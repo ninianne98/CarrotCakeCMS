@@ -26,6 +26,13 @@
 		a:hover {
 			text-decoration: underline;
 		}
+		div.scroll {
+			height: 175px;
+			width: 600px;
+			overflow: auto;
+			border: 1px solid #666;
+			padding: 2px;
+		}
 		td {
 			font-size: 11px;
 			color: #000000;
@@ -40,7 +47,6 @@
 			color: #97AC88;
 		}
 	</style>
-
 	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
 
 	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
@@ -79,13 +85,13 @@
 		}
 
 		function resizeImg() {
-			var img = $('#imgThumb');
-			img.removeAttr("width").attr("width");
-			img.removeAttr("height").attr("height");
-			if (img.removeAttr("width").attr("width") > 180) {
-				img.attr('width', 180);
-				setTimeout("resizeImg();", 1000);
-			}
+			//			var img = $('#imgThumb');
+			//			img.removeAttr("width").attr("width");
+			//			img.removeAttr("height").attr("height");
+			//			if (img.removeAttr("width").attr("width") > 180) {
+			//				img.attr('width', 180);
+			//				setTimeout("resizeImg();", 1000);
+			//			}
 		}
 
 		function fnSetFile() {
@@ -185,30 +191,32 @@
 				</td>
 			</tr>
 		</table>
-		<asp:Repeater ID="rpFolders" runat="server">
-			<HeaderTemplate>
-				<table cellpadding="2" cellspacing="0">
-			</HeaderTemplate>
-			<ItemTemplate>
-				<tr>
-					<td>
-						<img src="/manage/tiny_mce/Folder.gif" />
-					</td>
-					<td>
-						<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}", Eval("FolderPath"), sQueryMode ) %>'>
-							<%# String.Format( "{0}", Eval("FileName") ).ToUpper() %></a>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-					<td>
-						<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
-					</td>
-				</tr>
-			</ItemTemplate>
-			<FooterTemplate>
-				</table></FooterTemplate>
-		</asp:Repeater>
+		<div class="scroll">
+			<asp:Repeater ID="rpFolders" runat="server">
+				<HeaderTemplate>
+					<table cellpadding="2" cellspacing="0">
+				</HeaderTemplate>
+				<ItemTemplate>
+					<tr>
+						<td>
+							<img src="/manage/tiny_mce/Folder.gif" />
+						</td>
+						<td>
+							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}", Eval("FolderPath"), sQueryMode ) %>'>
+								<%# String.Format( "{0}", Eval("FileName") ).ToUpper() %></a>
+						</td>
+						<td>
+							&nbsp;&nbsp;
+						</td>
+						<td>
+							<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
+						</td>
+					</tr>
+				</ItemTemplate>
+				<FooterTemplate>
+					</table></FooterTemplate>
+			</asp:Repeater>
+		</div>
 		<p>
 			<br />
 			Select a file to upload to the current folder:<br />
@@ -216,56 +224,58 @@
 			<asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" /><br />
 			<asp:Label ID="lblWarning" runat="server"></asp:Label>
 		</p>
-		<div style="float: right; text-align: center;">
+		<%--<div style="float: right; text-align: center;">
 			<img src='' id="imgThumb" name="imgThumb" width="200" alt="Preview (if image)" />
-		</div>
-		<asp:Repeater ID="rpFiles" runat="server">
-			<HeaderTemplate>
-				<table cellpadding="2" cellspacing="0">
-					<tr bgcolor="#F74902">
-						<th>
-						</th>
-						<th>
-						</th>
-						<th>
-							<font color="#FFFFFF">Filename</font>
-						</th>
-						<th>
-							<font color="#FFFFFF">Date</font>
-						</th>
-						<th>
-						</th>
-						<th>
-							<font color="#FFFFFF">Size</font>
-						</th>
+		</div>--%>
+		<div class="scroll">
+			<asp:Repeater ID="rpFiles" runat="server">
+				<HeaderTemplate>
+					<table cellpadding="2" cellspacing="0">
+						<tr bgcolor="#F74902">
+							<th>
+							</th>
+							<th>
+							</th>
+							<th>
+								<font color="#FFFFFF">Filename</font>
+							</th>
+							<th>
+								<font color="#FFFFFF">Date</font>
+							</th>
+							<th>
+							</th>
+							<th>
+								<font color="#FFFFFF">Size</font>
+							</th>
+						</tr>
+				</HeaderTemplate>
+				<ItemTemplate>
+					<tr>
+						<td>
+							<asp:CheckBox ID="chkRemove" runat="server" value='<%# Eval("FileName") %>' />
+						</td>
+						<td>
+							<img src="/manage/tiny_mce/File.gif" />
+						</td>
+						<td>
+							<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
+								<%# String.Format( "{0}", Eval("FileName") ).ToLower() %></a>
+						</td>
+						<td>
+							<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
+						</td>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							<asp:Label ID="lblFileSize" runat="server" Text='<%# String.Format( "{0}", Eval("FileSizeFriendly") ) %>'></asp:Label>
+						</td>
 					</tr>
-			</HeaderTemplate>
-			<ItemTemplate>
-				<tr>
-					<td>
-						<asp:CheckBox ID="chkRemove" runat="server" value='<%# Eval("FileName") %>' />
-					</td>
-					<td>
-						<img src="/manage/tiny_mce/File.gif" />
-					</td>
-					<td>
-						<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
-							<%# String.Format( "{0}", Eval("FileName") ).ToLower() %></a>
-					</td>
-					<td>
-						<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
-					</td>
-					<td>
-						&nbsp;
-					</td>
-					<td>
-						<asp:Label ID="lblFileSize" runat="server" Text='<%# String.Format( "{0}", Eval("FileSizeFriendly") ) %>'></asp:Label>
-					</td>
-				</tr>
-			</ItemTemplate>
-			<FooterTemplate>
-				</table></FooterTemplate>
-		</asp:Repeater>
+				</ItemTemplate>
+				<FooterTemplate>
+					</table></FooterTemplate>
+			</asp:Repeater>
+		</div>
 		<p>
 			<br />
 			<asp:Button ID="btnRemove" runat="server" Text="Delete Checked" OnClick="btnRemove_Click" />
