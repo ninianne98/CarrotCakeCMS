@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSInterfaces", "CMSInterfa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.csproj", "{66647E76-0AB6-4C34-829F-56A8F3079806}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSCalendarModule", "CMSCalendarModule\CMSCalendarModule.csproj", "{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSFAQModule", "CMSFAQModule\CMSFAQModule.csproj", "{38E7C46A-F4B6-4CB7-8F39-C0088F109748}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,9 +50,15 @@ Global
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E7C46A-F4B6-4CB7-8F39-C0088F109748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E7C46A-F4B6-4CB7-8F39-C0088F109748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E7C46A-F4B6-4CB7-8F39-C0088F109748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E7C46A-F4B6-4CB7-8F39-C0088F109748}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
