@@ -315,7 +315,7 @@
 		
 		$("#removeconfirm" ).dialog({
 			open: function() {
-				$(this).parents('.ui-dialog-buttonpane button:eq(1)').focus(); 
+				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus(); 
 			},
 
 			resizable: false,
@@ -323,11 +323,11 @@
 			width: 400,
 			modal: true,
 			buttons: {
-					"Yes": function() {
-						cmsRemoveWidget(v);
+					"No": function() {
 						$( this ).dialog( "close" );
 					},
-					"No": function() {
+					"Yes": function() {
+						cmsRemoveWidget(v);
 						$( this ).dialog( "close" );
 					}
 				}
@@ -337,7 +337,10 @@
 		$("#removeconfirmmsg").parent().parent().attr('class', "GlossySeaGreen " + c);
 
 		var txt = $("#removeconfirmmsg").attr('style', 'padding:8px;');
-	
+
+		var lnk = $("#removeconfirmmsg").parent().parent().find(".ui-dialog-titlebar-close").attr('style', 'float:right; padding:5px;');
+		var cap = $("#removeconfirmmsg").parent().parent().find(".ui-dialog-title").attr('style', 'float:left; padding:5px;');
+		var cap = $("#removeconfirmmsg").parent().parent().find(".ui-button").attr('style', 'float:right;');
 	}
 
 
