@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="CarrotwareCMS" Class="CarrotCMSDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\sql2008express;Initial Catalog=CarrotwareCMS;Integrated Security=True" SettingsObjectName="Carrotware.CMS.Data.Properties.Settings" SettingsPropertyName="CarrotwareCMSConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.aspnet_Users" Member="aspnet_Users">
+    <Type Name="aspnet_User">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredUserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileAlias" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="IsAnonymous" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_User_tblUserSiteMapping" Member="tblUserSiteMappings" ThisKey="UserId" OtherKey="UserId" Type="tblUserSiteMapping" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_Membership" ThisKey="UserId" OtherKey="UserId" Type="aspnet_Membership" Cardinality="One" />
+      <Association Name="aspnet_User_tblContent" Member="tblContents" ThisKey="UserId" OtherKey="EditUserId" Type="tblContent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblSites" Member="tblSites">
+    <Type Name="tblSite">
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MetaKeyword" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="MetaDescription" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
+      <Column Name="SiteName" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="SiteFolder" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="MainURL" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="BlockIndex" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
+      <Association Name="tblSite_tblUserSiteMapping" Member="tblUserSiteMappings" ThisKey="SiteID" OtherKey="SiteID" Type="tblUserSiteMapping" />
+      <Association Name="tblSite_tblRootContent" Member="tblRootContent" ThisKey="SiteID" OtherKey="SiteID" Type="tblRootContent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblUserSiteMapping" Member="tblUserSiteMappings">
+    <Type Name="tblUserSiteMapping">
+      <Column Name="UserSiteMappingID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_User_tblUserSiteMapping" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+      <Association Name="tblSite_tblUserSiteMapping" Member="tblSite" ThisKey="SiteID" OtherKey="SiteID" Type="tblSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Membership" Member="aspnet_Memberships">
+    <Type Name="aspnet_Membership">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordFormat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordSalt" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="MobilePIN" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="LoweredEmail" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordQuestion" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordAnswer" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="IsApproved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLockedOut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastPasswordChangedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLockoutDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Roles" Member="aspnet_Roles">
+    <Type Name="aspnet_Role">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredRoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblContent" Member="tblContents">
+    <Type Name="tblContent">
+      <Column Name="ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Parent_ContentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsLatestVersion" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TitleBar" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="NavMenuText" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="PageHead" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="PageText" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="LeftPageText" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="RightPageText" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="NavOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Association Name="aspnet_User_tblContent" Member="aspnet_User" ThisKey="EditUserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+      <Association Name="tblRootContent_tblContent" Member="tblRootContent" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="tblRootContent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblRootContent" Member="tblRootContents">
+    <Type Name="tblRootContent">
+      <Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="EditHeartbeat" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Heartbeat_UserId" Type="System.Guid" DbType="UniqueIdentifier NULL" CanBeNull="true" />
+      <Column Name="PageActive" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Association Name="tblRootContent_tblContent" Member="tblContents" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="tblContent" />
+      <Association Name="tblRootContent_tblPageWidget" Member="tblPageWidgets" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="tblPageWidget" />
+      <Association Name="tblSite_tblRootContent" Member="tblSite" ThisKey="SiteID" OtherKey="SiteID" Type="tblSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblPageWidgets" Member="tblPageWidgets">
+    <Type Name="tblPageWidget">
+      <Column Name="PageWidgetID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="WidgetOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="PlaceholderName" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ControlPath" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ControlProperties" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="tblRootContent_tblPageWidget" Member="tblRootContent" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="tblRootContent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblSerialCache" Member="tblSerialCaches">
+    <Type Name="tblSerialCache">
+      <Column Name="SerialCacheID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SerializedData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="KeyType" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
