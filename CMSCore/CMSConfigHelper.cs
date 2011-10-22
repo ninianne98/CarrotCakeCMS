@@ -102,11 +102,21 @@ namespace Carrotware.CMS.Core {
 					DataSet ds = new DataSet();
 					ds.ReadXml(sPlugCfg);
 
-					_plugins = (from d in ds.Tables[0].AsEnumerable()
+					List<CMSPlugin> _p1 = new List<CMSPlugin>();
+
+					_p1.Add(new CMSPlugin { Caption = "Generic Content &#0134;", FilePath = "~/Manage/ucGenericContent.ascx" });
+					_p1.Add(new CMSPlugin { Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
+		
+					List<CMSPlugin> _p2 = (from d in ds.Tables[0].AsEnumerable()
 								select new CMSPlugin {
 									FilePath = d.Field<string>("filepath"),
 									Caption = d.Field<string>("crtldesc")
 								}).ToList();
+
+					_plugins = _p1.Union(_p2).ToList();
 
 					HttpContext.Current.Cache.Insert(ModuleKey, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}

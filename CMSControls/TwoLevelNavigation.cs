@@ -11,13 +11,39 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-
-
+using Carrotware.CMS.Interface;
+/*
+* CarrotCake CMS
+* http://carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:TwoLevelNavigation runat=server></{0}:TwoLevelNavigation>")]
-	public class TwoLevelNavigation : BaseServerControl {
+	public class TwoLevelNavigation : BaseServerControl, IWidget {
+
+
+		#region IWidget Members
+
+		public Guid PageWidgetID { get; set; }
+
+		public Guid RootContentID { get; set; }
+
+		Guid IWidget.SiteID { get; set; }
+
+		public string JSEditFunction {
+			get { return ""; }
+		}
+		public bool EnableEdit {
+			get { return true; }
+		}
+		#endregion
+
 
 		[Bindable(true)]
 		[Category("Appearance")]
