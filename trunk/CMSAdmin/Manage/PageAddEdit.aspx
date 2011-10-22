@@ -204,7 +204,7 @@
 		}
 
 		$(document).ready(function() {
-			CheckFileName()
+			CheckFileName();
 		});
 
 		function editFilenameCallback(data, status) {
@@ -234,7 +234,8 @@
 		function SubmitPage() {
 			saving = 1;
 			//tinyMCE.triggerSave();
-			setTimeout("ClickBtn();", 500);
+			CheckFileName();
+			setTimeout("ClickBtn();", 1000);
 		}
 		function ClickBtn() {
 			$('#<%=btnSave.ClientID %>').click();
