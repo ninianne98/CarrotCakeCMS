@@ -106,10 +106,6 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CMSCore\CMSCore.csproj">
-      <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
-      <Name>CMSCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
       <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
       <Name>CMSInterfaces</Name>

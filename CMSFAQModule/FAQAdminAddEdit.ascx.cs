@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
-using Carrotware.CMS.Core;
-
 
 
 namespace Carrotware.CMS.UI.Plugins.FAQModule {
@@ -31,9 +29,9 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (SiteID == Guid.Empty) {
-				SiteID = SiteData.CurrentSiteID;
-			}
+			//if (SiteID == Guid.Empty) {
+			//    SiteID = SiteData.CurrentSiteID;
+			//}
 
 			try {
 				ItemGuid = new Guid(Request.QueryString["id"].ToString());
