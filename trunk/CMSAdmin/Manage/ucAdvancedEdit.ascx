@@ -311,12 +311,33 @@
 
 
 	function CarrotCMSRemoveWidget(v) {
-		cmsRemoveWidget(v);
-//		var p = $('#' + v);
-//		var txt = p.find('#ctrlOrder');
-//		txt.val('-1');
-//		delItem(p);
-		//alert(v);
+		$("#removeconfirm").dialog("destroy");
+		
+		$("#removeconfirm" ).dialog({
+			open: function() {
+				$(this).parents('.ui-dialog-buttonpane button:eq(1)').focus(); 
+			},
+
+			resizable: false,
+			height: 250,
+			width: 400,
+			modal: true,
+			buttons: {
+					"Yes": function() {
+						cmsRemoveWidget(v);
+						$( this ).dialog( "close" );
+					},
+					"No": function() {
+						$( this ).dialog( "close" );
+					}
+				}
+		});
+		
+		var c = $("#removeconfirmmsg").parent().parent().attr('class');
+		$("#removeconfirmmsg").parent().parent().attr('class', "GlossySeaGreen " + c);
+
+		var txt = $("#removeconfirmmsg").attr('style', 'padding:8px;');
+	
 	}
 
 
@@ -495,6 +516,10 @@
 	<div id="modalalert" class="GlossySeaGreen" title="CMS Alert">
 		<p id="modalalertmessage">
 			&nbsp;</p>
+	</div>
+	<div id="removeconfirm" class="GlossySeaGreen" title="Remove Widget?">
+		<p id="removeconfirmmsg">
+			Are you sure you want to remove this widget?</p>
 	</div>
 	<div style="display: none">
 		<img src="/manage/images/x.png" />
