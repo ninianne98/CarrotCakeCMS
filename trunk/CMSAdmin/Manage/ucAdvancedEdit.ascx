@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
 <div style="clear: both;">
 	&nbsp;</div>
-<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
+<carrot:jquery runat="server" ID="jquery1" />
 
 <script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
 
@@ -473,7 +473,7 @@
 						<p class="toolitem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
 							<%# Eval("Caption")%>
 						</p>
-						<%# Eval("FilePath") %><br />
+						<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
 						<input type="hidden" id="ctrlID" size="35" value="<%# Eval("FilePath")%>" />
 						<input type="hidden" id="ctrlOrder" value="0" />
 						<div style="text-align: right;" id="ctrlBtn">

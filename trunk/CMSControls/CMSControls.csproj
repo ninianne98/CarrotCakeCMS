@@ -98,6 +98,10 @@
       <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
       <Name>CMSCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
+      <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
+      <Name>CMSInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="jquery142.js" />

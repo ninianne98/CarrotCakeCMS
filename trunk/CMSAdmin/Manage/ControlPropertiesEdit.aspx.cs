@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
-using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.CMS.UI.Base;
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -19,47 +20,62 @@ using Carrotware.CMS.Core;
 
 
 namespace Carrotware.CMS.UI.Admin.Manage {
-    public partial class ControlPropertiesEdit : AdminBasePage {
+	public partial class ControlPropertiesEdit : AdminBasePage {
 
-        public Guid guidWidget = Guid.Empty;
-        public Guid guidPage = Guid.Empty;
-        public List<WidgetProps> lstProps = null;
+		public Guid guidWidget = Guid.Empty;
+		public Guid guidPage = Guid.Empty;
+		public List<WidgetProps> lstProps = null;
 		public List<ObjectProperty> props = null;
 
 
-        protected void Page_Load(object sender, EventArgs e) {
+		protected void Page_Load(object sender, EventArgs e) {
 
-            if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-                guidWidget = new Guid(Request.QueryString["id"].ToString());
-            }
+			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
+				guidWidget = new Guid(Request.QueryString["id"].ToString());
+			}
 
-            if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
-                guidPage = new Guid(Request.QueryString["pageid"].ToString());
-            }
+			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
+				guidPage = new Guid(Request.QueryString["pageid"].ToString());
+			}
 
-            var pageContents = pageHelper.GetLatestContent(SiteID, guidPage);
-            cmsHelper.OverrideKey(pageContents.FileName);
-
-
-            PageWidget w = (from aw in cmsHelper.cmsAdminWidget
-                            where aw.PageWidgetID == guidWidget
-                            orderby aw.WidgetOrder
-                            select aw).FirstOrDefault();
+			var pageContents = pageHelper.GetLatestContent(SiteID, guidPage);
+			cmsHelper.OverrideKey(pageContents.FileName);
 
 
-            if (!IsPostBack) {
+			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
+							where aw.PageWidgetID == guidWidget
+							orderby aw.WidgetOrder
+							select aw).FirstOrDefault();
 
-                lstProps = w.ParseDefaultControlProperties();
 
-                Control widget = new Control();
+			if (!IsPostBack) {
 
-                try {
-                    widget = Page.LoadControl(w.ControlPath);
-                } catch (Exception ex) {
-                }
+				lstProps = w.ParseDefaultControlProperties();
 
-                props = cmsHelper.GetProperties(widget);
-                List<ObjectProperty> props1 = new List<ObjectProperty>();
+				Control widget = new Control();
+
+				if (w.ControlPath.EndsWith(".ascx")) {
+					try {
+						widget = Page.LoadControl(w.ControlPath);
+					} catch (Exception ex) {
+					}
+				}
+
+				if (w.ControlPath.ToLower().StartsWith("class:")) {
+					try {
+						Assembly a = Assembly.GetExecutingAssembly();
+						var className = w.ControlPath.Replace("CLASS:", "");
+						Type t = Type.GetType(className);
+						Object o = Activator.CreateInstance(t);
+						if (o != null) {
+							widget = o as Control;
+						}
+					} catch (Exception ex) {
+					}
+				}
+
+				props = cmsHelper.GetProperties(widget);
+				List<ObjectProperty> props1 = new List<ObjectProperty>();
 				List<ObjectProperty> props2 = new List<ObjectProperty>();
 				List<ObjectProperty> props3 = new List<ObjectProperty>();
 				List<ObjectProperty> props4 = new List<ObjectProperty>();
@@ -71,7 +87,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				if (widget is Carrotware.CMS.Interface.IWidget) {
 					props2 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidget));
 				}
-				
+
 				if (widget is Carrotware.CMS.Interface.BaseShellUserControl) {
 					props3 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.BaseShellUserControl));
 				}
@@ -82,56 +98,56 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					props5 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
 				}
 
-                rpProps.DataSource = (from p in props
-                                      where p.CanRead == true
-                                      && p.CanWrite == true
-                                      && !props1.Contains(p)
-                                      && !props2.Contains(p)
+				rpProps.DataSource = (from p in props
+									  where p.CanRead == true
+									  && p.CanWrite == true
+									  && !props1.Contains(p)
+									  && !props2.Contains(p)
 									  && !props3.Contains(p)
 									  && !props4.Contains(p)
 									  && !props5.Contains(p)
-                                      select p).ToList();
+									  select p).ToList();
 
-                rpProps.DataBind();
-            }
+				rpProps.DataBind();
+			}
 
 
-        }
+		}
 
-        public string GetSavedValue(string sDefVal, string sName) {
+		public string GetSavedValue(string sDefVal, string sName) {
 
-            var pp = (from p in lstProps
-                      where p.KeyName.ToLower() == sName.ToLower()
-                      select p).FirstOrDefault();
+			var pp = (from p in lstProps
+					  where p.KeyName.ToLower() == sName.ToLower()
+					  select p).FirstOrDefault();
 
-            if (pp == null) {
+			if (pp == null) {
 				return sDefVal;
-            } else {
-                return pp.KeyValue;
-            }
-        }
+			} else {
+				return pp.KeyValue;
+			}
+		}
 
 
-        protected void btnSave_Click(object sender, EventArgs e) {
+		protected void btnSave_Click(object sender, EventArgs e) {
 
-            PageWidget w = (from aw in cmsHelper.cmsAdminWidget
-                            where aw.PageWidgetID == guidWidget
-                            orderby aw.WidgetOrder
-                            select aw).FirstOrDefault();
+			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
+							where aw.PageWidgetID == guidWidget
+							orderby aw.WidgetOrder
+							select aw).FirstOrDefault();
 
-            var props = new List<WidgetProps>();
+			var props = new List<WidgetProps>();
 
-            foreach (RepeaterItem r in rpProps.Items) {
-                HiddenField hdnName = (HiddenField)r.FindControl("hdnName");
-                TextBox txtValue = (TextBox)r.FindControl("txtValue");
+			foreach (RepeaterItem r in rpProps.Items) {
+				HiddenField hdnName = (HiddenField)r.FindControl("hdnName");
+				TextBox txtValue = (TextBox)r.FindControl("txtValue");
 
-                var p = new WidgetProps();
-                p.KeyName = hdnName.Value;
-                p.KeyValue = txtValue.Text;
-                props.Add(p);
-            }
+				var p = new WidgetProps();
+				p.KeyName = hdnName.Value;
+				p.KeyValue = txtValue.Text;
+				props.Add(p);
+			}
 
-            w.SaveDefaultControlProperties(props);
+			w.SaveDefaultControlProperties(props);
 
 			var lst = cmsHelper.cmsAdminWidget;
 			lst.RemoveAll(x => x.PageWidgetID == guidWidget);
@@ -139,8 +155,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			cmsHelper.cmsAdminWidget = lst;
 
-        }
+		}
 
 
-    }
+	}
 }

@@ -307,7 +307,7 @@ namespace Carrotware.CMS.UI.Admin {
 						bool bGoodWidget = false;
 						var w = arrWidgCell.Split('\t');
 						var rWidg = new PageWidget();
-						if (w[2].ToLower().EndsWith(".ascx")) {
+						if (w[2].ToLower().EndsWith(".ascx") || w[2].ToLower().StartsWith("class:")) {
 							rWidg.ControlPath = w[2];
 							rWidg.PageWidgetID = Guid.NewGuid();
 							bGoodWidget = true;

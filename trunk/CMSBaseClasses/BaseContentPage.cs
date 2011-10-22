@@ -256,29 +256,54 @@ namespace Carrotware.CMS.UI.Base {
 
 
 				if (pageWidgets.Count > 0) {
+					
 
 					var lstWidget = (from d in pageWidgets
-								 where d.Root_ContentID == pageContents.Root_ContentID
-								 select d).ToList();
+									 where d.Root_ContentID == pageContents.Root_ContentID
+									 select d).ToList();
 
 					foreach (var theWidget in lstWidget) {
 						WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
 						if (plcHolder != null) {
 							Control widget = new Control();
 
-							if (File.Exists(Server.MapPath(theWidget.ControlPath))) {
+							if (theWidget.ControlPath.EndsWith(".ascx")) {
+								if (File.Exists(Server.MapPath(theWidget.ControlPath))) {
+									try {
+										widget = Page.LoadControl(theWidget.ControlPath);
+									} catch (Exception ex) {
+										var lit = new Literal();
+										lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
+										widget = lit;
+									}
+								} else {
+									var lit = new Literal();
+									lit.Text = "MISSING FILE: " + theWidget.ControlPath;
+									widget = lit;
+								}
+							}
+
+							if (theWidget.ControlPath.ToLower().StartsWith("class:")) {
 								try {
-									widget = Page.LoadControl(theWidget.ControlPath);
+									Assembly a = Assembly.GetExecutingAssembly();
+									var className = theWidget.ControlPath.Replace("CLASS:", "");
+									Type t = Type.GetType(className);
+									Object o = Activator.CreateInstance(t);
+									
+									if (o != null) {
+										widget = o as Control;
+									} else {
+										var lit = new Literal();
+										lit.Text = "OOPS: " + theWidget.ControlPath;
+										widget = lit;
+									}
 								} catch (Exception ex) {
 									var lit = new Literal();
 									lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
 									widget = lit;
 								}
-							} else {
-								var lit = new Literal();
-								lit.Text = "MISSING FILE: " + theWidget.ControlPath;
-								widget = lit;
 							}
+
 							widget.ID = CtrlId;
 
 							IWidget w = null;
@@ -322,14 +347,6 @@ namespace Carrotware.CMS.UI.Base {
 							} else {
 								plcHolder.Controls.Add(widget);
 							}
-
-							//List<ObjectProperty> props = cmsHelper.GetProperties(widget);
-
-							//if (!string.IsNullOrEmpty(theWidget.ControlProperties)) {
-							//    if (theWidget.ControlProperties.StartsWith("<?xml")) {
-							//        //do stuff with XML properties, eg: parse them!
-							//    }
-							//}
 
 						}
 					}
