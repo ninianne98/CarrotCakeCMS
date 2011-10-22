@@ -348,8 +348,8 @@
 				<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Pages</a> </li>
 				<li runat="server" id="tabModules"><a href="/Manage/ModuleIndex.aspx">Modules</a> </li>
 				<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Manage Users</a> </li>
-				<li runat="server" id="tabUser"><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">Change
-					Password</a> </li>
+				<li runat="server" id="tabUser"><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">Profile</a>
+				</li>
 				<li runat="server" id="tabAbout"><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
 				<li><a target="_blank" href="/">View Site</a> </li>
 				<li>
