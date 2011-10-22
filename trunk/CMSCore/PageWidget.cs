@@ -152,7 +152,7 @@ namespace Carrotware.CMS.Core {
 
 		public void SaveDefaultControlProperties(List<WidgetProps> props) {
 
-			DataSet ds = new DataSet();
+			DataSet ds = new DataSet("DefaultControlProperties");
 			DataTable dt = new DataTable("ControlProperties");
 			DataColumn dc1 = new DataColumn("KeyName", typeof(System.String));
 			DataColumn dc2 = new DataColumn("KeyValue", typeof(System.String));

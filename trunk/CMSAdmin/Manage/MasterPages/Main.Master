@@ -1,0 +1,404 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main-old.Master.cs" Inherits="Carrotware.CMS.UI.Admin.MasterPages.Main" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title></title>
+	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
+
+	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
+
+	<script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>
+
+	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
+
+	<link href="/Manage/includes/button-style.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/main.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/TableStyles.css" rel="stylesheet" type="text/css" />
+
+	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
+
+	<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript">
+
+		//  http://encosia.com/css-style-as-ajax-progress-indicator/
+		//  http://msdn.microsoft.com/en-us/library/bb386518.aspx
+
+		function UpdateAjaxJQuery() {
+			if (typeof (Sys) != 'undefined') {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				prm.add_endRequest(function() {
+					AjaxBtnLoad();
+				});
+			}
+		}
+
+		$(document).ready(function() {
+			UpdateAjaxJQuery();
+			AjaxBtnLoad();
+		});
+
+		function AjaxBtnLoad() {
+			$(function() {
+				$('#jqtabs').tabs();
+			});
+			$("#jqaccordion").accordion({
+				//collapsible: true
+				active: false,
+				autoheight: false,
+				collapsible: true,
+				alwaysOpen: false
+			});
+
+			$(function() {
+				$("input:button, input:submit").button();
+			});
+
+			$(".dateRegion").each(function(i) {
+				$(this).datepicker({
+					changeMonth: true,
+					changeYear: true,
+					showOn: 'button',
+					buttonImage: '/Manage/images/calendar.gif',
+					buttonImageOnly: true,
+					constrainInput: true
+				});
+			});
+		}	
+
+	</script>
+
+	<script type="text/javascript">
+
+		function alertModal(request) {
+			$("#modalalert").dialog("destroy");
+
+			$("#modalalert").dialog({
+				//autoOpen: false,
+				height: 400,
+				width: 600,
+				modal: true
+			});
+
+			$("#modalalertmessage").html(request);
+
+			var c = $("#modalalertmessage").parent().parent().attr('class');
+			$("#modalalertmessage").parent().parent().attr('class', "GlossySeaGreen " + c);
+		}
+
+		function ProcessKeyPress(e) {
+			var obj = window.event ? event : e;
+			var key = (window.event) ? event.keyCode : e.which;
+
+			if ((key == 13) || (key == 10)) {
+				obj.returnValue = false;
+				obj.cancelBubble = true;
+				return false;
+			}
+			return true;
+		}
+
+
+		function checkIntNumber(obj) {
+			var n = obj.value;
+			var intN = parseInt(n);
+			if (isNaN(intN) || intN < 0 || n != intN) {
+				alert("Value must be non-negative integers.");
+				obj.focus();
+			} else {
+				obj.value = intN;
+			}
+		}
+
+		function checkFloatNumber(obj) {
+			var n = obj.value;
+			var intN = parseFloat(n);
+			if (isNaN(intN) || intN < 0 || n != intN) {
+				alert("Value must be non-negative decimals.");
+				obj.value = 0;
+				obj.focus();
+			} else {
+				obj.value = intN;
+			}
+		}
+	</script>
+
+	<script type="text/javascript">
+		//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+		function BlockUI(elementID) {
+			if (typeof (Sys) != 'undefined') {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				prm.add_beginRequest(function() {
+					$("#" + elementID).block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+						css: {},
+						fadeOut: 1200,
+						timeout: 1200,
+						overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+					});
+				});
+				prm.add_endRequest(function() {
+					$("#" + elementID).unblock();
+				});
+			}
+		}
+
+		$(document).ready(function() {
+			BlockUI("divAjaxMain");
+			$.blockUI.defaults.css = {};
+		});
+	</script>
+
+	<script type="text/javascript">
+		var TheURL = '';
+		var RefreshPage = 0;
+
+		function ShowWindowNoRefresh(theURL) {
+			RefreshPage = 0;
+			LaunchWindow(theURL);
+		}
+
+		function ShowWindow(theURL) {
+			RefreshPage = 1;
+			LaunchWindow(theURL);
+		}
+
+		function LaunchWindow(theURL) {
+			TheURL = theURL;
+			$('#modalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="690" height="475" src="' + TheURL + '" /> </div>');
+
+			$("#divAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+				css: { width: '380px', height: '550px' },
+				fadeOut: 1000,
+				timeout: 1200,
+				overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+			});
+
+			setTimeout("LoadWindow();", 800);
+		}
+
+		function LoadWindow() {
+			$("#basic-modal-content").modal({ onClose: function(dialog) {
+				//$.modal.close(); // must call this!
+				setTimeout("$.modal.close();", 800);
+				$('#modalFrame').html('<div id="divAjaxMain"></div>');
+				DirtyPageRefresh();
+			}
+			});
+			IsDirty = 0;
+			$('#basic-modal-content').modal();
+			return false;
+		}
+
+		var IsDirty = 0;
+
+		function SetDirtyPage() {
+			IsDirty = 1;
+		}
+		function DirtyPageRefresh() {
+
+			$("#divAjaxMain").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+				css: {},
+				fadeOut: 1000,
+				timeout: 1200,
+				overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+			});
+
+			if (RefreshPage == 1) {
+				setTimeout("__doPostBack('PageRefresh', 'JavaScript');", 800);
+			}
+		}
+	
+	</script>
+
+	<!-- TinyMCE -->
+
+	<script type="text/javascript" src="/Manage/tiny_mce/tiny_mce.js"></script>
+
+	<script type="text/javascript">
+		tinyMCE.init({
+
+			//		mode : "textareas",
+			//		theme : "advanced",
+			//		theme_advanced_toolbar_location : "top",
+			//		theme_advanced_toolbar_align : "left",
+			//		document_base_url : "http://www.site.com/path1/"
+
+			mode: "textareas",
+			theme: "advanced",
+			editor_selector: "mceEditor",
+			theme_advanced_source_editor_width: "700",
+			theme_advanced_source_editor_height: "500",
+			skin: "o2k7",
+			skin_variant: "silver",
+			plugins: "advimage,advlink,advlist,media,iespell,inlinepopups",
+			file_browser_callback: "fileBrowserCallback",
+			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,forecolor,|,outdent,indent,blockquote,|,bullist,numlist,|,link,unlink,anchor,image,media,|,fileupbtn,cleanup,code,help",
+			theme_advanced_buttons2: "",
+			theme_advanced_buttons3: "",
+			theme_advanced_toolbar_location: "top",
+			theme_advanced_toolbar_align: "left",
+			theme_advanced_statusbar_location: "bottom",
+			relative_urls: false,
+			remove_script_host: true,
+			content_css: "/Manage/Includes/richedit.css",
+
+			// Add a custom button
+			setup: function(ed) {
+				ed.addButton('fileupbtn', {
+					title: 'FileUpload',
+					image: '/Manage/tiny_mce/insertfile.gif',
+					onclick: function() {
+						//debugger;
+						ed.focus();
+						//ed.selection.setContent('custom text');
+						var x = fileBrowserCallback(ed, '', '', this);
+						//ed.selection.setContent(x);
+					}
+				});
+			}
+
+
+		});
+
+
+		//http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
+		function fileBrowserCallback(field_name, url, type, win) {
+			var sURL = "/Manage/FileBrowser.aspx?useTiny=1&fldrpath=/Media/";
+
+			// block multiple file browser windows
+			if (!tinyMCE.selectedInstance.fileBrowserAlreadyOpen) {
+				tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true; // but now it will be
+
+				tinyMCE.activeEditor.windowManager.open({
+					file: sURL,
+					title: 'File Browser',
+					width: 700,
+					height: 500,
+					resizable: "no",
+					scrollbars: "yes",
+					status: "yes",
+					inline: "yes",
+					close_previous: "yes"
+				}, {
+					window: win,
+					input: field_name
+				});
+			}
+
+			return false;
+		}
+
+
+		function toggleEditor(id) {
+			if (!tinyMCE.get(id))
+				tinyMCE.execCommand('mceAddControl', false, id);
+			else
+				tinyMCE.execCommand('mceRemoveControl', false, id);
+		}
+
+
+	
+	</script>
+
+	<script type="text/javascript">
+		var fldName = '';
+		var winBrowse = null;
+		function FileBrowserOpen(fldN) {
+			fldN = '#' + fldN;
+			var fld = $(fldN);
+			fldName = fld.attr('id');
+
+			if (winBrowse != null) {
+				winBrowse.close();
+			}
+			winBrowse = window.open('/Manage/FileBrowser.aspx?useTiny=0&fldrpath=/Media/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
+			return false;
+		}
+
+		function fnSetFile(v) {
+			var fldN = '#' + fldName;
+			var fld = $(fldN);
+			fld.val(v);
+
+			winBrowse.close();
+			winBrowse = null;
+		}
+	
+	</script>
+
+	<!-- /TinyMCE -->
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+	</asp:ContentPlaceHolder>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<div id="divAjaxMain">
+		<div style="display: none">
+			<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+		</div>
+		<div id="header">
+			<h2>
+				CarrotCake CMS</h2>
+		</div>
+		<div id="menu">
+			<ul>
+				<li runat="server" id="tabMain"><a href="/Manage/">Home</a></li>
+				<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Pages</a> </li>
+				<li runat="server" id="tabModules"><a href="/Manage/ModuleIndex.aspx">Modules</a> </li>
+				<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Manage Users</a> </li>
+				<li runat="server" id="tabUser"><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">Change
+					Password</a> </li>
+				<li runat="server" id="tabAbout"><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
+				<li><a target="_blank" href="/">View Site</a> </li>
+				<li>
+					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=CurrentUser.UserName %></asp:LinkButton>
+				</li>
+				<li><a href="javascript:void(0)">&nbsp;</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			<div class="pad-content">
+				<h1>
+					<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
+					</asp:ContentPlaceHolder>
+				</h1>
+				<asp:ScriptManager ID="ScriptManager1" runat="server" />
+				<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
+					<ContentTemplate>
+						<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+						</asp:ContentPlaceHolder>
+					</ContentTemplate>
+				</asp:UpdatePanel>
+				<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
+				</asp:ContentPlaceHolder>
+			</div>
+		</div>
+		<div style="display: none">
+			<div id="basic-modal-content">
+				<div id="modalFrame">
+					<%--<iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="550" height="600" src="/Manage/blank.htm"></iframe>--%>
+				</div>
+			</div>
+			<div style="display: none">
+				<img src="/manage/images/x.png" />
+			</div>
+			<div style="display: none">
+				<div id="modalalert" title="CMS Alert">
+					<p id="modalalertmessage">
+						&nbsp;</p>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<p>
+				<asp:PlaceHolder ID="myFooter" runat="server">&copy; carrotware.com
+					<%= DateTime.Now.Year %>
+				</asp:PlaceHolder>
+			</p>
+		</div>
+	</div>
+	</form>
+</body>
+</html>
