@@ -104,7 +104,8 @@ namespace Carrotware.CMS.Core {
 
 					List<CMSPlugin> _p1 = new List<CMSPlugin>();
 
-					_p1.Add(new CMSPlugin { Caption = "Generic Content &#0134;", FilePath = "~/Manage/ucGenericContent.ascx" });
+					_p1.Add(new CMSPlugin { Caption = "Generic HTML &#0134;", FilePath = "~/Manage/ucGenericContent.ascx" });
+					_p1.Add(new CMSPlugin { Caption = "Plain Text &#0134;", FilePath = "~/Manage/ucTextContent.ascx" });
 					_p1.Add(new CMSPlugin { Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
