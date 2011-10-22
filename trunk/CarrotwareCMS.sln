@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSCore", "CMSCore\CMSCore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSInterfaces", "CMSInterfaces\CMSInterfaces.csproj", "{33D1EA6C-65EA-4234-9861-C1C88317B78A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.csproj", "{66647E76-0AB6-4C34-829F-56A8F3079806}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
