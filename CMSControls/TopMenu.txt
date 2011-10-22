@@ -1,0 +1,103 @@
+﻿
+{MENU_WRAPPER_ID} {
+	width: {MENU_WIDTH};
+	height: {MENU_HEIGHT};
+	margin: 0 auto;
+}
+
+
+{MENU_ID}  {
+	width: {MENU_WIDTH};
+	height: {MENU_HEIGHT};
+	float: left;
+	z-index: 5;
+	{TOP_BACKGROUND_STYLE}
+}
+
+{MENU_ID}  ul.parent li {
+	text-align: center;
+	float: left;
+}
+
+{MENU_ID}  ul.parent {
+	clear: both;
+	margin: 0;
+	padding: {MENU_TOP_PAD} 0px 0px 0px;
+	list-style: none;
+	line-height: normal;
+	margin-left: 30px;
+}
+
+{MENU_ID}  ul.parent li a {
+	display: block;
+	float: left;
+	margin-right: 3px;
+	padding: 5px 20px 5px 20px;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: bold;
+	color: {FORE_HEX};
+	{ITEM_BACKGROUND_STYLE}
+}
+
+
+{MENU_ID}  ul.parent li a:hover, {MENU_ID}  ul.parent li.selected a {
+	background: {FORE_HEX};
+	color: {BG_HEX};
+}
+
+{MENU_ID}  li .children {
+	display: none;
+	clear: both;
+}
+
+{MENU_ID}  li:hover .children {
+	color: {FORE_HEX};
+	list-style-type: none;
+	display: block;
+	position: absolute;
+	text-align: left;
+	float: left;
+	padding: 0px;
+	margin: 0px;
+	background-color: {FORE_HEX};
+	padding-left: 0px;
+	padding-bottom: 0px;
+	width: {SUB_MENU_WIDTH};
+	margin-top: 20px;
+	margin-left: 0px;
+	margin-right: 5px;
+	z-index: 5;
+	border-width: 1px;
+	border-style: solid;
+	border-color: {BG_HEX};
+	border-collapse: collapse;
+	font-size: 12px;
+	font-weight: bold;
+	color: {FORE_HEX};
+}
+
+
+{MENU_ID}  li:hover .children li a {
+	float: left;
+	padding: {MENU_TOP_2_PAD} 10px {MENU_TOP_2_PAD} 10px;
+	color: {BG_HEX};
+	width: {SUB_MENU_WIDTH2};
+	text-decoration: none;
+	text-align: left;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: {BG_HEX};
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: {BG_HEX};
+	clear: both;
+}
+
+{MENU_ID}  li:hover .children li a:hover {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
