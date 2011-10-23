@@ -10,8 +10,22 @@
 	<p>
 		CarrotCake CMS by Carrotware is dual licensed under the MIT or GPL Version 2 licenses.
 		<br />
-		<img src="images/carrotpower.png" alt="carrot power" title="carrot power" />
+		<img src="images/carrot_med.png" height="125" alt="carrot" title="carrot" />
+		<img src="images/carrotpower.png" alt="carrot" title="carrot" />
+		<img src="images/carrotcake.png" height="125" alt="carrot" title="carrot" />
 	</p>
+	<p>
+		The Carrotware carrot is &copy; 1997, 2002 Samantha Copeland</p>
+	<p>
+		The Powered by Carrotware badge is &copy; 2005, 2009 Samantha Copeland</p>
+	<p>
+		The CarrotCakeCMS logo is &copy; 2011 Samantha Copeland</p>
+	<p>
+		These works are licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons
+			Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.
+	</p>
+	<p>
+		These images may freely be used in conjunction with promotion of the CarrotCake CMS.</p>
 	<h2>
 		Components Utilized</h2>
 	<p>
