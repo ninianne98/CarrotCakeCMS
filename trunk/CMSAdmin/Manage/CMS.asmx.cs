@@ -260,6 +260,29 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 
+
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string UpdatePageTemplate(string TheTemplate, string ThisPage) {
+			try {
+				TheTemplate = cmsHelper.DecodeBase64(TheTemplate);
+				CurrentPageGuid = new Guid(ThisPage);
+				LoadGuids();
+
+				var c = cmsAdminContent;
+
+				c.TemplateFile = TheTemplate;
+
+				cmsAdminContent = c;
+
+				return "OK";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
+
+
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string ValidateUniqueFilename(string TheFileName, string PageID) {
@@ -272,7 +295,7 @@ namespace Carrotware.CMS.UI.Admin {
 						 && r.FileName.ToLower() == TheFileName.ToLower()
 						 && r.SiteID == SiteID
 						 select r).FirstOrDefault();
-				
+
 				if (h == null) {
 					return "PASS";
 				} else {

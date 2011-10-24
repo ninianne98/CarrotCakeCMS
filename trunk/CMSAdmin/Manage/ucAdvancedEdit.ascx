@@ -107,6 +107,27 @@
 	}
 
 
+	function cmsUpdateTemplate() {
+		var tmpl = $("#<%=ddlTemplate.ClientID%>").val();
+
+		var webMthd = webSvc + "/UpdatePageTemplate";
+
+		tmpl = MakeStringSafe(tmpl);
+		
+		//alert(tmpl);
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'TheTemplate': '" + tmpl + "', 'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: saveContentCallback,
+			error: ajaxFailed
+		});
+	}
+
+
 	function cmsUpdateWidgets() {
 
 		var webMthd = webSvc + "/CacheWidgetUpdate";
@@ -474,6 +495,14 @@
 			<textarea rows="5" cols="30" id="fullorder" style="width: 310px; height: 50px;"></textarea><br />
 			moveditem<br />
 			<input type="text" id="moveditem" style="width: 310px;" /><br />
+		</div>
+		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
+			<br />
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+			</asp:DropDownList>
+			<br />
+			<input runat="server" id="btnTemplate" type="button" value="Apply" style="text-align: center; margin: 5px; padding: 5px;"
+				onclick="cmsUpdateTemplate();" />
 		</div>
 		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
 			<br />

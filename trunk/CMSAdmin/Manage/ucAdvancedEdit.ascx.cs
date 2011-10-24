@@ -66,6 +66,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				bLocked = IsPageLocked(pageContents);
 
+				ddlTemplate.DataSource = cmsHelper.Templates;
+				ddlTemplate.DataBind();
+
+				try { ddlTemplate.SelectedValue = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
+
 				if (!bLocked) {
 					guidContentID = pageContents.Root_ContentID;
 
