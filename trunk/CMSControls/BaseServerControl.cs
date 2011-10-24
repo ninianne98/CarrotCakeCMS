@@ -11,7 +11,7 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	public class BaseServerControl : WebControl {
+	public abstract class BaseServerControl : WebControl {
 
 		protected ContentPage pageHelper = new ContentPage();
 		protected SiteData siteHelper = new SiteData();
