@@ -56,7 +56,7 @@
 	<script>
 		$(document).ready(function() {
 			$(function() {
-				$("input:button, input:submit").button();
+				$("input:button, input:submit, input:file").button();
 			});
 		});
 	</script>
@@ -293,11 +293,13 @@
 		<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
 	</div>
 	</asp:Literal>
-	<asp:Literal runat="server" ID="litFileMgr">
+	<div style="display: none">
+		<asp:Literal runat="server" ID="litFileMgr">
 		<input type="submit" id="Submit1" name="insert" value="Select" onclick="fnSetFile();return false;" />
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
-	</asp:Literal>
+		</asp:Literal>
+	</div>
 	</form>
 </body>
 </html>
