@@ -130,9 +130,19 @@ namespace Carrotware.CMS.UI.Base {
 					if (filePage != null) {
 						if (!sFileRequested.ToLower().Contains(filePage.TemplateFile.ToLower()) || bNoHome) {
 							string sRealFile = filePage.TemplateFile;
+
+							// selectivly engage the cms helper only if in advance mode
+							if (pageHelper.AdvancedEditMode) { 
+								CMSConfigHelper cmsHelper = new CMSConfigHelper();
+								if (cmsHelper.cmsAdminContent != null) {
+									try { sRealFile = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
+								}
+							}
+
 							if (!File.Exists(context.Server.MapPath(sRealFile))) {
 								sRealFile = DEFAULT_TEMPLATE;
 							}
+
 							sVirtualReqFile = sFileRequested;
 
 							context.RewritePath(sFileRequested, string.Empty, queryString);
