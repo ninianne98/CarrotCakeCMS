@@ -313,7 +313,10 @@
 			if (winBrowse != null) {
 				winBrowse.close();
 			}
-			winBrowse = window.open('/Manage/FileBrowser.aspx?useTiny=0&fldrpath=/Media/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
+			//winBrowse = window.open('/Manage/FileBrowser.aspx?useTiny=0&fldrpath=/Media/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
+
+			ShowWindowNoRefresh('/Manage/FileBrowser.aspx?useTiny=0&fldrpath=/Media/');
+
 			return false;
 		}
 
