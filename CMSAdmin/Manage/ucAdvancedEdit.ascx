@@ -29,7 +29,8 @@
 		height: 25px !important;
 		margin: 5px;
 		padding: 5px;
-		border: 2px dashed #676F6A;
+		background: #FFFFAA !important;
+		border: 2px dashed #676F6A !important;
 	}
 </style>
 
@@ -41,20 +42,20 @@
 	var thisPageID = '<%=guidContentID.ToString() %>';
 
 	function EscapeFile() {
-		thisPage = MakeStringSafe(thisPage);
+		thisPage = cmsMakeStringSafe(thisPage);
 	}
 
 	$(document).ready(function() {
 		EscapeFile();
 	});
 
-	function MakeStringSafe(val) {
+	function cmsMakeStringSafe(val) {
 		val = Base64.encode(val);
 		return val;
 	}
 
-	function EditHB() {
-		setTimeout("EditHB();", 30 * 1000);
+	function cmsEditHB() {
+		setTimeout("cmsEditHB();", 30 * 1000);
 
 		var webMthd = webSvc + "/RecordHeartbeat";
 
@@ -64,8 +65,8 @@
 			data: "{'PageID': '<%=guidContentID %>'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: updateHeartbeat,
-			error: ajaxFailed
+			success: cmsUpdateHeartbeat,
+			error: cmsAjaxFailed
 		});
 	}
 
@@ -74,8 +75,8 @@
 
 		var webMthd = webSvc + "/CacheContentZoneText";
 
-		val = MakeStringSafe(val);
-		zone = MakeStringSafe(zone);
+		val = cmsMakeStringSafe(val);
+		zone = cmsMakeStringSafe(zone);
 
 		$.ajax({
 			type: "POST",
@@ -83,8 +84,8 @@
 			data: "{'ZoneText': '" + val + "', 'Zone': '" + zone + "', 'ThisPage': '" + thisPageID + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: saveContentCallback,
-			error: ajaxFailed
+			success: cmsSaveContentCallback,
+			error: cmsAjaxFailed
 		});
 	}
 
@@ -93,7 +94,7 @@
 
 		var webMthd = webSvc + "/CacheGenericContent";
 
-		val = MakeStringSafe(val);
+		val = cmsMakeStringSafe(val);
 
 		$.ajax({
 			type: "POST",
@@ -101,8 +102,8 @@
 			data: "{'ZoneText': '" + val + "', 'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: saveContentCallback,
-			error: ajaxFailed
+			success: cmsSaveContentCallback,
+			error: cmsAjaxFailed
 		});
 	}
 
@@ -112,7 +113,7 @@
 
 		var webMthd = webSvc + "/UpdatePageTemplate";
 
-		tmpl = MakeStringSafe(tmpl);
+		tmpl = cmsMakeStringSafe(tmpl);
 		
 		//alert(tmpl);
 
@@ -122,8 +123,8 @@
 			data: "{'TheTemplate': '" + tmpl + "', 'ThisPage': '" + thisPageID + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: saveContentCallback,
-			error: ajaxFailed
+			success: cmsSaveContentCallback,
+			error: cmsAjaxFailed
 		});
 	}
 
@@ -134,7 +135,7 @@
 
 		var val = $("#fullorder").val();
 
-		val = MakeStringSafe(val);
+		val = cmsMakeStringSafe(val);
 
 		$.ajax({
 			type: "POST",
@@ -142,8 +143,8 @@
 			data: "{'WidgetAddition': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: saveWidgetsCallback,
-			error: ajaxFailed
+			success: cmsSaveWidgetsCallback,
+			error: cmsAjaxFailed
 		});
 	}
 	
@@ -157,8 +158,8 @@
 			data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: saveWidgetsCallback,
-			error: ajaxFailed
+			success: cmsSaveWidgetsCallback,
+			error: cmsAjaxFailed
 		});
 	}
 
@@ -172,75 +173,75 @@
 			data: "{'ThisPage': '" + thisPageID + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			success: savePageCallback,
-			error: ajaxFailed
+			success: cmsSavePageCallback,
+			error: cmsAjaxFailed
 		});
 
 	}
 
 <% if (!bLocked) { %>
-	setTimeout("EditHB();", 3000);
+	setTimeout("cmsEditHB();", 3000);
 <%} else { %>
 	$(document).ready(function() {
-		alertModal("<%=litUser.Text %>");
+		cmsAlertModal("<%=litUser.Text %>");
 	});
 <%} %>
 
-	function updateHeartbeat(data, status) {
+	function cmsUpdateHeartbeat(data, status) {
 		var hb = $('#heatbeat');
 		hb.empty().append('HB:  ');
 		hb.append(data.d);
 		CMSBusyShort();
 	}
 
-	function saveContentCallback(data, status) {
+	function cmsSaveContentCallback(data, status) {
 		if (data.d == "OK") {
 			CMSBusyShort();
 			window.setTimeout('location.reload()', 800);
 		} else {
-			alertModal(data.d);
+			cmsAlertModal(data.d);
 		}
 	}
 
-	function saveWidgetsCallback(data, status) {
+	function cmsSaveWidgetsCallback(data, status) {
 		if (data.d == "OK") {
 			CMSBusyShort();
 			window.setTimeout('location.reload()', 800);
 		} else {
-			alertModal(data.d);
+			cmsAlertModal(data.d);
 		}
 	}
 
-	function savePageCallback(data, status) {
+	function cmsSavePageCallback(data, status) {
 		if (data.d == "OK") {
 			CMSBusyShort();
-			alertModal("Saved");
+			cmsAlertModal("Saved");
 			window.setTimeout('location.href = \'<%=CurrentScriptName %>\'', 5000);
 		} else {
-			alertModal(data.d);
+			cmsAlertModal(data.d);
 		}
 	}
 
 
-	function cancelEdit() {
+	function cmsCancelEdit() {
 		window.setTimeout('location.href = \'<%=CurrentScriptName %>\'', 1000);
 	}
 
 
 //	$(document).ready(function() {
-//		alertModal("hello!");
+//		cmsAlertModal("hello!");
 //	});
 
 
-	function ajaxFailed(request) {
+	function cmsAjaxFailed(request) {
 		var s = "";
 		s = s + "<b>status: </b>" + request.status + '<br />\r\n';
 		s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
 		s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-		alertModal(s);
+		cmsAlertModal(s);
 	}
 
-	function alertModal(request) {
+	function cmsAlertModal(request) {
 		$("#modalalert").dialog("destroy");
 
 		$("#modalalert").dialog({
@@ -307,10 +308,10 @@
 	});
 
 
-	var trash_icon = "<div id='cmsDelIconDiv' style='text-align:right;padding:5px;margin:2px;'><a id='delico' class='ui-icon ui-icon-trash' href='javascript:void(0);' onclick='RemoveItem(this);' title='Delete'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>";
+	var trash_icon = "<div id='cmsDelIconDiv' style='text-align:right;padding:5px;margin:2px;'><a id='delico' class='ui-icon ui-icon-trash' href='javascript:void(0);' onclick='cmsRemoveItem(this);' title='Delete'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>";
 
 
-	function BuildOrder() {
+	function cmsBuildOrder() {
 		CMSBusyShort();
 
 		$("#fullorder").val('');
@@ -327,7 +328,7 @@
 		});
 	}
 
-	setTimeout("BuildOrder();", 1800);
+	setTimeout("cmsBuildOrder();", 1800);
 
 
 
@@ -365,7 +366,7 @@
 	}
 
 
-	function RemoveItem(a) {
+	function cmsRemoveItem(a) {
 		var tgt = $(a);
 		//alert(tgt.val());
 		if (tgt.is("a.ui-icon-trash")) {
@@ -373,13 +374,13 @@
 			//alert(p.attr('id'));
 			var txt = p.find('#ctrlOrder');
 			txt.val('-1');
-			delItem(p);
+			cmsDelItem(p);
 		}
 		return false;
 	}
 
 
-	function setOrder(fld) {
+	function cmsSetOrder(fld) {
 		var id = $(fld).attr('id');
 		$("#moveditem").val(id);
 	}
@@ -416,7 +417,7 @@
 			var id = $(ui.item).attr('id');
 			var val = $(ui.item).find('#ctrlID').val();
 			$("#moveditem").val(val);
-			setTimeout("BuildOrder();", 500);
+			setTimeout("cmsBuildOrder();", 500);
 			setTimeout("cmsUpdateWidgets();", 1800);
 		});
 
@@ -426,23 +427,23 @@
 
 	});
 
-	function SetVal(u) {
+	function cmsSetValue(u) {
 		var id = $(u).attr('id');
 		var val = $(u).find('#ctrlOrder').val();
 		//alert(val);
 		$("#moveditem").val(val);
-		setTimeout("BuildOrder();", 500);
+		setTimeout("cmsBuildOrder();", 500);
 	}
 
 
-	function delItem(item) {
+	function cmsDelItem(item) {
 		item.appendTo("#trashlist");
-		setTimeout("BuildOrder();", 500);
+		setTimeout("cmsBuildOrder();", 500);
 		setTimeout("cmsUpdateWidgets();", 1800);
 	}
 
 
-	function ShiftPosition(p) {
+	function cmsShiftPosition(p) {
 		floatingArray[0].targetTop = 30;
 		floatingArray[0].targetBottom = undefined;
 		if (p == 'L') {
@@ -470,11 +471,11 @@
 		<div onclick="ToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick' title="toggle" style="margin: 2px; float: right;">
 			T
 		</div>
-		<div onclick="ShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e' title="R" style="margin: 2px;
+		<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e' title="R" style="margin: 2px;
 			float: right;">
 			R
 		</div>
-		<div onclick="ShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w' title="L" style="margin: 2px;
+		<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w' title="L" style="margin: 2px;
 			float: right;">
 			L
 		</div>
@@ -510,7 +511,7 @@
 			<input runat="server" id="btnToolboxSave" type="button" value="Save" style="text-align: center; margin: 5px; padding: 5px;"
 				onclick="cmsApplyChanges();" />
 			&nbsp;&nbsp;&nbsp;
-			<input type="button" value="Cancel" style="text-align: center; margin: 5px; padding: 5px;" onclick="cancelEdit();" />
+			<input type="button" value="Cancel" style="text-align: center; margin: 5px; padding: 5px;" onclick="cmsCancelEdit();" />
 		</div>
 	</div>
 	<div id="cmsMainToolbox">
