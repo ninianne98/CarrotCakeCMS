@@ -463,7 +463,8 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 
 			var p = (from r in db.tblRootContents
-					 where r.FileName.ToLower() == sParentID.ToLower()
+					 where r.SiteID == siteID
+							&& r.FileName.ToLower() == sParentID.ToLower()
 					 select r).FirstOrDefault();
 
 			var oldC = (from ct in db.tblContents
