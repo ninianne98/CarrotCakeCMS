@@ -221,6 +221,9 @@ namespace Carrotware.CMS.UI.Base {
 									+ "<a style=\"color:#676F6A;padding:5px;margin:2px;font-weight: bold;\" target=\"_top\" href=\"" + CurrentScriptName + "?carrotedit=true\">ADVANCED EDIT</a>\r\n"
 									+ "</div>\r\n";
 							Page.Form.Controls.Add(litEd);
+
+							Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
+							Page.Form.Controls.Add(editor);
 						}
 
 					} else {

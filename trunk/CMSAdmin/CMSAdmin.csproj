@@ -80,6 +80,13 @@
     <Compile Include="Manage\ControlPropertiesEdit.aspx.designer.cs">
       <DependentUpon>ControlPropertiesEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\ucEditNotifier.ascx.cs">
+      <DependentUpon>ucEditNotifier.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ucEditNotifier.ascx.designer.cs">
+      <DependentUpon>ucEditNotifier.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\ucTextContent.ascx.cs">
       <DependentUpon>ucTextContent.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -581,6 +588,7 @@
     <Content Include="GPL-LICENSE.txt" />
     <Content Include="Manage\about.aspx" />
     <Content Include="Manage\Images\carrotcake.png" />
+    <Content Include="Manage\ucEditNotifier.ascx" />
     <Content Include="Manage\ucTextContent.ascx" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_b7d7c4_1x400.png" />
