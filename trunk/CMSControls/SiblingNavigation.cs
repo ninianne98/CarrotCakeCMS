@@ -72,19 +72,22 @@ namespace Carrotware.CMS.UI.Controls {
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
-
-			output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">");
-			foreach (var c in lst) {
-				if (!c.PageActive) {
-					c.NavMenuText = "&#9746; " + c.NavMenuText;
+			if (lst.Count > 0) {
+				output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">");
+				foreach (var c in lst) {
+					if (!c.PageActive) {
+						c.NavMenuText = "&#9746; " + c.NavMenuText;
+					}
+					if (c.NavFileName.ToLower() == CurrentScriptName.ToLower()) {
+						output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					} else {
+						output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					}
 				}
-				if (c.NavFileName.ToLower() == CurrentScriptName.ToLower()) {
-					output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
-				} else {
-					output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
-				}
+				output.Write("</ul>");
+			} else {
+				output.Write("<!--span id=\"" + this.ClientID + "\"></span -->");
 			}
-			output.Write("</ul>");
 		}
 
 

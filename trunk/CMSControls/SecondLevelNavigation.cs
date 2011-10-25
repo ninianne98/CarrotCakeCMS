@@ -42,31 +42,36 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Write("<h2>" + SectionTitle + "</h2>\r\n");
 			}
 
-			output.Write("<ul id=\"" + this.ClientID + "\">");
+			if (lst.Count > 0) {
 
-			if (IncludeParent) {
-				if (lst.Count > 0) {
-					var p = GetParent(lst.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
-					if (!p.PageActive) {
-						p.NavMenuText = "&#9746; " + p.NavMenuText;
-					}
-					if (p != null) {
-						output.Write("<li class=\"parent-nav\"><a href=\"" + p.NavFileName + "\">" + p.NavMenuText + "</a></li>\r\n");
-					}
-				}
-			}
+				output.Write("<ul id=\"" + this.ClientID + "\">");
 
-			foreach (var c in lst) {
-				if (!c.PageActive) {
-					c.NavMenuText = "&#9746;" + c.NavMenuText;
+				if (IncludeParent) {
+					if (lst.Count > 0) {
+						var p = GetParent(lst.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
+						if (!p.PageActive) {
+							p.NavMenuText = "&#9746; " + p.NavMenuText;
+						}
+						if (p != null) {
+							output.Write("<li class=\"parent-nav\"><a href=\"" + p.NavFileName + "\">" + p.NavMenuText + "</a></li>\r\n");
+						}
+					}
 				}
-				if (c.NavFileName.ToLower() == CurrentScriptName.ToLower()) {
-					output.Write("<li class=\"selected\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
-				} else {
-					output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+
+				foreach (var c in lst) {
+					if (!c.PageActive) {
+						c.NavMenuText = "&#9746;" + c.NavMenuText;
+					}
+					if (c.NavFileName.ToLower() == CurrentScriptName.ToLower()) {
+						output.Write("<li class=\"selected\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					} else {
+						output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					}
 				}
+				output.Write("</ul>");
+			} else {
+				output.Write("<!--span id=\"" + this.ClientID + "\"></span -->");
 			}
-			output.Write("</ul>");
 		}
 
 
