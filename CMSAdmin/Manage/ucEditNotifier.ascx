@@ -4,15 +4,16 @@
 <script src="/Manage/Includes/jq-floating-1.6.js" type="text/javascript"></script>
 
 <div id="cmsAdminToolbox" style="clear: both; padding: 5px; margin: 5px; border: 2px dashed #676F6A; font-weight: bold; color: #676F6A;
-	background: #CDE3D6; position: absolute; top: 20px; left: 20px; width: 150px; height: 150px; z-index: 1000; font-size: 14px;">
-	<p style="padding-top: 50px; padding-bottom: 20px; text-align: center;">
+	background: #CDE3D6; position: absolute; top: 20px; left: 20px; width: 160px; height: 100px; z-index: 1000; font-size: 14px;">
+	<p style="padding-top: 10px; padding-bottom: 10px; text-align: center;">
 		<a style="color: #676F6A; padding: 5px; margin: 2px; font-weight: bold;" href="<%=CurrentScriptName %>?carrotedit=true">ADVANCED
 			EDIT</a></p>
-	<table style="width: 145px; margin: 8px;">
+	<table style="width: 160px; margin: 5px;">
 		<tr>
 			<td>
 				<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" title="L" style="margin: 2px; padding-bottom: 10px;">
-				&lt;&lt;
+					&lt;&lt;
+				</div>
 			</td>
 			<td>
 				<div onclick="cmsFloatCenter()" id="cmsMnuCenter" title="C" style="margin: 2px; padding-bottom: 10px;">
