@@ -12,14 +12,5 @@ namespace Carrotware.CMS.UI.Admin.Manage {
     
     
     public partial class ucEditNotifier {
-        
-        /// <summary>
-        /// jquery1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Carrotware.CMS.UI.Controls.jquery jquery1;
     }
 }

@@ -9,8 +9,15 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class ucEditNotifier : BaseUserControl {
-		protected void Page_Load(object sender, EventArgs e) {
 
+		public Guid CurrentPageID {
+			get;
+			set;
+		}
+
+		protected void Page_Load(object sender, EventArgs e) {
+			var p = pageHelper.GetLatestContent(SiteID, null, CurrentScriptName);
+			CurrentPageID = p.Root_ContentID;
 		}
 	}
 }
