@@ -208,19 +208,19 @@ namespace Carrotware.CMS.UI.Base {
 
 
 					if (!AdvancedEditMode) {
-						string editLink = "<div style=\"background:#CDE3D6; padding:5px; border: 2px dashed #676F6A;\">"
-							+ "<a style=\"color:#676F6A;padding:5px;margin:0px;font-weight: bold;\" target=\"_blank\" href=\"/Manage/PageAddEdit.aspx?id=" + pageContents.Root_ContentID.ToString() + "\">EDIT</a></div>\r\n";
+						//string editLink = "<div style=\"background:#CDE3D6; padding:5px; border: 2px dashed #676F6A;\">"
+						//	+ "<a style=\"color:#676F6A;padding:5px;margin:0px;font-weight: bold;\" target=\"_blank\" href=\"/Manage/PageAddEdit.aspx?id=" + pageContents.Root_ContentID.ToString() + "\">EDIT</a></div>\r\n";
 
-						contCenter.Text = editLink + pageContents.PageText;
-						contLeft.Text = editLink + pageContents.LeftPageText;
-						contRight.Text = editLink + pageContents.RightPageText;
+						//contCenter.Text = editLink + pageContents.PageText;
+						//contLeft.Text = editLink + pageContents.LeftPageText;
+						//contRight.Text = editLink + pageContents.RightPageText;
 
 						if (IsAdmin || IsEditor) {
-							Literal litEd = new Literal();
-							litEd.Text = "\r\n<div style=\"clear: both;\">&nbsp;</div>\r\n<div style=\"text-align: center; background:#CDE3D6; padding:5px; margin:5px; border: 2px dashed #676F6A;\">\r\n"
-									+ "<a style=\"color:#676F6A;padding:5px;margin:2px;font-weight: bold;\" target=\"_top\" href=\"" + CurrentScriptName + "?carrotedit=true\">ADVANCED EDIT</a>\r\n"
-									+ "</div>\r\n";
-							Page.Form.Controls.Add(litEd);
+							//Literal litEd = new Literal();
+							//litEd.Text = "\r\n<div style=\"clear: both;\">&nbsp;</div>\r\n<div style=\"text-align: center; background:#CDE3D6; padding:5px; margin:5px; border: 2px dashed #676F6A;\">\r\n"
+							//        + "<a style=\"color:#676F6A;padding:5px;margin:2px;font-weight: bold;\" target=\"_top\" href=\"" + CurrentScriptName + "?carrotedit=true\">ADVANCED EDIT</a>\r\n"
+							//        + "</div>\r\n";
+							//Page.Form.Controls.Add(litEd);
 
 							Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
 							Page.Form.Controls.Add(editor);
