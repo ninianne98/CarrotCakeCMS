@@ -595,7 +595,7 @@
 
 	function cmsLaunchWindow(theURL) {
 		TheURL = theURL;
-		$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="690" height="475" src="' + TheURL + '" /> </div>');
+		$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="750" height="350" src="' + TheURL + '" /> </div>');
 
 		$("#divAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 			css: { width: '650px', height: '450px' },

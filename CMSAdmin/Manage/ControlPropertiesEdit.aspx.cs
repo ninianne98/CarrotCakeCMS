@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		public Guid guidWidget = Guid.Empty;
 		public Guid guidPage = Guid.Empty;
 		public List<WidgetProps> lstProps = null;
-		public List<ObjectProperty> props = null;
+		public List<ObjectProperty> lstDefProps = null;
 
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -74,7 +74,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					}
 				}
 
-				props = cmsHelper.GetProperties(widget);
+				lstDefProps = cmsHelper.GetProperties(widget);
 				List<ObjectProperty> props1 = new List<ObjectProperty>();
 				List<ObjectProperty> props2 = new List<ObjectProperty>();
 				List<ObjectProperty> props3 = new List<ObjectProperty>();
@@ -98,7 +98,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					props5 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
 				}
 
-				rpProps.DataSource = (from p in props
+				rpProps.DataSource = (from p in lstDefProps
 									  where p.CanRead == true
 									  && p.CanWrite == true
 									  && !props1.Contains(p)
@@ -121,6 +121,31 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					  select p).FirstOrDefault();
 
 			if (pp == null) {
+
+				var dp = (from p in lstDefProps
+						  where p.Name.ToLower() == sName.ToLower()
+						  select p).FirstOrDefault();
+
+				string sType = dp.PropertyType.ToString().ToLower();
+				if (dp.DefValue != null) {
+					sDefVal = dp.DefValue.ToString();
+					switch (sType) {
+						case "system.boolean":
+							bool vB = Convert.ToBoolean(dp.DefValue.ToString());
+							sDefVal = vB.ToString();
+							break;
+						case "system.drawing.color":
+							System.Drawing.Color vC = (System.Drawing.Color)dp.DefValue;
+							sDefVal = System.Drawing.ColorTranslator.ToHtml(vC);
+							break;
+						default:
+							sDefVal = dp.DefValue.ToString();
+							break;
+					}
+				} else {
+					sDefVal = "";
+				}
+
 				return sDefVal;
 			} else {
 				return pp.KeyValue;
