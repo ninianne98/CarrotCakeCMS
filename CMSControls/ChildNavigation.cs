@@ -23,7 +23,17 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ChildNavigation runat=server></{0}:ChildNavigation>")]
-	public class ChildNavigation : BaseServerControl, IWidget {
+	public class ChildNavigation : BaseServerControl, IWidgetParmData, IWidget {
+
+		#region IWidgetParmData Members
+
+		private Dictionary<string, string> _parms = new Dictionary<string, string>();
+		public Dictionary<string, string> PublicParmValues {
+			get { return _parms; }
+			set { _parms = value; }
+		}
+
+		#endregion
 
 		#region IWidget Members
 

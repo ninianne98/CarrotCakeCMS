@@ -2,8 +2,9 @@
 <div style="clear: both;">
 	&nbsp;</div>
 <div style="text-align: center; background: #CDE3D6; padding: 5px; margin: 5px; border: 2px dashed #676F6A;">
-	<a style="color: #676F6A; padding: 5px; margin: 2px; font-weight: bold;" target="_top" href="<%=CurrentScriptName %>?carrotedit=true">
-		ADVANCED EDIT</a>
+	<a style="color: #676F6A; padding: 5px; margin: 2px; font-weight: bold;" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
+		EDIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a style="color: #676F6A; padding: 5px; margin: 2px; font-weight: bold;"
+			target="_top" href="<%=CurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a>
 </div>
 <style type="text/css">
 	#cmsAdminToolbox1 {
