@@ -49,9 +49,8 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				SiteID = SiteData.CurrentSiteID;
 			}
 
-			string sCSS = "";
-
 			try {
+				string sCSS = "";
 				if (PublicParmValues.Count > 0) {
 					sCSS = (from c in PublicParmValues
 							where c.Key.ToLower() == "specifiedcssfile"

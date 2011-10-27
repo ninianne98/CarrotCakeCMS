@@ -25,8 +25,17 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:TwoLevelNavigation runat=server></{0}:TwoLevelNavigation>")]
-	public class TwoLevelNavigation : BaseServerControl, IWidget {
+	public class TwoLevelNavigation : BaseServerControl, IWidgetParmData, IWidget {
 
+		#region IWidgetParmData Members
+
+		private Dictionary<string, string> _parms = new Dictionary<string, string>();
+		public Dictionary<string, string> PublicParmValues {
+			get { return _parms; }
+			set { _parms = value; }
+		}
+
+		#endregion
 
 		#region IWidget Members
 
@@ -189,6 +198,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
+
 		protected override void RenderContents(HtmlTextWriter output) {
 
 			var pageContents = navHelper.GetPageNavigation(SiteID, CurrentScriptName);
@@ -240,6 +250,84 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected override void OnPreRender(EventArgs e) {
+			try {
+				string sTmp = "";
+
+				if (PublicParmValues.Count > 0) {
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "overridecss"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						OverrideCSS = sTmp;
+					}
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "cssselected"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						CSSSelected = sTmp;
+					}
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "menuwidth"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						MenuWidth = new Unit(sTmp);
+					}
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "menuheight"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						MenuHeight = new Unit(sTmp);
+					}
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "submenuwidth"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						SubMenuWidth = new Unit(sTmp);
+					}
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "submenuwidth"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						SubMenuWidth = new Unit(sTmp);
+					}
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "forecolor"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						ForeColor = ColorTranslator.FromHtml(sTmp);
+					}
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "backcolor"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						BackColor = ColorTranslator.FromHtml(sTmp);
+					}
+				}
+			} catch (Exception ex) {
+			}
+
 
 			if (string.IsNullOrEmpty(OverrideCSS)) {
 				//string sCSSFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.calendar.css");
