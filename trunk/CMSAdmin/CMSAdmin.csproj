@@ -276,22 +276,58 @@
     <Content Include="Manage\ModuleIndex.aspx" />
     <Content Include="Manage\PageAddEdit.aspx" />
     <Content Include="Manage\PageIndex.aspx" />
+    <Content Include="Manage\ucAdvancedEdit.ascx" />
+    <Content Include="Manage\ucGenericContent.ascx" />
+    <Content Include="Manage\User.aspx" />
+    <Content Include="Manage\UserAdd.aspx" />
+    <Content Include="Manage\UserMembership.aspx" />
+    <Content Include="Manage\UserPassword.aspx" />
+    <Content Include="Manage\web.config" />
+    <Content Include="AdminModules.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="citrus-island\citrus1.aspx" />
+    <Content Include="citrus-island\images\arrow.gif" />
+    <Content Include="citrus-island\images\bg.gif" />
+    <Content Include="citrus-island\images\CitrusIsland.css" />
+    <Content Include="citrus-island\images\clock.gif" />
+    <Content Include="citrus-island\images\comment.gif" />
+    <Content Include="citrus-island\images\firefox-gray.jpg" />
+    <Content Include="citrus-island\images\footerbg.gif" />
+    <Content Include="citrus-island\images\menu-current-bg.gif" />
+    <Content Include="citrus-island\images\menu-hover-bg.gif" />
+    <Content Include="citrus-island\images\menubg.gif" />
+    <Content Include="citrus-island\images\page.gif" />
+    <Content Include="citrus-island\images\quote.gif" />
+    <Content Include="citrus-island\index.html" />
+    <Content Include="citrus-island\style.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="env.aspx" />
+    <Content Include="GPL-LICENSE.txt" />
+    <Content Include="Manage\about.aspx" />
+    <Content Include="Manage\Images\carrotcake.png" />
+    <Content Include="Manage\Images\overlays.png" />
     <Content Include="Manage\tiny_mce\classes\adapter\jquery\adapter.js" />
     <Content Include="Manage\tiny_mce\classes\adapter\jquery\jquery.tinymce.js" />
     <Content Include="Manage\tiny_mce\classes\adapter\prototype\adapter.js" />
     <Content Include="Manage\tiny_mce\classes\AddOnManager.js" />
+    <Content Include="Manage\tiny_mce\classes\CommandManager.js" />
     <Content Include="Manage\tiny_mce\classes\ControlManager.js" />
+    <Content Include="Manage\tiny_mce\classes\Developer.js" />
     <Content Include="Manage\tiny_mce\classes\dom\DOMUtils.js" />
     <Content Include="Manage\tiny_mce\classes\dom\Element.js" />
     <Content Include="Manage\tiny_mce\classes\dom\EventUtils.js" />
     <Content Include="Manage\tiny_mce\classes\dom\Range.js" />
     <Content Include="Manage\tiny_mce\classes\dom\RangeUtils.js" />
+    <Content Include="Manage\tiny_mce\classes\dom\Schema.js" />
     <Content Include="Manage\tiny_mce\classes\dom\ScriptLoader.js" />
     <Content Include="Manage\tiny_mce\classes\dom\Selection.js" />
     <Content Include="Manage\tiny_mce\classes\dom\Serializer.js" />
     <Content Include="Manage\tiny_mce\classes\dom\Sizzle.js" />
+    <Content Include="Manage\tiny_mce\classes\dom\StringWriter.js" />
     <Content Include="Manage\tiny_mce\classes\dom\TreeWalker.js" />
     <Content Include="Manage\tiny_mce\classes\dom\TridentSelection.js" />
+    <Content Include="Manage\tiny_mce\classes\dom\XMLWriter.js" />
     <Content Include="Manage\tiny_mce\classes\Editor.js" />
     <Content Include="Manage\tiny_mce\classes\EditorCommands.js" />
     <Content Include="Manage\tiny_mce\classes\EditorManager.js" />
@@ -333,6 +369,7 @@
     <Content Include="Manage\tiny_mce\classes\util\URI.js" />
     <Content Include="Manage\tiny_mce\classes\util\XHR.js" />
     <Content Include="Manage\tiny_mce\classes\WindowManager.js" />
+    <Content Include="Manage\tiny_mce\classes\xml\Parser.js" />
     <Content Include="Manage\tiny_mce\File.gif" />
     <Content Include="Manage\tiny_mce\fileUp.gif" />
     <Content Include="Manage\tiny_mce\Folder.gif" />
@@ -414,8 +451,16 @@
     <Content Include="Manage\tiny_mce\plugins\layer\editor_plugin.js" />
     <Content Include="Manage\tiny_mce\plugins\legacyoutput\editor_plugin.js" />
     <Content Include="Manage\tiny_mce\plugins\lists\editor_plugin.js" />
+    <Content Include="Manage\tiny_mce\plugins\media\css\content.css" />
     <Content Include="Manage\tiny_mce\plugins\media\css\media.css" />
     <Content Include="Manage\tiny_mce\plugins\media\editor_plugin.js" />
+    <Content Include="Manage\tiny_mce\plugins\media\img\flash.gif" />
+    <Content Include="Manage\tiny_mce\plugins\media\img\flv_player.swf" />
+    <Content Include="Manage\tiny_mce\plugins\media\img\quicktime.gif" />
+    <Content Include="Manage\tiny_mce\plugins\media\img\realmedia.gif" />
+    <Content Include="Manage\tiny_mce\plugins\media\img\shockwave.gif" />
+    <Content Include="Manage\tiny_mce\plugins\media\img\trans.gif" />
+    <Content Include="Manage\tiny_mce\plugins\media\img\windowsmedia.gif" />
     <Content Include="Manage\tiny_mce\plugins\media\js\embed.js" />
     <Content Include="Manage\tiny_mce\plugins\media\js\media.js" />
     <Content Include="Manage\tiny_mce\plugins\media\langs\en_dlg.js" />
@@ -423,7 +468,10 @@
     <Content Include="Manage\tiny_mce\plugins\media\moxieplayer.swf" />
     <Content Include="Manage\tiny_mce\plugins\nonbreaking\editor_plugin.js" />
     <Content Include="Manage\tiny_mce\plugins\noneditable\editor_plugin.js" />
+    <Content Include="Manage\tiny_mce\plugins\pagebreak\css\content.css" />
     <Content Include="Manage\tiny_mce\plugins\pagebreak\editor_plugin.js" />
+    <Content Include="Manage\tiny_mce\plugins\pagebreak\img\pagebreak.gif" />
+    <Content Include="Manage\tiny_mce\plugins\pagebreak\img\trans.gif" />
     <Content Include="Manage\tiny_mce\plugins\paste\editor_plugin.js" />
     <Content Include="Manage\tiny_mce\plugins\paste\js\pastetext.js" />
     <Content Include="Manage\tiny_mce\plugins\paste\js\pasteword.js" />
@@ -546,7 +594,6 @@
     <Content Include="Manage\tiny_mce\themes\simple\skins\o2k7\img\button_bg.png" />
     <Content Include="Manage\tiny_mce\themes\simple\skins\o2k7\ui.css" />
     <Content Include="Manage\tiny_mce\tiny_mce.js" />
-    <Content Include="Manage\tiny_mce\tiny_mce_dev.js" />
     <Content Include="Manage\tiny_mce\tiny_mce_jquery.js" />
     <Content Include="Manage\tiny_mce\tiny_mce_popup.js" />
     <Content Include="Manage\tiny_mce\tiny_mce_prototype.js" />
@@ -554,39 +601,6 @@
     <Content Include="Manage\tiny_mce\utils\form_utils.js" />
     <Content Include="Manage\tiny_mce\utils\mctabs.js" />
     <Content Include="Manage\tiny_mce\utils\validate.js" />
-    <Content Include="Manage\ucAdvancedEdit.ascx" />
-    <Content Include="Manage\ucGenericContent.ascx" />
-    <Content Include="Manage\User.aspx" />
-    <Content Include="Manage\UserAdd.aspx" />
-    <Content Include="Manage\UserMembership.aspx" />
-    <Content Include="Manage\UserPassword.aspx" />
-    <Content Include="Manage\web.config" />
-    <Content Include="AdminModules.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Manage\tiny_mce\classes\firebug\FIREBUG.LICENSE" />
-    <None Include="Manage\tiny_mce\tiny_mce.zip" />
-    <Content Include="citrus-island\citrus1.aspx" />
-    <Content Include="citrus-island\images\arrow.gif" />
-    <Content Include="citrus-island\images\bg.gif" />
-    <Content Include="citrus-island\images\CitrusIsland.css" />
-    <Content Include="citrus-island\images\clock.gif" />
-    <Content Include="citrus-island\images\comment.gif" />
-    <Content Include="citrus-island\images\firefox-gray.jpg" />
-    <Content Include="citrus-island\images\footerbg.gif" />
-    <Content Include="citrus-island\images\menu-current-bg.gif" />
-    <Content Include="citrus-island\images\menu-hover-bg.gif" />
-    <Content Include="citrus-island\images\menubg.gif" />
-    <Content Include="citrus-island\images\page.gif" />
-    <Content Include="citrus-island\images\quote.gif" />
-    <Content Include="citrus-island\index.html" />
-    <Content Include="citrus-island\style.css" />
-    <Content Include="Default.aspx" />
-    <Content Include="env.aspx" />
-    <Content Include="GPL-LICENSE.txt" />
-    <Content Include="Manage\about.aspx" />
-    <Content Include="Manage\Images\carrotcake.png" />
-    <Content Include="Manage\Images\overlays.png" />
     <Content Include="Manage\ucEditNotifier.ascx" />
     <Content Include="Manage\ucTextContent.ascx" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
@@ -709,7 +723,14 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Manage\tiny_mce\classes\firebug\FIREBUG.LICENSE" />
+    <None Include="Manage\tiny_mce\tiny_mce.zip" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Manage\tiny_mce\plugins\autosave\images\" />
+    <Folder Include="Manage\tiny_mce\plugins\spellchecker\classes\utils\" />
+    <Folder Include="Manage\tiny_mce\plugins\spellchecker\includes\" />
     <Folder Include="Media\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
