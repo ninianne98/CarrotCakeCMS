@@ -48,45 +48,8 @@ using System.Web.UI;
 [assembly: TagPrefix("WidgetWrapper", "carrot")]
 [assembly: TagPrefix("ContentContainer", "carrot")]
 
-[assembly: TagPrefix("jquery", "carrot")]
-[assembly: TagPrefix("jqueryui", "carrot")]
-[assembly: TagPrefix("captcha", "carrot")]
+
 
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu7.txt", "text/css")]
-
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquery132.js", "text/javascript")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquery142.js", "text/javascript")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquery152.js", "text/javascript")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquery160.js", "text/javascript")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquery162.js", "text/javascript")]
-
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jqueryui-1-8-11.js", "text/javascript")]
-
-
-[assembly: TagPrefix("jquerybasic", "carrot")]
-
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.jquery-ui.css", "text/css", PerformSubstitution = true)]
-
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.jquery-162.js", "text/javascript")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.jquery-ui-1816.js", "text/javascript")]
-
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_flat_65_ffffff_40x100.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_glass_40_111111_1x400.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_glass_55_1c1c1c_1x400.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_glass_65_dddddd_1x400.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_glass_8_333333_1x400.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_highlight-hard_100_f9f9f9_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_highlight-hard_40_aaaaaa_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_highlight-soft_50_aaaaaa_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_inset-hard_45_e59494_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_inset-hard_45_f69898_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-bg_inset-hard_55_ffeb80_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-icons_222222_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-icons_4ca300_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-icons_824545_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-icons_ba1214_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-icons_bbbbbb_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-icons_ededed_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.jquerybasic.ui-icons_ffffff_256x240.png", "image/png")]

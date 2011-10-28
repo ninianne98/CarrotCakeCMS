@@ -21,7 +21,7 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Plugins.CalendarModule {
+namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:Calendar runat=server></{0}:Calendar>")]
 	public class Calendar : WebControl {
@@ -413,7 +413,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		protected override void OnPreRender(EventArgs e) {
 
 			if (string.IsNullOrEmpty(OverrideCSS)) {
-				//string sCSSFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.CalendarModule.calendar.css");
+				//string sCSSFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.calendar.css");
 
 				//var link = new HtmlLink();
 				//link.Href = sCSSFile;
@@ -422,7 +422,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				//Page.Header.Controls.Add(link);
 
 				var _assembly = Assembly.GetExecutingAssembly();
-				var _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Plugins.CalendarModule.calendar.txt"));
+				var _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.Web.UI.Controls.calendar.txt"));
 				string sCSS = _textStreamReader.ReadToEnd();
 
 				sCSS = sCSS.Replace("{WEEKDAY_CHEX}", ColorTranslator.ToHtml(WeekdayColor));

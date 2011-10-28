@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.CMS.UI.Plugins.CalendarModule.Calendar Calendar1;
+        protected global::Carrotware.Web.UI.Controls.Calendar Calendar1;
         
         /// <summary>
         /// btnLast control.

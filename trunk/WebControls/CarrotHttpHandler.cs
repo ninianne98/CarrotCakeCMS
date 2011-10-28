@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Carrotware.CMS.UI.Controls {
+namespace Carrotware.Web.UI.Controls {
 	class CarrotHttpHandler : IHttpHandler, IRequiresSessionState {
 
 

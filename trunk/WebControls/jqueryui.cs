@@ -9,10 +9,10 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 
 
-namespace Carrotware.CMS.UI.Controls {
+namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jqueryui runat=server></{0}:jqueryui>")]
-	public class jqueryui : BaseServerControl {
+	public class jqueryui : BaseWebControl {
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -32,7 +32,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jqueryui-1-8-11.js");
+			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-8-11.js");
 
 			output.Write("<!-- JQuery UI --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
 		}

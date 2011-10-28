@@ -8,7 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 
 
-namespace Carrotware.CMS.UI.Controls {
+namespace Carrotware.Web.UI.Controls {
 	public class CaptchaImage {
 
 		public static string EncodeColor(string ColorCode) {

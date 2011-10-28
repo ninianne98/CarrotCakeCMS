@@ -8,12 +8,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Carrotware.CMS.UI.Controls {
+namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("CaptchaText")]
 	[ToolboxData("<{0}:Captcha runat=server></{0}:Captcha>")]
 
 	[ValidationPropertyAttribute("CaptchaText")]
-	public class Captcha : BaseServerControl {
+	public class Captcha : BaseWebControl {
 
 		public string CaptchaText {
 			get;

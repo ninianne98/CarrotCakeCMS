@@ -9,10 +9,10 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 
-namespace Carrotware.CMS.UI.Controls {
+namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jquerybasic runat=server></{0}:jquerybasic>")]
-	public class jquerybasic : BaseServerControl {
+	public class jquerybasic : BaseWebControl {
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -32,15 +32,15 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquerybasic.jquery-ui.css");
+			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui.css");
 
 			output.Write("<!-- JQuery CSS --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquerybasic.jquery-162.js");
+			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-162.js");
 
 			output.Write("<!-- JQuery --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquerybasic.jquery-ui-1816.js");
+			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-1816.js");
 
 			output.Write("<!-- JQuery UI --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
 
