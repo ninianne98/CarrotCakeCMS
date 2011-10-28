@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Carrotware.CMS.UI.Plugins {
+namespace Carrotware.Web.UI.Controls {
 	public partial class CAPTCHA : System.Web.UI.Page {
 		protected override void OnInit(EventArgs e) {
 

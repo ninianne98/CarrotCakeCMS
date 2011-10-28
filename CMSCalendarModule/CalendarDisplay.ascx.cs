@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
-
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 	public partial class CalendarDisplay : BaseShellUserControl, IWidgetParmData, IWidget {

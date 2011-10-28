@@ -9,10 +9,10 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 
 
-namespace Carrotware.CMS.UI.Controls {
+namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jquery runat=server></{0}:jquery>")]
-	public class jquery : BaseServerControl {
+	public class jquery : BaseWebControl {
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -48,27 +48,27 @@ namespace Carrotware.CMS.UI.Controls {
 
 			switch (JQVersion) {
 				case "1.6.0":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquery160.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery160.js");
 					break;
 				case "1.6":
 				case "1.6.2":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquery162.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery162.js");
 					break;
 				case "1.5.2":
 				case "1.5":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquery152.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery152.js");
 					break;
 				case "1.4.2":
 				case "1.4":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquery142.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery142.js");
 					break;
 				case "1.3.2":
 				case "1.3":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquery132.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery132.js");
 					break;
 				default:
 					JQVersion = "1.5.2";
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.jquery152.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery152.js");
 					break;
 			}
 

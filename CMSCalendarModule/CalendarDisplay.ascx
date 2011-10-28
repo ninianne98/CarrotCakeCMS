@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarDisplay.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.CalendarModule.CalendarDisplay" %>
-<%@ Register Assembly="Carrotware.CMS.UI.Plugins.CalendarModule" TagPrefix="carrot" Namespace="Carrotware.CMS.UI.Plugins.CalendarModule" %>
+<%@ Register Assembly="Carrotware.Web.UI.Controls" TagPrefix="carrot" Namespace="Carrotware.Web.UI.Controls" %>
 <center>
 	<carrot:Calendar runat="server" ID="Calendar1"></carrot:Calendar>
 	<br />

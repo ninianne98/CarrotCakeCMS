@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.CMS.UI.Controls.jquery jquery1;
+        protected global::Carrotware.Web.UI.Controls.jquery jquery1;
         
         /// <summary>
         /// HeadContentPlaceHolder control.
