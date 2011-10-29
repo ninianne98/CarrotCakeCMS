@@ -74,15 +74,7 @@ namespace Carrotware.Web.UI.Controls {
 			sSortField = ResetSortToColumn(sSortField);
 			DefaultSort = sSortField;
 
-			//Type theType = DataSource.GetType();
-			//if (theType.IsGenericType) {
-			//    Type X = theType.GetGenericArguments()[0];
-			//    //List<X> lst = DataSource as List<X>;
-			//    //SetListDataSource<object>(lst);
-			//    // load data!
-			//}
-
-			//base.DataBind();
+			base.DataBind();
 		}
 
 
@@ -100,25 +92,51 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 
+		private void SetData() {
 
-		public void SetListDataSource<T>(List<T> lstData) {
-			List<T> lst = null;
+			if (!string.IsNullOrEmpty(DefaultSort)) {
+				Type theType = DataSource.GetType();
 
-			SortParm = DefaultSort;
+				if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
 
-			if (lstData != null) {
-				if (!string.IsNullOrEmpty(DefaultSort)) {
-					lst = SortDataList<T>(lstData);
+					IList lst = (IList)DataSource;
+					SortParm = DefaultSort;
+					var lstVals = SortDataListType(lst);
+
+					DataSource = lstVals;
 				}
 			}
+		}
 
-			DataSource = lst;
+
+
+		public IList SortDataListType(IList lst) {
+
+			IList query = null;
+			List<object> d = lst.Cast<object>().ToList();
+			IEnumerable<object> enuQueryable = d.AsQueryable();
+
+			if (SortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
+				query = (from enu in enuQueryable
+						 orderby GetPropertyValue(enu, SortField) descending
+						 select enu).ToList();
+			} else {
+				query = (from enu in enuQueryable
+						 orderby GetPropertyValue(enu, SortField) ascending
+						 select enu).ToList();
+			}
+
+			return query;
+		}
+
+		private IList SortDataListType(IList lst, string sSort) {
+			ResetSortToColumn(sSort);
+			return SortDataListType(lst);
 		}
 
 
 		protected override void Render(HtmlTextWriter writer) {
-			SortParm = DefaultSort;
-
+			
 			WalkGridForHeadings(this);
 
 			base.Render(writer);
@@ -126,6 +144,13 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		protected override void PerformDataBinding(IEnumerable data) {
+
+			SetData();
+
+			Type theType = DataSource.GetType();
+			if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
+				data = (IList) DataSource;
+			}
 
 			base.PerformDataBinding(data);
 
@@ -151,7 +176,6 @@ namespace Carrotware.Web.UI.Controls {
 				}
 				string sSortFld = string.Empty;
 				string sSortDir = string.Empty;
-				//sSort = sSort.Replace(" ", "    ");
 
 				int pos = sSort.LastIndexOf(" ");
 
@@ -159,11 +183,9 @@ namespace Carrotware.Web.UI.Controls {
 				sSortDir = sSort.Substring(pos).Trim();
 
 				SortField = sSortFld.Trim();
-				SortDir = sSortDir.Trim();
+				SortDir = sSortDir.Trim().ToUpper();
 			}
 		}
-
-
 
 		private void WalkGridSetClick(Control X) {
 			foreach (Control c in X.Controls) {
@@ -189,7 +211,7 @@ namespace Carrotware.Web.UI.Controls {
 				SortField = sSortField;
 			}
 
-			if (SortDir.Trim().IndexOf("ASC") < 0) {
+			if (SortDir.Trim().ToUpper().IndexOf("ASC") < 0) {
 				SortDir = "ASC";
 			} else {
 				SortDir = "DESC";
@@ -204,7 +226,7 @@ namespace Carrotware.Web.UI.Controls {
 			List<T> query = null;
 			IEnumerable<T> myEnumerables = d.AsEnumerable();
 
-			if (SortDir.Trim().IndexOf("ASC") < 0) {
+			if (SortDir.Trim().ToUpper().IndexOf("ASC") < 0) {
 				query = (from enu in myEnumerables
 						 orderby GetPropertyValue(enu, SortField) descending
 						 select enu).ToList<T>();
@@ -215,7 +237,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			return query.ToList<T>();
-
 		}
 
 		private List<T> SortDataList<T>(List<T> d, string sSort) {
@@ -241,15 +262,12 @@ namespace Carrotware.Web.UI.Controls {
 			foreach (Control c in X.Controls) {
 				if (c is LinkButton) {
 					LinkButton lb = (LinkButton)c;
-					lb.Click += new EventHandler(lblSort_Command);
 					if (strSortFld == lb.CommandName.ToLower()) {
 						//don't add the arrows if alread sorted!
 						if (lb.Text.IndexOf("&#x25B") < 0) {
 							if (strSortDir != "asc") {
-								//Response.Write(strSortFld + " -D- ");
 								lb.Text += SortDownIndicator;
 							} else {
-								//Response.Write(strSortFld + " -U- ");
 								lb.Text += SortUpIndicator;
 							}
 						}
@@ -260,9 +278,6 @@ namespace Carrotware.Web.UI.Controls {
 				}
 			}
 		}
-
-
-
 
 
 	}
