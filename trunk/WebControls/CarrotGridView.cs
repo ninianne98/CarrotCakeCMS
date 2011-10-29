@@ -137,7 +137,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		protected override void Render(HtmlTextWriter writer) {
 			
-			WalkGridForHeadings(this);
+			WalkGridForHeadings(this.HeaderRow);
 
 			base.Render(writer);
 		}
@@ -154,7 +154,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			base.PerformDataBinding(data);
 
-			WalkGridSetClick(this);
+			WalkGridSetClick(this.HeaderRow);
 		}
 
 
@@ -221,28 +221,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 
-		private List<T> SortDataList<T>(List<T> d) {
-
-			List<T> query = null;
-			IEnumerable<T> myEnumerables = d.AsEnumerable();
-
-			if (SortDir.Trim().ToUpper().IndexOf("ASC") < 0) {
-				query = (from enu in myEnumerables
-						 orderby GetPropertyValue(enu, SortField) descending
-						 select enu).ToList<T>();
-			} else {
-				query = (from enu in myEnumerables
-						 orderby GetPropertyValue(enu, SortField) ascending
-						 select enu).ToList<T>();
-			}
-
-			return query.ToList<T>();
-		}
-
-		private List<T> SortDataList<T>(List<T> d, string sSort) {
-			ResetSortToColumn(sSort);
-			return SortDataList<T>(d);
-		}
 
 		private object GetPropertyValue(object obj, string property) {
 			System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
@@ -254,18 +232,18 @@ namespace Carrotware.Web.UI.Controls {
 			WalkGridForHeadings(X, SortField, SortDir);
 		}
 
-		private void WalkGridForHeadings(Control X, string strSortFld, string strSortDir) {
+		private void WalkGridForHeadings(Control X, string sSortFld, string sSortDir) {
 
-			strSortFld = strSortFld.ToLower();
-			strSortDir = strSortDir.ToLower();
+			sSortFld = sSortFld.ToLower();
+			sSortDir = sSortDir.ToLower();
 
 			foreach (Control c in X.Controls) {
 				if (c is LinkButton) {
 					LinkButton lb = (LinkButton)c;
-					if (strSortFld == lb.CommandName.ToLower()) {
+					if (sSortFld == lb.CommandName.ToLower()) {
 						//don't add the arrows if alread sorted!
-						if (lb.Text.IndexOf("&#x25B") < 0) {
-							if (strSortDir != "asc") {
+						if (lb.Text.IndexOf("#x25B") < 0) {
+							if (sSortDir != "asc") {
 								lb.Text += SortDownIndicator;
 							} else {
 								lb.Text += SortUpIndicator;
@@ -274,7 +252,7 @@ namespace Carrotware.Web.UI.Controls {
 						break;
 					}
 				} else {
-					WalkGridForHeadings(c, strSortFld, strSortDir);
+					WalkGridForHeadings(c, sSortFld, sSortDir);
 				}
 			}
 		}
