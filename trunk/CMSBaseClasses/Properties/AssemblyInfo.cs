@@ -7,11 +7,11 @@ using System.Web.UI;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Carrotware.CMS.UI.Base")]
+[assembly: AssemblyTitle("Base")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
-[assembly: AssemblyProduct("Carrotware.CMS.UI.Base")]
+[assembly: AssemblyProduct("Base")]
 [assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
