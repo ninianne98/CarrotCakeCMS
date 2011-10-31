@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarUpcoming.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.CalendarModule.CalendarUpcoming" %>
-<%@ Register Assembly="Carrotware.CMS.UI.Plugins.CalendarModule" TagPrefix="carrot" Namespace="Carrotware.CMS.UI.Plugins.CalendarModule" %>
+
 <center>
 	<div style="width: 500px; padding: 25px;">
 		<asp:DataGrid ID="dgEvents" runat="server" CellPadding="2" ShowHeader="False" GridLines="None" AutoGenerateColumns="False">
