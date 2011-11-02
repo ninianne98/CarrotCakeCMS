@@ -1,0 +1,18 @@
+﻿{MENU_ID}  li:hover .children {
+	list-style-type: none;
+	display: block;
+	position: absolute;
+	text-align: left;
+	float: left;
+	padding: 0px;
+	margin: 0;
+	padding-left: 0px;
+	padding-bottom: 0px;
+	margin-top: -{MENU_TOP_2_PAD};
+	margin-left: 0px;
+	margin-right: 5px;
+	z-index: 5;
+	border-width: 1px;
+	border-style: solid;
+	border-collapse: collapse;
+}

@@ -1,0 +1,168 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainPopup.master.cs" Inherits="Carrotware.CMS.UI.Admin.MasterPages.MainPopup" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title></title>
+	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
+
+	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
+
+	<script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>
+
+	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
+
+	<link href="/Manage/includes/button-style.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/TableStyles.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/mainpopup.css" rel="stylesheet" type="text/css" />
+
+	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
+
+	<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript">
+    	//  http://encosia.com/css-style-as-ajax-progress-indicator/
+    	//  http://msdn.microsoft.com/en-us/library/bb386518.aspx
+    	
+        function UpdateAjaxJQuery() {
+            if (typeof (Sys) != 'undefined') {
+                var prm = Sys.WebForms.PageRequestManager.getInstance();
+                prm.add_endRequest(function() {
+                    AjaxBtnLoad();
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            UpdateAjaxJQuery();
+            AjaxBtnLoad();
+        });
+
+        function AjaxBtnLoad() {
+            $(function() {
+                $('#jqtabs').tabs();
+            });
+            $("#jqaccordion").accordion({
+                //collapsible: true
+                active: false,
+                autoheight: false,
+                collapsible: true,
+                alwaysOpen: false
+            });
+
+            $(function() {
+                $("input:button, input:submit").button();
+            });
+
+            $(".dateRegion").each(function(i) {
+                $(this).datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    showOn: 'button',
+                    buttonImage: '/Manage/images/calendar.gif',
+                    buttonImageOnly: true,
+                    constrainInput: true
+                });
+            });
+        }	
+
+	</script>
+
+	<script type="text/javascript">
+
+        function ProcessKeyPress(e) {
+            var obj = window.event ? event : e;
+            var key = (window.event) ? event.keyCode : e.which;
+
+            if ((key == 13) || (key == 10)) {
+                obj.returnValue = false;
+                obj.cancelBubble = true;
+                return false;
+            }
+            return true;
+        }
+
+
+        function checkIntNumber(obj) {
+            var n = obj.value;
+            var intN = parseInt(n);
+            if (isNaN(intN) || intN < 0 || n != intN) {
+                alert("Value must be non-negative integers.");
+                obj.focus();
+            } else {
+                obj.value = intN;
+            }
+        }
+
+        function checkFloatNumber(obj) {
+            var n = obj.value;
+            var intN = parseFloat(n);
+            if (isNaN(intN) || intN < 0 || n != intN) {
+                alert("Value must be non-negative decimals.");
+                obj.value = 0;
+                obj.focus();
+            } else {
+                obj.value = intN;
+            }
+        }
+
+
+
+		
+		
+	</script>
+
+	<script type="text/javascript">
+        //$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+        function BlockUI(elementID) {
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            prm.add_beginRequest(function() {
+                $("#" + elementID).block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+                    css: {},
+                    fadeOut: 1200,
+                    overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+                });
+            });
+            prm.add_endRequest(function() {
+                $("#" + elementID).unblock();
+            });
+        }
+        $(document).ready(function() {
+            BlockUI("divAjaxMain");
+            $.blockUI.defaults.css = {};
+        });
+	</script>
+
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+	</asp:ContentPlaceHolder>
+	<style type="text/css">
+		BODY {
+			background-color: #ffffff;
+			font-size: 12px;
+			font-family: Verdana, Helvetica, Sans-Serif;
+		}
+	</style>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<asp:ScriptManager ID="ScriptManager1" runat="server" />
+	<div id="divAjaxMain">
+		<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
+			<ContentTemplate>
+				<h1>
+					<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
+					</asp:ContentPlaceHolder>
+				</h1>
+				<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+				</asp:ContentPlaceHolder>
+				<asp:Panel ID="pnlDirty" runat="server">
+				</asp:Panel>
+			</ContentTemplate>
+		</asp:UpdatePanel>
+		<asp:ContentPlaceHolder ID="NoAjaxBodyContentPlaceHolder" runat="server">
+		</asp:ContentPlaceHolder>
+	</div>
+	</form>
+</body>
+</html>

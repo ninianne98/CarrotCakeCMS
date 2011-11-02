@@ -1,0 +1,151 @@
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #FFFFFF url(/manage/images/heading-bg.png) repeat-x;
+	font-family: Georgia, Times New Roman, Serif;
+	color: #000000;
+	font-size: 12px;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	font-family: Georgia, Times New Roman, Serif;
+	color: #69775F;
+}
+
+h2 {
+	font-size: 18px;
+}
+
+h3 {
+	letter-spacing: 2px;
+	font-size: 11px;
+}
+
+
+a {
+	color: #333;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/* Header */
+
+#header {
+	min-width: 780px;
+	height: 122px;
+	background: url(/manage/images/img02.jpg);
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+#header h1, #header h2 {
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+#header h1 {
+	float: left;
+	padding: 30px 0 0 20px;
+	font-size: 36px;
+}
+
+#header h2 {
+	float: left;
+	padding: 50px 20px 0 0;
+	font-size: 28px;
+}
+
+/* Menu */
+
+#menu {
+	min-width: 780px;
+	height: 50px;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	display: block;
+	float: left;
+	padding: 17px 20px 0 20px;
+	background: url(/manage/images/menu-a.gif) no-repeat;
+	text-decoration: none;
+	font: normal 12px "Trebuchet MS" , Arial, Helvetica, sans-serif;
+	color: #fff;
+}
+
+#menu a:hover {
+	color: #FFFFFF;
+}
+
+#menu .current a {
+	color: #fff;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#menu .current li {
+}
+
+/* Content */
+
+#content {
+	min-width: 720px;
+	margin: 0 auto 20px auto;
+	padding: 20px;
+	background: #FFFFFF url(/manage/images/content-bg.jpg) repeat-x left bottom;
+}
+
+#content H1 {
+	font-size: 24px;
+}
+
+#content H2 {
+	font-size: 18px;
+}
+
+.pad-content {
+	margin-left: 40px;
+	margin-right: 40px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-height: 400px;
+}
+
+
+/* Footer */
+
+#footer {
+	height: 50px;
+	padding: 20px;
+	background: #2D2D2D url(/manage/images/footer.gif) repeat-x;
+}
+
+#footer p {
+	text-align: center;
+	color: #fff;
+}
+
+
+
+/*  OTHER */
+
+.caption, .tablecaption {
+	font-weight: bold;
+}
