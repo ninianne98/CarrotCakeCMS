@@ -47,12 +47,12 @@ namespace Carrotware.CMS.UI.Admin {
 
 				var lstContent = pageHelper.GetLatestContentList(SiteID);
 
-				var cont = orderHelper.GetAdminPageList(SiteID, guidContentID);
+				//var cont = orderHelper.GetAdminPageList(SiteID, guidContentID);
 
-				ddlParent.DataSource = cont;
-				ddlParent.DataBind();
+				//ddlParent.DataSource = cont;
+				//ddlParent.DataBind();
 
-				ddlParent.Items.Insert(0, new ListItem("-Top Level Page-", "00"));
+				//ddlParent.Items.Insert(0, new ListItem("-Top Level Page-", "00"));
 
 				ddlTemplate.DataSource = cmsHelper.Templates;
 				ddlTemplate.DataBind();
@@ -90,7 +90,8 @@ namespace Carrotware.CMS.UI.Admin {
 					chkActive.Checked = Convert.ToBoolean(pageContents.PageActive);
 
 					if (pageContents.Parent_ContentID != null) {
-						ddlParent.SelectedValue = pageContents.Parent_ContentID.ToString();
+						//ddlParent.SelectedValue = pageContents.Parent_ContentID.ToString();
+						txtParent.Text = pageContents.Parent_ContentID.ToString();
 					}
 					if (pageContents.TemplateFile != null) {
 						try { ddlTemplate.SelectedValue = pageContents.TemplateFile.ToLower(); } catch { }
@@ -143,8 +144,13 @@ namespace Carrotware.CMS.UI.Admin {
 
 			pageContents.PageActive = chkActive.Checked;
 
-			if (ddlParent.SelectedValue.Length > 5) {
-				pageContents.Parent_ContentID = new Guid(ddlParent.SelectedValue);
+			//if (ddlParent.SelectedValue.Length > 5) {
+			//    pageContents.Parent_ContentID = new Guid(ddlParent.SelectedValue);
+			//} else {
+			//    pageContents.Parent_ContentID = null;
+			//}
+			if (txtParent.Text.Length > 5) {
+				pageContents.Parent_ContentID = new Guid(txtParent.Text);
 			} else {
 				pageContents.Parent_ContentID = null;
 			}
