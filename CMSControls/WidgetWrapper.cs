@@ -112,7 +112,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (IsAdminMode) {
 				string sEdit = "";
 				if (!string.IsNullOrEmpty(JSEditFunction)) {
-					sEdit = " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentEditLink{0}\" class=\"ui-state-default\" href=\"javascript:" + JSEditFunction + "\">\r\n"
+					sEdit = " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentEditLink{0}\" class=\"ui-state-hover\" href=\"javascript:" + JSEditFunction + "\">\r\n"
 							+ " Edit <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/pencil.png\" alt=\"Edit\" title=\"Edit\" /> </a> ";
 				}
 
@@ -120,8 +120,8 @@ namespace Carrotware.CMS.UI.Controls {
 				if (!string.IsNullOrEmpty(JQueryUIScope)) {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" style=\"border: 2px solid #000000; margin: 0px; padding:2px; margin-top:5px;\" >"
 										+ "<div id=\"" + this.ClientID + "\" class=\"" + JQueryUIScope + "\">"
-										+ "<p id=\"cmsWidgetHead\" class=\"toolitem ui-state-default ui-widget-header\" style=\"height:25px; margin: 0px; padding:2px;\">" + ControlPath
-										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-default\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
+										+ "<p id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header\" style=\"height:30px; margin: 0px; padding:2px;\">" + ControlPath
+										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
 										+ " Remove <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/cross.png\" alt=\"Remove\" title=\"Remove\" /> </a> </p></div>\r\n"
 										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"ctrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
@@ -129,8 +129,8 @@ namespace Carrotware.CMS.UI.Controls {
 				} else {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" style=\"border: 2px solid #000000; margin: 0px; padding:2px; margin-top:5px;\" >"
 										+ "<div id=\"" + this.ClientID + "\">"
-										+ "<p id=\"cmsWidgetHead\" class=\"toolitem ui-state-default ui-widget-header\" style=\"height:25px; margin: 0px; padding:2px;\">" + ControlPath
-										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-default\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
+										+ "<p id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header\" style=\"height:30px; margin: 0px; padding:2px;\">" + ControlPath
+										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
 										+ " Remove <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/cross.png\" alt=\"Remove\" title=\"Remove\" /> </a> </p></div>\r\n"
 										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"ctrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
