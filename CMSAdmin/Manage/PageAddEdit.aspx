@@ -158,8 +158,8 @@
 
 	<style type="text/css">
 		div.scroll {
-			height: 80px;
-			width: 360px;
+			height: 90px;
+			width: 340px;
 			overflow: auto;
 			padding: 2px;
 			position: absolute;
