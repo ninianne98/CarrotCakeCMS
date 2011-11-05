@@ -259,6 +259,107 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public List<SiteMapOrder> GetChildPages(string PageID, string CurrPageID) {
+			Guid? ParentID = Guid.Empty;
+			if (!string.IsNullOrEmpty(PageID)) {
+				if (PageID.Length > 20) {
+					ParentID = new Guid(PageID);
+				}
+			}
+
+			Guid ContPageID = Guid.Empty;
+			if (!string.IsNullOrEmpty(CurrPageID)) {
+				if (CurrPageID.Length > 20) {
+					ContPageID = new Guid(CurrPageID);
+				}
+			}
+
+			List<SiteMapOrder> lstSiteMap = new List<SiteMapOrder>();
+
+			var lst = (from ct in db.tblContents
+					   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+					   orderby ct.NavOrder, ct.NavMenuText
+					   where r.SiteID == SiteID
+							 && r.Root_ContentID != ContPageID
+							 && ct.IsLatestVersion == true
+							 && (ct.Parent_ContentID == ParentID
+								 || (ct.Parent_ContentID == null && ParentID == Guid.Empty))
+					   select new SiteMapOrder {
+						   NavLevel = -1,
+						   NavMenuText = ct.NavMenuText,
+						   NavOrder = ct.NavOrder,
+						   PageActive = Convert.ToBoolean(r.PageActive),
+						   Parent_ContentID = ct.Parent_ContentID,
+						   Root_ContentID = ct.Root_ContentID
+					   }).ToList();
+
+			lstSiteMap = (from l in lst
+						  orderby l.NavOrder, l.NavMenuText
+						  where l.Parent_ContentID != ContPageID || l.Parent_ContentID == null
+						  select l).ToList();
+
+			return lstSiteMap;
+
+		}
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public List<SiteMapOrder> GetPageCrumbs(string PageID, string CurrPageID) {
+
+			Guid? ContentPageID = Guid.Empty;
+
+			if (!string.IsNullOrEmpty(PageID)) {
+				if (PageID.Length > 20) {
+					ContentPageID = new Guid(PageID);
+				}
+			}
+
+			Guid ContPageID = Guid.Empty;
+			if (!string.IsNullOrEmpty(CurrPageID)) {
+				if (CurrPageID.Length > 20) {
+					ContPageID = new Guid(CurrPageID);
+				}
+			}
+
+			List<SiteMapOrder> lstSiteMap = new List<SiteMapOrder>();
+
+			int iLevel = 0;
+
+			int iLenB = 0;
+			int iLenA = 1;
+
+			while (iLenB < iLenA) {
+				iLenB = lstSiteMap.Count;
+
+				var cont = (from r in db.tblRootContents
+							join ct in db.tblContents on r.Root_ContentID equals ct.Root_ContentID
+							orderby ct.NavOrder, ct.NavMenuText
+							where r.SiteID == SiteID
+								&& ct.IsLatestVersion == true
+								&& ct.Root_ContentID == ContentPageID
+
+							select new SiteMapOrder {
+								NavLevel = iLevel,
+								NavMenuText = ct.NavMenuText,
+								NavOrder = ct.NavOrder,
+								PageActive = Convert.ToBoolean(r.PageActive),
+								Parent_ContentID = ct.Parent_ContentID,
+								Root_ContentID = ct.Root_ContentID
+							}).FirstOrDefault();
+
+				iLevel++;
+				if (cont != null) {
+					ContentPageID = cont.Parent_ContentID;
+					lstSiteMap.Add(cont);
+				}
+
+				iLenA = lstSiteMap.Count;
+			}
+
+			return lstSiteMap.OrderByDescending(y => y.NavLevel).ToList();
+		}
 
 
 
