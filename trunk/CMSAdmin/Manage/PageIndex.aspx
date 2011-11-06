@@ -44,6 +44,11 @@
 						</asp:TemplateField>
 						<asp:TemplateField>
 							<ItemTemplate>
+								<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit3" NavigateUrl='<%#  String.Format("{0}?carrotedit=true", Eval("FileName")) %>'><img border="0" src="/Manage/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
+							</ItemTemplate>
+						</asp:TemplateField>
+						<asp:TemplateField>
+							<ItemTemplate>
 								<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/PageHistory.aspx?id=<%#Eval("Root_ContentID") %>');">
 									<img border="0" src="/Manage/images/layout_content.png" alt="View Page History" title="View Page History" /></a>
 							</ItemTemplate>
