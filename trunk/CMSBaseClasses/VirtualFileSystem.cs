@@ -91,8 +91,14 @@ namespace Carrotware.CMS.UI.Base {
 					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
 						if (context.Request.QueryString["tag"] != null) {
 							sFileRequested = "/" + context.Request.QueryString["tag"].ToString() + ".aspx";
-							context.Response.Redirect(sFileRequested);
 
+							context.Response.StatusCode = 301;
+							context.Response.AppendHeader("Status", "301 Moved Permanently");
+							context.Response.AppendHeader("Location", sFileRequested); 
+							context.Response.Cache.SetLastModified(DateTime.Today.Date);
+							context.Response.Write("<h2>301 Moved Permanently</h2>");
+
+							context.Response.Redirect(sFileRequested);
 							context.Items[REQ_PATH] = sFileRequested;
 							context.Items[REQ_QUERY] = "";
 						}
