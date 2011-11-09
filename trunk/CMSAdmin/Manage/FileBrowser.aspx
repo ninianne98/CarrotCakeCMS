@@ -255,7 +255,8 @@
 							<asp:CheckBox ID="chkRemove" runat="server" value='<%# Eval("FileName") %>' />
 						</td>
 						<td>
-							<img src="/manage/images/doc.png" />
+							<%--<img src="/manage/images/doc.png" />--%>
+							<img src="/manage/images/<%# FileImageLink(String.Format("{0}", Eval("MimeType")))  %>.png" alt="filetype" />
 						</td>
 						<td>
 							<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
