@@ -83,6 +83,54 @@ namespace Carrotware.CMS.UI.Admin {
 			return string.Format("javascript:SetFile('{0}');", sPath);
 		}
 
+		public string FileImageLink(string sMime) {
+
+			sMime = sMime.ToLower();
+			var mime = sMime.Substring(0, sMime.IndexOf("/"));
+
+			string sImage = "plain";
+
+			switch (mime) {
+				case "image":
+					sImage = "image";
+					break;
+				case "audio":
+					sImage = "audio";
+					break;
+				case "video":
+					sImage = "video";
+					break;
+				case "application":
+					sImage = "application";
+					break;
+				default:
+					sImage = "plain";
+					break;
+			}
+
+			switch (sMime) {
+				case "application/pdf":
+					sImage = "pdf";
+					break;
+				case "text/html":
+				case "text/asp":
+					sImage = "html";
+					break;
+				case "application/excel":
+					sImage = "spreadsheet";
+					break;
+				case "application/rtf":
+				case "application/msword":
+					sImage = "wordprocessing";
+					break;
+				case "application/x-compressed":
+				case "application/zip":
+					sImage = "compress";
+					break;
+			}
+
+			return sImage;
+		}
 
 		protected void btnUpload_Click(object sender, EventArgs e) {
 			if (upFile.HasFile) {
