@@ -108,12 +108,13 @@ namespace Carrotware.CMS.Core {
 					if (!string.IsNullOrEmpty(MyFile.Extension)) {
 						f.FileExtension = MyFile.Extension.ToLower();
 					}
-
-					if ((from b in BlockedTypes
-						 where b.ToLower().Replace(".", "") == f.FileExtension.Replace(".", "")
-						 select b).Count() < 1) {
-						dsID.Add(f);
-					}
+					try {
+						if ((from b in BlockedTypes
+							 where b.ToLower().Replace(".", "") == f.FileExtension.Replace(".", "")
+							 select b).Count() < 1) {
+							dsID.Add(f);
+						}
+					} catch (Exception ex) { }
 
 				}
 			}
@@ -123,7 +124,6 @@ namespace Carrotware.CMS.Core {
 
 
 	}
-
 
 
 }

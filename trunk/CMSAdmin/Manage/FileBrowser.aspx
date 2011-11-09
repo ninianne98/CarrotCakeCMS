@@ -186,7 +186,7 @@
 						Files On Server</h2>
 					Contents of:
 					<asp:Label ID="lblPath" runat="server"></asp:Label><br />
-					<asp:HyperLink runat="server" ID="lnkUp"> <img src="/manage/tiny_mce/FolderUp.gif" border=0 />...</asp:HyperLink>
+					<asp:HyperLink runat="server" ID="lnkUp"><img src="/manage/images/back.png" border="0" /><img src="/manage/images/folder.png" border="0" /> </asp:HyperLink>
 					<br />
 				</td>
 			</tr>
@@ -199,7 +199,7 @@
 				<ItemTemplate>
 					<tr>
 						<td>
-							<img src="/manage/tiny_mce/Folder.gif" />
+							<img src="/manage/images/folder.png" />
 						</td>
 						<td>
 							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}", Eval("FolderPath"), sQueryMode ) %>'>
@@ -255,7 +255,7 @@
 							<asp:CheckBox ID="chkRemove" runat="server" value='<%# Eval("FileName") %>' />
 						</td>
 						<td>
-							<img src="/manage/tiny_mce/File.gif" />
+							<img src="/manage/images/doc.png" />
 						</td>
 						<td>
 							<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>

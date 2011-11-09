@@ -84,9 +84,17 @@
 		<br />
 	</p>
 	<p>
+		<b>Crystal Project Icons</b><br />
+		<br />
+		The Crystal Project are released under LGPL.<br />
+		<a target="_blank" href="http://www.everaldo.com/crystal/">http://www.everaldo.com/crystal/</a> and <a target="_blank" href="http://www.iconfinder.com/search/?q=iconset%3ACrystalClear">
+			http://www.iconfinder.com/search/?q=iconset%3ACrystalClear</a>
+		<br />
+	</p>
+	<p>
 		<b>Preloaders.net</b><br />
 		AJAX Spinners<br />
-		http://preloaders.net/<br />
+		<a target="_blank" href="http://preloaders.net/">http://preloaders.net/</a><br />
 	</p>
 	<p>
 		<b>jQuery blockUI - jQuery Plugin</b><br />
@@ -105,7 +113,7 @@
 	<p>
 		<b>SimpleModal 1.4.1 - jQuery Plugin</b><br />
 		<br />
-		http://www.ericmmartin.com/projects/simplemodal/<br />
+		<a target="_blank" href="http://www.ericmmartin.com/projects/simplemodal/">http://www.ericmmartin.com/projects/simplemodal/</a><br />
 		Copyright (c) 2010 Eric Martin (http://twitter.com/ericmmartin)<br />
 		Dual licensed under the MIT and GPL licenses<br />
 		Revision: $Id: jquery.simplemodal.js 261 2010-11-05 21:16:20Z emartin24 $<br />
@@ -114,7 +122,7 @@
 		<b>Absolute Floating Menu</b><br />
 		Script by: www.jtricks.com<br />
 		Version: 1.6 (20110222)<br />
-		Latest version: http://www.jtricks.com/javascript/navigation/floating.html<br />
+		Latest version: <a target="_blank" href="http://www.jtricks.com/javascript/navigation/floating.html">http://www.jtricks.com/javascript/navigation/floating.html</a><br />
 		http://www.jtricks.com/licensing.html<br />
 		<br />
 		Javascript samples & examples licensing information<br />
