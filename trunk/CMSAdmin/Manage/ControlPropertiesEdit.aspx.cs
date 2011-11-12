@@ -80,6 +80,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				List<ObjectProperty> props3 = new List<ObjectProperty>();
 				List<ObjectProperty> props4 = new List<ObjectProperty>();
 				List<ObjectProperty> props5 = new List<ObjectProperty>();
+				List<ObjectProperty> props6 = new List<ObjectProperty>();
 
 				if (widget is Carrotware.CMS.UI.Base.BaseUserControl) {
 					props1 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.UI.Base.BaseUserControl));
@@ -87,7 +88,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				if (widget is Carrotware.CMS.Interface.IWidget) {
 					props2 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidget));
 				}
-
 				if (widget is Carrotware.CMS.Interface.BaseShellUserControl) {
 					props3 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.BaseShellUserControl));
 				}
@@ -96,6 +96,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				}
 				if (widget is Carrotware.CMS.Interface.IWidgetParmData) {
 					props5 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
+				}
+				if (widget is Carrotware.CMS.Interface.IWidgetEditStatus) {
+					props6 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetEditStatus));
 				}
 
 				rpProps.DataSource = (from p in lstDefProps
@@ -106,12 +109,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 									  && !props3.Contains(p)
 									  && !props4.Contains(p)
 									  && !props5.Contains(p)
+									  && !props6.Contains(p)
 									  select p).ToList();
 
 				rpProps.DataBind();
 			}
-
-
 		}
 
 		public string GetSavedValue(string sDefVal, string sName) {
@@ -152,6 +154,44 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 		}
 
+		protected void rpProps_Bind(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e) {
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item) {
+
+				HiddenField hdnName = (HiddenField)e.Item.FindControl("hdnName");
+				TextBox txtValue = (TextBox)e.Item.FindControl("txtValue");
+				DropDownList ddlValue = (DropDownList)e.Item.FindControl("ddlValue");
+				txtValue.Visible = true;
+				ddlValue.Visible = false;
+
+				var listParm = (from p in lstDefProps
+								where p.CanRead == true
+								&& p.CanWrite == false
+								&& p.Name.ToLower() == ("dict" + hdnName.Value).ToLower()
+								select p).FirstOrDefault();
+
+				if (listParm != null) {
+					if (listParm.DefValue is Dictionary<string, string>) {
+						txtValue.Visible = false;
+						ddlValue.Visible = true;
+
+						ddlValue.DataTextField = "Value";
+						ddlValue.DataValueField = "Key";
+
+						ddlValue.DataSource = listParm.DefValue;
+						ddlValue.DataBind();
+
+						ddlValue.Items.Insert(0, new ListItem("-Select Value-", ""));
+
+						if (!string.IsNullOrEmpty(txtValue.Text)) {
+							try {
+								ddlValue.SelectedValue = txtValue.Text;
+							} catch { }
+						}
+					}
+				}
+			}
+		}
+
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
@@ -165,10 +205,15 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			foreach (RepeaterItem r in rpProps.Items) {
 				HiddenField hdnName = (HiddenField)r.FindControl("hdnName");
 				TextBox txtValue = (TextBox)r.FindControl("txtValue");
+				DropDownList ddlValue = (DropDownList)r.FindControl("ddlValue");
 
 				var p = new WidgetProps();
 				p.KeyName = hdnName.Value;
-				p.KeyValue = txtValue.Text;
+				if (ddlValue.Visible) {
+					p.KeyValue = ddlValue.SelectedValue;
+				} else {
+					p.KeyValue = txtValue.Text;
+				}
 				props.Add(p);
 			}
 
