@@ -7,12 +7,13 @@
 	Edit Properties
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<asp:Repeater ID="rpProps" runat="server">
+	<asp:Repeater ID="rpProps" runat="server"  OnItemDataBound="rpProps_Bind">
 		<ItemTemplate>
 			<div>
 				<%# String.Format("{0}", Eval("Name"))%>
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<asp:TextBox ID="txtValue" Width="300px" runat="server" Text='<%# GetSavedValue( String.Format( "{0}", Eval("DefValue")), String.Format( "{0}", Eval("Name")) ) %>'></asp:TextBox>
+				<asp:DropDownList ID="ddlValue" runat="server" />
+				<asp:TextBox ID="txtValue" Width="300px" runat="server" Text='<%# GetSavedValue( String.Format( "{0}", Eval("DefValue")), String.Format( "{0}", Eval("Name")) ) %>' />
 				<asp:HiddenField runat="server" ID="hdnName" Value='<%# String.Format( "{0}", Eval("Name") ) %>' />
 			</div>
 		</ItemTemplate>
