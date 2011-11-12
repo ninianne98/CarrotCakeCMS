@@ -327,6 +327,11 @@ namespace Carrotware.CMS.UI.Base {
 								wp.PublicParmValues = lstProp.ToDictionary(t => t.KeyName, t => t.KeyValue);
 							}
 
+							if (widget is IWidgetEditStatus) {
+								var wes = widget as IWidgetEditStatus;
+								wes.IsBeingEdited = AdvancedEditMode;
+							}
+
 							if (AdvancedEditMode) {
 								WidgetWrapper plcWrapper = new WidgetWrapper();
 								plcWrapper.JQueryUIScope = "GlossySeaGreen";
