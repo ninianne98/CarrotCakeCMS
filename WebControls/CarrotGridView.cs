@@ -136,8 +136,10 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		protected override void Render(HtmlTextWriter writer) {
-			
-			WalkGridForHeadings(this.HeaderRow);
+
+			if (this.Rows.Count > 0) {
+				WalkGridForHeadings(this.HeaderRow);
+			}
 
 			base.Render(writer);
 		}
@@ -153,8 +155,10 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			base.PerformDataBinding(data);
-
-			WalkGridSetClick(this.HeaderRow);
+			
+			if (this.Rows.Count > 0) {
+				WalkGridSetClick(this.HeaderRow);
+			}
 		}
 
 
