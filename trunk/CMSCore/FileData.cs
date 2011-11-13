@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -44,26 +44,41 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+
+		public FileData GetFolderInfo(string sPath, string sQuery, string myFile) {
+
+			string myFileName;
+			string myFileDate;
+
+			var f = new FileData();
+
+			myFileName = Path.GetFileName(myFile).Trim();
+			if (myFileName.Length > 0) {
+				FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
+				myFileDate = File.GetLastWriteTime(MyFile.FullName).ToString();
+				string sP = sQuery + myFileName + "/";
+				sP.Replace(@"//", @"/").Replace(@"//", @"/");
+
+				f.FileName = myFileName;
+				f.FolderPath = sP;
+				f.FileDate = Convert.ToDateTime(myFileDate);
+			}
+
+			return f;
+		}
+
+
 		public List<FileData> GetFolders(string sPath, string sQuery) {
 
 			var dsID = new List<FileData>();
 
 			foreach (string myFile in Directory.GetDirectories(sPath, "*.*")) {
 				string myFileName;
-				string myFileDate;
 				var f = new FileData();
 
 				myFileName = Path.GetFileName(myFile).Trim();
 				if (myFileName.Length > 0) {
-					FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
-					myFileDate = File.GetLastWriteTime(MyFile.FullName).ToString();
-					string sP = sQuery + myFileName + "/";
-					sP.Replace(@"//", @"/").Replace(@"//", @"/");
-
-					f.FileName = myFileName;
-					f.FolderPath = sP;
-					f.FileDate = Convert.ToDateTime(myFileDate);
-
+					f = GetFolderInfo(sPath, sQuery, myFile);
 					dsID.Add(f);
 				}
 			}
@@ -71,15 +86,79 @@ namespace Carrotware.CMS.Core {
 			return dsID;
 		}
 
+
+		public FileData GetFileInfo(string sPath, string sQuery, string myFile) {
+
+			string myFileName;
+			string myFileDate;
+			string myFileSizeF;
+			long myFileSize;
+
+			sPath = sPath.Replace(@"\", "/");
+			sQuery = sQuery.Replace(@"\", "/");
+
+			sPath = sPath.Substring(0, sPath.LastIndexOf("/") + 1);
+			sQuery = sQuery.Substring(0, sQuery.LastIndexOf("/") + 1);
+
+			sPath = sPath.Replace(@"//", @"/");
+			sQuery = sQuery.Replace(@"//", @"/");
+
+			var f = new FileData();
+
+			myFileName = Path.GetFileName(myFile).Trim();
+			if (myFileName.Length > 0) {
+				FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
+				myFileDate = File.GetLastWriteTime(MyFile.FullName).ToString();
+				myFileSize = MyFile.Length;
+
+				myFileSizeF = myFileSize.ToString() + " B";
+
+				if (myFileSize > 1500) {
+					if (myFileSize > (1024 * 1024)) {
+						myFileSizeF = (Convert.ToDouble(Convert.ToInt32((myFileSize * 100) / (1024 * 1024))) / 100).ToString() + " MB";
+					} else {
+						myFileSizeF = (Convert.ToDouble(Convert.ToInt32((myFileSize * 100) / 1024)) / 100).ToString() + " KB";
+					}
+				}
+				string sP = sQuery;
+				sP.Replace(@"//", @"/").Replace(@"//", @"/");
+
+				f.FileName = myFileName;
+				f.FolderPath = sP;
+				f.FileDate = Convert.ToDateTime(myFileDate);
+				f.FileSize = Convert.ToInt32(myFileSize);
+				f.FileSizeFriendly = myFileSizeF;
+				if (!string.IsNullOrEmpty(MyFile.Extension)) {
+					f.FileExtension = MyFile.Extension.ToLower();
+				} else {
+					f.FileExtension = ".";
+				}
+
+				f.MimeType = "text/plain";
+
+				try {
+					if ((from b in MimeTypes
+						 where b.Key.ToLower() == f.FileExtension.ToLower()
+						 select b).Count() > 0) {
+						f.MimeType = (from b in MimeTypes
+									  where b.Key.ToLower() == f.FileExtension.ToLower()
+									  select b.Value).FirstOrDefault();
+					}
+				} catch (Exception ex) { }
+
+
+			}
+
+			return f;
+		}
+
+
 		public List<FileData> GetFiles(string sPath, string sQuery) {
 
 			var dsID = new List<FileData>();
 
 			foreach (string myFile in Directory.GetFiles(sPath, "*.*")) {
 				string myFileName;
-				string myFileDate;
-				string myFileSizeF;
-				long myFileSize;
 
 				myFileName = Path.GetFileName(myFile).Trim();
 
@@ -87,45 +166,8 @@ namespace Carrotware.CMS.Core {
 				f.FileName = myFileName;
 
 				if (myFileName.Length > 0) {
-					FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
-					myFileDate = File.GetLastWriteTime(MyFile.FullName).ToString();
-					myFileSize = MyFile.Length;
 
-					myFileSizeF = myFileSize.ToString() + " B";
-
-					if (myFileSize > 1500) {
-						if (myFileSize > (1024 * 1024)) {
-							myFileSizeF = (Convert.ToDouble(Convert.ToInt32((myFileSize * 100) / (1024 * 1024))) / 100).ToString() + " MB";
-						} else {
-							myFileSizeF = (Convert.ToDouble(Convert.ToInt32((myFileSize * 100) / 1024)) / 100).ToString() + " KB";
-						}
-					}
-					string sP = sQuery;
-					sP.Replace(@"//", @"/").Replace(@"//", @"/");
-
-					f.FileName = myFileName;
-					f.FolderPath = sP;
-					f.FileDate = Convert.ToDateTime(myFileDate);
-					f.FileSize = Convert.ToInt32(myFileSize);
-					f.FileSizeFriendly = myFileSizeF;
-					if (!string.IsNullOrEmpty(MyFile.Extension)) {
-						f.FileExtension = MyFile.Extension.ToLower();
-					} else {
-						f.FileExtension = ".";
-					}
-
-					f.MimeType = "text/plain";
-
-
-					try {
-						if ((from b in MimeTypes
-							 where b.Key.ToLower() == f.FileExtension.ToLower()
-							 select b).Count() > 0) {
-							f.MimeType = (from b in MimeTypes
-										  where b.Key.ToLower() == f.FileExtension.ToLower()
-										  select b.Value).FirstOrDefault();
-						}
-					} catch (Exception ex) { }
+					f = GetFileInfo(sPath, sQuery, myFile);
 
 					try {
 						if ((from b in BlockedTypes
@@ -134,7 +176,6 @@ namespace Carrotware.CMS.Core {
 							dsID.Add(f);
 						}
 					} catch (Exception ex) { }
-
 				}
 			}
 
@@ -142,11 +183,71 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		List<string> _spiderdirs = null;
+
+		private void SpiderFolders(string sPath) {
+
+			string[] subdirs;
+			try {
+				subdirs = Directory.GetDirectories(sPath);
+			} catch {
+				subdirs = null;
+			}
+
+			if (subdirs != null) {
+				foreach (string theDir in subdirs) {
+					_spiderdirs.Add(theDir);
+					SpiderFolders(theDir);
+				}
+			}
+		}
 
 
-		private Dictionary<string, string> _dict = null;
+		public List<string> SpiderDeepFolders(string sPath) {
+			_spiderdirs = new List<string>();
 
-		public Dictionary<string, string> MimeTypes {
+			SpiderFolders(sPath);
+
+			return _spiderdirs;
+		}
+
+
+		List<FileData> _spiderFD = null;
+
+		private void SpiderFoldersFD(string sPath, string sQuery) {
+
+			string[] subdirs;
+			try {
+				subdirs = Directory.GetDirectories(sPath);
+			} catch {
+				subdirs = null;
+			}
+
+			if (subdirs != null) {
+				foreach (string theDir in subdirs) {
+					var f = GetFolderInfo(sPath, sQuery, theDir);
+					_spiderFD.Add(f);
+					SpiderFoldersFD(sPath + f.FolderPath, f.FolderPath);
+				}
+			}
+		}
+
+
+		public List<FileData> SpiderDeepFoldersFD(string sPath, string sQuery) {
+			_spiderFD = new List<FileData>();
+
+			SpiderFoldersFD(sPath, sQuery);
+
+			return _spiderFD;
+		}
+
+
+
+
+
+		private static Dictionary<string, string> _dict = null;
+
+		public static Dictionary<string, string> MimeTypes {
 			get {
 				if (_dict == null) {
 					_dict = new Dictionary<string, string>();
