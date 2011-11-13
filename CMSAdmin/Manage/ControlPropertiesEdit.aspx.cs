@@ -160,14 +160,20 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				HiddenField hdnName = (HiddenField)e.Item.FindControl("hdnName");
 				TextBox txtValue = (TextBox)e.Item.FindControl("txtValue");
 				DropDownList ddlValue = (DropDownList)e.Item.FindControl("ddlValue");
+				CheckBox chkValue = (CheckBox)e.Item.FindControl("chkValue");
+
 				txtValue.Visible = true;
-				ddlValue.Visible = false;
+				string sName = hdnName.Value;
 
 				var listParm = (from p in lstDefProps
 								where p.CanRead == true
 								&& p.CanWrite == false
-								&& p.Name.ToLower() == ("dict" + hdnName.Value).ToLower()
+								&& p.Name.ToLower() == ("dict" + sName).ToLower()
 								select p).FirstOrDefault();
+
+				var dp = (from p in lstDefProps
+						  where p.Name.ToLower() == sName.ToLower()
+						  select p).FirstOrDefault();
 
 				if (listParm != null) {
 					if (listParm.DefValue is Dictionary<string, string>) {
@@ -189,6 +195,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						}
 					}
 				}
+				string sType = dp.PropertyType.ToString().ToLower();
+				if (sType == "system.boolean") {
+					txtValue.Visible = false;
+					chkValue.Visible = true;
+
+					chkValue.Checked = Convert.ToBoolean(txtValue.Text);
+				}
+
 			}
 		}
 
@@ -203,14 +217,19 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			var props = new List<WidgetProps>();
 
 			foreach (RepeaterItem r in rpProps.Items) {
+
 				HiddenField hdnName = (HiddenField)r.FindControl("hdnName");
 				TextBox txtValue = (TextBox)r.FindControl("txtValue");
 				DropDownList ddlValue = (DropDownList)r.FindControl("ddlValue");
+				CheckBox chkValue = (CheckBox)r.FindControl("chkValue");
 
 				var p = new WidgetProps();
 				p.KeyName = hdnName.Value;
+
 				if (ddlValue.Visible) {
 					p.KeyValue = ddlValue.SelectedValue;
+				} else if (chkValue.Visible) {
+					p.KeyValue = chkValue.Checked.ToString();
 				} else {
 					p.KeyValue = txtValue.Text;
 				}
