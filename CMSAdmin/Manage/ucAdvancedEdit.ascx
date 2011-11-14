@@ -197,7 +197,8 @@
 	function cmsSaveContentCallback(data, status) {
 		if (data.d == "OK") {
 			CMSBusyShort();
-			window.setTimeout('location.reload()', 800);
+			//window.setTimeout('location.reload()', 800);
+			cmsDirtyPageRefresh();
 		} else {
 			cmsAlertModal(data.d);
 		}
@@ -206,7 +207,8 @@
 	function cmsSaveWidgetsCallback(data, status) {
 		if (data.d == "OK") {
 			CMSBusyShort();
-			window.setTimeout('location.reload()', 800);
+			//window.setTimeout('location.reload()', 800);
+			cmsDirtyPageRefresh();
 		} else {
 			cmsAlertModal(data.d);
 		}
@@ -621,7 +623,7 @@
 	}
 
 	function cmsDirtyPageRefresh() {
-		window.setTimeout('location.href = \'<%=CurrentScriptName %>?carrotedit=true\'', 800);
+		window.setTimeout('location.href = \'<%=CurrentScriptName %>?carrotedit=true&tick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
 	}
 
 
