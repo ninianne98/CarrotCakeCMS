@@ -106,7 +106,7 @@ namespace Carrotware.CMS.Core {
 			var f = new FileData();
 
 			myFileName = Path.GetFileName(myFile).Trim();
-			if (myFileName.Length > 0) {
+			if (myFileName.Length > 0 && File.Exists(sPath + "/" + myFileName)) {
 				FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
 				myFileDate = File.GetLastWriteTime(MyFile.FullName).ToString();
 				myFileSize = MyFile.Length;
