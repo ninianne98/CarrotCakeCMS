@@ -85,6 +85,7 @@ namespace Carrotware.CMS.UI.Admin {
                     var w = (IAdminModule)c;
                     w.SiteID = SiteID;
                     w.ModuleID = ModuleID;
+					w.ModuleName = pf;
                     w.QueryStringFragment = "pf=" + pf + "&pi=" + ModuleID.ToString();
                     w.QueryStringPattern = "pf={0}&pi=" + ModuleID.ToString();
                 }

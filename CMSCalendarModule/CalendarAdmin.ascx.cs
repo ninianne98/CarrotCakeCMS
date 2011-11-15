@@ -9,18 +9,15 @@ using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarAdmin : BaseShellUserControl, IAdminModule {
+	public partial class CalendarAdmin : AdminModule {
 
         protected dbCalendarDataContext db = new dbCalendarDataContext();
 
-        public string QueryStringFile { get; set; }
 
         protected void Page_Load(object sender, EventArgs e) {
             if (SiteID == Guid.Empty) {
                 SiteID = SiteData.CurrentSiteID;
             }
-
-            QueryStringFile = CurrentScriptName + "?" + string.Format(QueryStringPattern, "CalendarAdminAddEdit");
 
             if (!IsPostBack) {
                 LoadData();
@@ -63,18 +60,6 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
         }
 
 
-
-        #region IAdminModule Members
-
-        public Guid SiteID { get; set; }
-
-        public Guid ModuleID { get; set; }
-
-        public string QueryStringFragment { get; set; }
-
-        public string QueryStringPattern { get; set; }
-
-        #endregion
 
 
     }
