@@ -21,6 +21,8 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 
 		public string QueryStringPattern { get; set; }
 
+		public string ModuleName { get; set; }
+
 		#endregion
 
 

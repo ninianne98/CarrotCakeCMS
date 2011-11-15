@@ -19,6 +19,8 @@ namespace Carrotware.CMS.Interface {
 
         Guid ModuleID { get; set; }
 
+		string ModuleName { get; set; }
+
         string QueryStringFragment { get; set; }
 
         string QueryStringPattern { get; set; }

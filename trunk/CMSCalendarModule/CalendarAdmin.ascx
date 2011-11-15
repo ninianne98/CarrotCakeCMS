@@ -1,7 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdmin.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.CalendarModule.CalendarAdmin" %>
-
 <center>
-	<carrot:Calendar runat="server" ID="Calendar1"></carrot:Calendar>
+	<carrot:calendar runat="server" id="Calendar1"></carrot:calendar>
 	<br />
 	<asp:Button CssClass="calendarbutton" ID="btnLast" runat="server" Text="«««««" OnClick="btnLast_Click" />
 	&nbsp;&nbsp;&nbsp;
@@ -13,7 +12,7 @@
 				<asp:TemplateColumn>
 					<ItemStyle Width="20px" HorizontalAlign="Left" VerticalAlign="Top"></ItemStyle>
 					<ItemTemplate>
-						<asp:HyperLink ID="lnkedit" runat="server" NavigateUrl='<%# String.Format( "{0}&id={1}", QueryStringFile, DataBinder.Eval(Container, "DataItem.CalendarID") ) %>'>
+						<asp:HyperLink ID="lnkedit" runat="server" NavigateUrl='<%#CreateLink("CalendarAdminAddEdit", String.Format("id={0}", DataBinder.Eval(Container, "DataItem.CalendarID")) ) %>'>
                             <img border="0" src="/Manage/images/pencil.png" alt="Edit" title="Edit" style="margin-right: 10px;" />
 						</asp:HyperLink>
 					</ItemTemplate>
