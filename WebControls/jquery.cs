@@ -47,28 +47,24 @@ namespace Carrotware.Web.UI.Controls {
 			string sJQFile = "";
 
 			switch (JQVersion) {
-				case "1.6.0":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery160.js");
+				case "1.7":
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery170.js");
 					break;
 				case "1.6":
-				case "1.6.2":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery162.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery164.js");
 					break;
-				case "1.5.2":
 				case "1.5":
 					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery152.js");
 					break;
-				case "1.4.2":
 				case "1.4":
 					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery142.js");
 					break;
-				case "1.3.2":
 				case "1.3":
 					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery132.js");
 					break;
 				default:
-					JQVersion = "1.5.2";
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery152.js");
+					JQVersion = "1.6.4";
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery164.js");
 					break;
 			}
 

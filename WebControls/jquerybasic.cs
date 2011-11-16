@@ -36,7 +36,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			output.Write("<!-- JQuery CSS --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-162.js");
+			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery170.js");
 
 			output.Write("<!-- JQuery --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
 
