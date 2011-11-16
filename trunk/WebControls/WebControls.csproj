@@ -71,9 +71,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jquerybasic\jquery-162.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="jquerybasic\jquery-ui-1816.js" />
   </ItemGroup>
   <ItemGroup>
@@ -143,13 +140,11 @@
     <EmbeddedResource Include="jquery152.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jquery160.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="jquery162.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="jqueryui-1-8-11.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jquery164.js" />
+    <EmbeddedResource Include="jquery170.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
