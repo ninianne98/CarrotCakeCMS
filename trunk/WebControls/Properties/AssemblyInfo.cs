@@ -48,8 +48,8 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery132.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery142.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery152.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery160.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery162.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery164.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery170.js", "text/javascript")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-8-11.js", "text/javascript")]
 
@@ -58,7 +58,7 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui.css", "text/css", PerformSubstitution = true)]
 
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-162.js", "text/javascript")]
+//[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-162.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-1816.js", "text/javascript")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.ui-bg_flat_65_ffffff_40x100.png", "image/png")]
