@@ -8,34 +8,13 @@ using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.FAQModule {
-	public partial class FAQAdmin : BaseShellUserControl, IAdminModule {
-
-		#region IAdminModule Members
-
-		public Guid SiteID { get; set; }
-
-		public Guid ModuleID { get; set; }
-
-		public string QueryStringFragment { get; set; }
-
-		public string QueryStringPattern { get; set; }
-
-		public string ModuleName { get; set; }
-
-		#endregion
+	public partial class FAQAdmin : AdminModule {
 
 
         protected dbFAQDataContext db = new dbFAQDataContext();
 
-        public string QueryStringFile { get; set; }
-
 
         protected void Page_Load(object sender, EventArgs e) {
-			//if (SiteID == Guid.Empty) {
-			//    SiteID = SiteData.CurrentSiteID;
-			//}
-
-            QueryStringFile = CurrentScriptName + "?" + string.Format(QueryStringPattern, "FAQAdminAddEdit");
 
             if (!IsPostBack) {
                 LoadData();
@@ -57,8 +36,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
             dgMenu.DataBind();
 
         }
-
-
 
     }
 }

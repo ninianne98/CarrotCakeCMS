@@ -8,22 +8,8 @@ using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.FAQModule {
-	public partial class FAQAdminAddEdit : BaseShellUserControl, IAdminModule {
+	public partial class FAQAdminAddEdit : AdminModule {
 
-
-		#region IAdminModule Members
-
-		public Guid SiteID { get; set; }
-
-		public Guid ModuleID { get; set; }
-
-		public string QueryStringFragment { get; set; }
-
-		public string QueryStringPattern { get; set; }
-
-		public string ModuleName { get; set; }
-
-		#endregion
 
 
 		protected dbFAQDataContext db = new dbFAQDataContext();
@@ -87,9 +73,9 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 			db.tblFAQs.DeleteOnSubmit(itm);
 			db.SubmitChanges();
 
-			var QueryStringFile = CurrentScriptName + "?" + string.Format(QueryStringPattern, "FAQAdmin");
+			var sQueryStringFile = CreateLink("FAQAdmin");
 
-			Response.Redirect(QueryStringFile);
+			Response.Redirect(sQueryStringFile);
 
 		}
 
@@ -120,9 +106,9 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 			}
 			db.SubmitChanges();
 
-			var QueryStringFile = CurrentScriptName + "?" + string.Format(QueryStringPattern, "FAQAdminAddEdit");
+			var sQueryStringFile = CreateLink(ModuleName, "id=" + ItemGuid);
 
-			Response.Redirect(QueryStringFile + "&id=" + ItemGuid);
+			Response.Redirect(sQueryStringFile);
 
 		}
 
