@@ -32,6 +32,12 @@
 		background: #FFFFAA !important;
 		border: 2px dashed #676F6A !important;
 	}
+	#cmsWidgetHead img, .GlossySeaGreen a img {
+		border: 0px solid #CDE3D6 !important;
+	}
+	#cmsMainToolbox {
+		text-align: left;
+	}
 </style>
 
 <script type="text/javascript">
@@ -255,15 +261,9 @@
 
 		$("#modalalertmessage").html(request);
 		
-		var c = $("#modalalertmessage").parent().parent().attr('class');
-		$("#modalalertmessage").parent().parent().attr('class', "GlossySeaGreen " + c);
 		
-		var txt = $("#modalalertmessage").attr('style', 'padding:8px;');
-		
-		var lnk = $("#modalalertmessage").parent().parent().find(".ui-dialog-titlebar-close").attr('style', 'float:right; padding:5px;');
-		var cap = $("#modalalertmessage").parent().parent().find(".ui-dialog-title").attr('style', 'float:left; padding:5px;');
-		//alert($(lnk).attr('class'));
-		
+		cmsFixDialog('modalalertmessage');
+				
 	}
 
 
@@ -357,14 +357,8 @@
 				}
 		});
 		
-		var c = $("#removeconfirmmsg").parent().parent().attr('class');
-		$("#removeconfirmmsg").parent().parent().attr('class', "GlossySeaGreen " + c);
-
-		var txt = $("#removeconfirmmsg").attr('style', 'padding:8px;');
-
-		var lnk = $("#removeconfirmmsg").parent().parent().find(".ui-dialog-titlebar-close").attr('style', 'float:right; padding:5px;');
-		var cap = $("#removeconfirmmsg").parent().parent().find(".ui-dialog-title").attr('style', 'float:left; padding:5px;');
-		var cap = $("#removeconfirmmsg").parent().parent().find(".ui-button").attr('style', 'float:right;');
+		cmsFixDialog('removeconfirmmsg');
+		
 	}
 
 
@@ -461,7 +455,27 @@
 
 	}	
 
+	function cmsFixDialog(dialogname) {	
 	
+		var dilg = $("#"+dialogname).parent().parent();
+		var txt = $("#"+dialogname).attr('style', 'margin: 2px; padding: 5px; text-align: left;');
+			
+		var c = $(dilg).attr('class');
+		$(dilg).attr('class', "GlossySeaGreen ui-widget-content ui-corner-all " + c);
+
+		var pstyle = $(dilg).attr('style');
+		$(dilg).attr('style', "font-size: 12px; padding:2px; margin:2px; background: #ffffff; border: 1px solid #c0c0c0;" + pstyle);
+		
+		var cap = $(dilg).find(".ui-dialog-titlebar-close").attr('style', 'float:right; padding:4px; background-color:transparent;');
+		var cap = $(dilg).find(".ui-dialog-titlebar").attr('style', 'margin: 2px; padding: 2px; height: 32px;');
+		var cap = $(dilg).find(".ui-button").attr('style', 'float:right;');
+		var cap = $(dilg).find(".ui-dialog-title").attr('style', 'float:left; margin:2px; padding:2px;');
+		var cap = $(dilg).find(".ui-dialog-buttonpane").attr('style', 'margin:2px; padding:3px;');
+		
+		//var h = $(dilg).html();
+		//$(dilg).html('');
+		//$(dilg).html('<div class="GlossySeaGreen ui-widget-content ui-corner-all">' + h + '</div>');
+	}
 	
 </script>
 
@@ -481,7 +495,7 @@
 			float: right;">
 			L
 		</div>
-		<p class="toolboxmenu ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px;">
+		<p class="toolboxmenu ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
 			Toolbox
 		</p>
 		<br />
