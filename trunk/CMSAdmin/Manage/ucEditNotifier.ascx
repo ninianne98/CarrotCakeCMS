@@ -21,6 +21,9 @@
 		width: 8em;
 		margin-top: -2.5em;
 	}
+	#cmsAdminToolbox1 img, #cmsAdminToolbox2 img {
+		border: 1px solid #CDE3D6 !important;
+	}
 </style>
 <div id="cmsAdminToolbox1" style="padding: 0px; border: 2px dotted #676F6A; color: #676F6A; background: #CDE3D6; width: 30px;
 	height: 65px; z-index: 1000; font-size: 14px;">
