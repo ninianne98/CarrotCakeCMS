@@ -1,0 +1,107 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.Core;
+
+namespace Carrotware.CMS.UI.Admin {
+	public partial class PageHistory : AdminBasePage {
+
+		public Guid guidRootID = Guid.Empty;
+		public Guid guidContentID = Guid.Empty;
+		string sPageMode = String.Empty;
+
+		protected void Page_Load(object sender, EventArgs e) {
+
+			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
+				guidRootID = new Guid(Request.QueryString["id"].ToString());
+			}
+			if (!string.IsNullOrEmpty(Request.QueryString["version"])) {
+				guidContentID = new Guid(Request.QueryString["version"].ToString());
+			}
+
+			if (guidRootID != Guid.Empty) {
+				if (!IsPostBack) {
+					LoadGrid(hdnSort.Value);
+				}
+				pnlDetail.Visible = false;
+				pnlHistory.Visible = true;
+			}
+
+			if (guidContentID != Guid.Empty) {
+				var p = pageHelper.GetVersion(SiteID, guidContentID);
+
+				litLeft.Text = p.LeftPageText;
+				litCenter.Text = p.PageText;
+				litRight.Text = p.RightPageText;
+				guidRootID = p.Root_ContentID;
+
+				pnlDetail.Visible = true;
+				pnlHistory.Visible = false;
+			}
+
+			lnkReturn.NavigateUrl = "./PageHistory.aspx?id=" + guidRootID.ToString();
+
+		}
+
+
+
+		protected void LoadGrid(string sSortKey) {
+
+
+			var lstCont = (from c in pageHelper.GetVersionHistory(SiteID, guidRootID)
+						   select c).ToList();
+			var current = lstCont.Where(x => x.IsLatestVersion = true).FirstOrDefault();
+			var first = lstCont.OrderBy(x => x.EditDate).FirstOrDefault();
+
+
+			LoadGridLive<ContentPage>(gvPages, hdnSort, lstCont, sSortKey);
+
+			foreach (GridViewRow dgItem in gvPages.Rows) {
+				Image imgActive = (Image)dgItem.FindControl("imgActive");
+				HiddenField hdnIsActive = (HiddenField)dgItem.FindControl("hdnIsActive");
+				CheckBox chkContent = (CheckBox)dgItem.FindControl("chkContent");
+
+				if (hdnIsActive.Value.ToLower() != "true") {
+					imgActive.ImageUrl = hdnInactive.Value;
+					imgActive.AlternateText = "Inactive";
+				}
+				imgActive.ToolTip = imgActive.AlternateText;
+				if (chkContent != null) {
+					if (chkContent.Attributes["value"].ToString() == current.ContentID.ToString()) {
+						chkContent.Visible = false;
+					}
+					if (chkContent.Attributes["value"].ToString() == first.ContentID.ToString()) {
+						chkContent.Visible = false;
+					}
+				}
+
+
+			}
+
+			gs.WalkGridForHeadings(gvPages);
+
+		}
+
+		protected void btnRemove_Click(object sender, EventArgs e) {
+			List<Guid> lstDel = new List<Guid>();
+			foreach (GridViewRow dgItem in gvPages.Rows) {
+				CheckBox chkContent = (CheckBox)dgItem.FindControl("chkContent");
+				if (chkContent != null) {
+					if (chkContent.Checked) {
+						lstDel.Add(new Guid(chkContent.Attributes["value"].ToString()));
+					}
+				}
+			}
+
+			pageHelper.RemoveVersions(SiteID, lstDel);
+
+			LoadGrid(hdnSort.Value);
+		}
+
+
+	}
+}
