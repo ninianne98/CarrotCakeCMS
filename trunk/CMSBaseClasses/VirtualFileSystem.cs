@@ -89,12 +89,19 @@ namespace Carrotware.CMS.UI.Base {
 					ContentPage filePage = null;
 
 					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
+						string sParm = "";
 						if (context.Request.QueryString["tag"] != null) {
-							sFileRequested = "/" + context.Request.QueryString["tag"].ToString() + ".aspx";
+							sParm = context.Request.QueryString["tag"].ToString();
+						}
+						if (context.Request.QueryString["pg"] != null) {
+							sParm = context.Request.QueryString["pg"].ToString();
+						}
+						if (!string.IsNullOrEmpty(sParm)) {
+							sFileRequested = "/" + sParm + ".aspx";
 
 							context.Response.StatusCode = 301;
 							context.Response.AppendHeader("Status", "301 Moved Permanently");
-							context.Response.AppendHeader("Location", sFileRequested); 
+							context.Response.AppendHeader("Location", sFileRequested);
 							context.Response.Cache.SetLastModified(DateTime.Today.Date);
 							context.Response.Write("<h2>301 Moved Permanently</h2>");
 
@@ -138,7 +145,7 @@ namespace Carrotware.CMS.UI.Base {
 							string sRealFile = filePage.TemplateFile;
 
 							// selectivly engage the cms helper only if in advance mode
-							if (pageHelper.AdvancedEditMode) { 
+							if (pageHelper.AdvancedEditMode) {
 								CMSConfigHelper cmsHelper = new CMSConfigHelper();
 								if (cmsHelper.cmsAdminContent != null) {
 									try { sRealFile = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
