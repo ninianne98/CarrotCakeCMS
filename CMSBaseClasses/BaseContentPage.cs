@@ -101,29 +101,12 @@ namespace Carrotware.CMS.UI.Base {
 			theSite = GetSite();
 
 			if (theSite != null) {
-
-				HtmlMeta metaDesc = new HtmlMeta();
-				HtmlMeta metaKey = new HtmlMeta();
-
-				metaDesc.Name = "description";
-				metaKey.Name = "keywords";
-				metaDesc.Content = theSite.MetaDescription;
-				metaKey.Content = theSite.MetaKeyword;
-
-				if (!string.IsNullOrEmpty(theSite.MetaDescription)) {
-					Page.Header.Controls.Add(metaDesc);
-				}
-				if (!string.IsNullOrEmpty(theSite.MetaKeyword)) {
-					Page.Header.Controls.Add(metaKey);
-				}
-
 				if (theSite.BlockIndex) {
 					HtmlMeta metaNoCrawl = new HtmlMeta();
 					metaNoCrawl.Name = "robots";
 					metaNoCrawl.Content = "noindex,nofollow";
 					Page.Header.Controls.Add(metaNoCrawl);
 				}
-
 			}
 
 
@@ -150,6 +133,23 @@ namespace Carrotware.CMS.UI.Base {
 			pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
 
 			pageWidgets = widgetHelper.GetWidgets(guidContentID);
+
+			if (pageContents != null) {
+				HtmlMeta metaDesc = new HtmlMeta();
+				HtmlMeta metaKey = new HtmlMeta();
+
+				metaDesc.Name = "description";
+				metaKey.Name = "keywords";
+				metaDesc.Content = string.IsNullOrEmpty(theSite.MetaDescription) ? pageContents.MetaDescription : theSite.MetaDescription;
+				metaKey.Content = string.IsNullOrEmpty(theSite.MetaKeyword) ? pageContents.MetaKeyword : theSite.MetaKeyword;
+
+				if (!string.IsNullOrEmpty(metaDesc.Content)) {
+					Page.Header.Controls.Add(metaDesc);
+				}
+				if (!string.IsNullOrEmpty(metaKey.Content)) {
+					Page.Header.Controls.Add(metaKey);
+				}
+			}
 
 
 			Page.Title = string.Format(PageTitlePattern, theSite.SiteName, pageContents.TitleBar);
@@ -260,7 +260,7 @@ namespace Carrotware.CMS.UI.Base {
 
 
 				if (pageWidgets.Count > 0) {
-					
+
 
 					var lstWidget = (from d in pageWidgets
 									 where d.Root_ContentID == pageContents.Root_ContentID
@@ -293,7 +293,7 @@ namespace Carrotware.CMS.UI.Base {
 									var className = theWidget.ControlPath.Replace("CLASS:", "");
 									Type t = Type.GetType(className);
 									Object o = Activator.CreateInstance(t);
-									
+
 									if (o != null) {
 										widget = o as Control;
 									} else {

@@ -39,6 +39,7 @@
   </Target>
   -->
   <ItemGroup>
+    <None Include="add meta fields to content.sql" />
     <None Include="default user.sql" />
     <None Include="whole database.sql" />
   </ItemGroup>

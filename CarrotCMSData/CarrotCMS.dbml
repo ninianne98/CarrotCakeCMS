@@ -88,6 +88,8 @@
       <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="MetaKeyword" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="MetaDescription" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
       <Association Name="aspnet_User_tblContent" Member="aspnet_User" ThisKey="EditUserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
       <Association Name="tblRootContent_tblContent" Member="tblRootContent" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="tblRootContent" IsForeignKey="true" />
     </Type>

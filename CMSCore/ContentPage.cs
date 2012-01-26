@@ -62,6 +62,9 @@ namespace Carrotware.CMS.Core {
 			//this.NavFileName = AppendSiteFolder(rc.FileName);
 			this.NavFileName = rc.FileName;
 
+			this.MetaDescription = c.MetaDescription;
+			this.MetaKeyword = c.MetaKeyword;
+
 		}
 
 		/*
@@ -365,6 +368,9 @@ namespace Carrotware.CMS.Core {
 			c.EditDate = DateTime.Now;
 			c.TemplateFile = this.TemplateFile;
 
+			c.MetaKeyword = this.MetaKeyword;
+			c.MetaDescription = this.MetaDescription;
+
 			db.tblContents.InsertOnSubmit(c);
 			db.SubmitChanges();
 
@@ -395,6 +401,9 @@ namespace Carrotware.CMS.Core {
 		public Guid SiteID { get; set; }
 
 		public string NavFileName { get; set; }
+
+		public string MetaDescription { get; set; }
+		public string MetaKeyword { get; set; }
 
 		private tblRootContent RootContent { get; set; }
 		private tblContent Content { get; set; }

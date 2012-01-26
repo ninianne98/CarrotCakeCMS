@@ -263,6 +263,23 @@
 			</td>
 		</tr>
 		<tr>
+			<td valign="top" class="tablecaption">
+				meta keywords
+			</td>
+			<td valign="top">
+				<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="200" Columns="80" Style="width: 425px;" runat="server"></asp:TextBox>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				meta description:
+			</td>
+			<td valign="top">
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="5"
+					TextMode="MultiLine" runat="server"></asp:TextBox>
+			</td>
+		</tr>
+		<tr>
 			<td class="tablecaption" valign="top">
 				sort:
 			</td>
