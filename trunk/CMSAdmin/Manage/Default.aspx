@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Dashboard" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Default" %>
+﻿<%@ Page Title="Dashboard" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Default" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -23,8 +24,8 @@
 			</td>
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" ID="txtSiteName" MaxLength="200" Columns="80" Style="width: 425px;" runat="server"></asp:TextBox>
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -33,8 +34,8 @@
 			</td>
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;" runat="server"></asp:TextBox>
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtURL" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtURL" ID="RequiredFieldValidator2" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -50,7 +51,8 @@
 				Description
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="5" TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="5"
+					TextMode="MultiLine" runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
@@ -62,7 +64,7 @@
 			</td>
 		</tr>
 	</table>
-<%--	<asp:Panel ID="pnlFolder" runat="server">
+	<%--	<asp:Panel ID="pnlFolder" runat="server">
 		<table width="600">
 			<tr>
 				<td valign="top" class="tablecaption">

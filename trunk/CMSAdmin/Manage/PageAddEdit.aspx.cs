@@ -79,6 +79,9 @@ namespace Carrotware.CMS.UI.Admin {
 					txtHead.Text = pageContents.PageHead;
 					txtFileName.Text = pageContents.FileName;
 
+					txtDescription.Text = pageContents.MetaDescription;
+					txtKey.Text = pageContents.MetaKeyword;
+
 					txtSort.Text = pageContents.NavOrder.ToString();
 
 					lblUpdated.Text = pageContents.EditDate.ToString();
@@ -134,6 +137,9 @@ namespace Carrotware.CMS.UI.Admin {
 			pageContents.NavMenuText = txtNav.Text;
 			pageContents.PageHead = txtHead.Text;
 			pageContents.FileName = txtFileName.Text;
+
+			pageContents.MetaDescription = txtDescription.Text;
+			pageContents.MetaKeyword = txtKey.Text;
 
 			pageContents.EditDate = DateTime.Now;
 			pageContents.NavOrder = int.Parse(txtSort.Text);

@@ -1685,6 +1685,10 @@ namespace Carrotware.CMS.Data
 		
 		private string _TemplateFile;
 		
+		private string _MetaKeyword;
+		
+		private string _MetaDescription;
+		
 		private EntityRef<aspnet_User> _aspnet_User;
 		
 		private EntityRef<tblRootContent> _tblRootContent;
@@ -1721,6 +1725,10 @@ namespace Carrotware.CMS.Data
     partial void OnEditDateChanged();
     partial void OnTemplateFileChanging(string value);
     partial void OnTemplateFileChanged();
+    partial void OnMetaKeywordChanging(string value);
+    partial void OnMetaKeywordChanged();
+    partial void OnMetaDescriptionChanging(string value);
+    partial void OnMetaDescriptionChanged();
     #endregion
 		
 		public tblContent()
@@ -2014,6 +2022,46 @@ namespace Carrotware.CMS.Data
 					this._TemplateFile = value;
 					this.SendPropertyChanged("TemplateFile");
 					this.OnTemplateFileChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_MetaKeyword", DbType="VarChar(1000)")]
+		public string MetaKeyword
+		{
+			get
+			{
+				return this._MetaKeyword;
+			}
+			set
+			{
+				if ((this._MetaKeyword != value))
+				{
+					this.OnMetaKeywordChanging(value);
+					this.SendPropertyChanging();
+					this._MetaKeyword = value;
+					this.SendPropertyChanged("MetaKeyword");
+					this.OnMetaKeywordChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_MetaDescription", DbType="VarChar(2000)")]
+		public string MetaDescription
+		{
+			get
+			{
+				return this._MetaDescription;
+			}
+			set
+			{
+				if ((this._MetaDescription != value))
+				{
+					this.OnMetaDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._MetaDescription = value;
+					this.SendPropertyChanged("MetaDescription");
+					this.OnMetaDescriptionChanged();
 				}
 			}
 		}
