@@ -320,6 +320,7 @@
     <Content Include="Manage\Images\application_view_tile.png" />
     <Content Include="Manage\Images\audio.png" />
     <Content Include="Manage\Images\back.png" />
+    <Content Include="Manage\Images\brick.png" />
     <Content Include="Manage\Images\bullet_toggle_minus.png" />
     <Content Include="Manage\Images\bullet_toggle_plus.png" />
     <Content Include="Manage\Images\calendar.gif" />
@@ -352,6 +353,7 @@
     <Content Include="Manage\Images\menu-a.gif" />
     <Content Include="Manage\Images\navitembg.gif" />
     <Content Include="Manage\Images\overlays.png" />
+    <Content Include="Manage\Images\package.png" />
     <Content Include="Manage\Images\page.png" />
     <Content Include="Manage\Images\page_add.png" />
     <Content Include="Manage\Images\page_white.png" />
@@ -360,6 +362,7 @@
     <Content Include="Manage\Images\pdf.png" />
     <Content Include="Manage\Images\pencil.png" />
     <Content Include="Manage\Images\plain.png" />
+    <Content Include="Manage\Images\plugin.png" />
     <Content Include="Manage\Images\Ring-64px-72A584.gif" />
     <Content Include="Manage\Images\Ring-64px-A7B2A0.gif" />
     <Content Include="Manage\Images\script.png" />
