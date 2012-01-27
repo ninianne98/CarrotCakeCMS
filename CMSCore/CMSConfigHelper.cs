@@ -32,6 +32,40 @@ namespace Carrotware.CMS.Core {
 
 		}
 
+		public void ResetConfigs() {
+			string ModuleKey = "";
+
+			ModuleKey = "cms_AdminMenuModules";
+			HttpContext.Current.Cache.Remove(ModuleKey);
+
+			ModuleKey = "cms_AdminToolboxModules";
+			HttpContext.Current.Cache.Remove(ModuleKey);
+
+			ModuleKey = "cms_DynamicSite";
+			HttpContext.Current.Cache.Remove(ModuleKey);
+
+			ModuleKey = "cms_Templates";
+			HttpContext.Current.Cache.Remove(ModuleKey);
+
+			ModuleKey = "cms_DynSite_" + DomainName;
+			HttpContext.Current.Cache.Remove(ModuleKey);
+
+			System.Web.HttpRuntime.UnloadAppDomain();
+		}
+
+
+		public string DomainName {
+			get {
+				var domName = HttpContext.Current.Request.ServerVariables["HTTP_HOST"];
+				if (domName.IndexOf(":") > 0) {
+					domName = domName.Substring(0, domName.IndexOf(":"));
+				}
+
+				return domName.ToLower();
+			}
+		}
+
+
 		public List<CMSAdminModule> AdminModules {
 			get {
 
@@ -199,12 +233,8 @@ namespace Carrotware.CMS.Core {
 		public DynamicSite DynSite {
 			get {
 				var _plugins = new DynamicSite();
-				var domName = HttpContext.Current.Request.ServerVariables["HTTP_HOST"];
-				if (domName.IndexOf(":") > 0) {
-					domName = domName.Substring(0, domName.IndexOf(":"));
-				}
 
-				string ModuleKey = "cms_DynSite_" + domName;
+				string ModuleKey = "cms_DynSite_" + DomainName;
 				bool bCached = false;
 
 				try {
@@ -219,7 +249,7 @@ namespace Carrotware.CMS.Core {
 				if ((SiteList.Count > 0) && !bCached) {
 
 					_plugins = (from ss in SiteList
-								where ss.DomainName == domName
+								where ss.DomainName == DomainName
 								select ss).FirstOrDefault();
 
 					HttpContext.Current.Cache.Insert(ModuleKey, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
