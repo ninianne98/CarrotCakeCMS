@@ -1,4 +1,5 @@
-
+-- 2012-01-25
+-- added two new columns to tblContent
 
 if not exists( select * from information_schema.columns 
 		where table_name = 'tblContent' and column_name = 'MetaKeyword') begin
