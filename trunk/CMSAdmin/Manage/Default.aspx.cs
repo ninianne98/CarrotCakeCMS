@@ -76,6 +76,12 @@ namespace Carrotware.CMS.UI.Admin {
 			site.Save();
 		}
 
+		protected void btnResetVars_Click(object sender, EventArgs e) {
+			CMSConfigHelper cmsHelper = new CMSConfigHelper();
+			cmsHelper.ResetConfigs();
+
+		}
+
 
 	}
 }
