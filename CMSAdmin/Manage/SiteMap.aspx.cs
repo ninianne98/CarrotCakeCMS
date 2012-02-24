@@ -25,8 +25,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 			if (!IsPostBack) {
 				lstSite = (from c in pageHelper.GetLatestContentList(SiteID)
-								  orderby c.TemplateFile
-								  select c).ToList();
+						   orderby c.TemplateFile
+						   select c).ToList();
 				rpTop.DataSource = (from l in lstSite
 									orderby l.NavOrder, l.NavMenuText
 									where l.Parent_ContentID == null
@@ -37,26 +37,35 @@ namespace Carrotware.CMS.UI.Admin {
 
 		}
 
+		public string MakeStar(bool bFlag) {
+			if (bFlag) {
+				return "";
+			} else {
+				return "*";
+			}
+		}
+
+
 		protected void rpMap_ItemDataBound(object sender, RepeaterItemEventArgs e) {
 			PlaceHolder ph = (PlaceHolder)e.Item.FindControl("ph");
 
 			if (ph != null) {
 				var d = (ContentPage)e.Item.DataItem;
 				var lst = (from l in lstSite
-									orderby l.NavOrder, l.NavMenuText
-									where l.Parent_ContentID == d.Root_ContentID
-									select l).ToList();
+						   orderby l.NavOrder, l.NavMenuText
+						   where l.Parent_ContentID == d.Root_ContentID
+						   select l).ToList();
 
 				if (lst.Count > 0) {
 					Repeater rp = new Repeater();
-					
+
 					rp.HeaderTemplate = rpSub.HeaderTemplate;
 					rp.ItemTemplate = rpSub.ItemTemplate;
 					rp.FooterTemplate = rpSub.FooterTemplate;
 					ph.Controls.Add(rp);
 
 					rp.ItemDataBound += new System.Web.UI.WebControls.RepeaterItemEventHandler(this.rpMap_ItemDataBound);
-					
+
 					rp.DataSource = lst;
 					rp.DataBind();
 				}
