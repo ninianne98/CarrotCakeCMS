@@ -181,7 +181,7 @@
 			<ItemTemplate>
 				<li id="<%#Eval("Root_ContentID") %>"><span>
 					<%#Eval("FileName")%>
-					- [[<%#Eval("NavMenuText")%>]]</span>
+					- [[<%#Eval("NavMenuText")%>]<%#MakeStar(Convert.ToBoolean(Eval("PageActive")))%>]</span>
 					<asp:PlaceHolder ID="ph" runat="server"></asp:PlaceHolder>
 				</li>
 			</ItemTemplate>
@@ -196,44 +196,13 @@
 		<ItemTemplate>
 			<li id="<%#Eval("Root_ContentID") %>"><span>
 				<%#Eval("FileName")%>
-				- [[<%#Eval("NavMenuText")%>]]</span>
+				- [[<%#Eval("NavMenuText")%>]<%#MakeStar(Convert.ToBoolean(Eval("PageActive")))%>]</span>
 				<asp:PlaceHolder ID="ph" runat="server"></asp:PlaceHolder>
 			</li>
 		</ItemTemplate>
 		<FooterTemplate>
 			</ol></FooterTemplate>
 	</asp:Repeater>
-	<%--	 
-	<div id="cmsSiteMap">
-		<ol class="sortable">
-			<li id="itm1"><span>Item 1</span></li>
-			<li id="itm2"><span>Item 2</span>
-				<ol>
-					<li id="itm2.1"><span>Sub Item 2.1</span></li>
-					<li id="itm2.2"><span>Sub Item 2.2</span></li>
-					<li id="itm2.3"><span>Sub Item 2.3</span></li>
-					<li id="itm2.4"><span>Sub Item 2.4</span></li>
-				</ol></li>
-			<li id="itm3"><span>Item 3 </span></li>
-			<li id="itm4"><span>Item 4 </span></li>
-			<li id="itm5"><span>Item 5</span></li>
-			<li id="itm6"><span>Item 6</span>
-				<ol>
-					<li id="itm6.1"><span>Sub Item 6.1</span></li>
-					<li id="itm6.2"><span>Sub Item 6.2</span>
-						<ol>
-						<li id="itm6.2a"><span>Sub Item 6.2 a</span></li>
-						<li id="itm6.2b"><span>Sub Item 6.2 b</span></li>
-						</ol> </li>
-					<li id="itm6.3"><span>Sub Item 6.3</span></li>
-					<li id="itm6.4"><span>Sub Item 6.4</span></li>
-				</ol></li>
-			<li id="itm7"><span>Item 7</span></li>
-			<li id="itm8"><span>Item 8</span></li>
-		</ol>
-		
-	</div>
- --%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>
