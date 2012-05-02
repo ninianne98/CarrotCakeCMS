@@ -54,6 +54,7 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
+		private const string JSSCOPE = "GlossySeaGreen";
 
 
 		protected Guid guidContentID = Guid.Empty;
@@ -233,9 +234,9 @@ namespace Carrotware.CMS.UI.Base {
 						contLeft.IsAdminMode = true;
 						contRight.IsAdminMode = true;
 
-						contCenter.JQueryUIScope = "GlossySeaGreen";
-						contLeft.JQueryUIScope = "GlossySeaGreen";
-						contRight.JQueryUIScope = "GlossySeaGreen";
+						contCenter.JQueryUIScope = JSSCOPE;
+						contLeft.JQueryUIScope = JSSCOPE;
+						contRight.JQueryUIScope = JSSCOPE;
 
 						contCenter.ZoneChar = "c";
 						contLeft.ZoneChar = "l";
@@ -253,21 +254,32 @@ namespace Carrotware.CMS.UI.Base {
 						//Page.Header.Controls.Add(link);
 						Page.Header.Controls.AddAt(0, link);
 
-						MarkWidgets(page, "GlossySeaGreen", true);
+						MarkWidgets(page, JSSCOPE, true);
 
 					}
 				}
 
 
 				if (pageWidgets.Count > 0) {
+					//find each placeholder in use ONCE!
+					List<KeyedControl> lstPlaceholders = (from d in pageWidgets
+														  where d.Root_ContentID == pageContents.Root_ContentID
+														  select new KeyedControl {
+															  KeyName = d.PlaceholderName,
+															  KeyControl = FindTheControl(d.PlaceholderName, page)
+														  }).Distinct().ToList();
 
-
-					var lstWidget = (from d in pageWidgets
-									 where d.Root_ContentID == pageContents.Root_ContentID
-									 select d).ToList();
+					List<PageWidget> lstWidget = (from d in pageWidgets
+												  where d.Root_ContentID == pageContents.Root_ContentID
+												  select d).ToList();
 
 					foreach (var theWidget in lstWidget) {
-						WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
+
+						//WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
+						WidgetContainer plcHolder = (WidgetContainer)(from d in lstPlaceholders
+																	  where d.KeyName == theWidget.PlaceholderName
+																	  select d.KeyControl).FirstOrDefault();
+
 						if (plcHolder != null) {
 							Control widget = new Control();
 
@@ -318,9 +330,8 @@ namespace Carrotware.CMS.UI.Base {
 								w.RootContentID = theWidget.Root_ContentID;
 							}
 
-							IWidgetParmData wp = null;
 							if (widget is IWidgetParmData) {
-								wp = widget as IWidgetParmData;
+								var wp = widget as IWidgetParmData;
 
 								var lstProp = theWidget.ParseDefaultControlProperties();
 
@@ -334,7 +345,7 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (AdvancedEditMode) {
 								WidgetWrapper plcWrapper = new WidgetWrapper();
-								plcWrapper.JQueryUIScope = "GlossySeaGreen";
+								plcWrapper.JQueryUIScope = JSSCOPE;
 								plcWrapper.IsAdminMode = true;
 								plcWrapper.ControlPath = theWidget.ControlPath;
 								plcWrapper.Order = theWidget.WidgetOrder;

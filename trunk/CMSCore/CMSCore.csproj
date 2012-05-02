@@ -54,6 +54,7 @@
     <Compile Include="CMSConfigHelper.cs" />
     <Compile Include="ContentPage.cs" />
     <Compile Include="FileData.cs" />
+    <Compile Include="KeyedControl.cs" />
     <Compile Include="PageWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteData.cs" />
