@@ -86,22 +86,23 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		public static Bitmap GetCaptchaImage(Color fg, Color bg, Color n) {
-			var imageHeight = 50;
-			var topPadding = 2; // top and bottom padding in pixels
-			var sidePadding = 3; // side padding in pixels
+			int imageHeight = 50;
+			int topPadding = 2; // top and bottom padding in pixels
+			int sidePadding = 3; // side padding in pixels
 
-			var textBrush = new SolidBrush(fg);
-			var font = new Font("Verdana", 28, FontStyle.Bold);
+			SolidBrush textBrush = new SolidBrush(fg);
+			Font font = new Font("Verdana", 28, FontStyle.Bold);
 
 			string guid = GetKey();
 
-			var bitmap = new Bitmap(500, 500);
-			var graphics = Graphics.FromImage(bitmap);
-			var textSize = graphics.MeasureString(guid, font);
+			Bitmap bitmap = new Bitmap(500, 500);
+			Graphics graphics = Graphics.FromImage(bitmap);
+			SizeF textSize = graphics.MeasureString(guid, font);
+
 			bitmap.Dispose();
 			graphics.Dispose();
 
-			var bitmapWidth = sidePadding * 2 + (int)textSize.Width;
+			int bitmapWidth = sidePadding * 2 + (int)textSize.Width;
 			bitmap = new Bitmap(bitmapWidth, imageHeight);
 			graphics = Graphics.FromImage(bitmap);
 
@@ -117,10 +118,9 @@ namespace Carrotware.Web.UI.Controls {
 
 			HttpContext.Current.Response.ContentType = "image/x-png";
 
-			var memStream = new System.IO.MemoryStream();
-			bitmap.Save(memStream, ImageFormat.Png);
-
-			memStream.Dispose();
+			using (MemoryStream memStream = new MemoryStream()) {
+				bitmap.Save(memStream, ImageFormat.Png);
+			}
 			graphics.Dispose();
 
 			return bitmap;

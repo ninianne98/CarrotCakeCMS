@@ -19,8 +19,9 @@ namespace Carrotware.Web.UI.Controls {
 
 		private Bitmap ResizeBitmap(Bitmap bmpIn, int w, int h) {
 			Bitmap bmpNew = new Bitmap(w, h);
-			using (Graphics g = Graphics.FromImage(bmpNew))
+			using (Graphics g = Graphics.FromImage(bmpNew)) {
 				g.DrawImage(bmpIn, 0, 0, w, h);
+			}
 			return bmpNew;
 		}
 
@@ -30,11 +31,11 @@ namespace Carrotware.Web.UI.Controls {
 
 			if (context.Request.Path.ToLower() == "/carrotwarecaptcha.axd") {
 
-				var f = ColorTranslator.FromHtml(CaptchaImage.FGColorDef);
-				var b = ColorTranslator.FromHtml(CaptchaImage.BGColorDef);
-				var n = ColorTranslator.FromHtml(CaptchaImage.NColorDef);
+				Color f = ColorTranslator.FromHtml(CaptchaImage.FGColorDef);
+				Color b = ColorTranslator.FromHtml(CaptchaImage.BGColorDef);
+				Color n = ColorTranslator.FromHtml(CaptchaImage.NColorDef);
 
-				var captchaImg = CaptchaImage.GetCaptchaImage(f, b, n);
+				Bitmap captchaImg = CaptchaImage.GetCaptchaImage(f, b, n);
 
 				if (captchaImg == null) {
 					context.Response.StatusCode = 404;
@@ -45,18 +46,16 @@ namespace Carrotware.Web.UI.Controls {
 
 				context.Response.ContentType = "image/x-png";
 
-				var memStream = new System.IO.MemoryStream();
-				captchaImg.Save(memStream, ImageFormat.Png);
-				memStream.WriteTo(context.Response.OutputStream);
-
+				using (MemoryStream memStream = new MemoryStream()) {
+					captchaImg.Save(memStream, ImageFormat.Png);
+					memStream.WriteTo(context.Response.OutputStream);
+				}
 				context.Response.StatusCode = 200;
 				context.Response.StatusDescription = "OK";
 				context.ApplicationInstance.CompleteRequest();
 
-				context.Response.End();
-				memStream.Dispose();
 				captchaImg.Dispose();
-
+				context.Response.End();
 			}
 
 			if (context.Request.Path.ToLower() == "/carrotwarethumb.axd") {
@@ -98,18 +97,19 @@ namespace Carrotware.Web.UI.Controls {
 
 				context.Response.ContentType = "image/x-png";
 
-				var memStream = new System.IO.MemoryStream();
-				bmpThumb.Save(memStream, ImageFormat.Png);
-				memStream.WriteTo(context.Response.OutputStream);
+				using (MemoryStream memStream = new MemoryStream()) {
+					bmpThumb.Save(memStream, ImageFormat.Png);
+					memStream.WriteTo(context.Response.OutputStream);
+				}
 
 				context.Response.StatusCode = 200;
 				context.Response.StatusDescription = "OK";
 				context.ApplicationInstance.CompleteRequest();
 
-				context.Response.End();
-				memStream.Dispose();
 				bmpThumb.Dispose();
+				bmpIn.Dispose();
 
+				context.Response.End();
 			}
 
 		}
