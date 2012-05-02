@@ -506,8 +506,12 @@ namespace Carrotware.CMS.Core {
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
 			if (obj == null || GetType() != obj.GetType()) return false;
-			ObjectProperty p = (ObjectProperty)obj;
-			return (Name == p.Name) && (PropertyType == p.PropertyType);
+			if (obj is ObjectProperty) {
+				ObjectProperty p = (ObjectProperty)obj;
+				return (Name == p.Name) && (PropertyType == p.PropertyType);
+			} else {
+				return false;
+			}
 		}
 
 		public override int GetHashCode() {
