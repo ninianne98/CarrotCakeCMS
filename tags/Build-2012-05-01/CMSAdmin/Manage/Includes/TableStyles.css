@@ -1,0 +1,62 @@
+﻿
+.datatable {
+	border-collapse: collapse;
+	border: 1px solid #000000;
+	padding: 5px;
+	font-size: 11px;
+}
+.datatable tr, .datatable td, .datatable th {
+	border: 1px solid #000000;
+	padding: 3px;
+}
+
+
+.dataentrytable {
+	border-collapse: collapse;
+	border: 0px solid #000000;
+	padding: 5px;
+}
+.dataentrytable tr, .dataentrytable td, .dataentrytable th {
+	border: 0px solid #000000;
+	padding: 5px;
+}
+
+.tablehead {
+	font-weight: bolder;
+	background-color: #47805B;
+	color: #fff;
+	border: 1px solid #000000;
+}
+
+.tablehead a, #SortableGrid a {
+	color: #ffffff;
+	cursor: pointer;
+	font-weight: bolder;
+}
+
+.rowalt, .rowalt td {
+	background-color: #CCCCCC;
+	border: 1px solid #000000;
+	font-size: 12px;
+	font-weight: normal;
+}
+.rowregular, .rowregular td {
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+
+input.inputFld, .dateRegion {
+	background: #ffffff;
+}
+
+input.inputBlocked {
+	background: #808080;
+	cursor: crosshair;
+}
+
+.tablecaption {
+	font-weight: bold;
+}
