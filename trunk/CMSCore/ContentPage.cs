@@ -533,6 +533,38 @@ namespace Carrotware.CMS.Core {
 			return oldC;
 		}
 
+
+		public SiteNav GetParentPageNavigation(Guid siteID, string sPage) {
+			var oldC1 = GetPageNavigation(siteID, sPage);
+
+			SiteNav oldC = null;
+			if (oldC1 != null) {
+				oldC = (from ct in db.tblContents
+						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						where r.SiteID == siteID
+							&& r.FileName.ToLower() == oldC.FileName.ToLower()
+							&& ct.IsLatestVersion == true
+						select new SiteNav(r, ct)).FirstOrDefault();
+			}
+			return oldC;
+		}
+
+		public SiteNav GetParentPageNavigation(Guid siteID, Guid rootID) {
+			var oldC1 = GetPageNavigation(siteID, rootID);
+
+			SiteNav oldC = null;
+			if (oldC1 != null) {
+				oldC = (from ct in db.tblContents
+						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						where r.SiteID == siteID
+							&& ct.Root_ContentID == oldC1.Parent_ContentID
+							&& ct.IsLatestVersion == true
+						select new SiteNav(r, ct)).FirstOrDefault();
+			}
+			return oldC;
+		}
+
+
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
 			var oldC = (from ct in db.tblContents
 						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID

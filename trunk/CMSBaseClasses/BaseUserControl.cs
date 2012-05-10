@@ -83,6 +83,13 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
+
+		protected bool IsAuthEditor {
+			get {
+				return AdvancedEditMode || IsAdmin || IsEditor;
+			}
+		}
+
 		public bool IsAdmin {
 			get { return Roles.IsUserInRole("CarrotCMS Administrators"); }
 		}

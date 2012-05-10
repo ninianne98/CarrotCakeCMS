@@ -10,6 +10,8 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class ucEditNotifier : BaseUserControl {
 
+		protected SiteNav navHelper = new SiteNav();
+
 		public Guid CurrentPageID {
 			get;
 			set;
@@ -18,6 +20,58 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		protected void Page_Load(object sender, EventArgs e) {
 			var p = pageHelper.GetLatestContent(SiteID, null, CurrentScriptName);
 			CurrentPageID = p.Root_ContentID;
+
+			if (!IsPostBack) {
+				List<SiteNav> nav = navHelper.GetChildNavigation(SiteID, CurrentPageID, !IsAuthEditor);
+
+				SiteNav pageContents1 = navHelper.GetPageNavigation(SiteID, CurrentPageID);
+				if (pageContents1 != null) {
+					pageContents1.NavMenuText = "Current: " + pageContents1.NavMenuText;
+					pageContents1.NavOrder = -100;
+					nav.Add(pageContents1);
+				}
+
+				SiteNav pageContents2 = navHelper.GetParentPageNavigation(SiteID, CurrentPageID);
+				if (pageContents2 != null) {
+					pageContents2.NavMenuText = "Parent: " + pageContents2.NavMenuText;
+					pageContents2.NavOrder = -110;
+					nav.Add(pageContents2);
+				}
+				SiteNav pageContents3 = new SiteNav();
+				pageContents3.PageActive = true;
+				pageContents3.ContentID = Guid.Empty;
+				pageContents3.Root_ContentID = Guid.Empty;
+				pageContents3.SiteID = SiteID;
+				pageContents3.FileName = "/default.aspx";
+				pageContents3.NavFileName = "/default.aspx";
+				pageContents3.NavMenuText = "Homepage";
+				pageContents3.PageHead = "Homepage";
+				pageContents3.NavOrder = -120;
+				nav.Add(pageContents3);
+
+				List<SiteNav> lstNav = (from n in nav
+										orderby n.NavOrder
+										select new SiteNav {
+											NavOrder = n.NavOrder,
+											NavFileName = n.NavFileName,
+											FileName = n.FileName,
+											NavMenuText = (n.NavOrder > 0 ? "  -- " : "") + n.NavFileName + "  [[" + (n.PageActive ? "" : "{*U*}  ") + n.NavMenuText + "]]",
+											PageActive = n.PageActive,
+											ContentID = n.ContentID,
+											Root_ContentID = n.Root_ContentID,
+											PageHead = n.PageHead,
+											SiteID = n.SiteID
+										}).ToList();
+
+				ddlCMSLinks.DataSource = lstNav;
+				ddlCMSLinks.DataBind();
+
+				ddlCMSLinks.Items.Insert(0, new ListItem("-Navigate-", "00000"));
+			}
+
 		}
+
+
+
 	}
 }

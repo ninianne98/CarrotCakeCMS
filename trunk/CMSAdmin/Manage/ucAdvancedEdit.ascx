@@ -637,7 +637,7 @@
 	}
 
 	function cmsDirtyPageRefresh() {
-		window.setTimeout('location.href = \'<%=CurrentScriptName %>?carrotedit=true&tick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
+		window.setTimeout('location.href = \'<%=CurrentScriptName %>?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
 	}
 
 
