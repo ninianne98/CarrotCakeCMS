@@ -117,9 +117,13 @@ namespace Carrotware.CMS.UI.Base {
 			ContentPage filePage = null;
 
 			if (path.Length < 3) {
-				filePage = pageHelper.FindHome(SiteID);
+				if (IsAdmin || IsEditor) {
+					filePage = pageHelper.FindHome(SiteID, null);
+				} else {
+					filePage = pageHelper.FindHome(SiteID, true);
+				}
 			} else {
-				var pageName = path; //pageHelper.StripSiteFolder(path);
+				var pageName = path;
 				if (IsAdmin || IsEditor) {
 					filePage = pageHelper.GetLatestContent(SiteID, null, pageName);
 				} else {

@@ -57,6 +57,7 @@ namespace Carrotware.CMS.UI.Base {
 
 		public void ProcessRequest(HttpContext context) {
 
+
 			string sFileRequested = context.Request.Path;
 
 			if (context.User.Identity.IsAuthenticated) {
@@ -72,6 +73,7 @@ namespace Carrotware.CMS.UI.Base {
 
 
 			if (sFileRequested.ToLower().EndsWith(".aspx") || sFileRequested.Length < 3) {
+				bool bAllowAnyVersion = pageHelper.AdvancedEditMode || pageHelper.IsAdmin || pageHelper.IsEditor;
 
 				string queryString = "";
 				queryString = context.Request.QueryString.ToString();
@@ -113,19 +115,18 @@ namespace Carrotware.CMS.UI.Base {
 
 
 					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
-						filePage = pageHelper.FindHome(SiteID);
+						if (bAllowAnyVersion) {
+							filePage = pageHelper.FindHome(SiteID, null);
+						} else {
+							filePage = pageHelper.FindHome(SiteID, true);
+						}
 						if (sFileRequested.ToLower() == DEFAULT_FILE && filePage != null) {
-							var sRedirect = filePage.NavFileName;
-							if (string.IsNullOrEmpty(queryString)) {
-								context.Response.Redirect(sRedirect);
-							} else {
-								context.Response.Redirect(sRedirect + "?" + queryString);
-							}
+							sFileRequested = filePage.NavFileName;
 						}
 					}
 
-					var pageName = sFileRequested; // pageHelper.StripSiteFolder(sFileRequested);
-					if (pageHelper.AdvancedEditMode || pageHelper.IsAdmin || pageHelper.IsEditor) {
+					var pageName = sFileRequested;
+					if (bAllowAnyVersion) {
 						filePage = pageHelper.GetLatestContent(SiteID, null, pageName);
 					} else {
 						filePage = pageHelper.GetLatestContent(SiteID, true, pageName);
