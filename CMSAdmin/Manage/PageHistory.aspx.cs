@@ -22,8 +22,11 @@ namespace Carrotware.CMS.UI.Admin {
 			if (!string.IsNullOrEmpty(Request.QueryString["version"])) {
 				guidContentID = new Guid(Request.QueryString["version"].ToString());
 			}
+			ContentPage p = null;
+
 
 			if (guidRootID != Guid.Empty) {
+				p = pageHelper.GetLatestContent(SiteID, guidRootID);
 				if (!IsPostBack) {
 					LoadGrid(hdnSort.Value);
 				}
@@ -32,7 +35,7 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (guidContentID != Guid.Empty) {
-				var p = pageHelper.GetVersion(SiteID, guidContentID);
+				p = pageHelper.GetVersion(SiteID, guidContentID);
 
 				litLeft.Text = p.LeftPageText;
 				litCenter.Text = p.PageText;
@@ -42,6 +45,16 @@ namespace Carrotware.CMS.UI.Admin {
 				pnlDetail.Visible = true;
 				pnlHistory.Visible = false;
 			}
+
+			if (p != null) {
+				lblFilename.Text = p.FileName;
+				if (p.PageActive != true) {
+					imgStatus.ImageUrl = hdnInactive.Value;
+					imgStatus.AlternateText = "Inactive";
+				}
+				imgStatus.ToolTip = imgStatus.AlternateText;
+			}
+
 
 			lnkReturn.NavigateUrl = "./PageHistory.aspx?id=" + guidRootID.ToString();
 
@@ -65,11 +78,14 @@ namespace Carrotware.CMS.UI.Admin {
 				HiddenField hdnIsActive = (HiddenField)dgItem.FindControl("hdnIsActive");
 				CheckBox chkContent = (CheckBox)dgItem.FindControl("chkContent");
 
-				if (hdnIsActive.Value.ToLower() != "true") {
-					imgActive.ImageUrl = hdnInactive.Value;
-					imgActive.AlternateText = "Inactive";
+				if (hdnIsActive != null && imgActive != null) {
+					if (hdnIsActive.Value.ToLower() != "true") {
+						imgActive.ImageUrl = hdnInactive.Value;
+						imgActive.AlternateText = "Inactive";
+					}
+					imgActive.ToolTip = imgActive.AlternateText;
 				}
-				imgActive.ToolTip = imgActive.AlternateText;
+
 				if (chkContent != null) {
 					if (chkContent.Attributes["value"].ToString() == current.ContentID.ToString()) {
 						chkContent.Visible = false;
