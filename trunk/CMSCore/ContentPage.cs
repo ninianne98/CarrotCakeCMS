@@ -255,6 +255,17 @@ namespace Carrotware.CMS.Core {
 			return oldC;
 		}
 
+		public ContentPage FindHome(Guid siteID, bool? active) {
+			var oldC = (from ct in db.tblContents
+						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						orderby ct.NavOrder ascending
+						where r.SiteID == siteID
+							&& (r.PageActive == active || active == null)
+							&& ct.NavOrder < 1
+							&& ct.IsLatestVersion == true
+						select new ContentPage(r, ct)).FirstOrDefault();
+			return oldC;
+		}
 
 		public List<PageWidget> GetAllWidgetsAndUnsaved() {
 			CMSConfigHelper ch = new CMSConfigHelper();
