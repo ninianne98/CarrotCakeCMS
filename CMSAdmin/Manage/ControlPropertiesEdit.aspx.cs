@@ -161,6 +161,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				TextBox txtValue = (TextBox)e.Item.FindControl("txtValue");
 				DropDownList ddlValue = (DropDownList)e.Item.FindControl("ddlValue");
 				CheckBox chkValue = (CheckBox)e.Item.FindControl("chkValue");
+				CheckBoxList chkValues = (CheckBoxList)e.Item.FindControl("chkValues");
+
 
 				txtValue.Visible = true;
 				string sName = hdnName.Value;
@@ -168,8 +170,17 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				var listParm = (from p in lstDefProps
 								where p.CanRead == true
 								&& p.CanWrite == false
-								&& p.Name.ToLower() == ("dict" + sName).ToLower()
+								&& (p.Name.ToLower() == ("dict" + sName).ToLower()
+									|| p.Name.ToLower() == ("chk" + sName).ToLower())
 								select p).FirstOrDefault();
+
+				string sSeedValueProperty = (from p in lstDefProps
+											 where p.CanRead == true
+											 && p.CanWrite == false
+											&& (p.Name.ToLower() == ("dict" + sName).ToLower()
+													|| p.Name.ToLower() == ("chk" + sName).ToLower())
+											 select p.Name).FirstOrDefault();
+
 
 				var dp = (from p in lstDefProps
 						  where p.Name.ToLower() == sName.ToLower()
@@ -178,23 +189,53 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				if (listParm != null) {
 					if (listParm.DefValue is Dictionary<string, string>) {
 						txtValue.Visible = false;
-						ddlValue.Visible = true;
 
-						ddlValue.DataTextField = "Value";
-						ddlValue.DataValueField = "Key";
+						//work with a drop down list, only allow one item in the drop down.
+						if (sSeedValueProperty.StartsWith("dict")) {
+							ddlValue.Visible = true;
 
-						ddlValue.DataSource = listParm.DefValue;
-						ddlValue.DataBind();
+							ddlValue.DataTextField = "Value";
+							ddlValue.DataValueField = "Key";
 
-						ddlValue.Items.Insert(0, new ListItem("-Select Value-", ""));
+							ddlValue.DataSource = listParm.DefValue;
+							ddlValue.DataBind();
 
-						if (!string.IsNullOrEmpty(txtValue.Text)) {
-							try {
-								ddlValue.SelectedValue = txtValue.Text;
-							} catch { }
+							ddlValue.Items.Insert(0, new ListItem("-Select Value-", ""));
+
+							if (!string.IsNullOrEmpty(txtValue.Text)) {
+								try {
+									ddlValue.SelectedValue = txtValue.Text;
+								} catch { }
+							}
+						}
+
+						// work with a checkbox list, allow more than one value
+						if (sSeedValueProperty.StartsWith("chk")) {
+							chkValues.Visible = true;
+
+							chkValues.DataTextField = "Value";
+							chkValues.DataValueField = "Key";
+
+							chkValues.DataSource = listParm.DefValue;
+							chkValues.DataBind();
+
+							// since this is a multi selected capable field, look for anything that starts with the 
+							// field name and has the delimeter trailing
+							var pp = (from p in lstProps
+									  where p.KeyName.ToLower().StartsWith(sName.ToLower() + "|")
+									  select p).ToList();
+
+							if (pp.Count > 0) {
+								foreach (ListItem v in chkValues.Items) {
+									v.Selected = (from p in pp
+												  where p.KeyValue == v.Value
+												  select p.KeyValue).Count() < 1 ? false : true;
+								}
+							}
 						}
 					}
 				}
+
 				string sType = dp.PropertyType.ToString().ToLower();
 				if (sType == "system.boolean") {
 					txtValue.Visible = false;
@@ -222,6 +263,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				TextBox txtValue = (TextBox)r.FindControl("txtValue");
 				DropDownList ddlValue = (DropDownList)r.FindControl("ddlValue");
 				CheckBox chkValue = (CheckBox)r.FindControl("chkValue");
+				CheckBoxList chkValues = (CheckBoxList)r.FindControl("chkValues");
 
 				var p = new WidgetProps();
 				p.KeyName = hdnName.Value;
@@ -230,10 +272,26 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					p.KeyValue = ddlValue.SelectedValue;
 				} else if (chkValue.Visible) {
 					p.KeyValue = chkValue.Checked.ToString();
+				} else if (chkValues.Visible) {
+					//multiple selections are possible, since dictionary is used, insure key is unique by appending the ordinal with a | delimeter.
+					p = null;
+					int CheckedPosition = 0;
+					foreach (ListItem v in chkValues.Items) {
+						if (v.Selected) {
+							var pp = new WidgetProps();
+							pp.KeyName = hdnName.Value + "|" + CheckedPosition.ToString();
+							pp.KeyValue = v.Value.ToString();
+							props.Add(pp);
+							CheckedPosition++;
+						}
+					}
 				} else {
 					p.KeyValue = txtValue.Text;
 				}
-				props.Add(p);
+
+				if (p != null) {
+					props.Add(p);
+				}
 			}
 
 			w.SaveDefaultControlProperties(props);
