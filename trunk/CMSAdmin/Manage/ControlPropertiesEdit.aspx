@@ -15,6 +15,8 @@
 				</div>
 				<div style="float: left;">
 					<asp:DropDownList ID="ddlValue" runat="server" Visible="false" />
+					<asp:CheckBoxList ID="chkValues" runat="server" Visible="false">
+					</asp:CheckBoxList>
 					<asp:CheckBox ID="chkValue" runat="server" Visible="false" />
 					<asp:TextBox ID="txtValue" Width="300px" runat="server" Text='<%# GetSavedValue( String.Format( "{0}", Eval("DefValue")), String.Format( "{0}", Eval("Name")) ) %>' />
 					<asp:HiddenField runat="server" ID="hdnName" Value='<%# String.Format( "{0}", Eval("Name") ) %>' />
