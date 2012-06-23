@@ -26,7 +26,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 
-
 		public void ProcessRequest(HttpContext context) {
 
 			if (context.Request.Path.ToLower() == "/carrotwarecaptcha.axd") {
@@ -63,6 +62,7 @@ namespace Carrotware.Web.UI.Controls {
 				int iThumb = 150;
 
 				string sImg = context.Request.QueryString["thumb"];
+				string sScale = context.Request.QueryString["scale"];
 
 				if (context.Request.QueryString["square"] != null) {
 					string sImgPX = context.Request.QueryString["square"];
@@ -80,13 +80,30 @@ namespace Carrotware.Web.UI.Controls {
 				Bitmap bmpIn = new Bitmap(25, 25);
 				Bitmap bmpThumb = new Bitmap(iThumb, iThumb);
 
+				int iHeight = iThumb;
+				int iWidth = iThumb;
+
 				if (!string.IsNullOrEmpty(sImg)) {
 					sImg = context.Server.MapPath(sImg);
 					if (File.Exists(sImg)) {
 						bmpIn = new Bitmap(sImg);
-						bmpThumb = ResizeBitmap(bmpIn, iThumb, iThumb);
+
+						if (sScale == "true") {
+							int h = bmpIn.Height;
+							int w = bmpIn.Width;
+
+							if (iHeight > 0) {
+								iWidth = (int)(((float)w / (float)h) * (float)iHeight);
+							} else {
+								iHeight = h;
+								iWidth = w;
+							}
+						}
+
+						bmpThumb = ResizeBitmap(bmpIn, iWidth, iHeight);
 					}
 				}
+
 
 				if (bmpThumb == null) {
 					context.Response.StatusCode = 404;
@@ -114,8 +131,10 @@ namespace Carrotware.Web.UI.Controls {
 
 		}
 
+
+
+
+
 	}
-
-
 
 }
