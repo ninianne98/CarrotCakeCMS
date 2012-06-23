@@ -12,6 +12,8 @@ using System.Web.Profile;
 using System.Web.Security;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
+using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -144,12 +146,12 @@ namespace Carrotware.CMS.Core {
 					_p1.Add(new CMSPlugin { Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
-		
+
 					List<CMSPlugin> _p2 = (from d in ds.Tables[0].AsEnumerable()
-								select new CMSPlugin {
-									FilePath = d.Field<string>("filepath"),
-									Caption = d.Field<string>("crtldesc")
-								}).ToList();
+										   select new CMSPlugin {
+											   FilePath = d.Field<string>("filepath"),
+											   Caption = d.Field<string>("crtldesc")
+										   }).ToList();
 
 					_plugins = _p1.Union(_p2).ToList();
 
@@ -271,19 +273,44 @@ namespace Carrotware.CMS.Core {
 			return val;
 		}
 
+
 		public List<ObjectProperty> GetProperties(Object theObject) {
 			PropertyInfo[] info = theObject.GetType().GetProperties();
 
 			List<ObjectProperty> props = (from i in info.AsEnumerable()
-										  select new ObjectProperty {
-											  Name = i.Name,
-											  DefValue = theObject.GetType().GetProperty(i.Name).GetValue(theObject, null),
-											  PropertyType = i.PropertyType,
-											  CanRead = i.CanRead,
-											  CanWrite = i.CanWrite
-										  }).ToList();
+										  select GetCustProps(theObject, i)).ToList();
+
 			return props;
 		}
+
+
+		protected ObjectProperty GetCustProps(Object obj, PropertyInfo prop) {
+
+			ObjectProperty objprop = new ObjectProperty {
+				Name = prop.Name,
+				DefValue = obj.GetType().GetProperty(prop.Name).GetValue(obj, null),
+				PropertyType = prop.PropertyType,
+				CanRead = prop.CanRead,
+				CanWrite = prop.CanWrite,
+				Props = prop,
+				CompanionSourceFieldName = "",
+				FieldMode = (prop.PropertyType.ToString().ToLower() ==  "system.boolean") ?
+						WidgetAttribute.FieldMode.CheckBox : WidgetAttribute.FieldMode.TextBox
+			};
+
+			foreach (Attribute attr in objprop.Props.GetCustomAttributes(true)) {
+				if (attr is WidgetAttribute) {
+					var widgetAttrib = attr as WidgetAttribute;
+					if (null != widgetAttrib) {
+						objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource;
+						objprop.FieldMode = widgetAttrib.Mode;
+					}
+				}
+			}
+
+			return objprop;
+		}
+
 
 		public List<ObjectProperty> GetTypeProperties(Type theType) {
 			PropertyInfo[] info = theType.GetProperties();
@@ -501,6 +528,12 @@ namespace Carrotware.CMS.Core {
 		public Type PropertyType { get; set; }
 
 		public Object DefValue { get; set; }
+
+		public PropertyInfo Props { get; set; }
+
+		public string CompanionSourceFieldName { get; set; }
+
+		public WidgetAttribute.FieldMode FieldMode { get; set; }
 
 
 		public override bool Equals(Object obj) {

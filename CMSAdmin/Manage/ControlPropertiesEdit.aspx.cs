@@ -163,41 +163,64 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				CheckBox chkValue = (CheckBox)e.Item.FindControl("chkValue");
 				CheckBoxList chkValues = (CheckBoxList)e.Item.FindControl("chkValues");
 
-
 				txtValue.Visible = true;
 				string sName = hdnName.Value;
 
-				var listParm = (from p in lstDefProps
-								where p.CanRead == true
-								&& p.CanWrite == false
-								&& (p.Name.ToLower() == ("dict" + sName).ToLower()
-									|| p.Name.ToLower() == ("chk" + sName).ToLower())
-								select p).FirstOrDefault();
+				ObjectProperty ListSourceProperty = new ObjectProperty();
 
-				string sSeedValueProperty = (from p in lstDefProps
-											 where p.CanRead == true
-											 && p.CanWrite == false
-											&& (p.Name.ToLower() == ("dict" + sName).ToLower()
-													|| p.Name.ToLower() == ("chk" + sName).ToLower())
-											 select p.Name).FirstOrDefault();
+				string sListSourcePropertyName = (from p in lstDefProps
+												  where p.CanRead == true
+													 && p.CanWrite == false
+													 && (p.Name.ToLower() == ("dict" + sName).ToLower()
+														 || p.Name.ToLower() == ("chk" + sName).ToLower())
+												  select p.Name).FirstOrDefault();
 
+				if (string.IsNullOrEmpty(sListSourcePropertyName)) {
+					sListSourcePropertyName = (from p in lstDefProps
+											   where p.Name.ToLower() == sName.ToLower()
+													 && !string.IsNullOrEmpty(p.CompanionSourceFieldName)
+											   select p.CompanionSourceFieldName).FirstOrDefault();
+
+					if (string.IsNullOrEmpty(sListSourcePropertyName)) {
+						sListSourcePropertyName = "";
+					}
+
+					ListSourceProperty = (from p in lstDefProps
+										  where p.CanRead == true
+										  && p.CanWrite == false
+										  && p.Name.ToLower() == sListSourcePropertyName.ToLower()
+										  select p).FirstOrDefault();
+
+				} else {
+					if (string.IsNullOrEmpty(sListSourcePropertyName)) {
+						sListSourcePropertyName = "";
+					}
+
+					ListSourceProperty = (from p in lstDefProps
+										  where p.CanRead == true
+										  && p.CanWrite == false
+										  && (p.Name.ToLower() == ("dict" + sName).ToLower()
+											  || p.Name.ToLower() == ("chk" + sName).ToLower())
+										  select p).FirstOrDefault();
+				}
 
 				var dp = (from p in lstDefProps
 						  where p.Name.ToLower() == sName.ToLower()
 						  select p).FirstOrDefault();
 
-				if (listParm != null) {
-					if (listParm.DefValue is Dictionary<string, string>) {
+
+				if (ListSourceProperty != null) {
+					if (ListSourceProperty.DefValue is Dictionary<string, string>) {
 						txtValue.Visible = false;
 
 						//work with a drop down list, only allow one item in the drop down.
-						if (sSeedValueProperty.StartsWith("dict")) {
+						if (sListSourcePropertyName.StartsWith("dict") || dp.FieldMode == WidgetAttribute.FieldMode.DropDownList) {
 							ddlValue.Visible = true;
 
 							ddlValue.DataTextField = "Value";
 							ddlValue.DataValueField = "Key";
 
-							ddlValue.DataSource = listParm.DefValue;
+							ddlValue.DataSource = ListSourceProperty.DefValue;
 							ddlValue.DataBind();
 
 							ddlValue.Items.Insert(0, new ListItem("-Select Value-", ""));
@@ -210,13 +233,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						}
 
 						// work with a checkbox list, allow more than one value
-						if (sSeedValueProperty.StartsWith("chk")) {
+						if (sListSourcePropertyName.StartsWith("chk") || dp.FieldMode == WidgetAttribute.FieldMode.CheckBoxList) {
 							chkValues.Visible = true;
 
 							chkValues.DataTextField = "Value";
 							chkValues.DataValueField = "Key";
 
-							chkValues.DataSource = listParm.DefValue;
+							chkValues.DataSource = ListSourceProperty.DefValue;
 							chkValues.DataBind();
 
 							// since this is a multi selected capable field, look for anything that starts with the 
@@ -237,7 +260,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				}
 
 				string sType = dp.PropertyType.ToString().ToLower();
-				if (sType == "system.boolean") {
+				if (sType == "system.boolean" || dp.FieldMode == WidgetAttribute.FieldMode.CheckBox) {
 					txtValue.Visible = false;
 					chkValue.Visible = true;
 
@@ -269,8 +292,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				p.KeyName = hdnName.Value;
 
 				if (ddlValue.Visible) {
+					// drop down list detected, save the selected item
 					p.KeyValue = ddlValue.SelectedValue;
 				} else if (chkValue.Visible) {
+					//boolean detected
 					p.KeyValue = chkValue.Checked.ToString();
 				} else if (chkValues.Visible) {
 					//multiple selections are possible, since dictionary is used, insure key is unique by appending the ordinal with a | delimeter.
@@ -286,6 +311,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						}
 					}
 				} else {
+					//default, free text field
 					p.KeyValue = txtValue.Text;
 				}
 

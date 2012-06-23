@@ -64,6 +64,10 @@
       <Project>{88CC5073-9F28-42EB-A502-133DB06865A7}</Project>
       <Name>CMSData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
+      <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
+      <Name>CMSInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
