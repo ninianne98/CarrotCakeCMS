@@ -7,6 +7,8 @@ namespace Carrotware.CMS.Interface {
 	public class WidgetAttribute : Attribute {
 
 		public enum FieldMode {
+			Unknown,
+			DictionaryList,
 			DropDownList,
 			CheckBoxList,
 			TextBox,
