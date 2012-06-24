@@ -18,9 +18,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			var p = pageHelper.GetLatestContent(SiteID, null, CurrentScriptName);
-			CurrentPageID = p.Root_ContentID;
-			lnkCurrent.HRef = p.FileName;
+			var currentPage = pageHelper.GetLatestContent(SiteID, null, CurrentScriptName);
+			CurrentPageID = currentPage.Root_ContentID;
+			lnkCurrent.HRef = currentPage.FileName;
 
 			if (!IsPostBack) {
 				List<SiteNav> nav = navHelper.GetChildNavigation(SiteID, CurrentPageID, !IsAuthEditor);
@@ -42,6 +42,27 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				} else {
 					lnkParent.Visible = false;
 				}
+
+				var filePage = pageHelper.FindHome(SiteID, null);
+
+				List<SiteNav> lstNavTop = null;
+				if (filePage.Root_ContentID == CurrentPageID) {
+					lstNavTop = (from n in navHelper.GetTopNavigation(SiteID, !IsAuthEditor)
+								 where n.Root_ContentID != CurrentPageID
+								 orderby n.NavOrder
+								 select new SiteNav {
+									 NavOrder = n.NavOrder,
+									 NavFileName = n.NavFileName,
+									 FileName = n.FileName,
+									 NavMenuText = (n.NavOrder > 0 ? "  -- " : "") + n.NavFileName + "  [[" + (n.PageActive ? "" : "{*U*}  ") + n.NavMenuText + "]]",
+									 PageActive = n.PageActive,
+									 ContentID = n.ContentID,
+									 Root_ContentID = n.Root_ContentID,
+									 PageHead = n.PageHead,
+									 SiteID = n.SiteID
+								 }).ToList();
+				}
+
 				//SiteNav pageContents3 = new SiteNav();
 				//pageContents3.PageActive = true;
 				//pageContents3.ContentID = Guid.Empty;
@@ -67,6 +88,12 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 											PageHead = n.PageHead,
 											SiteID = n.SiteID
 										}).ToList();
+
+
+				if (lstNavTop != null) {
+					lstNav = lstNavTop.Union(lstNav).ToList();
+				}
+
 
 				ddlCMSLinks.DataSource = lstNav;
 				ddlCMSLinks.DataBind();
