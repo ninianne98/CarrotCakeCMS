@@ -14,6 +14,33 @@ namespace Carrotware.CMS.UI.Admin.Manage {
     public partial class ucEditNotifier {
         
         /// <summary>
+        /// lnkParent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkParent;
+        
+        /// <summary>
+        /// lnkCurrent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkCurrent;
+        
+        /// <summary>
+        /// lblChildDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblChildDDL;
+        
+        /// <summary>
         /// ddlCMSLinks control.
         /// </summary>
         /// <remarks>
