@@ -23,6 +23,7 @@
 		height: 128px !important;
 		z-index: 1000 !important;
 		font-size: 14px !important;
+		font-family:  Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	}
 	.cmsNavigationBlock img {
 		border: 1px solid #CDE3D6 !important;
@@ -34,12 +35,16 @@
 		font-weight: bold !important;
 		margin-left: 10px !important;
 		margin-right: 10px !important;
+		font-size: 14px !important;
+		font-family:  Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	}
 	.cmsFooterP {
 		text-align: center !important;
 		padding: 5px !important;
 		margin: 5px !important;
 		line-height: 110% !important;
+		font-size: 14px !important;
+		font-family:  Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	}
 </style>
 <div style="text-align: center; background: #CDE3D6; padding: 5px; margin: 5px; border: 2px dashed #676F6A;">
