@@ -58,7 +58,7 @@ namespace Carrotware.CMS.UI.Base {
 			if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
 				CurrentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
 				CurrentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
-				
+
 			}
 
 			//SetPageButtons(this);
