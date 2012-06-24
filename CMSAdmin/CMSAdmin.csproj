@@ -80,6 +80,13 @@
     <Compile Include="Manage\ControlPropertiesEdit.aspx.designer.cs">
       <DependentUpon>ControlPropertiesEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\PageEdit.aspx.cs">
+      <DependentUpon>PageEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\PageEdit.aspx.designer.cs">
+      <DependentUpon>PageEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\ucEditNotifier.ascx.cs">
       <DependentUpon>ucEditNotifier.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -381,6 +388,7 @@
     <Content Include="Manage\Images\video.png" />
     <Content Include="Manage\Images\wordprocessing.png" />
     <Content Include="Manage\Images\x.png" />
+    <Content Include="Manage\PageEdit.aspx" />
     <Content Include="Manage\tiny_mce\classes\adapter\jquery\adapter.js" />
     <Content Include="Manage\tiny_mce\classes\adapter\jquery\jquery.tinymce.js" />
     <Content Include="Manage\tiny_mce\classes\adapter\prototype\adapter.js" />
