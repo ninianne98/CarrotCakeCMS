@@ -1,11 +1,13 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
 <div style="clear: both;">
 	&nbsp;</div>
 <carrot:jquery runat="server" ID="jquery1" />
 
 <script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
 
-<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
+<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet"
+	type="text/css" />
 
 <script src="/Manage/includes/base64.js" type="text/javascript"></script>
 
@@ -25,7 +27,7 @@
 	#cmsDelIconDiv {
 		text-align: right;
 	}
-	.HighlightPH {
+	.cmsHighlightPH {
 		height: 25px !important;
 		margin: 5px;
 		padding: 5px;
@@ -47,12 +49,12 @@
 	
 	var thisPageID = '<%=guidContentID.ToString() %>';
 
-	function EscapeFile() {
+	function cmsEscapeFile() {
 		thisPage = cmsMakeStringSafe(thisPage);
 	}
 
 	$(document).ready(function() {
-		EscapeFile();
+		cmsEscapeFile();
 	});
 
 	function cmsMakeStringSafe(val) {
@@ -194,7 +196,7 @@
 <%} %>
 
 	function cmsUpdateHeartbeat(data, status) {
-		var hb = $('#heatbeat');
+		var hb = $('#cmsHeartBeat');
 		hb.empty().append('HB:  ');
 		hb.append(data.d);
 		CMSBusyShort();
@@ -250,21 +252,27 @@
 	}
 
 	function cmsAlertModal(request) {
-		$("#modalalert").dialog("destroy");
+		$("#CMSmodalalert").dialog("destroy");
 
-		$("#modalalert").dialog({
+		$("#CMSmodalalert").dialog({
 			//autoOpen: false,
 			height: 400,
 			width: 600,
 			modal: true
 		});
 
-		$("#modalalertmessage").html(request);
+		$("#CMSmodalalertmessage").html(request);
 		
 		
-		cmsFixDialog('modalalertmessage');
+		cmsFixDialog('CMSmodalalertmessage');
 				
 	}
+
+
+    function cmsShowEditPageInfo() {
+        //cmsAlertModal("ShowCoreInfo");
+        cmsLaunchWindow('/Manage/PageEdit.aspx?pageid=' + thisPageID);
+    }
 
 
 	function CMSBusyShort() {
@@ -289,7 +297,7 @@
 
 
 	var mnuVis = true;
-	function ToggleMenu() {
+	function cmsToggleMenu() {
 		var t = $('#cmsMainToolbox');
 		var m = $('#cmsMnuToggle');
 		//alert(m.attr('id'));
@@ -317,13 +325,13 @@
 		CMSBusyShort();
 
 		$("#fullorder").val('');
-		$(".cmsTargetArea").find('#ctrlOrder').each(function(i) {
+		$(".cmsTargetArea").find('#cmsCtrlOrder').each(function(i) {
 			var txt = $(this);
 			$(txt).val('');
 			var p = txt.parent().parent().parent().attr('id');
-			var key = txt.parent().find('#ctrlID').val();
+			var key = txt.parent().find('#cmsCtrlID').val();
 			txt.val(i + '\t' + p + '\t' + key);
-			//alert($('#'+p).find('#ctrlID').val());
+			//alert($('#'+p).find('#cmsCtrlID').val());
 
 			$("#fullorder").val($("#fullorder").val() + '\r\n ' + txt.val());
 
@@ -335,9 +343,9 @@
 
 
 	function CarrotCMSRemoveWidget(v) {
-		$("#removeconfirm").dialog("destroy");
+		$("#CMSremoveconfirm").dialog("destroy");
 		
-		$("#removeconfirm" ).dialog({
+		$("#CMSremoveconfirm" ).dialog({
 			open: function() {
 				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus(); 
 			},
@@ -357,7 +365,7 @@
 				}
 		});
 		
-		cmsFixDialog('removeconfirmmsg');
+		cmsFixDialog('CMSremoveconfirmmsg');
 		
 	}
 
@@ -368,7 +376,7 @@
 		if (tgt.is("a.ui-icon-trash")) {
 			var p = $($(tgt).parent().parent().parent().parent());
 			//alert(p.attr('id'));
-			var txt = p.find('#ctrlOrder');
+			var txt = p.find('#cmsCtrlOrder');
 			txt.val('-1');
 			cmsDelItem(p);
 		}
@@ -396,28 +404,28 @@
 		$(".cmsTargetArea").sortable({
 			revert: true,
 			dropOnEmpty: true,
-			placeholder: "HighlightPH GlossySeaGreen ui-state-highlight ui-corner-all",
-			hoverClass: "HighlightPH GlossySeaGreen ui-state-highlight ui-corner-all"
+			placeholder: "cmsHighlightPH GlossySeaGreen ui-state-highlight ui-corner-all",
+			hoverClass: "cmsHighlightPH GlossySeaGreen ui-state-highlight ui-corner-all"
 		});
 
-		$("#toolbox div.toolitem").draggable({
+		$("#cmsToolBox div.cmsToolItem").draggable({
 			connectToSortable: ".cmsTargetArea",
 			helper: "clone",
 			revert: "invalid",
-			handle: "p.toolitem",
-			placeholder: "HighlightPH GlossySeaGreen ui-state-highlight ui-corner-all"
+			handle: "p.cmsToolItem",
+			placeholder: "cmsHighlightPH GlossySeaGreen ui-state-highlight ui-corner-all"
 		});
 
 
 		$(".cmsTargetArea").bind("sortupdate", function(event, ui) {
 			var id = $(ui.item).attr('id');
-			var val = $(ui.item).find('#ctrlID').val();
+			var val = $(ui.item).find('#cmsCtrlID').val();
 			$("#moveditem").val(val);
 			setTimeout("cmsBuildOrder();", 500);
 			setTimeout("cmsUpdateWidgets();", 1800);
 		});
 
-		$("div#toolbox").disableSelection();
+		$("div#cmsToolBox").disableSelection();
 		$("#cmsContentArea a").enableSelection();
 		$("#cmsWidgetHead a").enableSelection();
 
@@ -425,7 +433,7 @@
 
 	function cmsSetValue(u) {
 		var id = $(u).attr('id');
-		var val = $(u).find('#ctrlOrder').val();
+		var val = $(u).find('#cmsCtrlOrder').val();
 		//alert(val);
 		$("#moveditem").val(val);
 		setTimeout("cmsBuildOrder();", 500);
@@ -433,7 +441,7 @@
 
 
 	function cmsDelItem(item) {
-		item.appendTo("#trashlist");
+		item.appendTo("#cmsTrashList");
 		setTimeout("cmsBuildOrder();", 500);
 		setTimeout("cmsUpdateWidgets();", 1800);
 	}
@@ -481,32 +489,34 @@
 
 <%--<div id="divCMSBusy" style="position: absolute; top: 20px; left: 20px; width: 90%; height: 90%; z-index: 500;">
 </div>--%>
-<div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="padding: 5px; margin: 5px; border: solid 2px #000;
-	color: #000; background: #fff; position: absolute; top: 20px; left: 20px; min-width: 275px; min-height: 200px; z-index: 1000;">
+<div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all"
+	style="padding: 5px; margin: 5px; border: solid 2px #000; color: #000; background: #fff;
+	position: absolute; top: 20px; left: 20px; min-width: 275px; min-height: 200px;
+	z-index: 1000;">
 	<div id="divCMSActive" style="z-index: 500; border: 0px solid #ddd;">
-		<div onclick="ToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick' title="toggle" style="margin: 2px; float: right;">
+		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick'
+			title="toggle" style="margin: 2px; float: right;">
 			T
 		</div>
-		<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e' title="R" style="margin: 2px;
-			float: right;">
+		<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e'
+			title="R" style="margin: 2px; float: right;">
 			R
 		</div>
-		<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w' title="L" style="margin: 2px;
-			float: right;">
+		<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w'
+			title="L" style="margin: 2px; float: right;">
 			L
 		</div>
-		<p class="toolboxmenu ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
+		<p class="ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
 			Toolbox
 		</p>
-		<br />
 		<div class="ui-widget" runat="server" id="divEditing">
-			<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
+			<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px;
+				margin-bottom: 5px;">
 				<p>
 					<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
 					<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
 			</div>
 		</div>
-		<br />
 		<div style="display: none;" class="GlossySeaGreen">
 			fullorder<br />
 			<textarea rows="5" cols="30" id="fullorder" style="width: 310px; height: 50px;"></textarea><br />
@@ -514,39 +524,44 @@
 			<input type="text" id="moveditem" style="width: 310px;" /><br />
 		</div>
 		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
+			<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info"
+				style="text-align: center; margin: 5px; padding: 5px;" onclick="cmsShowEditPageInfo();" />
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate"
+				runat="server">
 			</asp:DropDownList>
 			<br />
-			<input runat="server" id="btnTemplate" type="button" value="Apply" style="text-align: center; margin: 5px; padding: 5px;"
-				onclick="cmsUpdateTemplate();" />
+			<input runat="server" id="btnTemplate" type="button" value="Apply" style="text-align: center;
+				margin: 5px; padding: 5px;" onclick="cmsUpdateTemplate();" />
 		</div>
 		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
-			<br />
 			<%--<asp:Button ID="btnSave" class="GlossySeaGreen" runat="server" Text="Save" Style="margin: 2px; padding: 2px;" OnClick="btnSave_Click" />--%>
-			<input runat="server" id="btnToolboxSave" type="button" value="Save" style="text-align: center; margin: 5px; padding: 5px;"
-				onclick="cmsApplyChanges();" />
+			<input runat="server" id="btnToolboxSave" type="button" value="Save" style="text-align: center;
+				margin: 5px; padding: 5px;" onclick="cmsApplyChanges();" />
 			&nbsp;&nbsp;&nbsp;
-			<input type="button" value="Cancel" style="text-align: center; margin: 5px; padding: 5px;" onclick="cmsCancelEdit();" />
+			<input type="button" value="Cancel" style="text-align: center; margin: 5px; padding: 5px;"
+				onclick="cmsCancelEdit();" />
 		</div>
 	</div>
 	<div id="cmsMainToolbox">
 		<br style="clear: none;" />
 		<asp:Repeater ID="rpTools" runat="server">
 			<HeaderTemplate>
-				<div id="toolbox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
-					padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+				<div id="cmsToolBox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto;
+					height: 290px; width: 250px; padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
 			</HeaderTemplate>
 			<ItemTemplate>
-				<div class="toolitem GlossySeaGreen ui-widget-content ui-corner-all" id="toolItem">
-					<div id="cmsControl" class="GlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
-						<p class="toolitem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
+				<div class="cmsToolItem GlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
+					<div id="cmsControl" class="GlossySeaGreen" style="min-height: 75px; min-width: 125px;
+						padding: 2px; margin: 2px;">
+						<p class="cmsToolItem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move;
+							clear: both; padding: 2px; margin: 2px;">
 							<%# Eval("Caption")%>
 						</p>
 						<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
-						<input type="hidden" id="ctrlID" size="35" value="<%# Eval("FilePath")%>" />
-						<input type="hidden" id="ctrlOrder" value="0" />
-						<div style="text-align: right;" id="ctrlBtn">
+						<input type="hidden" id="cmsCtrlID" size="35" value="<%# Eval("FilePath")%>" />
+						<input type="hidden" id="cmsCtrlOrder" value="0" />
+						<div style="text-align: right;" id="cmsCtrlButton">
 						</div>
 					</div>
 				</div>
@@ -554,51 +569,57 @@
 			<FooterTemplate>
 				</div></FooterTemplate>
 		</asp:Repeater>
-		<div id="trashlist" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
-			background-color: #000;">
+		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px;
+			overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
 		</div>
 	</div>
-	<div id="heatbeat" style="clear: both; padding: 2px; margin: 2px;">
+	<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
 	</div>
 </div>
 <div style="display: none" class="GlossySeaGreen">
-	<div id="modalalert" class="GlossySeaGreen" title="CMS Alert">
-		<p id="modalalertmessage">
+	<div id="CMSmodalalert" class="GlossySeaGreen" title="CMS Alert">
+		<p id="CMSmodalalertmessage">
 			&nbsp;</p>
 	</div>
-	<div id="removeconfirm" class="GlossySeaGreen" title="Remove Widget?">
-		<p id="removeconfirmmsg">
+	<div id="CMSremoveconfirm" class="GlossySeaGreen" title="Remove Widget?">
+		<p id="CMSremoveconfirmmsg">
 			Are you sure you want to remove this widget?</p>
 	</div>
 	<div style="display: none">
 		<img src="/manage/images/x.png" />
 	</div>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtCenter" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtLeft" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtRight" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
-	<div id="cmsAdminEditCenter" class="GlossySeaGreen" style="height: 320px; width: 730px; border: none 0px #000;">
+	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtCenter" runat="server" TextMode="MultiLine"
+		Rows="15" Columns="80"></asp:TextBox>
+	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtLeft" runat="server" TextMode="MultiLine"
+		Rows="15" Columns="80"></asp:TextBox>
+	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtRight" runat="server" TextMode="MultiLine"
+		Rows="15" Columns="80"></asp:TextBox>
+	<div id="cmsAdminEditCenter" class="GlossySeaGreen" style="height: 320px; width: 730px;
+		border: none 0px #000;">
 		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
 			Edit Center</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
-			Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="clickCenterBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnCenterDone"
-			value="Done" />
+		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reBody"
+			runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox><br />
+		<input class="GlossySeaGreen" onclick="cmsClickCenterBtn()" type="button" style="margin: 2px;
+			padding: 2px;" id="btnCenterDone" value="Done" />
 	</div>
-	<div id="cmsAdminEditLeft" class="GlossySeaGreen" style="height: 300px; width: 730px; border: none 0px #000;">
+	<div id="cmsAdminEditLeft" class="GlossySeaGreen" style="height: 300px; width: 730px;
+		border: none 0px #000;">
 		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
 			Edit Left</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reLeftBody" runat="server" TextMode="MultiLine"
-			Rows="15" Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="clickLeftBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnLeftDone"
-			value="Done" />
+		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reLeftBody"
+			runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox><br />
+		<input class="GlossySeaGreen" onclick="cmsClickLeftBtn()" type="button" style="margin: 2px;
+			padding: 2px;" id="btnLeftDone" value="Done" />
 	</div>
-	<div id="cmsAdminEditRight" class="GlossySeaGreen" style="height: 300px; width: 730px; border: none 0px #000;">
+	<div id="cmsAdminEditRight" class="GlossySeaGreen" style="height: 300px; width: 730px;
+		border: none 0px #000;">
 		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
 			Edit Right</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reRightBody" runat="server" TextMode="MultiLine"
-			Rows="15" Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="clickRightBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnRightDone"
-			value="Done" />
+		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reRightBody"
+			runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox><br />
+		<input class="GlossySeaGreen" onclick="cmsClickRightBtn()" type="button" style="margin: 2px;
+			padding: 2px;" id="btnRightDone" value="Done" />
 	</div>
 </div>
 
@@ -656,7 +677,7 @@
 
 <script type="text/javascript">
 
-	function clickCenterBtn() {
+	function cmsClickCenterBtn() {
 		tinyMCE.triggerSave();
 		var ed = tinyMCE.get('<%=reBody.ClientID%>');
 		var d = ed.getContent();
@@ -670,7 +691,7 @@
 		cmsSaveContent(d, 'c');
 	}
 
-	function clickLeftBtn() {
+	function cmsClickLeftBtn() {
 		tinyMCE.triggerSave();
 		var ed = tinyMCE.get('<%=reLeftBody.ClientID%>');
 		var d = ed.getContent();
@@ -684,7 +705,7 @@
 		cmsSaveContent(d, 'l');
 	}
 
-	function clickRightBtn() {
+	function cmsClickRightBtn() {
 		tinyMCE.triggerSave();
 		var ed = tinyMCE.get('<%=reRightBody.ClientID%>');
 		var d = ed.getContent();
@@ -702,20 +723,20 @@
 	function CarrotCMSEdit(f, v) {
 		//alert(f + ' -- ' + v);
 		if (f == 'c') {
-			ClickCenterEdit();
+			cmsClickCenterEdit();
 		}
 		if (f == 'l') {
-			ClickLeftEdit();
+			cmsClickLeftEdit();
 		}
 		if (f == 'r') {
-			ClickRightEdit();
+			cmsClickRightEdit();
 		}
 
 	}
 
 
 
-	function ClickCenterEdit() {
+	function cmsClickCenterEdit() {
 		$("#cmsAdminEditCenter").modal({
 			onShow: function(dialog) {
 				$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
@@ -738,7 +759,7 @@
 	}
 
 
-	function ClickLeftEdit() {
+	function cmsClickLeftEdit() {
 		$("#cmsAdminEditLeft").modal({
 			onShow: function(dialog) {
 				$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
@@ -761,7 +782,7 @@
 	}
 
 
-	function ClickRightEdit() {
+	function cmsClickRightEdit() {
 		$("#cmsAdminEditRight").modal({
 			onShow: function(dialog) {
 				$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
@@ -811,7 +832,7 @@
 			skin: "o2k7",
 			skin_variant: "silver",
 			plugins: "advimage,advlink,advlist,media,iespell,inlinepopups",
-			file_browser_callback: "fileBrowserCallback",
+			file_browser_callback: "cmsFileBrowserCallback",
 			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,forecolor,|,outdent,indent,blockquote,|,bullist,numlist,|,link,unlink,anchor,image,media,|,fileupbtn,cleanup,code,help",
 			theme_advanced_buttons2: "",
 			theme_advanced_buttons3: "",
@@ -831,7 +852,7 @@
 						//debugger;
 						ed.focus();
 						//ed.selection.setContent('custom text');
-						var x = fileBrowserCallback(ed, '', '', this);
+						var x = cmsFileBrowserCallback(ed, '', '', this);
 						//ed.selection.setContent(x);
 					}
 				});
@@ -841,7 +862,7 @@
 
 
 	//http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
-	function fileBrowserCallback(field_name, url, type, win) {
+	function cmsFileBrowserCallback(field_name, url, type, win) {
 		var sURL = "/Manage/FileBrowser.aspx?useTiny=1&fldrpath=/";
 
 		// block multiple file browser windows
@@ -868,7 +889,7 @@
 	}
 
 
-	function toggleEditor(id) {
+	function cmsToggleTinyMCE(id) {
 		if (!tinyMCE.get(id))
 			tinyMCE.execCommand('mceAddControl', false, id);
 		else
@@ -880,7 +901,7 @@
 <script type="text/javascript">
 	var fldName = '';
 	var winBrowse = null;
-	function FileBrowserOpen(fldN) {
+	function cmsFileBrowserOpen(fldN) {
 		fldN = '#' + fldN;
 		var fld = $(fldN);
 		fldName = fld.attr('id');
@@ -892,7 +913,7 @@
 		return false;
 	}
 
-	function fnSetFile(v) {
+	function cmsSetFileName(v) {
 		var fldN = '#' + fldName;
 		var fld = $(fldN);
 		fld.val(v);
