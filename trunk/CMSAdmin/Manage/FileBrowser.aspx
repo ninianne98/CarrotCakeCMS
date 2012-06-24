@@ -89,10 +89,10 @@
 			fld.val(val);
 		}
 
-		function fnSetFile() {
+		function cmsSetFileName() {
 			var fldN = '#txtSelectedFile';
 			var fld = $(fldN);
-			window.opener.fnSetFile(fld.val());
+			window.opener.cmsSetFileName(fld.val());
 		}
 
 	</script>
@@ -382,7 +382,7 @@
 	</asp:Literal>
 	<div style="display: none">
 		<asp:Literal runat="server" ID="litFileMgr">
-		<input type="submit" id="Submit1" name="insert" value="Select" onclick="fnSetFile();return false;" />
+		<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName();return false;" />
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
 		</asp:Literal>

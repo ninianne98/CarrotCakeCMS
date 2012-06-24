@@ -73,19 +73,19 @@
 	<script type="text/javascript">
 
 		function alertModal(request) {
-			$("#modalalert").dialog("destroy");
+			$("#CMSmodalalert").dialog("destroy");
 
-			$("#modalalert").dialog({
+			$("#CMSmodalalert").dialog({
 				//autoOpen: false,
 				height: 400,
 				width: 600,
 				modal: true
 			});
 
-			$("#modalalertmessage").html(request);
+			$("#CMSmodalalertmessage").html(request);
 
-			var c = $("#modalalertmessage").parent().parent().attr('class');
-			$("#modalalertmessage").parent().parent().attr('class', "GlossySeaGreen " + c);
+			var c = $("#CMSmodalalertmessage").parent().parent().attr('class');
+			$("#CMSmodalalertmessage").parent().parent().attr('class', "GlossySeaGreen " + c);
 		}
 
 		function ProcessKeyPress(e) {
@@ -166,7 +166,7 @@
 
 		function LaunchWindow(theURL) {
 			TheURL = theURL;
-			$('#modalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="690" height="475" src="' + TheURL + '" /> </div>');
+			$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="690" height="475" src="' + TheURL + '" /> </div>');
 
 			$("#divAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 				css: { width: '380px', height: '550px' },
@@ -182,7 +182,7 @@
 			$("#basic-modal-content").modal({ onClose: function(dialog) {
 				//$.modal.close(); // must call this!
 				setTimeout("$.modal.close();", 800);
-				$('#modalFrame').html('<div id="divAjaxMain"></div>');
+				$('#cmsModalFrame').html('<div id="divAjaxMain"></div>');
 				DirtyPageRefresh();
 			}
 			});
@@ -233,7 +233,7 @@
 			skin: "o2k7",
 			skin_variant: "silver",
 			plugins: "advimage,advlink,advlist,media,iespell,inlinepopups",
-			file_browser_callback: "fileBrowserCallback",
+			file_browser_callback: "cmsFileBrowserCallback",
 			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,forecolor,|,outdent,indent,blockquote,|,bullist,numlist,|,link,unlink,anchor,image,media,|,fileupbtn,cleanup,code,help",
 			theme_advanced_buttons2: "",
 			theme_advanced_buttons3: "",
@@ -253,7 +253,7 @@
 						//debugger;
 						ed.focus();
 						//ed.selection.setContent('custom text');
-						var x = fileBrowserCallback(ed, '', '', this);
+						var x = cmsFileBrowserCallback(ed, '', '', this);
 						//ed.selection.setContent(x);
 					}
 				});
@@ -264,7 +264,7 @@
 
 
 		//http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
-		function fileBrowserCallback(field_name, url, type, win) {
+		function cmsFileBrowserCallback(field_name, url, type, win) {
 			var sURL = "/Manage/FileBrowser.aspx?useTiny=1&fldrpath=/";
 
 			// block multiple file browser windows
@@ -291,7 +291,7 @@
 		}
 
 
-		function toggleEditor(id) {
+		function cmsToggleTinyMCE(id) {
 			if (!tinyMCE.get(id))
 				tinyMCE.execCommand('mceAddControl', false, id);
 			else
@@ -305,7 +305,7 @@
 	<script type="text/javascript">
 		var fldName = '';
 		var winBrowse = null;
-		function FileBrowserOpen(fldN) {
+		function cmsFileBrowserOpen(fldN) {
 			fldN = '#' + fldN;
 			var fld = $(fldN);
 			fldName = fld.attr('id');
@@ -320,7 +320,7 @@
 			return false;
 		}
 
-		function fnSetFile(v) {
+		function cmsSetFileName(v) {
 			var fldN = '#' + fldName;
 			var fld = $(fldN);
 			fld.val(v);
@@ -380,7 +380,7 @@
 		</div>
 		<div style="display: none">
 			<div id="basic-modal-content">
-				<div id="modalFrame">
+				<div id="cmsModalFrame">
 					<%--<iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="550" height="600" src="/Manage/blank.htm"></iframe>--%>
 				</div>
 			</div>
@@ -388,8 +388,8 @@
 				<img src="/manage/images/x.png" />
 			</div>
 			<div style="display: none">
-				<div id="modalalert" title="CMS Alert">
-					<p id="modalalertmessage">
+				<div id="CMSmodalalert" title="CMS Alert">
+					<p id="CMSmodalalertmessage">
 						&nbsp;</p>
 				</div>
 			</div>
