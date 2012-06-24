@@ -40,15 +40,16 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 
 			dbFAQDataContext db = new dbFAQDataContext();
 
-			var dtFAQ = (from f in db.tblFAQs
+			var lstFAQ = (from f in db.tblFAQs
 						 where f.SiteID == SiteID
+						 && f.IsActive == true
 						 orderby f.SortOrder
 						 select f).ToList();
 
-			if (dtFAQ == null) {
+			if (lstFAQ == null) {
 				dgFAQ.Visible = false;
 			} else {
-				dgFAQ.DataSource = dtFAQ;
+				dgFAQ.DataSource = lstFAQ;
 				dgFAQ.DataBind();
 				dgFAQ.Visible = true;
 			}
