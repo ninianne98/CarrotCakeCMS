@@ -294,7 +294,7 @@ namespace Carrotware.CMS.Core {
 				CanWrite = prop.CanWrite,
 				Props = prop,
 				CompanionSourceFieldName = "",
-				FieldMode = (prop.PropertyType.ToString().ToLower() ==  "system.boolean") ?
+				FieldMode = (prop.PropertyType.ToString().ToLower() == "system.boolean") ?
 						WidgetAttribute.FieldMode.CheckBox : WidgetAttribute.FieldMode.TextBox
 			};
 
@@ -302,8 +302,8 @@ namespace Carrotware.CMS.Core {
 				if (attr is WidgetAttribute) {
 					var widgetAttrib = attr as WidgetAttribute;
 					if (null != widgetAttrib) {
-						objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource;
-						objprop.FieldMode = widgetAttrib.Mode;
+						try { objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource; } catch { objprop.CompanionSourceFieldName = ""; }
+						try { objprop.FieldMode = widgetAttrib.Mode; } catch { objprop.FieldMode = WidgetAttribute.FieldMode.Unknown; }
 					}
 				}
 			}
@@ -331,11 +331,15 @@ namespace Carrotware.CMS.Core {
 		private string ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + HttpContext.Current.Request.Path.ToString().ToLower() + "_cmsAdminContent";
 		private string WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + HttpContext.Current.Request.Path.ToString().ToLower() + "_cmsAdminWidget";
 
-		public void OverrideKey(string sPageName) {
+		public void OverrideKey(Guid guidContentID) {
+			ContentPage pageHelper = new ContentPage();
+			var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+			OverrideKey(pageContents.FileName);
+		}
 
+		public void OverrideKey(string sPageName) {
 			ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + sPageName.ToLower() + "_cmsAdminContent";
 			WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + sPageName.ToLower() + "_cmsAdminWidget";
-
 		}
 
 		protected Guid CurrentUserGuid = Guid.Empty;
@@ -395,7 +399,7 @@ namespace Carrotware.CMS.Core {
 					Object genpref = xmlSerializer.Deserialize(stringReader);
 					stringReader.Close();
 					c = genpref as ContentPage;
-				} catch { }
+				} catch (Exception ex) { }
 				return c;
 			}
 			set {
