@@ -1,13 +1,11 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
 <div style="clear: both;">
 	&nbsp;</div>
 <carrot:jquery runat="server" ID="jquery1" />
 
 <script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
 
-<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet"
-	type="text/css" />
+<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
 
 <script src="/Manage/includes/base64.js" type="text/javascript"></script>
 
@@ -141,7 +139,7 @@
 
 		var webMthd = webSvc + "/CacheWidgetUpdate";
 
-		var val = $("#fullorder").val();
+		var val = $("#cmsFullOrder").val();
 
 		val = cmsMakeStringSafe(val);
 
@@ -324,7 +322,7 @@
 	function cmsBuildOrder() {
 		CMSBusyShort();
 
-		$("#fullorder").val('');
+		$("#cmsFullOrder").val('');
 		$(".cmsTargetArea").find('#cmsCtrlOrder').each(function(i) {
 			var txt = $(this);
 			$(txt).val('');
@@ -333,7 +331,7 @@
 			txt.val(i + '\t' + p + '\t' + key);
 			//alert($('#'+p).find('#cmsCtrlID').val());
 
-			$("#fullorder").val($("#fullorder").val() + '\r\n ' + txt.val());
+			$("#cmsFullOrder").val($("#cmsFullOrder").val() + '\r\n ' + txt.val());
 
 		});
 	}
@@ -386,7 +384,7 @@
 
 	function cmsSetOrder(fld) {
 		var id = $(fld).attr('id');
-		$("#moveditem").val(id);
+		$("#cmsMovedItem").val(id);
 	}
 
 
@@ -420,7 +418,7 @@
 		$(".cmsTargetArea").bind("sortupdate", function(event, ui) {
 			var id = $(ui.item).attr('id');
 			var val = $(ui.item).find('#cmsCtrlID').val();
-			$("#moveditem").val(val);
+			$("#cmsMovedItem").val(val);
 			setTimeout("cmsBuildOrder();", 500);
 			setTimeout("cmsUpdateWidgets();", 1800);
 		});
@@ -435,7 +433,7 @@
 		var id = $(u).attr('id');
 		var val = $(u).find('#cmsCtrlOrder').val();
 		//alert(val);
-		$("#moveditem").val(val);
+		$("#cmsMovedItem").val(val);
 		setTimeout("cmsBuildOrder();", 500);
 	}
 
@@ -489,73 +487,65 @@
 
 <%--<div id="divCMSBusy" style="position: absolute; top: 20px; left: 20px; width: 90%; height: 90%; z-index: 500;">
 </div>--%>
-<div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all"
-	style="padding: 5px; margin: 5px; border: solid 2px #000; color: #000; background: #fff;
-	position: absolute; top: 20px; left: 20px; min-width: 275px; min-height: 200px;
-	z-index: 1000;">
+<div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="padding: 5px; margin: 5px; border: solid 2px #000;
+	color: #000; background: #fff; position: absolute; top: 20px; left: 20px; min-width: 275px; min-height: 200px; z-index: 1000;">
 	<div id="divCMSActive" style="z-index: 500; border: 0px solid #ddd;">
-		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick'
-			title="toggle" style="margin: 2px; float: right;">
+		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick' title="toggle" style="margin: 2px; float: right;">
 			T
 		</div>
-		<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e'
-			title="R" style="margin: 2px; float: right;">
+		<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e' title="R" style="margin: 2px;
+			float: right;">
 			R
 		</div>
-		<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w'
-			title="L" style="margin: 2px; float: right;">
+		<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w' title="L" style="margin: 2px;
+			float: right;">
 			L
 		</div>
 		<p class="ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
 			Toolbox
 		</p>
 		<div class="ui-widget" runat="server" id="divEditing">
-			<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px;
-				margin-bottom: 5px;">
+			<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
 				<p>
 					<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
 					<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
 			</div>
 		</div>
 		<div style="display: none;" class="GlossySeaGreen">
-			fullorder<br />
-			<textarea rows="5" cols="30" id="fullorder" style="width: 310px; height: 50px;"></textarea><br />
-			moveditem<br />
-			<input type="text" id="moveditem" style="width: 310px;" /><br />
+			cmsFullOrder<br />
+			<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
+			cmsMovedItem<br />
+			<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
 		</div>
 		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
-			<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info"
-				style="text-align: center; margin: 5px; padding: 5px;" onclick="cmsShowEditPageInfo();" />
+			<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" style="text-align: center; margin: 5px;
+				padding: 5px;" onclick="cmsShowEditPageInfo();" />
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate"
-				runat="server">
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 			</asp:DropDownList>
 			<br />
-			<input runat="server" id="btnTemplate" type="button" value="Apply" style="text-align: center;
-				margin: 5px; padding: 5px;" onclick="cmsUpdateTemplate();" />
+			<input runat="server" id="btnTemplate" type="button" value="Apply" style="text-align: center; margin: 5px; padding: 5px;"
+				onclick="cmsUpdateTemplate();" />
 		</div>
 		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
 			<%--<asp:Button ID="btnSave" class="GlossySeaGreen" runat="server" Text="Save" Style="margin: 2px; padding: 2px;" OnClick="btnSave_Click" />--%>
-			<input runat="server" id="btnToolboxSave" type="button" value="Save" style="text-align: center;
-				margin: 5px; padding: 5px;" onclick="cmsApplyChanges();" />
+			<input runat="server" id="btnToolboxSave" type="button" value="Save" style="text-align: center; margin: 5px; padding: 5px;"
+				onclick="cmsApplyChanges();" />
 			&nbsp;&nbsp;&nbsp;
-			<input type="button" value="Cancel" style="text-align: center; margin: 5px; padding: 5px;"
-				onclick="cmsCancelEdit();" />
+			<input type="button" value="Cancel" style="text-align: center; margin: 5px; padding: 5px;" onclick="cmsCancelEdit();" />
 		</div>
 	</div>
 	<div id="cmsMainToolbox">
 		<br style="clear: none;" />
 		<asp:Repeater ID="rpTools" runat="server">
 			<HeaderTemplate>
-				<div id="cmsToolBox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto;
-					height: 290px; width: 250px; padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+				<div id="cmsToolBox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
+					padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
 			</HeaderTemplate>
 			<ItemTemplate>
 				<div class="cmsToolItem GlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
-					<div id="cmsControl" class="GlossySeaGreen" style="min-height: 75px; min-width: 125px;
-						padding: 2px; margin: 2px;">
-						<p class="cmsToolItem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move;
-							clear: both; padding: 2px; margin: 2px;">
+					<div id="cmsControl" class="GlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
+						<p class="cmsToolItem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
 							<%# Eval("Caption")%>
 						</p>
 						<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
@@ -569,8 +559,8 @@
 			<FooterTemplate>
 				</div></FooterTemplate>
 		</asp:Repeater>
-		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px;
-			overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
+		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
+			background-color: #000;">
 		</div>
 	</div>
 	<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
@@ -588,38 +578,32 @@
 	<div style="display: none">
 		<img src="/manage/images/x.png" />
 	</div>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtCenter" runat="server" TextMode="MultiLine"
-		Rows="15" Columns="80"></asp:TextBox>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtLeft" runat="server" TextMode="MultiLine"
-		Rows="15" Columns="80"></asp:TextBox>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtRight" runat="server" TextMode="MultiLine"
-		Rows="15" Columns="80"></asp:TextBox>
-	<div id="cmsAdminEditCenter" class="GlossySeaGreen" style="height: 320px; width: 730px;
-		border: none 0px #000;">
+	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtCenter" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
+	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtLeft" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
+	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtRight" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
+	<div id="cmsAdminEditCenter" class="GlossySeaGreen" style="height: 320px; width: 730px; border: none 0px #000;">
 		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
 			Edit Center</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reBody"
-			runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="cmsClickCenterBtn()" type="button" style="margin: 2px;
-			padding: 2px;" id="btnCenterDone" value="Done" />
+		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
+			Columns="80"></asp:TextBox><br />
+		<input class="GlossySeaGreen" onclick="cmsClickCenterBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnCenterDone"
+			value="Done" />
 	</div>
-	<div id="cmsAdminEditLeft" class="GlossySeaGreen" style="height: 300px; width: 730px;
-		border: none 0px #000;">
+	<div id="cmsAdminEditLeft" class="GlossySeaGreen" style="height: 300px; width: 730px; border: none 0px #000;">
 		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
 			Edit Left</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reLeftBody"
-			runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="cmsClickLeftBtn()" type="button" style="margin: 2px;
-			padding: 2px;" id="btnLeftDone" value="Done" />
+		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reLeftBody" runat="server" TextMode="MultiLine"
+			Rows="15" Columns="80"></asp:TextBox><br />
+		<input class="GlossySeaGreen" onclick="cmsClickLeftBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnLeftDone"
+			value="Done" />
 	</div>
-	<div id="cmsAdminEditRight" class="GlossySeaGreen" style="height: 300px; width: 730px;
-		border: none 0px #000;">
+	<div id="cmsAdminEditRight" class="GlossySeaGreen" style="height: 300px; width: 730px; border: none 0px #000;">
 		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
 			Edit Right</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reRightBody"
-			runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="cmsClickRightBtn()" type="button" style="margin: 2px;
-			padding: 2px;" id="btnRightDone" value="Done" />
+		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reRightBody" runat="server" TextMode="MultiLine"
+			Rows="15" Columns="80"></asp:TextBox><br />
+		<input class="GlossySeaGreen" onclick="cmsClickRightBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnRightDone"
+			value="Done" />
 	</div>
 </div>
 
