@@ -124,8 +124,8 @@ namespace Carrotware.CMS.UI.Controls {
 										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
 										+ " Remove <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/cross.png\" alt=\"Remove\" title=\"Remove\" /> </a> </p></div>\r\n"
 										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
-										+ "<input type=\"hidden\" id=\"ctrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
-										+ "<input type=\"hidden\" id=\"ctrlOrder\" value=\"" + Order + "\"  />\r\n";
+										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
+										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
 				} else {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" style=\"border: 2px solid #000000; margin: 0px; padding:2px; margin-top:5px;\" >"
 										+ "<div id=\"" + this.ClientID + "\">"
@@ -133,8 +133,8 @@ namespace Carrotware.CMS.UI.Controls {
 										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
 										+ " Remove <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/cross.png\" alt=\"Remove\" title=\"Remove\" /> </a> </p></div>\r\n"
 										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
-										+ "<input type=\"hidden\" id=\"ctrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
-										+ "<input type=\"hidden\" id=\"ctrlOrder\" value=\"" + Order + "\"  />\r\n";
+										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
+										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
 				}
 				w.Write(sPrefix);
 
