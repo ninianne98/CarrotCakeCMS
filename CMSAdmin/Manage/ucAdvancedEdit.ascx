@@ -235,12 +235,6 @@
 		window.setTimeout('location.href = \'<%=CurrentScriptName %>\'', 1000);
 	}
 
-
-//	$(document).ready(function() {
-//		cmsAlertModal("hello!");
-//	});
-
-
 	function cmsAjaxFailed(request) {
 		var s = "";
 		s = s + "<b>status: </b>" + request.status + '<br />\r\n';
@@ -263,15 +257,13 @@
 		
 		
 		cmsFixDialog('CMSmodalalertmessage');
-				
 	}
 
 
     function cmsShowEditPageInfo() {
-        //cmsAlertModal("ShowCoreInfo");
+        //cmsAlertModal("cmsShowEditPageInfo");
         cmsLaunchWindow('/Manage/PageEdit.aspx?pageid=' + thisPageID);
     }
-
 
     function cmsShowEditWidgetForm(w, m) {
         //cmsAlertModal("cmsShowEditWidgetForm");
@@ -324,10 +316,6 @@
 	$(function() {
 		$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
 	});
-
-
-	var trash_icon = "<div id='cmsDelIconDiv' style='text-align:right;padding:5px;margin:2px;'><a id='delico' class='ui-icon ui-icon-trash' href='javascript:void(0);' onclick='cmsRemoveItem(this);' title='Delete'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>";
-
 
 	function cmsBuildOrder() {
 		CMSBusyShort();
@@ -538,7 +526,6 @@
 				onclick="cmsUpdateTemplate();" />
 		</div>
 		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
-			<%--<asp:Button ID="btnSave" class="GlossySeaGreen" runat="server" Text="Save" Style="margin: 2px; padding: 2px;" OnClick="btnSave_Click" />--%>
 			<input runat="server" id="btnToolboxSave" type="button" value="Save" style="text-align: center; margin: 5px; padding: 5px;"
 				onclick="cmsApplyChanges();" />
 			&nbsp;&nbsp;&nbsp;
@@ -586,34 +573,7 @@
 			Are you sure you want to remove this widget?</p>
 	</div>
 	<div style="display: none">
-		<img src="/manage/images/x.png" />
-	</div>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtCenter" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtLeft" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
-	<asp:TextBox Style="height: 280px; width: 730px;" ID="txtRight" runat="server" TextMode="MultiLine" Rows="15" Columns="80"></asp:TextBox>
-	<div id="cmsAdminEditCenter" class="GlossySeaGreen" style="height: 320px; width: 730px; border: none 0px #000;">
-		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
-			Edit Center</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
-			Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="cmsClickCenterBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnCenterDone"
-			value="Done" />
-	</div>
-	<div id="cmsAdminEditLeft" class="GlossySeaGreen" style="height: 300px; width: 730px; border: none 0px #000;">
-		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
-			Edit Left</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reLeftBody" runat="server" TextMode="MultiLine"
-			Rows="15" Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="cmsClickLeftBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnLeftDone"
-			value="Done" />
-	</div>
-	<div id="cmsAdminEditRight" class="GlossySeaGreen" style="height: 300px; width: 730px; border: none 0px #000;">
-		<div class="GlossySeaGreen ui-widget-header ui-corner-all" style="padding: 8px; margin: 0px;">
-			Edit Right</div>
-		<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor2" ID="reRightBody" runat="server" TextMode="MultiLine"
-			Rows="15" Columns="80"></asp:TextBox><br />
-		<input class="GlossySeaGreen" onclick="cmsClickRightBtn()" type="button" style="margin: 2px; padding: 2px;" id="btnRightDone"
-			value="Done" />
+		<img src="/manage/images/x.png" alt="x" />
 	</div>
 </div>
 
@@ -622,7 +582,6 @@
 	function cmsGenericEdit(PageId, WidgetId) {
 		cmsLaunchWindow('/Manage/ControlPropertiesEdit.aspx?pageid=' + PageId + '&id=' + WidgetId);
 	}
-
 
 	function cmsLaunchWindow(theURL) {
 		TheURL = theURL;
@@ -655,7 +614,6 @@
 		window.setTimeout('location.href = \'<%=CurrentScriptName %>?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
 	}
 
-
 </script>
 
 <div style="display: none">
@@ -665,257 +623,6 @@
 		</div>
 	</div>
 	<div style="display: none">
-		<img src="/manage/images/x.png" />
+		<img src="/manage/images/x.png" alt="x" />
 	</div>
 </div>
-
-<script type="text/javascript">
-
-	function cmsClickCenterBtn() {
-		tinyMCE.triggerSave();
-		var ed = tinyMCE.get('<%=reBody.ClientID%>');
-		var d = ed.getContent();
-
-		//$('#cmsAdmin_BodyCenter').html(d);
-		//$('#<%=txtCenter.ClientID%>').val(d);
-
-		tinyMCE.execCommand("mceRemoveControl", false, '<%=reBody.ClientID%>');
-		setTimeout("$.modal.close();", 500);
-		CMSBusyShort();
-		cmsSaveContent(d, 'c');
-	}
-
-	function cmsClickLeftBtn() {
-		tinyMCE.triggerSave();
-		var ed = tinyMCE.get('<%=reLeftBody.ClientID%>');
-		var d = ed.getContent();
-
-		//$('#<%=txtLeft.ClientID%>').val(d);
-		//$('#cmsAdmin_BodyLeft').html(d);
-
-		tinyMCE.execCommand("mceRemoveControl", false, '<%=reLeftBody.ClientID%>');
-		setTimeout("$.modal.close();", 800);
-		CMSBusyShort();
-		cmsSaveContent(d, 'l');
-	}
-
-	function cmsClickRightBtn() {
-		tinyMCE.triggerSave();
-		var ed = tinyMCE.get('<%=reRightBody.ClientID%>');
-		var d = ed.getContent();
-
-		//$('#<%=txtRight.ClientID%>').val(d);
-		//$('#cmsAdmin_BodyRight').html(d);
-
-		tinyMCE.execCommand("mceRemoveControl", false, '<%=reRightBody.ClientID%>');
-		setTimeout("$.modal.close();", 800);
-		CMSBusyShort();
-		cmsSaveContent(d, 'r');
-	}
-
-
-	function CarrotCMSEdit(f, v) {
-		//alert(f + ' -- ' + v);
-		if (f == 'c') {
-			cmsClickCenterEdit();
-		}
-		if (f == 'l') {
-			cmsClickLeftEdit();
-		}
-		if (f == 'r') {
-			cmsClickRightEdit();
-		}
-
-	}
-
-
-
-	function cmsClickCenterEdit() {
-		$("#cmsAdminEditCenter").modal({
-			onShow: function(dialog) {
-				$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
-
-				var v = $('#<%=txtCenter.ClientID%>').val();
-				$('#<%=reBody.ClientID%>').val(v);
-
-				setTimeout("initTinyMCE();", 200);
-				setTimeout("tinyMCE.execCommand('mceRemoveControl', false, '<%=reBody.ClientID%>');", 400);
-				setTimeout("tinyMCE.execCommand('mceAddControl', true, '<%=reBody.ClientID%>');", 600);
-				setTimeout("tinyMCE.triggerSave();", 800);
-			},
-			onClose: function(dialog) {
-				tinyMCE.execCommand("mceRemoveControl", false, '<%=reBody.ClientID%>');
-				$.modal.close();
-			}
-		});
-		$('#cmsAdminEditCenter').modal();
-		return false;
-	}
-
-
-	function cmsClickLeftEdit() {
-		$("#cmsAdminEditLeft").modal({
-			onShow: function(dialog) {
-				$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
-
-				var v = $('#<%=txtLeft.ClientID%>').val();
-				$('#<%=reLeftBody.ClientID%>').val(v);
-
-				setTimeout("initTinyMCE();", 200);
-				setTimeout("tinyMCE.execCommand('mceRemoveControl', false, '<%=reLeftBody.ClientID%>');", 400);
-				setTimeout("tinyMCE.execCommand('mceAddControl', true, '<%=reLeftBody.ClientID%>');", 600);
-				setTimeout("tinyMCE.triggerSave();", 800);
-			},
-			onClose: function(dialog) {
-				tinyMCE.execCommand("mceRemoveControl", false, '<%=reLeftBody.ClientID%>');
-				$.modal.close();
-			}
-		});
-		$('#cmsAdminEditLeft').modal();
-		return false;
-	}
-
-
-	function cmsClickRightEdit() {
-		$("#cmsAdminEditRight").modal({
-			onShow: function(dialog) {
-				$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
-
-				var v = $('#<%=txtRight.ClientID%>').val();
-				$('#<%=reRightBody.ClientID%>').val(v);
-
-				setTimeout("initTinyMCE();", 200);
-				setTimeout("tinyMCE.execCommand('mceRemoveControl', false, '<%=reRightBody.ClientID%>');", 400);
-				setTimeout("tinyMCE.execCommand('mceAddControl', true, '<%=reRightBody.ClientID%>');", 600);
-				setTimeout("tinyMCE.triggerSave();", 800);
-			},
-			onClose: function(dialog) {
-				tinyMCE.execCommand("mceRemoveControl", false, '<%=reRightBody.ClientID%>');
-				$.modal.close();
-			}
-		});
-		$('#cmsAdminEditRight').modal();
-		return false;
-	}
-
-
-</script>
-
-<!-- TinyMCE -->
-
-<script type="text/javascript" src="/Manage/tiny_mce/tiny_mce.js"></script>
-
-<script type="text/javascript">
-	//initTinyMCE();
-
-	function initTinyMCE() {
-
-		tinyMCE.init({
-
-			//		mode : "textareas",
-			//		theme : "advanced",
-			//		theme_advanced_toolbar_location : "top",
-			//		theme_advanced_toolbar_align : "left",
-			//		document_base_url : "http://www.site.com/path1/"
-
-			mode: "textareas",
-			theme: "advanced",
-			editor_selector: "mceEditor",
-			theme_advanced_source_editor_width: "700",
-			theme_advanced_source_editor_height: "500",
-			skin: "o2k7",
-			skin_variant: "silver",
-			plugins: "advimage,advlink,advlist,media,iespell,inlinepopups",
-			file_browser_callback: "cmsFileBrowserCallback",
-			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,forecolor,|,outdent,indent,blockquote,|,bullist,numlist,|,link,unlink,anchor,image,media,|,fileupbtn,cleanup,code,help",
-			theme_advanced_buttons2: "",
-			theme_advanced_buttons3: "",
-			theme_advanced_toolbar_location: "top",
-			theme_advanced_toolbar_align: "left",
-			theme_advanced_statusbar_location: "bottom",
-			relative_urls: false,
-			remove_script_host: true,
-			content_css: "/Manage/Includes/richedit.css",
-
-			// Add a custom button
-			setup: function(ed) {
-				ed.addButton('fileupbtn', {
-					title: 'FileUpload',
-					image: '/Manage/tiny_mce/insertfile.gif',
-					onclick: function() {
-						//debugger;
-						ed.focus();
-						//ed.selection.setContent('custom text');
-						var x = cmsFileBrowserCallback(ed, '', '', this);
-						//ed.selection.setContent(x);
-					}
-				});
-			}
-		});
-	}
-
-
-	//http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
-	function cmsFileBrowserCallback(field_name, url, type, win) {
-		var sURL = "/Manage/FileBrowser.aspx?useTiny=1&fldrpath=/";
-
-		// block multiple file browser windows
-		if (!tinyMCE.selectedInstance.fileBrowserAlreadyOpen) {
-			tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true; // but now it will be
-
-			tinyMCE.activeEditor.windowManager.open({
-				file: sURL,
-				title: 'File Browser',
-				width: 700,
-				height: 500,
-				resizable: "no",
-				scrollbars: "yes",
-				status: "yes",
-				inline: "yes",
-				close_previous: "yes"
-			}, {
-				window: win,
-				input: field_name
-			});
-		}
-
-		return false;
-	}
-
-
-	function cmsToggleTinyMCE(id) {
-		if (!tinyMCE.get(id))
-			tinyMCE.execCommand('mceAddControl', false, id);
-		else
-			tinyMCE.execCommand('mceRemoveControl', false, id);
-	}
-	
-</script>
-
-<script type="text/javascript">
-	var fldName = '';
-	var winBrowse = null;
-	function cmsFileBrowserOpen(fldN) {
-		fldN = '#' + fldN;
-		var fld = $(fldN);
-		fldName = fld.attr('id');
-
-		if (winBrowse != null) {
-			winBrowse.close();
-		}
-		winBrowse = window.open('/Manage/FileBrowser.aspx?useTiny=0&fldrpath=/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
-		return false;
-	}
-
-	function cmsSetFileName(v) {
-		var fldN = '#' + fldName;
-		var fld = $(fldN);
-		fld.val(v);
-
-		winBrowse.close();
-		winBrowse = null;
-	}
-	
-</script>
-
-<!-- /TinyMCE -->

@@ -81,10 +81,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						pageContents = cmsHelper.cmsAdminContent;
 					}
 
-					txtCenter.Text = ParseEdit(pageContents.PageText);
-					txtLeft.Text = ParseEdit(pageContents.LeftPageText);
-					txtRight.Text = ParseEdit(pageContents.RightPageText);
-
 					divEditing.Visible = false;
 
 				} else {
@@ -117,13 +113,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				}
 			}
 			return sFixed.Trim();
-		}
-
-
-		protected void btnSave_Click(object sender, EventArgs e) {
-			var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
-
-			pageContents.PageText = reBody.Text;
 		}
 
 

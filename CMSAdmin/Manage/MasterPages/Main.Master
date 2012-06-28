@@ -385,7 +385,7 @@
 				</div>
 			</div>
 			<div style="display: none">
-				<img src="/manage/images/x.png" />
+				<img src="/manage/images/x.png" alt="x" />
 			</div>
 			<div style="display: none">
 				<div id="CMSmodalalert" title="CMS Alert">
