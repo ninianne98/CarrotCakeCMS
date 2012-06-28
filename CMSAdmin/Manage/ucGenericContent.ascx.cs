@@ -31,11 +31,10 @@ namespace Carrotware.CMS.UI.Admin {
 		public new Guid SiteID { get; set; }
 
 		public string JSEditFunction {
-			get { return "click" + this.ClientID + "('" + this.PageWidgetID + "');"; }
-			//get { return ""; }
+			get { return "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'html');"; }
 		}
 
-		public bool EnableEdit { get { return false; } }
+		public bool EnableEdit { get { return true; } }
 
 		#endregion
 
@@ -49,22 +48,12 @@ namespace Carrotware.CMS.UI.Admin {
 							  where (w.PageWidgetID == PageWidgetID)
 							  orderby w.WidgetOrder
 							  select w).FirstOrDefault();
-				pnlJS.Visible = true;
+
 			} else {
 				pageWidget = widgetHelper.Get(PageWidgetID);
-				pnlJS.Visible = false;
 			}
 
-			GenericBody.ZoneChar = "w";
-			GenericBody.DatabaseKey = PageWidgetID;
-			GenericBody.Text = pageWidget.ControlProperties;
-			GenericBody.JQueryUIScope = "GlossySeaGreen";
-			GenericBody.IsAdminMode = AdvancedEditMode;
-
-			txtGeneric.Text = pageWidget.ControlProperties;
-
+			litContent.Text = pageWidget.ControlProperties;
 		}
-
-
 	}
 }

@@ -80,6 +80,13 @@
     <Compile Include="Manage\ControlPropertiesEdit.aspx.designer.cs">
       <DependentUpon>ControlPropertiesEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\ContentEdit.aspx.cs">
+      <DependentUpon>ContentEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ContentEdit.aspx.designer.cs">
+      <DependentUpon>ContentEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\PageEdit.aspx.cs">
       <DependentUpon>PageEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -316,6 +323,7 @@
     <Content Include="env.aspx" />
     <Content Include="GPL-LICENSE.txt" />
     <Content Include="Manage\about.aspx" />
+    <Content Include="Manage\ContentEdit.aspx" />
     <Content Include="Manage\Images\accept.png" />
     <Content Include="Manage\Images\add.png" />
     <Content Include="Manage\Images\ani-drip.gif" />
