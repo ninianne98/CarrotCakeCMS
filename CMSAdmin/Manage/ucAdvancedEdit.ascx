@@ -18,8 +18,8 @@
 <link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 	#simplemodal-container, .simplemodal-container {
-		height: 375px;
-		width: 780px;
+		height: 500px;
+		width: 775px;
 		z-index: 5000;
 	}
 	#cmsDelIconDiv {
@@ -546,7 +546,7 @@
 							<%# Eval("Caption")%>
 						</p>
 						<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
-						<input type="hidden" id="cmsCtrlID" size="35" value="<%# Eval("FilePath")%>" />
+						<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
 						<input type="hidden" id="cmsCtrlOrder" value="0" />
 						<div style="text-align: right;" id="cmsCtrlButton">
 						</div>
@@ -585,10 +585,10 @@
 
 	function cmsLaunchWindow(theURL) {
 		TheURL = theURL;
-		$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="750" height="350" src="' + TheURL + '" /> </div>');
+		$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
 
 		$("#divAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-			css: { width: '650px', height: '450px' },
+			css: { width: '750px', height: '475px' },
 			fadeOut: 1000,
 			timeout: 1200,
 			overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
