@@ -453,9 +453,9 @@
 
 		function SubmitPage() {
 			saving = 1;
-			//tinyMCE.triggerSave();
+			tinyMCE.triggerSave();
 			CheckFileName();
-			setTimeout("ClickBtn();", 1000);
+			setTimeout("ClickBtn();", 1200);
 		}
 		function ClickBtn() {
 			$('#<%=btnSave.ClientID %>').click();

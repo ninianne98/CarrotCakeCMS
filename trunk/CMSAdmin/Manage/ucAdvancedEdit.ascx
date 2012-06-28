@@ -273,6 +273,16 @@
     }
 
 
+    function cmsShowEditWidgetForm(w, m) {
+        //cmsAlertModal("cmsShowEditWidgetForm");
+        cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&widgetid=" + w + "&mode=" + m);
+    }
+    
+    function cmsShowEditContentForm(f, m) {
+        //cmsAlertModal("cmsShowEditContentForm");
+        cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&field=" + f + "&mode=" + m);
+    }
+    
 	function CMSBusyShort() {
 
 		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',

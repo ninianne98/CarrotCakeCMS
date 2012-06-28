@@ -322,11 +322,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			w.SaveDefaultControlProperties(props);
 
-			var lst = cmsHelper.cmsAdminWidget;
-			lst.RemoveAll(x => x.PageWidgetID == guidWidget);
-			lst.Add(w);
+			List<PageWidget> lstPageWidgets = cmsHelper.cmsAdminWidget;
+			lstPageWidgets.RemoveAll(x => x.PageWidgetID == guidWidget);
+			lstPageWidgets.Add(w);
 
-			cmsHelper.cmsAdminWidget = lst;
+			cmsHelper.cmsAdminWidget = lstPageWidgets;
 
 		}
 
