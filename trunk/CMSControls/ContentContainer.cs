@@ -88,7 +88,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sPrefix = "<div id=\"cmsContentArea_" + this.ClientID + "\" style=\"border: 2px solid #000000; margin: 0px; padding: 1px; margin-top: 5px; \">\r\n" +
 								"<div class=\"" + JQueryUIScope + "\"><div class=\"" + JQueryUIScope + " ui-state-default ui-widget-header\" style=\"height: 25px; margin: 0px; padding: 1px; border: 0px solid #ffffff; \">\r\n" +
 								"<a style=\"float:right; color:#676F6A; font-weight: bold; margin: 0px; padding: 0px; padding-right: 10px; border: 0px solid #ffffff; \" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"" + JQueryUIScope + " ui-state-default\" " +
-								" href=\"javascript:CarrotCMSEdit('" + ZoneChar + "','" + DatabaseKey + "'); \">\r\n" +
+								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \">\r\n" +
 								" Edit " + this.ClientID + " <img style=\"margin: 0px; padding: 0px; padding-right: 10px; \" border=\"0\" src=\"/manage/images/pencil.png\" alt=\"Edit\" title=\"Edit\" /> </a></div></div>\r\n" +
 								"<div style=\"border: 2px dashed #ffffff; \" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
 								"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";
@@ -96,7 +96,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sPrefix = "<div id=\"cmsContentArea_" + this.ClientID + "\" style=\"border: 2px solid #000000; margin: 0px; padding: 1px; margin-top: 5px; \">\r\n" +
 								"<div class=\"ui-state-default ui-widget-header\" style=\"height: 25px; margin: 0px; padding: 1px; border: 0px solid #ffffff; \">\r\n" +
 								"<a style=\"float:right; color:#676F6A; font-weight: bold; margin: 0px; padding: 0px; padding-right: 10px; border: 0px solid #ffffff; \" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"ui-state-default\" " +
-								" href=\"javascript:CarrotCMSEdit('" + ZoneChar + "','" + DatabaseKey + "'); \">\r\n" +
+								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \">\r\n" +
 								" Edit " + this.ClientID + " <img style=\"margin: 0px; padding: 0px; padding-right: 10px; \" border=\"0\" src=\"/manage/images/pencil.png\" alt=\"Edit\" title=\"Edit\" /> </a></div> \r\n" +
 								"<div style=\"border: 2px dashed #ffffff; \" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
 								"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";
