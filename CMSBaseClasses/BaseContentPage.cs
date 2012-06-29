@@ -93,7 +93,7 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected void LoadPageControls(Control page) {
 
-			string sGen = "\r\n\t<meta name=\"generator\" content=\"Carrotware CMS {0}\" />\r\n";
+			string sGen = "\r\n\t<meta name=\"generator\" content=\"CarrotCake CMS {0}\" />\r\n";
 
 			var generator = new Literal();
 			generator.Text = string.Format(sGen, CurrentDLLVersion);

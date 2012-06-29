@@ -602,6 +602,8 @@ namespace Carrotware.CMS.UI.Admin {
 					newContent.EditDate = DateTime.Now;
 
 					newContent.TemplateFile = cmsAdminContent.TemplateFile;
+					newContent.MetaDescription = cmsAdminContent.MetaDescription;
+					newContent.MetaKeyword = cmsAdminContent.MetaKeyword;
 
 					foreach (var wd in pageWidgets) {
 						wd.Delete();

@@ -1,5 +1,5 @@
-﻿<%@ Page ValidateRequest="false" Title="PageAddEdit" Language="C#" MasterPageFile="MasterPages/Main.Master"
-	AutoEventWireup="true" CodeBehind="PageAddEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.PageAddEdit" %>
+﻿<%@ Page ValidateRequest="false" Title="PageAddEdit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true"
+	CodeBehind="PageAddEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.PageAddEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -188,8 +188,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<br />
 	<div class="ui-widget" runat="server" id="divEditing">
-		<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px;
-			margin-bottom: 5px; width: 500px;">
+		<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px; width: 500px;">
 			<p>
 				<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
 				<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
@@ -221,10 +220,10 @@
 				title bar:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)"
-					ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle"
-					ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45"
+					MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -232,14 +231,13 @@
 				filename:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)"
-					onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName"
-					ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid"
-					ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique" Display="Dynamic"></asp:RequiredFieldValidator>
-				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25"
-					Columns="25" Style="display: none;" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName"
+					runat="server" Columns="45" MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server"
+					ErrorMessage="Not Valid/Unique" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
 			</td>
 		</tr>
 		<tr>
@@ -247,10 +245,10 @@
 				page head:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)"
-					ID="txtHead" runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead"
-					ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45"
+					MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -258,10 +256,10 @@
 				navigation:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)"
-					ID="txtNav" runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav"
-					ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45"
+					MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -269,7 +267,7 @@
 				meta keywords
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="200" Columns="80"
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="200" Columns="80"
 					Style="width: 425px;" runat="server"></asp:TextBox>
 			</td>
 		</tr>
@@ -278,8 +276,8 @@
 				meta description:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60"
-					Style="width: 425px;" Rows="5" TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="5"
+					TextMode="MultiLine" runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
@@ -287,10 +285,10 @@
 				sort:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="10"
-					ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort"
-					ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="10" ID="txtSort" runat="server" Columns="15"
+					MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -303,11 +301,9 @@
 					<div id="menupath" style="padding: 0px; float: left; min-height: 40px;">
 					</div>
 					<div style="float: left; padding: 0px;">
-						<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" style="position: relative;
-							width: 100px" class="menuitems ui-widget-header ui-corner-all">
-							Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);'
-								thevalue=''><span style="float: right;" class="ui-icon ui-icon-power"></span>
-							</a>
+						<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" style="position: relative; width: 100px" class="menuitems ui-widget-header ui-corner-all">
+							Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;"
+								class="ui-icon ui-icon-power"></span></a>
 						</div>
 						<div id="menuitemsouter">
 							<div id="menuitemsinner" class="scroll">
@@ -326,8 +322,7 @@
 				template:
 			</td>
 			<td valign="top">
-				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate"
-					runat="server">
+				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 				</asp:DropDownList>
 			</td>
 		</tr>
@@ -351,8 +346,8 @@
 				<div runat="server" id="divLeft">
 					body (left)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reLeftBody"
-					runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine"
+					Rows="15" Columns="80" />
 				<%--<asp:Button ID="Button1" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
 			</div>
@@ -362,8 +357,8 @@
 				<div runat="server" id="divCenter">
 					body (main/center)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reBody"
-					runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
+					Columns="80" />
 				<%--<asp:Button ID="Button2" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
 			</div>
@@ -373,8 +368,8 @@
 				<div runat="server" id="divRight">
 					body (right)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reRightBody"
-					runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine"
+					Rows="15" Columns="80" />
 				<%--<asp:Button ID="Button3" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
 			</div>
@@ -383,13 +378,11 @@
 	<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
 		&nbsp;</div>
 	<br />
-	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()"
-		Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="button" id="btnCancel" value="Cancel" onclick="location.href='./PageIndex.aspx';" />
 	<br />
 	<div style="display: none;">
-		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click"
-			Text="Save" />
+		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
 	</div>
 
 	<script type="text/javascript">

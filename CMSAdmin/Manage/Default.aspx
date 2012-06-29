@@ -26,7 +26,8 @@
 				Site Name
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtSiteName" MaxLength="200" Columns="80" Style="width: 425px;" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="200" Columns="80"
+					Style="width: 425px;" runat="server"></asp:TextBox>
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1" runat="server"
 					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
@@ -36,7 +37,8 @@
 				Site URL
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80"
+					Style="width: 425px;" runat="server"></asp:TextBox>
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtURL" ID="RequiredFieldValidator2" runat="server"
 					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
@@ -46,7 +48,8 @@
 				Meta Keywords
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="200" Columns="80" Style="width: 425px;" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="200" Columns="80"
+					Style="width: 425px;" runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
