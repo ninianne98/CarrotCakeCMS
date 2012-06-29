@@ -41,15 +41,11 @@ namespace Carrotware.CMS.UI.Base {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
 
-
-
 		public bool IsReusable {
 			get {
 				return false;
 			}
 		}
-
-
 
 		private string sVirtualReqFile = "";
 		private bool bAlreadyDone = false;
@@ -201,7 +197,9 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 
-		public void Dispose() { }
+		public void Dispose() {
+			pageHelper = null;
+		}
 
 
 	}
