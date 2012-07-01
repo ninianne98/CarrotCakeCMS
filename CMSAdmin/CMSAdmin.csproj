@@ -304,6 +304,16 @@
     <Content Include="AdminModules.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="abundant\abundant.aspx" />
+    <Content Include="abundant\images\img01.jpg" />
+    <Content Include="abundant\images\img02.jpg" />
+    <Content Include="abundant\images\img03.jpg" />
+    <Content Include="abundant\images\img04.jpg" />
+    <Content Include="abundant\images\img05.jpg" />
+    <Content Include="abundant\images\img06.gif" />
+    <Content Include="abundant\index.html" />
+    <Content Include="abundant\license.txt" />
+    <Content Include="abundant\style.css" />
     <Content Include="citrus-island\citrus1.aspx" />
     <Content Include="citrus-island\images\arrow.gif" />
     <Content Include="citrus-island\images\bg.gif" />
