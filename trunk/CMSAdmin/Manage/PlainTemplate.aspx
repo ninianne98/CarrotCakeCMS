@@ -223,7 +223,7 @@
 								<carrot:SecondLevelNavigation SectionTitle="Section Pages" runat="server" ID="SecondLevelNavigation1"></carrot:SecondLevelNavigation>
 							</li>
 							<li>
-								<carrot:MostRecentUpdated runat="server" ID="MostRecentUpdated1"></carrot:MostRecentUpdated>
+								<carrot:MostRecentUpdated UpdateTitle="Recent Updates" runat="server" ID="MostRecentUpdated1"></carrot:MostRecentUpdated>
 							</li>
 						</ul>
 					</div>
