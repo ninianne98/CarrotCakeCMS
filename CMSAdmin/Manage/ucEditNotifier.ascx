@@ -1,15 +1,16 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucEditNotifier.ascx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.Manage.ucEditNotifier" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucEditNotifier.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucEditNotifier" %>
 <div style="clear: both;">
 	&nbsp;</div>
 <style type="text/css">
 	#cmsAdminToolbox1 {
 		left: 0 !important;
 		top: 100px !important;
+		line-height: 15px !important;
 	}
 	#cmsAdminToolbox2 {
 		right: 0 !important;
 		bottom: 100px !important;
+		line-height: 15px !important;
 	}
 	.cmsNavigationBlock {
 		position: fixed !important;
@@ -23,10 +24,33 @@
 		height: 128px !important;
 		z-index: 1000 !important;
 		font-size: 14px !important;
-		font-family:  Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	}
-	.cmsNavigationBlock img {
+	.cmsNavBox1 {
+		padding-top: 2px !important;
+		padding-bottom: 10px !important;
+		text-align: center !important;
+		line-height: 15px !important;
+	}
+	.cmsNavBox2 {
+		padding-top: 2px !important;
+		padding-bottom: 2px !important;
+		text-align: center !important;
+		line-height: 15px !important;
+	}
+	.cmsNavImageLink {
+		margin: 0px !important;
+		padding: 0px !important;
+		color: #676F6A !important;
+		padding: 2px !important;
+		margin: 2px !important;
+		line-height: 10px !important;
+	}
+	.cmsNavigationBlock img, .cmsNavImageLink img {
+		margin: 0px !important;
+		padding: 0px !important;
 		border: 1px solid #CDE3D6 !important;
+		line-height: 10px !important;
 	}
 	.cmsFooterLinks {
 		color: #676F6A !important;
@@ -36,94 +60,91 @@
 		margin-left: 10px !important;
 		margin-right: 10px !important;
 		font-size: 14px !important;
-		font-family:  Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		text-decoration: underline !important;
 	}
 	.cmsFooterP {
+		line-height: 20px !important;
 		text-align: center !important;
 		padding: 5px !important;
 		margin: 5px !important;
 		line-height: 110% !important;
 		font-size: 14px !important;
-		font-family:  Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	}
+	.cmsNavFooterBox {
+		line-height: 20px !important;
+		text-align: center !important;
+		background: #CDE3D6 !important;
+		padding: 5px !important;
+		margin: 5px !important;
+		border: 2px dashed #676F6A !important;
 	}
 </style>
-<div style="text-align: center; background: #CDE3D6; padding: 5px; margin: 5px; border: 2px dashed #676F6A;">
+<div class="cmsNavFooterBox">
 	<p class="cmsFooterP">
 		<a class="cmsFooterLinks" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">EDIT</a> 
 		<a class="cmsFooterLinks" target="_top" href="<%=CurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
 		<a class="cmsFooterLinks" target="_top" href="/Manage/PageIndex.aspx">PAGE INDEX</a> 
-		<a class="cmsFooterLinks" target="_top" href="Manage/ModuleIndex.aspx">MODULE INDEX</a>
+		<a class="cmsFooterLinks" target="_top" href="/Manage/ModuleIndex.aspx">MODULE INDEX</a>
 	</p>
 	<p class="cmsFooterP">
 		<a class="cmsFooterLinks" href="/">HOME PAGE</a> 
 		<a class="cmsFooterLinks" runat="server" id="lnkParent" href="#">PARENT PAGE</a>
-		<a class="cmsFooterLinks" runat="server" id="lnkCurrent" href="#">CURRENT PAGE</a>		
+		<a class="cmsFooterLinks" runat="server" id="lnkCurrent" href="#">CURRENT PAGE</a>
 		<asp:Label ID="lblChildDDL" runat="server" CssClass="cmsFooterLinks">CHILD PAGES</asp:Label>
-		<asp:DropDownList ID="ddlCMSLinks" runat="server" onchange="cmsNavPage(this);" DataTextField="NavMenuText"
-			DataValueField="FileName" ValidationGroup="cmsMenuLinks">
+		<asp:DropDownList ID="ddlCMSLinks" runat="server" onchange="cmsNavPage(this);" DataTextField="NavMenuText" DataValueField="FileName"
+			ValidationGroup="cmsMenuLinkGroup">
 		</asp:DropDownList>
 	</p>
 </div>
 
 <script language="javascript" type="text/javascript">
-
 	function cmsNavPage(y) {
-
 		var url = y.options[y.selectedIndex].value;
 
 		if (url != '00000') {
-
-			//window.setTimeout('location.href = \'' + url + '?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 500);
-
 			window.setTimeout('location.href = \'' + url + '\'', 500);
 		}
 	}
 </script>
 
 <div id="cmsAdminToolbox1" class="cmsNavigationBlock">
-	<div style="padding-top: 2px; padding-bottom: 2px; text-align: center;">
-		<div style="padding-top: 2px; padding-bottom: 10px; text-align: center;">
-			<a style="color: #676F6A; padding: 5px; margin: 0px; font-weight: bold;" target="_blank"
-				href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
+	<div class="cmsNavBox2">
+		<div class="cmsNavBox1">
+			<a class="cmsNavImageLink" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
 				<img border="0" alt="EDIT" title="EDIT" src="/manage/images/application_edit.png" /></a>
 		</div>
-		<div style="padding-top: 2px; padding-bottom: 10px; text-align: center;">
-			<a title="ADVANCED EDIT" style="color: #676F6A; padding: 2px; margin: 2px;" target="_top"
-				href="<%=CurrentScriptName %>?carrotedit=true">
+		<div class="cmsNavBox1">
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=CurrentScriptName %>?carrotedit=true">
 				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/manage/images/overlays.png" /></a>
 		</div>
-		<div style="padding-top: 2px; padding-bottom: 10px; text-align: center;">
-			<a title="PAGE INDEX" style="color: #676F6A; padding: 2px; margin: 2px;" target="_top"
-				href="/Manage/PageIndex.aspx">
+		<div class="cmsNavBox1">
+			<a title="PAGE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/PageIndex.aspx">
 				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/manage/images/table.png" /></a>
 		</div>
-		<div style="padding-top: 2px; padding-bottom: 2px; text-align: center;">
-			<a title="MODULE INDEX" style="color: #676F6A; padding: 2px; margin: 2px;" target="_top"
-				href="/Manage/ModuleIndex.aspx">
+		<div class="cmsNavBox2">
+			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/ModuleIndex.aspx">
 				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/manage/images/brick.png" /></a>
 		</div>
 	</div>
 </div>
 <div id="cmsAdminToolbox2" class="cmsNavigationBlock">
-	<div style="padding-top: 2px; padding-bottom: 2px; text-align: center;">
-		<div style="padding-top: 2px; padding-bottom: 10px; text-align: center;">
-			<a style="color: #676F6A; padding: 5px; margin: 0px; font-weight: bold;" target="_blank"
-				href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
+	<div class="cmsNavBox2">
+		<div class="cmsNavBox1">
+			<a class="cmsNavImageLink" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
 				<img border="0" alt="EDIT" title="EDIT" src="/manage/images/application_edit.png" /></a>
 		</div>
-		<div style="padding-top: 2px; padding-bottom: 10px; text-align: center;">
-			<a title="ADVANCED EDIT" style="color: #676F6A; padding: 2px; margin: 2px;" target="_top"
-				href="<%=CurrentScriptName %>?carrotedit=true">
+		<div class="cmsNavBox1">
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=CurrentScriptName %>?carrotedit=true">
 				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/manage/images/overlays.png" /></a>
 		</div>
-		<div style="padding-top: 2px; padding-bottom: 10px; text-align: center;">
-			<a title="PAGE INDEX" style="color: #676F6A; padding: 2px; margin: 2px;" target="_top"
-				href="/Manage/PageIndex.aspx">
+		<div class="cmsNavBox1">
+			<a title="PAGE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/PageIndex.aspx">
 				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/manage/images/table.png" /></a>
 		</div>
-		<div style="padding-top: 2px; padding-bottom: 2px; text-align: center;">
-			<a title="MODULE INDEX" style="color: #676F6A; padding: 2px; margin: 2px;" target="_top"
-				href="/Manage/ModuleIndex.aspx">
+		<div class="cmsNavBox2">
+			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/ModuleIndex.aspx">
 				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/manage/images/brick.png" /></a>
 		</div>
 	</div>
