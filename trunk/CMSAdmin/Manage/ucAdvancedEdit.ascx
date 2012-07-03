@@ -36,7 +36,47 @@
 		border: 0px solid #CDE3D6 !important;
 	}
 	#cmsMainToolbox {
-		text-align: left;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		text-align: left !important;
+	}
+	.cmsToolbox2 {
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		padding: 5px !important;
+		margin: 5px !important;
+		border: solid 2px #000 !important;
+		color: #000 !important;
+		background: #fff !important;
+		min-width: 275px !important;
+		min-height: 200px !important;
+		z-index: 1000 !important;
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		font-size: 12px !important;
+		line-height: 18px !important;
+	}
+	.cmsFloatRight {
+		margin: 2px !important;
+		float: right !important;
+	}
+	.cmsInsideArea {
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		z-index: 500 !important;
+		border: 0px solid #ddd !important;
+		font-size: 12px !important;
+		line-height: 18px !important;
+	}
+	.cmsCenter5px {
+		text-align: center !important;
+		margin: 5px !important;
+		padding: 5px !important;
+		font-size: 12px !important;
+		line-height: 18px !important;
+	}
+	.cmsImageSpinner {
+		margin: 0px !important;
+		padding: 0px !important;
+		border: 0px solid #ddd !important;
 	}
 </style>
 
@@ -277,17 +317,17 @@
     
 	function CMSBusyShort() {
 
-		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
 			css: { border: 'none', backgroundColor: 'transparent' },
-			fadeOut: 900,
-			timeout: 1200,
+			fadeOut: 750,
+			timeout: 1000,
 			overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 		});
 	}
 
 	function CMSBusyLong() {
 
-		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img  class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
 			css: { border: 'none', backgroundColor: 'transparent' },
 			fadeOut: 4000,
 			timeout: 5000,
@@ -302,11 +342,11 @@
 		var m = $('#cmsMnuToggle');
 		//alert(m.attr('id'));
 		if (mnuVis) {
-			m.attr('class', 'ui-icon ui-icon-plusthick');
+			m.attr('class', 'ui-icon ui-icon-plusthick cmsFloatRight');
 			t.css('display', 'none')
 			mnuVis = false;
 		} else {
-			m.attr('class', 'ui-icon ui-icon-minusthick');
+			m.attr('class', 'ui-icon ui-icon-minusthick cmsFloatRight');
 			t.css('display', 'block')
 			mnuVis = true;
 		}
@@ -444,6 +484,7 @@
 
 
 	function cmsShiftPosition(p) {
+
 		floatingArray[0].targetTop = 30;
 		floatingArray[0].targetBottom = undefined;
 		if (p == 'L') {
@@ -462,19 +503,19 @@
 	function cmsFixDialog(dialogname) {	
 	
 		var dilg = $("#"+dialogname).parent().parent();
-		var txt = $("#"+dialogname).attr('style', 'margin: 2px; padding: 5px; text-align: left;');
+		var txt = $("#"+dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;');
 			
 		var c = $(dilg).attr('class');
 		$(dilg).attr('class', "GlossySeaGreen ui-widget-content ui-corner-all " + c);
 
 		var pstyle = $(dilg).attr('style');
-		$(dilg).attr('style', "font-size: 12px; padding:2px; margin:2px; background: #ffffff; border: 1px solid #c0c0c0;" + pstyle);
+		$(dilg).attr('style', "font-size: 12px !important; padding:2px !important; margin:2px !important; background: #ffffff !important; border: 1px solid #c0c0c0 !important;" + pstyle);
 		
-		var cap = $(dilg).find(".ui-dialog-titlebar-close").attr('style', 'float:right; padding:4px; background-color:transparent;');
-		var cap = $(dilg).find(".ui-dialog-titlebar").attr('style', 'margin: 2px; padding: 2px; height: 32px;');
-		var cap = $(dilg).find(".ui-button").attr('style', 'float:right;');
-		var cap = $(dilg).find(".ui-dialog-title").attr('style', 'float:left; margin:2px; padding:2px;');
-		var cap = $(dilg).find(".ui-dialog-buttonpane").attr('style', 'margin:2px; padding:3px;');
+		var cap = $(dilg).find(".ui-dialog-titlebar-close").attr('style', 'float:right !important; padding:4px !important; background-color:transparent !important;');
+		var cap = $(dilg).find(".ui-dialog-titlebar").attr('style', 'margin: 2px !important; padding: 2px !important; height: 32px !important;');
+		var cap = $(dilg).find(".ui-button").attr('style', 'float:right !important;');
+		var cap = $(dilg).find(".ui-dialog-title").attr('style', 'float:left !important; margin:2px !important; padding:2px !important;');
+		var cap = $(dilg).find(".ui-dialog-buttonpane").attr('style', 'margin:2px !important; padding:3px !important;');
 		
 		//var h = $(dilg).html();
 		//$(dilg).html('');
@@ -483,84 +524,78 @@
 	
 </script>
 
-<%--<div id="divCMSBusy" style="position: absolute; top: 20px; left: 20px; width: 90%; height: 90%; z-index: 500;">
-</div>--%>
-<div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="padding: 5px; margin: 5px; border: solid 2px #000;
-	color: #000; background: #fff; position: absolute; top: 20px; left: 20px; min-width: 275px; min-height: 200px; z-index: 1000;">
-	<div id="divCMSActive" style="z-index: 500; border: 0px solid #ddd;">
-		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick' title="toggle" style="margin: 2px; float: right;">
+<div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all cmsToolbox2">
+	<div class="cmsInsideArea">
+		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick cmsFloatRight' title="toggle">
 			T
 		</div>
-		<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e' title="R" style="margin: 2px;
-			float: right;">
+		<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e cmsFloatRight' title="R">
 			R
 		</div>
-		<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w' title="L" style="margin: 2px;
-			float: right;">
+		<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w cmsFloatRight' title="L">
 			L
 		</div>
 		<p class="ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
 			Toolbox
 		</p>
-		<div class="ui-widget" runat="server" id="divEditing">
-			<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
-				<p>
-					<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
-					<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
+		<div id="divCMSActive">
+			<div class="ui-widget" runat="server" id="divEditing">
+				<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
+					<p>
+						<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
+						<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
+				</div>
+			</div>
+			<div style="display: none;" class="GlossySeaGreen">
+				cmsFullOrder<br />
+				<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
+				cmsMovedItem<br />
+				<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
+			</div>
+			<div class="GlossySeaGreen cmsCenter5px">
+				<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsCenter5px" onclick="cmsShowEditPageInfo();" />
+				<br />
+				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+				</asp:DropDownList>
+				<br />
+				<input runat="server" id="btnTemplate" type="button" value="Apply" class="cmsCenter5px" onclick="cmsUpdateTemplate();" />
+			</div>
+			<div class="GlossySeaGreen cmsCenter5px">
+				<input runat="server" id="btnToolboxSave" type="button" value="Save" class="cmsCenter5px" onclick="cmsApplyChanges();" />
+				&nbsp;&nbsp;&nbsp;
+				<input type="button" value="Cancel" class="cmsCenter5px" onclick="cmsCancelEdit();" />
+			</div>
+			<div id="cmsMainToolbox">
+				<br style="clear: none;" />
+				<asp:Repeater ID="rpTools" runat="server">
+					<HeaderTemplate>
+						<div id="cmsToolBox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
+							padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+					</HeaderTemplate>
+					<ItemTemplate>
+						<div class="cmsToolItem GlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
+							<div id="cmsControl" class="GlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
+								<p class="cmsToolItem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
+									<%# Eval("Caption")%>
+								</p>
+								<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
+								<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
+								<input type="hidden" id="cmsCtrlOrder" value="0" />
+								<div style="text-align: right;" id="cmsCtrlButton">
+								</div>
+							</div>
+						</div>
+					</ItemTemplate>
+					<FooterTemplate>
+						</div></FooterTemplate>
+				</asp:Repeater>
+				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
+					background-color: #000;">
+				</div>
+			</div>
+			<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
 			</div>
 		</div>
-		<div style="display: none;" class="GlossySeaGreen">
-			cmsFullOrder<br />
-			<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
-			cmsMovedItem<br />
-			<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
-		</div>
-		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
-			<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" style="text-align: center; margin: 5px;
-				padding: 5px;" onclick="cmsShowEditPageInfo();" />
-			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
-			</asp:DropDownList>
-			<br />
-			<input runat="server" id="btnTemplate" type="button" value="Apply" style="text-align: center; margin: 5px; padding: 5px;"
-				onclick="cmsUpdateTemplate();" />
-		</div>
-		<div class="GlossySeaGreen" style="text-align: center; margin: 5px; padding: 5px;">
-			<input runat="server" id="btnToolboxSave" type="button" value="Save" style="text-align: center; margin: 5px; padding: 5px;"
-				onclick="cmsApplyChanges();" />
-			&nbsp;&nbsp;&nbsp;
-			<input type="button" value="Cancel" style="text-align: center; margin: 5px; padding: 5px;" onclick="cmsCancelEdit();" />
-		</div>
-	</div>
-	<div id="cmsMainToolbox">
-		<br style="clear: none;" />
-		<asp:Repeater ID="rpTools" runat="server">
-			<HeaderTemplate>
-				<div id="cmsToolBox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
-					padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
-			</HeaderTemplate>
-			<ItemTemplate>
-				<div class="cmsToolItem GlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
-					<div id="cmsControl" class="GlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
-						<p class="cmsToolItem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
-							<%# Eval("Caption")%>
-						</p>
-						<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
-						<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
-						<input type="hidden" id="cmsCtrlOrder" value="0" />
-						<div style="text-align: right;" id="cmsCtrlButton">
-						</div>
-					</div>
-				</div>
-			</ItemTemplate>
-			<FooterTemplate>
-				</div></FooterTemplate>
-		</asp:Repeater>
-		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
-			background-color: #000;">
-		</div>
-	</div>
-	<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
 	</div>
 </div>
 <div style="display: none" class="GlossySeaGreen">
@@ -585,9 +620,9 @@
 
 	function cmsLaunchWindow(theURL) {
 		TheURL = theURL;
-		$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
+		$('#cmsModalFrame').html('<div id="cmsDivAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
 
-		$("#divAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		$("#cmsDivAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 			css: { width: '750px', height: '475px' },
 			fadeOut: 1000,
 			timeout: 1200,
@@ -619,7 +654,6 @@
 <div style="display: none">
 	<div id="cms-basic-modal-content">
 		<div id="cmsModalFrame">
-			<%--<iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="550" height="600" src="/Manage/blank.htm"></iframe>--%>
 		</div>
 	</div>
 	<div style="display: none">
