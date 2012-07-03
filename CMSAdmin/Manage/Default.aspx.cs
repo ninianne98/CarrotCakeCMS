@@ -29,7 +29,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 			if (!IsPostBack) {
 				var site = siteHelper.Get(SiteData.CurrentSiteID);
-				txtURL.Text = Request.ServerVariables["SERVER_NAME"];
+				txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
+				txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
+
 				if (site != null) {
 					txtSiteName.Text = site.SiteName;
 					txtURL.Text = site.MainURL;
@@ -74,6 +76,10 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			site.Save();
+
+			//Master.HideWhenNoSiteProfileExists();
+
+			Response.Redirect(CurrentScriptName);
 		}
 
 		protected void btnResetVars_Click(object sender, EventArgs e) {
