@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
 
 /*
@@ -16,6 +17,7 @@ using Carrotware.CMS.UI.Base;
 
 namespace Carrotware.CMS.UI.Admin {
 	public class AdminBaseMasterPage : BaseMasterPage {
+		protected SiteData siteHelper = new SiteData();
 
 		public enum SectionID {
 			Home,

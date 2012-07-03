@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
 using Carrotware.Web.UI.Controls;
 
@@ -20,6 +21,21 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 			if (!File.Exists(sPlugCfg)) {
 				tabModules.Visible = false;
 			}
+
+			HideWhenNoSiteProfileExists();
+		}
+
+		public void HideWhenNoSiteProfileExists() {
+
+			var site = siteHelper.Get(SiteData.CurrentSiteID);
+
+			if (site == null) {
+				tabContent.Visible = false;
+				tabModules.Visible = false;
+			} else {
+				tabContent.Visible = true;
+				tabModules.Visible = true;
+			}
 		}
 
 
@@ -31,9 +47,6 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 
 
 		public void ActivateTab(SectionID sectionID) {
-
-
-
 
 			switch (sectionID) {
 				case SectionID.Home:
