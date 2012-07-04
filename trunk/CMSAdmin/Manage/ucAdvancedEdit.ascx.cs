@@ -52,7 +52,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				var pageContents = new ContentPage();
 				if (guidContentID == Guid.Empty) {
-					var pageName = SiteData.CurrentScriptName; //pageHelper.StripSiteFolder(CurrentScriptName);
+					var pageName = SiteData.CurrentScriptName;
 					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 				} else {
 					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);

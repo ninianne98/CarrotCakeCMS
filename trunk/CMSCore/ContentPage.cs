@@ -59,55 +59,12 @@ namespace Carrotware.CMS.Core {
 			this.EditUserId = c.EditUserId;
 			this.EditDate = c.EditDate;
 			this.TemplateFile = c.TemplateFile;
-			//this.NavFileName = AppendSiteFolder(rc.FileName);
 			this.NavFileName = rc.FileName;
 
 			this.MetaDescription = c.MetaDescription;
 			this.MetaKeyword = c.MetaKeyword;
 
 		}
-
-		/*
-		private Guid _siteid = Guid.Empty;
-		private SiteData siteHelper = null;
-		private void InitSite() {
-			if (_siteid != SiteData.CurrentSiteID) {
-				siteHelper = new SiteData();
-				siteHelper.LoadSiteFromCache();
-				_siteid = siteHelper.SiteID;
-			}
-		}
-		*/
-
-
-
-		/*
-		public string AppendSiteFolder(string sReqPath) {
-			InitSite();
-			var prefix = "";
-			if (!string.IsNullOrEmpty(siteHelper.SiteFolder)) {
-				prefix = siteHelper.SiteFolder;
-			}
-			if (!sReqPath.ToLower().StartsWith(prefix.ToLower())) {
-				sReqPath = prefix + sReqPath;
-			}
-			sReqPath = sReqPath.Replace("//", "/");
-			return sReqPath;
-		}
-
-		public string StripSiteFolder(string sReqPath) {
-			InitSite();
-			var prefix = "";
-			if (!string.IsNullOrEmpty(siteHelper.SiteFolder)) {
-				prefix = siteHelper.SiteFolder;
-				if (sReqPath.ToLower().StartsWith(prefix.ToLower())) {
-					sReqPath = sReqPath.Replace(prefix, "/");
-				}
-				sReqPath = sReqPath.Replace("//", "/");
-			}
-			return sReqPath;
-		}
-		*/
 
 
 		public List<ContentPage> GetLatestContentList(Guid siteID) {
@@ -167,10 +124,7 @@ namespace Carrotware.CMS.Core {
 					db.tblContents.DeleteOnSubmit(c);
 				}
 				db.SubmitChanges();
-
-				//System.Web.HttpRuntime.UnloadAppDomain();
 			}
-
 		}
 
 
@@ -296,33 +250,15 @@ namespace Carrotware.CMS.Core {
 			}
 			c.Root_ContentID = this.Root_ContentID;
 
-			//rc.Root_ContentID = this.Root_ContentID;
-			//rc.SiteID = this.SiteID;
 			rc.Heartbeat_UserId = this.Heartbeat_UserId;
 			rc.EditHeartbeat = this.EditHeartbeat;
 			rc.FileName = this.FileName;
 			rc.PageActive = this.PageActive;
 
-			//if (string.IsNullOrEmpty(rc.FileName)) {
-			//    rc.FileName = this.Root_ContentID.ToString().Substring(0, 6) + "-" + this.Root_ContentID.ToString().Substring(28, 6);
-			//}
-
-			//rc.FileName = rc.FileName.Trim().Replace(" ", "_");
-			//rc.FileName = rc.FileName.Trim().Replace("'", "-");
-			//rc.FileName = rc.FileName.Trim().Replace("\"", "-");
-
-			//if (!rc.FileName.ToLower().EndsWith(".aspx")) {
-			//    rc.FileName = rc.FileName + ".aspx";
-			//}
-			//if (rc.FileName.ToLower().IndexOf(@"/") < 0) {
-			//    rc.FileName = "/" + rc.FileName;
-			//}
-
 			rc.FileName = ContentPage.ScrubFilename(this.Root_ContentID, rc.FileName);
 
-			//c.ContentID = this.ContentID;
 			c.Parent_ContentID = this.Parent_ContentID;
-			c.IsLatestVersion = true;  //this.IsLatestVersion;
+			c.IsLatestVersion = true;
 			c.TitleBar = this.TitleBar;
 			c.NavMenuText = this.NavMenuText;
 			c.PageHead = this.PageHead;
@@ -340,7 +276,6 @@ namespace Carrotware.CMS.Core {
 			db.tblContents.InsertOnSubmit(c);
 			db.SubmitChanges();
 
-			//System.Web.HttpRuntime.UnloadAppDomain();
 		}
 
 
@@ -679,12 +614,6 @@ namespace Carrotware.CMS.Core {
 							  Root_ContentID = c.Root_ContentID
 						  }).ToList();
 
-			//int top = 0;
-			//foreach (var t in lstSiteMap) {
-			//    t.NavOrder = top;
-			//    top = top + iPageCt + 1;
-			//}
-
 
 			while (iBefore != iAfter) {
 				var lstLevel = (from z in lstSiteMap
@@ -720,10 +649,6 @@ namespace Carrotware.CMS.Core {
 
 				iAfter = lstSiteMap.Count;
 			}
-
-			//foreach (var x in lstSiteMap) {
-			//    x.NavMenuText = x.NavMenuText + " [" + x.NavOrder + "]";
-			//}
 
 			return (from m in lstSiteMap
 					orderby m.NavOrder, m.NavMenuText
