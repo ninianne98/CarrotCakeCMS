@@ -142,4 +142,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)\bin\$(TargetName).*" "$(SolutionDir)\CMSAdmin\bin\" /F /R /Y /I
+xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\" /F /R /Y /I
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>
