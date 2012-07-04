@@ -18,7 +18,9 @@ Released   : 20090703
 	<carrot:jqueryui runat="server" ID="jqueryui1" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Abundant by Free CSS Templates</title>
-	<link href="/abundant/style.css" rel="stylesheet" type="text/css" media="screen" />
+	<asp:PlaceHolder ID="myCSS" runat="server">
+		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+	</asp:PlaceHolder>
 </head>
 <body>
 	<form id="form1" runat="server">

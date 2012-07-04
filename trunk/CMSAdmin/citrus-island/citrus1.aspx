@@ -7,7 +7,9 @@
 	<carrot:jqueryui runat="server" ID="jqueryui1" />
 	<title>Citrus Island</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<link rel="stylesheet" href="/citrus-island/style.css" type="text/css" />
+	<asp:PlaceHolder ID="myCSS" runat="server">
+		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+	</asp:PlaceHolder>
 </head>
 <body>
 	<form id="form1" runat="server">
