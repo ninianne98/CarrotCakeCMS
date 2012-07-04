@@ -119,7 +119,7 @@ namespace Carrotware.CMS.UI.Base {
 							filePage = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 						}
 						if (sFileRequested.ToLower() == DEFAULT_FILE && filePage != null) {
-							sFileRequested = filePage.NavFileName;
+							sFileRequested = filePage.FileName;
 						}
 					}
 
