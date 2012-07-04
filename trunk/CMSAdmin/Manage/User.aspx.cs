@@ -29,14 +29,14 @@ namespace Carrotware.CMS.UI.Admin {
 				if (id != Guid.Empty) {
 					var dsRoles = new List<aspnet_Role>();
 
-					if (!IsAdmin) {
+					if (!SiteData.IsAdmin) {
 						dsRoles = (from l in db.aspnet_Roles
-								   where l.RoleName != "CarrotCMS Users" && l.RoleName != "CarrotCMS Administrators"
+								   where l.RoleName != SiteData.CMSGroup_Users && l.RoleName != SiteData.CMSGroup_Admins
 								   orderby l.RoleName
 								   select l).ToList();
 					} else {
 						dsRoles = (from l in db.aspnet_Roles
-								   where l.RoleName != "CarrotCMS Users"
+								   where l.RoleName != SiteData.CMSGroup_Users
 								   orderby l.RoleName
 								   select l).ToList();
 					}
@@ -44,7 +44,7 @@ namespace Carrotware.CMS.UI.Admin {
 					CheckBox chkSelected = null;
 
 					gvSites.Visible = false;
-					if (IsAdmin) {
+					if (SiteData.IsAdmin) {
 						gvSites.Visible = true;
 						gvSites.DataSource = (from l in db.tblSites
 											  orderby l.SiteName
@@ -135,12 +135,12 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 
 
-				if (!Roles.IsUserInRole(usr.UserName, "CarrotCMS Users")) {
-					Roles.AddUserToRole(usr.UserName, "CarrotCMS Users");
+				if (!Roles.IsUserInRole(usr.UserName, SiteData.CMSGroup_Users)) {
+					Roles.AddUserToRole(usr.UserName, SiteData.CMSGroup_Users);
 				}
 
 
-				if (IsAdmin) {
+				if (SiteData.IsAdmin) {
 					var dsLocs = (from l in db.tblUserSiteMappings
 								  where l.UserId == id
 								  select l).ToList();

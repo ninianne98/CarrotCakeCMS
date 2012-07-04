@@ -79,7 +79,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			orderHelper.UpdateSiteMap(SiteID, lst);
 
-			Response.Redirect(CurrentScriptName);
+			Response.Redirect(SiteData.CurrentScriptName);
 		}
 
 

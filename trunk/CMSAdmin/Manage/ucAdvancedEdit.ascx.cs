@@ -29,11 +29,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			bool bLock = false;
 			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != CurrentUserGuid
+				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
 						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (cp.Heartbeat_UserId == CurrentUserGuid
+				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
 					|| cp.Heartbeat_UserId == null) {
 					bLock = false;
 				}
@@ -52,10 +52,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				var pageContents = new ContentPage();
 				if (guidContentID == Guid.Empty) {
-					var pageName = CurrentScriptName; //pageHelper.StripSiteFolder(CurrentScriptName);
-					pageContents = pageHelper.GetLatestContent(SiteID, null, pageName);
+					var pageName = SiteData.CurrentScriptName; //pageHelper.StripSiteFolder(CurrentScriptName);
+					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 				} else {
-					pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
 				}
 
 				if (cmsHelper.ToolboxPlugins.Count > 0) {
@@ -84,13 +84,17 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					divEditing.Visible = false;
 
 				} else {
+					pnlBUttonGroup.Visible = false;
 					rpTools.Visible = false;
 					btnToolboxSave.Visible = false;
+					btnTemplate.Visible = false;
+					btnEditCoreInfo.Visible = false;
 					divEditing.Visible = true;
 
 					if (bLocked && pageContents.Heartbeat_UserId != null) {
 						var usr = ProfileManager.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
-						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.";
+						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
+							" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 					}
 				}
 			}

@@ -34,8 +34,12 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentContainer contRight { get; set; }
 		protected ContentContainer contLeft { get; set; }
 
-
 		protected SiteData theSite { get; set; }
+
+		protected Guid guidContentID = Guid.Empty;
+		protected ContentPage pageContents = new ContentPage();
+		protected List<PageWidget> pageWidgets = new List<PageWidget>();
+
 
 		protected string PageTitlePattern {
 			get {
@@ -56,24 +60,8 @@ namespace Carrotware.CMS.UI.Base {
 
 		private const string JSSCOPE = "GlossySeaGreen";
 
-
-		protected Guid guidContentID = Guid.Empty;
-		protected ContentPage pageContents = new ContentPage();
-		protected List<PageWidget> pageWidgets = new List<PageWidget>();
-
-
 		protected SiteData GetSite() {
 			return siteHelper.Get(SiteData.CurrentSiteID);
-		}
-
-		protected override void OnLoad(EventArgs e) {
-
-			//Response.Cache.SetNoServerCaching();
-			//Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-			//var dtExpire = System.DateTime.Now.AddMinutes(2);
-			//Response.Cache.SetExpires(dtExpire);
-
-			base.OnLoad(e);
 		}
 
 
@@ -93,11 +81,10 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected void LoadPageControls(Control page) {
 
-			string sGen = "\r\n\t<meta name=\"generator\" content=\"CarrotCake CMS {0}\" />\r\n";
-
-			var generator = new Literal();
-			generator.Text = string.Format(sGen, CurrentDLLVersion);
-			Page.Header.Controls.Add(generator);
+			HtmlMeta metaGenerator = new HtmlMeta();
+			metaGenerator.Name = "generator";
+			metaGenerator.Content = string.Format("CarrotCake CMS {0}", CurrentDLLVersion); ;
+			Page.Header.Controls.Add(metaGenerator);
 
 			theSite = GetSite();
 
@@ -110,24 +97,23 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-
-			string path = HttpContext.Current.Request.Path;
+			string path = SiteData.CurrentScriptName;
 			path = path.ToLower();
 
 			ContentPage filePage = null;
 
 			if (path.Length < 3) {
-				if (IsAdmin || IsEditor) {
-					filePage = pageHelper.FindHome(SiteID, null);
+				if (SiteData.IsAdmin || SiteData.IsEditor) {
+					filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
 				} else {
-					filePage = pageHelper.FindHome(SiteID, true);
+					filePage = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 				}
 			} else {
 				var pageName = path;
-				if (IsAdmin || IsEditor) {
-					filePage = pageHelper.GetLatestContent(SiteID, null, pageName);
+				if (SiteData.IsAdmin || SiteData.IsEditor) {
+					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 				} else {
-					filePage = pageHelper.GetLatestContent(SiteID, true, pageName);
+					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
 				}
 			}
 
@@ -135,7 +121,7 @@ namespace Carrotware.CMS.UI.Base {
 				guidContentID = filePage.Root_ContentID;
 			}
 
-			pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+			pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
 
 			pageWidgets = widgetHelper.GetWidgets(guidContentID);
 
@@ -156,16 +142,15 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-
 			Page.Title = string.Format(PageTitlePattern, theSite.SiteName, pageContents.TitleBar);
 
 			if (!pageContents.PageActive) {
-				if (IsAdmin || IsEditor) {
+				if (SiteData.IsAdmin || SiteData.IsEditor) {
 					Page.Title = string.Format(PageTitlePattern, "* UNPUBLISHED * " + theSite.SiteName, pageContents.TitleBar);
 				}
 			}
 
-			if (AdvancedEditMode) {
+			if (SiteData.AdvancedEditMode) {
 				if (cmsHelper.cmsAdminContent == null) {
 					cmsHelper.cmsAdminContent = pageContents;
 					cmsHelper.cmsAdminWidget = (from w in pageWidgets
@@ -180,7 +165,6 @@ namespace Carrotware.CMS.UI.Base {
 			} else {
 				cmsHelper.cmsAdminContent = null;
 			}
-
 
 			contCenter = new ContentContainer();
 			contLeft = new ContentContainer();
@@ -213,20 +197,9 @@ namespace Carrotware.CMS.UI.Base {
 					Response.Cache.SetExpires(dtExpire);
 
 
-					if (!AdvancedEditMode) {
-						//string editLink = "<div style=\"background:#CDE3D6; padding:5px; border: 2px dashed #676F6A;\">"
-						//	+ "<a style=\"color:#676F6A;padding:5px;margin:0px;font-weight: bold;\" target=\"_blank\" href=\"/Manage/PageAddEdit.aspx?id=" + pageContents.Root_ContentID.ToString() + "\">EDIT</a></div>\r\n";
+					if (!SiteData.AdvancedEditMode) {
 
-						//contCenter.Text = editLink + pageContents.PageText;
-						//contLeft.Text = editLink + pageContents.LeftPageText;
-						//contRight.Text = editLink + pageContents.RightPageText;
-
-						if (IsAdmin || IsEditor) {
-							//Literal litEd = new Literal();
-							//litEd.Text = "\r\n<div style=\"clear: both;\">&nbsp;</div>\r\n<div style=\"text-align: center; background:#CDE3D6; padding:5px; margin:5px; border: 2px dashed #676F6A;\">\r\n"
-							//        + "<a style=\"color:#676F6A;padding:5px;margin:2px;font-weight: bold;\" target=\"_top\" href=\"" + CurrentScriptName + "?carrotedit=true\">ADVANCED EDIT</a>\r\n"
-							//        + "</div>\r\n";
-							//Page.Form.Controls.Add(litEd);
+						if (SiteData.IsAdmin || SiteData.IsEditor) {
 
 							Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
 							Page.Form.Controls.Add(editor);
@@ -254,8 +227,7 @@ namespace Carrotware.CMS.UI.Base {
 						Page.Form.Controls.Add(editor);
 
 						jquery link = new jquery();
-						//link.JQVersion = "1.6";
-						//Page.Header.Controls.Add(link);
+
 						Page.Header.Controls.AddAt(0, link);
 
 						MarkWidgets(page, JSSCOPE, true);
@@ -329,7 +301,7 @@ namespace Carrotware.CMS.UI.Base {
 							IWidget w = null;
 							if (widget is IWidget) {
 								w = widget as IWidget;
-								w.SiteID = SiteID;
+								w.SiteID = SiteData.CurrentSiteID;
 								w.PageWidgetID = theWidget.PageWidgetID;
 								w.RootContentID = theWidget.Root_ContentID;
 							}
@@ -344,10 +316,10 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (widget is IWidgetEditStatus) {
 								var wes = widget as IWidgetEditStatus;
-								wes.IsBeingEdited = AdvancedEditMode;
+								wes.IsBeingEdited = SiteData.AdvancedEditMode;
 							}
 
-							if (AdvancedEditMode) {
+							if (SiteData.AdvancedEditMode) {
 								WidgetWrapper plcWrapper = new WidgetWrapper();
 								plcWrapper.JQueryUIScope = JSSCOPE;
 								plcWrapper.IsAdminMode = true;

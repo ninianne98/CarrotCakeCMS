@@ -79,7 +79,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			//Master.HideWhenNoSiteProfileExists();
 
-			Response.Redirect(CurrentScriptName);
+			Response.Redirect(SiteData.CurrentScriptName);
 		}
 
 		protected void btnResetVars_Click(object sender, EventArgs e) {

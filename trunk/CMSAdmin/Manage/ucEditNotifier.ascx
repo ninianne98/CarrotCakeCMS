@@ -63,6 +63,9 @@
 		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 		text-decoration: underline !important;
 	}
+	span.cmsFooterLinks {
+		text-decoration: none !important;
+	}
 	.cmsFooterP {
 		line-height: 20px !important;
 		text-align: center !important;
@@ -84,7 +87,7 @@
 <div class="cmsNavFooterBox">
 	<p class="cmsFooterP">
 		<a class="cmsFooterLinks" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">EDIT</a> 
-		<a class="cmsFooterLinks" target="_top" href="<%=CurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
+		<a class="cmsFooterLinks" target="_top" href="<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
 		<a class="cmsFooterLinks" target="_top" href="/Manage/PageIndex.aspx">PAGE INDEX</a> 
 		<a class="cmsFooterLinks" target="_top" href="/Manage/ModuleIndex.aspx">MODULE INDEX</a>
 	</p>
@@ -113,19 +116,19 @@
 	<div class="cmsNavBox2">
 		<div class="cmsNavBox1">
 			<a class="cmsNavImageLink" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
-				<img border="0" alt="EDIT" title="EDIT" src="/manage/images/application_edit.png" /></a>
+				<img border="0" alt="EDIT" title="EDIT" src="/Manage/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=CurrentScriptName %>?carrotedit=true">
-				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/manage/images/overlays.png" /></a>
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true">
+				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/Manage/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
 			<a title="PAGE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/PageIndex.aspx">
-				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/manage/images/table.png" /></a>
+				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/Manage/images/table.png" /></a>
 		</div>
 		<div class="cmsNavBox2">
 			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/ModuleIndex.aspx">
-				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/manage/images/brick.png" /></a>
+				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/Manage/images/brick.png" /></a>
 		</div>
 	</div>
 </div>
@@ -133,19 +136,19 @@
 	<div class="cmsNavBox2">
 		<div class="cmsNavBox1">
 			<a class="cmsNavImageLink" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
-				<img border="0" alt="EDIT" title="EDIT" src="/manage/images/application_edit.png" /></a>
+				<img border="0" alt="EDIT" title="EDIT" src="/Manage/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=CurrentScriptName %>?carrotedit=true">
-				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/manage/images/overlays.png" /></a>
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true">
+				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/Manage/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
 			<a title="PAGE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/PageIndex.aspx">
-				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/manage/images/table.png" /></a>
+				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/Manage/images/table.png" /></a>
 		</div>
 		<div class="cmsNavBox2">
 			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/ModuleIndex.aspx">
-				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/manage/images/brick.png" /></a>
+				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/Manage/images/brick.png" /></a>
 		</div>
 	</div>
 </div>

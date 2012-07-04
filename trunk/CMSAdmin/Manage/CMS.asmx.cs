@@ -37,23 +37,18 @@ namespace Carrotware.CMS.UI.Admin {
 		private ContentPage pageHelper = new ContentPage();
 		private PageWidget widgetHelper = new PageWidget();
 
-		private Guid CurrentUserGuid = Guid.Empty;
 		private Guid CurrentPageGuid = Guid.Empty;
-		private MembershipUser CurrentUser { get; set; }
 		private ContentPage filePage = null;
-
 
 		private List<ContentPage> _pages = null;
 		protected List<ContentPage> lstActivePages {
 			get {
 				if (_pages == null) {
-					_pages = pageHelper.GetLatestContentList(SiteID, true);
+					_pages = pageHelper.GetLatestContentList(SiteData.CurrentSiteID, true);
 				}
 				return _pages;
 			}
 		}
-
-
 
 		public ContentPage cmsAdminContent {
 			get {
@@ -109,11 +104,6 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
-		private Guid SiteID {
-			get {
-				return SiteData.CurrentSiteID;
-			}
-		}
 
 		private void SaveSerialized(string sKey, string sData) {
 			bool bAdd = false;
@@ -121,18 +111,18 @@ namespace Carrotware.CMS.UI.Admin {
 
 			var itm = (from c in db.tblSerialCaches
 					   where c.ItemID == CurrentPageGuid
-					   && c.EditUserId == CurrentUserGuid
+					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.KeyType == sKey
-					   && c.SiteID == SiteID
+					   && c.SiteID == SiteData.CurrentSiteID
 					   select c).FirstOrDefault();
 
 			if (itm == null) {
 				bAdd = true;
 				itm = new tblSerialCache();
 				itm.SerialCacheID = Guid.NewGuid();
-				itm.SiteID = SiteID;
+				itm.SiteID = SiteData.CurrentSiteID;
 				itm.ItemID = CurrentPageGuid;
-				itm.EditUserId = CurrentUserGuid;
+				itm.EditUserId = SiteData.CurrentUserGuid;
 				itm.KeyType = sKey;
 			}
 
@@ -152,9 +142,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 			var itm = (from c in db.tblSerialCaches
 					   where c.ItemID == CurrentPageGuid
-					   && c.EditUserId == CurrentUserGuid
+					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.KeyType == sKey
-					   && c.SiteID == SiteID
+					   && c.SiteID == SiteData.CurrentSiteID
 					   select c).FirstOrDefault();
 
 			if (itm != null) {
@@ -170,9 +160,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 			var itm = (from c in db.tblSerialCaches
 					   where c.ItemID == CurrentPageGuid
-					   && c.EditUserId == CurrentUserGuid
+					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.KeyType == sKey
-					   && c.SiteID == SiteID
+					   && c.SiteID == SiteData.CurrentSiteID
 					   select c).FirstOrDefault();
 
 			if (itm != null) {
@@ -187,27 +177,18 @@ namespace Carrotware.CMS.UI.Admin {
 		private void LoadGuids() {
 			if (!string.IsNullOrEmpty(CurrentEditPage)) {
 				ContentPage pageHelper = new ContentPage();
-				filePage = pageHelper.GetLatestContent(SiteID, null, CurrentEditPage.ToString().ToLower());
+				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, CurrentEditPage.ToString().ToLower());
 				CurrentPageGuid = filePage.Root_ContentID;
 			} else {
 				if (CurrentPageGuid != Guid.Empty) {
 					ContentPage pageHelper = new ContentPage();
-					filePage = pageHelper.GetLatestContent(SiteID, CurrentPageGuid);
+					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, CurrentPageGuid);
 					CurrentEditPage = filePage.FileName;
 				} else {
 					filePage = new ContentPage();
 				}
 			}
 
-			if (HttpContext.Current.User.Identity.IsAuthenticated) {
-				if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
-					CurrentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
-					CurrentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
-				}
-			} else {
-				CurrentUser = null;
-				CurrentUserGuid = Guid.Empty;
-			}
 		}
 
 
@@ -242,11 +223,11 @@ namespace Carrotware.CMS.UI.Admin {
 				LoadGuids();
 				var h = (from r in db.tblRootContents
 						 where r.Root_ContentID == CurrentPageGuid
-						 && r.SiteID == SiteID
+						 && r.SiteID == SiteData.CurrentSiteID
 						 select r).FirstOrDefault();
 
 				if (h != null) {
-					h.Heartbeat_UserId = CurrentUserGuid;
+					h.Heartbeat_UserId = SiteData.CurrentUserGuid;
 					h.EditHeartbeat = DateTime.Now;
 					db.SubmitChanges();
 					return DateTime.Now.ToString();
@@ -281,7 +262,7 @@ namespace Carrotware.CMS.UI.Admin {
 			var lst = (from ct in db.tblContents
 					   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
 					   orderby ct.NavOrder, ct.NavMenuText
-					   where r.SiteID == SiteID
+					   where r.SiteID == SiteData.CurrentSiteID
 							 && r.Root_ContentID != ContPageID
 							 && ct.IsLatestVersion == true
 							 && (ct.Parent_ContentID == ParentID
@@ -336,7 +317,7 @@ namespace Carrotware.CMS.UI.Admin {
 				var cont = (from r in db.tblRootContents
 							join ct in db.tblContents on r.Root_ContentID equals ct.Root_ContentID
 							orderby ct.NavOrder, ct.NavMenuText
-							where r.SiteID == SiteID
+							where r.SiteID == SiteData.CurrentSiteID
 								&& ct.IsLatestVersion == true
 								&& ct.Root_ContentID == ContentPageID
 
@@ -394,7 +375,7 @@ namespace Carrotware.CMS.UI.Admin {
 				var h = (from r in db.tblRootContents
 						 where r.Root_ContentID != CurrentPageGuid
 						 && r.FileName.ToLower() == TheFileName.ToLower()
-						 && r.SiteID == SiteID
+						 && r.SiteID == SiteData.CurrentSiteID
 						 select r).FirstOrDefault();
 
 				if (h == null) {
@@ -542,7 +523,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				var c = cmsAdminContent;
 				c.EditDate = DateTime.Now;
-				c.EditUserId = CurrentUserGuid;
+				c.EditUserId = SiteData.CurrentUserGuid;
 				c.ContentID = Guid.NewGuid();
 
 				if (Zone.ToLower() == "c")
@@ -572,7 +553,7 @@ namespace Carrotware.CMS.UI.Admin {
 				LoadGuids();
 				CurrentEditPage = filePage.FileName.ToLower();
 
-				var pageContents = pageHelper.GetLatestContent(SiteID, null, CurrentEditPage);
+				var pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, CurrentEditPage);
 
 				pageContents.IsLatestVersion = false;
 
@@ -585,7 +566,7 @@ namespace Carrotware.CMS.UI.Admin {
 					newContent.Parent_ContentID = cmsAdminContent.Parent_ContentID;
 					newContent.Root_ContentID = cmsAdminContent.Root_ContentID;
 
-					newContent.SiteID = SiteID;
+					newContent.SiteID = SiteData.CurrentSiteID;
 
 					newContent.PageText = ParseEdit(cmsAdminContent.PageText);
 					newContent.LeftPageText = ParseEdit(cmsAdminContent.LeftPageText);
@@ -598,7 +579,7 @@ namespace Carrotware.CMS.UI.Admin {
 					newContent.NavOrder = cmsAdminContent.NavOrder;
 					newContent.PageHead = cmsAdminContent.PageHead;
 					newContent.PageActive = cmsAdminContent.PageActive;
-					newContent.EditUserId = CurrentUserGuid;
+					newContent.EditUserId = SiteData.CurrentUserGuid;
 					newContent.EditDate = DateTime.Now;
 
 					newContent.TemplateFile = cmsAdminContent.TemplateFile;

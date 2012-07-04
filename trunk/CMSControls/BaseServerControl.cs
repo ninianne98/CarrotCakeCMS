@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -27,7 +28,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected List<ContentPage> lstActivePages {
 			get {
 				if (_pages == null) {
-					if (IsAuthEditor) {
+					if (SiteData.IsAuthEditor) {
 						_pages = pageHelper.GetLatestContentList(SiteID, null);
 					} else {
 						_pages = pageHelper.GetLatestContentList(SiteID, true);
@@ -36,35 +37,6 @@ namespace Carrotware.CMS.UI.Controls {
 				return _pages;
 			}
 		}
-
-		protected bool IsAuthEditor {
-			get {
-				return AdvancedEditMode || IsAdmin || IsEditor;
-			}
-		}
-
-		protected bool AdvancedEditMode {
-			get {
-				return pageHelper.AdvancedEditMode;
-			}
-		}
-		protected bool IsAdmin {
-			get {
-				return pageHelper.IsAdmin;
-			}
-		}
-		protected bool IsEditor {
-			get {
-				return pageHelper.IsEditor;
-			}
-		}
-
-
-		protected string CurrentScriptName {
-			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
-		}
-
-
 
 
 		public string Text {

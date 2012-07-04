@@ -83,7 +83,7 @@
 <script type="text/javascript">
 	var webSvc = "/Manage/CMS.asmx";
 
-	var thisPage = '<%=CurrentScriptName %>';
+	var thisPage = '<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>';
 	
 	var thisPageID = '<%=guidContentID.ToString() %>';
 
@@ -264,7 +264,7 @@
 		if (data.d == "OK") {
 			CMSBusyShort();
 			cmsAlertModal("Saved");
-			window.setTimeout('location.href = \'<%=CurrentScriptName %>\'', 5000);
+			window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 5000);
 		} else {
 			cmsAlertModal(data.d);
 		}
@@ -272,7 +272,7 @@
 
 
 	function cmsCancelEdit() {
-		window.setTimeout('location.href = \'<%=CurrentScriptName %>\'', 1000);
+		window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 1000);
 	}
 
 	function cmsAjaxFailed(request) {
@@ -546,25 +546,27 @@
 						<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
 				</div>
 			</div>
-			<div style="display: none;" class="GlossySeaGreen">
-				cmsFullOrder<br />
-				<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
-				cmsMovedItem<br />
-				<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
-			</div>
-			<div class="GlossySeaGreen cmsCenter5px">
-				<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsCenter5px" onclick="cmsShowEditPageInfo();" />
-				<br />
-				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
-				</asp:DropDownList>
-				<br />
-				<input runat="server" id="btnTemplate" type="button" value="Apply" class="cmsCenter5px" onclick="cmsUpdateTemplate();" />
-			</div>
-			<div class="GlossySeaGreen cmsCenter5px">
-				<input runat="server" id="btnToolboxSave" type="button" value="Save" class="cmsCenter5px" onclick="cmsApplyChanges();" />
-				&nbsp;&nbsp;&nbsp;
-				<input type="button" value="Cancel" class="cmsCenter5px" onclick="cmsCancelEdit();" />
-			</div>
+			<asp:Panel ID="pnlBUttonGroup" runat="server">
+				<div style="display: none;" class="GlossySeaGreen">
+					cmsFullOrder<br />
+					<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
+					cmsMovedItem<br />
+					<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
+				</div>
+				<div class="GlossySeaGreen cmsCenter5px">
+					<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsCenter5px" onclick="cmsShowEditPageInfo();" />
+					<br />
+					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+					</asp:DropDownList>
+					<br />
+					<input runat="server" id="btnTemplate" type="button" value="Apply" class="cmsCenter5px" onclick="cmsUpdateTemplate();" />
+				</div>
+				<div class="GlossySeaGreen cmsCenter5px">
+					<input runat="server" id="btnToolboxSave" type="button" value="Save" class="cmsCenter5px" onclick="cmsApplyChanges();" />
+					&nbsp;&nbsp;&nbsp;
+					<input type="button" value="Cancel" class="cmsCenter5px" onclick="cmsCancelEdit();" />
+				</div>
+			</asp:Panel>
 			<div id="cmsMainToolbox">
 				<br style="clear: none;" />
 				<asp:Repeater ID="rpTools" runat="server">
@@ -646,7 +648,7 @@
 	}
 
 	function cmsDirtyPageRefresh() {
-		window.setTimeout('location.href = \'<%=CurrentScriptName %>?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
+		window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
 	}
 
 </script>

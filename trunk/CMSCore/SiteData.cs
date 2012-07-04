@@ -153,6 +153,112 @@ namespace Carrotware.CMS.Core {
 		public string SiteName { get; set; }
 		public string SiteFolder { get; set; }
 
+
+
+		public static string CurrentScriptName {
+			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
+		}
+
+		public static string ReferringPage {
+			get {
+				var r = SiteData.CurrentScriptName;
+				try { r = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
+				if (string.IsNullOrEmpty(r))
+					r = "./default.aspx";
+				return r;
+			}
+		}
+
+
+		public static string CMSGroup_Admins {
+			get {
+				return "CarrotCMS Administrators";
+			}
+		}
+		public static string CMSGroup_Editors {
+			get {
+				return "CarrotCMS Editors";
+			}
+		}
+		public static string CMSGroup_Users {
+			get {
+				return "CarrotCMS Users";
+			}
+		}
+
+		public static bool IsAdmin {
+			get {
+				try {
+					return Roles.IsUserInRole(CMSGroup_Admins);
+				} catch {
+					return false;
+				}
+			}
+		}
+		public static bool IsEditor {
+			get {
+				try {
+					return Roles.IsUserInRole(CMSGroup_Editors);
+				} catch {
+					return false;
+				}
+			}
+		}
+		public static bool IsUsers {
+			get {
+				try {
+					return Roles.IsUserInRole(CMSGroup_Users);
+				} catch {
+					return false;
+				}
+			}
+		}
+
+		public static bool IsAuthEditor {
+			get {
+				return AdvancedEditMode || IsAdmin || IsEditor;
+			}
+		}
+
+		public static Guid CurrentUserGuid {
+			get {
+				Guid _currentUserGuid = Guid.Empty;
+				if (HttpContext.Current.User.Identity.IsAuthenticated) {
+					if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
+						_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
+					}
+				}
+				return _currentUserGuid;
+			}
+		}
+
+		public static MembershipUser CurrentUser {
+
+			get {
+				MembershipUser _currentUser = null;
+				if (HttpContext.Current.User.Identity.IsAuthenticated) {
+					if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
+						_currentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
+					}
+				}
+				return _currentUser;
+			}
+		}
+
+		public static bool AdvancedEditMode {
+			get {
+				bool _Advanced = false;
+				if (HttpContext.Current.User.Identity.IsAuthenticated) {
+					if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (SiteData.IsAdmin || SiteData.IsEditor)) {
+						_Advanced = true;
+					} else {
+						_Advanced = false;
+					}
+				}
+				return _Advanced;
+			}
+		}
+
 	}
 
 

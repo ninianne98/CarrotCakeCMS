@@ -29,11 +29,11 @@ namespace Carrotware.CMS.UI.Admin {
 			bool bLock = false;
 
 			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != CurrentUserGuid
+				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
 						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (cp.Heartbeat_UserId == CurrentUserGuid
+				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
 					|| cp.Heartbeat_UserId == null) {
 					bLock = false;
 				}
@@ -44,10 +44,10 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
-				LoadGuids();
-				if (!IsAdmin) {
+
+				if (!SiteData.IsAdmin) {
 					var lstSites = (from l in db.tblUserSiteMappings
-									where l.UserId == CurrentUserGuid
+									where l.UserId == SiteData.CurrentUserGuid
 										 && l.SiteID == SiteID
 									select l).ToList();
 
@@ -62,7 +62,7 @@ namespace Carrotware.CMS.UI.Admin {
 			DateTime dtExpire = System.DateTime.Now.AddMinutes(-5);
 			Response.Cache.SetExpires(dtExpire);
 
-			//base.OnLoad(e);
+			base.OnInit(e);
 
 		}
 

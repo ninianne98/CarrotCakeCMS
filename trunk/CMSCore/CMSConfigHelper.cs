@@ -328,12 +328,12 @@ namespace Carrotware.CMS.Core {
 
 		private CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		private string ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + HttpContext.Current.Request.Path.ToString().ToLower() + "_cmsAdminContent";
-		private string WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + HttpContext.Current.Request.Path.ToString().ToLower() + "_cmsAdminWidget";
+		private string ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + SiteData.CurrentScriptName.ToString().ToLower() + "_cmsAdminContent";
+		private string WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + SiteData.CurrentScriptName.ToString().ToLower() + "_cmsAdminWidget";
 
 		public void OverrideKey(Guid guidContentID) {
 			ContentPage pageHelper = new ContentPage();
-			var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+			var pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
 			OverrideKey(pageContents.FileName);
 		}
 
@@ -342,41 +342,28 @@ namespace Carrotware.CMS.Core {
 			WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + sPageName.ToLower() + "_cmsAdminWidget";
 		}
 
-		protected Guid CurrentUserGuid = Guid.Empty;
-
 		protected ContentPage filePage = null;
-
-		protected MembershipUser CurrentUser { get; set; }
 
 		protected void LoadGuids() {
 
 			ContentPage pageHelper = new ContentPage();
-			if (HttpContext.Current.Request.Path.ToString().ToLower().StartsWith("/manage/")) {
+			if (SiteData.CurrentScriptName.ToString().ToLower().StartsWith("/manage/")) {
 				Guid guidPage = Guid.Empty;
 				if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
 					guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
 				}
-				filePage = pageHelper.GetLatestContent(SiteID, guidPage);
+				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidPage);
 			} else {
-				filePage = pageHelper.GetLatestContent(SiteID, null, HttpContext.Current.Request.Path.ToString().ToLower());
+				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
 			}
 
-			if (HttpContext.Current.User.Identity.IsAuthenticated) {
-				if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
-					CurrentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
-					CurrentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
-				}
-			} else {
-				CurrentUser = null;
-				CurrentUserGuid = Guid.Empty;
-			}
 
 
 			var lst = (from c in db.tblSerialCaches
 					   where c.ItemID == filePage.Root_ContentID
-					   && c.EditUserId == CurrentUserGuid
+					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.EditDate < DateTime.Now.AddHours(-2)
-					   && c.SiteID == SiteID
+					   && c.SiteID == SiteData.CurrentSiteID
 					   select c).ToList();
 
 			if (lst.Count > 0) {
@@ -456,7 +443,7 @@ namespace Carrotware.CMS.Core {
 
 			var itm = (from c in db.tblSerialCaches
 					   where c.ItemID == filePage.Root_ContentID
-					   && c.EditUserId == CurrentUserGuid
+					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.KeyType == sKey
 					   && c.SiteID == SiteID
 					   select c).FirstOrDefault();
@@ -465,9 +452,9 @@ namespace Carrotware.CMS.Core {
 				bAdd = true;
 				itm = new tblSerialCache();
 				itm.SerialCacheID = Guid.NewGuid();
-				itm.SiteID = SiteID;
+				itm.SiteID = SiteData.CurrentSiteID;
 				itm.ItemID = filePage.Root_ContentID;
-				itm.EditUserId = CurrentUserGuid;
+				itm.EditUserId = SiteData.CurrentUserGuid;
 				itm.KeyType = sKey;
 			}
 
@@ -487,9 +474,9 @@ namespace Carrotware.CMS.Core {
 
 			var itm = (from c in db.tblSerialCaches
 					   where c.ItemID == filePage.Root_ContentID
-					   && c.EditUserId == CurrentUserGuid
+					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.KeyType == sKey
-					   && c.SiteID == SiteID
+					   && c.SiteID == SiteData.CurrentSiteID
 					   select c).FirstOrDefault();
 
 			if (itm != null) {
@@ -505,9 +492,9 @@ namespace Carrotware.CMS.Core {
 
 			var itm = (from c in db.tblSerialCaches
 					   where c.ItemID == filePage.Root_ContentID
-					   && c.EditUserId == CurrentUserGuid
+					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.KeyType == sKey
-					   && c.SiteID == SiteID
+					   && c.SiteID == SiteData.CurrentSiteID
 					   select c).FirstOrDefault();
 
 			if (itm != null) {

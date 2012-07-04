@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected List<SiteNav> GetUpdates() {
-			return navHelper.GetLatest(SiteID, TakeTop, !IsAuthEditor);
+			return navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SiteData.IsAuthEditor);
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Controls {
 					c.NavMenuText = "&#9746; " + c.NavMenuText;
 				}
 
-				if (c.NavFileName.ToLower() == CurrentScriptName.ToLower()) {
+				if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
 					output.Write("<li class=\"selected\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				} else {
 					output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
