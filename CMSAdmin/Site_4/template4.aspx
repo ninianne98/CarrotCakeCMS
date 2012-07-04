@@ -9,13 +9,16 @@
     -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>New Page</title>
-	<link rel="stylesheet" href="/Site_4/style.css" type="text/css" media="screen" />
-	<!--[if IE 6]><link rel="stylesheet" href="/Site_4/style.ie6.css" type="text/css" media="screen" /><![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" href="/Site_4/style.ie7.css" type="text/css" media="screen" /><![endif]-->
 	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
 	<carrot:jqueryui runat="server" ID="jqueryui1" />
+	<asp:PlaceHolder ID="myScripts" runat="server">
+		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+		<!--[if IE 6]><link rel="stylesheet" href="<%=pageContents.TemplateFolderPath %>style.ie6.css" type="text/css" media="screen" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" href="<%=pageContents.TemplateFolderPath %>style.ie7.css" type="text/css" media="screen" /><![endif]-->
 
-	<script type="text/javascript" src="/Site_4/script.js"></script>
+		<script type="text/javascript" src="<%=pageContents.TemplateFolderPath %>script.js"></script>
+
+	</asp:PlaceHolder>
 
 	<script type="text/javascript">
 

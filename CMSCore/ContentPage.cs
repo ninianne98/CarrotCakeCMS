@@ -294,6 +294,19 @@ namespace Carrotware.CMS.Core {
 		public string TemplateFile { get; set; }
 		public string TitleBar { get; set; }
 
+		public string TemplateFolderPath {
+			get {
+				if (!string.IsNullOrEmpty(TemplateFile)) {
+					if (TemplateFile.LastIndexOf("/") >= 2) {
+						return TemplateFile.Substring(0, TemplateFile.LastIndexOf("/") + 1);
+					} else {
+						return "/";
+					}
+				} else {
+					return "/";
+				}
+			}
+		}
 
 		public DateTime? EditHeartbeat { get; set; }
 		public string FileName { get; set; }

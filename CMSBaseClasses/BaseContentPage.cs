@@ -97,8 +97,7 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-			string path = SiteData.CurrentScriptName;
-			path = path.ToLower();
+			string path = SiteData.CurrentScriptName.ToLower();
 
 			ContentPage filePage = null;
 
