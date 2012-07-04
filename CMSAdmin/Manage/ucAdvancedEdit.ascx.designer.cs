@@ -41,6 +41,15 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         protected global::System.Web.UI.WebControls.Literal litUser;
         
         /// <summary>
+        /// pnlBUttonGroup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlBUttonGroup;
+        
+        /// <summary>
         /// btnEditCoreInfo control.
         /// </summary>
         /// <remarks>

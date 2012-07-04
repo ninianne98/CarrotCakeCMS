@@ -23,13 +23,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected List<SiteNav> GetSubNav() {
-			return navHelper.GetSiblingNavigation(SiteID, CurrentScriptName, !IsAuthEditor);
+			return navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SiteData.IsAuthEditor);
 		}
 
 		protected SiteNav GetParent(Guid? Root_ContentID) {
 			SiteNav pageContents = null;
 			if (Root_ContentID != null) {
-				pageContents = navHelper.GetPageNavigation(SiteID, new Guid(Root_ContentID.ToString()));
+				pageContents = navHelper.GetPageNavigation(SiteData.CurrentSiteID, new Guid(Root_ContentID.ToString()));
 			}
 			return pageContents;
 		}
@@ -62,7 +62,7 @@ namespace Carrotware.CMS.UI.Controls {
 					if (!c.PageActive) {
 						c.NavMenuText = "&#9746; " + c.NavMenuText;
 					}
-					if (c.NavFileName.ToLower() == CurrentScriptName.ToLower()) {
+					if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
 						output.Write("<li class=\"selected\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 					} else {
 						output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");

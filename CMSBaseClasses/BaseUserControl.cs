@@ -30,8 +30,6 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentPage pageHelper = new ContentPage();
 		protected PageWidget widgetHelper = new PageWidget();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
-		protected Guid CurrentUserGuid = Guid.Empty;
-		protected MembershipUser CurrentUser { get; set; }
 
 
 		protected Guid SiteID {
@@ -52,63 +50,6 @@ namespace Carrotware.CMS.UI.Base {
 				}
 				return _pages;
 			}
-		}
-
-
-		protected bool AdvancedEditMode {
-			get {
-				bool _Advanced = false;
-				if (Page.User.Identity.IsAuthenticated) {
-					if (Request.QueryString["carrotedit"] != null) {
-						_Advanced = true;
-					} else {
-						_Advanced = false;
-					}
-				}
-				return _Advanced;
-			}
-		}
-
-		public string CurrentScriptName {
-			get { return Request.ServerVariables["script_name"].ToString(); }
-		}
-
-		public string ReferringPage {
-			get {
-				var r = CurrentScriptName;
-				try { r = Request.ServerVariables["http_referer"].ToString(); } catch { }
-				if (string.IsNullOrEmpty(r))
-					r = "./default.aspx";
-				return r;
-			}
-		}
-
-
-		protected bool IsAuthEditor {
-			get {
-				return AdvancedEditMode || IsAdmin || IsEditor;
-			}
-		}
-
-		public bool IsAdmin {
-			get { return Roles.IsUserInRole("CarrotCMS Administrators"); }
-		}
-		public bool IsEditor {
-			get { return Roles.IsUserInRole("CarrotCMS Editors"); }
-		}
-		public bool IsUsers {
-			get { return Roles.IsUserInRole("CarrotCMS Users"); }
-		}
-
-		protected override void OnLoad(EventArgs e) {
-
-			if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
-				CurrentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
-				CurrentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
-			}
-
-			//SetPageButtons(this);
-			base.OnLoad(e);
 		}
 
 		public List<MembershipUser> GetUserList() {
@@ -147,23 +88,6 @@ namespace Carrotware.CMS.UI.Base {
 			TheGrid.DataSource = lstVals;
 			TheGrid.DataBind();
 		}
-
-
-
-		//protected void SetPageButtons(Control X) {
-		//    //add the command click event to the link buttons on the datagrid heading
-		//    foreach (Control c in X.Controls) {
-		//        if (c is Button) {
-		//            Button btn = (Button)c;
-		//            btn.Attributes["class"] = "staticButton";
-		//        } else if (c is HtmlInputButton) {
-		//            HtmlInputButton btn = (HtmlInputButton)c;
-		//            btn.Attributes["class"] = "staticButton";
-		//        } else {
-		//            SetPageButtons(c);
-		//        }
-		//    }
-		//}
 
 
 		bool bFound = false;

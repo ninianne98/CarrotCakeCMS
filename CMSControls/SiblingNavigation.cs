@@ -72,7 +72,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			var lst = navHelper.GetSiblingNavigation(SiteID, CurrentScriptName, !IsAuthEditor);
+			var lst = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SiteData.IsAuthEditor);
 
 			if (lst.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
 				output.Write("<h2>" + SectionTitle + "</h2>\r\n");
@@ -88,7 +88,7 @@ namespace Carrotware.CMS.UI.Controls {
 					if (!c.PageActive) {
 						c.NavMenuText = "&#9746; " + c.NavMenuText;
 					}
-					if (c.NavFileName.ToLower() == CurrentScriptName.ToLower()) {
+					if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
 						output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 					} else {
 						output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");

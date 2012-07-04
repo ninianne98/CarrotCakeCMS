@@ -467,7 +467,7 @@
 		<script type="text/javascript">
 			var webSvc = "/Manage/CMS.asmx";
 
-			var thisPage = '<%=CurrentScriptName %>';
+			var thisPage = '<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>';
 
 			function EscapeFile() {
 				thisPage = MakeStringSafe(thisPage);

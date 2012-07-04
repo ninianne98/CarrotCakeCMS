@@ -60,7 +60,7 @@ namespace Carrotware.CMS.UI.Admin {
 			sQueryPath.Replace(@"//", @"/").Replace(@"//", @"/");
 
 			if (lnkUp.Visible) {
-				lnkUp.NavigateUrl = Request.ServerVariables["script_name"] + "?useTiny=" + sQueryMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
+				lnkUp.NavigateUrl = SiteData.CurrentScriptName + "?useTiny=" + sQueryMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
 			}
 			if (!IsPostBack) {
 				LoadLists();

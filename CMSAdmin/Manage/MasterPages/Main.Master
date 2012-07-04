@@ -133,7 +133,7 @@
 				prm.add_beginRequest(function() {
 					$("#" + elementID).block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 						css: {},
-						fadeOut: 1200,
+						fadeOut: 1000,
 						timeout: 1200,
 						overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 					});
@@ -166,10 +166,10 @@
 
 		function LaunchWindow(theURL) {
 			TheURL = theURL;
-			$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="690" height="475" src="' + TheURL + '" /> </div>');
+			$('#cmsModalFrame').html('<div id="divAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
 
 			$("#divAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-				css: { width: '380px', height: '550px' },
+				css: { width: '750px', height: '550px' },
 				fadeOut: 1000,
 				timeout: 1200,
 				overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
@@ -298,8 +298,6 @@
 				tinyMCE.execCommand('mceRemoveControl', false, id);
 		}
 
-
-	
 	</script>
 
 	<script type="text/javascript">
@@ -334,6 +332,13 @@
 	<!-- /TinyMCE -->
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>
+	<style type="text/css">
+		#simplemodal-container, .simplemodal-container {
+			height: 500px;
+			width: 775px;
+			z-index: 5000;
+		}
+	</style>
 </head>
 <body>
 	<form id="form1" runat="server">
@@ -356,7 +361,7 @@
 				<li runat="server" id="tabAbout"><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
 				<li><a target="_blank" href="/">View Site</a> </li>
 				<li>
-					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=CurrentUser.UserName %></asp:LinkButton>
+					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=Carrotware.CMS.Core.SiteData.CurrentUser.UserName%></asp:LinkButton>
 				</li>
 				<li><a href="javascript:void(0)">&nbsp;</a></li>
 			</ul>

@@ -18,21 +18,21 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			var currentPage = pageHelper.GetLatestContent(SiteID, null, CurrentScriptName);
+			var currentPage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName);
 			CurrentPageID = currentPage.Root_ContentID;
 			lnkCurrent.HRef = currentPage.FileName;
 
 			if (!IsPostBack) {
-				List<SiteNav> nav = navHelper.GetChildNavigation(SiteID, CurrentPageID, !IsAuthEditor);
+				List<SiteNav> nav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, CurrentPageID, !SiteData.IsAuthEditor);
 
-				//SiteNav pageContents1 = navHelper.GetPageNavigation(SiteID, CurrentPageID);
+				//SiteNav pageContents1 = navHelper.GetPageNavigation(SiteData.CurrentSiteID, CurrentPageID);
 				//if (pageContents1 != null) {
 				//    pageContents1.NavMenuText = "Current: " + pageContents1.NavMenuText;
 				//    pageContents1.NavOrder = -100;
 				//    nav.Add(pageContents1);
 				//}
 
-				SiteNav pageContents2 = navHelper.GetParentPageNavigation(SiteID, CurrentPageID);
+				SiteNav pageContents2 = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, CurrentPageID);
 				if (pageContents2 != null) {
 					pageContents2.NavMenuText = "Parent: " + pageContents2.NavMenuText;
 					pageContents2.NavOrder = -110;
@@ -43,11 +43,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					lnkParent.Visible = false;
 				}
 
-				var filePage = pageHelper.FindHome(SiteID, null);
+				var filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
 
 				List<SiteNav> lstNavTop = null;
 				if (filePage.Root_ContentID == CurrentPageID) {
-					lstNavTop = (from n in navHelper.GetTopNavigation(SiteID, !IsAuthEditor)
+					lstNavTop = (from n in navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SiteData.IsAuthEditor)
 								 where n.Root_ContentID != CurrentPageID
 								 orderby n.NavOrder
 								 select new SiteNav {

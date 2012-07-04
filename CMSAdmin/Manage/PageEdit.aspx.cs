@@ -60,7 +60,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				cmsHelper.cmsAdminContent = pageContents;
 
-				Response.Redirect(CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString());
+				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString());
 			}
 
 		}

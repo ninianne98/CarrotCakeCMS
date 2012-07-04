@@ -79,51 +79,6 @@ namespace Carrotware.CMS.Core {
 		}
 		*/
 
-		public bool AdvancedEditMode {
-			get {
-				bool _Advanced = false;
-				if (HttpContext.Current.User.Identity.IsAuthenticated) {
-					if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (IsAdmin || IsEditor)) {
-						_Advanced = true;
-					} else {
-						_Advanced = false;
-					}
-				}
-				return _Advanced;
-			}
-		}
-
-
-
-		public bool IsAdmin {
-			get {
-				try {
-					return Roles.IsUserInRole("CarrotCMS Administrators");
-				} catch {
-					return false;
-				}
-			}
-		}
-		public bool IsEditor {
-			get {
-				try {
-					return Roles.IsUserInRole("CarrotCMS Editors");
-				} catch {
-					return false;
-				}
-			}
-		}
-		public bool IsUsers {
-			get {
-				try {
-					return Roles.IsUserInRole("CarrotCMS Users");
-				} catch {
-					return false;
-				}
-			}
-		}
-
-
 
 
 		/*

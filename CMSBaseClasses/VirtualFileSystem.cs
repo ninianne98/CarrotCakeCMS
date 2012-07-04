@@ -38,7 +38,9 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		private string CurrentScriptName {
-			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
+			get {
+				return SiteData.CurrentScriptName; 
+			}
 		}
 
 		public bool IsReusable {
@@ -69,7 +71,7 @@ namespace Carrotware.CMS.UI.Base {
 
 
 			if (sFileRequested.ToLower().EndsWith(".aspx") || sFileRequested.Length < 3) {
-				bool bAllowAnyVersion = pageHelper.AdvancedEditMode || pageHelper.IsAdmin || pageHelper.IsEditor;
+				bool bAllowAnyVersion = SiteData.AdvancedEditMode || SiteData.IsAdmin || SiteData.IsEditor;
 
 				string queryString = "";
 				queryString = context.Request.QueryString.ToString();
@@ -112,9 +114,9 @@ namespace Carrotware.CMS.UI.Base {
 
 					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
 						if (bAllowAnyVersion) {
-							filePage = pageHelper.FindHome(SiteID, null);
+							filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
 						} else {
-							filePage = pageHelper.FindHome(SiteID, true);
+							filePage = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 						}
 						if (sFileRequested.ToLower() == DEFAULT_FILE && filePage != null) {
 							sFileRequested = filePage.NavFileName;
@@ -123,9 +125,9 @@ namespace Carrotware.CMS.UI.Base {
 
 					var pageName = sFileRequested;
 					if (bAllowAnyVersion) {
-						filePage = pageHelper.GetLatestContent(SiteID, null, pageName);
+						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 					} else {
-						filePage = pageHelper.GetLatestContent(SiteID, true, pageName);
+						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
 					}
 
 					bool bNoHome = false;
@@ -142,7 +144,7 @@ namespace Carrotware.CMS.UI.Base {
 							string sRealFile = filePage.TemplateFile;
 
 							// selectivly engage the cms helper only if in advance mode
-							if (pageHelper.AdvancedEditMode) {
+							if (SiteData.AdvancedEditMode) {
 								CMSConfigHelper cmsHelper = new CMSConfigHelper();
 								if (cmsHelper.cmsAdminContent != null) {
 									try { sRealFile = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }

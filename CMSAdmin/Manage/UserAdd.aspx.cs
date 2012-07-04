@@ -20,7 +20,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected void createWizard_CreatedUser(object sender, EventArgs e) {
 			var pb = ProfileBase.Create(createWizard.UserName, false);
-			Roles.AddUserToRole(createWizard.UserName, "CarrotCMS Users");
+			Roles.AddUserToRole(createWizard.UserName, SiteData.CMSGroup_Users);
+
 			try {
 				MembershipUser usr = Membership.GetUser(createWizard.UserName);
 				Guid userID = new Guid(usr.ProviderUserKey.ToString());

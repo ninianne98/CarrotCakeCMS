@@ -34,13 +34,6 @@ namespace Carrotware.CMS.UI.Base {
 		protected PageWidget widgetHelper = new PageWidget();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
-
-		protected Guid CurrentUserGuid = Guid.Empty;
-
-		protected MembershipUser CurrentUser { get; set; }
-
-
-
 		protected string CurrentDLLVersion {
 			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
 		}
@@ -55,43 +48,11 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		protected bool AdvancedEditMode {
-			get {
-				bool _Advanced = false;
-				if (Page.User.Identity.IsAuthenticated) {
-					if (Request.QueryString["carrotedit"] != null && (IsAdmin || IsEditor)) {
-						_Advanced = true;
-					} else {
-						_Advanced = false;
-					}
-				}
-				return _Advanced;
-			}
-		}
-
-
 		protected Guid SiteID {
 			get {
 				return SiteData.CurrentSiteID;
 			}
 		}
-
-
-
-		public string CurrentScriptName {
-			get { return Request.ServerVariables["script_name"].ToString(); }
-		}
-
-		public string ReferringPage {
-			get {
-				var r = CurrentScriptName;
-				try { r = Request.ServerVariables["http_referer"].ToString(); } catch { }
-				if (string.IsNullOrEmpty(r))
-					r = "./default.aspx";
-				return r;
-			}
-		}
-
 
 		public bool IsPageRefreshJavaScript {
 			get {
@@ -106,36 +67,6 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		public bool IsAdmin {
-			get { return Roles.IsUserInRole("CarrotCMS Administrators"); }
-		}
-		public bool IsEditor {
-			get { return Roles.IsUserInRole("CarrotCMS Editors"); }
-		}
-		public bool IsUsers {
-			get { return Roles.IsUserInRole("CarrotCMS Users"); }
-		}
-
-		//protected override void OnLoad(EventArgs e) {
-		protected override void OnLoad(EventArgs e) {
-
-			LoadGuids();
-			//SetPageButtons(this);
-			base.OnLoad(e);
-		}
-
-
-		protected void LoadGuids() {
-			if (Page.User.Identity.IsAuthenticated) {
-				if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
-					CurrentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
-					CurrentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
-				}
-			} else {
-				CurrentUser = null;
-				CurrentUserGuid = Guid.Empty;
-			}
-		}
 
 		public List<MembershipUser> GetUserList() {
 			List<MembershipUser> usrs = new List<MembershipUser>();

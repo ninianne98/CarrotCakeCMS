@@ -108,7 +108,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					cmsHelper.cmsAdminContent = pageContents;
 				}
 
-				Response.Redirect(CurrentScriptName + "?" + Request.QueryString.ToString());
+				Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
 			}
 
 		}
