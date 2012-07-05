@@ -161,6 +161,50 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+
+		private List<CMSTemplate> GetTemplatesByDirectory() {
+			var _plugins = new List<CMSTemplate>();
+
+			var wwwpath = HttpContext.Current.Server.MapPath("~/");
+			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsTemplates/");
+
+			if (Directory.Exists(sPlugCfg)) {
+
+				string[] subdirs;
+				try {
+					subdirs = Directory.GetDirectories(sPlugCfg);
+				} catch {
+					subdirs = null;
+				}
+
+
+				if (subdirs != null) {
+					foreach (string theDir in subdirs) {
+
+						string sTplDef = theDir + @"\Skin.config";
+
+						if (File.Exists(sTplDef)) {
+
+							DataSet ds = new DataSet();
+							ds.ReadXml(sTplDef);
+
+							var _p2 = (from d in ds.Tables[0].AsEnumerable()
+									   select new CMSTemplate {
+										   TemplatePath = (theDir + "/" + d.Field<string>("templatefile").ToLower()).Replace(wwwpath, @"\").Replace(@"\", @"/"),
+										   Caption = d.Field<string>("filedesc")
+									   }).ToList();
+
+							_plugins = _plugins.Union(_p2).ToList();
+
+						}
+					}
+				}
+			}
+
+			return _plugins;
+		}
+
+
 		public List<CMSTemplate> Templates {
 			get {
 
@@ -184,11 +228,15 @@ namespace Carrotware.CMS.Core {
 					DataSet ds = new DataSet();
 					ds.ReadXml(sPlugCfg);
 
-					_plugins = (from d in ds.Tables[0].AsEnumerable()
-								select new CMSTemplate {
-									TemplatePath = d.Field<string>("templatefile").ToLower(),
-									Caption = d.Field<string>("filedesc")
-								}).ToList();
+					var _p1 = (from d in ds.Tables[0].AsEnumerable()
+							   select new CMSTemplate {
+								   TemplatePath = d.Field<string>("templatefile").ToLower(),
+								   Caption = d.Field<string>("filedesc")
+							   }).ToList();
+
+					var _p2 = GetTemplatesByDirectory();
+
+					_plugins = _p1.Union(_p2).ToList();
 
 					HttpContext.Current.Cache.Insert(ModuleKey, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}

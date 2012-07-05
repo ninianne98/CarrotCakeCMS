@@ -17,12 +17,13 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 				tabUserAdmin.Visible = false;
 			}
 
+			HideWhenNoSiteProfileExists();
+
 			string sPlugCfg = Server.MapPath("~/AdminModules.config");
 			if (!File.Exists(sPlugCfg)) {
 				tabModules.Visible = false;
 			}
 
-			HideWhenNoSiteProfileExists();
 		}
 
 		public void HideWhenNoSiteProfileExists() {
