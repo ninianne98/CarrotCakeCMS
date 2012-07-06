@@ -183,6 +183,8 @@ namespace Carrotware.CMS.Core {
 
 						string sTplDef = theDir + @"\Skin.config";
 
+						string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+
 						if (File.Exists(sTplDef)) {
 
 							DataSet ds = new DataSet();
@@ -190,7 +192,7 @@ namespace Carrotware.CMS.Core {
 
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
 									   select new CMSTemplate {
-										   TemplatePath = (theDir + "/" + d.Field<string>("templatefile").ToLower()).Replace(wwwpath, @"\").Replace(@"\", @"/"),
+										   TemplatePath = (sPathPrefix + d.Field<string>("templatefile").ToLower()).ToLower(),
 										   Caption = d.Field<string>("filedesc")
 									   }).ToList();
 
