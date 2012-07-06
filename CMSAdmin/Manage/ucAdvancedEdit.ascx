@@ -94,13 +94,27 @@
 		padding: 2px !important;
 		margin-top: 5px !important;
 	}
+	.cmsWidgetControlIDZone {
+		min-height: 20px !important;
+		margin: 0px !important;
+		padding: 1px !important;
+	}
+	.cmsWidgetControl {
+		border: 2px dashed #ffffff !important;
+	}
+	.cmsWidgetTargetOuterControl {
+		border: 2px solid #000000 !important;
+		margin: 0px !important;
+		padding: 1px !important;
+		margin-top: 5px !important;
+	}
 	.cmsWidgetBarImgReset {
 		margin: 0px !important;
 		padding: 0px !important;
 		padding-right: 10px !important;
 	}
 	.cmsWidgetTitleBar {
-		height: 30px !important;
+		min-height: 25px !important;
 		margin: 0px !important;
 		padding: 2px !important;
 	}
@@ -114,14 +128,14 @@
 	
 	#cmsControlPath {
 		float: left !important;
-		height: 35px !important;
-		font-size: 12px !important;
+		min-height: 30px !important;
+		font-size: 14px !important;
 		line-height: 18px !important;
 		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	}
 	
 	#cmsEditMenuList {
-		font-size: 12px !important;
+		font-size: 14px !important;
 		line-height: 18px !important;
 		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 		float: right !important;
@@ -135,6 +149,7 @@
 	#cmsEditMenuList a {
 		text-decoration: none !important;
 		color: #000000 !important;
+		border: 0px solid #FFFFFF !important;
 	}
 	
 	#cmsEditMenuList-inner {
@@ -153,6 +168,7 @@
 		font-size: 14px !important;
 		font-weight: bold !important;
 		color: #000000 !important;
+		border: 0px solid #FFFFFF !important;
 	}
 	
 	#cmsEditMenuList-inner ul.parent li {
@@ -248,33 +264,34 @@
 
 	function cmsMenuFixImages() {
 		$(".cmsWidgetBarIconCog").each(function (i) {
-			cmsFixGenImage(this, 'Manage', 'cog.png');
+			cmsFixGeneralImage(this, '', 'Manage', 'cog.png');
 		});
 		$(".cmsWidgetBarIconCross").each(function (i) {
-			cmsFixGeneralImage(this, 'Remove', 'cross.png');
+			cmsFixGeneralImage(this, 'Remove', 'Remove', 'cross.png');
 		});
 		$(".cmsWidgetBarIconPencil").each(function (i) {
-			cmsFixGeneralImage(this, 'Edit', 'pencil.png');
+			cmsFixGeneralImage(this, 'Edit', 'Edit', 'pencil.png');
 		});
 	}
 
-	function cmsFixGenImage(elm, txt, img) {
-		var id = $(elm).attr('id');
-		$(elm).html("<img class='cmsWidgetBarImgReset' border='0' src='/manage/images/" + img + "' alt='" + txt + "' title='" + txt + "' />");
-	}
 
-	function cmsFixGeneralImage(elm, txt, img) {
+	function cmsFixGeneralImage(elm, txt1, txt2, img) {
 		var id = $(elm).attr('id');
-		$(elm).html(txt + " <img class='cmsWidgetBarImgReset' border='0' src='/manage/images/" + img + "' alt='" + txt + "' title='" + txt + "' />");
+		$(elm).html(txt1 + " <img class='cmsWidgetBarImgReset' border='0' src='/manage/images/" + img + "' alt='" + txt2 + "' title='" + txt2 + "' />");
 	}
 
 	$(document).ready(function () {
-		cmsMenuFixImages();
-		setTimeout("cmsMenuFixImages();", 1000);
-		setTimeout("cmsMenuFixImages();", 3000);
+		setTimeout("cmsMenuFixImages();", 250);
+		setTimeout("cmsMenuFixImages();", 2500);
+		setTimeout("cmsMenuFixImages();", 5000);
 	});
 
 </script>
+<div style="display: none;">
+	<img src="/manage/images/cog.png" alt="" />
+	<img src="/manage/images/pencil.png" alt="" />
+	<img src="/manage/images/cross.png" alt="" />
+</div>
 <script type="text/javascript">
 	var webSvc = "/Manage/CMS.asmx";
 

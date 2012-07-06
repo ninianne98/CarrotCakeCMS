@@ -52,22 +52,22 @@ namespace Carrotware.CMS.UI.Controls {
 
 				string sPrefix = "";
 				if (!string.IsNullOrEmpty(JQueryUIScope)) {
-					sPrefix = "<div id=\"cms" + this.ID + "Outer\" style=\"border: 2px solid #000000; margin: 0px; padding: 1px; margin-top:5px; \">\r\n" +
-							"<div class=\"" + JQueryUIScope + "\"><div class=\"" + JQueryUIScope + " ui-state-default ui-state-active ui-widget-header\" style=\"height:25px; margin: 0px; padding: 1px; \">\r\n" +
+					sPrefix = "<div id=\"cms" + this.ID + "Outer\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
+							"<div class=\"" + JQueryUIScope + "\"><div class=\"" + JQueryUIScope + " ui-state-default ui-state-active ui-widget-header cmsWidgetControlIDZone\">\r\n" +
 							" " + this.ID + " </div></div>\r\n" +
-							"<div class=\"cmsTargetArea\" style=\"border: 2px dashed #ffffff; \" id=\"cms_" + this.ClientID + "\" > \r\n"; 
+							"<div class=\"cmsTargetArea cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
 				} else {
-					sPrefix = "<div id=\"cms" + this.ID + "Outer\" style=\"border: 2px solid #000000; margin: 0px; padding: 1px; margin-top:5px; \">\r\n" +
-						"<div class=\"ui-state-default ui-state-active ui-widget-header\" style=\"height:25px; margin: 0px; padding: 1px; \">\r\n" +
+					sPrefix = "<div id=\"cms" + this.ID + "Outer\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
+						"<div class=\"ui-state-default ui-state-active ui-widget-header cmsWidgetControlIDZone\">\r\n" +
 						" " + this.ID + " </div>\r\n" +
-						"<div class=\"cmsTargetArea\" style=\"border: 2px dashed #ffffff; \" id=\"cms_" + this.ClientID + "\" > \r\n"; 
+						"<div class=\"cmsTargetArea cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
 				}
 				w.Write(sPrefix);
 
 			} else {
 				w.Write("<div id=\"" + this.ClientID + "\">");
 			}
-			
+
 			base.Render(w);
 
 			if (IsAdminMode) {
