@@ -113,15 +113,15 @@ namespace Carrotware.CMS.UI.Controls {
 				string sEdit = "";
 				if (!string.IsNullOrEmpty(JSEditFunction)) {
 					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink{0}\" class=\"ui-state-hover\" href=\"javascript:" + JSEditFunction + "\">\r\n"
-							+ " Edit </a> </li> ";
+							+ " Edit </a></li> \r\n";
 				}
 
 				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
-										+ " Remove  </a> </li>";
+										+ " Remove  </a></li> \r\n";
 
-				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\"><img class=\"cmsWidgetBarImgReset\" border=\"0\" src=\"/manage/images/cog.png\" alt=\"Modify\" title=\"Modify\" /></a>";
+				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
 
-				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"parent\"> <li class=\"cmsWidgetCogIcon\"> " + sCog + " <ul class=\"children\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
+				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"parent\"> <li class=\"cmsWidgetCogIcon\"> " + sCog + "\r\n <ul class=\"children\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
 
 				string sPrefix = "";
 
@@ -129,16 +129,18 @@ namespace Carrotware.CMS.UI.Controls {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 										+ "<div id=\"" + this.ClientID + "\" class=\"" + JQueryUIScope + "\">"
 										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
-										+ "<div id=\"cmsControlPath\">" + ControlPath + "</div> " + sMenu + " </div></div><div style=\"clear: both;\"></div>\r\n"
-										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
+										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\">" + ControlPath + "</div> " + sMenu + " </div>"
+										+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
+										+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
 				} else {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 										+ "<div id=\"" + this.ClientID + "\">"
 										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
-										+ "<div id=\"cmsControlPath\">" + ControlPath + "</div> " + sMenu + " </div></div><div style=\"clear: both;\"></div>\r\n"
-										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
+										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\">" + ControlPath + "</div> " + sMenu + " </div>"
+										+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
+										+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
 				}
