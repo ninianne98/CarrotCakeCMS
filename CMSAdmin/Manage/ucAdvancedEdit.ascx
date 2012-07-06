@@ -502,14 +502,16 @@
 
 	function cmsFixDialog(dialogname) {	
 	
+		var fontfacereset = ' font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important; font-size: 12px !important; line-height: 18px !important; '
+
 		var dilg = $("#"+dialogname).parent().parent();
-		var txt = $("#"+dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;');
+		var txt = $("#"+dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;' + fontfacereset);
 			
 		var c = $(dilg).attr('class');
 		$(dilg).attr('class', "GlossySeaGreen ui-widget-content ui-corner-all " + c);
 
 		var pstyle = $(dilg).attr('style');
-		$(dilg).attr('style', "font-size: 12px !important; padding:2px !important; margin:2px !important; background: #ffffff !important; border: 1px solid #c0c0c0 !important;" + pstyle);
+		$(dilg).attr('style', "padding:2px !important; margin:2px !important; background: #ffffff !important; border: 1px solid #c0c0c0 !important;"+ fontfacereset + pstyle);
 		
 		var cap = $(dilg).find(".ui-dialog-titlebar-close").attr('style', 'float:right !important; padding:4px !important; background-color:transparent !important;');
 		var cap = $(dilg).find(".ui-dialog-titlebar").attr('style', 'margin: 2px !important; padding: 2px !important; height: 32px !important;');
