@@ -78,8 +78,203 @@
 		padding: 0px !important;
 		border: 0px solid #ddd !important;
 	}
+	
 </style>
+<style type="text/css">
+	.cmsWidgetBarLink {
+		color: #676F6A !important;
+		font-weight: bold !important;
+		margin: 0px !important;
+		padding: 0px !important;
+		border: 0px solid #fff !important;
+	}
+	.cmsWidgetContainerWrapper {
+		border: 2px solid #000000 !important;
+		margin: 0px !important;
+		padding: 2px !important;
+		margin-top: 5px !important;
+	}
+	.cmsWidgetBarImgReset {
+		margin: 0px !important;
+		padding: 0px !important;
+		padding-right: 10px !important;
+	}
+	.cmsWidgetTitleBar {
+		height: 30px !important;
+		margin: 0px !important;
+		padding: 2px !important;
+	}
+	.cmsWidgetCogIcon {
+		color: #676F6A !important;
+		height: 20px !important;
+		width: 20px !important;
+		margin: 0px !important;
+		padding: 0px !important;
+	}
+	
+	#cmsControlPath {
+		float: left !important;
+		height: 35px !important;
+		font-size: 12px !important;
+		line-height: 18px !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	}
+	
+	#cmsEditMenuList {
+		font-size: 12px !important;
+		line-height: 18px !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		float: right !important;
+		width: 25px !important;
+		height: 25px !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		padding-right: 10px !important;
+	}
+	
+	#cmsEditMenuList a {
+		text-decoration: none !important;
+		color: #000000 !important;
+	}
+	
+	#cmsEditMenuList-inner {
+		width: 22px !important;
+		height: 22px !important;
+		float: left !important;
+		z-index: 500 !important;
+	}
+	
+	#cmsEditMenuList-inner ul, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
+		margin: 0 !important;
+		padding: 0 !important;
+		text-decoration: none !important;
+		line-height: 18px !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		font-size: 14px !important;
+		font-weight: bold !important;
+		color: #000000 !important;
+	}
+	
+	#cmsEditMenuList-inner ul.parent li {
+		text-align: center !important;
+		float: left !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	
+	#cmsEditMenuList-inner ul.parent {
+		clear: both !important;
+		width: 22px !important;
+		height: 22px !important;
+		list-style: none !important;
+	}
+	
+	#cmsEditMenuList-inner ul.parent li a {
+		display: block !important;
+		float: left !important;
+		text-decoration: none !important;
+		line-height: 16px !important;
+		font-size: 14px !important;
+		font-weight: bold !important;
+	}
+	
+	
+	#cmsEditMenuList-inner ul.parent li a:hover, #cmsEditMenuList-inner ul.parent li.selected a {
+		text-decoration: none !important;
+	}
+	
+	#cmsEditMenuList-inner li .children {
+		margin-top: 10px !important;
+		margin-bottom: 10px !important;
+		width: 120px !important;
+		display: none !important;
+		clear: both !important;
+		font-size: 12px !important;
+		line-height: 16px !important;
+		font-weight: bold !important;
+		border-width: 1px !important;
+		border-style: solid !important;
+		background: #FFFFFF !important;
+		border-color: #000000 !important;
+		padding: 5px !important;
+	}
+	
+	#cmsEditMenuList-inner li:hover .children {
+		width: 120px !important;
+		list-style-type: none !important;
+		padding-left: 10px !important;
+		display: block !important;
+		position: absolute !important;
+		text-align: left !important;
+		float: left !important;
+		z-index: 600 !important;
+		font-size: 12px !important;
+		line-height: 16px !important;
+		font-weight: bold !important;
+		background: #FFFFFF !important;
+		border-color: #000000 !important;
+	}
+	
+	
+	#cmsEditMenuList-inner li:hover .children li a {
+		width: 120px !important;
+		float: left !important;
+		text-decoration: none !important;
+		text-align: left !important;
+		clear: both !important;
+	}
+</style>
+<!--[if IE 7]> 
+<style type="text/css">
+#cmsEditMenuList-inner  li:hover .children {
+	list-style-type: none;
+	display: block;
+	position: absolute;
+	text-align: left;
+	float: left;
+	padding: 0px;
+	margin: 0;
+	padding-left: 0px;
+	padding-bottom: 0px;
+	margin-top: -4px;
+	margin-left: 0px;
+	margin-right: 5px;
+	z-index: 5;
+}
+</style>
+<![endif]-->
 
+<script type="text/javascript">
+
+	function cmsMenuFixImages() {
+		$(".cmsWidgetBarIconCog").each(function (i) {
+			cmsFixGenImage(this, 'Manage', 'cog.png');
+		});
+		$(".cmsWidgetBarIconCross").each(function (i) {
+			cmsFixGeneralImage(this, 'Remove', 'cross.png');
+		});
+		$(".cmsWidgetBarIconPencil").each(function (i) {
+			cmsFixGeneralImage(this, 'Edit', 'pencil.png');
+		});
+	}
+
+	function cmsFixGenImage(elm, txt, img) {
+		var id = $(elm).attr('id');
+		$(elm).html("<img class='cmsWidgetBarImgReset' border='0' src='/manage/images/" + img + "' alt='" + txt + "' title='" + txt + "' />");
+	}
+
+	function cmsFixGeneralImage(elm, txt, img) {
+		var id = $(elm).attr('id');
+		$(elm).html(txt + " <img class='cmsWidgetBarImgReset' border='0' src='/manage/images/" + img + "' alt='" + txt + "' title='" + txt + "' />");
+	}
+
+	$(document).ready(function () {
+		cmsMenuFixImages();
+		setTimeout("cmsMenuFixImages();", 1000);
+		setTimeout("cmsMenuFixImages();", 3000);
+	});
+
+</script>
 <script type="text/javascript">
 	var webSvc = "/Manage/CMS.asmx";
 

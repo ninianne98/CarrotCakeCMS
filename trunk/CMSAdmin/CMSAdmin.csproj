@@ -16,6 +16,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -277,6 +278,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Manage\Images\cog.png" />
+    <Content Include="Manage\Images\cog_edit.png" />
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>

@@ -112,26 +112,32 @@ namespace Carrotware.CMS.UI.Controls {
 			if (IsAdminMode) {
 				string sEdit = "";
 				if (!string.IsNullOrEmpty(JSEditFunction)) {
-					sEdit = " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentEditLink{0}\" class=\"ui-state-hover\" href=\"javascript:" + JSEditFunction + "\">\r\n"
-							+ " Edit <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/pencil.png\" alt=\"Edit\" title=\"Edit\" /> </a> ";
+					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink{0}\" class=\"ui-state-hover\" href=\"javascript:" + JSEditFunction + "\">\r\n"
+							+ " Edit </a> </li> ";
 				}
 
+				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
+										+ " Remove  </a> </li>";
+
+				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\"><img class=\"cmsWidgetBarImgReset\" border=\"0\" src=\"/manage/images/cog.png\" alt=\"Modify\" title=\"Modify\" /></a>";
+
+				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"parent\"> <li class=\"cmsWidgetCogIcon\"> " + sCog + " <ul class=\"children\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
+
 				string sPrefix = "";
+
 				if (!string.IsNullOrEmpty(JQueryUIScope)) {
-					sPrefix = "<div id=\"" + DatabaseKey + "\" style=\"border: 2px solid #000000; margin: 0px; padding:2px; margin-top:5px;\" >"
+					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 										+ "<div id=\"" + this.ClientID + "\" class=\"" + JQueryUIScope + "\">"
-										+ "<p id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header\" style=\"height:30px; margin: 0px; padding:2px;\">" + ControlPath
-										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
-										+ " Remove <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/cross.png\" alt=\"Remove\" title=\"Remove\" /> </a> </p></div>\r\n"
+										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
+										+ "<div id=\"cmsControlPath\">" + ControlPath + "</div> " + sMenu + " </div></div><div style=\"clear: both;\"></div>\r\n"
 										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
 				} else {
-					sPrefix = "<div id=\"" + DatabaseKey + "\" style=\"border: 2px solid #000000; margin: 0px; padding:2px; margin-top:5px;\" >"
+					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 										+ "<div id=\"" + this.ClientID + "\">"
-										+ "<p id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header\" style=\"height:30px; margin: 0px; padding:2px;\">" + ControlPath
-										+ sEdit + " <a style=\"float:right; color:#676F6A;font-weight: bold;margin: 0px;padding:0px;padding-right: 10px;border: 0px solid #fff;\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
-										+ " Remove <img style=\"margin: 0px; padding:0px; padding-right: 10px;\" border=\"0\" src=\"/manage/images/cross.png\" alt=\"Remove\" title=\"Remove\" /> </a> </p></div>\r\n"
+										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
+										+ "<div id=\"cmsControlPath\">" + ControlPath + "</div> " + sMenu + " </div></div><div style=\"clear: both;\"></div>\r\n"
 										+ "<div style=\"border: 2px dashed #ffffff;\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
