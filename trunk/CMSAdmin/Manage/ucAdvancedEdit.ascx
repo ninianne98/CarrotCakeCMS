@@ -2,19 +2,12 @@
 <div style="clear: both;">
 	&nbsp;</div>
 <carrot:jquery runat="server" ID="jquery1" />
-
 <script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
-
 <link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
-
 <script src="/Manage/includes/base64.js" type="text/javascript"></script>
-
 <script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>
-
 <script src="/Manage/Includes/jq-floating-1.6.js" type="text/javascript"></script>
-
 <script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
-
 <link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 	#simplemodal-container, .simplemodal-container {
@@ -26,15 +19,13 @@
 		text-align: right;
 	}
 	.cmsHighlightPH {
-		height: 25px !important;
+		height: 30px !important;
 		margin: 5px;
 		padding: 5px;
 		background: #FFFFAA !important;
 		border: 2px dashed #676F6A !important;
 	}
-	#cmsWidgetHead img, .GlossySeaGreen a img {
-		border: 0px solid #CDE3D6 !important;
-	}
+	
 	#cmsMainToolbox {
 		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 		text-align: left !important;
@@ -53,7 +44,7 @@
 		top: 20px;
 		left: 20px;
 		font-size: 12px !important;
-		line-height: 18px !important;
+		line-height: 16px !important;
 	}
 	.cmsFloatRight {
 		margin: 2px !important;
@@ -64,21 +55,20 @@
 		z-index: 500 !important;
 		border: 0px solid #ddd !important;
 		font-size: 12px !important;
-		line-height: 18px !important;
+		line-height: 16px !important;
 	}
 	.cmsCenter5px {
 		text-align: center !important;
 		margin: 5px !important;
 		padding: 5px !important;
 		font-size: 12px !important;
-		line-height: 18px !important;
+		line-height: 16px !important;
 	}
 	.cmsImageSpinner {
 		margin: 0px !important;
 		padding: 0px !important;
 		border: 0px solid #ddd !important;
 	}
-	
 </style>
 <style type="text/css">
 	.cmsWidgetBarLink {
@@ -98,7 +88,17 @@
 		min-height: 20px !important;
 		margin: 0px !important;
 		padding: 1px !important;
+		font-size: 12px !important;
+		line-height: 16px !important;
+		color: #FFFFFF !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	}
+	.cmsWidgetBarImgReset {
+		margin: 0px !important;
+		padding: 0px !important;
+		padding-right: 5px !important;
+		padding-left: 5px !important;
+	}	
 	.cmsWidgetControl {
 		border: 2px dashed #ffffff !important;
 	}
@@ -108,39 +108,36 @@
 		padding: 1px !important;
 		margin-top: 5px !important;
 	}
-	.cmsWidgetBarImgReset {
-		margin: 0px !important;
-		padding: 0px !important;
-		padding-right: 10px !important;
-	}
 	.cmsWidgetTitleBar {
-		min-height: 25px !important;
+		min-height: 20px !important;
 		margin: 0px !important;
 		padding: 2px !important;
 	}
 	.cmsWidgetCogIcon {
 		color: #676F6A !important;
-		height: 20px !important;
-		width: 20px !important;
+		height: 22px !important;
+		width: 22px !important;
 		margin: 0px !important;
 		padding: 0px !important;
 	}
-	
+	#cmsWidgetHead img, .GlossySeaGreen a img {
+		border: 0px solid #CDE3D6 !important;
+	}
+	#cmsWidgetHead, #cmsControlPath {
+		font-size: 12x !important;
+		line-height: 16px !important;
+		color: #676F6A !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	}
 	#cmsControlPath {
 		float: left !important;
 		min-height: 30px !important;
-		font-size: 14px !important;
-		line-height: 18px !important;
-		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	}
 	
 	#cmsEditMenuList {
-		font-size: 14px !important;
-		line-height: 18px !important;
-		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 		float: right !important;
-		width: 25px !important;
-		height: 25px !important;
+		width: 24px !important;
+		height: 24px !important;
 		margin: 0 !important;
 		padding: 0 !important;
 		padding-right: 10px !important;
@@ -148,13 +145,13 @@
 	
 	#cmsEditMenuList a {
 		text-decoration: none !important;
-		color: #000000 !important;
+		color: #676F6A !important;
 		border: 0px solid #FFFFFF !important;
 	}
 	
 	#cmsEditMenuList-inner {
-		width: 22px !important;
-		height: 22px !important;
+		width: 24px !important;
+		height: 24px !important;
 		float: left !important;
 		z-index: 500 !important;
 	}
@@ -163,11 +160,8 @@
 		margin: 0 !important;
 		padding: 0 !important;
 		text-decoration: none !important;
-		line-height: 18px !important;
-		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-		font-size: 14px !important;
 		font-weight: bold !important;
-		color: #000000 !important;
+		color: #676F6A !important;
 		border: 0px solid #FFFFFF !important;
 	}
 	
@@ -183,94 +177,113 @@
 		width: 22px !important;
 		height: 22px !important;
 		list-style: none !important;
+		background-image: none !important;
 	}
 	
 	#cmsEditMenuList-inner ul.parent li a {
 		display: block !important;
 		float: left !important;
 		text-decoration: none !important;
-		line-height: 16px !important;
-		font-size: 14px !important;
 		font-weight: bold !important;
 	}
 	
-	
 	#cmsEditMenuList-inner ul.parent li a:hover, #cmsEditMenuList-inner ul.parent li.selected a {
 		text-decoration: none !important;
+		background-image: none !important;
 	}
 	
 	#cmsEditMenuList-inner li .children {
+		padding-left: 10px !important;
 		margin-top: 10px !important;
 		margin-bottom: 10px !important;
-		width: 120px !important;
+		width: 100px !important;
+		list-style-type: none !important;
 		display: none !important;
 		clear: both !important;
-		font-size: 12px !important;
-		line-height: 16px !important;
 		font-weight: bold !important;
 		border-width: 1px !important;
 		border-style: solid !important;
 		background: #FFFFFF !important;
+		background-image: none !important;
 		border-color: #000000 !important;
 		padding: 5px !important;
 	}
 	
 	#cmsEditMenuList-inner li:hover .children {
-		width: 120px !important;
+		width: 100px !important;
 		list-style-type: none !important;
 		padding-left: 10px !important;
+		margin-top: 10px !important;
+		margin-bottom: 10px !important;
 		display: block !important;
 		position: absolute !important;
 		text-align: left !important;
 		float: left !important;
 		z-index: 600 !important;
-		font-size: 12px !important;
-		line-height: 16px !important;
 		font-weight: bold !important;
-		background: #FFFFFF !important;
+		background: #DFF6E8 !important;
 		border-color: #000000 !important;
 	}
 	
-	
 	#cmsEditMenuList-inner li:hover .children li a {
-		width: 120px !important;
+		width: 100px !important;
 		float: left !important;
 		text-decoration: none !important;
 		text-align: left !important;
 		clear: both !important;
+		background-image: none !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	}
+	#cmsEditMenuList-inner li {
+		list-style-type: none !important;
+		background-image: none !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	}
+	
+	.cmsContentAreaHead {
+		float: right !important;
+		color: #676F6A !important;
+		font-weight: bold !important;
+		margin: 0px !important;
+		padding: 0px !important;
+		padding-right: 10px !important;
+		border: 0px solid #ffffff !important;
+		font-size: 12x !important;
+		line-height: 16px !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	}
+	.cmsContentContainer {
+		border: 2px solid #000000 !important;
+		margin: 0px !important;
+		padding: 1px !important;
+		margin-top: 5px !important;
+	}
+	.cmsContentContainerInner {
+		min-height: 20px !important;
+		margin: 0px !important;
+		padding: 1px !important;
+		border: 0px solid #ffffff !important;
 	}
 </style>
-<!--[if IE 7]> 
-<style type="text/css">
-#cmsEditMenuList-inner  li:hover .children {
-	list-style-type: none;
-	display: block;
-	position: absolute;
-	text-align: left;
-	float: left;
-	padding: 0px;
-	margin: 0;
-	padding-left: 0px;
-	padding-bottom: 0px;
-	margin-top: -4px;
-	margin-left: 0px;
-	margin-right: 5px;
-	z-index: 5;
-}
-</style>
-<![endif]-->
-
+<div style="display: none;">
+	<img src="/manage/images/cog.png" alt="" />
+	<img src="/manage/images/pencil.png" alt="" />
+	<img src="/manage/images/cross.png" alt="" />
+</div>
 <script type="text/javascript">
 
 	function cmsMenuFixImages() {
 		$(".cmsWidgetBarIconCog").each(function (i) {
-			cmsFixGeneralImage(this, '', 'Manage', 'cog.png');
+			cmsFixGeneralImage(this, ' ', 'Manage', 'cog.png');
 		});
 		$(".cmsWidgetBarIconCross").each(function (i) {
 			cmsFixGeneralImage(this, 'Remove', 'Remove', 'cross.png');
 		});
 		$(".cmsWidgetBarIconPencil").each(function (i) {
 			cmsFixGeneralImage(this, 'Edit', 'Edit', 'pencil.png');
+		});
+		$(".cmsWidgetBarIconPencil2").each(function (i) {
+			cmsFixGeneralImage(this, ' ', 'Edit', 'pencil.png');
 		});
 	}
 
@@ -287,11 +300,7 @@
 	});
 
 </script>
-<div style="display: none;">
-	<img src="/manage/images/cog.png" alt="" />
-	<img src="/manage/images/pencil.png" alt="" />
-	<img src="/manage/images/cross.png" alt="" />
-</div>
+
 <script type="text/javascript">
 	var webSvc = "/Manage/CMS.asmx";
 
@@ -714,7 +723,7 @@
 
 	function cmsFixDialog(dialogname) {	
 	
-		var fontfacereset = ' font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important; font-size: 12px !important; line-height: 18px !important; '
+		var fontfacereset = ' font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important; font-size: 12px !important; line-height: 16px !important; '
 
 		var dilg = $("#"+dialogname).parent().parent();
 		var txt = $("#"+dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;' + fontfacereset);
@@ -737,7 +746,6 @@
 	}
 	
 </script>
-
 <div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all cmsToolbox2">
 	<div class="cmsInsideArea">
 		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick cmsFloatRight' title="toggle">
@@ -827,7 +835,6 @@
 		<img src="/manage/images/x.png" alt="x" />
 	</div>
 </div>
-
 <script type="text/javascript">
 
 	function cmsGenericEdit(PageId, WidgetId) {
@@ -849,7 +856,7 @@
 	}
 
 	function cmsLoadWindow() {
-		$("#cms-basic-modal-content").modal({ onClose: function(dialog) {
+		$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
 			//$.modal.close(); // must call this!
 			setTimeout("$.modal.close();", 800);
 			$('#cmsModalFrame').html('<div id="divAjaxMain"></div>');
@@ -866,7 +873,6 @@
 	}
 
 </script>
-
 <div style="display: none">
 	<div id="cms-basic-modal-content">
 		<div id="cmsModalFrame">

@@ -152,7 +152,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.Render(w);
 			if (IsAdminMode) {
-				w.Write("\r\n<div style=\"text-align:right\" id=\"ctrlBtn\"></div><br /></div></div>");
+				w.Write("\r\n<br /></div></div>");
 			} else {
 				w.Write("\r\n</div>");
 			}

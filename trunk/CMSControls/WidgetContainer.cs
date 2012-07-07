@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.Render(w);
 
 			if (IsAdminMode) {
-				w.Write("\r\n&nbsp;<div style=\"text-align:right\" id=\"ctrlBtn\"></div>\r\n<div style=\"clear: both;\"></div>\r\n</div></div>");
+				w.Write("\r\n&nbsp;\r\n<div style=\"clear: both;\"></div>\r\n</div></div>");
 			} else {
 				w.Write("\r\n</div>");
 			}
