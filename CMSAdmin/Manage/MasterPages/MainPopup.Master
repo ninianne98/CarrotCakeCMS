@@ -194,6 +194,7 @@
 		//http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
 		function cmsFileBrowserCallback(field_name, url, type, win) {
 			var sURL = "/Manage/FileBrowser.aspx?useTiny=1&fldrpath=/";
+			setTimeout("tinyResetFileBrowserOpenStatus();", 500);
 
 			// block multiple file browser windows
 			if (!tinyMCE.selectedInstance.fileBrowserAlreadyOpen) {
@@ -215,9 +216,14 @@
 				});
 			}
 
+			setTimeout("tinyResetFileBrowserOpenStatus();", 1000);
+
 			return false;
 		}
 
+		function tinyResetFileBrowserOpenStatus() {
+			tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
+		}
 
 		function cmsToggleTinyMCE(id) {
 			if (!tinyMCE.get(id))

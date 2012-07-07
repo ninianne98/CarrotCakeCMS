@@ -69,19 +69,15 @@
 		}
 	</style>
 	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
-
 	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
-
 	<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />
-
 	<script>
-		$(document).ready(function() {
-			$(function() {
+		$(document).ready(function () {
+			$(function () {
 				$("input:button, input:submit, input:file").button();
 			});
 		});
 	</script>
-
 	<script type="text/javascript">
 		function SetFile(val) {
 			var fldN = '#txtSelectedFile';
@@ -96,7 +92,6 @@
 		}
 
 	</script>
-
 	<asp:Literal runat="server" ID="pnlTiny">
 	
 	<script type="text/javascript" src="/manage/tiny_mce/tiny_mce.js"></script>
@@ -106,13 +101,13 @@
 	<script language="javascript" type="text/javascript">
 
 		var FileBrowserDialogue = {
-			init: function() {
+			init: function () {
 				if (tinyMCE.selectedInstance != null) {
 					tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true;
 				}
 				// Here goes your code for setting your custom things onLoad.
 			},
-			mySubmit: function() {
+			mySubmit: function () {
 
 				var fldN = '#txtSelectedFile';
 				var fld = $(fldN);
@@ -139,11 +134,11 @@
 	</script>
 
 	<script type="text/javascript">
-		myInitFunction = function() {
+		myInitFunction = function () {
 
 			// patch TinyMCEPopup.close
 			tinyMCEPopup.close_original = tinyMCEPopup.close;
-			tinyMCEPopup.close = function() {
+			tinyMCEPopup.close = function () {
 				// remove blocking of opening another file browser window
 				if (tinyMCE.selectedInstance != null) {
 					tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
@@ -154,7 +149,7 @@
 			};
 		}
 
-		myExitFunction = function() {
+		myExitFunction = function () {
 			if (tinyMCE != null) {
 				if (tinyMCE.selectedInstance != null) {
 					tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
@@ -282,7 +277,6 @@
 				<img alt="" id="imgThmbnail" src="nothing.png" />
 			</div>
 		</div>
-
 		<script type="text/javascript">
 
 			var imgSrcLayer = 'imgWrapper';
@@ -362,7 +356,6 @@
 				}
 			}
 		</script>
-
 		<p>
 			<br />
 			<asp:Button ID="btnRemove" runat="server" Text="Delete Checked" OnClick="btnRemove_Click" />
