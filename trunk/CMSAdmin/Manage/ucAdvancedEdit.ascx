@@ -120,7 +120,7 @@
 		margin: 0px !important;
 		padding: 0px !important;
 	}
-	#cmsWidgetHead img, .GlossySeaGreen a img {
+	#cmsWidgetHead img, .cmsGlossySeaGreen a img {
 		border: 0px solid #CDE3D6 !important;
 	}
 	#cmsWidgetHead, #cmsControlPath {
@@ -575,7 +575,7 @@
 
 
 	$(function() {
-		$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
+		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
 	});
 
 	function cmsBuildOrder() {
@@ -655,14 +655,14 @@
 			snap: true
 		});
 
-		$(".GlossySeaGreen input:button, .GlossySeaGreen input:submit").button();
+		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
 
 
 		$(".cmsTargetArea").sortable({
 			revert: true,
 			dropOnEmpty: true,
-			placeholder: "cmsHighlightPH GlossySeaGreen ui-state-highlight ui-corner-all",
-			hoverClass: "cmsHighlightPH GlossySeaGreen ui-state-highlight ui-corner-all"
+			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
+			hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
 		});
 
 		$("#cmsToolBox div.cmsToolItem").draggable({
@@ -670,7 +670,7 @@
 			helper: "clone",
 			revert: "invalid",
 			handle: "p.cmsToolItem",
-			placeholder: "cmsHighlightPH GlossySeaGreen ui-state-highlight ui-corner-all"
+			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
 		});
 
 
@@ -729,7 +729,7 @@
 		var txt = $("#"+dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;' + fontfacereset);
 			
 		var c = $(dilg).attr('class');
-		$(dilg).attr('class', "GlossySeaGreen ui-widget-content ui-corner-all " + c);
+		$(dilg).attr('class', "cmsGlossySeaGreen ui-widget-content ui-corner-all " + c);
 
 		var pstyle = $(dilg).attr('style');
 		$(dilg).attr('style', "padding:2px !important; margin:2px !important; background: #ffffff !important; border: 1px solid #c0c0c0 !important;"+ fontfacereset + pstyle);
@@ -742,11 +742,11 @@
 		
 		//var h = $(dilg).html();
 		//$(dilg).html('');
-		//$(dilg).html('<div class="GlossySeaGreen ui-widget-content ui-corner-all">' + h + '</div>');
+		//$(dilg).html('<div class="cmsGlossySeaGreen ui-widget-content ui-corner-all">' + h + '</div>');
 	}
 	
 </script>
-<div id="cmsAdminToolbox" class="GlossySeaGreen ui-widget-content ui-corner-all cmsToolbox2">
+<div id="cmsAdminToolbox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all cmsToolbox2">
 	<div class="cmsInsideArea">
 		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick cmsFloatRight' title="toggle">
 			T
@@ -769,13 +769,13 @@
 				</div>
 			</div>
 			<asp:Panel ID="pnlBUttonGroup" runat="server">
-				<div style="display: none;" class="GlossySeaGreen">
+				<div style="display: none;" class="cmsGlossySeaGreen">
 					cmsFullOrder<br />
 					<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
 					cmsMovedItem<br />
 					<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
 				</div>
-				<div class="GlossySeaGreen cmsCenter5px">
+				<div class="cmsGlossySeaGreen cmsCenter5px">
 					<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsCenter5px" onclick="cmsShowEditPageInfo();" />
 					<br />
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
@@ -783,7 +783,7 @@
 					<br />
 					<input runat="server" id="btnTemplate" type="button" value="Apply" class="cmsCenter5px" onclick="cmsUpdateTemplate();" />
 				</div>
-				<div class="GlossySeaGreen cmsCenter5px">
+				<div class="cmsGlossySeaGreen cmsCenter5px">
 					<input runat="server" id="btnToolboxSave" type="button" value="Save" class="cmsCenter5px" onclick="cmsApplyChanges();" />
 					&nbsp;&nbsp;&nbsp;
 					<input type="button" value="Cancel" class="cmsCenter5px" onclick="cmsCancelEdit();" />
@@ -793,13 +793,13 @@
 				<br style="clear: none;" />
 				<asp:Repeater ID="rpTools" runat="server">
 					<HeaderTemplate>
-						<div id="cmsToolBox" class="GlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
+						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
 							padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
 					</HeaderTemplate>
 					<ItemTemplate>
-						<div class="cmsToolItem GlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
-							<div id="cmsControl" class="GlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
-								<p class="cmsToolItem GlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
+						<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
+							<div id="cmsControl" class="cmsGlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
+								<p class="cmsToolItem cmsGlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
 									<%# Eval("Caption")%>
 								</p>
 								<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
@@ -822,12 +822,12 @@
 		</div>
 	</div>
 </div>
-<div style="display: none" class="GlossySeaGreen">
-	<div id="CMSmodalalert" class="GlossySeaGreen" title="CMS Alert">
+<div style="display: none" class="cmsGlossySeaGreen">
+	<div id="CMSmodalalert" class="cmsGlossySeaGreen" title="CMS Alert">
 		<p id="CMSmodalalertmessage">
 			&nbsp;</p>
 	</div>
-	<div id="CMSremoveconfirm" class="GlossySeaGreen" title="Remove Widget?">
+	<div id="CMSremoveconfirm" class="cmsGlossySeaGreen" title="Remove Widget?">
 		<p id="CMSremoveconfirmmsg">
 			Are you sure you want to remove this widget?</p>
 	</div>

@@ -10,35 +10,35 @@
 
 /* Layout helpers
 ----------------------------------*/
-.GlossySeaGreen .ui-helper-hidden { display: none; }
-.GlossySeaGreen .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
-.GlossySeaGreen .ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
-.GlossySeaGreen .ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.GlossySeaGreen .ui-helper-clearfix { display: inline-block; }
+.cmsGlossySeaGreen .ui-helper-hidden { display: none; }
+.cmsGlossySeaGreen .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
+.cmsGlossySeaGreen .ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
+.cmsGlossySeaGreen .ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.cmsGlossySeaGreen .ui-helper-clearfix { display: inline-block; }
 /* required comment for clearfix to work in Opera \*/
 * html .ui-helper-clearfix { height:1%; }
-.GlossySeaGreen .ui-helper-clearfix { display:block; }
+.cmsGlossySeaGreen .ui-helper-clearfix { display:block; }
 /* end clearfix */
-.GlossySeaGreen .ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
+.cmsGlossySeaGreen .ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
 
 
 /* Interaction Cues
 ----------------------------------*/
-.GlossySeaGreen .ui-state-disabled { cursor: default !important; }
+.cmsGlossySeaGreen .ui-state-disabled { cursor: default !important; }
 
 
 /* Icons
 ----------------------------------*/
 
 /* states and images */
-.GlossySeaGreen .ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
+.cmsGlossySeaGreen .ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
 
 
 /* Misc visuals
 ----------------------------------*/
 
 /* Overlays */
-.GlossySeaGreen .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.cmsGlossySeaGreen .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 
 /*
@@ -56,238 +56,238 @@
 
 /* Component containers
 ----------------------------------*/
-.GlossySeaGreen .ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1.1em; }
-.GlossySeaGreen .ui-widget .ui-widget { font-size: 1em; }
-.GlossySeaGreen .ui-widget input, .GlossySeaGreen .ui-widget select, .GlossySeaGreen .ui-widget textarea, .GlossySeaGreen .ui-widget button { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
-.GlossySeaGreen .ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7 url(images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x; color: #362b36; }
-.GlossySeaGreen .ui-widget-content a { color: #362b36; }
-.GlossySeaGreen .ui-widget-header { border: 1px solid #8e908e; background: #b7d7c4 url(images/ui-bg_glass_100_b7d7c4_1x400.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
-.GlossySeaGreen .ui-widget-header a { color: #222222; }
+.cmsGlossySeaGreen .ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1.1em; }
+.cmsGlossySeaGreen .ui-widget .ui-widget { font-size: 1em; }
+.cmsGlossySeaGreen .ui-widget input, .cmsGlossySeaGreen .ui-widget select, .cmsGlossySeaGreen .ui-widget textarea, .cmsGlossySeaGreen .ui-widget button { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
+.cmsGlossySeaGreen .ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7 url(images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x; color: #362b36; }
+.cmsGlossySeaGreen .ui-widget-content a { color: #362b36; }
+.cmsGlossySeaGreen .ui-widget-header { border: 1px solid #8e908e; background: #b7d7c4 url(images/ui-bg_glass_100_b7d7c4_1x400.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
+.cmsGlossySeaGreen .ui-widget-header a { color: #222222; }
 
 /* Interaction states
 ----------------------------------*/
-.GlossySeaGreen .ui-state-default, .GlossySeaGreen .ui-widget-content .ui-state-default, .GlossySeaGreen .ui-widget-header .ui-state-default { border: 1px solid #8e908e; background: #b7d7c4 url(images/ui-bg_glass_80_b7d7c4_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #676f6a; }
-.GlossySeaGreen .ui-state-default a, .GlossySeaGreen .ui-state-default a:link, .GlossySeaGreen .ui-state-default a:visited { color: #676f6a; text-decoration: none; }
-.GlossySeaGreen .ui-state-hover, .GlossySeaGreen .ui-widget-content .ui-state-hover, .GlossySeaGreen .ui-widget-header .ui-state-hover, .GlossySeaGreen .ui-state-focus, .GlossySeaGreen .ui-widget-content .ui-state-focus, .GlossySeaGreen .ui-widget-header .ui-state-focus { border: 1px solid #8e908e; background: #dff6e8 url(images/ui-bg_glass_100_dff6e8_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #676f6a; }
-.GlossySeaGreen .ui-state-hover a, .GlossySeaGreen .ui-state-hover a:hover { color: #676f6a; text-decoration: none; }
-.GlossySeaGreen .ui-state-active, .GlossySeaGreen .ui-widget-content .ui-state-active, .GlossySeaGreen .ui-widget-header .ui-state-active { border: 1px solid #468b5e; background: #468b5e url(images/ui-bg_glass_50_468b5e_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #ffffff; }
-.GlossySeaGreen .ui-state-active a, .GlossySeaGreen .ui-state-active a:link, .GlossySeaGreen .ui-state-active a:visited { color: #ffffff; text-decoration: none; }
-.GlossySeaGreen .ui-widget :active { outline: none; }
+.cmsGlossySeaGreen .ui-state-default, .cmsGlossySeaGreen .ui-widget-content .ui-state-default, .cmsGlossySeaGreen .ui-widget-header .ui-state-default { border: 1px solid #8e908e; background: #b7d7c4 url(images/ui-bg_glass_80_b7d7c4_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #676f6a; }
+.cmsGlossySeaGreen .ui-state-default a, .cmsGlossySeaGreen .ui-state-default a:link, .cmsGlossySeaGreen .ui-state-default a:visited { color: #676f6a; text-decoration: none; }
+.cmsGlossySeaGreen .ui-state-hover, .cmsGlossySeaGreen .ui-widget-content .ui-state-hover, .cmsGlossySeaGreen .ui-widget-header .ui-state-hover, .cmsGlossySeaGreen .ui-state-focus, .cmsGlossySeaGreen .ui-widget-content .ui-state-focus, .cmsGlossySeaGreen .ui-widget-header .ui-state-focus { border: 1px solid #8e908e; background: #dff6e8 url(images/ui-bg_glass_100_dff6e8_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #676f6a; }
+.cmsGlossySeaGreen .ui-state-hover a, .cmsGlossySeaGreen .ui-state-hover a:hover { color: #676f6a; text-decoration: none; }
+.cmsGlossySeaGreen .ui-state-active, .cmsGlossySeaGreen .ui-widget-content .ui-state-active, .cmsGlossySeaGreen .ui-widget-header .ui-state-active { border: 1px solid #468b5e; background: #468b5e url(images/ui-bg_glass_50_468b5e_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #ffffff; }
+.cmsGlossySeaGreen .ui-state-active a, .cmsGlossySeaGreen .ui-state-active a:link, .cmsGlossySeaGreen .ui-state-active a:visited { color: #ffffff; text-decoration: none; }
+.cmsGlossySeaGreen .ui-widget :active { outline: none; }
 
 /* Interaction Cues
 ----------------------------------*/
-.GlossySeaGreen .ui-state-highlight, .GlossySeaGreen .ui-widget-content .ui-state-highlight, .GlossySeaGreen .ui-widget-header .ui-state-highlight  {border: 1px solid #f9dd34; background: #f3ebba url(images/ui-bg_highlight-soft_25_f3ebba_1x100.png) 50% top repeat-x; color: #363636; }
-.GlossySeaGreen .ui-state-highlight a, .GlossySeaGreen .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: #363636; }
-.GlossySeaGreen .ui-state-error, .GlossySeaGreen .ui-widget-content .ui-state-error, .GlossySeaGreen .ui-widget-header .ui-state-error {border: 1px solid #b62b2b; background: #e58b8b url(images/ui-bg_flat_15_e58b8b_40x100.png) 50% 50% repeat-x; color: #222222; }
-.GlossySeaGreen .ui-state-error a, .GlossySeaGreen .ui-widget-content .ui-state-error a, .GlossySeaGreen .ui-widget-header .ui-state-error a { color: #222222; }
-.GlossySeaGreen .ui-state-error-text, .GlossySeaGreen .ui-widget-content .ui-state-error-text, .GlossySeaGreen .ui-widget-header .ui-state-error-text { color: #222222; }
-.GlossySeaGreen .ui-priority-primary, .GlossySeaGreen .ui-widget-content .ui-priority-primary, .GlossySeaGreen .ui-widget-header .ui-priority-primary { font-weight: bold; }
-.GlossySeaGreen .ui-priority-secondary, .GlossySeaGreen .ui-widget-content .ui-priority-secondary,  .ui-widget-header .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
-.GlossySeaGreen .ui-state-disabled, .GlossySeaGreen .ui-widget-content .ui-state-disabled, .GlossySeaGreen .ui-widget-header .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
+.cmsGlossySeaGreen .ui-state-highlight, .cmsGlossySeaGreen .ui-widget-content .ui-state-highlight, .cmsGlossySeaGreen .ui-widget-header .ui-state-highlight  {border: 1px solid #f9dd34; background: #f3ebba url(images/ui-bg_highlight-soft_25_f3ebba_1x100.png) 50% top repeat-x; color: #363636; }
+.cmsGlossySeaGreen .ui-state-highlight a, .cmsGlossySeaGreen .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: #363636; }
+.cmsGlossySeaGreen .ui-state-error, .cmsGlossySeaGreen .ui-widget-content .ui-state-error, .cmsGlossySeaGreen .ui-widget-header .ui-state-error {border: 1px solid #b62b2b; background: #e58b8b url(images/ui-bg_flat_15_e58b8b_40x100.png) 50% 50% repeat-x; color: #222222; }
+.cmsGlossySeaGreen .ui-state-error a, .cmsGlossySeaGreen .ui-widget-content .ui-state-error a, .cmsGlossySeaGreen .ui-widget-header .ui-state-error a { color: #222222; }
+.cmsGlossySeaGreen .ui-state-error-text, .cmsGlossySeaGreen .ui-widget-content .ui-state-error-text, .cmsGlossySeaGreen .ui-widget-header .ui-state-error-text { color: #222222; }
+.cmsGlossySeaGreen .ui-priority-primary, .cmsGlossySeaGreen .ui-widget-content .ui-priority-primary, .cmsGlossySeaGreen .ui-widget-header .ui-priority-primary { font-weight: bold; }
+.cmsGlossySeaGreen .ui-priority-secondary, .cmsGlossySeaGreen .ui-widget-content .ui-priority-secondary,  .ui-widget-header .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
+.cmsGlossySeaGreen .ui-state-disabled, .cmsGlossySeaGreen .ui-widget-content .ui-state-disabled, .cmsGlossySeaGreen .ui-widget-header .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
 
 /* Icons
 ----------------------------------*/
 
 /* states and images */
-.GlossySeaGreen .ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_468b5e_256x240.png); }
-.GlossySeaGreen .ui-widget-content .ui-icon {background-image: url(images/ui-icons_468b5e_256x240.png); }
-.GlossySeaGreen .ui-widget-header .ui-icon {background-image: url(images/ui-icons_468b5e_256x240.png); }
-.GlossySeaGreen .ui-state-default .ui-icon { background-image: url(images/ui-icons_468b5e_256x240.png); }
-.GlossySeaGreen .ui-state-hover .ui-icon, .GlossySeaGreen .ui-state-focus .ui-icon {background-image: url(images/ui-icons_468b5e_256x240.png); }
-.GlossySeaGreen .ui-state-active .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
-.GlossySeaGreen .ui-state-highlight .ui-icon {background-image: url(images/ui-icons_c7820f_256x240.png); }
-.GlossySeaGreen .ui-state-error .ui-icon, .GlossySeaGreen .ui-state-error-text .ui-icon {background-image: url(images/ui-icons_753433_256x240.png); }
+.cmsGlossySeaGreen .ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_468b5e_256x240.png); }
+.cmsGlossySeaGreen .ui-widget-content .ui-icon {background-image: url(images/ui-icons_468b5e_256x240.png); }
+.cmsGlossySeaGreen .ui-widget-header .ui-icon {background-image: url(images/ui-icons_468b5e_256x240.png); }
+.cmsGlossySeaGreen .ui-state-default .ui-icon { background-image: url(images/ui-icons_468b5e_256x240.png); }
+.cmsGlossySeaGreen .ui-state-hover .ui-icon, .cmsGlossySeaGreen .ui-state-focus .ui-icon {background-image: url(images/ui-icons_468b5e_256x240.png); }
+.cmsGlossySeaGreen .ui-state-active .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
+.cmsGlossySeaGreen .ui-state-highlight .ui-icon {background-image: url(images/ui-icons_c7820f_256x240.png); }
+.cmsGlossySeaGreen .ui-state-error .ui-icon, .cmsGlossySeaGreen .ui-state-error-text .ui-icon {background-image: url(images/ui-icons_753433_256x240.png); }
 
 /* positioning */
-.GlossySeaGreen .ui-icon-carat-1-n { background-position: 0 0; }
-.GlossySeaGreen .ui-icon-carat-1-ne { background-position: -16px 0; }
-.GlossySeaGreen .ui-icon-carat-1-e { background-position: -32px 0; }
-.GlossySeaGreen .ui-icon-carat-1-se { background-position: -48px 0; }
-.GlossySeaGreen .ui-icon-carat-1-s { background-position: -64px 0; }
-.GlossySeaGreen .ui-icon-carat-1-sw { background-position: -80px 0; }
-.GlossySeaGreen .ui-icon-carat-1-w { background-position: -96px 0; }
-.GlossySeaGreen .ui-icon-carat-1-nw { background-position: -112px 0; }
-.GlossySeaGreen .ui-icon-carat-2-n-s { background-position: -128px 0; }
-.GlossySeaGreen .ui-icon-carat-2-e-w { background-position: -144px 0; }
-.GlossySeaGreen .ui-icon-triangle-1-n { background-position: 0 -16px; }
-.GlossySeaGreen .ui-icon-triangle-1-ne { background-position: -16px -16px; }
-.GlossySeaGreen .ui-icon-triangle-1-e { background-position: -32px -16px; }
-.GlossySeaGreen .ui-icon-triangle-1-se { background-position: -48px -16px; }
-.GlossySeaGreen .ui-icon-triangle-1-s { background-position: -64px -16px; }
-.GlossySeaGreen .ui-icon-triangle-1-sw { background-position: -80px -16px; }
-.GlossySeaGreen .ui-icon-triangle-1-w { background-position: -96px -16px; }
-.GlossySeaGreen .ui-icon-triangle-1-nw { background-position: -112px -16px; }
-.GlossySeaGreen .ui-icon-triangle-2-n-s { background-position: -128px -16px; }
-.GlossySeaGreen .ui-icon-triangle-2-e-w { background-position: -144px -16px; }
-.GlossySeaGreen .ui-icon-arrow-1-n { background-position: 0 -32px; }
-.GlossySeaGreen .ui-icon-arrow-1-ne { background-position: -16px -32px; }
-.GlossySeaGreen .ui-icon-arrow-1-e { background-position: -32px -32px; }
-.GlossySeaGreen .ui-icon-arrow-1-se { background-position: -48px -32px; }
-.GlossySeaGreen .ui-icon-arrow-1-s { background-position: -64px -32px; }
-.GlossySeaGreen .ui-icon-arrow-1-sw { background-position: -80px -32px; }
-.GlossySeaGreen .ui-icon-arrow-1-w { background-position: -96px -32px; }
-.GlossySeaGreen .ui-icon-arrow-1-nw { background-position: -112px -32px; }
-.GlossySeaGreen .ui-icon-arrow-2-n-s { background-position: -128px -32px; }
-.GlossySeaGreen .ui-icon-arrow-2-ne-sw { background-position: -144px -32px; }
-.GlossySeaGreen .ui-icon-arrow-2-e-w { background-position: -160px -32px; }
-.GlossySeaGreen .ui-icon-arrow-2-se-nw { background-position: -176px -32px; }
-.GlossySeaGreen .ui-icon-arrowstop-1-n { background-position: -192px -32px; }
-.GlossySeaGreen .ui-icon-arrowstop-1-e { background-position: -208px -32px; }
-.GlossySeaGreen .ui-icon-arrowstop-1-s { background-position: -224px -32px; }
-.GlossySeaGreen .ui-icon-arrowstop-1-w { background-position: -240px -32px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-n { background-position: 0 -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-ne { background-position: -16px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-e { background-position: -32px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-se { background-position: -48px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-s { background-position: -64px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-sw { background-position: -80px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-w { background-position: -96px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-1-nw { background-position: -112px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-2-n-s { background-position: -128px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-2-ne-sw { background-position: -144px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-2-e-w { background-position: -160px -48px; }
-.GlossySeaGreen .ui-icon-arrowthick-2-se-nw { background-position: -176px -48px; }
-.GlossySeaGreen .ui-icon-arrowthickstop-1-n { background-position: -192px -48px; }
-.GlossySeaGreen .ui-icon-arrowthickstop-1-e { background-position: -208px -48px; }
-.GlossySeaGreen .ui-icon-arrowthickstop-1-s { background-position: -224px -48px; }
-.GlossySeaGreen .ui-icon-arrowthickstop-1-w { background-position: -240px -48px; }
-.GlossySeaGreen .ui-icon-arrowreturnthick-1-w { background-position: 0 -64px; }
-.GlossySeaGreen .ui-icon-arrowreturnthick-1-n { background-position: -16px -64px; }
-.GlossySeaGreen .ui-icon-arrowreturnthick-1-e { background-position: -32px -64px; }
-.GlossySeaGreen .ui-icon-arrowreturnthick-1-s { background-position: -48px -64px; }
-.GlossySeaGreen .ui-icon-arrowreturn-1-w { background-position: -64px -64px; }
-.GlossySeaGreen .ui-icon-arrowreturn-1-n { background-position: -80px -64px; }
-.GlossySeaGreen .ui-icon-arrowreturn-1-e { background-position: -96px -64px; }
-.GlossySeaGreen .ui-icon-arrowreturn-1-s { background-position: -112px -64px; }
-.GlossySeaGreen .ui-icon-arrowrefresh-1-w { background-position: -128px -64px; }
-.GlossySeaGreen .ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }
-.GlossySeaGreen .ui-icon-arrowrefresh-1-e { background-position: -160px -64px; }
-.GlossySeaGreen .ui-icon-arrowrefresh-1-s { background-position: -176px -64px; }
-.GlossySeaGreen .ui-icon-arrow-4 { background-position: 0 -80px; }
-.GlossySeaGreen .ui-icon-arrow-4-diag { background-position: -16px -80px; }
-.GlossySeaGreen .ui-icon-extlink { background-position: -32px -80px; }
-.GlossySeaGreen .ui-icon-newwin { background-position: -48px -80px; }
-.GlossySeaGreen .ui-icon-refresh { background-position: -64px -80px; }
-.GlossySeaGreen .ui-icon-shuffle { background-position: -80px -80px; }
-.GlossySeaGreen .ui-icon-transfer-e-w { background-position: -96px -80px; }
-.GlossySeaGreen .ui-icon-transferthick-e-w { background-position: -112px -80px; }
-.GlossySeaGreen .ui-icon-folder-collapsed { background-position: 0 -96px; }
-.GlossySeaGreen .ui-icon-folder-open { background-position: -16px -96px; }
-.GlossySeaGreen .ui-icon-document { background-position: -32px -96px; }
-.GlossySeaGreen .ui-icon-document-b { background-position: -48px -96px; }
-.GlossySeaGreen .ui-icon-note { background-position: -64px -96px; }
-.GlossySeaGreen .ui-icon-mail-closed { background-position: -80px -96px; }
-.GlossySeaGreen .ui-icon-mail-open { background-position: -96px -96px; }
-.GlossySeaGreen .ui-icon-suitcase { background-position: -112px -96px; }
-.GlossySeaGreen .ui-icon-comment { background-position: -128px -96px; }
-.GlossySeaGreen .ui-icon-person { background-position: -144px -96px; }
-.GlossySeaGreen .ui-icon-print { background-position: -160px -96px; }
-.GlossySeaGreen .ui-icon-trash { background-position: -176px -96px; }
-.GlossySeaGreen .ui-icon-locked { background-position: -192px -96px; }
-.GlossySeaGreen .ui-icon-unlocked { background-position: -208px -96px; }
-.GlossySeaGreen .ui-icon-bookmark { background-position: -224px -96px; }
-.GlossySeaGreen .ui-icon-tag { background-position: -240px -96px; }
-.GlossySeaGreen .ui-icon-home { background-position: 0 -112px; }
-.GlossySeaGreen .ui-icon-flag { background-position: -16px -112px; }
-.GlossySeaGreen .ui-icon-calendar { background-position: -32px -112px; }
-.GlossySeaGreen .ui-icon-cart { background-position: -48px -112px; }
-.GlossySeaGreen .ui-icon-pencil { background-position: -64px -112px; }
-.GlossySeaGreen .ui-icon-clock { background-position: -80px -112px; }
-.GlossySeaGreen .ui-icon-disk { background-position: -96px -112px; }
-.GlossySeaGreen .ui-icon-calculator { background-position: -112px -112px; }
-.GlossySeaGreen .ui-icon-zoomin { background-position: -128px -112px; }
-.GlossySeaGreen .ui-icon-zoomout { background-position: -144px -112px; }
-.GlossySeaGreen .ui-icon-search { background-position: -160px -112px; }
-.GlossySeaGreen .ui-icon-wrench { background-position: -176px -112px; }
-.GlossySeaGreen .ui-icon-gear { background-position: -192px -112px; }
-.GlossySeaGreen .ui-icon-heart { background-position: -208px -112px; }
-.GlossySeaGreen .ui-icon-star { background-position: -224px -112px; }
-.GlossySeaGreen .ui-icon-link { background-position: -240px -112px; }
-.GlossySeaGreen .ui-icon-cancel { background-position: 0 -128px; }
-.GlossySeaGreen .ui-icon-plus { background-position: -16px -128px; }
-.GlossySeaGreen .ui-icon-plusthick { background-position: -32px -128px; }
-.GlossySeaGreen .ui-icon-minus { background-position: -48px -128px; }
-.GlossySeaGreen .ui-icon-minusthick { background-position: -64px -128px; }
-.GlossySeaGreen .ui-icon-close { background-position: -80px -128px; }
-.GlossySeaGreen .ui-icon-closethick { background-position: -96px -128px; }
-.GlossySeaGreen .ui-icon-key { background-position: -112px -128px; }
-.GlossySeaGreen .ui-icon-lightbulb { background-position: -128px -128px; }
-.GlossySeaGreen .ui-icon-scissors { background-position: -144px -128px; }
-.GlossySeaGreen .ui-icon-clipboard { background-position: -160px -128px; }
-.GlossySeaGreen .ui-icon-copy { background-position: -176px -128px; }
-.GlossySeaGreen .ui-icon-contact { background-position: -192px -128px; }
-.GlossySeaGreen .ui-icon-image { background-position: -208px -128px; }
-.GlossySeaGreen .ui-icon-video { background-position: -224px -128px; }
-.GlossySeaGreen .ui-icon-script { background-position: -240px -128px; }
-.GlossySeaGreen .ui-icon-alert { background-position: 0 -144px; }
-.GlossySeaGreen .ui-icon-info { background-position: -16px -144px; }
-.GlossySeaGreen .ui-icon-notice { background-position: -32px -144px; }
-.GlossySeaGreen .ui-icon-help { background-position: -48px -144px; }
-.GlossySeaGreen .ui-icon-check { background-position: -64px -144px; }
-.GlossySeaGreen .ui-icon-bullet { background-position: -80px -144px; }
-.GlossySeaGreen .ui-icon-radio-off { background-position: -96px -144px; }
-.GlossySeaGreen .ui-icon-radio-on { background-position: -112px -144px; }
-.GlossySeaGreen .ui-icon-pin-w { background-position: -128px -144px; }
-.GlossySeaGreen .ui-icon-pin-s { background-position: -144px -144px; }
-.GlossySeaGreen .ui-icon-play { background-position: 0 -160px; }
-.GlossySeaGreen .ui-icon-pause { background-position: -16px -160px; }
-.GlossySeaGreen .ui-icon-seek-next { background-position: -32px -160px; }
-.GlossySeaGreen .ui-icon-seek-prev { background-position: -48px -160px; }
-.GlossySeaGreen .ui-icon-seek-end { background-position: -64px -160px; }
-.GlossySeaGreen .ui-icon-seek-start { background-position: -80px -160px; }
+.cmsGlossySeaGreen .ui-icon-carat-1-n { background-position: 0 0; }
+.cmsGlossySeaGreen .ui-icon-carat-1-ne { background-position: -16px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-1-e { background-position: -32px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-1-se { background-position: -48px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-1-s { background-position: -64px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-1-sw { background-position: -80px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-1-w { background-position: -96px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-1-nw { background-position: -112px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-2-n-s { background-position: -128px 0; }
+.cmsGlossySeaGreen .ui-icon-carat-2-e-w { background-position: -144px 0; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-n { background-position: 0 -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-ne { background-position: -16px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-e { background-position: -32px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-se { background-position: -48px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-s { background-position: -64px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-sw { background-position: -80px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-w { background-position: -96px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-1-nw { background-position: -112px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-2-n-s { background-position: -128px -16px; }
+.cmsGlossySeaGreen .ui-icon-triangle-2-e-w { background-position: -144px -16px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-n { background-position: 0 -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-ne { background-position: -16px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-e { background-position: -32px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-se { background-position: -48px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-s { background-position: -64px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-sw { background-position: -80px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-w { background-position: -96px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-1-nw { background-position: -112px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-2-n-s { background-position: -128px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-2-ne-sw { background-position: -144px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-2-e-w { background-position: -160px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrow-2-se-nw { background-position: -176px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrowstop-1-n { background-position: -192px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrowstop-1-e { background-position: -208px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrowstop-1-s { background-position: -224px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrowstop-1-w { background-position: -240px -32px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-n { background-position: 0 -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-ne { background-position: -16px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-e { background-position: -32px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-se { background-position: -48px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-s { background-position: -64px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-sw { background-position: -80px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-w { background-position: -96px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-1-nw { background-position: -112px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-2-n-s { background-position: -128px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-2-ne-sw { background-position: -144px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-2-e-w { background-position: -160px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthick-2-se-nw { background-position: -176px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthickstop-1-n { background-position: -192px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthickstop-1-e { background-position: -208px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthickstop-1-s { background-position: -224px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowthickstop-1-w { background-position: -240px -48px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturnthick-1-w { background-position: 0 -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturnthick-1-n { background-position: -16px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturnthick-1-e { background-position: -32px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturnthick-1-s { background-position: -48px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturn-1-w { background-position: -64px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturn-1-n { background-position: -80px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturn-1-e { background-position: -96px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowreturn-1-s { background-position: -112px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowrefresh-1-w { background-position: -128px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowrefresh-1-e { background-position: -160px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrowrefresh-1-s { background-position: -176px -64px; }
+.cmsGlossySeaGreen .ui-icon-arrow-4 { background-position: 0 -80px; }
+.cmsGlossySeaGreen .ui-icon-arrow-4-diag { background-position: -16px -80px; }
+.cmsGlossySeaGreen .ui-icon-extlink { background-position: -32px -80px; }
+.cmsGlossySeaGreen .ui-icon-newwin { background-position: -48px -80px; }
+.cmsGlossySeaGreen .ui-icon-refresh { background-position: -64px -80px; }
+.cmsGlossySeaGreen .ui-icon-shuffle { background-position: -80px -80px; }
+.cmsGlossySeaGreen .ui-icon-transfer-e-w { background-position: -96px -80px; }
+.cmsGlossySeaGreen .ui-icon-transferthick-e-w { background-position: -112px -80px; }
+.cmsGlossySeaGreen .ui-icon-folder-collapsed { background-position: 0 -96px; }
+.cmsGlossySeaGreen .ui-icon-folder-open { background-position: -16px -96px; }
+.cmsGlossySeaGreen .ui-icon-document { background-position: -32px -96px; }
+.cmsGlossySeaGreen .ui-icon-document-b { background-position: -48px -96px; }
+.cmsGlossySeaGreen .ui-icon-note { background-position: -64px -96px; }
+.cmsGlossySeaGreen .ui-icon-mail-closed { background-position: -80px -96px; }
+.cmsGlossySeaGreen .ui-icon-mail-open { background-position: -96px -96px; }
+.cmsGlossySeaGreen .ui-icon-suitcase { background-position: -112px -96px; }
+.cmsGlossySeaGreen .ui-icon-comment { background-position: -128px -96px; }
+.cmsGlossySeaGreen .ui-icon-person { background-position: -144px -96px; }
+.cmsGlossySeaGreen .ui-icon-print { background-position: -160px -96px; }
+.cmsGlossySeaGreen .ui-icon-trash { background-position: -176px -96px; }
+.cmsGlossySeaGreen .ui-icon-locked { background-position: -192px -96px; }
+.cmsGlossySeaGreen .ui-icon-unlocked { background-position: -208px -96px; }
+.cmsGlossySeaGreen .ui-icon-bookmark { background-position: -224px -96px; }
+.cmsGlossySeaGreen .ui-icon-tag { background-position: -240px -96px; }
+.cmsGlossySeaGreen .ui-icon-home { background-position: 0 -112px; }
+.cmsGlossySeaGreen .ui-icon-flag { background-position: -16px -112px; }
+.cmsGlossySeaGreen .ui-icon-calendar { background-position: -32px -112px; }
+.cmsGlossySeaGreen .ui-icon-cart { background-position: -48px -112px; }
+.cmsGlossySeaGreen .ui-icon-pencil { background-position: -64px -112px; }
+.cmsGlossySeaGreen .ui-icon-clock { background-position: -80px -112px; }
+.cmsGlossySeaGreen .ui-icon-disk { background-position: -96px -112px; }
+.cmsGlossySeaGreen .ui-icon-calculator { background-position: -112px -112px; }
+.cmsGlossySeaGreen .ui-icon-zoomin { background-position: -128px -112px; }
+.cmsGlossySeaGreen .ui-icon-zoomout { background-position: -144px -112px; }
+.cmsGlossySeaGreen .ui-icon-search { background-position: -160px -112px; }
+.cmsGlossySeaGreen .ui-icon-wrench { background-position: -176px -112px; }
+.cmsGlossySeaGreen .ui-icon-gear { background-position: -192px -112px; }
+.cmsGlossySeaGreen .ui-icon-heart { background-position: -208px -112px; }
+.cmsGlossySeaGreen .ui-icon-star { background-position: -224px -112px; }
+.cmsGlossySeaGreen .ui-icon-link { background-position: -240px -112px; }
+.cmsGlossySeaGreen .ui-icon-cancel { background-position: 0 -128px; }
+.cmsGlossySeaGreen .ui-icon-plus { background-position: -16px -128px; }
+.cmsGlossySeaGreen .ui-icon-plusthick { background-position: -32px -128px; }
+.cmsGlossySeaGreen .ui-icon-minus { background-position: -48px -128px; }
+.cmsGlossySeaGreen .ui-icon-minusthick { background-position: -64px -128px; }
+.cmsGlossySeaGreen .ui-icon-close { background-position: -80px -128px; }
+.cmsGlossySeaGreen .ui-icon-closethick { background-position: -96px -128px; }
+.cmsGlossySeaGreen .ui-icon-key { background-position: -112px -128px; }
+.cmsGlossySeaGreen .ui-icon-lightbulb { background-position: -128px -128px; }
+.cmsGlossySeaGreen .ui-icon-scissors { background-position: -144px -128px; }
+.cmsGlossySeaGreen .ui-icon-clipboard { background-position: -160px -128px; }
+.cmsGlossySeaGreen .ui-icon-copy { background-position: -176px -128px; }
+.cmsGlossySeaGreen .ui-icon-contact { background-position: -192px -128px; }
+.cmsGlossySeaGreen .ui-icon-image { background-position: -208px -128px; }
+.cmsGlossySeaGreen .ui-icon-video { background-position: -224px -128px; }
+.cmsGlossySeaGreen .ui-icon-script { background-position: -240px -128px; }
+.cmsGlossySeaGreen .ui-icon-alert { background-position: 0 -144px; }
+.cmsGlossySeaGreen .ui-icon-info { background-position: -16px -144px; }
+.cmsGlossySeaGreen .ui-icon-notice { background-position: -32px -144px; }
+.cmsGlossySeaGreen .ui-icon-help { background-position: -48px -144px; }
+.cmsGlossySeaGreen .ui-icon-check { background-position: -64px -144px; }
+.cmsGlossySeaGreen .ui-icon-bullet { background-position: -80px -144px; }
+.cmsGlossySeaGreen .ui-icon-radio-off { background-position: -96px -144px; }
+.cmsGlossySeaGreen .ui-icon-radio-on { background-position: -112px -144px; }
+.cmsGlossySeaGreen .ui-icon-pin-w { background-position: -128px -144px; }
+.cmsGlossySeaGreen .ui-icon-pin-s { background-position: -144px -144px; }
+.cmsGlossySeaGreen .ui-icon-play { background-position: 0 -160px; }
+.cmsGlossySeaGreen .ui-icon-pause { background-position: -16px -160px; }
+.cmsGlossySeaGreen .ui-icon-seek-next { background-position: -32px -160px; }
+.cmsGlossySeaGreen .ui-icon-seek-prev { background-position: -48px -160px; }
+.cmsGlossySeaGreen .ui-icon-seek-end { background-position: -64px -160px; }
+.cmsGlossySeaGreen .ui-icon-seek-start { background-position: -80px -160px; }
 /* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
-.GlossySeaGreen .ui-icon-seek-first { background-position: -80px -160px; }
-.GlossySeaGreen .ui-icon-stop { background-position: -96px -160px; }
-.GlossySeaGreen .ui-icon-eject { background-position: -112px -160px; }
-.GlossySeaGreen .ui-icon-volume-off { background-position: -128px -160px; }
-.GlossySeaGreen .ui-icon-volume-on { background-position: -144px -160px; }
-.GlossySeaGreen .ui-icon-power { background-position: 0 -176px; }
-.GlossySeaGreen .ui-icon-signal-diag { background-position: -16px -176px; }
-.GlossySeaGreen .ui-icon-signal { background-position: -32px -176px; }
-.GlossySeaGreen .ui-icon-battery-0 { background-position: -48px -176px; }
-.GlossySeaGreen .ui-icon-battery-1 { background-position: -64px -176px; }
-.GlossySeaGreen .ui-icon-battery-2 { background-position: -80px -176px; }
-.GlossySeaGreen .ui-icon-battery-3 { background-position: -96px -176px; }
-.GlossySeaGreen .ui-icon-circle-plus { background-position: 0 -192px; }
-.GlossySeaGreen .ui-icon-circle-minus { background-position: -16px -192px; }
-.GlossySeaGreen .ui-icon-circle-close { background-position: -32px -192px; }
-.GlossySeaGreen .ui-icon-circle-triangle-e { background-position: -48px -192px; }
-.GlossySeaGreen .ui-icon-circle-triangle-s { background-position: -64px -192px; }
-.GlossySeaGreen .ui-icon-circle-triangle-w { background-position: -80px -192px; }
-.GlossySeaGreen .ui-icon-circle-triangle-n { background-position: -96px -192px; }
-.GlossySeaGreen .ui-icon-circle-arrow-e { background-position: -112px -192px; }
-.GlossySeaGreen .ui-icon-circle-arrow-s { background-position: -128px -192px; }
-.GlossySeaGreen .ui-icon-circle-arrow-w { background-position: -144px -192px; }
-.GlossySeaGreen .ui-icon-circle-arrow-n { background-position: -160px -192px; }
-.GlossySeaGreen .ui-icon-circle-zoomin { background-position: -176px -192px; }
-.GlossySeaGreen .ui-icon-circle-zoomout { background-position: -192px -192px; }
-.GlossySeaGreen .ui-icon-circle-check { background-position: -208px -192px; }
-.GlossySeaGreen .ui-icon-circlesmall-plus { background-position: 0 -208px; }
-.GlossySeaGreen .ui-icon-circlesmall-minus { background-position: -16px -208px; }
-.GlossySeaGreen .ui-icon-circlesmall-close { background-position: -32px -208px; }
-.GlossySeaGreen .ui-icon-squaresmall-plus { background-position: -48px -208px; }
-.GlossySeaGreen .ui-icon-squaresmall-minus { background-position: -64px -208px; }
-.GlossySeaGreen .ui-icon-squaresmall-close { background-position: -80px -208px; }
-.GlossySeaGreen .ui-icon-grip-dotted-vertical { background-position: 0 -224px; }
-.GlossySeaGreen .ui-icon-grip-dotted-horizontal { background-position: -16px -224px; }
-.GlossySeaGreen .ui-icon-grip-solid-vertical { background-position: -32px -224px; }
-.GlossySeaGreen .ui-icon-grip-solid-horizontal { background-position: -48px -224px; }
-.GlossySeaGreen .ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
-.GlossySeaGreen .ui-icon-grip-diagonal-se { background-position: -80px -224px; }
+.cmsGlossySeaGreen .ui-icon-seek-first { background-position: -80px -160px; }
+.cmsGlossySeaGreen .ui-icon-stop { background-position: -96px -160px; }
+.cmsGlossySeaGreen .ui-icon-eject { background-position: -112px -160px; }
+.cmsGlossySeaGreen .ui-icon-volume-off { background-position: -128px -160px; }
+.cmsGlossySeaGreen .ui-icon-volume-on { background-position: -144px -160px; }
+.cmsGlossySeaGreen .ui-icon-power { background-position: 0 -176px; }
+.cmsGlossySeaGreen .ui-icon-signal-diag { background-position: -16px -176px; }
+.cmsGlossySeaGreen .ui-icon-signal { background-position: -32px -176px; }
+.cmsGlossySeaGreen .ui-icon-battery-0 { background-position: -48px -176px; }
+.cmsGlossySeaGreen .ui-icon-battery-1 { background-position: -64px -176px; }
+.cmsGlossySeaGreen .ui-icon-battery-2 { background-position: -80px -176px; }
+.cmsGlossySeaGreen .ui-icon-battery-3 { background-position: -96px -176px; }
+.cmsGlossySeaGreen .ui-icon-circle-plus { background-position: 0 -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-minus { background-position: -16px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-close { background-position: -32px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-triangle-e { background-position: -48px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-triangle-s { background-position: -64px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-triangle-w { background-position: -80px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-triangle-n { background-position: -96px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-arrow-e { background-position: -112px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-arrow-s { background-position: -128px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-arrow-w { background-position: -144px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-arrow-n { background-position: -160px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-zoomin { background-position: -176px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-zoomout { background-position: -192px -192px; }
+.cmsGlossySeaGreen .ui-icon-circle-check { background-position: -208px -192px; }
+.cmsGlossySeaGreen .ui-icon-circlesmall-plus { background-position: 0 -208px; }
+.cmsGlossySeaGreen .ui-icon-circlesmall-minus { background-position: -16px -208px; }
+.cmsGlossySeaGreen .ui-icon-circlesmall-close { background-position: -32px -208px; }
+.cmsGlossySeaGreen .ui-icon-squaresmall-plus { background-position: -48px -208px; }
+.cmsGlossySeaGreen .ui-icon-squaresmall-minus { background-position: -64px -208px; }
+.cmsGlossySeaGreen .ui-icon-squaresmall-close { background-position: -80px -208px; }
+.cmsGlossySeaGreen .ui-icon-grip-dotted-vertical { background-position: 0 -224px; }
+.cmsGlossySeaGreen .ui-icon-grip-dotted-horizontal { background-position: -16px -224px; }
+.cmsGlossySeaGreen .ui-icon-grip-solid-vertical { background-position: -32px -224px; }
+.cmsGlossySeaGreen .ui-icon-grip-solid-horizontal { background-position: -48px -224px; }
+.cmsGlossySeaGreen .ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
+.cmsGlossySeaGreen .ui-icon-grip-diagonal-se { background-position: -80px -224px; }
 
 
 /* Misc visuals
 ----------------------------------*/
 
 /* Corner radius */
-.GlossySeaGreen .ui-corner-all, .GlossySeaGreen .ui-corner-top, .GlossySeaGreen .ui-corner-left, .GlossySeaGreen .ui-corner-tl { -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; -khtml-border-top-left-radius: 5px; border-top-left-radius: 5px; }
-.GlossySeaGreen .ui-corner-all, .GlossySeaGreen .ui-corner-top, .GlossySeaGreen .ui-corner-right, .GlossySeaGreen .ui-corner-tr { -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px; -khtml-border-top-right-radius: 5px; border-top-right-radius: 5px; }
-.GlossySeaGreen .ui-corner-all, .GlossySeaGreen .ui-corner-bottom, .GlossySeaGreen .ui-corner-left, .GlossySeaGreen .ui-corner-bl { -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px; -khtml-border-bottom-left-radius: 5px; border-bottom-left-radius: 5px; }
-.GlossySeaGreen .ui-corner-all, .GlossySeaGreen .ui-corner-bottom, .GlossySeaGreen .ui-corner-right, .GlossySeaGreen .ui-corner-br { -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px; -khtml-border-bottom-right-radius: 5px; border-bottom-right-radius: 5px; }
+.cmsGlossySeaGreen .ui-corner-all, .cmsGlossySeaGreen .ui-corner-top, .cmsGlossySeaGreen .ui-corner-left, .cmsGlossySeaGreen .ui-corner-tl { -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; -khtml-border-top-left-radius: 5px; border-top-left-radius: 5px; }
+.cmsGlossySeaGreen .ui-corner-all, .cmsGlossySeaGreen .ui-corner-top, .cmsGlossySeaGreen .ui-corner-right, .cmsGlossySeaGreen .ui-corner-tr { -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px; -khtml-border-top-right-radius: 5px; border-top-right-radius: 5px; }
+.cmsGlossySeaGreen .ui-corner-all, .cmsGlossySeaGreen .ui-corner-bottom, .cmsGlossySeaGreen .ui-corner-left, .cmsGlossySeaGreen .ui-corner-bl { -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px; -khtml-border-bottom-left-radius: 5px; border-bottom-left-radius: 5px; }
+.cmsGlossySeaGreen .ui-corner-all, .cmsGlossySeaGreen .ui-corner-bottom, .cmsGlossySeaGreen .ui-corner-right, .cmsGlossySeaGreen .ui-corner-br { -moz-border-radius-bottomright: 5px; -webkit-border-bottom-right-radius: 5px; -khtml-border-bottom-right-radius: 5px; border-bottom-right-radius: 5px; }
 
 /* Overlays */
-.GlossySeaGreen .ui-widget-overlay { background: #eeeeee url(images/ui-bg_hexagon_90_eeeeee_12x10.png) 50% 50% repeat; opacity: .80;filter:Alpha(Opacity=80); }
-.GlossySeaGreen .ui-widget-shadow { margin: -7px 0 0 -7px; padding: 7px; background: #000000 url(images/ui-bg_highlight-hard_70_000000_1x100.png) 50% top repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/*
+.cmsGlossySeaGreen .ui-widget-overlay { background: #eeeeee url(images/ui-bg_hexagon_90_eeeeee_12x10.png) 50% 50% repeat; opacity: .80;filter:Alpha(Opacity=80); }
+.cmsGlossySeaGreen .ui-widget-shadow { margin: -7px 0 0 -7px; padding: 7px; background: #000000 url(images/ui-bg_highlight-hard_70_000000_1x100.png) 50% top repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/*
  * jQuery UI Resizable 1.8.16
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
@@ -296,17 +296,17 @@
  *
  * http://docs.jquery.com/UI/Resizable#theming
  */
-.GlossySeaGreen .ui-resizable { position: relative;}
-.GlossySeaGreen .ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block; }
-.GlossySeaGreen .ui-resizable-disabled .ui-resizable-handle, .GlossySeaGreen .ui-resizable-autohide .ui-resizable-handle { display: none; }
-.GlossySeaGreen .ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
-.GlossySeaGreen .ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
-.GlossySeaGreen .ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0; height: 100%; }
-.GlossySeaGreen .ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0; height: 100%; }
-.GlossySeaGreen .ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
-.GlossySeaGreen .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
-.GlossySeaGreen .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
-.GlossySeaGreen .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/*
+.cmsGlossySeaGreen .ui-resizable { position: relative;}
+.cmsGlossySeaGreen .ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block; }
+.cmsGlossySeaGreen .ui-resizable-disabled .ui-resizable-handle, .cmsGlossySeaGreen .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.cmsGlossySeaGreen .ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
+.cmsGlossySeaGreen .ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
+.cmsGlossySeaGreen .ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0; height: 100%; }
+.cmsGlossySeaGreen .ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0; height: 100%; }
+.cmsGlossySeaGreen .ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.cmsGlossySeaGreen .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
+.cmsGlossySeaGreen .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
+.cmsGlossySeaGreen .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/*
  * jQuery UI Selectable 1.8.16
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
@@ -315,7 +315,7 @@
  *
  * http://docs.jquery.com/UI/Selectable#theming
  */
-.GlossySeaGreen .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
+.cmsGlossySeaGreen .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
 /*
  * jQuery UI Accordion 1.8.16
  *
@@ -326,15 +326,15 @@
  * http://docs.jquery.com/UI/Accordion#theming
  */
 /* IE/Win - Fix animation bug - #4615 */
-.GlossySeaGreen .ui-accordion { width: 100%; }
-.GlossySeaGreen .ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
-.GlossySeaGreen .ui-accordion .ui-accordion-li-fix { display: inline; }
-.GlossySeaGreen .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
-.GlossySeaGreen .ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .5em .5em .5em .7em; }
-.GlossySeaGreen .ui-accordion-icons .ui-accordion-header a { padding-left: 2.2em; }
-.GlossySeaGreen .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
-.GlossySeaGreen .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
-.GlossySeaGreen .ui-accordion .ui-accordion-content-active { display: block; }
+.cmsGlossySeaGreen .ui-accordion { width: 100%; }
+.cmsGlossySeaGreen .ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
+.cmsGlossySeaGreen .ui-accordion .ui-accordion-li-fix { display: inline; }
+.cmsGlossySeaGreen .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
+.cmsGlossySeaGreen .ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .5em .5em .5em .7em; }
+.cmsGlossySeaGreen .ui-accordion-icons .ui-accordion-header a { padding-left: 2.2em; }
+.cmsGlossySeaGreen .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+.cmsGlossySeaGreen .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
+.cmsGlossySeaGreen .ui-accordion .ui-accordion-content-active { display: block; }
 /*
  * jQuery UI Autocomplete 1.8.16
  *
@@ -344,7 +344,7 @@
  *
  * http://docs.jquery.com/UI/Autocomplete#theming
  */
-.GlossySeaGreen .ui-autocomplete { position: absolute; cursor: default; }	
+.cmsGlossySeaGreen .ui-autocomplete { position: absolute; cursor: default; }	
 
 /* workarounds */
 * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
@@ -358,17 +358,17 @@
  *
  * http://docs.jquery.com/UI/Menu#theming
  */
-.GlossySeaGreen .ui-menu {
+.cmsGlossySeaGreen .ui-menu {
 	list-style:none;
 	padding: 2px;
 	margin: 0;
 	display:block;
 	float: left;
 }
-.GlossySeaGreen .ui-menu .ui-menu {
+.cmsGlossySeaGreen .ui-menu .ui-menu {
 	margin-top: -3px;
 }
-.GlossySeaGreen .ui-menu .ui-menu-item {
+.cmsGlossySeaGreen .ui-menu .ui-menu-item {
 	margin:0;
 	padding: 0;
 	zoom: 1;
@@ -376,15 +376,15 @@
 	clear: left;
 	width: 100%;
 }
-.GlossySeaGreen .ui-menu .ui-menu-item a {
+.cmsGlossySeaGreen .ui-menu .ui-menu-item a {
 	text-decoration:none;
 	display:block;
 	padding:.2em .4em;
 	line-height:1.5;
 	zoom:1;
 }
-.GlossySeaGreen .ui-menu .ui-menu-item a.ui-state-hover,
-.GlossySeaGreen .ui-menu .ui-menu-item a.ui-state-active {
+.cmsGlossySeaGreen .ui-menu .ui-menu-item a.ui-state-hover,
+.cmsGlossySeaGreen .ui-menu .ui-menu-item a.ui-state-active {
 	font-weight: normal;
 	margin: -1px;
 }
@@ -397,32 +397,32 @@
  *
  * http://docs.jquery.com/UI/Button#theming
  */
-.GlossySeaGreen .ui-button { display: inline-block; position: relative; padding: 0; margin-right: .1em; text-decoration: none !important; cursor: pointer; text-align: center; zoom: 1; overflow: visible; } /* the overflow property removes extra width in IE */
-.GlossySeaGreen .ui-button-icon-only { width: 2.2em; } /* to make room for the icon, a width needs to be set here */
+.cmsGlossySeaGreen .ui-button { display: inline-block; position: relative; padding: 0; margin-right: .1em; text-decoration: none !important; cursor: pointer; text-align: center; zoom: 1; overflow: visible; } /* the overflow property removes extra width in IE */
+.cmsGlossySeaGreen .ui-button-icon-only { width: 2.2em; } /* to make room for the icon, a width needs to be set here */
 button.ui-button-icon-only { width: 2.4em; } /* button elements seem to need a little more width */
-.GlossySeaGreen .ui-button-icons-only { width: 3.4em; } 
+.cmsGlossySeaGreen .ui-button-icons-only { width: 3.4em; } 
 button.ui-button-icons-only { width: 3.7em; } 
 
 /*button text element */
-.GlossySeaGreen .ui-button .ui-button-text { display: block; line-height: 1.4;  }
-.GlossySeaGreen .ui-button-text-only .ui-button-text { padding: .4em 1em; }
-.GlossySeaGreen .ui-button-icon-only .ui-button-text, .GlossySeaGreen .ui-button-icons-only .ui-button-text { padding: .4em; text-indent: -9999999px; }
-.GlossySeaGreen .ui-button-text-icon-primary .ui-button-text, .GlossySeaGreen .ui-button-text-icons .ui-button-text { padding: .4em 1em .4em 2.1em; }
-.GlossySeaGreen .ui-button-text-icon-secondary .ui-button-text, .GlossySeaGreen .ui-button-text-icons .ui-button-text { padding: .4em 2.1em .4em 1em; }
-.GlossySeaGreen .ui-button-text-icons .ui-button-text { padding-left: 2.1em; padding-right: 2.1em; }
+.cmsGlossySeaGreen .ui-button .ui-button-text { display: block; line-height: 1.4;  }
+.cmsGlossySeaGreen .ui-button-text-only .ui-button-text { padding: .4em 1em; }
+.cmsGlossySeaGreen .ui-button-icon-only .ui-button-text, .cmsGlossySeaGreen .ui-button-icons-only .ui-button-text { padding: .4em; text-indent: -9999999px; }
+.cmsGlossySeaGreen .ui-button-text-icon-primary .ui-button-text, .cmsGlossySeaGreen .ui-button-text-icons .ui-button-text { padding: .4em 1em .4em 2.1em; }
+.cmsGlossySeaGreen .ui-button-text-icon-secondary .ui-button-text, .cmsGlossySeaGreen .ui-button-text-icons .ui-button-text { padding: .4em 2.1em .4em 1em; }
+.cmsGlossySeaGreen .ui-button-text-icons .ui-button-text { padding-left: 2.1em; padding-right: 2.1em; }
 /* no icon support for input elements, provide padding by default */
 input.ui-button { padding: .4em 1em; }
 
 /*button icon element(s) */
-.GlossySeaGreen .ui-button-icon-only .ui-icon, .GlossySeaGreen .ui-button-text-icon-primary .ui-icon, .GlossySeaGreen .ui-button-text-icon-secondary .ui-icon, .GlossySeaGreen .ui-button-text-icons .ui-icon, .GlossySeaGreen .ui-button-icons-only .ui-icon { position: absolute; top: 50%; margin-top: -8px; }
-.GlossySeaGreen .ui-button-icon-only .ui-icon { left: 50%; margin-left: -8px; }
-.GlossySeaGreen .ui-button-text-icon-primary .ui-button-icon-primary, .GlossySeaGreen .ui-button-text-icons .ui-button-icon-primary, .GlossySeaGreen .ui-button-icons-only .ui-button-icon-primary { left: .5em; }
-.GlossySeaGreen .ui-button-text-icon-secondary .ui-button-icon-secondary, .GlossySeaGreen .ui-button-text-icons .ui-button-icon-secondary, .GlossySeaGreen .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
-.GlossySeaGreen .ui-button-text-icons .ui-button-icon-secondary, .GlossySeaGreen .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
+.cmsGlossySeaGreen .ui-button-icon-only .ui-icon, .cmsGlossySeaGreen .ui-button-text-icon-primary .ui-icon, .cmsGlossySeaGreen .ui-button-text-icon-secondary .ui-icon, .cmsGlossySeaGreen .ui-button-text-icons .ui-icon, .cmsGlossySeaGreen .ui-button-icons-only .ui-icon { position: absolute; top: 50%; margin-top: -8px; }
+.cmsGlossySeaGreen .ui-button-icon-only .ui-icon { left: 50%; margin-left: -8px; }
+.cmsGlossySeaGreen .ui-button-text-icon-primary .ui-button-icon-primary, .cmsGlossySeaGreen .ui-button-text-icons .ui-button-icon-primary, .cmsGlossySeaGreen .ui-button-icons-only .ui-button-icon-primary { left: .5em; }
+.cmsGlossySeaGreen .ui-button-text-icon-secondary .ui-button-icon-secondary, .cmsGlossySeaGreen .ui-button-text-icons .ui-button-icon-secondary, .cmsGlossySeaGreen .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
+.cmsGlossySeaGreen .ui-button-text-icons .ui-button-icon-secondary, .cmsGlossySeaGreen .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
 
 /*button sets*/
-.GlossySeaGreen .ui-buttonset { margin-right: 7px; }
-.GlossySeaGreen .ui-buttonset .ui-button { margin-left: 0; margin-right: -.3em; }
+.cmsGlossySeaGreen .ui-buttonset { margin-right: 7px; }
+.cmsGlossySeaGreen .ui-buttonset .ui-button { margin-left: 0; margin-right: -.3em; }
 
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
@@ -435,18 +435,18 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  *
  * http://docs.jquery.com/UI/Dialog#theming
  */
-.GlossySeaGreen .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
-.GlossySeaGreen .ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative;  }
-.GlossySeaGreen .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
-.GlossySeaGreen .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
-.GlossySeaGreen .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
-.GlossySeaGreen .ui-dialog .ui-dialog-titlebar-close:hover, .GlossySeaGreen .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
-.GlossySeaGreen .ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
-.GlossySeaGreen .ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
-.GlossySeaGreen .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
-.GlossySeaGreen .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
-.GlossySeaGreen .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
-.GlossySeaGreen .ui-draggable .ui-dialog-titlebar { cursor: move; }
+.cmsGlossySeaGreen .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative;  }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-titlebar-close:hover, .cmsGlossySeaGreen .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
+.cmsGlossySeaGreen .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
+.cmsGlossySeaGreen .ui-draggable .ui-dialog-titlebar { cursor: move; }
 /*
  * jQuery UI Slider 1.8.16
  *
@@ -456,21 +456,21 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  *
  * http://docs.jquery.com/UI/Slider#theming
  */
-.GlossySeaGreen .ui-slider { position: relative; text-align: left; }
-.GlossySeaGreen .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; }
-.GlossySeaGreen .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
+.cmsGlossySeaGreen .ui-slider { position: relative; text-align: left; }
+.cmsGlossySeaGreen .ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; }
+.cmsGlossySeaGreen .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
 
-.GlossySeaGreen .ui-slider-horizontal { height: .8em; }
-.GlossySeaGreen .ui-slider-horizontal .ui-slider-handle { top: -.3em; margin-left: -.6em; }
-.GlossySeaGreen .ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
-.GlossySeaGreen .ui-slider-horizontal .ui-slider-range-min { left: 0; }
-.GlossySeaGreen .ui-slider-horizontal .ui-slider-range-max { right: 0; }
+.cmsGlossySeaGreen .ui-slider-horizontal { height: .8em; }
+.cmsGlossySeaGreen .ui-slider-horizontal .ui-slider-handle { top: -.3em; margin-left: -.6em; }
+.cmsGlossySeaGreen .ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.cmsGlossySeaGreen .ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.cmsGlossySeaGreen .ui-slider-horizontal .ui-slider-range-max { right: 0; }
 
-.GlossySeaGreen .ui-slider-vertical { width: .8em; height: 100px; }
-.GlossySeaGreen .ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
-.GlossySeaGreen .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
-.GlossySeaGreen .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
-.GlossySeaGreen .ui-slider-vertical .ui-slider-range-max { top: 0; }/*
+.cmsGlossySeaGreen .ui-slider-vertical { width: .8em; height: 100px; }
+.cmsGlossySeaGreen .ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
+.cmsGlossySeaGreen .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
+.cmsGlossySeaGreen .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+.cmsGlossySeaGreen .ui-slider-vertical .ui-slider-range-max { top: 0; }/*
  * jQuery UI Tabs 1.8.16
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
@@ -479,15 +479,15 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  *
  * http://docs.jquery.com/UI/Tabs#theming
  */
-.GlossySeaGreen .ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
-.GlossySeaGreen .ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
-.GlossySeaGreen .ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
-.GlossySeaGreen .ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
-.GlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
-.GlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .GlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .GlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
-.GlossySeaGreen .ui-tabs .ui-tabs-nav li a, .GlossySeaGreen .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
-.GlossySeaGreen .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
-.GlossySeaGreen .ui-tabs .ui-tabs-hide { display: none !important; }
+.cmsGlossySeaGreen .ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li a, .cmsGlossySeaGreen .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-hide { display: none !important; }
 /*
  * jQuery UI Datepicker 1.8.16
  *
@@ -497,55 +497,55 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  *
  * http://docs.jquery.com/UI/Datepicker#theming
  */
-.GlossySeaGreen .ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-prev, .GlossySeaGreen .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-prev-hover, .GlossySeaGreen .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-prev { left:2px; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-next { right:2px; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-prev-hover { left:1px; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-next-hover { right:1px; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-prev span, .GlossySeaGreen .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
-.GlossySeaGreen .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
-.GlossySeaGreen .ui-datepicker select.ui-datepicker-month, 
-.GlossySeaGreen .ui-datepicker select.ui-datepicker-year { width: 49%;}
-.GlossySeaGreen .ui-datepicker table {width: 100%; font-size: .9em; border-collapse: collapse; margin:0 0 .4em; }
-.GlossySeaGreen .ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
-.GlossySeaGreen .ui-datepicker td { border: 0; padding: 1px; }
-.GlossySeaGreen .ui-datepicker td span, .GlossySeaGreen .ui-datepicker td a { display: block; padding: .2em; text-align: right; text-decoration: none; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
-.GlossySeaGreen .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
+.cmsGlossySeaGreen .ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-prev, .cmsGlossySeaGreen .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-prev-hover, .cmsGlossySeaGreen .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-prev { left:2px; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-next { right:2px; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-prev-hover { left:1px; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-next-hover { right:1px; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-prev span, .cmsGlossySeaGreen .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
+.cmsGlossySeaGreen .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+.cmsGlossySeaGreen .ui-datepicker select.ui-datepicker-month, 
+.cmsGlossySeaGreen .ui-datepicker select.ui-datepicker-year { width: 49%;}
+.cmsGlossySeaGreen .ui-datepicker table {width: 100%; font-size: .9em; border-collapse: collapse; margin:0 0 .4em; }
+.cmsGlossySeaGreen .ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
+.cmsGlossySeaGreen .ui-datepicker td { border: 0; padding: 1px; }
+.cmsGlossySeaGreen .ui-datepicker td span, .cmsGlossySeaGreen .ui-datepicker td a { display: block; padding: .2em; text-align: right; text-decoration: none; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+.cmsGlossySeaGreen .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
 
 /* with multiple calendars */
-.GlossySeaGreen .ui-datepicker.ui-datepicker-multi { width:auto; }
-.GlossySeaGreen .ui-datepicker-multi .ui-datepicker-group { float:left; }
-.GlossySeaGreen .ui-datepicker-multi .ui-datepicker-group table { width:95%; margin:0 auto .4em; }
-.GlossySeaGreen .ui-datepicker-multi-2 .ui-datepicker-group { width:50%; }
-.GlossySeaGreen .ui-datepicker-multi-3 .ui-datepicker-group { width:33.3%; }
-.GlossySeaGreen .ui-datepicker-multi-4 .ui-datepicker-group { width:25%; }
-.GlossySeaGreen .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header { border-left-width:0; }
-.GlossySeaGreen .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header { border-left-width:0; }
-.GlossySeaGreen .ui-datepicker-multi .ui-datepicker-buttonpane { clear:left; }
-.GlossySeaGreen .ui-datepicker-row-break { clear:both; width:100%; font-size:0em; }
+.cmsGlossySeaGreen .ui-datepicker.ui-datepicker-multi { width:auto; }
+.cmsGlossySeaGreen .ui-datepicker-multi .ui-datepicker-group { float:left; }
+.cmsGlossySeaGreen .ui-datepicker-multi .ui-datepicker-group table { width:95%; margin:0 auto .4em; }
+.cmsGlossySeaGreen .ui-datepicker-multi-2 .ui-datepicker-group { width:50%; }
+.cmsGlossySeaGreen .ui-datepicker-multi-3 .ui-datepicker-group { width:33.3%; }
+.cmsGlossySeaGreen .ui-datepicker-multi-4 .ui-datepicker-group { width:25%; }
+.cmsGlossySeaGreen .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header { border-left-width:0; }
+.cmsGlossySeaGreen .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header { border-left-width:0; }
+.cmsGlossySeaGreen .ui-datepicker-multi .ui-datepicker-buttonpane { clear:left; }
+.cmsGlossySeaGreen .ui-datepicker-row-break { clear:both; width:100%; font-size:0em; }
 
 /* RTL support */
-.GlossySeaGreen .ui-datepicker-rtl { direction: rtl; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-prev { right: 2px; left: auto; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-next { left: 2px; right: auto; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-buttonpane { clear:right; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-buttonpane button { float: left; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current { float:right; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-group { float:right; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
-.GlossySeaGreen .ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
+.cmsGlossySeaGreen .ui-datepicker-rtl { direction: rtl; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-prev { right: 2px; left: auto; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-next { left: 2px; right: auto; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-buttonpane { clear:right; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-buttonpane button { float: left; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current { float:right; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-group { float:right; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
+.cmsGlossySeaGreen .ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
 
 /* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
-.GlossySeaGreen .ui-datepicker-cover {
+.cmsGlossySeaGreen .ui-datepicker-cover {
     display: none; /*sorry for IE5*/
     display/**/: block; /*sorry for IE5*/
     position: absolute; /*must have*/
@@ -564,5 +564,5 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  *
  * http://docs.jquery.com/UI/Progressbar#theming
  */
-.GlossySeaGreen .ui-progressbar { height:2em; text-align: left; }
-.GlossySeaGreen .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+.cmsGlossySeaGreen .ui-progressbar { height:2em; text-align: left; }
+.cmsGlossySeaGreen .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }

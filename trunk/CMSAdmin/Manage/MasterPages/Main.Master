@@ -85,7 +85,7 @@
 			$("#CMSmodalalertmessage").html(request);
 
 			var c = $("#CMSmodalalertmessage").parent().parent().attr('class');
-			$("#CMSmodalalertmessage").parent().parent().attr('class', "GlossySeaGreen " + c);
+			$("#CMSmodalalertmessage").parent().parent().attr('class', "cmsGlossySeaGreen " + c);
 		}
 
 		function ProcessKeyPress(e) {
