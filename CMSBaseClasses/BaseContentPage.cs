@@ -58,7 +58,7 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		private const string JSSCOPE = "GlossySeaGreen";
+		private const string JSSCOPE = "cmsGlossySeaGreen";
 
 		protected SiteData GetSite() {
 			return siteHelper.Get(SiteData.CurrentSiteID);
