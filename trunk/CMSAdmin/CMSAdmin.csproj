@@ -278,6 +278,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_b7d7c4_1x400.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_dff6e8_1x400.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_50_468b5e_1x400.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_80_b7d7c4_1x400.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_hexagon_90_eeeeee_12x10.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-bg_highlight-soft_25_f3ebba_1x100.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-icons_468b5e_256x240.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-icons_753433_256x240.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-icons_c7820f_256x240.png" />
+    <Content Include="Manage\glossyseagreen\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen-scoped.css" />
+    <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen.css" />
+    <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
     <Content Include="Manage\Images\cog.png" />
     <Content Include="Manage\Images\cog_edit.png" />
     <Content Include="SiteSkins.config" />
@@ -641,22 +657,6 @@
     <Content Include="Manage\tiny_mce\utils\validate.js" />
     <Content Include="Manage\ucEditNotifier.ascx" />
     <Content Include="Manage\ucTextContent.ascx" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_b7d7c4_1x400.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_dff6e8_1x400.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_50_468b5e_1x400.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_80_b7d7c4_1x400.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_hexagon_90_eeeeee_12x10.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_highlight-hard_70_000000_1x100.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-bg_highlight-soft_25_f3ebba_1x100.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-icons_468b5e_256x240.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-icons_753433_256x240.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-icons_c7820f_256x240.png" />
-    <Content Include="Manage\glossyseagreen\css\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen-scoped.css" />
-    <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen.css" />
-    <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
     <Content Include="MIT-LICENSE.txt" />
     <Content Include="Site_4\images\block_h.png" />
     <Content Include="Site_4\images\block_s.png" />

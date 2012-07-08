@@ -41,11 +41,20 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			return bLock;
 		}
 
+		public UserEditState EditorPrefs = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
 
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
+			}
+
+			EditorPrefs = UserEditState.cmsUserEditState;
+			if (EditorPrefs == null) {
+				EditorPrefs = new UserEditState();
+				EditorPrefs.EditorMargin = "L";
+				EditorPrefs.EditorOpen = "true";
+				EditorPrefs.EditorScrollPosition = "0";
 			}
 
 			if (!IsPostBack) {
