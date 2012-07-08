@@ -4,28 +4,27 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<p>
-	</p>
+	<div style="height: 25px; width: 200px; border: 1px solid #ffffff; clear: both;">
+		&nbsp
+	</div>
 	<table width="380px">
 		<tr>
 			<td class="tableback">
-				&nbsp;
-			</td>
-			<td class="tableback">
-				&nbsp;<%--<b class="caption">email address</b>&nbsp;--%>
+				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">
+					&nbsp
+				</div>
 			</td>
 			<td class="tableback">
 				<b class="caption">email address</b>&nbsp;<br />
-				<asp:TextBox ID="txtEmail" runat="server" Width="300px" MaxLength="80" ValidationGroup="loginTemplate"></asp:TextBox>
+				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate"></asp:TextBox>
 			</td>
 			<td class="tableback">
-				&nbsp;
+				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">
+					&nbsp
+				</div>
 			</td>
 		</tr>
 		<tr>
-			<td class="tableback">
-				&nbsp;
-			</td>
 			<td class="tableback">
 				&nbsp;
 			</td>

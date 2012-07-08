@@ -25,6 +25,9 @@ namespace Carrotware.CMS.UI.Admin {
 			if (Page.User.Identity.IsAuthenticated) {
 				Response.Redirect("./default.aspx");
 			}
+
+
+			litCMSBuildInfo.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
 		}
 
 		protected void cmdLogon_Click(object sender, EventArgs e) {

@@ -287,7 +287,7 @@
 			cmsMnuVis = true;
 		}
 
-		setTimeout("cmsSaveToolbarPosition();", 500);
+		//setTimeout("cmsSaveToolbarPosition();", 500);
 	}
 
 	var cmsToolbarPos = 'L';
@@ -308,8 +308,7 @@
 		floatingArray[0].centerX = undefined;
 		floatingArray[0].centerY = undefined;
 
-		
-		setTimeout("cmsSaveToolbarPosition();", 500);
+		//setTimeout("cmsSaveToolbarPosition();", 500);
 	}
 
 	$(document).ready(function() {
