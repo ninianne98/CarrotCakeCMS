@@ -10,7 +10,7 @@
 <script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
 <link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
-	#simplemodal-container, .simplemodal-container {
+	#cms-simplemodal-container, .cms-simplemodal-container {
 		height: 500px;
 		width: 775px;
 		z-index: 5000;
@@ -378,7 +378,7 @@
 	}
 
 	function cmsEditHB() {
-		cmsSaveToolbarPosition();
+		//cmsSaveToolbarPosition();
 		
 		setTimeout("cmsEditHB();", 30 * 1000);
 
@@ -809,23 +809,26 @@
 
 	function cmsLaunchWindow(theURL) {
 		TheURL = theURL;
-		$('#cmsModalFrame').html('<div id="cmsDivAjaxMain2"> <iframe scrolling="auto" id="frameEditor" frameborder="0" name="frameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
+		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
 
-		$("#cmsDivAjaxMain2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 			css: { width: '750px', height: '475px' },
 			fadeOut: 1000,
 			timeout: 1200,
 			overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 		});
 
+		cmsSaveToolbarPosition();
 		setTimeout("cmsLoadWindow();", 800);
 	}
 
 	function cmsLoadWindow() {
+		cmsSaveToolbarPosition();
+
 		$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
 			//$.modal.close(); // must call this!
 			setTimeout("$.modal.close();", 800);
-			$('#cmsModalFrame').html('<div id="divAjaxMain"></div>');
+			$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
 			cmsDirtyPageRefresh();
 		}
 		});
@@ -835,6 +838,7 @@
 	}
 
 	function cmsDirtyPageRefresh() {
+		cmsSaveToolbarPosition();
 		window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
 	}
 
