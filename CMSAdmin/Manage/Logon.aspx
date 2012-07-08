@@ -11,31 +11,21 @@
 					<table width="320px">
 						<tr>
 							<td class="tableback">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<div style="height: 40px; width: 50px; border: 1px solid #ffffff;">
+									&nbsp
+								</div>
 							</td>
 							<td class="tableback">
 								&nbsp;
-							</td>
-							<td class="tableback">
-								&nbsp;
-							</td>
-							<td class="tableback">
-								&nbsp;
-							</td>
-						</tr>
-						<tr>
-							<td class="tableback">
-								&nbsp;
-							</td>
-							<td class="tableback">
-								&nbsp;<%--<b class="caption">username</b>&nbsp;--%>
 							</td>
 							<td class="tableback">
 								&nbsp;<b class="caption">username</b>&nbsp;<br />
-								<asp:TextBox ID="UserName" runat="server" Width="160px" MaxLength="60" ValidationGroup="loginTemplate"></asp:TextBox>
+								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate"></asp:TextBox>
 							</td>
 							<td class="tableback">
-								&nbsp;
+								<div style="height: 40px; width: 40px; border: 1px solid #ffffff;">
+									&nbsp
+								</div>
 							</td>
 						</tr>
 						<tr>
@@ -43,12 +33,12 @@
 								&nbsp;
 							</td>
 							<td class="tableback">
-								&nbsp;<%--<b class="caption">password</b>&nbsp;--%>
+								&nbsp;
 							</td>
 							<td class="tableback">
 								<br />
 								&nbsp;<b class="caption">password</b>&nbsp;<br />
-								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="160px" MaxLength="60" ValidationGroup="loginTemplate"></asp:TextBox>
+								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="180px" MaxLength="60" ValidationGroup="loginTemplate"></asp:TextBox>
 							</td>
 							<td class="tableback">
 								&nbsp;
@@ -71,7 +61,7 @@
 							</td>
 						</tr>
 					</table>
-					<div style="width: 310px; text-align: left">
+					<div style="width: 310px; text-align: left;">
 						<asp:Label ID="FailureText" runat="server" EnableViewState="False"></asp:Label>
 						<br />
 						<a href="ForgotPassword.aspx">Forgot Password?</a>
@@ -80,4 +70,7 @@
 			</LayoutTemplate>
 		</asp:Login>
 	</asp:Panel>
+	<p>
+		<asp:Literal ID="litCMSBuildInfo" runat="server"></asp:Literal>
+	</p>
 </asp:Content>

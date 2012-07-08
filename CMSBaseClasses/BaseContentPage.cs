@@ -83,7 +83,7 @@ namespace Carrotware.CMS.UI.Base {
 
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
-			metaGenerator.Content = string.Format("CarrotCake CMS {0}", CurrentDLLVersion); ;
+			metaGenerator.Content = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
 			Page.Header.Controls.Add(metaGenerator);
 
 			theSite = GetSite();

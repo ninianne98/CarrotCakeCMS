@@ -17,6 +17,8 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 				tabUserAdmin.Visible = false;
 			}
 
+			litCMSBuildInfo.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
+
 			HideWhenNoSiteProfileExists();
 
 			string sPlugCfg = Server.MapPath("~/AdminModules.config");
