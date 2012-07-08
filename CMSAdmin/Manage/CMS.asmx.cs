@@ -240,6 +240,33 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string RecordEditorPosition(string ToolbarState, string ToolbarMargin, string ToolbarScroll) {
+			try {
+				GetSetUserEditState(ToolbarState, ToolbarMargin, ToolbarScroll);
+
+				return "OK";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
+
+		private void GetSetUserEditState(string ToolbarState, string ToolbarMargin, string ToolbarScroll) {
+			UserEditState editor = UserEditState.cmsUserEditState;
+			if (editor == null) {
+				editor = new UserEditState();
+			}
+
+			editor.EditorOpen = string.IsNullOrEmpty(ToolbarState) ? (string.IsNullOrEmpty(editor.EditorOpen) ? "true" : editor.EditorOpen) : ToolbarState.ToLower();
+			editor.EditorMargin = string.IsNullOrEmpty(ToolbarMargin) ? (string.IsNullOrEmpty(editor.EditorMargin) ? "L" : editor.EditorMargin) : ToolbarMargin.ToUpper();
+			editor.EditorScrollPosition = string.IsNullOrEmpty(ToolbarScroll) ? "0" : ToolbarScroll.ToLower();
+
+			UserEditState.cmsUserEditState = editor;
+		}
+
+
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<SiteMapOrder> GetChildPages(string PageID, string CurrPageID) {
@@ -357,6 +384,8 @@ namespace Carrotware.CMS.UI.Admin {
 				c.TemplateFile = TheTemplate;
 
 				cmsAdminContent = c;
+
+				GetSetUserEditState("", "", "");
 
 				return "OK";
 			} catch (Exception ex) {
@@ -599,6 +628,8 @@ namespace Carrotware.CMS.UI.Admin {
 					cmsAdminWidget = new List<PageWidget>();
 					cmsAdminContent = null;
 				}
+
+				GetSetUserEditState("true", "", "");
 
 				return "OK";
 

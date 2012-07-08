@@ -8,6 +8,20 @@
  * http://docs.jquery.com/UI/Theming/API
  */
 
+.cmsGlossySeaGreen p, .cmsGlossySeaGreen ul, 
+.cmsGlossySeaGreen ol, .cmsGlossySeaGreen h1, 
+.cmsGlossySeaGreen h2, .cmsGlossySeaGreen h3,
+.cmsGlossySeaGreen div, .cmsGlossySeaGreen span, 
+.cmsGlossySeaGreen input, .cmsGlossySeaGreen select, 
+.cmsGlossySeaGreen button, .cmsGlossySeaGreen textarea {
+	line-height: normal;
+	margin: 0px;
+	padding: 1px;
+	text-align: left;
+	font-size: small;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+}
+
 /* Layout helpers
 ----------------------------------*/
 .cmsGlossySeaGreen .ui-helper-hidden { display: none; }
