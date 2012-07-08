@@ -79,6 +79,21 @@ namespace Carrotware.CMS.UI.Base {
 			} catch (Exception ex) { }
 		}
 
+
+		protected void AssignContentZones(ContentContainer pageArea, ContentContainer pageSource) {
+
+			pageArea.JQueryUIScope = pageSource.JQueryUIScope;
+
+			pageArea.IsAdminMode = pageSource.IsAdminMode;
+
+			pageArea.Text = pageSource.Text;
+
+			pageArea.ZoneChar = pageSource.ZoneChar;
+
+			pageArea.DatabaseKey = pageSource.DatabaseKey;
+		}
+
+
 		protected void LoadPageControls(Control page) {
 
 			HtmlMeta metaGenerator = new HtmlMeta();
