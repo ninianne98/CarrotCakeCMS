@@ -296,6 +296,7 @@
     <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
     <Content Include="Manage\Images\cog.png" />
     <Content Include="Manage\Images\cog_edit.png" />
+    <Content Include="Manage\Includes\advanced-editor.css" />
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>
