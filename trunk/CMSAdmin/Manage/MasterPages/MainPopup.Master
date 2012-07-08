@@ -5,22 +5,15 @@
 <head runat="server">
 	<title></title>
 	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
-
 	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
-
 	<script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>
-
 	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
-
 	<link href="/Manage/includes/button-style.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/TableStyles.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/mainpopup.css" rel="stylesheet" type="text/css" />
-
 	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
-
 	<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />
-
 	<script type="text/javascript">
 		//  http://encosia.com/css-style-as-ajax-progress-indicator/
 		//  http://msdn.microsoft.com/en-us/library/bb386518.aspx
@@ -28,19 +21,19 @@
 		function UpdateAjaxJQuery() {
 			if (typeof (Sys) != 'undefined') {
 				var prm = Sys.WebForms.PageRequestManager.getInstance();
-				prm.add_endRequest(function() {
+				prm.add_endRequest(function () {
 					AjaxBtnLoad();
 				});
 			}
 		}
 
-		$(document).ready(function() {
+		$(document).ready(function () {
 			UpdateAjaxJQuery();
 			AjaxBtnLoad();
 		});
 
 		function AjaxBtnLoad() {
-			$(function() {
+			$(function () {
 				$('#jqtabs').tabs();
 			});
 			$("#jqaccordion").accordion({
@@ -51,11 +44,11 @@
 				alwaysOpen: false
 			});
 
-			$(function() {
+			$(function () {
 				$("input:button, input:submit").button();
 			});
 
-			$(".dateRegion").each(function(i) {
+			$(".dateRegion").each(function (i) {
 				$(this).datepicker({
 					changeMonth: true,
 					changeYear: true,
@@ -68,7 +61,6 @@
 		}	
 
 	</script>
-
 	<script type="text/javascript">
 
 		function ProcessKeyPress(e) {
@@ -108,12 +100,11 @@
 		}
 
 	</script>
-
 	<script type="text/javascript">
 		//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 		function BlockUI(elementID) {
 			var prm = Sys.WebForms.PageRequestManager.getInstance();
-			prm.add_beginRequest(function() {
+			prm.add_beginRequest(function () {
 				$("#" + elementID).block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 					css: {},
 					fadeOut: 1000,
@@ -121,16 +112,15 @@
 					overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 				});
 			});
-			prm.add_endRequest(function() {
+			prm.add_endRequest(function () {
 				$("#" + elementID).unblock();
 			});
 		}
-		$(document).ready(function() {
-			BlockUI("divAjaxMain");
+		$(document).ready(function () {
+			BlockUI("cmsAjaxMainDiv");
 			$.blockUI.defaults.css = {};
 		});
 	</script>
-
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>
 	<style type="text/css">
@@ -141,9 +131,7 @@
 		}
 	</style>
 	<!-- TinyMCE -->
-
 	<script type="text/javascript" src="/Manage/tiny_mce/tiny_mce.js"></script>
-
 	<script type="text/javascript">
 		tinyMCE.init({
 
@@ -173,11 +161,11 @@
 			content_css: "/Manage/Includes/richedit.css",
 
 			// Add a custom button
-			setup: function(ed) {
+			setup: function (ed) {
 				ed.addButton('fileupbtn', {
 					title: 'FileUpload',
 					image: '/Manage/tiny_mce/insertfile.gif',
-					onclick: function() {
+					onclick: function () {
 						//debugger;
 						ed.focus();
 						//ed.selection.setContent('custom text');
@@ -235,7 +223,6 @@
 
 	
 	</script>
-
 	<script type="text/javascript">
 		var fldName = '';
 		var winBrowse = null;
@@ -264,13 +251,12 @@
 		}
 	
 	</script>
-
 	<!-- /TinyMCE -->
 </head>
 <body>
 	<form id="form1" runat="server">
 	<asp:ScriptManager ID="ScriptManager1" runat="server" />
-	<div id="divAjaxMain">
+	<div id="cmsAjaxMainDiv">
 		<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
 			<ContentTemplate>
 				<h1>
