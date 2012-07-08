@@ -20,8 +20,8 @@
 	}
 	.cmsHighlightPH {
 		height: 30px !important;
-		margin: 5px;
-		padding: 5px;
+		margin: 5px !important;
+		padding: 5px !important;
 		background: #FFFFAA !important;
 		border: 2px dashed #676F6A !important;
 	}
@@ -100,7 +100,15 @@
 		padding-right: 5px !important;
 		padding-left: 5px !important;
 	}
+	.cmsAjaxModalSpinner {
+		margin: 0px !important;
+		padding: 0px !important;
+		padding-top: 100px !important;
+		padding-left: 200px !important;
+		border: 0px solid #ddd !important;
+	}
 	.cmsWidgetControl {
+		min-height: 8px !important;
 		border: 2px dashed #ffffff !important;
 	}
 	.cmsWidgetTargetOuterControl {
@@ -636,7 +644,7 @@
 
 	function CMSBusyLong() {
 
-		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img  class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
 			css: { border: 'none', backgroundColor: 'transparent' },
 			fadeOut: 4000,
 			timeout: 5000,
@@ -811,7 +819,7 @@
 		TheURL = theURL;
 		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
 
-		$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 			css: { width: '750px', height: '475px' },
 			fadeOut: 1000,
 			timeout: 1200,
@@ -895,8 +903,8 @@
 				<br style="clear: none;" />
 				<asp:Repeater ID="rpTools" runat="server">
 					<HeaderTemplate>
-						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
-							padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
+							float: left; border: solid 1px #000;">
 					</HeaderTemplate>
 					<ItemTemplate>
 						<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
@@ -915,8 +923,7 @@
 					<FooterTemplate>
 						</div></FooterTemplate>
 				</asp:Repeater>
-				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
-					background-color: #000;">
+				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
 				</div>
 			</div>
 			<div id="cmsToolboxSpacer" style="display: none;">
