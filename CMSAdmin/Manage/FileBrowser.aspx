@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+	<carrot:jquery runat="server" ID="jquery1" />
 	<style type="text/css">
 		BODY {
 			background-color: #FFFFFF;
@@ -68,10 +69,9 @@
 			text-align: left;
 		}
 	</style>
-	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
 	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
 	<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />
-	<script>
+	<script type="text/javascript">
 		$(document).ready(function () {
 			$(function () {
 				$("input:button, input:submit, input:file").button();
@@ -176,7 +176,7 @@
 						Files On Server</h2>
 					Contents of:
 					<asp:Label ID="lblPath" runat="server"></asp:Label><br />
-					<asp:HyperLink runat="server" ID="lnkUp"><img src="/manage/images/back.png" border="0" /><img src="/manage/images/folder.png" border="0" /> </asp:HyperLink>
+					<asp:HyperLink runat="server" ID="lnkUp"><img src="/manage/images/back.png" border="0" alt="back" /><img src="/manage/images/folder.png" border="0" alt="folder" /> </asp:HyperLink>
 					<br />
 				</td>
 			</tr>
@@ -189,7 +189,7 @@
 				<ItemTemplate>
 					<tr>
 						<td>
-							<img src="/manage/images/folder.png" />
+							<img src="/manage/images/folder.png" alt="folder" />
 						</td>
 						<td>
 							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}", Eval("FolderPath"), sQueryMode ) %>'>
@@ -251,7 +251,7 @@
 										<%# String.Format( "{0}", Eval("FileName") ).ToLower() %></a>
 								</div>
 								<div id="imgWrapper" style="display: none;">
-									<img id="imgThmbnail" filetype="<%# FileImageLink(String.Format("{0}", Eval("MimeType"))) %>" alt="" src="<%# String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") ).ToLower() %>" />
+									<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />
 								</div>
 							</div>
 						</td>
@@ -274,7 +274,7 @@
 			<div style="padding: 5px; min-height: 10px; min-width: 10px;">
 				<div id="imgDimension">
 				</div>
-				<img alt="" id="imgThmbnail" src="nothing.png" />
+				<img alt="" id="imgThmbnail" src="/manage/images/document.png" />
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -324,7 +324,7 @@
 					img.attr('height', 200);
 					img.removeAttr("width").attr("width");
 					img.removeAttr("height").attr("height");
-					img.attr('src', '/nothing.png');
+					img.attr('src', '/manage/images/document.png');
 
 					img.attr('alt', val);
 					img.attr('title', val);
