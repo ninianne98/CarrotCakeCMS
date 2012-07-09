@@ -85,24 +85,6 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabUserAdmin;
         
         /// <summary>
-        /// tabUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabUser;
-        
-        /// <summary>
-        /// tabAbout control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabAbout;
-        
-        /// <summary>
         /// lnkLogout control.
         /// </summary>
         /// <remarks>

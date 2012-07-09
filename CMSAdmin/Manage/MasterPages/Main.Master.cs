@@ -61,9 +61,6 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 				case SectionID.UserAdmin:
 					tabUserAdmin.Attributes["class"] = "current";
 					break;
-				case SectionID.UserFn:
-					tabUser.Attributes["class"] = "current";
-					break;
 				case SectionID.Modules:
 					tabModules.Attributes["class"] = "current";
 					break;
