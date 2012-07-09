@@ -83,6 +83,15 @@ namespace Carrotware.CMS.UI.Admin {
 			return string.Format("javascript:SetFile('{0}');", sPath);
 		}
 
+		public string CreateFileSrc(string sPath, string sFile, string sMime) {
+
+			if (FileImageLink(sMime).ToLower() == "image") {
+				return String.Format("{0}{1}", sPath, sFile).ToLower();
+			} else {
+				return "/manage/images/document.png";
+			}
+		}
+
 		public string FileImageLink(string sMime) {
 
 			sMime = sMime.ToLower();
