@@ -103,6 +103,21 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
+		public Unit FontSize {
+			get {
+				Unit s = new Unit("14px");
+				try { s = new Unit(ViewState["FontSize"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["FontSize"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public Unit MenuHeight {
 			get {
 				Unit s = new Unit("60px");
@@ -358,11 +373,17 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = sCSS.Replace("{MENU_HEIGHT}", MenuHeight.Value.ToString() + "px");
 				sCSS7 = sCSS7.Replace("{MENU_HEIGHT}", MenuHeight.Value.ToString() + "px");
 
+				sCSS = sCSS.Replace("{FONT_SIZE}", FontSize.Value.ToString() + "px");
+				sCSS7 = sCSS7.Replace("{FONT_SIZE}", FontSize.Value.ToString() + "px");
+
+				sCSS = sCSS.Replace("{LINK_PAD1}", Convert.ToInt16(FontSize.Value * .45).ToString() + "px");
+				sCSS7 = sCSS7.Replace("{LINK_PAD1}", Convert.ToInt16(FontSize.Value * .45).ToString() + "px");
+
+				sCSS = sCSS.Replace("{LINK_PAD2}", Convert.ToInt16(FontSize.Value * 1.40).ToString() + "px");
+				sCSS7 = sCSS7.Replace("{LINK_PAD2}", Convert.ToInt16(FontSize.Value * 1.40).ToString() + "px");
+
 				sCSS = sCSS.Replace("{SUB_MENU_WIDTH}", SubMenuWidth.Value.ToString() + "px");
 				sCSS7 = sCSS7.Replace("{SUB_MENU_WIDTH}", SubMenuWidth.Value.ToString() + "px");
-
-				sCSS = sCSS.Replace("{SUB_MENU_WIDTH2}", Convert.ToInt16(SubMenuWidth.Value - 20).ToString() + "px");
-				sCSS7 = sCSS7.Replace("{SUB_MENU_WIDTH2}", Convert.ToInt16(SubMenuWidth.Value - 20).ToString() + "px");
 
 				sCSS = sCSS.Replace("{MENU_LINE_HEIGHT}", Convert.ToInt16(MenuHeight.Value / 3).ToString() + "px");
 				sCSS7 = sCSS7.Replace("{MENU_LINE_HEIGHT}", Convert.ToInt16(MenuHeight.Value / 3).ToString() + "px");
@@ -370,9 +391,11 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = sCSS.Replace("{MENU_TOP_PAD}", Convert.ToInt16((MenuHeight.Value + 5) / 4).ToString() + "px");
 				sCSS7 = sCSS7.Replace("{MENU_TOP_PAD}", Convert.ToInt16((MenuHeight.Value + 5) / 4).ToString() + "px");
 
-				sCSS = sCSS.Replace("{MENU_TOP_2_PAD}", Convert.ToInt16(MenuHeight.Value / 12).ToString() + "px");
-				sCSS7 = sCSS7.Replace("{MENU_TOP_2_PAD}", Convert.ToInt16(MenuHeight.Value / 12).ToString() + "px");
+				sCSS = sCSS.Replace("{MENU_TOP_2_PAD}", Convert.ToInt16(FontSize.Value * .5).ToString() + "px");
+				sCSS7 = sCSS7.Replace("{MENU_TOP_2_PAD}", Convert.ToInt16(FontSize.Value * .5).ToString() + "px");
 
+				sCSS = sCSS.Replace("{MENU_TOP_3_PAD}", Convert.ToInt16(FontSize.Value * .8).ToString() + "px");
+				sCSS7 = sCSS7.Replace("{MENU_TOP_3_PAD}", Convert.ToInt16(FontSize.Value * .8).ToString() + "px");
 
 				if (!string.IsNullOrEmpty(TopBackgroundStyle)) {
 					TopBackgroundStyle = TopBackgroundStyle.Replace(";", "");

@@ -1,102 +1,130 @@
-﻿
+﻿{MENU_WRAPPER_ID} p, {MENU_WRAPPER_ID} ul, {MENU_WRAPPER_ID} ol, {MENU_WRAPPER_ID} li, {MENU_WRAPPER_ID} a {
+	line-height: normal;
+	background: none;
+	padding: 0;
+	margin: 0;
+}
+
+
 {MENU_WRAPPER_ID} {
 	width: {MENU_WIDTH};
 	height: {MENU_HEIGHT};
 	margin: 0 auto;
 }
 
+{MENU_WRAPPER_ID} ul li a {
+	padding: 0;
+	margin: 0;
+	font-size: {FONT_SIZE};
+}
 
-{MENU_ID}  {
+{MENU_ID} {
+	background: none;
 	width: {MENU_WIDTH};
 	height: {MENU_HEIGHT};
 	float: left;
-	z-index: 5;
+	z-index: 60;
 	{TOP_BACKGROUND_STYLE}
 }
 
-{MENU_ID}  ul.parent li {
+{MENU_ID} ul.parent li {
 	text-align: center;
 	float: left;
 }
 
-{MENU_ID}  ul.parent {
+{MENU_ID} ul.parent {
 	clear: both;
-	margin: 0;
 	padding: {MENU_TOP_PAD} 0px 0px 0px;
 	list-style: none;
 	line-height: normal;
 	margin-left: 30px;
 }
 
-{MENU_ID}  ul.parent li a {
+
+{MENU_ID} ul.parent li a, 
+{MENU_ID} ul.parent li.selected a {
+	background: none;
 	display: block;
 	float: left;
 	margin-right: 3px;
-	padding: 5px 20px 5px 20px;
+	padding: {LINK_PAD1} {LINK_PAD2} {LINK_PAD1} {LINK_PAD2};
 	text-decoration: none;
 	text-align: center;
 	text-transform: uppercase;
-	font-size: 12px;
+	font-size: {FONT_SIZE};
 	font-weight: bold;
 	color: {FORE_HEX};
 	{ITEM_BACKGROUND_STYLE}
 }
 
 
-{MENU_ID}  ul.parent li a:hover, {MENU_ID}  ul.parent li.selected a {
+{MENU_ID} ul.parent li a, 
+{MENU_ID} ul.parent li a:hover, 
+{MENU_ID} ul.parent li.selected a, 
+{MENU_ID} ul.parent li.selected a:hover {
+	margin-right: 3px;
+	padding: {LINK_PAD1} {LINK_PAD2} {LINK_PAD1} {LINK_PAD2};
+}
+
+{MENU_ID} ul.parent li a:hover, 
+{MENU_ID} ul.parent li.selected a, 
+{MENU_ID} ul.parent li.selected a:hover {
 	background: {FORE_HEX};
 	color: {BG_HEX};
 }
 
-{MENU_ID}  li .children {
+{MENU_ID} li .children {
 	display: none;
 	clear: both;
 }
 
-{MENU_ID}  li:hover .children {
+{MENU_ID} li:hover .children {
 	color: {FORE_HEX};
 	list-style-type: none;
 	display: block;
 	position: absolute;
 	text-align: left;
 	float: left;
-	padding: 0px;
-	margin: 0px;
 	background-color: {FORE_HEX};
 	padding-left: 0px;
 	padding-bottom: 0px;
-	width: {SUB_MENU_WIDTH};
-	margin-top: 20px;
+	margin-top: {LINK_PAD2};
 	margin-left: 0px;
-	margin-right: 5px;
-	z-index: 5;
+	margin-right: {LINK_PAD1};
+	z-index: 70;
 	border-width: 1px;
 	border-style: solid;
 	border-color: {BG_HEX};
 	border-collapse: collapse;
-	font-size: 12px;
+	font-size: {FONT_SIZE};
 	font-weight: bold;
 	color: {FORE_HEX};
+	width: {SUB_MENU_WIDTH};
+}
+
+{MENU_ID} .children li {
+	border-width: 1px;
+	border-style: solid;
+	border-color: {BG_HEX};
+	width: {SUB_MENU_WIDTH};
+}
+
+{MENU_ID} .children li a,
+{MENU_ID} .children li a:hover {
+	float: left;
+	padding: {MENU_TOP_2_PAD} {MENU_TOP_3_PAD} {MENU_TOP_2_PAD} {MENU_TOP_3_PAD};
+	text-align: left;
 }
 
 
-{MENU_ID}  li:hover .children li a {
-	float: left;
-	padding: {MENU_TOP_2_PAD} 10px {MENU_TOP_2_PAD} 10px;
+{MENU_ID} li:hover .children li a {
 	color: {BG_HEX};
-	width: {SUB_MENU_WIDTH2};
 	text-decoration: none;
-	text-align: left;
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: {BG_HEX};
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: {BG_HEX};
 	clear: both;
 }
 
-{MENU_ID}  li:hover .children li a:hover {
+
+{MENU_ID} li:hover .children li a:hover {
 	text-decoration: underline;
 	font-weight: bold;
 }
