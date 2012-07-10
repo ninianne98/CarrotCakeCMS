@@ -315,11 +315,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 					sTmp = "";
 					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "submenuwidth"
+							where c.Key.ToLower() == "fontsize"
 							select c.Value).FirstOrDefault();
 
 					if (!string.IsNullOrEmpty(sTmp)) {
-						SubMenuWidth = new Unit(sTmp);
+						FontSize = new Unit(sTmp);
 					}
 
 					sTmp = "";
