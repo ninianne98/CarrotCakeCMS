@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Manage - Users" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true"
+﻿<%@ Page Title="User" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true"
 	CodeBehind="User.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.User" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
