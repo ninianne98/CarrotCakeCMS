@@ -18,98 +18,110 @@ using Carrotware.CMS.Interface;
 */
 
 namespace Carrotware.CMS.UI.Admin {
-    public partial class ucAdminModule : BaseUserControl {
+	public partial class ucAdminModule : BaseUserControl {
 
-        Guid ModuleID = Guid.Empty;
-        public string SelMenu = "0";
+		Guid ModuleID = Guid.Empty;
+		string pf = string.Empty;
 
-        public bool UseAjax { get; set; }
+		public string SelMenu = "0";
 
-        protected bool bLoadModule = false;
+		public bool UseAjax { get; set; }
 
-        protected void Page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
-                if (cmsHelper.AdminModules.Count > 0) {
-                    rpModuleList.DataSource = cmsHelper.AdminModules;
-                    rpModuleList.DataBind();
-                } else {
-                    rpModuleList.Visible = false;
-                }
-            }
+		protected bool bLoadModule = false;
 
-            if (ModuleID != Guid.Empty) {
-                pnlSetter.Visible = true;
-                int x = 0;
-                foreach (var row in cmsHelper.AdminModules) {
-                    if (ModuleID.ToString().ToLower() == row.PluginID.ToString().ToLower()) {
-                        SelMenu = x.ToString();
-                        break;
-                    }
-                    x++;
-                }
-            }
-        }
+		protected void Page_Load(object sender, EventArgs e) {
+			if (!IsPostBack) {
+				if (cmsHelper.AdminModules.Count > 0) {
+					rpModuleList.DataSource = cmsHelper.AdminModules;
+					rpModuleList.DataBind();
+				} else {
+					rpModuleList.Visible = false;
+				}
+			}
 
-
-        protected override void OnInit(EventArgs e) {
-            if (!bLoadModule) {
-                LoadModule();
-            }
-            base.OnInit(e);
-        }
+			if (ModuleID != Guid.Empty) {
+				pnlSetter.Visible = true;
+				int x = 0;
+				foreach (var row in cmsHelper.AdminModules) {
+					if (ModuleID.ToString().ToLower() == row.PluginID.ToString().ToLower()) {
+						SelMenu = x.ToString();
+						break;
+					}
+					x++;
+				}
+			}
+		}
 
 
-        public void LoadModule() {
+		protected override void OnInit(EventArgs e) {
+			if (!bLoadModule) {
+				LoadModule();
+			}
+			base.OnInit(e);
+		}
 
-            if (Request.QueryString["pi"] != null) {
-                try { ModuleID = new Guid(Request.QueryString["pi"].ToString()); } catch { }
-            }
 
-            if (Request.QueryString["pf"] != null) {
+		public void LoadModule() {
 
-                string pf = Request.QueryString["pf"].ToString();
-                CMSAdminModule mod = (from m in cmsHelper.AdminModules
-                                      where m.PluginID == ModuleID
-                                      select m).FirstOrDefault();
+			if (Request.QueryString["pi"] != null) {
+				try { ModuleID = new Guid(Request.QueryString["pi"].ToString()); } catch { }
+			}
 
-                var cc = (from m in mod.PluginMenus
-                          where m.PluginParm == pf
-                          select m).FirstOrDefault();
+			if (Request.QueryString["pf"] != null) {
+				pf = Request.QueryString["pf"].ToString();
 
-                UseAjax = cc.UseAjax;
+				CMSAdminModule mod = (from m in cmsHelper.AdminModules
+									  where m.PluginID == ModuleID
+									  select m).FirstOrDefault();
 
-                Control c = Page.LoadControl(cc.ControlFile);
-                phAdminModule.Controls.Add(c);
+				var cc = (from m in mod.PluginMenus
+						  where m.PluginParm == pf
+						  select m).FirstOrDefault();
 
-                if (c is IAdminModule) {
-                    var w = (IAdminModule)c;
-                    w.SiteID = SiteID;
-                    w.ModuleID = ModuleID;
+				UseAjax = cc.UseAjax;
+
+				Control c = Page.LoadControl(cc.ControlFile);
+				phAdminModule.Controls.Add(c);
+
+				if (c is IAdminModule) {
+					var w = (IAdminModule)c;
+					w.SiteID = SiteID;
+					w.ModuleID = ModuleID;
 					w.ModuleName = pf;
-                    w.QueryStringFragment = "pf=" + pf + "&pi=" + ModuleID.ToString();
-                    w.QueryStringPattern = "pf={0}&pi=" + ModuleID.ToString();
-                }
-            }
+					w.QueryStringFragment = "pf=" + pf + "&pi=" + ModuleID.ToString();
+					w.QueryStringPattern = "pf={0}&pi=" + ModuleID.ToString();
+				}
+			}
 
-            bLoadModule = true;
-        }
+			bLoadModule = true;
+		}
 
+		protected string MarkSelected(string sID, string sParm) {
 
-        protected void rpModuleList_ItemDataBound(object sender, RepeaterItemEventArgs e) {
-
-            Repeater rpModuleContents = (Repeater)e.Item.FindControl("rpModuleContents");
-            HiddenField hdnID = (HiddenField)e.Item.FindControl("hdnID");
-
-            if (rpModuleContents != null) {
-                var d = (CMSAdminModule)e.Item.DataItem;
-
-                rpModuleContents.DataSource = d.PluginMenus.Where(z => z.IsVisible == true).OrderBy(x => x.SortOrder).ToList();
-                rpModuleContents.DataBind();
-
-            }
-        }
+			if (sID == ModuleID.ToString().ToLower() && sParm == pf) {
+				return " class=\"selectedModule\" ";
+			} else {
+				return " ";
+			}
 
 
+		}
 
-    }
+		protected void rpModuleList_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+
+			Repeater rpModuleContents = (Repeater)e.Item.FindControl("rpModuleContents");
+			HiddenField hdnID = (HiddenField)e.Item.FindControl("hdnID");
+
+			if (rpModuleContents != null) {
+				var d = (CMSAdminModule)e.Item.DataItem;
+
+				rpModuleContents.DataSource = d.PluginMenus.Where(z => z.IsVisible == true).OrderBy(x => x.SortOrder).ToList();
+				rpModuleContents.DataBind();
+
+			}
+		}
+
+
+
+	}
 }
