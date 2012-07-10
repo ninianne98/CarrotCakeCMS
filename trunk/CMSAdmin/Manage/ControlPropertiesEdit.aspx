@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ControlPropertiesEdit.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.Manage.ControlPropertiesEdit" %>
+﻿<%@ Page Title="Edit Properties" Language="C#" MasterPageFile="/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true"
+	CodeBehind="ControlPropertiesEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ControlPropertiesEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>

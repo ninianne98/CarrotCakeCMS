@@ -3,7 +3,6 @@
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
-
 	<script type="text/javascript">
 		var webSvc = "/Manage/CMS.asmx";
 
@@ -50,7 +49,7 @@
 			$('#' + menuPath).text('');
 
 			if (lstData.length > 0) {
-				$.each(lstData, function(i, v) {
+				$.each(lstData, function (i, v) {
 					var del = "<a href='javascript:void(0);' title='Remove' thevalue='" + val + "' onclick='selectItem(this);'><div class='ui-icon ui-icon-closethick' style='float:left'></div></a>";
 					if (i != (lstData.length - 1)) {
 						del = '';
@@ -104,16 +103,16 @@
 		}
 
 
-		$(document).ready(function() {
+		$(document).ready(function () {
 			mouseNode();
 			getCrumbs();
 
 			setTimeout("hideMnu();", 500);
 
-			$('#' + menuOuter).bind("mouseenter", function(e) {
+			$('#' + menuOuter).bind("mouseenter", function (e) {
 				showMnu();
 			});
-			$('#' + menuOuter).bind("mouseleave", function(e) {
+			$('#' + menuOuter).bind("mouseleave", function (e) {
 				hideMnu();
 			});
 
@@ -127,7 +126,7 @@
 			$('#' + menuInner).html('');
 			hideMnu();
 
-			$.each(lstData, function(i, v) {
+			$.each(lstData, function (i, v) {
 				//$('#returneditems').append(new Option(v.PageFile, v.Root_ContentID));
 				$('#' + menuInner).append("<div><a href='javascript:void(0);' onclick='selectItem(this);' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + "</a></div>");
 			});
@@ -155,7 +154,6 @@
 		}
 		
 	</script>
-
 	<style type="text/css">
 		div.scroll {
 			height: 90px;
@@ -384,7 +382,6 @@
 	<div style="display: none;">
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
 	</div>
-
 	<script type="text/javascript">
 		var webSvc = "/Manage/CMS.asmx";
 
@@ -416,7 +413,7 @@
 			});
 		}
 
-		$(document).ready(function() {
+		$(document).ready(function () {
 			CheckFileName();
 		});
 
@@ -429,7 +426,6 @@
 			Page_ClientValidate();
 		}
 	</script>
-
 	<script type="text/javascript">
 
 		function AutoSynchMCE() {
@@ -454,16 +450,13 @@
 			$('#<%=btnSave.ClientID %>').click();
 		}
 	</script>
-
 	<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).ready(function () {
 			setTimeout("$('#jqtabs').tabs('select', 'pagecontent-tabs-1');", 500);
 		});
 	</script>
-
 	<asp:Panel ID="pnlHB" runat="server">
-
 		<script type="text/javascript">
 			var webSvc = "/Manage/CMS.asmx";
 
@@ -515,6 +508,5 @@
 
 	
 		</script>
-
 	</asp:Panel>
 </asp:Content>

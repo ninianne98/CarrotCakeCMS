@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageEdit.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.Manage.PageEdit" %>
+﻿<%@ Page Title="Edit Page Info" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true"
+	CodeBehind="PageEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.PageEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -88,19 +88,17 @@
 	<div style="display: none;">
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
 	</div>
-
 	<script type="text/javascript">
-        var saving = 0;
+		var saving = 0;
 
-        function SubmitPage() {
-            saving = 1;
-            setTimeout("ClickBtn();", 1000);
-        }
-        function ClickBtn() {
-            $('#<%=btnSave.ClientID %>').click();
-        }
+		function SubmitPage() {
+			saving = 1;
+			setTimeout("ClickBtn();", 1000);
+		}
+		function ClickBtn() {
+			$('#<%=btnSave.ClientID %>').click();
+		}
 	</script>
-
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">
 </asp:Content>

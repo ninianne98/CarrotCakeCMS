@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Manage - Change Password" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true"
-	CodeBehind="UserPassword.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.UserPassword" %>
+﻿<%@ Page Title="Edit Profile" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="UserPassword.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.UserPassword" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

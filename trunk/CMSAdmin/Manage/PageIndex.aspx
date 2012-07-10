@@ -1,4 +1,4 @@
-﻿<%@ Page Title="PageIndex" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageIndex.aspx.cs"
+﻿<%@ Page Title="Page Index" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageIndex.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.PageIndex" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -207,15 +207,14 @@
 	<br />
 	<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/Manage/images/cancel.png" />
 	<asp:HiddenField runat="server" ID="hdnSort" Visible="false" Value="TitleBar ASC" />
-
 	<script type="text/javascript">
 
 		function ajaxIndex() {
 			if (typeof (Sys) != 'undefined') {
 				var prm = Sys.WebForms.PageRequestManager.getInstance();
-				prm.add_endRequest(function() {
+				prm.add_endRequest(function () {
 
-					$(function() {
+					$(function () {
 						$('#jqtabs').tabs();
 					});
 
@@ -226,7 +225,7 @@
 
 		ajaxIndex();
 
-		$(document).ready(function() {
+		$(document).ready(function () {
 			$('#jqtabs').tabs('select', '<%=sTab %>');
 		});
 
@@ -236,5 +235,4 @@
 		}
 		
 	</script>
-
 </asp:Content>

@@ -1,4 +1,4 @@
-﻿<%@ Page ValidateRequest="false" Title="ContentEdit" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master"
+﻿<%@ Page ValidateRequest="false" Title="Content Edit" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master"
 	AutoEventWireup="true" CodeBehind="ContentEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ContentEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -21,7 +21,6 @@
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
 	</div>
 	<asp:Panel ID="pnlRichEdit" runat="server" Visible="false">
-
 		<script type="text/javascript">
 
 			function AutoSynchMCE() {
@@ -44,10 +43,8 @@
 				$('#<%=btnSave.ClientID %>').click();
 			}
 		</script>
-
 	</asp:Panel>
 	<asp:Panel ID="pnlPlain" runat="server" Visible="false">
-
 		<script type="text/javascript">
 			function SubmitPage() {
 				setTimeout("ClickBtn();", 500);
@@ -56,7 +53,6 @@
 				$('#<%=btnSave.ClientID %>').click();
 			}
 		</script>
-
 	</asp:Panel>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">

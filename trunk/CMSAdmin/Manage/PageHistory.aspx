@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs"
+﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.PageHistory" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
@@ -45,14 +45,12 @@
 				</div>
 			</div>
 		</div>
-
 		<script type="text/javascript">
 
-			$(document).ready(function() {
+			$(document).ready(function () {
 				setTimeout("$('#jqtabs').tabs('select', 'pagecontent-tabs-1');", 500);
 			});
 		</script>
-
 	</asp:Panel>
 	<asp:Panel runat="server" ID="pnlHistory">
 		<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />

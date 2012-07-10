@@ -1,12 +1,10 @@
-﻿<%@ Page ValidateRequest="false" Title="SiteMap" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true"
+﻿<%@ Page ValidateRequest="false" Title="Site Map" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true"
 	CodeBehind="SiteMap.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.SiteMap" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
-
 	<script src="Includes/jquery.ui.nestedSortable.js" type="text/javascript"></script>
-
-	<style>
+	<style type="text/css">
 		#cmsSiteMap ol {
 			list-style: none;
 			padding: 0;
@@ -43,12 +41,11 @@
 			background-color: #FFFFCC !important;
 		}
 	</style>
-
 	<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).ready(function () {
 
-			$("ol.sortable").bind("sortupdate", function(event, ui) {
+			$("ol.sortable").bind("sortupdate", function (event, ui) {
 				//alert("sortupdate");
 				var id = $(ui.item).attr('id');
 				var p = $(ui.item).parent().parent().attr('id');
@@ -83,7 +80,7 @@
 
 
 		function itterateTree() {
-			$("#cmsSiteMap li").each(function(i) {
+			$("#cmsSiteMap li").each(function (i) {
 				setListItem(this);
 			});
 		}
@@ -142,7 +139,7 @@
 			var map = "#<%=txtMap.ClientID %>";
 			$(map).val('');
 
-			$("#cmsSiteMap li").each(function(i) {
+			$("#cmsSiteMap li").each(function (i) {
 				var itm = $(this);
 				var id = itm.attr('id');
 				var p = itm.parent().parent().attr('id');
@@ -156,15 +153,14 @@
 			});
 		}
 
-		$(document).ready(function() {
+		$(document).ready(function () {
 			setTimeout("BuildOrder();", 250);
 		});
 		
 	</script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
-	SiteMap
+	Site Map
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<div style="display: none;">

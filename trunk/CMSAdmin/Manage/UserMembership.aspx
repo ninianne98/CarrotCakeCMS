@@ -1,4 +1,4 @@
-<%@ Page Title="Manage - Membership" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs"
+<%@ Page Title="Membership" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.UserMembership" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
