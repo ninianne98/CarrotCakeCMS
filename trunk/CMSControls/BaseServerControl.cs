@@ -14,9 +14,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public abstract class BaseServerControl : WebControl {
 
-		protected ContentPage pageHelper = new ContentPage();
+		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
-		protected SiteNav navHelper = new SiteNav();
+		protected SiteNavHelper navHelper = new SiteNavHelper();
 
 		protected Guid SiteID {
 			get {

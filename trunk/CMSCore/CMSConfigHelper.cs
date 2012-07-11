@@ -26,13 +26,24 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.Core {
 
-	public class CMSConfigHelper {
+	public class CMSConfigHelper : IDisposable {
 
 		private System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
 
 		public CMSConfigHelper() {
 
 		}
+
+
+		private CarrotCMSDataContext db = new CarrotCMSDataContext();
+
+		#region IDisposable Members
+
+		public void Dispose() {
+			db.Dispose();
+		}
+
+		#endregion
 
 		public void ResetConfigs() {
 			string ModuleKey = "";
@@ -376,13 +387,12 @@ namespace Carrotware.CMS.Core {
 			return props;
 		}
 
-		private CarrotCMSDataContext db = new CarrotCMSDataContext();
 
 		private string ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + SiteData.CurrentScriptName.ToString().ToLower() + "_cmsAdminContent";
 		private string WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + SiteData.CurrentScriptName.ToString().ToLower() + "_cmsAdminWidget";
 
 		public void OverrideKey(Guid guidContentID) {
-			ContentPage pageHelper = new ContentPage();
+			ContentPageHelper pageHelper = new ContentPageHelper();
 			var pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
 			OverrideKey(pageContents.FileName);
 		}
@@ -396,7 +406,7 @@ namespace Carrotware.CMS.Core {
 
 		protected void LoadGuids() {
 
-			ContentPage pageHelper = new ContentPage();
+			ContentPageHelper pageHelper = new ContentPageHelper();
 			if (SiteData.CurrentScriptName.ToString().ToLower().StartsWith("/manage/")) {
 				Guid guidPage = Guid.Empty;
 				if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {

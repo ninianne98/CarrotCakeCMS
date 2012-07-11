@@ -29,9 +29,9 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected GridSorting gs = new GridSorting();
 
-		protected ContentPage pageHelper = new ContentPage();
+		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
-		protected PageWidget widgetHelper = new PageWidget();
+		protected PageWidgetHelper widgetHelper = new PageWidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 		protected string CurrentDLLVersion {

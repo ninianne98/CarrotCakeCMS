@@ -13,8 +13,11 @@ using Carrotware.CMS.Data;
 *
 * Date: October 2011
 */
+
+
 namespace Carrotware.CMS.Core {
-	public class PageWidget {
+
+	public class PageWidget : IDisposable {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
@@ -52,23 +55,7 @@ namespace Carrotware.CMS.Core {
 		public int WidgetOrder { get; set; }
 
 
-		public PageWidget Get(Guid pageWidgetID) {
-			var w = (from r in db.tblPageWidgets
-					 orderby r.WidgetOrder
-					 where r.PageWidgetID == pageWidgetID
-					 select new PageWidget(r)).FirstOrDefault();
 
-			return w;
-		}
-
-		public List<PageWidget> GetWidgets(Guid rootContentID) {
-			var w = (from r in db.tblPageWidgets
-					 orderby r.WidgetOrder
-					 where r.Root_ContentID == rootContentID
-					 select new PageWidget(r)).ToList();
-
-			return w;
-		}
 
 		public void Save() {
 			var w = (from r in db.tblPageWidgets
@@ -104,19 +91,6 @@ namespace Carrotware.CMS.Core {
 		public void Delete() {
 			var w = (from r in db.tblPageWidgets
 					 where r.PageWidgetID == this.PageWidgetID
-					 select r).FirstOrDefault();
-
-			if (w != null) {
-				db.tblPageWidgets.DeleteOnSubmit(w);
-				db.SubmitChanges();
-			}
-
-		}
-
-
-		public void Delete(Guid pageWidgetID) {
-			var w = (from r in db.tblPageWidgets
-					 where r.PageWidgetID == pageWidgetID
 					 select r).FirstOrDefault();
 
 			if (w != null) {
@@ -173,6 +147,13 @@ namespace Carrotware.CMS.Core {
 
 		}
 
+		#region IDisposable Members
+
+		public void Dispose() {
+			db.Dispose();
+		}
+
+		#endregion
 	}
 
 	public class WidgetProps {

@@ -145,8 +145,8 @@ namespace Carrotware.CMS.UI.Base {
 
 				metaDesc.Name = "description";
 				metaKey.Name = "keywords";
-				metaDesc.Content = string.IsNullOrEmpty(theSite.MetaDescription) ? pageContents.MetaDescription : theSite.MetaDescription;
-				metaKey.Content = string.IsNullOrEmpty(theSite.MetaKeyword) ? pageContents.MetaKeyword : theSite.MetaKeyword;
+				metaDesc.Content = string.IsNullOrEmpty(pageContents.MetaDescription) ? theSite.MetaDescription : pageContents.MetaDescription;
+				metaKey.Content = string.IsNullOrEmpty(pageContents.MetaKeyword) ? theSite.MetaKeyword : pageContents.MetaKeyword;
 
 				if (!string.IsNullOrEmpty(metaDesc.Content)) {
 					Page.Header.Controls.Add(metaDesc);
