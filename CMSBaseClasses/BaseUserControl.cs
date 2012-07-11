@@ -27,8 +27,8 @@ namespace Carrotware.CMS.UI.Base {
 	public abstract class BaseUserControl : System.Web.UI.UserControl {
 
 		protected GridSorting gs = new GridSorting();
-		protected ContentPage pageHelper = new ContentPage();
-		protected PageWidget widgetHelper = new PageWidget();
+		protected ContentPageHelper pageHelper = new ContentPageHelper();
+		protected PageWidgetHelper widgetHelper = new PageWidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 

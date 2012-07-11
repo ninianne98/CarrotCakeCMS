@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Base {
 		private const string REQ_PATH = "RewriteOrigPath";
 		private const string REQ_QUERY = "RewriteOrigQuery";
 
-		private ContentPage pageHelper = new ContentPage();
+		private ContentPageHelper pageHelper = new ContentPageHelper();
 
 		private Guid SiteID {
 			get {

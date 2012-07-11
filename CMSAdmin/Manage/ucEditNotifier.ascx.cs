@@ -10,7 +10,7 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class ucEditNotifier : BaseUserControl {
 
-		protected SiteNav navHelper = new SiteNav();
+		protected SiteNavHelper navHelper = new SiteNavHelper();
 
 		public Guid CurrentPageID {
 			get;

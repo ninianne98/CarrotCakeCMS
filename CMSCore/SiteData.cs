@@ -15,12 +15,11 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 namespace Carrotware.CMS.Core {
-	public class SiteData {
+	public class SiteData : IDisposable {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public SiteData() {
-		}
+		public SiteData() { }
 
 		public void LoadSiteFromCache() {
 			SiteData s = null;
@@ -153,7 +152,13 @@ namespace Carrotware.CMS.Core {
 		public string SiteName { get; set; }
 		public string SiteFolder { get; set; }
 
+		#region IDisposable Members
 
+		public void Dispose() {
+			db.Dispose();
+		}
+
+		#endregion
 
 		public static string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }

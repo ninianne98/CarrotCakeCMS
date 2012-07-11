@@ -34,8 +34,8 @@ namespace Carrotware.CMS.UI.Admin {
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
 		private CMSConfigHelper cmsHelper = new CMSConfigHelper();
-		private ContentPage pageHelper = new ContentPage();
-		private PageWidget widgetHelper = new PageWidget();
+		private ContentPageHelper pageHelper = new ContentPageHelper();
+		private PageWidgetHelper widgetHelper = new PageWidgetHelper();
 
 		private Guid CurrentPageGuid = Guid.Empty;
 		private ContentPage filePage = null;
@@ -176,12 +176,12 @@ namespace Carrotware.CMS.UI.Admin {
 
 		private void LoadGuids() {
 			if (!string.IsNullOrEmpty(CurrentEditPage)) {
-				ContentPage pageHelper = new ContentPage();
+				ContentPageHelper pageHelper = new ContentPageHelper();
 				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, CurrentEditPage.ToString().ToLower());
 				CurrentPageGuid = filePage.Root_ContentID;
 			} else {
 				if (CurrentPageGuid != Guid.Empty) {
-					ContentPage pageHelper = new ContentPage();
+					ContentPageHelper pageHelper = new ContentPageHelper();
 					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, CurrentPageGuid);
 					CurrentEditPage = filePage.FileName;
 				} else {
@@ -399,7 +399,7 @@ namespace Carrotware.CMS.UI.Admin {
 		public string ValidateUniqueFilename(string TheFileName, string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
-				TheFileName = ContentPage.ScrubFilename(CurrentPageGuid, TheFileName);
+				TheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, TheFileName);
 
 				var h = (from r in db.tblRootContents
 						 where r.Root_ContentID != CurrentPageGuid
