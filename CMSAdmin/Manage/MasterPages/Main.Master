@@ -363,6 +363,8 @@
 				<li><a href="javascript:void(0)">&nbsp;</a></li>
 			</ul>
 		</div>
+		<div style="height: 5px; width: 825px; clear: both;">
+		</div>
 		<div id="content">
 			<div class="pad-content">
 				<h1>

@@ -102,6 +102,20 @@
     <Compile Include="Manage\PageEdit.aspx.designer.cs">
       <DependentUpon>PageEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\SiteSkinEdit.aspx.cs">
+      <DependentUpon>SiteSkinEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\SiteSkinEdit.aspx.designer.cs">
+      <DependentUpon>SiteSkinEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\SiteSkinIndex.aspx.cs">
+      <DependentUpon>SiteSkinIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\SiteSkinIndex.aspx.designer.cs">
+      <DependentUpon>SiteSkinIndex.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\ucEditNotifier.ascx.cs">
       <DependentUpon>ucEditNotifier.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -296,7 +310,13 @@
     <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
     <Content Include="Manage\Images\cog.png" />
     <Content Include="Manage\Images\cog_edit.png" />
+    <Content Include="Manage\Images\page_edit.png" />
+    <Content Include="Manage\Images\page_gear.png" />
+    <Content Include="Manage\Images\page_paintbrush.png" />
+    <Content Include="Manage\Images\page_white_wrench.png" />
     <Content Include="Manage\Includes\advanced-editor.css" />
+    <Content Include="Manage\SiteSkinEdit.aspx" />
+    <Content Include="Manage\SiteSkinIndex.aspx" />
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>

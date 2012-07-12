@@ -204,6 +204,7 @@ namespace Carrotware.CMS.Core {
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
 									   select new CMSTemplate {
 										   TemplatePath = (sPathPrefix + d.Field<string>("templatefile").ToLower()).ToLower(),
+										   EncodedPath = EncodeBase64((sPathPrefix + d.Field<string>("templatefile").ToLower()).ToLower()),
 										   Caption = d.Field<string>("filedesc")
 									   }).ToList();
 
@@ -244,6 +245,7 @@ namespace Carrotware.CMS.Core {
 					var _p1 = (from d in ds.Tables[0].AsEnumerable()
 							   select new CMSTemplate {
 								   TemplatePath = d.Field<string>("templatefile").ToLower(),
+								   EncodedPath = EncodeBase64(d.Field<string>("templatefile").ToLower()),
 								   Caption = d.Field<string>("filedesc")
 							   }).ToList();
 
@@ -327,9 +329,18 @@ namespace Carrotware.CMS.Core {
 
 		public string DecodeBase64(string ValIn) {
 			string val = "";
-
 			if (!string.IsNullOrEmpty(ValIn)) {
 				val = encoding.GetString(Convert.FromBase64String(ValIn));
+			}
+			return val;
+		}
+
+		public string EncodeBase64(string ValIn) {
+			string val = "";
+			if (!string.IsNullOrEmpty(ValIn)) {
+				byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(ValIn);
+
+				val = System.Convert.ToBase64String(toEncodeAsBytes);
 			}
 			return val;
 		}
@@ -633,6 +644,7 @@ namespace Carrotware.CMS.Core {
 	public class CMSTemplate {
 		public string TemplatePath { get; set; }
 		public string Caption { get; set; }
+		public string EncodedPath { get; set; }
 	}
 
 	public class DynamicSite {

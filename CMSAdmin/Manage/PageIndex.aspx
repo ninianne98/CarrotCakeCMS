@@ -11,12 +11,14 @@
 	<p>
 		<a href="PageAddEdit.aspx?id=">
 			<img border="0" src="/manage/images/add.png" alt="Add" title="Add as WYSIWYG" />
-			Add Page (with editor)</a><br />
+			Add Page (with editor)</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 		<a href="PageAddEdit.aspx?mode=raw&id=">
 			<img border="0" src="/manage/images/script_add.png" alt="Add" title="Add as Plain Text" />
-			Add Page (as plain text)</a>
-	</p>
-	<p>
+			Add Page (as plain text)</a> 
+		</p>
+		<p><a href="SiteSkinIndex.aspx">
+			<img border="0" src="/manage/images/page_white_wrench.png" alt="Skins" title="Edit Site Skins" />
+			Edit Site Skins</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 		<a href="SiteMap.aspx">
 			<img border="0" src="/manage/images/chart_organisation.png" alt="Map" title="Edit Site Map" />
 			Edit Site Map</a>
