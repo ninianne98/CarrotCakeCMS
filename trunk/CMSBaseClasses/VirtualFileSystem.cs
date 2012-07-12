@@ -9,6 +9,8 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+using System.Web.Configuration;
+using System.Configuration;
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -39,7 +41,7 @@ namespace Carrotware.CMS.UI.Base {
 
 		private string CurrentScriptName {
 			get {
-				return SiteData.CurrentScriptName; 
+				return SiteData.CurrentScriptName;
 			}
 		}
 
@@ -66,7 +68,9 @@ namespace Carrotware.CMS.UI.Base {
 							sFileRequested = "/Manage/default.aspx";
 						}
 					}
-				} catch (Exception ex) { }
+				} catch (Exception ex) {
+					PerformRedirectToErrorPage("500", sFileRequested);
+				}
 			}
 
 
@@ -167,6 +171,9 @@ namespace Carrotware.CMS.UI.Base {
 							hand.ProcessRequest(context);
 						}
 					} else {
+
+						PerformRedirectToErrorPage("404", sFileRequested);
+
 						context.Response.StatusCode = 404;
 						context.Response.AppendHeader("Status", "HTTP/1.1 404 Object Not Found");
 						context.Response.Cache.SetLastModified(DateTime.Today.Date);
@@ -193,7 +200,9 @@ namespace Carrotware.CMS.UI.Base {
 					HttpContext.Current.RewritePath(sVirtualReqFile,
 							HttpContext.Current.Items[REQ_PATH].ToString(),
 							HttpContext.Current.Items[REQ_QUERY].ToString());
-				} catch (Exception ex) { }
+				} catch (Exception ex) {
+					PerformRedirectToErrorPage("500", sVirtualReqFile);
+				}
 				bAlreadyDone = true;
 			}
 		}
@@ -201,6 +210,28 @@ namespace Carrotware.CMS.UI.Base {
 
 		public void Dispose() {
 			pageHelper = null;
+		}
+
+
+		private void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {
+			Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
+
+			CustomErrorsSection section = (CustomErrorsSection)config.GetSection("system.web/customErrors");
+
+			if (section != null) {
+				if (section.Mode != CustomErrorsMode.Off) {
+					CustomError configuredError = section.Errors[sErrorKey];
+					if (configuredError != null) {
+						if (!string.IsNullOrEmpty(configuredError.Redirect)) {
+							HttpContext.Current.Response.Redirect(configuredError.Redirect + "?aspxerrorpath=" + sReqURL);
+						}
+					} else {
+						if (!string.IsNullOrEmpty(section.DefaultRedirect)) {
+							HttpContext.Current.Response.Redirect(section.DefaultRedirect + "?aspxerrorpath=" + sReqURL);
+						}
+					}
+				}
+			}
 		}
 
 
