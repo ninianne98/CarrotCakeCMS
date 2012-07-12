@@ -9,8 +9,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:WidgetWrapper runat=server></{0}:WidgetWrapper>")]
@@ -78,6 +76,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string ControlTitle {
+			get {
+				String s = (String)ViewState["ControlTitle"];
+				return ((s == null) ? String.Empty : s);
+			}
+
+			set {
+				ViewState["ControlTitle"] = value;
+			}
+		}
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -126,11 +138,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 				string sPrefix = "";
 
+
 				if (!string.IsNullOrEmpty(JQueryUIScope)) {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 										+ "<div id=\"" + this.ClientID + "\" class=\"" + JQueryUIScope + "\">"
 										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
-										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\">" + ControlPath + "</div> " + sMenu + " </div>"
+										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\" tooltip=\"" + ControlPath + "\">" + ControlTitle + "</div> " + sMenu + " </div>"
 										+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
 										+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
@@ -139,7 +152,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 										+ "<div id=\"" + this.ClientID + "\">"
 										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
-										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\">" + ControlPath + "</div> " + sMenu + " </div>"
+										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\" tooltip=\"" + ControlPath + "\">" + ControlTitle + "</div> " + sMenu + " </div>"
 										+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
 										+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
 										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"

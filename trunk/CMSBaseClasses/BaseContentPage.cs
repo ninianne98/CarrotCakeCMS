@@ -251,6 +251,8 @@ namespace Carrotware.CMS.UI.Base {
 
 
 				if (pageWidgets.Count > 0) {
+					CMSConfigHelper cmsHelper = new CMSConfigHelper();
+
 					//find each placeholder in use ONCE!
 					List<KeyedControl> lstPlaceholders = (from d in pageWidgets
 														  where d.Root_ContentID == pageContents.Root_ContentID
@@ -338,6 +340,16 @@ namespace Carrotware.CMS.UI.Base {
 								plcWrapper.JQueryUIScope = JSSCOPE;
 								plcWrapper.IsAdminMode = true;
 								plcWrapper.ControlPath = theWidget.ControlPath;
+								plcWrapper.ControlTitle = theWidget.ControlPath;
+
+								CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
+												  where p.FilePath.ToLower() == plcWrapper.ControlPath.ToLower()
+												  select p).FirstOrDefault();
+
+								if (plug != null) {
+									plcWrapper.ControlTitle = plug.Caption;
+								}
+
 								plcWrapper.Order = theWidget.WidgetOrder;
 								plcWrapper.DatabaseKey = theWidget.PageWidgetID;
 
@@ -360,6 +372,8 @@ namespace Carrotware.CMS.UI.Base {
 
 						}
 					}
+
+					cmsHelper.Dispose();
 				}
 			}
 		}
