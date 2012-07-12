@@ -68,9 +68,7 @@ namespace Carrotware.CMS.UI.Base {
 							sFileRequested = "/Manage/default.aspx";
 						}
 					}
-				} catch (Exception ex) {
-					PerformRedirectToErrorPage("500", sFileRequested);
-				}
+				} catch (Exception ex) { }
 			}
 
 
@@ -200,9 +198,7 @@ namespace Carrotware.CMS.UI.Base {
 					HttpContext.Current.RewritePath(sVirtualReqFile,
 							HttpContext.Current.Items[REQ_PATH].ToString(),
 							HttpContext.Current.Items[REQ_QUERY].ToString());
-				} catch (Exception ex) {
-					PerformRedirectToErrorPage("500", sVirtualReqFile);
-				}
+				} catch (Exception ex) { }
 				bAlreadyDone = true;
 			}
 		}
