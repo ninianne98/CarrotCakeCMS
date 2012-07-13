@@ -133,8 +133,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
 
-				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"parent\"> <li class=\"cmsWidgetCogIcon\"> "
-							+ sCog + "\r\n <ul class=\"children\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
+				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
+							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
 
 				string sPrefix = "";
 
