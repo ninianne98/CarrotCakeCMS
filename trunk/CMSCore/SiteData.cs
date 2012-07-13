@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
+using System.Web.Configuration;
 using System.Web.Security;
 using Carrotware.CMS.Data;
 /*
@@ -14,6 +16,8 @@ using Carrotware.CMS.Data;
 *
 * Date: October 2011
 */
+
+
 namespace Carrotware.CMS.Core {
 	public class SiteData : IDisposable {
 
@@ -159,6 +163,28 @@ namespace Carrotware.CMS.Core {
 		}
 
 		#endregion
+
+
+		public static void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {
+			Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
+
+			CustomErrorsSection section = (CustomErrorsSection)config.GetSection("system.web/customErrors");
+
+			if (section != null) {
+				if (section.Mode != CustomErrorsMode.Off) {
+					CustomError configuredError = section.Errors[sErrorKey];
+					if (configuredError != null) {
+						if (!string.IsNullOrEmpty(configuredError.Redirect)) {
+							HttpContext.Current.Response.Redirect(configuredError.Redirect + "?aspxerrorpath=" + sReqURL);
+						}
+					} else {
+						if (!string.IsNullOrEmpty(section.DefaultRedirect)) {
+							HttpContext.Current.Response.Redirect(section.DefaultRedirect + "?aspxerrorpath=" + sReqURL);
+						}
+					}
+				}
+			}
+		}
 
 		public static string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }

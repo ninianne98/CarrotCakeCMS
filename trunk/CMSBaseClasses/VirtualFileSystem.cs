@@ -9,8 +9,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 using Carrotware.CMS.Core;
-using System.Web.Configuration;
-using System.Configuration;
+
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -170,7 +169,7 @@ namespace Carrotware.CMS.UI.Base {
 						}
 					} else {
 
-						PerformRedirectToErrorPage("404", sFileRequested);
+						SiteData.PerformRedirectToErrorPage("404", sFileRequested);
 
 						context.Response.StatusCode = 404;
 						context.Response.AppendHeader("Status", "HTTP/1.1 404 Object Not Found");
@@ -209,26 +208,7 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 
-		private void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {
-			Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
 
-			CustomErrorsSection section = (CustomErrorsSection)config.GetSection("system.web/customErrors");
-
-			if (section != null) {
-				if (section.Mode != CustomErrorsMode.Off) {
-					CustomError configuredError = section.Errors[sErrorKey];
-					if (configuredError != null) {
-						if (!string.IsNullOrEmpty(configuredError.Redirect)) {
-							HttpContext.Current.Response.Redirect(configuredError.Redirect + "?aspxerrorpath=" + sReqURL);
-						}
-					} else {
-						if (!string.IsNullOrEmpty(section.DefaultRedirect)) {
-							HttpContext.Current.Response.Redirect(section.DefaultRedirect + "?aspxerrorpath=" + sReqURL);
-						}
-					}
-				}
-			}
-		}
 
 
 	}
