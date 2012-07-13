@@ -26,7 +26,7 @@
 	margin: 5px !important;
 	border: solid 2px #000 !important;
 	color: #000 !important;
-	background: #fff !important;
+	background: #FFFFFF !important;
 	min-width: 275px !important;
 	min-height: 50px !important;
 	z-index: 1000 !important;
@@ -43,7 +43,7 @@
 .cmsInsideArea {
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	z-index: 500 !important;
-	border: 0px solid #ddd !important;
+	border: 0px solid #dddddd !important;
 	font-size: 12px !important;
 	line-height: 16px !important;
 }
@@ -57,7 +57,7 @@
 .cmsImageSpinner {
 	margin: 0px !important;
 	padding: 0px !important;
-	border: 0px solid #ddd !important;
+	border: 0px solid #dddddd !important;
 }
 /*  Widget Styles   */
 .cmsWidgetBarLink {
@@ -93,11 +93,11 @@
 	padding: 0px !important;
 	padding-top: 100px !important;
 	padding-left: 200px !important;
-	border: 0px solid #ddd !important;
+	border: 0px solid #dddddd !important;
 }
 .cmsWidgetControl {
 	min-height: 8px !important;
-	border: 2px dashed #ffffff !important;
+	border: 2px dashed #FFFFFF !important;
 }
 .cmsWidgetTargetOuterControl {
 	border: 2px solid #000000 !important;
@@ -117,13 +117,23 @@
 	margin: 0px !important;
 	padding: 0px !important;
 }
+
+#cmsWidgetHead p, #cmsWidgetHead ul, #cmsWidgetHead ol, #cmsWidgetHead h1, #cmsWidgetHead h2, #cmsWidgetHead h3, #cmsWidgetHead div, #cmsWidgetHead span, #cmsWidgetHead input, #cmsWidgetHead select, #cmsWidgetHead button, #cmsWidgetHead textarea {
+	line-height: normal;
+	margin: 0px;
+	padding: 1px;
+	text-align: left;
+	font-size: small;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+}
+
 #cmsWidgetHead img, .cmsGlossySeaGreen a img {
 	border: 0px solid #CDE3D6 !important;
 }
 #cmsWidgetHead, #cmsControlPath {
+	color: #676F6A !important;
 	font-size: 12x !important;
 	line-height: 16px !important;
-	color: #676F6A !important;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 }
 #cmsControlPath {
@@ -141,8 +151,9 @@
 }
 
 #cmsEditMenuList a {
-	text-decoration: none !important;
+	background: #DFF6E8 !important;
 	color: #676F6A !important;
+	text-decoration: none !important;
 	border: 0px solid #FFFFFF !important;
 }
 
@@ -154,22 +165,23 @@
 }
 
 #cmsEditMenuList-inner ul, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
+	background: transparent !important;
+	color: #676F6A !important;
 	margin: 0 !important;
 	padding: 0 !important;
 	text-decoration: none !important;
 	font-weight: bold !important;
-	color: #676F6A !important;
 	border: 0px solid #FFFFFF !important;
 }
 
-#cmsEditMenuList-inner ul.parent li {
+#cmsEditMenuList-inner ul.cmsMnuParent li {
 	text-align: center !important;
 	float: left !important;
 	margin: 0 !important;
 	padding: 0 !important;
 }
 
-#cmsEditMenuList-inner ul.parent {
+#cmsEditMenuList-inner ul.cmsMnuParent {
 	clear: both !important;
 	width: 22px !important;
 	height: 22px !important;
@@ -177,19 +189,21 @@
 	background-image: none !important;
 }
 
-#cmsEditMenuList-inner ul.parent li a {
+#cmsEditMenuList-inner ul.cmsMnuParent li a {
 	display: block !important;
 	float: left !important;
 	text-decoration: none !important;
 	font-weight: bold !important;
 }
 
-#cmsEditMenuList-inner ul.parent li a:hover, #cmsEditMenuList-inner ul.parent li.selected a {
+#cmsEditMenuList-inner ul.cmsMnuParent li a:hover, #cmsEditMenuList-inner ul.cmsMnuParent li.selected a {
+	background: transparent !important;
+	color: #676F6A !important;
 	text-decoration: none !important;
 	background-image: none !important;
 }
 
-#cmsEditMenuList-inner li .children {
+#cmsEditMenuList-inner li .cmsMnuChildren {
 	padding-left: 10px !important;
 	margin-top: 10px !important;
 	margin-bottom: 10px !important;
@@ -206,7 +220,9 @@
 	padding: 5px !important;
 }
 
-#cmsEditMenuList-inner li:hover .children {
+#cmsEditMenuList-inner li:hover .cmsMnuChildren {
+	background: #DFF6E8 !important;
+	color: #676F6A !important;
 	width: 100px !important;
 	list-style-type: none !important;
 	padding-left: 10px !important;
@@ -218,11 +234,10 @@
 	float: left !important;
 	z-index: 600 !important;
 	font-weight: bold !important;
-	background: #DFF6E8 !important;
 	border-color: #000000 !important;
 }
 
-#cmsEditMenuList-inner li:hover .children li a {
+#cmsEditMenuList-inner li:hover .cmsMnuChildren li a {
 	width: 100px !important;
 	float: left !important;
 	text-decoration: none !important;
@@ -244,7 +259,7 @@
 	margin: 0px !important;
 	padding: 0px !important;
 	padding-right: 10px !important;
-	border: 0px solid #ffffff !important;
+	border: 0px solid #FFFFFF !important;
 	font-size: 12x !important;
 	line-height: 16px !important;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
@@ -259,5 +274,5 @@
 	min-height: 20px !important;
 	margin: 0px !important;
 	padding: 1px !important;
-	border: 0px solid #ffffff !important;
+	border: 0px solid #FFFFFF !important;
 }
