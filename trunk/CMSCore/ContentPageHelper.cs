@@ -161,7 +161,9 @@ namespace Carrotware.CMS.Core {
 		#region IDisposable Members
 
 		public void Dispose() {
-			db.Dispose();
+			if (db != null) {
+				db.Dispose();
+			}
 		}
 
 		#endregion
@@ -341,7 +343,9 @@ namespace Carrotware.CMS.Core {
 		#region IDisposable Members
 
 		public void Dispose() {
-			db.Dispose();
+			if (db != null) {
+				db.Dispose();
+			}
 		}
 
 		#endregion
@@ -477,7 +481,9 @@ namespace Carrotware.CMS.Core {
 		#region IDisposable Members
 
 		public void Dispose() {
-			db.Dispose();
+			if (db != null) {
+				db.Dispose();
+			}
 		}
 
 		#endregion
