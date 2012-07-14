@@ -50,12 +50,11 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		private string sVirtualReqFile = "";
+		private string sVirtualReqFile = String.Empty;
 		private bool bAlreadyDone = false;
 
 
 		public void ProcessRequest(HttpContext context) {
-
 
 			string sFileRequested = context.Request.Path;
 
@@ -72,30 +71,27 @@ namespace Carrotware.CMS.UI.Base {
 
 
 			if (sFileRequested.ToLower().EndsWith(".aspx") || sFileRequested.Length < 3) {
-				bool bAllowAnyVersion = SiteData.AdvancedEditMode || SiteData.IsAdmin || SiteData.IsEditor;
+				bool bIgnorePublishState = SiteData.AdvancedEditMode || SiteData.IsAdmin || SiteData.IsEditor;
 
-				string queryString = "";
+				string queryString = String.Empty;
 				queryString = context.Request.QueryString.ToString();
 				if (string.IsNullOrEmpty(queryString)) {
-					queryString = "";
+					queryString = String.Empty;
 				}
 
-				//if (sFileRequested.Replace(@"/", "").Length == sFileRequested.Length - 1) {
-				if (!File.Exists(context.Server.MapPath(sFileRequested))
-					|| sFileRequested.ToLower() == DEFAULT_FILE) {
+				if (!File.Exists(context.Server.MapPath(sFileRequested)) || sFileRequested.ToLower() == DEFAULT_FILE) {
 
 					context.Items[REQ_PATH] = context.Request.PathInfo;
 					context.Items[REQ_QUERY] = context.Request.QueryString.ToString();
 
-					ContentPage filePage = null;
-
+					// handle a case where this site was migrated from a format where all pages varied on a consistent querystring
+					// allow this QS parm to be set in a config file.
 					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
-						string sParm = "";
-						if (context.Request.QueryString["tag"] != null) {
-							sParm = context.Request.QueryString["tag"].ToString();
-						}
-						if (context.Request.QueryString["pg"] != null) {
-							sParm = context.Request.QueryString["pg"].ToString();
+						string sParm = String.Empty;
+						if (SiteData.OldSiteQuerystring != string.Empty) {
+							if (context.Request.QueryString[SiteData.OldSiteQuerystring] != null) {
+								sParm = context.Request.QueryString[SiteData.OldSiteQuerystring].ToString();
+							}
 						}
 						if (!string.IsNullOrEmpty(sParm)) {
 							sFileRequested = "/" + sParm + ".aspx";
@@ -108,13 +104,14 @@ namespace Carrotware.CMS.UI.Base {
 
 							context.Response.Redirect(sFileRequested);
 							context.Items[REQ_PATH] = sFileRequested;
-							context.Items[REQ_QUERY] = "";
+							context.Items[REQ_QUERY] = String.Empty;
 						}
 					}
 
+					ContentPage filePage = null;
 
 					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
-						if (bAllowAnyVersion) {
+						if (bIgnorePublishState) {
 							filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
 						} else {
 							filePage = pageHelper.FindHome(SiteData.CurrentSiteID, true);
@@ -125,7 +122,7 @@ namespace Carrotware.CMS.UI.Base {
 					}
 
 					var pageName = sFileRequested;
-					if (bAllowAnyVersion) {
+					if (bIgnorePublishState) {
 						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 					} else {
 						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
@@ -142,30 +139,24 @@ namespace Carrotware.CMS.UI.Base {
 
 					if (filePage != null) {
 						if (!sFileRequested.ToLower().Contains(filePage.TemplateFile.ToLower()) || bNoHome) {
-							string sRealFile = filePage.TemplateFile;
+							string sSelectedTemplate = filePage.TemplateFile;
 
 							// selectivly engage the cms helper only if in advance mode
 							if (SiteData.AdvancedEditMode) {
-								CMSConfigHelper cmsHelper = new CMSConfigHelper();
-								if (cmsHelper.cmsAdminContent != null) {
-									try { sRealFile = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
+								using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+									if (cmsHelper.cmsAdminContent != null) {
+										try { sSelectedTemplate = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
+									}
 								}
 							}
 
-							if (!File.Exists(context.Server.MapPath(sRealFile))) {
-								sRealFile = DEFAULT_TEMPLATE;
+							if (!File.Exists(context.Server.MapPath(sSelectedTemplate))) {
+								sSelectedTemplate = DEFAULT_TEMPLATE;
 							}
 
 							sVirtualReqFile = sFileRequested;
 
-							context.RewritePath(sFileRequested, string.Empty, queryString);
-
-							//cannot work in med trust
-							//Page hand = (Page)PageParser.GetCompiledPageInstance(sFileRequested, context.Server.MapPath(sRealFile), context);
-
-							Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(sRealFile, typeof(Page));
-							hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
-							hand.ProcessRequest(context);
+							RewriteCMSPath(context, sSelectedTemplate, queryString);
 						}
 					} else {
 
@@ -177,17 +168,29 @@ namespace Carrotware.CMS.UI.Base {
 						context.Response.Write("<h2>404 Not Found</h2>");
 						context.Response.End();
 					}
+
+					filePage.Dispose();
+
 				} else {
 					sVirtualReqFile = sFileRequested;
-					context.RewritePath(sVirtualReqFile, string.Empty, queryString);
 
-					Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(sVirtualReqFile, typeof(Page));
-					hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
-					hand.ProcessRequest(context);
+					RewriteCMSPath(context, sVirtualReqFile, queryString);
 				}
 			}
 
 			context.ApplicationInstance.CompleteRequest();
+		}
+
+		private void RewriteCMSPath(HttpContext context, string sTmplateFile, string sQuery) {
+
+			context.RewritePath(sVirtualReqFile, string.Empty, sQuery);
+
+			//cannot work in med trust
+			//Page hand = (Page)PageParser.GetCompiledPageInstance(sFileRequested, context.Server.MapPath(sRealFile), context);
+
+			Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(sTmplateFile, typeof(Page));
+			hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
+			hand.ProcessRequest(context);
 		}
 
 
@@ -206,10 +209,6 @@ namespace Carrotware.CMS.UI.Base {
 		public void Dispose() {
 			pageHelper = null;
 		}
-
-
-
-
 
 	}
 }

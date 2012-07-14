@@ -148,6 +148,20 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		private static string _siteQS = null;
+		public static string OldSiteQuerystring {
+			get {
+				if (_siteQS == null) {
+					_siteQS = String.Empty;
+					if (System.Configuration.ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"] != null) {
+						_siteQS = System.Configuration.ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"].ToString().ToLower();
+					}
+				}
+				return _siteQS;
+			}
+		}
+
+
 		public bool BlockIndex { get; set; }
 		public string MainURL { get; set; }
 		public string MetaDescription { get; set; }
@@ -159,7 +173,9 @@ namespace Carrotware.CMS.Core {
 		#region IDisposable Members
 
 		public void Dispose() {
-			db.Dispose();
+			if (db != null) {
+				db.Dispose();
+			}
 		}
 
 		#endregion
