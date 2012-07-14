@@ -7,7 +7,15 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Base;
-
+/*
+* CarrotCake CMS
+* http://carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class PageEdit : AdminBasePage {
@@ -52,7 +60,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.PageHead = txtHead.Text;
 
 				pageContents.MetaDescription = txtDescription.Text;
-				pageContents.MetaKeyword = txtKey.Text;
+				pageContents.MetaKeyword = txtKey.Text.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 
 				pageContents.EditDate = DateTime.Now;
 

@@ -69,15 +69,12 @@ namespace Carrotware.CMS.UI.Admin {
 			if (site != null) {
 				site.SiteName = txtSiteName.Text;
 				site.MainURL = txtURL.Text;
-				site.MetaKeyword = txtKey.Text;
-				//site.SiteFolder = txtFolder.Text;
+				site.MetaKeyword = txtKey.Text.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 				site.MetaDescription = txtDescription.Text;
 				site.BlockIndex = chkHide.Checked;
 			}
 
 			site.Save();
-
-			//Master.HideWhenNoSiteProfileExists();
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
@@ -85,9 +82,7 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void btnResetVars_Click(object sender, EventArgs e) {
 			CMSConfigHelper cmsHelper = new CMSConfigHelper();
 			cmsHelper.ResetConfigs();
-
 		}
-
 
 	}
 }
