@@ -20,10 +20,13 @@ using Carrotware.CMS.UI.Base;
 
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class SiteSkinEdit : AdminBasePage {
-		CMSConfigHelper configHelper = new CMSConfigHelper();
-		string sTemplateFileQS = String.Empty;
-		string sTemplateFile = String.Empty;
-		string sFullFilePath = String.Empty;
+		protected CMSConfigHelper configHelper = new CMSConfigHelper();
+		protected FileDataHelper helpFile = new FileDataHelper();
+		public string sTemplateFileQS = String.Empty;
+		protected string sTemplateFile = String.Empty;
+		protected string sFullFilePath = String.Empty;
+		protected string sDirectory = String.Empty;
+		protected string sEditFile = String.Empty;
 
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -33,30 +36,106 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				sTemplateFileQS = Request.QueryString["path"].ToString();
 				sTemplateFile = configHelper.DecodeBase64(sTemplateFileQS);
 				sFullFilePath = HttpContext.Current.Server.MapPath(sTemplateFile);
+				sEditFile = sFullFilePath;
 			}
 
-			litFileName.Text = sTemplateFile;
+			if (!string.IsNullOrEmpty(Request.QueryString["alt"])) {
+				string sAltFileQS = Request.QueryString["alt"].ToString();
+				string sAltFile = configHelper.DecodeBase64(sAltFileQS);
+				sEditFile = HttpContext.Current.Server.MapPath(sAltFile);
+			}
 
-			if (!IsPostBack) {
-				if (File.Exists(sFullFilePath)) {
-					using (StreamReader sr = new StreamReader(sFullFilePath)) {
+			litSkinFileName.Text = sTemplateFile;
+
+			litEditFileName.Text = sEditFile.Replace(Server.MapPath("~"), @"\");
+
+			if (File.Exists(sEditFile)) {
+				if (!IsPostBack) {
+					using (StreamReader sr = new StreamReader(sEditFile)) {
 						txtPageContents.Text = sr.ReadToEnd();
 					}
 				}
+				litDateMod.Text = File.GetLastWriteTime(sEditFile).ToString();
+
+				if (sFullFilePath.LastIndexOf(@"\") > 0) {
+					sDirectory = sFullFilePath.Substring(0, sFullFilePath.LastIndexOf(@"\"));
+				} else {
+					sDirectory = sFullFilePath.Substring(0, sFullFilePath.LastIndexOf(@"/"));
+				}
+
+				SetSourceFiles(sDirectory);
+
 			}
 		}
 
 		protected void btnSubmit_Click(object sender, EventArgs e) {
-			if (File.Exists(sFullFilePath)) {
+			if (File.Exists(sEditFile)) {
 				Encoding encode = System.Text.Encoding.Default;
 
-				using (var oWriter = new StreamWriter(sFullFilePath, false, encode)) {
+				using (var oWriter = new StreamWriter(sEditFile, false, encode)) {
 					oWriter.Write(txtPageContents.Text);
 					oWriter.Close();
 				}
 
-				Response.Redirect(SiteData.CurrentScriptName + "?path=" + sTemplateFileQS);
+				Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
 			}
+
+		}
+
+		public string EncodePath(string sIn) {
+			if (!(sIn.StartsWith(@"\") || sIn.StartsWith(@"/"))) {
+				sIn = @"/" + sIn;
+			}
+			return configHelper.EncodeBase64(sIn.ToLower());
+		}
+
+		protected void SetSourceFiles(string sDir) {
+
+			List<FileData> flsWorking = new List<FileData>();
+			List<FileData> fldrWorking = new List<FileData>();
+
+			List<string> lstFileExtensions = new List<string>();
+			lstFileExtensions.Add(".css");
+			lstFileExtensions.Add(".js");
+
+			if (Directory.Exists(sDir)) {
+
+				string sDirParent = "";
+
+				if (sDir.LastIndexOf(@"\") > 0) {
+					sDirParent = sDir.Substring(0, sDir.LastIndexOf(@"\"));
+				} else {
+					sDirParent = sDir.Substring(0, sDir.LastIndexOf(@"/"));
+				}
+
+				FileData skinFolder = helpFile.GetFolderInfo(sDirParent, "/", sDir);
+
+				skinFolder.FolderPath = FileDataHelper.MakeFilePathUniform("/" + sDir.Replace(Server.MapPath("~/"), "") + "/");
+
+				fldrWorking = helpFile.SpiderDeepFoldersFD(sDir, sDir.Replace(Server.MapPath("~/"), "") + "/");
+
+				fldrWorking.Add(skinFolder);
+
+				foreach (FileData f in fldrWorking) {
+					List<FileData> fls = helpFile.GetFiles(SetSitePath("/" + f.FolderPath), f.FolderPath);
+
+					flsWorking = (from m in flsWorking.Union(fls).ToList()
+								  join e in lstFileExtensions on m.FileExtension.ToLower() equals e
+								  select m).ToList();
+				}
+
+				flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("text") && (x.FolderPath.ToLower().StartsWith("/manage/") == false)).ToList();
+
+				rpFiles.DataSource = flsWorking.OrderBy(x => x.FileName).OrderBy(x => x.FolderPath).ToList();
+				rpFiles.DataBind();
+			}
+		}
+
+		protected string SetSitePath(string sPath) {
+			var wwwpath = Server.MapPath("~/");
+			string _path = wwwpath + "/" + sPath;
+			_path = FileDataHelper.MakeFilePathUniform(_path);
+			return _path;
 		}
 
 	}

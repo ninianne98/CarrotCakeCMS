@@ -13,13 +13,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
     public partial class SiteSkinEdit {
         
         /// <summary>
-        /// litFileName control.
+        /// litSkinFileName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litFileName;
+        protected global::System.Web.UI.WebControls.Literal litSkinFileName;
         
         /// <summary>
         /// RequiredFieldValidator1 control.
@@ -29,6 +29,33 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
+        /// rpFiles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rpFiles;
+        
+        /// <summary>
+        /// litEditFileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litEditFileName;
+        
+        /// <summary>
+        /// litDateMod control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDateMod;
         
         /// <summary>
         /// txtPageContents control.
