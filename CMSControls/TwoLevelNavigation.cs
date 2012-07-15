@@ -83,6 +83,34 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CSSULClassTop {
+			get {
+				string s = (string)ViewState["ULClassTop"];
+				return ((s == null) ? "parent" : s);
+			}
+			set {
+				ViewState["ULClassTop"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CSSULClassLower {
+			get {
+				string s = (string)ViewState["ULClassLower"];
+				return ((s == null) ? "children" : s);
+			}
+			set {
+				ViewState["ULClassLower"] = value;
+			}
+		}
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -227,7 +255,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Write("<div id=\"" + this.ClientID + "\">\r\n");
 			output.Write("<div id=\"" + this.ClientID + "-inner\">\r\n");
 
-			output.Write("<ul class=\"parent\">\r\n");
+			output.Write("<ul class=\"" + CSSULClassTop + "\">\r\n");
 			foreach (var c1 in lst) {
 				var cc = GetChildren(c1.Root_ContentID);
 				if (!c1.PageActive) {
@@ -240,7 +268,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 
 				if (cc.Count > 0) {
-					output.Write("\r\n\t<ul class=\"children\">\r\n");
+					output.Write("\r\n\t<ul class=\"" + CSSULClassLower + "\">\r\n");
 					foreach (var c2 in cc) {
 						if (!c2.PageActive) {
 							c2.NavMenuText = "&#9746; " + c2.NavMenuText;
@@ -259,9 +287,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			output.Write("</div>\r\n");
 			output.Write("</div>\r\n");
-
 		}
-
 
 
 		protected override void OnPreRender(EventArgs e) {
@@ -284,6 +310,24 @@ namespace Carrotware.CMS.UI.Controls {
 
 					if (!string.IsNullOrEmpty(sTmp)) {
 						CSSSelected = sTmp;
+					}
+
+
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "cssulclasstop"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						CSSULClassTop = sTmp;
+					}
+					sTmp = "";
+					sTmp = (from c in PublicParmValues
+							where c.Key.ToLower() == "cssulclasslower"
+							select c.Value).FirstOrDefault();
+
+					if (!string.IsNullOrEmpty(sTmp)) {
+						CSSULClassLower = sTmp;
 					}
 
 					sTmp = "";
@@ -345,12 +389,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 			if (string.IsNullOrEmpty(OverrideCSS)) {
-				//string sCSSFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.calendar.css");
-				//var link = new HtmlLink();
-				//link.Href = sCSSFile;
-				//link.Attributes.Add("rel", "stylesheet");
-				//link.Attributes.Add("type", "text/css");
-				//Page.Header.Controls.Add(link);
 
 				var _assembly = Assembly.GetExecutingAssembly();
 				StreamReader _textStreamReader = null;
@@ -396,6 +434,15 @@ namespace Carrotware.CMS.UI.Controls {
 
 				sCSS = sCSS.Replace("{MENU_TOP_3_PAD}", Convert.ToInt16(FontSize.Value * .8).ToString() + "px");
 				sCSS7 = sCSS7.Replace("{MENU_TOP_3_PAD}", Convert.ToInt16(FontSize.Value * .8).ToString() + "px");
+
+				sCSS = sCSS.Replace("{MENU_SELECT_CLASS}", CSSSelected);
+				sCSS7 = sCSS7.Replace("{MENU_SELECT_CLASS}", CSSSelected);
+
+				sCSS = sCSS.Replace("{MENU_UL_TOP}", CSSULClassTop);
+				sCSS7 = sCSS7.Replace("{MENU_UL_TOP}", CSSULClassTop);
+
+				sCSS = sCSS.Replace("{MENU_UL_LOWER}", CSSULClassLower);
+				sCSS7 = sCSS7.Replace("{MENU_UL_LOWER}", CSSULClassLower);
 
 				if (!string.IsNullOrEmpty(TopBackgroundStyle)) {
 					TopBackgroundStyle = TopBackgroundStyle.Replace(";", "");

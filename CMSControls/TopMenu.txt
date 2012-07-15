@@ -27,12 +27,12 @@
 	{TOP_BACKGROUND_STYLE}
 }
 
-{MENU_ID} ul.parent li {
+{MENU_ID} ul.{MENU_UL_TOP} li {
 	text-align: center;
 	float: left;
 }
 
-{MENU_ID} ul.parent {
+{MENU_ID} ul.{MENU_UL_TOP} {
 	clear: both;
 	padding: {MENU_TOP_PAD} 0px 0px 0px;
 	list-style: none;
@@ -41,8 +41,8 @@
 }
 
 
-{MENU_ID} ul.parent li a, 
-{MENU_ID} ul.parent li.selected a {
+{MENU_ID} ul.{MENU_UL_TOP} li a, 
+{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a {
 	background: none;
 	display: block;
 	float: left;
@@ -58,27 +58,27 @@
 }
 
 
-{MENU_ID} ul.parent li a, 
-{MENU_ID} ul.parent li a:hover, 
-{MENU_ID} ul.parent li.selected a, 
-{MENU_ID} ul.parent li.selected a:hover {
+{MENU_ID} ul.{MENU_UL_TOP} li a, 
+{MENU_ID} ul.{MENU_UL_TOP} li a:hover, 
+{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a, 
+{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a:hover {
 	margin-right: 3px;
 	padding: {LINK_PAD1} {LINK_PAD2} {LINK_PAD1} {LINK_PAD2};
 }
 
-{MENU_ID} ul.parent li a:hover, 
-{MENU_ID} ul.parent li.selected a, 
-{MENU_ID} ul.parent li.selected a:hover {
+{MENU_ID} ul.{MENU_UL_TOP} li a:hover, 
+{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a, 
+{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a:hover {
 	background: {FORE_HEX};
 	color: {BG_HEX};
 }
 
-{MENU_ID} li .children {
+{MENU_ID} li .{MENU_UL_LOWER} {
 	display: none;
 	clear: both;
 }
 
-{MENU_ID} li:hover .children {
+{MENU_ID} li:hover .{MENU_UL_LOWER} {
 	color: {FORE_HEX};
 	list-style-type: none;
 	display: block;
@@ -102,29 +102,29 @@
 	width: {SUB_MENU_WIDTH};
 }
 
-{MENU_ID} .children li {
+{MENU_ID} .{MENU_UL_LOWER} li {
 	border-width: 1px;
 	border-style: solid;
 	border-color: {BG_HEX};
 	width: {SUB_MENU_WIDTH};
 }
 
-{MENU_ID} .children li a,
-{MENU_ID} .children li a:hover {
+{MENU_ID} .{MENU_UL_LOWER} li a,
+{MENU_ID} .{MENU_UL_LOWER} li a:hover {
 	float: left;
 	padding: {MENU_TOP_2_PAD} {MENU_TOP_3_PAD} {MENU_TOP_2_PAD} {MENU_TOP_3_PAD};
 	text-align: left;
 }
 
 
-{MENU_ID} li:hover .children li a {
+{MENU_ID} li:hover .{MENU_UL_LOWER} li a {
 	color: {BG_HEX};
 	text-decoration: none;
 	clear: both;
 }
 
 
-{MENU_ID} li:hover .children li a:hover {
+{MENU_ID} li:hover .{MENU_UL_LOWER} li a:hover {
 	text-decoration: underline;
 	font-weight: bold;
 }
