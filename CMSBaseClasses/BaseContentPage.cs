@@ -37,6 +37,7 @@ namespace Carrotware.CMS.UI.Base {
 		protected SiteData theSite { get; set; }
 
 		protected Guid guidContentID = Guid.Empty;
+
 		protected ContentPage pageContents = new ContentPage();
 		protected List<PageWidget> pageWidgets = new List<PageWidget>();
 
@@ -52,7 +53,6 @@ namespace Carrotware.CMS.UI.Base {
 		private int iCtrl = 0;
 
 		private string CtrlId {
-
 			get {
 				return "WidgetID_" + (iCtrl++);
 			}
@@ -114,28 +114,26 @@ namespace Carrotware.CMS.UI.Base {
 
 			string path = SiteData.CurrentScriptName.ToLower();
 
-			ContentPage filePage = null;
+			pageContents = null;
 
 			if (path.Length < 3) {
 				if (SiteData.IsAdmin || SiteData.IsEditor) {
-					filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
+					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, null);
 				} else {
-					filePage = pageHelper.FindHome(SiteData.CurrentSiteID, true);
+					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 				}
 			} else {
 				var pageName = path;
 				if (SiteData.IsAdmin || SiteData.IsEditor) {
-					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
+					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 				} else {
-					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
+					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
 				}
 			}
 
-			if (filePage != null) {
-				guidContentID = filePage.Root_ContentID;
+			if (pageContents != null) {
+				guidContentID = pageContents.Root_ContentID;
 			}
-
-			pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
 
 			pageWidgets = widgetHelper.GetWidgets(guidContentID);
 
@@ -156,14 +154,6 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-			Page.Title = string.Format(PageTitlePattern, theSite.SiteName, pageContents.TitleBar);
-
-			if (!pageContents.PageActive) {
-				if (SiteData.IsAdmin || SiteData.IsEditor) {
-					Page.Title = string.Format(PageTitlePattern, "* UNPUBLISHED * " + theSite.SiteName, pageContents.TitleBar);
-				}
-			}
-
 			if (SiteData.AdvancedEditMode) {
 				if (cmsHelper.cmsAdminContent == null) {
 					cmsHelper.cmsAdminContent = pageContents;
@@ -180,6 +170,8 @@ namespace Carrotware.CMS.UI.Base {
 				cmsHelper.cmsAdminContent = null;
 			}
 
+			SetPageTitle(pageContents);
+
 			contCenter = new ContentContainer();
 			contLeft = new ContentContainer();
 			contRight = new ContentContainer();
@@ -191,7 +183,6 @@ namespace Carrotware.CMS.UI.Base {
 				Response.AppendHeader("Last-Modified", strModifed);
 				Response.Cache.SetLastModified(dtModified);
 
-				//Response.Cache.SetCacheability(System.Web.HttpCacheability.Private);
 				DateTime dtExpire = System.DateTime.Now.AddMinutes(1);
 				Response.Cache.SetExpires(dtExpire);
 
@@ -209,7 +200,6 @@ namespace Carrotware.CMS.UI.Base {
 					Response.Cache.SetCacheability(HttpCacheability.NoCache);
 					dtExpire = DateTime.Now.AddMinutes(-10);
 					Response.Cache.SetExpires(dtExpire);
-
 
 					if (!SiteData.AdvancedEditMode) {
 
@@ -241,11 +231,9 @@ namespace Carrotware.CMS.UI.Base {
 						Page.Form.Controls.Add(editor);
 
 						jquery link = new jquery();
-
 						Page.Header.Controls.AddAt(0, link);
 
 						MarkWidgets(page, JSSCOPE, true);
-
 					}
 				}
 
@@ -378,6 +366,17 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
+
+		private void SetPageTitle(ContentPage pageData) {
+
+			Page.Title = string.Format(PageTitlePattern, theSite.SiteName, pageData.TitleBar);
+
+			if (!pageData.PageActive) {
+				if (SiteData.IsAdmin || SiteData.IsEditor) {
+					Page.Title = string.Format(PageTitlePattern, "* UNPUBLISHED * " + theSite.SiteName, pageData.TitleBar);
+				}
+			}
+		}
 
 		protected void MarkWidgets(Control X, string sJQScope, bool bAdmin) {
 			//add the command click event to the link buttons on the datagrid heading

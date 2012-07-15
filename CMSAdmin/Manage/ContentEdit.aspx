@@ -1,5 +1,5 @@
-﻿<%@ Page ValidateRequest="false" Title="Content Edit" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master"
-	AutoEventWireup="true" CodeBehind="ContentEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ContentEdit" %>
+﻿<%@ Page ValidateRequest="false" Title="Content Edit" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ContentEdit.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Manage.ContentEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -7,11 +7,11 @@
 	Edit Content
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div style="height: 300px; margin-bottom: 10px;">
+	<div style="height: 350px; margin-bottom: 10px;">
 		<div runat="server" id="divCenter">
 			<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-		<asp:TextBox ValidationGroup="inputForm" Style="height: 275px; width: 650px;" CssClass="mceEditor" ID="reBody" runat="server"
-			TextMode="MultiLine" Rows="15" Columns="80" />
+		<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 700px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="20"
+			Columns="90" />
 		<br />
 	</div>
 	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -26,7 +26,7 @@
 			function AutoSynchMCE() {
 				if (saving != 1) {
 					tinyMCE.triggerSave();
-					setTimeout("AutoSynchMCE();", 2500);
+					setTimeout("AutoSynchMCE();", 3000);
 				}
 			}
 
@@ -37,7 +37,7 @@
 			function SubmitPage() {
 				saving = 1;
 				tinyMCE.triggerSave();
-				setTimeout("ClickBtn();", 1200);
+				setTimeout("ClickBtn();", 1500);
 			}
 			function ClickBtn() {
 				$('#<%=btnSave.ClientID %>').click();
