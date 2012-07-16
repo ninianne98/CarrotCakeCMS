@@ -14,9 +14,9 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 namespace Carrotware.CMS.UI.Admin.Manage {
-	public partial class about : System.Web.UI.Page {
+	public partial class about : AdminBasePage {
 		protected void Page_Load(object sender, EventArgs e) {
-
+			litVersion.Text = CurrentDLLVersion;
 		}
 	}
 }
