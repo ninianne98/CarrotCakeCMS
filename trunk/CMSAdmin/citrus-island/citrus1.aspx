@@ -31,7 +31,9 @@
 			</h2>--%>
 		</div>
 		<div id="menu">
-			<carrot:TopLevelNavigation CSSSelected="current" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" />
+			<%-- carrot:TopLevelNavigation CSSSelected="current" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" /> --%>
+			<carrot:TwoLevelNavigation MenuWidth="960px" MenuHeight="10px" FontSize="11px" ForeColor="#FFFFFF" BackColor="#F4845A" runat="server"
+				ID="TwoLevelNavigation1" />
 		</div>
 		<div id="sidebar">
 			<carrot:ChildNavigation SectionTitle="Child Pages" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
@@ -67,11 +69,13 @@
 					RSS Feed</a>--%>
 			</div>
 			<div id="footer-left">
-				<asp:PlaceHolder ID="myFooter" runat="server">&copy; Copyright
-					<%= DateTime.Now.Year %>, <strong>
-						<%=theSite.SiteName%></strong>&nbsp; Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a>
-					| Valid <a target="_blank" href="http://validator.w3.org/check/referer">XHTML</a> | <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">
-						CSS</a> </asp:PlaceHolder>
+				<asp:PlaceHolder ID="myFooter" runat="server">
+					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
+					All rights reserved. 
+					| Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a> <br />
+					 Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> 
+					| Valid <a target="_blank" href="http://validator.w3.org/check/referer">XHTML</a> 
+					| <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> </asp:PlaceHolder>
 			</div>
 		</div>
 	</div>

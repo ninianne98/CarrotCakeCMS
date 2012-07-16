@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"[]>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
@@ -15,36 +15,32 @@
 		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
 		<!--[if IE 6]><link rel="stylesheet" href="<%=pageContents.TemplateFolderPath %>style.ie6.css" type="text/css" media="screen" /><![endif]-->
 		<!--[if IE 7]><link rel="stylesheet" href="<%=pageContents.TemplateFolderPath %>style.ie7.css" type="text/css" media="screen" /><![endif]-->
-
 		<script type="text/javascript" src="<%=pageContents.TemplateFolderPath %>script.js"></script>
-
 	</asp:PlaceHolder>
-
 	<script type="text/javascript">
 
-		$(document).ready(function() {
-			$(".art-nav-inner .art-hmenu").each(function(i) {
+		$(document).ready(function () {
+			$(".art-nav-inner .art-hmenu").each(function (i) {
 				mnuEnhanced(this);
 			});
 
-			$(".art-vmenublockcontent-body .art-vmenu").each(function(i) {
+			$(".art-vmenublockcontent-body .art-vmenu").each(function (i) {
 				mnuEnhanced(this);
 			});
 
 		});
 
 		function mnuEnhanced(elm) {
-			$("li a").each(function(i) {
+			$("li a").each(function (i) {
 				$(this).html("<span class='l'></span><span class='r'></span><span class='t'>" + $(this).text() + "</span>");
 			});
 
-			$("li.active a").each(function(i) {
+			$("li.active a").each(function (i) {
 				$(this).attr('class', 'active');
 			});
 		}
 
 	</script>
-
 </head>
 <body>
 	<form id="form1" runat="server">
@@ -225,11 +221,12 @@
 					<div class="art-footer-body">
 						<a href="#" class="art-rss-tag-icon" title="RSS"></a>
 						<div class="art-footer-text">
-							<p>
-								<asp:PlaceHolder ID="myFooter" runat="server">Copyright
-									<%= DateTime.Now.Year %>,
-									<%=theSite.SiteName%>. </asp:PlaceHolder>
-								All Rights Reserved.</p>
+							<asp:PlaceHolder ID="myFooter" runat="server">
+								<p>
+									<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
+									All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
+								</p>
+							</asp:PlaceHolder>
 						</div>
 						<div class="cleared">
 						</div>
