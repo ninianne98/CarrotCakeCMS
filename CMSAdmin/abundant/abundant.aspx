@@ -78,11 +78,14 @@ Released   : 20090703
 		<!-- end #page -->
 	</div>
 	<div id="footer">
-		<p>
-			<asp:PlaceHolder ID="myFooter" runat="server">&copy;
-				<%= DateTime.Now.Year %>,
-				<%=theSite.SiteName%>. All rights reserved. </asp:PlaceHolder>
-			Design by <a target="_blank" href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
+		<asp:PlaceHolder ID="myFooter" runat="server">
+			<p>
+				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
+				All rights reserved. 
+				| Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a> <br />
+				Design by <a target="_blank" href="http://www.freecsstemplates.org/">Free CSS Templates</a>.
+			</p>
+		</asp:PlaceHolder>
 	</div>
 	<!-- end #footer -->
 	<asp:Panel ID="pnlHiddenControls" Visible="false" runat="server">
