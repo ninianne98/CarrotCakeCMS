@@ -8,6 +8,10 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
+		The currently running version of this CMS is
+		<asp:Literal ID="litVersion" runat="server"></asp:Literal>.
+	</p>
+	<p>
 		CarrotCake CMS by Carrotware is dual licensed under the MIT or GPL Version 2 licenses.
 		<br />
 		<img src="images/carrot_med.png" height="125" alt="carrot" title="carrot" />
@@ -30,7 +34,6 @@
 		Components Utilized</h2>
 	<p>
 		<b>jQuery JavaScript Library</b><br />
-		<br />
 		http://jquery.com/<br />
 		<br />
 		Copyright 2011, John Resig<br />
@@ -42,11 +45,9 @@
 		Copyright 2011, The Dojo Foundation<br />
 		Released under the MIT, BSD, and GPL Licenses.<br />
 		<br />
-		Date: Wed Feb 23 13:55:29 2011 -0500<br />
 	</p>
 	<p>
 		<b>jQuery UI CSS Framework</b><br />
-		<br />
 		Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)<br />
 		Dual licensed under the MIT or GPL Version 2 licenses.<br />
 		http://jquery.org/license<br />
@@ -55,7 +56,6 @@
 	</p>
 	<p>
 		<b>jQuery UI</b><br />
-		<br />
 		Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)<br />
 		Dual licensed under the MIT or GPL Version 2 licenses.<br />
 		http://jquery.org/license<br />
@@ -65,7 +65,6 @@
 	<p>
 		<b>jQuery UI Nested Sortable - jQuery Plugin</b><br />
 		v 1.3.4 / 28 apr 2011<br />
-		<br />
 		<a target="_blank" href="http://mjsarfatti.com/sandbox/nestedSortable">http://mjsarfatti.com/sandbox/nestedSortable</a><br />
 		<br />
 		Depends:<br />
@@ -77,7 +76,6 @@
 	</p>
 	<p>
 		<b>Silk icon set 1.3</b><br />
-		<br />
 		Mark James, <a target="_blank" href="http://www.famfamfam.com/lab/icons/silk/">http://www.famfamfam.com/lab/icons/silk/</a><br />
 		This work is licensed under a Creative Commons Attribution 2.5 License.<br />
 		http://creativecommons.org/licenses/by/2.5/
@@ -85,7 +83,6 @@
 	</p>
 	<p>
 		<b>Crystal Project Icons</b><br />
-		<br />
 		The Crystal Project are released under LGPL.<br />
 		<a target="_blank" href="http://www.everaldo.com/crystal/">http://www.everaldo.com/crystal/</a> and <a target="_blank" href="http://www.iconfinder.com/search/?q=iconset%3ACrystalClear">
 			http://www.iconfinder.com/search/?q=iconset%3ACrystalClear</a>
@@ -93,8 +90,14 @@
 	</p>
 	<p>
 		<b>Preloaders.net</b><br />
-		AJAX Spinners<br />
+		AJAX Spinners. All animated GIF and APNG images are completely free to use in all projects (web and desktop applications,
+		freeware and commercial projects).<br />
 		<a target="_blank" href="http://preloaders.net/">http://preloaders.net/</a><br />
+	</p>
+	<p>
+		<b>ajaxload.info</b><br />
+		Ajaxload - Ajax loading gif generator. Generated gifs are totally free for use.<br />
+		<a target="_blank" href="http://ajaxload.info/">http://ajaxload.info/</a><br />
 	</p>
 	<p>
 		<b>jQuery blockUI - jQuery Plugin</b><br />
@@ -112,11 +115,9 @@
 	</p>
 	<p>
 		<b>SimpleModal 1.4.1 - jQuery Plugin</b><br />
-		<br />
 		<a target="_blank" href="http://www.ericmmartin.com/projects/simplemodal/">http://www.ericmmartin.com/projects/simplemodal/</a><br />
 		Copyright (c) 2010 Eric Martin (http://twitter.com/ericmmartin)<br />
 		Dual licensed under the MIT and GPL licenses<br />
-		Revision: $Id: jquery.simplemodal.js 261 2010-11-05 21:16:20Z emartin24 $<br />
 	</p>
 	<p>
 		<b>Absolute Floating Menu</b><br />
