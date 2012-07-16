@@ -112,9 +112,28 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				skinFolder.FolderPath = FileDataHelper.MakeFilePathUniform("/" + sDir.Replace(Server.MapPath("~/"), "") + "/");
 
-				fldrWorking = helpFile.SpiderDeepFoldersFD(sDir, sDir.Replace(Server.MapPath("~/"), "") + "/");
+				fldrWorking = helpFile.SpiderDeepFoldersFD(sDir, "/" + sDir.Replace(Server.MapPath("~/"), "") + "/");
 
 				fldrWorking.Add(skinFolder);
+
+				try {
+					if (Directory.Exists(Server.MapPath("~/includes"))) {
+						FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("~/includes"));
+						fldrWorking.Add(incFolder);
+					}
+					if (Directory.Exists(Server.MapPath("~/js"))) {
+						FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("~/js"));
+						fldrWorking.Add(incFolder);
+					}
+					if (Directory.Exists(Server.MapPath("~/css"))) {
+						FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("~/css"));
+						fldrWorking.Add(incFolder);
+					}
+					//if (Directory.Exists(Server.MapPath("~/files"))) {
+					//    FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("files"));
+					//    fldrWorking.Add(incFolder);
+					//}
+				} catch (Exception ex) { }
 
 				foreach (FileData f in fldrWorking) {
 					List<FileData> fls = helpFile.GetFiles(SetSitePath("/" + f.FolderPath), f.FolderPath);

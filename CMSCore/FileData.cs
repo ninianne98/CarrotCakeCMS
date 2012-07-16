@@ -59,7 +59,7 @@ namespace Carrotware.CMS.Core {
 				string sP = sQuery + myFileName + "/";
 
 				f.FileName = myFileName;
-				f.FolderPath =  MakeFilePathUniform(sP);
+				f.FolderPath = MakeFilePathUniform(sP);
 				f.FileDate = Convert.ToDateTime(myFileDate);
 			}
 
@@ -71,14 +71,16 @@ namespace Carrotware.CMS.Core {
 
 			var dsID = new List<FileData>();
 
-			foreach (string myFile in Directory.GetDirectories(sPath, "*.*")) {
-				string myFileName;
-				var f = new FileData();
+			if (Directory.Exists(sPath)) {
+				foreach (string myFile in Directory.GetDirectories(sPath, "*.*")) {
+					string myFileName;
+					var f = new FileData();
 
-				myFileName = Path.GetFileName(myFile).Trim();
-				if (myFileName.Length > 0) {
-					f = GetFolderInfo(sPath, sQuery, myFile);
-					dsID.Add(f);
+					myFileName = Path.GetFileName(myFile).Trim();
+					if (myFileName.Length > 0) {
+						f = GetFolderInfo(sPath, sQuery, myFile);
+						dsID.Add(f);
+					}
 				}
 			}
 
@@ -162,25 +164,27 @@ namespace Carrotware.CMS.Core {
 
 			var dsID = new List<FileData>();
 
-			foreach (string myFile in Directory.GetFiles(sPath, "*.*")) {
-				string myFileName;
+			if (Directory.Exists(sPath)) {
+				foreach (string myFile in Directory.GetFiles(sPath, "*.*")) {
+					string myFileName;
 
-				myFileName = Path.GetFileName(myFile).Trim();
+					myFileName = Path.GetFileName(myFile).Trim();
 
-				var f = new FileData();
-				f.FileName = myFileName;
+					var f = new FileData();
+					f.FileName = myFileName;
 
-				if (myFileName.Length > 0) {
+					if (myFileName.Length > 0) {
 
-					f = GetFileInfo(sPath, sQuery, myFile);
+						f = GetFileInfo(sPath, sQuery, myFile);
 
-					try {
-						if ((from b in BlockedTypes
-							 where b.ToLower().Replace(".", "") == f.FileExtension.Replace(".", "")
-							 select b).Count() < 1) {
-							dsID.Add(f);
-						}
-					} catch (Exception ex) { }
+						try {
+							if ((from b in BlockedTypes
+								 where b.ToLower().Replace(".", "") == f.FileExtension.Replace(".", "")
+								 select b).Count() < 1) {
+								dsID.Add(f);
+							}
+						} catch (Exception ex) { }
+					}
 				}
 			}
 
@@ -194,7 +198,11 @@ namespace Carrotware.CMS.Core {
 
 			string[] subdirs;
 			try {
-				subdirs = Directory.GetDirectories(sPath);
+				if (Directory.Exists(sPath)) {
+					subdirs = Directory.GetDirectories(sPath);
+				} else {
+					subdirs = null;
+				}
 			} catch {
 				subdirs = null;
 			}
@@ -223,7 +231,11 @@ namespace Carrotware.CMS.Core {
 
 			string[] subdirs;
 			try {
-				subdirs = Directory.GetDirectories(sPath);
+				if (Directory.Exists(sPath)) {
+					subdirs = Directory.GetDirectories(sPath);
+				} else {
+					subdirs = null;
+				}
 			} catch {
 				subdirs = null;
 			}

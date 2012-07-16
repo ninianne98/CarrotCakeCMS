@@ -9,9 +9,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h2>
-		<a href="<%= String.Format("{0}?path={1}", Carrotware.CMS.Core.SiteData.CurrentScriptName, sTemplateFileQS) %>">
-			<asp:Literal ID="litSkinFileName" runat="server"></asp:Literal>
-		</a>
+		<asp:Literal ID="litSkinFileName" runat="server"></asp:Literal>
+		[<a href="<%= String.Format("{0}?path={1}", Carrotware.CMS.Core.SiteData.CurrentScriptName, sTemplateFileQS) %>">Edit</a>]
 	</h2>
 	<p>
 		<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageContents" ID="RequiredFieldValidator1"
@@ -19,22 +18,24 @@
 	</p>
 	<table width="100%">
 		<tr>
-			<td valign="top" width="180px">
+			<td valign="top" width="250px">
 				<p>
 					<b>Supporting Styles/Scripts</b>
 				</p>
-				<ul>
-					<asp:Repeater ID="rpFiles" runat="server">
-						<ItemTemplate>
-							<li><a href="<%# String.Format("{0}?path={1}&alt={2}", Carrotware.CMS.Core.SiteData.CurrentScriptName, sTemplateFileQS, EncodePath(String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName"))) ) %>">
-								<%# String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) %>
-							</a>
-								<br />
-								<br />
-							</li>
-						</ItemTemplate>
-					</asp:Repeater>
-				</ul>
+				<div style="border: solid 0px #000000; padding: 4px; width: 250px; height: 425px; overflow: auto;">
+					<ul>
+						<asp:Repeater ID="rpFiles" runat="server">
+							<ItemTemplate>
+								<li><a href="<%# String.Format("{0}?path={1}&alt={2}", Carrotware.CMS.Core.SiteData.CurrentScriptName, sTemplateFileQS, EncodePath(String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName"))) ) %>">
+									<%# String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) %>
+								</a>
+									<br />
+									<br />
+								</li>
+							</ItemTemplate>
+						</asp:Repeater>
+					</ul>
+				</div>
 			</td>
 			<td valign="top" width="20px">
 				<p>
