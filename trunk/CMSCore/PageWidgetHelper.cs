@@ -23,36 +23,75 @@ namespace Carrotware.CMS.Core {
 
 		public PageWidgetHelper() { }
 
-		public PageWidget Get(Guid pageWidgetID) {
-			var w = (from r in db.tblPageWidgets
-					 orderby r.WidgetOrder
-					 where r.PageWidgetID == pageWidgetID
-					 select new PageWidget(r)).FirstOrDefault();
-
-			return w;
+		public PageWidget Get(Guid rootWidgetID) {
+			return new PageWidget(rootWidgetID);
 		}
 
-		public List<PageWidget> GetWidgets(Guid rootContentID) {
-			var w = (from r in db.tblPageWidgets
-					 orderby r.WidgetOrder
-					 where r.Root_ContentID == rootContentID
+		public List<PageWidget> GetWidgets(Guid rootContentID, bool? bActive) {
+			var w = (from r in db.tblWidgetDatas
+					 join rr in db.tblWidgets on r.Root_WidgetID equals rr.Root_WidgetID
+					 orderby rr.WidgetOrder
+					 where rr.Root_ContentID == rootContentID
+						&& r.IsLatestVersion == true
+						&& rr.WidgetActive == bActive || bActive == null
 					 select new PageWidget(r)).ToList();
 
 			return w;
 		}
 
-
-		public void Delete(Guid pageWidgetID) {
-			var w = (from r in db.tblPageWidgets
-					 where r.PageWidgetID == pageWidgetID
+		public void Delete(Guid widgetDataID) {
+			var w = (from r in db.tblWidgetDatas
+					 where r.WidgetDataID == widgetDataID
 					 select r).FirstOrDefault();
 
 			if (w != null) {
-				db.tblPageWidgets.DeleteOnSubmit(w);
+				db.tblWidgetDatas.DeleteOnSubmit(w);
 				db.SubmitChanges();
 			}
-
 		}
+
+		public void Disable(Guid rootWidgetID) {
+			var w = (from r in db.tblWidgets
+					 where r.Root_WidgetID == rootWidgetID
+					 select r).FirstOrDefault();
+
+			if (w != null) {
+				w.WidgetActive = false;
+				db.SubmitChanges();
+			}
+		}
+
+		public void DeleteAll(Guid rootWidgetID) {
+
+			var w1 = (from r in db.tblWidgetDatas
+					  where r.Root_WidgetID == rootWidgetID
+					  select r).ToList();
+
+			var w2 = (from r in db.tblWidgets
+					  where r.Root_WidgetID == rootWidgetID
+					  select r).ToList();
+
+			bool bPendingDel = false;
+
+			if (w1 != null) {
+				foreach (var w in w1) {
+					db.tblWidgetDatas.DeleteOnSubmit(w);
+					bPendingDel = true;
+				}
+			}
+
+			if (w2 != null) {
+				foreach (var w in w2) {
+					db.tblWidgets.DeleteOnSubmit(w);
+					bPendingDel = true;
+				}
+			}
+
+			if (bPendingDel) {
+				db.SubmitChanges();
+			}
+		}
+
 
 		#region IDisposable Members
 

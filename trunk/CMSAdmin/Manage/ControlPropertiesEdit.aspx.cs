@@ -43,7 +43,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 
 			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
-							where aw.PageWidgetID == guidWidget
+							where aw.Root_WidgetID == guidWidget
 							orderby aw.WidgetOrder
 							select aw).FirstOrDefault();
 
@@ -274,7 +274,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		protected void btnSave_Click(object sender, EventArgs e) {
 
 			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
-							where aw.PageWidgetID == guidWidget
+							where aw.Root_WidgetID == guidWidget
 							orderby aw.WidgetOrder
 							select aw).FirstOrDefault();
 
@@ -323,7 +323,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			w.SaveDefaultControlProperties(props);
 
 			List<PageWidget> lstPageWidgets = cmsHelper.cmsAdminWidget;
-			lstPageWidgets.RemoveAll(x => x.PageWidgetID == guidWidget);
+			lstPageWidgets.RemoveAll(x => x.Root_WidgetID == guidWidget);
 			lstPageWidgets.Add(w);
 
 			cmsHelper.cmsAdminWidget = lstPageWidgets;
