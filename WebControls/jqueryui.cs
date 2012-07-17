@@ -13,20 +13,6 @@ namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jqueryui runat=server></{0}:jqueryui>")]
 	public class jqueryui : BaseWebControl {
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string Text {
-			get {
-				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
-			}
-
-			set {
-				ViewState["Text"] = value;
-			}
-		}
 
 
 		protected override void RenderContents(HtmlTextWriter output) {
