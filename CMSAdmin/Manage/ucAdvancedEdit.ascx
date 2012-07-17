@@ -87,6 +87,9 @@
 		$(".cmsWidgetBarIconPencil2").each(function (i) {
 			cmsFixGeneralImage(this, ' ', 'Edit', 'pencil.png');
 		});
+		$(".cmsWidgetBarIconWidget").each(function (i) {
+			cmsFixGeneralImage(this, 'Widgets', 'Widgets', 'application_view_tile.png');
+		});
 	}
 
 
@@ -353,6 +356,9 @@
 		cmsFixDialog('CMSmodalalertmessage');
 	}
 
+	function cmsManageWidgetHistory(zoneName) {
+		alert(zoneName);
+	}
 
     function cmsShowEditPageInfo() {
         //cmsAlertModal("cmsShowEditPageInfo");

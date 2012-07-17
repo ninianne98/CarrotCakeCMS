@@ -138,7 +138,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 				string sPrefix = "";
 
-
 				if (!string.IsNullOrEmpty(JQueryUIScope)) {
 					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 										+ "<div id=\"" + this.ClientID + "\" class=\"" + JQueryUIScope + "\">"

@@ -50,17 +50,27 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter w) {
 			if (IsAdminMode) {
 
+				string sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget\" id=\"cmsContentEditLink{0}\" class=\"ui-state-hover\" href=\"javascript:cmsManageWidgetHistory('" + this.ID + "')\">\r\n"
+							+ " Widgets </a></li> \r\n";
+			
+
+				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
+
+				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
+							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit +  " </ul> </li> </ul> </div> </div>";
+
 				string sPrefix = "";
+
 				if (!string.IsNullOrEmpty(JQueryUIScope)) {
 					sPrefix = "<div id=\"cms" + this.ID + "Outer\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
 							"<div class=\"" + JQueryUIScope + "\"><div class=\"" + JQueryUIScope + " ui-state-default ui-state-active ui-widget-header cmsWidgetControlIDZone\">\r\n" +
-							" " + this.ID + " </div></div>\r\n" +
-							"<div class=\"cmsTargetArea cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
+							" <div id=\"cmsWidgetContainerName\">" + this.ID + "</div> " + sMenu + "</div></div>\r\n" +
+							"<div class=\"cmsTargetArea cmsTargetMove cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
 				} else {
 					sPrefix = "<div id=\"cms" + this.ID + "Outer\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
-						"<div class=\"ui-state-default ui-state-active ui-widget-header cmsWidgetControlIDZone\">\r\n" +
-						" " + this.ID + " </div>\r\n" +
-						"<div class=\"cmsTargetArea cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
+							"<div ><div class=\"ui-state-default ui-state-active ui-widget-header cmsWidgetControlIDZone\">\r\n" +
+							" <div id=\"cmsWidgetContainerName\">" + this.ID + "</div> " + sMenu + "</div></div>\r\n" +
+							"<div class=\"cmsTargetArea cmsTargetMove cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
 				}
 				w.Write(sPrefix);
 
