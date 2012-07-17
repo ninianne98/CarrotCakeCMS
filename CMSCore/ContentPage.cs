@@ -73,10 +73,9 @@ namespace Carrotware.CMS.Core {
 			CMSConfigHelper ch = new CMSConfigHelper();
 			List<PageWidget> widgets = new List<PageWidget>();
 			if (ch.cmsAdminContent == null) {
-				widgets = (from w in db.tblPageWidgets
-						   where w.Root_ContentID == this.Root_ContentID
-						   orderby w.WidgetOrder
-						   select new PageWidget(w)).ToList();
+				using (var h = new PageWidgetHelper()) {
+					widgets = h.GetWidgets(this.Root_ContentID, true);
+				}
 			} else {
 				widgets = (from w in ch.cmsAdminWidget
 						   orderby w.WidgetOrder

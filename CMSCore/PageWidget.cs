@@ -23,83 +23,179 @@ namespace Carrotware.CMS.Core {
 
 		public PageWidget() { }
 
-		public PageWidget(Guid pageWidgetID) {
+		public PageWidget(Guid rootWidgetID) {
 
-			var w = (from r in db.tblPageWidgets
-					 orderby r.WidgetOrder
-					 where r.PageWidgetID == pageWidgetID
+			var w = (from r in db.tblWidgetDatas
+					 where r.Root_WidgetID == rootWidgetID
+						&& r.IsLatestVersion == true
 					 select r).FirstOrDefault();
 
 			SetVals(w);
 		}
 
-		public PageWidget(tblPageWidget w) {
+		public void LoadPageWidgetVersion(Guid widgetDataID) {
+
+			var w = (from r in db.tblWidgetDatas
+					 where r.WidgetDataID == widgetDataID
+					 select r).FirstOrDefault();
+
 			SetVals(w);
 		}
 
-		private void SetVals(tblPageWidget w) {
-			this.PageWidgetID = w.PageWidgetID;
-			this.WidgetOrder = w.WidgetOrder;
-			this.Root_ContentID = w.Root_ContentID;
-			this.PlaceholderName = w.PlaceholderName;
-			this.ControlPath = w.ControlPath;
+		public PageWidget(tblWidgetData w) {
+			SetVals(w);
+		}
+
+		private void SetVals(tblWidgetData w) {
+
+			var ww = db.tblWidgets.Where(x => x.Root_WidgetID == w.Root_WidgetID).FirstOrDefault();
+
+			this.IsWidgetPendingDelete = false;
+
+			this.WidgetDataID = w.WidgetDataID;
+			this.EditDate = w.EditDate;
+			this.IsLatestVersion = w.IsLatestVersion;
 			this.ControlProperties = w.ControlProperties;
+
+			if (ww != null) {
+				this.Root_WidgetID = ww.Root_WidgetID;
+				this.Root_ContentID = ww.Root_ContentID;
+				this.WidgetOrder = ww.WidgetOrder;
+				this.ControlPath = ww.ControlPath;
+				this.PlaceholderName = ww.PlaceholderName;
+				this.IsWidgetActive = ww.WidgetActive;
+			}
 		}
 
 
 		public string ControlPath { get; set; }
 		public string ControlProperties { get; set; }
-		public Guid PageWidgetID { get; set; }
+		public Guid WidgetDataID { get; set; }
+		public Guid Root_WidgetID { get; set; }
 		public string PlaceholderName { get; set; }
 		public Guid Root_ContentID { get; set; }
 		public int WidgetOrder { get; set; }
-
-
+		public bool? IsLatestVersion { get; set; }
+		public bool IsWidgetActive { get; set; }
+		public bool IsWidgetPendingDelete { get; set; }
+		public DateTime EditDate { get; set; }
 
 
 		public void Save() {
-			var w = (from r in db.tblPageWidgets
-					 orderby r.WidgetOrder
-					 where r.PageWidgetID == this.PageWidgetID
-					 select r).FirstOrDefault();
 
-			bool bAdd = false;
-			if (w == null) {
-				bAdd = true;
-				w = new tblPageWidget();
-			}
+			if (!this.IsWidgetPendingDelete) {
+				var w = (from r in db.tblWidgets
+						 orderby r.WidgetOrder
+						 where r.Root_WidgetID == this.Root_WidgetID
+						 select r).FirstOrDefault();
 
-			if (this.PageWidgetID == Guid.Empty) {
-				this.PageWidgetID = Guid.NewGuid();
+				bool bAdd = false;
+				if (w == null) {
+					bAdd = true;
+					w = new tblWidget();
+				}
+
+				if (this.Root_WidgetID == Guid.Empty) {
+					this.Root_WidgetID = Guid.NewGuid();
+				}
+
+				w.Root_WidgetID = this.Root_WidgetID;
+
+				w.WidgetOrder = this.WidgetOrder;
+				w.Root_ContentID = this.Root_ContentID;
+				w.PlaceholderName = this.PlaceholderName;
+				w.ControlPath = this.ControlPath;
+				w.WidgetActive = this.IsWidgetActive;
+
+				var wd = new tblWidgetData();
+				wd.Root_WidgetID = w.Root_WidgetID;
+				wd.WidgetDataID = Guid.NewGuid();
+				wd.IsLatestVersion = true;
+				wd.ControlProperties = this.ControlProperties;
+				wd.EditDate = DateTime.Now;
+
+				var oldWD = (from ww in db.tblWidgetDatas
+							 where ww.Root_WidgetID == w.Root_WidgetID
+								&& ww.IsLatestVersion == true
+							 select ww).FirstOrDefault();
+
+				//only add a new entry if the widget has some sort of change in the data stored.
+				if (oldWD != null) {
+					if (oldWD.ControlProperties != wd.ControlProperties) {
+						oldWD.IsLatestVersion = false;
+						db.tblWidgetDatas.InsertOnSubmit(wd);
+					}
+				} else {
+					db.tblWidgetDatas.InsertOnSubmit(wd);
+				}
+
+				if (bAdd) {
+					db.tblWidgets.InsertOnSubmit(w);
+				}
+
+				db.SubmitChanges();
+
 			} else {
-				w.PageWidgetID = this.PageWidgetID;
-			}
 
-			w.WidgetOrder = this.WidgetOrder;
-			w.Root_ContentID = this.Root_ContentID;
-			w.PlaceholderName = this.PlaceholderName;
-			w.ControlPath = this.ControlPath;
-			w.ControlProperties = this.ControlProperties;
+				DeleteAll();
 
-			if (bAdd) {
-				db.tblPageWidgets.InsertOnSubmit(w);
 			}
-			db.SubmitChanges();
 		}
 
 
 		public void Delete() {
-			var w = (from r in db.tblPageWidgets
-					 where r.PageWidgetID == this.PageWidgetID
+			var w = (from r in db.tblWidgetDatas
+					 where r.WidgetDataID == this.WidgetDataID
 					 select r).FirstOrDefault();
 
 			if (w != null) {
-				db.tblPageWidgets.DeleteOnSubmit(w);
+				db.tblWidgetDatas.DeleteOnSubmit(w);
 				db.SubmitChanges();
 			}
-
 		}
 
+		public void DeleteAll() {
+
+			var w1 = (from r in db.tblWidgetDatas
+					  where r.Root_WidgetID == this.Root_WidgetID
+					  select r).ToList();
+
+			var w2 = (from r in db.tblWidgets
+					  where r.Root_WidgetID == this.Root_WidgetID
+					  select r).ToList();
+
+			bool bPendingDel = false;
+
+			if (w1 != null) {
+				foreach (var w in w1) {
+					db.tblWidgetDatas.DeleteOnSubmit(w);
+					bPendingDel = true;
+				}
+			}
+
+			if (w2 != null) {
+				foreach (var w in w2) {
+					db.tblWidgets.DeleteOnSubmit(w);
+					bPendingDel = true;
+				}
+			}
+
+			if (bPendingDel) {
+				db.SubmitChanges();
+			}
+		}
+
+
+		public void Disable() {
+			var w = (from r in db.tblWidgets
+					 where r.Root_WidgetID == this.Root_WidgetID
+					 select r).FirstOrDefault();
+
+			if (w != null) {
+				w.WidgetActive = false;
+				db.SubmitChanges();
+			}
+		}
 
 		public List<WidgetProps> ParseDefaultControlProperties() {
 			List<WidgetProps> props = new List<WidgetProps>();

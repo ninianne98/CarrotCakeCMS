@@ -49,8 +49,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				if (!IsPostBack) {
 					if (guidWidgetID != Guid.Empty) {
 						PageWidget pageWidget = (from w in cmsHelper.cmsAdminWidget
-												 where (w.PageWidgetID == guidWidgetID)
-												 orderby w.WidgetOrder
+												 where w.Root_WidgetID == guidWidgetID
 												 select w).FirstOrDefault();
 
 						reBody.Text = pageWidget.ControlProperties;
@@ -82,13 +81,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					List<PageWidget> lstWidgets = cmsHelper.cmsAdminWidget;
 
 					PageWidget pageWidget = (from w in lstWidgets
-											 where (w.PageWidgetID == guidWidgetID)
-											 orderby w.WidgetOrder
+											 where w.Root_WidgetID == guidWidgetID
 											 select w).FirstOrDefault();
 
 					pageWidget.ControlProperties = reBody.Text;
+					pageWidget.WidgetDataID = Guid.NewGuid();
+					
+					lstWidgets.RemoveAll(x => x.Root_WidgetID == guidWidgetID);
 
-					lstWidgets.RemoveAll(x => x.PageWidgetID == guidWidgetID);
 					lstWidgets.Add(pageWidget);
 
 					cmsHelper.cmsAdminWidget = lstWidgets;

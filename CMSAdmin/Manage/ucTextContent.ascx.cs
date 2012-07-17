@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			if (SiteData.AdvancedEditMode) {
 				pageWidget = (from w in cmsHelper.cmsAdminWidget
-							  where (w.PageWidgetID == PageWidgetID)
+							  where (w.Root_WidgetID == PageWidgetID)
 							  orderby w.WidgetOrder
 							  select w).FirstOrDefault();
 

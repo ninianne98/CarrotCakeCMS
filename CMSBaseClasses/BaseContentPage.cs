@@ -135,7 +135,7 @@ namespace Carrotware.CMS.UI.Base {
 				guidContentID = pageContents.Root_ContentID;
 			}
 
-			pageWidgets = widgetHelper.GetWidgets(guidContentID);
+			pageWidgets = widgetHelper.GetWidgets(guidContentID, true);
 
 			if (pageContents != null) {
 				HtmlMeta metaDesc = new HtmlMeta();
@@ -158,11 +158,14 @@ namespace Carrotware.CMS.UI.Base {
 				if (cmsHelper.cmsAdminContent == null) {
 					cmsHelper.cmsAdminContent = pageContents;
 					cmsHelper.cmsAdminWidget = (from w in pageWidgets
+												where w.IsWidgetActive == true
 												orderby w.WidgetOrder
 												select w).ToList();
 				} else {
 					pageContents = cmsHelper.cmsAdminContent;
 					pageWidgets = (from w in cmsHelper.cmsAdminWidget
+								   where w.IsWidgetActive == true
+								   && w.IsWidgetPendingDelete == false
 								   orderby w.WidgetOrder
 								   select w).ToList();
 				}
@@ -306,7 +309,7 @@ namespace Carrotware.CMS.UI.Base {
 							if (widget is IWidget) {
 								w = widget as IWidget;
 								w.SiteID = SiteData.CurrentSiteID;
-								w.PageWidgetID = theWidget.PageWidgetID;
+								w.PageWidgetID = theWidget.Root_WidgetID;
 								w.RootContentID = theWidget.Root_ContentID;
 							}
 
@@ -339,7 +342,7 @@ namespace Carrotware.CMS.UI.Base {
 								}
 
 								plcWrapper.Order = theWidget.WidgetOrder;
-								plcWrapper.DatabaseKey = theWidget.PageWidgetID;
+								plcWrapper.DatabaseKey = theWidget.Root_WidgetID;
 
 								plcWrapper.Controls.Add(widget);
 								plcHolder.Controls.Add(plcWrapper);

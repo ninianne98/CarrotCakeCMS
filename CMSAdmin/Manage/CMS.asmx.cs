@@ -443,19 +443,24 @@ namespace Carrotware.CMS.UI.Admin {
 						var rWidg = new PageWidget();
 						if (w[2].ToLower().EndsWith(".ascx") || w[2].ToLower().StartsWith("class:")) {
 							rWidg.ControlPath = w[2];
-							rWidg.PageWidgetID = Guid.NewGuid();
+							rWidg.Root_WidgetID = Guid.NewGuid();
 							bGoodWidget = true;
 						} else {
 							if (w[2].ToString().Length == Guid.Empty.ToString().Length) {
-								rWidg.PageWidgetID = new Guid(w[2]);
+								rWidg.Root_WidgetID = new Guid(w[2]);
 								bGoodWidget = true;
 							}
 						}
 						if (bGoodWidget) {
-							dictOrder.Add(rWidg.PageWidgetID, iW);
+							dictOrder.Add(rWidg.Root_WidgetID, iW);
+
+							rWidg.WidgetDataID = Guid.NewGuid();
 							rWidg.PlaceholderName = w[1].Substring(4);
 							rWidg.WidgetOrder = int.Parse(w[0]);
 							rWidg.Root_ContentID = cmsAdminContent.Root_ContentID;
+							rWidg.IsWidgetActive = true;
+							rWidg.IsLatestVersion = true;
+							rWidg.EditDate = DateTime.Now;
 							inputWid.Add(rWidg);
 						}
 						iW++;
@@ -463,7 +468,7 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 
 				foreach (var wd in inputWid) {
-					var z = (from d in cacheWidget where d.PageWidgetID == wd.PageWidgetID select d).FirstOrDefault();
+					var z = (from d in cacheWidget where d.Root_WidgetID == wd.Root_WidgetID select d).FirstOrDefault();
 					if (z == null) {
 						cacheWidget.Add(wd);
 					} else {
@@ -471,7 +476,7 @@ namespace Carrotware.CMS.UI.Admin {
 						cacheWidget[i].WidgetOrder = wd.WidgetOrder;
 
 						int? mainSort = (from entry in dictOrder
-										 where entry.Key == wd.PageWidgetID
+										 where entry.Key == wd.Root_WidgetID
 										 select entry.Value).FirstOrDefault();
 						if (mainSort != null) {
 							cacheWidget[i].WidgetOrder = Convert.ToInt32(mainSort);
@@ -489,7 +494,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public string RemoveWidget(string DBKey, string ThisPage) {
+		public string DeleteWidget(string DBKey, string ThisPage) {
 			try {
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
@@ -497,11 +502,16 @@ namespace Carrotware.CMS.UI.Admin {
 
 				var cacheWidget = cmsAdminWidget;
 
-				var c = (from w in cacheWidget
-						 where w.PageWidgetID == guidWidget
-						 select w).FirstOrDefault();
+				var ww = (from w in cacheWidget
+						  where w.Root_WidgetID == guidWidget
+						  select w).ToList();
 
-				cacheWidget.RemoveAll(x => x.PageWidgetID == guidWidget);
+				if (ww != null) {
+					foreach (var w in ww) {
+						w.IsWidgetPendingDelete = true;
+						w.IsWidgetActive = false;
+					}
+				}
 
 				cmsAdminWidget = cacheWidget;
 
@@ -511,6 +521,33 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string RemoveWidget(string DBKey, string ThisPage) {
+			try {
+				CurrentPageGuid = new Guid(ThisPage);
+				LoadGuids();
+				Guid guidWidget = new Guid(DBKey);
+
+				var cacheWidget = cmsAdminWidget;
+
+				var ww = (from w in cacheWidget
+						  where w.Root_WidgetID == guidWidget
+						  select w).ToList();
+
+				if (ww != null) {
+					foreach (var w in ww) {
+						w.IsWidgetActive = false;
+					}
+				}
+
+				cmsAdminWidget = cacheWidget;
+
+				return "OK";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -524,7 +561,7 @@ namespace Carrotware.CMS.UI.Admin {
 				var cacheWidget = cmsAdminWidget;
 
 				var c = (from w in cacheWidget
-						 where w.PageWidgetID == guidWidget
+						 where w.Root_WidgetID == guidWidget
 						 select w).FirstOrDefault();
 
 				c.ControlProperties = ZoneText;
@@ -586,7 +623,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				pageContents.IsLatestVersion = false;
 
-				var pageWidgets = widgetHelper.GetWidgets(pageContents.Root_ContentID);
+				var pageWidgets = widgetHelper.GetWidgets(pageContents.Root_ContentID, true);
 
 				if (cmsAdminContent != null) {
 
@@ -615,11 +652,10 @@ namespace Carrotware.CMS.UI.Admin {
 					newContent.MetaDescription = cmsAdminContent.MetaDescription;
 					newContent.MetaKeyword = cmsAdminContent.MetaKeyword;
 
-					foreach (var wd in pageWidgets) {
-						wd.Delete();
-					}
+					//foreach (var wd in pageWidgets) {
+					//    wd.Delete();
+					//}
 					foreach (var wd in cmsAdminWidget) {
-						wd.PageWidgetID = Guid.NewGuid();
 						wd.Save();
 					}
 
