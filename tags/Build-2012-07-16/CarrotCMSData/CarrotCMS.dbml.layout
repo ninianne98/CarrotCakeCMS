@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 10.625" name="CarrotCMS">
+  <DataContextMoniker Name="/CarrotCMSDataContext" />
+  <nestedChildShapes>
+    <classShape Id="cd974134-a453-4ace-8312-3387de04f46f" absoluteBounds="3.625, 0.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CarrotCMSDataContext/aspnet_User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6b2208c0-3c2b-450a-a808-70fbf368bfbf" absoluteBounds="3.6400000000000006, 1.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1100b0ca-75f8-48a4-9e2c-fcaf70895050" absoluteBounds="3.625, 7.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CarrotCMSDataContext/tblSite" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cacb8cc1-e6db-4308-abea-0e32d0588873" absoluteBounds="3.6400000000000006, 7.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ac35d2f0-32d4-4d3a-b65d-c76b949f94eb" absoluteBounds="2.875, 5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/CarrotCMSDataContext/tblUserSiteMapping" />
+      <nestedChildShapes>
+        <elementListCompartment Id="de37beab-baf7-4a05-9e4c-95180034f56a" absoluteBounds="2.8900000000000006, 5.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.25 : 3.03049967447917); (4.25 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_tblUserSiteMapping" />
+      <nodes>
+        <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
+        <classShapeMoniker Id="ac35d2f0-32d4-4d3a-b65d-c76b949f94eb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.25 : 7.375); (4.25 : 6.3862939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CarrotCMSDataContext/tblSite/tblSite_tblUserSiteMapping" />
+      <nodes>
+        <classShapeMoniker Id="1100b0ca-75f8-48a4-9e2c-fcaf70895050" />
+        <classShapeMoniker Id="ac35d2f0-32d4-4d3a-b65d-c76b949f94eb" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a3e71a3a-84b5-4623-9856-981c52dc5221" absoluteBounds="0.5, 0.5, 2, 4.8477197265625">
+      <DataClassMoniker Name="/CarrotCMSDataContext/aspnet_Membership" />
+      <nestedChildShapes>
+        <elementListCompartment Id="29b47007-c199-4e54-beb7-367942f48834" absoluteBounds="0.51500000000000012, 0.96, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.625 : 1.95274983723958); (2.5 : 1.95274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_aspnet_Membership" />
+      <nodes>
+        <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
+        <classShapeMoniker Id="a3e71a3a-84b5-4623-9856-981c52dc5221" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ab56cfd9-367f-4110-a1bf-8a9bffdd147f" absoluteBounds="0.5, 5.875, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/CarrotCMSDataContext/aspnet_Role" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fb06ba8c-41d2-480e-a159-77be2c111df1" absoluteBounds="0.51500000000000012, 6.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fa120c6f-e058-4b6a-bed1-67d5978bc2c2" absoluteBounds="8.25, 1, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/CarrotCMSDataContext/tblContent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="621d3ef0-6c3b-45f1-9aae-b609ba50d65a" absoluteBounds="8.265, 1.46, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.625 : 2.01524983723958); (8.25 : 2.01524983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_tblContent" />
+      <nodes>
+        <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
+        <classShapeMoniker Id="fa120c6f-e058-4b6a-bed1-67d5978bc2c2" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1a0361c9-b5ab-41e6-9678-31eefb2072fa" absoluteBounds="5.5, 3.75, 2, 1.9631982421874996">
+      <DataClassMoniker Name="/CarrotCMSDataContext/tblRootContent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="269d1972-94da-4e5b-8856-b27f8f8e381f" absoluteBounds="5.515, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.5 : 4.31810628255208); (8.25 : 4.31810628255208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CarrotCMSDataContext/tblRootContent/tblRootContent_tblContent" />
+      <nodes>
+        <classShapeMoniker Id="1a0361c9-b5ab-41e6-9678-31eefb2072fa" />
+        <classShapeMoniker Id="fa120c6f-e058-4b6a-bed1-67d5978bc2c2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.2187495 : 7.375); (5.2187495 : 4.34375); (5.5 : 4.34375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CarrotCMSDataContext/tblSite/tblSite_tblRootContent" />
+      <nodes>
+        <classShapeMoniker Id="1100b0ca-75f8-48a4-9e2c-fcaf70895050" />
+        <classShapeMoniker Id="1a0361c9-b5ab-41e6-9678-31eefb2072fa" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="837ba2f1-5253-4967-a1e7-08b33ec69a44" absoluteBounds="6.625, 6.375, 2, 1.9631982421875">
+      <DataClassMoniker Name="/CarrotCMSDataContext/tblPageWidget" />
+      <nestedChildShapes>
+        <elementListCompartment Id="39310a24-768f-4366-ae28-f04482e58ab3" absoluteBounds="6.6400000000000006, 6.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.0625 : 5.32859537760417); (7.0625 : 6.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CarrotCMSDataContext/tblRootContent/tblRootContent_tblPageWidget" />
+      <nodes>
+        <classShapeMoniker Id="1a0361c9-b5ab-41e6-9678-31eefb2072fa" />
+        <classShapeMoniker Id="837ba2f1-5253-4967-a1e7-08b33ec69a44" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="39e28950-a462-4d38-84a4-41cfdd10fd1e" absoluteBounds="0.5, 8.375, 2, 1.9631982421875">
+      <DataClassMoniker Name="/CarrotCMSDataContext/tblSerialCache" />
+      <nestedChildShapes>
+        <elementListCompartment Id="59cb45e1-d1fa-40d9-8a70-300e997273bd" absoluteBounds="0.515, 8.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
