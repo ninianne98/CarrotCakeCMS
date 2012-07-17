@@ -13,20 +13,7 @@ namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jquery runat=server></{0}:jquery>")]
 	public class jquery : BaseWebControl {
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string Text {
-			get {
-				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
-			}
 
-			set {
-				ViewState["Text"] = value;
-			}
-		}
 
 		[Bindable(true)]
 		[Category("Appearance")]

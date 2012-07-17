@@ -50,7 +50,7 @@ namespace Carrotware.Web.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public Color ForeColor {
+		public override Color ForeColor {
 			get {
 				string s = (string)ViewState["ForeColor"];
 				return ((s == null) ? ColorTranslator.FromHtml(CaptchaImage.FGColorDef) : ColorTranslator.FromHtml(s));
@@ -79,7 +79,7 @@ namespace Carrotware.Web.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public Color BackColor {
+		public override Color BackColor {
 			get {
 				string s = (string)ViewState["BackColor"];
 				return ((s == null) ? ColorTranslator.FromHtml(CaptchaImage.BGColorDef) : ColorTranslator.FromHtml(s));
