@@ -101,7 +101,7 @@ IF (select COUNT(*) from  [dbo].[tblWidget]) < 1 BEGIN
 			  FROM [dbo].[tblPageWidgets]
 
 
-		INSERT INTO [CarrotwareCMS].[dbo].[tblWidgetData]
+		INSERT INTO [dbo].[tblWidgetData]
 				   ([WidgetDataID]
 				   ,[Root_WidgetID]
 				   ,[IsLatestVersion]
