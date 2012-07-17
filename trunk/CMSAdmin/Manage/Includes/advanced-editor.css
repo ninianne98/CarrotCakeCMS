@@ -130,15 +130,19 @@
 #cmsWidgetHead img, .cmsGlossySeaGreen a img {
 	border: 0px solid #CDE3D6 !important;
 }
-#cmsWidgetHead, #cmsControlPath {
+#cmsWidgetHead, #cmsControlPath, #cmsWidgetContainerName {
 	color: #676F6A !important;
 	font-size: 12x !important;
 	line-height: 16px !important;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 }
-#cmsControlPath {
+#cmsControlPath, #cmsWidgetContainerName {
 	float: left !important;
 	min-height: 30px !important;
+}
+
+#cmsWidgetContainerName {
+	color: #FFFFFF !important;
 }
 
 #cmsEditMenuList {
