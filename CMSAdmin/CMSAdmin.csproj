@@ -318,7 +318,6 @@
     <Content Include="Manage\SiteSkinEdit.aspx" />
     <Content Include="Manage\SiteSkinIndex.aspx" />
     <Content Include="SiteSkins.config" />
-    <Content Include="whole database.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Manage\CMS.asmx" />
