@@ -1,0 +1,23 @@
+﻿Notes on what/when to install which SQL scripts
+
+
+If installing/running CMS for first time run
+
+		** whole database.sql
+			-- creates the core tables for the CMS
+		** default user.sql  
+			-- you can update the username & email listed in script, note that the password is still going to be carrot123 unless you change it (RECOMENDED!!!!)
+			*OR* 
+			-- skip this script and use visual studio to create additional users
+			-- if skiping this script and using visual studio, create 3 groups: CarrotCMS Administrators, CarrotCMS Editors, and CarrotCMS Users
+
+		** create tblCalendar.sql
+			-- to use the calendar sample
+		** create tblFAQ.sql
+			-- to use the FAQ sample
+
+If coming from an earlier version, run these scripts
+
+		** add meta fields to content.sql     (from before 2012-01-25)
+
+		** new widget structure.sql     (from before 2012-07-16)

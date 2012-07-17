@@ -82,6 +82,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="create tblCalendar.sql" />
+    <Content Include="create tblFAQ.sql" />
     <Content Include="new widget structure.sql" />
+    <Content Include="__README.txt" />
   </ItemGroup>
 </Project>
