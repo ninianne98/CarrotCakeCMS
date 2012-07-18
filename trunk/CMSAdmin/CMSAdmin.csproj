@@ -263,6 +263,20 @@
     <Compile Include="Manage\UserPassword.aspx.designer.cs">
       <DependentUpon>UserPassword.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\WidgetHistory.aspx.cs">
+      <DependentUpon>WidgetHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\WidgetHistory.aspx.designer.cs">
+      <DependentUpon>WidgetHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\WidgetList.aspx.cs">
+      <DependentUpon>WidgetList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\WidgetList.aspx.designer.cs">
+      <DependentUpon>WidgetList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +331,8 @@
     <Content Include="Manage\Includes\advanced-editor.css" />
     <Content Include="Manage\SiteSkinEdit.aspx" />
     <Content Include="Manage\SiteSkinIndex.aspx" />
+    <Content Include="Manage\WidgetHistory.aspx" />
+    <Content Include="Manage\WidgetList.aspx" />
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>

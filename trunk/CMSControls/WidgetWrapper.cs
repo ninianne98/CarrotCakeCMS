@@ -124,8 +124,10 @@ namespace Carrotware.CMS.UI.Controls {
 			if (IsAdminMode) {
 				string sEdit = "";
 				if (!string.IsNullOrEmpty(JSEditFunction)) {
-					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink{0}\" class=\"ui-state-hover\" href=\"javascript:" + JSEditFunction + "\">\r\n"
+					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink\" class=\"ui-state-hover\" href=\"javascript:" + JSEditFunction + "\">\r\n"
 							+ " Edit </a></li> \r\n";
+					sEdit += " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget2\" id=\"cmsContentEditLink\" class=\"ui-state-hover\" href=\"javascript:cmsManageWidgetHistory('" + DatabaseKey + "')\">\r\n"
+								+ " History </a></li> \r\n";
 				}
 
 				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"

@@ -41,12 +41,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			var pageContents = pageHelper.GetLatestContent(SiteID, guidPage);
 			cmsHelper.OverrideKey(pageContents.FileName);
 
-
 			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
 							where aw.Root_WidgetID == guidWidget
 							orderby aw.WidgetOrder
 							select aw).FirstOrDefault();
-
 
 			if (!IsPostBack) {
 
@@ -169,40 +167,20 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				ObjectProperty ListSourceProperty = new ObjectProperty();
 
 				string sListSourcePropertyName = (from p in lstDefProps
-												  where p.CanRead == true
-													 && p.CanWrite == false
-													 && (p.Name.ToLower() == ("dict" + sName).ToLower()
-														 || p.Name.ToLower() == ("chk" + sName).ToLower())
-												  select p.Name).FirstOrDefault();
+												  where p.Name.ToLower() == sName.ToLower()
+														&& !string.IsNullOrEmpty(p.CompanionSourceFieldName)
+												  select p.CompanionSourceFieldName).FirstOrDefault();
 
 				if (string.IsNullOrEmpty(sListSourcePropertyName)) {
-					sListSourcePropertyName = (from p in lstDefProps
-											   where p.Name.ToLower() == sName.ToLower()
-													 && !string.IsNullOrEmpty(p.CompanionSourceFieldName)
-											   select p.CompanionSourceFieldName).FirstOrDefault();
-
-					if (string.IsNullOrEmpty(sListSourcePropertyName)) {
-						sListSourcePropertyName = "";
-					}
-
-					ListSourceProperty = (from p in lstDefProps
-										  where p.CanRead == true
-										  && p.CanWrite == false
-										  && p.Name.ToLower() == sListSourcePropertyName.ToLower()
-										  select p).FirstOrDefault();
-
-				} else {
-					if (string.IsNullOrEmpty(sListSourcePropertyName)) {
-						sListSourcePropertyName = "";
-					}
-
-					ListSourceProperty = (from p in lstDefProps
-										  where p.CanRead == true
-										  && p.CanWrite == false
-										  && (p.Name.ToLower() == ("dict" + sName).ToLower()
-											  || p.Name.ToLower() == ("chk" + sName).ToLower())
-										  select p).FirstOrDefault();
+					sListSourcePropertyName = "";
 				}
+
+				ListSourceProperty = (from p in lstDefProps
+									  where p.CanRead == true
+									  && p.CanWrite == false
+									  && p.Name.ToLower() == sListSourcePropertyName.ToLower()
+									  select p).FirstOrDefault();
+
 
 				var dp = (from p in lstDefProps
 						  where p.Name.ToLower() == sName.ToLower()
@@ -214,7 +192,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						txtValue.Visible = false;
 
 						//work with a drop down list, only allow one item in the drop down.
-						if (sListSourcePropertyName.StartsWith("dict") || dp.FieldMode == WidgetAttribute.FieldMode.DropDownList) {
+						if (dp.FieldMode == WidgetAttribute.FieldMode.DropDownList) {
 							ddlValue.Visible = true;
 
 							ddlValue.DataTextField = "Value";
@@ -233,7 +211,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						}
 
 						// work with a checkbox list, allow more than one value
-						if (sListSourcePropertyName.StartsWith("chk") || dp.FieldMode == WidgetAttribute.FieldMode.CheckBoxList) {
+						if (dp.FieldMode == WidgetAttribute.FieldMode.CheckBoxList) {
 							chkValues.Visible = true;
 
 							chkValues.DataTextField = "Value";
@@ -321,6 +299,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 
 			w.SaveDefaultControlProperties(props);
+			w.EditDate = DateTime.Now;
 
 			List<PageWidget> lstPageWidgets = cmsHelper.cmsAdminWidget;
 			lstPageWidgets.RemoveAll(x => x.Root_WidgetID == guidWidget);
