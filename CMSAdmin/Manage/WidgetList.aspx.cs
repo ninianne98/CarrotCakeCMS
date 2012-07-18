@@ -37,6 +37,18 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 		}
 
+		protected string GetCtrlName(string sCtrlName) {
+			string sName = "";
+			CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
+							  where p.FilePath.ToLower() == sCtrlName.ToLower()
+							  select p).FirstOrDefault();
+
+			if (plug != null) {
+				sName = plug.Caption;
+			}
+
+			return sName;
+		}
 
 		private void BindDataGrid() {
 
