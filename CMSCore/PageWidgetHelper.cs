@@ -27,13 +27,13 @@ namespace Carrotware.CMS.Core {
 			return new PageWidget(rootWidgetID);
 		}
 
-		public List<PageWidget> GetWidgets(Guid rootContentID, bool? bActive) {
+		public List<PageWidget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
 			var w = (from r in db.tblWidgetDatas
 					 join rr in db.tblWidgets on r.Root_WidgetID equals rr.Root_WidgetID
 					 orderby rr.WidgetOrder
 					 where rr.Root_ContentID == rootContentID
 						&& r.IsLatestVersion == true
-						&& rr.WidgetActive == bActive || bActive == null
+						&& (rr.WidgetActive == bActiveOnly || bActiveOnly == null)
 					 select new PageWidget(r)).ToList();
 
 			return w;

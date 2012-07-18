@@ -50,7 +50,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter w) {
 			if (IsAdminMode) {
 
-				string sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget\" id=\"cmsContentEditLink{0}\" class=\"ui-state-hover\" href=\"javascript:cmsManageWidgetHistory('" + this.ID + "')\">\r\n"
+				string sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget\" id=\"cmsContentEditLink\" class=\"ui-state-hover\" href=\"javascript:cmsManageWidgetList('" + this.ID + "')\">\r\n"
 							+ " Widgets </a></li> \r\n";
 			
 

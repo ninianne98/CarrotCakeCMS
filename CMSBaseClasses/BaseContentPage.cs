@@ -135,7 +135,11 @@ namespace Carrotware.CMS.UI.Base {
 				guidContentID = pageContents.Root_ContentID;
 			}
 
-			pageWidgets = widgetHelper.GetWidgets(guidContentID, true);
+			if (SiteData.AdvancedEditMode) {
+				pageWidgets = widgetHelper.GetWidgets(guidContentID, null);
+			} else {
+				pageWidgets = widgetHelper.GetWidgets(guidContentID, true);
+			}
 
 			if (pageContents != null) {
 				HtmlMeta metaDesc = new HtmlMeta();
@@ -158,14 +162,11 @@ namespace Carrotware.CMS.UI.Base {
 				if (cmsHelper.cmsAdminContent == null) {
 					cmsHelper.cmsAdminContent = pageContents;
 					cmsHelper.cmsAdminWidget = (from w in pageWidgets
-												where w.IsWidgetActive == true
 												orderby w.WidgetOrder
 												select w).ToList();
 				} else {
 					pageContents = cmsHelper.cmsAdminContent;
 					pageWidgets = (from w in cmsHelper.cmsAdminWidget
-								   where w.IsWidgetActive == true
-								   && w.IsWidgetPendingDelete == false
 								   orderby w.WidgetOrder
 								   select w).ToList();
 				}
@@ -254,6 +255,8 @@ namespace Carrotware.CMS.UI.Base {
 
 					List<PageWidget> lstWidget = (from d in pageWidgets
 												  where d.Root_ContentID == pageContents.Root_ContentID
+													&& d.IsWidgetActive == true
+													&& d.IsWidgetPendingDelete == false
 												  select d).ToList();
 
 					foreach (var theWidget in lstWidget) {

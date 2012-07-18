@@ -90,6 +90,10 @@
 		$(".cmsWidgetBarIconWidget").each(function (i) {
 			cmsFixGeneralImage(this, 'Widgets', 'Widgets', 'application_view_tile.png');
 		});
+		$(".cmsWidgetBarIconWidget2").each(function (i) {
+			cmsFixGeneralImage(this, 'History', 'History', 'layout.png');
+		});
+		
 	}
 
 
@@ -356,8 +360,13 @@
 		cmsFixDialog('CMSmodalalertmessage');
 	}
 
-	function cmsManageWidgetHistory(zoneName) {
-		alert(zoneName);
+	function cmsManageWidgetList(zoneName) {
+		//alert(zoneName);
+		cmsLaunchWindow('/Manage/WidgetList.aspx?pageid=' + thisPageID + "&zone=" + zoneName);
+	}
+	function cmsManageWidgetHistory(widgetID) {
+		//alert(widgetID);
+		cmsLaunchWindow('/Manage/WidgetHistory.aspx?widgetid=' + widgetID);
 	}
 
     function cmsShowEditPageInfo() {

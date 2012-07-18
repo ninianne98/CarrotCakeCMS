@@ -510,6 +510,7 @@ namespace Carrotware.CMS.UI.Admin {
 					foreach (var w in ww) {
 						w.IsWidgetPendingDelete = true;
 						w.IsWidgetActive = false;
+						w.EditDate = DateTime.Now;
 					}
 				}
 
@@ -538,6 +539,7 @@ namespace Carrotware.CMS.UI.Admin {
 				if (ww != null) {
 					foreach (var w in ww) {
 						w.IsWidgetActive = false;
+						w.EditDate = DateTime.Now;
 					}
 				}
 
@@ -565,6 +567,7 @@ namespace Carrotware.CMS.UI.Admin {
 						 select w).FirstOrDefault();
 
 				c.ControlProperties = ZoneText;
+				c.EditDate = DateTime.Now;
 
 				cmsAdminWidget = cacheWidget;
 
