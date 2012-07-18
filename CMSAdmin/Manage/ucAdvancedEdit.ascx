@@ -10,7 +10,6 @@
 <script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
 <link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 <link href="/Manage/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
-
 <script type="text/javascript">
 
 
@@ -260,6 +259,21 @@
 		});
 	}
 
+	function cmsMoveWidgetZone(zone, val) {
+		cmsSaveToolbarPosition();
+
+		var webMthd = webSvc + "/MoveWidgetToNewZone";
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'WidgetTarget': '" + zone + "', 'WidgetDropped': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsSaveWidgetsCallback,
+			error: cmsAjaxFailed
+		});
+	}
 
 	function cmsApplyChanges() {
 
@@ -503,6 +517,29 @@
 			handle: "p.cmsToolItem",
 			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
 		});
+
+/*
+		$( ".cmsTargetMove" ).droppable({
+			accept: ".cmsWidgetContainerWrapper",
+			hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
+			drop: function( event, ui ) {
+
+				//var zone = $( this ).attr('id');
+				var zone = $( this ).parent().find('#cmsWidgetContainerName').text();
+				//alert(zone);
+
+				var val = $(ui.draggable).find('#cmsCtrlID').val();
+
+				alert('dropped to: ' + zone + '     values: ' + val);
+				setTimeout("cmsBuildOrder();", 500);
+
+				//cmsMoveWidgetZone(zone, val);
+
+				ui.draggable.hide( "slow", function() {
+				});
+			}
+		});
+*/	
 
 
 		$(".cmsTargetArea").bind("sortupdate", function(event, ui) {

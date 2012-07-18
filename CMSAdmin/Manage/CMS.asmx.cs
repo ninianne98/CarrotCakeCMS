@@ -420,6 +420,55 @@ namespace Carrotware.CMS.UI.Admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string MoveWidgetToNewZone(string WidgetTarget, string WidgetDropped, string ThisPage) {
+			try {
+				//WidgetAddition = cmsHelper.DecodeBase64(WidgetAddition);
+				CurrentPageGuid = new Guid(ThisPage);
+				LoadGuids();
+				var w = WidgetDropped.Split('\t');
+
+				Guid guidWidget = Guid.Empty;
+				if (w.Length > 2) {
+					if (w[2].ToString().Length == Guid.Empty.ToString().Length) {
+						guidWidget = new Guid(w[2]);
+					}
+				} else {
+					if (w[0].ToString().Length == Guid.Empty.ToString().Length) {
+						guidWidget = new Guid(w[0]);
+					}
+				}
+
+				var cacheWidget = cmsAdminWidget;
+
+				var ww1 = (from w1 in cacheWidget
+						   where w1.Root_WidgetID == guidWidget
+						   select w1).FirstOrDefault();
+
+				if (ww1 != null) {
+					ww1.WidgetOrder = -1;
+					ww1.PlaceholderName = WidgetTarget;
+				}
+
+				var ww2 = (from w1 in cacheWidget
+						   where w1.PlaceholderName.ToLower() == WidgetTarget.ToLower()
+						   && w1.WidgetOrder >= 0
+						   orderby w1.WidgetOrder
+						   select w1).ToList();
+
+				int iW = 1;
+				foreach (var w2 in ww2) {
+					w2.WidgetOrder = iW++;
+				}
+
+				cmsAdminWidget = cacheWidget;
+				return "OK";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheWidgetUpdate(string WidgetAddition, string ThisPage) {
 			try {
 				WidgetAddition = cmsHelper.DecodeBase64(WidgetAddition);
