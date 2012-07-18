@@ -322,6 +322,15 @@
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen-scoped.css" />
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen.css" />
     <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
+    <Content Include="Manage\Images\balloons\balloon_bottom.png" />
+    <Content Include="Manage\Images\balloons\balloon_bottomLeft.png" />
+    <Content Include="Manage\Images\balloons\balloon_bottomRight.png" />
+    <Content Include="Manage\Images\balloons\balloon_left.png" />
+    <Content Include="Manage\Images\balloons\balloon_right.png" />
+    <Content Include="Manage\Images\balloons\balloon_tail.png" />
+    <Content Include="Manage\Images\balloons\balloon_top.png" />
+    <Content Include="Manage\Images\balloons\balloon_topLeft.png" />
+    <Content Include="Manage\Images\balloons\balloon_topRight.png" />
     <Content Include="Manage\Images\cog.png" />
     <Content Include="Manage\Images\cog_edit.png" />
     <Content Include="Manage\Images\page_edit.png" />
