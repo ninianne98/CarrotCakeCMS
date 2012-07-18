@@ -59,7 +59,7 @@
 		cmsResetToolbarScroll();
 	});
 
-	setTimeout("cmsResetToolbarScroll()", 500);
+	setTimeout("cmsResetToolbarScroll()", 250);
 
 	function cmsResetToolbarScroll() {
 		setTimeout("cmsShiftPosition('<%=EditorPrefs.EditorMargin %>')", 100);
@@ -109,17 +109,26 @@
 
 </script>
 <script type="text/javascript">
+	$(document).ready(function() {
+		<% if (!bLocked) { %>
+		setTimeout("cmsEditHB();", 1000);
+		<%} else { %>
+		cmsAlertModal("<%=litUser.Text %>");
+		<%} %>
+	});
+</script>
+<script type="text/javascript">
 	var webSvc = "/Manage/CMS.asmx";
 
 	var thisPage = '<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>';
-	
+
 	var thisPageID = '<%=guidContentID.ToString() %>';
 
 	function cmsEscapeFile() {
 		thisPage = cmsMakeStringSafe(thisPage);
 	}
 
-	$(document).ready(function() {
+	$(document).ready(function () {
 		cmsEscapeFile();
 	});
 
@@ -130,8 +139,8 @@
 
 	function cmsEditHB() {
 		//cmsSaveToolbarPosition();
-		
-		setTimeout("cmsEditHB();", 30 * 1000);
+
+		setTimeout("cmsEditHB();", 45 * 1000);
 
 		var webMthd = webSvc + "/RecordHeartbeat";
 
@@ -155,7 +164,7 @@
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'ToolbarState': '"+cmsMnuVis+"', 'ToolbarMargin': '"+cmsToolbarPos+"', 'ToolbarScroll': '"+scrollTop+"'}",
+			data: "{'ToolbarState': '" + cmsMnuVis + "', 'ToolbarMargin': '" + cmsToolbarPos + "', 'ToolbarScroll': '" + scrollTop + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsAjaxGeneralCallback,
@@ -210,7 +219,7 @@
 		var webMthd = webSvc + "/UpdatePageTemplate";
 
 		tmpl = cmsMakeStringSafe(tmpl);
-		
+
 		$.ajax({
 			type: "POST",
 			url: webMthd,
@@ -242,7 +251,7 @@
 			error: cmsAjaxFailed
 		});
 	}
-	
+
 	function cmsRemoveWidget(key) {
 		cmsSaveToolbarPosition();
 
@@ -291,14 +300,6 @@
 
 	}
 
-<% if (!bLocked) { %>
-	setTimeout("cmsEditHB();", 3000);
-<%} else { %>
-	$(document).ready(function() {
-		cmsAlertModal("<%=litUser.Text %>");
-	});
-<%} %>
-
 	function cmsUpdateHeartbeat(data, status) {
 		var hb = $('#cmsHeartBeat');
 		hb.empty().append('HB:  ');
@@ -328,7 +329,6 @@
 
 		if (data.d == "OK") {
 			CMSBusyShort();
-			//window.setTimeout('location.reload()', 800);
 			cmsDirtyPageRefresh();
 		} else {
 			cmsAlertModal(data.d);
@@ -369,8 +369,8 @@
 		});
 
 		$("#CMSmodalalertmessage").html(request);
-		
-		
+
+
 		cmsFixDialog('CMSmodalalertmessage');
 	}
 
@@ -383,21 +383,21 @@
 		cmsLaunchWindow('/Manage/WidgetHistory.aspx?widgetid=' + widgetID);
 	}
 
-    function cmsShowEditPageInfo() {
-        //cmsAlertModal("cmsShowEditPageInfo");
-        cmsLaunchWindow('/Manage/PageEdit.aspx?pageid=' + thisPageID);
-    }
+	function cmsShowEditPageInfo() {
+		//cmsAlertModal("cmsShowEditPageInfo");
+		cmsLaunchWindow('/Manage/PageEdit.aspx?pageid=' + thisPageID);
+	}
 
-    function cmsShowEditWidgetForm(w, m) {
-        //cmsAlertModal("cmsShowEditWidgetForm");
-        cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&widgetid=" + w + "&mode=" + m);
-    }
-    
-    function cmsShowEditContentForm(f, m) {
-        //cmsAlertModal("cmsShowEditContentForm");
-        cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&field=" + f + "&mode=" + m);
-    }
-    
+	function cmsShowEditWidgetForm(w, m) {
+		//cmsAlertModal("cmsShowEditWidgetForm");
+		cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&widgetid=" + w + "&mode=" + m);
+	}
+
+	function cmsShowEditContentForm(f, m) {
+		//cmsAlertModal("cmsShowEditContentForm");
+		cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&field=" + f + "&mode=" + m);
+	}
+
 	function CMSBusyShort() {
 
 		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
@@ -418,15 +418,22 @@
 		});
 	}
 
-	$(document).ready(function() {
+	$(document).ready(function () {
 		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
 	});
+
+	function cmsBuildOrderAndUpdateWidgets() {
+		var ret = cmsBuildOrder();
+		if (ret) {
+			cmsUpdateWidgets();
+		}
+	}
 
 	function cmsBuildOrder() {
 		CMSBusyShort();
 
 		$("#cmsFullOrder").val('');
-		$(".cmsTargetArea").find('#cmsCtrlOrder').each(function(i) {
+		$(".cmsTargetArea").find('#cmsCtrlOrder').each(function (i) {
 			var txt = $(this);
 			$(txt).val('');
 			var p = txt.parent().parent().parent().attr('id');
@@ -437,19 +444,20 @@
 			$("#cmsFullOrder").val($("#cmsFullOrder").val() + '\r\n ' + txt.val());
 
 		});
+
+		return true;
 	}
 
-	$(document).ready(function() {
-		setTimeout("cmsBuildOrder();", 500);
+	$(document).ready(function () {
+		setTimeout("cmsBuildOrder();", 250);
 	});
-	
 
 	function CarrotCMSRemoveWidget(v) {
 		$("#CMSremoveconfirm").dialog("destroy");
-		
-		$("#CMSremoveconfirm" ).dialog({
-			open: function() {
-				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus(); 
+
+		$("#CMSremoveconfirm").dialog({
+			open: function () {
+				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 			},
 
 			resizable: false,
@@ -457,18 +465,18 @@
 			width: 400,
 			modal: true,
 			buttons: {
-					"No": function() {
-						$( this ).dialog( "close" );
-					},
-					"Yes": function() {
-						cmsRemoveWidget(v);
-						$( this ).dialog( "close" );
-					}
+				"No": function () {
+					$(this).dialog("close");
+				},
+				"Yes": function () {
+					cmsRemoveWidget(v);
+					$(this).dialog("close");
 				}
+			}
 		});
-		
+
 		cmsFixDialog('CMSremoveconfirmmsg');
-		
+
 	}
 
 
@@ -492,7 +500,7 @@
 	}
 
 
-	$(document).ready(function() {
+	$(document).ready(function () {
 
 		$('#cmsAdminToolbox').addFloating({
 			targetLeft: 25,
@@ -502,13 +510,14 @@
 
 		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
 
-
+		/*
 		$(".cmsTargetArea").sortable({
-			revert: true,
-			dropOnEmpty: true,
-			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
-			hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
+		revert: true,
+		dropOnEmpty: true,
+		placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
+		hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
 		});
+		*/
 
 		$("#cmsToolBox div.cmsToolItem").draggable({
 			connectToSortable: ".cmsTargetArea",
@@ -518,36 +527,26 @@
 			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
 		});
 
-/*
-		$( ".cmsTargetMove" ).droppable({
-			accept: ".cmsWidgetContainerWrapper",
-			hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
-			drop: function( event, ui ) {
+		$(".cmsTargetMove").sortable({
+			connectWith: ".cmsTargetMove",
+			revert: true,
+			dropOnEmpty: true,
+			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
+			hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
+		}).disableSelection();
 
-				//var zone = $( this ).attr('id');
-				var zone = $( this ).parent().find('#cmsWidgetContainerName').text();
-				//alert(zone);
 
-				var val = $(ui.draggable).find('#cmsCtrlID').val();
+		// make sure sort only fires once
+		var cmsSortWidgets = false;
 
-				alert('dropped to: ' + zone + '     values: ' + val);
-				setTimeout("cmsBuildOrder();", 500);
-
-				//cmsMoveWidgetZone(zone, val);
-
-				ui.draggable.hide( "slow", function() {
-				});
+		$(".cmsTargetArea").bind("sortupdate", function (event, ui) {
+			if (!cmsSortWidgets) {
+				var id = $(ui.item).attr('id');
+				var val = $(ui.item).find('#cmsCtrlID').val();
+				$("#cmsMovedItem").val(val);
+				setTimeout("cmsBuildOrderAndUpdateWidgets();", 500);
+				cmsSortWidgets = true;
 			}
-		});
-*/	
-
-
-		$(".cmsTargetArea").bind("sortupdate", function(event, ui) {
-			var id = $(ui.item).attr('id');
-			var val = $(ui.item).find('#cmsCtrlID').val();
-			$("#cmsMovedItem").val(val);
-			setTimeout("cmsBuildOrder();", 500);
-			setTimeout("cmsUpdateWidgets();", 1800);
 		});
 
 		$("div#cmsToolBox").disableSelection();
@@ -567,31 +566,29 @@
 
 	function cmsDelItem(item) {
 		item.appendTo("#cmsTrashList");
-		setTimeout("cmsBuildOrder();", 500);
-		setTimeout("cmsUpdateWidgets();", 1800);
+		setTimeout("cmsBuildOrderAndUpdateWidgets();", 500);
 	}
 
 
+	function cmsFixDialog(dialogname) {
 
-	function cmsFixDialog(dialogname) {	
-	
 		var fontfacereset = ' font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important; font-size: 12px !important; line-height: 16px !important; '
 
-		var dilg = $("#"+dialogname).parent().parent();
-		var txt = $("#"+dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;' + fontfacereset);
-			
+		var dilg = $("#" + dialogname).parent().parent();
+		var txt = $("#" + dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;' + fontfacereset);
+
 		var c = $(dilg).attr('class');
 		$(dilg).attr('class', "cmsGlossySeaGreen ui-widget-content ui-corner-all " + c);
 
 		var pstyle = $(dilg).attr('style');
-		$(dilg).attr('style', "padding:2px !important; margin:2px !important; background: #ffffff !important; border: 1px solid #c0c0c0 !important;"+ fontfacereset + pstyle);
-		
+		$(dilg).attr('style', "padding:2px !important; margin:2px !important; background: #ffffff !important; border: 1px solid #c0c0c0 !important;" + fontfacereset + pstyle);
+
 		var cap = $(dilg).find(".ui-dialog-titlebar-close").attr('style', 'float:right !important; padding:4px !important; background-color:transparent !important;');
 		var cap = $(dilg).find(".ui-dialog-titlebar").attr('style', 'margin: 2px !important; padding: 2px !important; height: 32px !important;');
 		var cap = $(dilg).find(".ui-button").attr('style', 'float:right !important;');
 		var cap = $(dilg).find(".ui-dialog-title").attr('style', 'float:left !important; margin:2px !important; padding:2px !important;');
 		var cap = $(dilg).find(".ui-dialog-buttonpane").attr('style', 'margin:2px !important; padding:3px !important;');
-		
+
 		//var h = $(dilg).html();
 		//$(dilg).html('');
 		//$(dilg).html('<div class="cmsGlossySeaGreen ui-widget-content ui-corner-all">' + h + '</div>');
@@ -642,8 +639,10 @@
 </script>
 <div style="display: none;">
 	<img src="/manage/images/cog.png" alt="" />
-	<img src="/manage/images/pencil.png" alt="" />
 	<img src="/manage/images/cross.png" alt="" />
+	<img src="/manage/images/pencil.png" alt="" />
+	<img src="/manage/images/application_view_tile.png" alt="" />
+	<img src="/manage/images/layout.png" alt="" />
 </div>
 <div id="cmsAdminToolbox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all cmsToolbox2">
 	<div class="cmsInsideArea">
@@ -692,8 +691,8 @@
 				<br style="clear: none;" />
 				<asp:Repeater ID="rpTools" runat="server">
 					<HeaderTemplate>
-						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
-							float: left; border: solid 1px #000;">
+						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
+							padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
 					</HeaderTemplate>
 					<ItemTemplate>
 						<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
@@ -712,7 +711,8 @@
 					<FooterTemplate>
 						</div></FooterTemplate>
 				</asp:Repeater>
-				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
+				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
+					background-color: #000;">
 				</div>
 			</div>
 			<div id="cmsToolboxSpacer" style="display: none;">
