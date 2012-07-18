@@ -467,6 +467,7 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheWidgetUpdate(string WidgetAddition, string ThisPage) {
@@ -521,6 +522,9 @@ namespace Carrotware.CMS.UI.Admin {
 					if (z == null) {
 						cacheWidget.Add(wd);
 					} else {
+						z.EditDate = DateTime.Now;
+						z.PlaceholderName = wd.PlaceholderName; // if moving zones
+
 						var i = cacheWidget.IndexOf(z);
 						cacheWidget[i].WidgetOrder = wd.WidgetOrder;
 
