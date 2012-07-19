@@ -75,15 +75,15 @@ namespace Carrotware.CMS.UI.Controls {
 				w.Write(sPrefix);
 
 			} else {
-				w.Write("<div id=\"" + this.ClientID + "\">");
+				w.Write("\r\n<!--div id=\"" + this.ClientID + "\"-->\r\n");
 			}
 
 			base.Render(w);
 
 			if (IsAdminMode) {
-				w.Write("\r\n&nbsp;\r\n<div style=\"clear: both;\"></div>\r\n</div></div>");
+				w.Write("\r\n&nbsp;\r\n<div style=\"clear: both;\"></div>\r\n</div></div>\r\n");
 			} else {
-				w.Write("\r\n</div>");
+				w.Write("\r\n<!--/div-->\r\n");
 			}
 
 		}

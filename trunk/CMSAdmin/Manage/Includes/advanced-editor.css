@@ -140,7 +140,9 @@
 	float: left !important;
 	min-height: 30px !important;
 }
-
+#cmsWidgetHead {
+	cursor: move !important;
+}
 #cmsWidgetContainerName {
 	color: #FFFFFF !important;
 }
@@ -183,6 +185,7 @@
 	float: left !important;
 	margin: 0 !important;
 	padding: 0 !important;
+	cursor: pointer !important;
 }
 
 #cmsEditMenuList-inner ul.cmsMnuParent {
@@ -198,6 +201,7 @@
 	float: left !important;
 	text-decoration: none !important;
 	font-weight: bold !important;
+	cursor: pointer !important;
 }
 
 #cmsEditMenuList-inner ul.cmsMnuParent li a:hover, #cmsEditMenuList-inner ul.cmsMnuParent li.selected a {
@@ -205,6 +209,7 @@
 	color: #676F6A !important;
 	text-decoration: none !important;
 	background-image: none !important;
+	cursor: pointer !important;
 }
 
 #cmsEditMenuList-inner li .cmsMnuChildren {
