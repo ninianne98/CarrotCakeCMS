@@ -32,6 +32,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				guidContentID = new Guid(Request.QueryString["pageid"].ToString());
 			}
 
+			cmsHelper.OverrideKey(guidContentID);
+
 			if (!IsPostBack) {
 				BindDataGrid();
 			}
@@ -52,14 +54,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		private void BindDataGrid() {
 
-			cmsHelper.OverrideKey(guidContentID);
 
-			var d = (from aw in cmsHelper.cmsAdminWidget
+
+			var lstW = (from aw in cmsHelper.cmsAdminWidget
 					 where aw.PlaceholderName.ToLower() == sZone.ToLower()
 					 orderby aw.IsWidgetPendingDelete ascending, aw.IsWidgetActive descending, aw.WidgetOrder
 					 select aw).ToList();
 
-			gvPages.DataSource = d;
+			gvPages.DataSource = lstW;
 			gvPages.DataBind();
 
 			foreach (GridViewRow dgItem in gvPages.Rows) {

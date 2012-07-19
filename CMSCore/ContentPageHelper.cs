@@ -98,6 +98,7 @@ namespace Carrotware.CMS.Core {
 						orderby ct.EditDate descending
 						where r.SiteID == siteID
 						 && lstDel.Contains(ct.ContentID)
+						 && ct.IsLatestVersion != true
 						select ct).ToList();
 
 			if (oldC.Count > 0) {
