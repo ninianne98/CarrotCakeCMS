@@ -452,7 +452,7 @@
 		setTimeout("cmsBuildOrder();", 250);
 	});
 
-	function CarrotCMSRemoveWidget(v) {
+	function cmsRemoveWidgetLink(v) {
 		$("#CMSremoveconfirm").dialog("destroy");
 
 		$("#CMSremoveconfirm").dialog({

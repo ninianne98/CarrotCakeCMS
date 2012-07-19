@@ -130,7 +130,7 @@ namespace Carrotware.CMS.UI.Controls {
 								+ " History </a></li> \r\n";
 				}
 
-				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:CarrotCMSRemoveWidget('" + DatabaseKey + "');\">\r\n"
+				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:cmsRemoveWidgetLink('" + DatabaseKey + "');\">\r\n"
 								+ " Remove  </a></li> \r\n";
 
 				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
@@ -162,14 +162,15 @@ namespace Carrotware.CMS.UI.Controls {
 				w.Write(sPrefix);
 
 			} else {
-				w.Write("<div id=\"" + this.ClientID + "\">");
+				w.Write("\r\n<!--div id=\"" + this.ClientID + "\"-->\r\n");
 			}
 
 			base.Render(w);
+
 			if (IsAdminMode) {
-				w.Write("\r\n<div style=\"clear: both;\"></div> </div></div>");
+				w.Write("\r\n<div style=\"clear: both;\"></div> </div></div>\r\n");
 			} else {
-				w.Write("\r\n</div>");
+				w.Write("\r\n<!--/div-->\r\n");
 			}
 
 		}
