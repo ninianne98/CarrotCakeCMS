@@ -22,6 +22,7 @@ namespace Carrotware.CMS.UI.Admin {
 			if (!string.IsNullOrEmpty(Request.QueryString["version"])) {
 				guidContentID = new Guid(Request.QueryString["version"].ToString());
 			}
+
 			ContentPage p = null;
 
 
@@ -67,9 +68,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 			var lstCont = (from c in pageHelper.GetVersionHistory(SiteID, guidRootID)
 						   select c).ToList();
-			var current = lstCont.Where(x => x.IsLatestVersion = true).FirstOrDefault();
-			var first = lstCont.OrderBy(x => x.EditDate).FirstOrDefault();
 
+			var current = lstCont.Where(x => x.IsLatestVersion = true).FirstOrDefault();
+			//var first = lstCont.OrderBy(x => x.EditDate).FirstOrDefault();
 
 			LoadGridLive<ContentPage>(gvPages, hdnSort, lstCont, sSortKey);
 
@@ -90,9 +91,9 @@ namespace Carrotware.CMS.UI.Admin {
 					if (chkContent.Attributes["value"].ToString() == current.ContentID.ToString()) {
 						chkContent.Visible = false;
 					}
-					if (chkContent.Attributes["value"].ToString() == first.ContentID.ToString()) {
-						chkContent.Visible = false;
-					}
+					//if (chkContent.Attributes["value"].ToString() == first.ContentID.ToString()) {
+					//    chkContent.Visible = false;
+					//}
 				}
 
 
