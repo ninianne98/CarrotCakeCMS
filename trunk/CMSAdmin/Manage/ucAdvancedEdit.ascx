@@ -380,7 +380,7 @@
 	}
 	function cmsManageWidgetHistory(widgetID) {
 		//alert(widgetID);
-		cmsLaunchWindow('/Manage/WidgetHistory.aspx?widgetid=' + widgetID);
+		cmsLaunchWindow('/Manage/WidgetHistory.aspx?pageid=' + thisPageID + "&widgetid=" + widgetID);
 	}
 
 	function cmsShowEditPageInfo() {

@@ -574,6 +574,39 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string GetWidgetVersionText(string DBKey, string ThisPage) {
+			try {
+				CurrentPageGuid = new Guid(ThisPage);
+				LoadGuids();
+				Guid guidWidget = new Guid(DBKey);
+
+				var ww = (from w in cmsAdminWidget
+						  where w.WidgetDataID == guidWidget
+						  select w).FirstOrDefault();
+
+				if (ww == null) {
+					ww = widgetHelper.GetWidgetVersion(guidWidget);
+				}
+
+				if (ww != null) {
+					if (string.IsNullOrEmpty(ww.ControlProperties)) {
+						return "No Data";
+					} else {
+						if (ww.ControlProperties.Length < 768) {
+							return ww.ControlProperties;
+						} else {
+							return ww.ControlProperties.Substring(0, 700) + ".........";
+						}
+					}
+				}
+
+				return "OK";
+			} catch (Exception ex) {
+				return "FAIL";
+			}
+		}
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]

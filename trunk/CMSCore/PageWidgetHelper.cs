@@ -39,6 +39,40 @@ namespace Carrotware.CMS.Core {
 			return w;
 		}
 
+		public List<PageWidget> GetWidgetVersionHistory(Guid rootWidgetID) {
+			var w = (from r in db.tblWidgetDatas
+					 join rr in db.tblWidgets on r.Root_WidgetID equals rr.Root_WidgetID
+					 orderby r.EditDate descending
+					 where rr.Root_WidgetID == rootWidgetID
+					 select new PageWidget(r)).ToList();
+
+			return w;
+		}
+
+		public PageWidget GetWidgetVersion(Guid widgetDataID) {
+			var w = (from r in db.tblWidgetDatas
+					 where r.WidgetDataID == widgetDataID
+					 select new PageWidget(r)).FirstOrDefault();
+
+			return w;
+		}
+
+		public void RemoveVersions(List<Guid> lstDel) {
+
+			var oldW = (from w in db.tblWidgetDatas
+						orderby w.EditDate descending
+						where lstDel.Contains(w.WidgetDataID)
+						&& w.IsLatestVersion != true
+						select w).ToList();
+
+			if (oldW.Count > 0) {
+				foreach (var c in oldW) {
+					db.tblWidgetDatas.DeleteOnSubmit(c);
+				}
+				db.SubmitChanges();
+			}
+		}
+
 		public void Delete(Guid widgetDataID) {
 			var w = (from r in db.tblWidgetDatas
 					 where r.WidgetDataID == widgetDataID
