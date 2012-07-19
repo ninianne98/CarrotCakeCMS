@@ -47,6 +47,8 @@
 						<asp:Literal ID="litEditFileName" runat="server"></asp:Literal>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<asp:Literal ID="litDateMod" runat="server"></asp:Literal></b>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
 				</p>
 				<asp:TextBox Style="height: 450px; width: 790px;" ID="txtPageContents" runat="server" TextMode="MultiLine" Rows="15" Columns="100" />
 				<p>
