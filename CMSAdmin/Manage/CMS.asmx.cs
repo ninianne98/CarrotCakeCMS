@@ -232,7 +232,7 @@ namespace Carrotware.CMS.UI.Admin {
 					db.SubmitChanges();
 					return DateTime.Now.ToString();
 				} else {
-					return DateTime.MinValue.ToString();
+					return Convert.ToDateTime("12/31/1899").ToString();
 				}
 
 			} catch (Exception ex) {
@@ -399,15 +399,24 @@ namespace Carrotware.CMS.UI.Admin {
 		public string ValidateUniqueFilename(string TheFileName, string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
+				TheFileName = cmsHelper.DecodeBase64(TheFileName);
 				TheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, TheFileName);
 
-				var h = (from r in db.tblRootContents
-						 where r.Root_ContentID != CurrentPageGuid
-						 && r.FileName.ToLower() == TheFileName.ToLower()
-						 && r.SiteID == SiteData.CurrentSiteID
-						 select r).FirstOrDefault();
+				TheFileName = TheFileName.ToLower();
 
-				if (h == null) {
+				if (TheFileName == "/default.aspx") {
+					return "FAIL";
+				}
+
+				var fn = pageHelper.FindByFilename(SiteData.CurrentSiteID, TheFileName);
+
+				var cp = pageHelper.GetLatestContent(SiteData.CurrentSiteID, CurrentPageGuid);
+
+				if (cp == null) {
+					cp = pageHelper.GetVersion(SiteData.CurrentSiteID, CurrentPageGuid);
+				}
+
+				if (fn == null || (fn != null && cp != null && fn.Root_ContentID == cp.Root_ContentID)) {
 					return "PASS";
 				} else {
 					return "FAIL";

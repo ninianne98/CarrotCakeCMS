@@ -6,16 +6,14 @@
 	<script type="text/javascript">
 		var webSvc = "/Manage/CMS.asmx";
 
-		var thePageID = '<%=guidContentID.ToString() %>';
+		var thePageID = '<%=guidRootContentID.ToString() %>';
 
-		function ajaxFailed(xmlRequest) {
-			var msg = xmlRequest.status + '\r\n'
-			+ xmlRequest.statusText + '\r\n'
-			+ xmlRequest.responseText + '\r\n';
+		var thePage = '';
 
-			alert(msg);
+		function MakeStringSafe(val) {
+			val = Base64.encode(val);
+			return val;
 		}
-
 
 		var menuOuter = 'menuitemsouter';
 		var menuInner = 'menuitemsinner';
@@ -23,7 +21,6 @@
 		var menuValue = '<%=txtParent.ClientID %>';
 
 		var bMoused = false;
-
 
 		function getCrumbs() {
 			var webMthd = webSvc + "/GetPageCrumbs";
@@ -61,7 +58,6 @@
 			}
 
 		}
-
 
 
 		function hideMnu() {
@@ -152,7 +148,80 @@
 
 			getCrumbs();
 		}
-		
+
+
+
+		function CheckFileName() {
+			thePage = $('#<%= txtFileName.ClientID %>').val();
+
+			$('#<%= txtFileValid.ClientID %>').val('');
+
+			var webMthd = webSvc + "/ValidateUniqueFilename";
+			var myPage = MakeStringSafe(thePage);
+
+			$.ajax({
+				type: "POST",
+				url: webMthd,
+				data: "{'TheFileName': '" + myPage + "', 'PageID': '" + thePageID + "'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: editFilenameCallback,
+				error: ajaxFailed
+			});
+		}
+
+		$(document).ready(function () {
+			CheckFileName();
+		});
+
+		function editFilenameCallback(data, status) {
+			if (data.d == "PASS") {
+				$('#<%= txtFileValid.ClientID %>').val('VALID');
+			} else {
+				$('#<%= txtFileValid.ClientID %>').val('');
+			}
+			Page_ClientValidate();
+		}
+
+
+<asp:placeholder ID="pnlHB" runat="server">
+
+		function EditHB() {
+			setTimeout("EditHB();", 30 * 1000);
+
+			var webMthd = webSvc + "/RecordHeartbeat";
+
+			$.ajax({
+				type: "POST",
+				url: webMthd,
+				data: "{'PageID': '" + thePageID + "'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: updateHeartbeat,
+				error: ajaxFailed
+			});
+		}
+
+		function updateHeartbeat(data, status) {
+			var hb = $('#cmsHeartBeat');
+			hb.empty().append('HB:  ');
+			hb.append(data.d);
+		}
+
+		setTimeout("EditHB();", 1500);
+
+
+		function ajaxFailed(request) {
+			var s = "";
+			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
+			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
+			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
+			alertModal(s);
+		}
+
+</asp:placeholder>
+
+
 	</script>
 	<style type="text/css">
 		div.scroll {
@@ -333,7 +402,7 @@
 		</tr>
 	</table>
 	<br />
-	<div id="jqtabs" style="height: 400px; width: 780px;">
+	<div id="jqtabs" style="height: 400px; width: 825px;">
 		<ul>
 			<li><a href="#pagecontent-tabs-0">Left</a></li>
 			<li><a href="#pagecontent-tabs-1">Center</a></li>
@@ -344,7 +413,7 @@
 				<div runat="server" id="divLeft">
 					body (left)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine"
+				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine"
 					Rows="15" Columns="80" />
 				<%--<asp:Button ID="Button1" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
@@ -355,7 +424,7 @@
 				<div runat="server" id="divCenter">
 					body (main/center)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
+				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
 					Columns="80" />
 				<%--<asp:Button ID="Button2" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
@@ -366,7 +435,7 @@
 				<div runat="server" id="divRight">
 					body (right)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 730px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine"
+				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine"
 					Rows="15" Columns="80" />
 				<%--<asp:Button ID="Button3" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
@@ -375,64 +444,79 @@
 	</div>
 	<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
 		&nbsp;</div>
-	<br />
-	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="button" id="btnCancel" value="Cancel" onclick="location.href='./PageIndex.aspx';" />
+	<table width="800">
+		<tr>
+			<td valign="top">
+				<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" id="btnCancel" value="Cancel" onclick="location.href='./PageIndex.aspx';" />
+			</td>
+			<td valign="top">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</td>
+			<td valign="top" align="right">
+				<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
+				</asp:DropDownList>
+			</td>
+			<td valign="top">
+				&nbsp;&nbsp;
+			</td>
+			<td valign="top" align="left">
+				<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
+			</td>
+		</tr>
+	</table>
+	<script language="javascript" type="text/javascript">
+		function cmsPageVersionNav() {
+			var qs = $('#<%= ddlVersions.ClientID %>').val();
+
+			$("#confirmRevert").dialog("destroy");
+
+			if (qs != '00000') {
+
+				$("#confirmRevert").dialog({
+					open: function () {
+						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+					},
+
+					resizable: false,
+					height: 250,
+					width: 400,
+					modal: true,
+					buttons: {
+						"No": function () {
+							$(this).dialog("close");
+						},
+						"Yes": function () {
+							window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?id=' + qs + '\'', 500);
+							$(this).dialog("close");
+						}
+					}
+				});
+
+			}
+		}
+	</script>
 	<br />
 	<div style="display: none;">
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
+		<div id="confirmRevert" title="Really Revert?">
+			<div id="confirmRevertMsg">
+				<p>
+					Are you sure you want to open this older version of the content? All unsaved changes will be lost.</p>
+				<p>
+					This will not apply changes to the content until you save the prior version, generating a new copy.</p>
+				<p>
+					Note: this only applies to the page content shown here, all widgets currently assigned will remain.
+				</p>
+			</div>
+		</div>
 	</div>
-	<script type="text/javascript">
-		var webSvc = "/Manage/CMS.asmx";
-
-		var thisPage = '';
-
-		var thisPageID = '<%=guidContentID.ToString() %>';
-
-		function MakeStringSafe(val) {
-			val = Base64.encode(val);
-			return val;
-		}
-
-		function CheckFileName() {
-			thisPage = $('#<%= txtFileName.ClientID %>').val();
-
-			$('#<%= txtFileValid.ClientID %>').val('');
-
-			var webMthd = webSvc + "/ValidateUniqueFilename";
-			var myPage = MakeStringSafe(thisPage);
-
-			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: "{'TheFileName': '" + myPage + "', 'PageID': '" + thisPageID + "'}",
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: editFilenameCallback,
-				error: ajaxFailed
-			});
-		}
-
-		$(document).ready(function () {
-			CheckFileName();
-		});
-
-		function editFilenameCallback(data, status) {
-			if (data.d == "PASS") {
-				$('#<%= txtFileValid.ClientID %>').val('VALID');
-			} else {
-				$('#<%= txtFileValid.ClientID %>').val('');
-			}
-			Page_ClientValidate();
-		}
-	</script>
 	<script type="text/javascript">
 
 		function AutoSynchMCE() {
 			if (saving != 1) {
 				tinyMCE.triggerSave();
-				setTimeout("AutoSynchMCE();", 2500);
-				//alert("AutoSynchMCE");
+				setTimeout("AutoSynchMCE();", 3000);
 			}
 		}
 
@@ -444,7 +528,7 @@
 			saving = 1;
 			tinyMCE.triggerSave();
 			CheckFileName();
-			setTimeout("ClickBtn();", 1200);
+			setTimeout("ClickBtn();", 1500);
 		}
 		function ClickBtn() {
 			$('#<%=btnSave.ClientID %>').click();
@@ -456,57 +540,4 @@
 			setTimeout("$('#jqtabs').tabs('select', 'pagecontent-tabs-1');", 500);
 		});
 	</script>
-	<asp:Panel ID="pnlHB" runat="server">
-		<script type="text/javascript">
-			var webSvc = "/Manage/CMS.asmx";
-
-			var thisPage = '<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>';
-
-			function EscapeFile() {
-				thisPage = MakeStringSafe(thisPage);
-			}
-			EscapeFile();
-
-			function MakeStringSafe(val) {
-				val = val.replace(/(')/g, "{&&#0x0027-#0039&&}");
-				return val;
-			}
-
-
-			function EditHB() {
-				setTimeout("EditHB();", 30 * 1000);
-
-				var webMthd = webSvc + "/RecordHeartbeat";
-
-				$.ajax({
-					type: "POST",
-					url: webMthd,
-					data: "{'PageID': '<%=guidContentID %>'}",
-					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: updateHeartbeat,
-					error: ajaxFailed
-				});
-			}
-
-			function updateHeartbeat(data, status) {
-				var hb = $('#cmsHeartBeat');
-				hb.empty().append('HB:  ');
-				hb.append(data.d);
-			}
-
-			setTimeout("EditHB();", 1500);
-
-
-			function ajaxFailed(request) {
-				var s = "";
-				s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-				s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-				s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-				alertModal(s);
-			}
-
-	
-		</script>
-	</asp:Panel>
 </asp:Content>

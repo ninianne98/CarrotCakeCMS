@@ -146,6 +146,17 @@ namespace Carrotware.CMS.Core {
 			return oldC;
 		}
 
+		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
+			var oldC = (from ct in db.tblContents
+						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						where r.SiteID == siteID
+							&& ct.IsLatestVersion == true
+							&& r.FileName.ToLower() == urlFileName.ToLower()
+						select new ContentPage(r, ct)).FirstOrDefault();
+
+			return oldC;
+		}
+
 		public ContentPage FindHome(Guid siteID, bool? active) {
 			var oldC = (from ct in db.tblContents
 						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
