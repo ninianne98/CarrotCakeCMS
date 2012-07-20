@@ -20,6 +20,7 @@ namespace Carrotware.CMS.UI.Admin {
 	public partial class PageAddEdit : AdminBasePage {
 
 		public Guid guidContentID = Guid.Empty;
+		public Guid guidRootContentID = Guid.Empty;
 		string sPageMode = String.Empty;
 		SiteMapOrder orderHelper = new SiteMapOrder();
 
@@ -44,17 +45,26 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (!IsPostBack) {
+				var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+
+				if (guidContentID != Guid.Empty && pageContents == null) {
+					pageContents = pageHelper.GetVersion(SiteID, guidContentID);
+				}
 
 				var lstContent = pageHelper.GetLatestContentList(SiteID);
 
 				ddlTemplate.DataSource = cmsHelper.Templates;
 				ddlTemplate.DataBind();
 
-				var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
-
 				divEditing.Visible = false;
 
 				if (pageContents != null) {
+
+					guidRootContentID = pageContents.Root_ContentID;
+
+					ddlVersions.DataSource = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
+					ddlVersions.DataBind();
+					ddlVersions.Items.Insert(0, new ListItem("-Page Versions-", "00000"));
 
 					var bLocked = IsPageLocked(pageContents);
 
@@ -112,6 +122,10 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void btnSave_Click(object sender, EventArgs e) {
 
 			var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+
+			if (guidContentID != Guid.Empty && pageContents == null) {
+				pageContents = pageHelper.GetVersion(SiteID, guidContentID);
+			}
 
 			if (pageContents == null) {
 				pageContents = new ContentPage();

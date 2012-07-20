@@ -13,6 +13,15 @@ namespace Carrotware.CMS.UI.Admin {
     public partial class PageAddEdit {
         
         /// <summary>
+        /// pnlHB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlHB;
+        
+        /// <summary>
         /// divEditing control.
         /// </summary>
         /// <remarks>
@@ -256,6 +265,15 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.Button btnSaveButton;
         
         /// <summary>
+        /// ddlVersions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlVersions;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>
@@ -263,15 +281,6 @@ namespace Carrotware.CMS.UI.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-        
-        /// <summary>
-        /// pnlHB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlHB;
         
         /// <summary>
         /// Master property.
