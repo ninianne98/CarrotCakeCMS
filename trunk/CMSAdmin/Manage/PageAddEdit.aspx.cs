@@ -45,10 +45,10 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (!IsPostBack) {
-				var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+				ContentPage pageContents = pageHelper.GetVersion(SiteID, guidContentID);
 
 				if (guidContentID != Guid.Empty && pageContents == null) {
-					pageContents = pageHelper.GetVersion(SiteID, guidContentID);
+					pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
 				}
 
 				var lstContent = pageHelper.GetLatestContentList(SiteID);
@@ -121,10 +121,10 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
-			var pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+			ContentPage pageContents = pageHelper.GetVersion(SiteID, guidContentID);
 
 			if (guidContentID != Guid.Empty && pageContents == null) {
-				pageContents = pageHelper.GetVersion(SiteID, guidContentID);
+				pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
 			}
 
 			if (pageContents == null) {
