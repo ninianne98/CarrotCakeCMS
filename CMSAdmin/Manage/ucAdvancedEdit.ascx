@@ -93,7 +93,7 @@
 			cmsFixGeneralImage(this, 'History', 'History', 'layout.png');
 		});
 		$(".cmsWidgetBarIconShrink").each(function (i) {
-			cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'script_code.png');
+			cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
 		});
 		
 	}
@@ -624,7 +624,7 @@
 		var st = $(zone).attr('style');
 
 		if (st == undefined || st.length < 10) {
-			$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 100px; overflow: auto;');
+			$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 100px; max-width: 800px; overflow: auto;');
 		} else {
 			$(zone).attr('style', '');
 		}
@@ -704,6 +704,7 @@
 	<img src="/manage/images/pencil.png" alt="" />
 	<img src="/manage/images/application_view_tile.png" alt="" />
 	<img src="/manage/images/layout.png" alt="" />
+	<img src="/manage/images/arrow_in.png" alt="" />
 </div>
 <div id="cmsAdminToolbox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all cmsToolbox2">
 	<div class="cmsInsideArea">

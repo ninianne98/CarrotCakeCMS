@@ -322,6 +322,8 @@
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen-scoped.css" />
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen.css" />
     <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
+    <Content Include="Manage\Images\application_lightning.png" />
+    <Content Include="Manage\Images\arrow_in.png" />
     <Content Include="Manage\Images\balloons\balloon_bottom.png" />
     <Content Include="Manage\Images\balloons\balloon_bottomLeft.png" />
     <Content Include="Manage\Images\balloons\balloon_bottomRight.png" />
