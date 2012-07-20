@@ -137,6 +137,19 @@
 		return val;
 	}
 
+	var cmsConfirmLeavingPage = true;
+
+	$(window).bind('beforeunload', function () {
+		if (cmsConfirmLeavingPage) {
+			return '>>>>>Are you sure you want to navigate away<<<<<<<<';
+		}
+	});
+
+	function cmsMakeOKToLeave() {
+		cmsConfirmLeavingPage = false;
+	}
+
+
 	function cmsEditHB() {
 		//cmsSaveToolbarPosition();
 
@@ -339,6 +352,7 @@
 		if (data.d == "OK") {
 			CMSBusyShort();
 			cmsAlertModal("Saved");
+			cmsMakeOKToLeave();
 			window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 5000);
 		} else {
 			cmsAlertModal(data.d);
@@ -346,9 +360,38 @@
 	}
 
 
-	function cmsCancelEdit() {
+	function cmsCancelEdit0() {
+		cmsMakeOKToLeave();
 		window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 1000);
 	}
+
+	function cmsCancelEdit() {
+		$("#CMScancelconfirm").dialog("destroy");
+
+		$("#CMScancelconfirm").dialog({
+			open: function () {
+				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+			},
+
+			resizable: false,
+			height: 250,
+			width: 400,
+			modal: true,
+			buttons: {
+				"No": function () {
+					$(this).dialog("close");
+				},
+				"Yes": function () {
+					cmsMakeOKToLeave();
+					window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 500);
+					$(this).dialog("close");
+				}
+			}
+		});
+
+		cmsFixDialog('CMScancelconfirmmsg');
+	}
+
 
 	function cmsAjaxFailed(request) {
 		var s = "";
@@ -633,6 +676,7 @@
 
 	function cmsDirtyPageRefresh() {
 		cmsSaveToolbarPosition();
+		cmsMakeOKToLeave();
 		window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
 	}
 
@@ -731,8 +775,9 @@
 		<p id="CMSremoveconfirmmsg">
 			Are you sure you want to remove this widget?</p>
 	</div>
-	<div style="display: none">
-		<img src="/manage/images/x.png" alt="x" />
+	<div id="CMScancelconfirm" class="cmsGlossySeaGreen" title="Quit Editor?">
+		<p id="CMScancelconfirmmsg">
+			Are you sure you want to leave the editor? All changes will be lost!</p>
 	</div>
 </div>
 <div style="display: none">
