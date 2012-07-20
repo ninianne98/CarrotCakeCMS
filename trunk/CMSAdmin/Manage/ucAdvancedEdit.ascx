@@ -92,6 +92,9 @@
 		$(".cmsWidgetBarIconWidget2").each(function (i) {
 			cmsFixGeneralImage(this, 'History', 'History', 'layout.png');
 		});
+		$(".cmsWidgetBarIconShrink").each(function (i) {
+			cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'script_code.png');
+		});
 		
 	}
 
@@ -612,6 +615,20 @@
 		setTimeout("cmsBuildOrderAndUpdateWidgets();", 500);
 	}
 
+	function cmsShrinkWidgetHeight(key) {
+		var item = $("#" + key);
+		var id = $(item).attr('id');
+		//alert(id);
+
+		var zone = $(item).find('#cmsControl');
+		var st = $(zone).attr('style');
+
+		if (st == undefined || st.length < 10) {
+			$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 100px; overflow: auto;');
+		} else {
+			$(zone).attr('style', '');
+		}
+	}
 
 	function cmsFixDialog(dialogname) {
 

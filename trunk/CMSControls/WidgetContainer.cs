@@ -83,7 +83,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (IsAdminMode) {
 				w.Write("\r\n&nbsp;\r\n<div style=\"clear: both;\"></div>\r\n</div></div>\r\n");
 			} else {
-				w.Write("\r\n<!--/div-->\r\n");
+				w.Write("\r\n<!--/div--> <!-- END DIV " + this.ClientID + "\"-->\r\n");
 			}
 
 		}
