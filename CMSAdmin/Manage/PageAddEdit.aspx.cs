@@ -21,6 +21,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidRootContentID = Guid.Empty;
+		public Guid guidVersionContentID = Guid.Empty;
+
 		string sPageMode = String.Empty;
 		SiteMapOrder orderHelper = new SiteMapOrder();
 
@@ -30,6 +32,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
+			}
+			if (!string.IsNullOrEmpty(Request.QueryString["versionid"])) {
+				guidVersionContentID = new Guid(Request.QueryString["versionid"].ToString());
 			}
 
 			if (!string.IsNullOrEmpty(Request.QueryString["mode"])) {
@@ -45,8 +50,10 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (!IsPostBack) {
-				ContentPage pageContents = pageHelper.GetVersion(SiteID, guidContentID);
-
+				ContentPage pageContents = null;
+				if (guidVersionContentID != Guid.Empty) {
+					pageContents = pageHelper.GetVersion(SiteID, guidVersionContentID);
+				}
 				if (guidContentID != Guid.Empty && pageContents == null) {
 					pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
 				}
@@ -121,8 +128,10 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
-			ContentPage pageContents = pageHelper.GetVersion(SiteID, guidContentID);
-
+			ContentPage pageContents = null;
+			if (guidVersionContentID != Guid.Empty) {
+				pageContents = pageHelper.GetVersion(SiteID, guidVersionContentID);
+			}
 			if (guidContentID != Guid.Empty && pageContents == null) {
 				pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
 			}

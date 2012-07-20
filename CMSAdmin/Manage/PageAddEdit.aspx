@@ -487,7 +487,7 @@
 							$(this).dialog("close");
 						},
 						"Yes": function () {
-							window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?id=' + qs + '\'', 500);
+							window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?versionid=' + qs + '\'', 500);
 							$(this).dialog("close");
 						}
 					}
