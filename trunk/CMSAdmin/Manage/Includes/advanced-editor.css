@@ -20,6 +20,15 @@
 	text-align: left !important;
 	min-height: 50px !important;
 }
+
+#cmsMainToolbox input:focus, #cmsMainToolbox select:focus, #cmsMainToolbox textarea:focus {
+	color: #000000;
+	background: #FFFFFF;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+
 .cmsToolbox2 {
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 	padding: 5px !important;
@@ -140,6 +149,12 @@
 	float: left !important;
 	min-height: 30px !important;
 }
+#cmsControl {
+	min-height: 50px !important;
+}
+.cmsTargetMove {
+	min-height: 25px !important;
+}
 #cmsWidgetHead {
 	cursor: move !important;
 }
@@ -259,6 +274,10 @@
 	list-style-type: none !important;
 	background-image: none !important;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+}
+
+#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsContentContainer img {
+	background: transparent !important;
 }
 
 .cmsContentAreaHead {

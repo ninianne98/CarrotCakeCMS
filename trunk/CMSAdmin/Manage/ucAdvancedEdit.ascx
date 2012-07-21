@@ -92,10 +92,9 @@
 		$(".cmsWidgetBarIconWidget2").each(function (i) {
 			cmsFixGeneralImage(this, 'History', 'History', 'layout.png');
 		});
-		$(".cmsWidgetBarIconShrink").each(function (i) {
-			cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
-		});
-		
+		//$(".cmsWidgetBarIconShrink").each(function (i) {
+		//	cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
+		//});
 	}
 
 
@@ -556,14 +555,6 @@
 
 		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
 
-		/*
-		$(".cmsTargetArea").sortable({
-		revert: true,
-		dropOnEmpty: true,
-		placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
-		hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
-		});
-		*/
 
 		$("#cmsToolBox div.cmsToolItem").draggable({
 			connectToSortable: ".cmsTargetArea",
@@ -573,10 +564,26 @@
 			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
 		});
 
+
+		$(".cmsWidgetTitleBar").mousedown(function () {
+			var target = $(this).parent().parent().attr("id");
+			cmsMoveWidgetResizer(target, 1);
+		});
+
+		$(".cmsWidgetTitleBar").mouseup(function () {
+			var target = $(this).parent().parent().attr("id");
+			cmsMoveWidgetResizer(target, 0);
+		});
+
 		$(".cmsTargetMove").sortable({
+			stop: function (event, ui) {
+				var id = $(ui.item).attr('id');
+				cmsMoveWidgetResizer(id, 0);
+			},
 			connectWith: ".cmsTargetMove",
 			revert: true,
 			dropOnEmpty: true,
+			distance: 25,
 			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
 			hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
 		}).disableSelection();
@@ -598,6 +605,7 @@
 		$("div#cmsToolBox").disableSelection();
 		$("#cmsContentArea a").enableSelection();
 		$("#cmsWidgetHead a").enableSelection();
+
 
 	});
 
@@ -625,6 +633,24 @@
 
 		if (st == undefined || st.length < 10) {
 			$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 100px; max-width: 800px; overflow: auto;');
+		} else {
+			$(zone).attr('style', '');
+		}
+	}
+
+
+	function cmsMoveWidgetResizer(key, state) {
+		var item = $("#" + key);
+		var id = $(item).attr('id');
+		var zone = $(item).find('#cmsControl');
+
+		//var st = $(zone).attr('style');
+		//if (!(st == undefined || st.length < 10) && state == 1) {
+		//	state = 0;
+		//}
+
+		if (state != 0) {
+			$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 75px; max-width: 800px; overflow: auto;');
 		} else {
 			$(zone).attr('style', '');
 		}
@@ -753,8 +779,8 @@
 				<br style="clear: none;" />
 				<asp:Repeater ID="rpTools" runat="server">
 					<HeaderTemplate>
-						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
-							padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
+							float: left; border: solid 1px #000;">
 					</HeaderTemplate>
 					<ItemTemplate>
 						<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
@@ -773,8 +799,7 @@
 					<FooterTemplate>
 						</div></FooterTemplate>
 				</asp:Repeater>
-				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
-					background-color: #000;">
+				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
 				</div>
 			</div>
 			<div id="cmsToolboxSpacer" style="display: none;">
