@@ -112,6 +112,7 @@ namespace Carrotware.Web.UI.Controls {
 					return;
 				}
 
+				context.Response.Expires = 5;
 				context.Response.ContentType = "image/x-png";
 
 				using (MemoryStream memStream = new MemoryStream()) {
