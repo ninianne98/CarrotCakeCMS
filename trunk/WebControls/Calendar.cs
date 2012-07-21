@@ -387,10 +387,10 @@ namespace Carrotware.Web.UI.Controls {
 			output.Write("\r\n<table class=\"calendarGrid\" cellspacing=\"0\" cellpadding=\"3\" align=\"center\" border=\"1\">");
 			output.Write("\r\n	<tr>");
 			output.Write("\r\n		<td class=\"head\" colspan=\"7\">");
-			output.Write("\r\n			<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
-			output.Write("\r\n				<tr> <td class=\"normaltext\"> &nbsp; </td> </tr>");
-			output.Write("\r\n				<tr> <td class=\"headtext\"> " + MonthName + " </td> </tr>");
-			output.Write("\r\n				<tr> <td class=\"normaltext\"> &nbsp; </td> </tr>");
+			output.Write("\r\n			<table class=\"innerhead\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
+			output.Write("\r\n				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
+			output.Write("\r\n				<tr> <td class=\"head headtext\"> " + MonthName + " </td> </tr>");
+			output.Write("\r\n				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
 			output.Write("\r\n			</table>");
 			output.Write("\r\n		</td>");
 			output.Write("\r\n	</tr>");
