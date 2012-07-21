@@ -1,11 +1,21 @@
 
+{CALENDAR_ID} table, {CALENDAR_ID} tr, {CALENDAR_ID} td, {CALENDAR_ID} div {
+	margin: 1px;
+	padding: 1px;
+}
+
 {CALENDAR_ID} td.headtext, {CALENDAR_ID} td.head, {CALENDAR_ID} td.weekday, {CALENDAR_ID} td.today, 
-	{CALENDAR_ID} td.normal, {CALENDAR_ID} td.todaysel, {CALENDAR_ID} td.normalsel {
+	{CALENDAR_ID} td.normal, {CALENDAR_ID} td.todaysel, {CALENDAR_ID} td.normalsel, {CALENDAR_ID} .innerhead {
 	font-size: 18pt;
 	font-weight: 700;
 	color: {CELL_CHEX};
 	text-align: center;
 	background-color: {CELL_BGHEX};
+}
+
+{CALENDAR_ID} .innerhead, {CALENDAR_ID} .innerhead tr, {CALENDAR_ID} .innerhead tr td {
+    border-collapse: collapse;
+	border: 0px solid {CELL_BGHEX};
 }
 
 {CALENDAR_ID} .calendarGrid, {CALENDAR_ID} td.head, {CALENDAR_ID} td.weekday, {CALENDAR_ID} td.today, 
