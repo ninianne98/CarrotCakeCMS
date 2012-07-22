@@ -88,7 +88,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sPrefix = "<div id=\"cmsContentArea_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
 								"<div class=\"" + JQueryUIScope + "\"><div class=\"" + JQueryUIScope + " ui-state-default ui-widget-header cmsContentContainerInner\">\r\n" +
 								"<a title=\"Edit " + this.ClientID + "\" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"" + JQueryUIScope + " ui-state-default cmsContentAreaHead\" " +
-								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \">\r\n" +
+								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \"> " +
 								" Edit " + this.ClientID + " <span class=\"cmsWidgetBarIconPencil2\"  /></span> </a></div></div>\r\n" +
 								"<div class=\"cmsWidgetControl\" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
 								"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";
@@ -96,7 +96,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sPrefix = "<div id=\"cmsContentArea_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
 								"<div class=\"ui-state-default ui-widget-header cmsContentContainerInner\">\r\n" +
 								"<a title=\"Edit " + this.ClientID + "\" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"ui-state-default cmsContentAreaHead\" " +
-								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \">\r\n" +
+								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \"> " +
 								" Edit " + this.ClientID + " <span class=\"cmsWidgetBarIconPencil2\"  /></span></div> \r\n" +
 								"<div class=\"cmsWidgetControl\" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
 								"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";

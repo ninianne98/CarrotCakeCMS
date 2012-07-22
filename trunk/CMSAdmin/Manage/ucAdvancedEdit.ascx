@@ -11,9 +11,31 @@
 <link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 <link href="/Manage/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
+	var cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
+	$(document).ready(function() {
+		<% if (!bLocked) { %>
+		setTimeout("cmsEditHB();", 1000);
+		<%} else { %>
+		cmsAlertModal("<%=litUser.Text %>");
+		<%} %>
+	});
+
+	var cmsConfirmLeavingPage = true;
+
+	$(window).bind('beforeunload', function () {
+		if (!cmsIsPageLocked) {
+			if (cmsConfirmLeavingPage) {
+				return '>>>>>Are you sure you want to navigate away<<<<<<<<';
+			}
+		}
+	});
+
+</script>
+<script type="text/javascript">
 
 	var cmsMnuVis = true;
+
 	function cmsToggleMenu() {
 		var t = $('#cmsMainToolbox');
 		var s = $('#cmsToolboxSpacer');
@@ -71,7 +93,10 @@
 
 		$("html").scrollTop(<%= EditorPrefs.EditorScrollPosition %>);
 	}
+</script>
+<script type="text/javascript">
 
+	cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
 	function cmsMenuFixImages() {
 		$(".cmsWidgetBarIconCog").each(function (i) {
@@ -97,6 +122,15 @@
 		//});
 	}
 
+	function cmsBlockImageEdits(elm) {
+		$(elm).attr('style', 'display: none;');
+	}
+
+	function cmsBlockContentEdits(elm) {
+		var txt = $(elm).text();
+		$(elm).attr('style', 'display: none;');
+		$(elm).parent().text(txt);
+	}
 
 	function cmsFixGeneralImage(elm, txt1, txt2, img) {
 		var id = $(elm).attr('id');
@@ -104,20 +138,23 @@
 	}
 
 	$(document).ready(function () {
-		setTimeout("cmsMenuFixImages();", 250);
-		setTimeout("cmsMenuFixImages();", 2500);
-		setTimeout("cmsMenuFixImages();", 5000);
+		if (!cmsIsPageLocked) {
+			setTimeout("cmsMenuFixImages();", 250);
+			setTimeout("cmsMenuFixImages();", 2500);
+			setTimeout("cmsMenuFixImages();", 5000);
+		} else {
+			$("#cmsEditMenuList ul").each(function (i) {
+				cmsBlockImageEdits(this);
+			});
+
+			$(".cmsContentContainerInner a").each(function (i) {
+				cmsBlockContentEdits(this);
+			});
+		}
 	});
 
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		<% if (!bLocked) { %>
-		setTimeout("cmsEditHB();", 1000);
-		<%} else { %>
-		cmsAlertModal("<%=litUser.Text %>");
-		<%} %>
-	});
+
+
 </script>
 <script type="text/javascript">
 	var webSvc = "/Manage/CMS.asmx";
@@ -125,6 +162,8 @@
 	var thisPage = '<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>';
 
 	var thisPageID = '<%=guidContentID.ToString() %>';
+
+	cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
 	function cmsEscapeFile() {
 		thisPage = cmsMakeStringSafe(thisPage);
@@ -139,13 +178,6 @@
 		return val;
 	}
 
-	var cmsConfirmLeavingPage = true;
-
-	$(window).bind('beforeunload', function () {
-		if (cmsConfirmLeavingPage) {
-			return '>>>>>Are you sure you want to navigate away<<<<<<<<';
-		}
-	});
 
 	function cmsMakeOKToLeave() {
 		cmsConfirmLeavingPage = false;
@@ -154,20 +186,21 @@
 
 	function cmsEditHB() {
 		//cmsSaveToolbarPosition();
+		if (!cmsIsPageLocked) {
+			setTimeout("cmsEditHB();", 45 * 1000);
 
-		setTimeout("cmsEditHB();", 45 * 1000);
+			var webMthd = webSvc + "/RecordHeartbeat";
 
-		var webMthd = webSvc + "/RecordHeartbeat";
-
-		$.ajax({
-			type: "POST",
-			url: webMthd,
-			data: "{'PageID': '<%=guidContentID %>'}",
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsUpdateHeartbeat,
-			error: cmsAjaxFailed
-		});
+			$.ajax({
+				type: "POST",
+				url: webMthd,
+				data: "{'PageID': '<%=guidContentID %>'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: cmsUpdateHeartbeat,
+				error: cmsAjaxFailed
+			});
+		}
 	}
 
 	function cmsSaveToolbarPosition() {
@@ -544,6 +577,7 @@
 		$("#cmsMovedItem").val(id);
 	}
 
+	cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
 	$(document).ready(function () {
 
@@ -555,57 +589,59 @@
 
 		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
 
-
-		$("#cmsToolBox div.cmsToolItem").draggable({
-			connectToSortable: ".cmsTargetArea",
-			helper: "clone",
-			revert: "invalid",
-			handle: "p.cmsToolItem",
-			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
-		});
-
-
-		$(".cmsWidgetTitleBar").mousedown(function () {
-			var target = $(this).parent().parent().attr("id");
-			cmsMoveWidgetResizer(target, 1);
-		});
-
-		$(".cmsWidgetTitleBar").mouseup(function () {
-			var target = $(this).parent().parent().attr("id");
-			cmsMoveWidgetResizer(target, 0);
-		});
-
-		$(".cmsTargetMove").sortable({
-			stop: function (event, ui) {
-				var id = $(ui.item).attr('id');
-				cmsMoveWidgetResizer(id, 0);
-			},
-			connectWith: ".cmsTargetMove",
-			revert: true,
-			dropOnEmpty: true,
-			distance: 25,
-			placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
-			hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
-		}).disableSelection();
-
-
 		// make sure sort only fires once
 		var cmsSortWidgets = false;
 
-		$(".cmsTargetArea").bind("sortupdate", function (event, ui) {
-			if (!cmsSortWidgets) {
-				var id = $(ui.item).attr('id');
-				var val = $(ui.item).find('#cmsCtrlID').val();
-				$("#cmsMovedItem").val(val);
-				setTimeout("cmsBuildOrderAndUpdateWidgets();", 500);
-				cmsSortWidgets = true;
-			}
-		});
+		if (!cmsIsPageLocked) {
+
+			$("#cmsToolBox div.cmsToolItem").draggable({
+				connectToSortable: ".cmsTargetArea",
+				helper: "clone",
+				revert: "invalid",
+				handle: "p.cmsToolItem",
+				placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
+			});
+
+
+			$(".cmsWidgetTitleBar").mousedown(function () {
+				var target = $(this).parent().parent().attr("id");
+				cmsMoveWidgetResizer(target, 1);
+			});
+
+			$(".cmsWidgetTitleBar").mouseup(function () {
+				var target = $(this).parent().parent().attr("id");
+				cmsMoveWidgetResizer(target, 0);
+			});
+
+			$(".cmsTargetMove").sortable({
+				stop: function (event, ui) {
+					var id = $(ui.item).attr('id');
+					cmsMoveWidgetResizer(id, 0);
+				},
+				connectWith: ".cmsTargetMove",
+				revert: true,
+				dropOnEmpty: true,
+				distance: 25,
+				placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
+				hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
+			}).disableSelection();
+
+
+			$(".cmsTargetArea").bind("sortupdate", function (event, ui) {
+				if (!cmsSortWidgets) {
+					var id = $(ui.item).attr('id');
+					var val = $(ui.item).find('#cmsCtrlID').val();
+					$("#cmsMovedItem").val(val);
+					setTimeout("cmsBuildOrderAndUpdateWidgets();", 500);
+					cmsSortWidgets = true;
+				}
+			});
+
+		}
 
 		$("div#cmsToolBox").disableSelection();
 		$("#cmsContentArea a").enableSelection();
 		$("#cmsWidgetHead a").enableSelection();
-
 
 	});
 
@@ -779,8 +815,8 @@
 				<br style="clear: none;" />
 				<asp:Repeater ID="rpTools" runat="server">
 					<HeaderTemplate>
-						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
-							float: left; border: solid 1px #000;">
+						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
+							padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
 					</HeaderTemplate>
 					<ItemTemplate>
 						<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
@@ -799,7 +835,8 @@
 					<FooterTemplate>
 						</div></FooterTemplate>
 				</asp:Repeater>
-				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
+				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
+					background-color: #000;">
 				</div>
 			</div>
 			<div id="cmsToolboxSpacer" style="display: none;">
