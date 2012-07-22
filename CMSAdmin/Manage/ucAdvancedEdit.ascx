@@ -2,7 +2,7 @@
 <div style="clear: both;">
 	&nbsp;</div>
 <carrot:jquery runat="server" ID="jquery1" />
-<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
+<carrot:jqueryui runat="server" ID="jqueryui1" />
 <link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
 <script src="/Manage/includes/base64.js" type="text/javascript"></script>
 <script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>

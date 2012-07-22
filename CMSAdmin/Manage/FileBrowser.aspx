@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<carrot:jquery runat="server" ID="jquery1" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
 	<style type="text/css">
 		BODY {
 			background-color: #FFFFFF;
@@ -69,8 +69,6 @@
 			text-align: left;
 		}
 	</style>
-	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
-	<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$(function () {

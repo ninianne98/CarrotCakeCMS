@@ -13,13 +13,13 @@ namespace Carrotware.CMS.UI.Admin {
     public partial class FileBrowser {
         
         /// <summary>
-        /// jquery1 control.
+        /// jquerybasic1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.jquery jquery1;
+        protected global::Carrotware.Web.UI.Controls.jquerybasic jquerybasic1;
         
         /// <summary>
         /// pnlTiny control.

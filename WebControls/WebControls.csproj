@@ -219,6 +219,22 @@
   <ItemGroup>
     <EmbeddedResource Include="jquerybasic\jquery-ui-blue.css" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jquerybasic\jquery-ui-lightgreen.css" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_e58b8b_40x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_b7d7c4_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_dff6e8_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_50_468b5e_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_80_b7d7c4_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_hexagon_90_eeeeee_12x10.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-soft_25_f3ebba_1x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_468b5e_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_753433_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_c7820f_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
