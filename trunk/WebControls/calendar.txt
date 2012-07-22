@@ -1,12 +1,11 @@
 
 {CALENDAR_ID} table, {CALENDAR_ID} tr, {CALENDAR_ID} td, {CALENDAR_ID} div {
-	margin: 1px;
-	padding: 1px;
+	margin: 0px;
+	padding: 0px;
 }
 
 {CALENDAR_ID} td.headtext, {CALENDAR_ID} td.head, {CALENDAR_ID} td.weekday, {CALENDAR_ID} td.today, 
 	{CALENDAR_ID} td.normal, {CALENDAR_ID} td.todaysel, {CALENDAR_ID} td.normalsel, {CALENDAR_ID} .innerhead {
-	font-size: 18pt;
 	font-weight: 700;
 	color: {CELL_CHEX};
 	text-align: center;
@@ -20,32 +19,39 @@
 
 {CALENDAR_ID} .calendarGrid, {CALENDAR_ID} td.head, {CALENDAR_ID} td.weekday, {CALENDAR_ID} td.today, 
 	{CALENDAR_ID} td.normal, {CALENDAR_ID} td.todaysel, {CALENDAR_ID} td.normalsel {
-	font-size: 10pt;	
+	font-size: 12pt;
 	border: #000000 1px solid;
 }
 
+{CALENDAR_ID} .calendarGrid {
+	border: #000000 2px solid;
+}
 
-{CALENDAR_ID} td.head {
-	font-size: 16pt;
+{CALENDAR_ID} td.head, {CALENDAR_ID} td.headtext {
+	font-size: 18pt;
+	border: 0px solid {CELL_BGHEX};
 }
 
 {CALENDAR_ID} td.weekday {
-	font-size: 12pt;
+	font-size: 14pt;
 	color: {WEEKDAY_CHEX};
 	background-color: {WEEKDAY_BGHEX};
 	text-align: center;	
+	padding: 4px;
 }
 
 {CALENDAR_ID} td.today, {CALENDAR_ID} td.todaysel {
 	color: {TODAY_CHEX};
 	background-color: {TODAY_BGHEX};
-	text-align: center;		
+	text-align: center;	
+	padding: 5px;
 }
 
 {CALENDAR_ID} td.normal, {CALENDAR_ID} td.normalsel {
 	color: {NORMAL_CHEX};
 	background-color: {NORMAL_BGHEX};
-	text-align: center;		
+	text-align: center;	
+	padding: 5px;
 }
 
 {CALENDAR_ID} td.todaysel {
@@ -71,7 +77,7 @@
 }
 
 {CALENDAR_ID} .normaltext {
-	font-size: 10pt;
+	font-size: 12pt;
 }
 
 {CALENDAR_ID} .normaltext a {
