@@ -35,7 +35,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			switch (JQVersion) {
 				case "1.7":
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery170.js");
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
 					break;
 				case "1.6":
 					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery164.js");
