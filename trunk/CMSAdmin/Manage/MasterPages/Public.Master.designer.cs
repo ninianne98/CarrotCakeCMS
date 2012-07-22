@@ -22,13 +22,13 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
         
         /// <summary>
-        /// jquery1 control.
+        /// jquerybasic1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.jquery jquery1;
+        protected global::Carrotware.Web.UI.Controls.jquerybasic jquerybasic1;
         
         /// <summary>
         /// HeadContentPlaceHolder control.

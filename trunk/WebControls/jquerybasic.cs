@@ -19,7 +19,8 @@ namespace Carrotware.Web.UI.Controls {
 			Silver,
 			Purple,
 			Blue,
-			Green
+			Green,
+			LightGreen
 		}
 
 
@@ -68,6 +69,9 @@ namespace Carrotware.Web.UI.Controls {
 					break;
 				case jQueryTheme.Blue:
 					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-blue.css");
+					break;
+				case jQueryTheme.LightGreen:
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css");
 					break;
 				case jQueryTheme.GlossyBlack:
 				default:

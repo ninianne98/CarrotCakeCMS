@@ -3,16 +3,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<title></title>
-	<carrot:jquery runat="server" ID="jquery1" />
+	<title>Main</title>
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
 	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
 	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/main.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/TableStyles.css" rel="stylesheet" type="text/css" />
-	<script src="/Manage/glossyseagreen/js/jquery-ui-glossyseagreen.js" type="text/javascript"></script>
-	<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 
 		//  http://encosia.com/css-style-as-ajax-progress-indicator/
@@ -75,8 +73,6 @@
 
 			$("#CMSmodalalertmessage").html(request);
 
-			var c = $("#CMSmodalalertmessage").parent().parent().attr('class');
-			$("#CMSmodalalertmessage").parent().parent().attr('class', "cmsGlossySeaGreen " + c);
 		}
 
 		function ProcessKeyPress(e) {
