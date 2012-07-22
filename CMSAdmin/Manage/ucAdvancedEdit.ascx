@@ -815,8 +815,8 @@
 				<br style="clear: none;" />
 				<asp:Repeater ID="rpTools" runat="server">
 					<HeaderTemplate>
-						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
-							padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
+							float: left; border: solid 1px #000;">
 					</HeaderTemplate>
 					<ItemTemplate>
 						<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
@@ -835,8 +835,7 @@
 					<FooterTemplate>
 						</div></FooterTemplate>
 				</asp:Repeater>
-				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
-					background-color: #000;">
+				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
 				</div>
 			</div>
 			<div id="cmsToolboxSpacer" style="display: none;">

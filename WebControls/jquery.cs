@@ -22,7 +22,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string JQVersion {
 			get {
 				String s = (String)ViewState["JQVersion"];
-				return ((s == null) ? "1.6" : s);
+				return ((s == null) ? "1.7" : s);
 			}
 			set {
 				ViewState["JQVersion"] = value;
@@ -50,8 +50,8 @@ namespace Carrotware.Web.UI.Controls {
 					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery132.js");
 					break;
 				default:
-					JQVersion = "1.6.4";
-					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery164.js");
+					JQVersion = "1.7.2";
+					sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
 					break;
 			}
 
