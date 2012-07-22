@@ -1,13 +1,14 @@
-/*
- * jQuery UI CSS Framework 1.8.16
+/*!
+ * jQuery UI CSS Framework 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
  * http://docs.jquery.com/UI/Theming/API
  */
 
+ 
 .cmsGlossySeaGreen p, .cmsGlossySeaGreen ul, 
 .cmsGlossySeaGreen ol, .cmsGlossySeaGreen h1, 
 .cmsGlossySeaGreen h2, .cmsGlossySeaGreen h3,
@@ -22,17 +23,16 @@
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
 }
 
+
+
 /* Layout helpers
 ----------------------------------*/
 .cmsGlossySeaGreen .ui-helper-hidden { display: none; }
 .cmsGlossySeaGreen .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
 .cmsGlossySeaGreen .ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
-.cmsGlossySeaGreen .ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.cmsGlossySeaGreen .ui-helper-clearfix { display: inline-block; }
-/* required comment for clearfix to work in Opera \*/
-* html .ui-helper-clearfix { height:1%; }
-.cmsGlossySeaGreen .ui-helper-clearfix { display:block; }
-/* end clearfix */
+.cmsGlossySeaGreen .ui-helper-clearfix:before, .cmsGlossySeaGreen .ui-helper-clearfix:after { content: ""; display: table; }
+.cmsGlossySeaGreen .ui-helper-clearfix:after { clear: both; }
+.cmsGlossySeaGreen .ui-helper-clearfix { zoom: 1; }
 .cmsGlossySeaGreen .ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
 
 
@@ -55,10 +55,10 @@
 .cmsGlossySeaGreen .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 
-/*
- * jQuery UI CSS Framework 1.8.16
+/*!
+ * jQuery UI CSS Framework 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -301,17 +301,17 @@
 
 /* Overlays */
 .cmsGlossySeaGreen .ui-widget-overlay { background: #eeeeee url(images/ui-bg_hexagon_90_eeeeee_12x10.png) 50% 50% repeat; opacity: .80;filter:Alpha(Opacity=80); }
-.cmsGlossySeaGreen .ui-widget-shadow { margin: -7px 0 0 -7px; padding: 7px; background: #000000 url(images/ui-bg_highlight-hard_70_000000_1x100.png) 50% top repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/*
- * jQuery UI Resizable 1.8.16
+.cmsGlossySeaGreen .ui-widget-shadow { margin: -7px 0 0 -7px; padding: 7px; background: #000000 url(images/ui-bg_highlight-hard_70_000000_1x100.png) 50% top repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/*!
+ * jQuery UI Resizable 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
  * http://docs.jquery.com/UI/Resizable#theming
  */
 .cmsGlossySeaGreen .ui-resizable { position: relative;}
-.cmsGlossySeaGreen .ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block; }
+.cmsGlossySeaGreen .ui-resizable-handle { position: absolute;font-size: 0.1px; display: block; }
 .cmsGlossySeaGreen .ui-resizable-disabled .ui-resizable-handle, .cmsGlossySeaGreen .ui-resizable-autohide .ui-resizable-handle { display: none; }
 .cmsGlossySeaGreen .ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
 .cmsGlossySeaGreen .ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
@@ -320,20 +320,20 @@
 .cmsGlossySeaGreen .ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
 .cmsGlossySeaGreen .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
 .cmsGlossySeaGreen .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
-.cmsGlossySeaGreen .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/*
- * jQuery UI Selectable 1.8.16
+.cmsGlossySeaGreen .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/*!
+ * jQuery UI Selectable 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
  * http://docs.jquery.com/UI/Selectable#theming
  */
 .cmsGlossySeaGreen .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
-/*
- * jQuery UI Accordion 1.8.16
+/*!
+ * jQuery UI Accordion 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -349,10 +349,10 @@
 .cmsGlossySeaGreen .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
 .cmsGlossySeaGreen .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
 .cmsGlossySeaGreen .ui-accordion .ui-accordion-content-active { display: block; }
-/*
- * jQuery UI Autocomplete 1.8.16
+/*!
+ * jQuery UI Autocomplete 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -364,7 +364,7 @@
 * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
 
 /*
- * jQuery UI Menu 1.8.16
+ * jQuery UI Menu 1.8.21
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -402,10 +402,10 @@
 	font-weight: normal;
 	margin: -1px;
 }
-/*
- * jQuery UI Button 1.8.16
+/*!
+ * jQuery UI Button 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -440,10 +440,10 @@ input.ui-button { padding: .4em 1em; }
 
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
-/*
- * jQuery UI Dialog 1.8.16
+/*!
+ * jQuery UI Dialog 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -461,10 +461,10 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .cmsGlossySeaGreen .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
 .cmsGlossySeaGreen .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .cmsGlossySeaGreen .ui-draggable .ui-dialog-titlebar { cursor: move; }
-/*
- * jQuery UI Slider 1.8.16
+/*!
+ * jQuery UI Slider 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -484,10 +484,10 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .cmsGlossySeaGreen .ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
 .cmsGlossySeaGreen .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 .cmsGlossySeaGreen .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
-.cmsGlossySeaGreen .ui-slider-vertical .ui-slider-range-max { top: 0; }/*
- * jQuery UI Tabs 1.8.16
+.cmsGlossySeaGreen .ui-slider-vertical .ui-slider-range-max { top: 0; }/*!
+ * jQuery UI Tabs 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -502,10 +502,10 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .cmsGlossySeaGreen .ui-tabs .ui-tabs-nav li a, .cmsGlossySeaGreen .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .cmsGlossySeaGreen .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
 .cmsGlossySeaGreen .ui-tabs .ui-tabs-hide { display: none !important; }
-/*
- * jQuery UI Datepicker 1.8.16
+/*!
+ * jQuery UI Datepicker 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
@@ -569,14 +569,14 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
     left: -4px; /*must have*/
     width: 200px; /*must have*/
     height: 200px; /*must have*/
-}/*
- * jQuery UI Progressbar 1.8.16
+}/*!
+ * jQuery UI Progressbar 1.8.21
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
  * http://docs.jquery.com/UI/Progressbar#theming
  */
-.cmsGlossySeaGreen .ui-progressbar { height:2em; text-align: left; }
+.cmsGlossySeaGreen .ui-progressbar { height:2em; text-align: left; overflow: hidden; }
 .cmsGlossySeaGreen .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
