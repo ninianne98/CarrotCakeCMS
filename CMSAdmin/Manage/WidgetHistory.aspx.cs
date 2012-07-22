@@ -65,7 +65,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			var lstW = widgetHelper.GetWidgetVersionHistory(guidWidgetID);
 			var current = lstW.Where(x => x.IsLatestVersion == true).FirstOrDefault();
 
-
 			gvPages.DataSource = lstW;
 			gvPages.DataBind();
 
@@ -75,6 +74,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				if (chkContent.Attributes["value"].ToString() == current.WidgetDataID.ToString()) {
 					chkContent.Visible = false;
 				}
+			}
+
+			if (lstW.Count < 1) {
+				btnRemove.Visible = false;
 			}
 		}
 
