@@ -2184,6 +2184,8 @@ namespace Carrotware.CMS.Data
 		
 		private string _FileName;
 		
+		private System.DateTime _CreateDate;
+		
 		private EntitySet<tblContent> _tblContents;
 		
 		private EntitySet<tblWidget> _tblWidgets;
@@ -2206,6 +2208,8 @@ namespace Carrotware.CMS.Data
     partial void OnPageActiveChanged();
     partial void OnFileNameChanging(string value);
     partial void OnFileNameChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
     #endregion
 		
 		public tblRootContent()
@@ -2336,6 +2340,26 @@ namespace Carrotware.CMS.Data
 					this._FileName = value;
 					this.SendPropertyChanged("FileName");
 					this.OnFileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
 				}
 			}
 		}

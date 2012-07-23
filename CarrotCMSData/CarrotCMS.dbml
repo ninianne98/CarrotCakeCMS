@@ -102,6 +102,7 @@
 			<Column Name="Heartbeat_UserId" Type="System.Guid" DbType="UniqueIdentifier NULL" CanBeNull="true" />
 			<Column Name="PageActive" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
 			<Column Name="FileName" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+			<Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
 			<Association Name="tblRootContent_tblContent" Member="tblContents" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="tblContent" />
 			<Association Name="tblRootContent_tblWidget" Member="tblWidgets" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="tblWidget" />
 			<Association Name="tblSite_tblRootContent" Member="tblSite" ThisKey="SiteID" OtherKey="SiteID" Type="tblSite" IsForeignKey="true" />

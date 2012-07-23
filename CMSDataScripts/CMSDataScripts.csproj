@@ -82,6 +82,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="add create date to root content.sql" />
     <Content Include="create tblCalendar.sql" />
     <Content Include="create tblFAQ.sql" />
     <Content Include="new widget structure.sql" />

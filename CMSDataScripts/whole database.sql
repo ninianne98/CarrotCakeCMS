@@ -217,6 +217,7 @@ CREATE TABLE [dbo].[tblRootContent](
 	[EditHeartbeat] [datetime] NULL,
 	[FileName] [varchar](256) NOT NULL,
 	[PageActive] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
  CONSTRAINT [tblRootContent_PK] PRIMARY KEY CLUSTERED 
 (
 	[Root_ContentID] ASC
@@ -2693,6 +2694,9 @@ ALTER TABLE [dbo].[tblContent] ADD  CONSTRAINT [DF_tblContent_EditDate]  DEFAULT
 GO
 /****** Object:  Default [DF_tblRootContent_Root_ContentID]    Script Date: 07/16/2012 20:16:03 ******/
 ALTER TABLE [dbo].[tblRootContent] ADD  CONSTRAINT [DF_tblRootContent_Root_ContentID]  DEFAULT (newid()) FOR [Root_ContentID]
+GO
+/****** Object:  Default [DF_tblRootContent_CreateDate]    Script Date: 07/22/2012 20:58:03 ******/
+ALTER TABLE [dbo].[tblRootContent] ADD  CONSTRAINT [DF_tblRootContent_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
 GO
 /****** Object:  Default [DF_tblSerialCache_SerialCacheID]    Script Date: 07/16/2012 20:16:03 ******/
 ALTER TABLE [dbo].[tblSerialCache] ADD  CONSTRAINT [DF_tblSerialCache_SerialCacheID]  DEFAULT (newid()) FOR [SerialCacheID]
