@@ -46,6 +46,8 @@ namespace Carrotware.CMS.Core {
 			this.Heartbeat_UserId = rc.Heartbeat_UserId;
 			this.EditHeartbeat = rc.EditHeartbeat;
 			this.FileName = rc.FileName;
+			this.CreateDate = rc.CreateDate;
+
 			this.PageActive = Convert.ToBoolean(rc.PageActive);
 
 			this.ContentID = c.ContentID;
@@ -86,8 +88,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
-
 		public void SavePageEdit() {
 
 			var rc = (from r in db.tblRootContents
@@ -109,6 +109,7 @@ namespace Carrotware.CMS.Core {
 				rc.Root_ContentID = this.Root_ContentID;
 				rc.PageActive = true;
 				rc.SiteID = this.SiteID;
+				rc.CreateDate = DateTime.Now;
 				db.tblRootContents.InsertOnSubmit(rc);
 				bNew = true;
 			}
@@ -150,9 +151,9 @@ namespace Carrotware.CMS.Core {
 
 		}
 
-
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
+		public DateTime CreateDate { get; set; }
 		public Guid? EditUserId { get; set; }
 		public bool IsLatestVersion { get; set; }
 		public string LeftPageText { get; set; }
@@ -165,6 +166,18 @@ namespace Carrotware.CMS.Core {
 		public Guid Root_ContentID { get; set; }
 		public string TemplateFile { get; set; }
 		public string TitleBar { get; set; }
+
+		public DateTime? EditHeartbeat { get; set; }
+		public string FileName { get; set; }
+		public Guid? Heartbeat_UserId { get; set; }
+		public bool PageActive { get; set; }
+		public Guid SiteID { get; set; }
+
+		public string NavFileName { get; set; }
+
+		public string MetaDescription { get; set; }
+		public string MetaKeyword { get; set; }
+
 
 		public string TemplateFolderPath {
 			get {
@@ -180,20 +193,9 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public DateTime? EditHeartbeat { get; set; }
-		public string FileName { get; set; }
-		public Guid? Heartbeat_UserId { get; set; }
-		public bool PageActive { get; set; }
-		public Guid SiteID { get; set; }
-
-		public string NavFileName { get; set; }
-
-		public string MetaDescription { get; set; }
-		public string MetaKeyword { get; set; }
 
 		private tblRootContent RootContent { get; set; }
 		private tblContent Content { get; set; }
-
 
 		#region IDisposable Members
 
@@ -228,6 +230,7 @@ namespace Carrotware.CMS.Core {
 			this.SiteID = rc.SiteID;
 			this.FileName = rc.FileName;
 			this.PageActive = Convert.ToBoolean(rc.PageActive);
+			this.CreateDate = rc.CreateDate;
 
 			this.ContentID = c.ContentID;
 			this.Parent_ContentID = c.Parent_ContentID;
@@ -244,6 +247,7 @@ namespace Carrotware.CMS.Core {
 
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
+		public DateTime CreateDate { get; set; }
 		public string NavMenuText { get; set; }
 		public int? NavOrder { get; set; }
 		public string PageHead { get; set; }

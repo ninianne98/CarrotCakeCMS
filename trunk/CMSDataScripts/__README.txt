@@ -21,3 +21,5 @@ If coming from an earlier version, run these scripts
 		** add meta fields to content.sql     (from before 2012-01-25)
 
 		** new widget structure.sql     (from before 2012-07-16)
+
+		** add create date to root content.sql     (from before 2012-07-22)

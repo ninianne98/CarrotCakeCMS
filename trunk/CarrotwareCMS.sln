@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "database scripts", "{835815E6-C641-402B-A6C5-E6E8A4B2C754}"
 	ProjectSection(SolutionItems) = preProject
+		CMSDataScripts\add create date to root content.sql = CMSDataScripts\add create date to root content.sql
 		CMSDataScripts\add meta fields to content.sql = CMSDataScripts\add meta fields to content.sql
 		CMSDataScripts\create tblCalendar.sql = CMSDataScripts\create tblCalendar.sql
 		CMSDataScripts\create tblFAQ.sql = CMSDataScripts\create tblFAQ.sql
