@@ -122,7 +122,7 @@ namespace Carrotware.CMS.Core {
 			if (oldC.Count > 0) {
 				foreach (var c in oldC) {
 					c.TemplateFile = sTemplateFile;
-					c.EditDate = DateTime.Now;
+					//c.EditDate = DateTime.Now;
 				}
 				db.SubmitChanges();
 			}
