@@ -1,5 +1,4 @@
-﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.PageHistory" %>
+﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.PageHistory" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -11,11 +10,17 @@
 	<h3>
 		<asp:Label ID="lblFilename" runat="server" Text="lblFilename"></asp:Label>
 		<asp:Image ID="imgStatus" runat="server" ImageUrl="/Manage/images/accept.png" AlternateText="Active" />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Create Date:
+		<asp:Label ID="lblCreated" runat="server" Text="1/1/1900"></asp:Label>
 	</h3>
 	<asp:Panel runat="server" ID="pnlDetail">
 		<p>
 			<asp:HyperLink ID="lnkReturn" runat="server" NavigateUrl="">
 			<img border="0" src="/manage/images/table_go.png" alt="Return" title="Return" /> Return to list</asp:HyperLink>
+		</p>
+		<p>
+			Edited On:
+			<asp:Label ID="lblEditDate" runat="server" Text="1/1/1900"></asp:Label>
 		</p>
 		<div id="jqtabs" style="height: 350px; width: 625px;">
 			<ul>
@@ -55,8 +60,8 @@
 	<asp:Panel runat="server" ID="pnlHistory">
 		<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />
 		<div id="SortableGrid">
-			<asp:GridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+			<asp:GridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
+				RowStyle-CssClass="rowregular">
 				<Columns>
 					<asp:TemplateField>
 						<ItemTemplate>
@@ -70,7 +75,7 @@
 					</asp:TemplateField>
 					<asp:TemplateField>
 						<HeaderTemplate>
-							Page Title
+							Titlebar
 						</HeaderTemplate>
 						<ItemTemplate>
 							<%# Eval("TitleBar")%>
@@ -78,20 +83,12 @@
 					</asp:TemplateField>
 					<asp:TemplateField>
 						<HeaderTemplate>
-							Page Heading
+							Page Header
 						</HeaderTemplate>
 						<ItemTemplate>
 							<%# Eval("PageHead")%>
 						</ItemTemplate>
 					</asp:TemplateField>
-					<%--<asp:TemplateField>
-						<HeaderTemplate>
-							Filename
-						</HeaderTemplate>
-						<ItemTemplate>
-							<%# Eval("FileName")%>
-						</ItemTemplate>
-					</asp:TemplateField>--%>
 					<asp:TemplateField>
 						<HeaderTemplate>
 							Nav Menu Text
@@ -108,15 +105,6 @@
 							<%# Eval("EditDate")%>
 						</ItemTemplate>
 					</asp:TemplateField>
-					<%--<asp:TemplateField ItemStyle-HorizontalAlign="Center">
-						<HeaderTemplate>
-							Active
-						</HeaderTemplate>
-						<ItemTemplate>
-							<asp:Image ID="imgActive" runat="server" ImageUrl="/Manage/images/accept.png" AlternateText="Active" />
-							<asp:HiddenField ID="hdnIsActive" Visible="false" runat="server" Value='<%#Eval("PageActive") %>' />
-						</ItemTemplate>
-					</asp:TemplateField>--%>
 				</Columns>
 			</asp:GridView>
 		</div>

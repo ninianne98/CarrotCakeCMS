@@ -14,19 +14,19 @@ using Carrotware.CMS.UI.Base;
 namespace Carrotware.CMS.UI.Admin {
 	public partial class User : AdminBasePage {
 
-		public Guid id = Guid.Empty;
+		public Guid userID = Guid.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserAdmin);
 
 			if (Request.QueryString["id"] != null) {
-				id = new Guid(Request.QueryString["id"]);
+				userID = new Guid(Request.QueryString["id"]);
 			}
 
 
 
 			if (!IsPostBack) {
-				if (id != Guid.Empty) {
+				if (userID != Guid.Empty) {
 					var dsRoles = new List<aspnet_Role>();
 
 					if (!SiteData.IsAdmin) {
@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 						var dsLocs = (from l in db.tblUserSiteMappings
-									  where l.UserId == id
+									  where l.UserId == userID
 									  select l).ToList();
 
 						chkSelected = null;
@@ -77,7 +77,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 					}
 
-					MembershipUser usr = Membership.GetUser(id);
+					MembershipUser usr = Membership.GetUser(userID);
 					Email.Text = usr.Email;
 					lblUserName.Text = usr.UserName;
 					UserName.Text = usr.UserName;
@@ -113,10 +113,10 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected void btnApply_Click(object sender, EventArgs e) {
 
-			if (id != Guid.Empty) {
+			if (userID != Guid.Empty) {
 				CheckBox chkSelected = null;
 
-				MembershipUser usr = Membership.GetUser(id);
+				MembershipUser usr = Membership.GetUser(userID);
 				usr.Email = Email.Text;
 				Membership.UpdateUser(usr);
 
@@ -142,24 +142,24 @@ namespace Carrotware.CMS.UI.Admin {
 
 				if (SiteData.IsAdmin) {
 					var dsLocs = (from l in db.tblUserSiteMappings
-								  where l.UserId == id
+								  where l.UserId == userID
 								  select l).ToList();
 
 					HiddenField hdnSiteID = null;
 					foreach (GridViewRow dgItem in gvSites.Rows) {
 						hdnSiteID = (HiddenField)dgItem.FindControl("hdnSiteID");
 						if (hdnSiteID != null) {
-							var iLoc = new Guid(hdnSiteID.Value);
+							var guidSiteID = new Guid(hdnSiteID.Value);
 							chkSelected = (CheckBox)dgItem.FindControl("chkSelected");
 
 							int ct = (from l in dsLocs
-									  where l.SiteID == iLoc
+									  where l.SiteID == guidSiteID
 									  select l).Count();
 
 							tblUserSiteMapping map = new tblUserSiteMapping();
 							map.UserSiteMappingID = Guid.NewGuid();
-							map.SiteID = iLoc;
-							map.UserId = id;
+							map.SiteID = guidSiteID;
+							map.UserId = userID;
 
 							if (chkSelected.Checked) {
 								if (ct < 1) {
@@ -169,7 +169,7 @@ namespace Carrotware.CMS.UI.Admin {
 							} else {
 								if (ct > 0) {
 									var loc = (from l in dsLocs
-											   where l.SiteID == iLoc
+											   where l.SiteID == guidSiteID
 											   select l).First();
 									db.tblUserSiteMappings.DeleteOnSubmit(loc);
 									db.SubmitChanges();
