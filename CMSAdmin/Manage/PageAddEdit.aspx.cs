@@ -95,6 +95,7 @@ namespace Carrotware.CMS.UI.Admin {
 					txtSort.Text = pageContents.NavOrder.ToString();
 
 					lblUpdated.Text = pageContents.EditDate.ToString();
+					lblCreatDate.Text = pageContents.CreateDate.ToString();
 
 					reBody.Text = pageContents.PageText;
 					reLeftBody.Text = pageContents.LeftPageText;

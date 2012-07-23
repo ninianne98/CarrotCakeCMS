@@ -45,16 +45,11 @@ namespace Carrotware.CMS.UI.Admin {
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
 
-				if (!SiteData.IsAdmin) {
-					var lstSites = (from l in db.tblUserSiteMappings
-									where l.UserId == SiteData.CurrentUserGuid
-										 && l.SiteID == SiteID
-									select l).ToList();
+				bool bHasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
 
-					if (lstSites.Count < 1) {
-						FormsAuthentication.SignOut();
-						Response.Redirect("./Logon.aspx");
-					}
+				if (!bHasAccess) {
+					FormsAuthentication.SignOut();
+					Response.Redirect("./Logon.aspx");
 				}
 			}
 

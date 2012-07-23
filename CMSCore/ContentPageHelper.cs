@@ -110,6 +110,26 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public void BulkUpdateTemplate(Guid siteID, List<Guid> lstUpd, string sTemplateFile) {
+
+			var oldC = (from ct in db.tblContents
+						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						where r.SiteID == siteID
+						 && lstUpd.Contains(r.Root_ContentID)
+						 && ct.IsLatestVersion == true
+						select ct).ToList();
+
+			if (oldC.Count > 0) {
+				foreach (var c in oldC) {
+					c.TemplateFile = sTemplateFile;
+					c.EditDate = DateTime.Now;
+				}
+				db.SubmitChanges();
+			}
+		}
+
+
+
 		public ContentPage GetLatestContent(Guid siteID, Guid rootContentID) {
 			var oldC = (from ct in db.tblContents
 						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID

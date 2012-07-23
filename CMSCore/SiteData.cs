@@ -124,6 +124,61 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public bool VerifyUserHasSiteAccess(Guid siteID, Guid userID) {
+
+			//all admins have rights to all sites
+			if (SiteData.IsAdmin) {
+				return true;
+			}
+
+			// if user is neither admin nor editor, they should not be in the backend of the site
+			if (!(SiteData.IsEditor || SiteData.IsAdmin)) {
+				return false;
+			}
+
+			// by this point, the user is probably an editor, make sure they have rights to this site
+			var lstSites = (from l in db.tblUserSiteMappings
+							where l.UserId == userID
+								 && l.SiteID == siteID
+							select l.SiteID).ToList();
+
+			if (lstSites.Count > 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+
+		public void CleanUpSerialData() {
+
+			var lst = (from c in db.tblSerialCaches
+					   where c.EditDate < DateTime.Now.AddHours(-3)
+					   && c.SiteID == CurrentSiteID
+					   select c).ToList();
+
+			if (lst.Count > 0) {
+				foreach (var l in lst) {
+					db.tblSerialCaches.DeleteOnSubmit(l);
+				}
+				db.SubmitChanges();
+			}
+
+		}
+
+
+		public void MapUserToSite(Guid siteID, Guid userID) {
+
+			tblUserSiteMapping map = new tblUserSiteMapping();
+			map.UserSiteMappingID = Guid.NewGuid();
+			map.SiteID = siteID;
+			map.UserId = userID;
+
+			db.tblUserSiteMappings.InsertOnSubmit(map);
+			db.SubmitChanges();
+
+		}
+
 		public static Guid CurrentSiteID {
 			get {
 				Guid _site = Guid.Empty;

@@ -25,7 +25,6 @@ namespace Carrotware.CMS.UI.Admin {
 
 			ContentPage p = null;
 
-
 			if (guidRootID != Guid.Empty) {
 				p = pageHelper.GetLatestContent(SiteID, guidRootID);
 				if (!IsPostBack) {
@@ -43,12 +42,15 @@ namespace Carrotware.CMS.UI.Admin {
 				litRight.Text = p.RightPageText;
 				guidRootID = p.Root_ContentID;
 
+				lblEditDate.Text = p.EditDate.ToString();
+
 				pnlDetail.Visible = true;
 				pnlHistory.Visible = false;
 			}
 
 			if (p != null) {
 				lblFilename.Text = p.FileName;
+				lblCreated.Text = p.CreateDate.ToString();
 				if (p.PageActive != true) {
 					imgStatus.ImageUrl = hdnInactive.Value;
 					imgStatus.AlternateText = "Inactive";

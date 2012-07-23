@@ -42,17 +42,7 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 			}
 
-			var lst = (from c in db.tblSerialCaches
-					   where c.EditDate < DateTime.Now.AddHours(-3)
-					   && c.SiteID == SiteID
-					   select c).ToList();
-
-			if (lst.Count > 0) {
-				foreach (var l in lst) {
-					db.tblSerialCaches.DeleteOnSubmit(l);
-				}
-				db.SubmitChanges();
-			}
+			siteHelper.CleanUpSerialData();
 
 		}
 

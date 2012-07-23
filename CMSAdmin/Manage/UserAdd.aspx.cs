@@ -26,12 +26,7 @@ namespace Carrotware.CMS.UI.Admin {
 				MembershipUser usr = Membership.GetUser(createWizard.UserName);
 				Guid userID = new Guid(usr.ProviderUserKey.ToString());
 
-				tblUserSiteMapping map = new tblUserSiteMapping();
-				map.UserSiteMappingID = Guid.NewGuid();
-				map.SiteID = SiteID;
-				map.UserId = userID;
-				db.tblUserSiteMappings.InsertOnSubmit(map);
-				db.SubmitChanges();
+				siteHelper.MapUserToSite(SiteID, userID);
 
 				Response.Redirect("./User.aspx?id=" + userID.ToString());
 			} catch (Exception ex) {

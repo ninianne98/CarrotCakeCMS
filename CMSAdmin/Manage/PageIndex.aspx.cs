@@ -95,6 +95,7 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
+			List<Guid> lstUpd = new List<Guid>();
 
 			foreach (GridViewRow row in gvApply.Rows) {
 				var chkReMap = (CheckBox)row.FindControl("chkReMap");
@@ -103,17 +104,11 @@ namespace Carrotware.CMS.UI.Admin {
 					var hdnContentID = (HiddenField)row.FindControl("hdnContentID");
 					Guid gRoot = new Guid(hdnContentID.Value);
 
-					var cont = (from c in db.tblContents
-								   where c.IsLatestVersion == true
-								   where c.Root_ContentID == gRoot
-								   select c).FirstOrDefault();
-
-					cont.TemplateFile = ddlTemplate.SelectedValue;
-
-				}
-
-				db.SubmitChanges();
+					lstUpd.Add(gRoot);
+				}				
 			}
+
+			pageHelper.BulkUpdateTemplate(SiteData.CurrentSiteID, lstUpd, ddlTemplate.SelectedValue);
 
 			SetTemplateGrid();
 

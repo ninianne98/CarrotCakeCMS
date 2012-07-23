@@ -1,5 +1,4 @@
-﻿<%@ Page Title="Page Index" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageIndex.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.PageIndex" %>
+﻿<%@ Page Title="Page Index" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageIndex.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.PageIndex" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -11,17 +10,16 @@
 	<p>
 		<a href="PageAddEdit.aspx?id=">
 			<img border="0" src="/manage/images/add.png" alt="Add" title="Add as WYSIWYG" />
-			Add Page (with editor)</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-		<a href="PageAddEdit.aspx?mode=raw&id=">
-			<img border="0" src="/manage/images/script_add.png" alt="Add" title="Add as Plain Text" />
-			Add Page (as plain text)</a> 
-		</p>
-		<p><a href="SiteSkinIndex.aspx">
+			Add Page (with editor)</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="PageAddEdit.aspx?mode=raw&id=">
+				<img border="0" src="/manage/images/script_add.png" alt="Add" title="Add as Plain Text" />
+				Add Page (as plain text)</a>
+	</p>
+	<p>
+		<a href="SiteSkinIndex.aspx">
 			<img border="0" src="/manage/images/page_white_wrench.png" alt="Skins" title="Edit Site Skins" />
-			Edit Site Skins</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-		<a href="SiteMap.aspx">
-			<img border="0" src="/manage/images/chart_organisation.png" alt="Map" title="Edit Site Map" />
-			Edit Site Map</a>
+			Edit Site Skins</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="SiteMap.aspx">
+				<img border="0" src="/manage/images/chart_organisation.png" alt="Map" title="Edit Site Map" />
+				Edit Site Map</a>
 	</p>
 	<br />
 	<div id="jqtabs" style="min-height: 350px; width: 800px;">
@@ -31,8 +29,8 @@
 		</ul>
 		<div id="pageidx-tabs-1">
 			<div id="SortableGrid">
-				<asp:GridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-					AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+				<asp:GridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
+					RowStyle-CssClass="rowregular">
 					<Columns>
 						<asp:TemplateField>
 							<ItemTemplate>
@@ -65,7 +63,7 @@
 						</asp:TemplateField>--%>
 						<asp:TemplateField>
 							<HeaderTemplate>
-								<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead1" runat="server" CommandName="TitleBar">Page Title</asp:LinkButton>
+								<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead1" runat="server" CommandName="TitleBar">Titlebar</asp:LinkButton>
 							</HeaderTemplate>
 							<ItemTemplate>
 								<%# Eval("TitleBar")%>
@@ -73,7 +71,7 @@
 						</asp:TemplateField>
 						<asp:TemplateField>
 							<HeaderTemplate>
-								<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead2" runat="server" CommandName="PageHead">Page Heading</asp:LinkButton>
+								<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead2" runat="server" CommandName="PageHead">Page Header</asp:LinkButton>
 							</HeaderTemplate>
 							<ItemTemplate>
 								<%# Eval("PageHead")%>
@@ -103,6 +101,14 @@
 								<%# Eval("EditDate")%>
 							</ItemTemplate>
 						</asp:TemplateField>
+						<asp:TemplateField>
+							<HeaderTemplate>
+								<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead7" runat="server" CommandName="CreateDate">Created On</asp:LinkButton>
+							</HeaderTemplate>
+							<ItemTemplate>
+								<%# String.Format("{0:d}", Eval("CreateDate"))%>
+							</ItemTemplate>
+						</asp:TemplateField>
 						<asp:TemplateField ItemStyle-HorizontalAlign="Center">
 							<HeaderTemplate>
 								<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead4" runat="server" CommandName="PageActive">Active</asp:LinkButton>
@@ -129,8 +135,8 @@
 				</tr>
 			</table>
 			<div id="SortableGrid">
-				<asp:GridView CssClass="datatable" ID="gvApply" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-					AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+				<asp:GridView CssClass="datatable" ID="gvApply" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
+					RowStyle-CssClass="rowregular">
 					<Columns>
 						<asp:TemplateField ItemStyle-HorizontalAlign="Center">
 							<HeaderTemplate>
@@ -151,7 +157,7 @@
 						</asp:TemplateField>
 						<asp:TemplateField>
 							<HeaderTemplate>
-								Page Title
+								Titlebar
 							</HeaderTemplate>
 							<ItemTemplate>
 								<%# Eval("TitleBar")%>
@@ -159,7 +165,7 @@
 						</asp:TemplateField>
 						<asp:TemplateField>
 							<HeaderTemplate>
-								Page Heading
+								Page Header
 							</HeaderTemplate>
 							<ItemTemplate>
 								<%# Eval("PageHead")%>
@@ -186,7 +192,7 @@
 								Last Edited
 							</HeaderTemplate>
 							<ItemTemplate>
-								<%# Eval("EditDate")%>
+								<%# String.Format("{0:d}", Eval("EditDate"))%>
 							</ItemTemplate>
 						</asp:TemplateField>
 						<asp:TemplateField ItemStyle-HorizontalAlign="Center">
