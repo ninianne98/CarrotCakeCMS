@@ -57,56 +57,56 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				EditorPrefs.EditorScrollPosition = "0";
 			}
 
-			if (!IsPostBack) {
+			//if (!IsPostBack) {
 
-				var pageContents = new ContentPage();
-				if (guidContentID == Guid.Empty) {
-					var pageName = SiteData.CurrentScriptName;
-					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
+			var pageContents = new ContentPage();
+			if (guidContentID == Guid.Empty) {
+				var pageName = SiteData.CurrentScriptName;
+				pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
+			} else {
+				pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
+			}
+
+			if (cmsHelper.ToolboxPlugins.Count > 0) {
+				rpTools.DataSource = cmsHelper.ToolboxPlugins;
+				rpTools.DataBind();
+			} else {
+				rpTools.Visible = false;
+			}
+
+			bLocked = IsPageLocked(pageContents);
+
+			ddlTemplate.DataSource = cmsHelper.Templates;
+			ddlTemplate.DataBind();
+
+			try { ddlTemplate.SelectedValue = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
+
+			if (!bLocked) {
+				guidContentID = pageContents.Root_ContentID;
+
+				if (cmsHelper.cmsAdminContent == null) {
+					cmsHelper.cmsAdminContent = pageContents;
 				} else {
-					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
+					pageContents = cmsHelper.cmsAdminContent;
 				}
 
-				if (cmsHelper.ToolboxPlugins.Count > 0) {
-					rpTools.DataSource = cmsHelper.ToolboxPlugins;
-					rpTools.DataBind();
-				} else {
-					rpTools.Visible = false;
-				}
+				divEditing.Visible = false;
 
-				bLocked = IsPageLocked(pageContents);
+			} else {
+				pnlBUttonGroup.Visible = false;
+				rpTools.Visible = false;
+				btnToolboxSave.Visible = false;
+				btnTemplate.Visible = false;
+				btnEditCoreInfo.Visible = false;
+				divEditing.Visible = true;
 
-				ddlTemplate.DataSource = cmsHelper.Templates;
-				ddlTemplate.DataBind();
-
-				try { ddlTemplate.SelectedValue = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
-
-				if (!bLocked) {
-					guidContentID = pageContents.Root_ContentID;
-
-					if (cmsHelper.cmsAdminContent == null) {
-						cmsHelper.cmsAdminContent = pageContents;
-					} else {
-						pageContents = cmsHelper.cmsAdminContent;
-					}
-
-					divEditing.Visible = false;
-
-				} else {
-					pnlBUttonGroup.Visible = false;
-					rpTools.Visible = false;
-					btnToolboxSave.Visible = false;
-					btnTemplate.Visible = false;
-					btnEditCoreInfo.Visible = false;
-					divEditing.Visible = true;
-
-					if (bLocked && pageContents.Heartbeat_UserId != null) {
-						var usr = ProfileManager.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
-						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
-							" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
-					}
+				if (bLocked && pageContents.Heartbeat_UserId != null) {
+					var usr = ProfileManager.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
+					litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
+						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 				}
 			}
+			//}
 
 		}
 
