@@ -11,15 +11,23 @@
 <link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 <link href="/Manage/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
-	var cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
 	$(document).ready(function() {
 		<% if (!bLocked) { %>
-		setTimeout("cmsEditHB();", 1000);
+		setTimeout('cmsEditHB();', 1000);
 		<%} else { %>
-		cmsAlertModal("<%=litUser.Text %>");
+		cmsAlertModal('<%=litUser.Text %>');
 		<%} %>
 	});
+
+
+</script>
+<script type="text/javascript">
+
+	var cmsIsPageLocked = true;
+	if ('<%=bLocked.ToString().ToLower() %>' != 'true') {
+		cmsIsPageLocked = false;
+	}
 
 	var cmsConfirmLeavingPage = true;
 
@@ -31,8 +39,16 @@
 		}
 	});
 
-</script>
-<script type="text/javascript">
+	function cmsGetPageStatus() {
+		return cmsConfirmLeavingPage;
+	}
+
+	function cmsGetPageLock() {
+		return cmsIsPageLocked;
+	}
+
+	// ===============================================
+	// do menu stuff / icons etc
 
 	var cmsMnuVis = true;
 
@@ -77,7 +93,7 @@
 		//setTimeout("cmsSaveToolbarPosition();", 500);
 	}
 
-	$(document).ready(function() {
+	$(document).ready(function () {
 		cmsResetToolbarScroll();
 	});
 
@@ -86,17 +102,15 @@
 	function cmsResetToolbarScroll() {
 		setTimeout("cmsShiftPosition('<%=EditorPrefs.EditorMargin %>')", 100);
 
-		if ('<%= EditorPrefs.EditorOpen %>' =='false') {
+		if ('<%= EditorPrefs.EditorOpen %>' == 'false') {
 			cmsMnuVis = true;
 			cmsToggleMenu();
 		}
 
-		$("html").scrollTop(<%= EditorPrefs.EditorScrollPosition %>);
+		//$("html").scrollTop(parseInt('<%= EditorPrefs.EditorScrollPosition %>'));
+		$(document).scrollTop(parseInt('<%= EditorPrefs.EditorScrollPosition %>'));
 	}
-</script>
-<script type="text/javascript">
 
-	cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
 	function cmsMenuFixImages() {
 		$(".cmsWidgetBarIconCog").each(function (i) {
@@ -142,6 +156,36 @@
 			setTimeout("cmsMenuFixImages();", 250);
 			setTimeout("cmsMenuFixImages();", 2500);
 			setTimeout("cmsMenuFixImages();", 5000);
+
+			// these click events because of stoopid IE9 navigate away behavior
+			$('#cmsEditMenuList a').each(function (i) {
+				$(this).click(function () {
+					cmsMakeOKToLeave();
+					setTimeout("cmsMakeNotOKToLeave();", 250);
+				});
+			});
+
+			$('#cmsEditMenuList').each(function (i) {
+				$(this).click(function () {
+					cmsMakeOKToLeave();
+					setTimeout("cmsMakeNotOKToLeave();", 250);
+				});
+			});
+
+			$('.cmsContentAreaHead a').each(function (i) {
+				$(this).click(function () {
+					cmsMakeOKToLeave();
+					setTimeout("cmsMakeNotOKToLeave();", 250);
+				});
+			});
+
+			$('.cmsContentAreaHead').each(function (i) {
+				$(this).click(function () {
+					cmsMakeOKToLeave();
+					setTimeout("cmsMakeNotOKToLeave();", 250);
+				});
+			});
+
 		} else {
 			$("#cmsEditMenuList ul").each(function (i) {
 				cmsBlockImageEdits(this);
@@ -153,17 +197,27 @@
 		}
 	});
 
+	function cmsMakeOKToLeave() {
+		cmsConfirmLeavingPage = false;
+	}
 
+	function cmsMakeNotOKToLeave() {
+		cmsConfirmLeavingPage = true;
+	}
 
-</script>
-<script type="text/javascript">
+	function cmsRequireConfirmToLeave(confirmLeave) {
+		cmsConfirmLeavingPage = confirmLeave;
+	}
+
+	// ===============================================
+	// do loads of web service stuff
+
 	var webSvc = "/Manage/CMS.asmx";
 
-	var thisPage = '<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>';
+	var thisPage = "<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>"; // used in escaped fashion
+	var thisPageNav = "<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>";  // used non-escaped (redirects)
 
-	var thisPageID = '<%=guidContentID.ToString() %>';
-
-	cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
+	var thisPageID = "<%=guidContentID.ToString() %>";
 
 	function cmsEscapeFile() {
 		thisPage = cmsMakeStringSafe(thisPage);
@@ -178,12 +232,6 @@
 		return val;
 	}
 
-
-	function cmsMakeOKToLeave() {
-		cmsConfirmLeavingPage = false;
-	}
-
-
 	function cmsEditHB() {
 		//cmsSaveToolbarPosition();
 		if (!cmsIsPageLocked) {
@@ -194,7 +242,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'PageID': '<%=guidContentID %>'}",
+				data: "{'PageID': '" + thisPageID + "'}",
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: cmsUpdateHeartbeat,
@@ -205,7 +253,7 @@
 
 	function cmsSaveToolbarPosition() {
 
-		var scrollTop = $("html").scrollTop();
+		var scrollTop = $(document).scrollTop();  //$("html").scrollTop();
 
 		var webMthd = webSvc + "/RecordEditorPosition";
 
@@ -388,7 +436,7 @@
 			CMSBusyShort();
 			cmsAlertModal("Saved");
 			cmsMakeOKToLeave();
-			window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 5000);
+			window.setTimeout("location.href = \'" + thisPageNav + "\'", 5000);
 		} else {
 			cmsAlertModal(data.d);
 		}
@@ -397,7 +445,7 @@
 
 	function cmsCancelEdit0() {
 		cmsMakeOKToLeave();
-		window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 1000);
+		window.setTimeout("location.href = \'" + thisPageNav + "\'", 1000);
 	}
 
 	function cmsCancelEdit() {
@@ -418,7 +466,7 @@
 				},
 				"Yes": function () {
 					cmsMakeOKToLeave();
-					window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>\'', 500);
+					window.setTimeout("location.href = \'" + thisPageNav + "\'", 500);
 					$(this).dialog("close");
 				}
 			}
@@ -426,7 +474,6 @@
 
 		cmsFixDialog('CMScancelconfirmmsg');
 	}
-
 
 	function cmsAjaxFailed(request) {
 		var s = "";
@@ -451,6 +498,9 @@
 
 		cmsFixDialog('CMSmodalalertmessage');
 	}
+
+	//===========================
+	// do a lot of iFrame magic
 
 	function cmsManageWidgetList(zoneName) {
 		//alert(zoneName);
@@ -577,8 +627,6 @@
 		$("#cmsMovedItem").val(id);
 	}
 
-	cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
-
 	$(document).ready(function () {
 
 		$('#cmsAdminToolbox').addFloating({
@@ -645,6 +693,7 @@
 
 	});
 
+
 	function cmsSetValue(u) {
 		var id = $(u).attr('id');
 		var val = $(u).find('#cmsCtrlOrder').val();
@@ -652,7 +701,6 @@
 		$("#cmsMovedItem").val(val);
 		setTimeout("cmsBuildOrder();", 500);
 	}
-
 
 	function cmsDelItem(item) {
 		item.appendTo("#cmsTrashList");
@@ -680,11 +728,6 @@
 		var id = $(item).attr('id');
 		var zone = $(item).find('#cmsControl');
 
-		//var st = $(zone).attr('style');
-		//if (!(st == undefined || st.length < 10) && state == 1) {
-		//	state = 0;
-		//}
-
 		if (state != 0) {
 			$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 75px; max-width: 800px; overflow: auto;');
 		} else {
@@ -711,20 +754,15 @@
 		var cap = $(dilg).find(".ui-dialog-title").attr('style', 'float:left !important; margin:2px !important; padding:2px !important;');
 		var cap = $(dilg).find(".ui-dialog-buttonpane").attr('style', 'margin:2px !important; padding:3px !important;');
 
-		//var h = $(dilg).html();
-		//$(dilg).html('');
-		//$(dilg).html('<div class="cmsGlossySeaGreen ui-widget-content ui-corner-all">' + h + '</div>');
 	}
-	
-</script>
-<script type="text/javascript">
+
 
 	function cmsGenericEdit(PageId, WidgetId) {
 		cmsLaunchWindow('/Manage/ControlPropertiesEdit.aspx?pageid=' + PageId + '&id=' + WidgetId);
 	}
 
 	function cmsLaunchWindow(theURL) {
-		TheURL = theURL;
+		var TheURL = theURL;
 		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="750" height="475" src="' + TheURL + '" /> </div>');
 
 		$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
@@ -756,7 +794,9 @@
 	function cmsDirtyPageRefresh() {
 		cmsSaveToolbarPosition();
 		cmsMakeOKToLeave();
-		window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'', 800);
+		window.setTimeout('cmsMakeOKToLeave();', 500);
+		window.setTimeout('cmsMakeOKToLeave();', 700);
+		window.setTimeout("location.href = \'" + thisPageNav + "?carrotedit=true&carrottick=<%=DateTime.Now.Ticks.ToString() %>\'", 800);
 	}
 
 </script>
