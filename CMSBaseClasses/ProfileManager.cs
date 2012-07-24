@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
 using System.Web.UI;
+using System.Reflection;
 
 namespace Carrotware.CMS.UI.Base {
 
@@ -63,10 +64,12 @@ namespace Carrotware.CMS.UI.Base {
 				string MailTemplate = "";
 
 				//string MailTemplate = "Carrotware.CMS.UI.Base.EmailForgotPassMsg.txt";
-				var _assembly = System.Reflection.Assembly.GetExecutingAssembly();
-				StreamReader _textStreamReader = null;
-				_textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Base.EmailForgotPassMsg.txt"));
-				string sBody = _textStreamReader.ReadToEnd();
+				Assembly _assembly = Assembly.GetExecutingAssembly();
+
+				string sBody = String.Empty;
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Base.EmailForgotPassMsg.txt"))) {
+					sBody = oTextStream.ReadToEnd();
+				}
 
 				string SenderEmail = "";
 

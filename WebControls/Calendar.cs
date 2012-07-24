@@ -335,9 +335,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 
-
-
-
 			StringBuilder sb = new StringBuilder();
 			sb.Append("");
 
@@ -363,7 +360,7 @@ namespace Carrotware.Web.UI.Controls {
 							sClass = "today";
 						}
 
-						var copyRows = (from c in dates
+						IEnumerable<DateTime> copyRows = (from c in dates
 										where c == cellDate.Date
 										select c);
 						if (copyRows.Count() > 0) {
@@ -413,17 +410,14 @@ namespace Carrotware.Web.UI.Controls {
 		protected override void OnPreRender(EventArgs e) {
 
 			if (string.IsNullOrEmpty(OverrideCSS)) {
-				//string sCSSFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.calendar.css");
 
-				//var link = new HtmlLink();
-				//link.Href = sCSSFile;
-				//link.Attributes.Add("rel", "stylesheet");
-				//link.Attributes.Add("type", "text/css");
-				//Page.Header.Controls.Add(link);
+				string sCSS = String.Empty;
 
-				var _assembly = Assembly.GetExecutingAssembly();
-				var _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.Web.UI.Controls.calendar.txt"));
-				string sCSS = _textStreamReader.ReadToEnd();
+				Assembly _assembly = Assembly.GetExecutingAssembly();
+
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.Web.UI.Controls.calendar.txt"))) {
+					sCSS = oTextStream.ReadToEnd();
+				}
 
 				sCSS = sCSS.Replace("{WEEKDAY_CHEX}", ColorTranslator.ToHtml(WeekdayColor));
 				sCSS = sCSS.Replace("{WEEKDAY_BGHEX}", ColorTranslator.ToHtml(WeekdayBackground));
@@ -443,12 +437,12 @@ namespace Carrotware.Web.UI.Controls {
 				sCSS = sCSS.Replace("{CALENDAR_ID}", "#" + this.ClientID);
 				sCSS = "\r\n<style type=\"text/css\">\r\n" + sCSS + "\r\n</style>\r\n";
 
-				var link = new Literal();
+				Literal link = new Literal();
 				link.Text = sCSS;
 				Page.Header.Controls.Add(link);
 
 			} else {
-				var link = new HtmlLink();
+				HtmlLink link = new HtmlLink();
 				link.Href = OverrideCSS;
 				link.Attributes.Add("rel", "stylesheet");
 				link.Attributes.Add("type", "text/css");
