@@ -10,42 +10,33 @@
 namespace Carrotware.CMS.UI.Admin.Manage {
     
     
-    public partial class ucEditNotifier {
+    public partial class PageChildSort {
         
         /// <summary>
-        /// lnkParent control.
+        /// rpPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkParent;
+        protected global::System.Web.UI.WebControls.Repeater rpPages;
         
         /// <summary>
-        /// lnkCurrent control.
+        /// txtSort control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkCurrent;
+        protected global::System.Web.UI.WebControls.TextBox txtSort;
         
         /// <summary>
-        /// lblChildDDL control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChildDDL;
-        
-        /// <summary>
-        /// ddlCMSLinks control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCMSLinks;
+        protected global::System.Web.UI.WebControls.Button btnSave;
     }
 }

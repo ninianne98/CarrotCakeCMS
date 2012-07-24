@@ -95,6 +95,13 @@
     <Compile Include="Manage\ContentEdit.aspx.designer.cs">
       <DependentUpon>ContentEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\PageChildSort.aspx.cs">
+      <DependentUpon>PageChildSort.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\PageChildSort.aspx.designer.cs">
+      <DependentUpon>PageChildSort.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\PageEdit.aspx.cs">
       <DependentUpon>PageEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -342,6 +349,7 @@
     <Content Include="Manage\Includes\advanced-editor.css" />
     <Content Include="Manage\Includes\tooltiphelper.css" />
     <Content Include="Manage\Includes\tooltiphelper.js" />
+    <Content Include="Manage\PageChildSort.aspx" />
     <Content Include="Manage\SiteSkinEdit.aspx" />
     <Content Include="Manage\SiteSkinIndex.aspx" />
     <Content Include="Manage\WidgetHistory.aspx" />

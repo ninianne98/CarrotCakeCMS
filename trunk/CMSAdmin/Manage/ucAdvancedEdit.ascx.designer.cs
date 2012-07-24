@@ -76,15 +76,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         protected global::System.Web.UI.WebControls.Repeater rpTools;
         
         /// <summary>
-        /// btnEditCoreInfo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnEditCoreInfo;
-        
-        /// <summary>
         /// ddlTemplate control.
         /// </summary>
         /// <remarks>
@@ -101,5 +92,23 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnTemplate;
+        
+        /// <summary>
+        /// btnEditCoreInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnEditCoreInfo;
+        
+        /// <summary>
+        /// btnSortChildPages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnSortChildPages;
     }
 }
