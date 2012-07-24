@@ -243,9 +243,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public string RecordEditorPosition(string ToolbarState, string ToolbarMargin, string ToolbarScroll) {
+		public string RecordEditorPosition(string ToolbarState, string ToolbarMargin, string ToolbarScroll, string SelTabID) {
 			try {
-				GetSetUserEditState(ToolbarState, ToolbarMargin, ToolbarScroll);
+				GetSetUserEditState(ToolbarState, ToolbarMargin, ToolbarScroll, SelTabID);
 
 				return "OK";
 			} catch (Exception ex) {
@@ -253,7 +253,7 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
-		private void GetSetUserEditState(string ToolbarState, string ToolbarMargin, string ToolbarScroll) {
+		private void GetSetUserEditState(string ToolbarState, string ToolbarMargin, string ToolbarScroll, string SelTabID) {
 			UserEditState editor = UserEditState.cmsUserEditState;
 			if (editor == null) {
 				editor = new UserEditState();
@@ -262,6 +262,7 @@ namespace Carrotware.CMS.UI.Admin {
 			editor.EditorOpen = string.IsNullOrEmpty(ToolbarState) ? (string.IsNullOrEmpty(editor.EditorOpen) ? "true" : editor.EditorOpen) : ToolbarState.ToLower();
 			editor.EditorMargin = string.IsNullOrEmpty(ToolbarMargin) ? (string.IsNullOrEmpty(editor.EditorMargin) ? "L" : editor.EditorMargin) : ToolbarMargin.ToUpper();
 			editor.EditorScrollPosition = string.IsNullOrEmpty(ToolbarScroll) ? "0" : ToolbarScroll.ToLower();
+			editor.EditorSelectedTabIdx = string.IsNullOrEmpty(SelTabID) ? "0" : SelTabID.ToLower();
 
 			UserEditState.cmsUserEditState = editor;
 		}
@@ -385,7 +386,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				cmsAdminContent = c;
 
-				GetSetUserEditState("", "", "");
+				GetSetUserEditState("", "", "", "");
 
 				return "OK";
 			} catch (Exception ex) {
@@ -793,7 +794,7 @@ namespace Carrotware.CMS.UI.Admin {
 					cmsAdminContent = null;
 				}
 
-				GetSetUserEditState("true", "", "");
+				GetSetUserEditState("true", "", "", "");
 
 				return "OK";
 

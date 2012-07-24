@@ -28,6 +28,7 @@ namespace Carrotware.CMS.Core {
 
 		public string EditorScrollPosition { get; set; }
 
+		public string EditorSelectedTabIdx { get; set; }
 
 		public static string ContentKey {
 			get {
@@ -46,7 +47,7 @@ namespace Carrotware.CMS.Core {
 				if (value == null) {
 					HttpContext.Current.Cache.Remove(ContentKey);
 				} else {
-					HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddSeconds(15), Cache.NoSlidingExpiration);
+					HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(1), Cache.NoSlidingExpiration);
 				}
 			}
 		}
