@@ -55,6 +55,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						txtPageContents.Text = sr.ReadToEnd();
 					}
 				}
+
 				litDateMod.Text = File.GetLastWriteTime(sEditFile).ToString();
 
 				if (sFullFilePath.LastIndexOf(@"\") > 0) {

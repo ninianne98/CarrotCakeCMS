@@ -244,20 +244,20 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			var pageContents = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+		SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
-			var sParent = "";
-			if (pageContents != null) {
-				sParent = pageContents.FileName.ToLower();
+			string sParent = "";
+			if (pageNav != null) {
+				sParent = pageNav.FileName.ToLower();
 			}
 
-			var lst = GetTopNav();
+			List<SiteNav> lst = GetTopNav();
 			output.Write("<div id=\"" + this.ClientID + "\">\r\n");
 			output.Write("<div id=\"" + this.ClientID + "-inner\">\r\n");
 
 			output.Write("<ul class=\"" + CSSULClassTop + "\">\r\n");
-			foreach (var c1 in lst) {
-				var cc = GetChildren(c1.Root_ContentID);
+			foreach (SiteNav c1 in lst) {
+				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
 				if (!c1.PageActive) {
 					c1.NavMenuText = "&#9746; " + c1.NavMenuText;
 				}
@@ -269,7 +269,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 				if (cc.Count > 0) {
 					output.Write("\r\n\t<ul class=\"" + CSSULClassLower + "\">\r\n");
-					foreach (var c2 in cc) {
+					foreach (SiteNav c2 in cc) {
 						if (!c2.PageActive) {
 							c2.NavMenuText = "&#9746; " + c2.NavMenuText;
 						}
@@ -389,15 +389,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 			if (string.IsNullOrEmpty(OverrideCSS)) {
+				string sCSS = String.Empty;
+				string sCSS7 = String.Empty;
 
-				var _assembly = Assembly.GetExecutingAssembly();
-				StreamReader _textStreamReader = null;
+				Assembly _assembly = Assembly.GetExecutingAssembly();
 
-				_textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt"));
-				string sCSS = _textStreamReader.ReadToEnd();
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt"))) {
+					sCSS = oTextStream.ReadToEnd();
+				}
 
-				_textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu7.txt"));
-				string sCSS7 = _textStreamReader.ReadToEnd();
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu7.txt"))) {
+					sCSS7 = oTextStream.ReadToEnd();
+				}
 
 				sCSS = sCSS.Replace("{FORE_HEX}", ColorTranslator.ToHtml(ForeColor));
 				sCSS = sCSS.Replace("{BG_HEX}", ColorTranslator.ToHtml(BackColor));
@@ -470,14 +473,14 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS7 = sCSS7.Replace("{MENU_WRAPPER_ID}", "#" + this.ClientID + "");
 				sCSS7 = "\r\n<!--[if IE 7]> \r\n<style type=\"text/css\">\r\n" + sCSS7 + "\r\n</style>\r\n<![endif]-->\r\n";
 
-				var link = new Literal();
+				Literal link = new Literal();
 				link.Text = sCSS;
 				Page.Header.Controls.Add(link);
-				var link7 = new Literal();
+				Literal link7 = new Literal();
 				link7.Text = sCSS7;
 				Page.Header.Controls.Add(link7);
 			} else {
-				var link = new HtmlLink();
+				HtmlLink link = new HtmlLink();
 				link.Href = OverrideCSS;
 				link.Attributes.Add("rel", "stylesheet");
 				link.Attributes.Add("type", "text/css");
