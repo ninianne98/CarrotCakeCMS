@@ -414,6 +414,35 @@ namespace Carrotware.CMS.Core {
 			return m;
 		}
 
+		public List<SiteMapOrder> ParseChildPageData(string sMapText, Guid contentID) {
+			List<SiteMapOrder> m = new List<SiteMapOrder>();
+			sMapText = sMapText.Trim();
+
+			var c = (from ct in db.tblContents
+					 where ct.Root_ContentID == contentID
+						&& ct.IsLatestVersion == true
+					 select ct).FirstOrDefault();
+
+			int iOrder = Convert.ToInt32(c.NavOrder) + 2;
+
+			if (!string.IsNullOrEmpty(sMapText)) {
+				sMapText = sMapText.Replace("\r\n", "\n");
+				var rows = sMapText.Split('\n');
+				foreach (string r in rows) {
+					if (!string.IsNullOrEmpty(r)) {
+						var rr = r.Split('\t');
+						SiteMapOrder s = new SiteMapOrder();
+						s.NavOrder = iOrder + int.Parse(rr[0]);
+						s.Root_ContentID = new Guid(rr[1]);
+						s.Parent_ContentID = contentID;
+						m.Add(s);
+					}
+				}
+			}
+
+			return m;
+		}
+
 		public void UpdateSiteMap(Guid siteID, List<SiteMapOrder> oMap) {
 
 			foreach (var m in oMap) {

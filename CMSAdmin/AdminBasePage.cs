@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		protected SiteNav navHelper = new SiteNav();
+		protected SiteNavHelper navHelper = new SiteNavHelper();
 
 		public bool IsPageLocked(ContentPage cp) {
 

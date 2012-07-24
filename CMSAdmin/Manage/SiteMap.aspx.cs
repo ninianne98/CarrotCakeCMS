@@ -74,10 +74,10 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			SiteMapOrderHelper orderHelper = new SiteMapOrderHelper();
-			var lst = orderHelper.CreateSiteMapList(txtMap.Text);
-
-			orderHelper.UpdateSiteMap(SiteID, lst);
+			using (SiteMapOrderHelper orderHelper = new SiteMapOrderHelper()) {
+				var lst = orderHelper.CreateSiteMapList(txtMap.Text);
+				orderHelper.UpdateSiteMap(SiteID, lst);
+			}
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}

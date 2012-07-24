@@ -517,6 +517,11 @@
 		cmsLaunchWindow('/Manage/PageEdit.aspx?pageid=' + thisPageID);
 	}
 
+	function cmsSortChildren() {
+		//cmsAlertModal("cmsSortChildren");
+		cmsLaunchWindow('/Manage/PageChildSort.aspx?pageid=' + thisPageID);
+	}
+
 	function cmsShowEditWidgetForm(w, m) {
 		//cmsAlertModal("cmsShowEditWidgetForm");
 		cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&widgetid=" + w + "&mode=" + m);
@@ -879,13 +884,16 @@
 						<div id="cmsTabIdx-tabs-2" class="cmsGlossySeaGreen">
 							<div class="cmsCenter5px">
 								<p class="cmsLeft5px">
-									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsPlain5px" onclick="cmsShowEditPageInfo();" />
-								</p>
-								<p class="cmsLeft5px">
 									<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 									</asp:DropDownList>
 									<br />
 									<input runat="server" id="btnTemplate" type="button" value="Apply Template" class="cmsPlain5px" onclick="cmsUpdateTemplate();" />
+								</p>
+								<p class="cmsLeft5px">
+									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsPlain5px" onclick="cmsShowEditPageInfo();" />
+								</p>
+								<p class="cmsLeft5px">
+									<input runat="server" id="btnSortChildPages" type="button" value="Sort Child/Sub Pages" class="cmsPlain5px" onclick="cmsSortChildren();" />
 								</p>
 							</div>
 							<br style="clear: both;" />

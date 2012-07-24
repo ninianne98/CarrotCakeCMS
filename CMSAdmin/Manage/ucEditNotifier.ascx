@@ -51,6 +51,7 @@
 		padding: 0px !important;
 		border: 1px solid #CDE3D6 !important;
 		line-height: 10px !important;
+		background: transparent !important;
 	}
 	.cmsFooterLinks {
 		color: #676F6A !important;
@@ -83,6 +84,15 @@
 		margin: 5px !important;
 		border: 2px dashed #676F6A !important;
 	}
+	.cmsNavFooterBox select {
+		line-height: normal;
+		margin: 0px;
+		padding: 1px;
+		text-align: left;
+		font-size: small;
+		background: #FFFFFF !important;
+		color: #000000 !important;
+	}
 </style>
 <div class="cmsNavFooterBox">
 	<p class="cmsFooterP">
@@ -111,7 +121,6 @@
 		}
 	}
 </script>
-
 <div id="cmsAdminToolbox1" class="cmsNavigationBlock">
 	<div class="cmsNavBox2">
 		<div class="cmsNavBox1">
