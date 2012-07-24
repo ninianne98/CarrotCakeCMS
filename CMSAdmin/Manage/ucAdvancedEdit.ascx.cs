@@ -90,15 +90,15 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					pageContents = cmsHelper.cmsAdminContent;
 				}
 
-				divEditing.Visible = false;
+				cmsDivEditing.Visible = false;
 
 			} else {
-				pnlBUttonGroup.Visible = false;
+				pnlCMSEditZone.Visible = false;
 				rpTools.Visible = false;
 				btnToolboxSave.Visible = false;
 				btnTemplate.Visible = false;
 				btnEditCoreInfo.Visible = false;
-				divEditing.Visible = true;
+				cmsDivEditing.Visible = true;
 
 				if (bLocked && pageContents.Heartbeat_UserId != null) {
 					var usr = ProfileManager.GetUserByGuid(pageContents.Heartbeat_UserId.Value);

@@ -31,13 +31,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         protected global::Carrotware.Web.UI.Controls.jqueryui jqueryui1;
         
         /// <summary>
-        /// divEditing control.
+        /// cmsDivEditing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEditing;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl cmsDivEditing;
         
         /// <summary>
         /// litUser control.
@@ -49,13 +49,31 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         protected global::System.Web.UI.WebControls.Literal litUser;
         
         /// <summary>
-        /// pnlBUttonGroup control.
+        /// pnlCMSEditZone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlBUttonGroup;
+        protected global::System.Web.UI.WebControls.Panel pnlCMSEditZone;
+        
+        /// <summary>
+        /// btnToolboxSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave;
+        
+        /// <summary>
+        /// rpTools control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rpTools;
         
         /// <summary>
         /// btnEditCoreInfo control.
@@ -83,23 +101,5 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnTemplate;
-        
-        /// <summary>
-        /// btnToolboxSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave;
-        
-        /// <summary>
-        /// rpTools control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpTools;
     }
 }
