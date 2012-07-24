@@ -1,10 +1,10 @@
-<%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-	<carrot:jquerybasic runat="server" ID="jquerybasic" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic" SelectedSkin="GlossyBlack" />
 	<title>plain</title>
 	<style type="text/css">
 		body {
@@ -23,13 +23,13 @@
 			margin-bottom: 5px;
 		}
 		h1 {
-			font-size: 2em;
+			font-size: 2.5em;
 		}
 		h2 {
-			font-size: 2.4em;
+			font-size: 2em;
 		}
 		h3 {
-			font-size: 1.6em;
+			font-size: 1.5em;
 		}
 		p, ul, ol {
 			margin-top: 0;
@@ -39,7 +39,7 @@
 		}
 		a {
 			text-decoration: none;
-			color: #82050B;
+			color: #424242;
 		}
 		a:hover {
 		}
@@ -48,20 +48,29 @@
 			margin: 0 auto;
 			padding: 0;
 		}
-		/* Header */#header {
+		
+		/* Header */
+		
+		#header {
 			clear: both;
 			width: 980px;
 			height: 300px;
 			margin: 0 auto;
 			padding: 0px;
 		}
-		/* Menu */#menu {
+		
+		/* Menu */
+		
+		#menu {
 			width: 940px;
 			height: 80px;
 			margin: 0 auto;
 			padding: 0;
 		}
-		/* Page */#page {
+		
+		/* Page */
+		
+		#page {
 			width: 940px;
 			margin: 0 auto;
 			padding: 0px 0px 0px 0px;
@@ -71,7 +80,10 @@
 		}
 		#page-bgbtm {
 		}
-		/* Content */#content {
+		
+		/* Content */
+		
+		#content {
 			float: right;
 			width: 580px;
 			padding: 30px 0px 0px 0px;
@@ -104,7 +116,10 @@
 			font-size: 12px;
 			font-weight: bold;
 		}
-		/* Sidebar */#sidebar {
+		
+		/* Sidebar */
+		
+		#sidebar {
 			float: left;
 			width: 280px;
 			margin: 0px;
@@ -148,7 +163,10 @@
 			text-decoration: underline;
 			color: #8A8A8A;
 		}
-		/* Footer */#footer {
+		
+		/* Footer */
+		
+		#footer {
 			height: 50px;
 			margin: 0 auto;
 			padding: 0px 0 15px 0;
@@ -173,10 +191,15 @@
 <body>
 	<form id="form1" runat="server">
 	<div id="wrapper">
+		<h1 id="logo">
+			<asp:PlaceHolder ID="myHeading" runat="server"><a href="/">
+				<%=theSite.SiteName%></a></asp:PlaceHolder>
+		</h1>
 		<div id="menu">
 			<%--<carrot:TopLevelNavigation MenuWidth="960px" MenuHeight="44px" ForeColor="#000000"
                 BackColor="#FFFFFF" runat="server" OverrideCSS="button-style.css" ID="TopLevelNavigation1" />--%>
-			<carrot:TwoLevelNavigation MenuWidth="960px" MenuHeight="44px" ForeColor="#000000" BackColor="#FFFFFF" runat="server" ID="TwoLevelNavigation1" />
+			<carrot:TwoLevelNavigation MenuWidth="960px" FontSize="14px" MenuHeight="44px" ForeColor="#424242" BackColor="#FFFFFF" runat="server"
+				ID="TwoLevelNavigation1" />
 		</div>
 		<!-- end #menu -->
 		<div id="page">
@@ -237,9 +260,9 @@
 	</div>
 	<div id="footer">
 		<p>
-			<asp:PlaceHolder ID="myFooter" runat="server">&copy;
-				<%= DateTime.Now.Year %>,
-				<%=theSite.SiteName%>. All rights reserved. </asp:PlaceHolder>
+			<asp:PlaceHolder ID="myFooter" runat="server">
+				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
+				All rights reserved. </asp:PlaceHolder>
 		</p>
 	</div>
 	<!-- end #footer -->

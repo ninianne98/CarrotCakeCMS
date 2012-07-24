@@ -151,6 +151,7 @@
 		$(elm).html(txt1 + " <img class='cmsWidgetBarImgReset' border='0' src='/manage/images/" + img + "' alt='" + txt2 + "' title='" + txt2 + "' />");
 	}
 
+
 	$(document).ready(function () {
 		if (!cmsIsPageLocked) {
 			setTimeout("cmsMenuFixImages();", 250);
@@ -528,7 +529,7 @@
 
 	function CMSBusyShort() {
 
-		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+		$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
 			css: { border: 'none', backgroundColor: 'transparent' },
 			fadeOut: 750,
 			timeout: 1000,
@@ -538,7 +539,7 @@
 
 	function CMSBusyLong() {
 
-		$("#divCMSActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+		$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
 			css: { border: 'none', backgroundColor: 'transparent' },
 			fadeOut: 4000,
 			timeout: 5000,
@@ -641,6 +642,8 @@
 		var cmsSortWidgets = false;
 
 		if (!cmsIsPageLocked) {
+
+			$('#cmsJQTabedToolbox').tabs();
 
 			$("#cmsToolBox div.cmsToolItem").draggable({
 				connectToSortable: ".cmsTargetArea",
@@ -822,68 +825,84 @@
 		<p class="ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
 			Toolbox
 		</p>
-		<div id="divCMSActive">
-			<div class="ui-widget" runat="server" id="divEditing">
+		<div id="cmsDivActive" class="cmsGlossySeaGreen">
+			<div class="cmsGlossySeaGreen ui-widget" runat="server" id="cmsDivEditing">
 				<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
 					<p>
 						<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
 						<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
 				</div>
 			</div>
-			<div id="cmsMainToolbox">
-				<asp:Panel ID="pnlBUttonGroup" runat="server">
-					<div style="display: none;" class="cmsGlossySeaGreen">
-						cmsFullOrder<br />
-						<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
-						cmsMovedItem<br />
-						<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
-					</div>
-					<div class="cmsGlossySeaGreen cmsCenter5px">
-						<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsCenter5px" onclick="cmsShowEditPageInfo();" />
-						<br />
-						<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
-						</asp:DropDownList>
-						<br />
-						<input runat="server" id="btnTemplate" type="button" value="Apply" class="cmsCenter5px" onclick="cmsUpdateTemplate();" />
-					</div>
-					<div class="cmsGlossySeaGreen cmsCenter5px">
-						<input runat="server" id="btnToolboxSave" type="button" value="Save" class="cmsCenter5px" onclick="cmsApplyChanges();" />
-						&nbsp;&nbsp;&nbsp;
-						<input type="button" value="Cancel" class="cmsCenter5px" onclick="cmsCancelEdit();" />
+			<div id="cmsMainToolbox" class="cmsGlossySeaGreen">
+				<asp:Panel ID="pnlCMSEditZone" runat="server">
+					<div id="cmsJQTabedToolbox" class="cmsGlossySeaGreen" style="min-height: 50px; width: 275px;">
+						<ul>
+							<li class="cmsGlossySeaGreen"><a href="#cmsTabIdx-tabs-1">Widgets</a></li>
+							<li class="cmsGlossySeaGreen"><a href="#cmsTabIdx-tabs-2">Page Info</a></li>
+						</ul>
+						<div id="cmsTabIdx-tabs-1" class="cmsGlossySeaGreen">
+							<div style="display: none;">
+								cmsFullOrder<br />
+								<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
+								cmsMovedItem<br />
+								<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
+							</div>
+							<div class=" cmsCenter5px">
+								<input runat="server" id="btnToolboxSave" type="button" value="Save" class="cmsPlain5px" onclick="cmsApplyChanges();" />
+								&nbsp;&nbsp;&nbsp;
+								<input type="button" value="Cancel" class="cmsPlain5px" onclick="cmsCancelEdit();" />
+							</div>
+							<asp:Repeater ID="rpTools" runat="server">
+								<HeaderTemplate>
+									<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
+										padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+								</HeaderTemplate>
+								<ItemTemplate>
+									<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
+										<div id="cmsControl" class="cmsGlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
+											<p class="cmsToolItem cmsGlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
+												<%# Eval("Caption")%>
+											</p>
+											<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
+											<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
+											<input type="hidden" id="cmsCtrlOrder" value="0" />
+											<div style="text-align: right;" id="cmsCtrlButton">
+											</div>
+										</div>
+									</div>
+								</ItemTemplate>
+								<FooterTemplate>
+									</div></FooterTemplate>
+							</asp:Repeater>
+							<br style="clear: both;" />
+						</div>
+						<div id="cmsTabIdx-tabs-2" class="cmsGlossySeaGreen">
+							<div class="cmsCenter5px">
+								<p class="cmsLeft5px">
+									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsPlain5px" onclick="cmsShowEditPageInfo();" />
+								</p>
+								<p class="cmsLeft5px">
+									<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+									</asp:DropDownList>
+									<br />
+									<input runat="server" id="btnTemplate" type="button" value="Apply Template" class="cmsPlain5px" onclick="cmsUpdateTemplate();" />
+								</p>
+							</div>
+							<br style="clear: both;" />
+						</div>
 					</div>
 				</asp:Panel>
-				<br style="clear: none;" />
-				<asp:Repeater ID="rpTools" runat="server">
-					<HeaderTemplate>
-						<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
-							float: left; border: solid 1px #000;">
-					</HeaderTemplate>
-					<ItemTemplate>
-						<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
-							<div id="cmsControl" class="cmsGlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
-								<p class="cmsToolItem cmsGlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
-									<%# Eval("Caption")%>
-								</p>
-								<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
-								<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
-								<input type="hidden" id="cmsCtrlOrder" value="0" />
-								<div style="text-align: right;" id="cmsCtrlButton">
-								</div>
-							</div>
-						</div>
-					</ItemTemplate>
-					<FooterTemplate>
-						</div></FooterTemplate>
-				</asp:Repeater>
-				<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
-				</div>
-			</div>
-			<div id="cmsToolboxSpacer" style="display: none;">
-			</div>
-			<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; height: 20px;">
 			</div>
 		</div>
+		<div id="cmsToolboxSpacer" style="display: none;">
+		</div>
+		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
+			background-color: #000;">
+		</div>
+		<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; height: 20px;">
+		</div>
 	</div>
+</div>
 </div>
 <div style="display: none" class="cmsGlossySeaGreen">
 	<div id="CMSmodalalert" class="cmsGlossySeaGreen" title="CMS Alert">
