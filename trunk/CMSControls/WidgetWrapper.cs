@@ -130,10 +130,10 @@ namespace Carrotware.CMS.UI.Controls {
 								+ " History </a></li> \r\n";
 				}
 
-				//string sShrink = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconShrink\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:cmsShrinkWidgetHeight('" + DatabaseKey + "');\">\r\n"
+				//string sShrink = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconShrink\" id=\"cmsContentLink\" class=\"ui-state-hover\" href=\"javascript:cmsShrinkWidgetHeight('" + DatabaseKey + "');\">\r\n"
 				//                + " Shrink </a></li> \r\n";
 
-				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink{0}\" class=\"ui-state-hover\" href=\"javascript:cmsRemoveWidgetLink('" + DatabaseKey + "');\">\r\n"
+				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink\" class=\"ui-state-hover\" href=\"javascript:cmsRemoveWidgetLink('" + DatabaseKey + "');\">\r\n"
 								+ " Remove </a></li> \r\n";
 
 				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
