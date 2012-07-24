@@ -109,6 +109,7 @@
 
 		//$("html").scrollTop(parseInt('<%= EditorPrefs.EditorScrollPosition %>'));
 		$(document).scrollTop(parseInt('<%= EditorPrefs.EditorScrollPosition %>'));
+
 	}
 
 
@@ -255,13 +256,14 @@
 	function cmsSaveToolbarPosition() {
 
 		var scrollTop = $(document).scrollTop();  //$("html").scrollTop();
+		var tabID = $('#cmsJQTabedToolbox').tabs("option", "selected");
 
 		var webMthd = webSvc + "/RecordEditorPosition";
 
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'ToolbarState': '" + cmsMnuVis + "', 'ToolbarMargin': '" + cmsToolbarPos + "', 'ToolbarScroll': '" + scrollTop + "'}",
+			data: "{'ToolbarState': '" + cmsMnuVis + "', 'ToolbarMargin': '" + cmsToolbarPos + "', 'ToolbarScroll': '" + scrollTop + "', 'SelTabID': '" + tabID + "'}",
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsAjaxGeneralCallback,
@@ -650,6 +652,8 @@
 
 			$('#cmsJQTabedToolbox').tabs();
 
+			$('#cmsJQTabedToolbox').tabs('select', parseInt('<%=EditorPrefs.EditorSelectedTabIdx %>'));
+
 			$("#cmsToolBox div.cmsToolItem").draggable({
 				connectToSortable: ".cmsTargetArea",
 				helper: "clone",
@@ -859,8 +863,8 @@
 							</div>
 							<asp:Repeater ID="rpTools" runat="server">
 								<HeaderTemplate>
-									<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px;
-										padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+									<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
+										float: left; border: solid 1px #000;">
 								</HeaderTemplate>
 								<ItemTemplate>
 									<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
@@ -904,8 +908,7 @@
 		</div>
 		<div id="cmsToolboxSpacer" style="display: none;">
 		</div>
-		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
-			background-color: #000;">
+		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
 		</div>
 		<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; height: 20px;">
 		</div>

@@ -55,6 +55,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				EditorPrefs.EditorMargin = "L";
 				EditorPrefs.EditorOpen = "true";
 				EditorPrefs.EditorScrollPosition = "0";
+				EditorPrefs.EditorSelectedTabIdx = "0";
 			}
 
 			//if (!IsPostBack) {
