@@ -255,16 +255,25 @@ namespace Carrotware.CMS.UI.Admin {
 
 		private void GetSetUserEditState(string ToolbarState, string ToolbarMargin, string ToolbarScroll, string SelTabID) {
 			UserEditState editor = UserEditState.cmsUserEditState;
+
 			if (editor == null) {
 				editor = new UserEditState();
+				editor.EditorMargin = "L";
+				editor.EditorOpen = "true";
+				editor.EditorScrollPosition = "0";
+				editor.EditorSelectedTabIdx = "0";
 			}
 
-			editor.EditorOpen = string.IsNullOrEmpty(ToolbarState) ? (string.IsNullOrEmpty(editor.EditorOpen) ? "true" : editor.EditorOpen) : ToolbarState.ToLower();
-			editor.EditorMargin = string.IsNullOrEmpty(ToolbarMargin) ? (string.IsNullOrEmpty(editor.EditorMargin) ? "L" : editor.EditorMargin) : ToolbarMargin.ToUpper();
+			editor.EditorMargin = string.IsNullOrEmpty(ToolbarMargin) ? "L" : ToolbarMargin.ToUpper();
+			editor.EditorOpen = string.IsNullOrEmpty(ToolbarState) ? "true" : ToolbarState.ToLower();
 			editor.EditorScrollPosition = string.IsNullOrEmpty(ToolbarScroll) ? "0" : ToolbarScroll.ToLower();
 			editor.EditorSelectedTabIdx = string.IsNullOrEmpty(SelTabID) ? "0" : SelTabID.ToLower();
 
-			UserEditState.cmsUserEditState = editor;
+			if (string.IsNullOrEmpty(ToolbarMargin) && string.IsNullOrEmpty(ToolbarState)) {
+				UserEditState.cmsUserEditState = null;
+			} else {
+				UserEditState.cmsUserEditState = editor;
+			}
 		}
 
 
@@ -794,7 +803,7 @@ namespace Carrotware.CMS.UI.Admin {
 					cmsAdminContent = null;
 				}
 
-				GetSetUserEditState("true", "", "", "");
+				GetSetUserEditState("", "", "", "");
 
 				return "OK";
 
