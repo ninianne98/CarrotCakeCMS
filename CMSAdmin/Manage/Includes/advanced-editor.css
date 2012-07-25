@@ -101,6 +101,8 @@
 	padding: 0px !important;
 	padding-right: 5px !important;
 	padding-left: 5px !important;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
 }
 .cmsAjaxModalSpinner {
 	margin: 0px !important;
@@ -206,6 +208,8 @@
 	margin: 0 !important;
 	padding: 0 !important;
 	cursor: pointer !important;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
 }
 
 #cmsEditMenuList-inner ul.cmsMnuParent {
@@ -214,6 +218,8 @@
 	height: 22px !important;
 	list-style: none !important;
 	background-image: none !important;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
 }
 
 #cmsEditMenuList-inner ul.cmsMnuParent li a {

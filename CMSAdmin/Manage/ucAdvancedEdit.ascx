@@ -1,6 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
 <div style="clear: both;">
 	&nbsp;</div>
+<div style="width: 1px; height: 1024; clear: both; left: 0; border: 1px dotted transparent; z-index: 5000;">
+</div>
+<div style="width: 1024; height: 1px; clear: both; left: 0; border: 1px dotted transparent; z-index: 5000;">
+</div>
+<div style="clear: both;">
+	&nbsp;</div>
 <carrot:jquery runat="server" ID="jquery1" />
 <carrot:jqueryui runat="server" ID="jqueryui1" />
 <link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
