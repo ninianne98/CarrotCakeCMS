@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Carrotware.CMS.Data;
+using System.Reflection;
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -56,6 +57,66 @@ namespace Carrotware.CMS.Core {
 						 && ct.IsLatestVersion == true
 						select new ContentPage(r, ct)).ToList();
 			return oldC;
+		}
+
+
+		public int GetContentPagedListCount(Guid siteID, bool bActiveOnly) {
+			int iCount = (from ct in db.tblContents
+						  join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						  where r.SiteID == siteID
+							  && ct.IsLatestVersion == true
+							  && (r.PageActive == bActiveOnly || bActiveOnly == false)
+						  select r).Count();
+			return iCount;
+		}
+
+
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber) {
+			return GetLatestContentPagedList(siteID, bActiveOnly, pageSize, pageNumber, "", "");
+		}
+
+
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+
+			int startRec = pageNumber * pageSize;
+
+			if (string.IsNullOrEmpty(sortField)) {
+				sortField = "CreateDate";
+			}
+
+			if (string.IsNullOrEmpty(sortDir)) {
+				sortDir = "DESC";
+			}
+
+
+			IEnumerable<ContentPage> enuQuery = (from ct in db.tblContents
+												 join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+												 where r.SiteID == siteID
+													 && ct.IsLatestVersion == true
+													 && (r.PageActive == bActiveOnly || bActiveOnly == false)
+												 select new ContentPage(r, ct)).AsEnumerable();
+
+			IEnumerable<ContentPage> query = null;
+
+			if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
+				query = (from enu in enuQuery
+						 orderby GetPropertyValue(enu, sortField) descending
+						 select enu).ToList().Skip(startRec).Take(pageSize);
+
+			} else {
+				query = (from enu in enuQuery
+						 orderby GetPropertyValue(enu, sortField) ascending
+						 select enu).ToList().Skip(startRec).Take(pageSize);
+			}
+
+
+			return query.ToList();
+		}
+
+
+		private object GetPropertyValue(object obj, string property) {
+			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+			return propertyInfo.GetValue(obj, null);
 		}
 
 

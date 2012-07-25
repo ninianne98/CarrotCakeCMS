@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Carrotware.CMS.Data;
+using System.Text.RegularExpressions;
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -177,6 +178,32 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaDescription { get; set; }
 		public string MetaKeyword { get; set; }
+
+
+		public string PageTextSummary {
+			get {
+				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+
+				if (txt.Length > 512) {
+					return txt.Substring(0, 500) + "........";
+				} else {
+					return txt;
+				}
+			}
+		}
+
+		public string PageTextPlainSummary {
+			get {
+				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
+
+				if (txt.Length > 512) {
+					return txt.Substring(0, 500) + "........";
+				} else {
+					return txt;
+				}
+			}
+		}
 
 
 		public string TemplateFolderPath {
