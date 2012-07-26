@@ -87,6 +87,14 @@ namespace Carrotware.CMS.Core {
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			int startRec = pageNumber * pageSize;
 
+			if (pageSize < 0 || pageSize > 200) {
+				pageSize = 25;
+			}
+
+			if (pageNumber < 0 || pageNumber > 10000) {
+				pageNumber = 0;
+			}
+
 			if (string.IsNullOrEmpty(sortField)) {
 				sortField = "CreateDate";
 			}
