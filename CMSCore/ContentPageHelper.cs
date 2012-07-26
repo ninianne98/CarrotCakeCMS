@@ -71,13 +71,20 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageNumber, string sortField, string sortDir) {
+			return GetLatestContentPagedList(siteID, bActiveOnly, 10, pageNumber, sortField, sortDir);
+		}
+
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageNumber) {
+			return GetLatestContentPagedList(siteID, bActiveOnly, 10, pageNumber, "", "");
+		}
+
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber) {
 			return GetLatestContentPagedList(siteID, bActiveOnly, pageSize, pageNumber, "", "");
 		}
 
 
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
-
 			int startRec = pageNumber * pageSize;
 
 			if (string.IsNullOrEmpty(sortField)) {
@@ -88,27 +95,70 @@ namespace Carrotware.CMS.Core {
 				sortDir = "DESC";
 			}
 
+			IEnumerable<ContentPage> query = new List<ContentPage>();
 
-			IEnumerable<ContentPage> enuQuery = (from ct in db.tblContents
-												 join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-												 where r.SiteID == siteID
-													 && ct.IsLatestVersion == true
-													 && (r.PageActive == bActiveOnly || bActiveOnly == false)
-												 select new ContentPage(r, ct)).AsEnumerable();
+			bool bIsContent = TestIfPropExists(new tblContent(), sortField);
+			bool bIsRootContent = TestIfPropExists(new tblRootContent(), sortField);
 
-			IEnumerable<ContentPage> query = null;
-
-			if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
-				query = (from enu in enuQuery
-						 orderby GetPropertyValue(enu, sortField) descending
-						 select enu).ToList().Skip(startRec).Take(pageSize);
-
-			} else {
-				query = (from enu in enuQuery
-						 orderby GetPropertyValue(enu, sortField) ascending
-						 select enu).ToList().Skip(startRec).Take(pageSize);
+			if (bIsRootContent) {
+				if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
+					query = (from enu in
+								 (from ct in db.tblContents.AsEnumerable()
+								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								  orderby GetPropertyValue(r, sortField) descending
+								  where r.SiteID == siteID
+									 && ct.IsLatestVersion == true
+									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  select new ContentPage(r, ct)).AsQueryable()
+							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
+				} else {
+					query = (from enu in
+								 (from ct in db.tblContents.AsEnumerable()
+								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								  orderby GetPropertyValue(r, sortField) ascending
+								  where r.SiteID == siteID
+									 && ct.IsLatestVersion == true
+									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  select new ContentPage(r, ct)).AsQueryable()
+							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
+				}
 			}
 
+			if (bIsContent && !bIsRootContent) {
+				if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
+					query = (from enu in
+								 (from ct in db.tblContents.AsEnumerable()
+								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								  orderby GetPropertyValue(ct, sortField) descending
+								  where r.SiteID == siteID
+									 && ct.IsLatestVersion == true
+									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  select new ContentPage(r, ct)).AsQueryable()
+							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
+				} else {
+					query = (from enu in
+								 (from ct in db.tblContents.AsEnumerable()
+								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								  orderby GetPropertyValue(ct, sortField) ascending
+								  where r.SiteID == siteID
+									 && ct.IsLatestVersion == true
+									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  select new ContentPage(r, ct)).AsQueryable()
+							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
+				}
+			}
+
+			if (!bIsContent && !bIsRootContent) {
+				query = (from enu in
+							 (from ct in db.tblContents
+							  join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							  orderby r.CreateDate descending
+							  where r.SiteID == siteID
+								 && ct.IsLatestVersion == true
+								 && (r.PageActive == bActiveOnly || bActiveOnly == false)
+							  select new ContentPage(r, ct)).AsQueryable()
+						 select enu).AsQueryable().Skip(startRec).Take(pageSize);
+			}
 
 			return query.ToList();
 		}
@@ -117,6 +167,11 @@ namespace Carrotware.CMS.Core {
 		private object GetPropertyValue(object obj, string property) {
 			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
 			return propertyInfo.GetValue(obj, null);
+		}
+
+		private bool TestIfPropExists(object obj, string property) {
+			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+			return propertyInfo == null ? false : true;
 		}
 
 
