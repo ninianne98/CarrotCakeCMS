@@ -1,9 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
-<div style="clear: both;">
-	&nbsp;</div>
-<div style="width: 1px; height: 1024; clear: both; left: 0; border: 1px dotted transparent; z-index: 5000;">
+<div style="width: 1280px; height: 2px; clear: both; left: 0; border: 1px dotted #000000; z-index: 5000;">
 </div>
-<div style="width: 1024; height: 1px; clear: both; left: 0; border: 1px dotted transparent; z-index: 5000;">
+<div style="width: 2px; height: 1024px; clear: both; left: 0; border: 1px dotted #000000; z-index: 5000;">
 </div>
 <div style="clear: both;">
 	&nbsp;</div>
