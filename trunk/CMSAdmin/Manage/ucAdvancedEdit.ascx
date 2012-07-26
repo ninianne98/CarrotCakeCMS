@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
-<div style="width: 1280px; height: 2px; clear: both; left: 0; border: 1px dotted #000000; z-index: 5000;">
+<div style="width: 1280px; height: 2px; clear: both; left: 0; border: 0px dotted #000000; z-index: 5000;">
 </div>
-<div style="width: 2px; height: 1024px; clear: both; left: 0; border: 1px dotted #000000; z-index: 5000;">
+<div style="width: 2px; height: 1024px; clear: both; left: 0; border: 0px dotted #000000; z-index: 5000;">
 </div>
 <div style="clear: both;">
 	&nbsp;</div>
@@ -849,9 +849,9 @@
 			<div id="cmsMainToolbox" class="cmsGlossySeaGreen">
 				<asp:Panel ID="pnlCMSEditZone" runat="server">
 					<div id="cmsJQTabedToolbox" class="cmsGlossySeaGreen" style="min-height: 50px; width: 275px;">
-						<ul>
-							<li class="cmsGlossySeaGreen"><a href="#cmsTabIdx-tabs-1">Widgets</a></li>
-							<li class="cmsGlossySeaGreen"><a href="#cmsTabIdx-tabs-2">Page Info</a></li>
+						<ul class="cmsGlossySeaGreen">
+							<li class="cmsGlossySeaGreen"><a class="cmsGlossySeaGreen" href="#cmsTabIdx-tabs-1">Widgets</a></li>
+							<li class="cmsGlossySeaGreen"><a class="cmsGlossySeaGreen" href="#cmsTabIdx-tabs-2">Page Info</a></li>
 						</ul>
 						<div id="cmsTabIdx-tabs-1" class="cmsGlossySeaGreen">
 							<div style="display: none;">
@@ -871,16 +871,14 @@
 										float: left; border: solid 1px #000;">
 								</HeaderTemplate>
 								<ItemTemplate>
-									<div class="cmsToolItem cmsGlossySeaGreen ui-widget-content ui-corner-all" id="cmsToolItemDiv">
+									<div id="cmsToolItemDiv" class="cmsToolItem cmsGlossySeaGreen cmsToolItemWrapper">
 										<div id="cmsControl" class="cmsGlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
-											<p class="cmsToolItem cmsGlossySeaGreen ui-widget-header ui-corner-all" style="cursor: move; clear: both; padding: 2px; margin: 2px;">
+											<p class="cmsToolItem cmsGlossySeaGreen ui-widget-header">
 												<%# Eval("Caption")%>
 											</p>
 											<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
 											<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
 											<input type="hidden" id="cmsCtrlOrder" value="0" />
-											<div style="text-align: right;" id="cmsCtrlButton">
-											</div>
 										</div>
 									</div>
 								</ItemTemplate>

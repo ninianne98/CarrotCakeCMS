@@ -21,6 +21,28 @@
 	min-height: 50px !important;
 }
 
+.cmsToolItemWrapper {
+	margin: 0;
+	padding: 0;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+	text-align: left !important;
+	min-height: 60px !important;
+	color: #000000;
+	background: #FFFFFF;
+	border: 1px dashed #c0c0c0 !important;
+}
+
+p.cmsToolItem {
+	margin: 0;
+	padding: 2px;
+	cursor: move;
+	clear: both;
+	padding: 2px;
+	margin: 2px;
+}
+
 #cmsMainToolbox input:focus, #cmsMainToolbox select:focus, #cmsMainToolbox textarea:focus {
 	color: #000000;
 	background: #FFFFFF;
@@ -287,7 +309,7 @@
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 }
 
-#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsContentContainer img {
+#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsContentContainerInner img {
 	background: transparent !important;
 }
 
