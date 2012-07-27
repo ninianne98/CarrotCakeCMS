@@ -58,13 +58,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         protected global::System.Web.UI.WebControls.Panel pnlCMSEditZone;
         
         /// <summary>
-        /// btnToolboxSave control.
+        /// btnToolboxSave1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave1;
         
         /// <summary>
         /// rpTools control.
@@ -110,5 +110,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnSortChildPages;
+        
+        /// <summary>
+        /// btnToolboxSave2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave2;
     }
 }

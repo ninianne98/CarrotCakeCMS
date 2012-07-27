@@ -313,6 +313,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="citrus-island\citrus2.aspx" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_b7d7c4_1x400.png" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_dff6e8_1x400.png" />

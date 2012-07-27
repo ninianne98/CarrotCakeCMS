@@ -103,7 +103,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			} else {
 				pnlCMSEditZone.Visible = false;
 				rpTools.Visible = false;
-				btnToolboxSave.Visible = false;
+				btnToolboxSave1.Visible = false;
+				btnToolboxSave2.Visible = false;
 				btnTemplate.Visible = false;
 				btnEditCoreInfo.Visible = false;
 				cmsDivEditing.Visible = true;

@@ -1,4 +1,4 @@
- <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
 <div style="width: 1280px; height: 2px; clear: both; left: 0; border: 0px dotted #000000; z-index: 5000;">
 </div>
 <div style="width: 2px; height: 1024px; clear: both; left: 0; border: 0px dotted #000000; z-index: 5000;">
@@ -858,10 +858,10 @@
 								cmsMovedItem<br />
 								<input type="text" id="cmsMovedItem" style="width: 310px;" /><br />
 							</div>
-							<div class=" cmsCenter5px">
-								<input runat="server" id="btnToolboxSave" type="button" value="Save" class="cmsPlain5px" onclick="cmsApplyChanges();" />
+							<div class="cmsCenter5px">
+								<input type="button" runat="server" id="btnToolboxSave1" value="Save" onclick="cmsApplyChanges();" />
 								&nbsp;&nbsp;&nbsp;
-								<input type="button" value="Cancel" class="cmsPlain5px" onclick="cmsCancelEdit();" />
+								<input type="button" id="btnToolboxCancel1" value="Cancel" onclick="cmsCancelEdit();" />
 							</div>
 							<asp:Repeater ID="rpTools" runat="server">
 								<HeaderTemplate>
@@ -891,14 +891,20 @@
 									<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 									</asp:DropDownList>
 									<br />
-									<input runat="server" id="btnTemplate" type="button" value="Apply Template" class="cmsPlain5px" onclick="cmsUpdateTemplate();" />
+									<input runat="server" id="btnTemplate" type="button" value="Apply Template" onclick="cmsUpdateTemplate();" />
 								</p>
 								<p class="cmsLeft5px">
-									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" class="cmsPlain5px" onclick="cmsShowEditPageInfo();" />
+									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" onclick="cmsShowEditPageInfo();" />
 								</p>
 								<p class="cmsLeft5px">
-									<input runat="server" id="btnSortChildPages" type="button" value="Sort Child/Sub Pages" class="cmsPlain5px" onclick="cmsSortChildren();" />
+									<input runat="server" id="btnSortChildPages" type="button" value="Sort Child/Sub Pages" onclick="cmsSortChildren();" />
 								</p>
+								<br />
+								<div class="cmsCenter5px">
+									<input type="button" runat="server" id="btnToolboxSave2" value="Save" onclick="cmsApplyChanges();" />
+									&nbsp;&nbsp;&nbsp;
+									<input type="button" id="btnToolboxCancel2" value="Cancel" onclick="cmsCancelEdit();" />
+								</div>
 							</div>
 							<br style="clear: both;" />
 						</div>
