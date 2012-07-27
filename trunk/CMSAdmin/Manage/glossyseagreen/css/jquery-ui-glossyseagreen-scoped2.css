@@ -25,12 +25,17 @@
 	border: 0px solid transparent;
 }
 
-#cmsGlossySeaGreenID select, #cmsGlossySeaGreenID textarea {
+#cmsGlossySeaGreenID select, #cmsGlossySeaGreenID textarea,
+#cmsGlossySeaGreenID input[type="text"] {
 	color: #000000;
 	background-color: #ffffff;
 	border: 1px solid #c0c0c0;
 }
 
+#cmsGlossySeaGreenID input[type="button"] {
+	margin: 5px;
+	padding: 5px;
+}
 
 /* Layout helpers
 ----------------------------------*/
