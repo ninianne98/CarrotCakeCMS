@@ -8,7 +8,15 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+/*
+* CarrotCake CMS
+* http://carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 
 
@@ -52,21 +60,6 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public string JQueryUIScope {
-			get {
-				String s = (String)ViewState["jQueryUIScope"];
-				return ((s == null) ? String.Empty : s);
-			}
-
-			set {
-				ViewState["jQueryUIScope"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
 		public string ZoneChar {
 			get {
 				String s = (String)ViewState["ZoneChar"];
@@ -83,24 +76,14 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter w) {
 			if (IsAdminMode) {
 
-				string sPrefix = "";
-				if (!string.IsNullOrEmpty(JQueryUIScope)) {
-					sPrefix = "<div id=\"cmsContentArea_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
-								"<div class=\"" + JQueryUIScope + "\"><div class=\"" + JQueryUIScope + " ui-state-default ui-widget-header cmsContentContainerInner\">\r\n" +
-								"<a title=\"Edit " + this.ClientID + "\" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"" + JQueryUIScope + " ui-state-default cmsContentAreaHead\" " +
-								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \"> " +
-								" Edit " + this.ClientID + " <span class=\"cmsWidgetBarIconPencil2\"  /></span> </a></div></div>\r\n" +
-								"<div class=\"cmsWidgetControl\" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
-								"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";
-				} else {
-					sPrefix = "<div id=\"cmsContentArea_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
-								"<div class=\"ui-state-default ui-widget-header cmsContentContainerInner\">\r\n" +
-								"<a title=\"Edit " + this.ClientID + "\" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"ui-state-default cmsContentAreaHead\" " +
-								" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \"> " +
-								" Edit " + this.ClientID + " <span class=\"cmsWidgetBarIconPencil2\"  /></span></div> \r\n" +
-								"<div class=\"cmsWidgetControl\" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
-								"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";
-				}
+
+				string sPrefix = "<div id=\"cms_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
+							" <div class=\"cmsContentContainerTitle\">\r\n" +
+							"<a title=\"Edit " + this.ClientID + "\" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"cmsContentContainerInnerTitle\" " +
+							" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \"> " +
+							" Edit " + this.ClientID + " <span class=\"cmsWidgetBarIconPencil2\"  /></span> </a></div> \r\n" +
+							"<div class=\"cmsWidgetControl\" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
+							"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";
 
 				//w.Write("<div id=\"" + this.ClientID + "\" style=\"width:250px; background:#DAE816; color:#CF26DB; \"><div style=\"background:#CF26DB; color:#DAE816; \">title</div><br />\r\n"); 
 				w.Write(sPrefix);

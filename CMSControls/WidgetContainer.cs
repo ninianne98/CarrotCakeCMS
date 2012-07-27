@@ -7,7 +7,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+/*
+* CarrotCake CMS
+* http://carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 
 
@@ -32,46 +40,23 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string JQueryUIScope {
-			get {
-				String s = (String)ViewState["jQueryUIScope"];
-				return ((s == null) ? String.Empty : s);
-			}
-			set {
-				ViewState["jQueryUIScope"] = value;
-			}
-		}
-
-
 		protected override void Render(HtmlTextWriter w) {
 			if (IsAdminMode) {
 
-				string sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget\" id=\"cmsContentEditLink\" class=\"ui-state-hover\" href=\"javascript:cmsManageWidgetList('" + this.ID + "')\">\r\n"
+				string sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget\" id=\"cmsContentEditLink\" href=\"javascript:cmsManageWidgetList('" + this.ID + "')\">\r\n"
 							+ " Widgets </a></li> \r\n";
-			
+
 
 				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
 
 				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
-							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit +  " </ul> </li> </ul> </div> </div>";
+							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit + " </ul> </li> </ul> </div> </div>";
 
-				string sPrefix = "";
+				string sPrefix = "<div id=\"cms_" + this.ClientID + "\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
+						"<div class=\"cmsWidgetControlTitle\"><div class=\"cmsWidgetControlIDZone\">\r\n" +
+						"<div id=\"cmsWidgetContainerName\">" + this.ID + "</div> " + sMenu + "</div></div>\r\n" +
+						"<div class=\"cmsTargetArea cmsTargetMove cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
 
-				if (!string.IsNullOrEmpty(JQueryUIScope)) {
-					sPrefix = "<div id=\"cms" + this.ID + "Outer\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
-							"<div class=\"" + JQueryUIScope + "\"><div class=\"" + JQueryUIScope + " ui-state-default ui-state-active ui-widget-header cmsWidgetControlIDZone\">\r\n" +
-							" <div id=\"cmsWidgetContainerName\">" + this.ID + "</div> " + sMenu + "</div></div>\r\n" +
-							"<div class=\"cmsTargetArea cmsTargetMove cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
-				} else {
-					sPrefix = "<div id=\"cms" + this.ID + "Outer\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
-							"<div ><div class=\"ui-state-default ui-state-active ui-widget-header cmsWidgetControlIDZone\">\r\n" +
-							" <div id=\"cmsWidgetContainerName\">" + this.ID + "</div> " + sMenu + "</div></div>\r\n" +
-							"<div class=\"cmsTargetArea cmsTargetMove cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";
-				}
 				w.Write(sPrefix);
 
 			} else {

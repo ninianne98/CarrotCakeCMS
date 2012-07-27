@@ -122,20 +122,10 @@
 	<p>
 		<b>Absolute Floating Menu</b><br />
 		Script by: www.jtricks.com<br />
-		Version: 1.6 (20110222)<br />
 		Latest version: <a target="_blank" href="http://www.jtricks.com/javascript/navigation/floating.html">http://www.jtricks.com/javascript/navigation/floating.html</a><br />
 		http://www.jtricks.com/licensing.html<br />
 		<br />
-		Javascript samples & examples licensing information<br />
-		Javascript code on this site is available under the following terms & conditions:<br />
-		Basic permissions<br />
-		All script code is available:<br />
-		- For free download and usage on any number of web sites;<br />
-		- Can be modified;<br />
-		- Can be distributed as is.<br />
-		<br />
-		As long as:<br />
-		- Unless permitted otherwise, header referencing www.jtricks.com page remains intact in source code;<br />
+		License: GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html <br />
 	</p>
 	<p>
 		<b>TinyMCE</b>

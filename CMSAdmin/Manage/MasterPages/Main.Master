@@ -6,7 +6,7 @@
 	<title>Main</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
 	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
-	<script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>
+	<script src="/Manage/includes/jquery.simplemodal.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
 	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/main.css" rel="stylesheet" type="text/css" />

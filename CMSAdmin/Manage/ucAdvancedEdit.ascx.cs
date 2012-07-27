@@ -83,6 +83,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			try { ddlTemplate.SelectedValue = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
 
 			if (!bLocked) {
+
+				jqueryui link1 = new jqueryui();
+				Page.Header.Controls.AddAt(0, link1);
+
+				jquery link2 = new jquery();
+				Page.Header.Controls.AddAt(0, link2);
+
 				guidContentID = pageContents.Root_ContentID;
 
 				if (cmsHelper.cmsAdminContent == null) {

@@ -327,6 +327,7 @@
     <Content Include="Manage\glossyseagreen\css\images\ui-icons_c7820f_256x240.png" />
     <Content Include="Manage\glossyseagreen\css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen-scoped.css" />
+    <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen-scoped2.css" />
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen.css" />
     <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
     <Content Include="Manage\Images\application_lightning.png" />
@@ -347,6 +348,7 @@
     <Content Include="Manage\Images\page_paintbrush.png" />
     <Content Include="Manage\Images\page_white_wrench.png" />
     <Content Include="Manage\Includes\advanced-editor.css" />
+    <Content Include="Manage\Includes\floating-menu.js" />
     <Content Include="Manage\Includes\tooltiphelper.css" />
     <Content Include="Manage\Includes\tooltiphelper.js" />
     <Content Include="Manage\PageChildSort.aspx" />
@@ -361,9 +363,8 @@
     <Content Include="Manage\Default.aspx" />
     <Content Include="Manage\FileBrowser.aspx" />
     <Content Include="Manage\ForgotPassword.aspx" />
-    <Content Include="Manage\Includes\jq-floating-1.6.js" />
     <Content Include="Manage\Includes\jquery.blockUI.js" />
-    <Content Include="Manage\Includes\jquery.simplemodal.1.4.1.min.js" />
+    <Content Include="Manage\Includes\jquery.simplemodal.js" />
     <Content Include="Manage\Includes\logon.css" />
     <Content Include="Manage\Includes\main.css" />
     <Content Include="Manage\Includes\mainpopup.css" />
@@ -757,7 +758,6 @@
     <Content Include="PublicControls.config" />
     <Content Include="Manage\ControlPropertiesEdit.aspx" />
     <Content Include="Manage\Includes\base64.js" />
-    <Content Include="Manage\Includes\jquery-1.5.2.min.js" />
     <Content Include="Manage\Includes\jquery.ui.nestedSortable.js" />
     <Content Include="Manage\PageHistory.aspx" />
     <Content Include="Manage\PlainTemplate.aspx" />

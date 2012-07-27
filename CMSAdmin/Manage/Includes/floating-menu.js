@@ -1,6 +1,9 @@
 /* Script by: www.jtricks.com
- * Version: 1.6 (20110222)
+ * Version: 1.8 (20111103)
  * Latest version: www.jtricks.com/javascript/navigation/floating.html
+ *
+ * License:
+ * GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
  */
 var floatingMenu =
 {
@@ -34,6 +37,7 @@ floatingMenu.add = function(obj, options)
                 targetLeft: 0,
                 targetTop: 0,
 
+                distance: .07,
                 snap: true
             });
     }
@@ -55,6 +59,7 @@ floatingMenu.add = function(obj, options)
                 prohibitXMovement: options.prohibitXMovement,
                 prohibitYMovement: options.prohibitYMovement,
 
+                distance: options.distance != undefined ? options.distance : .07,
                 snap: options.snap,
                 ignoreParentDimensions: options.ignoreParentDimensions,
 
@@ -94,11 +99,7 @@ floatingMenu.scrollLeft = function(item)
     if (item.scrollContainer)
         return item.scrollContainer.scrollLeft;
 
-    var w = window;
-
-    // Find top window scroll parameters if we're IFRAMEd
-    while (w != w.parent)
-        w = w.parent;
+    var w = window.top;
 
     return this.hasInner
         ? w.pageXOffset  
@@ -113,11 +114,7 @@ floatingMenu.scrollTop = function(item)
     if (item.scrollContainer)
         return item.scrollContainer.scrollTop;
 
-    var w = window;
-
-    // Find top window scroll parameters if we're IFRAMEd
-    while (w != w.parent)
-        w = w.parent;
+    var w = window.top;
 
     return this.hasInner
         ? w.pageYOffset
@@ -297,11 +294,11 @@ floatingMenu.offsets = function(obj, item)
         obj = obj.offsetParent;
     }  
 
-    if (window == window.parent)
+    if (window == window.top)
         return result;
 
     // we're IFRAMEd
-    var iframes = window.parent.document.body.getElementsByTagName("IFRAME");
+    var iframes = window.top.document.body.getElementsByTagName("IFRAME");
     for (var i = 0; i < iframes.length; i++)
     {
         if (iframes[i].contentWindow != window)
@@ -329,7 +326,7 @@ floatingMenu.doFloatSingle = function(item)
 
     var cornerX = this.calculateCornerX(item);
 
-    var stepX = (cornerX - item.nextX) * .07;
+    var stepX = (cornerX - item.nextX) * item.distance;
     if (Math.abs(stepX) < .5 && item.snap
         || Math.abs(cornerX - item.nextX) == 1)
     {
@@ -338,7 +335,7 @@ floatingMenu.doFloatSingle = function(item)
 
     var cornerY = this.calculateCornerY(item);
 
-    var stepY = (cornerY - item.nextY) * .07;
+    var stepY = (cornerY - item.nextY) * item.distance;
     if (Math.abs(stepY) < .5 && item.snap
         || Math.abs(cornerY - item.nextY) == 1)
     {

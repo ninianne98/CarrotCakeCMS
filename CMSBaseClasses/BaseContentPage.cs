@@ -58,8 +58,6 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		private const string JSSCOPE = "cmsGlossySeaGreen";
-
 		protected SiteData GetSite() {
 			return siteHelper.Get(SiteData.CurrentSiteID);
 		}
@@ -81,8 +79,6 @@ namespace Carrotware.CMS.UI.Base {
 
 
 		protected void AssignContentZones(ContentContainer pageArea, ContentContainer pageSource) {
-
-			pageArea.JQueryUIScope = pageSource.JQueryUIScope;
 
 			pageArea.IsAdminMode = pageSource.IsAdminMode;
 
@@ -219,10 +215,6 @@ namespace Carrotware.CMS.UI.Base {
 						contLeft.IsAdminMode = true;
 						contRight.IsAdminMode = true;
 
-						contCenter.JQueryUIScope = JSSCOPE;
-						contLeft.JQueryUIScope = JSSCOPE;
-						contRight.JQueryUIScope = JSSCOPE;
-
 						contCenter.ZoneChar = "c";
 						contLeft.ZoneChar = "l";
 						contRight.ZoneChar = "r";
@@ -234,10 +226,7 @@ namespace Carrotware.CMS.UI.Base {
 						Control editor = Page.LoadControl("~/Manage/ucAdvancedEdit.ascx");
 						Page.Form.Controls.Add(editor);
 
-						jquery link = new jquery();
-						Page.Header.Controls.AddAt(0, link);
-
-						MarkWidgets(page, JSSCOPE, true);
+						MarkWidgets(page, true);
 					}
 				}
 
@@ -331,7 +320,6 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (SiteData.AdvancedEditMode) {
 								WidgetWrapper plcWrapper = new WidgetWrapper();
-								plcWrapper.JQueryUIScope = JSSCOPE;
 								plcWrapper.IsAdminMode = true;
 								plcWrapper.ControlPath = theWidget.ControlPath;
 								plcWrapper.ControlTitle = theWidget.ControlPath;
@@ -384,15 +372,14 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		protected void MarkWidgets(Control X, string sJQScope, bool bAdmin) {
+		protected void MarkWidgets(Control X, bool bAdmin) {
 			//add the command click event to the link buttons on the datagrid heading
 			foreach (Control c in X.Controls) {
 				if (c is WidgetContainer) {
 					WidgetContainer ph = (WidgetContainer)c;
 					ph.IsAdminMode = bAdmin;
-					ph.JQueryUIScope = sJQScope;
 				} else {
-					MarkWidgets(c, sJQScope, bAdmin);
+					MarkWidgets(c, bAdmin);
 				}
 			}
 		}
