@@ -7,10 +7,11 @@
 	&nbsp;</div>
 <carrot:jquery runat="server" ID="jquery1" />
 <carrot:jqueryui runat="server" ID="jqueryui1" />
+<link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped2.css" rel="stylesheet" type="text/css" />
 <link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
 <script src="/Manage/includes/base64.js" type="text/javascript"></script>
-<script src="/Manage/includes/jquery.simplemodal.1.4.1.min.js" type="text/javascript"></script>
-<script src="/Manage/Includes/jq-floating-1.6.js" type="text/javascript"></script>
+<script src="/Manage/includes/jquery.simplemodal.js" type="text/javascript"></script>
+<script src="/Manage/Includes/floating-menu.js" type="text/javascript"></script>
 <script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
 <link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 <link href="/Manage/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
@@ -24,6 +25,10 @@
 		<%} %>
 	});
 
+	$(document).ready(function () {
+		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
+		$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit").button();
+	});
 
 </script>
 <script type="text/javascript">
@@ -36,9 +41,10 @@
 	var cmsConfirmLeavingPage = true;
 
 	$(window).bind('beforeunload', function () {
+		cmsConfirmLeavingPage = false;
 		if (!cmsIsPageLocked) {
 			if (cmsConfirmLeavingPage) {
-				return '>>>>>Are you sure you want to navigate away<<<<<<<<';
+				return '>>Are you sure you want to navigate away<<';
 			}
 		}
 	});
@@ -178,14 +184,14 @@
 				});
 			});
 
-			$('.cmsContentAreaHead a').each(function (i) {
+			$('.cmsContentContainerInnerTitle a').each(function (i) {
 				$(this).click(function () {
 					cmsMakeOKToLeave();
 					setTimeout("cmsMakeNotOKToLeave();", 250);
 				});
 			});
 
-			$('.cmsContentAreaHead').each(function (i) {
+			$('.cmsContentContainerInnerTitle').each(function (i) {
 				$(this).click(function () {
 					cmsMakeOKToLeave();
 					setTimeout("cmsMakeNotOKToLeave();", 250);
@@ -197,7 +203,7 @@
 				cmsBlockImageEdits(this);
 			});
 
-			$(".cmsContentContainerInner a").each(function (i) {
+			$(".cmsContentContainerTitle a").each(function (i) {
 				cmsBlockContentEdits(this);
 			});
 		}
@@ -502,7 +508,6 @@
 
 		$("#CMSmodalalertmessage").html(request);
 
-
 		cmsFixDialog('CMSmodalalertmessage');
 	}
 
@@ -557,10 +562,6 @@
 			overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 		});
 	}
-
-	$(document).ready(function () {
-		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
-	});
 
 	function cmsBuildOrderAndUpdateWidgets() {
 		var ret = cmsBuildOrder();
@@ -647,8 +648,6 @@
 			snap: true
 		});
 
-		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
-
 		// make sure sort only fires once
 		var cmsSortWidgets = false;
 
@@ -663,7 +662,7 @@
 				helper: "clone",
 				revert: "invalid",
 				handle: "p.cmsToolItem",
-				placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
+				placeholder: "cmsHighlightPH"
 			});
 
 
@@ -686,8 +685,8 @@
 				revert: true,
 				dropOnEmpty: true,
 				distance: 25,
-				placeholder: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all",
-				hoverClass: "cmsHighlightPH cmsGlossySeaGreen ui-state-highlight ui-corner-all"
+				placeholder: "cmsHighlightPH",
+				hoverClass: "cmsHighlightPH"
 			}).disableSelection();
 
 
@@ -751,27 +750,26 @@
 		}
 	}
 
+
 	function cmsFixDialog(dialogname) {
-
-		var fontfacereset = ' font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important; font-size: 12px !important; line-height: 16px !important; '
-
 		var dilg = $("#" + dialogname).parent().parent();
-		var txt = $("#" + dialogname).attr('style', 'margin: 2px !important; padding: 5px !important; text-align: left !important;' + fontfacereset);
 
-		var c = $(dilg).attr('class');
-		$(dilg).attr('class', "cmsGlossySeaGreen ui-widget-content ui-corner-all " + c);
+		cmsOverrideCSSScope(dilg, "");
 
-		var pstyle = $(dilg).attr('style');
-		$(dilg).attr('style', "padding:2px !important; margin:2px !important; background: #ffffff !important; border: 1px solid #c0c0c0 !important;" + fontfacereset + pstyle);
+		var over = $(dilg).next(".ui-widget-overlay");
+		$(over).wrap("<div class=\"cmsGlossySeaGreen\" />");
 
-		var cap = $(dilg).find(".ui-dialog-titlebar-close").attr('style', 'float:right !important; padding:4px !important; background-color:transparent !important;');
-		var cap = $(dilg).find(".ui-dialog-titlebar").attr('style', 'margin: 2px !important; padding: 2px !important; height: 32px !important;');
-		var cap = $(dilg).find(".ui-button").attr('style', 'float:right !important;');
-		var cap = $(dilg).find(".ui-dialog-title").attr('style', 'float:left !important; margin:2px !important; padding:2px !important;');
-		var cap = $(dilg).find(".ui-dialog-buttonpane").attr('style', 'margin:2px !important; padding:3px !important;');
+		var d = $(dilg);
+		$(d).wrap("<div class=\"cmsGlossySeaGreen\" />");
 
 	}
 
+	function cmsOverrideCSSScope(elm, xtra) {
+		var c = $(elm).attr('class');
+		if (c.indexOf("cmsGlossySeaGreen") < 0 || c.indexOf(xtra) < 0) {
+			$(elm).attr('class', "cmsGlossySeaGreen " + xtra + " " + c);
+		}
+	}
 
 	function cmsGenericEdit(PageId, WidgetId) {
 		cmsLaunchWindow('/Manage/ControlPropertiesEdit.aspx?pageid=' + PageId + '&id=' + WidgetId);
@@ -824,8 +822,8 @@
 	<img src="/manage/images/layout.png" alt="" />
 	<img src="/manage/images/arrow_in.png" alt="" />
 </div>
-<div id="cmsAdminToolbox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all cmsToolbox2">
-	<div class="cmsInsideArea">
+<div id="cmsAdminToolbox" class="cmsToolbox2" style="padding: 2px; margin: 0px; min-height: 300px; width: 290px;">
+	<div id="cmsGlossySeaGreenID" class="cmsInsideArea">
 		<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick cmsFloatRight' title="toggle">
 			T
 		</div>
@@ -838,22 +836,22 @@
 		<p class="ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
 			Toolbox
 		</p>
-		<div id="cmsDivActive" class="cmsGlossySeaGreen">
-			<div class="cmsGlossySeaGreen ui-widget" runat="server" id="cmsDivEditing">
+		<div id="cmsDivActive">
+			<div class="ui-widget" runat="server" id="cmsDivEditing">
 				<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
 					<p>
 						<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
 						<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
 				</div>
 			</div>
-			<div id="cmsMainToolbox" class="cmsGlossySeaGreen">
+			<div id="cmsMainToolbox">
 				<asp:Panel ID="pnlCMSEditZone" runat="server">
-					<div id="cmsJQTabedToolbox" class="cmsGlossySeaGreen" style="min-height: 50px; width: 275px;">
-						<ul class="cmsGlossySeaGreen">
-							<li class="cmsGlossySeaGreen"><a class="cmsGlossySeaGreen" href="#cmsTabIdx-tabs-1">Widgets</a></li>
-							<li class="cmsGlossySeaGreen"><a class="cmsGlossySeaGreen" href="#cmsTabIdx-tabs-2">Page Info</a></li>
+					<div id="cmsJQTabedToolbox" style="min-height: 50px; width: 275px;">
+						<ul>
+							<li><a href="#cmsTabIdx-tabs-1">Widgets</a></li>
+							<li><a href="#cmsTabIdx-tabs-2">Page Info</a></li>
 						</ul>
-						<div id="cmsTabIdx-tabs-1" class="cmsGlossySeaGreen">
+						<div id="cmsTabIdx-tabs-1">
 							<div style="display: none;">
 								cmsFullOrder<br />
 								<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
@@ -867,13 +865,13 @@
 							</div>
 							<asp:Repeater ID="rpTools" runat="server">
 								<HeaderTemplate>
-									<div id="cmsToolBox" class="cmsGlossySeaGreen ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px;
-										float: left; border: solid 1px #000;">
+									<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px;
+										margin: 5px; float: left; border: solid 1px #000;">
 								</HeaderTemplate>
 								<ItemTemplate>
-									<div id="cmsToolItemDiv" class="cmsToolItem cmsGlossySeaGreen cmsToolItemWrapper">
-										<div id="cmsControl" class="cmsGlossySeaGreen" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
-											<p class="cmsToolItem cmsGlossySeaGreen ui-widget-header">
+									<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper">
+										<div id="cmsControl" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
+											<p class="cmsToolItem ui-widget-header">
 												<%# Eval("Caption")%>
 											</p>
 											<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
@@ -887,7 +885,7 @@
 							</asp:Repeater>
 							<br style="clear: both;" />
 						</div>
-						<div id="cmsTabIdx-tabs-2" class="cmsGlossySeaGreen">
+						<div id="cmsTabIdx-tabs-2">
 							<div class="cmsCenter5px">
 								<p class="cmsLeft5px">
 									<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
@@ -910,23 +908,24 @@
 		</div>
 		<div id="cmsToolboxSpacer" style="display: none;">
 		</div>
-		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
+		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
+			background-color: #000;">
 		</div>
 		<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; height: 20px;">
 		</div>
 	</div>
 </div>
 </div>
-<div style="display: none" class="cmsGlossySeaGreen">
-	<div id="CMSmodalalert" class="cmsGlossySeaGreen" title="CMS Alert">
+<div style="display: none">
+	<div id="CMSmodalalert" title="CMS Alert">
 		<p id="CMSmodalalertmessage">
 			&nbsp;</p>
 	</div>
-	<div id="CMSremoveconfirm" class="cmsGlossySeaGreen" title="Remove Widget?">
+	<div id="CMSremoveconfirm" title="Remove Widget?">
 		<p id="CMSremoveconfirmmsg">
 			Are you sure you want to remove this widget?</p>
 	</div>
-	<div id="CMScancelconfirm" class="cmsGlossySeaGreen" title="Quit Editor?">
+	<div id="CMScancelconfirm" title="Quit Editor?">
 		<p id="CMScancelconfirmmsg">
 			Are you sure you want to leave the editor? All changes will be lost!</p>
 	</div>

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<carrot:jquerybasic runat="server" ID="jquerybasic" SelectedSkin="GlossyBlack" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
 	<title>plain</title>
 	<style type="text/css">
 		body {

@@ -10,19 +10,27 @@
 
  
 .cmsGlossySeaGreen p, .cmsGlossySeaGreen ul, 
-.cmsGlossySeaGreen ol, .cmsGlossySeaGreen h1, 
-.cmsGlossySeaGreen h2, .cmsGlossySeaGreen h3,
-.cmsGlossySeaGreen div, .cmsGlossySeaGreen span, 
-.cmsGlossySeaGreen input, .cmsGlossySeaGreen select, 
-.cmsGlossySeaGreen button, .cmsGlossySeaGreen textarea {
+.cmsGlossySeaGreen li, .cmsGlossySeaGreen ol, 
+.cmsGlossySeaGreen h1, .cmsGlossySeaGreen h2, 
+.cmsGlossySeaGreen h3, .cmsGlossySeaGreen div, 
+.cmsGlossySeaGreen span, .cmsGlossySeaGreen input, 
+.cmsGlossySeaGreen select, .cmsGlossySeaGreen button, 
+.cmsGlossySeaGreen textarea, .cmsGlossySeaGreen a {
 	line-height: normal;
 	margin: 0px;
 	padding: 1px;
 	text-align: left;
 	font-size: small;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	background-color: transparent;
+	border: 0px solid transparent;
 }
 
+.cmsGlossySeaGreen select, .cmsGlossySeaGreen textarea {
+	color: #000000;
+	background-color: #ffffff;
+	border: 1px solid #c0c0c0;
+}
 
 
 /* Layout helpers

@@ -7,7 +7,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+/*
+* CarrotCake CMS
+* http://carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Controls {
 	[DefaultProperty("Text")]
@@ -95,20 +103,6 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public string JQueryUIScope {
-			get {
-				String s = (String)ViewState["jQueryUIScope"];
-				return ((s == null) ? String.Empty : s);
-			}
-			set {
-				ViewState["jQueryUIScope"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
 		public string JSEditFunction {
 			get {
 				String s = (String)ViewState["JSEditFunction"];
@@ -124,16 +118,16 @@ namespace Carrotware.CMS.UI.Controls {
 			if (IsAdminMode) {
 				string sEdit = "";
 				if (!string.IsNullOrEmpty(JSEditFunction)) {
-					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink\" class=\"ui-state-hover\" href=\"javascript:" + JSEditFunction + "\">\r\n"
+					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink\" href=\"javascript:" + JSEditFunction + "\">\r\n"
 							+ " Edit </a></li> \r\n";
-					sEdit += " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget2\" id=\"cmsContentEditLink\" class=\"ui-state-hover\" href=\"javascript:cmsManageWidgetHistory('" + DatabaseKey + "')\">\r\n"
+					sEdit += " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget2\" id=\"cmsContentEditLink\" href=\"javascript:cmsManageWidgetHistory('" + DatabaseKey + "')\">\r\n"
 								+ " History </a></li> \r\n";
 				}
 
-				//string sShrink = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconShrink\" id=\"cmsContentLink\" class=\"ui-state-hover\" href=\"javascript:cmsShrinkWidgetHeight('" + DatabaseKey + "');\">\r\n"
+				//string sShrink = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconShrink\" id=\"cmsContentLink\" href=\"javascript:cmsShrinkWidgetHeight('" + DatabaseKey + "');\">\r\n"
 				//                + " Shrink </a></li> \r\n";
 
-				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink\" class=\"ui-state-hover\" href=\"javascript:cmsRemoveWidgetLink('" + DatabaseKey + "');\">\r\n"
+				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink\" href=\"javascript:cmsRemoveWidgetLink('" + DatabaseKey + "');\">\r\n"
 								+ " Remove </a></li> \r\n";
 
 				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
@@ -141,27 +135,15 @@ namespace Carrotware.CMS.UI.Controls {
 				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
 							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
 
-				string sPrefix = "";
+				string sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
+									+ "<div id=\"cms_" + this.ClientID + "\">"
+									+ "<div id=\"cmsWidgetHead\" class=\"cmsWidgetTitleBar\">"
+									+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\" tooltip=\"" + ControlPath + "\">" + ControlTitle + "</div> " + sMenu + " </div>"
+									+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
+									+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
+									+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
+									+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
 
-				if (!string.IsNullOrEmpty(JQueryUIScope)) {
-					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
-										+ "<div id=\"" + this.ClientID + "\" class=\"" + JQueryUIScope + "\">"
-										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
-										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\" tooltip=\"" + ControlPath + "\">" + ControlTitle + "</div> " + sMenu + " </div>"
-										+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
-										+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
-										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
-										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
-				} else {
-					sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
-										+ "<div id=\"" + this.ClientID + "\">"
-										+ "<div id=\"cmsWidgetHead\" class=\"toolitem ui-state-hover ui-widget-header cmsWidgetTitleBar\">"
-										+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\" tooltip=\"" + ControlPath + "\">" + ControlTitle + "</div> " + sMenu + " </div>"
-										+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
-										+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
-										+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
-										+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
-				}
 				w.Write(sPrefix);
 
 			} else {
