@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
+ <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
 <div style="width: 1280px; height: 2px; clear: both; left: 0; border: 0px dotted #000000; z-index: 5000;">
 </div>
 <div style="width: 2px; height: 1024px; clear: both; left: 0; border: 0px dotted #000000; z-index: 5000;">
@@ -41,7 +41,7 @@
 	var cmsConfirmLeavingPage = true;
 
 	$(window).bind('beforeunload', function () {
-		cmsConfirmLeavingPage = false;
+		//cmsConfirmLeavingPage = false;
 		if (!cmsIsPageLocked) {
 			if (cmsConfirmLeavingPage) {
 				return '>>Are you sure you want to navigate away<<';
