@@ -25,10 +25,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 			litID.Text = SiteData.CurrentSiteID.ToString();
 
-			//pnlFolder.Visible = IsAdmin;
-
 			if (!IsPostBack) {
-				var site = siteHelper.Get(SiteData.CurrentSiteID);
+				SiteData site = siteHelper.GetCurrentSite();
 				txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
 				txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
 
@@ -37,19 +35,16 @@ namespace Carrotware.CMS.UI.Admin {
 					txtURL.Text = site.MainURL;
 					txtKey.Text = site.MetaKeyword;
 					txtDescription.Text = site.MetaDescription;
-					//txtFolder.Text = site.SiteFolder;
 					chkHide.Checked = site.BlockIndex;
 				}
 			}
 
 			siteHelper.CleanUpSerialData();
-
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
-			var site = siteHelper.Get(SiteData.CurrentSiteID);
-
+			SiteData site = siteHelper.GetCurrentSite();
 
 			if (site == null) {
 				site = new SiteData();
