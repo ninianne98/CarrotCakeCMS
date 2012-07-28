@@ -30,6 +30,11 @@ namespace Carrotware.CMS.UI.Admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
 			lblUpdated.Text = DateTime.Now.ToString();
 
+			SiteData site = siteHelper.GetCurrentSite();
+			if (site == null) {
+				Response.Redirect("./Default.aspx");
+			}
+
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
 			}

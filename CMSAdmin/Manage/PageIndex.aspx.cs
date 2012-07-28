@@ -24,6 +24,11 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
 
+			SiteData site = siteHelper.GetCurrentSite();
+			if (site == null) {
+				Response.Redirect("./Default.aspx");
+			}
+
 			if (!IsPostBack) {
 				LoadGrid(hdnSort.Value);
 

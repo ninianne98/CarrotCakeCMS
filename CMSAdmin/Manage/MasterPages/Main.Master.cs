@@ -30,7 +30,7 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 
 		public void HideWhenNoSiteProfileExists() {
 
-			var site = siteHelper.Get(SiteData.CurrentSiteID);
+			SiteData site = siteHelper.GetCurrentSite();
 
 			if (site == null) {
 				tabContent.Visible = false;

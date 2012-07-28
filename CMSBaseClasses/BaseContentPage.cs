@@ -58,11 +58,6 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		protected SiteData GetSite() {
-			return siteHelper.Get(SiteData.CurrentSiteID);
-		}
-
-
 		protected override void OnInit(EventArgs e) {
 
 			this.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
@@ -97,7 +92,7 @@ namespace Carrotware.CMS.UI.Base {
 			metaGenerator.Content = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
 			Page.Header.Controls.Add(metaGenerator);
 
-			theSite = GetSite();
+			theSite = siteHelper.GetCurrentSite();
 
 			if (theSite != null) {
 				if (theSite.BlockIndex) {
