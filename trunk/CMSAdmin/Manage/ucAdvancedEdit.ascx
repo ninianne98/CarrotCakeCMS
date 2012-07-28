@@ -514,6 +514,9 @@
 	//===========================
 	// do a lot of iFrame magic
 
+	function cmsShowWidgetList() {
+		cmsLaunchWindow('/Manage/WidgetList.aspx?pageid=' + thisPageID + "&zone=cms-all-placeholder-zones");
+	}
 	function cmsManageWidgetList(zoneName) {
 		//alert(zoneName);
 		cmsLaunchWindow('/Manage/WidgetList.aspx?pageid=' + thisPageID + "&zone=" + zoneName);
@@ -545,7 +548,7 @@
 
 	function CMSBusyShort() {
 
-		$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+		$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
 			css: { border: 'none', backgroundColor: 'transparent' },
 			fadeOut: 750,
 			timeout: 1000,
@@ -555,7 +558,7 @@
 
 	function CMSBusyLong() {
 
-		$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center"><img class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+		$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
 			css: { border: 'none', backgroundColor: 'transparent' },
 			fadeOut: 4000,
 			timeout: 5000,
@@ -865,8 +868,8 @@
 							</div>
 							<asp:Repeater ID="rpTools" runat="server">
 								<HeaderTemplate>
-									<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px;
-										margin: 5px; float: left; border: solid 1px #000;">
+									<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px; float: left;
+										border: solid 1px #000;">
 								</HeaderTemplate>
 								<ItemTemplate>
 									<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper">
@@ -899,6 +902,9 @@
 								<p class="cmsLeft5px">
 									<input runat="server" id="btnSortChildPages" type="button" value="Sort Child/Sub Pages" onclick="cmsSortChildren();" />
 								</p>
+								<p class="cmsLeft5px">
+									<input runat="server" id="btnAllWidgets" type="button" value="View Full Widget List" onclick="cmsShowWidgetList();" />
+								</p>
 								<br />
 								<div class="cmsCenter5px">
 									<input type="button" runat="server" id="btnToolboxSave2" value="Save" onclick="cmsApplyChanges();" />
@@ -914,8 +920,7 @@
 		</div>
 		<div id="cmsToolboxSpacer" style="display: none;">
 		</div>
-		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc;
-			background-color: #000;">
+		<div id="cmsTrashList" style="clear: both; display: none; width: 300px; height: 100px; overflow: auto; float: left; border: solid 1px #ccc; background-color: #000;">
 		</div>
 		<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; height: 20px;">
 		</div>

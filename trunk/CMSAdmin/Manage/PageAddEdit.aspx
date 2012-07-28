@@ -418,7 +418,6 @@
 					body (left)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
 				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-				<%--<asp:Button ID="Button1" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
 			</div>
 		</div>
@@ -428,7 +427,6 @@
 					body (main/center)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
 				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-				<%--<asp:Button ID="Button2" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
 			</div>
 		</div>
@@ -438,7 +436,6 @@
 					body (right)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
 				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-				<%--<asp:Button ID="Button3" runat="server" OnClientClick="SubmitPage()" Text="Save" /><br />--%>
 				<br />
 			</div>
 		</div>
@@ -450,6 +447,9 @@
 			<td valign="top">
 				<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="button" id="btnCancel" value="Cancel" onclick="location.href='./PageIndex.aspx';" />
+			</td>
+			<td valign="top">
+				<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
 			</td>
 			<td valign="top">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

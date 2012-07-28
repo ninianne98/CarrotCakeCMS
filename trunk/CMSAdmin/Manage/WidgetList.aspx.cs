@@ -54,12 +54,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		private void BindDataGrid() {
 
-
+			if (sZone.ToLower() != "cms-all-placeholder-zones") {
+				gvPages.Columns[4].Visible = false;
+			}
 
 			var lstW = (from aw in cmsHelper.cmsAdminWidget
-					 where aw.PlaceholderName.ToLower() == sZone.ToLower()
-					 orderby aw.IsWidgetPendingDelete ascending, aw.IsWidgetActive descending, aw.WidgetOrder
-					 select aw).ToList();
+						where aw.PlaceholderName.ToLower() == sZone.ToLower() || sZone.ToLower() == "cms-all-placeholder-zones"
+						orderby aw.PlaceholderName ascending, aw.IsWidgetPendingDelete ascending, aw.IsWidgetActive descending, aw.WidgetOrder
+						select aw).ToList();
 
 			gvPages.DataSource = lstW;
 			gvPages.DataBind();

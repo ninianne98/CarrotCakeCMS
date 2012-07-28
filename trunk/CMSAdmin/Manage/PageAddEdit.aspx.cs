@@ -68,13 +68,22 @@ namespace Carrotware.CMS.UI.Admin {
 				ddlTemplate.DataSource = cmsHelper.Templates;
 				ddlTemplate.DataBind();
 
+				chkDraft.Visible = false;
 				divEditing.Visible = false;
 
 				if (pageContents != null) {
 
 					guidRootContentID = pageContents.Root_ContentID;
 
-					ddlVersions.DataSource = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
+					var lstVer = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
+
+					ddlVersions.DataSource = (from v in lstVer
+											  orderby v.EditDate descending
+											  select new {
+												  EditDate = v.EditDate.ToString() + (v.IsLatestVersion ? " [**]" : " "),
+												  ContentID = v.ContentID
+											  }).ToList();
+
 					ddlVersions.DataBind();
 					ddlVersions.Items.Insert(0, new ListItem("-Page Versions-", "00000"));
 
@@ -83,6 +92,7 @@ namespace Carrotware.CMS.UI.Admin {
 					pnlHB.Visible = !bLocked;
 					btnSaveButton.Visible = !bLocked;
 					divEditing.Visible = bLocked;
+					chkDraft.Visible = !bLocked;
 
 					if (bLocked && pageContents.Heartbeat_UserId != null) {
 						var usr = ProfileManager.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
@@ -178,7 +188,11 @@ namespace Carrotware.CMS.UI.Admin {
 
 			pageContents.EditUserId = SiteData.CurrentUserGuid;
 
-			pageContents.SavePageEdit();
+			if (!chkDraft.Checked) {
+				pageContents.SavePageEdit();
+			} else {
+				pageContents.SavePageAsDraft();
+			}
 
 			if (sPageMode.Length < 1) {
 				Response.Redirect(SiteData.CurrentScriptName + "?id=" + pageContents.Root_ContentID.ToString());

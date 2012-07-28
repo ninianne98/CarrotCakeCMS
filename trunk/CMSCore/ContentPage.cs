@@ -152,6 +152,65 @@ namespace Carrotware.CMS.Core {
 
 		}
 
+
+		public void SavePageAsDraft() {
+
+			var rc = (from r in db.tblRootContents
+					  where r.Root_ContentID == this.Root_ContentID
+						&& r.SiteID == this.SiteID
+					  select r).FirstOrDefault();
+
+			bool bNew = false;
+
+			if (rc == null) {
+				rc = new tblRootContent();
+				rc.Root_ContentID = this.Root_ContentID;
+				rc.PageActive = true;
+				rc.SiteID = this.SiteID;
+				rc.CreateDate = DateTime.Now;
+				db.tblRootContents.InsertOnSubmit(rc);
+				bNew = true;
+			}
+
+			var c = new tblContent();
+			if (bNew) {
+				c.ContentID = this.Root_ContentID;
+			} else {
+				c.ContentID = Guid.NewGuid();
+			}
+			c.Root_ContentID = this.Root_ContentID;
+
+			rc.Heartbeat_UserId = this.Heartbeat_UserId;
+			rc.EditHeartbeat = this.EditHeartbeat;
+			rc.FileName = this.FileName;
+			rc.PageActive = this.PageActive;
+
+			rc.FileName = ContentPageHelper.ScrubFilename(this.Root_ContentID, rc.FileName);
+
+			c.Parent_ContentID = this.Parent_ContentID;
+			c.IsLatestVersion = false; // draft, leave existing version latest
+
+			c.TitleBar = this.TitleBar;
+			c.NavMenuText = this.NavMenuText;
+			c.PageHead = this.PageHead;
+			c.PageText = this.PageText;
+			c.LeftPageText = this.LeftPageText;
+			c.RightPageText = this.RightPageText;
+			c.NavOrder = this.NavOrder;
+			c.EditUserId = this.EditUserId;
+			c.EditDate = DateTime.Now;
+			c.TemplateFile = this.TemplateFile;
+
+			c.MetaKeyword = this.MetaKeyword;
+			c.MetaDescription = this.MetaDescription;
+
+			db.tblContents.InsertOnSubmit(c);
+			db.SubmitChanges();
+		}
+
+
+
+
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
 		public DateTime CreateDate { get; set; }
