@@ -274,6 +274,15 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.Button btnSaveButton;
         
         /// <summary>
+        /// chkDraft control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkDraft;
+        
+        /// <summary>
         /// ddlVersions control.
         /// </summary>
         /// <remarks>
