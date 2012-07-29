@@ -31,6 +31,7 @@
 	<div style="display: none">
 		<asp:Button ID="cmdDummy" runat="server"></asp:Button>
 	</div>
+	<asp:PlaceHolder ID="plcFooter" runat="server" />
 	</form>
 </body>
 </html>

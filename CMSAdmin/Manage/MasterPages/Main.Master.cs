@@ -17,6 +17,8 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 				tabUserAdmin.Visible = false;
 			}
 
+			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.MasterPages.Main.Ctrl");
+
 			litCMSBuildInfo.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
 
 			HideWhenNoSiteProfileExists();

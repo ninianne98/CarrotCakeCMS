@@ -11,6 +11,8 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 	public partial class Public : AdminBaseMasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
 
+			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.MasterPages.Public.Ctrl");
+
 		}
 	}
 }

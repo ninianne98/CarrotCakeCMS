@@ -270,6 +270,7 @@
 		<asp:ContentPlaceHolder ID="NoAjaxBodyContentPlaceHolder" runat="server">
 		</asp:ContentPlaceHolder>
 	</div>
+	<asp:PlaceHolder ID="plcFooter" runat="server" />
 	</form>
 </body>
 </html>
