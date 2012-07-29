@@ -1,5 +1,5 @@
-﻿<%@ Page ValidateRequest="false" Title="PageAddEdit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true"
-	CodeBehind="PageAddEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.PageAddEdit" %>
+﻿<%@ Page ValidateRequest="false" Title="PageAddEdit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageAddEdit.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.PageAddEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -252,6 +252,7 @@
 						$(this).dialog("close");
 					},
 					"Yes": function () {
+						cmsMakeOKToLeave();
 						cmsRecordCancellation();
 						window.setTimeout("location.href = './PageIndex.aspx';", 800);
 						$(this).dialog("close");
@@ -277,6 +278,53 @@
 
 
 		/* </asp:placeholder> */
+
+	</script>
+	<script type="text/javascript">
+
+		var cmsIsPageLocked = true;
+		if ('<%=bLocked.ToString().ToLower() %>' != 'true') {
+			cmsIsPageLocked = false;
+		}
+
+		var cmsConfirmLeavingPage = true;
+
+		$(window).bind('beforeunload', function () {
+			//cmsConfirmLeavingPage = false;
+			if (!cmsIsPageLocked) {
+				if (cmsConfirmLeavingPage) {
+					return '>>Are you sure you want to navigate away<<';
+				}
+			}
+		});
+
+		function cmsGetPageStatus() {
+			return cmsConfirmLeavingPage;
+		}
+
+		function cmsMakeOKToLeave() {
+			cmsConfirmLeavingPage = false;
+		}
+
+		function cmsMakeNotOKToLeave() {
+			cmsConfirmLeavingPage = true;
+		}
+
+		function cmsRequireConfirmToLeave(confirmLeave) {
+			cmsConfirmLeavingPage = confirmLeave;
+		}
+
+		$(document).ready(function () {
+			if (!cmsIsPageLocked) {
+				// these click events because of stoopid IE9 navigate away behavior
+				$('#menu a.lnkPopup').each(function (i) {
+					$(this).click(function () {
+						cmsMakeOKToLeave();
+						setTimeout("cmsMakeNotOKToLeave();", 500);
+					});
+				});
+			}
+		});
 
 	</script>
 	<style type="text/css">
@@ -352,10 +400,9 @@
 				title bar:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45"
-					MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -363,12 +410,12 @@
 				filename:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName"
-					runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server"
-					ErrorMessage="Not Valid/Unique" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
+					MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
+					Display="Dynamic"></asp:RequiredFieldValidator>
 				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
 			</td>
 		</tr>
@@ -377,10 +424,9 @@
 				page head:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45"
-					MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -388,10 +434,9 @@
 				navigation:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45"
-					MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -399,8 +444,8 @@
 				meta keywords:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60"
-					Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
+					TextMode="MultiLine" runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
@@ -408,8 +453,7 @@
 				meta description:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
-					TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
@@ -417,10 +461,9 @@
 				sort:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="10" ID="txtSort" runat="server" Columns="15"
-					MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="10" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -434,8 +477,8 @@
 					</div>
 					<div style="float: left; padding: 0px;">
 						<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" style="position: relative; width: 100px" class="menuitems ui-widget-header ui-corner-all">
-							Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;"
-								class="ui-icon ui-icon-power"></span></a>
+							Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power"></span>
+							</a>
 						</div>
 						<div id="menuitemsouter">
 							<div id="menuitemsinner" class="scroll">
@@ -478,8 +521,7 @@
 				<div runat="server" id="divLeft">
 					body (left)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine"
-					Rows="15" Columns="80" />
+				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 				<br />
 			</div>
 		</div>
@@ -488,8 +530,7 @@
 				<div runat="server" id="divCenter">
 					body (main/center)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
-					Columns="80" />
+				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 				<br />
 			</div>
 		</div>
@@ -498,8 +539,7 @@
 				<div runat="server" id="divRight">
 					body (right)<br />
 					<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine"
-					Rows="15" Columns="80" />
+				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 				<br />
 			</div>
 		</div>
@@ -554,6 +594,7 @@
 							$(this).dialog("close");
 						},
 						"Yes": function () {
+							cmsMakeOKToLeave();
 							window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?versionid=' + qs + '\'', 500);
 							$(this).dialog("close");
 						}
@@ -606,6 +647,7 @@
 			setTimeout("ClickBtn();", 1500);
 		}
 		function ClickBtn() {
+			cmsMakeOKToLeave();
 			$('#<%=btnSave.ClientID %>').click();
 		}
 	</script>

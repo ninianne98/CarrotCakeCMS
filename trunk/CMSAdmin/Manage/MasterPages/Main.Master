@@ -348,18 +348,18 @@
 				<li runat="server" id="tabMain"><a href="/Manage/">Home</a></li>
 				<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Pages</a> </li>
 				<li runat="server" id="tabModules"><a href="/Manage/ModuleIndex.aspx">Modules</a> </li>
-				<li><a href="javascript:void(0)" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
+				<li><a href="javascript:void(0)" class="lnkPopup" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
 				<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Manage Users</a> </li>
-				<li><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">Profile</a> </li>
-				<li><a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
-				<li><a target="_blank" href="/">View Site</a> </li>
+				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">Profile</a> </li>
+				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
+				<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
 				<li>
 					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=Carrotware.CMS.Core.SiteData.CurrentUser.UserName%></asp:LinkButton>
 				</li>
 				<li><a href="javascript:void(0)">&nbsp;</a></li>
 			</ul>
 		</div>
-		<div style="height: 5px; width: 825px; clear: both;">
+		<div style="height: 2px; width: 1000px; clear: both; border: 1px dashed #ffffff !important;">
 		</div>
 		<div id="content">
 			<div class="pad-content">
