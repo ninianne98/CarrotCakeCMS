@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Admin {
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidRootContentID = Guid.Empty;
 		public Guid guidVersionContentID = Guid.Empty;
-
+		public bool bLocked = false;
 		string sPageMode = String.Empty;
 		SiteMapOrder orderHelper = new SiteMapOrder();
 
@@ -87,7 +87,7 @@ namespace Carrotware.CMS.UI.Admin {
 					ddlVersions.DataBind();
 					ddlVersions.Items.Insert(0, new ListItem("-Page Versions-", "00000"));
 
-					var bLocked = pageHelper.IsPageLocked(pageContents);
+					bLocked = pageHelper.IsPageLocked(pageContents);
 
 					pnlHB.Visible = !bLocked;
 					pnlButtons.Visible = !bLocked;
