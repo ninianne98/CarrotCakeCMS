@@ -263,17 +263,20 @@
 
 		function cmsRecordCancellation() {
 
-			var webMthd = webSvc + "/CancelEditing";
+			if (thePageID != '<%=Guid.Empty %>') {
 
-			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: "{'ThisPage': '" + thePageID + "'}",
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: cmsAjaxGeneralCallback,
-				error: cmsAjaxFailed
-			});
+				var webMthd = webSvc + "/CancelEditing";
+
+				$.ajax({
+					type: "POST",
+					url: webMthd,
+					data: "{'ThisPage': '" + thePageID + "'}",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: cmsAjaxGeneralCallback,
+					error: cmsAjaxFailed
+				});
+			}
 		}
 
 
