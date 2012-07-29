@@ -88,6 +88,46 @@ namespace Carrotware.CMS.Core {
 			return widgets;
 		}
 
+		public void ResetHeartbeatLock() {
+
+			var rc = (from r in db.tblRootContents
+					  where r.Root_ContentID == this.Root_ContentID
+						&& r.SiteID == this.SiteID
+					  select r).FirstOrDefault();
+
+			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
+			rc.Heartbeat_UserId = null;
+			db.SubmitChanges();
+		}
+
+		public void RecordHeartbeatLock(Guid currentUserID) {
+
+			var rc = (from r in db.tblRootContents
+					  where r.Root_ContentID == this.Root_ContentID
+					  && r.SiteID == this.SiteID
+					  select r).FirstOrDefault();
+
+			rc.Heartbeat_UserId = currentUserID;
+			rc.EditHeartbeat = DateTime.Now;
+
+			db.SubmitChanges();
+		}
+
+		public bool IsPageLocked() {
+
+			bool bLock = false;
+			if (this.Heartbeat_UserId != null) {
+				if (this.Heartbeat_UserId != SiteData.CurrentUserGuid
+						&& this.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+					bLock = true;
+				}
+				if (this.Heartbeat_UserId == SiteData.CurrentUserGuid
+					|| this.Heartbeat_UserId == null) {
+					bLock = false;
+				}
+			}
+			return bLock;
+		}
 
 		public void SavePageEdit() {
 

@@ -220,16 +220,10 @@ namespace Carrotware.CMS.UI.Admin {
 		public string RecordHeartbeat(string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
-				LoadGuids();
-				var h = (from r in db.tblRootContents
-						 where r.Root_ContentID == CurrentPageGuid
-						 && r.SiteID == SiteData.CurrentSiteID
-						 select r).FirstOrDefault();
 
-				if (h != null) {
-					h.Heartbeat_UserId = SiteData.CurrentUserGuid;
-					h.EditHeartbeat = DateTime.Now;
-					db.SubmitChanges();
+				var bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+
+				if (bRet) {
 					return DateTime.Now.ToString();
 				} else {
 					return Convert.ToDateTime("12/31/1899").ToString();
@@ -237,6 +231,23 @@ namespace Carrotware.CMS.UI.Admin {
 
 			} catch (Exception ex) {
 				return DateTime.MinValue.ToString();
+			}
+		}
+
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string CancelEditing(string ThisPage) {
+			try {
+				CurrentPageGuid = new Guid(ThisPage);
+
+				pageHelper.ResetHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID);
+
+				GetSetUserEditState("", "", "", "");
+
+				return "OK";
+			} catch (Exception ex) {
+				return ex.ToString();
 			}
 		}
 

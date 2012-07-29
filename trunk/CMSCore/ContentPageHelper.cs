@@ -83,6 +83,50 @@ namespace Carrotware.CMS.Core {
 			return GetLatestContentPagedList(siteID, bActiveOnly, pageSize, pageNumber, "", "");
 		}
 
+		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID) {
+
+			var rc = (from r in db.tblRootContents
+					  where r.Root_ContentID == rootContentID
+						&& r.SiteID == siteID
+					  select r).FirstOrDefault();
+
+			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
+			rc.Heartbeat_UserId = null;
+			db.SubmitChanges();
+		}
+
+		public bool RecordHeartbeatLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
+
+			var rc = (from r in db.tblRootContents
+					 where r.Root_ContentID == rootContentID
+					 && r.SiteID == siteID
+					 select r).FirstOrDefault();
+
+			if (rc != null) {
+				rc.Heartbeat_UserId = currentUserID;
+				rc.EditHeartbeat = DateTime.Now;
+				db.SubmitChanges();
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool IsPageLocked(ContentPage cp) {
+
+			bool bLock = false;
+			if (cp.Heartbeat_UserId != null) {
+				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
+						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+					bLock = true;
+				}
+				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
+					|| cp.Heartbeat_UserId == null) {
+					bLock = false;
+				}
+			}
+			return bLock;
+		}
 
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			int startRec = pageNumber * pageSize;

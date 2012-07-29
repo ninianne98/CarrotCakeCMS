@@ -24,23 +24,6 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected SiteNavHelper navHelper = new SiteNavHelper();
 
-		public bool IsPageLocked(ContentPage cp) {
-
-			bool bLock = false;
-
-			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
-						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
-					bLock = true;
-				}
-				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
-					|| cp.Heartbeat_UserId == null) {
-					bLock = false;
-				}
-			}
-			return bLock;
-		}
-
 
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
