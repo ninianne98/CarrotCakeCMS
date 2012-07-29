@@ -87,10 +87,10 @@ namespace Carrotware.CMS.UI.Admin {
 					ddlVersions.DataBind();
 					ddlVersions.Items.Insert(0, new ListItem("-Page Versions-", "00000"));
 
-					var bLocked = IsPageLocked(pageContents);
+					var bLocked = pageHelper.IsPageLocked(pageContents);
 
 					pnlHB.Visible = !bLocked;
-					btnSaveButton.Visible = !bLocked;
+					pnlButtons.Visible = !bLocked;
 					divEditing.Visible = bLocked;
 					chkDraft.Visible = !bLocked;
 

@@ -15,12 +15,30 @@
 			return val;
 		}
 
-		function ajaxFailed(request) {
+		function cmsAjaxFailed(request) {
 			var s = "";
 			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
 			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
 			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-			alertModal(s);
+			cmsAlertModal(s);
+		}
+
+		function cmsAjaxGeneralCallback(data, status) {
+			if (data.d != "OK") {
+				cmsAlertModal(data.d);
+			}
+		}
+
+		function cmsAlertModal(request) {
+			$("#CMSmodalalert").dialog("destroy");
+
+			$("#CMSmodalalertmessage").html(request);
+
+			$("#CMSmodalalert").dialog({
+				height: 400,
+				width: 600,
+				modal: true
+			});
 		}
 
 		var menuOuter = 'menuitemsouter';
@@ -41,7 +59,7 @@
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: ajaxReturnCrumb,
-				error: ajaxFailed
+				error: cmsAjaxFailed
 			});
 
 		}
@@ -101,7 +119,7 @@
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: ajaxReturnNode,
-					error: ajaxFailed
+					error: cmsAjaxFailed
 				});
 			}
 		}
@@ -170,13 +188,14 @@
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,
-				error: ajaxFailed
+				error: cmsAjaxFailed
 			});
 		}
 
 		$(document).ready(function () {
 			CheckFileName();
 		});
+
 
 		function editFilenameCallback(data, status) {
 			if (data.d == "PASS") {
@@ -201,7 +220,7 @@
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: updateHeartbeat,
-				error: ajaxFailed
+				error: cmsAjaxFailed
 			});
 		}
 
@@ -211,7 +230,51 @@
 			hb.append(data.d);
 		}
 
-		setTimeout("EditHB();", 1500);
+		$(document).ready(function () {
+			setTimeout("EditHB();", 500);
+		});
+
+		function cancelEditing() {
+
+			$("#CMScancelconfirm").dialog("destroy");
+
+			$("#CMScancelconfirm").dialog({
+				open: function () {
+					$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+				},
+
+				resizable: false,
+				height: 250,
+				width: 400,
+				modal: true,
+				buttons: {
+					"No": function () {
+						$(this).dialog("close");
+					},
+					"Yes": function () {
+						cmsRecordCancellation();
+						window.setTimeout("location.href = './PageIndex.aspx';", 800);
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+
+		function cmsRecordCancellation() {
+
+			var webMthd = webSvc + "/CancelEditing";
+
+			$.ajax({
+				type: "POST",
+				url: webMthd,
+				data: "{'ThisPage': '" + thePageID + "'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: cmsAjaxGeneralCallback,
+				error: cmsAjaxFailed
+			});
+		}
+
 
 		/* </asp:placeholder> */
 
@@ -443,30 +506,32 @@
 	</div>
 	<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
 		&nbsp;</div>
-	<table width="800">
-		<tr>
-			<td valign="top">
-				<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" id="btnCancel" value="Cancel" onclick="location.href='./PageIndex.aspx';" />
-			</td>
-			<td valign="top">
-				<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
-			</td>
-			<td valign="top">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</td>
-			<td valign="top" align="right">
-				<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
-				</asp:DropDownList>
-			</td>
-			<td valign="top">
-				&nbsp;&nbsp;
-			</td>
-			<td valign="top" align="left">
-				<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
-			</td>
-		</tr>
-	</table>
+	<asp:Panel ID="pnlButtons" runat="server">
+		<table width="800">
+			<tr>
+				<td valign="top">
+					<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
+				</td>
+				<td valign="top">
+					<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
+				</td>
+				<td valign="top">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</td>
+				<td valign="top" align="right">
+					<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
+					</asp:DropDownList>
+				</td>
+				<td valign="top">
+					&nbsp;&nbsp;
+				</td>
+				<td valign="top" align="left">
+					<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
+				</td>
+			</tr>
+		</table>
+	</asp:Panel>
 	<script language="javascript" type="text/javascript">
 		function cmsPageVersionNav() {
 			var qs = $('#<%= ddlVersions.ClientID %>').val();
@@ -499,8 +564,16 @@
 		}
 	</script>
 	<br />
-	<div style="display: none;">
+	<div style="display: none">
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
+		<div id="CMSmodalalert" title="CMS Alert">
+			<p id="CMSmodalalertmessage">
+				&nbsp;</p>
+		</div>
+		<div id="CMScancelconfirm" title="Quit Editor?">
+			<p id="CMScancelconfirmmsg">
+				Are you sure you want to leave the editor? All changes will be lost!</p>
+		</div>
 		<div id="confirmRevert" title="Really Revert?">
 			<div id="confirmRevertMsg">
 				<p>

@@ -461,6 +461,22 @@
 		window.setTimeout("location.href = \'" + thisPageNav + "\'", 1000);
 	}
 
+	function cmsRecordCancellation() {
+
+		var webMthd = webSvc + "/CancelEditing";
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsAjaxGeneralCallback,
+			error: cmsAjaxFailed
+		});
+	}
+
+
 	function cmsCancelEdit() {
 		$("#CMScancelconfirm").dialog("destroy");
 
@@ -478,8 +494,9 @@
 					$(this).dialog("close");
 				},
 				"Yes": function () {
+					cmsRecordCancellation();
 					cmsMakeOKToLeave();
-					window.setTimeout("location.href = \'" + thisPageNav + "\'", 500);
+					window.setTimeout("location.href = \'" + thisPageNav + "\'", 800);
 					$(this).dialog("close");
 				}
 			}

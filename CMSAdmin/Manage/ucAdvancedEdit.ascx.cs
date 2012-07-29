@@ -25,22 +25,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		public Guid guidContentID = Guid.Empty;
 		public bool bLocked = false;
 
-		public bool IsPageLocked(ContentPage cp) {
-
-			bool bLock = false;
-			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
-						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
-					bLock = true;
-				}
-				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
-					|| cp.Heartbeat_UserId == null) {
-					bLock = false;
-				}
-			}
-			return bLock;
-		}
-
 		public UserEditState EditorPrefs = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -58,8 +42,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				EditorPrefs.EditorSelectedTabIdx = "0";
 			}
 
-			//if (!IsPostBack) {
-
 			var pageContents = new ContentPage();
 			if (guidContentID == Guid.Empty) {
 				var pageName = SiteData.CurrentScriptName;
@@ -75,7 +57,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				rpTools.Visible = false;
 			}
 
-			bLocked = IsPageLocked(pageContents);
+			bLocked = pageHelper.IsPageLocked(pageContents);
 
 			ddlTemplate.DataSource = cmsHelper.Templates;
 			ddlTemplate.DataBind();
@@ -115,7 +97,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 				}
 			}
-			//}
 
 		}
 
