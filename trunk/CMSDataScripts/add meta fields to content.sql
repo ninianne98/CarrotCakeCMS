@@ -8,3 +8,9 @@ if not exists( select * from information_schema.columns
 	ALTER TABLE tblContent ADD [MetaDescription] [varchar](2000) NULL
 	
 end
+
+GO
+
+update [dbo].[tblContent]  
+set [MetaKeyword] = ISNULL([MetaKeyword], ''),
+	[MetaDescription] = ISNULL([MetaDescription], '')
