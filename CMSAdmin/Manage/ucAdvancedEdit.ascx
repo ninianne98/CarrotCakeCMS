@@ -447,12 +447,37 @@
 	function cmsSavePageCallback(data, status) {
 		if (data.d == "OK") {
 			CMSBusyShort();
-			cmsAlertModal("Saved");
+			//cmsAlertModal("Saved");
 			cmsMakeOKToLeave();
-			window.setTimeout("location.href = \'" + thisPageNav + "\'", 5000);
+			cmsNotifySaved()
+			window.setTimeout("location.href = \'" + thisPageNav + "\'", 10000);
 		} else {
 			cmsAlertModal(data.d);
 		}
+	}
+
+	function cmsNotifySaved() {
+		$("#CMSsavedconfirm").dialog("destroy");
+
+		$("#CMSsavedconfirm").dialog({
+			open: function () {
+				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+			},
+
+			resizable: false,
+			height: 250,
+			width: 400,
+			modal: true,
+			buttons: {
+				"OK": function () {
+					cmsMakeOKToLeave();
+					window.setTimeout("location.href = \'" + thisPageNav + "\'", 500);
+					$(this).dialog("close");
+				}
+			}
+		});
+
+		cmsFixDialog('CMSsavedconfirmmsg');
 	}
 
 
@@ -546,6 +571,11 @@
 	function cmsShowEditPageInfo() {
 		//cmsAlertModal("cmsShowEditPageInfo");
 		cmsLaunchWindow('/Manage/PageEdit.aspx?pageid=' + thisPageID);
+	}
+
+	function cmsShowAddChildPage() {
+		//cmsAlertModal("cmsShowEditPageInfo");
+		cmsLaunchWindow('/Manage/PageAddChild.aspx?pageid=' + thisPageID);
 	}
 
 	function cmsSortChildren() {
@@ -906,28 +936,31 @@
 							<br style="clear: both;" />
 						</div>
 						<div id="cmsTabIdx-tabs-2">
-							<div class="cmsCenter5px">
-								<p class="cmsLeft5px">
+							<div class="cmsLeft5px">
+								<p>
 									<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 									</asp:DropDownList>
 									<br />
-									<input runat="server" id="btnTemplate" type="button" value="Apply Template" onclick="cmsUpdateTemplate();" />
+									<input runat="server" id="btnTemplate" type="button" value="Apply Template" onclick="cmsUpdateTemplate();" /><br />
+									<br />
 								</p>
-								<p class="cmsLeft5px">
+								<p>
 									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" onclick="cmsShowEditPageInfo();" />
 								</p>
-								<p class="cmsLeft5px">
+								<p>
+									<input runat="server" id="btnAddChild" type="button" value="Create Sub Page" onclick="cmsShowAddChildPage();" />
+								</p>
+								<p>
 									<input runat="server" id="btnSortChildPages" type="button" value="Sort Child/Sub Pages" onclick="cmsSortChildren();" />
 								</p>
-								<p class="cmsLeft5px">
+								<p>
 									<input runat="server" id="btnAllWidgets" type="button" value="View Full Widget List" onclick="cmsShowWidgetList();" />
 								</p>
-								<br />
-								<div class="cmsCenter5px">
-									<input type="button" runat="server" id="btnToolboxSave2" value="Save" onclick="cmsApplyChanges();" />
-									&nbsp;&nbsp;&nbsp;
-									<input type="button" id="btnToolboxCancel2" value="Cancel" onclick="cmsCancelEdit();" />
-								</div>
+							</div>
+							<div class="cmsCenter5px">
+								<input type="button" runat="server" id="btnToolboxSave2" value="Save" onclick="cmsApplyChanges();" />
+								&nbsp;&nbsp;&nbsp;
+								<input type="button" id="btnToolboxCancel2" value="Cancel" onclick="cmsCancelEdit();" />
 							</div>
 							<br style="clear: both;" />
 						</div>
@@ -952,6 +985,10 @@
 	<div id="CMSremoveconfirm" title="Remove Widget?">
 		<p id="CMSremoveconfirmmsg">
 			Are you sure you want to remove this widget?</p>
+	</div>
+	<div id="CMSsavedconfirm" title="Page Saved!">
+		<p id="CMSsavedconfirmmsg">
+			The page has been saved. Click OK to return to browse mode. Redirecting in 10 seconds...</p>
 	</div>
 	<div id="CMScancelconfirm" title="Quit Editor?">
 		<p id="CMScancelconfirmmsg">

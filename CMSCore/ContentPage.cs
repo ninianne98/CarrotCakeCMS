@@ -184,8 +184,14 @@ namespace Carrotware.CMS.Core {
 			c.EditDate = DateTime.Now;
 			c.TemplateFile = this.TemplateFile;
 
-			c.MetaKeyword = this.MetaKeyword;
-			c.MetaDescription = this.MetaDescription;
+			c.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+			c.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+
+			this.Root_ContentID = rc.Root_ContentID;
+			this.ContentID = c.ContentID;
+			this.FileName = rc.FileName;
+			this.EditDate = c.EditDate;
+			this.CreateDate = rc.CreateDate;
 
 			db.tblContents.InsertOnSubmit(c);
 			db.SubmitChanges();
@@ -241,8 +247,14 @@ namespace Carrotware.CMS.Core {
 			c.EditDate = DateTime.Now;
 			c.TemplateFile = this.TemplateFile;
 
-			c.MetaKeyword = this.MetaKeyword;
-			c.MetaDescription = this.MetaDescription;
+			c.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+			c.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+
+			this.Root_ContentID = rc.Root_ContentID;
+			this.ContentID = c.ContentID;
+			this.FileName = rc.FileName;
+			this.EditDate = c.EditDate;
+			this.CreateDate = rc.CreateDate;
 
 			db.tblContents.InsertOnSubmit(c);
 			db.SubmitChanges();

@@ -405,32 +405,39 @@ namespace Carrotware.CMS.Core {
 		private string WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + SiteData.CurrentScriptName.ToString().ToLower() + "_cmsAdminWidget";
 
 		public void OverrideKey(Guid guidContentID) {
-			ContentPageHelper pageHelper = new ContentPageHelper();
-			var pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
-			OverrideKey(pageContents.FileName);
+			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+				ContentPage pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
+				if (pageContents != null) {
+					ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + pageContents.FileName.ToLower() + "_cmsAdminContent";
+					WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + pageContents.FileName.ToLower() + "_cmsAdminWidget";
+				}
+			}
 		}
 
 		public void OverrideKey(string sPageName) {
 			ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + sPageName.ToLower() + "_cmsAdminContent";
 			WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + sPageName.ToLower() + "_cmsAdminWidget";
+
+			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, sPageName.ToLower());
+			}
 		}
 
 		protected ContentPage filePage = null;
 
 		protected void LoadGuids() {
 
-			ContentPageHelper pageHelper = new ContentPageHelper();
-			if (SiteData.CurrentScriptName.ToString().ToLower().StartsWith("/manage/")) {
-				Guid guidPage = Guid.Empty;
-				if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
-					guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
+			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+				if (SiteData.CurrentScriptName.ToString().ToLower().StartsWith("/manage/")) {
+					Guid guidPage = Guid.Empty;
+					if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
+						guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
+					}
+					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidPage);
+				} else {
+					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
 				}
-				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidPage);
-			} else {
-				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
 			}
-
-
 
 			var lst = (from c in db.tblSerialCaches
 					   where c.ItemID == filePage.Root_ContentID

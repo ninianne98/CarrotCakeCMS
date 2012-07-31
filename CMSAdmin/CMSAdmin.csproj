@@ -95,6 +95,13 @@
     <Compile Include="Manage\ContentEdit.aspx.designer.cs">
       <DependentUpon>ContentEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\PageAddChild.aspx.cs">
+      <DependentUpon>PageAddChild.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\PageAddChild.aspx.designer.cs">
+      <DependentUpon>PageAddChild.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\PageChildSort.aspx.cs">
       <DependentUpon>PageChildSort.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -314,6 +321,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="Manage\PageAddChild.aspx" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_b7d7c4_1x400.png" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_dff6e8_1x400.png" />

@@ -60,7 +60,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.PageHead = txtHead.Text;
 
 				pageContents.MetaDescription = txtDescription.Text;
-				pageContents.MetaKeyword = txtKey.Text.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+				pageContents.MetaKeyword = txtKey.Text;
 
 				pageContents.EditDate = DateTime.Now;
 
