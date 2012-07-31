@@ -165,6 +165,10 @@
 	overflow-x: hidden !important;
 	overflow-y: hidden !important;
 }
+.cmsWidgetBarLink img {
+	float: right !important;
+}
+
 .cmsAjaxModalSpinner {
 	margin: 0px !important;
 	padding: 0px !important;

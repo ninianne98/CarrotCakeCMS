@@ -44,6 +44,10 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public void IncludeAllFiletypes() {
+			_FileTypes = String.Empty;
+		}
+
 
 		public FileData GetFolderInfo(string sPath, string sQuery, string myFile) {
 
@@ -278,6 +282,7 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".arj", "application/octet-stream");
 					_dict.Add(".asf", "video/x-ms-asf");
 					_dict.Add(".asm", "text/x-asm");
+					_dict.Add(".ascx", "text/asp");
 					_dict.Add(".asp", "text/asp");
 					_dict.Add(".aspx", "text/asp");
 					_dict.Add(".asx", "video/x-ms-asf");

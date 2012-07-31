@@ -98,6 +98,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			List<string> lstFileExtensions = new List<string>();
 			lstFileExtensions.Add(".css");
 			lstFileExtensions.Add(".js");
+			lstFileExtensions.Add(".ascx");
 
 			if (Directory.Exists(sDir)) {
 
@@ -135,6 +136,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					//    fldrWorking.Add(incFolder);
 					//}
 				} catch (Exception ex) { }
+
+				helpFile.IncludeAllFiletypes();
 
 				foreach (FileData f in fldrWorking) {
 					List<FileData> fls = helpFile.GetFiles(SetSitePath("/" + f.FolderPath), f.FolderPath);
