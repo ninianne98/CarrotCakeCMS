@@ -48,8 +48,39 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+
+		private static string SiteKeyPrefix = "cms_SiteData_";
+		public static SiteData CurrentSite {
+			get {
+				string ContentKey = SiteKeyPrefix + CurrentSiteID.ToString();
+				SiteData currentSite = null;
+				try { currentSite = (SiteData)HttpContext.Current.Cache[ContentKey]; } catch { }
+				if (currentSite == null) {
+					using (SiteData sd = new SiteData()) {
+						currentSite = sd.Get(CurrentSiteID);
+					}
+					if (currentSite != null) {
+						HttpContext.Current.Cache.Insert(ContentKey, currentSite, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					} else {
+						HttpContext.Current.Cache.Remove(ContentKey);
+					}
+				}
+				return currentSite;
+			}
+			set {
+				string ContentKey = SiteKeyPrefix + CurrentSiteID.ToString();
+				if (value == null) {
+					HttpContext.Current.Cache.Remove(ContentKey);
+				} else {
+					HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+				}
+			}
+		}
+
+
 		public SiteData GetCurrentSite() {
-			return Get(CurrentSiteID);
+			//return Get(CurrentSiteID);
+			return CurrentSite;
 		}
 
 		public void Save() {
@@ -65,6 +96,11 @@ namespace Carrotware.CMS.Core {
 					this.SiteID = Guid.NewGuid();
 				}
 				bNew = true;
+			}
+
+			// if updating the current site then blank out its cache
+			if (CurrentSiteID == this.SiteID) {
+				CurrentSite = null;
 			}
 
 			s.SiteID = this.SiteID;
