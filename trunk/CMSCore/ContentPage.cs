@@ -129,6 +129,12 @@ namespace Carrotware.CMS.Core {
 			return bLock;
 		}
 
+		private void FixMeta() {
+			this.MetaKeyword = string.IsNullOrEmpty(this.MetaKeyword) ? String.Empty : this.MetaKeyword;
+			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? String.Empty : this.MetaDescription;
+
+		}
+
 		public void SavePageEdit() {
 
 			var rc = (from r in db.tblRootContents
@@ -183,7 +189,8 @@ namespace Carrotware.CMS.Core {
 			c.EditUserId = this.EditUserId;
 			c.EditDate = DateTime.Now;
 			c.TemplateFile = this.TemplateFile;
-
+			
+			FixMeta();
 			c.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 			c.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 
@@ -247,6 +254,7 @@ namespace Carrotware.CMS.Core {
 			c.EditDate = DateTime.Now;
 			c.TemplateFile = this.TemplateFile;
 
+			FixMeta();
 			c.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 			c.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 
