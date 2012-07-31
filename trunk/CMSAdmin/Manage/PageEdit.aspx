@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Edit Page Info" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true"
-	CodeBehind="PageEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.PageEdit" %>
+﻿<%@ Page Title="Edit Page Info" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageEdit.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Manage.PageEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -35,21 +35,9 @@
 				title bar:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45"
-					MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				page head:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45"
-					MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -57,10 +45,19 @@
 				navigation:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45"
-					MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				page head:
+			</td>
+			<td valign="top">
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
+				<%--<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server"
+					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>--%>
 			</td>
 		</tr>
 		<tr>
@@ -68,8 +65,8 @@
 				meta keywords:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60"
-					Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
+					Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
@@ -77,8 +74,8 @@
 				meta description:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
-					TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+					runat="server"></asp:TextBox>
 			</td>
 		</tr>
 	</table>

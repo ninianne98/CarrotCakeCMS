@@ -169,7 +169,7 @@ namespace Carrotware.CMS.UI.Admin {
 			pageContents.FileName = txtFileName.Text;
 
 			pageContents.MetaDescription = txtDescription.Text;
-			pageContents.MetaKeyword = txtKey.Text.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+			pageContents.MetaKeyword = txtKey.Text;
 
 			pageContents.EditDate = DateTime.Now;
 			pageContents.NavOrder = int.Parse(txtSort.Text);

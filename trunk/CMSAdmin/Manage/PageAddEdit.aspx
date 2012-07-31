@@ -35,8 +35,8 @@
 			$("#CMSmodalalertmessage").html(request);
 
 			$("#CMSmodalalert").dialog({
-				height: 400,
-				width: 600,
+				height: 450,
+				width: 550,
 				modal: true
 			});
 		}
@@ -244,8 +244,8 @@
 				},
 
 				resizable: false,
-				height: 250,
-				width: 400,
+				height: 350,
+				width: 450,
 				modal: true,
 				buttons: {
 					"No": function () {
@@ -413,23 +413,13 @@
 				filename:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
-					MaxLength="200" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
+					Columns="45" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 					Display="Dynamic"></asp:RequiredFieldValidator>
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
 					Display="Dynamic"></asp:RequiredFieldValidator>
 				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				page head:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
 			</td>
 		</tr>
 		<tr>
@@ -444,11 +434,21 @@
 		</tr>
 		<tr>
 			<td valign="top" class="tablecaption">
+				page head:
+			</td>
+			<td valign="top">
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
+				<%--<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
+					Display="Dynamic"></asp:RequiredFieldValidator>--%>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
 				meta keywords:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
-					TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
+					Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
@@ -456,7 +456,8 @@
 				meta description:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+					runat="server"></asp:TextBox>
 			</td>
 		</tr>
 		<tr>
@@ -480,8 +481,8 @@
 					</div>
 					<div style="float: left; padding: 0px;">
 						<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" style="position: relative; width: 100px" class="menuitems ui-widget-header ui-corner-all">
-							Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power"></span>
-							</a>
+							Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power">
+							</span></a>
 						</div>
 						<div id="menuitemsouter">
 							<div id="menuitemsinner" class="scroll">
@@ -589,8 +590,8 @@
 					},
 
 					resizable: false,
-					height: 250,
-					width: 400,
+					height: 350,
+					width: 450,
 					modal: true,
 					buttons: {
 						"No": function () {
