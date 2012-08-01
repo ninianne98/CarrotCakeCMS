@@ -33,7 +33,7 @@
 	margin-bottom: 5px !important;
 }
 
-#cmsMainToolbox input:focus, #cmsMainToolbox select:focus, #cmsMainToolbox textarea:focus {
+#cmsMainToolbox input:focus, #cmsMainToolbox select:focus, #cmsMainToolbox textarea:focus, #cmsMainToolbox input, #cmsMainToolbox select, #cmsMainToolbox textarea {
 	color: #000000;
 	background: #FFFFFF;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
