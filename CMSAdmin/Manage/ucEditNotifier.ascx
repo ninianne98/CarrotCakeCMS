@@ -84,14 +84,17 @@
 		margin: 5px !important;
 		border: 2px dashed #676F6A !important;
 	}
-	.cmsNavFooterBox select {
+
+	.cmsNavFooterBox input:focus, .cmsNavFooterBox select:focus, .cmsNavFooterBox textarea:focus, .cmsNavFooterBox input, .cmsNavFooterBox select, .cmsNavFooterBox textarea {
 		line-height: normal;
-		margin: 0px;
-		padding: 1px;
-		text-align: left;
-		font-size: small;
+		border: 1px solid #676F6A !important;
 		background: #FFFFFF !important;
 		color: #000000 !important;
+		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+		float: none !important;
+		margin: 2px !important;
+		padding: 1px !important;
+		width: auto !important;
 	}
 </style>
 <div class="cmsNavFooterBox">
@@ -111,7 +114,6 @@
 		</asp:DropDownList>
 	</p>
 </div>
-
 <script language="javascript" type="text/javascript">
 	function cmsNavPage(y) {
 		var url = y.options[y.selectedIndex].value;

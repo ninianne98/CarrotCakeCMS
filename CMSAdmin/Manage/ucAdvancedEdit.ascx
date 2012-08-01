@@ -19,7 +19,7 @@
 
 	$(document).ready(function() {
 		<% if (!bLocked) { %>
-		setTimeout('cmsEditHB();', 1000);
+		setTimeout('cmsEditHB();', 500);
 		<%} else { %>
 		cmsAlertModal('<%=litUser.Text %>');
 		<%} %>
@@ -107,7 +107,7 @@
 		cmsResetToolbarScroll();
 	});
 
-	setTimeout("cmsResetToolbarScroll()", 250);
+	setTimeout("cmsResetToolbarScroll()", 500);
 
 	function cmsResetToolbarScroll() {
 		setTimeout("cmsShiftPosition('<%=EditorPrefs.EditorMargin %>')", 100);
