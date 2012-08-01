@@ -75,6 +75,9 @@
       <DependentUpon>CAPTCHA.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="captcha\CAPTCHA.aspx.designer.cs">
+      <DependentUpon>CAPTCHA.aspx.cs</DependentUpon>
+    </Compile>
     <Compile Include="captcha\CaptchaImage.cs" />
     <Compile Include="CarrotGridView.cs" />
     <Compile Include="CarrotHttpHandler.cs" />
@@ -90,8 +93,6 @@
     <EmbeddedResource Include="captcha\CAPTCHA.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_40_111111_1x400.png" />
     <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_55_1c1c1c_1x400.png" />
     <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_65_dddddd_1x400.png" />

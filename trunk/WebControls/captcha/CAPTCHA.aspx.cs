@@ -8,8 +8,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Carrotware.Web.UI.Controls {
-	public partial class CAPTCHA : System.Web.UI.Page {
+namespace Carrotware.Web.UI.Controls.test {
+	public partial class CAPTCHA2 : System.Web.UI.Page {
 		protected override void OnInit(EventArgs e) {
 
 			int imageHeight = 50;
