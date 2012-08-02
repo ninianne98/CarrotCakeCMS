@@ -95,6 +95,13 @@
     <Compile Include="Manage\ContentEdit.aspx.designer.cs">
       <DependentUpon>ContentEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\PageTemplateUpdate.aspx.cs">
+      <DependentUpon>PageTemplateUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\PageTemplateUpdate.aspx.designer.cs">
+      <DependentUpon>PageTemplateUpdate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\PageAddChild.aspx.cs">
       <DependentUpon>PageAddChild.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -136,6 +143,13 @@
     </Compile>
     <Compile Include="Manage\ucEditNotifier.ascx.designer.cs">
       <DependentUpon>ucEditNotifier.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\ucPageMenuItems.ascx.cs">
+      <DependentUpon>ucPageMenuItems.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ucPageMenuItems.ascx.designer.cs">
+      <DependentUpon>ucPageMenuItems.ascx</DependentUpon>
     </Compile>
     <Compile Include="Manage\ucTextContent.ascx.cs">
       <DependentUpon>ucTextContent.ascx</DependentUpon>
@@ -321,6 +335,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="Manage\PageTemplateUpdate.aspx" />
     <Content Include="Manage\PageAddChild.aspx" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_glass_100_b7d7c4_1x400.png" />
@@ -585,6 +600,7 @@
     <Content Include="Manage\tiny_mce\utils\form_utils.js" />
     <Content Include="Manage\tiny_mce\utils\mctabs.js" />
     <Content Include="Manage\tiny_mce\utils\validate.js" />
+    <Content Include="Manage\ucPageMenuItems.ascx" />
     <Content Include="Manage\WidgetHistory.aspx" />
     <Content Include="Manage\WidgetList.aspx" />
     <Content Include="SiteSkins.config" />

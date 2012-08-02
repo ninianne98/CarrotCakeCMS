@@ -35,8 +35,12 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		}
 
 		protected void DoDataBind() {
+			List<SiteNav> lst = null;
 
-			var lst = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SiteData.IsAuthEditor);
+			using (SiteNavHelper navHelper = new SiteNavHelper()) {
+				lst = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SiteData.IsAuthEditor);
+			}
+
 			rpPages.DataSource = lst;
 			rpPages.DataBind();
 

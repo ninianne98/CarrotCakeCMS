@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Reflection;
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -116,13 +117,20 @@ namespace Carrotware.Web.UI.Controls {
 			List<object> d = lst.Cast<object>().ToList();
 			IEnumerable<object> enuQueryable = d.AsQueryable();
 
-			if (SortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
-				query = (from enu in enuQueryable
-						 orderby GetPropertyValue(enu, SortField) descending
-						 select enu).ToList();
+			SortField = GetProperties(d[0]).Where(x => x.ToLower() == SortField.ToLower()).FirstOrDefault();
+
+			if (!string.IsNullOrEmpty(SortField)) {
+				if (SortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
+					query = (from enu in enuQueryable
+							 orderby GetPropertyValue(enu, SortField) descending
+							 select enu).ToList();
+				} else {
+					query = (from enu in enuQueryable
+							 orderby GetPropertyValue(enu, SortField) ascending
+							 select enu).ToList();
+				}
 			} else {
 				query = (from enu in enuQueryable
-						 orderby GetPropertyValue(enu, SortField) ascending
 						 select enu).ToList();
 			}
 
@@ -151,17 +159,19 @@ namespace Carrotware.Web.UI.Controls {
 
 			Type theType = DataSource.GetType();
 			if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
-				data = (IList) DataSource;
+				data = (IList)DataSource;
 			}
 
 			base.PerformDataBinding(data);
-			
+
+			if (string.IsNullOrEmpty(SortField) || string.IsNullOrEmpty(SortDir)) {
+				SortParm = string.Empty;
+			}
+
 			if (this.Rows.Count > 0) {
 				WalkGridSetClick(this.HeaderRow);
 			}
 		}
-
-
 
 		private string SortParm {
 			get {
@@ -227,12 +237,30 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		private object GetPropertyValue(object obj, string property) {
-			System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
 			return propertyInfo.GetValue(obj, null);
+		}
+
+		private bool TestIfPropExists(object obj, string property) {
+			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+			return propertyInfo == null ? false : true;
+		}
+
+		public List<string> GetProperties(object obj) {
+			PropertyInfo[] info = obj.GetType().GetProperties();
+
+			List<string> props = (from i in info.AsEnumerable()
+								  select i.Name).ToList();
+			return props;
 		}
 
 
 		private void WalkGridForHeadings(Control X) {
+
+			if (string.IsNullOrEmpty(SortField) || string.IsNullOrEmpty(SortDir)) {
+				SortParm = string.Empty;
+			}
+
 			WalkGridForHeadings(X, SortField, SortDir);
 		}
 
