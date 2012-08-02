@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Widget History" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true"
-	CodeBehind="WidgetHistory.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.WidgetHistory" %>
+﻿<%@ Page Title="Widget History" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetHistory.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Manage.WidgetHistory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<link href="/Manage/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
@@ -57,7 +57,7 @@
 	</p>
 	<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />
 	<div id="SortableGrid">
-		<asp:GridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+		<carrot:CarrotGridView CssClass="datatable" DefaultSort="EditDate DESC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<Columns>
 				<asp:TemplateField>
@@ -82,7 +82,7 @@
 					</ItemTemplate>
 				</asp:TemplateField>
 			</Columns>
-		</asp:GridView>
+		</carrot:CarrotGridView>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">

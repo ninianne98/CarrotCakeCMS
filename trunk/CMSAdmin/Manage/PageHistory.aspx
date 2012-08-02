@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.PageHistory" %>
+﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.PageHistory" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -60,8 +61,8 @@
 	<asp:Panel runat="server" ID="pnlHistory">
 		<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />
 		<div id="SortableGrid">
-			<asp:GridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
-				RowStyle-CssClass="rowregular">
+			<carrot:CarrotGridView CssClass="datatable" DefaultSort="EditDate DESC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular" OnDataBound="gvPages_DataBound">
 				<Columns>
 					<asp:TemplateField>
 						<ItemTemplate>
@@ -106,10 +107,9 @@
 						</ItemTemplate>
 					</asp:TemplateField>
 				</Columns>
-			</asp:GridView>
+			</carrot:CarrotGridView>
 		</div>
 		<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/Manage/images/cancel.png" />
-		<asp:HiddenField runat="server" ID="hdnSort" Visible="false" Value="EditDate DESC" />
 	</asp:Panel>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">

@@ -1,5 +1,5 @@
-﻿<%@ Page Title="User" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true"
-	CodeBehind="User.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.User" %>
+﻿<%@ Page Title="User" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="User.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.User" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -28,8 +28,8 @@
 			</td>
 			<td>
 				<asp:TextBox Width="200px" ID="Email" runat="server" MaxLength="100" />
-				<asp:RequiredFieldValidator ID="EmailRequired" runat="server" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required."
-					ValidationGroup="createWizard" Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+				<asp:RequiredFieldValidator ID="EmailRequired" runat="server" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required." ValidationGroup="createWizard"
+					Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
 			</td>
 		</tr>
 		<tr>
@@ -46,7 +46,7 @@
 		<tr>
 			<td valign="top">
 				<div id="SortableGrid" style="width: 300px;">
-					<asp:GridView CssClass="datatable" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+					<carrot:CarrotGridView CssClass="datatable" DefaultSort="RoleName ASC" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 						<Columns>
 							<asp:TemplateField>
@@ -57,7 +57,7 @@
 							</asp:TemplateField>
 							<asp:BoundField DataField="RoleName" HeaderText="Role Name" />
 						</Columns>
-					</asp:GridView>
+					</carrot:CarrotGridView>
 				</div>
 			</td>
 			<td valign="top">
@@ -65,7 +65,7 @@
 			</td>
 			<td valign="top">
 				<div id="SortableGrid" style="width: 400px;">
-					<asp:GridView CssClass="datatable" ID="gvSites" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+					<carrot:CarrotGridView CssClass="datatable" DefaultSort="SiteName ASC" ID="gvSites" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 						<Columns>
 							<asp:TemplateField>
@@ -76,7 +76,7 @@
 							</asp:TemplateField>
 							<asp:BoundField DataField="SiteName" HeaderText="Site Name" />
 						</Columns>
-					</asp:GridView>
+					</carrot:CarrotGridView>
 				</div>
 			</td>
 		</tr>

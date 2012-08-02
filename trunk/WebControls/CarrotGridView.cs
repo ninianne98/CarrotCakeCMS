@@ -190,11 +190,13 @@ namespace Carrotware.Web.UI.Controls {
 				}
 				string sSortFld = string.Empty;
 				string sSortDir = string.Empty;
+				
+				if (!string.IsNullOrEmpty(sSort)) {
+					int pos = sSort.LastIndexOf(" ");
 
-				int pos = sSort.LastIndexOf(" ");
-
-				sSortFld = sSort.Substring(0, pos).Trim();
-				sSortDir = sSort.Substring(pos).Trim();
+					sSortFld = sSort.Substring(0, pos).Trim();
+					sSortDir = sSort.Substring(pos).Trim();
+				}
 
 				SortField = sSortFld.Trim();
 				SortDir = sSortDir.Trim().ToUpper();
