@@ -10,7 +10,7 @@
 namespace Carrotware.CMS.UI.Admin {
     
     
-    public partial class PageIndex {
+    public partial class PageTemplateUpdate {
         
         /// <summary>
         /// ucPageMenuItems1 control.
@@ -22,13 +22,31 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::Carrotware.CMS.UI.Admin.Manage.ucPageMenuItems ucPageMenuItems1;
         
         /// <summary>
-        /// gvPages control.
+        /// ddlTemplate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTemplate;
+        
+        /// <summary>
+        /// gvApply control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvApply;
+        
+        /// <summary>
+        /// btnSaveMapping control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveMapping;
         
         /// <summary>
         /// hdnInactive control.
@@ -38,15 +56,6 @@ namespace Carrotware.CMS.UI.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnInactive;
-        
-        /// <summary>
-        /// hdnActive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnActive;
         
         /// <summary>
         /// Master property.

@@ -22,9 +22,6 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		protected SiteNavHelper navHelper = new SiteNavHelper();
-
-
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
 

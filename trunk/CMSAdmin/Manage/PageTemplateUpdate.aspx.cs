@@ -17,7 +17,7 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Admin {
-	public partial class PageIndex : AdminBasePage {
+	public partial class PageTemplateUpdate : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
@@ -27,33 +27,51 @@ namespace Carrotware.CMS.UI.Admin {
 				Response.Redirect("./Default.aspx");
 			}
 
-			LoadGrid();
+			if (!IsPostBack) {
 
+				ddlTemplate.DataSource = cmsHelper.Templates;
+				ddlTemplate.DataBind();
+
+				SetTemplateGrid();
+			}
 		}
 
-		protected void LoadGrid() {
+		protected void SetTemplateGrid() {
+			gvApply.DataSource = pageHelper.GetLatestContentList(SiteID);
+			gvApply.DataBind();
 
-			var lstCont = pageHelper.GetLatestContentList(SiteID);
-
-			gvPages.DataSource = lstCont;
-			gvPages.DataBind();
-
-		}
-
-		protected void gvPages_DataBound(object sender, EventArgs e) {
-			foreach (GridViewRow dgItem in gvPages.Rows) {
+			foreach (GridViewRow dgItem in gvApply.Rows) {
 				Image imgActive = (Image)dgItem.FindControl("imgActive");
 				HiddenField hdnIsActive = (HiddenField)dgItem.FindControl("hdnIsActive");
 
 				if (hdnIsActive.Value.ToLower() != "true") {
 					imgActive.ImageUrl = hdnInactive.Value;
 					imgActive.AlternateText = "Inactive";
-				} else {
-					imgActive.ImageUrl = hdnActive.Value;
-					imgActive.AlternateText = "Active";
 				}
 				imgActive.ToolTip = imgActive.AlternateText;
 			}
+
+		}
+
+
+
+		protected void btnSaveMapping_Click(object sender, EventArgs e) {
+			List<Guid> lstUpd = new List<Guid>();
+
+			foreach (GridViewRow row in gvApply.Rows) {
+				var chkReMap = (CheckBox)row.FindControl("chkReMap");
+
+				if (chkReMap.Checked) {
+					var hdnContentID = (HiddenField)row.FindControl("hdnContentID");
+					Guid gRoot = new Guid(hdnContentID.Value);
+
+					lstUpd.Add(gRoot);
+				}				
+			}
+
+			pageHelper.BulkUpdateTemplate(SiteData.CurrentSiteID, lstUpd, ddlTemplate.SelectedValue);
+
+			SetTemplateGrid();
 		}
 
 	}
