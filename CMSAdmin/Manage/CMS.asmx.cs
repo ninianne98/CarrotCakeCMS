@@ -213,20 +213,25 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 
-
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string RecordHeartbeat(string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
 
-				var bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+				var bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
 
-				if (bRet) {
-					return DateTime.Now.ToString();
+				//only allow admin/editors to record a lock
+				if ((SiteData.IsAdmin || SiteData.IsEditor) && !bLock) {
+					var bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+
+					if (bRet) {
+						return DateTime.Now.ToString();
+					} else {
+						return Convert.ToDateTime("12/31/1899").ToString();
+					}
 				} else {
-					return Convert.ToDateTime("12/31/1899").ToString();
+					return DateTime.MinValue.ToString();
 				}
 
 			} catch (Exception ex) {

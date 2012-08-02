@@ -98,9 +98,9 @@ namespace Carrotware.CMS.Core {
 		public bool RecordHeartbeatLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
 			var rc = (from r in db.tblRootContents
-					 where r.Root_ContentID == rootContentID
-					 && r.SiteID == siteID
-					 select r).FirstOrDefault();
+					  where r.Root_ContentID == rootContentID
+					  && r.SiteID == siteID
+					  select r).FirstOrDefault();
 
 			if (rc != null) {
 				rc.Heartbeat_UserId = currentUserID;
@@ -110,6 +110,69 @@ namespace Carrotware.CMS.Core {
 			}
 
 			return false;
+		}
+
+		public bool IsPageLocked(Guid rootContentID) {
+
+			var cp = (from r in db.tblRootContents
+					  where r.Root_ContentID == rootContentID
+					  && r.SiteID == SiteData.CurrentSiteID
+					  select r).FirstOrDefault();
+
+			bool bLock = false;
+			if (cp.Heartbeat_UserId != null) {
+				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
+						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+					bLock = true;
+				}
+				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
+					|| cp.Heartbeat_UserId == null) {
+					bLock = false;
+				}
+			}
+			return bLock;
+		}
+
+		public bool IsPageLocked(Guid rootContentID, Guid siteID, Guid currentUserID) {
+
+			var cp = (from r in db.tblRootContents
+					  where r.Root_ContentID == rootContentID
+					  && r.SiteID == siteID
+					  select r).FirstOrDefault();
+
+			bool bLock = false;
+			if (cp.Heartbeat_UserId != null) {
+				if (cp.Heartbeat_UserId != currentUserID
+						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+					bLock = true;
+				}
+				if (cp.Heartbeat_UserId == currentUserID
+					|| cp.Heartbeat_UserId == null) {
+					bLock = false;
+				}
+			}
+			return bLock;
+		}
+
+		public bool IsPageLocked(Guid rootContentID, Guid siteID) {
+
+			var cp = (from r in db.tblRootContents
+					  where r.Root_ContentID == rootContentID
+					  && r.SiteID == siteID
+					  select r).FirstOrDefault();
+
+			bool bLock = false;
+			if (cp.Heartbeat_UserId != null) {
+				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
+						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+					bLock = true;
+				}
+				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
+					|| cp.Heartbeat_UserId == null) {
+					bLock = false;
+				}
+			}
+			return bLock;
 		}
 
 		public bool IsPageLocked(ContentPage cp) {
@@ -127,6 +190,7 @@ namespace Carrotware.CMS.Core {
 			}
 			return bLock;
 		}
+
 
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			int startRec = pageNumber * pageSize;
