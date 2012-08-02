@@ -37,9 +37,8 @@ a:hover {
 /* Header */
 
 #header {
-	min-width: 780px;
+	width: 950px;
 	height: 122px;
-	background: url(/manage/images/img02.jpg);
 	margin-left: 50px;
 	margin-right: 50px;
 }
@@ -64,7 +63,7 @@ a:hover {
 /* Menu */
 
 #menu {
-	min-width: 780px;
+	width: 1000px;
 	height: 50px;
 	margin-left: 50px;
 	margin-right: 50px;
