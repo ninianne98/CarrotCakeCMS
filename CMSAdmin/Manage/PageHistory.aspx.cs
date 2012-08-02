@@ -28,7 +28,7 @@ namespace Carrotware.CMS.UI.Admin {
 			if (guidRootID != Guid.Empty) {
 				p = pageHelper.GetLatestContent(SiteID, guidRootID);
 				if (!IsPostBack) {
-					LoadGrid(hdnSort.Value);
+					LoadGrid();
 				}
 				pnlDetail.Visible = false;
 				pnlHistory.Visible = true;
@@ -65,16 +65,18 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 
-		protected void LoadGrid(string sSortKey) {
+		protected void LoadGrid() {
 
+			var lstCont = pageHelper.GetVersionHistory(SiteID, guidRootID);
 
-			var lstCont = (from c in pageHelper.GetVersionHistory(SiteID, guidRootID)
-						   select c).ToList();
+			gvPages.DataSource = lstCont;
+			gvPages.DataBind();
 
-			var current = lstCont.Where(x => x.IsLatestVersion = true).FirstOrDefault();
-			//var first = lstCont.OrderBy(x => x.EditDate).FirstOrDefault();
+		}
 
-			LoadGridLive<ContentPage>(gvPages, hdnSort, lstCont, sSortKey);
+		protected void gvPages_DataBound(object sender, EventArgs e) {
+
+			var current = pageHelper.GetLatestContent(SiteID, guidRootID);
 
 			foreach (GridViewRow dgItem in gvPages.Rows) {
 				Image imgActive = (Image)dgItem.FindControl("imgActive");
@@ -93,16 +95,8 @@ namespace Carrotware.CMS.UI.Admin {
 					if (chkContent.Attributes["value"].ToString() == current.ContentID.ToString()) {
 						chkContent.Visible = false;
 					}
-					//if (chkContent.Attributes["value"].ToString() == first.ContentID.ToString()) {
-					//    chkContent.Visible = false;
-					//}
 				}
-
-
 			}
-
-			gs.WalkGridForHeadings(gvPages);
-
 		}
 
 		protected void btnRemove_Click(object sender, EventArgs e) {
@@ -118,7 +112,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			pageHelper.RemoveVersions(SiteID, lstDel);
 
-			LoadGrid(hdnSort.Value);
+			LoadGrid();
 		}
 
 

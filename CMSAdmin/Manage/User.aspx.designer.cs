@@ -91,7 +91,7 @@ namespace Carrotware.CMS.UI.Admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvRoles;
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvRoles;
         
         /// <summary>
         /// gvSites control.
@@ -100,7 +100,7 @@ namespace Carrotware.CMS.UI.Admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvSites;
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvSites;
         
         /// <summary>
         /// btnApply control.

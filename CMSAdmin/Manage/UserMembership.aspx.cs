@@ -15,36 +15,21 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserAdmin);
 
+			LoadGrid();
 
-			if (!IsPostBack || IsPageRefreshJavaScript) {
-				LoadGrid(hdnSort.Value);
-			}
 		}
 
 
-		protected void LoadGrid(string sSortKey) {
-			List<MembershipUser> usrs = null;
+		protected void LoadGrid() {
+			List<MembershipUser> usrs = GetUserList();
 
-			if (!IsPostBack) {
-				usrs = GetUserList();
-			}
+			dvMembers.DataSource = usrs;
+			dvMembers.DataBind();
+		}
 
-			LoadGrid<MembershipUser>(dvMembers, hdnSort, usrs, sSortKey);
-
+		protected void dvMembers_DataBound(object sender, EventArgs e) {
 			FormatGrid();
 		}
-
-		protected void lblSort_Command(object sender, EventArgs e) {
-			gs.DefaultSort = hdnSort.Value;
-			gs.Sort = hdnSort.Value;
-			LinkButton lb = (LinkButton)sender;
-			string sSortField = "";
-			try { sSortField = lb.CommandName.ToString(); } catch { }
-			sSortField = gs.ResetSortToColumn(sSortField);
-			LoadGrid(sSortField);
-			hdnSort.Value = sSortField;
-		}
-
 
 		protected void FormatGrid() {
 			foreach (GridViewRow dgItem in dvMembers.Rows) {
@@ -56,13 +41,8 @@ namespace Carrotware.CMS.UI.Admin {
 					imgLocked.AlternateText = "Locked Out";
 				}
 				imgLocked.ToolTip = imgLocked.AlternateText;
-
 			}
-
-			gs.WalkGridForHeadings(dvMembers);
 		}
-
-
 
 	}
 }

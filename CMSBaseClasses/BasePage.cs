@@ -27,7 +27,7 @@ using Carrotware.CMS.UI.Controls;
 namespace Carrotware.CMS.UI.Base {
 	public class BasePage : System.Web.UI.Page {
 
-		protected GridSorting gs = new GridSorting();
+		//protected GridSorting gs = new GridSorting();
 
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
@@ -77,36 +77,37 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 
-		public void LoadGrid<T>(GridView TheGrid, HiddenField SortValue, List<T> lst, string sSortKey) {
-			List<T> lstVals = null;
-			string VSKey = TheGrid.ClientID + "_Data";
-			gs.DefaultSort = SortValue.Value;
-			if (lst != null) {
-				lstVals = lst;
-				gs.Sort = SortValue.Value;
-			} else {
-				SortValue.Value = sSortKey;
-				gs.Sort = sSortKey;
-				lstVals = (List<T>)ViewState[VSKey];
-				lstVals = gs.SortDataList<T>(lstVals);
-			}
-			ViewState[VSKey] = lstVals;
-			TheGrid.DataSource = lstVals;
-			TheGrid.DataBind();
-		}
+		/*
+				public void LoadGrid<T>(GridView TheGrid, HiddenField SortValue, List<T> lst, string sSortKey) {
+					List<T> lstVals = null;
+					string VSKey = TheGrid.ClientID + "_Data";
+					gs.DefaultSort = SortValue.Value;
+					if (lst != null) {
+						lstVals = lst;
+						gs.Sort = SortValue.Value;
+					} else {
+						SortValue.Value = sSortKey;
+						gs.Sort = sSortKey;
+						lstVals = (List<T>)ViewState[VSKey];
+						lstVals = gs.SortDataList<T>(lstVals);
+					}
+					ViewState[VSKey] = lstVals;
+					TheGrid.DataSource = lstVals;
+					TheGrid.DataBind();
+				}
 
 
-		public void LoadGridLive<T>(GridView TheGrid, HiddenField SortValue, List<T> lstVals, string sSortKey) {
-			gs.DefaultSort = SortValue.Value;
+				public void LoadGridLive<T>(GridView TheGrid, HiddenField SortValue, List<T> lstVals, string sSortKey) {
+					gs.DefaultSort = SortValue.Value;
 
-			SortValue.Value = sSortKey;
-			gs.Sort = sSortKey;
-			lstVals = gs.SortDataList<T>(lstVals);
+					SortValue.Value = sSortKey;
+					gs.Sort = sSortKey;
+					lstVals = gs.SortDataList<T>(lstVals);
 
-			TheGrid.DataSource = lstVals;
-			TheGrid.DataBind();
-		}
-
+					TheGrid.DataSource = lstVals;
+					TheGrid.DataBind();
+				}
+		*/
 
 
 

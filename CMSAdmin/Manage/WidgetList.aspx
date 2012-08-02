@@ -52,7 +52,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<div id="SortableGrid">
-		<asp:GridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
+		<carrot:CarrotGridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
 			RowStyle-CssClass="rowregular">
 			<Columns>
 				<asp:TemplateField>
@@ -76,7 +76,8 @@
 					<ItemTemplate>
 						<asp:Button CommandName='<%#String.Format("restore_{0}", Eval("Root_WidgetID")) %>' ID="btnRestore" runat="server" Text="Show" OnCommand="ClickAction"
 							Visible="false" />
-						<asp:Button CommandName='<%#String.Format("remove_{0}", Eval("Root_WidgetID")) %>' ID="btnRemove" runat="server" Text="Hide" OnCommand="ClickAction" Visible="false" />
+						<asp:Button CommandName='<%#String.Format("remove_{0}", Eval("Root_WidgetID")) %>' ID="btnRemove" runat="server" Text="Hide" OnCommand="ClickAction"
+							Visible="false" />
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
@@ -107,7 +108,7 @@
 					</ItemTemplate>
 				</asp:TemplateField>
 			</Columns>
-		</asp:GridView>
+		</carrot:CarrotGridView>
 	</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">

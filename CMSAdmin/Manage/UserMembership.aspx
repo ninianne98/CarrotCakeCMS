@@ -14,8 +14,8 @@
 			Add User</a>
 	</p>
 	<div id="SortableGrid">
-		<asp:GridView ID="dvMembers" runat="server" CssClass="datatable" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+		<carrot:CarrotGridView CssClass="datatable" DefaultSort="username ASC" ID="dvMembers" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular" OnDataBound="dvMembers_DataBound">
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>
@@ -24,7 +24,7 @@
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<HeaderTemplate>
-						<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead1" runat="server" CommandName="UserName">UserName</asp:LinkButton>
+						<asp:LinkButton ID="lnkHead1" runat="server" CommandName="username">Username</asp:LinkButton>
 					</HeaderTemplate>
 					<ItemTemplate>
 						<%# Eval("UserName")%>
@@ -32,7 +32,7 @@
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<HeaderTemplate>
-						<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead2" runat="server" CommandName="Email">Email</asp:LinkButton>
+						<asp:LinkButton ID="lnkHead2" runat="server" CommandName="Email">Email</asp:LinkButton>
 					</HeaderTemplate>
 					<ItemTemplate>
 						<%# Eval("Email")%>
@@ -40,7 +40,7 @@
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<HeaderTemplate>
-						<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead3" runat="server" CommandName="CreationDate">Created On</asp:LinkButton>
+						<asp:LinkButton ID="lnkHead3" runat="server" CommandName="CreationDate">Created On</asp:LinkButton>
 					</HeaderTemplate>
 					<ItemTemplate>
 						<%# string.Format("{0:d}", Eval("CreationDate") )%>
@@ -48,7 +48,7 @@
 				</asp:TemplateField>
 				<asp:TemplateField ItemStyle-HorizontalAlign="Center">
 					<HeaderTemplate>
-						<asp:LinkButton OnClick="lblSort_Command" ID="lnkHead4" runat="server" CommandName="IsLockedOut">Status</asp:LinkButton>
+						<asp:LinkButton ID="lnkHead4" runat="server" CommandName="IsLockedOut">Status</asp:LinkButton>
 					</HeaderTemplate>
 					<ItemTemplate>
 						<asp:Image ID="imgLocked" runat="server" ImageUrl="/Manage/images/user_green.png" AlternateText="Unlocked" />
@@ -56,8 +56,7 @@
 					</ItemTemplate>
 				</asp:TemplateField>
 			</Columns>
-		</asp:GridView>
+		</carrot:CarrotGridView>
 		<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/Manage/images/lock.png" />
-		<asp:HiddenField runat="server" ID="hdnSort" Visible="false" Value="UserName ASC" />
 	</div>
 </asp:Content>
