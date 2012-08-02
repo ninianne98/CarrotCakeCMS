@@ -13,7 +13,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class PageChildSort : AdminBasePage {
 
 		public Guid guidContentID = Guid.Empty;
-
+		bool bClickedSort = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
@@ -28,23 +28,50 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		public string MakeStar(bool bFlag) {
 			if (bFlag) {
-				return "  ";
+				return "&nbsp; ";
 			} else {
 				return "&#9746; ";
 			}
 		}
 
 		protected void DoDataBind() {
-			List<SiteNav> lst = null;
+			List<SiteNav> lstNav = null;
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
-				lst = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SiteData.IsAuthEditor);
+				lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SiteData.IsAuthEditor);
 			}
 
-			rpPages.DataSource = lst;
+			if (bClickedSort && ddlAlternateSort.SelectedIndex > 0) {
+				switch (ddlAlternateSort.SelectedValue) {
+					case "alpha":
+						lstNav = lstNav.OrderBy(x => x.NavMenuText).ToList();
+						break;
+					case "datecreated":
+						lstNav = lstNav.OrderBy(x => x.CreateDate).ToList();
+						break;
+					case "dateupdated":
+						lstNav = lstNav.OrderBy(x => x.EditDate).ToList();
+						break;
+					case "alpha2":
+						lstNav = lstNav.OrderByDescending(x => x.NavMenuText).ToList();
+						break;
+					case "datecreated2":
+						lstNav = lstNav.OrderByDescending(x => x.CreateDate).ToList();
+						break;
+					case "dateupdated2":
+						lstNav = lstNav.OrderByDescending(x => x.EditDate).ToList();
+						break;
+
+					default:
+						lstNav = lstNav.OrderBy(x => x.NavOrder).ToList();
+						break;
+				}
+			}
+
+			rpPages.DataSource = lstNav;
 			rpPages.DataBind();
 
-			if (lst.Count < 2) {
+			if (lstNav.Count < 2) {
 				btnSave.Visible = false;
 			}
 
@@ -59,7 +86,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
 		}
 
+		protected void btnSort_Click(object sender, EventArgs e) {
+			bClickedSort = true;
 
+			DoDataBind();
+		}
 
 
 	}
