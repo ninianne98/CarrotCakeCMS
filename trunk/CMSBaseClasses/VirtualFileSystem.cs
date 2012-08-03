@@ -9,7 +9,6 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 using Carrotware.CMS.Core;
-
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -25,24 +24,10 @@ namespace Carrotware.CMS.UI.Base {
 
 	public class VirtualFileSystem : IHttpHandler, IRequiresSessionState {
 
-		private const string DEFAULT_FILE = "/default.aspx";
-		private const string DEFAULT_TEMPLATE = "/Manage/PlainTemplate.aspx";
 		private const string REQ_PATH = "RewriteOrigPath";
 		private const string REQ_QUERY = "RewriteOrigQuery";
 
-		private ContentPageHelper pageHelper = new ContentPageHelper();
-
-		private Guid SiteID {
-			get {
-				return SiteData.CurrentSiteID;
-			}
-		}
-
-		private string CurrentScriptName {
-			get {
-				return SiteData.CurrentScriptName;
-			}
-		}
+		private SiteNavHelper navHelper = new SiteNavHelper();
 
 		public bool IsReusable {
 			get {
@@ -79,14 +64,14 @@ namespace Carrotware.CMS.UI.Base {
 					queryString = String.Empty;
 				}
 
-				if (!File.Exists(context.Server.MapPath(sFileRequested)) || sFileRequested.ToLower() == DEFAULT_FILE) {
+				if (!File.Exists(context.Server.MapPath(sFileRequested)) || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
 
 					context.Items[REQ_PATH] = context.Request.PathInfo;
 					context.Items[REQ_QUERY] = context.Request.QueryString.ToString();
 
 					// handle a case where this site was migrated from a format where all pages varied on a consistent querystring
 					// allow this QS parm to be set in a config file.
-					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
+					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
 						string sParm = String.Empty;
 						if (SiteData.OldSiteQuerystring != string.Empty) {
 							if (context.Request.QueryString[SiteData.OldSiteQuerystring] != null) {
@@ -108,38 +93,38 @@ namespace Carrotware.CMS.UI.Base {
 						}
 					}
 
-					ContentPage filePage = null;
+					SiteNav navData = null;
 
-					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == DEFAULT_FILE) {
+					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
 						if (bIgnorePublishState) {
-							filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
+							navData = navHelper.FindHome(SiteData.CurrentSiteID, null);
 						} else {
-							filePage = pageHelper.FindHome(SiteData.CurrentSiteID, true);
+							navData = navHelper.FindHome(SiteData.CurrentSiteID, true);
 						}
-						if (sFileRequested.ToLower() == DEFAULT_FILE && filePage != null) {
-							sFileRequested = filePage.FileName;
+						if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
+							sFileRequested = navData.FileName;
 						}
 					}
 
 					var pageName = sFileRequested;
 					if (bIgnorePublishState) {
-						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
+						navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, null, pageName);
 					} else {
-						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
+						navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, true, pageName);
 					}
 
 					bool bNoHome = false;
-					if (sFileRequested.ToLower() == DEFAULT_FILE && filePage == null) {
-						filePage = new ContentPage();
-						filePage.TemplateFile = DEFAULT_FILE;
-						filePage.EditDate = DateTime.Now.AddMinutes(-10);
+					if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
+						navData = new SiteNav();
+						navData.TemplateFile = SiteData.DefaultDirectoryFilename;
+						navData.EditDate = DateTime.Now.AddMinutes(-10);
 						bNoHome = true;
 					}
 
 
-					if (filePage != null) {
-						if (!sFileRequested.ToLower().Contains(filePage.TemplateFile.ToLower()) || bNoHome) {
-							string sSelectedTemplate = filePage.TemplateFile;
+					if (navData != null) {
+						if (!sFileRequested.ToLower().Contains(navData.TemplateFile.ToLower()) || bNoHome) {
+							string sSelectedTemplate = navData.TemplateFile;
 
 							// selectivly engage the cms helper only if in advance mode
 							if (SiteData.AdvancedEditMode) {
@@ -151,7 +136,7 @@ namespace Carrotware.CMS.UI.Base {
 							}
 
 							if (!File.Exists(context.Server.MapPath(sSelectedTemplate))) {
-								sSelectedTemplate = DEFAULT_TEMPLATE;
+								sSelectedTemplate = SiteData.DefaultTemplateFilename;
 							}
 
 							sVirtualReqFile = sFileRequested;
@@ -169,7 +154,7 @@ namespace Carrotware.CMS.UI.Base {
 						context.Response.End();
 					}
 
-					filePage.Dispose();
+					navData.Dispose();
 
 				} else {
 					sVirtualReqFile = sFileRequested;
@@ -180,6 +165,7 @@ namespace Carrotware.CMS.UI.Base {
 
 			context.ApplicationInstance.CompleteRequest();
 		}
+
 
 		private void RewriteCMSPath(HttpContext context, string sTmplateFile, string sQuery) {
 
@@ -207,7 +193,12 @@ namespace Carrotware.CMS.UI.Base {
 
 
 		public void Dispose() {
-			pageHelper = null;
+
+			if (navHelper != null) {
+				navHelper.Dispose();
+			}
+
+			navHelper = null;
 		}
 
 	}

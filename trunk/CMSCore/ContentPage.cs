@@ -71,12 +71,19 @@ namespace Carrotware.CMS.Core {
 
 		}
 
+		public SiteNav GetSiteNav() {
+			SiteNav sd = null;
+			using (SiteNavHelper sdh = new SiteNavHelper()) {
+				sd = sdh.GetLatestVersion(this.SiteID, this.Root_ContentID);
+			}
+			return sd;
+		}
 
 		public List<PageWidget> GetAllWidgetsAndUnsaved() {
 			CMSConfigHelper ch = new CMSConfigHelper();
 			List<PageWidget> widgets = new List<PageWidget>();
 			if (ch.cmsAdminContent == null) {
-				using (var h = new PageWidgetHelper()) {
+				using (PageWidgetHelper h = new PageWidgetHelper()) {
 					widgets = h.GetWidgets(this.Root_ContentID, true);
 				}
 			} else {
@@ -90,10 +97,10 @@ namespace Carrotware.CMS.Core {
 
 		public void ResetHeartbeatLock() {
 
-			var rc = (from r in db.tblRootContents
-					  where r.Root_ContentID == this.Root_ContentID
-						&& r.SiteID == this.SiteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == this.Root_ContentID
+								   && r.SiteID == this.SiteID
+								 select r).FirstOrDefault();
 
 			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
 			rc.Heartbeat_UserId = null;
@@ -102,10 +109,10 @@ namespace Carrotware.CMS.Core {
 
 		public void RecordHeartbeatLock(Guid currentUserID) {
 
-			var rc = (from r in db.tblRootContents
-					  where r.Root_ContentID == this.Root_ContentID
-					  && r.SiteID == this.SiteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == this.Root_ContentID
+								 && r.SiteID == this.SiteID
+								 select r).FirstOrDefault();
 
 			rc.Heartbeat_UserId = currentUserID;
 			rc.EditHeartbeat = DateTime.Now;
@@ -137,17 +144,17 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageEdit() {
 
-			var rc = (from r in db.tblRootContents
-					  where r.Root_ContentID == this.Root_ContentID
-						&& r.SiteID == this.SiteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == this.Root_ContentID
+								   && r.SiteID == this.SiteID
+								 select r).FirstOrDefault();
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where ct.Root_ContentID == this.Root_ContentID
-							&& r.SiteID == this.SiteID
-							&& ct.IsLatestVersion == true
-						select ct).FirstOrDefault();
+			tblContent oldC = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   where ct.Root_ContentID == this.Root_ContentID
+								   && r.SiteID == this.SiteID
+								   && ct.IsLatestVersion == true
+							   select ct).FirstOrDefault();
 
 			bool bNew = false;
 
@@ -161,7 +168,7 @@ namespace Carrotware.CMS.Core {
 				bNew = true;
 			}
 
-			var c = new tblContent();
+			tblContent c = new tblContent();
 			if (bNew) {
 				c.ContentID = this.Root_ContentID;
 			} else {
@@ -189,7 +196,7 @@ namespace Carrotware.CMS.Core {
 			c.EditUserId = this.EditUserId;
 			c.EditDate = DateTime.Now;
 			c.TemplateFile = this.TemplateFile;
-			
+
 			FixMeta();
 			c.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 			c.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
@@ -208,10 +215,10 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageAsDraft() {
 
-			var rc = (from r in db.tblRootContents
-					  where r.Root_ContentID == this.Root_ContentID
-						&& r.SiteID == this.SiteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == this.Root_ContentID
+								   && r.SiteID == this.SiteID
+								 select r).FirstOrDefault();
 
 			bool bNew = false;
 
@@ -225,7 +232,7 @@ namespace Carrotware.CMS.Core {
 				bNew = true;
 			}
 
-			var c = new tblContent();
+			tblContent c = new tblContent();
 			if (bNew) {
 				c.ContentID = this.Root_ContentID;
 			} else {
@@ -386,10 +393,18 @@ namespace Carrotware.CMS.Core {
 			this.PageText = c.PageText;
 			this.NavOrder = c.NavOrder;
 			this.EditDate = c.EditDate;
+			this.TemplateFile = c.TemplateFile;
 			this.NavFileName = rc.FileName;
+
 		}
 
-
+		public ContentPage GetContentPage() {
+			ContentPage cp = null;
+			using (ContentPageHelper cph = new ContentPageHelper()) {
+				cp = cph.GetLatestContent(this.SiteID, this.Root_ContentID);
+			}
+			return cp;
+		}
 
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
@@ -407,6 +422,8 @@ namespace Carrotware.CMS.Core {
 		public Guid SiteID { get; set; }
 
 		public string NavFileName { get; set; }
+		public string TemplateFile { get; set; }
+
 
 		#region IDisposable Members
 
@@ -423,7 +440,6 @@ namespace Carrotware.CMS.Core {
 	public class SiteMapOrder {
 
 		public SiteMapOrder() { }
-
 
 		public int? NavOrder { get; set; }
 		public Guid? Parent_ContentID { get; set; }

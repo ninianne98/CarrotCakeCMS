@@ -249,6 +249,13 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static string DefaultDirectoryFilename {
+			get { return "/default.aspx"; }
+		}
+		public static string DefaultTemplateFilename {
+			get { return "/Manage/PlainTemplate.aspx"; }
+		}
+
 		public static string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
@@ -258,7 +265,7 @@ namespace Carrotware.CMS.Core {
 				var r = SiteData.CurrentScriptName;
 				try { r = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
 				if (string.IsNullOrEmpty(r))
-					r = "./default.aspx";
+					r = DefaultDirectoryFilename;
 				return r;
 			}
 		}
