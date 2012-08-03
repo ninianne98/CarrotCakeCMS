@@ -50,15 +50,14 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ContentPage> GetLatestContentList(Guid siteID) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-						 && ct.IsLatestVersion == true
-						select new ContentPage(r, ct)).ToList();
-			return oldC;
+			List<ContentPage> lstContent = (from ct in db.tblContents
+											join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+											orderby ct.NavOrder, ct.NavMenuText
+											where r.SiteID == siteID
+											 && ct.IsLatestVersion == true
+											select new ContentPage(r, ct)).ToList();
+			return lstContent;
 		}
-
 
 		public int GetContentPagedListCount(Guid siteID, bool bActiveOnly) {
 			int iCount = (from ct in db.tblContents
@@ -85,10 +84,10 @@ namespace Carrotware.CMS.Core {
 
 		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID) {
 
-			var rc = (from r in db.tblRootContents
-					  where r.Root_ContentID == rootContentID
-						&& r.SiteID == siteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == rootContentID
+								   && r.SiteID == siteID
+								 select r).FirstOrDefault();
 
 			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
 			rc.Heartbeat_UserId = null;
@@ -97,10 +96,10 @@ namespace Carrotware.CMS.Core {
 
 		public bool RecordHeartbeatLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
-			var rc = (from r in db.tblRootContents
-					  where r.Root_ContentID == rootContentID
-					  && r.SiteID == siteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == rootContentID
+								 && r.SiteID == siteID
+								 select r).FirstOrDefault();
 
 			if (rc != null) {
 				rc.Heartbeat_UserId = currentUserID;
@@ -114,19 +113,19 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID) {
 
-			var cp = (from r in db.tblRootContents
-					  where r.Root_ContentID == rootContentID
-					  && r.SiteID == SiteData.CurrentSiteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == rootContentID
+								 && r.SiteID == SiteData.CurrentSiteID
+								 select r).FirstOrDefault();
 
 			bool bLock = false;
-			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
-						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+			if (rc.Heartbeat_UserId != null) {
+				if (rc.Heartbeat_UserId != SiteData.CurrentUserGuid
+						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
-					|| cp.Heartbeat_UserId == null) {
+				if (rc.Heartbeat_UserId == SiteData.CurrentUserGuid
+					|| rc.Heartbeat_UserId == null) {
 					bLock = false;
 				}
 			}
@@ -135,19 +134,19 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
-			var cp = (from r in db.tblRootContents
-					  where r.Root_ContentID == rootContentID
-					  && r.SiteID == siteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == rootContentID
+								 && r.SiteID == siteID
+								 select r).FirstOrDefault();
 
 			bool bLock = false;
-			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != currentUserID
-						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+			if (rc.Heartbeat_UserId != null) {
+				if (rc.Heartbeat_UserId != currentUserID
+						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (cp.Heartbeat_UserId == currentUserID
-					|| cp.Heartbeat_UserId == null) {
+				if (rc.Heartbeat_UserId == currentUserID
+					|| rc.Heartbeat_UserId == null) {
 					bLock = false;
 				}
 			}
@@ -156,19 +155,19 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID, Guid siteID) {
 
-			var cp = (from r in db.tblRootContents
-					  where r.Root_ContentID == rootContentID
-					  && r.SiteID == siteID
-					  select r).FirstOrDefault();
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == rootContentID
+								 && r.SiteID == siteID
+								 select r).FirstOrDefault();
 
 			bool bLock = false;
-			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
-						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+			if (rc.Heartbeat_UserId != null) {
+				if (rc.Heartbeat_UserId != SiteData.CurrentUserGuid
+						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
-					|| cp.Heartbeat_UserId == null) {
+				if (rc.Heartbeat_UserId == SiteData.CurrentUserGuid
+					|| rc.Heartbeat_UserId == null) {
 					bLock = false;
 				}
 			}
@@ -291,50 +290,52 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootID) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.EditDate descending
-						where r.SiteID == siteID
-						 && r.Root_ContentID == rootID
-						select new ContentPage(r, ct)).ToList();
-			return oldC;
+		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootContentID) {
+			List<ContentPage> content = (from ct in db.tblContents
+										 join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										 orderby ct.EditDate descending
+										 where r.SiteID == siteID
+										  && r.Root_ContentID == rootContentID
+										 select new ContentPage(r, ct)).ToList();
+			return content;
 		}
 
 		public ContentPage GetVersion(Guid siteID, Guid contentID) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.EditDate descending
-						where r.SiteID == siteID
-						 && ct.ContentID == contentID
-						select new ContentPage(r, ct)).FirstOrDefault();
-			return oldC;
+			ContentPage content = (from ct in db.tblContents
+								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+								   orderby ct.EditDate descending
+								   where r.SiteID == siteID
+									&& ct.ContentID == contentID
+								   select new ContentPage(r, ct)).FirstOrDefault();
+			return content;
 		}
 
 
 		public List<ContentPage> GetLatestContentList(Guid siteID, bool? active) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-						 && ct.IsLatestVersion == true
-						 && (r.PageActive == active || active == null)
-						select new ContentPage(r, ct)).ToList();
-			return oldC;
+			List<ContentPage> lstContent = (from ct in db.tblContents
+											join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+											orderby ct.NavOrder, ct.NavMenuText
+											where r.SiteID == siteID
+											 && ct.IsLatestVersion == true
+											 && (r.PageActive == active || active == null)
+											select new ContentPage(r, ct)).ToList();
+
+			return lstContent;
 		}
+
 
 		public void RemoveVersions(Guid siteID, List<Guid> lstDel) {
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.EditDate descending
-						where r.SiteID == siteID
-						 && lstDel.Contains(ct.ContentID)
-						 && ct.IsLatestVersion != true
-						select ct).ToList();
+			List<tblContent> lstContent = (from ct in db.tblContents
+										   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										   orderby ct.EditDate descending
+										   where r.SiteID == siteID
+											&& lstDel.Contains(ct.ContentID)
+											&& ct.IsLatestVersion != true
+										   select ct).ToList();
 
-			if (oldC.Count > 0) {
-				foreach (var c in oldC) {
+			if (lstContent.Count > 0) {
+				foreach (tblContent c in lstContent) {
 					db.tblContents.DeleteOnSubmit(c);
 				}
 				db.SubmitChanges();
@@ -344,15 +345,15 @@ namespace Carrotware.CMS.Core {
 
 		public void BulkUpdateTemplate(Guid siteID, List<Guid> lstUpd, string sTemplateFile) {
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-						 && lstUpd.Contains(r.Root_ContentID)
-						 && ct.IsLatestVersion == true
-						select ct).ToList();
+			List<tblContent> lstContent = (from ct in db.tblContents
+										   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										   where r.SiteID == siteID
+											&& lstUpd.Contains(r.Root_ContentID)
+											&& ct.IsLatestVersion == true
+										   select ct).ToList();
 
-			if (oldC.Count > 0) {
-				foreach (var c in oldC) {
+			if (lstContent.Count > 0) {
+				foreach (tblContent c in lstContent) {
 					c.TemplateFile = sTemplateFile;
 					//c.EditDate = DateTime.Now;
 				}
@@ -363,63 +364,69 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage GetLatestContent(Guid siteID, Guid rootContentID) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-							&& r.Root_ContentID == rootContentID
-							&& ct.IsLatestVersion == true
-						select new ContentPage(r, ct)).FirstOrDefault();
+			ContentPage content = (from ct in db.tblContents
+								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+								   where r.SiteID == siteID
+									   && r.Root_ContentID == rootContentID
+									   && ct.IsLatestVersion == true
+								   select new ContentPage(r, ct)).FirstOrDefault();
 
-			return oldC;
+			return content;
 		}
+
 
 		public ContentPage GetLatestContent(Guid siteID, bool? active, string sPage) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-							&& (r.PageActive == active || active == null)
-							&& r.FileName.ToLower() == sPage.ToLower()
-							&& ct.IsLatestVersion == true
-						select new ContentPage(r, ct)).FirstOrDefault();
+			ContentPage content = (from ct in db.tblContents
+								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+								   where r.SiteID == siteID
+									   && (r.PageActive == active || active == null)
+									   && r.FileName.ToLower() == sPage.ToLower()
+									   && ct.IsLatestVersion == true
+								   select new ContentPage(r, ct)).FirstOrDefault();
 
-			return oldC;
+			return content;
 		}
+
 
 
 		public ContentPage FindHome(Guid siteID) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder ascending
-						where r.SiteID == siteID
-							&& r.PageActive == true
-							&& ct.NavOrder < 1
-							&& ct.IsLatestVersion == true
-						select new ContentPage(r, ct)).FirstOrDefault();
-			return oldC;
+			ContentPage content = (from ct in db.tblContents
+								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+								   orderby ct.NavOrder ascending
+								   where r.SiteID == siteID
+									   && r.PageActive == true
+									   && ct.NavOrder < 1
+									   && ct.IsLatestVersion == true
+								   select new ContentPage(r, ct)).FirstOrDefault();
+
+			return content;
 		}
 
-		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-							&& ct.IsLatestVersion == true
-							&& r.FileName.ToLower() == urlFileName.ToLower()
-						select new ContentPage(r, ct)).FirstOrDefault();
 
-			return oldC;
+		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
+			ContentPage content = (from ct in db.tblContents
+								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+								   where r.SiteID == siteID
+									   && ct.IsLatestVersion == true
+									   && r.FileName.ToLower() == urlFileName.ToLower()
+								   select new ContentPage(r, ct)).FirstOrDefault();
+
+			return content;
 		}
 
 		public ContentPage FindHome(Guid siteID, bool? active) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder ascending
-						where r.SiteID == siteID
-							&& (r.PageActive == active || active == null)
-							&& ct.NavOrder < 1
-							&& ct.IsLatestVersion == true
-						select new ContentPage(r, ct)).FirstOrDefault();
-			return oldC;
+			ContentPage content = (from ct in db.tblContents
+								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+								   orderby ct.NavOrder ascending
+								   where r.SiteID == siteID
+									   && (r.PageActive == active || active == null)
+									   && ct.NavOrder < 1
+									   && ct.IsLatestVersion == true
+								   select new ContentPage(r, ct)).FirstOrDefault();
+
+			return content;
 		}
+
 
 
 		#region IDisposable Members
@@ -439,170 +446,232 @@ namespace Carrotware.CMS.Core {
 		public SiteNavHelper() { }
 
 		public List<SiteNav> GetMasterNavigation(Guid siteID, bool bActiveOnly) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-							&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).ToList();
-			return oldC;
+			List<SiteNav> lstContent = (from ct in db.tblContents
+										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										orderby ct.NavOrder, ct.NavMenuText
+										where r.SiteID == siteID
+											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
+											&& ct.IsLatestVersion == true
+										select new SiteNav(r, ct)).ToList();
+			return lstContent;
 		}
 
 
 
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-							&& ct.Parent_ContentID == null
-							&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).ToList();
-			return oldC;
+			List<SiteNav> lstContent = (from ct in db.tblContents
+										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										orderby ct.NavOrder, ct.NavMenuText
+										where r.SiteID == siteID
+											&& ct.Parent_ContentID == null
+											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
+											&& ct.IsLatestVersion == true
+										select new SiteNav(r, ct)).ToList();
+			return lstContent;
 		}
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 
-			var p = (from r in db.tblRootContents
-					 where r.SiteID == siteID
-							&& r.FileName.ToLower() == sParentID.ToLower()
-					 select r).FirstOrDefault();
+			tblRootContent p = (from r in db.tblRootContents
+								where r.SiteID == siteID
+									   && r.FileName.ToLower() == sParentID.ToLower()
+								select r).FirstOrDefault();
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-							&& ct.Parent_ContentID == p.Root_ContentID
-							&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).ToList();
+			List<SiteNav> lstContent = (from ct in db.tblContents
+										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										orderby ct.NavOrder, ct.NavMenuText
+										where r.SiteID == siteID
+											&& ct.Parent_ContentID == p.Root_ContentID
+											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
+											&& ct.IsLatestVersion == true
+										select new SiteNav(r, ct)).ToList();
 
-			return oldC;
+			return lstContent;
 		}
 
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, string sPage, bool bActiveOnly) {
 
-			var c = (from ct in db.tblContents
-					 join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-					 where r.SiteID == siteID
-							&& r.FileName.ToLower() == sPage.ToLower()
-							&& ct.IsLatestVersion == true
-					 select ct).FirstOrDefault();
+			tblContent c = (from ct in db.tblContents
+							join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							where r.SiteID == siteID
+								   && r.FileName.ToLower() == sPage.ToLower()
+								   && ct.IsLatestVersion == true
+							select ct).FirstOrDefault();
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-							&& ct.Parent_ContentID == c.Parent_ContentID
-							&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).ToList();
+			List<SiteNav> lstContent = (from ct in db.tblContents
+										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										orderby ct.NavOrder, ct.NavMenuText
+										where r.SiteID == siteID
+											&& ct.Parent_ContentID == c.Parent_ContentID
+											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
+											&& ct.IsLatestVersion == true
+										select new SiteNav(r, ct)).ToList();
 
-			return oldC;
+			return lstContent;
 		}
 
 		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-							&& r.FileName.ToLower() == sPage.ToLower()
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).FirstOrDefault();
+			SiteNav content = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   where r.SiteID == siteID
+								   && r.FileName.ToLower() == sPage.ToLower()
+								   && ct.IsLatestVersion == true
+							   select new SiteNav(r, ct)).FirstOrDefault();
 
-			return oldC;
+			return content;
 		}
 
-		public SiteNav GetPageNavigation(Guid siteID, Guid rootID) {
+		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-							&& ct.Root_ContentID == rootID
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).FirstOrDefault();
+			SiteNav content = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   where r.SiteID == siteID
+								   && ct.Root_ContentID == rootContentID
+								   && ct.IsLatestVersion == true
+							   select new SiteNav(r, ct)).FirstOrDefault();
 
-			return oldC;
+			return content;
 		}
 
 
 		public SiteNav GetParentPageNavigation(Guid siteID, string sPage) {
-			var oldC1 = GetPageNavigation(siteID, sPage);
+			SiteNav nav1 = GetPageNavigation(siteID, sPage);
 
-			SiteNav oldC = null;
-			if (oldC1 != null) {
-				oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-							&& r.FileName.ToLower() == oldC.FileName.ToLower()
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).FirstOrDefault();
+			SiteNav content = null;
+			if (nav1 != null) {
+				content = (from ct in db.tblContents
+						   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						   where r.SiteID == siteID
+							   && r.FileName.ToLower() == content.FileName.ToLower()
+							   && ct.IsLatestVersion == true
+						   select new SiteNav(r, ct)).FirstOrDefault();
 			}
-			return oldC;
+			return content;
 		}
 
-		public SiteNav GetParentPageNavigation(Guid siteID, Guid rootID) {
-			var oldC1 = GetPageNavigation(siteID, rootID);
+		public SiteNav GetParentPageNavigation(Guid siteID, Guid rootContentID) {
+			SiteNav nav1 = GetPageNavigation(siteID, rootContentID);
 
-			SiteNav oldC = null;
-			if (oldC1 != null) {
-				oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						where r.SiteID == siteID
-							&& ct.Root_ContentID == oldC1.Parent_ContentID
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).FirstOrDefault();
+			SiteNav content = null;
+			if (nav1 != null) {
+				content = (from ct in db.tblContents
+						   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+						   where r.SiteID == siteID
+							   && ct.Root_ContentID == nav1.Parent_ContentID
+							   && ct.IsLatestVersion == true
+						   select new SiteNav(r, ct)).FirstOrDefault();
 			}
-			return oldC;
+			return content;
 		}
 
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-							&& ct.Parent_ContentID == ParentID
-							&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).ToList();
-			return oldC;
+			List<SiteNav> lstContent = (from ct in db.tblContents
+										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										orderby ct.NavOrder, ct.NavMenuText
+										where r.SiteID == siteID
+											&& ct.Parent_ContentID == ParentID
+											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
+											&& ct.IsLatestVersion == true
+										select new SiteNav(r, ct)).ToList();
+			return lstContent;
 		}
 
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, Guid PageID, bool bActiveOnly) {
 
-			var c = (from ct in db.tblContents
-					 where ct.Root_ContentID == PageID
-						&& ct.IsLatestVersion == true
-					 select ct).FirstOrDefault();
+			tblContent c = (from ct in db.tblContents
+							where ct.Root_ContentID == PageID
+							   && ct.IsLatestVersion == true
+							select ct).FirstOrDefault();
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.NavOrder, ct.NavMenuText
-						where r.SiteID == siteID
-							&& ct.Parent_ContentID == c.Parent_ContentID
-							&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-							&& ct.IsLatestVersion == true
-						select new SiteNav(r, ct)).ToList();
+			List<SiteNav> lstContent = (from ct in db.tblContents
+										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										orderby ct.NavOrder, ct.NavMenuText
+										where r.SiteID == siteID
+											&& ct.Parent_ContentID == c.Parent_ContentID
+											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
+											&& ct.IsLatestVersion == true
+										select new SiteNav(r, ct)).ToList();
 
-			return oldC;
+			return lstContent;
 		}
 
 
 		public List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
 
-			var oldC = (from ct in db.tblContents
-						join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						orderby ct.EditDate descending
-						where r.SiteID == siteID
-							&& ct.IsLatestVersion == true
-							&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-						select new SiteNav(r, ct)).Take(iUpdates).ToList();
+			List<SiteNav> lstContent = (from ct in db.tblContents
+										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										orderby ct.EditDate descending
+										where r.SiteID == siteID
+											&& ct.IsLatestVersion == true
+											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
+										select new SiteNav(r, ct)).Take(iUpdates).ToList();
 
-			return oldC;
+			return lstContent;
 		}
+
+
+		public SiteNav GetLatestVersion(Guid siteID, Guid rootContentID) {
+			SiteNav content = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   where r.SiteID == siteID
+								   && r.Root_ContentID == rootContentID
+								   && ct.IsLatestVersion == true
+							   select new SiteNav(r, ct)).FirstOrDefault();
+
+			return content;
+		}
+
+		public SiteNav GetLatestVersion(Guid siteID, bool? active, string sPage) {
+			SiteNav content = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   where r.SiteID == siteID
+								   && (r.PageActive == active || active == null)
+								   && r.FileName.ToLower() == sPage.ToLower()
+								   && ct.IsLatestVersion == true
+							   select new SiteNav(r, ct)).FirstOrDefault();
+
+			return content;
+		}
+
+
+		public SiteNav FindHome(Guid siteID) {
+			SiteNav content = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   orderby ct.NavOrder ascending
+							   where r.SiteID == siteID
+								   && r.PageActive == true
+								   && ct.NavOrder < 1
+								   && ct.IsLatestVersion == true
+							   select new SiteNav(r, ct)).FirstOrDefault();
+			return content;
+		}
+
+		public SiteNav FindByFilename(Guid siteID, string urlFileName) {
+			SiteNav content = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   where r.SiteID == siteID
+								   && ct.IsLatestVersion == true
+								   && r.FileName.ToLower() == urlFileName.ToLower()
+							   select new SiteNav(r, ct)).FirstOrDefault();
+
+			return content;
+		}
+
+		public SiteNav FindHome(Guid siteID, bool? active) {
+			SiteNav content = (from ct in db.tblContents
+							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							   orderby ct.NavOrder ascending
+							   where r.SiteID == siteID
+								   && (r.PageActive == active || active == null)
+								   && ct.NavOrder < 1
+								   && ct.IsLatestVersion == true
+							   select new SiteNav(r, ct)).FirstOrDefault();
+			return content;
+		}
+
+
 
 		#region IDisposable Members
 
@@ -650,10 +719,10 @@ namespace Carrotware.CMS.Core {
 			List<SiteMapOrder> m = new List<SiteMapOrder>();
 			sMapText = sMapText.Trim();
 
-			var c = (from ct in db.tblContents
-					 where ct.Root_ContentID == contentID
-						&& ct.IsLatestVersion == true
-					 select ct).FirstOrDefault();
+			tblContent c = (from ct in db.tblContents
+							where ct.Root_ContentID == contentID
+							   && ct.IsLatestVersion == true
+							select ct).FirstOrDefault();
 
 			int iOrder = Convert.ToInt32(c.NavOrder) + 2;
 
@@ -677,14 +746,14 @@ namespace Carrotware.CMS.Core {
 
 		public void UpdateSiteMap(Guid siteID, List<SiteMapOrder> oMap) {
 
-			foreach (var m in oMap) {
+			foreach (SiteMapOrder m in oMap) {
 
-				var c = (from ct in db.tblContents
-						 join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						 where r.SiteID == siteID
-							 && r.Root_ContentID == m.Root_ContentID
-							 && ct.IsLatestVersion == true
-						 select ct).FirstOrDefault();
+				tblContent c = (from ct in db.tblContents
+								join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+								where r.SiteID == siteID
+									&& r.Root_ContentID == m.Root_ContentID
+									&& ct.IsLatestVersion == true
+								select ct).FirstOrDefault();
 
 				c.Parent_ContentID = m.Parent_ContentID;
 				c.NavOrder = (m.NavOrder * 10);
@@ -696,19 +765,19 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteMapOrder> GetAdminPageList(Guid siteID, Guid contentID) {
 
-			var lstSite = (from ct in db.tblContents
-						   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
-						   orderby ct.NavOrder, ct.NavMenuText
-						   where r.SiteID == siteID
-							   && ct.IsLatestVersion == true
-						   select new SiteMapOrder {
-							   NavLevel = -1,
-							   NavMenuText = ct.NavMenuText,
-							   NavOrder = ct.NavOrder,
-							   PageActive = Convert.ToBoolean(r.PageActive),
-							   Parent_ContentID = ct.Parent_ContentID,
-							   Root_ContentID = ct.Root_ContentID
-						   }).ToList();
+			List<SiteMapOrder> lstSite = (from ct in db.tblContents
+										  join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+										  orderby ct.NavOrder, ct.NavMenuText
+										  where r.SiteID == siteID
+											  && ct.IsLatestVersion == true
+										  select new SiteMapOrder {
+											  NavLevel = -1,
+											  NavMenuText = ct.NavMenuText,
+											  NavOrder = ct.NavOrder,
+											  PageActive = Convert.ToBoolean(r.PageActive),
+											  Parent_ContentID = ct.Parent_ContentID,
+											  Root_ContentID = ct.Root_ContentID
+										  }).ToList();
 
 			List<SiteMapOrder> lstSiteMap = new List<SiteMapOrder>();
 			int iLevel = 0;
@@ -732,32 +801,32 @@ namespace Carrotware.CMS.Core {
 
 
 			while (iBefore != iAfter) {
-				var lstLevel = (from z in lstSiteMap
-								where z.NavLevel == iLevel
-								select z).ToList();
+				List<SiteMapOrder> lstLevel = (from z in lstSiteMap
+											   where z.NavLevel == iLevel
+											   select z).ToList();
 
 				iBefore = lstSiteMap.Count;
 				iLevel++;
 
 				iLvlCounter = 0;
 
-				var lstChild = (from s in lstSite
-								join l in lstLevel on s.Parent_ContentID equals l.Root_ContentID
-								orderby s.NavOrder, s.NavMenuText
-								where (s.Root_ContentID != contentID || contentID == Guid.Empty)
-								select new SiteMapOrder {
-									NavLevel = iLevel,
-									NavMenuText = l.NavMenuText + " > " + s.NavMenuText,
-									NavOrder = l.NavOrder + (iLvlCounter++)
-										+ (from s2 in lstSite
-										   join l2 in lstLevel on s2.Parent_ContentID equals l2.Root_ContentID
-										   where s.Parent_ContentID == s2.Parent_ContentID
-												  && s.Root_ContentID != s2.Root_ContentID
-										   select s.Root_ContentID).ToList().Count,
-									PageActive = s.PageActive,
-									Parent_ContentID = s.Parent_ContentID,
-									Root_ContentID = s.Root_ContentID
-								}).ToList();
+				List<SiteMapOrder> lstChild = (from s in lstSite
+											   join l in lstLevel on s.Parent_ContentID equals l.Root_ContentID
+											   orderby s.NavOrder, s.NavMenuText
+											   where (s.Root_ContentID != contentID || contentID == Guid.Empty)
+											   select new SiteMapOrder {
+												   NavLevel = iLevel,
+												   NavMenuText = l.NavMenuText + " > " + s.NavMenuText,
+												   NavOrder = l.NavOrder + (iLvlCounter++)
+													   + (from s2 in lstSite
+														  join l2 in lstLevel on s2.Parent_ContentID equals l2.Root_ContentID
+														  where s.Parent_ContentID == s2.Parent_ContentID
+																 && s.Root_ContentID != s2.Root_ContentID
+														  select s.Root_ContentID).ToList().Count,
+												   PageActive = s.PageActive,
+												   Parent_ContentID = s.Parent_ContentID,
+												   Root_ContentID = s.Root_ContentID
+											   }).ToList();
 
 				lstSiteMap = (from m in lstSiteMap.Union(lstChild).ToList()
 							  orderby m.NavOrder, m.NavMenuText

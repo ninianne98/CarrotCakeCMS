@@ -20,9 +20,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class SiteSkinIndex : AdminBasePage {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
-			
+
 			//get the detected templates in use and mask off the template that is baked in as a the default template.
-			gvPages.DataSource = cmsHelper.Templates.Where(x => x.TemplatePath.ToLower() != "/manage/plaintemplate.aspx").ToList();
+			gvPages.DataSource = cmsHelper.Templates.Where(x => x.TemplatePath.ToLower() != SiteData.DefaultTemplateFilename.ToLower()).ToList();
 			gvPages.DataBind();
 
 		}
