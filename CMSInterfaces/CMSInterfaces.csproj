@@ -79,6 +79,9 @@
     <Compile Include="IWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WidgetAttribute.cs" />
+    <Compile Include="WidgetParmData.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
