@@ -116,8 +116,15 @@ namespace Carrotware.Web.UI.Controls {
 			IList query = null;
 			List<object> d = lst.Cast<object>().ToList();
 			IEnumerable<object> enuQueryable = d.AsQueryable();
-
-			SortField = GetProperties(d[0]).Where(x => x.ToLower() == SortField.ToLower()).FirstOrDefault();
+			if (lst != null) {
+				if (lst.Count > 0) {
+					SortField = GetProperties(d[0]).Where(x => x.ToLower() == SortField.ToLower()).FirstOrDefault();
+				} else {
+					SortField = string.Empty;
+				}
+			} else {
+				SortField = string.Empty;
+			}
 
 			if (!string.IsNullOrEmpty(SortField)) {
 				if (SortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
@@ -190,7 +197,7 @@ namespace Carrotware.Web.UI.Controls {
 				}
 				string sSortFld = string.Empty;
 				string sSortDir = string.Empty;
-				
+
 				if (!string.IsNullOrEmpty(sSort)) {
 					int pos = sSort.LastIndexOf(" ");
 
