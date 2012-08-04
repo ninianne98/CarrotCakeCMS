@@ -626,7 +626,7 @@
 					<td valign="top">
 						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />
 						&nbsp;&nbsp;
-						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="SubmitPageVisit()" Text="Apply and Visit" />
+						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="SubmitPageVisit()" Text="Save and Visit" />
 						&nbsp;&nbsp;
 						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 					</td>
