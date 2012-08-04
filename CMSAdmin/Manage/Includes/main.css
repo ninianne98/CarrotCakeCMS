@@ -128,6 +128,55 @@ a:hover {
 }
 
 
+.imgNoBorder {
+	padding: 0px;
+	margin: 0px;	
+	border: 0px solid #ffffff;
+	padding: 1px;
+}
+
+
+.pageNodeDrillDown1 {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+	min-height: 45px;
+}
+
+.pageNodeDrillDown2 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+}
+
+.pageNodeDrillDown3 {
+	padding: 4px;
+	margin: 2px;
+	float: left;
+	margin-right: 5px;
+}
+
+.pageNodeDrillDown4 {
+	padding: 0px;
+	margin: 2px;
+	position: relative;
+	width: 100px;
+}
+
+.pageNodeDrillDown5 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+	margin-top: 0px;	
+}
+
+.pageNodeDrillDown6 {
+	padding: 2px;
+	margin: 0px;
+}
+
+
+
 /* Footer */
 
 #footer {
@@ -142,9 +191,9 @@ a:hover {
 }
 
 
-
 /*  OTHER */
 
 .caption, .tablecaption {
 	font-weight: bold;
 }
+

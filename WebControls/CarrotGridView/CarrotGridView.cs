@@ -94,12 +94,19 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		private void SetData() {
+			int iCol = 0;
+			foreach (DataControlField c in this.Columns) {
+				if (c is CarrotHeaderSortTemplateField) {
+					CarrotHeaderSortTemplateField ctf = (CarrotHeaderSortTemplateField)c;
+					ctf.HeaderTemplate = new CarrotLinkButtonCmdTemplate("lnkHead", iCol, ctf.HeaderText, ctf.SortExpression);
+					iCol++;
+				}
+			}
 
 			if (!string.IsNullOrEmpty(DefaultSort)) {
 				Type theType = DataSource.GetType();
 
 				if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
-
 					IList lst = (IList)DataSource;
 					SortParm = DefaultSort;
 					var lstVals = SortDataListType(lst);
@@ -272,6 +279,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			WalkGridForHeadings(X, SortField, SortDir);
 		}
+
 
 		private void WalkGridForHeadings(Control X, string sSortFld, string sSortDir) {
 
