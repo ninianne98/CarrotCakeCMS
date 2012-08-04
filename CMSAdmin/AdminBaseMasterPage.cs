@@ -27,6 +27,7 @@ namespace Carrotware.CMS.UI.Admin {
 			Home,
 			Content,
 			UserAdmin,
+			GroupAdmin,
 			UserFn,
 			Modules
 		}

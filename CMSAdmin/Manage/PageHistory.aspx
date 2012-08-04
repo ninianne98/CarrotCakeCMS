@@ -17,7 +17,7 @@
 	<asp:Panel runat="server" ID="pnlDetail">
 		<p>
 			<asp:HyperLink ID="lnkReturn" runat="server" NavigateUrl="">
-			<img border="0" src="/manage/images/table_go.png" alt="Return" title="Return" /> Return to list</asp:HyperLink>
+			<img class="imgNoBorder" src="/manage/images/table_go.png" alt="Return" title="Return" /> Return to list</asp:HyperLink>
 		</p>
 		<p>
 			Edited On:
@@ -66,7 +66,7 @@
 				<Columns>
 					<asp:TemplateField>
 						<ItemTemplate>
-							<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./PageHistory.aspx?version={0}", Eval("ContentID")) %>'><img border="0" src="/Manage/images/layout_content.png" alt="Inspect Version" title="Inspect Version" /></asp:HyperLink>
+							<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./PageHistory.aspx?version={0}", Eval("ContentID")) %>'><img class="imgNoBorder" src="/Manage/images/layout_content.png" alt="Inspect Version" title="Inspect Version" /></asp:HyperLink>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField>

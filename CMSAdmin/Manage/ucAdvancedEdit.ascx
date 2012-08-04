@@ -544,8 +544,13 @@
 		$("#CMSmodalalert").dialog({
 			//autoOpen: false,
 			height: 400,
-			width: 600,
-			modal: true
+			width: 550,
+			modal: true,
+			buttons: {
+				"OK": function () {
+					$(this).dialog("close");
+				}
+			}
 		});
 
 		$("#CMSmodalalertmessage").html(request);

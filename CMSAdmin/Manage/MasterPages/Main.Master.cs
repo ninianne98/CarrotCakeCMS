@@ -15,6 +15,7 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!SiteData.IsAdmin) {
 				tabUserAdmin.Visible = false;
+				tabGroupAdmin.Visible = false;
 			}
 
 			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.MasterPages.Main.Ctrl");
@@ -62,6 +63,9 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 					break;
 				case SectionID.UserAdmin:
 					tabUserAdmin.Attributes["class"] = "current";
+					break;
+				case SectionID.GroupAdmin:
+					tabGroupAdmin.Attributes["class"] = "current";
 					break;
 				case SectionID.Modules:
 					tabModules.Attributes["class"] = "current";

@@ -274,6 +274,15 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.Button btnSaveButton;
         
         /// <summary>
+        /// btnSaveButtonVisit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveButtonVisit;
+        
+        /// <summary>
         /// chkDraft control.
         /// </summary>
         /// <remarks>
@@ -292,6 +301,15 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.DropDownList ddlVersions;
         
         /// <summary>
+        /// txtOldFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOldFile;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>
@@ -299,6 +317,15 @@ namespace Carrotware.CMS.UI.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
+        
+        /// <summary>
+        /// btnSaveVisit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveVisit;
         
         /// <summary>
         /// Master property.
