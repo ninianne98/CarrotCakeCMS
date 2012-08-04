@@ -21,6 +21,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			if (Request.QueryString["id"] != null) {
 				groupID = new Guid(Request.QueryString["id"]);
 			}
+			if (groupID == Guid.Empty) {
+				btnApply.Text = "Add";
+			}
 
 			if (!IsPostBack) {
 				if (groupID != Guid.Empty) {
