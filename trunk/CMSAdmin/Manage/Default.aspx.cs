@@ -37,6 +37,10 @@ namespace Carrotware.CMS.UI.Admin {
 					txtDescription.Text = site.MetaDescription;
 					chkHide.Checked = site.BlockIndex;
 				}
+
+				if (site == null) {
+					btnSave.Text = "Click to Create Site";
+				}
 			}
 
 			siteHelper.CleanUpSerialData();

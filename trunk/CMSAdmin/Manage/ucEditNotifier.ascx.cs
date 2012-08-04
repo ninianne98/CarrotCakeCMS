@@ -46,7 +46,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				var filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
 
 				List<SiteNav> lstNavTop = null;
-				if (filePage.Root_ContentID == CurrentPageID) {
+				if (filePage != null && filePage.Root_ContentID == CurrentPageID) {
 					lstNavTop = (from n in navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SiteData.IsAuthEditor)
 								 where n.Root_ContentID != CurrentPageID
 								 orderby n.NavOrder
