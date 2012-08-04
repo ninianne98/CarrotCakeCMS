@@ -68,8 +68,9 @@
 
 			var lstData = data.d;
 			var val = '';
+			var mnuName = '#' + menuPath;
 
-			$('#' + menuPath).text('');
+			$(mnuName).text('');
 
 			if (lstData.length > 0) {
 				$.each(lstData, function (i, v) {
@@ -78,27 +79,33 @@
 						del = '';
 					}
 					val = v.Root_ContentID;
-					var bc = "<div style='margin-right:5px; float:left' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + " </div>";
-					$('#' + menuPath).append("<div class='ui-widget-header  ui-corner-all' style='padding:4px; margin:2px; float:left' >" + bc + del + "<div  style='clear: both;'></div></div>");
+					var bc = "<div class='pageNodeDrillDown2' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + " </div>";
+					$(mnuName).append("<div class='ui-widget-header ui-corner-all pageNodeDrillDown3' >" + bc + del + "<div  style='clear: both;'></div></div>");
 				});
 			}
 
+			makeMenuClickable();
 		}
 
+		function makeMenuClickable() {
+			$('#PageContents a').each(function (i) {
+				$(this).click(function () {
+					cmsMakeOKToLeave();
+					setTimeout("cmsMakeNotOKToLeave();", 500);
+				});
+			});
+		}
 
 		function hideMnu() {
 			bHidden = true;
-			$('#' + menuOuter).attr('style', 'height:5px;');
-			$('#' + menuInner).attr('style', 'display:none;');
-			$('#' + menuOuter).attr('class', 'scrollcontainer');
-			//alert("hide");
+			$('#' + menuInner).attr('class', 'scroll scrollcontainerhide');
+			$('#' + menuOuter).attr('class', 'scrollcontainer scrollcontainerheight');
 		}
 
 		var bHidden = true;
 		function showMnu() {
 			if (bHidden == true) {
-				$('#' + menuOuter).attr('style', '');
-				$('#' + menuInner).attr('style', '');
+				$('#' + menuInner).attr('class', 'scroll');
 				$('#' + menuOuter).attr('class', 'scrollcontainer ui-widget ui-widget-content ui-corner-all');
 				bHidden = false;
 			}
@@ -145,18 +152,22 @@
 
 			var lstData = data.d;
 
-			$('#' + menuInner).html('');
+			var mnuName = '#' + menuInner;
+
+			$(mnuName).html('');
 			hideMnu();
 
 			$.each(lstData, function (i, v) {
 				//$('#returneditems').append(new Option(v.PageFile, v.Root_ContentID));
-				$('#' + menuInner).append("<div><a href='javascript:void(0);' onclick='selectItem(this);' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + "</a></div>");
+				$(mnuName).append("<div><a href='javascript:void(0);' onclick='selectItem(this);' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + "</a></div>");
 			});
 
 			showMnu();
-			if ($('#' + menuInner).text().length < 5) {
-				$('#' + menuInner).append("<div><b>No Data</b></div>");
+			if ($(mnuName).text().length < 2) {
+				$(mnuName).append("<div><b>No Data</b></div>");
 			}
+
+			makeMenuClickable();
 
 			bMoused = true;
 		}
@@ -326,6 +337,13 @@
 						setTimeout("cmsMakeNotOKToLeave();", 500);
 					});
 				});
+
+				$('#PageContents a').each(function (i) {
+					$(this).click(function () {
+						cmsMakeOKToLeave();
+						setTimeout("cmsMakeNotOKToLeave();", 500);
+					});
+				});
 			}
 		});
 
@@ -345,6 +363,12 @@
 			padding: 4px;
 			position: absolute;
 			z-index: 2000;
+		}
+		div.scrollcontainerhide {
+			display: none;
+		}
+		div.scrollcontainerheight {
+			height: 5px;
 		}
 		div.menuitems {
 			margin-top: 2px;
@@ -368,214 +392,218 @@
 				<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
 		</div>
 	</div>
-	<table width="700">
-		<tr>
-			<td width="125" class="tablecaption" valign="top">
-				last updated:
-			</td>
-			<td width="575" valign="top">
-				<table cellpadding="0" cellspacing="0">
-					<tr>
-						<td width="175" valign="top">
-							<asp:Label ID="lblUpdated" runat="server"></asp:Label>
-						</td>
-						<td width="175" valign="top">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</td>
-						<td width="100" valign="top">
-							<asp:CheckBox ID="chkActive" runat="server" Text="published" />
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				create date:
-			</td>
-			<td valign="top">
-				<asp:Label ID="lblCreatDate" runat="server"></asp:Label><br />
-				<br />
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				title bar:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				filename:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
-					Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
-					Display="Dynamic"></asp:RequiredFieldValidator>
-				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				navigation:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				page head:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
-				<%--<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
+	<div id="PageContents">
+		<table width="700">
+			<tr>
+				<td width="125" class="tablecaption" valign="top">
+					last updated:
+				</td>
+				<td width="575" valign="top">
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td width="175" valign="top">
+								<asp:Label ID="lblUpdated" runat="server"></asp:Label>
+							</td>
+							<td width="175" valign="top">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+							<td width="100" valign="top">
+								<asp:CheckBox ID="chkActive" runat="server" Text="published" />
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					create date:
+				</td>
+				<td valign="top">
+					<asp:Label ID="lblCreatDate" runat="server"></asp:Label><br />
+					<br />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					title bar:
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
+						Display="Dynamic"></asp:RequiredFieldValidator>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					filename:
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
+						Columns="45" MaxLength="200" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
+						Display="Dynamic"></asp:RequiredFieldValidator>
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
+						Display="Dynamic"></asp:RequiredFieldValidator>
+					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					navigation:
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
+						Display="Dynamic"></asp:RequiredFieldValidator>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					page head:
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
+					<%--<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
 					Display="Dynamic"></asp:RequiredFieldValidator>--%>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				meta keywords:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
-					Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				meta description:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
-					runat="server"></asp:TextBox>
-			</td>
-		</tr>
-		<tr>
-			<td class="tablecaption" valign="top">
-				sort:
-			</td>
-			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="10" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				parent page:
-			</td>
-			<td valign="top">
-				<asp:TextBox Style="display: none" runat="server" ID="txtParent" />
-				<div style="float: left;">
-					<div id="menupath" style="padding: 0px; float: left; min-height: 40px;">
-					</div>
-					<div style="float: left; padding: 0px;">
-						<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" style="position: relative; width: 100px" class="menuitems ui-widget-header ui-corner-all">
-							Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power">
-							</span></a>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					meta keywords:
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
+						Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					meta description:
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+						runat="server"></asp:TextBox>
+				</td>
+			</tr>
+			<tr>
+				<td class="tablecaption" valign="top">
+					sort:
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="10" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required"
+						Display="Dynamic"></asp:RequiredFieldValidator>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					parent page:
+				</td>
+				<td valign="top">
+					<asp:TextBox Style="display: none" runat="server" ID="txtParent" />
+					<div style="float: left;">
+						<div id="menupath" class="pageNodeDrillDown1">
 						</div>
-						<div id="menuitemsouter">
-							<div id="menuitemsinner" class="scroll">
+						<div class="pageNodeDrillDown5">
+							<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" class="menuitems pageNodeDrillDown4 ui-widget-header ui-corner-all">
+								<div class="pageNodeDrillDown6">
+									Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power">
+									</span></a>
+								</div>
+							</div>
+							<div id="menuitemsouter">
+								<div id="menuitemsinner" class="scroll">
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div style="clear: both; height: 2px;">
-				</div>
-				<%--<asp:DropDownList DataTextField="NavMenuText" DataValueField="Root_ContentID" ID="ddlParent" runat="server">
+					<div style="clear: both; height: 2px;">
+					</div>
+					<%--<asp:DropDownList DataTextField="NavMenuText" DataValueField="Root_ContentID" ID="ddlParent" runat="server">
 				</asp:DropDownList>--%>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-				template:
-			</td>
-			<td valign="top">
-				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
-				</asp:DropDownList>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="tablecaption">
-			</td>
-			<td valign="top" align="right">
-				<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
-			</td>
-		</tr>
-	</table>
-	<br />
-	<div id="jqtabs" style="height: 400px; width: 825px;">
-		<ul>
-			<li><a href="#pagecontent-tabs-0">Left</a></li>
-			<li><a href="#pagecontent-tabs-1">Center</a></li>
-			<li><a href="#pagecontent-tabs-3">Right</a></li>
-		</ul>
-		<div id="pagecontent-tabs-0">
-			<div style="height: 325px; margin-bottom: 10px;">
-				<div runat="server" id="divLeft">
-					body (left)<br />
-					<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-				<br />
-			</div>
-		</div>
-		<div id="pagecontent-tabs-1">
-			<div style="height: 310px; margin-bottom: 10px;">
-				<div runat="server" id="divCenter">
-					body (main/center)<br />
-					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-				<br />
-			</div>
-		</div>
-		<div id="pagecontent-tabs-3">
-			<div style="height: 310px; margin-bottom: 10px;">
-				<div runat="server" id="divRight">
-					body (right)<br />
-					<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-				<br />
-			</div>
-		</div>
-	</div>
-	<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
-		&nbsp;</div>
-	<asp:Panel ID="pnlButtons" runat="server">
-		<table width="800">
+				</td>
+			</tr>
 			<tr>
-				<td valign="top">
-					<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
+				<td valign="top" class="tablecaption">
+					template:
 				</td>
 				<td valign="top">
-					<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
-				</td>
-				<td valign="top">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</td>
-				<td valign="top" align="right">
-					<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
+					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 					</asp:DropDownList>
 				</td>
-				<td valign="top">
-					&nbsp;&nbsp;
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
 				</td>
-				<td valign="top" align="left">
-					<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
+				<td valign="top" align="right">
+					<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
 				</td>
 			</tr>
 		</table>
-	</asp:Panel>
+		<br />
+		<div id="jqtabs" style="height: 400px; width: 825px;">
+			<ul>
+				<li><a href="#pagecontent-tabs-0">Left</a></li>
+				<li><a href="#pagecontent-tabs-1">Center</a></li>
+				<li><a href="#pagecontent-tabs-3">Right</a></li>
+			</ul>
+			<div id="pagecontent-tabs-0">
+				<div style="height: 325px; margin-bottom: 10px;">
+					<div runat="server" id="divLeft">
+						body (left)<br />
+						<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
+					<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+					<br />
+				</div>
+			</div>
+			<div id="pagecontent-tabs-1">
+				<div style="height: 310px; margin-bottom: 10px;">
+					<div runat="server" id="divCenter">
+						body (main/center)<br />
+						<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
+					<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+					<br />
+				</div>
+			</div>
+			<div id="pagecontent-tabs-3">
+				<div style="height: 310px; margin-bottom: 10px;">
+					<div runat="server" id="divRight">
+						body (right)<br />
+						<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
+					<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+					<br />
+				</div>
+			</div>
+		</div>
+		<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
+			&nbsp;</div>
+		<asp:Panel ID="pnlButtons" runat="server">
+			<table width="800">
+				<tr>
+					<td valign="top">
+						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
+					</td>
+					<td valign="top">
+						<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
+					</td>
+					<td valign="top">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</td>
+					<td valign="top" align="right">
+						<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
+						</asp:DropDownList>
+					</td>
+					<td valign="top">
+						&nbsp;&nbsp;
+					</td>
+					<td valign="top" align="left">
+						<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
+					</td>
+				</tr>
+			</table>
+		</asp:Panel>
+	</div>
 	<script language="javascript" type="text/javascript">
 		function cmsPageVersionNav() {
 			var qs = $('#<%= ddlVersions.ClientID %>').val();

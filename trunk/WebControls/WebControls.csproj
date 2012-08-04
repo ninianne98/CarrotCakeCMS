@@ -79,7 +79,9 @@
       <DependentUpon>CAPTCHA.aspx.cs</DependentUpon>
     </Compile>
     <Compile Include="captcha\CaptchaImage.cs" />
-    <Compile Include="CarrotGridView.cs" />
+    <Compile Include="CarrotGridView\CarrotGridView.cs" />
+    <Compile Include="CarrotGridView\CarrotLinkButtonCmdTemplate.cs" />
+    <Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
     <Compile Include="CarrotHttpHandler.cs" />
     <Compile Include="jquery.cs" />
     <Compile Include="jquerybasic.cs" />

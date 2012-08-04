@@ -322,7 +322,7 @@ namespace Carrotware.CMS.UI.Admin {
 								 || (ct.Parent_ContentID == null && ParentID == Guid.Empty))
 					   select new SiteMapOrder {
 						   NavLevel = -1,
-						   NavMenuText = ct.NavMenuText,
+						   NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
 						   NavOrder = ct.NavOrder,
 						   PageActive = Convert.ToBoolean(r.PageActive),
 						   Parent_ContentID = ct.Parent_ContentID,
@@ -376,7 +376,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 							select new SiteMapOrder {
 								NavLevel = iLevel,
-								NavMenuText = ct.NavMenuText,
+								NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
 								NavOrder = ct.NavOrder,
 								PageActive = Convert.ToBoolean(r.PageActive),
 								Parent_ContentID = ct.Parent_ContentID,
