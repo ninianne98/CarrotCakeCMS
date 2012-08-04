@@ -35,9 +35,14 @@
 			$("#CMSmodalalertmessage").html(request);
 
 			$("#CMSmodalalert").dialog({
-				height: 450,
+				height: 400,
 				width: 550,
-				modal: true
+				modal: true,
+				buttons: {
+					"OK": function () {
+						$(this).dialog("close");
+					}
+				}
 			});
 		}
 
@@ -184,6 +189,41 @@
 			getCrumbs();
 		}
 
+
+		function openPage() {
+			var theURL = $('#<%= txtOldFile.ClientID %>').val();
+
+			if (theURL.length > 3) {
+				$("#CMScancelconfirmmsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
+
+				$("#CMScancelconfirm").dialog("destroy");
+
+				$("#CMScancelconfirm").dialog({
+					open: function () {
+						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+					},
+
+					resizable: false,
+					height: 350,
+					width: 450,
+					modal: true,
+					buttons: {
+						"No": function () {
+							$(this).dialog("close");
+						},
+						"Yes": function () {
+							cmsMakeOKToLeave();
+							cmsRecordCancellation();
+							window.setTimeout("location.href = '" + theURL + "';", 800);
+							$(this).dialog("close");
+						}
+					}
+				});
+			} else {
+				cmsAlertModal("No saved page to show.");
+			}
+		}
+
 		function CheckFileName() {
 			thePage = $('#<%= txtFileName.ClientID %>').val();
 
@@ -246,6 +286,8 @@
 		});
 
 		function cancelEditing() {
+
+			$("#CMScancelconfirmmsg").text('Are you sure you want to leave the editor? All changes will be lost!');
 
 			$("#CMScancelconfirm").dialog("destroy");
 
@@ -355,14 +397,14 @@
 			overflow: auto;
 			padding: 2px;
 			position: absolute;
-			z-index: 2000;
+			z-index: 999;
 		}
 		div.scrollcontainer {
 			height: 100px;
 			width: 350px;
 			padding: 4px;
 			position: absolute;
-			z-index: 2000;
+			z-index: 999;
 		}
 		div.scrollcontainerhide {
 			display: none;
@@ -439,7 +481,8 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
-						Columns="45" MaxLength="200" />
+						Columns="45" MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
+							<img class="imgNoBorder" src="/Manage/images/html.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
@@ -575,13 +618,16 @@
 				</div>
 			</div>
 		</div>
-		<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px;">
+		<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; min-height: 22px;">
 			&nbsp;</div>
 		<asp:Panel ID="pnlButtons" runat="server">
-			<table width="800">
+			<table width="900">
 				<tr>
 					<td valign="top">
-						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />
+						&nbsp;&nbsp;
+						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="SubmitPageVisit()" Text="Apply and Visit" />
+						&nbsp;&nbsp;
 						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 					</td>
 					<td valign="top">
@@ -604,7 +650,7 @@
 			</table>
 		</asp:Panel>
 	</div>
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 		function cmsPageVersionNav() {
 			var qs = $('#<%= ddlVersions.ClientID %>').val();
 
@@ -638,14 +684,16 @@
 	</script>
 	<br />
 	<div style="display: none">
-		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
+		<asp:TextBox ID="txtOldFile" runat="server"></asp:TextBox>
+		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save 1" />
+		<asp:Button ValidationGroup="inputForm" ID="btnSaveVisit" runat="server" OnClick="btnSaveVisit_Click" Text="Save 2" />
 		<div id="CMSmodalalert" title="CMS Alert">
 			<p id="CMSmodalalertmessage">
 				&nbsp;</p>
 		</div>
 		<div id="CMScancelconfirm" title="Quit Editor?">
 			<p id="CMScancelconfirmmsg">
-				Are you sure you want to leave the editor? All changes will be lost!</p>
+				Are you sure you want cancel?</p>
 		</div>
 		<div id="confirmRevert" title="Really Revert?">
 			<div id="confirmRevertMsg">
@@ -673,14 +721,30 @@
 		var saving = 0;
 
 		function SubmitPage() {
+			SaveCommon();
+			setTimeout("ClickSaveBtn();", 1500);
+		}
+
+		function SubmitPageVisit() {
+			SaveCommon();
+			setTimeout("ClickSaveVisitBtn();", 1500);
+		}
+
+		function SaveCommon() {
 			saving = 1;
 			tinyMCE.triggerSave();
 			CheckFileName();
-			setTimeout("ClickBtn();", 1500);
 		}
-		function ClickBtn() {
+
+		function ClickSaveBtn() {
 			cmsMakeOKToLeave();
 			$('#<%=btnSave.ClientID %>').click();
+			setTimeout("cmsMakeNotOKToLeave();", 1500);
+		}
+		function ClickSaveVisitBtn() {
+			cmsMakeOKToLeave();
+			$('#<%=btnSaveVisit.ClientID %>').click();
+			setTimeout("cmsMakeNotOKToLeave();", 1500);
 		}
 	</script>
 	<script type="text/javascript">

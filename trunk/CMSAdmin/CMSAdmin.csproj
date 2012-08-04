@@ -277,6 +277,20 @@
     <Compile Include="Manage\UserAdd.aspx.designer.cs">
       <DependentUpon>UserAdd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\UserGroupAddEdit.aspx.cs">
+      <DependentUpon>UserGroupAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\UserGroupAddEdit.aspx.designer.cs">
+      <DependentUpon>UserGroupAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\UserGroups.aspx.cs">
+      <DependentUpon>UserGroups.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\UserGroups.aspx.designer.cs">
+      <DependentUpon>UserGroups.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\UserMembership.aspx.cs">
       <DependentUpon>UserMembership.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -335,6 +349,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="Manage\Images\user.png" />
+    <Content Include="Manage\Images\user_gray.png" />
+    <Content Include="Manage\Images\user_orange.png" />
+    <Content Include="Manage\Images\user_red.png" />
     <Content Include="Manage\PageTemplateUpdate.aspx" />
     <Content Include="Manage\PageAddChild.aspx" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />
@@ -601,6 +619,8 @@
     <Content Include="Manage\tiny_mce\utils\mctabs.js" />
     <Content Include="Manage\tiny_mce\utils\validate.js" />
     <Content Include="Manage\ucPageMenuItems.ascx" />
+    <Content Include="Manage\UserGroupAddEdit.aspx" />
+    <Content Include="Manage\UserGroups.aspx" />
     <Content Include="Manage\WidgetHistory.aspx" />
     <Content Include="Manage\WidgetList.aspx" />
     <Content Include="SiteSkins.config" />

@@ -75,6 +75,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 					guidRootContentID = pageContents.Root_ContentID;
 
+					txtOldFile.Text = pageContents.FileName;
+
 					var lstVer = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
 
 					ddlVersions.DataSource = (from v in lstVer
@@ -141,8 +143,15 @@ namespace Carrotware.CMS.UI.Admin {
 
 		}
 
-
 		protected void btnSave_Click(object sender, EventArgs e) {
+			SavePage(false);
+		}
+
+		protected void btnSaveVisit_Click(object sender, EventArgs e) {
+			SavePage(true);
+		}
+
+		protected void SavePage(bool bRedirect) {
 
 			ContentPage pageContents = null;
 			if (guidVersionContentID != Guid.Empty) {
@@ -194,10 +203,14 @@ namespace Carrotware.CMS.UI.Admin {
 				pageContents.SavePageAsDraft();
 			}
 
-			if (sPageMode.Length < 1) {
-				Response.Redirect(SiteData.CurrentScriptName + "?id=" + pageContents.Root_ContentID.ToString());
+			if (!bRedirect) {
+				if (sPageMode.Length < 1) {
+					Response.Redirect(SiteData.CurrentScriptName + "?id=" + pageContents.Root_ContentID.ToString());
+				} else {
+					Response.Redirect(SiteData.CurrentScriptName + "?mode=raw&id=" + pageContents.Root_ContentID.ToString());
+				}
 			} else {
-				Response.Redirect(SiteData.CurrentScriptName + "?mode=raw&id=" + pageContents.Root_ContentID.ToString());
+				Response.Redirect(pageContents.FileName);
 			}
 		}
 

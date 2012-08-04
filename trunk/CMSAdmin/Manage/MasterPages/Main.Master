@@ -349,9 +349,9 @@
 				<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Pages</a> </li>
 				<li runat="server" id="tabModules"><a href="/Manage/ModuleIndex.aspx">Modules</a> </li>
 				<li><a href="javascript:void(0)" class="lnkPopup" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
-				<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Manage Users</a> </li>
-				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">Profile</a>
-				</li>
+				<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Users</a> </li>
+				<li runat="server" id="tabGroupAdmin"><a href="/Manage/UserGroups.aspx">Groups</a> </li>
+				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">My Profile</a> </li>
 				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
 				<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
 				<li>

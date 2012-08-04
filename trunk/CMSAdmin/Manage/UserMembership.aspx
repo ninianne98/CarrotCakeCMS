@@ -1,4 +1,4 @@
-<%@ Page Title="Membership" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs"
+<%@ Page Title="Manage Users" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.UserMembership" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -10,7 +10,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
 		<a href="./UserAdd.aspx">
-			<img border="0" src="/manage/images/add.png" alt="Add" title="Add" />
+			<img class="imgNoBorder" src="/manage/images/add.png" alt="Add" title="Add" />
 			Add User</a>
 	</p>
 	<div id="SortableGrid">
@@ -19,42 +19,30 @@
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./User.aspx?id={0}", Eval("ProviderUserKey")) %>'><img border="0" src="/Manage/images/application_edit.png" alt="Edit" title="Edit" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./User.aspx?id={0}", Eval("ProviderUserKey")) %>'><img class="imgNoBorder" src="/Manage/images/application_edit.png" alt="Edit" title="Edit" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						<asp:LinkButton ID="lnkHead1" runat="server" CommandName="username">Username</asp:LinkButton>
-					</HeaderTemplate>
+				<carrot:CarrotHeaderSortTemplateField SortExpression="username" HeaderText="Username">
 					<ItemTemplate>
 						<%# Eval("UserName")%>
 					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						<asp:LinkButton ID="lnkHead2" runat="server" CommandName="Email">Email</asp:LinkButton>
-					</HeaderTemplate>
+				</carrot:CarrotHeaderSortTemplateField>
+				<carrot:CarrotHeaderSortTemplateField SortExpression="Email" HeaderText="Email">
 					<ItemTemplate>
 						<%# Eval("Email")%>
 					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						<asp:LinkButton ID="lnkHead3" runat="server" CommandName="CreationDate">Created On</asp:LinkButton>
-					</HeaderTemplate>
+				</carrot:CarrotHeaderSortTemplateField>
+				<carrot:CarrotHeaderSortTemplateField SortExpression="CreationDate" HeaderText="Created On">
 					<ItemTemplate>
 						<%# string.Format("{0:d}", Eval("CreationDate") )%>
 					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField ItemStyle-HorizontalAlign="Center">
-					<HeaderTemplate>
-						<asp:LinkButton ID="lnkHead4" runat="server" CommandName="IsLockedOut">Status</asp:LinkButton>
-					</HeaderTemplate>
+				</carrot:CarrotHeaderSortTemplateField>
+				<carrot:CarrotHeaderSortTemplateField SortExpression="IsLockedOut" HeaderText="Status" ItemStyle-HorizontalAlign="Center">
 					<ItemTemplate>
-						<asp:Image ID="imgLocked" runat="server" ImageUrl="/Manage/images/user_green.png" AlternateText="Unlocked" />
+						<asp:Image ID="imgLocked" runat="server" ImageUrl="/Manage/images/user.png" AlternateText="Unlocked" />
 						<asp:HiddenField ID="hdnIsLockedOut" Visible="false" runat="server" Value='<%#Eval("IsLockedOut") %>' />
 					</ItemTemplate>
-				</asp:TemplateField>
+				</carrot:CarrotHeaderSortTemplateField>
 			</Columns>
 		</carrot:CarrotGridView>
 		<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/Manage/images/lock.png" />
