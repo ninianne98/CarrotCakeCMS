@@ -106,33 +106,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 		private void SaveSerialized(string sKey, string sData) {
-			bool bAdd = false;
 			LoadGuids();
 
-			var itm = (from c in db.tblSerialCaches
-					   where c.ItemID == CurrentPageGuid
-					   && c.EditUserId == SiteData.CurrentUserGuid
-					   && c.KeyType == sKey
-					   && c.SiteID == SiteData.CurrentSiteID
-					   select c).FirstOrDefault();
-
-			if (itm == null) {
-				bAdd = true;
-				itm = new tblSerialCache();
-				itm.SerialCacheID = Guid.NewGuid();
-				itm.SiteID = SiteData.CurrentSiteID;
-				itm.ItemID = CurrentPageGuid;
-				itm.EditUserId = SiteData.CurrentUserGuid;
-				itm.KeyType = sKey;
-			}
-
-			itm.SerializedData = sData;
-			itm.EditDate = DateTime.Now;
-
-			if (bAdd) {
-				db.tblSerialCaches.InsertOnSubmit(itm);
-			}
-			db.SubmitChanges();
+			CMSConfigHelper.SaveSerialized(CurrentPageGuid, sKey, sData);
 		}
 
 
@@ -140,16 +116,7 @@ namespace Carrotware.CMS.UI.Admin {
 			string sData = "";
 			LoadGuids();
 
-			var itm = (from c in db.tblSerialCaches
-					   where c.ItemID == CurrentPageGuid
-					   && c.EditUserId == SiteData.CurrentUserGuid
-					   && c.KeyType == sKey
-					   && c.SiteID == SiteData.CurrentSiteID
-					   select c).FirstOrDefault();
-
-			if (itm != null) {
-				sData = itm.SerializedData;
-			}
+			sData = CMSConfigHelper.GetSerialized(CurrentPageGuid, sKey);
 
 			return sData;
 		}
@@ -158,20 +125,7 @@ namespace Carrotware.CMS.UI.Admin {
 		private bool ClearSerialized(string sKey) {
 			LoadGuids();
 
-			var itm = (from c in db.tblSerialCaches
-					   where c.ItemID == CurrentPageGuid
-					   && c.EditUserId == SiteData.CurrentUserGuid
-					   && c.KeyType == sKey
-					   && c.SiteID == SiteData.CurrentSiteID
-					   select c).FirstOrDefault();
-
-			if (itm != null) {
-				db.tblSerialCaches.DeleteOnSubmit(itm);
-				db.SubmitChanges();
-				return true;
-			}
-
-			return false;
+			return CMSConfigHelper.ClearSerialized(CurrentPageGuid, sKey); ;
 		}
 
 		private void LoadGuids() {
