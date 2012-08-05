@@ -123,12 +123,9 @@ namespace Carrotware.Web.UI.Controls {
 			IList query = null;
 			List<object> d = lst.Cast<object>().ToList();
 			IEnumerable<object> enuQueryable = d.AsQueryable();
-			if (lst != null) {
-				if (lst.Count > 0) {
-					SortField = GetProperties(d[0]).Where(x => x.ToLower() == SortField.ToLower()).FirstOrDefault();
-				} else {
-					SortField = string.Empty;
-				}
+
+			if (lst != null && lst.Count > 0) {
+				SortField = GetProperties(d[0]).Where(x => x.ToLower() == SortField.ToLower()).FirstOrDefault();
 			} else {
 				SortField = string.Empty;
 			}

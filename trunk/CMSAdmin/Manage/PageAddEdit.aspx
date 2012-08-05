@@ -480,8 +480,8 @@
 					filename:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
-						Columns="45" MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
+						MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
 							<img class="imgNoBorder" src="/Manage/images/html.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
@@ -515,8 +515,8 @@
 					meta keywords:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
-						Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
+						TextMode="MultiLine" runat="server"></asp:TextBox>
 				</td>
 			</tr>
 			<tr>
@@ -524,16 +524,15 @@
 					meta description:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
-						runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
 				</td>
 			</tr>
-			<tr>
+			<tr style="display: none">
 				<td class="tablecaption" valign="top">
 					sort:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="10" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
+					<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="1" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 				</td>
@@ -550,8 +549,8 @@
 						<div class="pageNodeDrillDown5">
 							<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" class="menuitems pageNodeDrillDown4 ui-widget-header ui-corner-all">
 								<div class="pageNodeDrillDown6">
-									Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power">
-									</span></a>
+									Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power"></span>
+									</a>
 								</div>
 							</div>
 							<div id="menuitemsouter">
