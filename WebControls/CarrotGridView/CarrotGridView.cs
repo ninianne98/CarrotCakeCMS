@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Reflection;
+using System.Data;
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -113,9 +114,52 @@ namespace Carrotware.Web.UI.Controls {
 
 					DataSource = lstVals;
 				}
+
+				if (DataSource is DataSet || theType.Name.ToLower() == "dataset") {
+					DataSet ds = (DataSet)DataSource;
+					if (ds.Tables.Count > 0) {
+						SortParm = DefaultSort;
+						DataTable dt = ds.Tables[0];
+						var dsVals = SortDataTable(dt);
+
+						DataSource = dsVals;
+					}
+				}
+
+				if (DataSource is DataTable || theType.Name.ToLower() == "datatable") {
+					DataTable dt = (DataTable)DataSource;
+					SortParm = DefaultSort;
+					var dsVals = SortDataTable(dt);
+
+					DataSource = dsVals;
+				}
 			}
 		}
 
+
+		public DataTable SortDataTable(DataTable dt) {
+
+			DataTable dtNew = dt.Clone();
+
+			if (!string.IsNullOrEmpty(SortField)) {
+
+				dtNew.DefaultView.RowFilter = dt.DefaultView.RowFilter;
+				DataRow[] copyRows = dt.DefaultView.Table.Select(dt.DefaultView.RowFilter, SortField + "   " + SortDir);
+
+				int iTotal = dt.Rows.Count;
+
+				for (int t = 0; t < iTotal; t++) {
+					DataRow copyRow = copyRows[t];
+					dtNew.ImportRow(copyRow);
+				}
+
+				return dtNew;
+			} else {
+
+				return dt;
+			}
+
+		}
 
 
 		public IList SortDataListType(IList lst) {
@@ -171,6 +215,15 @@ namespace Carrotware.Web.UI.Controls {
 			Type theType = DataSource.GetType();
 			if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
 				data = (IList)DataSource;
+			}
+
+			if (DataSource is DataSet || theType.Name.ToLower() == "dataset") {
+				if (((DataSet)DataSource).Tables.Count > 0) {
+					data = ((DataSet)DataSource).Tables[0].AsDataView();
+				}
+			}
+			if (DataSource is DataTable || theType.Name.ToLower() == "datatable") {
+				data = ((DataTable)DataSource).AsDataView();
 			}
 
 			base.PerformDataBinding(data);
