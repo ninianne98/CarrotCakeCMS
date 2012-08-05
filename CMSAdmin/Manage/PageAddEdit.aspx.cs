@@ -42,6 +42,10 @@ namespace Carrotware.CMS.UI.Admin {
 				guidVersionContentID = new Guid(Request.QueryString["versionid"].ToString());
 			}
 
+			if (pageHelper.GetSitePageCount(SiteData.CurrentSiteID) < 1) {
+				txtSort.Text = "0";
+			}
+
 			if (!string.IsNullOrEmpty(Request.QueryString["mode"])) {
 				sPageMode = Request.QueryString["mode"].ToString();
 				if (sPageMode.ToLower() == "raw") {

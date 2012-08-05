@@ -403,6 +403,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public int GetSitePageCount(Guid siteID) {
+			int content = (from r in db.tblRootContents
+						   where r.SiteID == siteID
+						   select r).Count();
+			return content;
+		}
+
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
 			ContentPage content = (from ct in db.tblContents
 								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
