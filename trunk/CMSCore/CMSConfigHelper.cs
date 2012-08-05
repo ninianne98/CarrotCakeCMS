@@ -515,7 +515,79 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private Guid SiteID { get { return SiteData.CurrentSiteID; } }
+
+		public static void SaveSerialized(Guid itemID, string sKey, string sData) {
+
+			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+				bool bAdd = false;
+
+				var itm = (from c in _db.tblSerialCaches
+						   where c.ItemID == itemID
+						   && c.EditUserId == SiteData.CurrentUserGuid
+						   && c.KeyType == sKey
+						   && c.SiteID == SiteData.CurrentSiteID
+						   select c).FirstOrDefault();
+
+				if (itm == null) {
+					bAdd = true;
+					itm = new tblSerialCache();
+					itm.SerialCacheID = Guid.NewGuid();
+					itm.SiteID = SiteData.CurrentSiteID;
+					itm.ItemID = itemID;
+					itm.EditUserId = SiteData.CurrentUserGuid;
+					itm.KeyType = sKey;
+				}
+
+				itm.SerializedData = sData;
+				itm.EditDate = DateTime.Now;
+
+				if (bAdd) {
+					_db.tblSerialCaches.InsertOnSubmit(itm);
+				}
+				_db.SubmitChanges();
+			}
+		}
+
+
+		public static string GetSerialized(Guid itemID, string sKey) {
+			string sData = "";
+			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+
+				var itm = (from c in _db.tblSerialCaches
+						   where c.ItemID == itemID
+						   && c.EditUserId == SiteData.CurrentUserGuid
+						   && c.KeyType == sKey
+						   && c.SiteID == SiteData.CurrentSiteID
+						   select c).FirstOrDefault();
+
+				if (itm != null) {
+					sData = itm.SerializedData;
+				}
+			}
+			return sData;
+		}
+
+
+		public static bool ClearSerialized(Guid itemID, string sKey) {
+			bool bRet = false;
+			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+				var itm = (from c in _db.tblSerialCaches
+						   where c.ItemID == itemID
+						   && c.EditUserId == SiteData.CurrentUserGuid
+						   && c.KeyType == sKey
+						   && c.SiteID == SiteData.CurrentSiteID
+						   select c).FirstOrDefault();
+
+				if (itm != null) {
+					_db.tblSerialCaches.DeleteOnSubmit(itm);
+					_db.SubmitChanges();
+					bRet = true;
+				}
+			}
+			return bRet;
+		}
+
+
 
 		private void SaveSerialized(string sKey, string sData) {
 			bool bAdd = false;
@@ -525,7 +597,7 @@ namespace Carrotware.CMS.Core {
 					   where c.ItemID == filePage.Root_ContentID
 					   && c.EditUserId == SiteData.CurrentUserGuid
 					   && c.KeyType == sKey
-					   && c.SiteID == SiteID
+					   && c.SiteID == SiteData.CurrentSiteID
 					   select c).FirstOrDefault();
 
 			if (itm == null) {
