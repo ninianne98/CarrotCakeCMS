@@ -28,14 +28,31 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPageExport(Guid rootContentID) {
+			ContentPage cp = null;
+			List<PageWidget> widgets = null;
 
 			using (ContentPageHelper cph = new ContentPageHelper()) {
-				ThePage = cph.GetLatestContent(SiteData.CurrentSiteID, rootContentID);
+				cp = cph.GetLatestContent(SiteData.CurrentSiteID, rootContentID);
 			}
 
 			using (PageWidgetHelper pwh = new PageWidgetHelper()) {
-				ThePageWidgets = pwh.GetWidgets(rootContentID, null);
+				widgets = pwh.GetWidgets(rootContentID, null);
 			}
+
+			SetVals(cp, widgets);
+		}
+
+		public ContentPageExport(ContentPage cp, List<PageWidget> widgets) {
+
+			SetVals(cp, widgets);
+		}
+
+		private void SetVals(ContentPage cp, List<PageWidget> widgets) {
+
+			NewRootContentID = Guid.NewGuid();
+
+			ThePage = cp;
+			ThePageWidgets = widgets;
 
 			if (ThePage == null) {
 				ThePage = new ContentPage();
@@ -50,7 +67,7 @@ namespace Carrotware.CMS.Core {
 			OriginalParentContentID = Guid.Empty;
 			ParentFileName = "";
 
-			if (ThePage.Parent_ContentID !=null) {
+			if (ThePage.Parent_ContentID != null) {
 				var parent = new ContentPage();
 				using (ContentPageHelper cph = new ContentPageHelper()) {
 					parent = cph.GetLatestContent(SiteData.CurrentSiteID, (Guid)ThePage.Parent_ContentID);
@@ -59,14 +76,18 @@ namespace Carrotware.CMS.Core {
 				OriginalParentContentID = parent.Root_ContentID;
 			}
 
-			ThePage.Root_ContentID = Guid.NewGuid();
-			ThePage.ContentID = ThePage.Root_ContentID;
+			ThePage.Root_ContentID = NewRootContentID;
+			ThePage.ContentID = NewRootContentID;
+			ThePage.CreateDate = DateTime.Now;
 
 			foreach (var w in ThePageWidgets) {
-				w.Root_ContentID = ThePage.Root_ContentID;
+				w.Root_ContentID = NewRootContentID;
 				w.Root_WidgetID = Guid.NewGuid();
+				w.WidgetDataID = Guid.NewGuid();
 			}
 		}
+
+		public Guid NewRootContentID { get; set; }
 
 		public Guid OriginalRootContentID { get; set; }
 
@@ -77,6 +98,23 @@ namespace Carrotware.CMS.Core {
 		public ContentPage ThePage { get; set; }
 
 		public List<PageWidget> ThePageWidgets { get; set; }
+
+
+		public static void AssignNewIDs(ContentPageExport cpe) {
+			cpe.NewRootContentID = Guid.NewGuid();
+
+			cpe.ThePage.Root_ContentID = cpe.NewRootContentID;
+			cpe.ThePage.ContentID = cpe.NewRootContentID;
+			cpe.ThePage.SiteID = SiteData.CurrentSiteID;
+			cpe.ThePage.EditUserId = SiteData.CurrentUserGuid;
+			cpe.ThePage.CreateDate = DateTime.Now;
+
+			foreach (var w in cpe.ThePageWidgets) {
+				w.Root_ContentID = cpe.NewRootContentID;
+				w.Root_WidgetID = Guid.NewGuid();
+				w.WidgetDataID = Guid.NewGuid();
+			}
+		}
 
 
 		public static ContentPageExport GetExportPage(Guid rootContentID) {
@@ -101,6 +139,10 @@ namespace Carrotware.CMS.Core {
 			ContentPageExport cpe = GetExportPage(rootContentID);
 
 			return GetExportXML(cpe);
+		}
+
+		public static void RemoveSerializedContentPageExport(Guid rootContentID) {
+			CMSConfigHelper.ClearSerialized(rootContentID, "cmsContentPageExport");
 		}
 
 		public static void SaveSerializedContentPageExport(ContentPageExport cpe) {
