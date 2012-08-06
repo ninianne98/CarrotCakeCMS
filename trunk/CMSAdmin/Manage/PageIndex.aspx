@@ -27,6 +27,11 @@
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
+						<asp:HyperLink runat="server" ID="lnkEdit4" Target="_blank" NavigateUrl='<%#  String.Format("./PageExport.aspx?id={0}", Eval("Root_ContentID")) %>'><img  class="imgNoBorder"  src="/Manage/images/html_go.png" alt="Export latest version of this page" title="Export latest version of this page" /></asp:HyperLink>
+					</ItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField>
+					<ItemTemplate>
 						<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit3" NavigateUrl='<%#  String.Format("{0}?carrotedit=true", Eval("FileName")) %>'><img  class="imgNoBorder"  src="/Manage/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>

@@ -56,9 +56,10 @@ namespace Carrotware.CMS.UI.Admin {
 				try {
 					var sXML = GetSerialized("cmsAdminContent");
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					StringReader stringReader = new StringReader(sXML);
-					Object genpref = xmlSerializer.Deserialize(stringReader);
-					stringReader.Close();
+					Object genpref = null;
+					using (StringReader stringReader = new StringReader(sXML)) {
+						genpref = xmlSerializer.Deserialize(stringReader);
+					}
 					c = genpref as ContentPage;
 				} catch { }
 				return c;
@@ -67,11 +68,12 @@ namespace Carrotware.CMS.UI.Admin {
 				if (value == null) {
 					ClearSerialized("cmsAdminContent");
 				} else {
+					string sXML = "";
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					StringWriter stringWriter = new StringWriter();
-					xmlSerializer.Serialize(stringWriter, value);
-					string sXML = stringWriter.ToString();
-					stringWriter.Close();
+					using (StringWriter stringWriter = new StringWriter()) {
+						xmlSerializer.Serialize(stringWriter, value);
+						sXML = stringWriter.ToString();
+					}
 					SaveSerialized("cmsAdminContent", sXML);
 
 				}
@@ -83,9 +85,10 @@ namespace Carrotware.CMS.UI.Admin {
 				List<PageWidget> c = null;
 				var sXML = GetSerialized("cmsAdminWidget");
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
-				StringReader stringReader = new StringReader(sXML);
-				Object genpref = xmlSerializer.Deserialize(stringReader);
-				stringReader.Close();
+				Object genpref = null;
+				using (StringReader stringReader = new StringReader(sXML)) {
+					genpref = xmlSerializer.Deserialize(stringReader);
+				}
 				c = genpref as List<PageWidget>;
 				return c;
 			}
@@ -93,11 +96,12 @@ namespace Carrotware.CMS.UI.Admin {
 				if (value == null) {
 					ClearSerialized("cmsAdminWidget");
 				} else {
+					string sXML = "";
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
-					StringWriter stringWriter = new StringWriter();
-					xmlSerializer.Serialize(stringWriter, value);
-					string sXML = stringWriter.ToString();
-					stringWriter.Close();
+					using (StringWriter stringWriter = new StringWriter()) {
+						xmlSerializer.Serialize(stringWriter, value);
+						sXML = stringWriter.ToString();
+					}
 					SaveSerialized("cmsAdminWidget", sXML);
 
 				}
