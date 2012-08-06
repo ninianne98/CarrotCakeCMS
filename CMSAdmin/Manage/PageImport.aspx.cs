@@ -38,11 +38,16 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 
 			if (!string.IsNullOrEmpty(sXML)) {
-				ContentPageExport cph = ContentPageExport.GetSerializedContentPageExport(sXML);
-				ContentPageExport.AssignNewIDs(cph);
-				ContentPageExport.SaveSerializedContentPageExport(cph);
+				try {
+					ContentPageExport cph = ContentPageExport.GetSerializedContentPageExport(sXML);
+					ContentPageExport.AssignNewIDs(cph);
+					ContentPageExport.SaveSerializedContentPageExport(cph);
 
-				Response.Redirect("./PageAddEdit.aspx?importid=" + cph.NewRootContentID.ToString());
+					Response.Redirect("./PageAddEdit.aspx?importid=" + cph.NewRootContentID.ToString());
+				} catch (Exception ex) {
+					lblWarning.Text = ex.ToString();
+					lblWarning.Attributes["style"] = "color: #990000;";
+				}
 
 			} else {
 				lblWarning.Text = "No file appeared in the upload queue.";
