@@ -101,6 +101,10 @@ namespace Carrotware.CMS.UI.Admin {
 
 					txtOldFile.Text = pageContents.FileName;
 
+					if (guidImportContentID != Guid.Empty) {
+						txtOldFile.Text = "";
+					}
+
 					var lstVer = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
 
 					ddlVersions.DataSource = (from v in lstVer
@@ -240,7 +244,7 @@ namespace Carrotware.CMS.UI.Admin {
 				List<PageWidget> widgets = ContentPageExport.GetSerializedContentPageExport(guidImportContentID).ThePageWidgets;
 
 				foreach (var wd in widgets) {
-					wd.Root_ContentID = guidImportContentID;
+					wd.Root_ContentID = pageContents.Root_ContentID;
 					wd.Root_WidgetID = Guid.NewGuid();
 					wd.WidgetDataID = Guid.NewGuid();
 					wd.EditDate = DateTime.Now;
