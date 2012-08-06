@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Caching;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
@@ -20,7 +16,7 @@ using Carrotware.CMS.Interface;
 */
 
 namespace Carrotware.CMS.UI.Admin {
-	public partial class ucTextContent : BaseUserControl, IWidget {
+	public partial class ucTextContent : BaseShellUserControl, IWidget, IWidgetRawData {
 
 		#region IWidget Members
 
@@ -28,7 +24,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 		public Guid RootContentID { get; set; }
 
-		public new Guid SiteID { get; set; }
+		public Guid SiteID { get; set; }
 
 		public string JSEditFunction {
 			get { return "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'plain');"; }
@@ -37,23 +33,32 @@ namespace Carrotware.CMS.UI.Admin {
 		public bool EnableEdit { get { return true; } }
 
 		#endregion
+		#region IWidgetRawData Members
 
+		public string RawWidgetData { get; set; }
+
+		#endregion
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			PageWidget pageWidget = null;
+			//PageWidget pageWidget = null;
 
-			if (SiteData.AdvancedEditMode) {
-				pageWidget = (from w in cmsHelper.cmsAdminWidget
-							  where (w.Root_WidgetID == PageWidgetID)
-							  orderby w.WidgetOrder
-							  select w).FirstOrDefault();
+			//if (SiteData.AdvancedEditMode) {
+			//    pageWidget = (from w in cmsHelper.cmsAdminWidget
+			//                  where (w.Root_WidgetID == PageWidgetID)
+			//                  orderby w.WidgetOrder
+			//                  select w).FirstOrDefault();
 
-			} else {
-				pageWidget = widgetHelper.Get(PageWidgetID);
-			}
+			//} else {
+			//    pageWidget = widgetHelper.Get(PageWidgetID);
+			//}
 
-			litContent.Text = pageWidget.ControlProperties;
+			//litContent.Text = pageWidget.ControlProperties;
+
+			litContent.Text = RawWidgetData;
+
 		}
+
+
 	}
 }

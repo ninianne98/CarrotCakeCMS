@@ -149,7 +149,7 @@ namespace Carrotware.CMS.Core {
 		public void CleanUpSerialData() {
 
 			var lst = (from c in db.tblSerialCaches
-					   where c.EditDate < DateTime.Now.AddHours(-3)
+					   where c.EditDate < DateTime.Now.AddHours(-6)
 					   && c.SiteID == CurrentSiteID
 					   select c).ToList();
 

@@ -64,6 +64,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			OriginalRootContentID = ThePage.Root_ContentID;
+			OriginalSiteID = ThePage.SiteID;
 			OriginalParentContentID = Guid.Empty;
 			ParentFileName = "";
 
@@ -90,6 +91,8 @@ namespace Carrotware.CMS.Core {
 		public Guid NewRootContentID { get; set; }
 
 		public Guid OriginalRootContentID { get; set; }
+
+		public Guid OriginalSiteID { get; set; }
 
 		public Guid OriginalParentContentID { get; set; }
 

@@ -27,6 +27,8 @@ namespace Carrotware.CMS.UI.Admin {
 				Response.Redirect("./Default.aspx");
 			}
 
+			siteHelper.CleanUpSerialData();
+
 			LoadGrid();
 
 		}
