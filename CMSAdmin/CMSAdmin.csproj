@@ -102,6 +102,13 @@
     <Compile Include="Manage\PageExport.aspx.designer.cs">
       <DependentUpon>PageExport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\PageImport.aspx.cs">
+      <DependentUpon>PageImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\PageImport.aspx.designer.cs">
+      <DependentUpon>PageImport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\PageTemplateUpdate.aspx.cs">
       <DependentUpon>PageTemplateUpdate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -367,6 +374,7 @@
     <Content Include="Manage\Images\user_orange.png" />
     <Content Include="Manage\Images\user_red.png" />
     <Content Include="Manage\PageExport.aspx" />
+    <Content Include="Manage\PageImport.aspx" />
     <Content Include="Manage\PageTemplateUpdate.aspx" />
     <Content Include="Manage\PageAddChild.aspx" />
     <Content Include="Manage\glossyseagreen\css\images\ui-bg_flat_15_e58b8b_40x100.png" />

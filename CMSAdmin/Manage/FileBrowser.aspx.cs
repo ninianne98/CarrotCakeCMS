@@ -159,6 +159,9 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 
 				LoadLists();
+			} else {
+				lblWarning.Text = "No file detected for upload.";
+				lblWarning.Attributes["style"] = "color: #990000;";
 			}
 		}
 

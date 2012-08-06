@@ -96,7 +96,7 @@
 
 	<script type="text/javascript" src="/manage/tiny_mce/tiny_mce_popup.js"></script>
 	
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 
 		var FileBrowserDialogue = {
 			init: function () {
