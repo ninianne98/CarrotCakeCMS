@@ -58,20 +58,6 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		protected override void OnInit(EventArgs e) {
-
-			this.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
-			base.OnInit(e);
-		}
-
-		void hand_PreRenderComplete(object sender, EventArgs e) {
-			try {
-				HttpContext.Current.RewritePath(HttpContext.Current.Request.Path,
-						HttpContext.Current.Request.PathInfo,
-						HttpContext.Current.Request.QueryString.ToString());
-			} catch (Exception ex) { }
-		}
-
 
 		protected void AssignContentZones(ContentContainer pageArea, ContentContainer pageSource) {
 
@@ -114,7 +100,7 @@ namespace Carrotware.CMS.UI.Base {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 				}
 			} else {
-				var pageName = path;
+				string pageName = path;
 				if (SiteData.IsAdmin || SiteData.IsEditor) {
 					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 				} else {
@@ -162,7 +148,10 @@ namespace Carrotware.CMS.UI.Base {
 								   select w).ToList();
 				}
 			} else {
-				cmsHelper.cmsAdminContent = null;
+				if (SiteData.CurrentUserGuid != Guid.Empty) {
+					cmsHelper.cmsAdminContent = null;
+					cmsHelper.cmsAdminWidget = null;
+				}
 			}
 
 			SetPageTitle(pageContents);
@@ -243,7 +232,7 @@ namespace Carrotware.CMS.UI.Base {
 													&& d.IsWidgetPendingDelete == false
 												  select d).ToList();
 
-					foreach (var theWidget in lstWidget) {
+					foreach (PageWidget theWidget in lstWidget) {
 
 						//WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
 						WidgetContainer plcHolder = (WidgetContainer)(from d in lstPlaceholders
@@ -258,12 +247,12 @@ namespace Carrotware.CMS.UI.Base {
 									try {
 										widget = Page.LoadControl(theWidget.ControlPath);
 									} catch (Exception ex) {
-										var lit = new Literal();
+										Literal lit = new Literal();
 										lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
 										widget = lit;
 									}
 								} else {
-									var lit = new Literal();
+									Literal lit = new Literal();
 									lit.Text = "MISSING FILE: " + theWidget.ControlPath;
 									widget = lit;
 								}
@@ -272,19 +261,19 @@ namespace Carrotware.CMS.UI.Base {
 							if (theWidget.ControlPath.ToLower().StartsWith("class:")) {
 								try {
 									Assembly a = Assembly.GetExecutingAssembly();
-									var className = theWidget.ControlPath.Replace("CLASS:", "");
+									string className = theWidget.ControlPath.Replace("CLASS:", "");
 									Type t = Type.GetType(className);
 									Object o = Activator.CreateInstance(t);
 
 									if (o != null) {
 										widget = o as Control;
 									} else {
-										var lit = new Literal();
+										Literal lit = new Literal();
 										lit.Text = "OOPS: " + theWidget.ControlPath;
 										widget = lit;
 									}
 								} catch (Exception ex) {
-									var lit = new Literal();
+									Literal lit = new Literal();
 									lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
 									widget = lit;
 								}
@@ -301,15 +290,19 @@ namespace Carrotware.CMS.UI.Base {
 							}
 
 							if (widget is IWidgetParmData) {
-								var wp = widget as IWidgetParmData;
-
-								var lstProp = theWidget.ParseDefaultControlProperties();
+								IWidgetParmData wp = widget as IWidgetParmData;
+								List<WidgetProps> lstProp = theWidget.ParseDefaultControlProperties();
 
 								wp.PublicParmValues = lstProp.ToDictionary(t => t.KeyName, t => t.KeyValue);
 							}
 
+							if (widget is IWidgetRawData) {
+								IWidgetRawData wp = widget as IWidgetRawData;
+								wp.RawWidgetData = theWidget.ControlProperties;
+							}
+
 							if (widget is IWidgetEditStatus) {
-								var wes = widget as IWidgetEditStatus;
+								IWidgetEditStatus wes = widget as IWidgetEditStatus;
 								wes.IsBeingEdited = SiteData.AdvancedEditMode;
 							}
 

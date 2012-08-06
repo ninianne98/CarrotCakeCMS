@@ -400,24 +400,13 @@ namespace Carrotware.CMS.Core {
 			return props;
 		}
 
-
-		private string ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + SiteData.CurrentScriptName.ToString().ToLower() + "_cmsAdminContent";
-		private string WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + SiteData.CurrentScriptName.ToString().ToLower() + "_cmsAdminWidget";
-
 		public void OverrideKey(Guid guidContentID) {
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				ContentPage pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
-				if (pageContents != null) {
-					ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + pageContents.FileName.ToLower() + "_cmsAdminContent";
-					WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + pageContents.FileName.ToLower() + "_cmsAdminWidget";
-				}
+				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
 			}
 		}
 
 		public void OverrideKey(string sPageName) {
-			ContentKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + sPageName.ToLower() + "_cmsAdminContent";
-			WidgetKey = HttpContext.Current.User.Identity.Name.ToString() + "_" + sPageName.ToLower() + "_cmsAdminWidget";
-
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
 				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, sPageName.ToLower());
 			}
@@ -439,20 +428,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
-			var lst = (from c in db.tblSerialCaches
-					   where c.ItemID == filePage.Root_ContentID
-					   && c.EditUserId == SiteData.CurrentUserGuid
-					   && c.EditDate < DateTime.Now.AddHours(-2)
-					   && c.SiteID == SiteData.CurrentSiteID
-					   select c).ToList();
-
-			if (lst.Count > 0) {
-				foreach (var l in lst) {
-					db.tblSerialCaches.DeleteOnSubmit(l);
-				}
-				db.SubmitChanges();
-			}
-
 		}
 
 		public ContentPage cmsAdminContent {
@@ -472,7 +447,6 @@ namespace Carrotware.CMS.Core {
 			}
 			set {
 				if (value == null) {
-					//HttpContext.Current.Cache.Remove(ContentKey);
 					ClearSerialized("cmsAdminContent");
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
@@ -482,8 +456,6 @@ namespace Carrotware.CMS.Core {
 						sXML = stringWriter.ToString();
 					}
 					SaveSerialized("cmsAdminContent", sXML);
-
-					//HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(360), Cache.NoSlidingExpiration);
 				}
 			}
 		}
@@ -491,7 +463,6 @@ namespace Carrotware.CMS.Core {
 		public List<PageWidget> cmsAdminWidget {
 			get {
 				List<PageWidget> c = null;
-				//try { c = (List<PageWidget>)HttpContext.Current.Cache[WidgetKey]; } catch { }
 				var sXML = GetSerialized("cmsAdminWidget");
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
 				Object genpref = null;
@@ -503,7 +474,6 @@ namespace Carrotware.CMS.Core {
 			}
 			set {
 				if (value == null) {
-					//HttpContext.Current.Cache.Remove(WidgetKey);
 					ClearSerialized("cmsAdminWidget");
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
@@ -513,8 +483,6 @@ namespace Carrotware.CMS.Core {
 						sXML = stringWriter.ToString();
 					}
 					SaveSerialized("cmsAdminWidget", sXML);
-
-					//HttpContext.Current.Cache.Insert(WidgetKey, value, null, DateTime.Now.AddMinutes(360), Cache.NoSlidingExpiration);
 				}
 			}
 		}
