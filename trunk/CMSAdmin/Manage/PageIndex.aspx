@@ -41,6 +41,12 @@
 							<img class="imgNoBorder" src="/Manage/images/layout_content.png" alt="View Page History" title="View Page History" /></a>
 					</ItemTemplate>
 				</asp:TemplateField>
+				<asp:TemplateField>
+					<ItemTemplate>
+						<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/PageChildSort.aspx?pageid=<%#Eval("Root_ContentID") %>');">
+							<img class="imgNoBorder" src="/Manage/images/chart_organisation.png" alt="Sort Sub Pages" title="Sort Sub Pages" /></a>
+					</ItemTemplate>
+				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField SortExpression="titlebar" HeaderText="Titlebar">
 					<ItemTemplate>
 						<%# Eval("TitleBar")%>

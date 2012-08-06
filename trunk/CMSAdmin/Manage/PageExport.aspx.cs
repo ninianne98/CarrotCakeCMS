@@ -17,10 +17,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
 			}
 
-			var content = ContentPageExport.GetExportPage(guidContentID);
-			var theXML = ContentPageExport.GetExportXML(content);
+			ContentPageExport content = ContentPageExport.GetExportPage(guidContentID);
+			string theXML = ContentPageExport.GetExportXML(content);
 
-			string fileName = content.ThePage.NavMenuText + ".xml";
+			string fileName = content.ThePage.NavMenuText + "_" + guidContentID.ToString() + ".xml";
 			fileName = fileName.Replace(" ", "_");
 
 			Response.Expires = 5;
