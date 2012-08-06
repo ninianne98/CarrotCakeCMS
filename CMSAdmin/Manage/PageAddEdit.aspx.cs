@@ -83,6 +83,8 @@ namespace Carrotware.CMS.UI.Admin {
 						ContentPage par = pageHelper.FindByFilename(SiteID, cpe.ParentFileName);
 						if (par != null) {
 							pageContents.Parent_ContentID = par.Root_ContentID;
+						} else {
+							pageContents.Parent_ContentID = null;
 						}
 					}
 				}
@@ -250,10 +252,9 @@ namespace Carrotware.CMS.UI.Admin {
 					wd.EditDate = DateTime.Now;
 					wd.Save();
 				}
+
+				ContentPageExport.RemoveSerializedContentPageExport(guidImportContentID);
 			}
-
-
-			ContentPageExport.RemoveSerializedContentPageExport(guidImportContentID);
 
 
 			if (!bRedirect) {
