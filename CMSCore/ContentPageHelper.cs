@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Security;
 using Carrotware.CMS.Data;
 using System.Reflection;
+using System.Xml.Serialization;
+using System.IO;
+using System.Text;
 /*
 * CarrotCake CMS
 * http://carrotware.com/

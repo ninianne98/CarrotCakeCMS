@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="CMSConfigHelper.cs" />
     <Compile Include="ContentPage.cs" />
+    <Compile Include="ContentPageExport.cs" />
     <Compile Include="ContentPageHelper.cs" />
     <Compile Include="PageWidgetHelper.cs" />
     <Compile Include="UserEditState.cs" />

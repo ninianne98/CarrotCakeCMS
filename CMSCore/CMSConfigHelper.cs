@@ -462,9 +462,10 @@ namespace Carrotware.CMS.Core {
 					//c = (ContentPage)HttpContext.Current.Cache[ContentKey];
 					var sXML = GetSerialized("cmsAdminContent");
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					StringReader stringReader = new StringReader(sXML);
-					Object genpref = xmlSerializer.Deserialize(stringReader);
-					stringReader.Close();
+					Object genpref = null;
+					using (StringReader stringReader = new StringReader(sXML)) {
+						genpref = xmlSerializer.Deserialize(stringReader);
+					}
 					c = genpref as ContentPage;
 				} catch (Exception ex) { }
 				return c;
@@ -475,10 +476,11 @@ namespace Carrotware.CMS.Core {
 					ClearSerialized("cmsAdminContent");
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					StringWriter stringWriter = new StringWriter();
-					xmlSerializer.Serialize(stringWriter, value);
-					string sXML = stringWriter.ToString();
-					stringWriter.Close();
+					string sXML = "";
+					using (StringWriter stringWriter = new StringWriter()) {
+						xmlSerializer.Serialize(stringWriter, value);
+						sXML = stringWriter.ToString();
+					}
 					SaveSerialized("cmsAdminContent", sXML);
 
 					//HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(360), Cache.NoSlidingExpiration);
@@ -492,9 +494,10 @@ namespace Carrotware.CMS.Core {
 				//try { c = (List<PageWidget>)HttpContext.Current.Cache[WidgetKey]; } catch { }
 				var sXML = GetSerialized("cmsAdminWidget");
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
-				StringReader stringReader = new StringReader(sXML);
-				Object genpref = xmlSerializer.Deserialize(stringReader);
-				stringReader.Close();
+				Object genpref = null;
+				using (StringReader stringReader = new StringReader(sXML)) {
+					genpref = xmlSerializer.Deserialize(stringReader);
+				}
 				c = genpref as List<PageWidget>;
 				return c;
 			}
@@ -504,10 +507,11 @@ namespace Carrotware.CMS.Core {
 					ClearSerialized("cmsAdminWidget");
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
-					StringWriter stringWriter = new StringWriter();
-					xmlSerializer.Serialize(stringWriter, value);
-					string sXML = stringWriter.ToString();
-					stringWriter.Close();
+					string sXML = "";
+					using (StringWriter stringWriter = new StringWriter()) {
+						xmlSerializer.Serialize(stringWriter, value);
+						sXML = stringWriter.ToString();
+					}
 					SaveSerialized("cmsAdminWidget", sXML);
 
 					//HttpContext.Current.Cache.Insert(WidgetKey, value, null, DateTime.Now.AddMinutes(360), Cache.NoSlidingExpiration);
