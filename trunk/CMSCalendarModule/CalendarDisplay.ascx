@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarDisplay.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.CalendarModule.CalendarDisplay" %>
-
-<center>
+<div style="clear: both;">
+</div>
+<div>
+	<center>
 	<carrot:Calendar runat="server" ID="Calendar1"></carrot:Calendar>
 	<br />
 	<asp:Button CssClass="calendarbutton" ID="btnLast" runat="server" Text="«««««" OnClick="btnLast_Click" />
@@ -36,3 +38,6 @@
 		</asp:DataGrid>
 	</div>
 </center>
+</div>
+<div style="clear: both;">
+</div>
