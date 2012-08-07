@@ -22,22 +22,9 @@
 	</div>
 	<asp:Panel ID="pnlRichEdit" runat="server" Visible="false">
 		<script type="text/javascript">
-
-			function AutoSynchMCE() {
-				if (saving != 1) {
-					tinyMCE.triggerSave();
-					setTimeout("AutoSynchMCE();", 3000);
-				}
-			}
-
-			AutoSynchMCE();
-
-			var saving = 0;
-
 			function SubmitPage() {
-				saving = 1;
-				tinyMCE.triggerSave();
-				setTimeout("ClickBtn();", 1500);
+				var ret = tinyMCE.triggerSave();
+				setTimeout("ClickBtn();", 1000);
 			}
 			function ClickBtn() {
 				$('#<%=btnSave.ClientID %>').click();
@@ -47,7 +34,7 @@
 	<asp:Panel ID="pnlPlain" runat="server" Visible="false">
 		<script type="text/javascript">
 			function SubmitPage() {
-				setTimeout("ClickBtn();", 500);
+				setTimeout("ClickBtn();", 250);
 			}
 			function ClickBtn() {
 				$('#<%=btnSave.ClientID %>').click();

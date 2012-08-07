@@ -482,8 +482,8 @@
 					filename:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
-						Columns="45" MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
+						MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
 							<img class="imgNoBorder" src="/Manage/images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
@@ -517,8 +517,8 @@
 					meta keywords:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
-						Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
+						TextMode="MultiLine" runat="server"></asp:TextBox>
 				</td>
 			</tr>
 			<tr>
@@ -526,8 +526,7 @@
 					meta description:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
-						runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
 				</td>
 			</tr>
 			<tr style="display: none">
@@ -552,8 +551,8 @@
 						<div class="pageNodeDrillDown5">
 							<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" class="menuitems pageNodeDrillDown4 ui-widget-header ui-corner-all">
 								<div class="pageNodeDrillDown6">
-									Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power">
-									</span></a>
+									Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power"></span>
+									</a>
 								</div>
 							</div>
 							<div id="menuitemsouter">
@@ -723,42 +722,30 @@
 	</div>
 	<script type="text/javascript">
 
-		function AutoSynchMCE() {
-			if (saving != 1) {
-				tinyMCE.triggerSave();
-				setTimeout("AutoSynchMCE();", 3000);
-			}
-		}
-
-		AutoSynchMCE();
-
-		var saving = 0;
-
 		function SubmitPage() {
-			SaveCommon();
-			setTimeout("ClickSaveBtn();", 1500);
+			var ret = SaveCommon();
+			setTimeout("ClickSaveBtn();", 500);
 		}
 
 		function SubmitPageVisit() {
-			SaveCommon();
-			setTimeout("ClickSaveVisitBtn();", 1500);
+			var ret = SaveCommon();
+			setTimeout("ClickSaveVisitBtn();", 500);
 		}
 
 		function SaveCommon() {
-			saving = 1;
-			tinyMCE.triggerSave();
+			cmsMakeOKToLeave();
+			var ret = tinyMCE.triggerSave();
 			CheckFileName();
+			return true;
 		}
 
 		function ClickSaveBtn() {
-			cmsMakeOKToLeave();
 			$('#<%=btnSave.ClientID %>').click();
-			setTimeout("cmsMakeNotOKToLeave();", 1500);
+			setTimeout("cmsMakeNotOKToLeave();", 1000);
 		}
 		function ClickSaveVisitBtn() {
-			cmsMakeOKToLeave();
 			$('#<%=btnSaveVisit.ClientID %>').click();
-			setTimeout("cmsMakeNotOKToLeave();", 1500);
+			setTimeout("cmsMakeNotOKToLeave();", 1000);
 		}
 	</script>
 	<script type="text/javascript">
