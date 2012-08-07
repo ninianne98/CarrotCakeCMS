@@ -103,6 +103,9 @@ namespace Carrotware.CMS.Core {
 		public List<PageWidget> ThePageWidgets { get; set; }
 
 
+		public static string keyPageImport = "cmsContentPageExport";
+
+
 		public static void AssignNewIDs(ContentPageExport cpe) {
 			cpe.NewRootContentID = Guid.NewGuid();
 
@@ -145,13 +148,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static void RemoveSerializedContentPageExport(Guid rootContentID) {
-			CMSConfigHelper.ClearSerialized(rootContentID, "cmsContentPageExport");
+			CMSConfigHelper.ClearSerialized(rootContentID, keyPageImport);
 		}
 
 		public static void SaveSerializedContentPageExport(ContentPageExport cpe) {
 
 			if (cpe == null) {
-				CMSConfigHelper.ClearSerialized(cpe.ThePage.Root_ContentID, "cmsContentPageExport");
+				CMSConfigHelper.ClearSerialized(cpe.ThePage.Root_ContentID, keyPageImport);
 			} else {
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPageExport));
 				string sXML = "";
@@ -159,7 +162,7 @@ namespace Carrotware.CMS.Core {
 					xmlSerializer.Serialize(stringWriter, cpe);
 					sXML = stringWriter.ToString();
 				}
-				CMSConfigHelper.SaveSerialized(cpe.ThePage.Root_ContentID, "cmsContentPageExport", sXML);
+				CMSConfigHelper.SaveSerialized(cpe.ThePage.Root_ContentID, keyPageImport, sXML);
 			}
 		}
 
@@ -167,7 +170,7 @@ namespace Carrotware.CMS.Core {
 
 			ContentPageExport c = null;
 			try {
-				var sXML = CMSConfigHelper.GetSerialized(rootContentID, "cmsContentPageExport");
+				var sXML = CMSConfigHelper.GetSerialized(rootContentID, keyPageImport);
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPageExport));
 				Object genpref = null;
 				using (StringReader stringReader = new StringReader(sXML)) {

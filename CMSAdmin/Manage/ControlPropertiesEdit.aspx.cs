@@ -38,8 +38,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				guidPage = new Guid(Request.QueryString["pageid"].ToString());
 			}
 
-			var pageContents = pageHelper.GetLatestContent(SiteID, guidPage);
-			cmsHelper.OverrideKey(pageContents.FileName);
+			cmsHelper.OverrideKey(guidPage);
 
 			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
 							where aw.Root_WidgetID == guidWidget
@@ -72,7 +71,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					}
 				}
 
-				lstDefProps = cmsHelper.GetProperties(widget);
+				lstDefProps = CMSConfigHelper.GetProperties(widget);
 				List<ObjectProperty> props1 = new List<ObjectProperty>();
 				List<ObjectProperty> props2 = new List<ObjectProperty>();
 				List<ObjectProperty> props3 = new List<ObjectProperty>();
@@ -81,22 +80,22 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				List<ObjectProperty> props6 = new List<ObjectProperty>();
 
 				if (widget is Carrotware.CMS.UI.Base.BaseUserControl) {
-					props1 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.UI.Base.BaseUserControl));
+					props1 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.UI.Base.BaseUserControl));
 				}
 				if (widget is Carrotware.CMS.Interface.IWidget) {
-					props2 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidget));
+					props2 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidget));
 				}
 				if (widget is Carrotware.CMS.Interface.BaseShellUserControl) {
-					props3 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.BaseShellUserControl));
+					props3 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.BaseShellUserControl));
 				}
 				if (widget is System.Web.UI.UserControl) {
-					props4 = cmsHelper.GetTypeProperties(typeof(System.Web.UI.UserControl));
+					props4 = CMSConfigHelper.GetTypeProperties(typeof(System.Web.UI.UserControl));
 				}
 				if (widget is Carrotware.CMS.Interface.IWidgetParmData) {
-					props5 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
+					props5 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
 				}
 				if (widget is Carrotware.CMS.Interface.IWidgetEditStatus) {
-					props6 = cmsHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetEditStatus));
+					props6 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetEditStatus));
 				}
 
 				rpProps.DataSource = (from p in lstDefProps

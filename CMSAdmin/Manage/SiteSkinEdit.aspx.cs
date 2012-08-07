@@ -20,7 +20,6 @@ using Carrotware.CMS.UI.Base;
 
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class SiteSkinEdit : AdminBasePage {
-		protected CMSConfigHelper configHelper = new CMSConfigHelper();
 		protected FileDataHelper helpFile = new FileDataHelper();
 		public string sTemplateFileQS = String.Empty;
 		protected string sTemplateFile = String.Empty;
@@ -34,14 +33,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			if (!string.IsNullOrEmpty(Request.QueryString["path"])) {
 				sTemplateFileQS = Request.QueryString["path"].ToString();
-				sTemplateFile = configHelper.DecodeBase64(sTemplateFileQS);
+				sTemplateFile = CMSConfigHelper.DecodeBase64(sTemplateFileQS);
 				sFullFilePath = HttpContext.Current.Server.MapPath(sTemplateFile);
 				sEditFile = sFullFilePath;
 			}
 
 			if (!string.IsNullOrEmpty(Request.QueryString["alt"])) {
 				string sAltFileQS = Request.QueryString["alt"].ToString();
-				string sAltFile = configHelper.DecodeBase64(sAltFileQS);
+				string sAltFile = CMSConfigHelper.DecodeBase64(sAltFileQS);
 				sEditFile = HttpContext.Current.Server.MapPath(sAltFile);
 			}
 
@@ -87,7 +86,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			if (!(sIn.StartsWith(@"\") || sIn.StartsWith(@"/"))) {
 				sIn = @"/" + sIn;
 			}
-			return configHelper.EncodeBase64(sIn.ToLower());
+			return CMSConfigHelper.EncodeBase64(sIn.ToLower());
 		}
 
 		protected void SetSourceFiles(string sDir) {
