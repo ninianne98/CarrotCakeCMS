@@ -28,7 +28,6 @@ namespace Carrotware.CMS.Core {
 
 	public class CMSConfigHelper : IDisposable {
 
-		private System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
 
 		public CMSConfigHelper() {
 
@@ -47,22 +46,32 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 
+		private static string keyAdminMenuModules = "cms_AdminMenuModules";
+
+		private static string keyAdminToolboxModules = "cms_AdminToolboxModules";
+
+		private static string keyDynamicSite = "cms_DynamicSite";
+
+		private static string keyTemplates = "cms_Templates";
+
+		private static string keyDynSite = "cms_DynSite_";
+
+		public static string keyAdminContent = "cmsAdminContent";
+
+		public static string keyAdminWidget = "cmsAdminWidget";
+
+
 		public void ResetConfigs() {
-			string ModuleKey = "";
 
-			ModuleKey = "cms_AdminMenuModules";
-			HttpContext.Current.Cache.Remove(ModuleKey);
+			HttpContext.Current.Cache.Remove(keyAdminMenuModules);
 
-			ModuleKey = "cms_AdminToolboxModules";
-			HttpContext.Current.Cache.Remove(ModuleKey);
+			HttpContext.Current.Cache.Remove(keyAdminToolboxModules);
 
-			ModuleKey = "cms_DynamicSite";
-			HttpContext.Current.Cache.Remove(ModuleKey);
+			HttpContext.Current.Cache.Remove(keyDynamicSite);
 
-			ModuleKey = "cms_Templates";
-			HttpContext.Current.Cache.Remove(ModuleKey);
+			HttpContext.Current.Cache.Remove(keyTemplates);
 
-			ModuleKey = "cms_DynSite_" + DomainName;
+			string ModuleKey = keyDynSite + DomainName;
 			HttpContext.Current.Cache.Remove(ModuleKey);
 
 			System.Web.HttpRuntime.UnloadAppDomain();
@@ -86,13 +95,12 @@ namespace Carrotware.CMS.Core {
 
 				var _modules = new List<CMSAdminModule>();
 
-				string ModuleKey = "cms_AdminMenuModules";
 				bool bCached = false;
 
 				string sPlugCfg = HttpContext.Current.Server.MapPath("~/AdminModules.config");
 
 				try {
-					_modules = (List<CMSAdminModule>)HttpContext.Current.Cache[ModuleKey];
+					_modules = (List<CMSAdminModule>)HttpContext.Current.Cache[keyAdminMenuModules];
 					if (_modules != null) {
 						bCached = true;
 					}
@@ -122,7 +130,7 @@ namespace Carrotware.CMS.Core {
 											 PluginID = new Guid(d.Field<string>("pluginid"))
 										 }).ToList();
 					}
-					HttpContext.Current.Cache.Insert(ModuleKey, _modules, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					HttpContext.Current.Cache.Insert(keyAdminMenuModules, _modules, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 				return _modules;
 			}
@@ -133,13 +141,12 @@ namespace Carrotware.CMS.Core {
 
 				var _plugins = new List<CMSPlugin>();
 
-				string ModuleKey = "cms_AdminToolboxModules";
 				bool bCached = false;
 
 				string sPlugCfg = HttpContext.Current.Server.MapPath("~/PublicControls.config");
 
 				try {
-					_plugins = (List<CMSPlugin>)HttpContext.Current.Cache[ModuleKey];
+					_plugins = (List<CMSPlugin>)HttpContext.Current.Cache[keyAdminToolboxModules];
 					if (_plugins != null) {
 						bCached = true;
 					}
@@ -168,7 +175,7 @@ namespace Carrotware.CMS.Core {
 
 					_plugins = _p1.Union(_p2).ToList();
 
-					HttpContext.Current.Cache.Insert(ModuleKey, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					HttpContext.Current.Cache.Insert(keyAdminToolboxModules, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 				return _plugins;
 			}
@@ -226,13 +233,12 @@ namespace Carrotware.CMS.Core {
 
 				var _plugins = new List<CMSTemplate>();
 
-				string ModuleKey = "cms_Templates";
 				bool bCached = false;
 
 				string sPlugCfg = HttpContext.Current.Server.MapPath("~/SiteSkins.config");
 
 				try {
-					_plugins = (List<CMSTemplate>)HttpContext.Current.Cache[ModuleKey];
+					_plugins = (List<CMSTemplate>)HttpContext.Current.Cache[keyTemplates];
 					if (_plugins != null) {
 						bCached = true;
 					}
@@ -255,7 +261,7 @@ namespace Carrotware.CMS.Core {
 
 					_plugins = _p1.Union(_p2).ToList();
 
-					HttpContext.Current.Cache.Insert(ModuleKey, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					HttpContext.Current.Cache.Insert(keyTemplates, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 				return _plugins;
 			}
@@ -266,13 +272,12 @@ namespace Carrotware.CMS.Core {
 
 				var _plugins = new List<DynamicSite>();
 
-				string ModuleKey = "cms_DynamicSite";
 				bool bCached = false;
 
 				string sPlugCfg = HttpContext.Current.Server.MapPath("~/SiteMapping.config");
 
 				try {
-					_plugins = (List<DynamicSite>)HttpContext.Current.Cache[ModuleKey];
+					_plugins = (List<DynamicSite>)HttpContext.Current.Cache[keyDynamicSite];
 					if (_plugins != null) {
 						bCached = true;
 					}
@@ -290,7 +295,7 @@ namespace Carrotware.CMS.Core {
 									SiteID = new Guid(d.Field<string>("siteid"))
 								}).ToList();
 
-					HttpContext.Current.Cache.Insert(ModuleKey, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					HttpContext.Current.Cache.Insert(keyDynamicSite, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 				return _plugins;
 			}
@@ -301,7 +306,7 @@ namespace Carrotware.CMS.Core {
 			get {
 				var _plugins = new DynamicSite();
 
-				string ModuleKey = "cms_DynSite_" + DomainName;
+				string ModuleKey = keyDynSite + DomainName;
 				bool bCached = false;
 
 				try {
@@ -326,29 +331,27 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
-
-
-		public string DecodeBase64(string ValIn) {
+		public static string DecodeBase64(string ValIn) {
 			string val = "";
 			if (!string.IsNullOrEmpty(ValIn)) {
+				ASCIIEncoding encoding = new ASCIIEncoding();
 				val = encoding.GetString(Convert.FromBase64String(ValIn));
 			}
 			return val;
 		}
 
-		public string EncodeBase64(string ValIn) {
+		public static string EncodeBase64(string ValIn) {
 			string val = "";
 			if (!string.IsNullOrEmpty(ValIn)) {
-				byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(ValIn);
-
+				ASCIIEncoding encoding = new ASCIIEncoding();
+				byte[] toEncodeAsBytes = ASCIIEncoding.ASCII.GetBytes(ValIn);
 				val = System.Convert.ToBase64String(toEncodeAsBytes);
 			}
 			return val;
 		}
 
 
-		public List<ObjectProperty> GetProperties(Object theObject) {
+		public static List<ObjectProperty> GetProperties(Object theObject) {
 			PropertyInfo[] info = theObject.GetType().GetProperties();
 
 			List<ObjectProperty> props = (from i in info.AsEnumerable()
@@ -358,7 +361,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		protected ObjectProperty GetCustProps(Object obj, PropertyInfo prop) {
+		public static ObjectProperty GetCustProps(Object obj, PropertyInfo prop) {
 
 			ObjectProperty objprop = new ObjectProperty {
 				Name = prop.Name,
@@ -386,13 +389,12 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public List<ObjectProperty> GetTypeProperties(Type theType) {
+		public static List<ObjectProperty> GetTypeProperties(Type theType) {
 			PropertyInfo[] info = theType.GetProperties();
 
 			List<ObjectProperty> props = (from i in info.AsEnumerable()
 										  select new ObjectProperty {
 											  Name = i.Name,
-											  //DefValue = theType.GetProperty(i.Name).GetValue(theType, null).ToString(),
 											  PropertyType = i.PropertyType,
 											  CanRead = i.CanRead,
 											  CanWrite = i.CanWrite
@@ -401,12 +403,14 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void OverrideKey(Guid guidContentID) {
+			filePage = null;
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
 				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
 			}
 		}
 
 		public void OverrideKey(string sPageName) {
+			filePage = null;
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
 				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, sPageName.ToLower());
 			}
@@ -415,27 +419,26 @@ namespace Carrotware.CMS.Core {
 		protected ContentPage filePage = null;
 
 		protected void LoadGuids() {
-
-			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				if (SiteData.CurrentScriptName.ToString().ToLower().StartsWith("/manage/")) {
-					Guid guidPage = Guid.Empty;
-					if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
-						guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
+			if (filePage == null) {
+				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+					if (SiteData.CurrentScriptName.ToString().ToLower().StartsWith("/manage/")) {
+						Guid guidPage = Guid.Empty;
+						if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
+							guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
+						}
+						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidPage);
+					} else {
+						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
 					}
-					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidPage);
-				} else {
-					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
 				}
 			}
-
 		}
 
 		public ContentPage cmsAdminContent {
 			get {
 				ContentPage c = null;
 				try {
-					//c = (ContentPage)HttpContext.Current.Cache[ContentKey];
-					var sXML = GetSerialized("cmsAdminContent");
+					var sXML = GetSerialized(keyAdminContent);
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
 					Object genpref = null;
 					using (StringReader stringReader = new StringReader(sXML)) {
@@ -447,7 +450,7 @@ namespace Carrotware.CMS.Core {
 			}
 			set {
 				if (value == null) {
-					ClearSerialized("cmsAdminContent");
+					ClearSerialized(keyAdminContent);
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
 					string sXML = "";
@@ -455,7 +458,7 @@ namespace Carrotware.CMS.Core {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
 					}
-					SaveSerialized("cmsAdminContent", sXML);
+					SaveSerialized(keyAdminContent, sXML);
 				}
 			}
 		}
@@ -463,7 +466,7 @@ namespace Carrotware.CMS.Core {
 		public List<PageWidget> cmsAdminWidget {
 			get {
 				List<PageWidget> c = null;
-				var sXML = GetSerialized("cmsAdminWidget");
+				var sXML = GetSerialized(keyAdminWidget);
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
 				Object genpref = null;
 				using (StringReader stringReader = new StringReader(sXML)) {
@@ -474,7 +477,7 @@ namespace Carrotware.CMS.Core {
 			}
 			set {
 				if (value == null) {
-					ClearSerialized("cmsAdminWidget");
+					ClearSerialized(keyAdminWidget);
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
 					string sXML = "";
@@ -482,7 +485,7 @@ namespace Carrotware.CMS.Core {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
 					}
-					SaveSerialized("cmsAdminWidget", sXML);
+					SaveSerialized(keyAdminWidget, sXML);
 				}
 			}
 		}

@@ -33,7 +33,6 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		private CMSConfigHelper cmsHelper = new CMSConfigHelper();
 		private ContentPageHelper pageHelper = new ContentPageHelper();
 		private PageWidgetHelper widgetHelper = new PageWidgetHelper();
 
@@ -54,7 +53,7 @@ namespace Carrotware.CMS.UI.Admin {
 			get {
 				ContentPage c = null;
 				try {
-					var sXML = GetSerialized("cmsAdminContent");
+					var sXML = GetSerialized(CMSConfigHelper.keyAdminContent);
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
 					Object genpref = null;
 					using (StringReader stringReader = new StringReader(sXML)) {
@@ -66,7 +65,7 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 			set {
 				if (value == null) {
-					ClearSerialized("cmsAdminContent");
+					ClearSerialized(CMSConfigHelper.keyAdminContent);
 				} else {
 					string sXML = "";
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
@@ -74,7 +73,7 @@ namespace Carrotware.CMS.UI.Admin {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
 					}
-					SaveSerialized("cmsAdminContent", sXML);
+					SaveSerialized(CMSConfigHelper.keyAdminContent, sXML);
 
 				}
 			}
@@ -83,7 +82,7 @@ namespace Carrotware.CMS.UI.Admin {
 		public List<PageWidget> cmsAdminWidget {
 			get {
 				List<PageWidget> c = null;
-				var sXML = GetSerialized("cmsAdminWidget");
+				var sXML = GetSerialized(CMSConfigHelper.keyAdminWidget);
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
 				Object genpref = null;
 				using (StringReader stringReader = new StringReader(sXML)) {
@@ -94,7 +93,7 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 			set {
 				if (value == null) {
-					ClearSerialized("cmsAdminWidget");
+					ClearSerialized(CMSConfigHelper.keyAdminWidget);
 				} else {
 					string sXML = "";
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
@@ -102,7 +101,7 @@ namespace Carrotware.CMS.UI.Admin {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
 					}
-					SaveSerialized("cmsAdminWidget", sXML);
+					SaveSerialized(CMSConfigHelper.keyAdminWidget, sXML);
 
 				}
 			}
@@ -359,7 +358,7 @@ namespace Carrotware.CMS.UI.Admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string UpdatePageTemplate(string TheTemplate, string ThisPage) {
 			try {
-				TheTemplate = cmsHelper.DecodeBase64(TheTemplate);
+				TheTemplate = CMSConfigHelper.DecodeBase64(TheTemplate);
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 
@@ -383,7 +382,7 @@ namespace Carrotware.CMS.UI.Admin {
 		public string ValidateUniqueFilename(string TheFileName, string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
-				TheFileName = cmsHelper.DecodeBase64(TheFileName);
+				TheFileName = CMSConfigHelper.DecodeBase64(TheFileName);
 				TheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, TheFileName);
 
 				TheFileName = TheFileName.ToLower();
@@ -415,7 +414,7 @@ namespace Carrotware.CMS.UI.Admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string MoveWidgetToNewZone(string WidgetTarget, string WidgetDropped, string ThisPage) {
 			try {
-				//WidgetAddition = cmsHelper.DecodeBase64(WidgetAddition);
+				//WidgetAddition = CMSConfigHelper.DecodeBase64(WidgetAddition);
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 				var w = WidgetDropped.Split('\t');
@@ -465,7 +464,7 @@ namespace Carrotware.CMS.UI.Admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheWidgetUpdate(string WidgetAddition, string ThisPage) {
 			try {
-				WidgetAddition = cmsHelper.DecodeBase64(WidgetAddition);
+				WidgetAddition = CMSConfigHelper.DecodeBase64(WidgetAddition);
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 
@@ -664,7 +663,7 @@ namespace Carrotware.CMS.UI.Admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheGenericContent(string ZoneText, string DBKey, string ThisPage) {
 			try {
-				ZoneText = cmsHelper.DecodeBase64(ZoneText);
+				ZoneText = CMSConfigHelper.DecodeBase64(ZoneText);
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 				Guid guidWidget = new Guid(DBKey);
@@ -693,8 +692,8 @@ namespace Carrotware.CMS.UI.Admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheContentZoneText(string ZoneText, string Zone, string ThisPage) {
 			try {
-				ZoneText = cmsHelper.DecodeBase64(ZoneText);
-				Zone = cmsHelper.DecodeBase64(Zone);
+				ZoneText = CMSConfigHelper.DecodeBase64(ZoneText);
+				Zone = CMSConfigHelper.DecodeBase64(Zone);
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 				CurrentEditPage = filePage.FileName.ToLower();
