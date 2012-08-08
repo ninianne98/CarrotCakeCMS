@@ -8,8 +8,6 @@ using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
-using System.Web.Profile;
-using System.Web.Security;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
 using Carrotware.CMS.Interface;

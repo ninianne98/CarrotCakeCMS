@@ -270,6 +270,64 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static List<MembershipUser> GetUserSearch(string searchTerm) {
+			List<MembershipUser> usrs = null;
+			//usrs = GetUserListByEmail(searchTerm);
+			//List<MembershipUser> usrs2 = GetUserListByName(searchTerm);
+			//List<string> usrKeys = (from u in usrs
+			//                        select u.ProviderUserKey.ToString()).ToList();
+			//usrs2.RemoveAll(x => usrKeys.Contains(x.ProviderUserKey.ToString()));
+			//usrs = usrs.Union(usrs2).ToList();
+
+			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+				usrs = (from u in _db.aspnet_Users
+						join m in _db.aspnet_Memberships on u.UserId equals m.UserId
+						where u.UserName.ToLower().Contains(searchTerm)
+							|| m.Email.ToLower().Contains(searchTerm)
+						select Membership.GetUser(u.UserName)).Take(50).ToList();
+			}
+
+			return usrs;
+		}
+
+
+		public static List<MembershipUser> GetUserListByEmail(string email) {
+			List<MembershipUser> usrs = new List<MembershipUser>();
+			int iCt = 0;
+			foreach (MembershipUser usr in Membership.FindUsersByEmail(email, 0, 25, out iCt)) {
+				usrs.Add(usr);
+			}
+			return usrs;
+		}
+
+		public static List<MembershipUser> GetUserListByName(string usrName) {
+			List<MembershipUser> usrs = new List<MembershipUser>();
+			int iCt = 0;
+			foreach (MembershipUser usr in Membership.FindUsersByName(usrName, 0, 25, out iCt)) {
+				usrs.Add(usr);
+			}
+			return usrs;
+		}
+
+
+		public static List<MembershipUser> GetUserList() {
+			List<MembershipUser> usrs = new List<MembershipUser>();
+			foreach (MembershipUser usr in Membership.GetAllUsers()) {
+				usrs.Add(usr);
+			}
+			return usrs;
+		}
+
+		public static List<MembershipUser> GetUsersInRole(string groupName) {
+			string[] usersInRole = Roles.GetUsersInRole(groupName);
+			List<MembershipUser> usrs = new List<MembershipUser>();
+			foreach (string u in usersInRole) {
+				foreach (MembershipUser usr in Membership.FindUsersByName(u)) {
+					usrs.Add(usr);
+				}
+			}
+			return usrs;
+		}
 
 		public static string CMSGroup_Admins {
 			get {

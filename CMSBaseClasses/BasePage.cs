@@ -6,8 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
-using System.Web.Profile;
-using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -68,13 +66,6 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 
-		public List<MembershipUser> GetUserList() {
-			List<MembershipUser> usrs = new List<MembershipUser>();
-			foreach (MembershipUser usr in Membership.GetAllUsers()) {
-				usrs.Add(usr);
-			}
-			return usrs;
-		}
 
 
 		/*

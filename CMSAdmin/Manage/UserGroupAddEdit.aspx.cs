@@ -21,21 +21,78 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			if (Request.QueryString["id"] != null) {
 				groupID = new Guid(Request.QueryString["id"]);
 			}
+
 			if (groupID == Guid.Empty) {
 				btnApply.Text = "Add";
+			} else {
+				pnlUsers.Visible = true;
 			}
 
 			if (!IsPostBack) {
 				if (groupID != Guid.Empty) {
-					aspnet_Role role = (from l in db.aspnet_Roles
-										where l.RoleId == groupID
-										select l).FirstOrDefault();
+					aspnet_Role role = getCurrentGroup();
+
 					txtRoleName.Text = role.RoleName;
 
 					btnApply.Visible = CheckValidEditing(role.RoleName);
+
+					GetUserList(role.RoleName);
+
 				}
 			}
 
+		}
+
+		protected void GetUserList(string roleName) {
+
+			List<MembershipUser> usrs = SiteData.GetUsersInRole(roleName);
+			gvUsers.DataSource = usrs;
+			gvUsers.DataBind();
+		}
+
+		protected aspnet_Role getCurrentGroup() {
+			aspnet_Role role = (from l in db.aspnet_Roles
+								where l.RoleId == groupID
+								select l).FirstOrDefault();
+
+			return role;
+		}
+
+
+		protected void btnAddUsers_Click(object sender, EventArgs e) {
+			if (!string.IsNullOrEmpty(hdnUserID.Value)) {
+				aspnet_Role role = getCurrentGroup();
+				if (!Roles.IsUserInRole(hdnUserID.Value, role.RoleName)) {
+					Roles.AddUserToRole(hdnUserID.Value, role.RoleName);
+				}
+			}
+
+			Response.Redirect(SiteData.CurrentScriptName + "?id=" + groupID.ToString());
+		}
+
+
+
+		protected void btnRemove_Click(object sender, EventArgs e) {
+			HiddenField hdnUserName = null;
+			CheckBox chkSelected = null;
+
+			aspnet_Role role = getCurrentGroup();
+
+			string currentRoleName = role.RoleName;
+
+			foreach (GridViewRow dgItem in gvUsers.Rows) {
+				hdnUserName = (HiddenField)dgItem.FindControl("hdnUserName");
+
+				if (!string.IsNullOrEmpty(hdnUserName.Value)) {
+
+					chkSelected = (CheckBox)dgItem.FindControl("chkSelected");
+					if (chkSelected.Checked) {
+						Roles.RemoveUserFromRole(hdnUserName.Value, currentRoleName);
+					}
+				}
+			}
+
+			Response.Redirect(SiteData.CurrentScriptName + "?id=" + groupID.ToString());
 		}
 
 		protected void btnApply_Click(object sender, EventArgs e) {

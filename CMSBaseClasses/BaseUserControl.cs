@@ -6,8 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
-using System.Web.Profile;
-using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -52,15 +50,7 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		public List<MembershipUser> GetUserList() {
-			List<MembershipUser> usrs = new List<MembershipUser>();
-			foreach (MembershipUser usr in Membership.GetAllUsers()) {
-				usrs.Add(usr);
-			}
-			return usrs;
-		}
-
-
+/*
 		public void LoadGrid<T>(GridView TheGrid, HiddenField SortValue, List<T> lst, string sSortKey) {
 			List<T> lstVals = null;
 			string VSKey = TheGrid.ClientID + "_Data";
@@ -88,7 +78,7 @@ namespace Carrotware.CMS.UI.Base {
 			TheGrid.DataSource = lstVals;
 			TheGrid.DataBind();
 		}
-
+*/
 
 		bool bFound = false;
 		PlaceHolder x = new PlaceHolder();

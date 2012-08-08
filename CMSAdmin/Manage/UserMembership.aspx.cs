@@ -6,6 +6,8 @@ using System.Web.Profile;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
+using Carrotware.CMS.Data;
 using Carrotware.CMS.UI.Base;
 
 
@@ -21,7 +23,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 		protected void LoadGrid() {
-			List<MembershipUser> usrs = GetUserList();
+			List<MembershipUser> usrs = SiteData.GetUserList();
 
 			dvMembers.DataSource = usrs;
 			dvMembers.DataBind();
