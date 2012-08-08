@@ -1,0 +1,373 @@
+﻿/* General Editor Styles */
+#cms-simplemodal-container, .cms-simplemodal-container {
+	height: 500px;
+	width: 775px;
+	z-index: 5000;
+}
+
+.cmsHighlightPH {
+	height: 30px !important;
+	margin: 5px !important;
+	padding: 5px !important;
+	background: #FFFFAA !important;
+	border: 2px dashed #676F6A !important;
+}
+
+#cmsMainToolbox, #cmsToolboxSpacer {
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	text-align: left !important;
+	min-height: 50px !important;
+}
+
+.cmsToolItemWrapper {
+	margin: 0;
+	padding: 0;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+	text-align: left !important;
+	min-height: 60px !important;
+	color: #000000 !important;
+	background: #FFFFFF !important;
+	border: 1px dashed #c0c0c0 !important;
+	margin-bottom: 5px !important;
+}
+
+#cmsMainToolbox input:focus, #cmsMainToolbox select:focus, #cmsMainToolbox textarea:focus, #cmsMainToolbox input, #cmsMainToolbox select, #cmsMainToolbox textarea {
+	color: #000000;
+	background: #FFFFFF;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+
+.cmsToolbox2 {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	padding: 5px !important;
+	margin: 5px !important;
+	border: solid 2px #000000 !important;
+	min-width: 275px !important;
+	min-height: 50px !important;
+	z-index: 1000 !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	color: #000000 !important;
+	background: #FFFFFF !important;
+}
+
+.cmsFloatRight {
+	margin: 2px !important;
+	float: right !important;
+}
+.cmsInsideArea {
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	z-index: 500 !important;
+	border: 0px solid #dddddd !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+.cmsCenter5px, .cmsLeft5px, .cmsPlain5px {
+	margin: 5px !important;
+	padding: 5px !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+.cmsCenter5px {
+	text-align: center !important;
+}
+.cmsLeft5px {
+	text-align: left !important;
+}
+
+#cmsGlossySeaGreenID img, .cmsGlossySeaGreen img, #cmsImageSpinnerImage, .cmsImageSpinner, img.cmsImageSpinner, #cmsSpinnerZone img, #cmsSpinnerZone .cmsImageSpinner {
+	margin: 0px !important;
+	padding: 0px !important;
+	border: 0px solid #dddddd !important;
+	background: transparent !important;
+}
+/*  Widget Styles   */
+
+.cmsContentContainerTitle, .cmsWidgetControlTitle, .cmsWidgetTitleBar {
+	margin: 0;
+	padding: 0;
+	font-size: 12px !important;
+	line-height: 16px !important;
+	font-weight: bold !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	color: #C0C0C0 !important;
+	background: #008080 !important;
+	min-height: 20px !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	border: 1px solid #c0c0c0 !important;
+}
+
+
+.cmsContentContainerTitle, .cmsContentContainerTitle a {
+	color: #FFFFFF !important;
+	background: #478C5F !important;
+	text-decoration: none !important;
+}
+.cmsWidgetControlTitle, .cmsWidgetControlTitle a {
+	color: #FFFFFF !important;
+	background: #8DC0A3 !important;
+	text-decoration: none !important;
+}
+.cmsWidgetTitleBar, .cmsWidgetTitleBar a {
+	color: #676F6A !important;
+	background: #DFF6E8 !important;
+	text-decoration: none !important;
+}
+
+.cmsContentContainerInnerTitle {
+	float: right !important;
+	color: #676F6A !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	padding-right: 10px !important;
+	border: 0px solid #FFFFFF !important;
+	font-size: 12x !important;
+	line-height: 16px !important;
+	font-weight: bold !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+}
+
+.cmsContentContainer {
+	border: 1px solid #000000 !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	margin-top: 5px !important;
+}
+
+.cmsWidgetBarLink {
+	color: #676F6A !important;
+	font-weight: bold !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	border: 0px solid #ffffff !important;
+}
+.cmsWidgetContainerWrapper {
+	border: 1px solid #000000 !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	margin-top: 5px !important;
+}
+
+.cmsWidgetBarImgReset {
+	margin: 0px !important;
+	padding: 0px !important;
+	padding-right: 5px !important;
+	padding-left: 5px !important;
+	border: 0px solid #FFFFFF !important;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
+}
+.cmsWidgetBarLink img {
+	float: right !important;
+}
+
+.cmsAjaxModalSpinner {
+	margin: 0px !important;
+	padding: 0px !important;
+	padding-top: 100px !important;
+	padding-left: 200px !important;
+	border: 0px solid #dddddd !important;
+}
+.cmsWidgetControl {
+	min-height: 10px !important;
+	border: 1px dashed #c0c0c0 !important;
+}
+.cmsWidgetTargetOuterControl {
+	border: 1px solid #000000 !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	margin-top: 5px !important;
+}
+
+.cmsWidgetCogIcon {
+	color: #676F6A !important;
+	height: 22px !important;
+	width: 22px !important;
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+#cmsWidgetHead p, #cmsWidgetHead ul, #cmsWidgetHead ol, #cmsWidgetHead h1, #cmsWidgetHead h2, #cmsWidgetHead h3, #cmsWidgetHead div, #cmsWidgetHead span, #cmsWidgetHead input, #cmsWidgetHead select, #cmsWidgetHead button, #cmsWidgetHead textarea {
+	line-height: normal;
+	margin: 0px;
+	padding: 1px;
+	text-align: left;
+	font-size: small;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+}
+.cmsTargetMove {
+	min-height: 25px !important;
+}
+
+
+#cmsWidgetHead, #cmsControlPath, #cmsWidgetContainerName {
+	color: #676F6A !important;
+}
+#cmsControlPath, #cmsWidgetContainerName {
+	float: left !important;
+	min-height: 30px !important;
+}
+#cmsControl {
+	min-height: 50px !important;
+}
+#cmsWidgetHead {
+	cursor: move !important;
+}
+#cmsWidgetContainerName {
+	color: #FFFFFF !important;
+}
+
+/* edit menu for widgets */
+#cmsEditMenuList {
+	float: right !important;
+	width: 24px !important;
+	height: 24px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	padding-right: 10px !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+}
+
+#cmsEditMenuList a {
+	background: #DFF6E8 !important;
+	color: #676F6A !important;
+	text-decoration: none !important;
+	border: 0px solid #FFFFFF !important;
+}
+
+#cmsEditMenuList-inner {
+	width: 24px !important;
+	height: 24px !important;
+	float: left !important;
+	z-index: 500 !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+}
+
+#cmsEditMenuList-inner ul, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
+	background: transparent !important;
+	color: #676F6A !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-decoration: none !important;
+	font-weight: bold !important;
+	border: 0px solid #FFFFFF !important;
+}
+
+#cmsEditMenuList-inner ul.cmsMnuParent li {
+	text-align: center !important;
+	float: left !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	cursor: pointer !important;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
+}
+
+#cmsEditMenuList-inner ul.cmsMnuParent {
+	clear: both !important;
+	width: 22px !important;
+	height: 22px !important;
+	list-style: none !important;
+	background-image: none !important;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
+	background-image: none !important;
+}
+
+#cmsEditMenuList-inner ul.cmsMnuParent li a {
+	display: block !important;
+	float: left !important;
+	text-decoration: none !important;
+	font-weight: bold !important;
+	cursor: pointer !important;
+	background-image: none !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+}
+
+#cmsEditMenuList-inner ul.cmsMnuParent li a:hover, #cmsEditMenuList-inner ul.cmsMnuParent li.selected a {
+	background: transparent !important;
+	color: #676F6A !important;
+	text-decoration: none !important;
+	background-image: none !important;
+	cursor: pointer !important;
+}
+
+#cmsEditMenuList-inner li .cmsMnuChildren {
+	padding-left: 10px !important;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+	width: 100px !important;
+	list-style-type: none !important;
+	display: none !important;
+	clear: both !important;
+	font-weight: bold !important;
+	border-width: 1px !important;
+	border-style: solid !important;
+	background: #FFFFFF !important;
+	background-image: none !important;
+	border-color: #000000 !important;
+	padding: 5px !important;
+}
+
+#cmsEditMenuList-inner li:hover .cmsMnuChildren {
+	background: #DFF6E8 !important;
+	color: #676F6A !important;
+	width: 100px !important;
+	list-style-type: none !important;
+	padding-left: 10px !important;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+	display: block !important;
+	position: absolute !important;
+	text-align: left !important;
+	float: left !important;
+	z-index: 600 !important;
+	font-weight: bold !important;
+	border-color: #000000 !important;
+}
+
+#cmsEditMenuList-inner li:hover .cmsMnuChildren li a {
+	width: 100px !important;
+	float: left !important;
+	text-decoration: none !important;
+	text-align: left !important;
+	clear: both !important;
+	background-image: none !important;
+}
+#cmsEditMenuList-inner li {
+	list-style-type: none !important;
+	background-image: none !important;
+}
+
+#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsWidgetControlTitle img, .cmsContentContainerTitle img, .cmsWidgetTitleBar img {
+	background: transparent !important;
+}
+
+
+p.cmsToolItem {
+	margin: 0;
+	padding: 2px;
+	cursor: move;
+	clear: both;
+	padding: 2px;
+	margin: 2px;
+	color: #000000;
+	background: #DFF6E8;
+	font-size: 12x;
+	line-height: 16px;
+	font-weight: bold;
+	border: 1px dashed #c0c0c0;
+}
+
+.cmsGlossySeaGreen .ui-tabs .ui-tabs-panel, #cmsGlossySeaGreenID .ui-tabs .ui-tabs-panel {
+	padding: 4px !important;
+}
+
