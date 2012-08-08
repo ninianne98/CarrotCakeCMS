@@ -129,10 +129,10 @@
 				</td>
 				<td valign="top">
 					<p>
-						Search for users to add to this group.
+						Search for users to add to this group.  Search by either username or email address.
 					</p>
 					<p>
-						<b>Users: </b>
+						<b>Search: </b>
 						<asp:TextBox ValidationGroup="addUsers" ID="txtSearch" runat="server" Columns="60" />
 						<asp:HiddenField ID="hdnUserID" runat="server" />
 					</p>
