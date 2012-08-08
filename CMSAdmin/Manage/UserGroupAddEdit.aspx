@@ -88,13 +88,13 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
-		<asp:TextBox ID="txtRoleName" Width="300px" MaxLength="100" runat="server"></asp:TextBox>
-		<asp:RequiredFieldValidator ID="RoleNameRequired" runat="server" ControlToValidate="txtRoleName" ErrorMessage="!" ToolTip="Role is required."
-			ValidationGroup="createWizard" Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+		<asp:TextBox ValidationGroup="editGroupName" ID="txtRoleName" onkeypress="return ProcessKeyPress(event)" Width="300px" MaxLength="100" runat="server"></asp:TextBox>
+		<asp:RequiredFieldValidator ValidationGroup="editGroupName" ControlToValidate="txtRoleName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
+			Display="Dynamic"></asp:RequiredFieldValidator>
 	</p>
 	<p>
 		<br />
-		<asp:Button ValidationGroup="createWizard" ID="btnApply" runat="server" Text="Save" OnClick="btnApply_Click" />
+		<asp:Button ValidationGroup="editGroupName" ID="btnApply" runat="server" Text="Save" OnClick="btnApply_Click" />
 		<input type="button" id="btnCancel" runat="server" value="Cancel" onclick="javascript:window.location='./UserGroups.aspx';" />
 		<br />
 	</p>
@@ -128,17 +128,21 @@
 					&nbsp;&nbsp;&nbsp;
 				</td>
 				<td valign="top">
-					<p>
-						Search for users to add to this group.  Search by either username or email address.
-					</p>
-					<p>
-						<b>Search: </b>
-						<asp:TextBox ValidationGroup="addUsers" ID="txtSearch" runat="server" Columns="60" />
-						<asp:HiddenField ID="hdnUserID" runat="server" />
-					</p>
-					<p style="text-align: right;">
-						<asp:Button ValidationGroup="addUsers" ID="btnAddUsers" runat="server" Text="Add User" OnClick="btnAddUsers_Click" />
-					</p>
+					<div style="width: 375px;">
+						<p>
+							Search for users to add to this group. Search by either username or email address.
+						</p>
+						<p>
+							<b>Search: </b>
+							<asp:TextBox ValidationGroup="addUsers" ID="txtSearch" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100" runat="server" />
+							<asp:RequiredFieldValidator ValidationGroup="addUsers" ControlToValidate="txtSearch" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
+								Display="Dynamic"></asp:RequiredFieldValidator>
+							<asp:HiddenField ID="hdnUserID" runat="server" />
+						</p>
+						<p style="text-align: right;">
+							<asp:Button ValidationGroup="addUsers" ID="btnAddUsers" runat="server" Text="Add User" OnClick="btnAddUsers_Click" />
+						</p>
+					</div>
 				</td>
 			</tr>
 		</table>
