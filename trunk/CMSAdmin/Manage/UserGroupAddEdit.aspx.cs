@@ -48,6 +48,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			List<MembershipUser> usrs = SiteData.GetUsersInRole(roleName);
 			gvUsers.DataSource = usrs;
 			gvUsers.DataBind();
+
+			if (usrs.Count < 1) {
+				btnRemove.Visible = false;
+			}
 		}
 
 		protected aspnet_Role getCurrentGroup() {
