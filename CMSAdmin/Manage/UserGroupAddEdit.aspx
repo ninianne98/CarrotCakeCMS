@@ -12,8 +12,6 @@
 			return val;
 		}
 
-		//===============================================
-
 		function cmsAjaxFailed(request) {
 			var s = "";
 			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
@@ -82,6 +80,17 @@
 		});
 
 	</script>
+	<style type="text/css">
+		.ui-autocomplete-loading {
+			background: white url('/Manage/images/mini-spinner3-6F997D.gif') right center no-repeat;
+		}
+		.ui-autocomplete {
+			max-height: 150px;
+			overflow-y: auto;
+			overflow-x: hidden;
+			padding-right: 20px;
+		}
+	</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	User Group Add/Edit

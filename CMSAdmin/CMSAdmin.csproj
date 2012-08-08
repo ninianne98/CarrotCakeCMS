@@ -369,6 +369,10 @@
     <Content Include="Manage\Images\cog_go.png" />
     <Content Include="Manage\Images\html2.png" />
     <Content Include="Manage\Images\html_go.png" />
+    <Content Include="Manage\Images\mini-spinner1-6F997D.gif" />
+    <Content Include="Manage\Images\mini-spinner2-6F997D.gif" />
+    <Content Include="Manage\Images\mini-spinner3-6F997D.gif" />
+    <Content Include="Manage\Images\ui-anim_basic_16x16.gif" />
     <Content Include="Manage\Images\user.png" />
     <Content Include="Manage\Images\user_gray.png" />
     <Content Include="Manage\Images\user_orange.png" />
