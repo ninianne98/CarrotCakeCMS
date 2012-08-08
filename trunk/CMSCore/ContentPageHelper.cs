@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
 using Carrotware.CMS.Data;
 using System.Reflection;
 using System.Xml.Serialization;
@@ -191,6 +190,20 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 			return bLock;
+		}
+
+		public Guid GetCurrentEditUser(Guid rootContentID, Guid siteID) {
+
+			tblRootContent rc = (from r in db.tblRootContents
+								 where r.Root_ContentID == rootContentID
+								 && r.SiteID == siteID
+								 select r).FirstOrDefault();
+
+			if (rc != null) {
+				return (Guid)rc.Heartbeat_UserId;
+			} else {
+				return Guid.Empty;
+			}
 		}
 
 

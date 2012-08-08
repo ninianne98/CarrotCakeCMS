@@ -379,6 +379,18 @@ namespace Carrotware.CMS.UI.Admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public List<MembershipUser> FindUsers(string searchTerm) {
+
+			string search = CMSConfigHelper.DecodeBase64(searchTerm);
+
+			List<MembershipUser> lstUsers = SiteData.GetUserSearch(search);
+
+			return lstUsers.OrderBy(x => x.UserName).ToList();
+		}
+
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string ValidateUniqueFilename(string TheFileName, string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
@@ -730,11 +742,14 @@ namespace Carrotware.CMS.UI.Admin {
 				LoadGuids();
 				CurrentEditPage = filePage.FileName.ToLower();
 
-				var pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, CurrentEditPage);
+				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+				Guid guidUser = pageHelper.GetCurrentEditUser(CurrentPageGuid, SiteData.CurrentSiteID);
 
-				pageContents.IsLatestVersion = false;
+				if (bLock || guidUser != SiteData.CurrentUserGuid) {
+					return "Cannot publish changes, not current editing user.";
+				}
 
-				var pageWidgets = widgetHelper.GetWidgets(pageContents.Root_ContentID, true);
+				List<PageWidget> pageWidgets = widgetHelper.GetWidgets(CurrentPageGuid, true);
 
 				if (cmsAdminContent != null) {
 
