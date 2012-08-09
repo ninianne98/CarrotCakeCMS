@@ -377,6 +377,8 @@
     <Content Include="Manage\Images\user_gray.png" />
     <Content Include="Manage\Images\user_orange.png" />
     <Content Include="Manage\Images\user_red.png" />
+    <Content Include="Manage\Includes\common-utils.js" />
+    <Content Include="Manage\Includes\tinymce-config.js" />
     <Content Include="Manage\PageExport.aspx" />
     <Content Include="Manage\PageImport.aspx" />
     <Content Include="Manage\PageTemplateUpdate.aspx" />
