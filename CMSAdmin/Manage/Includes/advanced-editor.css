@@ -367,7 +367,7 @@ p.cmsToolItem {
 	border: 1px dashed #c0c0c0;
 }
 
-.cmsGlossySeaGreen .ui-tabs .ui-tabs-panel, #cmsGlossySeaGreenID .ui-tabs .ui-tabs-panel {
+#cmsAdminToolbox .cmsGlossySeaGreen .ui-tabs .ui-tabs-panel, #cmsAdminToolbox #cmsGlossySeaGreenID .ui-tabs .ui-tabs-panel {
 	padding: 4px !important;
 }
 

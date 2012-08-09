@@ -25,6 +25,11 @@ h3 {
 	font-size: 11px;
 }
 
+.headingColor {
+	color: #69775F;
+	font-family: Georgia, Times New Roman, Serif;
+	font-weight: bold;
+}
 
 a {
 	color: #333;
@@ -46,6 +51,7 @@ a:hover {
 #header h1, #header h2 {
 	font-weight: bold;
 	color: #FFFFFF;
+	font-family: Georgia, Times New Roman, Serif;
 }
 
 #header h1 {
@@ -130,7 +136,7 @@ a:hover {
 
 .imgNoBorder {
 	padding: 0px;
-	margin: 0px;	
+	margin: 0px;
 	border: 0px solid #ffffff;
 	padding: 1px;
 }
@@ -167,7 +173,7 @@ a:hover {
 	padding: 0px;
 	margin: 2px;
 	float: left;
-	margin-top: 0px;	
+	margin-top: 0px;
 }
 
 .pageNodeDrillDown6 {

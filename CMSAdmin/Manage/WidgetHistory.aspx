@@ -34,16 +34,6 @@
 			}
 		}
 
-
-		function cmsAjaxFailed(request) {
-			var s = "";
-			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-
-			alert(s);
-		}
-
 	</script>
 	<script src="/Manage/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>

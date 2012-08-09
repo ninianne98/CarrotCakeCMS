@@ -35,15 +35,6 @@
 		}
 
 
-		function cmsAjaxFailed(request) {
-			var s = "";
-			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-
-			alert(s);
-		}
-
 	</script>
 	<script src="/Manage/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>
@@ -110,6 +101,12 @@
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>
+	<p>
+		&nbsp;
+	</p>
+	<p>
+		&nbsp;
+	</p>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">
 </asp:Content>
