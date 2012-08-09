@@ -10,41 +10,6 @@
 
 		var thePage = '';
 
-		function MakeStringSafe(val) {
-			val = Base64.encode(val);
-			return val;
-		}
-
-		function cmsAjaxFailed(request) {
-			var s = "";
-			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-			cmsAlertModal(s);
-		}
-
-		function cmsAjaxGeneralCallback(data, status) {
-			if (data.d != "OK") {
-				cmsAlertModal(data.d);
-			}
-		}
-
-		function cmsAlertModal(request) {
-			$("#CMSmodalalert").dialog("destroy");
-
-			$("#CMSmodalalertmessage").html(request);
-
-			$("#CMSmodalalert").dialog({
-				height: 400,
-				width: 550,
-				modal: true,
-				buttons: {
-					"OK": function () {
-						$(this).dialog("close");
-					}
-				}
-			});
-		}
 
 		var menuOuter = 'menuitemsouter';
 		var menuInner = 'menuitemsinner';
@@ -196,11 +161,11 @@
 			var theURL = $('#<%= txtOldFile.ClientID %>').val();
 
 			if (theURL.length > 3) {
-				$("#CMScancelconfirmmsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
+				$("#divCMSCancelWinMsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
 
-				$("#CMScancelconfirm").dialog("destroy");
+				$("#divCMSCancelWin").dialog("destroy");
 
-				$("#CMScancelconfirm").dialog({
+				$("#divCMSCancelWin").dialog({
 					open: function () {
 						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 					},
@@ -289,11 +254,11 @@
 
 		function cancelEditing() {
 
-			$("#CMScancelconfirmmsg").text('Are you sure you want to leave the editor? All changes will be lost!');
+			$("#divCMSCancelWinMsg").text('Are you sure you want to leave the editor? All changes will be lost!');
 
-			$("#CMScancelconfirm").dialog("destroy");
+			$("#divCMSCancelWin").dialog("destroy");
 
-			$("#CMScancelconfirm").dialog({
+			$("#divCMSCancelWin").dialog({
 				open: function () {
 					$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 				},
@@ -413,6 +378,7 @@
 		}
 		div.scrollcontainerheight {
 			height: 5px;
+			width: 75px;
 		}
 		div.menuitems {
 			margin-top: 2px;
@@ -482,8 +448,8 @@
 					filename:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
-						MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
+						Columns="45" MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
 							<img class="imgNoBorder" src="/Manage/images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
@@ -517,8 +483,8 @@
 					meta keywords:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
-						TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
+						Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
 				</td>
 			</tr>
 			<tr>
@@ -526,7 +492,8 @@
 					meta description:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+						runat="server"></asp:TextBox>
 				</td>
 			</tr>
 			<tr style="display: none">
@@ -551,8 +518,8 @@
 						<div class="pageNodeDrillDown5">
 							<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" class="menuitems pageNodeDrillDown4 ui-widget-header ui-corner-all">
 								<div class="pageNodeDrillDown6">
-									Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power"></span>
-									</a>
+									Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power">
+									</span></a>
 								</div>
 							</div>
 							<div id="menuitemsouter">
@@ -700,12 +667,8 @@
 		<asp:TextBox ID="txtOldFile" runat="server"></asp:TextBox>
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save 1" />
 		<asp:Button ValidationGroup="inputForm" ID="btnSaveVisit" runat="server" OnClick="btnSaveVisit_Click" Text="Save 2" />
-		<div id="CMSmodalalert" title="CMS Alert">
-			<p id="CMSmodalalertmessage">
-				&nbsp;</p>
-		</div>
-		<div id="CMScancelconfirm" title="Quit Editor?">
-			<p id="CMScancelconfirmmsg">
+		<div id="divCMSCancelWin" title="Quit Editor?">
+			<p id="divCMSCancelWinMsg">
 				Are you sure you want cancel?</p>
 		</div>
 		<div id="confirmRevert" title="Really Revert?">

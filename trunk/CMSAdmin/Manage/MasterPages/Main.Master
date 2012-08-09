@@ -61,18 +61,40 @@
 	</script>
 	<script type="text/javascript">
 
-		function alertModal(request) {
-			$("#CMSmodalalert").dialog("destroy");
+		function MakeStringSafe(val) {
+			val = Base64.encode(val);
+			return val;
+		}
 
-			$("#CMSmodalalert").dialog({
-				//autoOpen: false,
+		function cmsAjaxFailed(request) {
+			var s = "";
+			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
+			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
+			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
+			cmsAlertModal(s);
+		}
+
+		function cmsAjaxGeneralCallback(data, status) {
+			if (data.d != "OK") {
+				cmsAlertModal(data.d);
+			}
+		}
+
+		function cmsAlertModal(request) {
+			$("#divCMSModal").dialog("destroy");
+
+			$("#divCMSModalMsg").html(request);
+
+			$("#divCMSModal").dialog({
 				height: 400,
-				width: 600,
-				modal: true
+				width: 550,
+				modal: true,
+				buttons: {
+					"OK": function () {
+						$(this).dialog("close");
+					}
+				}
 			});
-
-			$("#CMSmodalalertmessage").html(request);
-
 		}
 
 		function ProcessKeyPress(e) {
@@ -364,7 +386,7 @@
 		</div>
 		<div id="content">
 			<div class="pad-content">
-				<h1>
+				<h1 class="headingColor">
 					<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
 					</asp:ContentPlaceHolder>
 				</h1>
@@ -388,9 +410,9 @@
 				<img src="/manage/images/x.png" alt="x" />
 			</div>
 			<div style="display: none">
-				<div id="CMSmodalalert" title="CMS Alert">
-					<p id="CMSmodalalertmessage">
-						&nbsp;</p>
+				<div id="divCMSModal" title="CMS Alert">
+					<div id="divCMSModalMsg">
+						&nbsp;</div>
 				</div>
 			</div>
 		</div>

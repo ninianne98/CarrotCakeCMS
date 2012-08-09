@@ -9,18 +9,6 @@
 
 		var thePage = '';
 
-		function MakeStringSafe(val) {
-			val = Base64.encode(val);
-			return val;
-		}
-
-		function cmsAjaxFailed(request) {
-			var s = "";
-			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-			cmsAlertModal(s);
-		}
 
 		function CheckFileName() {
 			thePage = $('#<%= txtFileName.ClientID %>').val();
@@ -141,10 +129,8 @@
 			<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
 		</div>
 		<script type="text/javascript">
-			var saving = 0;
 
 			function SubmitPage() {
-				saving = 1;
 				CheckFileName();
 				setTimeout("ClickBtn();", 1000);
 			}

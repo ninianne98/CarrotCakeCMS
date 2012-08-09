@@ -7,40 +7,9 @@
 
 		var webSvc = "/Manage/CMS.asmx";
 
-		function MakeStringSafe(val) {
-			val = Base64.encode(val);
-			return val;
-		}
-
-		function cmsAjaxFailed(request) {
-			var s = "";
-			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-			cmsAlertModal(s);
-		}
-
-		function cmsAlertModal(request) {
-
-			$("#CMSmodalalertmessage").html(request);
-
-			$("#CMSmodalalert").dialog("destroy");
-
-			$("#CMSmodalalert").dialog({
-				//autoOpen: false,
-				height: 400,
-				width: 550,
-				modal: true,
-				buttons: {
-					"OK": function () {
-						$(this).dialog("close");
-					}
-				}
-			});
-		}
-
 		$(document).ready(function () {
 			var webMthd = webSvc + "/FindUsers";
+			var resFld = "#spanResults";
 
 			$("#<%=txtSearch.ClientID %>").autocomplete({
 				source: function (request, response) {
@@ -49,18 +18,26 @@
 						type: 'POST',
 						dataType: 'json',
 						contentType: 'application/json; charset=utf-8',
-						//data: JSON.stringify(paramters),
 						data: "{ 'searchTerm': '" + MakeStringSafe(request.term) + "' }",
 						contentType: "application/json; charset=utf-8",
 						dataFilter: function (data) { return data; },
 						success: function (data) {
 							$("#<%=hdnUserID.ClientID %>").val('');
+							$(resFld).text('');
+							//debugger;
 							response($.map(data.d, function (item) {
 								return {
 									value: item.UserName + " (" + item.Email + ")",
 									id: item.UserName
 								}
 							}))
+							if (data.d.length < 1) {
+								$(resFld).attr('style', 'color: #990000;');
+								$(resFld).text('  No Results  ');
+							} else {
+								$(resFld).attr('style', 'color: #009900;');
+								$(resFld).text('  ' + data.d.length + ' Results  ');
+							}
 						},
 
 						error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -73,6 +50,7 @@
 					if (ui.item) {
 						$("#<%=hdnUserID.ClientID %>").val(ui.item.id);
 					}
+					$(resFld).text('');
 				},
 				minLength: 1,
 				delay: 1000
@@ -142,7 +120,7 @@
 							Search for users to add to this group. Search by either username or email address.
 						</p>
 						<p>
-							<b>Search: </b>
+							<b>Search: </b><span id="spanResults"></span>
 							<asp:TextBox ValidationGroup="addUsers" ID="txtSearch" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100" runat="server" />
 							<asp:RequiredFieldValidator ValidationGroup="addUsers" ControlToValidate="txtSearch" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
 								Display="Dynamic"></asp:RequiredFieldValidator>
@@ -155,12 +133,6 @@
 				</td>
 			</tr>
 		</table>
-		<div style="display: none">
-			<div id="CMSmodalalert" title="CMS Alert">
-				<p id="CMSmodalalertmessage">
-					&nbsp;</p>
-			</div>
-		</div>
 	</asp:Panel>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
