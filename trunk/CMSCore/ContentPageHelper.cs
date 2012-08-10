@@ -36,10 +36,23 @@ namespace Carrotware.CMS.Core {
 				newFileName = rootContentID.ToString().Substring(0, 6) + "-" + rootContentID.ToString().Substring(28, 6);
 			}
 
-			newFileName = newFileName.Trim().Replace(" ", "_");
-			newFileName = newFileName.Trim().Replace("'", "-");
-			newFileName = newFileName.Trim().Replace("\"", "-");
-			newFileName = newFileName.Trim().Replace("&", "-n-");
+			newFileName = newFileName.Replace(" ", "-");
+			newFileName = newFileName.Replace("'", "-");
+			newFileName = newFileName.Replace("\"", "-");
+			newFileName = newFileName.Replace(@"\", @"/");
+			newFileName = newFileName.Replace("*", "-star-");
+			newFileName = newFileName.Replace("%", "-percent-");
+			newFileName = newFileName.Replace("&", "-n-");
+			newFileName = newFileName.Replace("--", "-").Replace("--", "-");
+			newFileName = newFileName.Replace(@"//", @"/").Replace(@"//", @"/");
+			newFileName = newFileName.Trim();
+
+			if (newFileName.ToLower().EndsWith(".htm")) {
+				newFileName = newFileName.Substring(0, newFileName.Length - 4) + ".aspx";
+			}
+			if (newFileName.ToLower().EndsWith(".html")) {
+				newFileName = newFileName.Substring(0, newFileName.Length - 5) + ".aspx";
+			}
 
 			if (!newFileName.ToLower().EndsWith(".aspx")) {
 				newFileName = newFileName + ".aspx";
