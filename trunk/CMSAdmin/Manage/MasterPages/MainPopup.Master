@@ -8,7 +8,7 @@
 	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.simplemodal.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
-	<link href="/Manage/includes/button-style.css" rel="stylesheet" type="text/css" />
+	<script src="/Manage/includes/common-utils.js" type="text/javascript"></script>
 	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/TableStyles.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/mainpopup.css" rel="stylesheet" type="text/css" />
@@ -30,131 +30,6 @@
 			AjaxBtnLoad();
 		});
 
-		function AjaxBtnLoad() {
-			$(function () {
-				$('#jqtabs').tabs();
-			});
-			$("#jqaccordion").accordion({
-				//collapsible: true
-				active: false,
-				autoheight: false,
-				collapsible: true,
-				alwaysOpen: false
-			});
-
-			$(function () {
-				$("input:button, input:submit").button();
-			});
-
-			$(".dateRegion").each(function (i) {
-				$(this).datepicker({
-					changeMonth: true,
-					changeYear: true,
-					showOn: 'button',
-					buttonImage: '/Manage/images/calendar.gif',
-					buttonImageOnly: true,
-					constrainInput: true
-				});
-			});
-		}	
-
-	</script>
-	<script type="text/javascript">
-
-		function MakeStringSafe(val) {
-			val = Base64.encode(val);
-			return val;
-		}
-
-		function cmsAjaxFailed(request) {
-			var s = "";
-			s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-			s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-			s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-			cmsAlertModal(s);
-		}
-
-		function cmsAjaxGeneralCallback(data, status) {
-			if (data.d != "OK") {
-				cmsAlertModal(data.d);
-			}
-		}
-
-		function cmsAlertModal(request) {
-			$("#divCMSModal").dialog("destroy");
-
-			$("#divCMSModalMsg").html(request);
-
-			$("#divCMSModal").dialog({
-				height: 400,
-				width: 550,
-				modal: true,
-				buttons: {
-					"OK": function () {
-						$(this).dialog("close");
-					}
-				}
-			});
-		}
-
-
-		function ProcessKeyPress(e) {
-			var obj = window.event ? event : e;
-			var key = (window.event) ? event.keyCode : e.which;
-
-			if ((key == 13) || (key == 10)) {
-				obj.returnValue = false;
-				obj.cancelBubble = true;
-				return false;
-			}
-			return true;
-		}
-
-
-		function checkIntNumber(obj) {
-			var n = obj.value;
-			var intN = parseInt(n);
-			if (isNaN(intN) || intN < 0 || n != intN) {
-				alert("Value must be non-negative integers.");
-				obj.focus();
-			} else {
-				obj.value = intN;
-			}
-		}
-
-		function checkFloatNumber(obj) {
-			var n = obj.value;
-			var intN = parseFloat(n);
-			if (isNaN(intN) || intN < 0 || n != intN) {
-				alert("Value must be non-negative decimals.");
-				obj.value = 0;
-				obj.focus();
-			} else {
-				obj.value = intN;
-			}
-		}
-
-	</script>
-	<script type="text/javascript">
-		//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
-		function BlockUI(elementID) {
-			var prm = Sys.WebForms.PageRequestManager.getInstance();
-			prm.add_beginRequest(function () {
-				$("#" + elementID).block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-					css: {},
-					fadeOut: 1000,
-					timeout: 1200,
-					overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
-				});
-			});
-			prm.add_endRequest(function () {
-				$("#" + elementID).unblock();
-			});
-		}
-		$(document).ready(function () {
-			BlockUI("cmsAjaxMainDiv");
-			$.blockUI.defaults.css = {};
-		});
 	</script>
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>
@@ -167,124 +42,26 @@
 	</style>
 	<!-- TinyMCE -->
 	<script type="text/javascript" src="/Manage/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="/Manage/includes/tinymce-config.js"></script>
 	<script type="text/javascript">
-		tinyMCE.init({
+		function AjaxTinyLoad() {
+			TinyMCEParamInit("650", "400");
+		}
 
-			//		mode : "textareas",
-			//		theme : "advanced",
-			//		theme_advanced_toolbar_location : "top",
-			//		theme_advanced_toolbar_align : "left",
-			//		document_base_url : "http://www.site.com/path1/"
-
-			mode: "textareas",
-			theme: "advanced",
-			editor_selector: "mceEditor",
-			theme_advanced_source_editor_width: "650",
-			theme_advanced_source_editor_height: "400",
-			skin: "o2k7",
-			skin_variant: "silver",
-			plugins: "advimage,advlink,advlist,media,iespell,inlinepopups",
-			file_browser_callback: "cmsFileBrowserCallback",
-			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,forecolor,|,outdent,indent,blockquote,|,bullist,numlist,|,link,unlink,anchor,image,media,|,fileupbtn,cleanup,code,help",
-			theme_advanced_buttons2: "",
-			theme_advanced_buttons3: "",
-			theme_advanced_toolbar_location: "top",
-			theme_advanced_toolbar_align: "left",
-			theme_advanced_statusbar_location: "bottom",
-			relative_urls: false,
-			remove_script_host: true,
-			content_css: "/Manage/Includes/richedit.css",
-
-			// Add a custom button
-			setup: function (ed) {
-				ed.addButton('fileupbtn', {
-					title: 'FileUpload',
-					image: '/Manage/tiny_mce/insertfile.gif',
-					onclick: function () {
-						//debugger;
-						ed.focus();
-						//ed.selection.setContent('custom text');
-						var x = cmsFileBrowserCallback(ed, '', '', this);
-						//ed.selection.setContent(x);
-					}
+		function UpdateAjaxTiny() {
+			if (typeof (Sys) != 'undefined') {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				prm.add_endRequest(function () {
+					AjaxTinyLoad();
 				});
 			}
+		}
 
-
+		$(document).ready(function () {
+			UpdateAjaxTiny();
+			AjaxTinyLoad();
 		});
 
-
-		//http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
-		function cmsFileBrowserCallback(field_name, url, type, win) {
-			var sURL = "/Manage/FileBrowser.aspx?useTiny=1&fldrpath=/";
-			setTimeout("tinyResetFileBrowserOpenStatus();", 500);
-
-			// block multiple file browser windows
-			if (!tinyMCE.selectedInstance.fileBrowserAlreadyOpen) {
-				tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true; // but now it will be
-
-				tinyMCE.activeEditor.windowManager.open({
-					file: sURL,
-					title: 'File Browser',
-					width: 650,
-					height: 400,
-					resizable: "no",
-					scrollbars: "yes",
-					status: "yes",
-					inline: "yes",
-					close_previous: "yes"
-				}, {
-					window: win,
-					input: field_name
-				});
-			}
-
-			setTimeout("tinyResetFileBrowserOpenStatus();", 1000);
-
-			return false;
-		}
-
-		function tinyResetFileBrowserOpenStatus() {
-			tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
-		}
-
-		function cmsToggleTinyMCE(id) {
-			if (!tinyMCE.get(id))
-				tinyMCE.execCommand('mceAddControl', false, id);
-			else
-				tinyMCE.execCommand('mceRemoveControl', false, id);
-		}
-
-
-	
-	</script>
-	<script type="text/javascript">
-		var fldName = '';
-		var winBrowse = null;
-		function cmsFileBrowserOpen(fldN) {
-			fldN = '#' + fldN;
-			var fld = $(fldN);
-			fldName = fld.attr('id');
-
-			if (winBrowse != null) {
-				winBrowse.close();
-			}
-			//winBrowse = window.open('/Manage/FileBrowser.aspx?useTiny=0&fldrpath=/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
-
-			ShowWindowNoRefresh('/Manage/FileBrowser.aspx?useTiny=0&fldrpath=/');
-
-			return false;
-		}
-
-		function cmsSetFileName(v) {
-			var fldN = '#' + fldName;
-			var fld = $(fldN);
-			fld.val(v);
-
-			winBrowse.close();
-			winBrowse = null;
-		}
-	
 	</script>
 	<!-- /TinyMCE -->
 </head>

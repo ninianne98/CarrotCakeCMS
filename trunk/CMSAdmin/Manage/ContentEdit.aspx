@@ -7,10 +7,10 @@
 	Edit Content
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div style="height: 350px; margin-bottom: 10px;">
+	<div style="height: 400px; margin-bottom: 10px;">
 		<div runat="server" id="divCenter">
 			<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-		<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 700px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="20"
+		<asp:TextBox ValidationGroup="inputForm" Style="height: 350px; width: 750px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="20"
 			Columns="90" />
 		<br />
 	</div>
@@ -24,7 +24,7 @@
 		<script type="text/javascript">
 			function SubmitPage() {
 				var ret = tinyMCE.triggerSave();
-				setTimeout("ClickBtn();", 1000);
+				setTimeout("ClickBtn();", 500);
 			}
 			function ClickBtn() {
 				$('#<%=btnSave.ClientID %>').click();

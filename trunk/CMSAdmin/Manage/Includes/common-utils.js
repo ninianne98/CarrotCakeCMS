@@ -120,3 +120,71 @@ function checkFloatNumber(obj) {
 		obj.value = intN;
 	}
 }
+
+//====================================
+
+var TheURL = '';
+var RefreshPage = 0;
+
+function ShowWindowNoRefresh(theURL) {
+	RefreshPage = 0;
+	LaunchWindow(theURL);
+}
+
+function ShowWindow(theURL) {
+	RefreshPage = 1;
+	LaunchWindow(theURL);
+}
+
+function LaunchWindow(theURL) {
+	TheURL = theURL;
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="840" height="540" src="' + TheURL + '" /> </div>');
+
+	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		css: { width: '840px', height: '540px' },
+		fadeOut: 1000,
+		timeout: 1200,
+		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+	});
+
+	setTimeout("LoadWindow();", 800);
+}
+
+function LoadWindow() {
+	$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
+		//$.modal.close(); // must call this!
+		setTimeout("$.modal.close();", 800);
+		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+		DirtyPageRefresh();
+	}
+	});
+	IsDirty = 0;
+	$('#cms-basic-modal-content').modal();
+	return false;
+}
+
+var IsDirty = 0;
+
+function SetDirtyPage() {
+	IsDirty = 1;
+}
+function DirtyPageRefresh() {
+
+	if (RefreshPage == 1) {
+		$("#cmsAjaxMainDiv").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+			css: {},
+			fadeOut: 1000,
+			timeout: 1200,
+			overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+		});
+
+		setTimeout("__doPostBack('PageRefresh', 'JavaScript');", 800);
+	} else {
+		$("#cmsAjaxMainDiv").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+			css: {},
+			fadeOut: 250,
+			timeout: 500,
+			overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+		});
+	}
+}
