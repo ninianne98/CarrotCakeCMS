@@ -10,6 +10,7 @@
 		$(document).ready(function () {
 			var webMthd = webSvc + "/FindUsers";
 			var resFld = "#spanResults";
+			var hdnFld = "#<%=hdnUserID.ClientID %>";
 
 			$("#<%=txtSearch.ClientID %>").autocomplete({
 				source: function (request, response) {
@@ -22,7 +23,7 @@
 						contentType: "application/json; charset=utf-8",
 						dataFilter: function (data) { return data; },
 						success: function (data) {
-							$("#<%=hdnUserID.ClientID %>").val('');
+							$(hdnFld).val('');
 							$(resFld).text('');
 							//debugger;
 							response($.map(data.d, function (item) {
@@ -36,7 +37,11 @@
 								$(resFld).text('  No Results  ');
 							} else {
 								$(resFld).attr('style', 'color: #009900;');
-								$(resFld).text('  ' + data.d.length + ' Results  ');
+								if (data.d.length == 1) {
+									$(resFld).text('  ' + data.d.length + ' Result  ');
+								} else {
+									$(resFld).text('  ' + data.d.length + ' Results  ');
+								}
 							}
 						},
 
@@ -46,9 +51,9 @@
 					});
 				},
 				select: function (event, ui) {
-					$("#<%=hdnUserID.ClientID %>").val('');
+					$(hdnFld).val('');
 					if (ui.item) {
-						$("#<%=hdnUserID.ClientID %>").val(ui.item.id);
+						$(hdnFld).val(ui.item.id);
 					}
 					$(resFld).text('');
 				},
