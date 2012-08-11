@@ -26,21 +26,42 @@
 	});
 }
 
-//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+var htmlAjaxSpinnerTable = '<table style="TableSpinner"><tr><td><img style="RingSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>';
+
 function BlockUI(elementID) {
-	var prm = Sys.WebForms.PageRequestManager.getInstance();
-	prm.add_beginRequest(function () {
-		$("#" + elementID).block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-			css: {},
-			fadeOut: 1000,
-			timeout: 1200,
-			overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+	if (typeof (Sys) != 'undefined') {
+		var prm = Sys.WebForms.PageRequestManager.getInstance();
+		prm.add_beginRequest(function () {
+			$("#" + elementID).block({ message: htmlAjaxSpinnerTable,
+				css: {
+					padding: 0,
+					margin: 0,
+					width: '30%',
+					top: '40%',
+					left: '45%',
+					textAlign: 'center'
+				},
+				fadeOut: 2000,
+				timeout: 3000,
+				overlayCSS: {
+					backgroundColor: '#FFFFFF',
+					opacity: 0.6,
+					border: '0px solid #000000'
+				}
+			});
+			var spinner = ".blockMsg"; // fix for spinner location
+			$(spinner).css('top', '33%');
+			$(spinner).css('left', '45%');
+			$(spinner).css('margin-left', 'auto');
+			$(spinner).css('margin-right', 'auto');
+			$(spinner).css('position', 'fixed');
 		});
-	});
-	prm.add_endRequest(function () {
-		$("#" + elementID).unblock();
-	});
+		prm.add_endRequest(function () {
+			$("#" + elementID).unblock();
+		});
+	}
 }
+
 $(document).ready(function () {
 	BlockUI("cmsAjaxMainDiv");
 	$.blockUI.defaults.css = {};
@@ -140,7 +161,7 @@ function LaunchWindow(theURL) {
 	TheURL = theURL;
 	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="840" height="540" src="' + TheURL + '" /> </div>');
 
-	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
 		css: { width: '840px', height: '540px' },
 		fadeOut: 1000,
 		timeout: 1200,
@@ -163,6 +184,7 @@ function LoadWindow() {
 	return false;
 }
 
+
 var IsDirty = 0;
 
 function SetDirtyPage() {
@@ -171,7 +193,7 @@ function SetDirtyPage() {
 function DirtyPageRefresh() {
 
 	if (RefreshPage == 1) {
-		$("#cmsAjaxMainDiv").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		$("#cmsAjaxMainDiv").block({ message: htmlAjaxSpinnerTable,
 			css: {},
 			fadeOut: 1000,
 			timeout: 1200,
@@ -180,7 +202,7 @@ function DirtyPageRefresh() {
 
 		setTimeout("__doPostBack('PageRefresh', 'JavaScript');", 800);
 	} else {
-		$("#cmsAjaxMainDiv").block({ message: '<table><tr><td><img src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		$("#cmsAjaxMainDiv").block({ message: htmlAjaxSpinnerTable,
 			css: {},
 			fadeOut: 250,
 			timeout: 500,
