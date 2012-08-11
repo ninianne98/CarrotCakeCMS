@@ -367,8 +367,10 @@
     <Content Include="Manage\Images\book_next.png" />
     <Content Include="Manage\Images\book_previous.png" />
     <Content Include="Manage\Images\cog_go.png" />
+    <Content Include="Manage\Images\heading-bg-gradient.png" />
     <Content Include="Manage\Images\html2.png" />
     <Content Include="Manage\Images\html_go.png" />
+    <Content Include="Manage\Images\menu-div.png" />
     <Content Include="Manage\Images\mini-spinner1-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner2-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner3-6F997D.gif" />
