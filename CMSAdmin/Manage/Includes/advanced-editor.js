@@ -579,24 +579,33 @@ function cmsShowEditContentForm(f, m) {
 	cmsLaunchWindow('/Manage/ContentEdit.aspx?pageid=' + thisPageID + "&field=" + f + "&mode=" + m);
 }
 
+function cmsFixSpinner() {
+	$(".blockMsg img").addClass('cmsImageSpinner');
+	$(".blockMsg table").addClass('cmsImageSpinnerTbl');
+}
+
+var cmsHtmlSpinner = '<table width="100%" class="cmsImageSpinnerTbl" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>';
+
 function CMSBusyShort() {
 
-	$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+	$("#cmsDivActive").block({ message: cmsHtmlSpinner,
 		css: { border: 'none', backgroundColor: 'transparent' },
 		fadeOut: 750,
 		timeout: 1000,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
+	cmsFixSpinner();
 }
 
 function CMSBusyLong() {
 
-	$("#cmsDivActive").block({ message: '<table width="100%" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/Manage/images/ani-smallbar.gif"/></td></tr></table>',
+	$("#cmsDivActive").block({ message: cmsHtmlSpinner,
 		css: { border: 'none', backgroundColor: 'transparent' },
 		fadeOut: 4000,
-		timeout: 5000,
+		timeout: 6000,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
+	cmsFixSpinner();
 }
 
 function cmsBuildOrderAndUpdateWidgets() {
