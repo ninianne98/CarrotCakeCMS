@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 /*
 * CarrotCake CMS
 * http://carrotware.com/
@@ -33,7 +34,7 @@ namespace Carrotware.CMS.Core {
 			string newFileName = FileName;
 
 			if (string.IsNullOrEmpty(newFileName)) {
-				newFileName = rootContentID.ToString().Substring(0, 6) + "-" + rootContentID.ToString().Substring(28, 6);
+				newFileName = rootContentID.ToString();
 			}
 
 			newFileName = newFileName.Replace(" ", "-");
@@ -46,6 +47,11 @@ namespace Carrotware.CMS.Core {
 			newFileName = newFileName.Replace("--", "-").Replace("--", "-");
 			newFileName = newFileName.Replace(@"//", @"/").Replace(@"//", @"/");
 			newFileName = newFileName.Trim();
+
+			newFileName = Regex.Replace(newFileName, "[:\"*?<>|]+", "-");
+			newFileName = Regex.Replace(newFileName, @"[^0-9a-zA-Z.-/_]+", "-");
+
+			newFileName = newFileName.Replace("--", "-").Replace("--", "-");
 
 			if (newFileName.ToLower().EndsWith(".htm")) {
 				newFileName = newFileName.Substring(0, newFileName.Length - 4) + ".aspx";
