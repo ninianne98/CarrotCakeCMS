@@ -25,15 +25,15 @@ namespace Carrotware.CMS.Core {
 
 		}
 
-		public ContentPage(tblRootContent rc, tblContent c) {
+		public ContentPage(carrot_RootContent rc, carrot_Content c) {
 
 			if (rc == null) {
-				rc = new tblRootContent();
+				rc = new carrot_RootContent();
 				rc.Root_ContentID = Guid.NewGuid();
 				rc.PageActive = true;
 			}
 			if (c == null) {
-				c = new tblContent();
+				c = new carrot_Content();
 				c.ContentID = rc.Root_ContentID;
 				c.Root_ContentID = rc.Root_ContentID;
 			}
@@ -96,7 +96,7 @@ namespace Carrotware.CMS.Core {
 
 		public void ResetHeartbeatLock() {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == this.Root_ContentID
 								   && r.SiteID == this.SiteID
 								 select r).FirstOrDefault();
@@ -108,7 +108,7 @@ namespace Carrotware.CMS.Core {
 
 		public void RecordHeartbeatLock(Guid currentUserID) {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == this.Root_ContentID
 								 && r.SiteID == this.SiteID
 								 select r).FirstOrDefault();
@@ -143,13 +143,13 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageEdit() {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == this.Root_ContentID
 								   && r.SiteID == this.SiteID
 								 select r).FirstOrDefault();
 
-			tblContent oldC = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			carrot_Content oldC = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   where ct.Root_ContentID == this.Root_ContentID
 								   && r.SiteID == this.SiteID
 								   && ct.IsLatestVersion == true
@@ -158,16 +158,16 @@ namespace Carrotware.CMS.Core {
 			bool bNew = false;
 
 			if (rc == null) {
-				rc = new tblRootContent();
+				rc = new carrot_RootContent();
 				rc.Root_ContentID = this.Root_ContentID;
 				rc.PageActive = true;
 				rc.SiteID = this.SiteID;
 				rc.CreateDate = DateTime.Now;
-				db.tblRootContents.InsertOnSubmit(rc);
+				db.carrot_RootContents.InsertOnSubmit(rc);
 				bNew = true;
 			}
 
-			tblContent c = new tblContent();
+			carrot_Content c = new carrot_Content();
 			if (bNew) {
 				c.ContentID = this.Root_ContentID;
 			} else {
@@ -206,7 +206,7 @@ namespace Carrotware.CMS.Core {
 			this.EditDate = c.EditDate;
 			this.CreateDate = rc.CreateDate;
 
-			db.tblContents.InsertOnSubmit(c);
+			db.carrot_Contents.InsertOnSubmit(c);
 			db.SubmitChanges();
 
 		}
@@ -214,7 +214,7 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageAsDraft() {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == this.Root_ContentID
 								   && r.SiteID == this.SiteID
 								 select r).FirstOrDefault();
@@ -222,16 +222,16 @@ namespace Carrotware.CMS.Core {
 			bool bNew = false;
 
 			if (rc == null) {
-				rc = new tblRootContent();
+				rc = new carrot_RootContent();
 				rc.Root_ContentID = this.Root_ContentID;
 				rc.PageActive = true;
 				rc.SiteID = this.SiteID;
 				rc.CreateDate = DateTime.Now;
-				db.tblRootContents.InsertOnSubmit(rc);
+				db.carrot_RootContents.InsertOnSubmit(rc);
 				bNew = true;
 			}
 
-			tblContent c = new tblContent();
+			carrot_Content c = new carrot_Content();
 			if (bNew) {
 				c.ContentID = this.Root_ContentID;
 			} else {
@@ -270,7 +270,7 @@ namespace Carrotware.CMS.Core {
 			this.EditDate = c.EditDate;
 			this.CreateDate = rc.CreateDate;
 
-			db.tblContents.InsertOnSubmit(c);
+			db.carrot_Contents.InsertOnSubmit(c);
 			db.SubmitChanges();
 		}
 
@@ -346,8 +346,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		private tblRootContent RootContent { get; set; }
-		private tblContent Content { get; set; }
+		private carrot_RootContent RootContent { get; set; }
+		private carrot_Content Content { get; set; }
 
 		#region IDisposable Members
 
@@ -365,15 +365,15 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav() { }
 
-		public SiteNav(tblRootContent rc, tblContent c) {
+		public SiteNav(carrot_RootContent rc, carrot_Content c) {
 
 			if (rc == null) {
-				rc = new tblRootContent();
+				rc = new carrot_RootContent();
 				rc.Root_ContentID = Guid.NewGuid();
 				rc.PageActive = true;
 			}
 			if (c == null) {
-				c = new tblContent();
+				c = new carrot_Content();
 				c.ContentID = rc.Root_ContentID;
 				c.Root_ContentID = rc.Root_ContentID;
 			}

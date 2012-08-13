@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "database scripts", "{835815E6-C641-402B-A6C5-E6E8A4B2C754}"
 	ProjectSection(SolutionItems) = preProject
-		CMSDataScripts\add create date to root content.sql = CMSDataScripts\add create date to root content.sql
-		CMSDataScripts\add meta fields to content.sql = CMSDataScripts\add meta fields to content.sql
+		CMSDataScripts\__README.txt = CMSDataScripts\__README.txt
+		CMSDataScripts\ALTER 01 - add meta fields to content.sql = CMSDataScripts\ALTER 01 - add meta fields to content.sql
+		CMSDataScripts\ALTER 02 - new widget structure.sql = CMSDataScripts\ALTER 02 - new widget structure.sql
+		CMSDataScripts\ALTER 03 - add create date to root content.sql = CMSDataScripts\ALTER 03 - add create date to root content.sql
+		CMSDataScripts\ALTER 04 - move data to carrot prefix tables.sql = CMSDataScripts\ALTER 04 - move data to carrot prefix tables.sql
+		CMSDataScripts\CREATE 01 - whole database.sql = CMSDataScripts\CREATE 01 - whole database.sql
+		CMSDataScripts\CREATE 02 - default user.sql = CMSDataScripts\CREATE 02 - default user.sql
 		CMSDataScripts\create tblCalendar.sql = CMSDataScripts\create tblCalendar.sql
 		CMSDataScripts\create tblFAQ.sql = CMSDataScripts\create tblFAQ.sql
-		CMSDataScripts\default user.sql = CMSDataScripts\default user.sql
-		CMSDataScripts\new widget structure.sql = CMSDataScripts\new widget structure.sql
-		CMSDataScripts\whole database.sql = CMSDataScripts\whole database.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSAdmin", "CMSAdmin\CMSAdmin.csproj", "{3137431F-6BE3-4996-9CF8-4D50414B403A}"

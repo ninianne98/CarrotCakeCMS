@@ -269,8 +269,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 			List<SiteMapOrder> lstSiteMap = new List<SiteMapOrder>();
 
-			var lst = (from ct in db.tblContents
-					   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			var lst = (from ct in db.carrot_Contents
+					   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 					   orderby ct.NavOrder, ct.NavMenuText
 					   where r.SiteID == SiteData.CurrentSiteID
 							 && r.Root_ContentID != ContPageID
@@ -324,8 +324,8 @@ namespace Carrotware.CMS.UI.Admin {
 			while (iLenB < iLenA) {
 				iLenB = lstSiteMap.Count;
 
-				var cont = (from r in db.tblRootContents
-							join ct in db.tblContents on r.Root_ContentID equals ct.Root_ContentID
+				var cont = (from r in db.carrot_RootContents
+							join ct in db.carrot_Contents on r.Root_ContentID equals ct.Root_ContentID
 							orderby ct.NavOrder, ct.NavMenuText
 							where r.SiteID == SiteData.CurrentSiteID
 								&& ct.IsLatestVersion == true
