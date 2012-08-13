@@ -830,7 +830,9 @@
     <Content Include="Site_4\style.ie6.css" />
     <Content Include="Site_4\style.ie7.css" />
     <Content Include="Site_4\template4.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="PublicControls.config" />
     <Content Include="Manage\ControlPropertiesEdit.aspx" />
     <Content Include="Manage\Includes\base64.js" />

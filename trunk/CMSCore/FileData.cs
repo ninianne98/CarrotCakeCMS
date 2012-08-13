@@ -38,7 +38,7 @@ namespace Carrotware.CMS.Core {
 					try { _FileTypes = System.Configuration.ConfigurationManager.AppSettings["BlockFromFileManager"].ToString(); } catch { }
 				}
 				if (_FileTypes == null) {
-					_FileTypes = "aspx;ascx;asmx;dll;config";
+					_FileTypes = "aspx;ascx;asmx;asax;config;dll";
 				}
 				return _FileTypes.Split(';').ToList();
 			}
