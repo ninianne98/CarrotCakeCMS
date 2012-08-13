@@ -4,12 +4,11 @@
 If installing/running CMS for first time run
 
 		** CREATE 01 - whole database.sql
-			-- creates the core tables for the CMS
+			-- creates the core tables for the CMS, inital seed of membership groups
 		** CREATE 02 - default user.sql  
-			-- you can update the username & email listed in script, note that the password is still going to be carrot123 unless you change it (RECOMENDED!!!!)
+			-- you can update the username & email listed in script, note that the password is still going to be carrot123 unless you change it (PLEASE CHANGE ASAP!!!!)
 			*OR* 
-			-- skip this script and use visual studio to create additional users
-			-- if skiping this script and using visual studio, create 3 groups: CarrotCMS Administrators, CarrotCMS Editors, and CarrotCMS Users
+			-- skip this script and use visual studio to create additional users, groups are auto created for you
 
 		** create tblCalendar.sql
 			-- to use the calendar sample
