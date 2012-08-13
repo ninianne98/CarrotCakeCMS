@@ -1,6 +1,9 @@
 -- USE [CarrotwareCMS]
 GO
 
+-- 2012-07-16 
+-- update to include new widget structure
+
 /****** Object:  Table [dbo].[tblWidget]    Script Date: 07/16/2012 19:55:41 ******/
 SET ANSI_NULLS ON
 GO
@@ -115,10 +118,20 @@ IF (select COUNT(*) from  [dbo].[tblWidget]) < 1 BEGIN
 			  FROM [dbo].[tblPageWidgets]
 
 END  
-  
+
+
+--=======================================
+--   both new tables created, remove old tables
+--=======================================
 GO
 
-
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tblPageWidgets]') AND type in (N'U'))
+	AND EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tblWidget]') AND type in (N'U'))
+	AND EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tblWidgetData]') AND type in (N'U')) BEGIN
+	ALTER TABLE [dbo].[tblPageWidgets] DROP CONSTRAINT [tblRootContent_tblPageWidgets_FK]
+	ALTER TABLE [dbo].[tblPageWidgets] DROP CONSTRAINT [DF_tblPageWidgets_PageWidgetID]
+	DROP TABLE [dbo].[tblPageWidgets]
+END
 
 
 

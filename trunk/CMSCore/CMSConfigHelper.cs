@@ -494,7 +494,7 @@ namespace Carrotware.CMS.Core {
 			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
 				bool bAdd = false;
 
-				var itm = (from c in _db.tblSerialCaches
+				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
 						   && c.EditUserId == SiteData.CurrentUserGuid
 						   && c.KeyType == sKey
@@ -503,7 +503,7 @@ namespace Carrotware.CMS.Core {
 
 				if (itm == null) {
 					bAdd = true;
-					itm = new tblSerialCache();
+					itm = new carrot_SerialCache();
 					itm.SerialCacheID = Guid.NewGuid();
 					itm.SiteID = SiteData.CurrentSiteID;
 					itm.ItemID = itemID;
@@ -515,7 +515,7 @@ namespace Carrotware.CMS.Core {
 				itm.EditDate = DateTime.Now;
 
 				if (bAdd) {
-					_db.tblSerialCaches.InsertOnSubmit(itm);
+					_db.carrot_SerialCaches.InsertOnSubmit(itm);
 				}
 				_db.SubmitChanges();
 			}
@@ -526,7 +526,7 @@ namespace Carrotware.CMS.Core {
 			string sData = "";
 			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
 
-				var itm = (from c in _db.tblSerialCaches
+				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
 						   && c.EditUserId == SiteData.CurrentUserGuid
 						   && c.KeyType == sKey
@@ -544,7 +544,7 @@ namespace Carrotware.CMS.Core {
 		public static bool ClearSerialized(Guid itemID, string sKey) {
 			bool bRet = false;
 			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
-				var itm = (from c in _db.tblSerialCaches
+				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
 						   && c.EditUserId == SiteData.CurrentUserGuid
 						   && c.KeyType == sKey
@@ -552,7 +552,7 @@ namespace Carrotware.CMS.Core {
 						   select c).FirstOrDefault();
 
 				if (itm != null) {
-					_db.tblSerialCaches.DeleteOnSubmit(itm);
+					_db.carrot_SerialCaches.DeleteOnSubmit(itm);
 					_db.SubmitChanges();
 					bRet = true;
 				}

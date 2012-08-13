@@ -71,8 +71,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ContentPage> GetLatestContentList(Guid siteID) {
-			List<ContentPage> lstContent = (from ct in db.tblContents
-											join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<ContentPage> lstContent = (from ct in db.carrot_Contents
+											join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 											orderby ct.NavOrder, ct.NavMenuText
 											where r.SiteID == siteID
 											 && ct.IsLatestVersion == true
@@ -81,8 +81,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public int GetContentPagedListCount(Guid siteID, bool bActiveOnly) {
-			int iCount = (from ct in db.tblContents
-						  join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			int iCount = (from ct in db.carrot_Contents
+						  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 						  where r.SiteID == siteID
 							  && ct.IsLatestVersion == true
 							  && (r.PageActive == bActiveOnly || bActiveOnly == false)
@@ -105,7 +105,7 @@ namespace Carrotware.CMS.Core {
 
 		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID) {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == rootContentID
 								   && r.SiteID == siteID
 								 select r).FirstOrDefault();
@@ -117,7 +117,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool RecordHeartbeatLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == rootContentID
 								 && r.SiteID == siteID
 								 select r).FirstOrDefault();
@@ -134,7 +134,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID) {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == rootContentID
 								 && r.SiteID == SiteData.CurrentSiteID
 								 select r).FirstOrDefault();
@@ -155,7 +155,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == rootContentID
 								 && r.SiteID == siteID
 								 select r).FirstOrDefault();
@@ -176,7 +176,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID, Guid siteID) {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == rootContentID
 								 && r.SiteID == siteID
 								 select r).FirstOrDefault();
@@ -213,7 +213,7 @@ namespace Carrotware.CMS.Core {
 
 		public Guid GetCurrentEditUser(Guid rootContentID, Guid siteID) {
 
-			tblRootContent rc = (from r in db.tblRootContents
+			carrot_RootContent rc = (from r in db.carrot_RootContents
 								 where r.Root_ContentID == rootContentID
 								 && r.SiteID == siteID
 								 select r).FirstOrDefault();
@@ -247,14 +247,14 @@ namespace Carrotware.CMS.Core {
 
 			IEnumerable<ContentPage> query = new List<ContentPage>();
 
-			bool bIsContent = TestIfPropExists(new tblContent(), sortField);
-			bool bIsRootContent = TestIfPropExists(new tblRootContent(), sortField);
+			bool bIsContent = TestIfPropExists(new carrot_Content(), sortField);
+			bool bIsRootContent = TestIfPropExists(new carrot_RootContent(), sortField);
 
 			if (bIsRootContent) {
 				if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
 					query = (from enu in
-								 (from ct in db.tblContents.AsEnumerable()
-								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								 (from ct in db.carrot_Contents.AsEnumerable()
+								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
 								  orderby GetPropertyValue(r, sortField) descending
 								  where r.SiteID == siteID
 									 && ct.IsLatestVersion == true
@@ -263,8 +263,8 @@ namespace Carrotware.CMS.Core {
 							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
 				} else {
 					query = (from enu in
-								 (from ct in db.tblContents.AsEnumerable()
-								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								 (from ct in db.carrot_Contents.AsEnumerable()
+								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
 								  orderby GetPropertyValue(r, sortField) ascending
 								  where r.SiteID == siteID
 									 && ct.IsLatestVersion == true
@@ -277,8 +277,8 @@ namespace Carrotware.CMS.Core {
 			if (bIsContent && !bIsRootContent) {
 				if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
 					query = (from enu in
-								 (from ct in db.tblContents.AsEnumerable()
-								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								 (from ct in db.carrot_Contents.AsEnumerable()
+								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
 								  orderby GetPropertyValue(ct, sortField) descending
 								  where r.SiteID == siteID
 									 && ct.IsLatestVersion == true
@@ -287,8 +287,8 @@ namespace Carrotware.CMS.Core {
 							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
 				} else {
 					query = (from enu in
-								 (from ct in db.tblContents.AsEnumerable()
-								  join r in db.tblRootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
+								 (from ct in db.carrot_Contents.AsEnumerable()
+								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
 								  orderby GetPropertyValue(ct, sortField) ascending
 								  where r.SiteID == siteID
 									 && ct.IsLatestVersion == true
@@ -300,8 +300,8 @@ namespace Carrotware.CMS.Core {
 
 			if (!bIsContent && !bIsRootContent) {
 				query = (from enu in
-							 (from ct in db.tblContents
-							  join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+							 (from ct in db.carrot_Contents
+							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							  orderby r.CreateDate descending
 							  where r.SiteID == siteID
 								 && ct.IsLatestVersion == true
@@ -326,8 +326,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootContentID) {
-			List<ContentPage> content = (from ct in db.tblContents
-										 join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<ContentPage> content = (from ct in db.carrot_Contents
+										 join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										 orderby ct.EditDate descending
 										 where r.SiteID == siteID
 										  && r.Root_ContentID == rootContentID
@@ -336,8 +336,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage GetVersion(Guid siteID, Guid contentID) {
-			ContentPage content = (from ct in db.tblContents
-								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.carrot_Contents
+								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 								   orderby ct.EditDate descending
 								   where r.SiteID == siteID
 									&& ct.ContentID == contentID
@@ -347,8 +347,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<ContentPage> GetLatestContentList(Guid siteID, bool? active) {
-			List<ContentPage> lstContent = (from ct in db.tblContents
-											join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<ContentPage> lstContent = (from ct in db.carrot_Contents
+											join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 											orderby ct.NavOrder, ct.NavMenuText
 											where r.SiteID == siteID
 											 && ct.IsLatestVersion == true
@@ -361,8 +361,8 @@ namespace Carrotware.CMS.Core {
 
 		public void RemoveVersions(Guid siteID, List<Guid> lstDel) {
 
-			List<tblContent> lstContent = (from ct in db.tblContents
-										   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<carrot_Content> lstContent = (from ct in db.carrot_Contents
+										   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										   orderby ct.EditDate descending
 										   where r.SiteID == siteID
 											&& lstDel.Contains(ct.ContentID)
@@ -370,8 +370,8 @@ namespace Carrotware.CMS.Core {
 										   select ct).ToList();
 
 			if (lstContent.Count > 0) {
-				foreach (tblContent c in lstContent) {
-					db.tblContents.DeleteOnSubmit(c);
+				foreach (carrot_Content c in lstContent) {
+					db.carrot_Contents.DeleteOnSubmit(c);
 				}
 				db.SubmitChanges();
 			}
@@ -380,15 +380,15 @@ namespace Carrotware.CMS.Core {
 
 		public void BulkUpdateTemplate(Guid siteID, List<Guid> lstUpd, string sTemplateFile) {
 
-			List<tblContent> lstContent = (from ct in db.tblContents
-										   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<carrot_Content> lstContent = (from ct in db.carrot_Contents
+										   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										   where r.SiteID == siteID
 											&& lstUpd.Contains(r.Root_ContentID)
 											&& ct.IsLatestVersion == true
 										   select ct).ToList();
 
 			if (lstContent.Count > 0) {
-				foreach (tblContent c in lstContent) {
+				foreach (carrot_Content c in lstContent) {
 					c.TemplateFile = sTemplateFile;
 					//c.EditDate = DateTime.Now;
 				}
@@ -399,8 +399,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage GetLatestContent(Guid siteID, Guid rootContentID) {
-			ContentPage content = (from ct in db.tblContents
-								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.carrot_Contents
+								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 								   where r.SiteID == siteID
 									   && r.Root_ContentID == rootContentID
 									   && ct.IsLatestVersion == true
@@ -411,8 +411,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage GetLatestContent(Guid siteID, bool? active, string sPage) {
-			ContentPage content = (from ct in db.tblContents
-								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.carrot_Contents
+								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 								   where r.SiteID == siteID
 									   && (r.PageActive == active || active == null)
 									   && r.FileName.ToLower() == sPage.ToLower()
@@ -425,8 +425,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage FindHome(Guid siteID) {
-			ContentPage content = (from ct in db.tblContents
-								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.carrot_Contents
+								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 								   orderby ct.NavOrder ascending
 								   where r.SiteID == siteID
 									   && r.PageActive == true
@@ -439,15 +439,15 @@ namespace Carrotware.CMS.Core {
 
 
 		public int GetSitePageCount(Guid siteID) {
-			int content = (from r in db.tblRootContents
+			int content = (from r in db.carrot_RootContents
 						   where r.SiteID == siteID
 						   select r).Count();
 			return content;
 		}
 
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
-			ContentPage content = (from ct in db.tblContents
-								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.carrot_Contents
+								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 								   where r.SiteID == siteID
 									   && ct.IsLatestVersion == true
 									   && r.FileName.ToLower() == urlFileName.ToLower()
@@ -457,8 +457,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage FindHome(Guid siteID, bool? active) {
-			ContentPage content = (from ct in db.tblContents
-								   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.carrot_Contents
+								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 								   orderby ct.NavOrder ascending
 								   where r.SiteID == siteID
 									   && (r.PageActive == active || active == null)
@@ -488,8 +488,8 @@ namespace Carrotware.CMS.Core {
 		public SiteNavHelper() { }
 
 		public List<SiteNav> GetMasterNavigation(Guid siteID, bool bActiveOnly) {
-			List<SiteNav> lstContent = (from ct in db.tblContents
-										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteNav> lstContent = (from ct in db.carrot_Contents
+										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										orderby ct.NavOrder, ct.NavMenuText
 										where r.SiteID == siteID
 											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
@@ -501,8 +501,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
-			List<SiteNav> lstContent = (from ct in db.tblContents
-										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteNav> lstContent = (from ct in db.carrot_Contents
+										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										orderby ct.NavOrder, ct.NavMenuText
 										where r.SiteID == siteID
 											&& ct.Parent_ContentID == null
@@ -514,13 +514,13 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 
-			tblRootContent p = (from r in db.tblRootContents
+			carrot_RootContent p = (from r in db.carrot_RootContents
 								where r.SiteID == siteID
 									   && r.FileName.ToLower() == sParentID.ToLower()
 								select r).FirstOrDefault();
 
-			List<SiteNav> lstContent = (from ct in db.tblContents
-										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteNav> lstContent = (from ct in db.carrot_Contents
+										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										orderby ct.NavOrder, ct.NavMenuText
 										where r.SiteID == siteID
 											&& ct.Parent_ContentID == p.Root_ContentID
@@ -533,15 +533,15 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, string sPage, bool bActiveOnly) {
 
-			tblContent c = (from ct in db.tblContents
-							join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			carrot_Content c = (from ct in db.carrot_Contents
+							join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							where r.SiteID == siteID
 								   && r.FileName.ToLower() == sPage.ToLower()
 								   && ct.IsLatestVersion == true
 							select ct).FirstOrDefault();
 
-			List<SiteNav> lstContent = (from ct in db.tblContents
-										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteNav> lstContent = (from ct in db.carrot_Contents
+										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										orderby ct.NavOrder, ct.NavMenuText
 										where r.SiteID == siteID
 											&& ct.Parent_ContentID == c.Parent_ContentID
@@ -554,8 +554,8 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
 
-			SiteNav content = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			SiteNav content = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   where r.SiteID == siteID
 								   && r.FileName.ToLower() == sPage.ToLower()
 								   && ct.IsLatestVersion == true
@@ -566,8 +566,8 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
 
-			SiteNav content = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			SiteNav content = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   where r.SiteID == siteID
 								   && ct.Root_ContentID == rootContentID
 								   && ct.IsLatestVersion == true
@@ -582,8 +582,8 @@ namespace Carrotware.CMS.Core {
 
 			SiteNav content = null;
 			if (nav1 != null) {
-				content = (from ct in db.tblContents
-						   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+				content = (from ct in db.carrot_Contents
+						   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 						   where r.SiteID == siteID
 							   && r.FileName.ToLower() == content.FileName.ToLower()
 							   && ct.IsLatestVersion == true
@@ -597,8 +597,8 @@ namespace Carrotware.CMS.Core {
 
 			SiteNav content = null;
 			if (nav1 != null) {
-				content = (from ct in db.tblContents
-						   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+				content = (from ct in db.carrot_Contents
+						   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 						   where r.SiteID == siteID
 							   && ct.Root_ContentID == nav1.Parent_ContentID
 							   && ct.IsLatestVersion == true
@@ -609,8 +609,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
-			List<SiteNav> lstContent = (from ct in db.tblContents
-										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteNav> lstContent = (from ct in db.carrot_Contents
+										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										orderby ct.NavOrder, ct.NavMenuText
 										where r.SiteID == siteID
 											&& ct.Parent_ContentID == ParentID
@@ -622,13 +622,13 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, Guid PageID, bool bActiveOnly) {
 
-			tblContent c = (from ct in db.tblContents
+			carrot_Content c = (from ct in db.carrot_Contents
 							where ct.Root_ContentID == PageID
 							   && ct.IsLatestVersion == true
 							select ct).FirstOrDefault();
 
-			List<SiteNav> lstContent = (from ct in db.tblContents
-										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteNav> lstContent = (from ct in db.carrot_Contents
+										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										orderby ct.NavOrder, ct.NavMenuText
 										where r.SiteID == siteID
 											&& ct.Parent_ContentID == c.Parent_ContentID
@@ -642,8 +642,8 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
 
-			List<SiteNav> lstContent = (from ct in db.tblContents
-										join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteNav> lstContent = (from ct in db.carrot_Contents
+										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										orderby ct.EditDate descending
 										where r.SiteID == siteID
 											&& ct.IsLatestVersion == true
@@ -655,8 +655,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public SiteNav GetLatestVersion(Guid siteID, Guid rootContentID) {
-			SiteNav content = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			SiteNav content = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   where r.SiteID == siteID
 								   && r.Root_ContentID == rootContentID
 								   && ct.IsLatestVersion == true
@@ -666,8 +666,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteNav GetLatestVersion(Guid siteID, bool? active, string sPage) {
-			SiteNav content = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			SiteNav content = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   where r.SiteID == siteID
 								   && (r.PageActive == active || active == null)
 								   && r.FileName.ToLower() == sPage.ToLower()
@@ -679,8 +679,8 @@ namespace Carrotware.CMS.Core {
 
 
 		public SiteNav FindHome(Guid siteID) {
-			SiteNav content = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			SiteNav content = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   orderby ct.NavOrder ascending
 							   where r.SiteID == siteID
 								   && r.PageActive == true
@@ -691,8 +691,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteNav FindByFilename(Guid siteID, string urlFileName) {
-			SiteNav content = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			SiteNav content = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   where r.SiteID == siteID
 								   && ct.IsLatestVersion == true
 								   && r.FileName.ToLower() == urlFileName.ToLower()
@@ -702,8 +702,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteNav FindHome(Guid siteID, bool? active) {
-			SiteNav content = (from ct in db.tblContents
-							   join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			SiteNav content = (from ct in db.carrot_Contents
+							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 							   orderby ct.NavOrder ascending
 							   where r.SiteID == siteID
 								   && (r.PageActive == active || active == null)
@@ -761,7 +761,7 @@ namespace Carrotware.CMS.Core {
 			List<SiteMapOrder> m = new List<SiteMapOrder>();
 			sMapText = sMapText.Trim();
 
-			tblContent c = (from ct in db.tblContents
+			carrot_Content c = (from ct in db.carrot_Contents
 							where ct.Root_ContentID == contentID
 							   && ct.IsLatestVersion == true
 							select ct).FirstOrDefault();
@@ -790,8 +790,8 @@ namespace Carrotware.CMS.Core {
 
 			foreach (SiteMapOrder m in oMap) {
 
-				tblContent c = (from ct in db.tblContents
-								join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+				carrot_Content c = (from ct in db.carrot_Contents
+								join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 								where r.SiteID == siteID
 									&& r.Root_ContentID == m.Root_ContentID
 									&& ct.IsLatestVersion == true
@@ -807,8 +807,8 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteMapOrder> GetAdminPageList(Guid siteID, Guid contentID) {
 
-			List<SiteMapOrder> lstSite = (from ct in db.tblContents
-										  join r in db.tblRootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<SiteMapOrder> lstSite = (from ct in db.carrot_Contents
+										  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 										  orderby ct.NavOrder, ct.NavMenuText
 										  where r.SiteID == siteID
 											  && ct.IsLatestVersion == true

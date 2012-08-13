@@ -3,9 +3,9 @@
 
 If installing/running CMS for first time run
 
-		** whole database.sql
+		** CREATE 01 - whole database.sql
 			-- creates the core tables for the CMS
-		** default user.sql  
+		** CREATE 02 - default user.sql  
 			-- you can update the username & email listed in script, note that the password is still going to be carrot123 unless you change it (RECOMENDED!!!!)
 			*OR* 
 			-- skip this script and use visual studio to create additional users
@@ -18,8 +18,10 @@ If installing/running CMS for first time run
 
 If coming from an earlier version, run these scripts
 
-		** add meta fields to content.sql     (from before 2012-01-25)
+		** ALTER 01 - add meta fields to content.sql     (from before 2012-01-25)
 
-		** new widget structure.sql     (from before 2012-07-16)
+		** ALTER 02 - new widget structure.sql     (from before 2012-07-16)
 
-		** add create date to root content.sql     (from before 2012-07-22)
+		** ALTER 03 - add create date to root content.sql     (from before 2012-07-22)
+
+		** ALTER 04 - move data to carrot prefix tables.sql     (from before 2012-08-12)		

@@ -46,13 +46,13 @@ namespace Carrotware.CMS.UI.Admin {
 					gvSites.Visible = false;
 					if (SiteData.IsAdmin) {
 						gvSites.Visible = true;
-						gvSites.DataSource = (from l in db.tblSites
+						gvSites.DataSource = (from l in db.carrot_Sites
 											  orderby l.SiteName
 											  select l).ToList();
 						gvSites.DataBind();
 
 
-						var dsLocs = (from l in db.tblUserSiteMappings
+						var dsLocs = (from l in db.carrot_UserSiteMappings
 									  where l.UserId == userID
 									  select l).ToList();
 
@@ -141,7 +141,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 				if (SiteData.IsAdmin) {
-					var dsLocs = (from l in db.tblUserSiteMappings
+					var dsLocs = (from l in db.carrot_UserSiteMappings
 								  where l.UserId == userID
 								  select l).ToList();
 
@@ -156,14 +156,14 @@ namespace Carrotware.CMS.UI.Admin {
 									  where l.SiteID == guidSiteID
 									  select l).Count();
 
-							tblUserSiteMapping map = new tblUserSiteMapping();
+							carrot_UserSiteMapping map = new carrot_UserSiteMapping();
 							map.UserSiteMappingID = Guid.NewGuid();
 							map.SiteID = guidSiteID;
 							map.UserId = userID;
 
 							if (chkSelected.Checked) {
 								if (ct < 1) {
-									db.tblUserSiteMappings.InsertOnSubmit(map);
+									db.carrot_UserSiteMappings.InsertOnSubmit(map);
 									db.SubmitChanges();
 								}
 							} else {
@@ -171,7 +171,7 @@ namespace Carrotware.CMS.UI.Admin {
 									var loc = (from l in dsLocs
 											   where l.SiteID == guidSiteID
 											   select l).First();
-									db.tblUserSiteMappings.DeleteOnSubmit(loc);
+									db.carrot_UserSiteMappings.DeleteOnSubmit(loc);
 									db.SubmitChanges();
 								}
 							}

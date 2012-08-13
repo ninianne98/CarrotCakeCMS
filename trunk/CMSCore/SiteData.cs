@@ -25,7 +25,7 @@ namespace Carrotware.CMS.Core {
 
 		public SiteData() { }
 
-		public SiteData(tblSite s) {
+		public SiteData(carrot_Site s) {
 
 			this.SiteID = s.SiteID;
 			this.MetaKeyword = s.MetaKeyword;
@@ -37,7 +37,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteData Get(Guid siteID) {
-			var s = (from r in db.tblSites
+			var s = (from r in db.carrot_Sites
 					 where r.SiteID == siteID
 					 select r).FirstOrDefault();
 
@@ -85,13 +85,13 @@ namespace Carrotware.CMS.Core {
 
 		public void Save() {
 
-			var s = (from r in db.tblSites
+			var s = (from r in db.carrot_Sites
 					 where r.SiteID == this.SiteID
 					 select r).FirstOrDefault();
 
 			bool bNew = false;
 			if (s == null) {
-				s = new tblSite();
+				s = new carrot_Site();
 				if (this.SiteID == Guid.Empty) {
 					this.SiteID = Guid.NewGuid();
 				}
@@ -112,7 +112,7 @@ namespace Carrotware.CMS.Core {
 			s.BlockIndex = this.BlockIndex;
 
 			if (bNew) {
-				db.tblSites.InsertOnSubmit(s);
+				db.carrot_Sites.InsertOnSubmit(s);
 			}
 			db.SubmitChanges();
 
@@ -133,7 +133,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			// by this point, the user is probably an editor, make sure they have rights to this site
-			var lstSites = (from l in db.tblUserSiteMappings
+			var lstSites = (from l in db.carrot_UserSiteMappings
 							where l.UserId == userID
 								 && l.SiteID == siteID
 							select l.SiteID).ToList();
@@ -148,14 +148,14 @@ namespace Carrotware.CMS.Core {
 
 		public void CleanUpSerialData() {
 
-			var lst = (from c in db.tblSerialCaches
+			var lst = (from c in db.carrot_SerialCaches
 					   where c.EditDate < DateTime.Now.AddHours(-6)
 					   && c.SiteID == CurrentSiteID
 					   select c).ToList();
 
 			if (lst.Count > 0) {
 				foreach (var l in lst) {
-					db.tblSerialCaches.DeleteOnSubmit(l);
+					db.carrot_SerialCaches.DeleteOnSubmit(l);
 				}
 				db.SubmitChanges();
 			}
@@ -165,12 +165,12 @@ namespace Carrotware.CMS.Core {
 
 		public void MapUserToSite(Guid siteID, Guid userID) {
 
-			tblUserSiteMapping map = new tblUserSiteMapping();
+			carrot_UserSiteMapping map = new carrot_UserSiteMapping();
 			map.UserSiteMappingID = Guid.NewGuid();
 			map.SiteID = siteID;
 			map.UserId = userID;
 
-			db.tblUserSiteMappings.InsertOnSubmit(map);
+			db.carrot_UserSiteMappings.InsertOnSubmit(map);
 			db.SubmitChanges();
 
 		}

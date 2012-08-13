@@ -60,11 +60,6 @@
   </Target>
   -->
   <ItemGroup>
-    <None Include="add meta fields to content.sql" />
-    <None Include="default user.sql" />
-    <None Include="whole database.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -82,10 +77,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="add create date to root content.sql" />
+    <Content Include="ALTER 01 - add meta fields to content.sql" />
+    <Content Include="ALTER 02 - new widget structure.sql" />
+    <Content Include="ALTER 03 - add create date to root content.sql" />
+    <Content Include="ALTER 04 - move data to carrot prefix tables.sql" />
+    <Content Include="CREATE 01 - whole database.sql" />
+    <Content Include="CREATE 02 - default user.sql" />
     <Content Include="create tblCalendar.sql" />
     <Content Include="create tblFAQ.sql" />
-    <Content Include="new widget structure.sql" />
     <Content Include="__README.txt" />
   </ItemGroup>
 </Project>

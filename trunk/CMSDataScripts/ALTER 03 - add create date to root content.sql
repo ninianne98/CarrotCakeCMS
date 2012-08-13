@@ -1,3 +1,6 @@
+-- USE [CarrotwareCMS]
+GO
+
 -- 2012-07-22
 -- added new column to tblRootContent
 
@@ -7,6 +10,11 @@ IF NOT EXISTS( select * from information_schema.columns
 	ALTER TABLE [dbo].[tblRootContent] ADD [CreateDate] [datetime] NULL
 
 END
+
+GO
+
+ALTER TABLE [dbo].[tblRootContent] 
+	ALTER COLUMN  [CreateDate] [datetime] NULL
 
 GO
 

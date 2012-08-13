@@ -25,7 +25,7 @@ namespace Carrotware.CMS.Core {
 
 		public PageWidget(Guid rootWidgetID) {
 
-			var w = (from r in db.tblWidgetDatas
+			var w = (from r in db.carrot_WidgetDatas
 					 where r.Root_WidgetID == rootWidgetID
 						&& r.IsLatestVersion == true
 					 select r).FirstOrDefault();
@@ -35,20 +35,20 @@ namespace Carrotware.CMS.Core {
 
 		public void LoadPageWidgetVersion(Guid widgetDataID) {
 
-			var w = (from r in db.tblWidgetDatas
+			var w = (from r in db.carrot_WidgetDatas
 					 where r.WidgetDataID == widgetDataID
 					 select r).FirstOrDefault();
 
 			SetVals(w);
 		}
 
-		public PageWidget(tblWidgetData w) {
+		public PageWidget(carrot_WidgetData w) {
 			SetVals(w);
 		}
 
-		private void SetVals(tblWidgetData w) {
+		private void SetVals(carrot_WidgetData w) {
 
-			var ww = db.tblWidgets.Where(x => x.Root_WidgetID == w.Root_WidgetID).FirstOrDefault();
+			var ww = db.carrot_Widgets.Where(x => x.Root_WidgetID == w.Root_WidgetID).FirstOrDefault();
 
 			this.IsWidgetPendingDelete = false;
 
@@ -84,7 +84,7 @@ namespace Carrotware.CMS.Core {
 		public void Save() {
 
 			if (!this.IsWidgetPendingDelete) {
-				var w = (from r in db.tblWidgets
+				var w = (from r in db.carrot_Widgets
 						 orderby r.WidgetOrder
 						 where r.Root_WidgetID == this.Root_WidgetID
 						 select r).FirstOrDefault();
@@ -92,7 +92,7 @@ namespace Carrotware.CMS.Core {
 				bool bAdd = false;
 				if (w == null) {
 					bAdd = true;
-					w = new tblWidget();
+					w = new carrot_Widget();
 				}
 
 				if (this.Root_WidgetID == Guid.Empty) {
@@ -107,14 +107,14 @@ namespace Carrotware.CMS.Core {
 				w.ControlPath = this.ControlPath;
 				w.WidgetActive = this.IsWidgetActive;
 
-				var wd = new tblWidgetData();
+				var wd = new carrot_WidgetData();
 				wd.Root_WidgetID = w.Root_WidgetID;
 				wd.WidgetDataID = Guid.NewGuid();
 				wd.IsLatestVersion = true;
 				wd.ControlProperties = this.ControlProperties;
 				wd.EditDate = DateTime.Now;
 
-				var oldWD = (from ww in db.tblWidgetDatas
+				var oldWD = (from ww in db.carrot_WidgetDatas
 							 where ww.Root_WidgetID == w.Root_WidgetID
 								&& ww.IsLatestVersion == true
 							 select ww).FirstOrDefault();
@@ -123,14 +123,14 @@ namespace Carrotware.CMS.Core {
 				if (oldWD != null) {
 					if (oldWD.ControlProperties != wd.ControlProperties) {
 						oldWD.IsLatestVersion = false;
-						db.tblWidgetDatas.InsertOnSubmit(wd);
+						db.carrot_WidgetDatas.InsertOnSubmit(wd);
 					}
 				} else {
-					db.tblWidgetDatas.InsertOnSubmit(wd);
+					db.carrot_WidgetDatas.InsertOnSubmit(wd);
 				}
 
 				if (bAdd) {
-					db.tblWidgets.InsertOnSubmit(w);
+					db.carrot_Widgets.InsertOnSubmit(w);
 				}
 
 				db.SubmitChanges();
@@ -144,23 +144,23 @@ namespace Carrotware.CMS.Core {
 
 
 		public void Delete() {
-			var w = (from r in db.tblWidgetDatas
+			var w = (from r in db.carrot_WidgetDatas
 					 where r.WidgetDataID == this.WidgetDataID
 					 select r).FirstOrDefault();
 
 			if (w != null) {
-				db.tblWidgetDatas.DeleteOnSubmit(w);
+				db.carrot_WidgetDatas.DeleteOnSubmit(w);
 				db.SubmitChanges();
 			}
 		}
 
 		public void DeleteAll() {
 
-			var w1 = (from r in db.tblWidgetDatas
+			var w1 = (from r in db.carrot_WidgetDatas
 					  where r.Root_WidgetID == this.Root_WidgetID
 					  select r).ToList();
 
-			var w2 = (from r in db.tblWidgets
+			var w2 = (from r in db.carrot_Widgets
 					  where r.Root_WidgetID == this.Root_WidgetID
 					  select r).ToList();
 
@@ -168,14 +168,14 @@ namespace Carrotware.CMS.Core {
 
 			if (w1 != null) {
 				foreach (var w in w1) {
-					db.tblWidgetDatas.DeleteOnSubmit(w);
+					db.carrot_WidgetDatas.DeleteOnSubmit(w);
 					bPendingDel = true;
 				}
 			}
 
 			if (w2 != null) {
 				foreach (var w in w2) {
-					db.tblWidgets.DeleteOnSubmit(w);
+					db.carrot_Widgets.DeleteOnSubmit(w);
 					bPendingDel = true;
 				}
 			}
@@ -187,7 +187,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public void Disable() {
-			var w = (from r in db.tblWidgets
+			var w = (from r in db.carrot_Widgets
 					 where r.Root_WidgetID == this.Root_WidgetID
 					 select r).FirstOrDefault();
 
