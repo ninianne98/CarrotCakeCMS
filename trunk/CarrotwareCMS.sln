@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "database scripts", "{835815E6-C641-402B-A6C5-E6E8A4B2C754}"
 	ProjectSection(SolutionItems) = preProject
-		CMSDataScripts\__README.txt = CMSDataScripts\__README.txt
-		CMSDataScripts\ALTER 01 - add meta fields to content.sql = CMSDataScripts\ALTER 01 - add meta fields to content.sql
-		CMSDataScripts\ALTER 02 - new widget structure.sql = CMSDataScripts\ALTER 02 - new widget structure.sql
-		CMSDataScripts\ALTER 03 - add create date to root content.sql = CMSDataScripts\ALTER 03 - add create date to root content.sql
-		CMSDataScripts\ALTER 04 - move data to carrot prefix tables.sql = CMSDataScripts\ALTER 04 - move data to carrot prefix tables.sql
-		CMSDataScripts\CREATE 01 - whole database.sql = CMSDataScripts\CREATE 01 - whole database.sql
-		CMSDataScripts\CREATE 02 - default user.sql = CMSDataScripts\CREATE 02 - default user.sql
-		CMSDataScripts\create tblCalendar.sql = CMSDataScripts\create tblCalendar.sql
-		CMSDataScripts\create tblFAQ.sql = CMSDataScripts\create tblFAQ.sql
+		CMSDataScripts\Scripts\__README.txt = CMSDataScripts\Scripts\__README.txt
+		CMSDataScripts\Scripts\ALTER 01 - add meta fields to content.sql = CMSDataScripts\Scripts\ALTER 01 - add meta fields to content.sql
+		CMSDataScripts\Scripts\ALTER 02 - new widget structure.sql = CMSDataScripts\Scripts\ALTER 02 - new widget structure.sql
+		CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql = CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql
+		CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql = CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql
+		CMSDataScripts\Scripts\CREATE 01 - whole database.sql = CMSDataScripts\Scripts\CREATE 01 - whole database.sql
+		CMSDataScripts\Scripts\CREATE 02 - default user.sql = CMSDataScripts\Scripts\CREATE 02 - default user.sql
+		CMSDataScripts\Scripts\create tblCalendar.sql = CMSDataScripts\Scripts\create tblCalendar.sql
+		CMSDataScripts\Scripts\create tblFAQ.sql = CMSDataScripts\Scripts\create tblFAQ.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSAdmin", "CMSAdmin\CMSAdmin.csproj", "{3137431F-6BE3-4996-9CF8-4D50414B403A}"
@@ -26,8 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSCore", "CMSCore\CMSCore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSInterfaces", "CMSInterfaces\CMSInterfaces.csproj", "{33D1EA6C-65EA-4234-9861-C1C88317B78A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.csproj", "{66647E76-0AB6-4C34-829F-56A8F3079806}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSCalendarModule", "CMSCalendarModule\CMSCalendarModule.csproj", "{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSFAQModule", "CMSFAQModule\CMSFAQModule.csproj", "{38E7C46A-F4B6-4CB7-8F39-C0088F109748}"
@@ -37,6 +35,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "widgets", "widgets", "{53B5D160-56A0-42F9-8189-E0E87726B5CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server controls", "server controls", "{8A505549-83D1-4BBF-87DE-0276139946D2}"
+EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.dbproj", "{66647E76-0AB6-4C34-829F-56A8F3079806}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,8 +68,6 @@ Global
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D1EA6C-65EA-4234-9861-C1C88317B78A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -82,15 +80,20 @@ Global
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{66647E76-0AB6-4C34-829F-56A8F3079806} = {835815E6-C641-402B-A6C5-E6E8A4B2C754}
-		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
-		{38E7C46A-F4B6-4CB7-8F39-C0088F109748} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7} = {8A505549-83D1-4BBF-87DE-0276139946D2}
 		{2DEB6A0C-B032-4B78-96BD-CC9271473CA1} = {8A505549-83D1-4BBF-87DE-0276139946D2}
+		{38E7C46A-F4B6-4CB7-8F39-C0088F109748} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
+		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 	EndGlobalSection
 EndGlobal
