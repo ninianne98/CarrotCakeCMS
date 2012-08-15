@@ -1,6 +1,5 @@
 ﻿Notes on what/when to install which SQL scripts
 
-
 If installing/running CMS for first time run
 
 		** CREATE 01 - whole database.sql
@@ -14,6 +13,8 @@ If installing/running CMS for first time run
 			-- to use the calendar sample
 		** create tblFAQ.sql
 			-- to use the FAQ sample
+		** create tblGallery.sql
+			-- to use the Gallery sample
 
 If coming from an earlier version, run these scripts
 
