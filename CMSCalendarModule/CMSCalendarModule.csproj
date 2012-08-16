@@ -16,6 +16,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +100,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="calendar1.css" />
+    <Content Include="calendar2.css" />
+    <Content Include="calendar3.css" />
     <Content Include="CalendarAdmin.ascx" />
     <Content Include="CalendarAdminAddEdit.ascx" />
     <Content Include="CalendarDisplay.ascx" />
@@ -167,6 +171,7 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)\bin\$(TargetName).*" "$(SolutionDir)\CMSAdmin\bin\" /F /R /Y /I
-xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\" /F /R /Y /I</PostBuildEvent>
+xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\" /F /R /Y /I
+xcopy  "$(ProjectDir)\*.css" "$(SolutionDir)\CMSAdmin\cmsPlugins\" /F /R /Y /I</PostBuildEvent>
   </PropertyGroup>
 </Project>
