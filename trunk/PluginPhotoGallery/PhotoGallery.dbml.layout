@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="PhotoGallery">
+  <DataContextMoniker Name="/PhotoGalleryDataContext" />
+  <nestedChildShapes>
+    <classShape Id="393bd1d8-cdbd-46af-8488-efbebb13f55a" absoluteBounds="0.5, 0.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/PhotoGalleryDataContext/tblGallery" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b5807d9a-0b6a-4623-a54d-c6d51650730a" absoluteBounds="0.515, 0.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0004cd95-4129-4d30-90ba-acdd4310007f" absoluteBounds="3.5, 0.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/PhotoGalleryDataContext/tblGalleryImage" />
+      <nestedChildShapes>
+        <elementListCompartment Id="760dfafc-ad34-4d9f-af60-4838d27439f5" absoluteBounds="3.515, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 1.19314697265625); (3.5 : 1.19314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/PhotoGalleryDataContext/tblGallery/tblGallery_tblGalleryImage" />
+      <nodes>
+        <classShapeMoniker Id="393bd1d8-cdbd-46af-8488-efbebb13f55a" />
+        <classShapeMoniker Id="0004cd95-4129-4d30-90ba-acdd4310007f" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

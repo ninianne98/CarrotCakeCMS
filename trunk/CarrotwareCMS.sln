@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server controls", "server c
 EndProject
 Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.dbproj", "{66647E76-0AB6-4C34-829F-56A8F3079806}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginPhotoGallery", "PluginPhotoGallery\PluginPhotoGallery.csproj", "{AB1DE455-438E-4249-B282-52937F9D1386}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66647E76-0AB6-4C34-829F-56A8F3079806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{66647E76-0AB6-4C34-829F-56A8F3079806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1DE455-438E-4249-B282-52937F9D1386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB1DE455-438E-4249-B282-52937F9D1386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB1DE455-438E-4249-B282-52937F9D1386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1DE455-438E-4249-B282-52937F9D1386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,5 +97,6 @@ Global
 		{2DEB6A0C-B032-4B78-96BD-CC9271473CA1} = {8A505549-83D1-4BBF-87DE-0276139946D2}
 		{38E7C46A-F4B6-4CB7-8F39-C0088F109748} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
+		{AB1DE455-438E-4249-B282-52937F9D1386} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 	EndGlobalSection
 EndGlobal
