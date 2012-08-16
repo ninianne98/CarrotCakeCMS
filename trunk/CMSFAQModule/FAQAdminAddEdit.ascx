@@ -1,14 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="FAQAdminAddEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.FAQModule.FAQAdminAddEdit" %>
 <table width="700" align="center">
 	<tr>
-		<td valign="top" width="200">
+		<td valign="top" width="100">
 			&nbsp;
 			<br />
 			question
 		</td>
-		<td colspan="2" width="500">
+		<td colspan="2" width="600">
 			<a href="javascript:cmsToggleTinyMCE('<%= reQuestion.ClientID %>');">Add/Remove editor</a><br />
-			<asp:TextBox CssClass="mceEditor" ID="reQuestion" runat="server" TextMode="MultiLine" Rows="6" Columns="60"></asp:TextBox>
+			<asp:TextBox Style="height: 150px; width: 625px;" CssClass="mceEditor" ID="reQuestion" runat="server" TextMode="MultiLine" Rows="6" Columns="60"></asp:TextBox>
 		</td>
 	</tr>
 	<tr>
@@ -19,7 +19,7 @@
 		</td>
 		<td colspan="2">
 			<a href="javascript:cmsToggleTinyMCE('<%= reAnswer.ClientID %>');">Add/Remove editor</a><br />
-			<asp:TextBox CssClass="mceEditor" ID="reAnswer" runat="server" TextMode="MultiLine" Rows="6" Columns="60"></asp:TextBox>
+			<asp:TextBox Style="height: 150px; width: 625px;" CssClass="mceEditor" ID="reAnswer" runat="server" TextMode="MultiLine" Rows="6" Columns="60"></asp:TextBox>
 		</td>
 	</tr>
 	<tr>
@@ -31,8 +31,7 @@
 				<asp:CheckBox ID="chkActive" runat="server" Checked="True"></asp:CheckBox>Active
 			</div>
 			Sort:&nbsp;
-			<asp:TextBox onkeypress="return ProcessKeyPress(event)" ID="txtSort" onblur="checkIntNumber(this)" runat="server" Columns="8"
-				Text="0" MaxLength="3">0</asp:TextBox>
+			<asp:TextBox onkeypress="return ProcessKeyPress(event)" ID="txtSort" onblur="checkIntNumber(this)" runat="server" Columns="8" Text="0" MaxLength="3">0</asp:TextBox>
 		</td>
 		<td valign="top" align="right">
 			&nbsp;<input id="btnDelete" onclick="fnDelete()" type="button" value="Delete" name="btnDelete" runat="server" />
@@ -47,7 +46,6 @@
 		</td>
 	</tr>
 </table>
-
 <script language="javascript">
     function calAutoSynchMCE() {
 
@@ -88,4 +86,3 @@
         }
     }
 </script>
-
