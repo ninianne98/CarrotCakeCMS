@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AB1DE455-438E-4249-B282-52937F9D1386}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Carrotware.CMS.UI.Plugins.PhotoGallery</RootNamespace>
+    <AssemblyName>Carrotware.CMS.UI.Plugins.PhotoGallery</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="fancybox\images\blank.gif" />
+    <EmbeddedResource Include="fancybox\images\fancybox-x.png" />
+    <EmbeddedResource Include="fancybox\images\fancybox-y.png" />
+    <EmbeddedResource Include="fancybox\images\fancybox.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_close.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_loading.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_nav_left.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_nav_right.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_e.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_n.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_ne.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_nw.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_s.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_se.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_sw.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_shadow_w.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_title_left.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_title_main.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_title_over.png" />
+    <EmbeddedResource Include="fancybox\images\fancy_title_right.png" />
+    <EmbeddedResource Include="fancybox\easing-p.js" />
+    <EmbeddedResource Include="fancybox\fancybox.css" />
+    <EmbeddedResource Include="fancybox\fancybox-p.js" />
+    <EmbeddedResource Include="fancybox\mousewheel-p.js" />
+    <Content Include="fancybox\README.txt" />
+    <Content Include="PhotoGalleryPrettyPhoto.ascx" />
+    <Content Include="PhotoGalleryFancyBox2.ascx" />
+    <Content Include="PhotoGalleryAdminCategory.ascx" />
+    <Content Include="PhotoGalleryAdminCategoryList.ascx" />
+    <Content Include="PhotoGalleryFancyBox.ascx" />
+    <None Include="PhotoGallery.dbml.layout">
+      <DependentUpon>PhotoGallery.dbml</DependentUpon>
+    </None>
+    <Content Include="PhotoGalleryAdmin.ascx" />
+    <Content Include="PhotoGalleryTest.aspx" />
+    <EmbeddedResource Include="prettyphoto\images\dark_rounded\btnNext.png" />
+    <EmbeddedResource Include="prettyphoto\images\dark_rounded\btnPrevious.png" />
+    <EmbeddedResource Include="prettyphoto\images\dark_rounded\contentPattern.png" />
+    <EmbeddedResource Include="prettyphoto\images\dark_rounded\default_thumbnail.gif" />
+    <EmbeddedResource Include="prettyphoto\images\dark_rounded\loader.gif" />
+    <EmbeddedResource Include="prettyphoto\images\dark_rounded\sprite.png" />
+    <EmbeddedResource Include="prettyphoto\images\dark_square\btnNext.png" />
+    <EmbeddedResource Include="prettyphoto\images\dark_square\btnPrevious.png" />
+    <EmbeddedResource Include="prettyphoto\images\dark_square\contentPattern.png" />
+    <EmbeddedResource Include="prettyphoto\images\dark_square\default_thumbnail.gif" />
+    <EmbeddedResource Include="prettyphoto\images\dark_square\loader.gif" />
+    <EmbeddedResource Include="prettyphoto\images\dark_square\sprite.png" />
+    <EmbeddedResource Include="prettyphoto\images\default\default_thumb.png" />
+    <EmbeddedResource Include="prettyphoto\images\default\loader.gif" />
+    <EmbeddedResource Include="prettyphoto\images\default\sprite.png" />
+    <EmbeddedResource Include="prettyphoto\images\default\sprite_next.png" />
+    <EmbeddedResource Include="prettyphoto\images\default\sprite_prev.png" />
+    <EmbeddedResource Include="prettyphoto\images\default\sprite_x.png" />
+    <EmbeddedResource Include="prettyphoto\images\default\sprite_y.png" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\btnNext.png" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\btnPrevious.png" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\contentPatternBottom.png" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\contentPatternLeft.png" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\contentPatternRight.png" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\contentPatternTop.png" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\default_thumbnail.gif" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\loader.gif" />
+    <EmbeddedResource Include="prettyphoto\images\facebook\sprite.png" />
+    <EmbeddedResource Include="prettyphoto\images\light_rounded\btnNext.png" />
+    <EmbeddedResource Include="prettyphoto\images\light_rounded\btnPrevious.png" />
+    <EmbeddedResource Include="prettyphoto\images\light_rounded\default_thumbnail.gif" />
+    <EmbeddedResource Include="prettyphoto\images\light_rounded\loader.gif" />
+    <EmbeddedResource Include="prettyphoto\images\light_rounded\sprite.png" />
+    <EmbeddedResource Include="prettyphoto\images\light_square\btnNext.png" />
+    <EmbeddedResource Include="prettyphoto\images\light_square\btnPrevious.png" />
+    <EmbeddedResource Include="prettyphoto\images\light_square\default_thumbnail.gif" />
+    <EmbeddedResource Include="prettyphoto\images\light_square\loader.gif" />
+    <EmbeddedResource Include="prettyphoto\images\light_square\sprite.png" />
+    <EmbeddedResource Include="prettyphoto\prettyPhoto.js" />
+    <EmbeddedResource Include="prettyphoto\prettyPhoto.css" />
+    <Content Include="prettyphoto\README.txt" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PrettyPhoto.cs" />
+    <Compile Include="PhotoGalleryPrettyPhoto.ascx.cs">
+      <DependentUpon>PhotoGalleryPrettyPhoto.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryPrettyPhoto.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryPrettyPhoto.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGalleryFancyBox2.ascx.cs">
+      <DependentUpon>PhotoGalleryFancyBox2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryFancyBox2.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryFancyBox2.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FancyBox.cs" />
+    <Compile Include="PhotoGallery.cs">
+      <DependentUpon>PhotoGallery.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGallery.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoGallery.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminCategory.ascx.cs">
+      <DependentUpon>PhotoGalleryAdminCategory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminCategory.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryAdminCategory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminCategoryList.ascx.cs">
+      <DependentUpon>PhotoGalleryAdminCategoryList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminCategoryList.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryAdminCategoryList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGalleryFancyBox.ascx.cs">
+      <DependentUpon>PhotoGalleryFancyBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryFancyBox.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryFancyBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGalleryAdmin.ascx.cs">
+      <DependentUpon>PhotoGalleryAdmin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryAdmin.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryAdmin.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGalleryTest.aspx.cs">
+      <DependentUpon>PhotoGalleryTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryTest.aspx.designer.cs">
+      <DependentUpon>PhotoGalleryTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PhotoGallery.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>PhotoGallery.designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CarrotCakeCMS\WebControls\WebControls.csproj">
+      <Project>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</Project>
+      <Name>WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSCore\CMSCore.csproj">
+      <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
+      <Name>CMSCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
+      <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
+      <Name>CMSInterfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50002</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)\bin\$(TargetName).*" "$(SolutionDir)\CMSAdmin\bin\" /F /R /Y /I
+xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\" /F /R /Y /I
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>
