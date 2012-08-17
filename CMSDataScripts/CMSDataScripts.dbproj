@@ -42,15 +42,14 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>.\sql\debug\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TargetConnectionString>
-    </TargetConnectionString>
+    <TargetConnectionString>Data Source=.\SQL2008EXPRESS;Integrated Security=True;Pooling=False</TargetConnectionString>
     <TargetDatabase>CarrotCMS</TargetDatabase>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <SuppressWarnings>
     </SuppressWarnings>
     <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
     <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
-    <DeployToDatabase>False</DeployToDatabase>
+    <DeployToDatabase>True</DeployToDatabase>
   </PropertyGroup>
   <!--Import the settings-->
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\TeamData\Microsoft.Data.Schema.SqlTasks.targets" />
@@ -268,10 +267,10 @@
     <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Membership.PK_aspnet_Membership.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.tblCalendar.tblCalendar_PK_UC1.pkey.sql">
+    <Build Include="Schema Objects\Tables\Keys\dbo.tblCalendar.tblCalendar_PK.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.tblFAQ.tblFAQ_PK_UC1.pkey.sql">
+    <Build Include="Schema Objects\Tables\Keys\dbo.tblFAQ.tblFAQ_PK.pkey.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_UsersInRoles.PK_aspnet_UsersInRoles.pkey.sql">
@@ -567,6 +566,12 @@
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Tables\dbo.tblGallery.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.tblGalleryImageMeta.DF_tblGalleryImageMeta_GalleryImageMetaID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.tblGalleryImageMeta.table.sql">
       <SubType>Code</SubType>
     </Build>
   </ItemGroup>
