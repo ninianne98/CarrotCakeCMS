@@ -81,7 +81,7 @@
 				</asp:Panel>
 			</ContentTemplate>
 		</asp:UpdatePanel>
-		<asp:ContentPlaceHolder ID="NoAjaxBodyContentPlaceHolder" runat="server">
+		<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
 		</asp:ContentPlaceHolder>
 	</div>
 	<asp:PlaceHolder ID="plcFooter" runat="server" />

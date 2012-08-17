@@ -10,42 +10,36 @@
 namespace Carrotware.CMS.UI.Admin {
     
     
-    public partial class ucAdminModule {
+    public partial class ModulePopup {
         
         /// <summary>
-        /// pnlNav control.
+        /// phAjax control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNav;
+        protected global::System.Web.UI.WebControls.PlaceHolder phAjax;
         
         /// <summary>
-        /// rpModuleList control.
+        /// phNoAjax control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpModuleList;
+        protected global::System.Web.UI.WebControls.PlaceHolder phNoAjax;
         
         /// <summary>
-        /// phAdminModule control.
+        /// Master property.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated property.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phAdminModule;
-        
-        /// <summary>
-        /// pnlSetter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlSetter;
+        public new Carrotware.CMS.UI.Admin.MasterPages.MainPopup Master {
+            get {
+                return ((Carrotware.CMS.UI.Admin.MasterPages.MainPopup)(base.Master));
+            }
+        }
     }
 }

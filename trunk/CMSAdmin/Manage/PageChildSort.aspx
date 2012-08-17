@@ -108,5 +108,5 @@
 		<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
 	</p>
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

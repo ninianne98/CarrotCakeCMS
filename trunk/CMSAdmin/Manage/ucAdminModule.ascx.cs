@@ -27,17 +27,21 @@ namespace Carrotware.CMS.UI.Admin {
 
 		public bool UseAjax { get; set; }
 
+		public bool HideList { get; set; }
+
 		protected bool bLoadModule = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
-				if (cmsHelper.AdminModules.Count > 0) {
+				if (!HideList && cmsHelper.AdminModules.Count > 0) {
 					rpModuleList.DataSource = cmsHelper.AdminModules;
 					rpModuleList.DataBind();
 				} else {
 					rpModuleList.Visible = false;
 				}
 			}
+
+			pnlNav.Visible = !HideList;
 
 			if (ModuleID != Guid.Empty) {
 				pnlSetter.Visible = true;
@@ -104,6 +108,14 @@ namespace Carrotware.CMS.UI.Admin {
 				return " ";
 			}
 
+		}
+
+		protected string CreateLink(string sPop, string sID, string sParm) {
+			if (Convert.ToBoolean(sPop)) {
+				return String.Format("javascript:ShowWindowNoRefresh('{0}?pi={1}&pf={2}');", "./ModulePopup.aspx", Eval("PluginID"), Eval("PluginParm"));
+			} else {
+				return String.Format("{0}?pi={1}&pf={2}", Carrotware.CMS.Core.SiteData.CurrentScriptName, Eval("PluginID"), Eval("PluginParm"));
+			}
 
 		}
 
