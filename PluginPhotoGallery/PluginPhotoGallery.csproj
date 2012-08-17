@@ -96,6 +96,7 @@
     <Content Include="PhotoGalleryAdminCategory.ascx" />
     <Content Include="PhotoGalleryAdminCategoryList.ascx" />
     <Content Include="PhotoGalleryFancyBox.ascx" />
+    <Content Include="Admin.config" />
     <None Include="PhotoGallery.dbml.layout">
       <DependentUpon>PhotoGallery.dbml</DependentUpon>
     </None>
@@ -143,6 +144,7 @@
     <EmbeddedResource Include="prettyphoto\prettyPhoto.css" />
     <Content Include="prettyphoto\README.txt" />
     <Content Include="Web.config" />
+    <Content Include="Public.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PhotoGalleryPrettyPhotoContent.ascx.cs">
@@ -277,7 +279,8 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)\bin\$(TargetName).*" "$(SolutionDir)\CMSAdmin\bin\" /F /R /Y /I
-xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\" /F /R /Y /I
-</PostBuildEvent>
+xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I
+xcopy  "$(ProjectDir)\Admin.config" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I
+xcopy  "$(ProjectDir)\Public.config" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I</PostBuildEvent>
   </PropertyGroup>
 </Project>

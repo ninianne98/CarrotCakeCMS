@@ -90,9 +90,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private enum CMSConfigFileType {
+			AdminMod,
 			AdminModules,
 			PublicControls,
-			Skin,
+			SkinDef,
+			PublicCtrl,
 			SiteSkins,
 			SiteMapping
 		}
@@ -108,10 +110,17 @@ namespace Carrotware.CMS.Core {
 					sPlugCfg = sRealPath + "AdminModules.config";
 					iExpectedTblCount = 2;
 					break;
+				case CMSConfigFileType.AdminMod:
+					sPlugCfg = sRealPath + "Admin.config";
+					iExpectedTblCount = 2;
+					break;
+				case CMSConfigFileType.PublicCtrl:
+					sPlugCfg = sRealPath + "Public.config";
+					break;
 				case CMSConfigFileType.PublicControls:
 					sPlugCfg = sRealPath + "PublicControls.config";
 					break;
-				case CMSConfigFileType.Skin:
+				case CMSConfigFileType.SkinDef:
 					sPlugCfg = sRealPath + "Skin.config";
 					break;
 				case CMSConfigFileType.SiteSkins:
@@ -152,6 +161,7 @@ namespace Carrotware.CMS.Core {
 				List<string> reqCols1 = new List<string>();
 
 				switch (cfg) {
+					case CMSConfigFileType.AdminMod:
 					case CMSConfigFileType.AdminModules:
 						reqCols0.Add("caption");
 						reqCols0.Add("pluginid");
@@ -165,11 +175,12 @@ namespace Carrotware.CMS.Core {
 						reqCols1.Add("visible");
 						reqCols1.Add("pluginid");
 						break;
+					case CMSConfigFileType.PublicCtrl:
 					case CMSConfigFileType.PublicControls:
 						reqCols0.Add("filepath");
 						reqCols0.Add("crtldesc");
 						break;
-					case CMSConfigFileType.Skin:
+					case CMSConfigFileType.SkinDef:
 					case CMSConfigFileType.SiteSkins:
 						reqCols0.Add("templatefile");
 						reqCols0.Add("filedesc");
@@ -248,16 +259,121 @@ namespace Carrotware.CMS.Core {
 											 PluginParm = d.Field<string>("parm"),
 											 ControlFile = d.Field<string>("plugincontrol"),
 											 UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
-											 UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false: Convert.ToBoolean(d.Field<string>("useajax")),
+											 UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
 											 IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
 											 PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
 										 }).ToList();
 					}
+
+					_modules = _modules.Union(GetModulesByDirectory()).ToList();
+
 					HttpContext.Current.Cache.Insert(keyAdminMenuModules, _modules, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
-				return _modules;
+
+				return _modules.OrderBy(m => m.PluginName).ToList();
 			}
 		}
+
+
+		private List<CMSPlugin> GetPluginsByDirectory() {
+			var _plugins = new List<CMSPlugin>();
+
+			var wwwpath = HttpContext.Current.Server.MapPath("~/");
+			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsPlugins/");
+
+			if (Directory.Exists(sPlugCfg)) {
+
+				string[] subdirs;
+				try {
+					subdirs = Directory.GetDirectories(sPlugCfg);
+				} catch {
+					subdirs = null;
+				}
+
+				if (subdirs != null) {
+					foreach (string theDir in subdirs) {
+
+						string sTplDef = theDir + @"\Public.config";
+
+						if (File.Exists(sTplDef)) {
+							string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+							DataSet ds = ReadDataSetConfig(CMSConfigFileType.PublicCtrl, sPathPrefix);
+
+							var _p2 = (from d in ds.Tables[0].AsEnumerable()
+									   select new CMSPlugin {
+										   FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
+										   Caption = d.Field<string>("crtldesc")
+									   }).ToList();
+
+							_plugins = _plugins.Union(_p2).ToList();
+						}
+					}
+				}
+			}
+
+			return _plugins;
+		}
+
+
+
+		private List<CMSAdminModule> GetModulesByDirectory() {
+			var _plugins = new List<CMSAdminModule>();
+
+			var wwwpath = HttpContext.Current.Server.MapPath("~/");
+			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsPlugins/");
+
+			if (Directory.Exists(sPlugCfg)) {
+
+				string[] subdirs;
+				try {
+					subdirs = Directory.GetDirectories(sPlugCfg);
+				} catch {
+					subdirs = null;
+				}
+
+				if (subdirs != null) {
+					foreach (string theDir in subdirs) {
+
+						string sTplDef = theDir + @"\Admin.config";
+
+						if (File.Exists(sTplDef)) {
+							string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+							DataSet ds = ReadDataSetConfig(CMSConfigFileType.AdminMod, sPathPrefix);
+
+							var _modules = (from d in ds.Tables[0].AsEnumerable()
+											select new CMSAdminModule {
+												PluginName = d.Field<string>("caption"),
+												PluginID = new Guid(d.Field<string>("pluginid"))
+											}).ToList();
+
+							var _ctrls = (from d in ds.Tables[1].AsEnumerable()
+										  select new CMSAdminModuleMenu {
+											  Caption = d.Field<string>("pluginlabel"),
+											  SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
+											  PluginParm = d.Field<string>("parm"),
+											  ControlFile = "~" + sPathPrefix + d.Field<string>("plugincontrol"),
+											  UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
+											  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
+											  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
+											  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
+										  }).ToList();
+
+							foreach (var p in _modules) {
+								p.PluginMenus = (from c in _ctrls
+												 where c.PluginID == p.PluginID
+												 select c).ToList();
+							}
+
+							_plugins = _plugins.Union(_modules).ToList();
+						}
+					}
+				}
+			}
+
+			return _plugins;
+		}
+
+
 
 		public List<CMSPlugin> ToolboxPlugins {
 			get {
@@ -280,12 +396,12 @@ namespace Carrotware.CMS.Core {
 
 					List<CMSPlugin> _p1 = new List<CMSPlugin>();
 
-					_p1.Add(new CMSPlugin { Caption = "Generic HTML &#0134;", FilePath = "~/Manage/ucGenericContent.ascx" });
-					_p1.Add(new CMSPlugin { Caption = "Plain Text &#0134;", FilePath = "~/Manage/ucTextContent.ascx" });
-					_p1.Add(new CMSPlugin { Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "     Generic HTML &#0134;", FilePath = "~/Manage/ucGenericContent.ascx" });
+					_p1.Add(new CMSPlugin { Caption = "     Plain Text &#0134;", FilePath = "~/Manage/ucTextContent.ascx" });
+					_p1.Add(new CMSPlugin { Caption = "   Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "   Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "  Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "  Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
 
 					List<CMSPlugin> _p2 = (from d in ds.Tables[0].AsEnumerable()
 										   select new CMSPlugin {
@@ -293,11 +409,12 @@ namespace Carrotware.CMS.Core {
 											   Caption = d.Field<string>("crtldesc")
 										   }).ToList();
 
-					_plugins = _p1.Union(_p2).ToList();
+					_plugins = _p1.Union(_p2).Union(GetPluginsByDirectory()).ToList();
 
 					HttpContext.Current.Cache.Insert(keyAdminToolboxModules, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
-				return _plugins;
+
+				return _plugins.OrderBy(p => p.Caption).ToList();
 			}
 		}
 
@@ -317,7 +434,6 @@ namespace Carrotware.CMS.Core {
 					subdirs = null;
 				}
 
-
 				if (subdirs != null) {
 					foreach (string theDir in subdirs) {
 
@@ -325,7 +441,7 @@ namespace Carrotware.CMS.Core {
 
 						if (File.Exists(sTplDef)) {
 							string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
-							DataSet ds = ReadDataSetConfig(CMSConfigFileType.Skin, sPathPrefix);
+							DataSet ds = ReadDataSetConfig(CMSConfigFileType.SkinDef, sPathPrefix);
 
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
 									   select new CMSTemplate {
