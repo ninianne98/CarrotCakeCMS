@@ -89,6 +89,7 @@
     <EmbeddedResource Include="fancybox\fancybox-p.js" />
     <EmbeddedResource Include="fancybox\mousewheel-p.js" />
     <Content Include="fancybox\README.txt" />
+    <Content Include="PhotoGalleryAdminMetaData.ascx" />
     <Content Include="PhotoGalleryPrettyPhoto.ascx" />
     <Content Include="PhotoGalleryFancyBox2.ascx" />
     <Content Include="PhotoGalleryAdminCategory.ascx" />
@@ -143,6 +144,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PhotoGalleryAdminMetaData.ascx.cs">
+      <DependentUpon>PhotoGalleryAdminMetaData.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminMetaData.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryAdminMetaData.ascx</DependentUpon>
+    </Compile>
     <Compile Include="PrettyPhoto.cs" />
     <Compile Include="PhotoGalleryPrettyPhoto.ascx.cs">
       <DependentUpon>PhotoGalleryPrettyPhoto.ascx</DependentUpon>

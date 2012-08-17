@@ -36,6 +36,9 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery
     partial void InserttblGalleryImage(tblGalleryImage instance);
     partial void UpdatetblGalleryImage(tblGalleryImage instance);
     partial void DeletetblGalleryImage(tblGalleryImage instance);
+    partial void InserttblGalleryImageMeta(tblGalleryImageMeta instance);
+    partial void UpdatetblGalleryImageMeta(tblGalleryImageMeta instance);
+    partial void DeletetblGalleryImageMeta(tblGalleryImageMeta instance);
     #endregion
 		
 		public PhotoGalleryDataContext() : 
@@ -81,6 +84,14 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery
 			get
 			{
 				return this.GetTable<tblGalleryImage>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblGalleryImageMeta> tblGalleryImageMetas
+		{
+			get
+			{
+				return this.GetTable<tblGalleryImageMeta>();
 			}
 		}
 	}
@@ -373,6 +384,140 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery
 						this._GalleryID = default(Nullable<System.Guid>);
 					}
 					this.SendPropertyChanged("tblGallery");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblGalleryImageMeta")]
+	public partial class tblGalleryImageMeta : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _GalleryImageMetaID;
+		
+		private string _GalleryImage;
+		
+		private string _ImageMetaData;
+		
+		private System.Nullable<System.Guid> _SiteID;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnGalleryImageMetaIDChanging(System.Guid value);
+    partial void OnGalleryImageMetaIDChanged();
+    partial void OnGalleryImageChanging(string value);
+    partial void OnGalleryImageChanged();
+    partial void OnImageMetaDataChanging(string value);
+    partial void OnImageMetaDataChanged();
+    partial void OnSiteIDChanging(System.Nullable<System.Guid> value);
+    partial void OnSiteIDChanged();
+    #endregion
+		
+		public tblGalleryImageMeta()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GalleryImageMetaID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid GalleryImageMetaID
+		{
+			get
+			{
+				return this._GalleryImageMetaID;
+			}
+			set
+			{
+				if ((this._GalleryImageMetaID != value))
+				{
+					this.OnGalleryImageMetaIDChanging(value);
+					this.SendPropertyChanging();
+					this._GalleryImageMetaID = value;
+					this.SendPropertyChanged("GalleryImageMetaID");
+					this.OnGalleryImageMetaIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GalleryImage", DbType="VarChar(512)")]
+		public string GalleryImage
+		{
+			get
+			{
+				return this._GalleryImage;
+			}
+			set
+			{
+				if ((this._GalleryImage != value))
+				{
+					this.OnGalleryImageChanging(value);
+					this.SendPropertyChanging();
+					this._GalleryImage = value;
+					this.SendPropertyChanged("GalleryImage");
+					this.OnGalleryImageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageMetaData", DbType="VarChar(MAX)")]
+		public string ImageMetaData
+		{
+			get
+			{
+				return this._ImageMetaData;
+			}
+			set
+			{
+				if ((this._ImageMetaData != value))
+				{
+					this.OnImageMetaDataChanging(value);
+					this.SendPropertyChanging();
+					this._ImageMetaData = value;
+					this.SendPropertyChanged("ImageMetaData");
+					this.OnImageMetaDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this.OnSiteIDChanging(value);
+					this.SendPropertyChanging();
+					this._SiteID = value;
+					this.SendPropertyChanged("SiteID");
+					this.OnSiteIDChanged();
 				}
 			}
 		}
