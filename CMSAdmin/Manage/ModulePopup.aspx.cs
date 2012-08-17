@@ -19,19 +19,18 @@ using Carrotware.CMS.Interface;
 */
 
 namespace Carrotware.CMS.UI.Admin {
-	public partial class ModuleIndex : AdminBasePage {
+	public partial class ModulePopup : AdminBasePage {
 
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.Modules);
 
 		
 		}
 
 		protected override void OnInit(EventArgs e) {
 			ucAdminModule c = (ucAdminModule)Page.LoadControl("~/Manage/ucAdminModule.ascx");
-			c.HideList = false;
+			c.HideList = true;
 			c.LoadModule();
 
 			if (c.UseAjax) {

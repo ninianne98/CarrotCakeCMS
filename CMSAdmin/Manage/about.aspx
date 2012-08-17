@@ -413,5 +413,5 @@ of this license document, but changing it is not allowed.
 		OF SUCH DAMAGES.
 	</p>
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxBodyContentPlaceHolder" runat="server">
+<asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

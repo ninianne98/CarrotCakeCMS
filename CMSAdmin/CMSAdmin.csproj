@@ -95,6 +95,13 @@
     <Compile Include="Manage\ContentEdit.aspx.designer.cs">
       <DependentUpon>ContentEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\ModulePopup.aspx.cs">
+      <DependentUpon>ModulePopup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ModulePopup.aspx.designer.cs">
+      <DependentUpon>ModulePopup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\PageExport.aspx.cs">
       <DependentUpon>PageExport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -363,6 +370,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="Manage\ModulePopup.aspx" />
     <Content Include="Manage\Images\application_side_expand.png" />
     <Content Include="Manage\Images\book_next.png" />
     <Content Include="Manage\Images\book_previous.png" />
