@@ -49,7 +49,7 @@ CREATE TABLE [dbo].[tblGallery](
 	[GalleryID] [uniqueidentifier] NOT NULL,
 	[GalleryTitle] [varchar](255) NULL,
 	[SiteID] [uniqueidentifier] NULL,
- CONSTRAINT [tblGallery_PK_UC1] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [tblGallery_PK] PRIMARY KEY CLUSTERED 
 (
 	[GalleryID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
@@ -78,7 +78,7 @@ CREATE TABLE [dbo].[tblGalleryImage](
 	[GalleryImage] [varchar](512) NULL,
 	[ImageOrder]  int NULL,
 	[GalleryID] [uniqueidentifier] NULL,
- CONSTRAINT [tblGalleryImage_PK_UC1] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [tblGalleryImage_PK] PRIMARY KEY CLUSTERED 
 (
 	[GalleryImageID] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
@@ -102,4 +102,33 @@ GO
 ALTER TABLE [dbo].[tblGalleryImage] ADD  CONSTRAINT [DF_tblGalleryImage_GalleryImageID]  DEFAULT (newid()) FOR [GalleryImageID]
 GO
 
+
+/****** Object:  Table [dbo].[tblGalleryImageMeta]    Script Date: 08/16/2012 22:13:01 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[tblGalleryImageMeta](
+	[GalleryImageMetaID] [uniqueidentifier] NOT NULL,
+	[GalleryImage] [varchar](512) NULL,
+	[ImageMetaData] [varchar](max) NULL,
+	[SiteID] [uniqueidentifier] NULL,
+ CONSTRAINT [tblGalleryImageMeta_PK] PRIMARY KEY CLUSTERED 
+(
+	[GalleryImageMetaID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[tblGalleryImageMeta] ADD  CONSTRAINT [DF_tblGalleryImageMeta_GalleryImageMetaID]  DEFAULT (newid()) FOR [GalleryImageMetaID]
+GO
 
