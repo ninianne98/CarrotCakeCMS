@@ -4,7 +4,7 @@
 <p>
 	<asp:Literal ID="litImgName" runat="server"></asp:Literal>
 </p>
-<a href="javascript:cmsToggleTinyMCE('<%= txtMetaInfo.ClientID %>');">Show/Hide Editor</a></div>
+<a href="javascript:cmsToggleTinyMCE('<%= txtMetaInfo.ClientID %>');">Show/Hide Editor</a>
 <asp:TextBox Style="height: 280px; width: 680px;" CssClass="mceEditor" ID="txtMetaInfo" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 <br />
 <asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />
