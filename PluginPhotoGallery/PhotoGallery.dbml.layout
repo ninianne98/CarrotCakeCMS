@@ -14,12 +14,18 @@
         <elementListCompartment Id="760dfafc-ad34-4d9f-af60-4838d27439f5" absoluteBounds="3.515, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 1.19314697265625); (3.5 : 1.19314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.5 : 1.19314697265625); (3.5 : 1.19314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/PhotoGalleryDataContext/tblGallery/tblGallery_tblGalleryImage" />
       <nodes>
         <classShapeMoniker Id="393bd1d8-cdbd-46af-8488-efbebb13f55a" />
         <classShapeMoniker Id="0004cd95-4129-4d30-90ba-acdd4310007f" />
       </nodes>
     </associationConnector>
+    <classShape Id="fcd59252-e3f1-4142-9cc9-caf449e15c26" absoluteBounds="2, 2.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/PhotoGalleryDataContext/tblGalleryImageMeta" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4e69ac7f-b163-4116-847e-318a844f05f6" absoluteBounds="2.015, 3.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

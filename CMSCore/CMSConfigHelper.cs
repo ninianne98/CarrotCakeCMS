@@ -24,8 +24,10 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.Core {
 
-	public class CMSConfigHelper : IDisposable {
 
+
+
+	public class CMSConfigHelper : IDisposable {
 
 		public CMSConfigHelper() {
 
@@ -87,6 +89,131 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		private enum CMSConfigFileType {
+			AdminModules,
+			PublicControls,
+			Skin,
+			SiteSkins,
+			SiteMapping
+		}
+
+		private DataSet ReadDataSetConfig(CMSConfigFileType cfg, string sPath) {
+			string sPlugCfg = "default.config";
+			string sRealPath = HttpContext.Current.Server.MapPath(sPath);
+
+			int iExpectedTblCount = 1;
+
+			switch (cfg) {
+				case CMSConfigFileType.AdminModules:
+					sPlugCfg = sRealPath + "AdminModules.config";
+					iExpectedTblCount = 2;
+					break;
+				case CMSConfigFileType.PublicControls:
+					sPlugCfg = sRealPath + "PublicControls.config";
+					break;
+				case CMSConfigFileType.Skin:
+					sPlugCfg = sRealPath + "Skin.config";
+					break;
+				case CMSConfigFileType.SiteSkins:
+					sPlugCfg = sRealPath + "SiteSkins.config";
+					break;
+				case CMSConfigFileType.SiteMapping:
+					sPlugCfg = sRealPath + "SiteMapping.config";
+					break;
+				default:
+					sPlugCfg = sRealPath + "default.config";
+					iExpectedTblCount = -1;
+					break;
+			}
+
+			DataSet ds = new DataSet();
+			if (File.Exists(sPlugCfg) && iExpectedTblCount > 0) {
+				ds.ReadXml(sPlugCfg);
+			}
+
+			if (ds == null) {
+				ds = new DataSet();
+			}
+
+			int iTblCount = ds.Tables.Count;
+
+			// if dataset has wrong # of tables, build out more tables
+			if (iTblCount < iExpectedTblCount) {
+				for (int t = iTblCount; t <= iExpectedTblCount; t++) {
+					ds.Tables.Add(new DataTable());
+					ds.AcceptChanges();
+				}
+			}
+
+			if (iExpectedTblCount > 0) {
+				iTblCount = ds.Tables.Count;
+
+				List<string> reqCols0 = new List<string>();
+				List<string> reqCols1 = new List<string>();
+
+				switch (cfg) {
+					case CMSConfigFileType.AdminModules:
+						reqCols0.Add("caption");
+						reqCols0.Add("pluginid");
+
+						reqCols1.Add("pluginlabel");
+						reqCols1.Add("menuorder");
+						reqCols1.Add("parm");
+						reqCols1.Add("plugincontrol");
+						reqCols1.Add("useajax");
+						reqCols1.Add("usepopup");
+						reqCols1.Add("visible");
+						reqCols1.Add("pluginid");
+						break;
+					case CMSConfigFileType.PublicControls:
+						reqCols0.Add("filepath");
+						reqCols0.Add("crtldesc");
+						break;
+					case CMSConfigFileType.Skin:
+					case CMSConfigFileType.SiteSkins:
+						reqCols0.Add("templatefile");
+						reqCols0.Add("filedesc");
+						break;
+					case CMSConfigFileType.SiteMapping:
+						reqCols0.Add("domname");
+						reqCols0.Add("siteid");
+						break;
+					default:
+						reqCols0.Add("caption");
+						reqCols0.Add("pluginid");
+						break;
+				}
+
+				//validate that the dataset has the right table configuration
+				DataTable dt0 = ds.Tables[0];
+				foreach (string c in reqCols0) {
+					if (!dt0.Columns.Contains(c)) {
+						DataColumn dc = new DataColumn(c);
+						dc.DataType = System.Type.GetType("System.String"); // add if not found
+
+						dt0.Columns.Add(dc);
+						dt0.AcceptChanges();
+					}
+				}
+
+				for (int iTbl = 1; iTbl < iTblCount; iTbl++) {
+					DataTable dt = ds.Tables[iTbl];
+					foreach (string c in reqCols1) {
+						if (!dt.Columns.Contains(c)) {
+							DataColumn dc = new DataColumn(c);
+							dc.DataType = System.Type.GetType("System.String"); // add if not found
+
+							dt.Columns.Add(dc);
+							dt.AcceptChanges();
+						}
+					}
+				}
+
+			}
+
+			return ds;
+		}
+
 
 		public List<CMSAdminModule> AdminModules {
 			get {
@@ -94,8 +221,6 @@ namespace Carrotware.CMS.Core {
 				var _modules = new List<CMSAdminModule>();
 
 				bool bCached = false;
-
-				string sPlugCfg = HttpContext.Current.Server.MapPath("~/AdminModules.config");
 
 				try {
 					_modules = (List<CMSAdminModule>)HttpContext.Current.Cache[keyAdminMenuModules];
@@ -106,9 +231,8 @@ namespace Carrotware.CMS.Core {
 					bCached = false;
 				}
 
-				if (File.Exists(sPlugCfg) && !bCached) {
-					DataSet ds = new DataSet();
-					ds.ReadXml(sPlugCfg);
+				if (!bCached) {
+					DataSet ds = ReadDataSetConfig(CMSConfigFileType.AdminModules, "~/");
 
 					_modules = (from d in ds.Tables[0].AsEnumerable()
 								select new CMSAdminModule {
@@ -120,12 +244,13 @@ namespace Carrotware.CMS.Core {
 						p.PluginMenus = (from d in ds.Tables["ID_" + p.PluginID.ToString()].AsEnumerable()
 										 select new CMSAdminModuleMenu {
 											 Caption = d.Field<string>("pluginlabel"),
-											 SortOrder = int.Parse(d.Field<string>("menuorder")),
+											 SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
 											 PluginParm = d.Field<string>("parm"),
 											 ControlFile = d.Field<string>("plugincontrol"),
-											 UseAjax = Convert.ToBoolean(d.Field<string>("useajax")),
-											 IsVisible = Convert.ToBoolean(d.Field<string>("visible")),
-											 PluginID = new Guid(d.Field<string>("pluginid"))
+											 UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
+											 UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false: Convert.ToBoolean(d.Field<string>("useajax")),
+											 IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
+											 PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
 										 }).ToList();
 					}
 					HttpContext.Current.Cache.Insert(keyAdminMenuModules, _modules, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
@@ -141,8 +266,6 @@ namespace Carrotware.CMS.Core {
 
 				bool bCached = false;
 
-				string sPlugCfg = HttpContext.Current.Server.MapPath("~/PublicControls.config");
-
 				try {
 					_plugins = (List<CMSPlugin>)HttpContext.Current.Cache[keyAdminToolboxModules];
 					if (_plugins != null) {
@@ -152,9 +275,8 @@ namespace Carrotware.CMS.Core {
 					bCached = false;
 				}
 
-				if (File.Exists(sPlugCfg) && !bCached) {
-					DataSet ds = new DataSet();
-					ds.ReadXml(sPlugCfg);
+				if (!bCached) {
+					DataSet ds = ReadDataSetConfig(CMSConfigFileType.PublicControls, "~/");
 
 					List<CMSPlugin> _p1 = new List<CMSPlugin>();
 
@@ -201,12 +323,9 @@ namespace Carrotware.CMS.Core {
 
 						string sTplDef = theDir + @"\Skin.config";
 
-						string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
-
 						if (File.Exists(sTplDef)) {
-
-							DataSet ds = new DataSet();
-							ds.ReadXml(sTplDef);
+							string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+							DataSet ds = ReadDataSetConfig(CMSConfigFileType.Skin, sPathPrefix);
 
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
 									   select new CMSTemplate {
@@ -234,8 +353,6 @@ namespace Carrotware.CMS.Core {
 
 				bool bCached = false;
 
-				string sPlugCfg = HttpContext.Current.Server.MapPath("~/SiteSkins.config");
-
 				try {
 					_plugins = (List<CMSTemplate>)HttpContext.Current.Cache[keyTemplates];
 					if (_plugins != null) {
@@ -254,10 +371,8 @@ namespace Carrotware.CMS.Core {
 					_plugins.Add(t);
 				}
 
-				if (File.Exists(sPlugCfg) && !bCached) {
-
-					DataSet ds = new DataSet();
-					ds.ReadXml(sPlugCfg);
+				if (!bCached) {
+					DataSet ds = ReadDataSetConfig(CMSConfigFileType.SiteSkins, "~/");
 
 					var _p1 = (from d in ds.Tables[0].AsEnumerable()
 							   select new CMSTemplate {
@@ -274,7 +389,7 @@ namespace Carrotware.CMS.Core {
 					HttpContext.Current.Cache.Insert(keyTemplates, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 
-				return _plugins.OrderBy(t=> t.Caption).ToList();
+				return _plugins.OrderBy(t => t.Caption).ToList();
 			}
 		}
 
@@ -285,8 +400,6 @@ namespace Carrotware.CMS.Core {
 
 				bool bCached = false;
 
-				string sPlugCfg = HttpContext.Current.Server.MapPath("~/SiteMapping.config");
-
 				try {
 					_plugins = (List<DynamicSite>)HttpContext.Current.Cache[keyDynamicSite];
 					if (_plugins != null) {
@@ -296,9 +409,8 @@ namespace Carrotware.CMS.Core {
 					bCached = false;
 				}
 
-				if (File.Exists(sPlugCfg) && !bCached) {
-					DataSet ds = new DataSet();
-					ds.ReadXml(sPlugCfg);
+				if (!bCached) {
+					DataSet ds = ReadDataSetConfig(CMSConfigFileType.SiteMapping, "~/");
 
 					_plugins = (from d in ds.Tables[0].AsEnumerable()
 								select new DynamicSite {
@@ -653,6 +765,7 @@ namespace Carrotware.CMS.Core {
 		public string PluginParm { get; set; }
 		public string ControlFile { get; set; }
 		public bool UseAjax { get; set; }
+		public bool UsePopup { get; set; }
 		public bool IsVisible { get; set; }
 
 	}

@@ -63,6 +63,18 @@
 	#gallerySource .icoDel {
 		display: none;
 	}
+	
+	#galleryTarget .editMetaData {
+		display: block;
+		float: right;
+		padding: 4px;
+	}
+	#gallerySource .editMetaData {
+		display: none;
+	}
+	
+	
+	
 	.inputFields {
 		display: none;
 	}
@@ -185,8 +197,10 @@
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
-						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'>
-							<span class="ui-icon ui-icon-closethick"></span></a></span></li>
+						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
+						</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ Carrotware.CMS.Core.CMSConfigHelper.EncodeBase64(Eval("FolderPath").ToString() + Eval("FileName").ToString()))%>">
+							<img class="imgNoBorder" src="/Manage/images/pencil.png" alt="Edit" title="Edit" />
+						</a></li>
 				</ItemTemplate>
 			</asp:Repeater>
 		</ul>
@@ -195,17 +209,19 @@
 		<ul id="galleryTarget" class='ui-state-default photoTarget'>
 			<asp:Repeater ID="rpGallery" runat="server">
 				<ItemTemplate>
-					<li class="ui-widget ui-widget-content" id="ID_0000000001">
-						<img height="40" width="40" style="float: left" src="/carrotwarethumb.axd?square=50&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName"))) %>"
-							alt="<%# HttpUtility.UrlEncode(String.Format("{0}", Eval("FileName"))) %>" />
+					<li class="ui-widget ui-widget-content" id="ID_0000000000">
+						<img height="40" width="40" style="float: left" src="/carrotwarethumb.axd?square=50&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
+							alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
 						<div style="float: left; max-width: 250px" class="fileInfo">
 							<%# String.Format("<span id=\"imgName\">{0}{1}</span>", Eval("FolderPath"), Eval("FileName"))%>
 							<br />
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
-						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'>
-							<span class="ui-icon ui-icon-closethick"></span></a></span></li>
+						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
+						</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ Carrotware.CMS.Core.CMSConfigHelper.EncodeBase64(Eval("FolderPath").ToString() + Eval("FileName").ToString()))%>">
+							<img class="imgNoBorder" src="/Manage/images/pencil.png" alt="Edit" title="Edit" />
+						</a></li>
 				</ItemTemplate>
 			</asp:Repeater>
 		</ul>

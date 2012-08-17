@@ -17,4 +17,12 @@
       <Association Name="tblGallery_tblGalleryImage" Member="tblGallery" ThisKey="GalleryID" OtherKey="GalleryID" Type="tblGallery" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.tblGalleryImageMeta" Member="tblGalleryImageMetas">
+    <Type Name="tblGalleryImageMeta">
+      <Column Name="GalleryImageMetaID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="GalleryImage" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="ImageMetaData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
