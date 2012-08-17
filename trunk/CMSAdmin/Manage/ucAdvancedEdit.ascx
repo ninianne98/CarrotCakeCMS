@@ -127,7 +127,7 @@
 											<p class="cmsToolItem ui-widget-header">
 												<%# Eval("Caption")%>
 											</p>
-											<%# String.Format("{0}", Eval("FilePath")).Replace(".",". ") %><br />
+											<%# String.Format("{0}", Eval("FilePath")).Replace(".", ". ").Replace("/", "/ ")%><br />
 											<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
 											<input type="hidden" id="cmsCtrlOrder" value="0" />
 										</div>
