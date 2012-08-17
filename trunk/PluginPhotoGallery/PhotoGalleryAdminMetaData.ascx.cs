@@ -49,14 +49,15 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			var meta = (from m in db.tblGalleryImageMetas
 						where m.SiteID == SiteData.CurrentSiteID
-						&& m.GalleryImage.ToLower() == sImageFile.ToLower()
+							&& m.GalleryImage.ToLower() == sImageFile.ToLower()
 						select m).FirstOrDefault();
 
 			if (meta == null) {
 				bAdd = true;
 				meta = new tblGalleryImageMeta();
+				meta.GalleryImageMetaID = Guid.NewGuid();
 				meta.SiteID = SiteID;
-				meta.GalleryImage = sImageFile;
+				meta.GalleryImage = sImageFile.ToLower();
 			}
 
 			meta.ImageMetaData = txtMetaInfo.Text;
