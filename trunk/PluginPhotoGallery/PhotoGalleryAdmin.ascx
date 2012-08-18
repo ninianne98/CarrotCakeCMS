@@ -19,7 +19,7 @@
 		padding: 5px;
 		font-size: 11px;
 		width: 350px;
-		height: 50px;
+		height: 60px;
 	}
 	#galleryTarget li img, #gallerySource li img {
 		margin: 3px;
@@ -165,16 +165,30 @@
 	
 </script>
 <br />
-<div style="float: left; width: 275px">
-	<asp:CheckBox ID="chkFilter" runat="server" />
-	Restrict Site Images to +/- 14 days
-</div>
-<div style="float: left; width: 175px">
-	<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server" />
-</div>
-<div style="float: left; width: 125px">
-	<asp:Button ID="btnApply" runat="server" Text="Apply" OnClick="btnApply_Click" />
-</div>
+<table>
+	<tr>
+		<td style="width: 225px">
+			<asp:CheckBox ID="chkFilter" runat="server" />
+			Restrict images to +/- 14 days
+		</td>
+		<td style="width: 225px">
+			<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server" />
+		</td>
+		<td style="width: 100px">
+			<asp:Button ID="btnApply" runat="server" Text="Apply" OnClick="btnApply_Click" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<asp:CheckBox ID="chkPath" runat="server" />
+			Restrict images to selected folder
+		</td>
+		<td colspan="2">
+			<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath">
+			</asp:DropDownList>
+		</td>
+	</tr>
+</table>
 <div style="clear: both">
 </div>
 <div style="width: 960px">
@@ -189,9 +203,9 @@
 			<asp:Repeater ID="rpFiles" runat="server">
 				<ItemTemplate>
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
-						<img height="40" width="40" style="float: left" src="/carrotwarethumb.axd?square=50&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
-							alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
-						<div style="float: left; max-width: 250px" class="fileInfo">
+						<img height="50" width="50" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
+							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
+						<div style="float: left; max-width: 240px" class="fileInfo">
 							<%# String.Format("<span id=\"imgName\">{0}{1}</span>", Eval("FolderPath"), Eval("FileName"))%>
 							<br />
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
@@ -210,9 +224,9 @@
 			<asp:Repeater ID="rpGallery" runat="server">
 				<ItemTemplate>
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
-						<img height="40" width="40" style="float: left" src="/carrotwarethumb.axd?square=50&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
-							alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
-						<div style="float: left; max-width: 250px" class="fileInfo">
+						<img height="50" width="50" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
+							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
+						<div style="float: left; max-width: 240px" class="fileInfo">
 							<%# String.Format("<span id=\"imgName\">{0}{1}</span>", Eval("FolderPath"), Eval("FileName"))%>
 							<br />
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
