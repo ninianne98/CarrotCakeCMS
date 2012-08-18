@@ -30,10 +30,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected string SetSitePath(string sPath) {
-			var wwwpath = Server.MapPath("~/");
-			string _path = wwwpath + "/" + sPath;
-			_path = _path.Replace(@"\", @"/").Replace(@"//", @"/");
-			return _path;
+			return FileDataHelper.MakeFileFolderPath(sPath);
 		}
 
 		protected void LoadLists() {

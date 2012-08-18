@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Text;
 
 /*
@@ -156,13 +157,31 @@ namespace Carrotware.CMS.Core {
 			return f;
 		}
 
-		public static string MakeFilePathUniform(string sPath) {
-			if (!string.IsNullOrEmpty(sPath)) {
-				sPath = sPath.Replace(@"\", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+		public static string MakeFilePathUniform(string sDirPath) {
+			if (!string.IsNullOrEmpty(sDirPath)) {
+				sDirPath = sDirPath.Replace(@"\", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
 			}
-			return sPath;
+			return sDirPath;
 		}
 
+		private static string _wwwpath = HttpContext.Current.Server.MapPath("~/");
+
+		public static string MakeFileFolderPath(string sDirPath) {
+			string _path = _wwwpath + "/" + sDirPath;
+			_path = MakeFilePathUniform(_path);
+			return _path;
+		}
+
+		public static string MakeWebFolderPath(string sDirPath) {
+			string sPathPrefix = "/";
+
+			if (!String.IsNullOrEmpty(sDirPath)) {
+				sPathPrefix = sDirPath.Replace(_wwwpath, @"\") + "/";
+			}
+			sPathPrefix = MakeFilePathUniform(sPathPrefix);
+
+			return sPathPrefix;
+		}
 
 		public List<FileData> GetFiles(string sPath, string sQuery) {
 
@@ -282,9 +301,11 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".arj", "application/octet-stream");
 					_dict.Add(".asf", "video/x-ms-asf");
 					_dict.Add(".asm", "text/x-asm");
+					_dict.Add(".asmx", "text/asp");
 					_dict.Add(".ascx", "text/asp");
 					_dict.Add(".asp", "text/asp");
 					_dict.Add(".aspx", "text/asp");
+					_dict.Add(".asax", "text/asp");
 					_dict.Add(".asx", "video/x-ms-asf");
 					_dict.Add(".au", "audio/basic");
 					_dict.Add(".avi", "video/avi");
@@ -300,6 +321,7 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".class", "application/java");
 					_dict.Add(".com", "application/octet-stream");
 					_dict.Add(".conf", "text/plain");
+					_dict.Add(".config", "text/asp");
 					_dict.Add(".cpp", "text/x-c");
 					_dict.Add(".crt", "application/x-x509-ca-cert");
 					_dict.Add(".csh", "application/x-csh");
@@ -434,6 +456,7 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".shtml", "text/html");
 					_dict.Add(".sit", "application/x-stuffit");
 					_dict.Add(".snd", "audio/basic");
+					_dict.Add(".svc", "text/asp");
 					_dict.Add(".svf", "image/x-dwg");
 					_dict.Add(".swf", "application/x-shockwave-flash");
 					_dict.Add(".t", "application/x-troff");
