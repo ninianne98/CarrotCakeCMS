@@ -32,6 +32,20 @@ namespace Carrotware.CMS.Core {
 	public class FileDataHelper {
 		public FileDataHelper() { }
 
+		private static string _wwwpath = null;
+		private static string WWWPath {
+			get {
+				if (_wwwpath == null) {
+					_wwwpath = HttpContext.Current.Server.MapPath("~/");
+					if (!_wwwpath.EndsWith(@"\")) {
+						_wwwpath += @"\";
+					}
+				}
+				return _wwwpath;
+			}
+		}
+
+
 		private string _FileTypes = null;
 		public List<string> BlockedTypes {
 			get {
@@ -50,7 +64,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public FileData GetFolderInfo(string sPath, string sQuery, string myFile) {
+		public FileData GetFolderInfo(string sQuery, string myFile) {
+
+			string sPath = MakeFileFolderPath(sQuery);
 
 			string myFileName;
 			string myFileDate;
@@ -72,7 +88,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public List<FileData> GetFolders(string sPath, string sQuery) {
+		public List<FileData> GetFolders(string sQuery) {
+
+			string sPath = MakeFileFolderPath(sQuery);
 
 			var dsID = new List<FileData>();
 
@@ -83,7 +101,7 @@ namespace Carrotware.CMS.Core {
 
 					myFileName = Path.GetFileName(myFile).Trim();
 					if (myFileName.Length > 0) {
-						f = GetFolderInfo(sPath, sQuery, myFile);
+						f = GetFolderInfo(sQuery, myFile);
 						dsID.Add(f);
 					}
 				}
@@ -93,21 +111,15 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public FileData GetFileInfo(string sPath, string sQuery, string myFile) {
+		public FileData GetFileInfo(string sQuery, string myFile) {
+
+			sQuery = MakeFilePathUniform(sQuery);
+			string sPath = MakeFileFolderPath(sQuery);
 
 			string myFileName;
 			string myFileDate;
 			string myFileSizeF;
 			long myFileSize;
-
-			sPath = MakeFilePathUniform(sPath);
-			sQuery = MakeFilePathUniform(sQuery);
-
-			sPath = sPath.Substring(0, sPath.LastIndexOf("/") + 1);
-			sQuery = sQuery.Substring(0, sQuery.LastIndexOf("/") + 1);
-
-			sPath = MakeFilePathUniform(sPath);
-			sQuery = MakeFilePathUniform(sQuery);
 
 			var f = new FileData();
 
@@ -150,40 +162,48 @@ namespace Carrotware.CMS.Core {
 									  select b.Value).FirstOrDefault();
 					}
 				} catch (Exception ex) { }
-
-
 			}
 
 			return f;
 		}
 
 		public static string MakeFilePathUniform(string sDirPath) {
+			string _path = "/";
 			if (!string.IsNullOrEmpty(sDirPath)) {
-				sDirPath = sDirPath.Replace(@"\", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+				_path = @"/" + sDirPath;
+
+				if (!Directory.Exists(WWWPath + _path)) {
+					_path = _path.Replace(@"\", @"/");
+					_path = _path.Substring(0, _path.Length - 1);
+					_path = _path.Substring(0, _path.LastIndexOf(@"/"));
+				}
+				_path = _path + @"/";
+				_path = _path.Replace(@"\", @"/").Replace(@"///", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
 			}
-			return sDirPath;
+			return _path;
 		}
 
-		private static string _wwwpath = HttpContext.Current.Server.MapPath("~/");
-
 		public static string MakeFileFolderPath(string sDirPath) {
-			string _path = _wwwpath + "/" + sDirPath;
-			_path = MakeFilePathUniform(_path);
-			return _path;
+			string _path = MakeFilePathUniform(sDirPath);
+			string _map = HttpContext.Current.Server.MapPath(_path);
+
+			return _map;
 		}
 
 		public static string MakeWebFolderPath(string sDirPath) {
 			string sPathPrefix = "/";
 
 			if (!String.IsNullOrEmpty(sDirPath)) {
-				sPathPrefix = sDirPath.Replace(_wwwpath, @"\") + "/";
+				sPathPrefix = sDirPath.Replace(WWWPath, @"/");
 			}
 			sPathPrefix = MakeFilePathUniform(sPathPrefix);
 
 			return sPathPrefix;
 		}
 
-		public List<FileData> GetFiles(string sPath, string sQuery) {
+		public List<FileData> GetFiles(string sQuery) {
+
+			string sPath = MakeFileFolderPath(sQuery);
 
 			var dsID = new List<FileData>();
 
@@ -198,7 +218,7 @@ namespace Carrotware.CMS.Core {
 
 					if (myFileName.Length > 0) {
 
-						f = GetFileInfo(sPath, sQuery, myFile);
+						f = GetFileInfo(sQuery, myFile);
 
 						try {
 							if ((from b in BlockedTypes
@@ -239,7 +259,10 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public List<string> SpiderDeepFolders(string sPath) {
+		public List<string> SpiderDeepFolders(string sQuery) {
+
+			string sPath = MakeFileFolderPath(sQuery);
+
 			_spiderdirs = new List<string>();
 
 			SpiderFolders(sPath);
@@ -250,7 +273,9 @@ namespace Carrotware.CMS.Core {
 
 		List<FileData> _spiderFD = null;
 
-		private void SpiderFoldersFD(string sPath, string sQuery) {
+		private void SpiderFoldersFD(string sQuery) {
+
+			string sPath = MakeFileFolderPath(sQuery);
 
 			string[] subdirs;
 			try {
@@ -265,18 +290,20 @@ namespace Carrotware.CMS.Core {
 
 			if (subdirs != null) {
 				foreach (string theDir in subdirs) {
-					var f = GetFolderInfo(sPath, sQuery, theDir);
+					var f = GetFolderInfo(sQuery, theDir);
 					_spiderFD.Add(f);
-					SpiderFoldersFD(sPath + f.FolderPath, f.FolderPath);
+					SpiderFoldersFD(f.FolderPath);
 				}
 			}
 		}
 
 
-		public List<FileData> SpiderDeepFoldersFD(string sPath, string sQuery) {
+		public List<FileData> SpiderDeepFoldersFD(string sQuery) {
 			_spiderFD = new List<FileData>();
 
-			SpiderFoldersFD(sPath, sQuery);
+			string sPath = MakeFileFolderPath(sQuery);
+
+			SpiderFoldersFD(sQuery);
 
 			return _spiderFD;
 		}

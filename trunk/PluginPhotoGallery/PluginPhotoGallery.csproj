@@ -142,6 +142,7 @@
     <EmbeddedResource Include="prettyphoto\images\light_square\sprite.png" />
     <EmbeddedResource Include="prettyphoto\prettyPhoto.js" />
     <EmbeddedResource Include="prettyphoto\prettyPhoto.css" />
+    <Content Include="PluginPhotoGallery.sln" />
     <Content Include="prettyphoto\README.txt" />
     <Content Include="Web.config" />
     <Content Include="Public.config" />
@@ -263,8 +264,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50002</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>5002</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
