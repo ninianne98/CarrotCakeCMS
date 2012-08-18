@@ -10,20 +10,9 @@ using Carrotware.CMS.Core;
 
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarUpcoming : BaseShellUserControl, IWidgetParmData, IWidget {
+	public partial class CalendarUpcoming : WidgetParmData, IWidget {
 
 		protected dbCalendarDataContext db = new dbCalendarDataContext();
-
-		#region IWidgetParmData Members
-
-		private Dictionary<string, string> _parms = new Dictionary<string, string>();
-		public Dictionary<string, string> PublicParmValues {
-			get { return _parms; }
-			set { _parms = value; }
-		}
-
-		#endregion
-
 
 		#region IWidget Members
 
@@ -64,30 +53,31 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			if (!IsPostBack) {
 				SetCalendar();
 			}
-
 		}
 
 
 		protected void SetCalendar() {
 
-			try {
-				if (PublicParmValues.Count > 0) {
-					DaysInPast = Convert.ToInt32((from c in PublicParmValues
-												  where c.Key.ToLower() == "daysinpast"
-												  select c.Value).FirstOrDefault());
+			if (PublicParmValues.Count > 0) {
+				try {
+					string sFoundVal = GetParmValue("DaysInPast", "-3");
 
-					DaysInFuture = Convert.ToInt32((from c in PublicParmValues
-													where c.Key.ToLower() == "daysinfuture"
-													select c.Value).FirstOrDefault());
-				}
+					if (!string.IsNullOrEmpty(sFoundVal)) {
+						DaysInPast = Convert.ToInt32(sFoundVal);
+					}
+				} catch (Exception ex) { }
 
-			} catch (Exception ex) {
+				try {
+					string sFoundVal = GetParmValue("DaysInFuture", "30");
+
+					if (!string.IsNullOrEmpty(sFoundVal)) {
+						DaysInFuture = Convert.ToInt32(sFoundVal);
+					}
+				} catch (Exception ex) { }
 			}
-
 
 			DateTime dtStart = DateTime.Now.AddDays(DaysInPast);
 			DateTime dtEnd = DateTime.Now.AddDays(DaysInFuture);
-
 
 			var lst = (from c in db.tblCalendars
 					   where c.EventDate >= dtStart

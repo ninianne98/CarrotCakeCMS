@@ -9,19 +9,9 @@ using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarDisplay : BaseShellUserControl, IWidgetParmData, IWidget {
+	public partial class CalendarDisplay : WidgetParmData, IWidget {
 
 		protected dbCalendarDataContext db = new dbCalendarDataContext();
-
-		#region IWidgetParmData Members
-
-		private Dictionary<string, string> _parms = new Dictionary<string, string>();
-		public Dictionary<string, string> PublicParmValues {
-			get { return _parms; }
-			set { _parms = value; }
-		}
-
-		#endregion
 
 		#region IWidget Members
 
@@ -42,6 +32,9 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 		public string SpecifiedCSSFile { get; set; }
 
+		public string JavascriptFunctionNameDate { get; set; }
+
+		public string LaunchURLWindow { get; set; }
 
 		protected override void OnPreRender(EventArgs e) {
 
@@ -49,23 +42,45 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				SiteID = SiteData.CurrentSiteID;
 			}
 
-			try {
-				string sCSS = "";
-				if (PublicParmValues.Count > 0) {
-					sCSS = (from c in PublicParmValues
-							where c.Key.ToLower() == "specifiedcssfile"
-							select c.Value).FirstOrDefault();
-				}
-				if (!string.IsNullOrEmpty(sCSS)) {
-					SpecifiedCSSFile = sCSS;
-				}
+			if (PublicParmValues.Count > 0) {
+				try {
+					string sFoundVal = GetParmValue("SpecifiedCSSFile", "");
 
-			} catch (Exception ex) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
+						SpecifiedCSSFile = sFoundVal;
+					}
+				} catch (Exception ex) { }
+
+				try {
+					string sFoundVal = GetParmValue("JavascriptFunctionNameDate", "");
+
+					if (!string.IsNullOrEmpty(sFoundVal)) {
+						JavascriptFunctionNameDate = sFoundVal;
+					}
+				} catch (Exception ex) { }
+
+				try {
+					string sFoundVal = GetParmValue("LaunchURLWindow", "");
+
+					if (!string.IsNullOrEmpty(sFoundVal)) {
+						LaunchURLWindow = sFoundVal;
+					}
+				} catch (Exception ex) { }
+			}
+
+
+			if (!string.IsNullOrEmpty(LaunchURLWindow) && string.IsNullOrEmpty(JavascriptFunctionNameDate)) {
+				JavascriptFunctionNameDate = "eventCalendarDateLaunch";
 			}
 
 			if (!string.IsNullOrEmpty(SpecifiedCSSFile)) {
 				Calendar1.OverrideCSS = SpecifiedCSSFile;
 			}
+
+			if (!string.IsNullOrEmpty(JavascriptFunctionNameDate)) {
+				Calendar1.JavascriptForDate = JavascriptFunctionNameDate;
+			}
+
 
 			base.OnInit(e);
 		}
