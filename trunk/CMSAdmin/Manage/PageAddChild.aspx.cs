@@ -9,7 +9,7 @@ using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Base;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -66,10 +66,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.MetaDescription = txtDescription.Text;
 				pageContents.MetaKeyword = txtKey.Text;
 
-				pageContents.Heartbeat_UserId = SiteData.CurrentUserGuid;
+				pageContents.Heartbeat_UserId = SecurityData.CurrentUserGuid;
 				pageContents.EditHeartbeat = DateTime.Now;
 
-				pageContents.EditUserId = SiteData.CurrentUserGuid;
+				pageContents.EditUserId = SecurityData.CurrentUserGuid;
 				pageContents.IsLatestVersion = true;
 				pageContents.EditDate = DateTime.Now;
 				pageContents.NavOrder = parentPageContents.NavOrder + 1;

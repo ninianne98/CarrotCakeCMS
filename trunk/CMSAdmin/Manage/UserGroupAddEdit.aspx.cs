@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		protected void GetUserList(string roleName) {
 
-			List<MembershipUser> usrs = SiteData.GetUsersInRole(roleName);
+			List<MembershipUser> usrs = SecurityData.GetUsersInRole(roleName);
 			gvUsers.DataSource = usrs;
 			gvUsers.DataBind();
 
@@ -146,9 +146,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			sLoweredRoleName = sLoweredRoleName.ToLower();
 
 			if (groupID != Guid.Empty
-						&& sLoweredRoleName != SiteData.CMSGroup_Admins.ToLower()
-						&& sLoweredRoleName != SiteData.CMSGroup_Editors.ToLower()
-						&& sLoweredRoleName != SiteData.CMSGroup_Users.ToLower()) {
+						&& sLoweredRoleName != SecurityData.CMSGroup_Admins.ToLower()
+						&& sLoweredRoleName != SecurityData.CMSGroup_Editors.ToLower()
+						&& sLoweredRoleName != SecurityData.CMSGroup_Users.ToLower()) {
 
 				return true;
 			}

@@ -18,7 +18,7 @@ using Carrotware.CMS.UI.Controls;
 using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -92,14 +92,14 @@ namespace Carrotware.CMS.UI.Base {
 			pageContents = null;
 
 			if (path.Length < 3) {
-				if (SiteData.IsAdmin || SiteData.IsEditor) {
+				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, null);
 				} else {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 				}
 			} else {
 				string pageName = path;
-				if (SiteData.IsAdmin || SiteData.IsEditor) {
+				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
 				} else {
 					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
@@ -110,7 +110,7 @@ namespace Carrotware.CMS.UI.Base {
 				guidContentID = pageContents.Root_ContentID;
 			}
 
-			if (SiteData.AdvancedEditMode) {
+			if (SecurityData.AdvancedEditMode) {
 				pageWidgets = widgetHelper.GetWidgets(guidContentID, null);
 			} else {
 				pageWidgets = widgetHelper.GetWidgets(guidContentID, true);
@@ -133,7 +133,7 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-			if (SiteData.AdvancedEditMode) {
+			if (SecurityData.AdvancedEditMode) {
 				if (cmsHelper.cmsAdminContent == null) {
 					cmsHelper.cmsAdminContent = pageContents;
 					cmsHelper.cmsAdminWidget = (from w in pageWidgets
@@ -146,7 +146,7 @@ namespace Carrotware.CMS.UI.Base {
 								   select w).ToList();
 				}
 			} else {
-				if (SiteData.CurrentUserGuid != Guid.Empty) {
+				if (SecurityData.CurrentUserGuid != Guid.Empty) {
 					cmsHelper.cmsAdminContent = null;
 					cmsHelper.cmsAdminWidget = null;
 				}
@@ -183,9 +183,9 @@ namespace Carrotware.CMS.UI.Base {
 					dtExpire = DateTime.Now.AddMinutes(-10);
 					Response.Cache.SetExpires(dtExpire);
 
-					if (!SiteData.AdvancedEditMode) {
+					if (!SecurityData.AdvancedEditMode) {
 
-						if (SiteData.IsAdmin || SiteData.IsEditor) {
+						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 
 							Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
 							Page.Form.Controls.Add(editor);
@@ -301,10 +301,10 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (widget is IWidgetEditStatus) {
 								IWidgetEditStatus wes = widget as IWidgetEditStatus;
-								wes.IsBeingEdited = SiteData.AdvancedEditMode;
+								wes.IsBeingEdited = SecurityData.AdvancedEditMode;
 							}
 
-							if (SiteData.AdvancedEditMode) {
+							if (SecurityData.AdvancedEditMode) {
 								WidgetWrapper plcWrapper = new WidgetWrapper();
 								plcWrapper.IsAdminMode = true;
 								plcWrapper.ControlPath = theWidget.ControlPath;
@@ -352,7 +352,7 @@ namespace Carrotware.CMS.UI.Base {
 			Page.Title = string.Format(PageTitlePattern, theSite.SiteName, pageData.TitleBar);
 
 			if (!pageData.PageActive) {
-				if (SiteData.IsAdmin || SiteData.IsEditor) {
+				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 					Page.Title = string.Format(PageTitlePattern, "* UNPUBLISHED * " + theSite.SiteName, pageData.TitleBar);
 				}
 			}

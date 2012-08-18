@@ -29,14 +29,14 @@ namespace Carrotware.CMS.UI.Admin {
 				if (userID != Guid.Empty) {
 					var dsRoles = new List<aspnet_Role>();
 
-					if (!SiteData.IsAdmin) {
+					if (!SecurityData.IsAdmin) {
 						dsRoles = (from l in db.aspnet_Roles
-								   where l.RoleName != SiteData.CMSGroup_Users && l.RoleName != SiteData.CMSGroup_Admins
+								   where l.RoleName != SecurityData.CMSGroup_Users && l.RoleName != SecurityData.CMSGroup_Admins
 								   orderby l.RoleName
 								   select l).ToList();
 					} else {
 						dsRoles = (from l in db.aspnet_Roles
-								   where l.RoleName != SiteData.CMSGroup_Users
+								   where l.RoleName != SecurityData.CMSGroup_Users
 								   orderby l.RoleName
 								   select l).ToList();
 					}
@@ -44,7 +44,7 @@ namespace Carrotware.CMS.UI.Admin {
 					CheckBox chkSelected = null;
 
 					gvSites.Visible = false;
-					if (SiteData.IsAdmin) {
+					if (SecurityData.IsAdmin) {
 						gvSites.Visible = true;
 						gvSites.DataSource = (from l in db.carrot_Sites
 											  orderby l.SiteName
@@ -135,12 +135,12 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 
 
-				if (!Roles.IsUserInRole(usr.UserName, SiteData.CMSGroup_Users)) {
-					Roles.AddUserToRole(usr.UserName, SiteData.CMSGroup_Users);
+				if (!Roles.IsUserInRole(usr.UserName, SecurityData.CMSGroup_Users)) {
+					Roles.AddUserToRole(usr.UserName, SecurityData.CMSGroup_Users);
 				}
 
 
-				if (SiteData.IsAdmin) {
+				if (SecurityData.IsAdmin) {
 					var dsLocs = (from l in db.carrot_UserSiteMappings
 								  where l.UserId == userID
 								  select l).ToList();

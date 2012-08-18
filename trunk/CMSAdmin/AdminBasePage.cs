@@ -9,7 +9,7 @@ using Carrotware.CMS.UI.Base;
 
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin {
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
 
-				bool bHasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+				bool bHasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 				if (!bHasAccess) {
 					FormsAuthentication.SignOut();

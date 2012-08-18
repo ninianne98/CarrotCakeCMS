@@ -11,7 +11,7 @@ using Carrotware.CMS.Core;
 using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -176,11 +176,11 @@ namespace Carrotware.CMS.UI.Admin {
 			try {
 				CurrentPageGuid = new Guid(PageID);
 
-				var bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+				var bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 				//only allow admin/editors to record a lock
-				if ((SiteData.IsAdmin || SiteData.IsEditor) && !bLock) {
-					var bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+				if ((SecurityData.IsAdmin || SecurityData.IsEditor) && !bLock) {
+					var bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 					if (bRet) {
 						return DateTime.Now.ToString();
@@ -383,7 +383,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			string search = CMSConfigHelper.DecodeBase64(searchTerm);
 
-			List<MembershipUser> lstUsers = SiteData.GetUserSearch(search);
+			List<MembershipUser> lstUsers = SecurityData.GetUserSearch(search);
 
 			return lstUsers.OrderBy(x => x.UserName).ToList();
 		}
@@ -712,7 +712,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				var c = cmsAdminContent;
 				c.EditDate = DateTime.Now;
-				c.EditUserId = SiteData.CurrentUserGuid;
+				c.EditUserId = SecurityData.CurrentUserGuid;
 				c.ContentID = Guid.NewGuid();
 
 				if (Zone.ToLower() == "c")
@@ -742,10 +742,10 @@ namespace Carrotware.CMS.UI.Admin {
 				LoadGuids();
 				CurrentEditPage = filePage.FileName.ToLower();
 
-				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SiteData.CurrentUserGuid);
+				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 				Guid guidUser = pageHelper.GetCurrentEditUser(CurrentPageGuid, SiteData.CurrentSiteID);
 
-				if (bLock || guidUser != SiteData.CurrentUserGuid) {
+				if (bLock || guidUser != SecurityData.CurrentUserGuid) {
 					return "Cannot publish changes, not current editing user.";
 				}
 
@@ -771,7 +771,7 @@ namespace Carrotware.CMS.UI.Admin {
 					newContent.NavOrder = cmsAdminContent.NavOrder;
 					newContent.PageHead = cmsAdminContent.PageHead;
 					newContent.PageActive = cmsAdminContent.PageActive;
-					newContent.EditUserId = SiteData.CurrentUserGuid;
+					newContent.EditUserId = SecurityData.CurrentUserGuid;
 					newContent.EditDate = DateTime.Now;
 
 					newContent.TemplateFile = cmsAdminContent.TemplateFile;

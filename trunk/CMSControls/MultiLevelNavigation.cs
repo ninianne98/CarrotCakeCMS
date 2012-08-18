@@ -35,11 +35,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected List<SiteNav> GetTopNav() {
-			return navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SiteData.IsAuthEditor);
+			return navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 		}
 
-		protected List<SiteNav> GetChildren(Guid Root_ContentID) {
-			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, Root_ContentID, !SiteData.IsAuthEditor);
+		protected List<SiteNav> GetChildren(Guid rootContentID) {
+			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, rootContentID, !SecurityData.IsAuthEditor);
 		}
 
 
