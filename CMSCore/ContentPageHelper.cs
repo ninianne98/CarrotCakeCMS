@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -141,11 +141,11 @@ namespace Carrotware.CMS.Core {
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
-				if (rc.Heartbeat_UserId != SiteData.CurrentUserGuid
+				if (rc.Heartbeat_UserId != SecurityData.CurrentUserGuid
 						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (rc.Heartbeat_UserId == SiteData.CurrentUserGuid
+				if (rc.Heartbeat_UserId == SecurityData.CurrentUserGuid
 					|| rc.Heartbeat_UserId == null) {
 					bLock = false;
 				}
@@ -183,11 +183,11 @@ namespace Carrotware.CMS.Core {
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
-				if (rc.Heartbeat_UserId != SiteData.CurrentUserGuid
+				if (rc.Heartbeat_UserId != SecurityData.CurrentUserGuid
 						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (rc.Heartbeat_UserId == SiteData.CurrentUserGuid
+				if (rc.Heartbeat_UserId == SecurityData.CurrentUserGuid
 					|| rc.Heartbeat_UserId == null) {
 					bLock = false;
 				}
@@ -199,11 +199,11 @@ namespace Carrotware.CMS.Core {
 
 			bool bLock = false;
 			if (cp.Heartbeat_UserId != null) {
-				if (cp.Heartbeat_UserId != SiteData.CurrentUserGuid
+				if (cp.Heartbeat_UserId != SecurityData.CurrentUserGuid
 						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (cp.Heartbeat_UserId == SiteData.CurrentUserGuid
+				if (cp.Heartbeat_UserId == SecurityData.CurrentUserGuid
 					|| cp.Heartbeat_UserId == null) {
 					bLock = false;
 				}

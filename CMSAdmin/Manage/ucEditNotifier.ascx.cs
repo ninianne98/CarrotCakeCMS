@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			lnkCurrent.HRef = currentPage.FileName;
 
 			if (!IsPostBack) {
-				List<SiteNav> nav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, CurrentPageID, !SiteData.IsAuthEditor);
+				List<SiteNav> nav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, CurrentPageID, !SecurityData.IsAuthEditor);
 
 				//SiteNav pageContents1 = navHelper.GetPageNavigation(SiteData.CurrentSiteID, CurrentPageID);
 				//if (pageContents1 != null) {
@@ -47,7 +47,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				List<SiteNav> lstNavTop = null;
 				if (filePage != null && filePage.Root_ContentID == CurrentPageID) {
-					lstNavTop = (from n in navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SiteData.IsAuthEditor)
+					lstNavTop = (from n in navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor)
 								 where n.Root_ContentID != CurrentPageID
 								 orderby n.NavOrder
 								 select new SiteNav {

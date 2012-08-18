@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using System.IO;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -111,7 +111,7 @@ namespace Carrotware.CMS.Core {
 			cpe.ThePage.Root_ContentID = cpe.NewRootContentID;
 			cpe.ThePage.ContentID = cpe.NewRootContentID;
 			cpe.ThePage.SiteID = SiteData.CurrentSiteID;
-			cpe.ThePage.EditUserId = SiteData.CurrentUserGuid;
+			cpe.ThePage.EditUserId = SecurityData.CurrentUserGuid;
 			cpe.ThePage.CreateDate = DateTime.Now;
 
 			foreach (var w in cpe.ThePageWidgets) {

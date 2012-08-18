@@ -13,7 +13,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -348,7 +348,7 @@ namespace Carrotware.Web.UI.Controls {
 					if ((d >= 1) && (d <= iDaysInMonth)) {
 						cellDate = new DateTime(YearNumber, MonthNumber, d);
 						if (!string.IsNullOrEmpty(JavascriptForDate)) {
-							strCaption = "&nbsp;<a href=\"javascript:" + JavascriptForDate + "('" + cellDate.ToShortDateString() + "')\">" + d.ToString() + "&nbsp;";
+							strCaption = "&nbsp;<a href=\"javascript:" + JavascriptForDate + "('" + cellDate.ToString("yyyy-MM-dd") + "')\">" + d.ToString() + "&nbsp;";
 						} else {
 							strCaption = "&nbsp;" + d.ToString() + "&nbsp;";
 						}

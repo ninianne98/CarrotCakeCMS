@@ -14,7 +14,7 @@ using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -207,7 +207,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public Color ForeColor {
+		public override Color ForeColor {
 			get {
 				string s = (string)ViewState["ForeColor"];
 				return ((s == null) ? ColorTranslator.FromHtml("#758569") : ColorTranslator.FromHtml(s));
@@ -221,7 +221,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public Color BackColor {
+		public override Color BackColor {
 			get {
 				string s = (string)ViewState["BackColor"];
 				return ((s == null) ? ColorTranslator.FromHtml("#DDDDDD") : ColorTranslator.FromHtml(s));
@@ -233,11 +233,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected List<SiteNav> GetTopNav() {
-			return navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SiteData.IsAuthEditor);
+			return navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 		}
 
-		protected List<SiteNav> GetChildren(Guid Root_ContentID) {
-			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, Root_ContentID, !SiteData.IsAuthEditor);
+		protected List<SiteNav> GetChildren(Guid rootContentID) {
+			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, rootContentID, !SecurityData.IsAuthEditor);
 		}
 
 

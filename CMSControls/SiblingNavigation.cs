@@ -10,7 +10,7 @@ using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -72,7 +72,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			var lst = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SiteData.IsAuthEditor);
+			var lst = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
 
 			if (lst.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
 				output.Write("<h2>" + SectionTitle + "</h2>\r\n");

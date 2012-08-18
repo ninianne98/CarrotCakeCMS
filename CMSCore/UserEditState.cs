@@ -8,7 +8,7 @@ using System.Web.Caching;
 
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -32,7 +32,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string ContentKey {
 			get {
-				return "cms_UserEditState_" + SiteData.CurrentUser.UserName.ToLower();
+				return "cms_UserEditState_" + SecurityData.CurrentUser.UserName.ToLower();
 			}
 		}
 

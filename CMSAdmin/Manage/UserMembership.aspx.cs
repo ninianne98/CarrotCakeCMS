@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 		protected void LoadGrid() {
-			List<MembershipUser> usrs = SiteData.GetUserList();
+			List<MembershipUser> usrs = SecurityData.GetUserList();
 
 			dvMembers.DataSource = usrs;
 			dvMembers.DataBind();

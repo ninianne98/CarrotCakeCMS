@@ -15,7 +15,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.

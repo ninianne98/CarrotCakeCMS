@@ -77,6 +77,7 @@
     <Compile Include="ContentPageExport.cs" />
     <Compile Include="ContentPageHelper.cs" />
     <Compile Include="PageWidgetHelper.cs" />
+    <Compile Include="SecurityData.cs" />
     <Compile Include="UserEditState.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="KeyedControl.cs" />

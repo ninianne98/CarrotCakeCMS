@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected List<SiteNav> GetUpdates() {
-			return navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SiteData.IsAuthEditor);
+			return navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {

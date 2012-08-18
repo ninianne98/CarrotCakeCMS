@@ -14,7 +14,7 @@ using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -503,7 +503,7 @@ namespace Carrotware.CMS.Core {
 					CMSTemplate t = new CMSTemplate();
 					t.TemplatePath = sDefTemplate;
 					t.EncodedPath = EncodeBase64(sDefTemplate);
-					t.Caption = "  Black 'n White - Plain L-R-C Content [*]  ";
+					t.Caption = "   Black 'n White - Plain L-R-C Content [*]   ";
 					_plugins.Add(t);
 				}
 
@@ -757,7 +757,7 @@ namespace Carrotware.CMS.Core {
 
 				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
-						   && c.EditUserId == SiteData.CurrentUserGuid
+						   && c.EditUserId == SecurityData.CurrentUserGuid
 						   && c.KeyType == sKey
 						   && c.SiteID == SiteData.CurrentSiteID
 						   select c).FirstOrDefault();
@@ -768,7 +768,7 @@ namespace Carrotware.CMS.Core {
 					itm.SerialCacheID = Guid.NewGuid();
 					itm.SiteID = SiteData.CurrentSiteID;
 					itm.ItemID = itemID;
-					itm.EditUserId = SiteData.CurrentUserGuid;
+					itm.EditUserId = SecurityData.CurrentUserGuid;
 					itm.KeyType = sKey;
 				}
 
@@ -789,7 +789,7 @@ namespace Carrotware.CMS.Core {
 
 				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
-						   && c.EditUserId == SiteData.CurrentUserGuid
+						   && c.EditUserId == SecurityData.CurrentUserGuid
 						   && c.KeyType == sKey
 						   && c.SiteID == SiteData.CurrentSiteID
 						   select c).FirstOrDefault();
@@ -807,7 +807,7 @@ namespace Carrotware.CMS.Core {
 			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
 				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
-						   && c.EditUserId == SiteData.CurrentUserGuid
+						   && c.EditUserId == SecurityData.CurrentUserGuid
 						   && c.KeyType == sKey
 						   && c.SiteID == SiteData.CurrentSiteID
 						   select c).FirstOrDefault();

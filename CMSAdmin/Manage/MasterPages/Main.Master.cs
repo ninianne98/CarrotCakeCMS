@@ -13,7 +13,7 @@ using Carrotware.Web.UI.Controls;
 namespace Carrotware.CMS.UI.Admin.MasterPages {
 	public partial class Main : AdminBaseMasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!SiteData.IsAdmin) {
+			if (!SecurityData.IsAdmin) {
 				tabUserAdmin.Visible = false;
 				tabGroupAdmin.Visible = false;
 			}

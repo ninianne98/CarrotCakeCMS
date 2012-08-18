@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			List<SiteNav> lstNav = null;
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
-				lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SiteData.IsAuthEditor);
+				lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SecurityData.IsAuthEditor);
 			}
 
 			if (bClickedSort && ddlAlternateSort.SelectedIndex > 0) {

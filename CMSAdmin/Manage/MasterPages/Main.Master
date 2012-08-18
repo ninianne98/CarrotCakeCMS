@@ -89,7 +89,7 @@
 				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
 				<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
 				<li>
-					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=Carrotware.CMS.Core.SiteData.CurrentUser.UserName%></asp:LinkButton>
+					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=Carrotware.CMS.Core.SecurityData.CurrentUser.UserName%></asp:LinkButton>
 				</li>
 				<li><a href="javascript:void(0)">&nbsp;</a></li>
 			</ul>

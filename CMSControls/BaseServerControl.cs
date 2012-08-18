@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected List<ContentPage> lstActivePages {
 			get {
 				if (_pages == null) {
-					if (SiteData.IsAuthEditor) {
+					if (SecurityData.IsAuthEditor) {
 						_pages = pageHelper.GetLatestContentList(SiteID, null);
 					} else {
 						_pages = pageHelper.GetLatestContentList(SiteID, true);

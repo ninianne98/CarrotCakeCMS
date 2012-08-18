@@ -6,7 +6,7 @@ using Carrotware.CMS.Data;
 using System.Text.RegularExpressions;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -123,11 +123,11 @@ namespace Carrotware.CMS.Core {
 
 			bool bLock = false;
 			if (this.Heartbeat_UserId != null) {
-				if (this.Heartbeat_UserId != SiteData.CurrentUserGuid
+				if (this.Heartbeat_UserId != SecurityData.CurrentUserGuid
 						&& this.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
 				}
-				if (this.Heartbeat_UserId == SiteData.CurrentUserGuid
+				if (this.Heartbeat_UserId == SecurityData.CurrentUserGuid
 					|| this.Heartbeat_UserId == null) {
 					bLock = false;
 				}

@@ -17,7 +17,7 @@ namespace Carrotware.CMS.UI.Admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserFn);
 
 			if (!IsPostBack) {
-				txtEmail.Text = SiteData.CurrentUser.Email;
+				txtEmail.Text = SecurityData.CurrentUser.Email;
 			} else {
 				lblEmail.Text = "";
 			}
@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void btnSaveEmail_Click(object sender, EventArgs e) {
-			MembershipUser usr = SiteData.CurrentUser;
+			MembershipUser usr = SecurityData.CurrentUser;
 			usr.Email = txtEmail.Text;
 			Membership.UpdateUser(usr);
 			lblEmail.Text = "Email Updated";

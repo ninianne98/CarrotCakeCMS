@@ -10,7 +10,7 @@ using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -57,7 +57,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected List<SiteNav> GetSubNav() {
-			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SiteData.IsAuthEditor);
+			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
 		}
 
 		protected SiteNav GetParent(Guid? Root_ContentID) {

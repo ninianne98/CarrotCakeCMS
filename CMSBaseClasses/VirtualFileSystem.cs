@@ -11,7 +11,7 @@ using System.Web.UI;
 using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
-* http://carrotware.com/
+* http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -56,7 +56,7 @@ namespace Carrotware.CMS.UI.Base {
 
 
 			if (sFileRequested.ToLower().EndsWith(".aspx") || sFileRequested.Length < 3) {
-				bool bIgnorePublishState = SiteData.AdvancedEditMode || SiteData.IsAdmin || SiteData.IsEditor;
+				bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsEditor;
 
 				string queryString = String.Empty;
 				queryString = context.Request.QueryString.ToString();
@@ -127,7 +127,7 @@ namespace Carrotware.CMS.UI.Base {
 							string sSelectedTemplate = navData.TemplateFile;
 
 							// selectivly engage the cms helper only if in advance mode
-							if (SiteData.AdvancedEditMode) {
+							if (SecurityData.AdvancedEditMode) {
 								using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
 									if (cmsHelper.cmsAdminContent != null) {
 										try { sSelectedTemplate = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
