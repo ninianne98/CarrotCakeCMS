@@ -15,21 +15,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:FancyBox runat=server></{0}:FancyBox>")]
 	public class FancyBox : BaseWebControl {
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string Text {
-			get {
-				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
-			}
-
-			set {
-				ViewState["Text"] = value;
-			}
-		}
-
 
 
 		protected override void RenderContents(HtmlTextWriter output) {
