@@ -92,6 +92,13 @@
     <Compile Include="CalendarUpcoming.ascx.designer.cs">
       <DependentUpon>CalendarUpcoming.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CalendarDateInfo.ascx.cs">
+      <DependentUpon>CalendarDateInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarDateInfo.ascx.designer.cs">
+      <DependentUpon>CalendarDateInfo.ascx</DependentUpon>
+    </Compile>
     <Compile Include="dbCalendar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,6 +116,7 @@
     <Content Include="CalendarUpcoming.ascx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CalendarDateInfo.ascx" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

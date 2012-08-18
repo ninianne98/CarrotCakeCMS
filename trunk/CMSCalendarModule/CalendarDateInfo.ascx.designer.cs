@@ -10,15 +10,15 @@
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
     
     
-    public partial class CalendarUpcoming {
+    public partial class CalendarDateInfo {
         
         /// <summary>
-        /// dgEvents control.
+        /// rEvents control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid dgEvents;
+        protected global::System.Web.UI.WebControls.Repeater rEvents;
     }
 }
