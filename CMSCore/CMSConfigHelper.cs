@@ -78,7 +78,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public string DomainName {
+		public static string DomainName {
 			get {
 				var domName = HttpContext.Current.Request.ServerVariables["HTTP_HOST"];
 				if (domName.IndexOf(":") > 0) {
@@ -99,7 +99,7 @@ namespace Carrotware.CMS.Core {
 			SiteMapping
 		}
 
-		private DataSet ReadDataSetConfig(CMSConfigFileType cfg, string sPath) {
+		private static DataSet ReadDataSetConfig(CMSConfigFileType cfg, string sPath) {
 			string sPlugCfg = "default.config";
 			string sRealPath = HttpContext.Current.Server.MapPath(sPath);
 
@@ -225,6 +225,17 @@ namespace Carrotware.CMS.Core {
 			return ds;
 		}
 
+		public string GetFolderPrefix(string sDirPath) {
+			string sPathPrefix = "/";
+
+			if (!String.IsNullOrEmpty(sDirPath)) {
+				var wwwpath = HttpContext.Current.Server.MapPath("~/");
+				sPathPrefix = sDirPath.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+			}
+
+			return sPathPrefix;
+		}
+
 
 		public List<CMSAdminModule> AdminModules {
 			get {
@@ -245,24 +256,36 @@ namespace Carrotware.CMS.Core {
 				if (!bCached) {
 					DataSet ds = ReadDataSetConfig(CMSConfigFileType.AdminModules, "~/");
 
+					List<CMSAdminModuleMenu> _ctrls = new List<CMSAdminModuleMenu>();
+
 					_modules = (from d in ds.Tables[0].AsEnumerable()
 								select new CMSAdminModule {
 									PluginName = d.Field<string>("caption"),
 									PluginID = new Guid(d.Field<string>("pluginid"))
 								}).ToList();
 
+					foreach (DataTable t in ds.Tables) {
+						if (t.TableName.StartsWith("ID_") || t.TableName.StartsWith("plugincontrols")) {
+							var _ctrl2 = (from d in t.AsEnumerable()
+										  select new CMSAdminModuleMenu {
+											  Caption = d.Field<string>("pluginlabel"),
+											  SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
+											  PluginParm = d.Field<string>("parm"),
+											  ControlFile = d.Field<string>("plugincontrol"),
+											  UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
+											  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
+											  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
+											  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
+										  }).ToList();
+
+							_ctrls = _ctrls.Union(_ctrl2).ToList();
+						}
+					}
+
 					foreach (var p in _modules) {
-						p.PluginMenus = (from d in ds.Tables["ID_" + p.PluginID.ToString()].AsEnumerable()
-										 select new CMSAdminModuleMenu {
-											 Caption = d.Field<string>("pluginlabel"),
-											 SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
-											 PluginParm = d.Field<string>("parm"),
-											 ControlFile = d.Field<string>("plugincontrol"),
-											 UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
-											 UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
-											 IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
-											 PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
-										 }).ToList();
+						p.PluginMenus = (from c in _ctrls
+										 where c.PluginID == p.PluginID
+										 select c).ToList();
 					}
 
 					_modules = _modules.Union(GetModulesByDirectory()).ToList();
@@ -278,7 +301,6 @@ namespace Carrotware.CMS.Core {
 		private List<CMSPlugin> GetPluginsByDirectory() {
 			var _plugins = new List<CMSPlugin>();
 
-			var wwwpath = HttpContext.Current.Server.MapPath("~/");
 			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsPlugins/");
 
 			if (Directory.Exists(sPlugCfg)) {
@@ -296,7 +318,7 @@ namespace Carrotware.CMS.Core {
 						string sTplDef = theDir + @"\Public.config";
 
 						if (File.Exists(sTplDef)) {
-							string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+							string sPathPrefix = GetFolderPrefix(theDir);
 							DataSet ds = ReadDataSetConfig(CMSConfigFileType.PublicCtrl, sPathPrefix);
 
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
@@ -319,7 +341,6 @@ namespace Carrotware.CMS.Core {
 		private List<CMSAdminModule> GetModulesByDirectory() {
 			var _plugins = new List<CMSAdminModule>();
 
-			var wwwpath = HttpContext.Current.Server.MapPath("~/");
 			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsPlugins/");
 
 			if (Directory.Exists(sPlugCfg)) {
@@ -337,7 +358,7 @@ namespace Carrotware.CMS.Core {
 						string sTplDef = theDir + @"\Admin.config";
 
 						if (File.Exists(sTplDef)) {
-							string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+							string sPathPrefix = GetFolderPrefix(theDir);
 							DataSet ds = ReadDataSetConfig(CMSConfigFileType.AdminMod, sPathPrefix);
 
 							var _modules = (from d in ds.Tables[0].AsEnumerable()
@@ -422,7 +443,6 @@ namespace Carrotware.CMS.Core {
 		private List<CMSTemplate> GetTemplatesByDirectory() {
 			var _plugins = new List<CMSTemplate>();
 
-			var wwwpath = HttpContext.Current.Server.MapPath("~/");
 			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsTemplates/");
 
 			if (Directory.Exists(sPlugCfg)) {
@@ -440,7 +460,7 @@ namespace Carrotware.CMS.Core {
 						string sTplDef = theDir + @"\Skin.config";
 
 						if (File.Exists(sTplDef)) {
-							string sPathPrefix = theDir.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
+							string sPathPrefix = GetFolderPrefix(theDir);
 							DataSet ds = ReadDataSetConfig(CMSConfigFileType.SkinDef, sPathPrefix);
 
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
@@ -509,16 +529,16 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public List<DynamicSite> SiteList {
+		public static List<DynamicSite> SiteList {
 			get {
 
-				var _plugins = new List<DynamicSite>();
+				var _sites = new List<DynamicSite>();
 
 				bool bCached = false;
 
 				try {
-					_plugins = (List<DynamicSite>)HttpContext.Current.Cache[keyDynamicSite];
-					if (_plugins != null) {
+					_sites = (List<DynamicSite>)HttpContext.Current.Cache[keyDynamicSite];
+					if (_sites != null) {
 						bCached = true;
 					}
 				} catch {
@@ -528,29 +548,29 @@ namespace Carrotware.CMS.Core {
 				if (!bCached) {
 					DataSet ds = ReadDataSetConfig(CMSConfigFileType.SiteMapping, "~/");
 
-					_plugins = (from d in ds.Tables[0].AsEnumerable()
+					_sites = (from d in ds.Tables[0].AsEnumerable()
 								select new DynamicSite {
 									DomainName = d.Field<string>("domname"),
 									SiteID = new Guid(d.Field<string>("siteid"))
 								}).ToList();
 
-					HttpContext.Current.Cache.Insert(keyDynamicSite, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					HttpContext.Current.Cache.Insert(keyDynamicSite, _sites, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
-				return _plugins;
+				return _sites;
 			}
 		}
 
 
-		public DynamicSite DynSite {
+		public static DynamicSite DynSite {
 			get {
-				var _plugins = new DynamicSite();
+				DynamicSite _site = new DynamicSite();
 
 				string ModuleKey = keyDynSite + DomainName;
 				bool bCached = false;
 
 				try {
-					_plugins = (DynamicSite)HttpContext.Current.Cache[ModuleKey];
-					if (_plugins != null) {
+					_site = (DynamicSite)HttpContext.Current.Cache[ModuleKey];
+					if (_site != null) {
 						bCached = true;
 					}
 				} catch {
@@ -559,13 +579,13 @@ namespace Carrotware.CMS.Core {
 
 				if ((SiteList.Count > 0) && !bCached) {
 
-					_plugins = (from ss in SiteList
+					_site = (from ss in SiteList
 								where ss.DomainName == DomainName
 								select ss).FirstOrDefault();
 
-					HttpContext.Current.Cache.Insert(ModuleKey, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					HttpContext.Current.Cache.Insert(ModuleKey, _site, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
-				return _plugins;
+				return _site;
 			}
 		}
 
