@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
+using System.IO;
 
 
 
@@ -14,7 +15,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		Guid gTheID = Guid.Empty;
 		protected PhotoGalleryDataContext db = new PhotoGalleryDataContext();
-		protected FileDataHelper helpFile = new FileDataHelper();
+		protected FileDataHelper fileHelper = new FileDataHelper();
 
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -26,11 +27,56 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			if (!IsPostBack) {
 				txtDate.Text = DateTime.Now.ToShortDateString();
 				LoadLists();
+				BuildFolderList();
 			}
 		}
 
 		protected string SetSitePath(string sPath) {
 			return FileDataHelper.MakeFileFolderPath(sPath);
+		}
+
+		protected void BuildFolderList() {
+			List<FileData> lstFolders = new List<FileData>();
+
+			string sRoot = HttpContext.Current.Server.MapPath("~/");
+
+			string[] subdirs;
+			try {
+				subdirs = Directory.GetDirectories(sRoot);
+			} catch {
+				subdirs = null;
+			}
+
+			lstFolders.Add(new FileData { FileName = "  -- whole site --  ", FolderPath = "/", FileDate = DateTime.Now });
+
+			if (subdirs != null) {
+				foreach (string theDir in subdirs) {
+					string w = FileDataHelper.MakeWebFolderPath(theDir);
+					lstFolders.Add(new FileData { FileName = w, FolderPath = w, FileDate = DateTime.Now });
+
+					string[] subdirs2;
+					try {
+						subdirs2 = Directory.GetDirectories(theDir);
+					} catch {
+						subdirs2 = null;
+					}
+
+					if (subdirs2 != null) {
+						foreach (string theDir2 in subdirs2) {
+							string w2 = FileDataHelper.MakeWebFolderPath(theDir2);
+							lstFolders.Add(new FileData { FileName = w2, FolderPath = w2, FileDate = DateTime.Now });
+						}
+					}
+				}
+			}
+
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/manage/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/bin/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/obj/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/app_data/"));
+
+			ddlFolders.DataSource = lstFolders.OrderBy(f => f.FileName);
+			ddlFolders.DataBind();
 		}
 
 		protected void LoadLists() {
@@ -45,12 +91,12 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				rpGallery.DataSource = (from g in db.tblGalleryImages
 										where g.GalleryID == gTheID
 										orderby g.ImageOrder ascending
-										select helpFile.GetFileInfo(g.GalleryImage, g.GalleryImage)).ToList();
+										select fileHelper.GetFileInfo(g.GalleryImage, g.GalleryImage)).ToList();
 
 				rpGallery.DataBind();
 			}
 
-			SetSourceFiles(null);
+			SetSourceFiles(null, "/");
 
 		}
 
@@ -104,26 +150,44 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			rpGallery.DataSource = (from g in lstImages
 									orderby g.Key ascending
-									select helpFile.GetFileInfo(g.Value, g.Value)).ToList();
+									select fileHelper.GetFileInfo(g.Value, g.Value)).ToList();
 			rpGallery.DataBind();
 
-			SetSourceFiles(dtFilter);
+			string sPath = "/";
+
+			if (chkPath.Checked) {
+				sPath = ddlFolders.SelectedValue;
+			}
+
+			SetSourceFiles(dtFilter, sPath);
 		}
 
 
-		protected void SetSourceFiles(DateTime? dtFilter) {
+		protected void SetSourceFiles(DateTime? dtFilter, string sPath) {
 
 			List<FileData> flsWorking = new List<FileData>();
 			List<FileData> fldrWorking = new List<FileData>();
 
-			fldrWorking = helpFile.SpiderDeepFoldersFD("/");
+			fldrWorking = fileHelper.SpiderDeepFoldersFD(sPath);
 
-			foreach (var f in fldrWorking) {
-				var fls = helpFile.GetFiles(f.FolderPath);
+			if (Directory.Exists(FileDataHelper.MakeFileFolderPath(sPath))) {
+				var fls = fileHelper.GetFiles(sPath);
 
-				flsWorking = (from m in flsWorking.Union(fls).ToList()
+				var imgs = (from m in flsWorking.Union(fls).ToList()
 							  where m.MimeType.StartsWith("image")
 							  select m).ToList();
+
+				flsWorking = flsWorking.Union(imgs).ToList();
+			}
+
+			foreach (var f in fldrWorking) {
+				var fls = fileHelper.GetFiles(f.FolderPath);
+
+				var imgs = (from m in flsWorking.Union(fls).ToList()
+							where m.MimeType.StartsWith("image")
+							select m).ToList();
+
+				flsWorking = flsWorking.Union(imgs).ToList();
 			}
 
 			flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("image") && (x.FolderPath.ToLower().StartsWith("/manage/") == false)).ToList();

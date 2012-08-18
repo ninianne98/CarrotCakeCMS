@@ -49,6 +49,24 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
         protected global::System.Web.UI.WebControls.Button btnApply;
         
         /// <summary>
+        /// chkPath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPath;
+        
+        /// <summary>
+        /// ddlFolders control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFolders;
+        
+        /// <summary>
         /// rpFiles control.
         /// </summary>
         /// <remarks>
