@@ -226,16 +226,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public string GetFolderPrefix(string sDirPath) {
-			string sPathPrefix = "/";
-
-			if (!String.IsNullOrEmpty(sDirPath)) {
-				var wwwpath = HttpContext.Current.Server.MapPath("~/");
-				sPathPrefix = sDirPath.Replace(wwwpath, @"\").Replace(@"\", @"/") + "/";
-			}
-
-			return sPathPrefix;
+			return FileDataHelper.MakeWebFolderPath(sDirPath);
 		}
-
 
 		public List<CMSAdminModule> AdminModules {
 			get {
@@ -549,10 +541,10 @@ namespace Carrotware.CMS.Core {
 					DataSet ds = ReadDataSetConfig(CMSConfigFileType.SiteMapping, "~/");
 
 					_sites = (from d in ds.Tables[0].AsEnumerable()
-								select new DynamicSite {
-									DomainName = d.Field<string>("domname"),
-									SiteID = new Guid(d.Field<string>("siteid"))
-								}).ToList();
+							  select new DynamicSite {
+								  DomainName = string.IsNullOrEmpty(d.Field<string>("domname")) ? "" : d.Field<string>("domname").ToLower(),
+								  SiteID = new Guid(d.Field<string>("siteid"))
+							  }).ToList();
 
 					HttpContext.Current.Cache.Insert(keyDynamicSite, _sites, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
@@ -580,8 +572,8 @@ namespace Carrotware.CMS.Core {
 				if ((SiteList.Count > 0) && !bCached) {
 
 					_site = (from ss in SiteList
-								where ss.DomainName == DomainName
-								select ss).FirstOrDefault();
+							 where ss.DomainName == DomainName
+							 select ss).FirstOrDefault();
 
 					HttpContext.Current.Cache.Insert(ModuleKey, _site, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
