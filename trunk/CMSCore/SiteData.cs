@@ -184,8 +184,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				if (_site == Guid.Empty) {
-					CMSConfigHelper h = new CMSConfigHelper();
-					var s = h.DynSite;
+					var s = CMSConfigHelper.DynSite;
 					if (s != null) {
 						_site = s.SiteID;
 					}

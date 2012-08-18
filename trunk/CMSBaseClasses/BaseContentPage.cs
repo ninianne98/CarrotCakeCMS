@@ -251,7 +251,7 @@ namespace Carrotware.CMS.UI.Base {
 									}
 								} else {
 									Literal lit = new Literal();
-									lit.Text = "MISSING FILE: " + theWidget.ControlPath;
+									lit.Text = "MISSING FILE: " + theWidget.ControlPath + "<br />\r\n";
 									widget = lit;
 								}
 							}
@@ -267,7 +267,7 @@ namespace Carrotware.CMS.UI.Base {
 										widget = o as Control;
 									} else {
 										Literal lit = new Literal();
-										lit.Text = "OOPS: " + theWidget.ControlPath;
+										lit.Text = "OOPS: " + theWidget.ControlPath + "<br />\r\n";
 										widget = lit;
 									}
 								} catch (Exception ex) {
