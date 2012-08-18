@@ -23,7 +23,6 @@ namespace Carrotware.CMS.UI.Admin {
 	public partial class FileBrowser : AdminBasePage {
 		public string sQueryPath = "";
 		public string sQueryMode = "1";
-		protected string sMapPath = "";
 
 		protected FileDataHelper helpFile = new FileDataHelper();
 
@@ -49,11 +48,9 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (string.IsNullOrEmpty(sQueryPath)) {
-				sMapPath = SetSitePath("/");
 				sQueryPath = "/";
 				lnkUp.Visible = false;
 			} else {
-				sMapPath = SetSitePath(sQueryPath);
 				lnkUp.Visible = true;
 			}
 			sQueryPath = sQueryPath.StartsWith(@"/") ? sQueryPath : @"/" + sQueryPath;
@@ -69,8 +66,8 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void LoadLists() {
-			var fldr = helpFile.GetFolders(sMapPath, sQueryPath);
-			var fls = helpFile.GetFiles(sMapPath, sQueryPath);
+			var fldr = helpFile.GetFolders(sQueryPath);
+			var fls = helpFile.GetFiles(sQueryPath);
 
 			rpFolders.DataSource = fldr;
 			rpFolders.DataBind();

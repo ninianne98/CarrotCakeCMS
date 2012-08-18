@@ -109,29 +109,29 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					sDirParent = sDir.Substring(0, sDir.LastIndexOf(@"/"));
 				}
 
-				FileData skinFolder = helpFile.GetFolderInfo(sDirParent, "/", sDir);
+				FileData skinFolder = helpFile.GetFolderInfo("/", sDir);
 
-				skinFolder.FolderPath = FileDataHelper.MakeFilePathUniform("/" + sDir.Replace(Server.MapPath("~/"), "") + "/");
+				skinFolder.FolderPath = FileDataHelper.MakeWebFolderPath(sDir);
 
-				fldrWorking = helpFile.SpiderDeepFoldersFD(sDir, "/" + sDir.Replace(Server.MapPath("~/"), "") + "/");
+				fldrWorking = helpFile.SpiderDeepFoldersFD(FileDataHelper.MakeWebFolderPath(sDir));
 
 				fldrWorking.Add(skinFolder);
 
 				try {
 					if (Directory.Exists(Server.MapPath("~/includes"))) {
-						FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("~/includes"));
+						FileData incFolder = helpFile.GetFolderInfo("/", "/includes");
 						fldrWorking.Add(incFolder);
 					}
 					if (Directory.Exists(Server.MapPath("~/js"))) {
-						FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("~/js"));
+						FileData incFolder = helpFile.GetFolderInfo("/", "/js");
 						fldrWorking.Add(incFolder);
 					}
 					if (Directory.Exists(Server.MapPath("~/css"))) {
-						FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("~/css"));
+						FileData incFolder = helpFile.GetFolderInfo("/", "/css");
 						fldrWorking.Add(incFolder);
 					}
 					//if (Directory.Exists(Server.MapPath("~/files"))) {
-					//    FileData incFolder = helpFile.GetFolderInfo(Server.MapPath("~/"), "/", Server.MapPath("files"));
+					//    FileData incFolder = helpFile.GetFolderInfo("/", Server.MapPath("files"));
 					//    fldrWorking.Add(incFolder);
 					//}
 				} catch (Exception ex) { }
@@ -139,7 +139,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				helpFile.IncludeAllFiletypes();
 
 				foreach (FileData f in fldrWorking) {
-					List<FileData> fls = helpFile.GetFiles(SetSitePath("/" + f.FolderPath), f.FolderPath);
+					List<FileData> fls = helpFile.GetFiles(f.FolderPath);
 
 					flsWorking = (from m in flsWorking.Union(fls).ToList()
 								  join e in lstFileExtensions on m.FileExtension.ToLower() equals e
@@ -153,12 +153,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 		}
 
-		protected string SetSitePath(string sPath) {
-			var wwwpath = Server.MapPath("~/");
-			string _path = wwwpath + "/" + sPath;
-			_path = FileDataHelper.MakeFilePathUniform(_path);
-			return _path;
-		}
+
 
 	}
 }

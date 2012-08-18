@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				rpGallery.DataSource = (from g in db.tblGalleryImages
 										where g.GalleryID == gTheID
 										orderby g.ImageOrder ascending
-										select helpFile.GetFileInfo(Server.MapPath(g.GalleryImage), g.GalleryImage, g.GalleryImage)).ToList();
+										select helpFile.GetFileInfo(g.GalleryImage, g.GalleryImage)).ToList();
 
 				rpGallery.DataBind();
 			}
@@ -104,7 +104,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			rpGallery.DataSource = (from g in lstImages
 									orderby g.Key ascending
-									select helpFile.GetFileInfo(Server.MapPath(g.Value), g.Value, g.Value)).ToList();
+									select helpFile.GetFileInfo(g.Value, g.Value)).ToList();
 			rpGallery.DataBind();
 
 			SetSourceFiles(dtFilter);
@@ -116,10 +116,10 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			List<FileData> flsWorking = new List<FileData>();
 			List<FileData> fldrWorking = new List<FileData>();
 
-			fldrWorking = helpFile.SpiderDeepFoldersFD(Server.MapPath("/"), "/");
+			fldrWorking = helpFile.SpiderDeepFoldersFD("/");
 
 			foreach (var f in fldrWorking) {
-				var fls = helpFile.GetFiles(SetSitePath("/" + f.FolderPath), f.FolderPath);
+				var fls = helpFile.GetFiles(f.FolderPath);
 
 				flsWorking = (from m in flsWorking.Union(fls).ToList()
 							  where m.MimeType.StartsWith("image")
@@ -187,7 +187,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			db.SubmitChanges();
 
 			var QueryStringFile = CreateLink(ModuleName, "id=" + gTheID.ToString());
-			
+
 
 			Response.Redirect(QueryStringFile);
 		}
