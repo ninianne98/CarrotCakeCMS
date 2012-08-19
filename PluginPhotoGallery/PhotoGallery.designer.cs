@@ -419,6 +419,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery
 		
 		private string _GalleryImage;
 		
+		private string _ImageTitle;
+		
 		private string _ImageMetaData;
 		
 		private System.Nullable<System.Guid> _SiteID;
@@ -431,6 +433,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery
     partial void OnGalleryImageMetaIDChanged();
     partial void OnGalleryImageChanging(string value);
     partial void OnGalleryImageChanged();
+    partial void OnImageTitleChanging(string value);
+    partial void OnImageTitleChanged();
     partial void OnImageMetaDataChanging(string value);
     partial void OnImageMetaDataChanged();
     partial void OnSiteIDChanging(System.Nullable<System.Guid> value);
@@ -478,6 +482,26 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery
 					this._GalleryImage = value;
 					this.SendPropertyChanged("GalleryImage");
 					this.OnGalleryImageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageTitle", DbType="VarChar(256)")]
+		public string ImageTitle
+		{
+			get
+			{
+				return this._ImageTitle;
+			}
+			set
+			{
+				if ((this._ImageTitle != value))
+				{
+					this.OnImageTitleChanging(value);
+					this.SendPropertyChanging();
+					this._ImageTitle = value;
+					this.SendPropertyChanged("ImageTitle");
+					this.OnImageTitleChanged();
 				}
 			}
 		}

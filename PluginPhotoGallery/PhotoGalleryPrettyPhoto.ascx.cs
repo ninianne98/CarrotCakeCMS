@@ -72,6 +72,27 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			return ThumbSize.ToString().ToLower();
 		}
 
+
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstPrettySkins")]
+		public string PrettyPhotoSkin { get; set; }
+
+
+		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
+		public Dictionary<string, string> lstPrettySkins {
+			get {
+
+				Dictionary<string, string> _dict = new Dictionary<string, string>();
+
+				_dict.Add("default", "default");
+				_dict.Add("light_square", "light square");
+				_dict.Add("light_rounded", "light rounded");
+				_dict.Add("facebook", "facebook");
+				_dict.Add("dark_square", "dark square");
+				_dict.Add("dark_rounded", "dark rounded");
+				return _dict;
+			}
+		}
+
 		protected void Page_Load(object sender, EventArgs e) {
 
 			if (PublicParmValues.Count > 0) {
@@ -109,6 +130,18 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						ThumbSize = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
+
+				try {
+					string sFoundVal = GetParmValue("PrettyPhotoSkin", "light_rounded");
+
+					if (!string.IsNullOrEmpty(sFoundVal)) {
+						PrettyPhotoSkin = sFoundVal;
+					}
+				} catch (Exception ex) { }
+			}
+
+			if (string.IsNullOrEmpty(PrettyPhotoSkin)) {
+				PrettyPhotoSkin = "light_rounded";
 			}
 
 			var gal = (from g in db.tblGalleries

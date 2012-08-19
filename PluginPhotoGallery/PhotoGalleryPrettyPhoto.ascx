@@ -3,7 +3,6 @@
 <div style="clear: both;">
 </div>
 <div>
-	<%--<carrot:jquery runat="server" ID="jquery1" />--%>
 	<div runat="server" id="divGallery">
 		<asp:Panel ID="pnlGalleryHead" runat="server">
 			<h2>
@@ -23,7 +22,7 @@
 			<asp:Panel ID="pnlScript" runat="server">
 				<script type="text/javascript">
 			function InitPrettyPhoto<%=pnlGallery.ClientID %>() {
-				$("#<%=pnlGallery.ClientID %> a[rel^='prettyPhoto']").prettyPhoto( { theme:'light_rounded', social_tools : '' } );
+				$("#<%=pnlGallery.ClientID %> a[rel^='prettyPhoto']").prettyPhoto( { theme:'<%=PrettyPhotoSkin %>', social_tools : '' } );
 			}
 
 			$(document).ready(function() {

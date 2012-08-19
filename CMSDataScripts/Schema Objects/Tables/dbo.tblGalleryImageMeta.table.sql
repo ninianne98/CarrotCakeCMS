@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[tblGalleryImageMeta](
 	[GalleryImageMetaID] [uniqueidentifier] NOT NULL,
 	[GalleryImage] [varchar](512) NULL,
+	[ImageTitle] [varchar](256) NULL,
 	[ImageMetaData] [varchar](max) NULL,
 	[SiteID] [uniqueidentifier] NULL,
  CONSTRAINT [tblGalleryImageMeta_PK] PRIMARY KEY CLUSTERED 
