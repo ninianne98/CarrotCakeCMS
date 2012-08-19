@@ -22,7 +22,11 @@
 				<asp:Repeater ID="rpGalleryDetail" runat="server">
 					<ItemTemplate>
 						<div id="<%# CtrlId %>" style="display: none;">
-							<div style="border: solid 0px #000000; padding: 4px; width: <%#GetWindowWidth() %>px; height: 500px; overflow: auto;">
+							<div style="clear: both;">
+								<b>
+									<%# GetImageTitle(Eval("GalleryImage").ToString())%></b>
+							</div>
+							<div style="border: solid 0px #000000; padding: 4px; width: <%# GetWindowWidth() %>px; height: 500px; overflow: auto;">
 								<div class="gallery" style="margin: 0 auto 20px; padding: 0; text-align: center; clear: both;">
 									<a target="_blank" href="<%# String.Format("{0}", Eval("GalleryImage"))  %>" rel="prettyPhoto[<%=this.ClientID %>_2]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
 										<img src="/carrotwarethumb.axd?scale=<%# GetScale()%>&thumb=<%# HttpUtility.UrlEncode(String.Format("{0}", Eval("GalleryImage")))  %>&square=<%# GetThumbSize2() %>"
@@ -39,7 +43,7 @@
 			<asp:Panel ID="pnlScript" runat="server">
 				<script type="text/javascript">
 			function InitPrettyPhoto<%=pnlGallery.ClientID %>() {
-				$("#<%=pnlGallery.ClientID %> a[rel^='prettyPhoto']").prettyPhoto( { theme:'light_rounded', default_width: <%=GetWindowWidth() %>, social_tools : '' } );
+				$("#<%=pnlGallery.ClientID %> a[rel^='prettyPhoto']").prettyPhoto( { theme:'<%=PrettyPhotoSkin %>', default_width: <%=GetWindowWidth() %>, social_tools : '' } );
 			}
 
 			$(document).ready(function() {

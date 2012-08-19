@@ -38,6 +38,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 				if (meta != null) {
 					txtMetaInfo.Text = meta.ImageMetaData;
+					txtTitle.Text = meta.ImageTitle;
 				}
 			}
 
@@ -61,6 +62,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 
 			meta.ImageMetaData = txtMetaInfo.Text;
+			meta.ImageTitle = txtTitle.Text;
 
 			if (bAdd) {
 				db.tblGalleryImageMetas.InsertOnSubmit(meta);

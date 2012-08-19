@@ -95,6 +95,27 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstPrettySkins")]
+		public string PrettyPhotoSkin { get; set; }
+
+
+		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
+		public Dictionary<string, string> lstPrettySkins {
+			get {
+
+				Dictionary<string, string> _dict = new Dictionary<string, string>();
+
+				_dict.Add("default", "default");
+				_dict.Add("light_square", "light square");
+				_dict.Add("light_rounded", "light rounded");
+				_dict.Add("facebook", "facebook");
+				_dict.Add("dark_square", "dark square");
+				_dict.Add("dark_rounded", "dark rounded");
+				return _dict;
+			}
+		}
+
+
 		public string GetScale() {
 			return ScaleImage.ToString().ToLower();
 		}
@@ -112,16 +133,29 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			return WindowWidth.ToString().ToLower();
 		}
 
+		private List<tblGalleryImageMeta> imageData = new List<tblGalleryImageMeta>();
+
 		public string GetImageBody(string sImg) {
-			var imgData = (from g in db.tblGalleryImageMetas
-						   where g.SiteID == SiteData.CurrentSiteID
-							   && g.GalleryImage.ToLower() == sImg.ToLower()
+			var imgData = (from g in imageData
+						   where g.GalleryImage.ToLower() == sImg.ToLower()
 						   select g).FirstOrDefault();
 
 			if (imgData == null) {
 				return "";
 			} else {
 				return imgData.ImageMetaData;
+			}
+		}
+
+		public string GetImageTitle(string sImg) {
+			var imgData = (from g in imageData
+						   where g.GalleryImage.ToLower() == sImg.ToLower()
+						   select g).FirstOrDefault();
+
+			if (imgData == null) {
+				return sImg;
+			} else {
+				return imgData.ImageTitle;
 			}
 		}
 
@@ -178,6 +212,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						ThumbSize2 = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
+
+				try {
+					string sFoundVal = GetParmValue("PrettyPhotoSkin", "light_rounded");
+
+					if (!string.IsNullOrEmpty(sFoundVal)) {
+						PrettyPhotoSkin = sFoundVal;
+					}
+				} catch (Exception ex) { }
+
+			}
+
+			if (string.IsNullOrEmpty(PrettyPhotoSkin)) {
+				PrettyPhotoSkin = "light_rounded";
 			}
 
 			var gal = (from g in db.tblGalleries
@@ -199,6 +246,14 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				iCtrl = 0;
 				rpGallery.DataSource = gallery;
 				rpGallery.DataBind();
+
+				List<string> imgNames = (from g in gallery
+										 select g.GalleryImage.ToLower()).ToList();
+
+				imageData = (from g in db.tblGalleryImageMetas
+							 where g.SiteID == SiteData.CurrentSiteID
+								 && imgNames.Contains(g.GalleryImage.ToLower())
+							 select g).ToList();
 
 				iCtrl = 0;
 				rpGalleryDetail.DataSource = gallery;
