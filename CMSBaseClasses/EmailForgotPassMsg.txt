@@ -1,12 +1,12 @@
-﻿Dear <%%UserName%%>,
+﻿Dear {%%UserName%%},
 
-Your password has been reset to: <%%Password%%>
+Your password has been reset to: {%%Password%%}
 
-		<%%SiteURL%%>/Manage/
+		{%%SiteURL%%}/Manage/
 
 -- CMS Site
 
 
-Powered by Carrotware CMS
+Powered by CarrotCake CMS
 
-Request sent at <%%Time%%>
+Request sent at {%%Time%%}

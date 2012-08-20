@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Net;
 using System.Net.Mail;
-using System.Web.Security;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Carrotware.CMS.UI.Base {
 	public class EmailSender {
-		public ListDictionary Dictionary { get; set; }
+
+		public Dictionary<string, string> ContentPlaceholders { get; set; }
+
 		public string Recepient { get; set; }
 		public Control WebControl { get; set; }
 		public string TemplateFile { get; set; }
@@ -16,46 +20,47 @@ namespace Carrotware.CMS.UI.Base {
 		public string Body { get; set; }
 		public bool IsHTML { get; set; }
 
-		public string SmtpHost { get { return System.Configuration.ConfigurationManager.AppSettings["SmtpHost"].ToString(); } }
-		public string SmtpPassword { get { return System.Configuration.ConfigurationManager.AppSettings["SmtpPassword"].ToString(); } }
-		public string SmtpUsername { get { return System.Configuration.ConfigurationManager.AppSettings["SmtpEmail"].ToString(); } }
+		public static string SmtpSender { get { return ConfigurationManager.AppSettings["CarrotSenderEmail"].ToString(); } }
+		public static string SmtpHost { get { return ConfigurationManager.AppSettings["CarrotSmtpHost"].ToString(); } }
+		public static string SmtpPassword { get { return ConfigurationManager.AppSettings["CarrotSmtpPassword"].ToString(); } }
+		public static string SmtpUsername { get { return ConfigurationManager.AppSettings["CarrotSmtpEmail"].ToString(); } }
 
 		public EmailSender() {
-			Dictionary = new ListDictionary();
+			ContentPlaceholders = new Dictionary<string, string>();
 		}
 
 		public void SendMail() {
-			var mailDefinition = new MailDefinition {
+			MailDefinition mailDefinition = new MailDefinition {
 				BodyFileName = TemplateFile,
 				From = From,
 				Subject = Subject,
 				IsBodyHtml = IsHTML
 			};
 
-			MailMessage mailMessage = null;
-			if (!string.IsNullOrEmpty(Body)) {
-				mailMessage = mailDefinition.CreateMailMessage(Recepient, Dictionary, Body, WebControl);
-			} else {
-				mailMessage = mailDefinition.CreateMailMessage(Recepient, Dictionary, WebControl);
+			if (!string.IsNullOrEmpty(TemplateFile)) {
+				string sFullFilePath = HttpContext.Current.Server.MapPath(TemplateFile);
+				if (File.Exists(sFullFilePath)) {
+					using (StreamReader sr = new StreamReader(sFullFilePath)) {
+						Body = sr.ReadToEnd();
+					}
+				}
 			}
 
-			var client = new SmtpClient();
+			MailMessage mailMessage = null;
+			if (!string.IsNullOrEmpty(Body)) {
+				mailMessage = mailDefinition.CreateMailMessage(Recepient, ContentPlaceholders, Body, WebControl);
+			} else {
+				mailMessage = mailDefinition.CreateMailMessage(Recepient, ContentPlaceholders, WebControl);
+			}
+
+			SmtpClient client = new SmtpClient();
 			if (!string.IsNullOrEmpty(SmtpPassword)) {
-				client.Credentials = new System.Net.NetworkCredential(SmtpUsername, SmtpPassword);
+				client.Credentials = new NetworkCredential(SmtpUsername, SmtpPassword);
+			} else {
+				client.Credentials = new NetworkCredential();
 			}
 			client.Send(mailMessage);
 		}
-
-
-		//public void SendMail(string recepient, Control webControl, string templateFile, string subject, string from, bool html) {
-		//    Recepient = recepient;
-		//    WebControl = webControl;
-		//    TemplateFile = templateFile;
-		//    Subject = subject;
-		//    IsHTML = html;
-		//    From = from;
-		//    SendMail();
-		//}
 
 	}
 }

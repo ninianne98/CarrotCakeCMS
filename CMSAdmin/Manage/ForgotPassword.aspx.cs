@@ -19,12 +19,18 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void cmdReset_Click(object sender, EventArgs e) {
 			ProfileManager p = new ProfileManager();
 			bool bReset = false;
-			try { bReset = p.ResetPassword(txtEmail.Text, this); } catch (Exception ex) { }
+			lblErr.Text = "";
+
+			try { bReset = p.ResetPassword(txtEmail.Text, this); } catch (Exception ex) { lblErr.Text = ex.ToString(); }
 
 			if (bReset) {
 				FailureText.Text = "Email sent with new password.";
 			} else {
-				FailureText.Text = "Invalid username.";
+				if (lblErr.Text.ToLower().IndexOf("system.net.mail.smtpclient") > 0) {
+					FailureText.Text = "Error sending reset message.";
+				} else {
+					FailureText.Text = "Invalid username/email.";
+				}
 			}
 			divLogonLink.Visible = bReset;
 
