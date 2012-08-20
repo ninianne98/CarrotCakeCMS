@@ -1,5 +1,4 @@
-﻿<%@ Page Title="Forgot Password?" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="ForgotPassword.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.ForgotPassword" %>
+﻿<%@ Page Title="Forgot Password?" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="ForgotPassword.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.ForgotPassword" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -32,8 +31,7 @@
 				<br />
 				<asp:Button ID="cmdCancel" runat="server" OnClick="cmdCancel_Click" Text="Cancel" />
 				&nbsp;
-				<asp:Button ID="cmdReset" runat="server" Text="Reset" CommandName="Login" OnClick="cmdReset_Click" ValidationGroup="loginTemplate">
-				</asp:Button>
+				<asp:Button ID="cmdReset" runat="server" Text="Reset" CommandName="Login" OnClick="cmdReset_Click" ValidationGroup="loginTemplate"></asp:Button>
 			</td>
 			<td class="tableback" align="right">
 				&nbsp;
@@ -47,5 +45,8 @@
 				Click <a href="./logon.aspx">here </a>to logon.
 			</p>
 		</div>
+	</div>
+	<div style="display: none;">
+		<asp:Label ID="lblErr" runat="server" Text=""></asp:Label>
 	</div>
 </asp:Content>

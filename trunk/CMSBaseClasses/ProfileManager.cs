@@ -46,7 +46,7 @@ namespace Carrotware.CMS.UI.Base {
 			return Membership.GetUser(username);
 		}
 
-		public bool ResetPassword(string Email, Control X) {
+		public bool ResetPassword(string Email, Control theControl) {
 
 			MembershipUser user = null;
 
@@ -60,10 +60,6 @@ namespace Carrotware.CMS.UI.Base {
 
 			if (user != null) {
 
-				//string MailTemplate = "~/Forgot.txt";
-				string MailTemplate = "";
-
-				//string MailTemplate = "Carrotware.CMS.UI.Base.EmailForgotPassMsg.txt";
 				Assembly _assembly = Assembly.GetExecutingAssembly();
 
 				string sBody = String.Empty;
@@ -71,24 +67,19 @@ namespace Carrotware.CMS.UI.Base {
 					sBody = oTextStream.ReadToEnd();
 				}
 
-				string SenderEmail = "";
-
 				string tmpPassword = user.ResetPassword(); // set to known password
 				string newPassword = GenerateSimplePassword(); // create simpler password
 
-				try { SenderEmail = System.Configuration.ConfigurationManager.AppSettings["FormEmail"].ToString(); } catch { }
-				try { MailTemplate = System.Configuration.ConfigurationManager.AppSettings["FormEmailForgotMessage"].ToString(); } catch { }
-
 				user.ChangePassword(tmpPassword, newPassword); // set to simpler password
 
-				var mailer = new EmailSender {
-					From = SenderEmail,
+				EmailSender mailer = new EmailSender {
+					From = EmailSender.SmtpSender,
 					Recepient = user.Email,
 					Subject = "Password Reset",
-					TemplateFile = MailTemplate,
+					TemplateFile = null,
 					Body = sBody,
 					IsHTML = false,
-					WebControl = X
+					WebControl = theControl
 				};
 
 				string strHTTPHost = "";
@@ -106,10 +97,10 @@ namespace Carrotware.CMS.UI.Base {
 
 				strHTTPHost = strHTTPProto + strHTTPHost.ToLower();
 
-				mailer.Dictionary.Add("<%%UserName%%>", user.UserName);
-				mailer.Dictionary.Add("<%%Password%%>", newPassword);
-				mailer.Dictionary.Add("<%%SiteURL%%>", strHTTPHost);
-				mailer.Dictionary.Add("<%%Time%%>", DateTime.Now.ToString());
+				mailer.ContentPlaceholders.Add("{%%UserName%%}", user.UserName);
+				mailer.ContentPlaceholders.Add("{%%Password%%}", newPassword);
+				mailer.ContentPlaceholders.Add("{%%SiteURL%%}", strHTTPHost);
+				mailer.ContentPlaceholders.Add("{%%Time%%}", DateTime.Now.ToString());
 
 				mailer.SendMail();
 
