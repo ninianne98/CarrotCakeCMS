@@ -43,7 +43,7 @@ namespace Carrotware.CMS.UI.Base {
 		protected string PageTitlePattern {
 			get {
 				string x = "{0} - {1}";
-				try { x = System.Configuration.ConfigurationManager.AppSettings["PageTitlePattern"].ToString(); } catch { }
+				try { x = System.Configuration.ConfigurationManager.AppSettings["CarrotPageTitlePattern"].ToString(); } catch { }
 				return x;
 			}
 		}
