@@ -50,7 +50,7 @@ namespace Carrotware.CMS.Core {
 		public List<string> BlockedTypes {
 			get {
 				if (_FileTypes == null) {
-					try { _FileTypes = System.Configuration.ConfigurationManager.AppSettings["BlockFromFileManager"].ToString(); } catch { }
+					try { _FileTypes = System.Configuration.ConfigurationManager.AppSettings["CarrotBlockFromFileManager"].ToString(); } catch { }
 				}
 				if (_FileTypes == null) {
 					_FileTypes = "aspx;ascx;asmx;asax;config;dll";
