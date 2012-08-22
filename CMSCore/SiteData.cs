@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Configuration;
 using Carrotware.CMS.Data;
+using System.Collections.Specialized;
+using System.Xml;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -177,8 +179,8 @@ namespace Carrotware.CMS.Core {
 			get {
 				Guid _site = Guid.Empty;
 
-				if (System.Configuration.ConfigurationManager.AppSettings["CarrotSiteID"] != null) {
-					_site = new Guid(System.Configuration.ConfigurationManager.AppSettings["CarrotSiteID"].ToString());
+				if (ConfigurationManager.AppSettings["CarrotSiteID"] != null) {
+					_site = new Guid(ConfigurationManager.AppSettings["CarrotSiteID"].ToString());
 				}
 
 				if (_site == Guid.Empty) {
@@ -197,8 +199,8 @@ namespace Carrotware.CMS.Core {
 			get {
 				if (_siteQS == null) {
 					_siteQS = String.Empty;
-					if (System.Configuration.ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"] != null) {
-						_siteQS = System.Configuration.ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"].ToString().ToLower();
+					if (ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"] != null) {
+						_siteQS = ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"].ToString().ToLower();
 					}
 				}
 				return _siteQS;
@@ -226,8 +228,42 @@ namespace Carrotware.CMS.Core {
 
 
 		public static void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {
-			Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
 
+			//parse web.config as XML because of medium trust issues
+
+			XmlDocument xDoc = new XmlDocument();
+			xDoc.Load(HttpContext.Current.Server.MapPath("~/Web.config"));
+
+			XmlElement xmlCustomErrors = xDoc.SelectSingleNode("//system.web/customErrors") as XmlElement;
+
+			if (xmlCustomErrors != null) {
+				string defaultRedirect = "";
+				string çonfigRedirect = "";
+
+				if (xmlCustomErrors.Attributes["mode"] != null && xmlCustomErrors.Attributes["mode"].Value.ToLower() != "off") {
+					if (xmlCustomErrors.Attributes["defaultRedirect"] != null) {
+						defaultRedirect = xmlCustomErrors.Attributes["defaultRedirect"].Value;
+					}
+
+					if (xmlCustomErrors.HasChildNodes) {
+						XmlNode errNode = xmlCustomErrors.SelectSingleNode("/configuration/system.web/customErrors/error[@statusCode='" + sErrorKey + "']");
+						if (errNode != null) {
+							çonfigRedirect = errNode.Attributes["redirect"].Value;
+						}
+					}
+
+					if (!string.IsNullOrEmpty(çonfigRedirect)) {
+						HttpContext.Current.Response.Redirect(çonfigRedirect + "?aspxerrorpath=" + sReqURL);
+					} else {
+						if (!string.IsNullOrEmpty(defaultRedirect)) {
+							HttpContext.Current.Response.Redirect(defaultRedirect + "?aspxerrorpath=" + sReqURL);
+						}
+					}
+				}
+			}
+
+			/*
+			Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
 			CustomErrorsSection section = (CustomErrorsSection)config.GetSection("system.web/customErrors");
 
 			if (section != null) {
@@ -244,6 +280,7 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 			}
+			*/
 		}
 
 		public static string DefaultDirectoryFilename {
