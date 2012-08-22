@@ -12,6 +12,10 @@ namespace Carrotware.CMS.UI.Base {
 
 		public Dictionary<string, string> ContentPlaceholders { get; set; }
 
+		private string CurrentDLLVersion {
+			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+		}
+
 		public string Recepient { get; set; }
 		public Control WebControl { get; set; }
 		public string TemplateFile { get; set; }
@@ -47,11 +51,16 @@ namespace Carrotware.CMS.UI.Base {
 			}
 
 			MailMessage mailMessage = null;
+
 			if (!string.IsNullOrEmpty(Body)) {
 				mailMessage = mailDefinition.CreateMailMessage(Recepient, ContentPlaceholders, Body, WebControl);
 			} else {
 				mailMessage = mailDefinition.CreateMailMessage(Recepient, ContentPlaceholders, WebControl);
 			}
+
+			mailMessage.Priority = MailPriority.Normal;
+			mailMessage.Headers.Add("X-Application", "CarrotCake CMS " + CurrentDLLVersion);
+			mailMessage.Headers.Add("X-Originating-IP", HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"].ToString());
 
 			SmtpClient client = new SmtpClient();
 			if (!string.IsNullOrEmpty(SmtpPassword)) {
