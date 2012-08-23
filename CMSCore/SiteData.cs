@@ -208,6 +208,31 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public static AspNetHostingPermissionLevel CurrentTrustLevel {
+			get {
+
+				foreach (AspNetHostingPermissionLevel trustLevel in
+					new AspNetHostingPermissionLevel[] {
+						AspNetHostingPermissionLevel.Unrestricted,
+						AspNetHostingPermissionLevel.High,
+						AspNetHostingPermissionLevel.Medium,
+						AspNetHostingPermissionLevel.Low,
+						AspNetHostingPermissionLevel.Minimal 
+					  }) {
+					try {
+						new AspNetHostingPermission(trustLevel).Demand();
+					} catch (System.Security.SecurityException) {
+						continue;
+					}
+
+					return trustLevel;
+				}
+
+				return AspNetHostingPermissionLevel.None;
+			}
+		}
+
+
 		public bool BlockIndex { get; set; }
 		public string MainURL { get; set; }
 		public string MetaDescription { get; set; }

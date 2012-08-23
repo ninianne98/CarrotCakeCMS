@@ -76,6 +76,7 @@
     <Compile Include="ContentPage.cs" />
     <Compile Include="ContentPageExport.cs" />
     <Compile Include="ContentPageHelper.cs" />
+    <Compile Include="DatabaseUpdate.cs" />
     <Compile Include="PageWidgetHelper.cs" />
     <Compile Include="SecurityData.cs" />
     <Compile Include="UserEditState.cs" />
@@ -111,6 +112,13 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataScripts\ALTER01.sql" />
+    <EmbeddedResource Include="DataScripts\ALTER02.sql" />
+    <EmbeddedResource Include="DataScripts\ALTER03.sql" />
+    <EmbeddedResource Include="DataScripts\ALTER04.sql" />
+    <EmbeddedResource Include="DataScripts\CREATE01.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,10 +23,17 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
+
 			if (Page.User.Identity.IsAuthenticated) {
+
 				Response.Redirect("./default.aspx");
 			}
 
+			DatabaseUpdate du = new DatabaseUpdate();
+
+			if (du.FailedSQL || du.DoesDBNeedUpdates()) {
+				Response.Redirect("./DatabaseSetup.aspx");
+			}
 
 			litCMSBuildInfo.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
 		}
@@ -35,10 +43,12 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void loginTemplate_LoggedIn(object sender, EventArgs e) {
-			//var user = new Users(loginTemplate.UserName);
+
 			if (Page.User.Identity.IsAuthenticated) {
+
 				Response.Redirect("./default.aspx");
 			}
+
 		}
 
 		protected void loginTemplate_LoggingIn(object sender, LoginCancelEventArgs e) {
