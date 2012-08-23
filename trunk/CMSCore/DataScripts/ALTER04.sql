@@ -417,10 +417,10 @@ GO
 
 declare @DeleteTables bit
 
-set @DeleteTables = 0
+set @DeleteTables = 1
 
 
-IF @DeleteTables  = 1 BEGIN
+IF @DeleteTables = 1 BEGIN
 	
 	SELECT 'delete tables has been set' as msg
 
