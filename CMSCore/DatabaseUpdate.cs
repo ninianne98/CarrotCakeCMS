@@ -103,12 +103,10 @@ namespace Carrotware.CMS.Core {
 		public bool DoDatabaseTablesExist() {
 			if (!FailedSQL) {
 
-				string query = "";
-				DataTable table1 = null;
+				string query = "select distinct table_name from information_schema.columns where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent') ";
+				DataTable table1 = GetData(query);
 
-				query = "select distinct table_name from information_schema.columns  where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count == 4) {
+				if (table1.Rows.Count >= 4) {
 					return true;
 				}
 			}
@@ -122,34 +120,40 @@ namespace Carrotware.CMS.Core {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "select distinct table_name, column_name from information_schema.columns  where table_name in ('tblSites', 'carrot_Sites') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
-					return true;
-				}
-				// update 01
-				query = "select * from information_schema.columns where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
-					return true;
-				}
-				// update 02
-				query = "select * from information_schema.columns where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
-					return true;
-				}
-				// update 03
-				query = "select * from information_schema.columns where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
-					return true;
-				}
-				// update 04
-				query = "select * from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent')";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
-					return true;
+				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_Content', 'carrot_Widget', 'carrot_RootContent') ";
+				DataTable table2 = GetData(query);
+				if (table2.Rows.Count < 1) {
+
+					query = "select distinct table_name, column_name from information_schema.columns where table_name in ('tblSites', 'carrot_Sites') ";
+					table1 = GetData(query);
+					if (table1.Rows.Count < 1) {
+						return true;
+					}
+					// update 01
+					query = "select * from information_schema.columns where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
+					table1 = GetData(query);
+					if (table1.Rows.Count < 1) {
+						return true;
+					}
+					// update 02
+					query = "select * from information_schema.columns where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
+					table1 = GetData(query);
+					if (table1.Rows.Count < 1) {
+						return true;
+					}
+					// update 03
+					query = "select * from information_schema.columns where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
+					table1 = GetData(query);
+					if (table1.Rows.Count < 1) {
+						return true;
+					}
+
+					// update 04
+					query = "select * from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent')";
+					table1 = GetData(query);
+					if (table1.Rows.Count < 1) {
+						return true;
+					}
 				}
 			}
 
