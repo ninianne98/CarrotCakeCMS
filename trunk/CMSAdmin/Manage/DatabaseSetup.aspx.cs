@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Admin {
 			litMsg.Text = "";
 			string ret = "";
 
-			FormsAuthentication.SignOut();
+			//FormsAuthentication.SignOut();
 
 			btnLogin.Visible = false;
 			btnCreate.Visible = false;
@@ -84,7 +84,7 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void btnCreate_Click(object sender, EventArgs e) {
-
+			Response.Redirect("./CreateFirstAdmin.aspx");
 		}
 
 

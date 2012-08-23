@@ -95,6 +95,13 @@
     <Compile Include="Manage\ContentEdit.aspx.designer.cs">
       <DependentUpon>ContentEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\CreateFirstAdmin.aspx.cs">
+      <DependentUpon>CreateFirstAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\CreateFirstAdmin.aspx.designer.cs">
+      <DependentUpon>CreateFirstAdmin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\DatabaseSetup.aspx.cs">
       <DependentUpon>DatabaseSetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -377,6 +384,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="Manage\CreateFirstAdmin.aspx" />
     <Content Include="Manage\DatabaseSetup.aspx" />
     <Content Include="Manage\ModulePopup.aspx" />
     <Content Include="Manage\Images\application_side_expand.png" />
