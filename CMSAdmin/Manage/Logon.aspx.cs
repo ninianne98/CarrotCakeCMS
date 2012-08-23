@@ -24,15 +24,16 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
+			DatabaseUpdate du = new DatabaseUpdate();
+
+			if (du.FailedSQL || du.DoesDBNeedUpdates() || !du.DoUsersExist()) {
+				FormsAuthentication.SignOut();
+				Response.Redirect("./DatabaseSetup.aspx");
+			}
+
 			if (Page.User.Identity.IsAuthenticated) {
 
 				Response.Redirect("./default.aspx");
-			}
-
-			DatabaseUpdate du = new DatabaseUpdate();
-
-			if (du.FailedSQL || du.DoesDBNeedUpdates()) {
-				Response.Redirect("./DatabaseSetup.aspx");
 			}
 
 			litCMSBuildInfo.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
