@@ -24,7 +24,6 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
 			litMsg.Text = "";
-			string ret = "";
 
 			//FormsAuthentication.SignOut();
 
@@ -32,30 +31,27 @@ namespace Carrotware.CMS.UI.Admin {
 			btnCreate.Visible = false;
 
 			if (du.LastSQLError != null) {
-				litMsg.Text += "<hr>" + du.LastSQLError.Message.ToString();
+				HandleResponse(du.LastSQLError.Message.ToString());
 				du.LastSQLError = null;
 			} else {
 
+				bool bUpdate = true;
+
 				if (!du.DoCMSTablesExist()) {
-					ret = du.CreateCMSDatabase();
-					litMsg.Text += "<hr> Create Database <br> " + ret;
+					HandleResponse("Create Database ", du.CreateCMSDatabase());
+					bUpdate = false;
 				} else {
-					litMsg.Text += "<hr> Database already exists ";
+					HandleResponse("Database already exists ");
+					bUpdate = du.DatabaseNeedsUpdate();
 				}
 
-				bool bUpdate = du.DatabaseNeedsUpdate();
-
 				if (bUpdate) {
-					ret = du.AlterStep01();
-					litMsg.Text += "<hr> Update 1 <br> " + ret;
-					ret = du.AlterStep02();
-					litMsg.Text += "<hr> Update 2 <br> " + ret;
-					ret = du.AlterStep03();
-					litMsg.Text += "<hr> Update 3 <br> " + ret;
-					ret = du.AlterStep04();
-					litMsg.Text += "<hr> Update 4 <br> " + ret;
+					HandleResponse("Update 1 ", du.AlterStep01());
+					HandleResponse("Update 2 ", du.AlterStep02());
+					HandleResponse("Update 3 ", du.AlterStep03());
+					HandleResponse("Update 4 ", du.AlterStep04());
 				} else {
-					litMsg.Text += "<hr> Database up-to-date ";
+					HandleResponse("Database up-to-date ");
 				}
 
 				bUpdate = du.DatabaseNeedsUpdate();
@@ -69,15 +65,35 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 			}
 
-
 			if (du.LastSQLError != null) {
-				litMsg.Text += "<hr>" + du.LastSQLError.Message.ToString();
+				HandleResponse(du.LastSQLError.Message.ToString());
 			}
 
-
-
-			litMsg.Text += "<hr>";
+			HandleResponse("  ");
 		}
+
+		protected void HandleResponse(string sMsg) {
+			HandleResponse(sMsg, null);
+		}
+
+		protected void HandleResponse(string sMsg, DatabaseUpdateResponse execMessage) {
+			string sResponse = "";
+
+			if (!string.IsNullOrEmpty(sMsg)) {
+
+				sResponse += "<hr /> <b>" + sMsg + " </b><br /> ";
+
+				if (execMessage != null) {
+					sResponse += execMessage.Response + " <br />";
+					if (execMessage.LastException != null && !string.IsNullOrEmpty(execMessage.LastException.Message.ToString())) {
+						sResponse += "<i>" + execMessage.LastException.Message.ToString() + "</i> <br />";
+					}
+				}
+			}
+
+			litMsg.Text += sResponse;
+		}
+
 
 		protected void btnLogin_Click(object sender, EventArgs e) {
 			Response.Redirect("./Logon.aspx");
@@ -86,7 +102,6 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void btnCreate_Click(object sender, EventArgs e) {
 			Response.Redirect("./CreateFirstAdmin.aspx");
 		}
-
 
 
 	}

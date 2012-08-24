@@ -30,7 +30,7 @@
 			&nbsp;
 		</h2>
 		<h2>
-			To create your site, visit the <a href="/manage/"> site administration</a>.
+			To manage your site, visit the <a href="/manage/">site administration</a>.
 		</h2>
 	</div>
 	</form>
