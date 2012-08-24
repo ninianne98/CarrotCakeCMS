@@ -309,10 +309,10 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string DefaultDirectoryFilename {
-			get { return "/default.aspx"; }
+			get { return "/default.aspx".ToLower(); }
 		}
 		public static string DefaultTemplateFilename {
-			get { return "/Manage/PlainTemplate.aspx"; }
+			get { return "/Manage/PlainTemplate.aspx".ToLower(); }
 		}
 
 		public static string CurrentScriptName {

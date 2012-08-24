@@ -15,7 +15,7 @@ namespace Carrotware.CMS.UI.Admin {
 	public partial class CreateFirstAdmin : BasePage {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
-			if (du.DoUsersExist()) {
+			if (du.UsersExist()) {
 				createWizard.Visible = false;
 				lblLogon.Visible = true;
 			} else {

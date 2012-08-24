@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Configuration;
+using System.Reflection;
 using System.Web;
 using System.Web.Caching;
-using System.IO;
-using System.Reflection;
 
 
 namespace Carrotware.CMS.Core {
@@ -21,15 +20,15 @@ namespace Carrotware.CMS.Core {
 		public DatabaseUpdate() {
 			LastSQLError = null;
 			SetConn();
-			testDB();
+			TestDatabaseWithQuery();
 		}
 
-		private void testDB() {
+		private void TestDatabaseWithQuery() {
 			LastSQLError = null;
 
-			string query = "select distinct table_name, column_name from information_schema.columns " +
-					" where table_name like 'carrot%' " +
-					" order by table_name";
+			string query = "select table_name, column_name, ordinal_position from information_schema.columns i  " +
+					" where i.table_name like 'carrot%' " +
+					" order by i.table_name, i.ordinal_position, i.column_name";
 
 			DataTable table1 = GetData(query);
 		}
@@ -56,7 +55,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private DataTable GetData(string sQuery) {
+		public DataTable GetData(string sQuery) {
 			DataTable tables = new DataTable();
 			try {
 				SetConn();
@@ -90,7 +89,7 @@ namespace Carrotware.CMS.Core {
 				DataTable table1 = GetData(query);
 
 				if (table1.Rows.Count < 1) {
-					var ex = ProcessQuery("Carrotware.CMS.Core.DataScripts.CREATE01.sql", false);
+					Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.CREATE01.sql", false);
 					return "Created Database \r\n" + ex.Message.ToString();
 				}
 
@@ -100,7 +99,7 @@ namespace Carrotware.CMS.Core {
 			return "Database Access Failed";
 		}
 
-		public bool DoDatabaseTablesExist() {
+		public bool DoCMSTablesExist() {
 			if (!FailedSQL) {
 
 				string query = "select distinct table_name from information_schema.columns where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent') ";
@@ -114,7 +113,60 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
-		public bool DoesDBNeedUpdates() {
+
+		public bool TableExists(string testTableName) {
+			string testQuery = "select distinct table_name, column_name from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
+
+			DataTable table1 = GetData(testQuery);
+
+			if (table1.Rows.Count < 1) {
+				return false;
+			}
+
+			return true;
+		}
+
+		public List<string> GetTableColumns(string testTableName) {
+			List<string> lst = new List<string>();
+
+			string testQuery = "select distinct table_name, column_name from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
+
+			DataTable table1 = GetData(testQuery);
+
+			if (table1.Rows.Count > 1) {
+				lst = (from d in table1.AsEnumerable()
+					   select d.Field<string>("column_name")).ToList();
+			}
+
+			return lst;
+		}
+
+		public string ApplyUpdateIfNotFound(string testQuery, string updateStatement, bool bIg) {
+
+			DataTable table1 = GetData(testQuery);
+
+			if (table1.Rows.Count < 1) {
+				Exception ex = ExecScriptContents(updateStatement, bIg);
+				return "Applied update \r\n" + ex.Message.ToString();
+			}
+
+			return "Did not apply update";
+		}
+
+		public string ApplyUpdateIfFound(string testQuery, string updateStatement, bool bIg) {
+
+			DataTable table1 = GetData(testQuery);
+
+			if (table1.Rows.Count > 0) {
+				Exception ex = ExecScriptContents(updateStatement, bIg);
+				return "Applied update \r\n" + ex.Message.ToString();
+			}
+
+			return "Did not apply update";
+		}
+
+
+		public bool DatabaseNeedsUpdate() {
 			if (!FailedSQL) {
 
 				string query = "";
@@ -122,8 +174,11 @@ namespace Carrotware.CMS.Core {
 
 				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_Content', 'carrot_Widget', 'carrot_RootContent') ";
 				DataTable table2 = GetData(query);
-				if (table2.Rows.Count < 1) {
+				if (table2.Rows.Count >= 4) {
+					return false;
+				}
 
+				if (table2.Rows.Count < 1) {
 					query = "select distinct table_name, column_name from information_schema.columns where table_name in ('tblSites', 'carrot_Sites') ";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
@@ -147,20 +202,20 @@ namespace Carrotware.CMS.Core {
 					if (table1.Rows.Count < 1) {
 						return true;
 					}
-
 					// update 04
 					query = "select * from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent')";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
 						return true;
 					}
+
 				}
 			}
 
 			return false;
 		}
 
-		public bool DoUsersExist() {
+		public bool UsersExist() {
 			if (!FailedSQL) {
 				string query = "select top 5 * from [aspnet_Membership]";
 				DataTable table1 = GetData(query);
@@ -179,7 +234,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				var ex = ProcessQuery("Carrotware.CMS.Core.DataScripts.ALTER01.sql", false);
+				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER01.sql", false);
 				return "Created MetaKeyword and MetaDescription \r\n" + ex.Message.ToString();
 			}
 
@@ -192,7 +247,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				var ex = ProcessQuery("Carrotware.CMS.Core.DataScripts.ALTER02.sql", false);
+				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER02.sql", false);
 				return "Widget Schema Updated \r\n" + ex.Message.ToString();
 			}
 
@@ -205,7 +260,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				var ex = ProcessQuery("Carrotware.CMS.Core.DataScripts.ALTER03.sql", false);
+				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER03.sql", false);
 				return "RootContent.CreateDate Updated \r\n" + ex.Message.ToString();
 			}
 
@@ -218,26 +273,35 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				var ex = ProcessQuery("Carrotware.CMS.Core.DataScripts.ALTER04.sql", false);
+				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER04.sql", false);
 				return "CMS Table Names Updated \r\n" + ex.Message.ToString();
 			}
 
 			return "CMS Tables Already Renamed";
 		}
 
-		public Exception ProcessQuery(string sFileName, bool bIgnoreErr) {
+		public Exception ExecScriptContents(string sScriptContents, bool bIgnoreErr) {
 			SetConn();
 
-			string sScriptContents = ReadFile(sFileName);
+			Exception response = ExecNonQuery(_ConnectionString, sScriptContents, bIgnoreErr);
 
-			Exception response = RunNonQueryFile(_ConnectionString, sScriptContents, bIgnoreErr);
+			return response;
+
+		}
+
+		private Exception ExecFileContents(string sResourceName, bool bIgnoreErr) {
+			SetConn();
+
+			string sScriptContents = ReadEmbededScript(sResourceName);
+
+			Exception response = ExecScriptContents(sScriptContents, bIgnoreErr);
 
 			return response;
 
 		}
 
 
-		public static string ReadFile(string filePath) {
+		private string ReadEmbededScript(string filePath) {
 
 			string sFile = "";
 
@@ -251,7 +315,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		private static List<string> SplitSQLCmds(string sSQLQuery) {
+		private List<string> SplitSQLCmds(string sSQLQuery) {
 			sSQLQuery = sSQLQuery.Replace("\r\n", "\n");
 			string[] splitcommands = sSQLQuery.Split(new string[] { "GO\n" }, StringSplitOptions.RemoveEmptyEntries);
 			List<string> commandList = new List<string>(splitcommands);
@@ -259,44 +323,48 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		private Exception RunNonQueryFile(string sConnectionString, string sSQLQuery, bool bIgnoreErr) {
+		private Exception ExecNonQuery(string sConnectionString, string sSQLQuery, bool bIgnoreErr) {
 			string sConnString = sConnectionString;
 
 			Exception exc = new Exception("");
 
-			SqlConnection myConnection = new SqlConnection(sConnString);
-			myConnection.Open();
+			using (SqlConnection myConnection = new SqlConnection(sConnString)) {
+				myConnection.Open();
 
-			var cmdLst = SplitSQLCmds(sSQLQuery);
+				var cmdLst = SplitSQLCmds(sSQLQuery);
 
-			if (!bIgnoreErr) {
-				try {
-					foreach (string cmdStr in cmdLst) {
-						SqlCommand myCommand = myConnection.CreateCommand();
-						myCommand.CommandText = cmdStr;
-						myCommand.Connection = myConnection;
-						myCommand.CommandTimeout = 360;
-						int ret = myCommand.ExecuteNonQuery();
+				if (!bIgnoreErr) {
+					try {
+						foreach (string cmdStr in cmdLst) {
+							using (SqlCommand myCommand = myConnection.CreateCommand()) {
+								myCommand.CommandText = cmdStr;
+								myCommand.Connection = myConnection;
+								myCommand.CommandTimeout = 360;
+								int ret = myCommand.ExecuteNonQuery();
+							}
+						}
+					} catch (Exception ex) {
+						exc = ex;
+					} finally {
+						myConnection.Close();
 					}
-				} catch (Exception ex) {
-					exc = ex;
-				} finally {
+				} else {
+					string sErr = "";
+					foreach (string cmdStr in cmdLst) {
+						try {
+							using (SqlCommand myCommand = myConnection.CreateCommand()) {
+								myCommand.CommandText = cmdStr;
+								myCommand.Connection = myConnection;
+								myCommand.CommandTimeout = 360;
+								int ret = myCommand.ExecuteNonQuery();
+							}
+						} catch (Exception ex) {
+							sErr += ex.Message.ToString() + "\n~~~~~~~~~~~~~~~~~~~~~~~~\n";
+						}
+					}
+					exc = new Exception(sErr);
 					myConnection.Close();
 				}
-			} else {
-				string sErr = "";
-				foreach (string cmdStr in cmdLst) {
-					try {
-						SqlCommand myCommand = myConnection.CreateCommand();
-						myCommand.CommandText = cmdStr;
-						myCommand.Connection = myConnection;
-						int ret = myCommand.ExecuteNonQuery();
-					} catch (Exception ex) {
-						sErr += ex.Message.ToString() + "\n~~~~~~~~~~~~~~~~~~~~~~~~\n";
-					}
-				}
-				exc = new Exception(sErr);
-				myConnection.Close();
 			}
 
 			return exc;
