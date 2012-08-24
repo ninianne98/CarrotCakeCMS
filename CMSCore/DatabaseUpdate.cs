@@ -11,6 +11,8 @@ using System.Web.Caching;
 
 
 namespace Carrotware.CMS.Core {
+
+
 	public class DatabaseUpdate {
 
 		public SqlException LastSQLError { get; set; }
@@ -26,7 +28,7 @@ namespace Carrotware.CMS.Core {
 		private void TestDatabaseWithQuery() {
 			LastSQLError = null;
 
-			string query = "select table_name, column_name, ordinal_position from information_schema.columns i  " +
+			string query = "select table_name, column_name, ordinal_position from information_schema.columns i " +
 					" where i.table_name like 'carrot%' " +
 					" order by i.table_name, i.ordinal_position, i.column_name";
 
@@ -81,22 +83,27 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public string CreateCMSDatabase() {
+		public DatabaseUpdateResponse CreateCMSDatabase() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
 			if (!FailedSQL) {
-				string query = "select distinct table_name, column_name from information_schema.columns " +
+				string query = "select * from information_schema.columns " +
 						" where table_name in ('tblSites', 'carrot_Sites') ";
 
 				DataTable table1 = GetData(query);
 
 				if (table1.Rows.Count < 1) {
-					Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.CREATE01.sql", false);
-					return "Created Database \r\n" + ex.Message.ToString();
+					res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.CREATE01.sql", false);
+					res.Response = "Created Database";
+					return res;
 				}
 
-				return "Database Already Created";
+				res.Response = "Database Already Created";
+				return res;
 			}
 
-			return "Database Access Failed";
+			res.Response = "Database Access Failed";
+			return res;
 		}
 
 		public bool DoCMSTablesExist() {
@@ -115,7 +122,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public bool TableExists(string testTableName) {
-			string testQuery = "select distinct table_name, column_name from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
+			string testQuery = "select * from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
 
 			DataTable table1 = GetData(testQuery);
 
@@ -129,40 +136,44 @@ namespace Carrotware.CMS.Core {
 		public List<string> GetTableColumns(string testTableName) {
 			List<string> lst = new List<string>();
 
-			string testQuery = "select distinct table_name, column_name from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
+			string testQuery = "select * from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
 
 			DataTable table1 = GetData(testQuery);
 
 			if (table1.Rows.Count > 1) {
 				lst = (from d in table1.AsEnumerable()
-					   select d.Field<string>("column_name")).ToList();
+					 select d.Field<string>("column_name")).ToList();
 			}
 
 			return lst;
 		}
 
-		public string ApplyUpdateIfNotFound(string testQuery, string updateStatement, bool bIg) {
-
+		public DatabaseUpdateResponse ApplyUpdateIfNotFound(string testQuery, string updateStatement, bool bIg) {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 			DataTable table1 = GetData(testQuery);
 
 			if (table1.Rows.Count < 1) {
-				Exception ex = ExecScriptContents(updateStatement, bIg);
-				return "Applied update \r\n" + ex.Message.ToString();
+				res.LastException = ExecScriptContents(updateStatement, bIg);
+				res.Response = "Applied update";
+				return res;
 			}
 
-			return "Did not apply update";
+			res.Response = "Did not apply update";
+			return res;
 		}
 
-		public string ApplyUpdateIfFound(string testQuery, string updateStatement, bool bIg) {
-
+		public DatabaseUpdateResponse ApplyUpdateIfFound(string testQuery, string updateStatement, bool bIg) {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 			DataTable table1 = GetData(testQuery);
 
 			if (table1.Rows.Count > 0) {
-				Exception ex = ExecScriptContents(updateStatement, bIg);
-				return "Applied update \r\n" + ex.Message.ToString();
+				res.LastException = ExecScriptContents(updateStatement, bIg);
+				res.Response = "Applied update";
+				return res;
 			}
 
-			return "Did not apply update";
+			res.Response = "Did not apply update";
+			return res;
 		}
 
 
@@ -179,7 +190,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				if (table2.Rows.Count < 1) {
-					query = "select distinct table_name, column_name from information_schema.columns where table_name in ('tblSites', 'carrot_Sites') ";
+					query = "select * from information_schema.columns where table_name in ('tblSites', 'carrot_Sites') ";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
 						return true;
@@ -228,56 +239,71 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
-		public string AlterStep01() {
+		public DatabaseUpdateResponse AlterStep01() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
 			string query = "select * from information_schema.columns where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
 
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER01.sql", false);
-				return "Created MetaKeyword and MetaDescription \r\n" + ex.Message.ToString();
+				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER01.sql", false);
+				res.Response = "Created MetaKeyword and MetaDescription";
+				return res;
 			}
 
-			return "MetaKeyword and MetaDescription Already Exists";
+			res.Response = "MetaKeyword and MetaDescription Already Exists";
+			return res;
 		}
 
-		public string AlterStep02() {
+		public DatabaseUpdateResponse AlterStep02() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
 			string query = "select * from information_schema.columns where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
 
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER02.sql", false);
-				return "Widget Schema Updated \r\n" + ex.Message.ToString();
+				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER02.sql", false);
+				res.Response = "Widget Schema Updated";
+				return res;
 			}
 
-			return "Widget Schema Already Exists";
+			res.Response = "Widget Schema Already Exists";
+			return res;
 		}
 
-		public string AlterStep03() {
+		public DatabaseUpdateResponse AlterStep03() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
 			string query = "select * from information_schema.columns where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
 
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER03.sql", false);
-				return "RootContent.CreateDate Updated \r\n" + ex.Message.ToString();
+				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER03.sql", false);
+				res.Response = "RootContent.CreateDate Updated";
 			}
 
-			return "RootContent.CreateDate Already Exists";
+			res.Response = "RootContent.CreateDate Already Exists";
+			return res;
 		}
 
-		public string AlterStep04() {
+		public DatabaseUpdateResponse AlterStep04() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
 			string query = "select * from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent')";
 
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				Exception ex = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER04.sql", false);
-				return "CMS Table Names Updated \r\n" + ex.Message.ToString();
+				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER04.sql", false);
+				res.Response = "CMS Table Names Updated";
+				return res;
 			}
 
-			return "CMS Tables Already Renamed";
+			res.Response = "CMS Tables Already Renamed";
+			return res;
 		}
 
 		public Exception ExecScriptContents(string sScriptContents, bool bIgnoreErr) {
@@ -369,8 +395,17 @@ namespace Carrotware.CMS.Core {
 
 			return exc;
 		}
+	}
 
 
+	public class DatabaseUpdateResponse {
 
+		public Exception LastException { get; set; }
+		public string Response { get; set; }
+
+		public DatabaseUpdateResponse() {
+			LastException = null;
+			Response = "";
+		}
 	}
 }
