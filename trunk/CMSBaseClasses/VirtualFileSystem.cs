@@ -94,33 +94,44 @@ namespace Carrotware.CMS.UI.Base {
 					}
 
 					SiteNav navData = null;
-
-					if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
-						if (bIgnorePublishState) {
-							navData = navHelper.FindHome(SiteData.CurrentSiteID, null);
-						} else {
-							navData = navHelper.FindHome(SiteData.CurrentSiteID, true);
-						}
-						if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
-							sFileRequested = navData.FileName;
-						}
-					}
-
-					var pageName = sFileRequested;
-					if (bIgnorePublishState) {
-						navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, null, pageName);
-					} else {
-						navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, true, pageName);
-					}
-
 					bool bNoHome = false;
-					if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
-						navData = new SiteNav();
-						navData.TemplateFile = SiteData.DefaultDirectoryFilename;
-						navData.EditDate = DateTime.Now.AddMinutes(-10);
-						bNoHome = true;
-					}
 
+					try {
+
+						if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
+							if (bIgnorePublishState) {
+								navData = navHelper.FindHome(SiteData.CurrentSiteID, null);
+							} else {
+								navData = navHelper.FindHome(SiteData.CurrentSiteID, true);
+							}
+							if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
+								sFileRequested = navData.FileName;
+							}
+						}
+
+						string pageName = sFileRequested;
+						if (bIgnorePublishState) {
+							navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, null, pageName);
+						} else {
+							navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, true, pageName);
+						}
+
+						if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
+							navData = SiteNavHelper.GetEmptyHome();
+							bNoHome = true;
+						}
+
+					} catch (Exception ex) {
+						//assumption is database is probably empty / needs updating, so trigger the under construction view
+						if (ex is System.Data.SqlClient.SqlException
+							 && (ex.Message.ToLower().Contains("invalid object name")
+									|| ex.Message.ToLower().Contains("no process is on the other end of the pipe"))) {
+							if (navData == null) {
+								navData = SiteNavHelper.GetEmptyHome();
+								bNoHome = true;
+							}
+						}
+					}
 
 					if (navData != null) {
 						if (!sFileRequested.ToLower().Contains(navData.TemplateFile.ToLower()) || bNoHome) {

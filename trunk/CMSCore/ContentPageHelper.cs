@@ -106,9 +106,9 @@ namespace Carrotware.CMS.Core {
 		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID) {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == rootContentID
-								   && r.SiteID == siteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == rootContentID
+									   && r.SiteID == siteID
+									 select r).FirstOrDefault();
 
 			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
 			rc.Heartbeat_UserId = null;
@@ -118,9 +118,9 @@ namespace Carrotware.CMS.Core {
 		public bool RecordHeartbeatLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == rootContentID
-								 && r.SiteID == siteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == rootContentID
+									 && r.SiteID == siteID
+									 select r).FirstOrDefault();
 
 			if (rc != null) {
 				rc.Heartbeat_UserId = currentUserID;
@@ -135,9 +135,9 @@ namespace Carrotware.CMS.Core {
 		public bool IsPageLocked(Guid rootContentID) {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == rootContentID
-								 && r.SiteID == SiteData.CurrentSiteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == rootContentID
+									 && r.SiteID == SiteData.CurrentSiteID
+									 select r).FirstOrDefault();
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
@@ -156,9 +156,9 @@ namespace Carrotware.CMS.Core {
 		public bool IsPageLocked(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == rootContentID
-								 && r.SiteID == siteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == rootContentID
+									 && r.SiteID == siteID
+									 select r).FirstOrDefault();
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
@@ -177,9 +177,9 @@ namespace Carrotware.CMS.Core {
 		public bool IsPageLocked(Guid rootContentID, Guid siteID) {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == rootContentID
-								 && r.SiteID == siteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == rootContentID
+									 && r.SiteID == siteID
+									 select r).FirstOrDefault();
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
@@ -214,9 +214,9 @@ namespace Carrotware.CMS.Core {
 		public Guid GetCurrentEditUser(Guid rootContentID, Guid siteID) {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == rootContentID
-								 && r.SiteID == siteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == rootContentID
+									 && r.SiteID == siteID
+									 select r).FirstOrDefault();
 
 			if (rc != null) {
 				return (Guid)rc.Heartbeat_UserId;
@@ -362,12 +362,12 @@ namespace Carrotware.CMS.Core {
 		public void RemoveVersions(Guid siteID, List<Guid> lstDel) {
 
 			List<carrot_Content> lstContent = (from ct in db.carrot_Contents
-										   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										   orderby ct.EditDate descending
-										   where r.SiteID == siteID
-											&& lstDel.Contains(ct.ContentID)
-											&& ct.IsLatestVersion != true
-										   select ct).ToList();
+											   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+											   orderby ct.EditDate descending
+											   where r.SiteID == siteID
+												&& lstDel.Contains(ct.ContentID)
+												&& ct.IsLatestVersion != true
+											   select ct).ToList();
 
 			if (lstContent.Count > 0) {
 				foreach (carrot_Content c in lstContent) {
@@ -381,11 +381,11 @@ namespace Carrotware.CMS.Core {
 		public void BulkUpdateTemplate(Guid siteID, List<Guid> lstUpd, string sTemplateFile) {
 
 			List<carrot_Content> lstContent = (from ct in db.carrot_Contents
-										   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										   where r.SiteID == siteID
-											&& lstUpd.Contains(r.Root_ContentID)
-											&& ct.IsLatestVersion == true
-										   select ct).ToList();
+											   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+											   where r.SiteID == siteID
+												&& lstUpd.Contains(r.Root_ContentID)
+												&& ct.IsLatestVersion == true
+											   select ct).ToList();
 
 			if (lstContent.Count > 0) {
 				foreach (carrot_Content c in lstContent) {
@@ -515,9 +515,9 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 
 			carrot_RootContent p = (from r in db.carrot_RootContents
-								where r.SiteID == siteID
-									   && r.FileName.ToLower() == sParentID.ToLower()
-								select r).FirstOrDefault();
+									where r.SiteID == siteID
+										   && r.FileName.ToLower() == sParentID.ToLower()
+									select r).FirstOrDefault();
 
 			List<SiteNav> lstContent = (from ct in db.carrot_Contents
 										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
@@ -534,11 +534,11 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, string sPage, bool bActiveOnly) {
 
 			carrot_Content c = (from ct in db.carrot_Contents
-							join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-							where r.SiteID == siteID
-								   && r.FileName.ToLower() == sPage.ToLower()
-								   && ct.IsLatestVersion == true
-							select ct).FirstOrDefault();
+								join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+								where r.SiteID == siteID
+									   && r.FileName.ToLower() == sPage.ToLower()
+									   && ct.IsLatestVersion == true
+								select ct).FirstOrDefault();
 
 			List<SiteNav> lstContent = (from ct in db.carrot_Contents
 										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
@@ -608,6 +608,20 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public static SiteNav GetEmptyHome() {
+			SiteNav navData = new SiteNav();
+			navData.TemplateFile = SiteData.DefaultDirectoryFilename;
+			navData.FileName = SiteData.DefaultDirectoryFilename;
+			navData.NavFileName = SiteData.DefaultDirectoryFilename;
+			navData.NavMenuText = "NONE";
+			navData.PageHead = "NONE";
+			navData.TitleBar = "NONE";
+			navData.EditDate = DateTime.Now.Date.AddMinutes(-15);
+			navData.CreateDate = DateTime.Now.Date.AddMinutes(-30);
+
+			return navData;
+		}
+
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
 			List<SiteNav> lstContent = (from ct in db.carrot_Contents
 										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
@@ -623,9 +637,9 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, Guid PageID, bool bActiveOnly) {
 
 			carrot_Content c = (from ct in db.carrot_Contents
-							where ct.Root_ContentID == PageID
-							   && ct.IsLatestVersion == true
-							select ct).FirstOrDefault();
+								where ct.Root_ContentID == PageID
+								   && ct.IsLatestVersion == true
+								select ct).FirstOrDefault();
 
 			List<SiteNav> lstContent = (from ct in db.carrot_Contents
 										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
@@ -762,9 +776,9 @@ namespace Carrotware.CMS.Core {
 			sMapText = sMapText.Trim();
 
 			carrot_Content c = (from ct in db.carrot_Contents
-							where ct.Root_ContentID == contentID
-							   && ct.IsLatestVersion == true
-							select ct).FirstOrDefault();
+								where ct.Root_ContentID == contentID
+								   && ct.IsLatestVersion == true
+								select ct).FirstOrDefault();
 
 			int iOrder = Convert.ToInt32(c.NavOrder) + 2;
 
@@ -791,11 +805,11 @@ namespace Carrotware.CMS.Core {
 			foreach (SiteMapOrder m in oMap) {
 
 				carrot_Content c = (from ct in db.carrot_Contents
-								join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-								where r.SiteID == siteID
-									&& r.Root_ContentID == m.Root_ContentID
-									&& ct.IsLatestVersion == true
-								select ct).FirstOrDefault();
+									join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+									where r.SiteID == siteID
+										&& r.Root_ContentID == m.Root_ContentID
+										&& ct.IsLatestVersion == true
+									select ct).FirstOrDefault();
 
 				c.Parent_ContentID = m.Parent_ContentID;
 				c.NavOrder = (m.NavOrder * 10);

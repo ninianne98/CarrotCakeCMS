@@ -36,14 +36,14 @@ namespace Carrotware.CMS.UI.Admin {
 				du.LastSQLError = null;
 			} else {
 
-				if (!du.DoDatabaseTablesExist()) {
+				if (!du.DoCMSTablesExist()) {
 					ret = du.CreateCMSDatabase();
 					litMsg.Text += "<hr> Create Database <br> " + ret;
 				} else {
 					litMsg.Text += "<hr> Database already exists ";
 				}
 
-				bool bUpdate = du.DoesDBNeedUpdates();
+				bool bUpdate = du.DatabaseNeedsUpdate();
 
 				if (bUpdate) {
 					ret = du.AlterStep01();
@@ -58,10 +58,10 @@ namespace Carrotware.CMS.UI.Admin {
 					litMsg.Text += "<hr> Database up-to-date ";
 				}
 
-				bUpdate = du.DoesDBNeedUpdates();
+				bUpdate = du.DatabaseNeedsUpdate();
 
 				if (!bUpdate && du.LastSQLError == null) {
-					if (du.DoUsersExist()) {
+					if (du.UsersExist()) {
 						btnLogin.Visible = true;
 					} else {
 						btnCreate.Visible = true;

@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			DatabaseUpdate du = new DatabaseUpdate();
 
-			if (du.FailedSQL || du.DoesDBNeedUpdates() || !du.DoUsersExist()) {
+			if (du.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist()) {
 				FormsAuthentication.SignOut();
 				Response.Redirect("./DatabaseSetup.aspx");
 			}
