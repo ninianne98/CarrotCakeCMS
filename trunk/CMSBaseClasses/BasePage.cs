@@ -23,7 +23,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Base {
-	public class BasePage : System.Web.UI.Page {
+	public abstract class BasePage : System.Web.UI.Page {
 
 		//protected GridSorting gs = new GridSorting();
 
