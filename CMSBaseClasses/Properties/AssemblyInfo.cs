@@ -7,11 +7,11 @@ using System.Web.UI;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Base")]
+[assembly: AssemblyTitle("CMSBaseClasses")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
-[assembly: AssemblyProduct("Base")]
+[assembly: AssemblyProduct("CMSBaseClasses")]
 [assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Web.UI;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3d5900ae-111a-45be-96b3-d9e4606ca793")]
+[assembly: Guid("9e0f6348-fcab-4e15-9012-124df2932c75")]
 
 // Version information for an assembly consists of the following four values:
 //
