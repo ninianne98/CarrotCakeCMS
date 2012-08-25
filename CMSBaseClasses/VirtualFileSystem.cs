@@ -91,7 +91,6 @@ namespace Carrotware.CMS.UI.Base {
 					}
 
 					SiteNav navData = null;
-					bool bNoHome = false;
 
 					try {
 
@@ -115,7 +114,6 @@ namespace Carrotware.CMS.UI.Base {
 
 						if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
 							navData = SiteNavHelper.GetEmptyHome();
-							bNoHome = true;
 						}
 
 					} catch (Exception ex) {
@@ -123,13 +121,13 @@ namespace Carrotware.CMS.UI.Base {
 						if (DatabaseUpdate.SystemNeedsChecking(ex)) {
 							if (navData == null) {
 								navData = SiteNavHelper.GetEmptyHome();
-								bNoHome = true;
 							}
 						}
 					}
 
 					if (navData != null) {
-						if (!sFileRequested.ToLower().Contains(navData.TemplateFile.ToLower()) || bNoHome) {
+						if (!sFileRequested.ToLower().Contains(navData.TemplateFile.ToLower()) 
+								|| navData.Root_ContentID == Guid.Empty) {
 							string sSelectedTemplate = navData.TemplateFile;
 
 							// selectivly engage the cms helper only if in advance mode
