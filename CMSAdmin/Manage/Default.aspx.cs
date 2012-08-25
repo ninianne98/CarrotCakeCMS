@@ -23,27 +23,37 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.Home);
 
+
 			litID.Text = SiteData.CurrentSiteID.ToString();
+			try {
+				if (!IsPostBack) {
 
-			if (!IsPostBack) {
-				SiteData site = siteHelper.GetCurrentSite();
-				txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
-				txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
+					SiteData site = siteHelper.GetCurrentSite();
+					txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
+					txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
 
-				if (site != null) {
-					txtSiteName.Text = site.SiteName;
-					txtURL.Text = site.MainURL;
-					txtKey.Text = site.MetaKeyword;
-					txtDescription.Text = site.MetaDescription;
-					chkHide.Checked = site.BlockIndex;
+					if (site != null) {
+						txtSiteName.Text = site.SiteName;
+						txtURL.Text = site.MainURL;
+						txtKey.Text = site.MetaKeyword;
+						txtDescription.Text = site.MetaDescription;
+						chkHide.Checked = site.BlockIndex;
+					}
+
+					if (site == null) {
+						btnSave.Text = "Click to Create Site";
+					}
 				}
 
-				if (site == null) {
-					btnSave.Text = "Click to Create Site";
+				siteHelper.CleanUpSerialData();
+
+			} catch (Exception ex) {
+				if (DatabaseUpdate.SystemNeedsChecking(ex)) {
+					Response.Redirect("./DatabaseSetup.aspx");
 				}
+				//if the error is not the kind DatabaseUpdate recomends checking the database for, make sure the error is sent back to the user
+				throw;
 			}
-
-			siteHelper.CleanUpSerialData();
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
@@ -58,7 +68,7 @@ namespace Carrotware.CMS.UI.Admin {
 			if (site != null) {
 				site.SiteName = txtSiteName.Text;
 				site.MainURL = txtURL.Text;
-				site.MetaKeyword = txtKey.Text.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+				site.MetaKeyword = txtKey.Text;
 				site.MetaDescription = txtDescription.Text;
 				site.BlockIndex = chkHide.Checked;
 			}

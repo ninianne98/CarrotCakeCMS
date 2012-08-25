@@ -104,8 +104,11 @@ namespace Carrotware.CMS.Core {
 			}
 
 			s.SiteID = this.SiteID;
-			s.MetaKeyword = this.MetaKeyword;
-			s.MetaDescription = this.MetaDescription;
+
+			FixMeta();
+			s.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+			s.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
+
 			s.SiteName = this.SiteName;
 			s.SiteFolder = this.SiteFolder;
 			s.MainURL = this.MainURL;
@@ -119,6 +122,11 @@ namespace Carrotware.CMS.Core {
 			//System.Web.HttpRuntime.UnloadAppDomain();
 		}
 
+		private void FixMeta() {
+			this.MetaKeyword = string.IsNullOrEmpty(this.MetaKeyword) ? String.Empty : this.MetaKeyword;
+			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? String.Empty : this.MetaDescription;
+
+		}
 
 		public bool VerifyUserHasSiteAccess(Guid siteID, Guid userID) {
 

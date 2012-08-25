@@ -1,10 +1,7 @@
 using System;
-using System.Web.Compilation;
-using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Web;
+using System.Web.Compilation;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
@@ -123,9 +120,7 @@ namespace Carrotware.CMS.UI.Base {
 
 					} catch (Exception ex) {
 						//assumption is database is probably empty / needs updating, so trigger the under construction view
-						if (ex is System.Data.SqlClient.SqlException
-							 && (ex.Message.ToLower().Contains("invalid object name")
-									|| ex.Message.ToLower().Contains("no process is on the other end of the pipe"))) {
+						if (DatabaseUpdate.SystemNeedsChecking(ex)) {
 							if (navData == null) {
 								navData = SiteNavHelper.GetEmptyHome();
 								bNoHome = true;

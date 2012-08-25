@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Caching;
+using System.Text;
 
 
 namespace Carrotware.CMS.Core {
@@ -28,9 +29,9 @@ namespace Carrotware.CMS.Core {
 		private void TestDatabaseWithQuery() {
 			LastSQLError = null;
 
-			string query = "select table_name, column_name, ordinal_position from information_schema.columns i " +
-					" where i.table_name like 'carrot%' " +
-					" order by i.table_name, i.ordinal_position, i.column_name";
+			string query = "select table_name, column_name, ordinal_position from information_schema.columns as isc " +
+					" where isc.table_name like 'carrot%' " +
+					" order by isc.table_name, isc.ordinal_position, isc.column_name";
 
 			DataTable table1 = GetData(query);
 		}
@@ -55,6 +56,25 @@ namespace Carrotware.CMS.Core {
 			set {
 				HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 			}
+		}
+
+		public static bool SystemNeedsChecking(Exception ex) {
+			//assumption is database is probably empty / needs updating, so trigger the under construction view
+
+			if (ex is SqlException && ex != null) {
+				string msg = ex.Message.ToLower();
+				if (ex.InnerException != null) {
+					msg += "\r\n" + ex.InnerException.Message.ToLower();
+				}
+				if (msg.Contains("invalid object name")
+					//|| msg.Contains("no process is on the other end of the pipe")
+					|| msg.Contains("not found")) {
+
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public DataTable GetData(string sQuery) {
@@ -142,7 +162,7 @@ namespace Carrotware.CMS.Core {
 
 			if (table1.Rows.Count > 1) {
 				lst = (from d in table1.AsEnumerable()
-					 select d.Field<string>("column_name")).ToList();
+					   select d.Field<string>("column_name")).ToList();
 			}
 
 			return lst;
@@ -183,10 +203,16 @@ namespace Carrotware.CMS.Core {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_Content', 'carrot_Widget', 'carrot_RootContent') ";
+				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
 				DataTable table2 = GetData(query);
 				if (table2.Rows.Count >= 4) {
 					return false;
+				}
+
+				query = "select distinct table_name from information_schema.columns where table_name in ('tblSites', 'tblRootContent', 'tblContent', 'tblWidget') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count >= 4) {
+					return true;
 				}
 
 				if (table2.Rows.Count < 1) {
@@ -248,11 +274,11 @@ namespace Carrotware.CMS.Core {
 
 			if (table1.Rows.Count < 1) {
 				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER01.sql", false);
-				res.Response = "Created MetaKeyword and MetaDescription";
+				res.Response = "Created Content MetaKeyword and MetaDescription";
 				return res;
 			}
 
-			res.Response = "MetaKeyword and MetaDescription Already Exists";
+			res.Response = "Content MetaKeyword and MetaDescription Already Exists";
 			return res;
 		}
 
@@ -282,10 +308,10 @@ namespace Carrotware.CMS.Core {
 
 			if (table1.Rows.Count < 1) {
 				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER03.sql", false);
-				res.Response = "RootContent.CreateDate Updated";
+				res.Response = "RootContent CreateDate Updated";
 			}
 
-			res.Response = "RootContent.CreateDate Already Exists";
+			res.Response = "RootContent CreateDate Already Exists";
 			return res;
 		}
 
@@ -298,11 +324,11 @@ namespace Carrotware.CMS.Core {
 
 			if (table1.Rows.Count < 1) {
 				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER04.sql", false);
-				res.Response = "CMS Table Names Updated";
+				res.Response = "CMS Table Names Changed";
 				return res;
 			}
 
-			res.Response = "CMS Tables Already Renamed";
+			res.Response = "CMS Tables Already Changed";
 			return res;
 		}
 
@@ -341,7 +367,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		private List<string> SplitSQLCmds(string sSQLQuery) {
+		private List<string> SplitScriptAtGo(string sSQLQuery) {
 			sSQLQuery = sSQLQuery.Replace("\r\n", "\n");
 			string[] splitcommands = sSQLQuery.Split(new string[] { "GO\n" }, StringSplitOptions.RemoveEmptyEntries);
 			List<string> commandList = new List<string>(splitcommands);
@@ -357,7 +383,7 @@ namespace Carrotware.CMS.Core {
 			using (SqlConnection myConnection = new SqlConnection(sConnString)) {
 				myConnection.Open();
 
-				var cmdLst = SplitSQLCmds(sSQLQuery);
+				List<string> cmdLst = SplitScriptAtGo(sSQLQuery);
 
 				if (!bIgnoreErr) {
 					try {
@@ -375,7 +401,7 @@ namespace Carrotware.CMS.Core {
 						myConnection.Close();
 					}
 				} else {
-					string sErr = "";
+					StringBuilder sb = new StringBuilder();
 					foreach (string cmdStr in cmdLst) {
 						try {
 							using (SqlCommand myCommand = myConnection.CreateCommand()) {
@@ -385,10 +411,10 @@ namespace Carrotware.CMS.Core {
 								int ret = myCommand.ExecuteNonQuery();
 							}
 						} catch (Exception ex) {
-							sErr += ex.Message.ToString() + "\n~~~~~~~~~~~~~~~~~~~~~~~~\n";
+							sb.Append(ex.Message.ToString() + "\n~~~~~~~~~~~~~~~~~~~~~~~~\n");
 						}
 					}
-					exc = new Exception(sErr);
+					exc = new Exception(sb.ToString());
 					myConnection.Close();
 				}
 			}
