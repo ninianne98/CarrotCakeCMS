@@ -127,7 +127,7 @@ namespace Carrotware.CMS.UI.Admin {
 					chkDraft.Visible = !bLocked;
 
 					if (bLocked && pageContents.Heartbeat_UserId != null) {
-						var usr = ProfileManager.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
+						var usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
 						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.";
 					}
 

@@ -6,7 +6,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Reflection;
 
-namespace Carrotware.CMS.UI.Base {
+namespace Carrotware.CMS.Core {
 
 	public class ProfileManager {
 
@@ -33,19 +33,6 @@ namespace Carrotware.CMS.UI.Base {
 			Load(username, anon);
 		}
 
-		public static MembershipUser GetCurrentUser() {
-			string username = HttpContext.Current.User.Identity.Name;
-			return Membership.GetUser(username);
-		}
-
-		public static MembershipUser GetUserByGuid(Guid providerUserKey) {
-			return Membership.GetUser(providerUserKey);
-		}
-
-		public static MembershipUser GetUserByName(string username) {
-			return Membership.GetUser(username);
-		}
-
 		public bool ResetPassword(string Email, Control theControl) {
 
 			MembershipUser user = null;
@@ -63,7 +50,7 @@ namespace Carrotware.CMS.UI.Base {
 				Assembly _assembly = Assembly.GetExecutingAssembly();
 
 				string sBody = String.Empty;
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Base.EmailForgotPassMsg.txt"))) {
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.EmailForgotPassMsg.txt"))) {
 					sBody = oTextStream.ReadToEnd();
 				}
 
@@ -73,9 +60,8 @@ namespace Carrotware.CMS.UI.Base {
 				user.ChangePassword(tmpPassword, newPassword); // set to simpler password
 
 				EmailSender mailer = new EmailSender {
-					From = EmailSender.SmtpSender,
 					Recepient = user.Email,
-					Subject = "Password Reset",
+					MailSubject = "Password Reset",
 					TemplateFile = null,
 					Body = sBody,
 					IsHTML = false,

@@ -279,9 +279,9 @@ namespace Carrotware.CMS.Core {
 					}
 
 					if (xmlCustomErrors.HasChildNodes) {
-						XmlNode errNode = xmlCustomErrors.SelectSingleNode("/configuration/system.web/customErrors/error[@statusCode='" + sErrorKey + "']");
-						if (errNode != null) {
-							çonfigRedirect = errNode.Attributes["redirect"].Value;
+						XmlNode xmlErrNode = xmlCustomErrors.SelectSingleNode("//system.web/customErrors/error[@statusCode='" + sErrorKey + "']");
+						if (xmlErrNode != null) {
+							çonfigRedirect = xmlErrNode.Attributes["redirect"].Value;
 						}
 					}
 

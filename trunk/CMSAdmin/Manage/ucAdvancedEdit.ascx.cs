@@ -92,7 +92,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				cmsDivEditing.Visible = true;
 
 				if (bLocked && pageContents.Heartbeat_UserId != null) {
-					var usr = ProfileManager.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
+					var usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
 					litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
 						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 				}

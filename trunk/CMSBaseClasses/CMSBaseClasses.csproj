@@ -63,7 +63,6 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EmailForgotPassMsg.txt" />
     <Content Include="GenericPage.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -88,9 +87,7 @@
       <DependentUpon>GenericPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="VirtualFileSystem.cs" />
-    <Compile Include="EmailSender.cs" />
     <Compile Include="GridSorting.cs" />
-    <Compile Include="ProfileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
