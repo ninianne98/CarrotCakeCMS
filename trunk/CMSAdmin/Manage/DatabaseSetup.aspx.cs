@@ -96,6 +96,10 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 		protected void btnLogin_Click(object sender, EventArgs e) {
+			if (Page.User.Identity.IsAuthenticated) {
+				Response.Redirect("./default.aspx");
+			}
+
 			Response.Redirect("./Logon.aspx");
 		}
 

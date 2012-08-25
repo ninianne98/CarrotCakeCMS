@@ -32,7 +32,6 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (Page.User.Identity.IsAuthenticated) {
-
 				Response.Redirect("./default.aspx");
 			}
 
@@ -46,7 +45,6 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void loginTemplate_LoggedIn(object sender, EventArgs e) {
 
 			if (Page.User.Identity.IsAuthenticated) {
-
 				Response.Redirect("./default.aspx");
 			}
 
