@@ -610,12 +610,17 @@ namespace Carrotware.CMS.Core {
 
 		public static SiteNav GetEmptyHome() {
 			SiteNav navData = new SiteNav();
+			navData.ContentID = Guid.Empty;
+			navData.Root_ContentID = Guid.Empty;
+			navData.SiteID = Guid.Empty;
 			navData.TemplateFile = SiteData.DefaultDirectoryFilename;
 			navData.FileName = SiteData.DefaultDirectoryFilename;
 			navData.NavFileName = SiteData.DefaultDirectoryFilename;
 			navData.NavMenuText = "NONE";
 			navData.PageHead = "NONE";
 			navData.TitleBar = "NONE";
+			navData.PageActive = false;
+			navData.PageText = "NO PAGE CONTENT";
 			navData.EditDate = DateTime.Now.Date.AddMinutes(-15);
 			navData.CreateDate = DateTime.Now.Date.AddMinutes(-30);
 

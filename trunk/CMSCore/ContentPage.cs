@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 
 namespace Carrotware.CMS.Core {
 
-	public class ContentPage : IDisposable {
+	public class ContentPage : IDisposable, ISiteContent {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
@@ -360,7 +360,7 @@ namespace Carrotware.CMS.Core {
 		#endregion
 	}
 
-	public class SiteNav : IDisposable {
+	public class SiteNav : IDisposable, ISiteContent {
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
 		public SiteNav() { }
@@ -404,6 +404,48 @@ namespace Carrotware.CMS.Core {
 			}
 			return cp;
 		}
+
+
+		public string PageTextSummary {
+			get {
+				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+
+				if (txt.Length > 512) {
+					return txt.Substring(0, 500) + "........";
+				} else {
+					return txt;
+				}
+			}
+		}
+
+		public string PageTextPlainSummary {
+			get {
+				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
+
+				if (txt.Length > 512) {
+					return txt.Substring(0, 500) + "........";
+				} else {
+					return txt;
+				}
+			}
+		}
+
+
+		public string TemplateFolderPath {
+			get {
+				if (!string.IsNullOrEmpty(TemplateFile)) {
+					if (TemplateFile.LastIndexOf("/") >= 2) {
+						return TemplateFile.Substring(0, TemplateFile.LastIndexOf("/") + 1);
+					} else {
+						return "/";
+					}
+				} else {
+					return "/";
+				}
+			}
+		}
+
 
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
