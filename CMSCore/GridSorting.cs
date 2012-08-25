@@ -23,7 +23,8 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Base {
+
+namespace Carrotware.CMS.Core {
 	public class GridSorting {
 
 		public GridSorting() {

@@ -78,6 +78,7 @@
     <Compile Include="ContentPageHelper.cs" />
     <Compile Include="DatabaseUpdate.cs" />
     <Compile Include="EmailSender.cs" />
+    <Compile Include="GridSorting.cs" />
     <Compile Include="ISiteContent.cs" />
     <Compile Include="PageWidgetHelper.cs" />
     <Compile Include="ProfileManager.cs" />

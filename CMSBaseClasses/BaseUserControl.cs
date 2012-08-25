@@ -24,17 +24,12 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Base {
 	public abstract class BaseUserControl : System.Web.UI.UserControl {
 
-		protected GridSorting gs = new GridSorting();
+		//protected GridSorting gs = new GridSorting();
+
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected PageWidgetHelper widgetHelper = new PageWidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
-
-		protected Guid SiteID {
-			get {
-				return SiteData.CurrentSiteID;
-			}
-		}
 
 		protected string CurrentDLLVersion {
 			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
@@ -44,7 +39,7 @@ namespace Carrotware.CMS.UI.Base {
 		protected List<ContentPage> lstActivePages {
 			get {
 				if (_pages == null) {
-					_pages = pageHelper.GetLatestContentList(SiteID, true);
+					_pages = pageHelper.GetLatestContentList(SiteData.CurrentSiteID, true);
 				}
 				return _pages;
 			}
