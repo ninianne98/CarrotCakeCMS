@@ -77,8 +77,10 @@
     <Compile Include="ContentPageExport.cs" />
     <Compile Include="ContentPageHelper.cs" />
     <Compile Include="DatabaseUpdate.cs" />
+    <Compile Include="EmailSender.cs" />
     <Compile Include="ISiteContent.cs" />
     <Compile Include="PageWidgetHelper.cs" />
+    <Compile Include="ProfileManager.cs" />
     <Compile Include="SecurityData.cs" />
     <Compile Include="UserEditState.cs" />
     <Compile Include="FileData.cs" />
@@ -120,6 +122,9 @@
     <EmbeddedResource Include="DataScripts\ALTER03.sql" />
     <EmbeddedResource Include="DataScripts\ALTER04.sql" />
     <EmbeddedResource Include="DataScripts\CREATE01.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EmailForgotPassMsg.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

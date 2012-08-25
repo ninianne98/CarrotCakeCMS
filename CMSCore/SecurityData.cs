@@ -155,6 +155,14 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static MembershipUser GetUserByGuid(Guid providerUserKey) {
+			return Membership.GetUser(providerUserKey);
+		}
+
+		public static MembershipUser GetUserByName(string username) {
+			return Membership.GetUser(username);
+		}
+
 		public static bool AdvancedEditMode {
 			get {
 				bool _Advanced = false;

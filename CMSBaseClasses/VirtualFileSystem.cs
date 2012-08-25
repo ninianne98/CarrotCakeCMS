@@ -126,7 +126,7 @@ namespace Carrotware.CMS.UI.Base {
 					}
 
 					if (navData != null) {
-						if (!sFileRequested.ToLower().Contains(navData.TemplateFile.ToLower()) 
+						if (!sFileRequested.ToLower().Contains(navData.TemplateFile.ToLower())
 								|| navData.Root_ContentID == Guid.Empty) {
 							string sSelectedTemplate = navData.TemplateFile;
 
@@ -154,7 +154,7 @@ namespace Carrotware.CMS.UI.Base {
 						context.Response.StatusCode = 404;
 						context.Response.AppendHeader("Status", "HTTP/1.1 404 Object Not Found");
 						context.Response.Cache.SetLastModified(DateTime.Today.Date);
-						context.Response.Write("<h2>404 Not Found</h2>");
+						context.Response.Write("<h2>404 Not Found</h2><p>HTTP 404. The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly. </p>");
 						context.Response.End();
 					}
 

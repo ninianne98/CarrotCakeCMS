@@ -35,7 +35,3 @@ using System.Web.UI;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("4.1.*")]
 [assembly: AssemblyFileVersion("4.1.0.0")]
-
-
-
-[assembly: WebResource("Carrotware.CMS.UI.Base.EmailForgotPassMsg.txt", "text/plain")]

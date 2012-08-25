@@ -20,13 +20,16 @@ namespace Carrotware.CMS.UI.Admin {
 			ProfileManager p = new ProfileManager();
 			bool bReset = false;
 			lblErr.Text = "";
+			FailureText.Text = "";
 
 			try { bReset = p.ResetPassword(txtEmail.Text, this); } catch (Exception ex) { lblErr.Text = ex.ToString(); }
+			//bReset = p.ResetPassword(txtEmail.Text, this); 
 
 			if (bReset) {
 				FailureText.Text = "Email sent with new password.";
 			} else {
-				if (lblErr.Text.ToLower().IndexOf("system.net.mail.smtpclient") > 0) {
+				if (lblErr.Text.ToLower().Contains("system.net.mail.smtpclient")
+						|| lblErr.Text.ToLower().Contains("system.security.securityexception")) {
 					FailureText.Text = "Error sending reset message.";
 				} else {
 					FailureText.Text = "Invalid username/email.";
