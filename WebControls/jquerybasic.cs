@@ -20,7 +20,8 @@ namespace Carrotware.Web.UI.Controls {
 			Purple,
 			Blue,
 			Green,
-			LightGreen
+			LightGreen,
+			NotUsed
 		}
 
 
@@ -49,11 +50,11 @@ namespace Carrotware.Web.UI.Controls {
 
 			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
 
-			output.Write("<!-- JQuery --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
+			output.Write("<!-- JQuery 1.7.2 --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
 
 			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-8-21.js");
 
-			output.Write("<!-- JQuery UI --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
+			output.Write("<!-- JQuery UI 1.8.21 --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
 
 			sJQFile = "";
 
@@ -79,7 +80,9 @@ namespace Carrotware.Web.UI.Controls {
 					break;
 			}
 
-			output.Write("<!-- JQuery CSS  " + SelectedSkin.ToString() + " --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
+			if (SelectedSkin != jQueryTheme.NotUsed) {
+				output.Write("<!-- JQuery UI CSS  " + SelectedSkin.ToString() + " --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
+			}
 
 		}
 

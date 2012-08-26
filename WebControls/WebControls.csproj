@@ -238,6 +238,9 @@
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_c7820f_256x240.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="jquery180.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
