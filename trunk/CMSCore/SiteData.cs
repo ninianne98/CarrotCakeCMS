@@ -263,34 +263,36 @@ namespace Carrotware.CMS.Core {
 		public static void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {
 
 			//parse web.config as XML because of medium trust issues
+			HttpContext context = HttpContext.Current;
 
 			XmlDocument xDoc = new XmlDocument();
-			xDoc.Load(HttpContext.Current.Server.MapPath("~/Web.config"));
+			xDoc.Load(context.Server.MapPath("~/Web.config"));
 
 			XmlElement xmlCustomErrors = xDoc.SelectSingleNode("//system.web/customErrors") as XmlElement;
 
 			if (xmlCustomErrors != null) {
-				string defaultRedirect = "";
-				string çonfigRedirect = "";
+				string redirectPage = "";
 
 				if (xmlCustomErrors.Attributes["mode"] != null && xmlCustomErrors.Attributes["mode"].Value.ToLower() != "off") {
 					if (xmlCustomErrors.Attributes["defaultRedirect"] != null) {
-						defaultRedirect = xmlCustomErrors.Attributes["defaultRedirect"].Value;
+						redirectPage = xmlCustomErrors.Attributes["defaultRedirect"].Value;
 					}
 
 					if (xmlCustomErrors.HasChildNodes) {
 						XmlNode xmlErrNode = xmlCustomErrors.SelectSingleNode("//system.web/customErrors/error[@statusCode='" + sErrorKey + "']");
 						if (xmlErrNode != null) {
-							çonfigRedirect = xmlErrNode.Attributes["redirect"].Value;
+							redirectPage = xmlErrNode.Attributes["redirect"].Value;
+						}
+					}
+					string sQS = "";
+					if (context.Request.QueryString != null) {
+						if (!string.IsNullOrEmpty(context.Request.QueryString.ToString())) {
+							sQS = HttpUtility.UrlEncode("?" + context.Request.QueryString.ToString());
 						}
 					}
 
-					if (!string.IsNullOrEmpty(çonfigRedirect)) {
-						HttpContext.Current.Response.Redirect(çonfigRedirect + "?aspxerrorpath=" + sReqURL);
-					} else {
-						if (!string.IsNullOrEmpty(defaultRedirect)) {
-							HttpContext.Current.Response.Redirect(defaultRedirect + "?aspxerrorpath=" + sReqURL);
-						}
+					if (!string.IsNullOrEmpty(redirectPage)) {
+						context.Response.Redirect(redirectPage + "?aspxerrorpath=" + sReqURL + sQS);
 					}
 				}
 			}
@@ -304,11 +306,11 @@ namespace Carrotware.CMS.Core {
 					CustomError configuredError = section.Errors[sErrorKey];
 					if (configuredError != null) {
 						if (!string.IsNullOrEmpty(configuredError.Redirect)) {
-							HttpContext.Current.Response.Redirect(configuredError.Redirect + "?aspxerrorpath=" + sReqURL);
+							context.Response.Redirect(configuredError.Redirect + "?aspxerrorpath=" + sReqURL);
 						}
 					} else {
 						if (!string.IsNullOrEmpty(section.DefaultRedirect)) {
-							HttpContext.Current.Response.Redirect(section.DefaultRedirect + "?aspxerrorpath=" + sReqURL);
+							context.Response.Redirect(section.DefaultRedirect + "?aspxerrorpath=" + sReqURL);
 						}
 					}
 				}
