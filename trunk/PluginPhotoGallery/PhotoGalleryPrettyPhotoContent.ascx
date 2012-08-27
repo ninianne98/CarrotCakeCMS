@@ -14,14 +14,14 @@
 			<div class="prettyphotoGallery  gallery">
 				<asp:Repeater ID="rpGallery" runat="server">
 					<ItemTemplate>
-						<a href="#<%# CtrlId %>" rel="prettyPhoto[<%=this.ClientID %>]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
+						<a href="#<%# CtrlTopId %>" rel="prettyPhoto[<%=this.ClientID %>]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
 							<img src="/carrotwarethumb.axd?scale=<%# GetScale()%>&thumb=<%# HttpUtility.UrlEncode(String.Format("{0}", Eval("GalleryImage")))  %>&square=<%# GetThumbSize() %>"
 								alt="" /></a>
 					</ItemTemplate>
 				</asp:Repeater>
 				<asp:Repeater ID="rpGalleryDetail" runat="server">
 					<ItemTemplate>
-						<div id="<%# CtrlId %>" style="display: none;">
+						<div id="<%# CtrlSubId %>" style="display: none;">
 							<div style="clear: both;">
 								<b>
 									<%# GetImageTitle(Eval("GalleryImage").ToString())%></b>

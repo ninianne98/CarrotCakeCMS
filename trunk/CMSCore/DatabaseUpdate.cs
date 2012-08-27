@@ -368,6 +368,8 @@ namespace Carrotware.CMS.Core {
 
 
 		private List<string> SplitScriptAtGo(string sSQLQuery) {
+			sSQLQuery += "\r\n\r\nGO\r\n\r\n";
+
 			sSQLQuery = sSQLQuery.Replace("\r\n", "\n");
 			string[] splitcommands = sSQLQuery.Split(new string[] { "GO\n" }, StringSplitOptions.RemoveEmptyEntries);
 			List<string> commandList = new List<string>(splitcommands);

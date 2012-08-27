@@ -1,6 +1,3 @@
---  USE [CarrotwareCMS]
-GO
-
 
 /****** Object:  Table [dbo].[tblGallery]    Script Date: 11/11/2011 23:00:56 ******/
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tblGallery]') AND type in (N'U')) BEGIN
@@ -54,6 +51,7 @@ IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo
 END
 
 GO
+
 
 
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_tblGalleryImage_GalleryImageID]') AND type = 'D') BEGIN

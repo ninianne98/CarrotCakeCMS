@@ -37,11 +37,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-		private int iCtrl = 0;
+		private int iCtrl1 = 0;
 
-		protected string CtrlId {
+		protected string CtrlTopId {
 			get {
-				return "Gallery_" + (iCtrl++);
+				return "GalleryContent_" + (iCtrl1++);
+			}
+		}
+
+		private int iCtrl2 = 0;
+
+		protected string CtrlSubId {
+			get {
+				return "GalleryContent_" + (iCtrl2++);
 			}
 		}
 
@@ -49,7 +57,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public int ThumbSize2 { get; set; }
 
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
-		public int ThumbSize { get; set; }
+		public int ThumbSize1 { get; set; }
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstSizes {
@@ -122,7 +130,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 
 		public string GetThumbSize() {
-			return ThumbSize.ToString().ToLower();
+			return ThumbSize1.ToString().ToLower();
 		}
 
 		public string GetThumbSize2() {
@@ -198,10 +206,10 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				} catch (Exception ex) { }
 
 				try {
-					string sFoundVal = GetParmValue("ThumbSize", "150");
+					string sFoundVal = GetParmValue("ThumbSize1", "150");
 
 					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ThumbSize = Convert.ToInt32(sFoundVal);
+						ThumbSize1 = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
 
@@ -232,20 +240,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 							&& g.SiteID == SiteData.CurrentSiteID
 					   select g).FirstOrDefault();
 
+			imageData = new List<tblGalleryImageMeta>();
+
 			if (gal != null) {
 
 				litGalleryName.Text = gal.GalleryTitle;
 				pnlGalleryHead.Visible = ShowHeading;
 
-				var gallery = (from g in db.tblGalleryImages
+				List<tblGalleryImage> gallery = (from g in db.tblGalleryImages
 							   join gg in db.tblGalleries on g.GalleryID equals gg.GalleryID
 							   where g.GalleryID == GalleryID
 								   && gg.SiteID == SiteData.CurrentSiteID
 							   orderby g.ImageOrder ascending
 							   select g).ToList();
-				iCtrl = 0;
-				rpGallery.DataSource = gallery;
-				rpGallery.DataBind();
 
 				List<string> imgNames = (from g in gallery
 										 select g.GalleryImage.ToLower()).ToList();
@@ -254,8 +261,11 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 							 where g.SiteID == SiteData.CurrentSiteID
 								 && imgNames.Contains(g.GalleryImage.ToLower())
 							 select g).ToList();
+	
+				
+				rpGallery.DataSource = gallery;
+				rpGallery.DataBind();
 
-				iCtrl = 0;
 				rpGalleryDetail.DataSource = gallery;
 				rpGalleryDetail.DataBind();
 			}
