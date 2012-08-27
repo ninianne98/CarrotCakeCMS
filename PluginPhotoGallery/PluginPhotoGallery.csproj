@@ -88,6 +88,7 @@
     <EmbeddedResource Include="fancybox\fancybox.css" />
     <EmbeddedResource Include="fancybox\fancybox-p.js" />
     <EmbeddedResource Include="fancybox\mousewheel-p.js" />
+    <Content Include="PhotoGalleryDatabase.ascx" />
     <Content Include="PhotoGalleryPrettyPhotoContent.ascx" />
     <Content Include="fancybox\README.txt" />
     <Content Include="PhotoGalleryAdminMetaData.ascx" />
@@ -144,10 +145,18 @@
     <EmbeddedResource Include="prettyphoto\prettyPhoto.css" />
     <Content Include="PluginPhotoGallery.sln" />
     <Content Include="prettyphoto\README.txt" />
+    <EmbeddedResource Include="scripts\CreateGallery.sql" />
     <Content Include="Web.config" />
     <Content Include="Public.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PhotoGalleryDatabase.ascx.cs">
+      <DependentUpon>PhotoGalleryDatabase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryDatabase.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryDatabase.ascx</DependentUpon>
+    </Compile>
     <Compile Include="PhotoGalleryPrettyPhotoContent.ascx.cs">
       <DependentUpon>PhotoGalleryPrettyPhotoContent.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
