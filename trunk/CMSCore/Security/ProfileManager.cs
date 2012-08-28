@@ -50,7 +50,7 @@ namespace Carrotware.CMS.Core {
 				Assembly _assembly = Assembly.GetExecutingAssembly();
 
 				string sBody = String.Empty;
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.EmailForgotPassMsg.txt"))) {
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.Utilities.EmailForgotPassMsg.txt"))) {
 					sBody = oTextStream.ReadToEnd();
 				}
 

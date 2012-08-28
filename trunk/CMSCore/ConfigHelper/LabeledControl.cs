@@ -16,28 +16,26 @@ using System.Web.UI;
 
 namespace Carrotware.CMS.Core {
 
-	public class KeyedControl {
+	public class LabeledControl {
 
-		public KeyedControl() { }
+		public LabeledControl() { }
 
-
-		public string KeyName { get; set; }
+		public string ControlLabel { get; set; }
 		public Control KeyControl { get; set; }
-
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
 			if (obj == null || GetType() != obj.GetType()) return false;
-			if (obj is KeyedControl) {
-				KeyedControl p = (KeyedControl)obj;
-				return (KeyName == p.KeyName);
+			if (obj is LabeledControl) {
+				LabeledControl p = (LabeledControl)obj;
+				return (ControlLabel.ToLower() == p.ControlLabel.ToLower());
 			} else {
 				return false;
 			}
 		}
 
 		public override int GetHashCode() {
-			return KeyName.GetHashCode() ^ KeyControl.GetHashCode();
+			return ControlLabel.GetHashCode() ^ KeyControl.GetHashCode();
 		}
 
 	}

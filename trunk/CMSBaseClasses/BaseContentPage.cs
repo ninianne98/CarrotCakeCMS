@@ -217,10 +217,10 @@ namespace Carrotware.CMS.UI.Base {
 					CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 					//find each placeholder in use ONCE!
-					List<KeyedControl> lstPlaceholders = (from d in pageWidgets
+					List<LabeledControl> lstPlaceholders = (from d in pageWidgets
 														  where d.Root_ContentID == pageContents.Root_ContentID
-														  select new KeyedControl {
-															  KeyName = d.PlaceholderName,
+														  select new LabeledControl {
+															  ControlLabel = d.PlaceholderName,
 															  KeyControl = FindTheControl(d.PlaceholderName, page)
 														  }).Distinct().ToList();
 
@@ -234,7 +234,7 @@ namespace Carrotware.CMS.UI.Base {
 
 						//WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
 						WidgetContainer plcHolder = (WidgetContainer)(from d in lstPlaceholders
-																	  where d.KeyName == theWidget.PlaceholderName
+																	  where d.ControlLabel == theWidget.PlaceholderName
 																	  select d.KeyControl).FirstOrDefault();
 
 						if (plcHolder != null) {
