@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Base {
 		protected Guid guidContentID = Guid.Empty;
 
 		protected ContentPage pageContents = new ContentPage();
-		protected List<PageWidget> pageWidgets = new List<PageWidget>();
+		protected List<Widget> pageWidgets = new List<Widget>();
 
 
 		protected string PageTitlePattern {
@@ -224,13 +224,13 @@ namespace Carrotware.CMS.UI.Base {
 															  KeyControl = FindTheControl(d.PlaceholderName, page)
 														  }).Distinct().ToList();
 
-					List<PageWidget> lstWidget = (from d in pageWidgets
+					List<Widget> lstWidget = (from d in pageWidgets
 												  where d.Root_ContentID == pageContents.Root_ContentID
 													&& d.IsWidgetActive == true
 													&& d.IsWidgetPendingDelete == false
 												  select d).ToList();
 
-					foreach (PageWidget theWidget in lstWidget) {
+					foreach (Widget theWidget in lstWidget) {
 
 						//WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
 						WidgetContainer plcHolder = (WidgetContainer)(from d in lstPlaceholders

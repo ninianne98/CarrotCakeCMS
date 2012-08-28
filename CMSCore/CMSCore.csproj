@@ -77,16 +77,20 @@
     <Compile Include="ContentPageExport.cs" />
     <Compile Include="ContentPageHelper.cs" />
     <Compile Include="DatabaseUpdate.cs" />
+    <Compile Include="SiteMapOrder.cs" />
+    <Compile Include="SiteMapOrderHelper.cs" />
+    <Compile Include="SiteNav.cs" />
+    <Compile Include="SiteNavHelper.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="GridSorting.cs" />
     <Compile Include="ISiteContent.cs" />
-    <Compile Include="PageWidgetHelper.cs" />
+    <Compile Include="WidgetHelper.cs" />
     <Compile Include="ProfileManager.cs" />
     <Compile Include="SecurityData.cs" />
     <Compile Include="UserEditState.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="KeyedControl.cs" />
-    <Compile Include="PageWidget.cs" />
+    <Compile Include="Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteData.cs" />
   </ItemGroup>

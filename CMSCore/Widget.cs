@@ -17,13 +17,13 @@ using Carrotware.CMS.Data;
 
 namespace Carrotware.CMS.Core {
 
-	public class PageWidget : IDisposable {
+	public class Widget : IDisposable {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public PageWidget() { }
+		public Widget() { }
 
-		public PageWidget(Guid rootWidgetID) {
+		public Widget(Guid rootWidgetID) {
 
 			var w = (from r in db.carrot_WidgetDatas
 					 where r.Root_WidgetID == rootWidgetID
@@ -42,7 +42,7 @@ namespace Carrotware.CMS.Core {
 			SetVals(w);
 		}
 
-		public PageWidget(carrot_WidgetData w) {
+		public Widget(carrot_WidgetData w) {
 			SetVals(w);
 		}
 

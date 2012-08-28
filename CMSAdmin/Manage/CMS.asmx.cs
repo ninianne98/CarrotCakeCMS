@@ -34,7 +34,7 @@ namespace Carrotware.CMS.UI.Admin {
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
 		private ContentPageHelper pageHelper = new ContentPageHelper();
-		private PageWidgetHelper widgetHelper = new PageWidgetHelper();
+		private WidgetHelper widgetHelper = new WidgetHelper();
 
 		private Guid CurrentPageGuid = Guid.Empty;
 		private ContentPage filePage = null;
@@ -79,16 +79,16 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
-		public List<PageWidget> cmsAdminWidget {
+		public List<Widget> cmsAdminWidget {
 			get {
-				List<PageWidget> c = null;
+				List<Widget> c = null;
 				var sXML = GetSerialized(CMSConfigHelper.keyAdminWidget);
-				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
+				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
 				Object genpref = null;
 				using (StringReader stringReader = new StringReader(sXML)) {
 					genpref = xmlSerializer.Deserialize(stringReader);
 				}
-				c = genpref as List<PageWidget>;
+				c = genpref as List<Widget>;
 				return c;
 			}
 			set {
@@ -96,7 +96,7 @@ namespace Carrotware.CMS.UI.Admin {
 					ClearSerialized(CMSConfigHelper.keyAdminWidget);
 				} else {
 					string sXML = "";
-					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
+					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
@@ -482,7 +482,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				var cacheWidget = cmsAdminWidget;
 
-				List<PageWidget> inputWid = new List<PageWidget>();
+				List<Widget> inputWid = new List<Widget>();
 				Dictionary<Guid, int> dictOrder = new Dictionary<Guid, int>();
 				int iW = 0;
 
@@ -494,7 +494,7 @@ namespace Carrotware.CMS.UI.Admin {
 					if (!string.IsNullOrEmpty(arrWidgCell)) {
 						bool bGoodWidget = false;
 						var w = arrWidgCell.Split('\t');
-						var rWidg = new PageWidget();
+						var rWidg = new Widget();
 						if (w[2].ToLower().EndsWith(".ascx") || w[2].ToLower().StartsWith("class:")) {
 							rWidg.ControlPath = w[2];
 							rWidg.Root_WidgetID = Guid.NewGuid();
@@ -749,7 +749,7 @@ namespace Carrotware.CMS.UI.Admin {
 					return "Cannot publish changes, not current editing user.";
 				}
 
-				List<PageWidget> pageWidgets = widgetHelper.GetWidgets(CurrentPageGuid, true);
+				List<Widget> pageWidgets = widgetHelper.GetWidgets(CurrentPageGuid, true);
 
 				if (cmsAdminContent != null) {
 
@@ -761,7 +761,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 					newContent.SavePageEdit();
 
-					cmsAdminWidget = new List<PageWidget>();
+					cmsAdminWidget = new List<Widget>();
 					cmsAdminContent = null;
 				}
 

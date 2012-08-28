@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text;
+using System.Configuration;
 
 /*
 * CarrotCake CMS
@@ -50,7 +51,7 @@ namespace Carrotware.CMS.Core {
 		public List<string> BlockedTypes {
 			get {
 				if (_FileTypes == null) {
-					try { _FileTypes = System.Configuration.ConfigurationManager.AppSettings["CarrotBlockFromFileManager"].ToString(); } catch { }
+					try { _FileTypes = ConfigurationManager.AppSettings["CarrotBlockFromFileManager"].ToString(); } catch { }
 				}
 				if (_FileTypes == null) {
 					_FileTypes = "aspx;ascx;asmx;asax;config;dll";

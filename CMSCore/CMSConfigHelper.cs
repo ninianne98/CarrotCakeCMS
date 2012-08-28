@@ -714,23 +714,23 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public List<PageWidget> cmsAdminWidget {
+		public List<Widget> cmsAdminWidget {
 			get {
-				List<PageWidget> c = null;
+				List<Widget> c = null;
 				var sXML = GetSerialized(keyAdminWidget);
-				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
+				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
 				Object genpref = null;
 				using (StringReader stringReader = new StringReader(sXML)) {
 					genpref = xmlSerializer.Deserialize(stringReader);
 				}
-				c = genpref as List<PageWidget>;
+				c = genpref as List<Widget>;
 				return c;
 			}
 			set {
 				if (value == null) {
 					ClearSerialized(keyAdminWidget);
 				} else {
-					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PageWidget>));
+					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
 					string sXML = "";
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
