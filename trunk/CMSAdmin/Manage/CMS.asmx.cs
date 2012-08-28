@@ -753,34 +753,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 				if (cmsAdminContent != null) {
 
-					ContentPage newContent = new ContentPage();
-					newContent.ContentID = Guid.NewGuid();
-					newContent.Parent_ContentID = cmsAdminContent.Parent_ContentID;
-					newContent.Root_ContentID = cmsAdminContent.Root_ContentID;
+					ContentPage newContent = pageHelper.CopyContentPageToNew(cmsAdminContent);
 
-					newContent.SiteID = SiteData.CurrentSiteID;
-
-					newContent.PageText = ParseEdit(cmsAdminContent.PageText);
-					newContent.LeftPageText = ParseEdit(cmsAdminContent.LeftPageText);
-					newContent.RightPageText = ParseEdit(cmsAdminContent.RightPageText);
-
-					newContent.IsLatestVersion = true;
-					newContent.FileName = cmsAdminContent.FileName;
-					newContent.TitleBar = cmsAdminContent.TitleBar;
-					newContent.NavMenuText = cmsAdminContent.NavMenuText;
-					newContent.NavOrder = cmsAdminContent.NavOrder;
-					newContent.PageHead = cmsAdminContent.PageHead;
-					newContent.PageActive = cmsAdminContent.PageActive;
-					newContent.EditUserId = SecurityData.CurrentUserGuid;
-					newContent.EditDate = DateTime.Now;
-
-					newContent.TemplateFile = cmsAdminContent.TemplateFile;
-					newContent.MetaDescription = cmsAdminContent.MetaDescription;
-					newContent.MetaKeyword = cmsAdminContent.MetaKeyword;
-
-					//foreach (var wd in pageWidgets) {
-					//    wd.Delete();
-					//}
 					foreach (var wd in cmsAdminWidget) {
 						wd.Save();
 					}
