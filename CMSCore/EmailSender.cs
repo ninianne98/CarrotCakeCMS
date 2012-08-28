@@ -38,9 +38,10 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void SendMail() {
+			HttpContext context = HttpContext.Current;
 
 			if (!string.IsNullOrEmpty(TemplateFile)) {
-				string sFullFilePath = HttpContext.Current.Server.MapPath(TemplateFile);
+				string sFullFilePath = context.Server.MapPath(TemplateFile);
 				if (File.Exists(sFullFilePath)) {
 					using (StreamReader sr = new StreamReader(sFullFilePath)) {
 						Body = sr.ReadToEnd();
@@ -55,8 +56,10 @@ namespace Carrotware.CMS.Core {
 			mailSettings.MailPassword = "";
 			mailSettings.ReturnAddress = "";
 
+			//parse web.config as XML because of medium trust issues
+
 			XmlDocument xDoc = new XmlDocument();
-			xDoc.Load(HttpContext.Current.Server.MapPath("~/Web.config"));
+			xDoc.Load(context.Server.MapPath("~/Web.config"));
 
 			XmlElement xmlMailSettings = xDoc.SelectSingleNode("//system.net/mailSettings/smtp") as XmlElement;
 
@@ -78,7 +81,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			if (string.IsNullOrEmpty(mailSettings.MailDomainName)) {
-				mailSettings.MailDomainName = HttpContext.Current.Request.ServerVariables["SERVER_NAME"];
+				mailSettings.MailDomainName = context.Request.ServerVariables["SERVER_NAME"];
 			}
 
 			if (string.IsNullOrEmpty(mailSettings.ReturnAddress)) {
@@ -104,7 +107,7 @@ namespace Carrotware.CMS.Core {
 
 			mailMessage.Priority = MailPriority.Normal;
 			mailMessage.Headers.Add("X-Application", "CarrotCake CMS " + CurrentDLLVersion);
-			mailMessage.Headers.Add("X-Originating-IP", HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"].ToString());
+			mailMessage.Headers.Add("X-Originating-IP", context.Request.ServerVariables["REMOTE_ADDR"].ToString());
 
 			SmtpClient client = new SmtpClient();
 			mailMessage.From = new MailAddress(mailSettings.ReturnAddress);

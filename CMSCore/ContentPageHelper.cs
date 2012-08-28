@@ -324,6 +324,35 @@ namespace Carrotware.CMS.Core {
 			return propertyInfo == null ? false : true;
 		}
 
+		public ContentPage CopyContentPageToNew(ContentPage pageSource) {
+			ContentPage pageNew = new ContentPage();
+			pageNew.SiteID = SiteData.CurrentSiteID;
+			pageNew.ContentID = Guid.NewGuid();
+			pageNew.Parent_ContentID = pageSource.Parent_ContentID;
+			pageNew.Root_ContentID = pageSource.Root_ContentID;
+
+			pageNew.PageText = pageSource.PageText;
+			pageNew.LeftPageText = pageSource.LeftPageText;
+			pageNew.RightPageText = pageSource.RightPageText;
+
+			pageNew.IsLatestVersion = true;
+			pageNew.FileName = pageSource.FileName;
+			pageNew.TitleBar = pageSource.TitleBar;
+			pageNew.NavMenuText = pageSource.NavMenuText;
+			pageNew.NavOrder = pageSource.NavOrder;
+			pageNew.PageHead = pageSource.PageHead;
+			pageNew.PageActive = pageSource.PageActive;
+			pageNew.EditUserId = SecurityData.CurrentUserGuid;
+			pageNew.EditDate = DateTime.Now;
+			pageNew.CreateDate = DateTime.Today.Date.AddDays(-3);
+
+			pageNew.TemplateFile = pageSource.TemplateFile;
+			pageNew.MetaDescription = pageSource.MetaDescription;
+			pageNew.MetaKeyword = pageSource.MetaKeyword;
+
+			return pageNew;
+		}
+
 
 		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootContentID) {
 			List<ContentPage> content = (from ct in db.carrot_Contents
@@ -612,7 +641,7 @@ namespace Carrotware.CMS.Core {
 			SiteNav navData = new SiteNav();
 			navData.ContentID = Guid.Empty;
 			navData.Root_ContentID = Guid.Empty;
-			navData.SiteID = Guid.Empty;
+			navData.SiteID = SiteData.CurrentSiteID;
 			navData.TemplateFile = SiteData.DefaultDirectoryFilename;
 			navData.FileName = SiteData.DefaultDirectoryFilename;
 			navData.NavFileName = SiteData.DefaultDirectoryFilename;
