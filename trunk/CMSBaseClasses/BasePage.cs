@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
-		protected PageWidgetHelper widgetHelper = new PageWidgetHelper();
+		protected WidgetHelper widgetHelper = new WidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 		protected string CurrentDLLVersion {

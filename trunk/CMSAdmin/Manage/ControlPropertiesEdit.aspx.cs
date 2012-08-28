@@ -40,7 +40,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			cmsHelper.OverrideKey(guidPage);
 
-			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
+			Widget w = (from aw in cmsHelper.cmsAdminWidget
 							where aw.Root_WidgetID == guidWidget
 							orderby aw.WidgetOrder
 							select aw).FirstOrDefault();
@@ -250,7 +250,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
-			PageWidget w = (from aw in cmsHelper.cmsAdminWidget
+			Widget w = (from aw in cmsHelper.cmsAdminWidget
 							where aw.Root_WidgetID == guidWidget
 							orderby aw.WidgetOrder
 							select aw).FirstOrDefault();
@@ -300,7 +300,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			w.SaveDefaultControlProperties(props);
 			w.EditDate = DateTime.Now;
 
-			List<PageWidget> lstPageWidgets = cmsHelper.cmsAdminWidget;
+			List<Widget> lstPageWidgets = cmsHelper.cmsAdminWidget;
 			lstPageWidgets.RemoveAll(x => x.Root_WidgetID == guidWidget);
 			lstPageWidgets.Add(w);
 

@@ -17,42 +17,42 @@ using Carrotware.CMS.Data;
 
 namespace Carrotware.CMS.Core {
 
-	public class PageWidgetHelper : IDisposable {
+	public class WidgetHelper : IDisposable {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public PageWidgetHelper() { }
+		public WidgetHelper() { }
 
-		public PageWidget Get(Guid rootWidgetID) {
-			return new PageWidget(rootWidgetID);
+		public Widget Get(Guid rootWidgetID) {
+			return new Widget(rootWidgetID);
 		}
 
-		public List<PageWidget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
+		public List<Widget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
 			var w = (from r in db.carrot_WidgetDatas
 					 join rr in db.carrot_Widgets on r.Root_WidgetID equals rr.Root_WidgetID
 					 orderby rr.WidgetOrder
 					 where rr.Root_ContentID == rootContentID
 						&& r.IsLatestVersion == true
 						&& (rr.WidgetActive == bActiveOnly || bActiveOnly == null)
-					 select new PageWidget(r)).ToList();
+					 select new Widget(r)).ToList();
 
 			return w;
 		}
 
-		public List<PageWidget> GetWidgetVersionHistory(Guid rootWidgetID) {
+		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
 			var w = (from r in db.carrot_WidgetDatas
 					 join rr in db.carrot_Widgets on r.Root_WidgetID equals rr.Root_WidgetID
 					 orderby r.EditDate descending
 					 where rr.Root_WidgetID == rootWidgetID
-					 select new PageWidget(r)).ToList();
+					 select new Widget(r)).ToList();
 
 			return w;
 		}
 
-		public PageWidget GetWidgetVersion(Guid widgetDataID) {
+		public Widget GetWidgetVersion(Guid widgetDataID) {
 			var w = (from r in db.carrot_WidgetDatas
 					 where r.WidgetDataID == widgetDataID
-					 select new PageWidget(r)).FirstOrDefault();
+					 select new Widget(r)).FirstOrDefault();
 
 			return w;
 		}

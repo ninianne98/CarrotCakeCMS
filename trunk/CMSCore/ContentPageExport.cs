@@ -23,30 +23,30 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPageExport() {
 			ThePage = new ContentPage();
-			ThePageWidgets = new List<PageWidget>();
+			ThePageWidgets = new List<Widget>();
 		}
 
 		public ContentPageExport(Guid rootContentID) {
 			ContentPage cp = null;
-			List<PageWidget> widgets = null;
+			List<Widget> widgets = null;
 
 			using (ContentPageHelper cph = new ContentPageHelper()) {
 				cp = cph.GetLatestContent(SiteData.CurrentSiteID, rootContentID);
 			}
 
-			using (PageWidgetHelper pwh = new PageWidgetHelper()) {
+			using (WidgetHelper pwh = new WidgetHelper()) {
 				widgets = pwh.GetWidgets(rootContentID, null);
 			}
 
 			SetVals(cp, widgets);
 		}
 
-		public ContentPageExport(ContentPage cp, List<PageWidget> widgets) {
+		public ContentPageExport(ContentPage cp, List<Widget> widgets) {
 
 			SetVals(cp, widgets);
 		}
 
-		private void SetVals(ContentPage cp, List<PageWidget> widgets) {
+		private void SetVals(ContentPage cp, List<Widget> widgets) {
 
 			NewRootContentID = Guid.NewGuid();
 
@@ -59,7 +59,7 @@ namespace Carrotware.CMS.Core {
 				ThePage.ContentID = ThePage.Root_ContentID;
 			}
 			if (ThePageWidgets == null) {
-				ThePageWidgets = new List<PageWidget>();
+				ThePageWidgets = new List<Widget>();
 			}
 
 			OriginalRootContentID = ThePage.Root_ContentID;
@@ -99,7 +99,7 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPage ThePage { get; set; }
 
-		public List<PageWidget> ThePageWidgets { get; set; }
+		public List<Widget> ThePageWidgets { get; set; }
 
 
 		public static string keyPageImport = "cmsContentPageExport";

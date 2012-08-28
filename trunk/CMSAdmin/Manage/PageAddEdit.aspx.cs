@@ -243,7 +243,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			//if importing, copy in all meta data possible
 			if (guidImportContentID != Guid.Empty) {
-				List<PageWidget> widgets = ContentPageExport.GetSerializedContentPageExport(guidImportContentID).ThePageWidgets;
+				List<Widget> widgets = ContentPageExport.GetSerializedContentPageExport(guidImportContentID).ThePageWidgets;
 
 				foreach (var wd in widgets) {
 					wd.Root_ContentID = pageContents.Root_ContentID;
