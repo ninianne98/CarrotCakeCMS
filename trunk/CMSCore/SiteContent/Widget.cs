@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Data;
+using System.Xml.Serialization;
 using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
@@ -25,19 +27,19 @@ namespace Carrotware.CMS.Core {
 
 		public Widget(Guid rootWidgetID) {
 
-			var w = (from r in db.carrot_WidgetDatas
-					 where r.Root_WidgetID == rootWidgetID
-						&& r.IsLatestVersion == true
-					 select r).FirstOrDefault();
+			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
+								   where r.Root_WidgetID == rootWidgetID
+									  && r.IsLatestVersion == true
+								   select r).FirstOrDefault();
 
 			SetVals(w);
 		}
 
 		public void LoadPageWidgetVersion(Guid widgetDataID) {
 
-			var w = (from r in db.carrot_WidgetDatas
-					 where r.WidgetDataID == widgetDataID
-					 select r).FirstOrDefault();
+			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
+								   where r.WidgetDataID == widgetDataID
+								   select r).FirstOrDefault();
 
 			SetVals(w);
 		}
@@ -48,7 +50,7 @@ namespace Carrotware.CMS.Core {
 
 		private void SetVals(carrot_WidgetData w) {
 
-			var ww = db.carrot_Widgets.Where(x => x.Root_WidgetID == w.Root_WidgetID).FirstOrDefault();
+			carrot_Widget ww = db.carrot_Widgets.Where(x => x.Root_WidgetID == w.Root_WidgetID).FirstOrDefault();
 
 			this.IsWidgetPendingDelete = false;
 
@@ -84,10 +86,10 @@ namespace Carrotware.CMS.Core {
 		public void Save() {
 
 			if (!this.IsWidgetPendingDelete) {
-				var w = (from r in db.carrot_Widgets
-						 orderby r.WidgetOrder
-						 where r.Root_WidgetID == this.Root_WidgetID
-						 select r).FirstOrDefault();
+				carrot_Widget w = (from r in db.carrot_Widgets
+								   orderby r.WidgetOrder
+								   where r.Root_WidgetID == this.Root_WidgetID
+								   select r).FirstOrDefault();
 
 				bool bAdd = false;
 				if (w == null) {
@@ -107,17 +109,17 @@ namespace Carrotware.CMS.Core {
 				w.ControlPath = this.ControlPath;
 				w.WidgetActive = this.IsWidgetActive;
 
-				var wd = new carrot_WidgetData();
+				carrot_WidgetData wd = new carrot_WidgetData();
 				wd.Root_WidgetID = w.Root_WidgetID;
 				wd.WidgetDataID = Guid.NewGuid();
 				wd.IsLatestVersion = true;
 				wd.ControlProperties = this.ControlProperties;
 				wd.EditDate = DateTime.Now;
 
-				var oldWD = (from ww in db.carrot_WidgetDatas
-							 where ww.Root_WidgetID == w.Root_WidgetID
-								&& ww.IsLatestVersion == true
-							 select ww).FirstOrDefault();
+				carrot_WidgetData oldWD = (from ww in db.carrot_WidgetDatas
+										   where ww.Root_WidgetID == w.Root_WidgetID
+											  && ww.IsLatestVersion == true
+										   select ww).FirstOrDefault();
 
 				//only add a new entry if the widget has some sort of change in the data stored.
 				if (oldWD != null) {
@@ -144,9 +146,9 @@ namespace Carrotware.CMS.Core {
 
 
 		public void Delete() {
-			var w = (from r in db.carrot_WidgetDatas
-					 where r.WidgetDataID == this.WidgetDataID
-					 select r).FirstOrDefault();
+			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
+								   where r.WidgetDataID == this.WidgetDataID
+								   select r).FirstOrDefault();
 
 			if (w != null) {
 				db.carrot_WidgetDatas.DeleteOnSubmit(w);
@@ -156,25 +158,25 @@ namespace Carrotware.CMS.Core {
 
 		public void DeleteAll() {
 
-			var w1 = (from r in db.carrot_WidgetDatas
-					  where r.Root_WidgetID == this.Root_WidgetID
-					  select r).ToList();
+			List<carrot_WidgetData> w1 = (from r in db.carrot_WidgetDatas
+										  where r.Root_WidgetID == this.Root_WidgetID
+										  select r).ToList();
 
-			var w2 = (from r in db.carrot_Widgets
-					  where r.Root_WidgetID == this.Root_WidgetID
-					  select r).ToList();
+			List<carrot_Widget> w2 = (from r in db.carrot_Widgets
+									  where r.Root_WidgetID == this.Root_WidgetID
+									  select r).ToList();
 
 			bool bPendingDel = false;
 
 			if (w1 != null) {
-				foreach (var w in w1) {
+				foreach (carrot_WidgetData w in w1) {
 					db.carrot_WidgetDatas.DeleteOnSubmit(w);
 					bPendingDel = true;
 				}
 			}
 
 			if (w2 != null) {
-				foreach (var w in w2) {
+				foreach (carrot_Widget w in w2) {
 					db.carrot_Widgets.DeleteOnSubmit(w);
 					bPendingDel = true;
 				}
@@ -187,9 +189,9 @@ namespace Carrotware.CMS.Core {
 
 
 		public void Disable() {
-			var w = (from r in db.carrot_Widgets
-					 where r.Root_WidgetID == this.Root_WidgetID
-					 select r).FirstOrDefault();
+			carrot_Widget w = (from r in db.carrot_Widgets
+							   where r.Root_WidgetID == this.Root_WidgetID
+							   select r).FirstOrDefault();
 
 			if (w != null) {
 				w.WidgetActive = false;
@@ -199,20 +201,20 @@ namespace Carrotware.CMS.Core {
 
 		public List<WidgetProps> ParseDefaultControlProperties() {
 			List<WidgetProps> props = new List<WidgetProps>();
-			var sProps = this.ControlProperties;
+			string sProps = this.ControlProperties;
 
-			if (!string.IsNullOrEmpty(sProps)) {
-				if (sProps.StartsWith("<?xml")) {
-					System.IO.StringReader stream = new System.IO.StringReader(sProps);
-
-					DataSet ds = new DataSet();
-					ds.ReadXml(stream);
-
-					props = (from d in ds.Tables[0].AsEnumerable()
-							 select new WidgetProps {
-								 KeyName = d.Field<string>("KeyName"),
-								 KeyValue = d.Field<string>("KeyValue")
-							 }).ToList();
+			if (!string.IsNullOrEmpty(sProps) && sProps.StartsWith("<?xml version=\"1.0\"")
+					&& sProps.Contains("<KeyName") && sProps.Contains("<KeyValue")) {
+				if (sProps.Contains("<ArrayOfWidgetProps")) {
+					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WidgetProps>));
+					Object genpref = null;
+					using (StringReader stringReader = new StringReader(sProps)) {
+						genpref = xmlSerializer.Deserialize(stringReader);
+					}
+					props = genpref as List<WidgetProps>;
+				}
+				if (sProps.Contains("<DefaultControlProperties")) {
+					props = ParseDefaultControlPropertiesOld(sProps);
 				}
 			}
 
@@ -222,6 +224,39 @@ namespace Carrotware.CMS.Core {
 
 		public void SaveDefaultControlProperties(List<WidgetProps> props) {
 
+			XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WidgetProps>));
+			string sXML = "";
+			using (StringWriter stringWriter = new StringWriter()) {
+				xmlSerializer.Serialize(stringWriter, props);
+				sXML = stringWriter.ToString();
+			}
+
+			this.ControlProperties = sXML;
+		}
+
+
+		private List<WidgetProps> ParseDefaultControlPropertiesOld(string sProps) {
+			List<WidgetProps> props = new List<WidgetProps>();
+
+			if (!string.IsNullOrEmpty(sProps) && sProps.StartsWith("<?xml")) {
+				DataSet ds = new DataSet();
+				using (StringReader stream = new StringReader(sProps)) {
+					ds.ReadXml(stream);
+				}
+
+				props = (from d in ds.Tables[0].AsEnumerable()
+						 select new WidgetProps {
+							 KeyName = d.Field<string>("KeyName"),
+							 KeyValue = d.Field<string>("KeyValue")
+						 }).ToList();
+			}
+
+			return props;
+		}
+
+
+		private void SaveDefaultControlPropertiesOld(List<WidgetProps> props) {
+
 			DataSet ds = new DataSet("DefaultControlProperties");
 			DataTable dt = new DataTable("ControlProperties");
 			DataColumn dc1 = new DataColumn("KeyName", typeof(System.String));
@@ -230,7 +265,7 @@ namespace Carrotware.CMS.Core {
 			dt.Columns.Add(dc2);
 			ds.Tables.Add(dt);
 
-			foreach (var p in props) {
+			foreach (WidgetProps p in props) {
 				DataRow newRow = ds.Tables["ControlProperties"].NewRow();
 				newRow["KeyName"] = p.KeyName;
 				newRow["KeyValue"] = p.KeyValue;
@@ -240,7 +275,6 @@ namespace Carrotware.CMS.Core {
 			ds.AcceptChanges();
 
 			this.ControlProperties = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>     " + ds.GetXml();
-
 		}
 
 		#region IDisposable Members
