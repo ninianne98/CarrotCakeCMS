@@ -324,6 +324,29 @@ namespace Carrotware.CMS.Core {
 		public static string DefaultTemplateFilename {
 			get { return "/Manage/PlainTemplate.aspx".ToLower(); }
 		}
+		public static string VirtualCMSEditPrefix {
+			get { return "/cms/carrotcake/edit/".ToLower(); }
+		}
+
+		public static bool PageIsVirtualEdit {
+			get {
+				return SiteData.CurrentScriptName.ToLower().StartsWith(SiteData.VirtualCMSEditPrefix);
+			}
+		}
+
+		public static string PreviewTemplateFile {
+			get {
+				string _preview = DefaultTemplateFilename;
+
+				if (HttpContext.Current.Request.QueryString["carrot_templatepreview"] != null) {
+					_preview = HttpContext.Current.Request.QueryString["carrot_templatepreview"].ToString();
+					_preview = CMSConfigHelper.DecodeBase64(_preview);
+				}
+
+				return _preview;
+			}
+		}
+
 
 		public static string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }

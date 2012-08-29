@@ -295,6 +295,21 @@ function cmsSaveGenericContent(val, key) {
 	});
 }
 
+var cmsTemplatePreview = "";
+
+function cmsSetPreviewFileName(tmplName) {
+	cmsTemplatePreview = tmplName;
+}
+
+function cmsPreviewTemplate() {
+	var tmpl = $(cmsTemplateDDL).val();
+
+	tmpl = cmsMakeStringSafe(tmpl);
+
+	cmsLaunchWindowOnly(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
+
+}
+
 var cmsTemplateDDL = "";
 
 function cmsSetTemplateDDL(ddlName) {
@@ -566,7 +581,7 @@ function cmsShowAddChildPage() {
 
 function cmsSortChildren() {
 	//cmsAlertModal("cmsSortChildren");
-	cmsLaunchWindow('/Manage/PageChildSort.aspx?pageid=' + thisPageID);
+	cmsLaunchWindowOnly('/Manage/PageChildSort.aspx?pageid=' + thisPageID);
 }
 
 function cmsShowEditWidgetForm(w, m) {
@@ -817,10 +832,10 @@ function cmsGenericEdit(PageId, WidgetId) {
 
 function cmsLaunchWindow(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="840" height="540" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="910" height="540" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-		css: { width: '840px', height: '540px' },
+		css: { width: '900px', height: '540px' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
@@ -844,6 +859,36 @@ function cmsLoadWindow() {
 	$('#cms-basic-modal-content').modal();
 	return false;
 }
+
+function cmsLaunchWindowOnly(theURL) {
+	var TheURL = theURL;
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="910" height="540" src="' + TheURL + '" /> </div>');
+
+	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		css: { width: '900px', height: '540px' },
+		fadeOut: 1000,
+		timeout: 1200,
+		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+	});
+
+	cmsSaveToolbarPosition();
+	setTimeout("cmsLoadWindowOnly();", 800);
+}
+
+function cmsLoadWindowOnly() {
+	cmsSaveToolbarPosition();
+
+	$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
+		//$.modal.close(); // must call this!
+		setTimeout("$.modal.close();", 800);
+		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+	}
+	});
+
+	$('#cms-basic-modal-content').modal();
+	return false;
+}
+
 
 function cmsDirtyPageRefresh() {
 	cmsSaveToolbarPosition();

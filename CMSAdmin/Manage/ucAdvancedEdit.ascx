@@ -29,7 +29,7 @@
 <script type="text/javascript">
 
 	var cmsWebSvc = "/Manage/CMS.asmx";
-	var cmsThisPage = "<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>"; 
+	var cmsThisPage = "<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>";
 	var cmsThisPageID = "<%=guidContentID.ToString() %>";
 
 	var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";
@@ -53,10 +53,10 @@
 
 	cmsSetServiceParms(cmsWebSvc, cmsThisPage, cmsThisPageID, cmsTimeTick);
 
-	cmsSetTemplateDDL("#<%=ddlTemplate.ClientID%>");
+	cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
 
+	cmsSetPreviewFileName('<%=Carrotware.CMS.Core.SiteData.VirtualCMSEditPrefix + "TemplatePreviw.aspx"%>');
 
-	
 </script>
 <div style="display: none;">
 	<img src="/manage/images/cog.png" alt="" />
@@ -141,10 +141,14 @@
 						<div id="cmsTabIdx-tabs-2">
 							<div class="cmsLeft5px">
 								<p>
+									Templates / Skins<br />
 									<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 									</asp:DropDownList>
-									<br />
-									<input runat="server" id="btnTemplate" type="button" value="Apply Template" onclick="cmsUpdateTemplate();" /><br />
+								</p>
+								<p class="cmsCenter5px">
+									<input runat="server" id="btnTemplate" type="button" value="Apply" onclick="cmsUpdateTemplate();" />
+									&nbsp;&nbsp;&nbsp;
+									<input runat="server" id="btnPreview" type="button" value="Preview" onclick="cmsPreviewTemplate();" />
 									<br />
 								</p>
 								<p>

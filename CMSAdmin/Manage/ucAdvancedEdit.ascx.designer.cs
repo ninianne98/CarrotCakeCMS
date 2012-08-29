@@ -94,6 +94,15 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnTemplate;
         
         /// <summary>
+        /// btnPreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnPreview;
+        
+        /// <summary>
         /// btnEditCoreInfo control.
         /// </summary>
         /// <remarks>

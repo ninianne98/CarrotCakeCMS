@@ -53,19 +53,23 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 
-			carrot_RootContent p = (from r in db.carrot_RootContents
+			carrot_RootContent c = (from r in db.carrot_RootContents
 									where r.SiteID == siteID
 										   && r.FileName.ToLower() == sParentID.ToLower()
 									select r).FirstOrDefault();
+			
+			List<SiteNav> lstContent = new List<SiteNav>();
 
-			List<SiteNav> lstContent = (from ct in db.carrot_Contents
-										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										orderby ct.NavOrder, ct.NavMenuText
-										where r.SiteID == siteID
-											&& ct.Parent_ContentID == p.Root_ContentID
-											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-											&& ct.IsLatestVersion == true
-										select new SiteNav(r, ct)).ToList();
+			if (c != null) {
+				lstContent = (from ct in db.carrot_Contents
+							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+							  orderby ct.NavOrder, ct.NavMenuText
+							  where r.SiteID == siteID
+								  && ct.Parent_ContentID == c.Root_ContentID
+								  && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  && ct.IsLatestVersion == true
+							  select new SiteNav(r, ct)).ToList();
+			}
 
 			return lstContent;
 		}
@@ -79,14 +83,18 @@ namespace Carrotware.CMS.Core {
 									   && ct.IsLatestVersion == true
 								select ct).FirstOrDefault();
 
-			List<SiteNav> lstContent = (from ct in db.carrot_Contents
-										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										orderby ct.NavOrder, ct.NavMenuText
-										where r.SiteID == siteID
-											&& ct.Parent_ContentID == c.Parent_ContentID
-											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-											&& ct.IsLatestVersion == true
-										select new SiteNav(r, ct)).ToList();
+			List<SiteNav> lstContent = new List<SiteNav>();
+
+			if (c != null) {
+				lstContent = (from ct in db.carrot_Contents
+							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+							  orderby ct.NavOrder, ct.NavMenuText
+							  where r.SiteID == siteID
+								  && ct.Parent_ContentID == c.Parent_ContentID
+								  && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  && ct.IsLatestVersion == true
+							  select new SiteNav(r, ct)).ToList();
+			}
 
 			return lstContent;
 		}
@@ -166,6 +174,39 @@ namespace Carrotware.CMS.Core {
 			return navData;
 		}
 
+		public SiteNav GetSamplerView() {
+
+			string sFile1 = "";
+
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.SampleContent1.txt"))) {
+				sFile1 = oTextStream.ReadToEnd();
+			}
+
+			SiteNav navNew = new SiteNav();
+			navNew.Root_ContentID = Guid.NewGuid();
+			navNew.ContentID = navNew.Root_ContentID;
+			navNew.SiteID = SiteData.CurrentSiteID;
+			navNew.Parent_ContentID = null;
+
+			navNew.PageText = "<h2>CENTER</h2>\r\n" + sFile1;
+
+			navNew.TitleBar = "Template Preview - TITLE";
+			navNew.NavMenuText = "Template Preview - NAV";
+			navNew.NavOrder = -1;
+			navNew.PageHead = "Template Preview - HEAD";
+			navNew.PageActive = true;
+			navNew.EditDate = DateTime.Now.AddMinutes(-30);
+			navNew.CreateDate = DateTime.Today.AddDays(-1);
+
+			navNew.TemplateFile = SiteData.PreviewTemplateFile;
+			navNew.FileName = SiteData.VirtualCMSEditPrefix + "TemplatePreviw.aspx";
+			navNew.NavFileName = navNew.FileName;
+
+			return navNew;
+		}
+
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
 			List<SiteNav> lstContent = (from ct in db.carrot_Contents
 										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
@@ -185,15 +226,18 @@ namespace Carrotware.CMS.Core {
 								   && ct.IsLatestVersion == true
 								select ct).FirstOrDefault();
 
-			List<SiteNav> lstContent = (from ct in db.carrot_Contents
-										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										orderby ct.NavOrder, ct.NavMenuText
-										where r.SiteID == siteID
-											&& ct.Parent_ContentID == c.Parent_ContentID
-											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-											&& ct.IsLatestVersion == true
-										select new SiteNav(r, ct)).ToList();
+			List<SiteNav> lstContent = new List<SiteNav>();
 
+			if (c != null) {
+				lstContent = (from ct in db.carrot_Contents
+							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+							  orderby ct.NavOrder, ct.NavMenuText
+							  where r.SiteID == siteID
+								  && ct.Parent_ContentID == c.Parent_ContentID
+								  && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  && ct.IsLatestVersion == true
+							  select new SiteNav(r, ct)).ToList();
+			}
 			return lstContent;
 		}
 
@@ -283,5 +327,5 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 	}
-		
+
 }

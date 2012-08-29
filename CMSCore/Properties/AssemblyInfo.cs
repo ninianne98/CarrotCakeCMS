@@ -45,3 +45,7 @@ using System.Web.UI;
 
 
 [assembly: WebResource("Carrotware.CMS.Core.Utilities.EmailForgotPassMsg.txt", "text/plain")]
+
+
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.SampleContent1.txt", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.SampleContent1.txt", "text/plain")]
