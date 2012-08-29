@@ -18,7 +18,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			var currentPage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName);
+			ContentPage currentPage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName);
+			if (SiteData.PageIsVirtualEdit && currentPage == null) {
+				currentPage = pageHelper.GetSamplerView();
+			}
+
 			CurrentPageID = currentPage.Root_ContentID;
 			lnkCurrent.HRef = currentPage.FileName;
 

@@ -354,6 +354,51 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public ContentPage GetSamplerView() {
+
+			string sFile1 = "";
+			string sFile2 = "";
+
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.SampleContent1.txt"))) {
+				sFile1 = oTextStream.ReadToEnd();
+			}
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.SampleContent2.txt"))) {
+				sFile2 = oTextStream.ReadToEnd();
+			}
+
+			ContentPage pageNew = new ContentPage();
+			pageNew.Root_ContentID = Guid.NewGuid();
+			pageNew.ContentID = pageNew.Root_ContentID;
+			pageNew.SiteID = SiteData.CurrentSiteID;
+			pageNew.Parent_ContentID = null;
+
+			pageNew.PageText = "<h2>CENTER</h2>\r\n" + sFile1;
+			pageNew.LeftPageText = "<h2>LEFT</h2>\r\n" + sFile2;
+			pageNew.RightPageText = "<h2>RIGHT</h2>\r\n" + sFile2;
+
+			pageNew.IsLatestVersion = true;
+			pageNew.TitleBar = "Template Preview - TITLE";
+			pageNew.NavMenuText = "Template Preview - NAV";
+			pageNew.NavOrder = -1;
+			pageNew.PageHead = "Template Preview - HEAD";
+			pageNew.PageActive = true;
+			pageNew.EditUserId = SecurityData.CurrentUserGuid;
+			pageNew.EditDate = DateTime.Now.AddMinutes(-30);
+			pageNew.CreateDate = DateTime.Today.AddDays(-1);
+
+			pageNew.TemplateFile = SiteData.PreviewTemplateFile;
+			pageNew.FileName = SiteData.VirtualCMSEditPrefix + "TemplatePreviw.aspx";
+			pageNew.NavFileName = pageNew.FileName;
+			pageNew.MetaDescription = "Meta Description";
+			pageNew.MetaKeyword = "Meta Keyword";
+
+			return pageNew;
+		}
+
+
+
 		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootContentID) {
 			List<ContentPage> content = (from ct in db.carrot_Contents
 										 join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID

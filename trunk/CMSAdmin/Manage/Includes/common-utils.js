@@ -159,10 +159,10 @@ function ShowWindow(theURL) {
 
 function LaunchWindow(theURL) {
 	TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="840" height="540" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="910" height="540" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
-		css: { width: '840px', height: '540px' },
+		css: { width: '900px', height: '540px' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }

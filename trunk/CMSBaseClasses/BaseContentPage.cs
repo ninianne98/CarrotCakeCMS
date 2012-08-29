@@ -106,6 +106,10 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
+			if (SiteData.PageIsVirtualEdit && pageContents == null) {
+				pageContents = pageHelper.GetSamplerView();
+			}
+
 			if (pageContents != null) {
 				guidContentID = pageContents.Root_ContentID;
 			}
@@ -186,9 +190,10 @@ namespace Carrotware.CMS.UI.Base {
 					if (!SecurityData.AdvancedEditMode) {
 
 						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
-
-							Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
-							Page.Form.Controls.Add(editor);
+							if (!SiteData.PageIsVirtualEdit) {
+								Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
+								Page.Form.Controls.Add(editor);
+							}
 						}
 
 					} else {
