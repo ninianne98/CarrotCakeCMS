@@ -230,6 +230,8 @@ namespace Carrotware.CMS.UI.Base {
 													&& d.IsWidgetPendingDelete == false
 												  select d).ToList();
 
+					Assembly a = Assembly.GetExecutingAssembly();
+
 					foreach (Widget theWidget in lstWidget) {
 
 						//WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
@@ -258,8 +260,7 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (theWidget.ControlPath.ToLower().StartsWith("class:")) {
 								try {
-									Assembly a = Assembly.GetExecutingAssembly();
-									string className = theWidget.ControlPath.Replace("CLASS:", "");
+										string className = theWidget.ControlPath.Replace("CLASS:", "");
 									Type t = Type.GetType(className);
 									Object o = Activator.CreateInstance(t);
 
