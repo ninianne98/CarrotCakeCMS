@@ -356,6 +356,17 @@
 			}
 		});
 
+		var cmsTemplateDDL = '#<%=ddlTemplate.ClientID%>';
+		var cmsTemplatePreview = '<%=Carrotware.CMS.Core.SiteData.PreviewTemplateFilePage %>';
+
+		function cmsPreviewTemplate() {
+			var tmpl = $(cmsTemplateDDL).val();
+
+			tmpl = MakeStringSafe(tmpl);
+
+			ShowWindowNoRefresh(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
+		}
+
 	</script>
 	<style type="text/css">
 		div.scroll {
@@ -539,6 +550,8 @@
 				<td valign="top">
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 					</asp:DropDownList>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" onclick="cmsPreviewTemplate()" value="Preview" />
 				</td>
 			</tr>
 			<tr>

@@ -74,6 +74,11 @@ function MakeStringSafe(val) {
 	return val;
 }
 
+function cmsMakeStringSafe(val) {
+	val = Base64.encode(val);
+	return val;
+}
+
 function cmsAjaxFailed(request) {
 	var s = "";
 	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
