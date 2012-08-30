@@ -112,10 +112,6 @@ namespace Carrotware.CMS.UI.Base {
 							navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, true, pageName);
 						}
 
-						if (SiteData.IsPageSampler && navData == null) {
-							navData = SiteNavHelper.GetSamplerView();
-						}
-
 						if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
 							navData = SiteNavHelper.GetEmptyHome();
 						}
