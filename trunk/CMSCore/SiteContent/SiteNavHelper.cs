@@ -153,6 +153,15 @@ namespace Carrotware.CMS.Core {
 			return navList;
 		}
 
+		public static SiteNav GetSamplerView(Guid rootParentID) {
+			var sn = GetSamplerView();
+
+			sn.Parent_ContentID = rootParentID;
+
+			return sn;
+
+		}
+
 		public static SiteNav GetSamplerView() {
 
 			string sFile2 = "";
