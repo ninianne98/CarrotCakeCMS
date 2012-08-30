@@ -107,7 +107,7 @@ namespace Carrotware.CMS.UI.Base {
 			}
 
 			if (SiteData.IsPageSampler && pageContents == null) {
-				pageContents = pageHelper.GetSamplerView();
+				pageContents = ContentPageHelper.GetSamplerView();
 			}
 
 			if (pageContents != null) {

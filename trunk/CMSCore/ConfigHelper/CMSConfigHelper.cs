@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
+using System.Web.UI;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
 using Carrotware.CMS.Interface;
@@ -81,6 +82,19 @@ namespace Carrotware.CMS.Core {
 			System.Web.HttpRuntime.UnloadAppDomain();
 		}
 
+
+		private static Page CachedPage {
+			get {
+				if (_CachedPage == null)
+					_CachedPage = new Page();
+				return _CachedPage;
+			}
+		}
+		private static Page _CachedPage;
+
+		public static string GetWebResourceUrl(Type type, string resource) {
+			return CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+		}
 
 		public static string DomainName {
 			get {
@@ -676,7 +690,7 @@ namespace Carrotware.CMS.Core {
 						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
 					}
 					if (SiteData.IsPageSampler && filePage == null) {
-						filePage = pageHelper.GetSamplerView();
+						filePage = ContentPageHelper.GetSamplerView();
 					}
 				}
 			}

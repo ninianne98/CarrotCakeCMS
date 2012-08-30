@@ -3,10 +3,8 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
-using System.Web.Configuration;
-using Carrotware.CMS.Data;
-using System.Collections.Specialized;
 using System.Xml;
+using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -317,6 +315,7 @@ namespace Carrotware.CMS.Core {
 			}
 			*/
 		}
+
 
 		public static string DefaultDirectoryFilename {
 			get { return "/default.aspx".ToLower(); }
