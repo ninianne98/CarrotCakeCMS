@@ -134,8 +134,14 @@
     <EmbeddedResource Include="Utilities\EmailForgotPassMsg.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SiteContent\SampleContent2.txt" />
-    <EmbeddedResource Include="SiteContent\SampleContent1.txt" />
+    <EmbeddedResource Include="SiteContent\Mock\SampleContent2.txt" />
+    <EmbeddedResource Include="SiteContent\Mock\SampleContent1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SiteContent\Mock\sample1.png" />
+    <EmbeddedResource Include="SiteContent\Mock\sample2.png" />
+    <EmbeddedResource Include="SiteContent\Mock\sample3.png" />
+    <EmbeddedResource Include="SiteContent\Mock\sample4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -327,10 +327,14 @@ namespace Carrotware.CMS.Core {
 		public static string VirtualCMSEditPrefix {
 			get { return "/cms/carrotcake/edit/".ToLower(); }
 		}
+		public static string PreviewTemplateFilePage {
+			get { return VirtualCMSEditPrefix + "templatepreview/Page.aspx"; }
+		}
 
-		public static bool PageIsVirtualEdit {
+		public static bool IsPageSampler {
 			get {
-				return SiteData.CurrentScriptName.ToLower().StartsWith(SiteData.VirtualCMSEditPrefix);
+				string _prefix = (SiteData.VirtualCMSEditPrefix + "templatepreview/").ToLower();
+				return SiteData.CurrentScriptName.ToLower().StartsWith(_prefix);
 			}
 		}
 

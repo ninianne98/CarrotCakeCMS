@@ -106,7 +106,7 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-			if (SiteData.PageIsVirtualEdit && pageContents == null) {
+			if (SiteData.IsPageSampler && pageContents == null) {
 				pageContents = pageHelper.GetSamplerView();
 			}
 
@@ -190,7 +190,7 @@ namespace Carrotware.CMS.UI.Base {
 					if (!SecurityData.AdvancedEditMode) {
 
 						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
-							if (!SiteData.PageIsVirtualEdit) {
+							if (!SiteData.IsPageSampler) {
 								Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
 								Page.Form.Controls.Add(editor);
 							}

@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web.UI;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -40,14 +41,21 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
-			List<SiteNav> lstContent = (from ct in db.carrot_Contents
-										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										orderby ct.NavOrder, ct.NavMenuText
-										where r.SiteID == siteID
-											&& ct.Parent_ContentID == null
-											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-											&& ct.IsLatestVersion == true
-										select new SiteNav(r, ct)).ToList();
+			List<SiteNav> lstContent = null;
+
+			if (SiteData.IsPageSampler) {
+				lstContent = GetSamplerFakeNav();
+			} else {
+				lstContent = (from ct in db.carrot_Contents
+							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+							  orderby ct.NavOrder, ct.NavMenuText
+							  where r.SiteID == siteID
+								  && ct.Parent_ContentID == null
+								  && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  && ct.IsLatestVersion == true
+							  select new SiteNav(r, ct)).ToList();
+			}
+
 			return lstContent;
 		}
 
@@ -57,7 +65,7 @@ namespace Carrotware.CMS.Core {
 									where r.SiteID == siteID
 										   && r.FileName.ToLower() == sParentID.ToLower()
 									select r).FirstOrDefault();
-			
+
 			List<SiteNav> lstContent = new List<SiteNav>();
 
 			if (c != null) {
@@ -69,6 +77,10 @@ namespace Carrotware.CMS.Core {
 								  && (r.PageActive == bActiveOnly || bActiveOnly == false)
 								  && ct.IsLatestVersion == true
 							  select new SiteNav(r, ct)).ToList();
+			}
+
+			if (SiteData.IsPageSampler) {
+				lstContent = GetSamplerFakeNav();
 			}
 
 			return lstContent;
@@ -96,30 +108,42 @@ namespace Carrotware.CMS.Core {
 							  select new SiteNav(r, ct)).ToList();
 			}
 
+			if (SiteData.IsPageSampler) {
+				lstContent = GetSamplerFakeNav();
+			}
+
 			return lstContent;
 		}
 
 		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
 
-			SiteNav content = (from ct in db.carrot_Contents
-							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-							   where r.SiteID == siteID
-								   && r.FileName.ToLower() == sPage.ToLower()
-								   && ct.IsLatestVersion == true
-							   select new SiteNav(r, ct)).FirstOrDefault();
-
+			SiteNav content = null;
+			if (SiteData.IsPageSampler) {
+				content = GetSamplerView();
+			} else {
+				content = (from ct in db.carrot_Contents
+						   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+						   where r.SiteID == siteID
+							   && r.FileName.ToLower() == sPage.ToLower()
+							   && ct.IsLatestVersion == true
+						   select new SiteNav(r, ct)).FirstOrDefault();
+			}
 			return content;
 		}
 
 		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
 
-			SiteNav content = (from ct in db.carrot_Contents
-							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-							   where r.SiteID == siteID
-								   && ct.Root_ContentID == rootContentID
-								   && ct.IsLatestVersion == true
-							   select new SiteNav(r, ct)).FirstOrDefault();
-
+			SiteNav content = null;
+			if (SiteData.IsPageSampler) {
+				content = GetSamplerView();
+			} else {
+				content = (from ct in db.carrot_Contents
+						   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+						   where r.SiteID == siteID
+							   && ct.Root_ContentID == rootContentID
+							   && ct.IsLatestVersion == true
+						   select new SiteNav(r, ct)).FirstOrDefault();
+			}
 			return content;
 		}
 
@@ -136,6 +160,9 @@ namespace Carrotware.CMS.Core {
 							   && ct.IsLatestVersion == true
 						   select new SiteNav(r, ct)).FirstOrDefault();
 			}
+			if (SiteData.IsPageSampler) {
+				content = GetSamplerView();
+			}
 			return content;
 		}
 
@@ -150,6 +177,9 @@ namespace Carrotware.CMS.Core {
 							   && ct.Root_ContentID == nav1.Parent_ContentID
 							   && ct.IsLatestVersion == true
 						   select new SiteNav(r, ct)).FirstOrDefault();
+			}
+			if (SiteData.IsPageSampler) {
+				content = GetSamplerView();
 			}
 			return content;
 		}
@@ -174,48 +204,98 @@ namespace Carrotware.CMS.Core {
 			return navData;
 		}
 
+		public List<SiteNav> GetSamplerFakeNav() {
+			return GetSamplerFakeNav(null);
+		}
+
+		public List<SiteNav> GetSamplerFakeNav(Guid? rootParentID) {
+			List<SiteNav> navList = new List<SiteNav>();
+			int n = 0;
+			int nMax = 3;
+
+			while (n < nMax) {
+				SiteNav nav = GetSamplerView();
+				nav.NavOrder = n;
+				nav.NavMenuText = nav.NavMenuText + " " + n.ToString();
+
+				if (n > 0 || rootParentID != null) {
+					nav.Root_ContentID = Guid.NewGuid();
+					nav.ContentID = Guid.NewGuid();
+					//nav.FileName = nav.FileName.Replace(".aspx", nav.NavOrder.ToString() + ".aspx");
+					nav.FileName = "#";
+					nav.NavFileName = nav.FileName;
+					if (rootParentID != null) {
+						nav.NavMenuText = nav.NavMenuText + " - " + rootParentID.Value.ToString().Substring(0, 4);
+					}
+				}
+				nav.Parent_ContentID = rootParentID;
+
+				navList.Add(nav);
+				n++;
+			}
+
+			return navList;
+		}
+
 		public SiteNav GetSamplerView() {
 
-			string sFile1 = "";
+			string sFile2 = "";
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
+			Page p = new Page();
 
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.SampleContent1.txt"))) {
-				sFile1 = oTextStream.ReadToEnd();
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent2.txt"))) {
+				sFile2 = oTextStream.ReadToEnd();
+			}
+
+			List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
+									   where i.Contains("SiteContent.Mock.sample")
+									   && i.EndsWith(".png")
+									   select i).ToList();
+
+			foreach (string img in imageNames) {
+				var imgURL = p.ClientScript.GetWebResourceUrl(this.GetType(), img);
+				sFile2 = sFile2.Replace(img, imgURL);
 			}
 
 			SiteNav navNew = new SiteNav();
-			navNew.Root_ContentID = Guid.NewGuid();
-			navNew.ContentID = navNew.Root_ContentID;
+			navNew.Root_ContentID = SiteData.CurrentSiteID;
+			navNew.ContentID = Guid.NewGuid();
 			navNew.SiteID = SiteData.CurrentSiteID;
 			navNew.Parent_ContentID = null;
 
-			navNew.PageText = "<h2>CENTER</h2>\r\n" + sFile1;
+			navNew.PageText = "<h2>Content CENTER</h2>\r\n" + sFile2;
 
-			navNew.TitleBar = "Template Preview - TITLE";
-			navNew.NavMenuText = "Template Preview - NAV";
 			navNew.NavOrder = -1;
+			navNew.TitleBar = "Template Preview - TITLE";
+			navNew.NavMenuText = "Template PV - NAV";
 			navNew.PageHead = "Template Preview - HEAD";
 			navNew.PageActive = true;
 			navNew.EditDate = DateTime.Now.AddMinutes(-30);
 			navNew.CreateDate = DateTime.Today.AddDays(-1);
 
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
-			navNew.FileName = SiteData.VirtualCMSEditPrefix + "TemplatePreviw.aspx";
+			navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();
 			navNew.NavFileName = navNew.FileName;
 
 			return navNew;
 		}
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
-			List<SiteNav> lstContent = (from ct in db.carrot_Contents
-										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										orderby ct.NavOrder, ct.NavMenuText
-										where r.SiteID == siteID
-											&& ct.Parent_ContentID == ParentID
-											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-											&& ct.IsLatestVersion == true
-										select new SiteNav(r, ct)).ToList();
+			List<SiteNav> lstContent = null;
+
+			if (SiteData.IsPageSampler) {
+				lstContent = GetSamplerFakeNav(ParentID);
+			} else {
+				lstContent = (from ct in db.carrot_Contents
+							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+							  orderby ct.NavOrder, ct.NavMenuText
+							  where r.SiteID == siteID
+								  && ct.Parent_ContentID == ParentID
+								  && (r.PageActive == bActiveOnly || bActiveOnly == false)
+								  && ct.IsLatestVersion == true
+							  select new SiteNav(r, ct)).ToList();
+			}
 			return lstContent;
 		}
 
@@ -238,19 +318,30 @@ namespace Carrotware.CMS.Core {
 								  && ct.IsLatestVersion == true
 							  select new SiteNav(r, ct)).ToList();
 			}
+
+			if (SiteData.IsPageSampler) {
+				lstContent = GetSamplerFakeNav(PageID);
+			}
+
 			return lstContent;
 		}
 
 
 		public List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
 
-			List<SiteNav> lstContent = (from ct in db.carrot_Contents
-										join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-										orderby ct.EditDate descending
-										where r.SiteID == siteID
-											&& ct.IsLatestVersion == true
-											&& (r.PageActive == bActiveOnly || bActiveOnly == false)
-										select new SiteNav(r, ct)).Take(iUpdates).ToList();
+			List<SiteNav> lstContent = null;
+
+			if (SiteData.IsPageSampler) {
+				lstContent = GetSamplerFakeNav();
+			} else {
+				lstContent = (from ct in db.carrot_Contents
+							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+							  orderby ct.EditDate descending
+							  where r.SiteID == siteID
+								  && ct.IsLatestVersion == true
+								  && (r.PageActive == bActiveOnly || bActiveOnly == false)
+							  select new SiteNav(r, ct)).Take(iUpdates).ToList();
+			}
 
 			return lstContent;
 		}
