@@ -48,7 +48,8 @@ using System.Web.UI;
 [assembly: TagPrefix("WidgetWrapper", "carrot")]
 [assembly: TagPrefix("ContentContainer", "carrot")]
 
-
+[assembly: TagPrefix("ContentPlainText", "carrot")]
+[assembly: TagPrefix("ContentRichText", "carrot")]
 
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]

@@ -39,6 +39,34 @@ namespace Carrotware.CMS.Core {
 			return w;
 		}
 
+
+		public void UpdateContentWidgets(Guid rootContentID) {
+
+			var ww = (from rr in db.carrot_Widgets
+					 orderby rr.WidgetOrder
+					 where rr.Root_ContentID == rootContentID
+					 && (rr.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")
+							|| rr.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx"))
+					 select rr).ToList();
+
+			bool bEdit = false;
+
+			foreach (var w in ww) {
+				bEdit = true;
+				if (w.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")) {
+					w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls";
+				}
+				if (w.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx")) {
+					w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls";
+				}
+			}
+
+			if (bEdit) {
+				db.SubmitChanges();
+			}
+		}
+
+
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
 			var w = (from r in db.carrot_WidgetDatas
 					 join rr in db.carrot_Widgets on r.Root_WidgetID equals rr.Root_WidgetID

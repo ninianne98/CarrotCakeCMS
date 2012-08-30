@@ -114,6 +114,8 @@ namespace Carrotware.CMS.UI.Base {
 				guidContentID = pageContents.Root_ContentID;
 			}
 
+			widgetHelper.UpdateContentWidgets(guidContentID);
+
 			if (SecurityData.AdvancedEditMode) {
 				pageWidgets = widgetHelper.GetWidgets(guidContentID, null);
 			} else {

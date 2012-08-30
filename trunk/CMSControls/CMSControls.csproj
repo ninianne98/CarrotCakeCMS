@@ -16,6 +16,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,6 +66,8 @@
   <ItemGroup>
     <Compile Include="BaseServerControl.cs" />
     <Compile Include="ChildNavigation.cs" />
+    <Compile Include="ContentPlainText.cs" />
+    <Compile Include="ContentRichText.cs" />
     <Compile Include="SiblingNavigation.cs" />
     <Compile Include="MultiLevelNavigation.cs" />
     <Compile Include="MostRecentUpdated.cs" />
