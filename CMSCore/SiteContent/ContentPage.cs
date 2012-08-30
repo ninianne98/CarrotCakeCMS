@@ -72,8 +72,12 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav GetSiteNav() {
 			SiteNav sd = null;
-			using (SiteNavHelper sdh = new SiteNavHelper()) {
-				sd = sdh.GetLatestVersion(this.SiteID, this.Root_ContentID);
+			if (SiteData.IsPageSampler) {
+				sd = SiteNavHelper.GetSamplerView();
+			} else {
+				using (SiteNavHelper sdh = new SiteNavHelper()) {
+					sd = sdh.GetLatestVersion(this.SiteID, this.Root_ContentID);
+				}
 			}
 			return sd;
 		}
@@ -97,9 +101,9 @@ namespace Carrotware.CMS.Core {
 		public void ResetHeartbeatLock() {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == this.Root_ContentID
-								   && r.SiteID == this.SiteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == this.Root_ContentID
+									   && r.SiteID == this.SiteID
+									 select r).FirstOrDefault();
 
 			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
 			rc.Heartbeat_UserId = null;
@@ -109,9 +113,9 @@ namespace Carrotware.CMS.Core {
 		public void RecordHeartbeatLock(Guid currentUserID) {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == this.Root_ContentID
-								 && r.SiteID == this.SiteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == this.Root_ContentID
+									 && r.SiteID == this.SiteID
+									 select r).FirstOrDefault();
 
 			rc.Heartbeat_UserId = currentUserID;
 			rc.EditHeartbeat = DateTime.Now;
@@ -144,16 +148,16 @@ namespace Carrotware.CMS.Core {
 		public void SavePageEdit() {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == this.Root_ContentID
-								   && r.SiteID == this.SiteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == this.Root_ContentID
+									   && r.SiteID == this.SiteID
+									 select r).FirstOrDefault();
 
 			carrot_Content oldC = (from ct in db.carrot_Contents
-							   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-							   where ct.Root_ContentID == this.Root_ContentID
-								   && r.SiteID == this.SiteID
-								   && ct.IsLatestVersion == true
-							   select ct).FirstOrDefault();
+								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+								   where ct.Root_ContentID == this.Root_ContentID
+									   && r.SiteID == this.SiteID
+									   && ct.IsLatestVersion == true
+								   select ct).FirstOrDefault();
 
 			bool bNew = false;
 
@@ -215,9 +219,9 @@ namespace Carrotware.CMS.Core {
 		public void SavePageAsDraft() {
 
 			carrot_RootContent rc = (from r in db.carrot_RootContents
-								 where r.Root_ContentID == this.Root_ContentID
-								   && r.SiteID == this.SiteID
-								 select r).FirstOrDefault();
+									 where r.Root_ContentID == this.Root_ContentID
+									   && r.SiteID == this.SiteID
+									 select r).FirstOrDefault();
 
 			bool bNew = false;
 

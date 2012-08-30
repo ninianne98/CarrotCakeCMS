@@ -56,8 +56,12 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPage GetContentPage() {
 			ContentPage cp = null;
-			using (ContentPageHelper cph = new ContentPageHelper()) {
-				cp = cph.GetLatestContent(this.SiteID, this.Root_ContentID);
+			if (SiteData.IsPageSampler) {
+				cp = ContentPageHelper.GetSamplerView();
+			} else {
+				using (ContentPageHelper cph = new ContentPageHelper()) {
+					cp = cph.GetLatestContent(this.SiteID, this.Root_ContentID);
+				}
 			}
 			return cp;
 		}
