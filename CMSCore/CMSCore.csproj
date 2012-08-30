@@ -79,10 +79,13 @@
     <Compile Include="SiteContent\ContentPageExport.cs" />
     <Compile Include="SiteContent\ContentPageHelper.cs" />
     <Compile Include="DataScripts\DatabaseUpdate.cs" />
+    <Compile Include="SiteContent\SiteNavHelper.cs" />
+    <Compile Include="SiteContent\SiteNavHelperMock.cs" />
+    <Compile Include="SiteContent\ISiteNavHelper.cs" />
     <Compile Include="SiteContent\SiteMapOrder.cs" />
     <Compile Include="SiteContent\SiteMapOrderHelper.cs" />
     <Compile Include="SiteContent\SiteNav.cs" />
-    <Compile Include="SiteContent\SiteNavHelper.cs" />
+    <Compile Include="SiteContent\SiteNavHelperReal.cs" />
     <Compile Include="Utilities\EmailSender.cs" />
     <Compile Include="Utilities\GridSorting.cs" />
     <Compile Include="SiteContent\ISiteContent.cs" />

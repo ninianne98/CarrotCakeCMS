@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		protected void Page_Load(object sender, EventArgs e) {
 			ContentPage currentPage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName);
 			if (SiteData.IsPageSampler && currentPage == null) {
-				currentPage = pageHelper.GetSamplerView();
+				currentPage = ContentPageHelper.GetSamplerView();
 			}
 
 			CurrentPageID = currentPage.Root_ContentID;

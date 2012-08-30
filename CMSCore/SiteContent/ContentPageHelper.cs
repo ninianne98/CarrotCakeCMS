@@ -355,13 +355,12 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public ContentPage GetSamplerView() {
+		public static ContentPage GetSamplerView() {
 
 			string sFile1 = "";
 			string sFile2 = "";
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
-			Page p = new Page();
 
 			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt"))) {
 				sFile1 = oTextStream.ReadToEnd();
@@ -376,7 +375,7 @@ namespace Carrotware.CMS.Core {
 									   select i).ToList();
 
 			foreach (string img in imageNames) {
-				var imgURL = p.ClientScript.GetWebResourceUrl(this.GetType(), img);
+				var imgURL = CMSConfigHelper.GetWebResourceUrl(typeof(ContentPage), img);
 				sFile1 = sFile1.Replace(img, imgURL);
 				sFile2 = sFile2.Replace(img, imgURL);
 			}

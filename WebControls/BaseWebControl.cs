@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,6 +15,20 @@ using System.Web.UI.WebControls;
 namespace Carrotware.Web.UI.Controls {
 
 	public abstract class BaseWebControl : WebControl {
+
+		private static Page CachedPage {
+			get {
+				if (_CachedPage == null)
+					_CachedPage = new Page();
+				return _CachedPage;
+			}
+		}
+		private static Page _CachedPage;
+
+		public static string GetWebResourceUrl(Type type, string resource) {
+			return CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+		}
+
 
 		protected string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
