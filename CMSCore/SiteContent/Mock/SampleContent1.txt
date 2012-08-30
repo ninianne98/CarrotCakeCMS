@@ -1,11 +1,10 @@
 ﻿
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi arcu, lacinia scelerisque blandit nec, mattis non nibh. Curabitur quis urna at massa 
+<p><img title="" src='Carrotware.CMS.Core.SiteContent.Mock.sample1.png' align="left" />  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi arcu, lacinia scelerisque blandit nec, mattis non nibh. Curabitur quis urna at massa 
 	placerat auctor. Quisque et mauris sapien, a consectetur nulla. Cum <a title="" href="#">sociis natoque penatibus et magnis dis</a> parturient montes, nascetur ridiculus mus. 
 	Nullam pellentesque, turpis a gravida porta, nibh libero feugiat augue, vel interdum erat lectus nec lorem. Phasellus vel odio felis, a venenatis tellus. 
 	Nullam sit amet ligula vitae tellus laoreet accumsan eu nec odio. Sed tincidunt congue euismod. Pellentesque sollicitudin erat massa. 
 	<a title="" href="#">Quisque lacinia</a>, metus in pretium lobortis, ipsum leo semper mauris, at gravida est nisl sit amet metus. Pellentesque quis 
-	massa eget odio lobortis pharetra. Sed faucibus sapien et ligula vulputate eu iaculis dui adipiscing. Etiam a quam lacus. Etiam urna sapien, porttitor 
-	at rhoncus sed, tristique sed sapien. Nam felis nulla, sodales a tincidunt ac, fermentum eu nisi.</p>
+	massa eget odio lobortis pharetra. </p>
 
 <ul>
     <li>This is an nordered list Item 1</li>
@@ -15,10 +14,13 @@
 </ul>
 
 <h2>Vivamus urna libero, blandit nec eleifend at</h2>
-<p>Vivamus urna libero, blandit nec eleifend at, porta id ante. Proin vitae turpis lacus. Sed ultrices vulputate dictum. Cras porttitor nibh 
+<p> <img title="" src='Carrotware.CMS.Core.SiteContent.Mock.sample2.png' align="left" />  Vivamus urna libero, blandit nec eleifend at, porta id ante. Proin vitae turpis lacus. Sed ultrices vulputate dictum. Cras porttitor nibh 
 	sed eros suscipit quis pellentesque urna feugiat. Fusce <a title="" href="#">interdum mattis ullamcorper</a>. Aliquam non nibh arcu. Donec mollis, libero eget tempor facilisis,
 	libero erat viverra lorem, et porta neque elit ornare arcu. Sed a ipsum diam. Ut pellentesque egestas lacus, <a title="" href="#">non ultrices dui</a> molestie non. Vivamus 
 	venenatis pharetra massa vitae tincidunt. Nulla quis lorem lacus, quis sagittis urna.</p>
+
+<blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi arcu, lacinia scelerisque blandit nec, mattis non nibh. Curabitur quis urna at 
+massa placerat auctor. Quisque et mauris sapien, a consectetur nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </blockquote>
 
 <ol>
     <li>This is an ordered list Item 1</li>
@@ -27,12 +29,17 @@
     <li>This is an ordered list Item 4</li>
 </ol>
 
-<p>Aliquam rhoncus, massa eget congue accumsan, turpis ante vestibulum ligula, sed auctor ligula quam at quam. Integer fringilla, diam vitae egestas
+<table>
+	<tr><th>Column 1</th><th>Column 2</th><th>Column 3</th><th>Column 4</th></tr>
+	<tr><td>Row 2, 1</td><td>Row 2, 2</td><td>Row 2, 3</td><td>Row 2, 4</td></tr>
+	<tr><td>Row 3, 1</td><td>Row 3, 2</td><td>Row 3, 3</td><td>Row 3, 4</td></tr>
+	<tr><td>Row 4, 1</td><td>Row 4, 2</td><td>Row 4, 3</td><td>Row 4, 4</td></tr>
+</table>
+
+<p> <img title="" src='Carrotware.CMS.Core.SiteContent.Mock.sample3.png'  align="right"/> Aliquam rhoncus, massa eget congue accumsan, turpis ante vestibulum ligula, sed auctor ligula quam at quam. Integer fringilla, diam vitae egestas
 	elementum, erat tellus lacinia neque, posuere eleifend turpis quam quis mi. Cras bibendum varius lacus, a varius quam lacinia non. Duis ac purus id 
 	dolor aliquam interdum. Maecenas sit amet neque lectus. Nullam non mi non sapien dignissim dapibus at ac turpis. Sed nec luctus nunc. In id felis vitae massa 
 	adipiscing lacinia. Aenean placerat massa sit amet tortor porttitor adipiscing. Donec iaculis nisi fringilla mi pretium at sodales tellus suscipit. Maecenas ac 
 	sollicitudin urna. Suspendisse sed purus a libero fermentum rhoncus. Morbi diam orci, volutpat sed cursus vel, ultrices eu dolor. Nullam et magna non ante sagittis 
-	euismod sed at erat.</p>
+	euismod sed at erat.  </p>
 
-<blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi arcu, lacinia scelerisque blandit nec, mattis non nibh. Curabitur quis urna at 
-massa placerat auctor. Quisque et mauris sapien, a consectetur nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </blockquote>

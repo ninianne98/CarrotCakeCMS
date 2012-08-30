@@ -55,7 +55,7 @@
 
 	cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
 
-	cmsSetPreviewFileName('<%=Carrotware.CMS.Core.SiteData.VirtualCMSEditPrefix + "TemplatePreviw.aspx"%>');
+	cmsSetPreviewFileName('<%=Carrotware.CMS.Core.SiteData.PreviewTemplateFilePage %>');
 
 </script>
 <div style="display: none;">

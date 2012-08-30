@@ -47,5 +47,10 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.CMS.Core.Utilities.EmailForgotPassMsg.txt", "text/plain")]
 
 
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.SampleContent1.txt", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.SampleContent1.txt", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt", "text/html", PerformSubstitution = true)]
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt", "text/html", PerformSubstitution = true)]
+
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample1.png", "image/png")]
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample2.png", "image/png")]
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample3.png", "image/png")]
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample4.png", "image/png")]

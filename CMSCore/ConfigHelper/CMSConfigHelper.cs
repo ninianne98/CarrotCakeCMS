@@ -675,7 +675,7 @@ namespace Carrotware.CMS.Core {
 					} else {
 						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
 					}
-					if (SiteData.PageIsVirtualEdit && filePage == null) {
+					if (SiteData.IsPageSampler && filePage == null) {
 						filePage = pageHelper.GetSamplerView();
 					}
 				}

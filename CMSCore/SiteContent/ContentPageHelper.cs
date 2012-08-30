@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;
+using System.Web.UI;
 using System.Text.RegularExpressions;
 /*
 * CarrotCake CMS
@@ -360,28 +361,41 @@ namespace Carrotware.CMS.Core {
 			string sFile2 = "";
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
+			Page p = new Page();
 
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.SampleContent1.txt"))) {
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt"))) {
 				sFile1 = oTextStream.ReadToEnd();
 			}
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.SampleContent2.txt"))) {
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent2.txt"))) {
 				sFile2 = oTextStream.ReadToEnd();
 			}
 
+			List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
+									   where i.Contains("SiteContent.Mock.sample")
+									   && i.EndsWith(".png")
+									   select i).ToList();
+
+			foreach (string img in imageNames) {
+				var imgURL = p.ClientScript.GetWebResourceUrl(this.GetType(), img);
+				sFile1 = sFile1.Replace(img, imgURL);
+				sFile2 = sFile2.Replace(img, imgURL);
+			}
+
+
 			ContentPage pageNew = new ContentPage();
-			pageNew.Root_ContentID = Guid.NewGuid();
+			pageNew.Root_ContentID = SiteData.CurrentSiteID;
 			pageNew.ContentID = pageNew.Root_ContentID;
 			pageNew.SiteID = SiteData.CurrentSiteID;
 			pageNew.Parent_ContentID = null;
 
-			pageNew.PageText = "<h2>CENTER</h2>\r\n" + sFile1;
-			pageNew.LeftPageText = "<h2>LEFT</h2>\r\n" + sFile2;
-			pageNew.RightPageText = "<h2>RIGHT</h2>\r\n" + sFile2;
+			pageNew.PageText = "<h2>Content CENTER</h2>\r\n" + sFile1;
+			pageNew.LeftPageText = "<h2>Content LEFT</h2>\r\n" + sFile2;
+			pageNew.RightPageText = "<h2>Content RIGHT</h2>\r\n" + sFile2;
 
 			pageNew.IsLatestVersion = true;
-			pageNew.TitleBar = "Template Preview - TITLE";
-			pageNew.NavMenuText = "Template Preview - NAV";
 			pageNew.NavOrder = -1;
+			pageNew.TitleBar = "Template Preview - TITLE";
+			pageNew.NavMenuText = "Template PV - NAV"; ;
 			pageNew.PageHead = "Template Preview - HEAD";
 			pageNew.PageActive = true;
 			pageNew.EditUserId = SecurityData.CurrentUserGuid;
@@ -389,7 +403,7 @@ namespace Carrotware.CMS.Core {
 			pageNew.CreateDate = DateTime.Today.AddDays(-1);
 
 			pageNew.TemplateFile = SiteData.PreviewTemplateFile;
-			pageNew.FileName = SiteData.VirtualCMSEditPrefix + "TemplatePreviw.aspx";
+			pageNew.FileName = SiteData.PreviewTemplateFilePage;
 			pageNew.NavFileName = pageNew.FileName;
 			pageNew.MetaDescription = "Meta Description";
 			pageNew.MetaKeyword = "Meta Keyword";
