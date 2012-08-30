@@ -308,6 +308,22 @@ function cmsPreviewTemplate() {
 
 	cmsLaunchWindowOnly(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
 
+	var editFrame = $('#cmsModalFrame');
+	var editIFrame = $('#cmsFrameEditor');
+
+	$(editIFrame).attr('width', '910');
+	$(editIFrame).attr('height', '480');
+
+	var btnApply = ' <input type="button" id="btnApplyTemplate" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
+	var btnClose = ' <input type="button" id="btnCloseTemplate" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
+
+	$(editFrame).append('<div id="cmsGlossySeaGreenID" class="cmsRight5px"> ' + btnClose + btnApply + ' </div>');
+	window.setTimeout("cmsLateBtnStyle();", 500);
+}
+
+function cmsLateBtnStyle() {
+	$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
+	$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit").button();
 }
 
 var cmsTemplateDDL = "";
@@ -889,6 +905,12 @@ function cmsLoadWindowOnly() {
 	return false;
 }
 
+
+function cmsCloseModalWin() {
+	cmsSaveToolbarPosition();
+	setTimeout("$.modal.close();", 250);
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+}
 
 function cmsDirtyPageRefresh() {
 	cmsSaveToolbarPosition();
