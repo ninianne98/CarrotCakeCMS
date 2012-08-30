@@ -69,7 +69,7 @@
 	font-size: 12px !important;
 	line-height: 16px !important;
 }
-.cmsCenter5px, .cmsLeft5px, .cmsPlain5px {
+.cmsCenter5px, .cmsLeft5px, .cmsRight5px, .cmsPlain5px {
 	margin: 5px !important;
 	padding: 5px !important;
 	font-size: 12px !important;
@@ -80,6 +80,9 @@
 }
 .cmsLeft5px {
 	text-align: left !important;
+}
+.cmsRight5px {
+	text-align: right !important;
 }
 
 #cmsGlossySeaGreenID img, .cmsGlossySeaGreen img, #cmsImageSpinnerImage, .cmsImageSpinner, img.cmsImageSpinner, #cmsSpinnerZone img, #cmsSpinnerZone .cmsImageSpinner, .cmsImageSpinnerTbl, .blockMsg table, .blockMsg tr, .blockMsg td {
