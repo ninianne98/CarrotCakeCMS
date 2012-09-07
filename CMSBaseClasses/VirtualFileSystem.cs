@@ -126,27 +126,25 @@ namespace Carrotware.CMS.UI.Base {
 					}
 
 					if (navData != null) {
-						if (!sFileRequested.ToLower().Contains(navData.TemplateFile.ToLower())
-								|| navData.Root_ContentID == Guid.Empty) {
-							string sSelectedTemplate = navData.TemplateFile;
+						string sSelectedTemplate = navData.TemplateFile;
 
-							// selectivly engage the cms helper only if in advance mode
-							if (SecurityData.AdvancedEditMode) {
-								using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
-									if (cmsHelper.cmsAdminContent != null) {
-										try { sSelectedTemplate = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
-									}
+						// selectivly engage the cms helper only if in advance mode
+						if (SecurityData.AdvancedEditMode) {
+							using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+								if (cmsHelper.cmsAdminContent != null) {
+									try { sSelectedTemplate = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
 								}
 							}
-
-							if (!File.Exists(context.Server.MapPath(sSelectedTemplate))) {
-								sSelectedTemplate = SiteData.DefaultTemplateFilename;
-							}
-
-							sVirtualReqFile = sFileRequested;
-
-							RewriteCMSPath(context, sSelectedTemplate, queryString);
 						}
+
+						if (!File.Exists(context.Server.MapPath(sSelectedTemplate))) {
+							sSelectedTemplate = SiteData.DefaultTemplateFilename;
+						}
+
+						sVirtualReqFile = sFileRequested;
+
+						RewriteCMSPath(context, sSelectedTemplate, queryString);
+
 					} else {
 
 						SiteData.PerformRedirectToErrorPage("404", sFileRequested);
