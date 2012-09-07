@@ -54,6 +54,10 @@ namespace Carrotware.CMS.Core {
 					sBody = oTextStream.ReadToEnd();
 				}
 
+				if (user.IsLockedOut && user.LastLockoutDate < DateTime.Now.AddMinutes(-45)) {
+					user.UnlockUser();
+				}
+
 				string tmpPassword = user.ResetPassword(); // set to known password
 				string newPassword = GenerateSimplePassword(); // create simpler password
 
