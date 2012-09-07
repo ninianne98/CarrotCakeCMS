@@ -134,7 +134,7 @@
     <EmbeddedResource Include="DataScripts\CREATE01.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Utilities\EmailForgotPassMsg.txt" />
+    <EmbeddedResource Include="Security\EmailForgotPassMsg.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SiteContent\Mock\SampleContent2.txt" />
