@@ -44,7 +44,7 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.CMS.Core.DataScripts.CREATE01.sql", "text/plain")]
 
 
-[assembly: WebResource("Carrotware.CMS.Core.Utilities.EmailForgotPassMsg.txt", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt", "text/plain")]
 
 
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt", "text/html", PerformSubstitution = true)]
