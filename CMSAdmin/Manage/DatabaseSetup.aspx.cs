@@ -46,10 +46,13 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 
 				if (bUpdate) {
-					HandleResponse("Update 1 ", du.AlterStep01());
-					HandleResponse("Update 2 ", du.AlterStep02());
-					HandleResponse("Update 3 ", du.AlterStep03());
-					HandleResponse("Update 4 ", du.AlterStep04());
+					if (!du.IsPostStep04()) {
+						HandleResponse("Update A.1 ", du.AlterStep01());
+						HandleResponse("Update A.2 ", du.AlterStep02());
+						HandleResponse("Update A.3 ", du.AlterStep03());
+						HandleResponse("Update A.4 ", du.AlterStep04());
+					}
+					HandleResponse("Update B.1 ", du.AlterStep05());
 				} else {
 					HandleResponse("Database up-to-date ");
 				}

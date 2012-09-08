@@ -38,21 +38,59 @@ namespace Carrotware.CMS.Core {
 				c.Root_ContentID = rc.Root_ContentID;
 			}
 
-			this.RootContent = rc;
-			this.Content = c;
+			if (c.Root_ContentID == rc.Root_ContentID) {
 
-			this.Root_ContentID = rc.Root_ContentID;
-			this.SiteID = rc.SiteID;
-			this.Heartbeat_UserId = rc.Heartbeat_UserId;
-			this.EditHeartbeat = rc.EditHeartbeat;
-			this.FileName = rc.FileName;
-			this.CreateDate = rc.CreateDate;
+				this.Root_ContentID = rc.Root_ContentID;
+				this.SiteID = rc.SiteID;
+				this.Heartbeat_UserId = rc.Heartbeat_UserId;
+				this.EditHeartbeat = rc.EditHeartbeat;
+				this.FileName = rc.FileName;
+				this.CreateDate = rc.CreateDate;
 
-			this.PageActive = Convert.ToBoolean(rc.PageActive);
+				this.PageActive = rc.PageActive;
+
+				this.ContentID = c.ContentID;
+				this.Parent_ContentID = c.Parent_ContentID;
+				this.IsLatestVersion = c.IsLatestVersion.Value;
+				this.TitleBar = c.TitleBar;
+				this.NavMenuText = c.NavMenuText;
+				this.PageHead = c.PageHead;
+				this.PageText = c.PageText;
+				this.LeftPageText = c.LeftPageText;
+				this.RightPageText = c.RightPageText;
+				this.NavOrder = c.NavOrder;
+				this.EditUserId = c.EditUserId;
+				this.EditDate = c.EditDate;
+				this.TemplateFile = c.TemplateFile;
+				this.NavFileName = rc.FileName;
+
+				this.MetaDescription = c.MetaDescription;
+				this.MetaKeyword = c.MetaKeyword;
+
+			}
+		}
+
+		public ContentPage(vw_carrot_Content c) {
+
+			if (c == null) {
+				c = new vw_carrot_Content();
+				c.Root_ContentID = Guid.NewGuid();
+				c.ContentID = c.Root_ContentID;
+				c.PageActive = true;
+			}
+
+			this.Root_ContentID = c.Root_ContentID;
+			this.SiteID = c.SiteID;
+			this.Heartbeat_UserId = c.Heartbeat_UserId;
+			this.EditHeartbeat = c.EditHeartbeat;
+			this.FileName = c.FileName;
+			this.CreateDate = c.CreateDate;
+
+			this.PageActive = c.PageActive;
 
 			this.ContentID = c.ContentID;
 			this.Parent_ContentID = c.Parent_ContentID;
-			this.IsLatestVersion = Convert.ToBoolean(c.IsLatestVersion);
+			this.IsLatestVersion = c.IsLatestVersion.Value;
 			this.TitleBar = c.TitleBar;
 			this.NavMenuText = c.NavMenuText;
 			this.PageHead = c.PageHead;
@@ -63,7 +101,7 @@ namespace Carrotware.CMS.Core {
 			this.EditUserId = c.EditUserId;
 			this.EditDate = c.EditDate;
 			this.TemplateFile = c.TemplateFile;
-			this.NavFileName = rc.FileName;
+			this.NavFileName = c.FileName;
 
 			this.MetaDescription = c.MetaDescription;
 			this.MetaKeyword = c.MetaKeyword;
@@ -349,9 +387,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
-		private carrot_RootContent RootContent { get; set; }
-		private carrot_Content Content { get; set; }
 
 		#region IDisposable Members
 

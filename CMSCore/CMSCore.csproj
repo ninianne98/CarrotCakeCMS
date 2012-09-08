@@ -146,6 +146,9 @@
     <EmbeddedResource Include="SiteContent\Mock\sample3.png" />
     <EmbeddedResource Include="SiteContent\Mock\sample4.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataScripts\ALTER05.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

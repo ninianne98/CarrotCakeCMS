@@ -410,7 +410,7 @@
 		<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px; width: 500px;">
 			<p>
 				<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
-				<asp:Literal ID="litUser" runat="server">&nbsp</asp:Literal></p>
+				<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal></p>
 		</div>
 	</div>
 	<div id="PageContents">

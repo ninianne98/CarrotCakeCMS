@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using System.Web.UI.HtmlControls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -25,6 +26,7 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void Page_Load(object sender, EventArgs e) {
 
 			DatabaseUpdate du = new DatabaseUpdate();
+			((HtmlImage)loginTemplate.FindControl("imgError")).Visible = false;
 
 			if (du.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist()) {
 				FormsAuthentication.SignOut();
@@ -43,20 +45,18 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void loginTemplate_LoggedIn(object sender, EventArgs e) {
-
 			if (Page.User.Identity.IsAuthenticated) {
 				Response.Redirect("./default.aspx");
 			}
-
 		}
 
 		protected void loginTemplate_LoggingIn(object sender, LoginCancelEventArgs e) {
 			if (FormsAuthentication.Authenticate(loginTemplate.UserName, loginTemplate.Password)) {
 				FormsAuthentication.RedirectFromLoginPage(loginTemplate.UserName, false);
+			} else {
+				((HtmlImage)loginTemplate.FindControl("imgError")).Visible = true;
 			}
 		}
-
-
 
 	}
 }
