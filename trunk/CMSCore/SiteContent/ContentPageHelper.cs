@@ -72,12 +72,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ContentPage> GetLatestContentList(Guid siteID) {
-			List<ContentPage> lstContent = (from ct in db.carrot_Contents
-											join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<ContentPage> lstContent = (from ct in db.vw_carrot_Contents
 											orderby ct.NavOrder, ct.NavMenuText
-											where r.SiteID == siteID
+											where ct.SiteID == siteID
 											 && ct.IsLatestVersion == true
-											select new ContentPage(r, ct)).ToList();
+											select new ContentPage(ct)).ToList();
 			return lstContent;
 		}
 
@@ -246,72 +245,42 @@ namespace Carrotware.CMS.Core {
 				sortDir = "DESC";
 			}
 
-			IEnumerable<ContentPage> query = new List<ContentPage>();
+			IQueryable<vw_carrot_Content> query1 = null;
+			IEnumerable<ContentPage> query2 = new List<ContentPage>();
 
-			bool bIsContent = TestIfPropExists(new carrot_Content(), sortField);
-			bool bIsRootContent = TestIfPropExists(new carrot_RootContent(), sortField);
+			bool bIsRootContent = TestIfPropExists(new vw_carrot_Content(), sortField);
 
 			if (bIsRootContent) {
 				if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
-					query = (from enu in
-								 (from ct in db.carrot_Contents.AsEnumerable()
-								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
-								  orderby GetPropertyValue(r, sortField) descending
-								  where r.SiteID == siteID
-									 && ct.IsLatestVersion == true
-									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
-								  select new ContentPage(r, ct)).AsQueryable()
-							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
+					query1 = (from c in db.vw_carrot_Contents
+							  orderby GetPropertyValue(c, sortField) descending
+							  where c.SiteID == siteID
+								 && c.IsLatestVersion == true
+								 && (c.PageActive == bActiveOnly || bActiveOnly == false)
+							  select c);
 				} else {
-					query = (from enu in
-								 (from ct in db.carrot_Contents.AsEnumerable()
-								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
-								  orderby GetPropertyValue(r, sortField) ascending
-								  where r.SiteID == siteID
-									 && ct.IsLatestVersion == true
-									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
-								  select new ContentPage(r, ct)).AsQueryable()
-							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
+					query1 = (from c in db.vw_carrot_Contents
+							  orderby GetPropertyValue(c, sortField) ascending
+							  where c.SiteID == siteID
+								 && c.IsLatestVersion == true
+								 && (c.PageActive == bActiveOnly || bActiveOnly == false)
+							  select c);
 				}
 			}
 
-			if (bIsContent && !bIsRootContent) {
-				if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
-					query = (from enu in
-								 (from ct in db.carrot_Contents.AsEnumerable()
-								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
-								  orderby GetPropertyValue(ct, sortField) descending
-								  where r.SiteID == siteID
-									 && ct.IsLatestVersion == true
-									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
-								  select new ContentPage(r, ct)).AsQueryable()
-							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
-				} else {
-					query = (from enu in
-								 (from ct in db.carrot_Contents.AsEnumerable()
-								  join r in db.carrot_RootContents.AsEnumerable() on ct.Root_ContentID equals r.Root_ContentID
-								  orderby GetPropertyValue(ct, sortField) ascending
-								  where r.SiteID == siteID
-									 && ct.IsLatestVersion == true
-									 && (r.PageActive == bActiveOnly || bActiveOnly == false)
-								  select new ContentPage(r, ct)).AsQueryable()
-							 select enu).AsQueryable().Skip(startRec).Take(pageSize);
-				}
+			if (!bIsRootContent) {
+				query1 = (from c in db.vw_carrot_Contents
+						  orderby c.CreateDate descending
+						  where c.SiteID == siteID
+							 && c.IsLatestVersion == true
+							 && (c.PageActive == bActiveOnly || bActiveOnly == false)
+						  select c);
 			}
 
-			if (!bIsContent && !bIsRootContent) {
-				query = (from enu in
-							 (from ct in db.carrot_Contents
-							  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-							  orderby r.CreateDate descending
-							  where r.SiteID == siteID
-								 && ct.IsLatestVersion == true
-								 && (r.PageActive == bActiveOnly || bActiveOnly == false)
-							  select new ContentPage(r, ct)).AsQueryable()
-						 select enu).AsQueryable().Skip(startRec).Take(pageSize);
-			}
+			query2 = (from q in query1
+					  select new ContentPage(q)).Skip(startRec).Take(pageSize);
 
-			return query.ToList();
+			return query2.ToList();
 		}
 
 
@@ -413,34 +382,31 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootContentID) {
-			List<ContentPage> content = (from ct in db.carrot_Contents
-										 join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<ContentPage> content = (from ct in db.vw_carrot_Contents
 										 orderby ct.EditDate descending
-										 where r.SiteID == siteID
-										  && r.Root_ContentID == rootContentID
-										 select new ContentPage(r, ct)).ToList();
+										 where ct.SiteID == siteID
+										  && ct.Root_ContentID == rootContentID
+										 select new ContentPage(ct)).ToList();
 			return content;
 		}
 
 		public ContentPage GetVersion(Guid siteID, Guid contentID) {
-			ContentPage content = (from ct in db.carrot_Contents
-								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.vw_carrot_Contents
 								   orderby ct.EditDate descending
-								   where r.SiteID == siteID
+								   where ct.SiteID == siteID
 									&& ct.ContentID == contentID
-								   select new ContentPage(r, ct)).FirstOrDefault();
+								   select new ContentPage(ct)).FirstOrDefault();
 			return content;
 		}
 
 
 		public List<ContentPage> GetLatestContentList(Guid siteID, bool? active) {
-			List<ContentPage> lstContent = (from ct in db.carrot_Contents
-											join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+			List<ContentPage> lstContent = (from ct in db.vw_carrot_Contents
 											orderby ct.NavOrder, ct.NavMenuText
-											where r.SiteID == siteID
+											where ct.SiteID == siteID
 											 && ct.IsLatestVersion == true
-											 && (r.PageActive == active || active == null)
-											select new ContentPage(r, ct)).ToList();
+											 && (ct.PageActive == active || active == null)
+											select new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -486,25 +452,23 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage GetLatestContent(Guid siteID, Guid rootContentID) {
-			ContentPage content = (from ct in db.carrot_Contents
-								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-								   where r.SiteID == siteID
-									   && r.Root_ContentID == rootContentID
+			ContentPage content = (from ct in db.vw_carrot_Contents
+								   where ct.SiteID == siteID
+									   && ct.Root_ContentID == rootContentID
 									   && ct.IsLatestVersion == true
-								   select new ContentPage(r, ct)).FirstOrDefault();
+								   select new ContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}
 
 
 		public ContentPage GetLatestContent(Guid siteID, bool? active, string sPage) {
-			ContentPage content = (from ct in db.carrot_Contents
-								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-								   where r.SiteID == siteID
-									   && (r.PageActive == active || active == null)
-									   && r.FileName.ToLower() == sPage.ToLower()
+			ContentPage content = (from ct in db.vw_carrot_Contents
+								   where ct.SiteID == siteID
+									   && (ct.PageActive == active || active == null)
+									   && ct.FileName.ToLower() == sPage.ToLower()
 									   && ct.IsLatestVersion == true
-								   select new ContentPage(r, ct)).FirstOrDefault();
+								   select new ContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -512,14 +476,13 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage FindHome(Guid siteID) {
-			ContentPage content = (from ct in db.carrot_Contents
-								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.vw_carrot_Contents
 								   orderby ct.NavOrder ascending
-								   where r.SiteID == siteID
-									   && r.PageActive == true
+								   where ct.SiteID == siteID
+									   && ct.PageActive == true
 									   && ct.NavOrder < 1
 									   && ct.IsLatestVersion == true
-								   select new ContentPage(r, ct)).FirstOrDefault();
+								   select new ContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -533,25 +496,23 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
-			ContentPage content = (from ct in db.carrot_Contents
-								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-								   where r.SiteID == siteID
+			ContentPage content = (from ct in db.vw_carrot_Contents
+								   where ct.SiteID == siteID
 									   && ct.IsLatestVersion == true
-									   && r.FileName.ToLower() == urlFileName.ToLower()
-								   select new ContentPage(r, ct)).FirstOrDefault();
+									   && ct.FileName.ToLower() == urlFileName.ToLower()
+								   select new ContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}
 
 		public ContentPage FindHome(Guid siteID, bool? active) {
-			ContentPage content = (from ct in db.carrot_Contents
-								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+			ContentPage content = (from ct in db.vw_carrot_Contents
 								   orderby ct.NavOrder ascending
-								   where r.SiteID == siteID
-									   && (r.PageActive == active || active == null)
+								   where ct.SiteID == siteID
+									   && (ct.PageActive == active || active == null)
 									   && ct.NavOrder < 1
 									   && ct.IsLatestVersion == true
-								   select new ContentPage(r, ct)).FirstOrDefault();
+								   select new ContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}

@@ -4,13 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<div style="height: 25px; width: 200px; border: 1px solid #ffffff; clear: both;">
-		&nbsp
+		&nbsp;
 	</div>
 	<table width="380px">
 		<tr>
 			<td class="tableback">
 				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">
-					&nbsp
+					&nbsp;
 				</div>
 			</td>
 			<td class="tableback">
@@ -19,7 +19,7 @@
 			</td>
 			<td class="tableback">
 				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">
-					&nbsp
+					&nbsp;
 				</div>
 			</td>
 		</tr>

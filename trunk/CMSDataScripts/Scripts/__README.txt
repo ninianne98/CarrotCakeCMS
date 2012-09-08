@@ -24,4 +24,6 @@ If coming from an earlier version, run these scripts
 
 		** ALTER 03 - add create date to root content.sql     (from before 2012-07-22)
 
-		** ALTER 04 - move data to carrot prefix tables.sql     (from before 2012-08-12)		
+		** ALTER 04 - move data to carrot prefix tables.sql     (from before 2012-08-12)
+
+		** ALTER 05 - create combined content view.sql     (from before 2012-09-08)

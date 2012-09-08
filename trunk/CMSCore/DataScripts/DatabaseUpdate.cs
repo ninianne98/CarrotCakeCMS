@@ -196,12 +196,32 @@ namespace Carrotware.CMS.Core {
 			return res;
 		}
 
+		public bool IsPostStep04() {
+			if (!FailedSQL) {
+				string query = "";
+				DataTable table1 = null;
+
+				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count >= 4) {
+					return true;
+				}
+			}
+
+			return false;
+		}
 
 		public bool DatabaseNeedsUpdate() {
 			if (!FailedSQL) {
 
 				string query = "";
 				DataTable table1 = null;
+
+				query = "SELECT * FROM sys.views WHERE name = 'vw_carrot_Content' ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 1) {
+					return true;
+				}
 
 				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
 				DataTable table2 = GetData(query);
@@ -329,6 +349,23 @@ namespace Carrotware.CMS.Core {
 			}
 
 			res.Response = "CMS Tables Already Changed";
+			return res;
+		}
+
+		public DatabaseUpdateResponse AlterStep05() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			string query = "SELECT * FROM sys.views WHERE name = 'vw_carrot_Content' ";
+
+			DataTable table1 = GetData(query);
+
+			if (table1.Rows.Count < 1) {
+				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER05.sql", false);
+				res.Response = "CMS DB added vw_carrot_Content";
+				return res;
+			}
+
+			res.Response = "CMS DB vw_carrot_Content Already Changed";
 			return res;
 		}
 

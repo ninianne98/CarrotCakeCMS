@@ -35,11 +35,41 @@ namespace Carrotware.CMS.Core {
 				c.Root_ContentID = rc.Root_ContentID;
 			}
 
-			this.Root_ContentID = rc.Root_ContentID;
-			this.SiteID = rc.SiteID;
-			this.FileName = rc.FileName;
-			this.PageActive = Convert.ToBoolean(rc.PageActive);
-			this.CreateDate = rc.CreateDate;
+			if (c.Root_ContentID == rc.Root_ContentID) {
+
+				this.Root_ContentID = rc.Root_ContentID;
+				this.SiteID = rc.SiteID;
+				this.FileName = rc.FileName;
+				this.PageActive = Convert.ToBoolean(rc.PageActive);
+				this.CreateDate = rc.CreateDate;
+
+				this.ContentID = c.ContentID;
+				this.Parent_ContentID = c.Parent_ContentID;
+				this.TitleBar = c.TitleBar;
+				this.NavMenuText = c.NavMenuText;
+				this.PageHead = c.PageHead;
+				this.PageText = c.PageText;
+				this.NavOrder = c.NavOrder;
+				this.EditDate = c.EditDate;
+				this.TemplateFile = c.TemplateFile;
+				this.NavFileName = rc.FileName;
+			}
+		}
+
+		public SiteNav(vw_carrot_Content c) {
+
+			if (c == null) {
+				c = new vw_carrot_Content();
+				c.Root_ContentID = Guid.NewGuid();
+				c.ContentID = c.Root_ContentID;
+				c.PageActive = true;
+			}
+
+			this.Root_ContentID = c.Root_ContentID;
+			this.SiteID = c.SiteID;
+			this.FileName = c.FileName;
+			this.PageActive = Convert.ToBoolean(c.PageActive);
+			this.CreateDate = c.CreateDate;
 
 			this.ContentID = c.ContentID;
 			this.Parent_ContentID = c.Parent_ContentID;
@@ -50,7 +80,7 @@ namespace Carrotware.CMS.Core {
 			this.NavOrder = c.NavOrder;
 			this.EditDate = c.EditDate;
 			this.TemplateFile = c.TemplateFile;
-			this.NavFileName = rc.FileName;
+			this.NavFileName = c.FileName;
 
 		}
 
