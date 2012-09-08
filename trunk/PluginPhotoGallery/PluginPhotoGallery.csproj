@@ -243,10 +243,6 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CarrotCakeCMS\WebControls\WebControls.csproj">
-      <Project>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</Project>
-      <Name>WebControls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CMSCore\CMSCore.csproj">
       <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
       <Name>CMSCore</Name>
@@ -254,6 +250,10 @@
     <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
       <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
       <Name>CMSInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebControls\WebControls.csproj">
+      <Project>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</Project>
+      <Name>WebControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
