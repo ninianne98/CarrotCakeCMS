@@ -20,13 +20,80 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNavHelperReal() { }
 
+		private SiteNav MakeSiteNav(carrot_RootContent rc, carrot_Content c) {
+			var nav = new SiteNav();
+
+			if (rc == null) {
+				rc = new carrot_RootContent();
+				rc.Root_ContentID = Guid.NewGuid();
+				rc.PageActive = true;
+			}
+			if (c == null) {
+				c = new carrot_Content();
+				c.ContentID = rc.Root_ContentID;
+				c.Root_ContentID = rc.Root_ContentID;
+			}
+
+			if (c.Root_ContentID == rc.Root_ContentID) {
+
+				nav.Root_ContentID = rc.Root_ContentID;
+				nav.SiteID = rc.SiteID;
+				nav.FileName = rc.FileName;
+				nav.PageActive = Convert.ToBoolean(rc.PageActive);
+				nav.CreateDate = rc.CreateDate;
+
+				nav.ContentID = c.ContentID;
+				nav.Parent_ContentID = c.Parent_ContentID;
+				nav.TitleBar = c.TitleBar;
+				nav.NavMenuText = c.NavMenuText;
+				nav.PageHead = c.PageHead;
+				nav.PageText = c.PageText;
+				nav.NavOrder = c.NavOrder;
+				nav.EditDate = c.EditDate;
+				nav.TemplateFile = c.TemplateFile;
+				nav.NavFileName = rc.FileName;
+			}
+
+			return nav;
+		}
+
+		private SiteNav MakeSiteNav(vw_carrot_Content c) {
+			var nav = new SiteNav();
+
+			if (c == null) {
+				c = new vw_carrot_Content();
+				c.Root_ContentID = Guid.NewGuid();
+				c.ContentID = c.Root_ContentID;
+				c.PageActive = true;
+			}
+
+			nav.Root_ContentID = c.Root_ContentID;
+			nav.SiteID = c.SiteID;
+			nav.FileName = c.FileName;
+			nav.PageActive = Convert.ToBoolean(c.PageActive);
+			nav.CreateDate = c.CreateDate;
+
+			nav.ContentID = c.ContentID;
+			nav.Parent_ContentID = c.Parent_ContentID;
+			nav.TitleBar = c.TitleBar;
+			nav.NavMenuText = c.NavMenuText;
+			nav.PageHead = c.PageHead;
+			nav.PageText = c.PageText;
+			nav.NavOrder = c.NavOrder;
+			nav.EditDate = c.EditDate;
+			nav.TemplateFile = c.TemplateFile;
+			nav.NavFileName = c.FileName;
+
+			return nav;
+		}
+
 		public List<SiteNav> GetMasterNavigation(Guid siteID, bool bActiveOnly) {
 			List<SiteNav> lstContent = (from ct in db.vw_carrot_Contents
 										orderby ct.NavOrder, ct.NavMenuText
 										where ct.SiteID == siteID
 											&& (ct.PageActive == bActiveOnly || bActiveOnly == false)
 											&& ct.IsLatestVersion == true
-										select new SiteNav(ct)).ToList();
+										select MakeSiteNav(ct)).ToList();
 
 			return lstContent;
 		}
@@ -40,7 +107,7 @@ namespace Carrotware.CMS.Core {
 							  && ct.Parent_ContentID == null
 							  && (ct.PageActive == bActiveOnly || bActiveOnly == false)
 							  && ct.IsLatestVersion == true
-						  select new SiteNav(ct)).ToList();
+						  select MakeSiteNav(ct)).ToList();
 
 			return lstContent;
 		}
@@ -61,7 +128,7 @@ namespace Carrotware.CMS.Core {
 								  && ct.Parent_ContentID == c.Root_ContentID
 								  && (ct.PageActive == bActiveOnly || bActiveOnly == false)
 								  && ct.IsLatestVersion == true
-							  select new SiteNav(ct)).ToList();
+							  select MakeSiteNav(ct)).ToList();
 			}
 
 			return lstContent;
@@ -84,7 +151,7 @@ namespace Carrotware.CMS.Core {
 								  && ct.Parent_ContentID == c.Parent_ContentID
 								  && (ct.PageActive == bActiveOnly || bActiveOnly == false)
 								  && ct.IsLatestVersion == true
-							  select new SiteNav(ct)).ToList();
+							  select MakeSiteNav(ct)).ToList();
 			}
 
 			return lstContent;
@@ -98,7 +165,7 @@ namespace Carrotware.CMS.Core {
 					   where ct.SiteID == siteID
 						   && ct.FileName.ToLower() == sPage.ToLower()
 						   && ct.IsLatestVersion == true
-					   select new SiteNav(ct)).FirstOrDefault();
+					   select MakeSiteNav(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -111,7 +178,7 @@ namespace Carrotware.CMS.Core {
 					   where ct.SiteID == siteID
 						   && ct.Root_ContentID == rootContentID
 						   && ct.IsLatestVersion == true
-					   select new SiteNav(ct)).FirstOrDefault();
+					   select MakeSiteNav(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -126,7 +193,7 @@ namespace Carrotware.CMS.Core {
 						   where ct.SiteID == siteID
 							   && ct.FileName.ToLower() == content.FileName.ToLower()
 							   && ct.IsLatestVersion == true
-						   select new SiteNav(ct)).FirstOrDefault();
+						   select MakeSiteNav(ct)).FirstOrDefault();
 			}
 
 			return content;
@@ -141,7 +208,7 @@ namespace Carrotware.CMS.Core {
 						   where ct.SiteID == siteID
 							   && ct.Root_ContentID == nav1.Parent_ContentID
 							   && ct.IsLatestVersion == true
-						   select new SiteNav(ct)).FirstOrDefault();
+						   select MakeSiteNav(ct)).FirstOrDefault();
 			}
 
 			return content;
@@ -156,7 +223,7 @@ namespace Carrotware.CMS.Core {
 							  && ct.Parent_ContentID == ParentID
 							  && (ct.PageActive == bActiveOnly || bActiveOnly == false)
 							  && ct.IsLatestVersion == true
-						  select new SiteNav(ct)).ToList();
+						  select MakeSiteNav(ct)).ToList();
 
 			return lstContent;
 		}
@@ -177,7 +244,7 @@ namespace Carrotware.CMS.Core {
 								  && ct.Parent_ContentID == c.Parent_ContentID
 								  && (ct.PageActive == bActiveOnly || bActiveOnly == false)
 								  && ct.IsLatestVersion == true
-							  select new SiteNav(ct)).ToList();
+							  select MakeSiteNav(ct)).ToList();
 			}
 
 			return lstContent;
@@ -192,7 +259,7 @@ namespace Carrotware.CMS.Core {
 						  where ct.SiteID == siteID
 							  && ct.IsLatestVersion == true
 							  && (ct.PageActive == bActiveOnly || bActiveOnly == false)
-						  select new SiteNav(ct)).Take(iUpdates).ToList();
+						  select MakeSiteNav(ct)).Take(iUpdates).ToList();
 
 			return lstContent;
 		}
@@ -203,7 +270,7 @@ namespace Carrotware.CMS.Core {
 							   where ct.SiteID == siteID
 								   && ct.Root_ContentID == rootContentID
 								   && ct.IsLatestVersion == true
-							   select new SiteNav(ct)).FirstOrDefault();
+							   select MakeSiteNav(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -214,7 +281,7 @@ namespace Carrotware.CMS.Core {
 								   && (ct.PageActive == active || active == null)
 								   && ct.FileName.ToLower() == sPage.ToLower()
 								   && ct.IsLatestVersion == true
-							   select new SiteNav(ct)).FirstOrDefault();
+							   select MakeSiteNav(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -226,7 +293,7 @@ namespace Carrotware.CMS.Core {
 								   && ct.PageActive == true
 								   && ct.NavOrder < 1
 								   && ct.IsLatestVersion == true
-							   select new SiteNav(ct)).FirstOrDefault();
+							   select MakeSiteNav(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -236,7 +303,7 @@ namespace Carrotware.CMS.Core {
 							   where ct.SiteID == siteID
 								   && ct.IsLatestVersion == true
 								   && ct.FileName.ToLower() == urlFileName.ToLower()
-							   select new SiteNav(ct)).FirstOrDefault();
+							   select MakeSiteNav(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -248,7 +315,7 @@ namespace Carrotware.CMS.Core {
 								   && (ct.PageActive == active || active == null)
 								   && ct.NavOrder < 1
 								   && ct.IsLatestVersion == true
-							   select new SiteNav(ct)).FirstOrDefault();
+							   select MakeSiteNav(ct)).FirstOrDefault();
 
 			return content;
 		}

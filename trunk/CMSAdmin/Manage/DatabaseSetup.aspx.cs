@@ -42,8 +42,9 @@ namespace Carrotware.CMS.UI.Admin {
 					bUpdate = false;
 				} else {
 					HandleResponse("Database already exists ");
-					bUpdate = du.DatabaseNeedsUpdate();
 				}
+
+				bUpdate = du.DatabaseNeedsUpdate();
 
 				if (bUpdate) {
 					if (!du.IsPostStep04()) {
