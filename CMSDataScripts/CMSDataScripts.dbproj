@@ -574,6 +574,9 @@
     <Build Include="Schema Objects\Tables\dbo.tblGalleryImageMeta.table.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_Widget.view.sql">
+      <SubType>Code</SubType>
+    </Build>
     <Build Include="Schema Objects\Views\dbo.vw_carrot_Content.view.sql">
       <SubType>Code</SubType>
     </Build>
