@@ -27,14 +27,34 @@ namespace Carrotware.CMS.Core {
 			return new Widget(rootWidgetID);
 		}
 
+		private Widget MakeWidget(vw_carrot_Widget ww) {
+
+			var w = new Widget();
+
+			w.IsWidgetPendingDelete = false;
+
+			w.WidgetDataID = ww.WidgetDataID;
+			w.EditDate = ww.EditDate;
+			w.IsLatestVersion = ww.IsLatestVersion;
+			w.ControlProperties = ww.ControlProperties;
+
+			w.Root_WidgetID = ww.Root_WidgetID;
+			w.Root_ContentID = ww.Root_ContentID;
+			w.WidgetOrder = ww.WidgetOrder;
+			w.ControlPath = ww.ControlPath;
+			w.PlaceholderName = ww.PlaceholderName;
+			w.IsWidgetActive = ww.WidgetActive;
+
+			return w;
+		}
+
 		public List<Widget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
-			var w = (from r in db.carrot_WidgetDatas
-					 join rr in db.carrot_Widgets on r.Root_WidgetID equals rr.Root_WidgetID
-					 orderby rr.WidgetOrder
-					 where rr.Root_ContentID == rootContentID
+			var w = (from r in db.vw_carrot_Widgets
+					 orderby r.WidgetOrder
+					 where r.Root_ContentID == rootContentID
 						&& r.IsLatestVersion == true
-						&& (rr.WidgetActive == bActiveOnly || bActiveOnly == null)
-					 select new Widget(r)).ToList();
+						&& (r.WidgetActive == bActiveOnly || bActiveOnly == null)
+					 select MakeWidget(r)).ToList();
 
 			return w;
 		}
@@ -68,19 +88,18 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
-			var w = (from r in db.carrot_WidgetDatas
-					 join rr in db.carrot_Widgets on r.Root_WidgetID equals rr.Root_WidgetID
+			var w = (from r in db.vw_carrot_Widgets
 					 orderby r.EditDate descending
-					 where rr.Root_WidgetID == rootWidgetID
-					 select new Widget(r)).ToList();
+					 where r.Root_WidgetID == rootWidgetID
+					 select MakeWidget(r)).ToList();
 
 			return w;
 		}
 
 		public Widget GetWidgetVersion(Guid widgetDataID) {
-			var w = (from r in db.carrot_WidgetDatas
+			var w = (from r in db.vw_carrot_Widgets
 					 where r.WidgetDataID == widgetDataID
-					 select new Widget(r)).FirstOrDefault();
+					 select MakeWidget(r)).FirstOrDefault();
 
 			return w;
 		}

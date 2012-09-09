@@ -179,6 +179,14 @@ namespace Carrotware.CMS.Data
 				return this.GetTable<vw_carrot_Content>();
 			}
 		}
+		
+		public System.Data.Linq.Table<vw_carrot_Widget> vw_carrot_Widgets
+		{
+			get
+			{
+				return this.GetTable<vw_carrot_Widget>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.aspnet_Users")]
@@ -3533,6 +3541,213 @@ namespace Carrotware.CMS.Data
 				if ((this._MetaDescription != value))
 				{
 					this._MetaDescription = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Widget")]
+	public partial class vw_carrot_Widget
+	{
+		
+		private System.Guid _Root_WidgetID;
+		
+		private System.Guid _Root_ContentID;
+		
+		private int _WidgetOrder;
+		
+		private string _PlaceholderName;
+		
+		private string _ControlPath;
+		
+		private bool _WidgetActive;
+		
+		private System.Guid _WidgetDataID;
+		
+		private System.Nullable<bool> _IsLatestVersion;
+		
+		private System.DateTime _EditDate;
+		
+		private string _ControlProperties;
+		
+		private System.Guid _SiteID;
+		
+		public vw_carrot_Widget()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_WidgetID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_WidgetID
+		{
+			get
+			{
+				return this._Root_WidgetID;
+			}
+			set
+			{
+				if ((this._Root_WidgetID != value))
+				{
+					this._Root_WidgetID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this._Root_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetOrder", DbType="Int NOT NULL")]
+		public int WidgetOrder
+		{
+			get
+			{
+				return this._WidgetOrder;
+			}
+			set
+			{
+				if ((this._WidgetOrder != value))
+				{
+					this._WidgetOrder = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlaceholderName", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
+		public string PlaceholderName
+		{
+			get
+			{
+				return this._PlaceholderName;
+			}
+			set
+			{
+				if ((this._PlaceholderName != value))
+				{
+					this._PlaceholderName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlPath", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
+		public string ControlPath
+		{
+			get
+			{
+				return this._ControlPath;
+			}
+			set
+			{
+				if ((this._ControlPath != value))
+				{
+					this._ControlPath = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetActive", DbType="Bit NOT NULL")]
+		public bool WidgetActive
+		{
+			get
+			{
+				return this._WidgetActive;
+			}
+			set
+			{
+				if ((this._WidgetActive != value))
+				{
+					this._WidgetActive = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetDataID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid WidgetDataID
+		{
+			get
+			{
+				return this._WidgetDataID;
+			}
+			set
+			{
+				if ((this._WidgetDataID != value))
+				{
+					this._WidgetDataID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
+		public System.Nullable<bool> IsLatestVersion
+		{
+			get
+			{
+				return this._IsLatestVersion;
+			}
+			set
+			{
+				if ((this._IsLatestVersion != value))
+				{
+					this._IsLatestVersion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EditDate
+		{
+			get
+			{
+				return this._EditDate;
+			}
+			set
+			{
+				if ((this._EditDate != value))
+				{
+					this._EditDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlProperties", DbType="VarChar(MAX)")]
+		public string ControlProperties
+		{
+			get
+			{
+				return this._ControlProperties;
+			}
+			set
+			{
+				if ((this._ControlProperties != value))
+				{
+					this._ControlProperties = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
 				}
 			}
 		}

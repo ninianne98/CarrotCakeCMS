@@ -217,9 +217,9 @@ namespace Carrotware.CMS.Core {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "SELECT * FROM sys.views WHERE name = 'vw_carrot_Content' ";
+				query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
+				if (table1.Rows.Count < 2) {
 					return true;
 				}
 
@@ -355,17 +355,17 @@ namespace Carrotware.CMS.Core {
 		public DatabaseUpdateResponse AlterStep05() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "SELECT * FROM sys.views WHERE name = 'vw_carrot_Content' ";
+			string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 
 			DataTable table1 = GetData(query);
 
-			if (table1.Rows.Count < 1) {
+			if (table1.Rows.Count < 2) {
 				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER05.sql", false);
-				res.Response = "CMS DB added vw_carrot_Content";
+				res.Response = "CMS DB added vw_carrot_Content and vw_carrot_Widget";
 				return res;
 			}
 
-			res.Response = "CMS DB vw_carrot_Content Already Changed";
+			res.Response = "CMS DB vw_carrot_Content and vw_carrot_Widget already added";
 			return res;
 		}
 

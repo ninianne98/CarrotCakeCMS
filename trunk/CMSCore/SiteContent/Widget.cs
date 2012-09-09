@@ -50,7 +50,7 @@ namespace Carrotware.CMS.Core {
 
 		private void SetVals(carrot_WidgetData w) {
 
-			carrot_Widget ww = db.carrot_Widgets.Where(x => x.Root_WidgetID == w.Root_WidgetID).FirstOrDefault();
+			vw_carrot_Widget ww = db.vw_carrot_Widgets.Where(x => x.Root_WidgetID == w.Root_WidgetID && x.IsLatestVersion == true).FirstOrDefault();
 
 			this.IsWidgetPendingDelete = false;
 
@@ -68,7 +68,6 @@ namespace Carrotware.CMS.Core {
 				this.IsWidgetActive = ww.WidgetActive;
 			}
 		}
-
 
 		public string ControlPath { get; set; }
 		public string ControlProperties { get; set; }

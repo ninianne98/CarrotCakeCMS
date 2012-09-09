@@ -167,4 +167,19 @@
 			<Column Name="MetaDescription" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
 		</Type>
 	</Table>
+	<Table Name="dbo.vw_carrot_Widget" Member="vw_carrot_Widgets">
+		<Type Name="vw_carrot_Widget">
+			<Column Name="Root_WidgetID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+			<Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+			<Column Name="WidgetOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+			<Column Name="PlaceholderName" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+			<Column Name="ControlPath" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
+			<Column Name="WidgetActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+			<Column Name="WidgetDataID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+			<Column Name="IsLatestVersion" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+			<Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+			<Column Name="ControlProperties" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+			<Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+		</Type>
+	</Table>
 </Database>
