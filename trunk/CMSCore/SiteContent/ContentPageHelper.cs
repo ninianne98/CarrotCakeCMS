@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Carrotware.CMS.Data;
-using System.Reflection;
-using System.Xml.Serialization;
 using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
-using System.Web.UI;
 using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.UI;
+using System.Xml.Serialization;
+using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -314,6 +315,25 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		private static IQueryable<T> SortByParm<T>(IQueryable<T> source, string SortByFieldName, string SortDirection) {
+			string SortDir = "OrderBy";
+
+			if (SortDirection.ToUpper() == "DESC") {
+				SortDir = "OrderByDescending";
+			}
+
+			Type type = typeof(T);
+			PropertyInfo property = type.GetProperty(SortByFieldName);
+			ParameterExpression parameter = Expression.Parameter(type, SortByFieldName);
+			MemberExpression propertyAccess = Expression.MakeMemberAccess(parameter, property);
+			LambdaExpression orderByExp = Expression.Lambda(propertyAccess, parameter);
+
+			MethodCallExpression resultExp = Expression.Call(typeof(Queryable), SortDir, new Type[] { type, property.PropertyType }, source.Expression, Expression.Quote(orderByExp));
+
+			return source.Provider.CreateQuery<T>(resultExp);
+		}
+
+
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			int startRec = pageNumber * pageSize;
 
@@ -333,36 +353,38 @@ namespace Carrotware.CMS.Core {
 				sortDir = "DESC";
 			}
 
+			bool IsContentProp = false;
+
+			sortDir = sortDir.ToUpper();
+
 			IQueryable<vw_carrot_Content> query1 = null;
 			IEnumerable<ContentPage> query2 = new List<ContentPage>();
 
-			bool bIsRootContent = TestIfPropExists(new vw_carrot_Content(), sortField);
+			sortField = (from p in GetProperties(new vw_carrot_Content())
+						 where p.ToLower().Trim() == sortField.ToLower().Trim()
+						 select p).FirstOrDefault();
 
-			if (bIsRootContent) {
-				if (sortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
-					query1 = (from c in db.vw_carrot_Contents
-							  orderby GetPropertyValue(c, sortField) descending
-							  where c.SiteID == siteID
-								 && c.IsLatestVersion == true
-								 && (c.PageActive == bActiveOnly || bActiveOnly == false)
-							  select c);
-				} else {
-					query1 = (from c in db.vw_carrot_Contents
-							  orderby GetPropertyValue(c, sortField) ascending
-							  where c.SiteID == siteID
-								 && c.IsLatestVersion == true
-								 && (c.PageActive == bActiveOnly || bActiveOnly == false)
-							  select c);
-				}
+			if (!string.IsNullOrEmpty(sortField)) {
+				IsContentProp = TestIfPropExists(new vw_carrot_Content(), sortField);
 			}
 
-			if (!bIsRootContent) {
-				query1 = (from c in db.vw_carrot_Contents
+			query1 = (from c in db.vw_carrot_Contents
+					  where c.SiteID == siteID
+						 && c.IsLatestVersion == true
+						 && (c.PageActive == bActiveOnly || bActiveOnly == false)
+					  select c).AsQueryable();
+
+			if (IsContentProp) {
+				query1 = SortByParm<vw_carrot_Content>(query1, sortField, sortDir);
+			}
+
+			if (!IsContentProp) {
+				query1 = (from c in query1
 						  orderby c.CreateDate descending
 						  where c.SiteID == siteID
 							 && c.IsLatestVersion == true
 							 && (c.PageActive == bActiveOnly || bActiveOnly == false)
-						  select c);
+						  select c).AsQueryable();
 			}
 
 			query2 = (from q in query1
@@ -380,6 +402,14 @@ namespace Carrotware.CMS.Core {
 		private bool TestIfPropExists(object obj, string property) {
 			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
 			return propertyInfo == null ? false : true;
+		}
+
+		public List<string> GetProperties(object obj) {
+			PropertyInfo[] info = obj.GetType().GetProperties();
+
+			List<string> props = (from i in info.AsEnumerable()
+								  select i.Name).ToList();
+			return props;
 		}
 
 		public ContentPage CopyContentPageToNew(ContentPage pageSource) {
