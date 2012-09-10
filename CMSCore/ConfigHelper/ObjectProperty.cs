@@ -28,6 +28,8 @@ namespace Carrotware.CMS.Core {
 		public PropertyInfo Props { get; set; }
 
 		public string CompanionSourceFieldName { get; set; }
+		
+		public string FieldDescription { get; set; }
 
 		public WidgetAttribute.FieldMode FieldMode { get; set; }
 

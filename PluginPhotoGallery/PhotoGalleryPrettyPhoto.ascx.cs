@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
@@ -13,10 +14,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		PhotoGalleryDataContext db = new PhotoGalleryDataContext();
 
+		[Description("Display gallery heading")]
 		public bool ShowHeading { get; set; }
 
+		[Description("Scale gallery images")]
 		public bool ScaleImage { get; set; }
 
+		[Description("Gallery to display")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstGalleryID")]
 		public Guid GalleryID { get; set; }
 
@@ -38,7 +42,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 
-
+		[Description("Gallery image pixel height/width")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
 		public int ThumbSize { get; set; }
 
@@ -67,12 +71,11 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			return ScaleImage.ToString().ToLower();
 		}
 
-
 		public string GetThumbSize() {
 			return ThumbSize.ToString().ToLower();
 		}
 
-
+		[Description("Gallery appearance (pretty photo skin)")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstPrettySkins")]
 		public string PrettyPhotoSkin { get; set; }
 

@@ -71,42 +71,55 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					}
 				}
 
-				lstDefProps = CMSConfigHelper.GetProperties(widget);
-				List<ObjectProperty> props1 = new List<ObjectProperty>();
-				List<ObjectProperty> props2 = new List<ObjectProperty>();
-				List<ObjectProperty> props3 = new List<ObjectProperty>();
-				List<ObjectProperty> props4 = new List<ObjectProperty>();
-				List<ObjectProperty> props5 = new List<ObjectProperty>();
-				List<ObjectProperty> props6 = new List<ObjectProperty>();
+				lstDefProps = ReflectionUtilities.GetObjectProperties(widget);
+				List<ObjectProperty> props = new List<ObjectProperty>();
+				List<ObjectProperty> props_tmp = new List<ObjectProperty>();
 
 				if (widget is Carrotware.CMS.UI.Base.BaseUserControl) {
-					props1 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.UI.Base.BaseUserControl));
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.UI.Base.BaseUserControl));
+					props = props.Union(props_tmp).ToList();
 				}
-				if (widget is Carrotware.CMS.Interface.IWidget) {
-					props2 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidget));
-				}
+
 				if (widget is Carrotware.CMS.Interface.BaseShellUserControl) {
-					props3 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.BaseShellUserControl));
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.BaseShellUserControl));
+					props = props.Union(props_tmp).ToList();
 				}
+
 				if (widget is System.Web.UI.UserControl) {
-					props4 = CMSConfigHelper.GetTypeProperties(typeof(System.Web.UI.UserControl));
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(System.Web.UI.UserControl));
+					props = props.Union(props_tmp).ToList();
 				}
-				if (widget is Carrotware.CMS.Interface.IWidgetParmData) {
-					props5 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
+
+				if (widget is Carrotware.CMS.Interface.IAdminModule) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IAdminModule));
+					props = props.Union(props_tmp).ToList();
 				}
+
+				if (widget is Carrotware.CMS.Interface.IWidget) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidget));
+					props = props.Union(props_tmp).ToList();
+				}
+
 				if (widget is Carrotware.CMS.Interface.IWidgetEditStatus) {
-					props6 = CMSConfigHelper.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetEditStatus));
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetEditStatus));
+					props = props.Union(props_tmp).ToList();
 				}
+
+				if (widget is Carrotware.CMS.Interface.IWidgetParmData) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
+					props = props.Union(props_tmp).ToList();
+				}
+
+				if (widget is Carrotware.CMS.Interface.IWidgetRawData) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetRawData));
+					props = props.Union(props_tmp).ToList();
+				}
+
 
 				rpProps.DataSource = (from p in lstDefProps
 									  where p.CanRead == true
 									  && p.CanWrite == true
-									  && !props1.Contains(p)
-									  && !props2.Contains(p)
-									  && !props3.Contains(p)
-									  && !props4.Contains(p)
-									  && !props5.Contains(p)
-									  && !props6.Contains(p)
+									  && !props.Contains(p)
 									  select p).ToList();
 
 				rpProps.DataBind();

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
@@ -13,10 +14,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		PhotoGalleryDataContext db = new PhotoGalleryDataContext();
 
+		[Description("Display gallery heading")]
 		public bool ShowHeading { get; set; }
 
+		[Description("Scale gallery images")]
 		public bool ScaleImage { get; set; }
 
+		[Description("Gallery to display")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstGalleryID")]
 		public Guid GalleryID { get; set; }
 
@@ -53,11 +57,14 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
+		[Description("Gallery main image pixel height/width")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
+		public int ThumbSize1 { get; set; }
+
+		[Description("Gallery detail image pixel height/width")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
 		public int ThumbSize2 { get; set; }
 
-		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
-		public int ThumbSize1 { get; set; }
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstSizes {
@@ -83,6 +90,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
+		[Description("Gallery popup window width in pixels")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes2")]
 		public int WindowWidth { get; set; }
 
@@ -103,6 +111,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
+		[Description("Gallery appearance (pretty photo skin)")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstPrettySkins")]
 		public string PrettyPhotoSkin { get; set; }
 
@@ -127,7 +136,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public string GetScale() {
 			return ScaleImage.ToString().ToLower();
 		}
-
 
 		public string GetThumbSize() {
 			return ThumbSize1.ToString().ToLower();
@@ -248,11 +256,11 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				pnlGalleryHead.Visible = ShowHeading;
 
 				List<tblGalleryImage> gallery = (from g in db.tblGalleryImages
-							   join gg in db.tblGalleries on g.GalleryID equals gg.GalleryID
-							   where g.GalleryID == GalleryID
-								   && gg.SiteID == SiteData.CurrentSiteID
-							   orderby g.ImageOrder ascending
-							   select g).ToList();
+												 join gg in db.tblGalleries on g.GalleryID equals gg.GalleryID
+												 where g.GalleryID == GalleryID
+													 && gg.SiteID == SiteData.CurrentSiteID
+												 orderby g.ImageOrder ascending
+												 select g).ToList();
 
 				List<string> imgNames = (from g in gallery
 										 select g.GalleryImage.ToLower()).ToList();
@@ -261,8 +269,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 							 where g.SiteID == SiteData.CurrentSiteID
 								 && imgNames.Contains(g.GalleryImage.ToLower())
 							 select g).ToList();
-	
-				
+
+
 				rpGallery.DataSource = gallery;
 				rpGallery.DataBind();
 

@@ -315,25 +315,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		private static IQueryable<T> SortByParm<T>(IQueryable<T> source, string SortByFieldName, string SortDirection) {
-			string SortDir = "OrderBy";
-
-			if (SortDirection.ToUpper() == "DESC") {
-				SortDir = "OrderByDescending";
-			}
-
-			Type type = typeof(T);
-			PropertyInfo property = type.GetProperty(SortByFieldName);
-			ParameterExpression parameter = Expression.Parameter(type, SortByFieldName);
-			MemberExpression propertyAccess = Expression.MakeMemberAccess(parameter, property);
-			LambdaExpression orderByExp = Expression.Lambda(propertyAccess, parameter);
-
-			MethodCallExpression resultExp = Expression.Call(typeof(Queryable), SortDir, new Type[] { type, property.PropertyType }, source.Expression, Expression.Quote(orderByExp));
-
-			return source.Provider.CreateQuery<T>(resultExp);
-		}
-
-
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			int startRec = pageNumber * pageSize;
 
@@ -360,12 +341,12 @@ namespace Carrotware.CMS.Core {
 			IQueryable<vw_carrot_Content> query1 = null;
 			IEnumerable<ContentPage> query2 = new List<ContentPage>();
 
-			sortField = (from p in GetProperties(new vw_carrot_Content())
+			sortField = (from p in ReflectionUtilities.GetPropertyStrings(typeof(vw_carrot_Content))
 						 where p.ToLower().Trim() == sortField.ToLower().Trim()
 						 select p).FirstOrDefault();
 
 			if (!string.IsNullOrEmpty(sortField)) {
-				IsContentProp = TestIfPropExists(new vw_carrot_Content(), sortField);
+				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_Content), sortField);
 			}
 
 			query1 = (from c in db.vw_carrot_Contents
@@ -375,7 +356,7 @@ namespace Carrotware.CMS.Core {
 					  select c).AsQueryable();
 
 			if (IsContentProp) {
-				query1 = SortByParm<vw_carrot_Content>(query1, sortField, sortDir);
+				query1 = ReflectionUtilities.SortByParm<vw_carrot_Content>(query1, sortField, sortDir);
 			}
 
 			if (!IsContentProp) {
@@ -391,25 +372,6 @@ namespace Carrotware.CMS.Core {
 					  select CreateContentPage(q)).Skip(startRec).Take(pageSize);
 
 			return query2.ToList();
-		}
-
-
-		private object GetPropertyValue(object obj, string property) {
-			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
-			return propertyInfo.GetValue(obj, null);
-		}
-
-		private bool TestIfPropExists(object obj, string property) {
-			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
-			return propertyInfo == null ? false : true;
-		}
-
-		public List<string> GetProperties(object obj) {
-			PropertyInfo[] info = obj.GetType().GetProperties();
-
-			List<string> props = (from i in info.AsEnumerable()
-								  select i.Name).ToList();
-			return props;
 		}
 
 		public ContentPage CopyContentPageToNew(ContentPage pageSource) {

@@ -614,57 +614,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public static List<ObjectProperty> GetProperties(Object theObject) {
-			PropertyInfo[] info = theObject.GetType().GetProperties();
-
-			List<ObjectProperty> props = (from i in info.AsEnumerable()
-										  select GetCustProps(theObject, i)).ToList();
-
-			return props;
-		}
-
-
-		public static ObjectProperty GetCustProps(Object obj, PropertyInfo prop) {
-
-			ObjectProperty objprop = new ObjectProperty {
-				Name = prop.Name,
-				DefValue = obj.GetType().GetProperty(prop.Name).GetValue(obj, null),
-				PropertyType = prop.PropertyType,
-				CanRead = prop.CanRead,
-				CanWrite = prop.CanWrite,
-				Props = prop,
-				CompanionSourceFieldName = "",
-				FieldMode = (prop.PropertyType.ToString().ToLower() == "system.boolean") ?
-						WidgetAttribute.FieldMode.CheckBox : WidgetAttribute.FieldMode.TextBox
-			};
-
-			foreach (Attribute attr in objprop.Props.GetCustomAttributes(true)) {
-				if (attr is WidgetAttribute) {
-					var widgetAttrib = attr as WidgetAttribute;
-					if (null != widgetAttrib) {
-						try { objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource; } catch { objprop.CompanionSourceFieldName = ""; }
-						try { objprop.FieldMode = widgetAttrib.Mode; } catch { objprop.FieldMode = WidgetAttribute.FieldMode.Unknown; }
-					}
-				}
-			}
-
-			return objprop;
-		}
-
-
-		public static List<ObjectProperty> GetTypeProperties(Type theType) {
-			PropertyInfo[] info = theType.GetProperties();
-
-			List<ObjectProperty> props = (from i in info.AsEnumerable()
-										  select new ObjectProperty {
-											  Name = i.Name,
-											  PropertyType = i.PropertyType,
-											  CanRead = i.CanRead,
-											  CanWrite = i.CanWrite
-										  }).ToList();
-			return props;
-		}
-
 		public void OverrideKey(Guid guidContentID) {
 			filePage = null;
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
@@ -698,7 +647,7 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 			}
-			
+
 		}
 
 		public ContentPage cmsAdminContent {
