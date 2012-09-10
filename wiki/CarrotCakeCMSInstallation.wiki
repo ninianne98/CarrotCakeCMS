@@ -1,0 +1,602 @@
+<h1> CarrotCake CMS Installation</a></h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in;text-indent:-.25in'>1)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Download
+a release ZIP archive from the CarrotCake CMS webpage and unzip the files into
+its own directory.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in;text-indent:-.25in'>2)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+a site in IIS or provision a new dot net hosting account using your hosting
+provider's control panel, depending on your hosting arrangements.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in;text-indent:-.25in'>3)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Copy
+the files into your site's webroot.  If this is an update, you should only need
+to upload the \bin\ and \Manage\ directory, other folders are (mostly) optional
+if updating, and configuration files should be compared against your hosted
+versions to confirm that you are running the configuration parameters.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in;text-indent:-.25in'>4)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+a new database on your server, or contact your hosting provider to perform the
+operation.  If you are limited to a finite number of databases in your hosting
+environment, you can share the same database and users across multiple sites. 
+Be sure that each unique site its own unique <span style='font-size:9.0pt;
+line-height:115%;font-family:"Courier New";color:blue'>CarrotSiteID</span>
+value set in the web.config.  </p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in'>Users configured
+as Administrators can log into any site that shares the same database, while
+Editors must be mapped to individual sites for access purposes.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;
+line-height:normal;text-autospace:none'>5)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Update the database connection string entry in the web.config for <span
+style='font-size:9.0pt;font-family:"Courier New";color:blue'>CarrotwareCMSConnectionString</span>
+to match your database credentials, your hosting provider may provide the
+string you need when they provision your database.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:7.0pt;font-family:"Courier New";
+color:blue'>&lt;</span><span style='font-size:7.0pt;font-family:"Courier New";
+color:#A31515'>connectionStrings</span><span style='font-size:7.0pt;font-family:
+"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>add</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>name</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue'>CarrotwareCMSConnectionString</span>&quot;<span style='color:blue'> </span><span
+style='color:red'>connectionString</span><span style='color:blue'>=</span>&quot;<span
+style='color:blue;background:yellow'>Data Source=MyServer\MySQLInstance;Initial
+Catalog=CarrotCMS;Integrated Security=True;</span>&quot;<span style='color:
+blue'> </span><span style='color:red'>providerName</span><span
+style='color:blue'>=</span>&quot;<span style='color:blue'>System.Data.SqlClient</span>&quot;<span
+style='color:blue'>/&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>connectionStrings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:7.0pt;font-family:"Courier New";
+color:blue'>&lt;</span><span style='font-size:7.0pt;font-family:"Courier New";
+color:#A31515'>connectionStrings</span><span style='font-size:7.0pt;font-family:
+"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>add</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>name</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue'>CarrotwareCMSConnectionString</span>&quot;<span style='color:blue'> </span><span
+style='color:red'>connectionString</span><span style='color:blue'>=</span>&quot;<span
+style='color:blue;background:yellow'>Data Source=MyServer\MySQLInstance;Initial
+Catalog=CarrotCMS;User ID=MyDBUser;Password=MyP@ssw0rd;</span>&quot;<span
+style='color:blue'> </span><span style='color:red'>providerName</span><span
+style='color:blue'>=</span>&quot;<span style='color:blue'>System.Data.SqlClient</span>&quot;<span
+style='color:blue'>/&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>connectionStrings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in;
+line-height:normal;text-autospace:none'>6)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Update the web.config section for <span style='font-size:9.0pt;
+font-family:"Courier New";color:blue'>&lt;</span><span style='font-size:9.0pt;
+font-family:"Courier New";color:#A31515'>mailSettings</span><span
+style='font-size:9.0pt;font-family:"Courier New";color:blue'>&gt; </span>to
+reflect the network delivery settings appropriate for your ISP.  You can leave
+the password field blank if you are not required to provide one or if your mail
+server has whitelisted your web server.  This is important for password
+retrieval purposes.  If this is not configured, if you forget your password,
+you will have no way to get a new password sent to you.</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>system.net</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>mailSettings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>smtp</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>from</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue;background:yellow'>web@example.com</span>&quot;<span style='color:blue'> </span><span
+style='color:red'>deliveryMethod</span><span style='color:blue'>=</span>&quot;<span
+style='color:blue'>SpecifiedPickupDirectory</span>&quot;<span style='color:
+blue'>&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>              &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>specifiedPickupDirectory</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>pickupDirectoryLocation</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue'>C:\Temp</span>&quot;<span style='color:blue'>/&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>smtp</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>mailSettings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>system.net</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>system.net</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>mailSettings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>smtp</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>from</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue;background:yellow'>web@example.com</span>&quot;<span style='color:blue'> </span><span
+style='color:red'>deliveryMethod</span><span style='color:blue'>=</span>&quot;<span
+style='color:blue'>Network</span>&quot;<span style='color:blue'>&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>              &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>network</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>defaultCredentials</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue'>true</span>&quot;<span style='color:blue'> </span><span style='color:
+red'>host</span><span style='color:blue'>=</span>&quot;<span style='color:blue;
+background:yellow'>mail.example.com</span>&quot;<span style='color:blue'> </span><span
+style='color:red'>userName</span><span style='color:blue'>=</span>&quot;<span
+style='color:blue;background:yellow'>web@example.com</span>&quot;<span
+style='color:blue'> </span><span style='color:red'>password</span><span
+style='color:blue'>=</span>&quot;<span style='color:blue;background:yellow'>P@ssword1</span>&quot;<span
+style='color:blue'> /&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>smtp</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>mailSettings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>system.net</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in;text-indent:-.25in'>7)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+the key to identify your site. Run the statement &quot; <span style='font-size:
+9.0pt;line-height:115%;font-family:"Courier New";color:blue'>select</span><span
+style='font-size:9.0pt;line-height:115%;font-family:"Courier New"'> <span
+style='color:fuchsia'>NEWID</span><span style='color:gray'>()</span> <span
+style='color:blue'>as</span> id</span> &quot; in SQL Management Studio.  Alternately
+you can use the Visual Studio &quot;Create GUID&quot; functionality.</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:normal;
+text-autospace:none'><span style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>appSettings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>add</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>key</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue'>CarrotSiteID</span>&quot;<span style='color:blue'> </span><span
+style='color:red'>value</span><span style='color:blue'>=</span>&quot;<span
+style='color:blue;background:yellow'>1953DE6A-0300-481b-A0E8-72F442266C79</span>&quot;<span
+style='color:blue'>/&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>     &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>add</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>key</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue'>CarrotBlockFromFileManager</span>&quot;<span style='color:blue'> </span><span
+style='color:red'>value</span><span style='color:blue'>=</span>&quot;<span
+style='color:blue'>aspx;ascx;asmx;asax;axd;dll;pdb;cs;master;config;xml;user;csproj;sln</span>&quot;<span
+style='color:blue'> /&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>appSettings</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in'><span
+style='font-size:7.0pt;line-height:115%;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in'>A.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Some
+GUIDs to get you started.</p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>1C124D39-D701-4513-97D6-08CC2003A022</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>1D6EDC91-5321-492C-854D-3DD01543B998</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>DE01E5AB-C8D8-4353-8948-4019D9C10629</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>7E256368-2468-4C6F-8894-42917DB82682</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>C51D3709-0863-4B45-8D7E-4E6021B2F919</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>D1325D7B-1942-49B7-938B-A2993D7C0239</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>5BFD81BC-08EB-4BB4-8D73-A822F2F2C7F6</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>7CF4F67E-292B-4342-A527-C6DE58BAB81F</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>270F728F-2AA2-4A94-8DDF-CEE870723202</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'><span style='font-size:9.0pt;
+font-family:"Courier New"'>0579C3A4-6979-4378-AA64-DAD03962FBC6</span></p>
+
+<p class=MsoNoSpacing style='margin-left:1.0in'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in'>B.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Paste
+the new GUID into the web.config of the admin project to replace the GUID entry
+for <span style='font-size:9.0pt;line-height:115%;font-family:"Courier New";
+color:blue'>CarrotSiteID</span> .  If this is the first site with your
+database, you can leave the GUID that is preloaded in the web.config file
+as-is.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>C.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Alternately,
+comment out the web.config key for <span style='font-size:9.0pt;line-height:
+115%;font-family:"Courier New";color:blue'>CarrotSiteID</span>, and open the
+file SiteMapping.config and add entries to map a set of domain names to
+different GUIDs.  This will allow a single webroot to provide different
+content  based on different domain names.  This is similar to using different
+host headers or bindings in IIS for a single webroot.  </p>
+
+<p class=MsoListParagraphCxSpLast style='margin-bottom:0in;margin-bottom:.0001pt;
+line-height:normal;text-autospace:none'><span style='font-size:7.0pt;
+font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;?</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>xml</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'> </span><span
+style='font-size:7.0pt;font-family:"Courier New";color:red'>version</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>=</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>&quot;<span style='color:
+blue'>1.0</span>&quot;<span style='color:blue'> </span><span style='color:red'>encoding</span><span
+style='color:blue'>=</span>&quot;<span style='color:blue'>utf-8</span>&quot;<span
+style='color:blue'> ?&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>tbl</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>siteid</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";background:aqua'>5D7A9FA5-3C52-4d0c-95BB-2F10FFBF7149</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>siteid</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>domname</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";background:yellow'>example.com</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>domname</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>siteid</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";background:aqua'>5D7A9FA5-3C52-4d0c-95BB-2F10FFBF7149</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>siteid</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>domname</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";background:yellow'>www.example.com</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>domname</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>siteid</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>5016177C-4C7D-4F3F-A812-6BEB299C6DAB<span
+style='color:blue'>&lt;/</span><span style='color:#A31515'>siteid</span><span
+style='color:blue'>&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>domname</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>othersite1.local<span
+style='color:blue'>&lt;/</span><span style='color:#A31515'>domname</span><span
+style='color:blue'>&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>siteid</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>D0A2139E-B50E-4E68-98E0-DB6CB129FAF4<span
+style='color:blue'>&lt;/</span><span style='color:#A31515'>siteid</span><span
+style='color:blue'>&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>                   &lt;</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>domname</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span><span
+style='font-size:7.0pt;font-family:"Courier New"'>othersite2.local<span
+style='color:blue'>&lt;/</span><span style='color:#A31515'>domname</span><span
+style='color:blue'>&gt;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>          &lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>sitedetail</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&lt;/</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:#A31515'>tbl</span><span
+style='font-size:7.0pt;font-family:"Courier New";color:blue'>&gt;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal;text-autospace:none'><span
+style='font-size:7.0pt;font-family:"Courier New"'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpFirst>Note: if <i>www.example.com</i> and <i>example.com</i>
+need to provide the same site, you will have to add entries for both, but they
+can point at the same GUID entry.</p>
+
+<p class=MsoListParagraphCxSpMiddle>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:.25in;text-indent:-.25in'>8)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Upload
+the modified configuration file(s) to your website's webroot.</p>
+
+<span style='font-size:11.0pt;line-height:115%;font-family:"Calibri","sans-serif"'><br
+clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in;text-indent:-.25in'>9)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Configure
+the database</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>A.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>If
+your SQL credentials used in the web.config have dbo or higher rights, you can
+simply go to the logon page of the CMS and the tables will be created/updated
+for you.  Before updating an existing site you should logout of the CMS
+administration.  If you have no pre-existing users in the database, you will be
+prompted to create a new administrator.  You can create whatever
+username/password you wish.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>B.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>If
+you wish to manually deploy updates, or do not have sufficient rights from the
+credentials contained within the web.config, execute the provided scripts in
+the order listed.  The scripts provided were generated from SQL 2008 Express,
+they should also work on Standard 2008 or Standard 2008 R2 etc.  They may also
+work on SQL 2005, but have not been tested.  Authentication is provided by SQL
+Membership Provider.  </p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><strong><span
+style='font-family:"Calibri","sans-serif"'>CREATE 01 - whole database.sql </span></strong>--
+will create the application tables.  Run this first.  It also includes the
+membership provider schema and creates the security groups.  You can just run
+this script and then go to the CMS logon page and create a new user, or you can
+perform step 2.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.75in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><strong><span
+style='font-family:"Calibri","sans-serif"'>CREATE 02 - default user.sql </span></strong>--
+will create the default groups and an admin account with a default password. 
+If you are building the application project yourself, point the web.config of
+the CMSAdmin project at your new database.  You can fire up the ASP.Net
+Configuration menu in Visual Studio and use that to create additional users. 
+You will want to read the comments in the script and potentially edit according
+to your needs.</p>
+
+<p class=MsoListParagraphCxSpMiddle>Additional scripts may appear for catch-up
+if there are schema changes or plugin/module/widget purposes.  If you are using
+a downloaded zip archive from the CarrotCake CMS project site, scripts will be
+found in \_SQLScripts\</p>
+
+<p class=MsoListParagraphCxSpLast>&nbsp;</p>
