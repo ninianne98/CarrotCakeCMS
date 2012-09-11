@@ -78,11 +78,7 @@ namespace Carrotware.CMS.UI.Base {
 						if (!string.IsNullOrEmpty(sParm)) {
 							sFileRequested = "/" + sParm + ".aspx";
 
-							context.Response.StatusCode = 301;
-							context.Response.AppendHeader("Status", "301 Moved Permanently");
-							context.Response.AppendHeader("Location", sFileRequested);
-							context.Response.Cache.SetLastModified(DateTime.Today.Date);
-							context.Response.Write("<h2>301 Moved Permanently</h2>");
+							SiteData.Show301Message(sFileRequested);
 
 							context.Response.Redirect(sFileRequested);
 							context.Items[REQ_PATH] = sFileRequested;
@@ -122,6 +118,9 @@ namespace Carrotware.CMS.UI.Base {
 							if (navData == null) {
 								navData = SiteNavHelper.GetEmptyHome();
 							}
+						} else {
+							//something bad has gone down, toss back the error
+							throw;
 						}
 					}
 
@@ -147,13 +146,9 @@ namespace Carrotware.CMS.UI.Base {
 
 					} else {
 
-						SiteData.PerformRedirectToErrorPage("404", sFileRequested);
+						SiteData.PerformRedirectToErrorPage(404, sFileRequested);
+						SiteData.Show404MessageFull(true);
 
-						context.Response.StatusCode = 404;
-						context.Response.AppendHeader("Status", "HTTP/1.1 404 Object Not Found");
-						context.Response.Cache.SetLastModified(DateTime.Today.Date);
-						context.Response.Write("<h2>404 Not Found</h2><p>HTTP 404. The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly. </p>");
-						context.Response.End();
 					}
 
 					navData.Dispose();
