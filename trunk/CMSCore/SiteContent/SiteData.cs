@@ -257,6 +257,36 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 
+		public static void Show404MessageFull(bool bResponseEnd) {
+			HttpContext context = HttpContext.Current;
+			context.Response.StatusCode = 404;
+			context.Response.AppendHeader("Status", "HTTP/1.1 404 Object Not Found");
+			context.Response.Cache.SetLastModified(DateTime.Today.Date);
+			context.Response.Write("<h2>404 Not Found</h2><p>HTTP 404. The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly. </p>");
+			if (bResponseEnd) {
+				context.Response.End();
+			}
+		}
+
+		public static void Show404MessageShort() {
+			HttpContext context = HttpContext.Current;
+			context.Response.StatusCode = 404;
+			context.Response.StatusDescription = "Not Found";
+		}
+
+		public static void Show301Message(string sFileRequested) {
+			HttpContext context = HttpContext.Current;
+			context.Response.StatusCode = 301;
+			context.Response.AppendHeader("Status", "301 Moved Permanently");
+			context.Response.AppendHeader("Location", sFileRequested);
+			context.Response.Cache.SetLastModified(DateTime.Today.Date);
+			context.Response.Write("<h2>301 Moved Permanently</h2>");
+		}
+
+		
+		public static void PerformRedirectToErrorPage(int ErrorKey, string sReqURL) {
+			PerformRedirectToErrorPage(ErrorKey.ToString(), sReqURL);
+		}
 
 		public static void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {
 
