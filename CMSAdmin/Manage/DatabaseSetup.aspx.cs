@@ -46,14 +46,17 @@ namespace Carrotware.CMS.UI.Admin {
 
 				bUpdate = du.DatabaseNeedsUpdate();
 
+				int iUpdate = 1;
+
 				if (bUpdate) {
 					if (!du.IsPostStep04()) {
-						HandleResponse("Update A.1 ", du.AlterStep01());
-						HandleResponse("Update A.2 ", du.AlterStep02());
-						HandleResponse("Update A.3 ", du.AlterStep03());
-						HandleResponse("Update A.4 ", du.AlterStep04());
+						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep01());
+						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep01a());
+						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep02());
+						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep03());
+						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep04());
 					}
-					HandleResponse("Update B.1 ", du.AlterStep05());
+					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep05());
 				} else {
 					HandleResponse("Database up-to-date ");
 				}

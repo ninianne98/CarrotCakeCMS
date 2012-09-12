@@ -38,6 +38,7 @@ using System.Web.UI;
 
 
 [assembly: WebResource("Carrotware.CMS.Core.DataScripts.ALTER01.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.Core.DataScripts.ALTER01a.sql", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.Core.DataScripts.ALTER02.sql", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.Core.DataScripts.ALTER03.sql", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.Core.DataScripts.ALTER04.sql", "text/plain")]
