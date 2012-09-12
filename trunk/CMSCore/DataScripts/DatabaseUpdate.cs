@@ -29,7 +29,7 @@ namespace Carrotware.CMS.Core {
 		private void TestDatabaseWithQuery() {
 			LastSQLError = null;
 
-			string query = "select table_name, column_name, ordinal_position from information_schema.columns as isc " +
+			string query = "select table_name, column_name, ordinal_position from [information_schema].[columns] as isc " +
 					" where isc.table_name like 'carrot%' " +
 					" order by isc.table_name, isc.ordinal_position, isc.column_name";
 
@@ -66,8 +66,13 @@ namespace Carrotware.CMS.Core {
 				if (ex.InnerException != null) {
 					msg += "\r\n" + ex.InnerException.Message.ToLower();
 				}
+				if (msg.Contains("the server was not found")) {
+					return false;
+				}
+
 				if (msg.Contains("invalid object name")
 					//|| msg.Contains("no process is on the other end of the pipe")
+					|| msg.Contains("invalid column name")
 					|| msg.Contains("not found")) {
 
 					return true;
@@ -107,7 +112,7 @@ namespace Carrotware.CMS.Core {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
 			if (!FailedSQL) {
-				string query = "select * from information_schema.columns " +
+				string query = "select * from [information_schema].[columns] " +
 						" where table_name in ('tblSites', 'carrot_Sites') ";
 
 				DataTable table1 = GetData(query);
@@ -129,7 +134,7 @@ namespace Carrotware.CMS.Core {
 		public bool DoCMSTablesExist() {
 			if (!FailedSQL) {
 
-				string query = "select distinct table_name from information_schema.columns where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent') ";
+				string query = "select distinct table_name from [information_schema].[columns] where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent') ";
 				DataTable table1 = GetData(query);
 
 				if (table1.Rows.Count >= 4) {
@@ -142,7 +147,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public bool TableExists(string testTableName) {
-			string testQuery = "select * from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
+			string testQuery = "select * from [information_schema].[columns] where table_name = '" + testTableName.Replace("'", "''") + "' ";
 
 			DataTable table1 = GetData(testQuery);
 
@@ -156,7 +161,7 @@ namespace Carrotware.CMS.Core {
 		public List<string> GetTableColumns(string testTableName) {
 			List<string> lst = new List<string>();
 
-			string testQuery = "select * from information_schema.columns where table_name = '" + testTableName.Replace("'", "''") + "' ";
+			string testQuery = "select * from [information_schema].[columns] where table_name = '" + testTableName.Replace("'", "''") + "' ";
 
 			DataTable table1 = GetData(testQuery);
 
@@ -201,7 +206,7 @@ namespace Carrotware.CMS.Core {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
+				query = "select distinct table_name from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
 				table1 = GetData(query);
 				if (table1.Rows.Count >= 4) {
 					return true;
@@ -217,50 +222,61 @@ namespace Carrotware.CMS.Core {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+				//query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+				query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 2) {
+				if (table1.Rows.Count < 36) {
 					return true;
 				}
 
-				query = "select distinct table_name from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
+				//query = "select distinct table_name from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
+				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
+						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
 				DataTable table2 = GetData(query);
-				if (table2.Rows.Count >= 4) {
-					return false;
+				if (table2.Rows.Count < 51) {
+					return true;
 				}
 
-				query = "select distinct table_name from information_schema.columns where table_name in ('tblSites', 'tblRootContent', 'tblContent', 'tblWidget') ";
+				query = "select distinct table_name from [information_schema].[columns] where table_name in ('tblSites', 'tblRootContent', 'tblContent', 'tblWidget') ";
 				table1 = GetData(query);
 				if (table1.Rows.Count >= 4) {
 					return true;
 				}
 
 				if (table2.Rows.Count < 1) {
-					query = "select * from information_schema.columns where table_name in ('tblSites', 'carrot_Sites') ";
+					query = "select * from [information_schema].[columns] where table_name in ('tblSites', 'carrot_Sites') ";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
 						return true;
 					}
 					// update 01
-					query = "select * from information_schema.columns where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
+					query = "select * from [information_schema].[columns] where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
 						return true;
 					}
+
+					// update 01 A
+					query = "select column_name, table_name from [information_schema].[columns] where column_name='SerialCacheID' and table_name in ('tblSerialCache', 'carrot_SerialCache') ";
+					table1 = GetData(query);
+					if (table1.Rows.Count < 1) {
+						return true;
+					}
+
 					// update 02
-					query = "select * from information_schema.columns where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
+					query = "select * from [information_schema].[columns] where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
 						return true;
 					}
 					// update 03
-					query = "select * from information_schema.columns where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
+					query = "select * from [information_schema].[columns] where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
 						return true;
 					}
 					// update 04
-					query = "select * from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent')";
+					query = "select * from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent')";
 					table1 = GetData(query);
 					if (table1.Rows.Count < 1) {
 						return true;
@@ -288,7 +304,7 @@ namespace Carrotware.CMS.Core {
 		public DatabaseUpdateResponse AlterStep01() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from information_schema.columns where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
+			string query = "select * from [information_schema].[columns] where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
 
 			DataTable table1 = GetData(query);
 
@@ -302,10 +318,27 @@ namespace Carrotware.CMS.Core {
 			return res;
 		}
 
+		public DatabaseUpdateResponse AlterStep01a() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			string query = "select column_name, table_name from [information_schema].[columns] where column_name='SerialCacheID' and table_name in ('tblSerialCache', 'carrot_SerialCache') ";
+
+			DataTable table1 = GetData(query);
+
+			if (table1.Rows.Count < 1) {
+				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER01a.sql", false);
+				res.Response = "Created Table SerialCache";
+				return res;
+			}
+
+			res.Response = "Table SerialCache Already Exists";
+			return res;
+		}
+
 		public DatabaseUpdateResponse AlterStep02() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from information_schema.columns where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
+			string query = "select * from [information_schema].[columns] where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
 
 			DataTable table1 = GetData(query);
 
@@ -322,7 +355,7 @@ namespace Carrotware.CMS.Core {
 		public DatabaseUpdateResponse AlterStep03() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from information_schema.columns where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
+			string query = "select * from [information_schema].[columns] where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
 
 			DataTable table1 = GetData(query);
 
@@ -338,7 +371,7 @@ namespace Carrotware.CMS.Core {
 		public DatabaseUpdateResponse AlterStep04() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from information_schema.columns where table_name in ('carrot_Sites', 'carrot_RootContent')";
+			string query = "select * from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent')";
 
 			DataTable table1 = GetData(query);
 
@@ -355,11 +388,12 @@ namespace Carrotware.CMS.Core {
 		public DatabaseUpdateResponse AlterStep05() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+			//string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+			string query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 
 			DataTable table1 = GetData(query);
 
-			if (table1.Rows.Count < 2) {
+			if (table1.Rows.Count < 36) {
 				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER05.sql", false);
 				res.Response = "CMS DB added vw_carrot_Content and vw_carrot_Widget";
 				return res;
