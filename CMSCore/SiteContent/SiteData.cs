@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Caching;
 using System.Xml;
@@ -257,12 +259,71 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 
+
+		private static string FormatToHTML(string inputString) {
+			string outputString = String.Empty;
+			if (!string.IsNullOrEmpty(inputString)) {
+				outputString = inputString;
+				outputString = outputString.Replace("\r\n", " <br \\> \r\n");
+				outputString = outputString.Replace("   ", "&nbsp;&nbsp;&nbsp;");
+				outputString = outputString.Replace("  ", "&nbsp;&nbsp;");
+				outputString = outputString.Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+			}
+			return outputString;
+		}
+
+		public static string FormatErrorOutput(Exception objErr) {
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+
+			string sBody = String.Empty;
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm"))) {
+				sBody = oTextStream.ReadToEnd();
+			}
+
+			if (objErr is HttpException) {
+				HttpException httpEx = (HttpException)objErr;
+
+				sBody = sBody.Replace("{PAGE_TITLE}", httpEx.Message);
+				sBody = sBody.Replace("{SHORT_NAME}", httpEx.Message);
+				sBody = sBody.Replace("{LONG_NAME}", httpEx.GetHttpCode() + " " + FormatToHTML(httpEx.Message));
+
+			} else {
+
+				sBody = sBody.Replace("{PAGE_TITLE}", objErr.Message);
+				sBody = sBody.Replace("{SHORT_NAME}", " [" + objErr.GetType().ToString() + "] " + objErr.Message);
+				sBody = sBody.Replace("{LONG_NAME}", FormatToHTML(objErr.Message));
+
+			}
+
+			if (objErr.StackTrace != null) {
+				sBody = sBody.Replace("{STACK_TRACE}", FormatToHTML(objErr.StackTrace));
+			}
+
+			if (objErr.InnerException != null) {
+				sBody = sBody.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
+			}
+
+
+			sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
+
+			sBody = sBody.Replace("{CONTENT_DETAIL}", "");
+			sBody = sBody.Replace("{STACK_TRACE}", "");
+
+			return sBody;
+		}
+
 		public static void Show404MessageFull(bool bResponseEnd) {
 			HttpContext context = HttpContext.Current;
 			context.Response.StatusCode = 404;
 			context.Response.AppendHeader("Status", "HTTP/1.1 404 Object Not Found");
 			context.Response.Cache.SetLastModified(DateTime.Today.Date);
-			context.Response.Write("<h2>404 Not Found</h2><p>HTTP 404. The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly. </p>");
+			//context.Response.Write("<h2>404 Not Found</h2><p>HTTP 404. The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly. </p>");
+
+			Exception errInner = new Exception("The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly.");
+			HttpException err = new HttpException(404, "Object Not Found", errInner);
+
+			context.Response.Write(FormatErrorOutput(err));
+
 			if (bResponseEnd) {
 				context.Response.End();
 			}
@@ -280,10 +341,13 @@ namespace Carrotware.CMS.Core {
 			context.Response.AppendHeader("Status", "301 Moved Permanently");
 			context.Response.AppendHeader("Location", sFileRequested);
 			context.Response.Cache.SetLastModified(DateTime.Today.Date);
-			context.Response.Write("<h2>301 Moved Permanently</h2>");
+			//context.Response.Write("<h2>301 Moved Permanently</h2>");
+
+			HttpException ex = new HttpException(301, "301 Moved Permanently");
+			context.Response.Write(FormatErrorOutput(ex));
 		}
 
-		
+
 		public static void PerformRedirectToErrorPage(int ErrorKey, string sReqURL) {
 			PerformRedirectToErrorPage(ErrorKey.ToString(), sReqURL);
 		}
