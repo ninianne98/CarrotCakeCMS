@@ -17,6 +17,8 @@ using System.Web.UI.HtmlControls;
 *
 * Date: October 2011
 */
+
+
 namespace Carrotware.CMS.UI.Admin {
 	public partial class Logon : BasePage {
 
@@ -28,7 +30,7 @@ namespace Carrotware.CMS.UI.Admin {
 			DatabaseUpdate du = new DatabaseUpdate();
 			((HtmlImage)loginTemplate.FindControl("imgError")).Visible = false;
 
-			if (du.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist()) {
+			if (DatabaseUpdate.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist()) {
 				FormsAuthentication.SignOut();
 				Response.Redirect("./DatabaseSetup.aspx");
 			}

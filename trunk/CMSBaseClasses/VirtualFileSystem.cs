@@ -114,7 +114,7 @@ namespace Carrotware.CMS.UI.Base {
 
 					} catch (Exception ex) {
 						//assumption is database is probably empty / needs updating, so trigger the under construction view
-						if (DatabaseUpdate.SystemNeedsChecking(ex)) {
+						if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
 							if (navData == null) {
 								navData = SiteNavHelper.GetEmptyHome();
 							}
