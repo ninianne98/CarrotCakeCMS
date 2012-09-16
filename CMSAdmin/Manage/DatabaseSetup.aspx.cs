@@ -30,9 +30,9 @@ namespace Carrotware.CMS.UI.Admin {
 			btnLogin.Visible = false;
 			btnCreate.Visible = false;
 
-			if (du.LastSQLError != null) {
-				HandleResponse(du.LastSQLError.Message.ToString());
-				du.LastSQLError = null;
+			if (DatabaseUpdate.LastSQLError != null) {
+				HandleResponse(DatabaseUpdate.LastSQLError.Message);
+				DatabaseUpdate.LastSQLError = null;
 			} else {
 
 				bool bUpdate = true;
@@ -50,8 +50,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 				if (bUpdate) {
 					if (!du.IsPostStep04()) {
+						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep00());
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep01());
-						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep01a());
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep02());
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep03());
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep04());
@@ -63,7 +63,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				bUpdate = du.DatabaseNeedsUpdate();
 
-				if (!bUpdate && du.LastSQLError == null) {
+				if (!bUpdate && DatabaseUpdate.LastSQLError == null) {
 					if (du.UsersExist()) {
 						btnLogin.Visible = true;
 					} else {
@@ -72,8 +72,8 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 			}
 
-			if (du.LastSQLError != null) {
-				HandleResponse(du.LastSQLError.Message.ToString());
+			if (DatabaseUpdate.LastSQLError != null) {
+				HandleResponse(DatabaseUpdate.LastSQLError.Message);
 			}
 
 			HandleResponse("  ");
@@ -92,8 +92,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 				if (execMessage != null) {
 					sResponse += execMessage.Response + " <br />";
-					if (execMessage.LastException != null && !string.IsNullOrEmpty(execMessage.LastException.Message.ToString())) {
-						sResponse += "<i>" + execMessage.LastException.Message.ToString() + "</i> <br />";
+					if (execMessage.LastException != null && !string.IsNullOrEmpty(execMessage.LastException.Message)) {
+						sResponse += "<i>" + execMessage.LastException.Message + "</i> <br />";
 					}
 				}
 			}

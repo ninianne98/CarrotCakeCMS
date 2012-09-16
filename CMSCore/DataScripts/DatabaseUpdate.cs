@@ -16,11 +16,12 @@ namespace Carrotware.CMS.Core {
 
 	public class DatabaseUpdate {
 
-		public SqlException LastSQLError { get; set; }
+		public static SqlException LastSQLError { get; set; }
 
-		private string _ConnectionString = "";
+		private static string _ConnectionString = "";
 
 		public DatabaseUpdate() {
+			_ConnectionString = "";
 			LastSQLError = null;
 			SetConn();
 			TestDatabaseWithQuery();
@@ -36,7 +37,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 		}
 
-		private void SetConn() {
+		private static void SetConn() {
 			if (string.IsNullOrEmpty(_ConnectionString)) {
 				_ConnectionString = "";
 				if (ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"] != null) {
@@ -46,8 +47,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private string ContentKey = "cms_SiteSetUpSQLState";
-		public bool FailedSQL {
+		private static string ContentKey = "cms_SiteSetUpSQLState";
+		public static bool FailedSQL {
 			get {
 				bool c = false;
 				try { c = (bool)HttpContext.Current.Cache[ContentKey]; } catch { }
@@ -82,7 +83,7 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
-		public DataTable GetData(string sQuery) {
+		public static DataTable GetData(string sQuery) {
 			DataTable tables = new DataTable();
 			try {
 				SetConn();
@@ -216,6 +217,30 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
+
+		public static bool AreCMSTablesIncomplete() {
+			if (!FailedSQL) {
+
+				string query = "";
+				DataTable table1 = null;
+
+				query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 36) {
+					return true;
+				}
+
+				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
+						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 51) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		public bool DatabaseNeedsUpdate() {
 			if (!FailedSQL) {
 
@@ -318,7 +343,7 @@ namespace Carrotware.CMS.Core {
 			return res;
 		}
 
-		public DatabaseUpdateResponse AlterStep01a() {
+		public DatabaseUpdateResponse AlterStep00() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
 			string query = "select column_name, table_name from [information_schema].[columns] where column_name='SerialCacheID' and table_name in ('tblSerialCache', 'carrot_SerialCache') ";
