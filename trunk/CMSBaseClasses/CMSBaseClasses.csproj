@@ -52,6 +52,7 @@
     <Reference Include="System.Web.Extensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -80,6 +81,7 @@
     <Compile Include="BaseUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="VirtualDirectory.cs" />
     <Compile Include="GenericPage.aspx.cs">
       <DependentUpon>GenericPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

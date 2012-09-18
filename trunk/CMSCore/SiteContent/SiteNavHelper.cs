@@ -109,6 +109,20 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 
+		public static List<string> GetSiteDirectoryPaths() {
+			List<string> lstContent = null;
+
+			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+
+				lstContent = (from ct in _db.vw_carrot_Contents
+							  where ct.IsLatestVersion == true
+								  && ct.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)
+							  select ct.FileName.ToLower()).Distinct().ToList();
+			}
+
+			return lstContent;
+		}
+
 		public static SiteNav GetEmptyHome() {
 			SiteNav navData = new SiteNav();
 			navData.ContentID = Guid.Empty;
