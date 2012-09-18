@@ -88,7 +88,7 @@
 
 		function SubmitPage() {
 			saving = 1;
-			setTimeout("ClickBtn();", 1000);
+			setTimeout("ClickBtn();", 500);
 		}
 		function ClickBtn() {
 			$('#<%=btnSave.ClientID %>').click();
