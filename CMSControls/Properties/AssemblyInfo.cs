@@ -38,6 +38,7 @@ using System.Web.UI;
 
 [assembly: TagPrefix("SiblingNavigation", "carrot")]
 [assembly: TagPrefix("TopLevelNavigation", "carrot")]
+[assembly: TagPrefix("BreadCrumbNavigation", "carrot")]
 [assembly: TagPrefix("SecondLevelNavigation", "carrot")]
 [assembly: TagPrefix("TwoLevelNavigation", "carrot")]
 [assembly: TagPrefix("MultiLevelNavigation", "carrot")]

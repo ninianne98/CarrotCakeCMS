@@ -50,7 +50,7 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Write("\r\n\t<ul class=\"children level-" + iLevel + "\">\r\n");
 				foreach (var c2 in cc) {
 					if (!c2.PageActive) {
-						c2.NavMenuText = "&#9746; " + c2.NavMenuText;
+						c2.NavMenuText = InactivePagePrefix + c2.NavMenuText;
 					}
 					if (c2.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
 						output.Write("\t\t<li class=\"" + CSSSelected + " level-" + iLevel + "\"> ");
@@ -68,7 +68,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			var pageContents = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			var pageContents = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
 			var sParent = "";
 			if (pageContents != null) {
@@ -83,7 +83,7 @@ namespace Carrotware.CMS.UI.Controls {
 			foreach (var c1 in lst) {
 
 				if (!c1.PageActive) {
-					c1.NavMenuText = "&#9746; " + c1.NavMenuText;
+					c1.NavMenuText = InactivePagePrefix + c1.NavMenuText;
 				}
 				if (c1.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c1.NavFileName.ToLower() == sParent) {
 					output.Write("\t<li class=\"" + CSSSelected + "\"> ");

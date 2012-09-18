@@ -29,8 +29,8 @@ namespace Carrotware.CMS.Core {
 
 		List<SiteNav> GetMasterNavigation(Guid siteID, bool bActiveOnly);
 
-		SiteNav GetPageNavigation(Guid siteID, Guid rootContentID);
-		SiteNav GetPageNavigation(Guid siteID, string sPage);
+		SiteNav GetPageCrumbNavigation(Guid siteID, Guid rootContentID);
+		SiteNav GetPageCrumbNavigation(Guid siteID, string sPage);
 
 		SiteNav GetParentPageNavigation(Guid siteID, Guid rootContentID);
 		SiteNav GetParentPageNavigation(Guid siteID, string sPage);
@@ -39,6 +39,9 @@ namespace Carrotware.CMS.Core {
 		List<SiteNav> GetSiblingNavigation(Guid siteID, string sPage, bool bActiveOnly);
 
 		List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly);
+
+		List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly);
+		List<SiteNav> GetPathNavigation(Guid siteID, string sPage, bool bActiveOnly);
 
 	}
 }

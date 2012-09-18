@@ -285,13 +285,13 @@ namespace Carrotware.CMS.Core {
 
 				sBody = sBody.Replace("{PAGE_TITLE}", httpEx.Message);
 				sBody = sBody.Replace("{SHORT_NAME}", httpEx.Message);
-				sBody = sBody.Replace("{LONG_NAME}", httpEx.GetHttpCode() + " " + FormatToHTML(httpEx.Message));
+				sBody = sBody.Replace("{LONG_NAME}", "HTTP " + httpEx.GetHttpCode() + " - " + FormatToHTML(httpEx.Message));
 
 			} else {
 
 				sBody = sBody.Replace("{PAGE_TITLE}", objErr.Message);
-				sBody = sBody.Replace("{SHORT_NAME}", " [" + objErr.GetType().ToString() + "] " + objErr.Message);
-				sBody = sBody.Replace("{LONG_NAME}", FormatToHTML(objErr.Message));
+				sBody = sBody.Replace("{SHORT_NAME}", objErr.Message);
+				sBody = sBody.Replace("{LONG_NAME}", FormatToHTML(" [" + objErr.GetType().ToString() + "] " + objErr.Message));
 
 			}
 
@@ -302,7 +302,6 @@ namespace Carrotware.CMS.Core {
 			if (objErr.InnerException != null) {
 				sBody = sBody.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
 			}
-
 
 			sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
 
@@ -319,8 +318,8 @@ namespace Carrotware.CMS.Core {
 			context.Response.Cache.SetLastModified(DateTime.Today.Date);
 			//context.Response.Write("<h2>404 Not Found</h2><p>HTTP 404. The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly. </p>");
 
-			Exception errInner = new Exception("The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly.");
-			HttpException err = new HttpException(404, "Object Not Found", errInner);
+			Exception errInner = new Exception("The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable. Please review the following URL and make sure that it is spelled correctly.");
+			HttpException err = new HttpException(404, "File or directory not found.", errInner);
 
 			context.Response.Write(FormatErrorOutput(err));
 
