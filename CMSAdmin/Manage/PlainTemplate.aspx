@@ -202,6 +202,7 @@
 		</div>
 		<!-- end #menu -->
 		<div id="page">
+			<carrot:BreadCrumbNavigation runat="server" ID="BreadCrumbNavigation1" />
 			<div id="page-bgtop">
 				<div id="page-bgbtm">
 					<div id="content">
@@ -209,7 +210,6 @@
 							<h2>
 								<asp:Literal ID="litPageHeading" runat="server"></asp:Literal></h2>
 							<div class="entry">
-								<carrot:BreadCrumbNavigation runat="server" ID="BreadCrumbNavigation1" />
 								<carrot:WidgetContainer ID="phCenterTop" runat="server">
 								</carrot:WidgetContainer>
 								<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server"></carrot:ContentContainer>
