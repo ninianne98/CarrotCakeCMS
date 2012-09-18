@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
-using Carrotware.CMS.Core;
 using System.Web.Caching;
 /*
 * CarrotCake CMS
@@ -15,8 +14,9 @@ using System.Web.Caching;
 */
 
 
-namespace Carrotware.CMS.UI.Base {
+namespace Carrotware.CMS.Core {
 	public class VirtualDirectory : IRouteHandler {
+
 
 		public VirtualDirectory(string virtualPath) {
 			this.VirtualPath = virtualPath;
@@ -24,6 +24,7 @@ namespace Carrotware.CMS.UI.Base {
 
 
 		public string VirtualPath { get; private set; }
+
 
 		private static string ContentKey = "cms_RegisterRoutes";
 		public static bool HasRegisteredRoutes {
@@ -37,6 +38,13 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
+		public static void RegisterRoutes(bool OverrideRefresh) {
+			RegisterRoutes(RouteTable.Routes, OverrideRefresh);
+		}
+
+		public static void RegisterRoutes() {
+			RegisterRoutes(RouteTable.Routes);
+		}
 
 		public static void RegisterRoutes(RouteCollection routes) {
 			RegisterRoutes(routes, false);

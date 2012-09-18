@@ -79,6 +79,8 @@ namespace Carrotware.CMS.Core {
 			string ModuleKey = keyDynSite + DomainName;
 			HttpContext.Current.Cache.Remove(ModuleKey);
 
+			VirtualDirectory.RegisterRoutes(true);
+
 			System.Web.HttpRuntime.UnloadAppDomain();
 		}
 
