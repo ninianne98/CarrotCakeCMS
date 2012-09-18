@@ -81,7 +81,6 @@
     <Compile Include="BaseUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="VirtualDirectory.cs" />
     <Compile Include="GenericPage.aspx.cs">
       <DependentUpon>GenericPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
