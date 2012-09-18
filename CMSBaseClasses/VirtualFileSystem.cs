@@ -2,10 +2,12 @@ using System;
 using System.IO;
 using System.Web;
 using System.Web.Compilation;
+using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+using System.Collections.Generic;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -36,9 +38,19 @@ namespace Carrotware.CMS.UI.Base {
 		private bool bAlreadyDone = false;
 
 
+
 		public void ProcessRequest(HttpContext context) {
 
 			string sFileRequested = context.Request.Path;
+
+			VirtualDirectory.RegisterRoutes(RouteTable.Routes);
+
+			if (!string.IsNullOrEmpty(sFileRequested)) {
+				sFileRequested = sFileRequested.Replace(@"\", @"/");
+				if (sFileRequested.EndsWith("/") || !sFileRequested.ToLower().EndsWith(".aspx")) {
+					sFileRequested = (sFileRequested + SiteData.DefaultDirectoryFilename).Replace(@"//", @"/");
+				}
+			}
 
 			if (context.User.Identity.IsAuthenticated) {
 				try {
