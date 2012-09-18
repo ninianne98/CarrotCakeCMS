@@ -495,7 +495,7 @@ function cmsNotifySaved() {
 
 function cmsCancelEdit0() {
 	cmsMakeOKToLeave();
-	window.setTimeout("location.href = \'" + thisPageNav + "\'", 1000);
+	window.setTimeout("location.href = \'" + thisPageNav + "\'", 1500);
 }
 
 function cmsRecordCancellation() {
