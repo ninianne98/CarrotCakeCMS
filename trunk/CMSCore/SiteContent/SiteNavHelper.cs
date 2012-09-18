@@ -71,12 +71,12 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.GetMasterNavigation(siteID, bActiveOnly);
 		}
 
-		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
-			return _navHelper.GetPageNavigation(siteID, rootContentID);
+		public SiteNav GetPageCrumbNavigation(Guid siteID, Guid rootContentID) {
+			return _navHelper.GetPageCrumbNavigation(siteID, rootContentID);
 		}
 
-		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
-			return _navHelper.GetPageNavigation(siteID, sPage);
+		public SiteNav GetPageCrumbNavigation(Guid siteID, string sPage) {
+			return _navHelper.GetPageCrumbNavigation(siteID, sPage);
 		}
 
 		public SiteNav GetParentPageNavigation(Guid siteID, Guid rootContentID) {
@@ -97,6 +97,14 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
 			return _navHelper.GetTopNavigation(siteID, bActiveOnly);
+		}
+
+		public List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			return _navHelper.GetPathNavigation(siteID, rootContentID, bActiveOnly);
+		}
+
+		public List<SiteNav> GetPathNavigation(Guid siteID, string sPage, bool bActiveOnly) {
+			return _navHelper.GetPathNavigation(siteID, sPage, bActiveOnly);
 		}
 
 		#endregion

@@ -86,7 +86,7 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (var c in lst) {
 					if (!c.PageActive) {
-						c.NavMenuText = "&#9746; " + c.NavMenuText;
+						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 					}
 					if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
 						output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");

@@ -198,8 +198,7 @@
 		<div id="menu">
 			<%--<carrot:TopLevelNavigation MenuWidth="960px" MenuHeight="44px" ForeColor="#000000"
                 BackColor="#FFFFFF" runat="server" OverrideCSS="button-style.css" ID="TopLevelNavigation1" />--%>
-			<carrot:TwoLevelNavigation MenuWidth="960px" FontSize="14px" MenuHeight="44px" ForeColor="#424242" BackColor="#FFFFFF" runat="server"
-				ID="TwoLevelNavigation1" />
+			<carrot:TwoLevelNavigation MenuWidth="960px" FontSize="14px" MenuHeight="44px" ForeColor="#424242" BackColor="#FFFFFF" runat="server" ID="TwoLevelNavigation1" />
 		</div>
 		<!-- end #menu -->
 		<div id="page">
@@ -210,6 +209,7 @@
 							<h2>
 								<asp:Literal ID="litPageHeading" runat="server"></asp:Literal></h2>
 							<div class="entry">
+								<carrot:BreadCrumbNavigation runat="server" ID="BreadCrumbNavigation1" />
 								<carrot:WidgetContainer ID="phCenterTop" runat="server">
 								</carrot:WidgetContainer>
 								<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server"></carrot:ContentContainer>

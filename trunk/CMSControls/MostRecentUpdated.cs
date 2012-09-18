@@ -50,7 +50,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			foreach (var c in lst) {
 				if (!c.PageActive) {
-					c.NavMenuText = "&#9746; " + c.NavMenuText;
+					c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 				}
 
 				if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {

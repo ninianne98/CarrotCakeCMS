@@ -67,30 +67,27 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected List<SiteNav> GetTopNav() {
-			return navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
-		}
-
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			var pageContents = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			SiteNav pageContents = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 			var sParent = "";
 			if (pageContents != null) {
 				if (pageContents.Parent_ContentID == null) {
 					sParent = pageContents.FileName.ToLower();
 				}
 			}
-			var lst = GetTopNav();
+
+			List<SiteNav> lst = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
-			output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">");
-			foreach (var c in lst) {
+			output.Write("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+			foreach (SiteNav c in lst) {
 				if (!c.PageActive) {
-					c.NavMenuText = "&#9746; " + c.NavMenuText;
+					c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 				}
 				if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.NavFileName.ToLower() == sParent) {
 					output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");

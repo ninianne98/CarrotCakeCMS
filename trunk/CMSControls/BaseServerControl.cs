@@ -23,6 +23,12 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		protected string InactivePagePrefix {
+			get {
+				return "&#9746; ";
+			}
+		}
+
 		private List<ContentPage> _pages = null;
 		protected List<ContentPage> lstActivePages {
 			get {

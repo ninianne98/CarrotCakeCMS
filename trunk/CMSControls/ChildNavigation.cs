@@ -63,7 +63,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected SiteNav GetParent(Guid? Root_ContentID) {
 			SiteNav pageContents = null;
 			if (Root_ContentID != null) {
-				pageContents = navHelper.GetPageNavigation(SiteData.CurrentSiteID, new Guid(Root_ContentID.ToString()));
+				pageContents = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, new Guid(Root_ContentID.ToString()));
 			}
 			return pageContents;
 		}
@@ -86,7 +86,7 @@ namespace Carrotware.CMS.UI.Controls {
 					if (lst.Count > 0) {
 						var p = GetParent(lst.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
 						if (!p.PageActive) {
-							p.NavMenuText = "&#9746; " + p.NavMenuText;
+							p.NavMenuText = InactivePagePrefix + p.NavMenuText;
 						}
 						if (p != null) {
 							output.Write("<li class=\"parent-nav\"><a href=\"" + p.NavFileName + "\">" + p.NavMenuText + "</a></li>\r\n");
@@ -96,7 +96,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 				foreach (var c in lst) {
 					if (!c.PageActive) {
-						c.NavMenuText = "&#9746; " + c.NavMenuText;
+						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 					}
 
 					output.Write("<li class=\"child-nav\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");

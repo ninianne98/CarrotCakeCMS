@@ -244,7 +244,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-		SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+		SiteNav pageNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
 			string sParent = "";
 			if (pageNav != null) {
@@ -259,7 +259,7 @@ namespace Carrotware.CMS.UI.Controls {
 			foreach (SiteNav c1 in lst) {
 				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
 				if (!c1.PageActive) {
-					c1.NavMenuText = "&#9746; " + c1.NavMenuText;
+					c1.NavMenuText = InactivePagePrefix + c1.NavMenuText;
 				}
 				if (c1.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c1.NavFileName.ToLower() == sParent) {
 					output.Write("\t<li class=\"" + CSSSelected + "\"><a href=\"" + c1.NavFileName + "\">" + c1.NavMenuText + "</a>");
@@ -271,7 +271,7 @@ namespace Carrotware.CMS.UI.Controls {
 					output.Write("\r\n\t<ul class=\"" + CSSULClassLower + "\">\r\n");
 					foreach (SiteNav c2 in cc) {
 						if (!c2.PageActive) {
-							c2.NavMenuText = "&#9746; " + c2.NavMenuText;
+							c2.NavMenuText = InactivePagePrefix + c2.NavMenuText;
 						}
 						if (c2.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
 							output.Write("\t\t<li class=\"" + CSSSelected + "\"><a href=\"" + c2.NavFileName + "\">" + c2.NavMenuText + "</a></li>\r\n");

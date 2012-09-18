@@ -27,6 +27,14 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerFakeNav();
 		}
 
+		public List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			return SiteNavHelper.GetSamplerFakeNav(rootContentID);
+		}
+
+		public List<SiteNav> GetPathNavigation(Guid siteID, string sPage, bool bActiveOnly) {
+			return SiteNavHelper.GetSamplerFakeNav(Guid.NewGuid());
+		}
+
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 
 			return SiteNavHelper.GetSamplerFakeNav(Guid.NewGuid());
@@ -37,12 +45,12 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerFakeNav(Guid.NewGuid());
 		}
 
-		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
+		public SiteNav GetPageCrumbNavigation(Guid siteID, string sPage) {
 
 			return SiteNavHelper.GetSamplerView();
 		}
 
-		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
+		public SiteNav GetPageCrumbNavigation(Guid siteID, Guid rootContentID) {
 
 			return SiteNavHelper.GetSamplerView(rootContentID);
 		}
