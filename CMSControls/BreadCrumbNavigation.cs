@@ -140,10 +140,10 @@ namespace Carrotware.CMS.UI.Controls {
 					if (!c.PageActive) {
 						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 					}
-					if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.NavFileName.ToLower() == sParent) {
-						output.Write("<li class=\"" + sSelCSS + "\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					if (c.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.FileName.ToLower() == sParent) {
+						output.Write("<li class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 					} else {
-						output.Write("<li" + sWrapCSS + "><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+						output.Write("<li" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 					}
 				}
 				output.Write("</ul>");
@@ -158,10 +158,10 @@ namespace Carrotware.CMS.UI.Controls {
 					if (!c.PageActive) {
 						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 					}
-					if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.NavFileName.ToLower() == sParent) {
-						output.Write("<span class=\"" + sSelCSS + "\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
+					if (c.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.FileName.ToLower() == sParent) {
+						output.Write("<span class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
 					} else {
-						output.Write("<span" + sWrapCSS + "><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
+						output.Write("<span" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
 					}
 					iCtr++;
 

@@ -256,6 +256,9 @@ namespace Carrotware.CMS.UI.Admin {
 				ContentPageExport.RemoveSerializedContentPageExport(guidImportContentID);
 			}
 
+			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
+				VirtualDirectory.RegisterRoutes(true);
+			}
 
 			if (!bRedirect) {
 				if (sPageMode.Length < 1) {

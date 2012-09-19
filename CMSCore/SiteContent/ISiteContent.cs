@@ -5,7 +5,6 @@ namespace Carrotware.CMS.Core {
 		DateTime CreateDate { get; set; }
 		DateTime EditDate { get; set; }
 		string FileName { get; set; }
-		string NavFileName { get; set; }
 		string NavMenuText { get; set; }
 		int? NavOrder { get; set; }
 		bool PageActive { get; set; }

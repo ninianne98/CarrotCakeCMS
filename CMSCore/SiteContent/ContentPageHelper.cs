@@ -71,7 +71,6 @@ namespace Carrotware.CMS.Core {
 				cont.EditUserId = c.EditUserId;
 				cont.EditDate = c.EditDate;
 				cont.TemplateFile = c.TemplateFile;
-				cont.NavFileName = rc.FileName;
 
 				cont.MetaDescription = c.MetaDescription;
 				cont.MetaKeyword = c.MetaKeyword;
@@ -112,7 +111,6 @@ namespace Carrotware.CMS.Core {
 			cont.EditUserId = c.EditUserId;
 			cont.EditDate = c.EditDate;
 			cont.TemplateFile = c.TemplateFile;
-			cont.NavFileName = c.FileName;
 
 			cont.MetaDescription = c.MetaDescription;
 			cont.MetaKeyword = c.MetaKeyword;
@@ -142,6 +140,11 @@ namespace Carrotware.CMS.Core {
 			newFileName = Regex.Replace(newFileName, @"[^0-9a-zA-Z.-/_]+", "-");
 
 			newFileName = newFileName.Replace("--", "-").Replace("--", "-");
+
+			if (newFileName.EndsWith(@"/")) {
+				newFileName = newFileName + SiteData.DefaultDirectoryFilename;
+				newFileName = newFileName.Replace(@"//", @"/");
+			}
 
 			if (newFileName.ToLower().EndsWith(".htm")) {
 				newFileName = newFileName.Substring(0, newFileName.Length - 4) + ".aspx";
@@ -452,7 +455,6 @@ namespace Carrotware.CMS.Core {
 
 			pageNew.TemplateFile = SiteData.PreviewTemplateFile;
 			pageNew.FileName = SiteData.PreviewTemplateFilePage;
-			pageNew.NavFileName = pageNew.FileName;
 			pageNew.MetaDescription = "Meta Description";
 			pageNew.MetaKeyword = "Meta Keyword";
 

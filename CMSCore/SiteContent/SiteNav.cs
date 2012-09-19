@@ -92,7 +92,6 @@ namespace Carrotware.CMS.Core {
 		public bool PageActive { get; set; }
 		public Guid SiteID { get; set; }
 
-		public string NavFileName { get; set; }
 		public string TemplateFile { get; set; }
 
 

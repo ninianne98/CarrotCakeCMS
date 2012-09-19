@@ -89,7 +89,7 @@ namespace Carrotware.CMS.UI.Controls {
 							p.NavMenuText = InactivePagePrefix + p.NavMenuText;
 						}
 						if (p != null) {
-							output.Write("<li class=\"parent-nav\"><a href=\"" + p.NavFileName + "\">" + p.NavMenuText + "</a></li>\r\n");
+							output.Write("<li class=\"parent-nav\"><a href=\"" + p.FileName + "\">" + p.NavMenuText + "</a></li>\r\n");
 						}
 					}
 				}
@@ -99,7 +99,7 @@ namespace Carrotware.CMS.UI.Controls {
 						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 					}
 
-					output.Write("<li class=\"child-nav\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					output.Write("<li class=\"child-nav\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				}
 				output.Write("</ul>");
 			} else {
