@@ -43,26 +43,16 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web.Extensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GenericPage.aspx" />
@@ -88,7 +78,6 @@
     <Compile Include="GenericPage.aspx.designer.cs">
       <DependentUpon>GenericPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="VirtualFileSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +88,10 @@
     <ProjectReference Include="..\CMSControls\CMSControls.csproj">
       <Project>{2DEB6A0C-B032-4B78-96BD-CC9271473CA1}</Project>
       <Name>CMSControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSDBUpdater\CMSDBUpdater.csproj">
+      <Project>{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}</Project>
+      <Name>CMSDBUpdater</Name>
     </ProjectReference>
     <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
       <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>

@@ -42,6 +42,8 @@ Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "CMSDataScripts", "CMSDataSc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginPhotoGallery", "PluginPhotoGallery\PluginPhotoGallery.csproj", "{AB1DE455-438E-4249-B282-52937F9D1386}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSDBUpdater", "CMSDBUpdater\CMSDBUpdater.csproj", "{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{AB1DE455-438E-4249-B282-52937F9D1386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB1DE455-438E-4249-B282-52937F9D1386}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB1DE455-438E-4249-B282-52937F9D1386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -52,6 +52,7 @@
     <Reference Include="System.Web.Extensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -373,6 +374,10 @@
       <Project>{B2F5F85A-ECF8-4E1D-B2B4-15EB7F6A0ED5}</Project>
       <Name>CMSBaseClasses</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CMSDBUpdater\CMSDBUpdater.csproj">
+      <Project>{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}</Project>
+      <Name>CMSDBUpdater</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
       <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
       <Name>CMSInterfaces</Name>
@@ -384,6 +389,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="global.asax" />
     <Content Include="Manage\CreateFirstAdmin.aspx" />
     <Content Include="Manage\DatabaseSetup.aspx" />
     <Content Include="Manage\Images\house.png" />

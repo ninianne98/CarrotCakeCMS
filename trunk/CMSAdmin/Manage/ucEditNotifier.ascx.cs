@@ -56,9 +56,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 								 orderby n.NavOrder
 								 select new SiteNav {
 									 NavOrder = n.NavOrder,
-									 NavFileName = n.NavFileName,
 									 FileName = n.FileName,
-									 NavMenuText = (n.NavOrder > 0 ? "  -- " : "") + n.NavFileName + "  [[" + (n.PageActive ? "" : "{*U*}  ") + n.NavMenuText + "]]",
+									 NavMenuText = (n.NavOrder > 0 ? "  -- " : "") + n.FileName + "  [[" + (n.PageActive ? "" : "{*U*}  ") + n.NavMenuText + "]]",
 									 PageActive = n.PageActive,
 									 ContentID = n.ContentID,
 									 Root_ContentID = n.Root_ContentID,
@@ -73,7 +72,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				//pageContents3.Root_ContentID = Guid.Empty;
 				//pageContents3.SiteID = SiteID;
 				//pageContents3.FileName = "/default.aspx";
-				//pageContents3.NavFileName = "/default.aspx";
+				//pageContents3.FileName = "/default.aspx";
 				//pageContents3.NavMenuText = "Homepage";
 				//pageContents3.PageHead = "Homepage";
 				//pageContents3.NavOrder = -120;
@@ -83,9 +82,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 										orderby n.NavOrder
 										select new SiteNav {
 											NavOrder = n.NavOrder,
-											NavFileName = n.NavFileName,
 											FileName = n.FileName,
-											NavMenuText = (n.NavOrder > 0 ? "  -- " : "") + n.NavFileName + "  [[" + (n.PageActive ? "" : "{*U*}  ") + n.NavMenuText + "]]",
+											NavMenuText = (n.NavOrder > 0 ? "  -- " : "") + n.FileName + "  [[" + (n.PageActive ? "" : "{*U*}  ") + n.NavMenuText + "]]",
 											PageActive = n.PageActive,
 											ContentID = n.ContentID,
 											Root_ContentID = n.Root_ContentID,

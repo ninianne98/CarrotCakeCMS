@@ -5,6 +5,7 @@ using System.Web.Compilation;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
+using Carrotware.CMS.DBUpdater;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/

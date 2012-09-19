@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Routing;
 using System.Web.Caching;
+using System.Web.Routing;
+using Carrotware.CMS.DBUpdater;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -34,7 +35,7 @@ namespace Carrotware.CMS.Core {
 				return c;
 			}
 			set {
-				HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+				HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(15), Cache.NoSlidingExpiration);
 			}
 		}
 
@@ -49,7 +50,6 @@ namespace Carrotware.CMS.Core {
 		public static void RegisterRoutes(RouteCollection routes) {
 			RegisterRoutes(routes, false);
 		}
-
 
 		public static void RegisterRoutes(RouteCollection routes, bool OverrideRefresh) {
 

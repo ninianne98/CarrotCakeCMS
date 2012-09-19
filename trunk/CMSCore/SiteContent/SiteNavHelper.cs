@@ -130,7 +130,6 @@ namespace Carrotware.CMS.Core {
 			navData.SiteID = SiteData.CurrentSiteID;
 			navData.TemplateFile = SiteData.DefaultDirectoryFilename;
 			navData.FileName = SiteData.DefaultDirectoryFilename;
-			navData.NavFileName = SiteData.DefaultDirectoryFilename;
 			navData.NavMenuText = "NONE";
 			navData.PageHead = "NONE";
 			navData.TitleBar = "NONE";
@@ -161,7 +160,6 @@ namespace Carrotware.CMS.Core {
 					nav.ContentID = Guid.NewGuid();
 					//nav.FileName = nav.FileName.Replace(".aspx", nav.NavOrder.ToString() + ".aspx");
 					nav.FileName = "#";
-					nav.NavFileName = nav.FileName;
 					if (rootParentID != null) {
 						nav.NavMenuText = nav.NavMenuText + " - " + rootParentID.Value.ToString().Substring(0, 4);
 					}
@@ -222,7 +220,6 @@ namespace Carrotware.CMS.Core {
 
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
 			navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();
-			navNew.NavFileName = navNew.FileName;
 
 			return navNew;
 		}

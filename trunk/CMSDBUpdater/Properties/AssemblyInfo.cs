@@ -6,12 +6,12 @@ using System.Web.UI;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CMSCore")]
+[assembly: AssemblyTitle("CMSDBUpdater")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
-[assembly: AssemblyProduct("CMSCore")]
-[assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
+[assembly: AssemblyProduct("CMSDBUpdater")]
+[assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +21,7 @@ using System.Web.UI;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6ca70c43-f22a-44d9-ba1d-a341d3e9d0aa")]
+[assembly: Guid("0b93a145-c022-4f35-a0b6-3c7a016ca248")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -37,15 +37,10 @@ using System.Web.UI;
 [assembly: AssemblyFileVersion("4.1.0.0")]
 
 
-
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm", "text/plain")]
-
-[assembly: WebResource("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt", "text/plain")]
-
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt", "text/html", PerformSubstitution = true)]
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt", "text/html", PerformSubstitution = true)]
-
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample1.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample2.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample3.png", "image/png")]
-[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample4.png", "image/png")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER01.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER01a.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER02.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER03.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER04.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER05.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", "text/plain")]

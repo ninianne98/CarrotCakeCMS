@@ -53,10 +53,10 @@ namespace Carrotware.CMS.UI.Controls {
 					c.NavMenuText = InactivePagePrefix + c.NavMenuText;
 				}
 
-				if (c.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
-					output.Write("<li class=\"selected\"><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+				if (c.FileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
+					output.Write("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				} else {
-					output.Write("<li><a href=\"" + c.NavFileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				}
 			}
 			output.Write("</ul>\r\n");

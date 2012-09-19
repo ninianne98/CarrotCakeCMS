@@ -6,12 +6,22 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Caching;
-using System.Text;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 
-namespace Carrotware.CMS.Core {
+
+namespace Carrotware.CMS.DBUpdater {
 
 
 	public class DatabaseUpdate {
@@ -119,7 +129,7 @@ namespace Carrotware.CMS.Core {
 				DataTable table1 = GetData(query);
 
 				if (table1.Rows.Count < 1) {
-					res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.CREATE01.sql", false);
+					res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", false);
 					res.Response = "Created Database";
 					return res;
 				}
@@ -334,7 +344,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER01.sql", false);
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01.sql", false);
 				res.Response = "Created Content MetaKeyword and MetaDescription";
 				return res;
 			}
@@ -351,7 +361,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER01a.sql", false);
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01a.sql", false);
 				res.Response = "Created Table SerialCache";
 				return res;
 			}
@@ -368,7 +378,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER02.sql", false);
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER02.sql", false);
 				res.Response = "Widget Schema Updated";
 				return res;
 			}
@@ -385,7 +395,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER03.sql", false);
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER03.sql", false);
 				res.Response = "RootContent CreateDate Updated";
 			}
 
@@ -401,7 +411,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 1) {
-				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER04.sql", false);
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER04.sql", false);
 				res.Response = "CMS Table Names Changed";
 				return res;
 			}
@@ -419,7 +429,7 @@ namespace Carrotware.CMS.Core {
 			DataTable table1 = GetData(query);
 
 			if (table1.Rows.Count < 36) {
-				res.LastException = ExecFileContents("Carrotware.CMS.Core.DataScripts.ALTER05.sql", false);
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER05.sql", false);
 				res.Response = "CMS DB added vw_carrot_Content and vw_carrot_Widget";
 				return res;
 			}

@@ -52,12 +52,12 @@ namespace Carrotware.CMS.UI.Controls {
 					if (!c2.PageActive) {
 						c2.NavMenuText = InactivePagePrefix + c2.NavMenuText;
 					}
-					if (c2.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
+					if (c2.FileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
 						output.Write("\t\t<li class=\"" + CSSSelected + " level-" + iLevel + "\"> ");
 					} else {
 						output.Write("\t\t<li class=\"level-" + iLevel + "\"> ");
 					}
-					output.Write("<a href=\"" + c2.NavFileName + "\">" + c2.NavMenuText + "</a> \r\n");
+					output.Write("<a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a> \r\n");
 					LoadChildren(output, c2.Root_ContentID, iLevel + 1);
 					output.Write("\r\n</li>\r\n");
 				}
@@ -85,13 +85,13 @@ namespace Carrotware.CMS.UI.Controls {
 				if (!c1.PageActive) {
 					c1.NavMenuText = InactivePagePrefix + c1.NavMenuText;
 				}
-				if (c1.NavFileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c1.NavFileName.ToLower() == sParent) {
+				if (c1.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c1.FileName.ToLower() == sParent) {
 					output.Write("\t<li class=\"" + CSSSelected + "\"> ");
 				} else {
 					output.Write("\t<li> ");
 				}
 
-				output.Write("<a href=\"" + c1.NavFileName + "\">" + c1.NavMenuText + "</a>");
+				output.Write("<a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				LoadChildren(output, c1.Root_ContentID, 1);
 				output.Write("</li>\r\n");
 			}

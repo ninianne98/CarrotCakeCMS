@@ -51,7 +51,6 @@ namespace Carrotware.CMS.Core {
 				nav.NavOrder = c.NavOrder;
 				nav.EditDate = c.EditDate;
 				nav.TemplateFile = c.TemplateFile;
-				nav.NavFileName = rc.FileName;
 			}
 
 			return nav;
@@ -82,7 +81,6 @@ namespace Carrotware.CMS.Core {
 			nav.NavOrder = c.NavOrder;
 			nav.EditDate = c.EditDate;
 			nav.TemplateFile = c.TemplateFile;
-			nav.NavFileName = c.FileName;
 
 			return nav;
 		}

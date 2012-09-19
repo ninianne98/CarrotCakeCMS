@@ -7,8 +7,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.Interface;
-
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryDatabase : AdminModule {
