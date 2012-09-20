@@ -94,6 +94,8 @@ function cmsAjaxGeneralCallback(data, status) {
 }
 
 function cmsAlertModal(request) {
+	$("#divCMSModalMsg").html('');
+
 	$("#divCMSModal").dialog("destroy");
 
 	$("#divCMSModalMsg").html(request);
@@ -215,3 +217,32 @@ function DirtyPageRefresh() {
 		});
 	}
 }
+
+
+//===================
+
+function AjaxShowErrorMsg(sender, args) {
+	if (args.get_error() != undefined) {
+		var errorMessage;
+		if (args.get_response().get_statusCode() == '200') {
+			errorMessage = args.get_error().message;
+		}
+		else {
+			// Error occurred somewhere other than the server page.
+			errorMessage = 'An error occurred. ';
+		}
+		args.set_errorHandled(true);
+		cmsAlertModal(errorMessage);
+	}
+}
+
+function UpdateAjaxErrorMsg() {
+	if (typeof (Sys) != 'undefined') {
+		var prm = Sys.WebForms.PageRequestManager.getInstance();
+		prm.add_endRequest(AjaxShowErrorMsg);
+	}
+}
+
+$(document).ready(function () {
+	UpdateAjaxErrorMsg();
+});

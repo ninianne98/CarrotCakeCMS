@@ -715,11 +715,11 @@
 
 		function ClickSaveBtn() {
 			$('#<%=btnSave.ClientID %>').click();
-			setTimeout("cmsMakeNotOKToLeave();", 1500);
+			setTimeout("cmsMakeNotOKToLeave();", 2500);
 		}
 		function ClickSaveVisitBtn() {
 			$('#<%=btnSaveVisit.ClientID %>').click();
-			setTimeout("cmsMakeNotOKToLeave();", 1500);
+			setTimeout("cmsMakeNotOKToLeave();", 2500);
 		}
 	</script>
 	<script type="text/javascript">
