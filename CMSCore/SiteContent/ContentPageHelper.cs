@@ -124,11 +124,15 @@ namespace Carrotware.CMS.Core {
 			if (string.IsNullOrEmpty(newFileName)) {
 				newFileName = rootContentID.ToString();
 			}
+			newFileName = newFileName.Replace(@"\", @"/");
+
+			if (!newFileName.StartsWith(@"/")) {
+				newFileName = @"/" + newFileName;
+			}
 
 			newFileName = newFileName.Replace(" ", "-");
 			newFileName = newFileName.Replace("'", "-");
 			newFileName = newFileName.Replace("\"", "-");
-			newFileName = newFileName.Replace(@"\", @"/");
 			newFileName = newFileName.Replace("*", "-star-");
 			newFileName = newFileName.Replace("%", "-percent-");
 			newFileName = newFileName.Replace("&", "-n-");
@@ -140,6 +144,7 @@ namespace Carrotware.CMS.Core {
 			newFileName = Regex.Replace(newFileName, @"[^0-9a-zA-Z.-/_]+", "-");
 
 			newFileName = newFileName.Replace("--", "-").Replace("--", "-");
+
 
 			if (newFileName.EndsWith(@"/")) {
 				newFileName = newFileName + SiteData.DefaultDirectoryFilename;
@@ -155,9 +160,6 @@ namespace Carrotware.CMS.Core {
 
 			if (!newFileName.ToLower().EndsWith(".aspx")) {
 				newFileName = newFileName + ".aspx";
-			}
-			if (newFileName.ToLower().IndexOf(@"/") < 0) {
-				newFileName = "/" + newFileName;
 			}
 
 			return newFileName;

@@ -51,7 +51,6 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 		}
 
 
-
 		public void ActivateTab(SectionID sectionID) {
 
 			switch (sectionID) {
@@ -73,5 +72,26 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 
 			}
 		}
+
+		protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e) {
+			string sError = String.Empty;
+
+			if (e.Exception != null) {
+				Exception objErr = e.Exception;
+				sError = objErr.Message;
+				if (objErr.StackTrace != null) {
+					sError += "\r\n<hr />\r\n" + objErr.StackTrace;
+				}
+
+				if (objErr.InnerException != null) {
+					sError += "\r\n<hr />\r\n" + objErr.InnerException;
+				}
+			} else {
+				sError = " An error occurred. ";
+			}
+
+			ScriptManager1.AsyncPostBackErrorMessage = sError;
+		}
+
 	}
 }

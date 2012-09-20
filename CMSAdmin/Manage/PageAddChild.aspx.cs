@@ -82,6 +82,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pnlSaved.Visible = true;
 
 				litPageName.Text = pageContents.FileName;
+
+				if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
+					VirtualDirectory.RegisterRoutes(true);
+				}
 			}
 
 		}
