@@ -266,6 +266,13 @@ namespace Carrotware.CMS.Core {
 		public string PageTextSummary {
 			get {
 				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
+				txt = Regex.Replace(txt, @"<!--(\n|.)*-->", " ");
+				if (txt.Length > 4096) {
+					txt = txt.Substring(0, 4096);
+				}
+
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ");
 
 				if (txt.Length > 512) {
 					return txt.Substring(0, 500) + "........";
@@ -278,7 +285,15 @@ namespace Carrotware.CMS.Core {
 		public string PageTextPlainSummary {
 			get {
 				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
+				txt = Regex.Replace(txt, @"<!--(\n|.)*-->", " ");
+				if (txt.Length > 4096) {
+					txt = txt.Substring(0, 4096);
+				}
+
 				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
+
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ");
 
 				if (txt.Length > 512) {
 					return txt.Substring(0, 500) + "........";
