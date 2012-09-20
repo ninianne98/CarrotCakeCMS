@@ -81,7 +81,9 @@ namespace Carrotware.CMS.Core {
 
 			VirtualDirectory.RegisterRoutes(true);
 
-			System.Web.HttpRuntime.UnloadAppDomain();
+			if (SiteData.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted) {
+				System.Web.HttpRuntime.UnloadAppDomain();
+			}
 		}
 
 

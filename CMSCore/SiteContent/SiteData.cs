@@ -119,7 +119,9 @@ namespace Carrotware.CMS.Core {
 			}
 			db.SubmitChanges();
 
-			//System.Web.HttpRuntime.UnloadAppDomain();
+			//if (SiteData.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted) {
+			//    System.Web.HttpRuntime.UnloadAppDomain();
+			//}
 		}
 
 		private void FixMeta() {
