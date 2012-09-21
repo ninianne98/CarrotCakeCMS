@@ -47,36 +47,12 @@
 							<img class="imgNoBorder" src="/Manage/images/chart_organisation.png" alt="Sort Sub Pages" title="Sort Sub Pages" /></a>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="titlebar" HeaderText="Titlebar">
-					<ItemTemplate>
-						<%# Eval("TitleBar")%>
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="pagehead" HeaderText="Page Header">
-					<ItemTemplate>
-						<%# Eval("PageHead")%>
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename">
-					<ItemTemplate>
-						<%# Eval("FileName")%>
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text">
-					<ItemTemplate>
-						<%# Eval("NavMenuText")%>
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited">
-					<ItemTemplate>
-						<%# Eval("EditDate")%>
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On">
-					<ItemTemplate>
-						<%# String.Format("{0:d}", Eval("CreateDate"))%>
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
+				<carrot:CarrotHeaderSortTemplateField SortExpression="titlebar" HeaderText="Titlebar" DataField="Titlebar" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="pagehead" HeaderText="Page Header" DataField="pagehead" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename" DataField="Filename" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text" DataField="NavMenuText" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="PageActive" HeaderText="Active" ItemStyle-HorizontalAlign="Center">
 					<ItemTemplate>
 						<asp:Image ID="imgActive" runat="server" ImageUrl="/Manage/images/application_lightning.png" AlternateText="Active" />
