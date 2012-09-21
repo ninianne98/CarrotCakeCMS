@@ -28,6 +28,34 @@ namespace Carrotware.Web.UI.Controls {
 
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string DataField {
+			get {
+				String s = ViewState["DataField"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["DataField"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string DataFieldFormat {
+			get {
+				String s = ViewState["DataFieldFormat"] as String;
+				return ((s == null) ? "{0}" : s);
+			}
+			set {
+				ViewState["DataFieldFormat"] = value;
+			}
+		}
+
 
 		//[Bindable(true)]
 		//[Category("Appearance")]

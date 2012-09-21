@@ -45,4 +45,38 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 	}
+
+	//=========================================
+
+	public class CarrotAutoItemTemplate : ITemplate {
+		private string _format { get; set; }
+		private string _field { get; set; }
+
+		public CarrotAutoItemTemplate(string fieldParm, string formatPattern) {
+			_format = formatPattern;
+			_field = fieldParm;
+		}
+
+		public void InstantiateIn(Control container) {
+
+			Literal litContent = new Literal();
+			litContent.Text = _field;
+
+			litContent.DataBinding += new EventHandler(litContent_DataBinding);
+
+			container.Controls.Add(litContent);
+		}
+
+		private void litContent_DataBinding(object sender, EventArgs e) {
+			Literal litContent = (Literal)sender;
+			GridViewRow container = (GridViewRow)litContent.NamingContainer;
+
+			object oValue = DataBinder.Eval(container, "DataItem." + _field);
+
+			litContent.Text = String.Format(_format, oValue);
+		}
+
+	}
+
+
 }

@@ -100,6 +100,11 @@ namespace Carrotware.Web.UI.Controls {
 				if (c is CarrotHeaderSortTemplateField) {
 					CarrotHeaderSortTemplateField ctf = (CarrotHeaderSortTemplateField)c;
 					ctf.HeaderTemplate = new CarrotLinkButtonCmdTemplate("lnkHead", iCol, ctf.HeaderText, ctf.SortExpression);
+
+					if (!string.IsNullOrEmpty(ctf.DataField) && ctf.ItemTemplate == null) {
+						ctf.ItemTemplate = new CarrotAutoItemTemplate(ctf.DataField, ctf.DataFieldFormat);
+					}
+
 					iCol++;
 				}
 			}
