@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+using System.IO;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -62,5 +60,18 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 
 		}
+		
+
+		public static string GetCtrlText(Control ctrl) {
+			StringBuilder sb = new StringBuilder();
+			StringWriter tw = new StringWriter(sb);
+			HtmlTextWriter hw = new HtmlTextWriter(tw);
+
+			ctrl.RenderControl(hw);
+
+			return sb.ToString();
+		}
+
+
 	}
 }
