@@ -41,6 +41,7 @@ using System.Web.UI;
 [assembly: TagPrefix("BreadCrumbNavigation", "carrot")]
 [assembly: TagPrefix("SecondLevelNavigation", "carrot")]
 [assembly: TagPrefix("TwoLevelNavigation", "carrot")]
+[assembly: TagPrefix("TwoLevelNavigationTemplate", "carrot")]
 [assembly: TagPrefix("MultiLevelNavigation", "carrot")]
 [assembly: TagPrefix("ChildNavigation", "carrot")]
 [assembly: TagPrefix("MostRecentUpdated", "carrot")]
@@ -51,7 +52,6 @@ using System.Web.UI;
 
 [assembly: TagPrefix("ContentPlainText", "carrot")]
 [assembly: TagPrefix("ContentRichText", "carrot")]
-
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu7.txt", "text/css")]

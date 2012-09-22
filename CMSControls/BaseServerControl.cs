@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected string InactivePagePrefix {
+		public static string InactivePagePrefix {
 			get {
 				return "&#9746; ";
 			}
