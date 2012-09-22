@@ -96,6 +96,29 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
+
+
+		public List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly) {
+			List<SiteNav> lstContent = null;
+
+			List<Guid> lstTop = (from ct in db.vw_carrot_Contents
+								 where ct.SiteID == siteID
+									 && ct.Parent_ContentID == null
+									 && ct.IsLatestVersion == true
+								 select ct.Root_ContentID).ToList();
+
+			lstContent = (from ct in db.vw_carrot_Contents
+						  orderby ct.NavOrder, ct.NavMenuText
+						  where ct.SiteID == siteID
+								&& (ct.PageActive == bActiveOnly || bActiveOnly == false)
+								&& ct.IsLatestVersion == true
+								&& (lstTop.Contains(ct.Root_ContentID) || lstTop.Contains(ct.Parent_ContentID.Value))
+						  select MakeSiteNav(ct)).ToList();
+
+			return lstContent;
+		}
+
+
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
 			List<SiteNav> lstContent = null;
 

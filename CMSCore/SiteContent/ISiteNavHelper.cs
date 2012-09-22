@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -39,6 +38,8 @@ namespace Carrotware.CMS.Core {
 		List<SiteNav> GetSiblingNavigation(Guid siteID, string sPage, bool bActiveOnly);
 
 		List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly);
+
+		List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly);
 
 		List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly);
 		List<SiteNav> GetPathNavigation(Guid siteID, string sPage, bool bActiveOnly);
