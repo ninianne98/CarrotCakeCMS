@@ -30,7 +30,6 @@ namespace Carrotware.CMS.UI.Admin {
 			siteHelper.CleanUpSerialData();
 
 			LoadGrid();
-
 		}
 
 		protected void LoadGrid() {
@@ -40,22 +39,6 @@ namespace Carrotware.CMS.UI.Admin {
 			gvPages.DataSource = lstCont;
 			gvPages.DataBind();
 
-		}
-
-		protected void gvPages_DataBound(object sender, EventArgs e) {
-			foreach (GridViewRow dgItem in gvPages.Rows) {
-				Image imgActive = (Image)dgItem.FindControl("imgActive");
-				HiddenField hdnIsActive = (HiddenField)dgItem.FindControl("hdnIsActive");
-
-				if (hdnIsActive.Value.ToLower() != "true") {
-					imgActive.ImageUrl = hdnInactive.Value;
-					imgActive.AlternateText = "Inactive";
-				} else {
-					imgActive.ImageUrl = hdnActive.Value;
-					imgActive.AlternateText = "Active";
-				}
-				imgActive.ToolTip = imgActive.AlternateText;
-			}
 		}
 
 	}

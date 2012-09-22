@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Admin {
 	public partial class PageTemplateUpdate : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentTemplate);
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {
@@ -39,17 +39,6 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void SetTemplateGrid() {
 			gvApply.DataSource = pageHelper.GetLatestContentList(SiteID);
 			gvApply.DataBind();
-
-			foreach (GridViewRow dgItem in gvApply.Rows) {
-				Image imgActive = (Image)dgItem.FindControl("imgActive");
-				HiddenField hdnIsActive = (HiddenField)dgItem.FindControl("hdnIsActive");
-
-				if (hdnIsActive.Value.ToLower() != "true") {
-					imgActive.ImageUrl = hdnInactive.Value;
-					imgActive.AlternateText = "Inactive";
-				}
-				imgActive.ToolTip = imgActive.AlternateText;
-			}
 
 		}
 

@@ -26,6 +26,9 @@ namespace Carrotware.CMS.UI.Admin {
 		public enum SectionID {
 			Home,
 			Content,
+			ContentTemplate,
+			ContentSkinEdit,
+			ContentSiteMap,
 			UserAdmin,
 			GroupAdmin,
 			UserFn,

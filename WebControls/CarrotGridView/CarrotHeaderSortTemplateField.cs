@@ -56,6 +56,91 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string ImagePathTrue {
+			get {
+				String s = ViewState["ImagePathTrue"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["ImagePathTrue"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string ImagePathFalse {
+			get {
+				String s = ViewState["ImagePathFalse"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["ImagePathFalse"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string BooleanImageCssClass {
+			get {
+				String s = ViewState["BooleanImageCssClass"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["BooleanImageCssClass"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool ShowBooleanImage {
+			get {
+				String s = (String)ViewState["ShowBooleanImage"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["ShowBooleanImage"] = value.ToString();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string AlternateTextTrue {
+			get {
+				String s = ViewState["AlternateTextTrue"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["AlternateTextTrue"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string AlternateTextFalse {
+			get {
+				String s = ViewState["AlternateTextFalse"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["AlternateTextFalse"] = value;
+			}
+		}
 
 		//[Bindable(true)]
 		//[Category("Appearance")]

@@ -21,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin {
 		List<ContentPage> lstSite = new List<ContentPage>();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSiteMap);
 
 			if (!IsPostBack) {
 				lstSite = (from c in pageHelper.GetLatestContentList(SiteID)

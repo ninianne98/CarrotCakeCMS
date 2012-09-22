@@ -13,7 +13,7 @@
 	<uc1:ucPageMenuItems ID="ucPageMenuItems1" runat="server" />
 	<div id="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="TitleBar ASC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular" OnDataBound="gvPages_DataBound">
+			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>
@@ -47,21 +47,15 @@
 							<img class="imgNoBorder" src="/Manage/images/chart_organisation.png" alt="Sort Sub Pages" title="Sort Sub Pages" /></a>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="titlebar" HeaderText="Titlebar" DataField="Titlebar" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="pagehead" HeaderText="Page Header" DataField="pagehead" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="titlebar" HeaderText="Titlebar" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="pagehead" HeaderText="Page Header" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename" DataField="Filename" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text" DataField="NavMenuText" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="PageActive" HeaderText="Active" ItemStyle-HorizontalAlign="Center">
-					<ItemTemplate>
-						<asp:Image ID="imgActive" runat="server" ImageUrl="/Manage/images/application_lightning.png" AlternateText="Active" />
-						<asp:HiddenField ID="hdnIsActive" Visible="false" runat="server" Value='<%#Eval("PageActive") %>' />
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Active" AlternateTextFalse="Inactive"
+					AlternateTextTrue="Active" ShowBooleanImage="true" />
 			</Columns>
 		</carrot:CarrotGridView>
-		<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/Manage/images/cancel.png" />
-		<asp:HiddenField runat="server" ID="hdnActive" Visible="false" Value="/Manage/images/accept.png" />
 	</div>
 </asp:Content>

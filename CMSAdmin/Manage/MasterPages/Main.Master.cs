@@ -14,9 +14,10 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 	public partial class Main : AdminBaseMasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!SecurityData.IsAdmin) {
-				tabUserAdmin.Visible = false;
-				tabGroupAdmin.Visible = false;
+				tabUserSecurity.Visible = false;
 			}
+			tabUserAdmin.Visible = tabUserSecurity.Visible;
+			tabGroupAdmin.Visible = tabUserSecurity.Visible;
 
 			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.MasterPages.Main.Ctrl");
 
@@ -36,12 +37,13 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 			SiteData site = siteHelper.GetCurrentSite();
 
 			if (site == null) {
-				tabContent.Visible = false;
-				tabModules.Visible = false;
+				tabContentTop.Visible = false;
 			} else {
-				tabContent.Visible = true;
-				tabModules.Visible = true;
+				tabContentTop.Visible = true;
 			}
+
+			tabContent.Visible = tabContentTop.Visible;
+			tabModules.Visible = tabContentTop.Visible;
 		}
 
 
@@ -57,13 +59,29 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 				case SectionID.Home:
 					tabMain.Attributes["class"] = "current";
 					break;
+
 				case SectionID.Content:
+					tabContentTop.Attributes["class"] = "current";
 					tabContent.Attributes["class"] = "current";
 					break;
+				case SectionID.ContentTemplate:
+					tabContentTop.Attributes["class"] = "current";
+					tabContentTemplate.Attributes["class"] = "current";
+					break;
+				case SectionID.ContentSkinEdit:
+					tabContentTop.Attributes["class"] = "current";
+					tabContentSkin.Attributes["class"] = "current";
+					break;
+				case SectionID.ContentSiteMap:
+					tabContentTop.Attributes["class"] = "current";
+					tabContentSiteMap.Attributes["class"] = "current";
+					break;
 				case SectionID.UserAdmin:
+					tabUserSecurity.Attributes["class"] = "current";
 					tabUserAdmin.Attributes["class"] = "current";
 					break;
 				case SectionID.GroupAdmin:
+					tabUserSecurity.Attributes["class"] = "current";
 					tabGroupAdmin.Attributes["class"] = "current";
 					break;
 				case SectionID.Modules:
