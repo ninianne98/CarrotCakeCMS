@@ -31,24 +31,6 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
         
         /// <summary>
-        /// hdnInactive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnInactive;
-        
-        /// <summary>
-        /// hdnActive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnActive;
-        
-        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

@@ -95,17 +95,32 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		private void SetData() {
-			int iCol = 0;
 			foreach (DataControlField c in this.Columns) {
 				if (c is CarrotHeaderSortTemplateField) {
 					CarrotHeaderSortTemplateField ctf = (CarrotHeaderSortTemplateField)c;
-					ctf.HeaderTemplate = new CarrotLinkButtonCmdTemplate("lnkHead", iCol, ctf.HeaderText, ctf.SortExpression);
+					ctf.HeaderTemplate = new CarrotSortButtonHeaderTemplate(ctf.HeaderText, ctf.SortExpression);
 
-					if (!string.IsNullOrEmpty(ctf.DataField) && ctf.ItemTemplate == null) {
-						ctf.ItemTemplate = new CarrotAutoItemTemplate(ctf.DataField, ctf.DataFieldFormat);
+					if (string.IsNullOrEmpty(ctf.DataField) && !string.IsNullOrEmpty(ctf.SortExpression)) {
+						ctf.DataField = ctf.SortExpression;
 					}
 
-					iCol++;
+					if (ctf.ItemTemplate == null) {
+						if (!string.IsNullOrEmpty(ctf.DataField) && !ctf.ShowBooleanImage) {
+							ctf.ItemTemplate = new CarrotAutoItemTemplate(ctf.DataField, ctf.DataFieldFormat);
+						}
+
+						if (ctf.ShowBooleanImage) {
+							CarrotBooleanImageItemTemplate iImageItemTemplate = new CarrotBooleanImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass);
+							if (!string.IsNullOrEmpty(ctf.AlternateTextTrue) || !string.IsNullOrEmpty(ctf.AlternateTextFalse)) {
+								iImageItemTemplate.SetVerbiage(ctf.AlternateTextTrue, ctf.AlternateTextFalse);
+							}
+							if (!string.IsNullOrEmpty(ctf.ImagePathTrue) || !string.IsNullOrEmpty(ctf.ImagePathFalse)) {
+								iImageItemTemplate.SetImage(ctf.ImagePathTrue, ctf.ImagePathFalse);
+							}
+							ctf.ItemTemplate = iImageItemTemplate;
+						}
+
+					}
 				}
 			}
 

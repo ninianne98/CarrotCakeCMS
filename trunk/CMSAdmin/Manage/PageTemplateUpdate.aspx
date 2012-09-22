@@ -85,20 +85,12 @@
 						<%# String.Format("{0:d}", Eval("EditDate"))%>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<asp:TemplateField ItemStyle-HorizontalAlign="Center">
-					<HeaderTemplate>
-						Active
-					</HeaderTemplate>
-					<ItemTemplate>
-						<asp:Image ID="imgActive" runat="server" ImageUrl="/Manage/images/accept.png" AlternateText="Active" />
-						<asp:HiddenField ID="hdnIsActive" Visible="false" runat="server" Value='<%#Eval("PageActive") %>' />
-					</ItemTemplate>
-				</asp:TemplateField>
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
+					ShowBooleanImage="true" />
 			</Columns>
 		</carrot:CarrotGridView>
 		<div style="height: 50px; margin-top: 10px; margin-bottom: 10px;">
 			<asp:Button ID="btnSaveMapping" runat="server" Text="Save" OnClick="btnSaveMapping_Click" />
 		</div>
-		<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/Manage/images/cancel.png" />
 	</div>
 </asp:Content>

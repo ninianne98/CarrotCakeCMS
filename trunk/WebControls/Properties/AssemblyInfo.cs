@@ -43,7 +43,10 @@ using System.Web.UI;
 [assembly: TagPrefix("captcha", "carrot")]
 [assembly: TagPrefix("Calendar", "carrot")]
 [assembly: TagPrefix("CarrotGridView", "carrot")]
+
 [assembly: TagPrefix("CarrotHeaderSortTemplateField", "carrot")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.accept.png", "image/png")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.cancel.png", "image/png")]
 
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery132.js", "text/javascript")]

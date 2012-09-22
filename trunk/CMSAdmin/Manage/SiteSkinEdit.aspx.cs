@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSkinEdit);
 
 			if (!string.IsNullOrEmpty(Request.QueryString["path"])) {
 				sTemplateFileQS = Request.QueryString["path"].ToString();

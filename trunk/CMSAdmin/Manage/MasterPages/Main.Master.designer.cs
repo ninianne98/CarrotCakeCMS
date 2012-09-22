@@ -67,6 +67,15 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabMain;
         
         /// <summary>
+        /// tabContentTop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentTop;
+        
+        /// <summary>
         /// tabContent control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,33 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContent;
         
         /// <summary>
+        /// tabContentTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentTemplate;
+        
+        /// <summary>
+        /// tabContentSiteMap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentSiteMap;
+        
+        /// <summary>
+        /// tabContentSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentSkin;
+        
+        /// <summary>
         /// tabModules control.
         /// </summary>
         /// <remarks>
@@ -83,6 +119,15 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabModules;
+        
+        /// <summary>
+        /// tabUserSecurity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabUserSecurity;
         
         /// <summary>
         /// tabUserAdmin control.

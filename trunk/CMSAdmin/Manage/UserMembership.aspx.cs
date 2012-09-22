@@ -29,22 +29,7 @@ namespace Carrotware.CMS.UI.Admin {
 			dvMembers.DataBind();
 		}
 
-		protected void dvMembers_DataBound(object sender, EventArgs e) {
-			FormatGrid();
-		}
 
-		protected void FormatGrid() {
-			foreach (GridViewRow dgItem in dvMembers.Rows) {
-				Image imgLocked = (Image)dgItem.FindControl("imgLocked");
-				HiddenField hdnIsLockedOut = (HiddenField)dgItem.FindControl("hdnIsLockedOut");
-
-				if (hdnIsLockedOut.Value.ToLower() == "true") {
-					imgLocked.ImageUrl = hdnInactive.Value;
-					imgLocked.AlternateText = "Locked Out";
-				}
-				imgLocked.ToolTip = imgLocked.AlternateText;
-			}
-		}
 
 	}
 }

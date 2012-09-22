@@ -1,5 +1,4 @@
-﻿<%@ Page Title="User Groups" Language="C#" MasterPageFile="~/Manage/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserGroups.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.Manage.UserGroups" %>
+﻿<%@ Page Title="User Groups" Language="C#" MasterPageFile="~/Manage/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserGroups.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.UserGroups" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -22,11 +21,7 @@
 						<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./UserGroupAddEdit.aspx?id={0}", Eval("RoleId")) %>'><img class="imgNoBorder" src="/Manage/images/application_edit.png" alt="Edit" title="Edit" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="RoleName" HeaderText="Role Name">
-					<ItemTemplate>
-						<%# Eval("RoleName")%>
-					</ItemTemplate>
-				</carrot:CarrotHeaderSortTemplateField>
+				<carrot:CarrotHeaderSortTemplateField SortExpression="RoleName" HeaderText="Role Name" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>
