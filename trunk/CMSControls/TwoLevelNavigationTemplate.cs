@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
-using System.Text;
-using System.Web;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -145,7 +141,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private Control FindSubControl(Control X) {
 			//add the command click event to the link buttons on the datagrid heading
 			foreach (Control c in X.Controls) {
-				if (c is PlaceHolder) {
+				if (c is PlaceHolder || c is StructuredNavLink) {
 					return c;
 				} else {
 					FindSubControl(c);
@@ -155,10 +151,16 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected void SetSubNav(RepeaterItem container, Guid rootContentID) {
-			Control ph = FindSubControl(container);
-			if (ph == null) {
-				ph = new PlaceHolder();
-				container.Controls.Add(ph);
+			Control ph1 = FindSubControl(container);
+
+			if (ph1 == null) {
+				ph1 = new PlaceHolder();
+				container.Controls.Add(ph1);
+			} else {
+				Control ph2 = FindSubControl(ph1);
+				if (ph2 != null) {
+					ph1 = ph2;
+				}
 			}
 
 			List<SiteNav> lst = GetChildren(rootContentID);
@@ -169,7 +171,7 @@ namespace Carrotware.CMS.UI.Controls {
 			rSubNav.ItemTemplate = SubNavTemplate;
 			rSubNav.FooterTemplate = SubNavFooterTemplate;
 
-			ph.Controls.Add(rSubNav);
+			ph1.Controls.Add(rSubNav);
 
 			rSubNav.DataSource = lst;
 			rSubNav.DataBind();
@@ -188,12 +190,22 @@ namespace Carrotware.CMS.UI.Controls {
 				sParent = pageNav.FileName.ToLower();
 			}
 
+			if (TopNavHeaderTemplate == null || TopNavFooterTemplate == null) {
+				TopNavHeaderTemplate = new DefaultListOpenNavTemplate();
+				TopNavFooterTemplate = new DefaultListCloseNavTemplate();
+			}
+
+			if (SubNavHeaderTemplate == null || SubNavFooterTemplate == null) {
+				SubNavHeaderTemplate = new DefaultListOpenNavTemplate(true);
+				SubNavFooterTemplate = new DefaultListCloseNavTemplate(true);
+			}
+
 			if (TopNavTemplate == null) {
-				TopNavTemplate = new DefaultTopNavTemplate();
+				TopNavTemplate = new DefaultLinkNavTemplate();
 			}
 
 			if (SubNavTemplate == null) {
-				SubNavTemplate = new DefaultSubNavTemplate();
+				SubNavTemplate = new DefaultLinkNavTemplate(true);
 			}
 
 			List<SiteNav> lst = GetTopNav();
@@ -229,18 +241,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			output.Write("\r\n</span>");
 		}
-
-
-		private string GetCtrlText(Control ctrl) {
-			StringBuilder sb = new StringBuilder();
-			StringWriter tw = new StringWriter(sb);
-			HtmlTextWriter hw = new HtmlTextWriter(tw);
-
-			ctrl.RenderControl(hw);
-
-			return sb.ToString();
-		}
-
 
 
 		private void UpdateHyperlinks(Control X) {
@@ -295,7 +295,6 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-
 			if (!string.IsNullOrEmpty(OverrideCSS)) {
 				HtmlLink link = new HtmlLink();
 				link.Href = OverrideCSS;
@@ -310,76 +309,229 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 
+
 	//========================================
-	public class DefaultTopNavTemplate : ITemplate {
 
-		public DefaultTopNavTemplate() {
+	[DefaultProperty("Text")]
+	[ToolboxData("<{0}:StructuredNavLink runat=server></{0}:StructuredNavLink>")]
 
+	public class StructuredNavLink : WebControl {
+
+		public string NavigateUrl {
+			get {
+				return lnk.NavigateUrl;
+			}
+
+			set {
+				lnk.NavigateUrl = value;
+			}
+		}
+
+		public string LinkText {
+			get {
+				return lnk.Text;
+			}
+
+			set {
+				lnk.Text = value;
+			}
+		}
+
+		public override string CssClass {
+			get {
+				return lnk.CssClass;
+			}
+
+			set {
+				lnk.CssClass = value;
+			}
+		}
+
+
+		public string Target {
+			get {
+				return lnk.Target;
+			}
+
+			set {
+				lnk.Target = value;
+			}
+		}
+
+		public override string ToolTip {
+			get {
+				return lnk.ToolTip;
+			}
+
+			set {
+				lnk.ToolTip = value;
+			}
+		}
+
+		private Control phAll = new Control();
+		private HyperLink lnk = new HyperLink();
+		private PlaceHolder ph = new PlaceHolder();
+
+		public StructuredNavLink()
+			: base() {
+
+			LoadCtrsl();
+		}
+
+		public StructuredNavLink(HtmlTextWriterTag tag)
+			: base(tag) {
+
+			LoadCtrsl();
+		}
+
+		private void LoadCtrsl() {
+			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);
+
+			phAll.Controls.Add(lnk);
+			phAll.Controls.Add(ph);
+
+			this.Controls.Add(phAll);
+		}
+
+		private void lnkContent_DataBinding(object sender, EventArgs e) {
+			HyperLink lnk = (HyperLink)sender;
+			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
+
+			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+
+			if (string.IsNullOrEmpty(lnk.NavigateUrl)) {
+				lnk.NavigateUrl = sTxt1;
+			}
+
+			if (string.IsNullOrEmpty(lnk.Text)) {
+				lnk.Text = sTxt2;
+			}
+		}
+
+
+		protected override void Render(HtmlTextWriter output) {
+			RenderContents(output);
+		}
+
+		protected override void RenderContents(HtmlTextWriter output) {
+
+			base.RenderContents(output);
+		}
+	}
+
+	//========================================
+	public class DefaultListOpenNavTemplate : ITemplate {
+
+		private bool _indent = false;
+
+		public DefaultListOpenNavTemplate() {
+
+		}
+
+		public DefaultListOpenNavTemplate(bool Indent) {
+			_indent = Indent;
 		}
 
 		public void InstantiateIn(Control container) {
 
-			Literal litContent = new Literal();
-			litContent.Text = " <a href='{0}'>{1}</a> \r\n";
+			Literal litL = new Literal();
 
-			litContent.DataBinding += new EventHandler(litContent_DataBinding);
-
-			container.Controls.Add(litContent);
-		}
-
-		private void litContent_DataBinding(object sender, EventArgs e) {
-			Literal litContent = (Literal)sender;
-			RepeaterItem container = (RepeaterItem)litContent.NamingContainer;
-			string sTxt = litContent.Text;
-
-			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
-			bool bAct = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.PageActive"));
-
-			if (!bAct) {
-				sTxt2 = BaseServerControl.InactivePagePrefix + sTxt2;
+			if (_indent) {
+				litL.Text = "\r\n\t\t<ul>\r\n";
+			} else {
+				litL.Text = "\r\n<ul>\r\n";
 			}
 
-			litContent.Text = String.Format(sTxt, sTxt1, sTxt2);
+			container.Controls.Add(litL);
 		}
 
 	}
 
-
 	//========================================
-	public class DefaultSubNavTemplate : ITemplate {
+	public class DefaultListCloseNavTemplate : ITemplate {
+		private bool _indent = false;
 
-		public DefaultSubNavTemplate() {
+		public DefaultListCloseNavTemplate() {
 
+		}
+
+		public DefaultListCloseNavTemplate(bool Indent) {
+			_indent = Indent;
 		}
 
 		public void InstantiateIn(Control container) {
 
-			Literal litContent = new Literal();
-			litContent.Text = "\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href='{0}'>{1}</a> \r\n";
-
-			litContent.DataBinding += new EventHandler(litContent_DataBinding);
-
-			container.Controls.Add(litContent);
-		}
-
-		private void litContent_DataBinding(object sender, EventArgs e) {
-			Literal litContent = (Literal)sender;
-			RepeaterItem container = (RepeaterItem)litContent.NamingContainer;
-			string sTxt = litContent.Text;
-
-			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
-			bool bAct = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.PageActive"));
-
-			if (!bAct) {
-				sTxt2 = BaseServerControl.InactivePagePrefix + sTxt2;
+			Literal litL = new Literal();
+			if (_indent) {
+				litL.Text = "\t\t</ul>\r\n";
+			} else {
+				litL.Text = "</ul>\r\n";
 			}
 
-			litContent.Text = String.Format(sTxt, sTxt1, sTxt2);
+			container.Controls.Add(litL);
 		}
 
 	}
+
+	//========================================
+	public class DefaultLinkNavTemplate : ITemplate {
+
+		private bool _indent = false;
+
+		public DefaultLinkNavTemplate() {
+
+		}
+
+		public DefaultLinkNavTemplate(bool Indent) {
+			_indent = Indent;
+		}
+
+		public void InstantiateIn(Control container) {
+
+			Literal litL = new Literal();
+
+			if (_indent) {
+				litL.Text = "\t\t\t<li>";
+			} else {
+				litL.Text = "<li>";
+			}
+
+			Literal litR = new Literal();
+			litR.Text = "</li>\r\n";
+
+			PlaceHolder phAll = new PlaceHolder();
+
+			StructuredNavLink lnk = new StructuredNavLink();
+			lnk.LinkText = " LINK ";
+			lnk.NavigateUrl = "#";
+
+			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);
+
+			phAll.Controls.Add(litL);
+			phAll.Controls.Add(lnk);
+			phAll.Controls.Add(litR);
+
+			container.Controls.Add(phAll);
+		}
+
+
+		private void lnkContent_DataBinding(object sender, EventArgs e) {
+			StructuredNavLink lnk = (StructuredNavLink)sender;
+			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
+
+			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+
+			lnk.NavigateUrl = sTxt1;
+			lnk.LinkText = sTxt2;
+		}
+
+
+
+	}
+
+
 
 
 }
@@ -393,6 +545,10 @@ namespace Carrotware.CMS.UI.Controls {
 			<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' runat="server">
 				<%# Eval("NavMenuText").ToString()%></asp:HyperLink>
 			<asp:PlaceHolder runat="server" ID="ph"></asp:PlaceHolder>
+		</li>
+		<li>
+			<carrot:StructuredNavLink ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' LinkText='<%# Eval("NavMenuText").ToString()%>'>
+			</carrot:StructuredNavLink>
 		</li>
 		<%--<li><a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
 			<%# String.Format("{0}", Eval("NavMenuText"))%></a>
