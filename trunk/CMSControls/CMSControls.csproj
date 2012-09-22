@@ -77,6 +77,7 @@
     <Compile Include="SecondLevelNavigation.cs" />
     <Compile Include="TopLevelNavigation.cs" />
     <Compile Include="TwoLevelNavigation.cs" />
+    <Compile Include="TwoLevelNavigationTemplate.cs" />
     <Compile Include="WidgetContainer.cs" />
     <Compile Include="WidgetWrapper.cs" />
   </ItemGroup>
