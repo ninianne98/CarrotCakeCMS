@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -25,6 +26,16 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
 
 			return SiteNavHelper.GetSamplerFakeNav();
+		}
+
+		public List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly) {
+			List<SiteNav> lstNav = SiteNavHelper.GetSamplerFakeNav();
+			List<SiteNav> lstNav2 = new List<SiteNav>();
+			foreach (var l in lstNav) {
+				lstNav2 = lstNav2.Union(SiteNavHelper.GetSamplerFakeNav(l.Root_ContentID)).ToList();
+			}
+			lstNav = lstNav.Union(lstNav2).ToList();
+			return lstNav;
 		}
 
 		public List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Carrotware.CMS.Data;
-using System.Reflection;
-using System.Xml.Serialization;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.UI;
+using System.Xml.Serialization;
+using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -97,6 +97,10 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
 			return _navHelper.GetTopNavigation(siteID, bActiveOnly);
+		}
+
+		public List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly) {
+			return _navHelper.GetTwoLevelNavigation(siteID, bActiveOnly);
 		}
 
 		public List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
