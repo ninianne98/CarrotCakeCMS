@@ -552,21 +552,28 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void LoadCtrsl() {
+			ControlCollection ctrls = new ControlCollection(this);
 
 			litL.Text = "\t<li>";
 			litR.Text = "</li>\r\n";
-
-			ctrlAll.Controls.Clear();
-
-			ctrlAll.Controls.Add(litL);
 
 			// using the for counter because of enumeration error
 			//foreach (Control ctrl in this.Controls) {
 			//    Ctrl.Add(ctrl);
 			//}
+			int iMax = this.Controls.Count - 1;
 
-			for (int i = 0; i < this.Controls.Count; i++) {
-				ctrlAll.Controls.Add(this.Controls[i]);
+			for (int i = iMax; i >= 0; i--) {
+				ctrls.Add(this.Controls[i]);
+			}
+
+			ctrlAll.Controls.Clear();
+
+			ctrlAll.Controls.Add(litL);
+
+			iMax = ctrls.Count - 1;
+			for (int i = iMax; i >= 0; i--) {
+				ctrlAll.Controls.Add(ctrls[i]);
 			}
 
 			ctrlAll.Controls.Add(litR);
