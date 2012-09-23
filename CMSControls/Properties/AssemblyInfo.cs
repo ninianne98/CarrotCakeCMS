@@ -43,7 +43,8 @@ using System.Web.UI;
 
 [assembly: TagPrefix("TwoLevelNavigation", "carrot")]
 [assembly: TagPrefix("TwoLevelNavigationTemplate", "carrot")]
-[assembly: TagPrefix("StructuredNavLink", "carrot")] 
+[assembly: TagPrefix("StructuredNavLink", "carrot")]
+[assembly: TagPrefix("ListItemHTMLWrap", "carrot")]
 
 [assembly: TagPrefix("MultiLevelNavigation", "carrot")]
 [assembly: TagPrefix("ChildNavigation", "carrot")]
