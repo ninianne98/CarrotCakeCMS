@@ -170,7 +170,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void FindSubControl2(Control X) {
 			foreach (Control c in X.Controls) {
-				if (c is PlaceHolder || c is StructuredNavLink) {
+				if (c is PlaceHolder || c is NavLinkForTemplate) {
 					if (!bFound) {
 						bFound = true;
 						fndCtrl = c;
@@ -256,8 +256,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (SubNavHeaderTemplate == null || SubNavFooterTemplate == null) {
-				SubNavHeaderTemplate = new DefaultListOpenNavTemplate(true);
-				SubNavFooterTemplate = new DefaultListCloseNavTemplate(true);
+				SubNavHeaderTemplate = new DefaultListOpenNavTemplate();
+				SubNavFooterTemplate = new DefaultListCloseNavTemplate();
 			}
 
 			if (TopNavTemplate == null) {
@@ -265,7 +265,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (SubNavTemplate == null) {
-				SubNavTemplate = new DefaultLinkNavTemplate(true);
+				SubNavTemplate = new DefaultLinkNavTemplate();
 			}
 
 			List<SiteNav> lst = GetTopNav();
@@ -295,7 +295,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		private void ModWrap(ListItemHTMLWrap lnk) {
+		private void ModWrap(ListItemWrapper lnk) {
 			string sPage = HttpContext.Current.Request.Path.ToLower();
 
 			if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
@@ -325,7 +325,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private void ModHyperLink(StructuredNavLink lnk) {
+		private void ModHyperLink(NavLinkForTemplate lnk) {
 			SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			string sPage = HttpContext.Current.Request.Path.ToLower();
@@ -354,12 +354,14 @@ namespace Carrotware.CMS.UI.Controls {
 				if (c is HyperLink) {
 					HyperLink lnk = (HyperLink)c;
 					ModHyperLink(lnk);
-				} else if (c is StructuredNavLink) {
-					StructuredNavLink lnk = (StructuredNavLink)c;
+				} else if (c is NavLinkForTemplate) {
+					NavLinkForTemplate lnk = (NavLinkForTemplate)c;
 					ModHyperLink(lnk);
-				} else if (c is ListItemHTMLWrap) {
-					ListItemHTMLWrap lnk = (ListItemHTMLWrap)c;
+					UpdateHyperLink(c);
+				} else if (c is ListItemWrapper) {
+					ListItemWrapper lnk = (ListItemWrapper)c;
 					ModWrap(lnk);
+					UpdateHyperLink(c);
 				} else {
 					UpdateHyperLink(c);
 				}
@@ -409,9 +411,9 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 
 	[DefaultProperty("Text")]
-	[ToolboxData("<{0}:StructuredNavLink runat=server></{0}:StructuredNavLink>")]
+	[ToolboxData("<{0}:NavLinkForTemplate runat=server></{0}:NavLinkForTemplate>")]
 
-	public class StructuredNavLink : Control {
+	public class NavLinkForTemplate : Control {
 
 		public string NavigateUrl {
 			get {
@@ -466,7 +468,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private HyperLink lnk = new HyperLink();
 		private PlaceHolder ph = new PlaceHolder();
 
-		public StructuredNavLink()
+		public NavLinkForTemplate()
 			: base() {
 
 			LoadCtrsl();
@@ -513,9 +515,9 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 
 	[DefaultProperty("Text")]
-	[ToolboxData("<{0}:ListItemHTMLWrap runat=server></{0}:ListItemHTMLWrap>")]
+	[ToolboxData("<{0}:ListItemWrapper runat=server></{0}:ListItemWrapper>")]
 
-	public class ListItemHTMLWrap : Control {
+	public class ListItemWrapper : Control {
 
 		private string _CssClass = "";
 		public string CssClass {
@@ -540,12 +542,24 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private string _TagName = "li";
+		public string TagName {
+			get {
+				return _TagName;
+			}
+
+			set {
+				_TagName = value;
+				SetTag();
+			}
+		}
+
 
 		private Literal litL = new Literal();
 		private Literal litR = new Literal();
 		private Control ctrlAll = new Control();
 
-		public ListItemHTMLWrap()
+		public ListItemWrapper()
 			: base() {
 
 			litL.DataBinding += new EventHandler(litL_DataBinding);
@@ -554,8 +568,8 @@ namespace Carrotware.CMS.UI.Controls {
 		private void LoadCtrsl() {
 			ControlCollection ctrls = new ControlCollection(this);
 
-			litL.Text = "\t<li>";
-			litR.Text = "</li>\r\n";
+			litL.Text = "\t<" + TagName + ">";
+			litR.Text = "</" + TagName + ">\r\n";
 
 			// using the for counter because of enumeration error
 			//foreach (Control ctrl in this.Controls) {
@@ -587,16 +601,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void SetTag() {
 
-			string sCSS = "";
+			litL.Text = "\t<" + TagName + ">";
+			litR.Text = "</" + TagName + ">\r\n";
 
 			if (!string.IsNullOrEmpty(CssClass)) {
+				string sCSS = "";
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
+				litL.Text = "\t<" + TagName + sCSS + ">";
 			}
-
-			litL.Text = "\t<li" + sCSS + ">";
 		}
 
 		private void litL_DataBinding(object sender, EventArgs e) {
+			SetTag();
+
 			Literal lnk = (Literal)sender;
 			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
 
@@ -617,25 +634,16 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class DefaultListOpenNavTemplate : ITemplate {
 
-		private bool _indent = false;
 
 		public DefaultListOpenNavTemplate() {
 
-		}
-
-		public DefaultListOpenNavTemplate(bool Indent) {
-			_indent = Indent;
 		}
 
 		public void InstantiateIn(Control container) {
 
 			Literal litL = new Literal();
 
-			if (_indent) {
-				litL.Text = "\r\n\t\t<ul>\r\n";
-			} else {
-				litL.Text = "\r\n<ul>\r\n";
-			}
+			litL.Text = "\r\n<ul>\r\n";
 
 			container.Controls.Add(litL);
 		}
@@ -644,24 +652,15 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 	public class DefaultListCloseNavTemplate : ITemplate {
-		private bool _indent = false;
 
 		public DefaultListCloseNavTemplate() {
 
 		}
 
-		public DefaultListCloseNavTemplate(bool Indent) {
-			_indent = Indent;
-		}
-
 		public void InstantiateIn(Control container) {
 
 			Literal litL = new Literal();
-			if (_indent) {
-				litL.Text = "\t\t</ul>\r\n";
-			} else {
-				litL.Text = "</ul>\r\n";
-			}
+			litL.Text = "</ul>\r\n";
 
 			container.Controls.Add(litL);
 		}
@@ -671,25 +670,19 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class DefaultLinkNavTemplate : ITemplate {
 
-		private bool _indent = false;
-
 		public DefaultLinkNavTemplate() {
 
-		}
-
-		public DefaultLinkNavTemplate(bool Indent) {
-			_indent = Indent;
 		}
 
 		public void InstantiateIn(Control container) {
 
 			PlaceHolder phAll = new PlaceHolder();
 
-			StructuredNavLink lnk = new StructuredNavLink();
+			NavLinkForTemplate lnk = new NavLinkForTemplate();
 			lnk.Text = " LINK ";
 			lnk.NavigateUrl = "#";
 
-			ListItemHTMLWrap wrap = new ListItemHTMLWrap();
+			ListItemWrapper wrap = new ListItemWrapper();
 			wrap.Controls.Add(lnk);
 
 			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);
@@ -701,7 +694,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		private void lnkContent_DataBinding(object sender, EventArgs e) {
-			StructuredNavLink lnk = (StructuredNavLink)sender;
+			NavLinkForTemplate lnk = (NavLinkForTemplate)sender;
 			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
 
 			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
@@ -720,6 +713,12 @@ namespace Carrotware.CMS.UI.Controls {
 /*
 <div>
  	<carrot:TwoLevelNavigationTemplate runat="server" ID="TwoLevelNavigationTemplate1" ShowSecondLevel="true">
+		<%--<TopNavTemplate>
+			<carrot:ListItemWrapper runat="server" ID="wrap">
+				~
+				<carrot:NavLinkForTemplate ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' />
+			</carrot:ListItemWrapper>
+		</TopNavTemplate>--%>
 		<%--<TopNavTemplate>--%>
 		<%--<li>
 				<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' runat="server">
@@ -730,7 +729,7 @@ namespace Carrotware.CMS.UI.Controls {
 				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
 			</li>--%>
 		<%--<li>
-				<carrot:StructuredNavLink ID="lnk" runat="server" Target="_blank"></carrot:StructuredNavLink>
+				<carrot:NavLinkForTemplate ID="lnk" runat="server" Target="_blank"></carrot:NavLinkForTemplate>
 			</li>
 		</TopNavTemplate>--%>
 		<TopNavFooterTemplate>
@@ -745,13 +744,19 @@ namespace Carrotware.CMS.UI.Controls {
 		<SubNavHeaderTemplate>
 			<div>
 		</SubNavHeaderTemplate>--%>
+		<%--<SubNavTemplate>
+			<carrot:ListItemWrapper runat="server" ID="wrap">
+				~~~~
+				<carrot:NavLinkForTemplate ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' />
+			</carrot:ListItemWrapper>
+		</SubNavTemplate>--%>
 		<SubNavTemplate>
 			<li>--
 				<%--<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' runat="server">
 						<%# Eval("NavMenuText").ToString()%></asp:HyperLink>--%>
 				<%--<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' runat="server">
 				</asp:HyperLink>--%>
-				<carrot:StructuredNavLink ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' />
+				<carrot:NavLinkForTemplate ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' />
 				<%--<li> -- <a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
 				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
 			</li>--%>
