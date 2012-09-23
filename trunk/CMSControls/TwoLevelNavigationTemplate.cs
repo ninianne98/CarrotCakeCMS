@@ -55,6 +55,22 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
+		public bool ShowSecondLevel {
+			get {
+				String s = (String)ViewState["ShowSecondLevel"];
+				return ((s == null) ? true : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["ShowSecondLevel"] = value.ToString();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string OverrideCSS {
 			get {
 				string s = "";
@@ -138,50 +154,94 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstTwoLevelNav.Where(ct => ct.FileName.ToLower() == sPage.ToLower()).FirstOrDefault();
 		}
 
+
+		bool bFound = false;
+		Control fndCtrl = null;
+
 		private Control FindSubControl(Control X) {
-			//add the command click event to the link buttons on the datagrid heading
-			foreach (Control c in X.Controls) {
-				if (c is PlaceHolder || c is StructuredNavLink) {
-					return c;
-				} else {
-					FindSubControl(c);
-				}
-			}
-			return null;
+
+			bFound = false;
+			fndCtrl = null;
+
+			FindSubControl2(X);
+
+			return fndCtrl;
 		}
 
-		protected void SetSubNav(RepeaterItem container, Guid rootContentID) {
-			Control ph1 = FindSubControl(container);
+		private void FindSubControl2(Control X) {
+			foreach (Control c in X.Controls) {
+				if (c is PlaceHolder || c is StructuredNavLink) {
+					if (!bFound) {
+						bFound = true;
+						fndCtrl = c;
+					}
+				} else {
+					if (!bFound) {
+						FindSubControl2(c);
+					}
+				}
+			}
+		}
 
-			if (ph1 == null) {
-				ph1 = new PlaceHolder();
-				container.Controls.Add(ph1);
+
+		protected void SetSubNav(RepeaterItem container, Guid rootContentID) {
+			Control ctrl = FindSubControl(container);
+
+			if (ctrl == null) {
+				ctrl = new PlaceHolder();
+				container.Controls.Add(ctrl);
 			} else {
-				Control ph2 = FindSubControl(ph1);
-				if (ph2 != null) {
-					ph1 = ph2;
+				Control ctrl2 = FindSubControl(ctrl);
+				if (ctrl2 != null) {
+					ctrl = ctrl2;
 				}
 			}
 
 			List<SiteNav> lst = GetChildren(rootContentID);
 
 			Repeater rSubNav = new Repeater();
+			ctrl.Controls.Add(rSubNav);
+
 			rSubNav.ID = "rSubNav";
 			rSubNav.HeaderTemplate = SubNavHeaderTemplate;
 			rSubNav.ItemTemplate = SubNavTemplate;
 			rSubNav.FooterTemplate = SubNavFooterTemplate;
 
-			ph1.Controls.Add(rSubNav);
-
 			rSubNav.DataSource = lst;
 			rSubNav.DataBind();
+
+			UpdateHyperLink(rSubNav);
+
 		}
+
+
+		private Repeater rTopNav = new Repeater();
+
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
+			UpdateHyperLink(rTopNav);
+
+			output.Write("<span id=\"" + this.ClientID + "\">\r\n");
+
+			base.RenderContents(output);
+
+			rTopNav.RenderControl(output);
+
+			output.Write("\r\n</span>");
+		}
+
+
+		protected override void OnInit(EventArgs e) {
 			Controls.Clear();
 
-			lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			base.OnInit(e);
+
+			if (ShowSecondLevel) {
+				lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			} else {
+				lstTwoLevelNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			}
 
 			SiteNav pageNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
@@ -210,7 +270,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			List<SiteNav> lst = GetTopNav();
 
-			Repeater rTopNav = new Repeater();
 			rTopNav.ID = "rTopNav";
 			rTopNav.HeaderTemplate = TopNavHeaderTemplate;
 			rTopNav.ItemTemplate = TopNavTemplate;
@@ -222,48 +281,87 @@ namespace Carrotware.CMS.UI.Controls {
 			rTopNav.DataBind();
 
 
-			int iIdx = 0;
-			foreach (SiteNav c1 in lst) {
-				RepeaterItem container = rTopNav.Items[iIdx];
+			if (ShowSecondLevel) {
+				int iIdx = 0;
+				foreach (SiteNav c1 in lst) {
+					RepeaterItem container = rTopNav.Items[iIdx];
 
-				SetSubNav(container, c1.Root_ContentID);
+					SetSubNav(container, c1.Root_ContentID);
 
-				iIdx++;
+					iIdx++;
+				}
 			}
 
-			this.ChildControlsCreated = true;
-
-			UpdateHyperlinks(rTopNav);
-
-			output.Write("<span id=\"" + this.ClientID + "\">\r\n");
-
-			output.Write(GetCtrlText(rTopNav));
-
-			output.Write("\r\n</span>");
 		}
 
 
-		private void UpdateHyperlinks(Control X) {
+		private void ModWrap(ListItemHTMLWrap lnk) {
+			string sPage = HttpContext.Current.Request.Path.ToLower();
+
+			if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
+				lnk.CssClass = CSSSelected;
+			}
+		}
+
+		private void ModHyperLink(HyperLink lnk) {
+			SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
+
+			string sPage = HttpContext.Current.Request.Path.ToLower();
+
+			if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
+				lnk.CssClass = CSSSelected;
+			}
+
+			if (nav != null && !nav.PageActive) {
+				if (string.IsNullOrEmpty(lnk.Text)) {
+					Literal lit = new Literal();
+					lit.Text = BaseServerControl.InactivePagePrefix;
+					lnk.Controls.AddAt(0, lit);
+				} else {
+					if (!lnk.Text.StartsWith(BaseServerControl.InactivePagePrefix)) {
+						lnk.Text = BaseServerControl.InactivePagePrefix + lnk.Text;
+					}
+				}
+			}
+		}
+
+		private void ModHyperLink(StructuredNavLink lnk) {
+			SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
+
+			string sPage = HttpContext.Current.Request.Path.ToLower();
+
+			if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
+				lnk.CssClass = CSSSelected;
+			}
+
+			if (nav != null && !nav.PageActive) {
+				if (string.IsNullOrEmpty(lnk.Text)) {
+					Literal lit = new Literal();
+					lit.Text = BaseServerControl.InactivePagePrefix;
+					lnk.Controls.AddAt(0, lit);
+				} else {
+					if (!lnk.Text.StartsWith(BaseServerControl.InactivePagePrefix)) {
+						lnk.Text = BaseServerControl.InactivePagePrefix + lnk.Text;
+					}
+				}
+			}
+		}
+
+
+		private void UpdateHyperLink(Control X) {
 
 			foreach (Control c in X.Controls) {
 				if (c is HyperLink) {
 					HyperLink lnk = (HyperLink)c;
-					string sPage = HttpContext.Current.Request.Path.ToLower();
-					if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
-						lnk.CssClass = CSSSelected;
-					}
-					SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
-					if (nav != null && !nav.PageActive) {
-						Literal lit = new Literal();
-						if (string.IsNullOrEmpty(lnk.Text)) {
-							lit.Text = BaseServerControl.InactivePagePrefix;
-							lnk.Controls.AddAt(0, lit);
-						} else {
-							lnk.Text = BaseServerControl.InactivePagePrefix + lnk.Text;
-						}
-					}
+					ModHyperLink(lnk);
+				} else if (c is StructuredNavLink) {
+					StructuredNavLink lnk = (StructuredNavLink)c;
+					ModHyperLink(lnk);
+				} else if (c is ListItemHTMLWrap) {
+					ListItemHTMLWrap lnk = (ListItemHTMLWrap)c;
+					ModWrap(lnk);
 				} else {
-					UpdateHyperlinks(c);
+					UpdateHyperLink(c);
 				}
 			}
 		}
@@ -308,14 +406,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
-
-
 	//========================================
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:StructuredNavLink runat=server></{0}:StructuredNavLink>")]
 
-	public class StructuredNavLink : WebControl {
+	public class StructuredNavLink : Control {
 
 		public string NavigateUrl {
 			get {
@@ -327,7 +423,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public string LinkText {
+		public string Text {
 			get {
 				return lnk.Text;
 			}
@@ -336,17 +432,6 @@ namespace Carrotware.CMS.UI.Controls {
 				lnk.Text = value;
 			}
 		}
-
-		public override string CssClass {
-			get {
-				return lnk.CssClass;
-			}
-
-			set {
-				lnk.CssClass = value;
-			}
-		}
-
 
 		public string Target {
 			get {
@@ -358,7 +443,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public override string ToolTip {
+		public string ToolTip {
 			get {
 				return lnk.ToolTip;
 			}
@@ -368,7 +453,16 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private Control phAll = new Control();
+		public string CssClass {
+			get {
+				return lnk.CssClass;
+			}
+
+			set {
+				lnk.CssClass = value;
+			}
+		}
+
 		private HyperLink lnk = new HyperLink();
 		private PlaceHolder ph = new PlaceHolder();
 
@@ -378,46 +472,139 @@ namespace Carrotware.CMS.UI.Controls {
 			LoadCtrsl();
 		}
 
-		public StructuredNavLink(HtmlTextWriterTag tag)
-			: base(tag) {
-
-			LoadCtrsl();
-		}
-
 		private void LoadCtrsl() {
+
+			this.Controls.Add(lnk);
+			this.Controls.Add(ph);
+
 			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);
-
-			phAll.Controls.Add(lnk);
-			phAll.Controls.Add(ph);
-
-			this.Controls.Add(phAll);
 		}
 
 		private void lnkContent_DataBinding(object sender, EventArgs e) {
 			HyperLink lnk = (HyperLink)sender;
 			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
 
-			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			string sNavMenuText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+			bool bPageActive = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.PageActive").ToString());
 
 			if (string.IsNullOrEmpty(lnk.NavigateUrl)) {
-				lnk.NavigateUrl = sTxt1;
+				lnk.NavigateUrl = sFileName;
 			}
 
 			if (string.IsNullOrEmpty(lnk.Text)) {
-				lnk.Text = sTxt2;
+				lnk.Text = sNavMenuText;
+			}
+
+			if (!bPageActive) {
+				if (string.IsNullOrEmpty(lnk.Text)) {
+					Literal lit = new Literal();
+					lit.Text = BaseServerControl.InactivePagePrefix;
+					lnk.Controls.AddAt(0, lit);
+				} else {
+					if (!lnk.Text.StartsWith(BaseServerControl.InactivePagePrefix)) {
+						lnk.Text = BaseServerControl.InactivePagePrefix + lnk.Text;
+					}
+				}
+			}
+		}
+	}
+
+	//========================================
+
+	[DefaultProperty("Text")]
+	[ToolboxData("<{0}:ListItemHTMLWrap runat=server></{0}:ListItemHTMLWrap>")]
+
+	public class ListItemHTMLWrap : Control {
+
+		private string _CssClass = "";
+		public string CssClass {
+			get {
+				return _CssClass;
+			}
+
+			set {
+				_CssClass = value;
+				SetTag();
+			}
+		}
+
+		private string _NavigateUrl = "";
+		public string NavigateUrl {
+			get {
+				return _NavigateUrl;
+			}
+
+			set {
+				_NavigateUrl = value;
 			}
 		}
 
 
-		protected override void Render(HtmlTextWriter output) {
-			RenderContents(output);
+		private Literal litL = new Literal();
+		private Literal litR = new Literal();
+		private Control ctrlAll = new Control();
+
+		public ListItemHTMLWrap()
+			: base() {
+
+			litL.DataBinding += new EventHandler(litL_DataBinding);
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		private void LoadCtrsl() {
 
-			base.RenderContents(output);
+			litL.Text = "\t<li>";
+			litR.Text = "</li>\r\n";
+
+			ctrlAll.Controls.Clear();
+
+			ctrlAll.Controls.Add(litL);
+
+			// using the for counter because of enumeration error
+			//foreach (Control ctrl in this.Controls) {
+			//    Ctrl.Add(ctrl);
+			//}
+
+			for (int i = 0; i < this.Controls.Count; i++) {
+				ctrlAll.Controls.Add(this.Controls[i]);
+			}
+
+			ctrlAll.Controls.Add(litR);
+
+			this.Controls.Clear();
+
+			this.Controls.Add(ctrlAll);
+
 		}
+
+
+		private void SetTag() {
+
+			string sCSS = "";
+
+			if (!string.IsNullOrEmpty(CssClass)) {
+				sCSS = string.Format(" class=\"{0}\"", CssClass);
+			}
+
+			litL.Text = "\t<li" + sCSS + ">";
+		}
+
+		private void litL_DataBinding(object sender, EventArgs e) {
+			Literal lnk = (Literal)sender;
+			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
+
+			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
+
+			this.NavigateUrl = sFileName;
+		}
+
+
+		protected override void OnDataBinding(EventArgs e) {
+			LoadCtrsl();
+
+			base.OnDataBinding(e);
+		}
+
 	}
 
 	//========================================
@@ -489,28 +676,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public void InstantiateIn(Control container) {
 
-			Literal litL = new Literal();
-
-			if (_indent) {
-				litL.Text = "\t\t\t<li>";
-			} else {
-				litL.Text = "<li>";
-			}
-
-			Literal litR = new Literal();
-			litR.Text = "</li>\r\n";
-
 			PlaceHolder phAll = new PlaceHolder();
 
 			StructuredNavLink lnk = new StructuredNavLink();
-			lnk.LinkText = " LINK ";
+			lnk.Text = " LINK ";
 			lnk.NavigateUrl = "#";
+
+			ListItemHTMLWrap wrap = new ListItemHTMLWrap();
+			wrap.Controls.Add(lnk);
 
 			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);
 
-			phAll.Controls.Add(litL);
-			phAll.Controls.Add(lnk);
-			phAll.Controls.Add(litR);
+			phAll.Controls.Add(wrap);
 
 			container.Controls.Add(phAll);
 		}
@@ -520,17 +697,13 @@ namespace Carrotware.CMS.UI.Controls {
 			StructuredNavLink lnk = (StructuredNavLink)sender;
 			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
 
-			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			string sNavMenuText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
 
-			lnk.NavigateUrl = sTxt1;
-			lnk.LinkText = sTxt2;
+			lnk.NavigateUrl = sFileName;
+			lnk.Text = sNavMenuText;
 		}
-
-
-
 	}
-
 
 
 
@@ -539,52 +712,50 @@ namespace Carrotware.CMS.UI.Controls {
 
 /*
 <div>
-<carrot:TwoLevelNavigationTemplate runat="server" ID="TwoLevelNavigationTemplate1">
-	<TopNavTemplate>
-		<li>
-			<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' runat="server">
-				<%# Eval("NavMenuText").ToString()%></asp:HyperLink>
-			<asp:PlaceHolder runat="server" ID="ph"></asp:PlaceHolder>
-		</li>
-		<li>
-			<carrot:StructuredNavLink ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' LinkText='<%# Eval("NavMenuText").ToString()%>'>
-			</carrot:StructuredNavLink>
-		</li>
-		<%--<li><a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
-			<%# String.Format("{0}", Eval("NavMenuText"))%></a>
-		</li>--%>
-	</TopNavTemplate>
-	<TopNavFooterTemplate>
-		</ul>
-	</TopNavFooterTemplate>
-	<TopNavHeaderTemplate>
-		<ul>
-	</TopNavHeaderTemplate>
-	<%--<SubNavFooterTemplate>
-		</div>
-	</SubNavFooterTemplate>
-	<SubNavHeaderTemplate>
-		<div>
-	</SubNavHeaderTemplate>--%>
-	<SubNavTemplate>
-			<li>--
-				<%--
+ 	<carrot:TwoLevelNavigationTemplate runat="server" ID="TwoLevelNavigationTemplate1" ShowSecondLevel="true">
+		<%--<TopNavTemplate>--%>
+		<%--<li>
 				<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' runat="server">
 					<%# Eval("NavMenuText").ToString()%></asp:HyperLink>
-				--%>
-				<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' runat="server">
-					</asp:HyperLink>
+				<asp:PlaceHolder runat="server" ID="ph"></asp:PlaceHolder>
+			</li>--%>
+		<%--<li><a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
+				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
+			</li>--%>
+		<%--<li>
+				<carrot:StructuredNavLink ID="lnk" runat="server" Target="_blank"></carrot:StructuredNavLink>
 			</li>
-		<%--<li> -- <a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
-			<%# String.Format("{0}", Eval("NavMenuText"))%></a>
-		</li>--%>
-	</SubNavTemplate>
-	<SubNavFooterTemplate>
-		</ol>
-	</SubNavFooterTemplate>
-	<SubNavHeaderTemplate>
-		<ol>
-	</SubNavHeaderTemplate>
-</carrot:TwoLevelNavigationTemplate>
+		</TopNavTemplate>--%>
+		<TopNavFooterTemplate>
+			</ol>
+		</TopNavFooterTemplate>
+		<TopNavHeaderTemplate>
+			<ol>
+		</TopNavHeaderTemplate>
+		<%--<SubNavFooterTemplate>
+			</div>
+		</SubNavFooterTemplate>
+		<SubNavHeaderTemplate>
+			<div>
+		</SubNavHeaderTemplate>--%>
+		<SubNavTemplate>
+			<li>--
+				<%--<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' runat="server">
+						<%# Eval("NavMenuText").ToString()%></asp:HyperLink>--%>
+				<%--<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' runat="server">
+				</asp:HyperLink>--%>
+				<carrot:StructuredNavLink ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' />
+				<%--<li> -- <a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
+				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
+			</li>--%>
+				-- </li>
+		</SubNavTemplate>
+		<SubNavFooterTemplate>
+			</ol>
+		</SubNavFooterTemplate>
+		<SubNavHeaderTemplate>
+			<ol type="i">
+		</SubNavHeaderTemplate>
+	</carrot:TwoLevelNavigationTemplate>
 </div>
 */
