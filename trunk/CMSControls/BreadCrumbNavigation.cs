@@ -112,15 +112,15 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageContents = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			SiteNav pageNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 			string sParent = "";
-			if (pageContents != null) {
-				if (pageContents.Parent_ContentID == null) {
-					sParent = pageContents.FileName.ToLower();
+			if (pageNav != null) {
+				if (pageNav.Parent_ContentID == null) {
+					sParent = pageNav.FileName.ToLower();
 				}
 			}
 
-			List<SiteNav> lst = navHelper.GetPathNavigation(SiteData.CurrentSiteID, pageContents.Root_ContentID, !SecurityData.IsAuthEditor);
+			List<SiteNav> lst = navHelper.GetPathNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
