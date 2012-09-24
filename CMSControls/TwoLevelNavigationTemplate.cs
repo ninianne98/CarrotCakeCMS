@@ -97,6 +97,16 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private string _TagName = "div";
+		public string TagName {
+			get {
+				return _TagName;
+			}
+
+			set {
+				_TagName = value;
+			}
+		}
 
 
 
@@ -171,14 +181,10 @@ namespace Carrotware.CMS.UI.Controls {
 		private void FindSubControl2(Control X) {
 			foreach (Control c in X.Controls) {
 				if (c is PlaceHolder || c is NavLinkForTemplate) {
-					if (!bFound) {
-						bFound = true;
-						fndCtrl = c;
-					}
+					bFound = true;
+					fndCtrl = c;
 				} else {
-					if (!bFound) {
-						FindSubControl2(c);
-					}
+					FindSubControl2(c);
 				}
 			}
 		}
@@ -222,13 +228,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 			UpdateHyperLink(rTopNav);
 
-			output.Write("<span id=\"" + this.ClientID + "\">\r\n");
+			output.Write("<" + TagName + " id=\"" + this.ClientID + "\">\r\n");
 
 			base.RenderContents(output);
 
 			rTopNav.RenderControl(output);
 
-			output.Write("\r\n</span>");
+			output.Write("\r\n</" + TagName + ">");
 		}
 
 		protected void LoadData() {
@@ -256,13 +262,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			LoadData();
 
-			SiteNav pageNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
-
-			string sParent = "";
-			if (pageNav != null) {
-				sParent = pageNav.FileName.ToLower();
-			}
-
 			if (TopNavHeaderTemplate == null || TopNavFooterTemplate == null) {
 				TopNavHeaderTemplate = new DefaultListOpenNavTemplate();
 				TopNavFooterTemplate = new DefaultListCloseNavTemplate();
@@ -281,7 +280,7 @@ namespace Carrotware.CMS.UI.Controls {
 				SubNavTemplate = new DefaultLinkNavTemplate();
 			}
 
-			List<SiteNav> lst = GetTopNav();
+			List<SiteNav> lstTop = GetTopNav();
 
 			rTopNav.ID = "rTopNav";
 			rTopNav.HeaderTemplate = TopNavHeaderTemplate;
@@ -290,18 +289,14 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.Controls.Add(rTopNav);
 
-			rTopNav.DataSource = lst;
+			rTopNav.DataSource = lstTop;
 			rTopNav.DataBind();
 
 
 			if (ShowSecondLevel) {
-				int iIdx = 0;
-				foreach (SiteNav c1 in lst) {
-					RepeaterItem container = rTopNav.Items[iIdx];
-
-					SetSubNav(container, c1.Root_ContentID);
-
-					iIdx++;
+				int iMax = lstTop.Count;
+				for (int iIdx = 0; iIdx < iMax; iIdx++) {
+					SetSubNav(rTopNav.Items[iIdx], lstTop[iIdx].Root_ContentID);
 				}
 			}
 
@@ -317,7 +312,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void ModHyperLink(HyperLink lnk) {
-			SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
+			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			string sPage = HttpContext.Current.Request.Path.ToLower();
 
@@ -339,7 +334,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void ModHyperLink(NavLinkForTemplate lnk) {
-			SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
+			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			string sPage = HttpContext.Current.Request.Path.ToLower();
 
@@ -489,6 +484,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void LoadCtrsl() {
 
+			ph.ID = "phNavLinkForTemplate";
+
 			this.Controls.Add(lnk);
 			this.Controls.Add(ph);
 
@@ -501,7 +498,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
 			string sNavMenuText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
-			bool bPageActive = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.PageActive").ToString());
+			//bool bPageActive = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.PageActive").ToString());
 
 			if (string.IsNullOrEmpty(lnk.NavigateUrl)) {
 				lnk.NavigateUrl = sFileName;
@@ -581,6 +578,8 @@ namespace Carrotware.CMS.UI.Controls {
 		private void LoadCtrsl() {
 			ControlCollection ctrls = new ControlCollection(this);
 
+			int iMax = this.Controls.Count - 1;
+
 			litL.Text = "\t<" + TagName + ">";
 			litR.Text = "</" + TagName + ">\r\n";
 
@@ -588,14 +587,12 @@ namespace Carrotware.CMS.UI.Controls {
 			//foreach (Control ctrl in this.Controls) {
 			//    Ctrl.Add(ctrl);
 			//}
-			int iMax = this.Controls.Count - 1;
 
 			for (int i = iMax; i >= 0; i--) {
 				ctrls.Add(this.Controls[i]);
 			}
 
 			ctrlAll.Controls.Clear();
-
 			ctrlAll.Controls.Add(litL);
 
 			iMax = ctrls.Count - 1;
@@ -603,10 +600,17 @@ namespace Carrotware.CMS.UI.Controls {
 				ctrlAll.Controls.Add(ctrls[i]);
 			}
 
+			//for (int i = iMax; i >= 0; i--) {
+			//    ctrlAll.Controls.AddAt(i, this.Controls[i]);
+			//}
+
+			PlaceHolder ph = new PlaceHolder();
+			ph.ID = "phListItemWrapper";
+
+			ctrlAll.Controls.Add(ph);
 			ctrlAll.Controls.Add(litR);
 
 			this.Controls.Clear();
-
 			this.Controls.Add(ctrlAll);
 
 		}
@@ -623,6 +627,7 @@ namespace Carrotware.CMS.UI.Controls {
 				litL.Text = "\t<" + TagName + sCSS + ">";
 			}
 		}
+
 
 		private void litL_DataBinding(object sender, EventArgs e) {
 			SetTag();
