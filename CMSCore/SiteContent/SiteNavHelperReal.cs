@@ -148,7 +148,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+		public List<SiteNav> GetPageCrumbNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
 
 			List<SiteNav> lstContent = new List<SiteNav>();
 
@@ -183,7 +183,7 @@ namespace Carrotware.CMS.Core {
 
 		}
 
-		public List<SiteNav> GetPathNavigation(Guid siteID, string sPage, bool bActiveOnly) {
+		public List<SiteNav> GetPageCrumbNavigation(Guid siteID, string sPage, bool bActiveOnly) {
 
 			vw_carrot_Content c = (from ct in db.vw_carrot_Contents
 								   where ct.SiteID == siteID
@@ -191,7 +191,7 @@ namespace Carrotware.CMS.Core {
 										  && ct.IsLatestVersion == true
 								   select ct).FirstOrDefault();
 
-			return GetPathNavigation(siteID, c.Root_ContentID, bActiveOnly);
+			return GetPageCrumbNavigation(siteID, c.Root_ContentID, bActiveOnly);
 
 		}
 
@@ -219,7 +219,7 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
-		public SiteNav GetPageCrumbNavigation(Guid siteID, string sPage) {
+		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
 
 			SiteNav content = null;
 
@@ -232,7 +232,7 @@ namespace Carrotware.CMS.Core {
 			return content;
 		}
 
-		public SiteNav GetPageCrumbNavigation(Guid siteID, Guid rootContentID) {
+		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
 
 			SiteNav content = null;
 
@@ -247,14 +247,14 @@ namespace Carrotware.CMS.Core {
 
 
 		public SiteNav GetParentPageNavigation(Guid siteID, string sPage) {
-			SiteNav nav1 = GetPageCrumbNavigation(siteID, sPage);
+			SiteNav nav1 = GetPageNavigation(siteID, sPage);
 
 			return GetParentPageNavigation(siteID, nav1.Root_ContentID);
 		}
 
 
 		public SiteNav GetParentPageNavigation(Guid siteID, Guid rootContentID) {
-			SiteNav nav1 = GetPageCrumbNavigation(siteID, rootContentID);
+			SiteNav nav1 = GetPageNavigation(siteID, rootContentID);
 
 			SiteNav content = null;
 			if (nav1 != null) {

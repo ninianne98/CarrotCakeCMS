@@ -49,11 +49,8 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">\r\n");
 
 			foreach (var c in lst) {
-				if (!c.PageActive) {
-					c.NavMenuText = InactivePagePrefix + c.NavMenuText;
-				}
-
-				if (c.FileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
+				IdentifyLinkAsInactive(c);
+				if (SiteData.IsFilenameCurrentPage(c.FileName)) {
 					output.Write("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				} else {
 					output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");

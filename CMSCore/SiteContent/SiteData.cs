@@ -410,7 +410,22 @@ namespace Carrotware.CMS.Core {
 			}
 			*/
 		}
+		
+		public static bool IsFilenameCurrentPage(string sCurrentFile) {
+			
+			if (string.IsNullOrEmpty(sCurrentFile)) {
+				return false;
+			}
 
+			if (sCurrentFile.Contains("?")) {
+				sCurrentFile = sCurrentFile.Substring(0, sCurrentFile.IndexOf("?"));
+			}
+
+			if (sCurrentFile.ToLower() == SiteData.CurrentScriptName.ToLower()) {
+				return true;
+			}
+			return false;
+		}
 
 		public static string DefaultDirectoryFilename {
 			get { return "/default.aspx".ToLower(); }
@@ -459,8 +474,6 @@ namespace Carrotware.CMS.Core {
 				return r;
 			}
 		}
-
-
 
 	}
 

@@ -97,14 +97,14 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private string _TagName = "div";
-		public string TagName {
+		private string _HtmlTagName = "div";
+		public string HtmlTagName {
 			get {
-				return _TagName;
+				return _HtmlTagName;
 			}
 
 			set {
-				_TagName = value;
+				_HtmlTagName = value;
 			}
 		}
 
@@ -160,17 +160,15 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstTwoLevelNav.Where(ct => ct.Parent_ContentID == rootContentID).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 		}
 
-		protected SiteNav GetPageInfo(string sPage) {
-			return lstTwoLevelNav.Where(ct => ct.FileName.ToLower() == sPage.ToLower()).FirstOrDefault();
+		protected SiteNav GetPageInfo(string sPath) {
+			return lstTwoLevelNav.Where(ct => ct.FileName.ToLower() == sPath.ToLower()).FirstOrDefault();
 		}
 
 
-		bool bFound = false;
 		Control fndCtrl = null;
 
 		private Control FindSubControl(Control X) {
 
-			bFound = false;
 			fndCtrl = null;
 
 			FindSubControl2(X);
@@ -181,7 +179,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private void FindSubControl2(Control X) {
 			foreach (Control c in X.Controls) {
 				if (c is PlaceHolder || c is NavLinkForTemplate) {
-					bFound = true;
 					fndCtrl = c;
 				} else {
 					FindSubControl2(c);
@@ -228,13 +225,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 			UpdateHyperLink(rTopNav);
 
-			output.Write("<" + TagName + " id=\"" + this.ClientID + "\">\r\n");
+			string sCSS = "";
+			if (!string.IsNullOrEmpty(CssClass)) {
+				sCSS = string.Format(" class=\"{0}\"", CssClass);
+			}
+
+			output.Write("<" + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\">\r\n");
 
 			base.RenderContents(output);
 
 			rTopNav.RenderControl(output);
 
-			output.Write("\r\n</" + TagName + ">");
+			output.Write("\r\n</" + HtmlTagName + ">");
 		}
 
 		protected void LoadData() {
@@ -246,11 +248,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			foreach (var nav in lstTwoLevelNav.Where(n => !n.PageActive)) {
-				if (!nav.PageActive) {
-					nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
-					nav.PageHead = InactivePagePrefix + nav.PageHead;
-					nav.TitleBar = InactivePagePrefix + nav.TitleBar;
-				}
+				IdentifyLinkAsInactive(nav);
 			}
 		}
 
@@ -304,9 +302,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		private void ModWrap(ListItemWrapper lnk) {
-			string sPage = HttpContext.Current.Request.Path.ToLower();
 
-			if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
+			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
 				lnk.CssClass = CSSSelected;
 			}
 		}
@@ -314,9 +311,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private void ModHyperLink(HyperLink lnk) {
 			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
-			string sPage = HttpContext.Current.Request.Path.ToLower();
-
-			if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
+			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
 				lnk.CssClass = CSSSelected;
 			}
 
@@ -336,9 +331,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private void ModHyperLink(NavLinkForTemplate lnk) {
 			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
-			string sPage = HttpContext.Current.Request.Path.ToLower();
-
-			if (lnk.NavigateUrl.ToLower() == sPage && !string.IsNullOrEmpty(CSSSelected)) {
+			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
 				lnk.CssClass = CSSSelected;
 			}
 
@@ -552,14 +545,14 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private string _TagName = "li";
-		public string TagName {
+		private string _HtmlTagName = "li";
+		public string HtmlTagName {
 			get {
-				return _TagName;
+				return _HtmlTagName;
 			}
 
 			set {
-				_TagName = value;
+				_HtmlTagName = value;
 				SetTag();
 			}
 		}
@@ -580,8 +573,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 			int iMax = this.Controls.Count - 1;
 
-			litL.Text = "\t<" + TagName + ">";
-			litR.Text = "</" + TagName + ">\r\n";
+			litL.Text = "\t<" + HtmlTagName + ">";
+			litR.Text = "</" + HtmlTagName + ">\r\n";
 
 			// using the for counter because of enumeration error
 			//foreach (Control ctrl in this.Controls) {
@@ -618,13 +611,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void SetTag() {
 
-			litL.Text = "\t<" + TagName + ">";
-			litR.Text = "</" + TagName + ">\r\n";
+			litL.Text = "\t<" + HtmlTagName + ">";
+			litR.Text = "</" + HtmlTagName + ">\r\n";
 
 			if (!string.IsNullOrEmpty(CssClass)) {
 				string sCSS = "";
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
-				litL.Text = "\t<" + TagName + sCSS + ">";
+				litL.Text = "\t<" + HtmlTagName + sCSS + ">";
 			}
 		}
 

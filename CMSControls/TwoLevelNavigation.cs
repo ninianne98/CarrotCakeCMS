@@ -245,11 +245,7 @@ namespace Carrotware.CMS.UI.Controls {
 			lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 
 			foreach (var nav in lstTwoLevelNav.Where(n => !n.PageActive)) {
-				if (!nav.PageActive) {
-					nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
-					nav.PageHead = InactivePagePrefix + nav.PageHead;
-					nav.TitleBar = InactivePagePrefix + nav.TitleBar;
-				}
+				IdentifyLinkAsInactive(nav);
 			}
 		}
 
@@ -264,24 +260,26 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
 			string sParent = "";
 			if (pageNav != null) {
 				sParent = pageNav.FileName.ToLower();
 			}
 
+			string sCSS = "";
+			if (!string.IsNullOrEmpty(CssClass)) {
+				sCSS = string.Format(" class=\"{0}\"", CssClass);
+			}
+
 			List<SiteNav> lst = GetTopNav();
-			output.Write("<div id=\"" + this.ClientID + "\">\r\n");
+			output.Write("<div " + sCSS + " id=\"" + this.ClientID + "\">\r\n");
 			output.Write("<div id=\"" + this.ClientID + "-inner\">\r\n");
 
 			output.Write("<ul class=\"" + CSSULClassTop + "\">\r\n");
 			foreach (SiteNav c1 in lst) {
 				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
-				//if (!c1.PageActive) {
-				//    c1.NavMenuText = InactivePagePrefix + c1.NavMenuText;
-				//}
-				if (c1.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c1.FileName.ToLower() == sParent) {
+				if (SiteData.IsFilenameCurrentPage(c1.FileName) || c1.FileName.ToLower() == sParent) {
 					output.Write("\t<li class=\"" + CSSSelected + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				} else {
 					output.Write("\t<li><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
@@ -290,10 +288,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (cc.Count > 0) {
 					output.Write("\r\n\t<ul class=\"" + CSSULClassLower + "\">\r\n");
 					foreach (SiteNav c2 in cc) {
-						//if (!c2.PageActive) {
-						//    c2.NavMenuText = InactivePagePrefix + c2.NavMenuText;
-						//}
-						if (c2.FileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
+						if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
 							output.Write("\t\t<li class=\"" + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>\r\n");
 						} else {
 							output.Write("\t\t<li><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>\r\n");
