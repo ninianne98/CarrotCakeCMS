@@ -20,9 +20,9 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			//	$(".art-nav-inner .art-hmenu").each(function (i) {
-			//		mnuEnhanced(this);
-			//	});
+			$(".art-nav-inner .art-hmenu").each(function (i) {
+				mnuEnhanced(this);
+			});
 
 			$(".art-vmenublockcontent-body .art-vmenu").each(function (i) {
 				mnuEnhanced(this);
