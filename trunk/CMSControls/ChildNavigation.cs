@@ -61,11 +61,11 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected SiteNav GetParent(Guid? Root_ContentID) {
-			SiteNav pageContents = null;
+			SiteNav pageNav = null;
 			if (Root_ContentID != null) {
-				pageContents = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, new Guid(Root_ContentID.ToString()));
+				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, new Guid(Root_ContentID.ToString()));
 			}
-			return pageContents;
+			return pageNav;
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
@@ -85,9 +85,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (IncludeParent) {
 					if (lst.Count > 0) {
 						var p = GetParent(lst.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
-						if (!p.PageActive) {
-							p.NavMenuText = InactivePagePrefix + p.NavMenuText;
-						}
+						IdentifyLinkAsInactive(p);
 						if (p != null) {
 							output.Write("<li class=\"parent-nav\"><a href=\"" + p.FileName + "\">" + p.NavMenuText + "</a></li>\r\n");
 						}
@@ -95,9 +93,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 
 				foreach (var c in lst) {
-					if (!c.PageActive) {
-						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
-					}
+					IdentifyLinkAsInactive(c);
 
 					output.Write("<li class=\"child-nav\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				}

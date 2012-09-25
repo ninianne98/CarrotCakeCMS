@@ -60,7 +60,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 
 		}
-		
+
 
 		public static string GetCtrlText(Control ctrl) {
 			StringBuilder sb = new StringBuilder();
@@ -70,6 +70,26 @@ namespace Carrotware.CMS.UI.Controls {
 			ctrl.RenderControl(hw);
 
 			return sb.ToString();
+		}
+
+		public static string IdentifyTextAsInactive(bool bStatus, string sLinkText) {
+
+			if (!bStatus) {
+				sLinkText = InactivePagePrefix + sLinkText;
+			}
+
+			return sLinkText;
+		}
+
+		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
+
+			if (!nav.PageActive) {
+				nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
+				nav.PageHead = InactivePagePrefix + nav.PageHead;
+				nav.TitleBar = InactivePagePrefix + nav.TitleBar;
+			}
+
+			return nav;
 		}
 
 

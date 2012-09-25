@@ -71,12 +71,12 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.GetMasterNavigation(siteID, bActiveOnly);
 		}
 
-		public SiteNav GetPageCrumbNavigation(Guid siteID, Guid rootContentID) {
-			return _navHelper.GetPageCrumbNavigation(siteID, rootContentID);
+		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
+			return _navHelper.GetPageNavigation(siteID, rootContentID);
 		}
 
-		public SiteNav GetPageCrumbNavigation(Guid siteID, string sPage) {
-			return _navHelper.GetPageCrumbNavigation(siteID, sPage);
+		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
+			return _navHelper.GetPageNavigation(siteID, sPage);
 		}
 
 		public SiteNav GetParentPageNavigation(Guid siteID, Guid rootContentID) {
@@ -103,12 +103,12 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.GetTwoLevelNavigation(siteID, bActiveOnly);
 		}
 
-		public List<SiteNav> GetPathNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
-			return _navHelper.GetPathNavigation(siteID, rootContentID, bActiveOnly);
+		public List<SiteNav> GetPageCrumbNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			return _navHelper.GetPageCrumbNavigation(siteID, rootContentID, bActiveOnly);
 		}
 
-		public List<SiteNav> GetPathNavigation(Guid siteID, string sPage, bool bActiveOnly) {
-			return _navHelper.GetPathNavigation(siteID, sPage, bActiveOnly);
+		public List<SiteNav> GetPageCrumbNavigation(Guid siteID, string sPage, bool bActiveOnly) {
+			return _navHelper.GetPageCrumbNavigation(siteID, sPage, bActiveOnly);
 		}
 
 		#endregion
@@ -163,7 +163,7 @@ namespace Carrotware.CMS.Core {
 					nav.Root_ContentID = Guid.NewGuid();
 					nav.ContentID = Guid.NewGuid();
 					//nav.FileName = nav.FileName.Replace(".aspx", nav.NavOrder.ToString() + ".aspx");
-					nav.FileName = "#";
+					nav.FileName = "/#";
 					if (rootParentID != null) {
 						nav.NavMenuText = nav.NavMenuText + " - " + rootParentID.Value.ToString().Substring(0, 4);
 					}

@@ -112,7 +112,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 			string sParent = "";
 			if (pageNav != null) {
 				if (pageNav.Parent_ContentID == null) {
@@ -120,7 +120,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			List<SiteNav> lst = navHelper.GetPathNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
+			List<SiteNav> lst = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
@@ -137,10 +137,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 				output.Write("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (SiteNav c in lst) {
-					if (!c.PageActive) {
-						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
-					}
-					if (c.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.FileName.ToLower() == sParent) {
+					IdentifyLinkAsInactive(c);
+					if (SiteData.IsFilenameCurrentPage(c.FileName) || c.FileName.ToLower() == sParent) {
 						output.Write("<li class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 					} else {
 						output.Write("<li" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
@@ -155,10 +153,8 @@ namespace Carrotware.CMS.UI.Controls {
 				int iMax = lst.Count;
 				output.Write("<div" + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (SiteNav c in lst) {
-					if (!c.PageActive) {
-						c.NavMenuText = InactivePagePrefix + c.NavMenuText;
-					}
-					if (c.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.FileName.ToLower() == sParent) {
+					IdentifyLinkAsInactive(c);
+					if (SiteData.IsFilenameCurrentPage(c.FileName) || c.FileName.ToLower() == sParent) {
 						output.Write("<span class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
 					} else {
 						output.Write("<span" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");

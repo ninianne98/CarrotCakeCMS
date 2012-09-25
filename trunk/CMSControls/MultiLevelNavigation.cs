@@ -49,10 +49,8 @@ namespace Carrotware.CMS.UI.Controls {
 			if (cc.Count > 0) {
 				output.Write("\r\n\t<ul class=\"children level-" + iLevel + "\">\r\n");
 				foreach (var c2 in cc) {
-					if (!c2.PageActive) {
-						c2.NavMenuText = InactivePagePrefix + c2.NavMenuText;
-					}
-					if (c2.FileName.ToLower() == SiteData.CurrentScriptName.ToLower()) {
+					IdentifyLinkAsInactive(c2);
+					if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
 						output.Write("\t\t<li class=\"" + CSSSelected + " level-" + iLevel + "\"> ");
 					} else {
 						output.Write("\t\t<li class=\"level-" + iLevel + "\"> ");
@@ -68,11 +66,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			var pageContents = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			var pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
 			var sParent = "";
-			if (pageContents != null) {
-				sParent = pageContents.FileName.ToLower();
+			if (pageNav != null) {
+				sParent = pageNav.FileName.ToLower();
 			}
 
 			var lst = GetTopNav();
@@ -82,10 +80,8 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Write("<ul class=\"parent\">\r\n");
 			foreach (var c1 in lst) {
 
-				if (!c1.PageActive) {
-					c1.NavMenuText = InactivePagePrefix + c1.NavMenuText;
-				}
-				if (c1.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c1.FileName.ToLower() == sParent) {
+				IdentifyLinkAsInactive(c1);
+				if (SiteData.IsFilenameCurrentPage(c1.FileName) || c1.FileName.ToLower() == sParent) {
 					output.Write("\t<li class=\"" + CSSSelected + "\"> ");
 				} else {
 					output.Write("\t<li> ");

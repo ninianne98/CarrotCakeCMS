@@ -69,11 +69,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageContents = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 			var sParent = "";
-			if (pageContents != null) {
-				if (pageContents.Parent_ContentID == null) {
-					sParent = pageContents.FileName.ToLower();
+			if (pageNav != null) {
+				if (pageNav.Parent_ContentID == null) {
+					sParent = pageNav.FileName.ToLower();
 				}
 			}
 
@@ -86,10 +86,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 			output.Write("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 			foreach (SiteNav c in lst) {
-				if (!c.PageActive) {
-					c.NavMenuText = InactivePagePrefix + c.NavMenuText;
-				}
-				if (c.FileName.ToLower() == SiteData.CurrentScriptName.ToLower() || c.FileName.ToLower() == sParent) {
+				IdentifyLinkAsInactive(c);
+				if (SiteData.IsFilenameCurrentPage(c.FileName) || c.FileName.ToLower() == sParent) {
 					output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				} else {
 					output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
