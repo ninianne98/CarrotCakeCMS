@@ -201,19 +201,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			List<SiteNav> lst = GetChildren(rootContentID);
+			if (lst.Count > 0) {
+				Repeater rSubNav = new Repeater();
+				ctrl.Controls.Add(rSubNav);
 
-			Repeater rSubNav = new Repeater();
-			ctrl.Controls.Add(rSubNav);
+				rSubNav.ID = "rSubNav";
+				rSubNav.HeaderTemplate = SubNavHeaderTemplate;
+				rSubNav.ItemTemplate = SubNavTemplate;
+				rSubNav.FooterTemplate = SubNavFooterTemplate;
 
-			rSubNav.ID = "rSubNav";
-			rSubNav.HeaderTemplate = SubNavHeaderTemplate;
-			rSubNav.ItemTemplate = SubNavTemplate;
-			rSubNav.FooterTemplate = SubNavFooterTemplate;
+				rSubNav.DataSource = lst;
+				rSubNav.DataBind();
 
-			rSubNav.DataSource = lst;
-			rSubNav.DataBind();
-
-			UpdateHyperLink(rSubNav);
+				UpdateHyperLink(rSubNav);
+			}
 
 		}
 
@@ -302,9 +303,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		private void ModWrap(ListItemWrapper lnk) {
+			SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
 				lnk.CssClass = CSSSelected;
+			}
+
+			if (GetChildren(nav.Root_ContentID).Count > 0 && !string.IsNullOrEmpty(lnk.HasChildCssClass)) {
+				if (!string.IsNullOrEmpty(lnk.CssClass)) {
+					lnk.CssClass = lnk.CssClass + " " + lnk.HasChildCssClass;
+				} else {
+					lnk.CssClass = lnk.HasChildCssClass;
+				}
 			}
 		}
 
@@ -522,37 +532,49 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public class ListItemWrapper : Control {
 
-		private string _CssClass = "";
+		private string _css = "";
 		public string CssClass {
 			get {
-				return _CssClass;
+				return _css.Trim();
 			}
 
 			set {
-				_CssClass = value;
+				_css = value;
 				SetTag();
 			}
 		}
 
-		private string _NavigateUrl = "";
-		public string NavigateUrl {
+		private string _childCSS = "";
+		public string HasChildCssClass {
 			get {
-				return _NavigateUrl;
+				return _childCSS.Trim();
 			}
 
 			set {
-				_NavigateUrl = value;
+				_childCSS = value;
+				SetTag();
 			}
 		}
 
-		private string _HtmlTagName = "li";
-		public string HtmlTagName {
+		private string _url = "";
+		public string NavigateUrl {
 			get {
-				return _HtmlTagName;
+				return _url.Trim();
 			}
 
 			set {
-				_HtmlTagName = value;
+				_url = value;
+			}
+		}
+
+		private string _tag = "li";
+		public string HtmlTagName {
+			get {
+				return _tag.Trim();
+			}
+
+			set {
+				_tag = value;
 				SetTag();
 			}
 		}
@@ -569,7 +591,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void LoadCtrsl() {
-			ControlCollection ctrls = new ControlCollection(this);
+			Dictionary<int, Control> ctrls = new Dictionary<int, Control>();
 
 			int iMax = this.Controls.Count - 1;
 
@@ -582,26 +604,22 @@ namespace Carrotware.CMS.UI.Controls {
 			//}
 
 			for (int i = iMax; i >= 0; i--) {
-				ctrls.Add(this.Controls[i]);
+				ctrls.Add(i, this.Controls[i]);
 			}
 
 			ctrlAll.Controls.Clear();
 			ctrlAll.Controls.Add(litL);
 
-			iMax = ctrls.Count - 1;
-			for (int i = iMax; i >= 0; i--) {
-				ctrlAll.Controls.Add(ctrls[i]);
+			foreach (KeyValuePair<int, Control> d in ctrls.OrderBy(x => x.Key)) {
+				ctrlAll.Controls.Add(d.Value);
 			}
-
-			//for (int i = iMax; i >= 0; i--) {
-			//    ctrlAll.Controls.AddAt(i, this.Controls[i]);
-			//}
 
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "phListItemWrapper";
 
 			ctrlAll.Controls.Add(ph);
 			ctrlAll.Controls.Add(litR);
+
 
 			this.Controls.Clear();
 			this.Controls.Add(ctrlAll);
