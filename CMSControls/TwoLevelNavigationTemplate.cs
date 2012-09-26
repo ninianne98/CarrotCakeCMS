@@ -303,13 +303,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		private void ModWrap(ListItemWrapper lnk) {
-			SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
+			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
 				lnk.CssClass = CSSSelected;
 			}
 
-			if (GetChildren(nav.Root_ContentID).Count > 0 && !string.IsNullOrEmpty(lnk.HasChildCssClass)) {
+			if (GetChildren(lnk.ContentID).Count > 0 && !string.IsNullOrEmpty(lnk.HasChildCssClass)) {
 				if (!string.IsNullOrEmpty(lnk.CssClass)) {
 					lnk.CssClass = lnk.CssClass + " " + lnk.HasChildCssClass;
 				} else {
@@ -567,6 +567,19 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+
+		private Guid _id = Guid.Empty;
+		public Guid ContentID {
+			get {
+				return _id;
+			}
+
+			set {
+				_id = value;
+			}
+		}
+
+
 		private string _tag = "li";
 		public string HtmlTagName {
 			get {
@@ -647,8 +660,10 @@ namespace Carrotware.CMS.UI.Controls {
 			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
 
 			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
 
 			this.NavigateUrl = sFileName;
+			this.ContentID = pageID;
 		}
 
 
