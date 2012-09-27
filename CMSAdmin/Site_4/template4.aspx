@@ -86,8 +86,8 @@
 							<ul class="art-hmenu">
 						</TopNavHeaderTemplate>
 						<TopNavTemplate>
-							<carrot:ListItemWrapper runat="server" HtmlTagName="li" ID="ListItemWrapper1">
-								<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server">
+							<carrot:ListItemWrapper runat="server" HtmlTagName="li" ID="ListItemWrapper1" CSSSelected="active">
+								<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" CSSSelected="active">
 									<span class="l"></span><span class="r"></span><span class="t">
 										<%# Eval("NavMenuText").ToString()%></span>
 								</carrot:NavLinkForTemplate>

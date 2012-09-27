@@ -255,7 +255,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected override void OnInit(EventArgs e) {
-			Controls.Clear();
+			this.Controls.Clear();
 
 			base.OnInit(e);
 
@@ -281,7 +281,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			List<SiteNav> lstTop = GetTopNav();
 
-			rTopNav.ID = "rTopNav";
+			rTopNav.ID = this.ClientID + "_rTopNav";
 			rTopNav.HeaderTemplate = TopNavHeaderTemplate;
 			rTopNav.ItemTemplate = TopNavTemplate;
 			rTopNav.FooterTemplate = TopNavFooterTemplate;
@@ -306,14 +306,14 @@ namespace Carrotware.CMS.UI.Controls {
 			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
-				lnk.CssClass = CSSSelected;
+				lnk.IsSelected = true;
 			}
 
 			if (GetChildren(lnk.ContentID).Count > 0 && !string.IsNullOrEmpty(lnk.HasChildCssClass)) {
-				if (!string.IsNullOrEmpty(lnk.CssClass)) {
-					lnk.CssClass = lnk.CssClass + " " + lnk.HasChildCssClass;
+				if (!string.IsNullOrEmpty(lnk.CssClassNormal)) {
+					lnk.CssClassNormal = lnk.CssClassNormal + " " + lnk.HasChildCssClass;
 				} else {
-					lnk.CssClass = lnk.HasChildCssClass;
+					lnk.CssClassNormal = lnk.HasChildCssClass;
 				}
 			}
 		}
@@ -329,7 +329,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private void ModHyperLink(NavLinkForTemplate lnk) {
 
 			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
-				lnk.CssClass = CSSSelected;
+				lnk.IsSelected = true;
 			}
 
 		}
@@ -338,10 +338,12 @@ namespace Carrotware.CMS.UI.Controls {
 		private void UpdateHyperLink(Control X) {
 
 			foreach (Control c in X.Controls) {
-				if (c is HyperLink) {
+				/* if (c is HyperLink) {
 					HyperLink lnk = (HyperLink)c;
 					ModHyperLink(lnk);
-				} else if (c is NavLinkForTemplate) {
+				} else */
+
+				if (c is NavLinkForTemplate) {
 					NavLinkForTemplate lnk = (NavLinkForTemplate)c;
 					ModHyperLink(lnk);
 					UpdateHyperLink(c);

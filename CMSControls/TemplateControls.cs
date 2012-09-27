@@ -65,16 +65,69 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public string CssClass {
+		private string _Ncss = "";
+		public string CssClassNormal {
 			get {
-				return lnk.CssClass;
+				return _Ncss;
 			}
 
 			set {
-				lnk.CssClass = value;
+				_Ncss = value;
+				SetCSS();
 			}
 		}
 
+		private string _Scss = "";
+		public string CSSSelected {
+			get {
+				return _Scss;
+			}
+
+			set {
+				_Scss = value;
+				SetCSS();
+			}
+		}
+
+		private bool _sel = false;
+		public bool IsSelected {
+			get {
+				return _sel;
+			}
+
+			set {
+				_sel = value;
+				SetCSS();
+			}
+		}
+
+
+
+		private Guid _id = Guid.Empty;
+		public Guid ContentID {
+			get {
+				return _id;
+			}
+
+			set {
+				_id = value;
+			}
+		}
+
+
+		private void SetCSS() {
+
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
+				string sCSS = "";
+				string sSel = "";
+				if (IsSelected) {
+					sSel = CSSSelected;
+				}
+				sCSS = string.Format("{0} {1}", CssClassNormal, sSel);
+
+				lnk.CssClass = sCSS.Trim();
+			}
+		}
 
 
 		private string _linkPage = string.Empty;
@@ -91,23 +144,32 @@ namespace Carrotware.CMS.UI.Controls {
 			_linkPage = DataBinder.Eval(container, "DataItem.FileName").ToString();
 			_linkText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
 
+			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
+
+			this.ContentID = pageID;
+
+			LoadCtrsl();
+
 			base.OnDataBinding(e);
 		}
 
 
 		private void AssignVals() {
+
+			SetCSS();
+
 			if (!string.IsNullOrEmpty(_linkPage) && string.IsNullOrEmpty(this.NavigateUrl)) {
 				this.NavigateUrl = _linkPage;
 			}
 
 			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.Text)) {
-				//var ctrl = FindSubControl(this, _linkText);
-				//if (ctrl == null) {
-				//    this.Text = _linkText;
-				//}
-				if (!this.HasControls()) {
+				var ctrl = FindSubControl(this, _linkText);
+				if (ctrl == null) {
 					this.Text = _linkText;
 				}
+				//if (!this.HasControls()) {
+				//    this.Text = _linkText;
+				//}
 			}
 		}
 
@@ -127,13 +189,6 @@ namespace Carrotware.CMS.UI.Controls {
 			AssignVals();
 		}
 
-		protected override void OnPreRender(EventArgs e) {
-
-			LoadCtrsl();
-
-			base.OnPreRender(e);
-		}
-
 
 		private void lnkContent_PreRender(object sender, EventArgs e) {
 			AssignVals();
@@ -147,12 +202,13 @@ namespace Carrotware.CMS.UI.Controls {
 			_linkPage = DataBinder.Eval(container, "DataItem.FileName").ToString();
 			_linkText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
 		}
-		
 
+		bool bFoundCtrl = false;
 		Control fndCtrl = null;
 
 		private Control FindSubControl(Control X, string txt) {
 
+			bFoundCtrl = false;
 			fndCtrl = null;
 
 			FindSubControl2(X, txt.ToLower().Trim());
@@ -162,20 +218,16 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void FindSubControl2(Control X, string txt) {
 			foreach (Control c in X.Controls) {
-				if (c is Literal) {
-					Literal lnk = (Literal)c;
-					if (lnk.Text.ToLower().Trim().Contains(txt)) {
-						fndCtrl = c;
+				if (!bFoundCtrl) {
+					if (c is ITextControl) {
+						ITextControl lnk = (ITextControl)c;
+						if (lnk.Text.ToLower().Trim().Contains(txt)) {
+							fndCtrl = c;
+						}
+						bFoundCtrl = true;
+					} else {
+						FindSubControl2(c, txt);
 					}
-					FindSubControl2(c, txt);
-				} else if (c is DataBoundLiteralControl) {
-					DataBoundLiteralControl lnk = (DataBoundLiteralControl)c;
-					if (lnk.Text.ToLower().Trim().Contains(txt)) {
-						fndCtrl = c;
-					}
-					FindSubControl2(c, txt);
-				} else {
-					FindSubControl2(c, txt);
 				}
 			}
 		}
@@ -190,14 +242,38 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public class ListItemWrapper : Control {
 
-		private string _css = "";
-		public string CssClass {
+		private string _Ncss = "";
+		public string CssClassNormal {
 			get {
-				return _css.Trim();
+				return _Ncss;
 			}
 
 			set {
-				_css = value;
+				_Ncss = value;
+				SetTag();
+			}
+		}
+
+		private string _Scss = "";
+		public string CSSSelected {
+			get {
+				return _Scss;
+			}
+
+			set {
+				_Scss = value;
+				SetTag();
+			}
+		}
+
+		private bool _sel = false;
+		public bool IsSelected {
+			get {
+				return _sel;
+			}
+
+			set {
+				_sel = value;
 				SetTag();
 			}
 		}
@@ -205,7 +281,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private string _childCSS = "";
 		public string HasChildCssClass {
 			get {
-				return _childCSS.Trim();
+				return _childCSS;
 			}
 
 			set {
@@ -293,6 +369,8 @@ namespace Carrotware.CMS.UI.Controls {
 			this.Controls.Clear();
 			this.Controls.Add(ctrlAll);
 
+
+
 		}
 
 
@@ -301,9 +379,18 @@ namespace Carrotware.CMS.UI.Controls {
 			litL.Text = "\t<" + HtmlTagName + ">";
 			litR.Text = "</" + HtmlTagName + ">\r\n";
 
-			if (!string.IsNullOrEmpty(CssClass)) {
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
-				sCSS = string.Format(" class=\"{0}\"", CssClass);
+				string sSelCss = "";
+
+				if (IsSelected) {
+					sSelCss = CSSSelected.Trim();
+				}
+
+				if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(sSelCss)) {
+					sCSS = string.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
+				}
+
 				litL.Text = "\t<" + HtmlTagName + sCSS + ">";
 			}
 		}
