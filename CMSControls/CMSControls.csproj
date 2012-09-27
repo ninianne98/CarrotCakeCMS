@@ -69,6 +69,7 @@
     <Compile Include="ContentPlainText.cs" />
     <Compile Include="ContentRichText.cs" />
     <Compile Include="BreadCrumbNavigation.cs" />
+    <Compile Include="TemplateControls.cs" />
     <Compile Include="SiblingNavigation.cs" />
     <Compile Include="MultiLevelNavigation.cs" />
     <Compile Include="MostRecentUpdated.cs" />
