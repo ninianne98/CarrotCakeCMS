@@ -20,9 +20,9 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			$(".art-nav-inner .art-hmenu").each(function (i) {
-				mnuEnhanced(this);
-			});
+			//		$(".art-nav-inner .art-hmenu").each(function (i) {
+			//			mnuEnhanced(this);
+			//		});
 
 			$(".art-vmenublockcontent-body .art-vmenu").each(function (i) {
 				mnuEnhanced(this);
@@ -74,30 +74,30 @@
 			</div>
 			<div class="art-nav-outer">
 				<div class="art-nav-wrapper">
-					<div class="art-nav-inner">
-						<%--<ul class="art-hmenu">
+					<%--<div class="art-nav-inner">--%>
+					<%--<ul class="art-hmenu">
 							<li><a href="./new-page.html" class="active"><span class="l"></span><span class="r"></span><span class="t">New Page</span></a>
 							</li>
 							<li><a href="./new-page-2.html"><span class="l"></span><span class="r"></span><span class="t">New Page 2</span></a> </li>
 						</ul>--%>
-						<%--<carrot:TopLevelNavigation CSSSelected="active" CssClass="art-hmenu" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" />--%>
-						<carrot:TwoLevelNavigationTemplate runat="server" CssClass="art-nav-inner" CSSSelected="active" ID="TwoLevelNavigationTemplate1" ShowSecondLevel="false">
-							<TopNavHeaderTemplate>
-								<ul class="art-hmenu">
-							</TopNavHeaderTemplate>
-							<TopNavTemplate>
-								<carrot:ListItemWrapper runat="server" HtmlTagName="li" ID="ListItemWrapper1">
-									<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server">
-										<span class="l"></span><span class="r"></span><span class="t">
-											<%# Eval("NavMenuText").ToString()%></span>
-									</carrot:NavLinkForTemplate>
-								</carrot:ListItemWrapper>
-							</TopNavTemplate>
-							<TopNavFooterTemplate>
-								</ul>
-							</TopNavFooterTemplate>
-						</carrot:TwoLevelNavigationTemplate>
-					</div>
+					<%--<carrot:TopLevelNavigation CSSSelected="active" CssClass="art-hmenu" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" />--%>
+					<carrot:TwoLevelNavigationTemplate runat="server" CssClass="art-nav-inner" CSSSelected="active" ID="TwoLevelNavigationTemplate1" ShowSecondLevel="false">
+						<TopNavHeaderTemplate>
+							<ul class="art-hmenu">
+						</TopNavHeaderTemplate>
+						<TopNavTemplate>
+							<carrot:ListItemWrapper runat="server" HtmlTagName="li" ID="ListItemWrapper1">
+								<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server">
+									<span class="l"></span><span class="r"></span><span class="t">
+										<%# Eval("NavMenuText").ToString()%></span>
+								</carrot:NavLinkForTemplate>
+							</carrot:ListItemWrapper>
+						</TopNavTemplate>
+						<TopNavFooterTemplate>
+							</ul>
+						</TopNavFooterTemplate>
+					</carrot:TwoLevelNavigationTemplate>
+					<%--</div>--%>
 				</div>
 			</div>
 		</div>
