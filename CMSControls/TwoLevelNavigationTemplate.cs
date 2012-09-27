@@ -319,43 +319,19 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void ModHyperLink(HyperLink lnk) {
-			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
 				lnk.CssClass = CSSSelected;
 			}
 
-			//if (nav != null && !nav.PageActive) {
-			//    if (string.IsNullOrEmpty(lnk.Text)) {
-			//        Literal lit = new Literal();
-			//        lit.Text = BaseServerControl.InactivePagePrefix;
-			//        lnk.Controls.AddAt(0, lit);
-			//    } else {
-			//        if (!lnk.Text.StartsWith(BaseServerControl.InactivePagePrefix)) {
-			//            lnk.Text = BaseServerControl.InactivePagePrefix + lnk.Text;
-			//        }
-			//    }
-			//}
 		}
 
 		private void ModHyperLink(NavLinkForTemplate lnk) {
-			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
 
 			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
 				lnk.CssClass = CSSSelected;
 			}
 
-			//if (nav != null && !nav.PageActive) {
-			//    if (string.IsNullOrEmpty(lnk.Text)) {
-			//        Literal lit = new Literal();
-			//        lit.Text = BaseServerControl.InactivePagePrefix;
-			//        lnk.Controls.AddAt(0, lit);
-			//    } else {
-			//        if (!lnk.Text.StartsWith(BaseServerControl.InactivePagePrefix)) {
-			//            lnk.Text = BaseServerControl.InactivePagePrefix + lnk.Text;
-			//        }
-			//    }
-			//}
 		}
 
 
@@ -482,47 +458,116 @@ namespace Carrotware.CMS.UI.Controls {
 		public NavLinkForTemplate()
 			: base() {
 
-			LoadCtrsl();
+			AssignEvents();
+
 		}
+
+		private void AssignEvents() {
+
+			ph.ID = "phNavLinkForTemplate";
+
+			//lnk.DataBinding += new EventHandler(lnkContent_DataBinding);
+			//lnk.PreRender += new EventHandler(lnkContent_PreRender);
+		}
+
+
+		protected override void OnDataBinding(EventArgs e) {
+
+			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+
+			_linkPage = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			_linkText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+
+			base.OnDataBinding(e);
+		}
+
+
+		private void AssignVals() {
+			if (!string.IsNullOrEmpty(_linkPage) && string.IsNullOrEmpty(this.NavigateUrl)) {
+				this.NavigateUrl = _linkPage;
+			}
+
+			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.Text)) {
+				var ctrl = FindSubControl(this, _linkText);
+				if (ctrl == null) {
+					this.Text = _linkText;
+				}
+			}
+		}
+
 
 		private void LoadCtrsl() {
 
-			ph.ID = "phNavLinkForTemplate";
+			int iMax = this.Controls.Count;
+			lnk.Controls.Clear();
+
+			for (int i = 0; i < iMax; i++) {
+				lnk.Controls.Add(this.Controls[0]);
+			}
 
 			this.Controls.Add(lnk);
 			this.Controls.Add(ph);
 
-			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);
+			AssignVals();
 		}
+
+		protected override void OnPreRender(EventArgs e) {
+
+			LoadCtrsl();
+
+			base.OnPreRender(e);
+		}
+
+
+		private string _linkPage = string.Empty;
+		private string _linkText = string.Empty;
+
+		private void lnkContent_PreRender(object sender, EventArgs e) {
+			AssignVals();
+		}
+
 
 		private void lnkContent_DataBinding(object sender, EventArgs e) {
 			HyperLink lnk = (HyperLink)sender;
 			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
 
-			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			string sNavMenuText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
-			//bool bPageActive = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.PageActive").ToString());
+			_linkPage = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			_linkText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
 
-			if (string.IsNullOrEmpty(lnk.NavigateUrl)) {
-				lnk.NavigateUrl = sFileName;
-			}
-
-			if (string.IsNullOrEmpty(lnk.Text)) {
-				lnk.Text = sNavMenuText;
-			}
-
-			//if (!bPageActive) {
-			//    if (string.IsNullOrEmpty(lnk.Text)) {
-			//        Literal lit = new Literal();
-			//        lit.Text = BaseServerControl.InactivePagePrefix;
-			//        lnk.Controls.AddAt(0, lit);
-			//    } else {
-			//        if (!lnk.Text.StartsWith(BaseServerControl.InactivePagePrefix)) {
-			//            lnk.Text = BaseServerControl.InactivePagePrefix + lnk.Text;
-			//        }
-			//    }
-			//}
 		}
+
+
+		Control fndCtrl = null;
+
+		private Control FindSubControl(Control X, string txt) {
+
+			fndCtrl = null;
+
+			FindSubControl2(X, txt.ToLower().Trim());
+
+			return fndCtrl;
+		}
+
+		private void FindSubControl2(Control X, string txt) {
+			foreach (Control c in X.Controls) {
+				if (c is Literal) {
+					Literal lnk = (Literal)c;
+					if (lnk.Text.ToLower().Trim().Contains(txt)) {
+						fndCtrl = c;
+					}
+					FindSubControl2(c, txt);
+				} else if (c is DataBoundLiteralControl) {
+					DataBoundLiteralControl lnk = (DataBoundLiteralControl)c;
+					if (lnk.Text.ToLower().Trim().Contains(txt)) {
+						fndCtrl = c;
+					}
+					FindSubControl2(c, txt);
+				} else {
+					FindSubControl2(c, txt);
+				}
+			}
+		}
+
 	}
 
 	//========================================
@@ -604,28 +649,32 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void LoadCtrsl() {
-			Dictionary<int, Control> ctrls = new Dictionary<int, Control>();
+			//Dictionary<int, Control> ctrls = new Dictionary<int, Control>();
 
-			int iMax = this.Controls.Count - 1;
+			int iMax = this.Controls.Count;
 
-			litL.Text = "\t<" + HtmlTagName + ">";
-			litR.Text = "</" + HtmlTagName + ">\r\n";
+			SetTag();
 
 			// using the for counter because of enumeration error
 			//foreach (Control ctrl in this.Controls) {
 			//    Ctrl.Add(ctrl);
 			//}
 
-			for (int i = iMax; i >= 0; i--) {
-				ctrls.Add(i, this.Controls[i]);
-			}
+			//for (int i = iMax; i >= 0; i--) {
+			//    ctrls.Add(i, this.Controls[i]);
+			//}
 
 			ctrlAll.Controls.Clear();
 			ctrlAll.Controls.Add(litL);
 
-			foreach (KeyValuePair<int, Control> d in ctrls.OrderBy(x => x.Key)) {
-				ctrlAll.Controls.Add(d.Value);
+			//instead of wind/unwind, pop stack X times
+			for (int i = 0; i < iMax; i++) {
+				ctrlAll.Controls.Add(this.Controls[0]);
 			}
+
+			//foreach (KeyValuePair<int, Control> d in ctrls.OrderBy(x => x.Key)) {
+			//    ctrlAll.Controls.Add(d.Value);
+			//}
 
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "phListItemWrapper";
