@@ -24,13 +24,18 @@ namespace Carrotware.CMS.UI.Admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSiteMap);
 
 			if (!IsPostBack) {
+
+				rpSub.ItemTemplate = rpTop.ItemTemplate;
+
 				lstSite = (from c in pageHelper.GetLatestContentList(SiteID)
 						   orderby c.TemplateFile
 						   select c).ToList();
+
 				rpTop.DataSource = (from l in lstSite
 									orderby l.NavOrder, l.NavMenuText
 									where l.Parent_ContentID == null
 									select l).ToList();
+
 				rpTop.DataBind();
 
 			}
@@ -45,6 +50,13 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+		public string ReturnImage(bool bFlag) {
+			if (bFlag) {
+				return hdnActive.Value;
+			} else {
+				return hdnInactive.Value;
+			}
+		}
 
 		protected void rpMap_ItemDataBound(object sender, RepeaterItemEventArgs e) {
 			PlaceHolder ph = (PlaceHolder)e.Item.FindControl("ph");
