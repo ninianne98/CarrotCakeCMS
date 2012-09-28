@@ -196,6 +196,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 			LoadCtrsl();
 
+			this.EnableViewState = false;
+
 			base.OnDataBinding(e);
 
 
@@ -438,7 +440,6 @@ namespace Carrotware.CMS.UI.Controls {
 			//}
 
 			ListItemPlaceHolder ph = new ListItemPlaceHolder();
-			ph.ID = "phListItemWrapper";
 
 			ctrlAll.Controls.Add(ph);
 			ctrlAll.Controls.Add(litR);
@@ -451,8 +452,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void SetTag() {
 
-			litL.Text = "\t<" + HtmlTagName + ">";
-			litR.Text = "</" + HtmlTagName + ">\r\n";
+			litL.Text = "<" + HtmlTagName + ">";
+			litR.Text = "</" + HtmlTagName + ">";
 
 			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
@@ -466,7 +467,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sCSS = string.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
 				}
 
-				litL.Text = "\t<" + HtmlTagName + sCSS + ">";
+				litL.Text = "<" + HtmlTagName + sCSS + ">";
 			}
 		}
 
@@ -484,6 +485,8 @@ namespace Carrotware.CMS.UI.Controls {
 			SetTag();
 
 			LoadCtrsl();
+
+			this.EnableViewState = false;
 
 			base.OnDataBinding(e);
 		}
@@ -507,7 +510,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			Literal litL = new Literal();
 
-			litL.Text = "\r\n<ul>\r\n";
+			litL.Text = "<ul>\r\n";
 
 			container.Controls.Add(litL);
 		}
@@ -543,10 +546,12 @@ namespace Carrotware.CMS.UI.Controls {
 			ListItemPlaceHolder phAll = new ListItemPlaceHolder();
 
 			NavLinkForTemplate lnk = new NavLinkForTemplate();
+			lnk.EnableViewState = false;
 			lnk.LinkText = " LINK ";
 			lnk.NavigateUrl = "#";
 
 			ListItemWrapper wrap = new ListItemWrapper();
+			wrap.EnableViewState = false;
 			wrap.Controls.Add(lnk);
 
 			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);

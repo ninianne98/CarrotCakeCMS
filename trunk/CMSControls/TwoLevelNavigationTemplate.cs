@@ -191,6 +191,8 @@ namespace Carrotware.CMS.UI.Controls {
 				rSubNav.DataSource = lst;
 				rSubNav.DataBind();
 
+				rSubNav.EnableViewState = false;
+
 				UpdateHyperLink(rSubNav);
 			}
 
@@ -203,6 +205,8 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 
 			UpdateHyperLink(rTopNav);
+
+			rTopNav.EnableViewState = false;
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
@@ -236,6 +240,8 @@ namespace Carrotware.CMS.UI.Controls {
 			this.Controls.Clear();
 
 			base.OnInit(e);
+
+			this.EnableViewState = false;
 
 			LoadData();
 
