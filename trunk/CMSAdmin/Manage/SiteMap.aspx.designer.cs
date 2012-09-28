@@ -40,6 +40,24 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.Repeater rpTop;
         
         /// <summary>
+        /// hdnInactive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnInactive;
+        
+        /// <summary>
+        /// hdnActive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnActive;
+        
+        /// <summary>
         /// rpSub control.
         /// </summary>
         /// <remarks>

@@ -1,5 +1,5 @@
-﻿<%@ Page ValidateRequest="false" Title="Site Map" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true"
-	CodeBehind="SiteMap.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.SiteMap" %>
+﻿<%@ Page ValidateRequest="false" Title="Site Map" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteMap.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.SiteMap" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -27,12 +27,17 @@
 			margin-left: 5px;
 			margin-bottom: 8px;
 		}
-		#cmsSiteMap .sortable li span {
+		#cmsSiteMap .sortable li span.handle-filename {
 			padding: 3px;
 			margin: 0;
 			cursor: move;
 			line-height: 20px;
 		}
+		
+		#cmsSiteMap span.page-status, #cmsSiteMap span.handle-filename a {
+			cursor: pointer;
+		}
+		
 		.HighlightPH {
 			height: 25px !important;
 			margin: 5px;
@@ -61,7 +66,7 @@
 			$("ol.sortable").nestedSortable({
 				disableNesting: 'no-nest',
 				forcePlaceholderSize: true,
-				handle: 'span',
+				handle: 'span.map-handle',
 				helper: 'clone',
 				items: 'li',
 				maxLevels: 5,
@@ -74,6 +79,7 @@
 			});
 
 			itterateTree();
+			itterateTreeSetToggle();
 
 		});
 
@@ -85,22 +91,49 @@
 			});
 		}
 
+
+		function itterateTreeSetToggle() {
+			$("#cmsSiteMap li span.page-status").each(function (i) {
+				setDblClickSpan(this);
+			});
+		}
+
+
+		function setDblClickSpan(elm) {
+			$(elm).dblclick(function () {
+				var target = $(elm).parent();
+				var h = target.html();
+
+				if (h.indexOf("ToggleTree") > 0) {
+					var lnk = $(target).find("a");
+					ToggleTree(lnk);
+				}
+			});
+		}
+
+
 		function setListItem(item) {
-			var node = $(item).find("span").first();
-			var h = node.html();
-			var t = node.text();
+
+			var node = $(item).find("span.map-handle").first();
+			var id = $(node).attr('id');
+			var nodeNav = $(node).find("span.handle-filename");
+			var nodeStat = $(node).find("span.page-status");
+
+			var h = nodeNav.html();
+			var t = nodeNav.text();
 			var lst = $(item).find("ol").first();
+
 			if (h.indexOf("ToggleTree") < 0) {
 				if (lst.length > 0) {
-					node.html('<a state="close" onclick="ToggleTree(this);" href="javascript:void(0);">&#9658;</a>  ' + t); // &#9660;
+					nodeNav.html('<a state="close" id="menu-lnk-' + id + '" onclick="ToggleTree(this);" href="javascript:void(0);">&#9658;</a>  ' + t); // &#9660;
 					lst.attr('style', 'display:none;');
 				} else {
-					var lnk = node.find("a").first();
+					var lnk = nodeNav.find("a").first();
 					lnk.remove();
 				}
 			} else {
 				if (lst.length < 1) {
-					var lnk = node.find("a").first();
+					var lnk = nodeNav.find("a").first();
 					lnk.remove();
 				}
 			}
@@ -110,7 +143,7 @@
 			if (n.length > 28) {
 				var node = $('#' + n);
 				//alert(n)
-				var a = node.find("span").find("a").first();
+				var a = node.find("span.map-handle").find("a").first();
 				if (a != null) {
 					//alert(a.attr('state'));
 					a.attr('state', 'close');
@@ -123,7 +156,7 @@
 		function ToggleTree(arrow) {
 			var a = $(arrow);
 			//alert($(arrow).text() + '  ' + $(arrow).parent().parent().attr('id'));
-			var lst = a.parent().parent().find("ol").first();
+			var lst = a.parent().parent().parent().find("ol").first();
 			if (a.attr('state') != 'open') {
 				a.html("&#9660;");
 				lst.attr('style', 'display:block;');
@@ -175,27 +208,33 @@
 				<ol class="sortable">
 			</HeaderTemplate>
 			<ItemTemplate>
-				<li id="<%#Eval("Root_ContentID") %>"><span>
+				<li id="<%#Eval("Root_ContentID") %>"><span class="map-handle" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-filename" id="filename-<%#Eval("Root_ContentID") %>">
 					<%#Eval("FileName")%>
-					- [[<%#Eval("NavMenuText")%>]<%#MakeStar(Convert.ToBoolean(Eval("PageActive")))%>]</span>
+				</span><span class="page-status">&nbsp;&nbsp;&nbsp; [<b><%#Eval("NavMenuText")%></b>] &nbsp;&nbsp;&nbsp;
+					<img alt="status" class="image-status-icon img-status-<%#Eval("PageActive").ToString().ToLower() %>" src='<%#ReturnImage(Convert.ToBoolean(Eval("PageActive")))%>' />
+				</span></span>
 					<asp:PlaceHolder ID="ph" runat="server"></asp:PlaceHolder>
 				</li>
 			</ItemTemplate>
 			<FooterTemplate>
 				</ol></FooterTemplate>
 		</asp:Repeater>
+		<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/Manage/images/cancel.png" />
+		<asp:HiddenField runat="server" ID="hdnActive" Visible="false" Value="/Manage/images/accept.png" />
 	</div>
 	<asp:Repeater ID="rpSub" runat="server" OnItemDataBound="rpMap_ItemDataBound">
 		<HeaderTemplate>
 			<ol>
 		</HeaderTemplate>
-		<ItemTemplate>
-			<li id="<%#Eval("Root_ContentID") %>"><span>
+		<%--<ItemTemplate>
+			<li id="<%#Eval("Root_ContentID") %>"><span class="handle" id="handle-<%#Eval("Root_ContentID") %>">
 				<%#Eval("FileName")%>
-				- [[<%#Eval("NavMenuText")%>]<%#MakeStar(Convert.ToBoolean(Eval("PageActive")))%>]</span>
+				<span class="page-status-<%#Eval("PageActive").ToString().ToLower() %>">- [<%#Eval("NavMenuText")%>]
+					<img alt="status" src='<%#ReturnImage(Convert.ToBoolean(Eval("PageActive")))%>' />
+				</span></span>
 				<asp:PlaceHolder ID="ph" runat="server"></asp:PlaceHolder>
 			</li>
-		</ItemTemplate>
+		</ItemTemplate>--%>
 		<FooterTemplate>
 			</ol></FooterTemplate>
 	</asp:Repeater>
