@@ -44,6 +44,7 @@ using System.Web.UI;
 [assembly: TagPrefix("TwoLevelNavigation", "carrot")]
 [assembly: TagPrefix("TwoLevelNavigationTemplate", "carrot")]
 [assembly: TagPrefix("NavLinkForTemplate", "carrot")]
+[assembly: TagPrefix("ListItemNavText", "carrot")]
 [assembly: TagPrefix("ListItemWrapper", "carrot")]
 
 [assembly: TagPrefix("MultiLevelNavigation", "carrot")]

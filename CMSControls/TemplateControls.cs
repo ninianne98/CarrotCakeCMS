@@ -494,6 +494,102 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 	//========================================
+	[DefaultProperty("Text")]
+	[ToolboxData("<{0}:ListItemNavText runat=server></{0}:ListItemNavText>")]
+	public class ListItemNavText : Control, ITextControl {
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public Guid ContentID {
+			get {
+				Guid s = Guid.Empty;
+				try { s = new Guid(ViewState["ContentID"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["ContentID"] = value;
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string NavigateUrl {
+			get {
+				string s = (string)ViewState["NavigateUrl"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["NavigateUrl"] = value;
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string Text {
+			get {
+				string s = (string)ViewState["Text"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["Text"] = value;
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string DataField {
+			get {
+				string s = (string)ViewState["DataField"];
+				return ((s == null) ? "NavMenuText" : s);
+			}
+			set {
+				ViewState["DataField"] = value;
+			}
+		}
+
+
+		protected override void Render(HtmlTextWriter output) {
+
+			output.Write(this.Text);
+
+			//base.Render(output);
+
+		}
+
+
+		protected override void OnDataBinding(EventArgs e) {
+
+			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+
+			string sNavMenuText = DataBinder.Eval(container, "DataItem." + DataField).ToString();
+			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
+
+			this.NavigateUrl = sFileName;
+			this.Text = sNavMenuText;
+			this.ContentID = pageID;
+
+			this.EnableViewState = false;
+
+			base.OnDataBinding(e);
+		}
+
+
+	}
+
+	//========================================
 	public class ListItemPlaceHolder : PlaceHolder {
 
 	}
