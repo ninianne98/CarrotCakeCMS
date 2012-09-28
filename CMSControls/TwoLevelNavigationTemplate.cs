@@ -22,33 +22,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:TwoLevelNavigationTemplate runat=server></{0}:TwoLevelNavigationTemplate>")]
-	public class TwoLevelNavigationTemplate : BaseServerControl, IWidgetParmData, IWidget {
-
-		#region IWidgetParmData Members
-
-		private Dictionary<string, string> _parms = new Dictionary<string, string>();
-		public Dictionary<string, string> PublicParmValues {
-			get { return _parms; }
-			set { _parms = value; }
-		}
-
-		#endregion
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		Guid IWidget.SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return true; }
-		}
-		#endregion
+	public class TwoLevelNavigationTemplate : BaseServerControl {
 
 
 		[Bindable(true)]
@@ -73,9 +47,8 @@ namespace Carrotware.CMS.UI.Controls {
 		[Localizable(true)]
 		public string OverrideCSS {
 			get {
-				string s = "";
-				try { s = Convert.ToString(ViewState["OverrideCSS"]); } catch { ViewState["OverrideCSS"] = ""; }
-				return s;
+				string s = (string)ViewState["OverrideCSS"];
+				return ((s == null) ? "" : s);
 			}
 			set {
 				ViewState["OverrideCSS"] = value;
@@ -90,23 +63,28 @@ namespace Carrotware.CMS.UI.Controls {
 		public string CSSSelected {
 			get {
 				string s = (string)ViewState["CSSSelected"];
-				return ((s == null) ? "selected" : s);
+				return ((s == null) ? "" : s);
 			}
 			set {
 				ViewState["CSSSelected"] = value;
 			}
 		}
 
-		private string _HtmlTagName = "div";
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string HtmlTagName {
 			get {
-				return _HtmlTagName;
+				string s = (string)ViewState["HtmlTagName"];
+				return ((s == null) ? "div" : s);
 			}
-
 			set {
-				_HtmlTagName = value;
+				ViewState["HtmlTagName"] = value;
 			}
 		}
+
 
 
 
@@ -302,53 +280,32 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		private void ModWrap(ListItemWrapper lnk) {
-			//SiteNav nav = GetPageInfo(lnk.NavigateUrl.ToLower());
+		private void ModWrap(IActivateNavItem lnk) {
 
-			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
+			if (!string.IsNullOrEmpty(CSSSelected)) {
+				lnk.CSSSelected = CSSSelected;
+			}
+
+			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(lnk.CSSSelected)) {
 				lnk.IsSelected = true;
 			}
 
-			if (GetChildren(lnk.ContentID).Count > 0 && !string.IsNullOrEmpty(lnk.HasChildCssClass)) {
+			if (GetChildren(lnk.ContentID).Count > 0 && !string.IsNullOrEmpty(lnk.CssClassHasChild)) {
 				if (!string.IsNullOrEmpty(lnk.CssClassNormal)) {
-					lnk.CssClassNormal = lnk.CssClassNormal + " " + lnk.HasChildCssClass;
+					lnk.CssClassNormal = lnk.CssClassNormal + " " + lnk.CssClassHasChild;
 				} else {
-					lnk.CssClassNormal = lnk.HasChildCssClass;
+					lnk.CssClassNormal = lnk.CssClassHasChild;
 				}
 			}
 		}
 
-		private void ModHyperLink(HyperLink lnk) {
-
-			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
-				lnk.CssClass = CSSSelected;
-			}
-
-		}
-
-		private void ModHyperLink(NavLinkForTemplate lnk) {
-
-			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(CSSSelected)) {
-				lnk.IsSelected = true;
-			}
-
-		}
 
 
 		private void UpdateHyperLink(Control X) {
 
 			foreach (Control c in X.Controls) {
-				/* if (c is HyperLink) {
-					HyperLink lnk = (HyperLink)c;
-					ModHyperLink(lnk);
-				} else */
-
-				if (c is NavLinkForTemplate) {
-					NavLinkForTemplate lnk = (NavLinkForTemplate)c;
-					ModHyperLink(lnk);
-					UpdateHyperLink(c);
-				} else if (c is ListItemWrapper) {
-					ListItemWrapper lnk = (ListItemWrapper)c;
+				if (c is IActivateNavItem) {
+					IActivateNavItem lnk = (IActivateNavItem)c;
 					ModWrap(lnk);
 					UpdateHyperLink(c);
 				} else {
@@ -359,30 +316,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected override void OnPreRender(EventArgs e) {
+
 			try {
-				string sTmp = "";
 
 				if (PublicParmValues.Count > 0) {
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "overridecss"
-							select c.Value).FirstOrDefault();
 
-					if (!string.IsNullOrEmpty(sTmp)) {
-						OverrideCSS = sTmp;
-					}
+					OverrideCSS = GetParmValue("OverrideCSS", "");
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "cssselected"
-							select c.Value).FirstOrDefault();
-
-					if (!string.IsNullOrEmpty(sTmp)) {
-						CSSSelected = sTmp;
-					}
+					CSSSelected = GetParmValue("CSSSelected", "");
 
 				}
 			} catch (Exception ex) {
 			}
+
 
 			if (!string.IsNullOrEmpty(OverrideCSS)) {
 				HtmlLink link = new HtmlLink();
@@ -391,6 +337,7 @@ namespace Carrotware.CMS.UI.Controls {
 				link.Attributes.Add("type", "text/css");
 				Page.Header.Controls.Add(link);
 			}
+
 
 			base.OnPreRender(e);
 		}

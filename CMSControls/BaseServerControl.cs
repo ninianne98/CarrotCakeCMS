@@ -5,21 +5,26 @@ using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-
+using Carrotware.CMS.Interface;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Controls {
 
-	public abstract class BaseServerControl : WebControl {
+	public abstract class BaseServerControl : WidgetParmDataWebControl {
+
 
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
 		protected SiteNavHelper navHelper = new SiteNavHelper();
-
-		protected Guid SiteID {
-			get {
-				return SiteData.CurrentSiteID;
-			}
-		}
+		
 
 		public static string InactivePagePrefix {
 			get {
@@ -27,30 +32,12 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private List<ContentPage> _pages = null;
-		protected List<ContentPage> lstActivePages {
-			get {
-				if (_pages == null) {
-					if (SecurityData.IsAuthEditor) {
-						_pages = pageHelper.GetLatestContentList(SiteID, null);
-					} else {
-						_pages = pageHelper.GetLatestContentList(SiteID, true);
-					}
-				}
-				return _pages;
-			}
-		}
 
+		protected override void OnInit(EventArgs e) {
+			SiteID = SiteData.CurrentSiteID;
 
-		public string Text {
-			get {
-				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
-			}
+			base.OnInit(e);
 
-			set {
-				ViewState["Text"] = value;
-			}
 		}
 
 		protected override void Render(HtmlTextWriter writer) {

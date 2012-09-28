@@ -24,34 +24,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:TwoLevelNavigation runat=server></{0}:TwoLevelNavigation>")]
-	public class TwoLevelNavigation : BaseServerControl, IWidgetParmData, IWidget {
-
-		#region IWidgetParmData Members
-
-		private Dictionary<string, string> _parms = new Dictionary<string, string>();
-		public Dictionary<string, string> PublicParmValues {
-			get { return _parms; }
-			set { _parms = value; }
-		}
-
-		#endregion
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		Guid IWidget.SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return true; }
-		}
-		#endregion
-
+	public class TwoLevelNavigation : BaseServerControl {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -59,14 +32,14 @@ namespace Carrotware.CMS.UI.Controls {
 		[Localizable(true)]
 		public string OverrideCSS {
 			get {
-				string s = "";
-				try { s = Convert.ToString(ViewState["OverrideCSS"]); } catch { ViewState["OverrideCSS"] = ""; }
-				return s;
+				string s = (string)ViewState["OverrideCSS"];
+				return ((s == null) ? "" : s);
 			}
 			set {
 				ViewState["OverrideCSS"] = value;
 			}
 		}
+
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -110,6 +83,8 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["ULClassLower"] = value;
 			}
 		}
+
+
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -307,94 +282,55 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				string sTmp = "";
+
 
 				if (PublicParmValues.Count > 0) {
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "overridecss"
-							select c.Value).FirstOrDefault();
 
-					if (!string.IsNullOrEmpty(sTmp)) {
-						OverrideCSS = sTmp;
-					}
+					string sTmp = "";
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "cssselected"
-							select c.Value).FirstOrDefault();
+					OverrideCSS = GetParmValue("OverrideCSS", "");
 
+					sTmp = GetParmValue("CSSSelected", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						CSSSelected = sTmp;
 					}
 
-
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "cssulclasstop"
-							select c.Value).FirstOrDefault();
-
+					sTmp = GetParmValue("CSSULClassTop", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						CSSULClassTop = sTmp;
 					}
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "cssulclasslower"
-							select c.Value).FirstOrDefault();
 
+					sTmp = GetParmValue("CSSULClassLower", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						CSSULClassLower = sTmp;
 					}
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "menuwidth"
-							select c.Value).FirstOrDefault();
-
+					sTmp = GetParmValue("MenuWidth", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						MenuWidth = new Unit(sTmp);
 					}
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "menuheight"
-							select c.Value).FirstOrDefault();
-
+					sTmp = GetParmValue("MenuHeight", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						MenuHeight = new Unit(sTmp);
 					}
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "submenuwidth"
-							select c.Value).FirstOrDefault();
-
+					sTmp = GetParmValue("SubMenuWidth", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						SubMenuWidth = new Unit(sTmp);
 					}
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "fontsize"
-							select c.Value).FirstOrDefault();
-
+					sTmp = GetParmValue("FontSize", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						FontSize = new Unit(sTmp);
 					}
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "forecolor"
-							select c.Value).FirstOrDefault();
-
+					sTmp = GetParmValue("ForeColor", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						ForeColor = ColorTranslator.FromHtml(sTmp);
 					}
 
-					sTmp = "";
-					sTmp = (from c in PublicParmValues
-							where c.Key.ToLower() == "backcolor"
-							select c.Value).FirstOrDefault();
-
+					sTmp = GetParmValue("BackColor", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						BackColor = ColorTranslator.FromHtml(sTmp);
 					}

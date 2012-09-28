@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:NavLinkForTemplate runat=server></{0}:NavLinkForTemplate>")]
 
-	public class NavLinkForTemplate : Control {
+	public class NavLinkForTemplate : Control, IActivateNavItem {
 
 		public string NavigateUrl {
 			get {
@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public string Text {
+		public string LinkText {
 			get {
 				return lnk.Text;
 			}
@@ -65,52 +65,98 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private string _Ncss = "";
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string CssClassNormal {
 			get {
-				return _Ncss;
+				string s = (string)ViewState["CssClassNormal"];
+				return ((s == null) ? "" : s);
 			}
-
 			set {
-				_Ncss = value;
+				ViewState["CssClassNormal"] = value;
 				SetCSS();
 			}
 		}
 
-		private string _Scss = "";
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string CSSSelected {
 			get {
-				return _Scss;
+				string s = (string)ViewState["CSSSelected"];
+				return ((s == null) ? "" : s);
 			}
-
 			set {
-				_Scss = value;
+				ViewState["CSSSelected"] = value;
 				SetCSS();
 			}
 		}
 
-		private bool _sel = false;
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CssClassHasChild {
+			get {
+				string s = (string)ViewState["HasChildCssClass"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["HasChildCssClass"] = value;
+				SetCSS();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public bool IsSelected {
 			get {
-				return _sel;
+				bool s = false;
+				try { s = (bool)ViewState["IsSelected"]; } catch { }
+				return s;
 			}
-
 			set {
-				_sel = value;
+				ViewState["IsSelected"] = value;
+				SetCSS();
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public bool UseDefaultText {
+			get {
+				bool s = true;
+				try { s = (bool)ViewState["UseDefaultText"]; } catch { }
+				return s;
+			}
+			set {
+				ViewState["UseDefaultText"] = value;
 				SetCSS();
 			}
 		}
 
 
-
-		private Guid _id = Guid.Empty;
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public Guid ContentID {
 			get {
-				return _id;
+				Guid s = Guid.Empty;
+				try { s = new Guid(ViewState["ContentID"].ToString()); } catch { }
+				return s;
 			}
-
 			set {
-				_id = value;
+				ViewState["ContentID"] = value;
 			}
 		}
 
@@ -151,6 +197,15 @@ namespace Carrotware.CMS.UI.Controls {
 			LoadCtrsl();
 
 			base.OnDataBinding(e);
+
+
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+
+			base.OnPreRender(e);
+
+			AssignVals();
 		}
 
 
@@ -162,14 +217,17 @@ namespace Carrotware.CMS.UI.Controls {
 				this.NavigateUrl = _linkPage;
 			}
 
-			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.Text)) {
-				var ctrl = FindSubControl(this, _linkText);
-				if (ctrl == null) {
-					this.Text = _linkText;
-				}
+			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.LinkText)) {
+				//var ctrl = FindSubControl(this, _linkText);
+				//if (ctrl == null) {
+				//    this.Text = _linkText;
+				//}
 				//if (!this.HasControls()) {
 				//    this.Text = _linkText;
 				//}
+				if (UseDefaultText) {
+					this.LinkText = _linkText;
+				}
 			}
 		}
 
@@ -186,21 +244,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.Controls.Add(lnk);
 			this.Controls.Add(ph);
 
-			AssignVals();
-		}
-
-
-		private void lnkContent_PreRender(object sender, EventArgs e) {
-			AssignVals();
-		}
-
-
-		private void lnkContent_DataBinding(object sender, EventArgs e) {
-			HyperLink lnk = (HyperLink)sender;
-			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
-
-			_linkPage = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			_linkText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
 		}
 
 		bool bFoundCtrl = false;
@@ -225,6 +268,12 @@ namespace Carrotware.CMS.UI.Controls {
 							fndCtrl = c;
 						}
 						bFoundCtrl = true;
+					} else if (c is DataBoundLiteralControl) {
+						DataBoundLiteralControl lnk = (DataBoundLiteralControl)c;
+						if (lnk.Text.ToLower().Trim().Contains(txt)) {
+							fndCtrl = c;
+						}
+						FindSubControl2(c, txt);
 					} else {
 						FindSubControl2(c, txt);
 					}
@@ -240,88 +289,116 @@ namespace Carrotware.CMS.UI.Controls {
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ListItemWrapper runat=server></{0}:ListItemWrapper>")]
 
-	public class ListItemWrapper : Control {
+	public class ListItemWrapper : Control, IActivateNavItem {
 
-		private string _Ncss = "";
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string CssClassNormal {
 			get {
-				return _Ncss;
+				string s = (string)ViewState["CssClassNormal"];
+				return ((s == null) ? "" : s);
 			}
-
 			set {
-				_Ncss = value;
+				ViewState["CssClassNormal"] = value;
 				SetTag();
 			}
 		}
 
-		private string _Scss = "";
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string CSSSelected {
 			get {
-				return _Scss;
+				string s = (string)ViewState["CSSSelected"];
+				return ((s == null) ? "" : s);
 			}
-
 			set {
-				_Scss = value;
+				ViewState["CSSSelected"] = value;
 				SetTag();
 			}
 		}
 
-		private bool _sel = false;
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public bool IsSelected {
 			get {
-				return _sel;
+				bool s = false;
+				try { s = (bool)ViewState["IsSelected"]; } catch { }
+				return s;
 			}
-
 			set {
-				_sel = value;
+				ViewState["IsSelected"] = value;
 				SetTag();
 			}
 		}
 
-		private string _childCSS = "";
-		public string HasChildCssClass {
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CssClassHasChild {
 			get {
-				return _childCSS;
+				string s = (string)ViewState["HasChildCssClass"];
+				return ((s == null) ? "" : s);
 			}
-
 			set {
-				_childCSS = value;
+				ViewState["HasChildCssClass"] = value;
 				SetTag();
 			}
 		}
 
-		private string _url = "";
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string NavigateUrl {
 			get {
-				return _url;
+				string s = (string)ViewState["NavigateUrl"];
+				return ((s == null) ? "" : s);
 			}
-
 			set {
-				_url = value;
+				ViewState["NavigateUrl"] = value;
+				SetTag();
 			}
 		}
 
 
-		private Guid _id = Guid.Empty;
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public Guid ContentID {
 			get {
-				return _id;
+				Guid s = Guid.Empty;
+				try { s = new Guid(ViewState["ContentID"].ToString()); } catch { }
+				return s;
 			}
-
 			set {
-				_id = value;
+				ViewState["ContentID"] = value;
 			}
 		}
 
 
-		private string _tag = "li";
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string HtmlTagName {
 			get {
-				return _tag.Trim();
+				string s = (string)ViewState["HtmlTagName"];
+				return ((s == null) ? "li" : s);
 			}
-
 			set {
-				_tag = value;
+				ViewState["HtmlTagName"] = value;
 				SetTag();
 			}
 		}
@@ -369,8 +446,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.Controls.Clear();
 			this.Controls.Add(ctrlAll);
 
-
-
 		}
 
 
@@ -414,7 +489,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
-
 
 	//========================================
 	public class ListItemPlaceHolder : PlaceHolder {
@@ -469,7 +543,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ListItemPlaceHolder phAll = new ListItemPlaceHolder();
 
 			NavLinkForTemplate lnk = new NavLinkForTemplate();
-			lnk.Text = " LINK ";
+			lnk.LinkText = " LINK ";
 			lnk.NavigateUrl = "#";
 
 			ListItemWrapper wrap = new ListItemWrapper();
@@ -491,8 +565,26 @@ namespace Carrotware.CMS.UI.Controls {
 			string sNavMenuText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
 
 			lnk.NavigateUrl = sFileName;
-			lnk.Text = sNavMenuText;
+			lnk.LinkText = sNavMenuText;
 		}
+	}
+
+
+	//========================================
+	public interface IActivateNavItem {
+
+		string CSSSelected { get; set; }
+
+		string CssClassNormal { get; set; }
+
+		string CssClassHasChild { get; set; }
+
+		bool IsSelected { get; set; }
+
+		string NavigateUrl { get; set; }
+
+		Guid ContentID { get; set; }
+
 	}
 
 
