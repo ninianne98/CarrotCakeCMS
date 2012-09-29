@@ -111,7 +111,7 @@ namespace Carrotware.CMS.Core {
 											  NavLevel = -1,
 											  NavMenuText = ct.NavMenuText,
 											  NavOrder = ct.NavOrder,
-											  PageActive = Convert.ToBoolean(r.PageActive),
+											  PageActive = r.PageActive,
 											  Parent_ContentID = ct.Parent_ContentID,
 											  Root_ContentID = ct.Root_ContentID
 										  }).ToList();

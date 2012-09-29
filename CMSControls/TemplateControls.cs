@@ -114,7 +114,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
+		[DefaultValue(false)]
 		[Localizable(true)]
 		public bool IsSelected {
 			get {
@@ -130,7 +130,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
+		[DefaultValue(true)]
 		[Localizable(true)]
 		public bool UseDefaultText {
 			get {
@@ -196,12 +196,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 			LoadCtrsl();
 
-			this.EnableViewState = false;
-
 			base.OnDataBinding(e);
-
-
 		}
+
 
 		protected override void OnPreRender(EventArgs e) {
 
@@ -327,7 +324,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
+		[DefaultValue(false)]
 		[Localizable(true)]
 		public bool IsSelected {
 			get {
@@ -486,8 +483,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			LoadCtrsl();
 
-			this.EnableViewState = false;
-
 			base.OnDataBinding(e);
 		}
 
@@ -498,6 +493,23 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:ListItemNavText runat=server></{0}:ListItemNavText>")]
 	public class ListItemNavText : Control, ITextControl {
 
+		public enum NavTextFieldName {
+			Root_ContentID,
+			SiteID,
+			FileName,
+			PageActive,
+			CreateDate,
+			ContentID,
+			Parent_ContentID,
+			TitleBar,
+			NavMenuText,
+			PageHead,
+			PageText,
+			NavOrder,
+			EditUserId,
+			EditDate,
+			TemplateFile
+		}
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -544,18 +556,37 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("{0}")]
+		[Localizable(true)]
+		public string FieldFormat {
+			get {
+				String s = ViewState["FieldFormat"] as String;
+				return ((s == null) ? "{0}" : s);
+			}
+			set {
+				ViewState["FieldFormat"] = value;
+			}
+		}
 
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public string DataField {
+		public NavTextFieldName DataField {
 			get {
 				string s = (string)ViewState["DataField"];
-				return ((s == null) ? "NavMenuText" : s);
+				NavTextFieldName c = (NavTextFieldName)Enum.Parse(typeof(NavTextFieldName), "NavMenuText", true);
+				if (!string.IsNullOrEmpty(s)) {
+					try {
+						c = (NavTextFieldName)Enum.Parse(typeof(NavTextFieldName), s, true);
+					} catch (Exception ex) { }
+				}
+				return c;
 			}
 			set {
-				ViewState["DataField"] = value;
+				ViewState["DataField"] = value.ToString();
 			}
 		}
 
@@ -573,15 +604,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
-			string sNavMenuText = DataBinder.Eval(container, "DataItem." + DataField).ToString();
+			string sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
 			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
 			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
 
+			this.Text = sFieldValue;
 			this.NavigateUrl = sFileName;
-			this.Text = sNavMenuText;
 			this.ContentID = pageID;
-
-			this.EnableViewState = false;
 
 			base.OnDataBinding(e);
 		}
@@ -642,12 +671,10 @@ namespace Carrotware.CMS.UI.Controls {
 			ListItemPlaceHolder phAll = new ListItemPlaceHolder();
 
 			NavLinkForTemplate lnk = new NavLinkForTemplate();
-			lnk.EnableViewState = false;
 			lnk.LinkText = " LINK ";
 			lnk.NavigateUrl = "#";
 
 			ListItemWrapper wrap = new ListItemWrapper();
-			wrap.EnableViewState = false;
 			wrap.Controls.Add(lnk);
 
 			lnk.DataBinding += new EventHandler(lnkContent_DataBinding);

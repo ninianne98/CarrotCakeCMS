@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
+		[DefaultValue(false)]
 		[Localizable(true)]
 		public bool IsAdminMode {
 			get {

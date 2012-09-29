@@ -81,6 +81,7 @@
 							<li><a href="./new-page-2.html"><span class="l"></span><span class="r"></span><span class="t">New Page 2</span></a> </li>
 						</ul>--%>
 					<%--<carrot:TopLevelNavigation CSSSelected="active" CssClass="art-hmenu" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" />--%>
+					<%--</div>--%>
 					<carrot:TwoLevelNavigationTemplate runat="server" CssClass="art-nav-inner" CSSSelected="active" ID="TwoLevelNavigationTemplate1" ShowSecondLevel="false">
 						<TopNavHeaderTemplate>
 							<ul class="art-hmenu">
@@ -89,7 +90,8 @@
 							<carrot:ListItemWrapper ID="ListItemWrapper1" runat="server" HtmlTagName="li">
 								<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" UseDefaultText="false">
 									<span class="l"></span><span class="r"></span><span class="t">
-										<%# Eval("NavMenuText").ToString()%></span>
+										<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="NavMenuText" />
+										<%--<%# Eval("NavMenuText").ToString()%>--%></span>
 								</carrot:NavLinkForTemplate>
 							</carrot:ListItemWrapper>
 						</TopNavTemplate>
@@ -97,7 +99,6 @@
 							</ul>
 						</TopNavFooterTemplate>
 					</carrot:TwoLevelNavigationTemplate>
-					<%--</div>--%>
 				</div>
 			</div>
 		</div>

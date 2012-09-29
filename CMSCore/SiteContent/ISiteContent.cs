@@ -4,6 +4,7 @@ namespace Carrotware.CMS.Core {
 		Guid ContentID { get; set; }
 		DateTime CreateDate { get; set; }
 		DateTime EditDate { get; set; }
+		Guid? EditUserId { get; set; }
 		string FileName { get; set; }
 		string NavMenuText { get; set; }
 		int? NavOrder { get; set; }

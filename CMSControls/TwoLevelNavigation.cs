@@ -229,8 +229,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnInit(e);
 
-			this.EnableViewState = false;
-
 			LoadData();
 		}
 

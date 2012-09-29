@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
+		[DefaultValue(true)]
 		[Localizable(true)]
 		public bool ShowSecondLevel {
 			get {
@@ -37,6 +37,22 @@ namespace Carrotware.CMS.UI.Controls {
 
 			set {
 				ViewState["ShowSecondLevel"] = value.ToString();
+			}
+		}
+
+		[DefaultValue(false)]
+		[Themeable(false)]
+		public override bool EnableViewState {
+			get {
+				String s = (String)ViewState["EnableViewState"];
+				bool b = ((s == null) ? false : Convert.ToBoolean(s));
+				base.EnableViewState = b;
+				return b;
+			}
+
+			set {
+				ViewState["EnableViewState"] = value.ToString();
+				base.EnableViewState = value;
 			}
 		}
 
@@ -191,7 +207,7 @@ namespace Carrotware.CMS.UI.Controls {
 				rSubNav.DataSource = lst;
 				rSubNav.DataBind();
 
-				rSubNav.EnableViewState = false;
+				rSubNav.EnableViewState = this.EnableViewState;
 
 				UpdateHyperLink(rSubNav);
 			}
@@ -206,7 +222,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			UpdateHyperLink(rTopNav);
 
-			rTopNav.EnableViewState = false;
+			rTopNav.EnableViewState = this.EnableViewState;
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
@@ -240,8 +256,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.Controls.Clear();
 
 			base.OnInit(e);
-
-			this.EnableViewState = false;
 
 			LoadData();
 
