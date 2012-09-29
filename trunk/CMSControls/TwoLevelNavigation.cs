@@ -9,7 +9,6 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -81,6 +80,22 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				ViewState["ULClassLower"] = value;
+			}
+		}
+
+		[DefaultValue(false)]
+		[Themeable(false)]
+		public override bool EnableViewState {
+			get {
+				String s = (String)ViewState["EnableViewState"];
+				bool b = ((s == null) ? false : Convert.ToBoolean(s));
+				base.EnableViewState = b;
+				return b;
+			}
+
+			set {
+				ViewState["EnableViewState"] = value.ToString();
+				base.EnableViewState = value;
 			}
 		}
 
@@ -235,12 +250,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
-
-			string sParent = "";
-			if (pageNav != null) {
-				sParent = pageNav.FileName.ToLower();
-			}
+			SiteNav pageNav = GetParentPage();
+			string sParent = pageNav.FileName.ToLower();
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
@@ -254,7 +265,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Write("<ul class=\"" + CSSULClassTop + "\">\r\n");
 			foreach (SiteNav c1 in lst) {
 				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
-				if (SiteData.IsFilenameCurrentPage(c1.FileName) || c1.FileName.ToLower() == sParent) {
+				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
 					output.Write("\t<li class=\"" + CSSSelected + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				} else {
 					output.Write("\t<li><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");

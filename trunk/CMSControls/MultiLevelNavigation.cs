@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Controls {
 
@@ -66,12 +66,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			var pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
-
-			var sParent = "";
-			if (pageNav != null) {
-				sParent = pageNav.FileName.ToLower();
-			}
+			SiteNav pageNav = GetParentPage();
+			string sParent = pageNav.FileName.ToLower();
 
 			var lst = GetTopNav();
 			output.Write("<div name=\"" + this.UniqueID + "\" id=\"" + this.ClientID + "\">\r\n");
@@ -81,7 +77,7 @@ namespace Carrotware.CMS.UI.Controls {
 			foreach (var c1 in lst) {
 
 				IdentifyLinkAsInactive(c1);
-				if (SiteData.IsFilenameCurrentPage(c1.FileName) || c1.FileName.ToLower() == sParent) {
+				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
 					output.Write("\t<li class=\"" + CSSSelected + "\"> ");
 				} else {
 					output.Write("\t<li> ");

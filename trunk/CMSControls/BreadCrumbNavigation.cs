@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -86,13 +81,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
-			string sParent = "";
-			if (pageNav != null) {
-				if (pageNav.Parent_ContentID == null) {
-					sParent = pageNav.FileName.ToLower();
-				}
-			}
+			SiteNav pageNav = GetParentPage();
+			string sParent = pageNav.FileName.ToLower();
 
 			List<SiteNav> lst = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
 
@@ -112,7 +102,7 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Write("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (SiteNav c in lst) {
 					IdentifyLinkAsInactive(c);
-					if (SiteData.IsFilenameCurrentPage(c.FileName) || c.FileName.ToLower() == sParent) {
+					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
 						output.Write("<li class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 					} else {
 						output.Write("<li" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
@@ -128,7 +118,7 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Write("<div" + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (SiteNav c in lst) {
 					IdentifyLinkAsInactive(c);
-					if (SiteData.IsFilenameCurrentPage(c.FileName) || c.FileName.ToLower() == sParent) {
+					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
 						output.Write("<span class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
 					} else {
 						output.Write("<span" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");

@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -143,8 +141,10 @@ namespace Carrotware.CMS.UI.Controls {
 		public virtual ITemplate SubNavFooterTemplate { get; set; }
 
 
+		private SiteNav ParentPageNav { get; set; }
 
 		private List<SiteNav> lstTwoLevelNav = new List<SiteNav>();
+
 
 		protected List<SiteNav> GetTopNav() {
 			return lstTwoLevelNav.Where(ct => ct.Parent_ContentID == null).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
@@ -240,6 +240,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected void LoadData() {
 
+			ParentPageNav = GetParentPage();
+
 			if (ShowSecondLevel) {
 				lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			} else {
@@ -306,7 +308,8 @@ namespace Carrotware.CMS.UI.Controls {
 				lnk.CSSSelected = CSSSelected;
 			}
 
-			if (SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) && !string.IsNullOrEmpty(lnk.CSSSelected)) {
+			if ((SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) || AreFilenamesSame(lnk.NavigateUrl, ParentPageNav.FileName))
+					&& !string.IsNullOrEmpty(lnk.CSSSelected)) {
 				lnk.IsSelected = true;
 			}
 
