@@ -394,6 +394,7 @@
     <Content Include="Manage\DatabaseSetup.aspx" />
     <Content Include="Manage\Images\house.png" />
     <Content Include="Manage\Images\house_go.png" />
+    <Content Include="Manage\Images\webpage.png" />
     <Content Include="Manage\ModulePopup.aspx" />
     <Content Include="Manage\Images\application_side_expand.png" />
     <Content Include="Manage\Images\book_next.png" />

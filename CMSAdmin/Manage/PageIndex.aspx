@@ -17,22 +17,22 @@
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./PageAddEdit.aspx?id={0}", Eval("Root_ContentID")) %>'><img  class="imgNoBorder"  src="/Manage/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%# String.Format("./PageAddEdit.aspx?id={0}", Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/Manage/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%#  String.Format("./PageAddEdit.aspx?mode=raw&id={0}", Eval("Root_ContentID")) %>'><img  class="imgNoBorder"  src="/Manage/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("./PageAddEdit.aspx?mode=raw&id={0}", Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/Manage/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit4" Target="_blank" NavigateUrl='<%#  String.Format("./PageExport.aspx?id={0}", Eval("Root_ContentID")) %>'><img  class="imgNoBorder"  src="/Manage/images/html_go.png" alt="Export latest version of this page" title="Export latest version of this page" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit4" Target="_blank" NavigateUrl='<%# String.Format("./PageExport.aspx?id={0}", Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/Manage/images/html_go.png" alt="Export latest version of this page" title="Export latest version of this page" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit3" NavigateUrl='<%#  String.Format("{0}?carrotedit=true", Eval("FileName")) %>'><img  class="imgNoBorder"  src="/Manage/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
+						<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit3" NavigateUrl='<%# String.Format("{0}?carrotedit=true", Eval("FileName")) %>'><img class="imgNoBorder" src="/Manage/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
