@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 /*
@@ -24,7 +22,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
 		protected SiteNavHelper navHelper = new SiteNavHelper();
-		
+
 
 		public static string InactivePagePrefix {
 			get {
@@ -46,6 +44,35 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
+		}
+
+		protected string GetParentPageName() {
+			SiteNav nav = GetParentPage();
+
+			return nav.FileName.ToLower();
+		}
+
+		protected bool AreFilenamesSame(string sParm1, string sParm2) {
+
+			if (sParm1 == null || sParm2 == null) {
+				return false;
+			}
+
+			return (sParm1.ToLower() == sParm2.ToLower()) ? true : false;
+		}
+
+		protected SiteNav GetParentPage() {
+
+			SiteNav pageNav = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+
+			if (pageNav == null) {
+				pageNav = new SiteNav();
+				pageNav.Root_ContentID = Guid.Empty;
+				pageNav.FileName = "";
+				pageNav.TemplateFile = "";
+			}
+
+			return pageNav;
 		}
 
 

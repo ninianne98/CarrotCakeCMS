@@ -1,13 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -41,13 +37,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
-			var sParent = "";
-			if (pageNav != null) {
-				if (pageNav.Parent_ContentID == null) {
-					sParent = pageNav.FileName.ToLower();
-				}
-			}
+			SiteNav pageNav = GetParentPage();
+			string sParent = pageNav.FileName.ToLower();
 
 			List<SiteNav> lst = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 
@@ -59,7 +50,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Write("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 			foreach (SiteNav c in lst) {
 				IdentifyLinkAsInactive(c);
-				if (SiteData.IsFilenameCurrentPage(c.FileName) || c.FileName.ToLower() == sParent) {
+				if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
 					output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
 				} else {
 					output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");

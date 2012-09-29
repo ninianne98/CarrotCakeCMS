@@ -26,7 +26,7 @@
 			margin-left: 5px;
 			margin-bottom: 8px;
 		}
-		#cmsSiteMap .sortable li span.image-handle {
+		#cmsSiteMap .image-handle {
 			padding: 3px;
 			margin: 0;
 			cursor: move;
