@@ -12,7 +12,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryAdminMetaData : AdminModule {
 
 		Guid gTheID = Guid.Empty;
-		string sImageFile = "";
+		public string sImageFile = "";
 		protected PhotoGalleryDataContext db = new PhotoGalleryDataContext();
 		protected FileDataHelper helpFile = new FileDataHelper();
 

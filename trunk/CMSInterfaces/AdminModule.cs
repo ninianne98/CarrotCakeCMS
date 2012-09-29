@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Carrotware.CMS.Interface {
-	public abstract class AdminModule : BaseShellUserControl, IAdminModule {
+	public class AdminModule : BaseShellUserControl, IAdminModule {
 
 		public string CreateLink(string sModuleName, string sIDParm) {
 
