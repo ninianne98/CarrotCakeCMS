@@ -2,7 +2,8 @@
 <h2>
 	Photo Gallery : Image Meta Data</h2>
 <p>
-	<asp:Literal ID="litImgName" runat="server"></asp:Literal>
+	<asp:Literal ID="litImgName" runat="server" /><br />
+	<img src="/carrotwarethumb.axd?thumb=<%= HttpUtility.UrlEncode(sImageFile) %>&scale=true&square=100" alt="<%=sImageFile %>" title="<%=sImageFile %>" />
 </p>
 <p>
 	<b>Title</b><br />
@@ -11,7 +12,7 @@
 <p>
 	<b>Details</b><br />
 	<a href="javascript:cmsToggleTinyMCE('<%= txtMetaInfo.ClientID %>');">Show/Hide Editor</a>
-	<asp:TextBox Style="height: 225px; width: 680px;" CssClass="mceEditor" ID="txtMetaInfo" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+	<asp:TextBox Style="height: 200px; width: 680px;" CssClass="mceEditor" ID="txtMetaInfo" runat="server" TextMode="MultiLine" Rows="12" Columns="80" />
 </p>
 <br />
 <asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />

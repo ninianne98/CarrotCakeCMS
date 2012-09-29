@@ -102,6 +102,21 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool AutoStylingDisabled {
+			get {
+				String s = (String)ViewState["AutoStylingDisabled"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["AutoStylingDisabled"] = value.ToString();
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
 		public Unit MenuWidth {
@@ -240,7 +255,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnInit(EventArgs e) {
-			Controls.Clear();
+			this.Controls.Clear();
 
 			base.OnInit(e);
 
@@ -350,7 +365,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 
-			if (string.IsNullOrEmpty(OverrideCSS)) {
+			if (string.IsNullOrEmpty(OverrideCSS) && !AutoStylingDisabled) {
 				string sCSS = String.Empty;
 				string sCSS7 = String.Empty;
 
@@ -442,12 +457,15 @@ namespace Carrotware.CMS.UI.Controls {
 				link7.Text = sCSS7;
 				Page.Header.Controls.Add(link7);
 			} else {
-				HtmlLink link = new HtmlLink();
-				link.Href = OverrideCSS;
-				link.Attributes.Add("rel", "stylesheet");
-				link.Attributes.Add("type", "text/css");
-				Page.Header.Controls.Add(link);
+				if (!string.IsNullOrEmpty(OverrideCSS)) {
+					HtmlLink link = new HtmlLink();
+					link.Href = OverrideCSS;
+					link.Attributes.Add("rel", "stylesheet");
+					link.Attributes.Add("type", "text/css");
+					Page.Header.Controls.Add(link);
+				}
 			}
+
 
 			base.OnPreRender(e);
 		}

@@ -30,12 +30,14 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		protected void SetSiteID() {
+			SiteID = SiteData.CurrentSiteID;
+		}
 
 		protected override void OnInit(EventArgs e) {
-			SiteID = SiteData.CurrentSiteID;
+			SetSiteID();
 
 			base.OnInit(e);
-
 		}
 
 		protected override void Render(HtmlTextWriter writer) {
