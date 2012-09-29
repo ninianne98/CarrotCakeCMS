@@ -19,25 +19,32 @@
 			border: 0;
 		}
 		#cmsSiteMap li {
-			list-style: none;
-			background: no-repeat url(images/page.png);
+			list-style: none; /* background: no-repeat url(images/page.png); */
 			padding: 0;
 			margin: 0;
 			padding-left: 15px;
 			margin-left: 5px;
 			margin-bottom: 8px;
 		}
-		#cmsSiteMap .sortable li span.handle-filename {
+		#cmsSiteMap .sortable li span.image-handle {
 			padding: 3px;
 			margin: 0;
 			cursor: move;
-			line-height: 20px;
+			line-height: 25px;
 		}
 		
-		#cmsSiteMap span.page-status, #cmsSiteMap span.handle-filename a {
+		#cmsSiteMap span.page-status, #cmsSiteMap span.handle-expand a {
 			cursor: pointer;
 		}
+		#cmsSiteMap span.handle-expand {
+			width: 50px !important;
+			height: 25px !important;
+			border: 1px dashed #ffffff;
+		}
 		
+		#cmsSiteMap img {
+			vertical-align: text-top;
+		}
 		.HighlightPH {
 			height: 25px !important;
 			margin: 5px;
@@ -47,6 +54,8 @@
 		}
 	</style>
 	<script type="text/javascript">
+		var handleCssClass = 'img.image-handle';
+
 
 		$(document).ready(function () {
 
@@ -54,7 +63,7 @@
 				//alert("sortupdate");
 				var id = $(ui.item).attr('id');
 				var p = $(ui.item).parent().parent().attr('id');
-				//alert(p + '  ->  ' + id);
+				//alert(p + '  ->  ' + id);	
 
 				setTimeout("itterateTree();", 250);
 				setTimeout("BuildOrder();", 500);
@@ -66,7 +75,7 @@
 			$("ol.sortable").nestedSortable({
 				disableNesting: 'no-nest',
 				forcePlaceholderSize: true,
-				handle: 'span.map-handle',
+				handle: handleCssClass,
 				helper: 'clone',
 				items: 'li',
 				maxLevels: 5,
@@ -114,27 +123,33 @@
 
 		function setListItem(item) {
 
-			var node = $(item).find("span.map-handle").first();
-			var id = $(node).attr('id');
-			var nodeNav = $(node).find("span.handle-filename");
+			var imgNode = $(item).find(handleCssClass).first();
+			var id = $(imgNode).attr('id');
+			//alert(id);
+			var node = $(imgNode).parent();
+			var nodeNav = $(node).find("span.handle-expand");
 			var nodeStat = $(node).find("span.page-status");
 
 			var h = nodeNav.html();
-			var t = nodeNav.text();
+			//var t = nodeNav.text();
 			var lst = $(item).find("ol").first();
+			var blankField = '&nbsp;&#9671;&nbsp; ';
 
 			if (h.indexOf("ToggleTree") < 0) {
 				if (lst.length > 0) {
-					nodeNav.html('<a state="close" id="menu-lnk-' + id + '" onclick="ToggleTree(this);" href="javascript:void(0);">&#9658;</a>  ' + t); // &#9660;
+					//nodeNav.html('<a state="close" id="menu-lnk-' + id + '" onclick="ToggleTree(this);" href="javascript:void(0);">&#9658;</a>  ' + t); // &#9660;
+					nodeNav.html('&nbsp;<a state="close" id="menu-lnk-' + id + '" onclick="ToggleTree(this);" href="javascript:void(0);">&#9658;</a>&nbsp; '); // &#9660;
 					lst.attr('style', 'display:none;');
 				} else {
 					var lnk = nodeNav.find("a").first();
 					lnk.remove();
+					nodeNav.html(blankField);
 				}
 			} else {
 				if (lst.length < 1) {
 					var lnk = nodeNav.find("a").first();
 					lnk.remove();
+					nodeNav.html(blankField);
 				}
 			}
 		}
@@ -143,7 +158,7 @@
 			if (n.length > 28) {
 				var node = $('#' + n);
 				//alert(n)
-				var a = node.find("span.map-handle").find("a").first();
+				var a = node.find(handleCssClass).parent().find("a").first();
 				if (a != null) {
 					//alert(a.attr('state'));
 					a.attr('state', 'close');
@@ -208,11 +223,14 @@
 				<ol class="sortable">
 			</HeaderTemplate>
 			<ItemTemplate>
-				<li id="<%#Eval("Root_ContentID") %>"><span class="map-handle" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-filename" id="filename-<%#Eval("Root_ContentID") %>">
-					<%#Eval("FileName")%>
-				</span><span class="page-status">&nbsp;&nbsp;&nbsp; [<b><%#Eval("NavMenuText")%></b>] &nbsp;&nbsp;&nbsp;
-					<img alt="status" class="image-status-icon img-status-<%#Eval("PageActive").ToString().ToLower() %>" src='<%#ReturnImage(Convert.ToBoolean(Eval("PageActive")))%>' />
-				</span></span>
+				<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand" id="filename-<%#Eval("Root_ContentID") %>">
+					&nbsp; </span>
+					<img src="/manage/images/webpage.png" class="imgNoBorder image-handle" title="webpage" alt="webpage" id="img-<%#Eval("Root_ContentID") %>" />
+					<span class="page-status">
+						<%#Eval("FileName")%>
+						&nbsp;&nbsp;&nbsp; [<b><%#Eval("NavMenuText")%></b>] &nbsp;&nbsp;&nbsp;
+						<img alt="status" class="image-status-icon img-status-<%#Eval("PageActive").ToString().ToLower() %>" src='<%#ReturnImage(Convert.ToBoolean(Eval("PageActive")))%>' />
+					</span></span>
 					<asp:PlaceHolder ID="ph" runat="server"></asp:PlaceHolder>
 				</li>
 			</ItemTemplate>
@@ -226,6 +244,7 @@
 		<HeaderTemplate>
 			<ol>
 		</HeaderTemplate>
+		<%--use item template from top level--%>
 		<%--<ItemTemplate>
 			<li id="<%#Eval("Root_ContentID") %>"><span class="handle" id="handle-<%#Eval("Root_ContentID") %>">
 				<%#Eval("FileName")%>
