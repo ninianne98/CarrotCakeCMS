@@ -39,7 +39,7 @@ namespace Carrotware.CMS.Core {
 				nav.Root_ContentID = rc.Root_ContentID;
 				nav.SiteID = rc.SiteID;
 				nav.FileName = rc.FileName;
-				nav.PageActive = Convert.ToBoolean(rc.PageActive);
+				nav.PageActive = rc.PageActive;
 				nav.CreateDate = rc.CreateDate;
 
 				nav.ContentID = c.ContentID;
@@ -69,8 +69,9 @@ namespace Carrotware.CMS.Core {
 			nav.Root_ContentID = c.Root_ContentID;
 			nav.SiteID = c.SiteID;
 			nav.FileName = c.FileName;
-			nav.PageActive = Convert.ToBoolean(c.PageActive);
+			nav.PageActive = c.PageActive;
 			nav.CreateDate = c.CreateDate;
+			nav.EditUserId = c.EditUserId;
 
 			nav.ContentID = c.ContentID;
 			nav.Parent_ContentID = c.Parent_ContentID;

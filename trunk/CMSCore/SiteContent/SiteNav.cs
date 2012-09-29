@@ -79,6 +79,7 @@ namespace Carrotware.CMS.Core {
 
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
+		public Guid? EditUserId { get; set; }
 		public DateTime CreateDate { get; set; }
 		public string NavMenuText { get; set; }
 		public int? NavOrder { get; set; }
