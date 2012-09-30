@@ -67,11 +67,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 			SiteNav pageNav = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
+			//assign bogus page name for comp purposes
 			if (pageNav == null) {
 				pageNav = new SiteNav();
 				pageNav.Root_ContentID = Guid.Empty;
-				pageNav.FileName = "";
-				pageNav.TemplateFile = "";
+				pageNav.FileName = "/##/";
+				pageNav.TemplateFile = "/##/";
 			}
 
 			return pageNav;

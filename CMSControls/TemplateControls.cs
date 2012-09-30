@@ -165,11 +165,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
-				string sSel = "";
+				string sSelCss = "";
+
 				if (IsSelected) {
-					sSel = CSSSelected;
+					sSelCss = CSSSelected.Trim();
 				}
-				sCSS = string.Format("{0} {1}", CssClassNormal, sSel);
+
+				sCSS = string.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
 
 				lnk.CssClass = sCSS.Trim();
 			}
@@ -504,7 +506,7 @@ namespace Carrotware.CMS.UI.Controls {
 			TitleBar,
 			NavMenuText,
 			PageHead,
-			PageText,
+			PageTextPlainSummary,
 			NavOrder,
 			EditUserId,
 			EditDate,
