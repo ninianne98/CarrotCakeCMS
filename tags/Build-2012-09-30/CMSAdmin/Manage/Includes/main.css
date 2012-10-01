@@ -1,0 +1,311 @@
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #FFFFFF url(/manage/images/heading-bg-gradient.png) repeat-x; /* background: #FFFFFF url(/manage/images/heading-bg.png) repeat-x; */
+	font-family: Georgia, Times New Roman, Serif;
+	color: #000000;
+	font-size: 12px;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	font-family: Georgia, Times New Roman, Serif;
+	color: #69775F;
+}
+
+h2 {
+	font-size: 18px;
+}
+
+h3 {
+	letter-spacing: 2px;
+	font-size: 11px;
+}
+
+.headingColor {
+	color: #69775F;
+	font-family: Georgia, Times New Roman, Serif;
+	font-weight: bold;
+}
+
+a {
+	color: #333333;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* Header */
+
+#header {
+	width: 950px;
+	height: 110px;
+	margin-left: 50px;
+	margin-right: 50px;
+	font-family: Georgia, Times New Roman, Serif;
+}
+
+#header h1, #header h2 {
+	font-weight: bold;
+	color: #FFFFFF;
+	font-family: Georgia, Times New Roman, Serif;
+}
+
+#header h1 {
+	float: left;
+	padding: 30px 0 0 20px;
+	font-size: 36px;
+}
+
+#header h2 {
+	float: left;
+	padding: 40px 20px 0 0;
+	font-size: 28px;
+}
+
+/* Menu */
+
+#menu {
+	width: 1000px;
+	height: 50px;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#menu li {
+	display: inline;
+	font: normal 12px "Trebuchet MS" , Arial, Helvetica, sans-serif;
+}
+
+#menu a {
+	display: block;
+	float: left;
+	padding: 10px 20px 0 20px;
+	background: url(/manage/images/menu-div.png) no-repeat; /* background: url(/manage/images/menu-a.gif) no-repeat; */
+	text-decoration: none;
+	font: normal 12px "Trebuchet MS" , Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+}
+
+#menu a:hover {
+	color: #FFFFFF;
+}
+
+#menu .current a {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 10px 18px 0 18px;
+}
+
+#menu .current li {
+	
+}
+
+
+
+#menu-inner {
+	width: 1000px;
+	height: 20px;
+	float: left;
+	z-index: 60;
+}
+
+#menu-inner ul li {
+	float: left;
+}
+
+#menu-inner ul {
+	clear: both;
+	list-style: none;
+	line-height: normal;
+	margin-left: 30px;
+}
+
+#menu-inner ul li a, #menu-inner ul li.selected a {
+	display: block;
+	float: left;
+}
+
+#menu-inner li .children {
+	display: none;
+	clear: both;
+	background: #3C3C3C;
+	color: #ffffff;
+	padding: 5px 10px 5px 10px;
+	border-left: 2px solid #636363;
+	border-right: 2px solid #636363;
+	border-bottom: 2px solid #636363;
+}
+
+#menu-inner li:hover .children {
+	list-style-type: none;
+	display: block;
+	position: absolute;
+	text-align: left;
+	float: left;
+	padding-left: 0px;
+	padding-bottom: 0px;
+	margin-top: 25px;
+	margin-left: 0px;
+	margin-right: 5px;
+	z-index: 70;
+	font-weight: bold;
+	width: 150px;
+}
+
+#menu-inner .current .children li a {
+	font-weight: normal;
+	font-size: 12px;
+}
+
+#menu-inner .current .children li.current a {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#menu-inner .children li {
+	background: none;
+	background: #3C3C3C;
+	color: #ffffff;
+	width: 150px;
+	padding: 5px 0px 5px 5px;
+	margin: 2px 2px 2px 2px;
+}
+
+#menu-inner .children li a, #menu-inner .children li a:hover {
+	padding: 0;
+	margin: 0;
+	float: left;
+	text-align: left;
+}
+
+#menu-inner li:hover .children li a {
+	background: #3C3C3C;
+	color: #ffffff;
+	text-decoration: none;
+	clear: both;
+}
+
+#menu-inner li:hover .children li a:hover {
+	text-decoration: underline;
+}
+
+/* Content */
+
+#content {
+	min-width: 720px;
+	margin: 0 auto 20px auto;
+	padding: 20px;
+	background: #FFFFFF url(/manage/images/content-bg.jpg) repeat-x left bottom;
+}
+
+#content H1 {
+	font-size: 24px;
+}
+
+#content H2 {
+	font-size: 18px;
+}
+
+.pad-content {
+	margin-left: 40px;
+	margin-right: 40px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-height: 400px;
+}
+
+
+.imgNoBorder {
+	padding: 0px;
+	margin: 0px;
+	border: 0px solid #ffffff;
+	padding: 1px;
+}
+
+
+.pageNodeDrillDown1 {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+	min-height: 45px;
+}
+
+.pageNodeDrillDown2 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+}
+
+.pageNodeDrillDown3 {
+	padding: 4px;
+	margin: 2px;
+	float: left;
+	margin-right: 5px;
+}
+
+.pageNodeDrillDown4 {
+	padding: 0px;
+	margin: 2px;
+	position: relative;
+	width: 100px;
+}
+
+.pageNodeDrillDown5 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+	margin-top: 0px;
+}
+
+.pageNodeDrillDown6 {
+	padding: 2px;
+	margin: 0px;
+}
+
+
+
+/* Footer */
+
+#footer {
+	height: 50px;
+	padding: 20px; /* background: #2D2D2D url(/manage/images/footer.gif) repeat-x; */
+	background: #333333;
+	border-top: 5px solid #000000;
+}
+
+
+#footer p {
+	text-align: center;
+	color: #FFFFFF;
+}
+
+
+/*  OTHER */
+
+.caption, .tablecaption {
+	font-weight: bold;
+}
+
+
+/* correction for jquery ui */
+
+.ui-widget-header a, .ui-widget-header, .ui-widget p, .ui-widget ul, .ui-widget li, .ui-widget ol, .ui-widget h1, .ui-widget h2, .ui-widget h3, .ui-widget div, .ui-widget span, .ui-widget input, .ui-widget select, .ui-widget button, .ui-widget textarea, .ui-widget a {
+	line-height: normal;
+	text-align: left;
+	font-size: small;
+	font-family: Lucida Grande, Lucida Sans Arial, sans-serif;
+	color: #676F6A;
+}
