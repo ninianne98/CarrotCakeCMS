@@ -74,6 +74,7 @@
 }
 
 {MENU_ID} li .{MENU_UL_LOWER} {
+	text-align: left;
 	display: none;
 	clear: both;
 }
@@ -103,6 +104,7 @@
 }
 
 {MENU_ID} .{MENU_UL_LOWER} li {
+	text-align: left;
 	border-width: 1px;
 	border-style: solid;
 	border-color: {BG_HEX};
@@ -118,6 +120,7 @@
 
 
 {MENU_ID} li:hover .{MENU_UL_LOWER} li a {
+	text-align: left;
 	color: {BG_HEX};
 	text-decoration: none;
 	clear: both;
@@ -125,6 +128,7 @@
 
 
 {MENU_ID} li:hover .{MENU_UL_LOWER} li a:hover {
+	text-align: left;
 	text-decoration: underline;
 	font-weight: bold;
 }
