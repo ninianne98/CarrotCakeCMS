@@ -191,9 +191,11 @@ namespace Carrotware.CMS.Core {
 										  && ct.FileName.ToLower() == sPage.ToLower()
 										  && ct.IsLatestVersion == true
 								   select ct).FirstOrDefault();
-
-			return GetPageCrumbNavigation(siteID, c.Root_ContentID, bActiveOnly);
-
+			if (c != null) {
+				return GetPageCrumbNavigation(siteID, c.Root_ContentID, bActiveOnly);
+			} else {
+				return null;
+			}
 		}
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
@@ -202,8 +204,11 @@ namespace Carrotware.CMS.Core {
 									where r.SiteID == siteID
 										   && r.FileName.ToLower() == sParentID.ToLower()
 									select r).FirstOrDefault();
-
-			return GetChildNavigation(siteID, c.Root_ContentID, bActiveOnly);
+			if (c != null) {
+				return GetChildNavigation(siteID, c.Root_ContentID, bActiveOnly);
+			} else {
+				return null;
+			}
 		}
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
@@ -250,7 +255,11 @@ namespace Carrotware.CMS.Core {
 		public SiteNav GetParentPageNavigation(Guid siteID, string sPage) {
 			SiteNav nav1 = GetPageNavigation(siteID, sPage);
 
-			return GetParentPageNavigation(siteID, nav1.Root_ContentID);
+			if (nav1 != null) {
+				return GetParentPageNavigation(siteID, nav1.Root_ContentID);
+			} else {
+				return null;
+			}
 		}
 
 
@@ -299,8 +308,12 @@ namespace Carrotware.CMS.Core {
 										  && ct.FileName.ToLower() == sPage.ToLower()
 										  && ct.IsLatestVersion == true
 								   select ct).FirstOrDefault();
-
-			return GetSiblingNavigation(siteID, c.Root_ContentID, bActiveOnly);
+			
+			if (c != null) {
+				return GetSiblingNavigation(siteID, c.Root_ContentID, bActiveOnly);
+			} else {
+				return null;
+			}
 		}
 
 		public List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
