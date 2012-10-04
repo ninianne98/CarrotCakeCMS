@@ -195,14 +195,17 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			List<SiteNav> lst = GetChildren(rootContentID);
+
 			if (lst.Count > 0) {
-				Repeater rSubNav = new Repeater();
-				ctrl.Controls.Add(rSubNav);
+				ListItemRepeater rSubNav = new ListItemRepeater();
+				rSubNav.IndentPad = 2;
 
 				rSubNav.ID = "rSubNav";
 				rSubNav.HeaderTemplate = SubNavHeaderTemplate;
 				rSubNav.ItemTemplate = SubNavTemplate;
 				rSubNav.FooterTemplate = SubNavFooterTemplate;
+
+				ctrl.Controls.Add(rSubNav);
 
 				rSubNav.DataSource = lst;
 				rSubNav.DataBind();
@@ -215,7 +218,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		private Repeater rTopNav = new Repeater();
+		private ListItemRepeater rTopNav = new ListItemRepeater();
 
 
 		protected override void RenderContents(HtmlTextWriter output) {
@@ -224,18 +227,20 @@ namespace Carrotware.CMS.UI.Controls {
 
 			rTopNav.EnableViewState = this.EnableViewState;
 
+			base.RenderContents(output);
+
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
 			}
 
-			output.Write("<" + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\">\r\n");
-
-			base.RenderContents(output);
+			output.WriteLine(HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\"" + HtmlTextWriter.TagRightChar);
 
 			rTopNav.RenderControl(output);
 
-			output.Write("\r\n</" + HtmlTagName + ">");
+			//output.Write("\r\n\t<!--  CLOSE  " + this.ClientID + " -->   ");
+			output.WriteLine("\t" + HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
+
 		}
 
 		protected void LoadData() {
@@ -281,6 +286,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			List<SiteNav> lstTop = GetTopNav();
 
+			rTopNav.IndentPad = 1;
 			rTopNav.ID = this.ClientID + "_rTopNav";
 			rTopNav.HeaderTemplate = TopNavHeaderTemplate;
 			rTopNav.ItemTemplate = TopNavTemplate;
