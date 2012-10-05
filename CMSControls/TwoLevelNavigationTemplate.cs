@@ -238,7 +238,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			rTopNav.RenderControl(output);
 
-			//output.Write("\r\n\t<!--  CLOSE  " + this.ClientID + " -->   ");
+			//output.WriteLine("\t<!--  CLOSE  " + this.ClientID + " -->   ");
 			output.WriteLine("\t" + HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
 
 		}
