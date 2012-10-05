@@ -757,6 +757,7 @@ $(document).ready(function () {
 				var id = $(ui.item).attr('id');
 				cmsMoveWidgetResizer(id, 0);
 			},
+			handle: ".cmsWidgetTitleBar",
 			connectWith: ".cmsTargetMove",
 			revert: true,
 			dropOnEmpty: true,

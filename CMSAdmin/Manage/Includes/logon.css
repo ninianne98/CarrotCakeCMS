@@ -20,44 +20,21 @@ a:hover {
 	text-decoration: underline;
 }
 
-/*
-.greenborder2, .greenborder2-small {
-	border-width: 10px;
-	border-style: solid;
-	border-color: #F5F5F5;
-	border-collapse: collapse;
-	margin: 50px 50px 50px 50px;
-	background-color: #ffffff;
-}
-.greenborder, .greenborder-small {
-	border-width: 2px;
-	border-style: solid;
-	border-color: #353535;
-	border-collapse: collapse;
-	margin: 0px;
-	padding: 10px;
-	min-height: 500px;
-	min-width: 780px;
-	font-size: 12px;
-	font-family: Verdana, Helvetica, Sans-Serif;
-	background-color: #ffffff;
-	background: transparent url( ../images/carrot_sm.png ) no-repeat scroll right bottom;
-}
-
-.greenborder2-small {
-	width: 425px;
-	margin: 50px 100px 50px 100px;
+.imgNoBorder {
 	padding: 0px;
-}
-
-.greenborder-small {
-	padding: 10px;
-	min-height: 200px;
-	min-width: 400px;
 	margin: 0px;
+	padding: 1px;
+	border: none;
+	border: 0;
 }
 
-*/
+a .imgNoBorder {
+	border-width: 0;
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	outline: none;
+}
 
 .greenborder2-small {
 	border-width: 1px;
