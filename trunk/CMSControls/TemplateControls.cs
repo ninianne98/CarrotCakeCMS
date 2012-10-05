@@ -401,20 +401,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		private void LoadCtrsl() {
-			//Dictionary<int, Control> ctrls = new Dictionary<int, Control>();
-
 			int iMax = this.Controls.Count;
 
 			SetTag();
-
-			// using the for counter because of enumeration error
-			//foreach (Control ctrl in this.Controls) {
-			//    Ctrl.Add(ctrl);
-			//}
-
-			//for (int i = iMax; i >= 0; i--) {
-			//    ctrls.Add(i, this.Controls[i]);
-			//}
 
 			ctrlAll.Controls.Clear();
 			ctrlAll.Controls.Add(litOpen);
@@ -423,10 +412,6 @@ namespace Carrotware.CMS.UI.Controls {
 			for (int i = 0; i < iMax; i++) {
 				ctrlAll.Controls.Add(this.Controls[0]);
 			}
-
-			//foreach (KeyValuePair<int, Control> d in ctrls.OrderBy(x => x.Key)) {
-			//    ctrlAll.Controls.Add(d.Value);
-			//}
 
 			ListItemPlaceHolder ph = new ListItemPlaceHolder();
 			ph.IndentPad = 1;
@@ -443,7 +428,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private void SetTag() {
 
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
-			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
+			litClose.Text = "\t" + HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
 			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
@@ -461,6 +446,15 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		protected override void RenderChildren(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+
+			writer.Indent = indent + 1;
+
+			base.RenderChildren(writer);
+
+			writer.Indent = indent;
+		}
 
 		protected override void OnDataBinding(EventArgs e) {
 
@@ -565,7 +559,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
+		[DefaultValue("NavMenuText")]
 		[Localizable(true)]
 		public NavTextFieldName DataField {
 			get {
@@ -630,23 +624,34 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void Render(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+
 			writer.Indent = writer.Indent + IndentPad;
 
 			base.Render(writer);
 
-			writer.Indent = writer.Indent - IndentPad;
-
-			//RenderControl(writer);
+			writer.Indent = indent;
 		}
 
 		public override void RenderControl(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+
 			writer.Indent = writer.Indent + IndentPad;
 
 			base.RenderControl(writer);
 
-			writer.Indent = writer.Indent - IndentPad;
+			writer.Indent = indent;
 		}
 
+		protected override void RenderChildren(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+
+			writer.Indent = writer.Indent + IndentPad + 1;
+
+			base.RenderChildren(writer);
+
+			writer.Indent = indent;
+		}
 	}
 
 	//========================================
@@ -668,23 +673,34 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void Render(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+
 			writer.Indent = writer.Indent + IndentPad;
 
 			base.Render(writer);
 
-			writer.Indent = writer.Indent - IndentPad;
-
-			//RenderControl(writer);
+			writer.Indent = indent;
 		}
 
 		public override void RenderControl(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+
 			writer.Indent = writer.Indent + IndentPad;
 
 			base.RenderControl(writer);
 
-			writer.Indent = writer.Indent - IndentPad;
+			writer.Indent = indent;
 		}
 
+		protected override void RenderChildren(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+
+			writer.Indent = writer.Indent + IndentPad + 1;
+
+			base.RenderChildren(writer);
+
+			writer.Indent = indent;
+		}
 	}
 
 	//========================================
@@ -716,7 +732,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public void InstantiateIn(Control container) {
 
 			Literal litL = new Literal();
-			litL.Text = HtmlTextWriter.EndTagLeftChars + "ul" + HtmlTextWriter.TagRightChar;
+			litL.Text = "\t" + HtmlTextWriter.EndTagLeftChars + "ul" + HtmlTextWriter.TagRightChar;
 
 			container.Controls.Add(litL);
 		}
