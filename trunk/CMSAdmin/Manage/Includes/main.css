@@ -110,7 +110,6 @@ a:hover {
 }
 
 #menu .current li {
-	
 }
 
 
@@ -227,14 +226,21 @@ a:hover {
 	min-height: 400px;
 }
 
-
 .imgNoBorder {
 	padding: 0px;
 	margin: 0px;
-	border: 0px solid #ffffff;
 	padding: 1px;
+	border: none;
+	border: 0;
 }
 
+a .imgNoBorder {
+	border-width: 0;
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	outline: none;
+}
 
 .pageNodeDrillDown1 {
 	padding: 0px;
