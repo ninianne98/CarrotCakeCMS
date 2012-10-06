@@ -197,7 +197,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (lst.Count > 0) {
 				ListItemRepeater rSubNav = new ListItemRepeater();
-				rSubNav.IndentPad = 2;
 
 				rSubNav.ID = "rSubNav";
 				rSubNav.HeaderTemplate = SubNavHeaderTemplate;
@@ -220,27 +219,51 @@ namespace Carrotware.CMS.UI.Controls {
 		private ListItemRepeater rTopNav = new ListItemRepeater();
 
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
+			writer.Indent++;
+			writer.Indent++;
+
+			writer.WriteLine("");
 
 			UpdateHyperLink(rTopNav);
 
 			rTopNav.EnableViewState = this.EnableViewState;
 
-			base.RenderContents(output);
-
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
 			}
+			int indent = writer.Indent;
 
-			output.WriteLine(HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\"" + HtmlTextWriter.TagRightChar);
+			writer.WriteLine(HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\"" + HtmlTextWriter.TagRightChar);
+			writer.WriteLine("");
 
-			rTopNav.RenderControl(output);
+			rTopNav.RenderControl(writer);
+
+			writer.Indent = indent;
 
 			//output.WriteLine("\t<!--  CLOSE  " + this.ClientID + " -->   ");
-			output.WriteLine("\t" + HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
+			writer.WriteLine("");
+			writer.WriteLine(HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
+			writer.WriteLine("");
 
+			writer.Indent--;
+			writer.Indent--;
 		}
+
+		//protected override void RenderChildren(HtmlTextWriter writer) {
+		//    int indent = writer.Indent++;
+
+		//    writer.Indent = indent + 2;
+
+		//    //writer.WriteLine("");
+		//    base.RenderChildren(writer);
+		//    //writer.WriteLine("");
+
+		//    writer.Indent = indent;
+		//    writer.Indent--;
+		//}
+
 
 		protected void LoadData() {
 
@@ -285,7 +308,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			List<SiteNav> lstTop = GetTopNav();
 
-			rTopNav.IndentPad = 1;
 			rTopNav.ID = this.ClientID + "_rTopNav";
 			rTopNav.HeaderTemplate = TopNavHeaderTemplate;
 			rTopNav.ItemTemplate = TopNavTemplate;
