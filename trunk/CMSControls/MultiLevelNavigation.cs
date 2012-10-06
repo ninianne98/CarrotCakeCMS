@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 /*
@@ -33,67 +34,126 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public int LevelDepth {
+			get {
+				int s = 3;
+				try { s = int.Parse(ViewState["LevelDepth"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["LevelDepth"] = value.ToString();
+			}
+		}
+
+
+		private List<SiteNav> lstDeepLevelNav = new List<SiteNav>();
+
 
 		protected List<SiteNav> GetTopNav() {
-			return navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			return lstDeepLevelNav.Where(ct => ct.Parent_ContentID == null).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 		}
 
 		protected List<SiteNav> GetChildren(Guid rootContentID) {
-			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, rootContentID, !SecurityData.IsAuthEditor);
+			return lstDeepLevelNav.Where(ct => ct.Parent_ContentID == rootContentID).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
+		}
+
+		protected SiteNav GetPageInfo(string sPath) {
+			return lstDeepLevelNav.Where(ct => ct.FileName.ToLower() == sPath.ToLower()).FirstOrDefault();
+		}
+
+		protected void LoadData() {
+			lstDeepLevelNav = navHelper.GetLevelDepthNavigation(SiteData.CurrentSiteID, LevelDepth, !SecurityData.IsAuthEditor);
+		}
+
+
+		protected override void OnInit(EventArgs e) {
+			this.Controls.Clear();
+
+			base.OnInit(e);
+
+			LoadData();
 		}
 
 
 		private void LoadChildren(HtmlTextWriter output, Guid rootContentID, int iLevel) {
-			var cc = GetChildren(rootContentID);
+			List<SiteNav> cc = GetChildren(rootContentID);
+			int indent = output.Indent;
+			output.Indent = indent + 1;
 
 			if (cc.Count > 0) {
-				output.Write("\r\n\t<ul class=\"children level-" + iLevel + "\">\r\n");
-				foreach (var c2 in cc) {
-					IdentifyLinkAsInactive(c2);
-					if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
-						output.Write("\t\t<li class=\"" + CSSSelected + " level-" + iLevel + "\"> ");
+				output.WriteLine("");
+				output.WriteLine("<ul class=\"children level-" + iLevel + "\">");
+				int indent2 = output.Indent + 1;
+				foreach (SiteNav c1 in cc) {
+					output.Indent = indent2;
+					IdentifyLinkAsInactive(c1);
+					if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, ParentFileName)) {
+						output.Write("<li class=\"" + CSSSelected + " level-" + iLevel + "\">");
 					} else {
-						output.Write("\t\t<li class=\"level-" + iLevel + "\"> ");
+						output.Write("<li class=\"level-" + iLevel + "\">");
 					}
-					output.Write("<a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a> \r\n");
-					LoadChildren(output, c2.Root_ContentID, iLevel + 1);
-					output.Write("\r\n</li>\r\n");
+					output.Write(" <a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a> ");
+					int indent3 = output.Indent;
+					LoadChildren(output, c1.Root_ContentID, iLevel + 1);
+					output.Indent = indent3;
+					output.Write("</li>");
+					output.WriteLine("");
 				}
-				output.Write("\t</ul>\r\n\t");
+				output.Indent--;
+				output.WriteLine("</ul> ");
 			}
+
+			output.Indent = indent;
 		}
 
+		private string ParentFileName = "";
 
 		protected override void RenderContents(HtmlTextWriter output) {
+			int indent = output.Indent;
+			output.Indent = indent + 2;
 
+			List<SiteNav> lst = GetTopNav();
 			SiteNav pageNav = GetParentPage();
-			string sParent = pageNav.FileName.ToLower();
+			ParentFileName = pageNav.FileName.ToLower();
 
-			var lst = GetTopNav();
-			output.Write("<div name=\"" + this.UniqueID + "\" id=\"" + this.ClientID + "\">\r\n");
-			output.Write("<div id=\"" + this.ClientID + "-inner\">\r\n");
+			output.WriteLine("");
+			output.WriteLine("<div name=\"" + this.UniqueID + "\" id=\"" + this.ClientID + "\">");
+			output.Indent++;
+			output.WriteLine("<div id=\"" + this.ClientID + "-inner\">");
+			output.Indent++;
+			output.WriteLine("<ul class=\"parent\">");
 
-			output.Write("<ul class=\"parent\">\r\n");
-			foreach (var c1 in lst) {
+			int indent2 = output.Indent + 1;
 
+			foreach (SiteNav c1 in lst) {
+				output.Indent = indent2;
 				IdentifyLinkAsInactive(c1);
-				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
-					output.Write("\t<li class=\"" + CSSSelected + "\"> ");
+				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, ParentFileName)) {
+					output.Write("<li class=\"" + CSSSelected + "\">");
 				} else {
-					output.Write("\t<li> ");
+					output.Write("<li>");
 				}
 
-				output.Write("<a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+				output.Write(" <a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a> ");
+				int indent3 = output.Indent;
 				LoadChildren(output, c1.Root_ContentID, 1);
-				output.Write("</li>\r\n");
+				output.Indent = indent3;
+				output.Write("</li>");
+				output.WriteLine("");
 			}
-			output.Write("</ul>\r\n");
+			output.Indent--;
+			output.WriteLine("</ul>");
+			output.Indent--;
+			output.WriteLine("</div>");
+			output.Indent--;
+			output.WriteLine("</div>");
 
-			output.Write("</div>\r\n");
-			output.Write("</div>\r\n");
-
+			output.Indent = indent;
 		}
-
 
 	}
 }

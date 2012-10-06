@@ -103,6 +103,10 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.GetTwoLevelNavigation(siteID, bActiveOnly);
 		}
 
+		public List<SiteNav> GetLevelDepthNavigation(Guid siteID, int iDepth, bool bActiveOnly) {
+			return _navHelper.GetLevelDepthNavigation(siteID, iDepth, bActiveOnly);
+		}
+
 		public List<SiteNav> GetPageCrumbNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
 			return _navHelper.GetPageCrumbNavigation(siteID, rootContentID, bActiveOnly);
 		}

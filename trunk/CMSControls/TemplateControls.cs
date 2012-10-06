@@ -626,7 +626,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter writer) {
 			int indent = writer.Indent;
 
-			writer.Indent = writer.Indent + IndentPad;
+			writer.Indent = indent + IndentPad;
 
 			base.Render(writer);
 
@@ -636,7 +636,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public override void RenderControl(HtmlTextWriter writer) {
 			int indent = writer.Indent;
 
-			writer.Indent = writer.Indent + IndentPad;
+			writer.Indent = indent + IndentPad;
 
 			base.RenderControl(writer);
 
@@ -646,7 +646,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderChildren(HtmlTextWriter writer) {
 			int indent = writer.Indent;
 
-			writer.Indent = writer.Indent + IndentPad + 1;
+			writer.Indent = indent + IndentPad + 1;
 
 			base.RenderChildren(writer);
 
@@ -675,7 +675,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter writer) {
 			int indent = writer.Indent;
 
-			writer.Indent = writer.Indent + IndentPad;
+			writer.Indent = indent + IndentPad;
 
 			base.Render(writer);
 
@@ -685,7 +685,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public override void RenderControl(HtmlTextWriter writer) {
 			int indent = writer.Indent;
 
-			writer.Indent = writer.Indent + IndentPad;
+			writer.Indent = indent + IndentPad;
 
 			base.RenderControl(writer);
 
@@ -695,7 +695,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderChildren(HtmlTextWriter writer) {
 			int indent = writer.Indent;
 
-			writer.Indent = writer.Indent + IndentPad + 1;
+			writer.Indent = indent + IndentPad + 1;
 
 			base.RenderChildren(writer);
 

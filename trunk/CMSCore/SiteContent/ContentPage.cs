@@ -262,6 +262,22 @@ namespace Carrotware.CMS.Core {
 		public string MetaDescription { get; set; }
 		public string MetaKeyword { get; set; }
 
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is ContentPage) {
+				ContentPage p = (ContentPage)obj;
+				return (this.ContentID == p.ContentID)
+						&& (this.SiteID == p.SiteID)
+						&& (this.FileName.ToLower() == p.FileName.ToLower());
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return ContentID.GetHashCode() ^ SiteID.GetHashCode() ^ Root_ContentID.GetHashCode() ^ FileName.GetHashCode();
+		}
 
 		public string PageTextSummary {
 			get {

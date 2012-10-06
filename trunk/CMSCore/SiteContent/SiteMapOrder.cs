@@ -28,6 +28,20 @@ namespace Carrotware.CMS.Core {
 		public bool PageActive { get; set; }
 		public int NavLevel { get; set; }
 
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is SiteMapOrder) {
+				SiteMapOrder p = (SiteMapOrder)obj;
+				return (this.Root_ContentID == p.Root_ContentID);
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return Root_ContentID.GetHashCode();
+		}
 	}
 
 }

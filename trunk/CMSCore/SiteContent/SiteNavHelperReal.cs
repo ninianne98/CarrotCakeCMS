@@ -119,6 +119,50 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
+		public List<SiteNav> GetLevelDepthNavigation(Guid siteID, int iDepth, bool bActiveOnly) {
+
+			List<SiteNav> lstContent = null;
+			List<Guid> lstSub = new List<Guid>();
+
+			if (iDepth < 1) {
+				iDepth = 1;
+			}
+
+			if (iDepth > 10) {
+				iDepth = 10;
+			}
+
+			List<Guid> lstTop = (from ct in db.vw_carrot_Contents
+								 where ct.SiteID == siteID
+									 && ct.Parent_ContentID == null
+									 && ct.IsLatestVersion == true
+								 select ct.Root_ContentID).ToList();
+
+			while (iDepth > 1) {
+
+				lstSub = (from ct in db.vw_carrot_Contents
+						  where ct.SiteID == siteID
+								&& ct.IsLatestVersion == true
+								&& (ct.PageActive == bActiveOnly || bActiveOnly == false)
+								&& (!lstTop.Contains(ct.Root_ContentID) && lstTop.Contains(ct.Parent_ContentID.Value))
+						  select ct.Root_ContentID).Distinct().ToList();
+
+				lstTop = lstTop.Union(lstSub).ToList();
+
+				iDepth--;
+			}
+
+			lstContent = (from ct in db.vw_carrot_Contents
+						  orderby ct.NavOrder, ct.NavMenuText
+						  where ct.SiteID == siteID
+								&& (ct.PageActive == bActiveOnly || bActiveOnly == false)
+								&& ct.IsLatestVersion == true
+								&& lstTop.Contains(ct.Root_ContentID)
+						  select MakeSiteNav(ct)).ToList();
+
+			return lstContent;
+		}
+
 
 		public List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly) {
 			List<SiteNav> lstContent = null;
@@ -308,7 +352,7 @@ namespace Carrotware.CMS.Core {
 										  && ct.FileName.ToLower() == sPage.ToLower()
 										  && ct.IsLatestVersion == true
 								   select ct).FirstOrDefault();
-			
+
 			if (c != null) {
 				return GetSiblingNavigation(siteID, c.Root_ContentID, bActiveOnly);
 			} else {
