@@ -98,6 +98,25 @@ namespace Carrotware.CMS.Core {
 
 		#region IDisposable Members
 
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is SiteNav) {
+				SiteNav p = (SiteNav)obj;
+				return (this.ContentID == p.ContentID)
+						&& (this.SiteID == p.SiteID)
+						&& (this.FileName.ToLower() == p.FileName.ToLower());
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return ContentID.GetHashCode() ^ SiteID.GetHashCode() ^ Root_ContentID.GetHashCode() ^ FileName.GetHashCode();
+		}
+
+
 		public void Dispose() {
 			if (db != null) {
 				db.Dispose();

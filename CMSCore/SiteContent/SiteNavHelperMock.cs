@@ -29,11 +29,33 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly) {
+
 			List<SiteNav> lstNav = SiteNavHelper.GetSamplerFakeNav();
 			List<SiteNav> lstNav2 = new List<SiteNav>();
-			foreach (var l in lstNav) {
+
+			foreach (SiteNav l in lstNav) {
 				lstNav2 = lstNav2.Union(SiteNavHelper.GetSamplerFakeNav(l.Root_ContentID)).ToList();
 			}
+
+			lstNav = lstNav.Union(lstNav2).ToList();
+			return lstNav;
+		}
+
+		public List<SiteNav> GetLevelDepthNavigation(Guid siteID, int iDepth, bool bActiveOnly) {
+
+			List<SiteNav> lstNav = SiteNavHelper.GetSamplerFakeNav();
+			List<SiteNav> lstNav2 = new List<SiteNav>();
+
+			foreach (SiteNav l1 in lstNav) {
+				List<SiteNav> lst = SiteNavHelper.GetSamplerFakeNav(l1.Root_ContentID);
+				lstNav2 = lstNav2.Union(lst).ToList();
+
+				foreach (SiteNav l2 in lst) {
+					List<SiteNav> lst2 = SiteNavHelper.GetSamplerFakeNav(l2.Root_ContentID);
+					lstNav2 = lstNav2.Union(lst2).ToList();
+				}
+			}
+
 			lstNav = lstNav.Union(lstNav2).ToList();
 			return lstNav;
 		}

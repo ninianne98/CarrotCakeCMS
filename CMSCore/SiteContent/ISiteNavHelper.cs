@@ -41,6 +41,8 @@ namespace Carrotware.CMS.Core {
 
 		List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly);
 
+		List<SiteNav> GetLevelDepthNavigation(Guid siteID, int iDepth, bool bActiveOnly);
+
 		List<SiteNav> GetPageCrumbNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly);
 		List<SiteNav> GetPageCrumbNavigation(Guid siteID, string sPage, bool bActiveOnly);
 
