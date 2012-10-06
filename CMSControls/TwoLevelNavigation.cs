@@ -21,7 +21,6 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:TwoLevelNavigation runat=server></{0}:TwoLevelNavigation>")]
 	public class TwoLevelNavigation : BaseServerControl {
 
@@ -249,9 +248,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 
-			foreach (var nav in lstTwoLevelNav.Where(n => !n.PageActive)) {
-				IdentifyLinkAsInactive(nav);
-			}
 		}
 
 		protected override void OnInit(EventArgs e) {
@@ -265,7 +261,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
+			int indent = output.Indent;
+			output.Indent = indent + 3;
+
+			List<SiteNav> lstNav = GetTopNav();
 			SiteNav pageNav = GetParentPage();
+
 			string sParent = pageNav.FileName.ToLower();
 
 			string sCSS = "";
@@ -273,36 +274,55 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
 			}
 
-			List<SiteNav> lst = GetTopNav();
-			output.Write("<div " + sCSS + " id=\"" + this.ClientID + "\">\r\n");
-			output.Write("<div id=\"" + this.ClientID + "-inner\">\r\n");
+			output.WriteLine("");
+			output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\">");
+			output.Indent++;
+			output.WriteLine("<div id=\"" + this.ClientID + "-inner\">");
+			output.Indent++;
+			output.WriteLine("<ul class=\"" + CSSULClassTop + "\">");
+			output.Indent++;
 
-			output.Write("<ul class=\"" + CSSULClassTop + "\">\r\n");
-			foreach (SiteNav c1 in lst) {
+			int indent2 = output.Indent;
+
+			foreach (SiteNav c1 in lstNav) {
+				output.Indent = indent2;
 				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
+				IdentifyLinkAsInactive(c1);
 				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
-					output.Write("\t<li class=\"" + CSSSelected + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+					output.WriteLine("<li class=\"level-1 " + CSSSelected + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				} else {
-					output.Write("\t<li><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+					output.WriteLine("<li class=\"level-1\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				}
 
+				output.Indent++;
 				if (cc.Count > 0) {
-					output.Write("\r\n\t<ul class=\"" + CSSULClassLower + "\">\r\n");
+					int indent3 = output.Indent;
+					output.WriteLine("<ul class=\"" + CSSULClassLower + "\">");
+					output.Indent++;
 					foreach (SiteNav c2 in cc) {
+						IdentifyLinkAsInactive(c2);
 						if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
-							output.Write("\t\t<li class=\"" + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>\r\n");
+							output.WriteLine("<li class=\"level-2 " + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
 						} else {
-							output.Write("\t\t<li><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>\r\n");
+							output.WriteLine("<li class=\"level-2\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
 						}
 					}
-					output.Write("\t</ul>\r\n\t");
+					output.Indent = indent3;
+					output.WriteLine("</ul>");
 				}
-				output.Write("</li>\r\n");
+				output.Indent--;
+				output.WriteLine("</li>");
 			}
-			output.Write("</ul>\r\n");
 
-			output.Write("</div>\r\n");
-			output.Write("</div>\r\n");
+			output.Indent--;
+			output.WriteLine("</ul>");
+			output.Indent--;
+			output.WriteLine("</div>");
+			output.Indent--;
+			output.WriteLine("</div>");
+			output.WriteLine("");
+
+			output.Indent = indent;
 		}
 
 
@@ -444,11 +464,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 				sCSS = sCSS.Replace("{MENU_ID}", "#" + this.ClientID + "-inner");
 				sCSS = sCSS.Replace("{MENU_WRAPPER_ID}", "#" + this.ClientID + "");
-				sCSS = "\r\n<style type=\"text/css\">\r\n" + sCSS + "\r\n</style>\r\n";
+				sCSS = "<style type=\"text/css\">" + sCSS + "</style>";
 
 				sCSS7 = sCSS7.Replace("{MENU_ID}", "#" + this.ClientID + "-inner");
 				sCSS7 = sCSS7.Replace("{MENU_WRAPPER_ID}", "#" + this.ClientID + "");
-				sCSS7 = "\r\n<!--[if IE 7]> \r\n<style type=\"text/css\">\r\n" + sCSS7 + "\r\n</style>\r\n<![endif]-->\r\n";
+				sCSS7 = "<!--[if IE 7]> <style type=\"text/css\">" + sCSS7 + "</style> <![endif]-->";
 
 				Literal link = new Literal();
 				link.Text = sCSS;
