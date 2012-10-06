@@ -84,7 +84,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 1;
 
 			if (cc.Count > 0) {
-				output.WriteLine("");
+				output.WriteLine();
 				output.WriteLine("<ul class=\"children level-" + iLevel + "\">");
 				int indent2 = output.Indent + 1;
 				foreach (SiteNav c1 in cc) {
@@ -100,7 +100,7 @@ namespace Carrotware.CMS.UI.Controls {
 					LoadChildren(output, c1.Root_ContentID, iLevel + 1);
 					output.Indent = indent3;
 					output.Write("</li>");
-					output.WriteLine("");
+					output.WriteLine();
 				}
 				output.Indent--;
 				output.WriteLine("</ul> ");
@@ -119,7 +119,7 @@ namespace Carrotware.CMS.UI.Controls {
 			SiteNav pageNav = GetParentPage();
 			ParentFileName = pageNav.FileName.ToLower();
 
-			output.WriteLine("");
+			output.WriteLine();
 			output.WriteLine("<div name=\"" + this.UniqueID + "\" id=\"" + this.ClientID + "\">");
 			output.Indent++;
 			output.WriteLine("<div id=\"" + this.ClientID + "-inner\">");
@@ -142,7 +142,7 @@ namespace Carrotware.CMS.UI.Controls {
 				LoadChildren(output, c1.Root_ContentID, 1);
 				output.Indent = indent3;
 				output.Write("</li>");
-				output.WriteLine("");
+				output.WriteLine();
 			}
 			output.Indent--;
 			output.WriteLine("</ul>");

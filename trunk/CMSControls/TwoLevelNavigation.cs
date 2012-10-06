@@ -274,7 +274,7 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
 			}
 
-			output.WriteLine("");
+			output.WriteLine();
 			output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\">");
 			output.Indent++;
 			output.WriteLine("<div id=\"" + this.ClientID + "-inner\">");
@@ -320,7 +320,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("</div>");
 			output.Indent--;
 			output.WriteLine("</div>");
-			output.WriteLine("");
+			output.WriteLine();
 
 			output.Indent = indent;
 		}

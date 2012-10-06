@@ -448,9 +448,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		//    writer.Indent = indent + 2;
 
-		//    //writer.WriteLine("");
+		//    //writer.WriteLine();
 		//    base.RenderChildren(writer);
-		//    //writer.WriteLine("");
+		//    //writer.WriteLine();
 
 		//    writer.Indent = indent;
 		//    writer.Indent--;
@@ -653,7 +653,7 @@ namespace Carrotware.CMS.UI.Controls {
 		//        if (c is ListItemRepeater) {
 		//            string html = "\t\t" + BaseServerControl.GetCtrlText(c).Replace("\r\n", "\r\n\t\t");
 		//            writer.Write(html);
-		//            writer.WriteLine("");
+		//            writer.WriteLine();
 		//        } else {
 		//            writer.Indent--;
 		//            c.RenderControl(writer);
@@ -707,13 +707,14 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderChildren(HtmlTextWriter writer) {
 			int indent1 = writer.Indent;
-			int indent2 = indent1++;
 
 			foreach (Control c in this.Controls) {
 				writer.Indent = indent1;
 				if (c is ListItemRepeater) {
-					writer.Indent = indent2;
-					writer.Write(BaseServerControl.GetCtrlText(c).Replace("\r\n", "\r\n\t"));
+					writer.Write("\t");
+					writer.Write(BaseServerControl.GetCtrlText(c).Replace("\r\n", "\r\n\t\t"));
+					writer.WriteLine();
+					writer.Write("\t\t");
 				} else {
 					c.RenderControl(writer);
 				}
