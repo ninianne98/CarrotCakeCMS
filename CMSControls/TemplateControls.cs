@@ -236,8 +236,6 @@ namespace Carrotware.CMS.UI.Controls {
 				lnk.Controls.Add(this.Controls[0]);
 			}
 
-			ph.IndentPad = 1;
-
 			this.Controls.Add(lnk);
 			this.Controls.Add(ph);
 
@@ -414,7 +412,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			ListItemPlaceHolder ph = new ListItemPlaceHolder();
-			ph.IndentPad = 1;
 
 			ctrlAll.Controls.Add(ph);
 			ctrlAll.Controls.Add(litClose);
@@ -428,7 +425,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private void SetTag() {
 
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
-			litClose.Text = "\t" + HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
+			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
 			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
@@ -446,15 +443,18 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void RenderChildren(HtmlTextWriter writer) {
-			int indent = writer.Indent;
+		//protected override void RenderChildren(HtmlTextWriter writer) {
+		//    int indent = writer.Indent++;
 
-			writer.Indent = indent + 1;
+		//    writer.Indent = indent + 2;
 
-			base.RenderChildren(writer);
+		//    //writer.WriteLine("");
+		//    base.RenderChildren(writer);
+		//    //writer.WriteLine("");
 
-			writer.Indent = indent;
-		}
+		//    writer.Indent = indent;
+		//    writer.Indent--;
+		//}
 
 		protected override void OnDataBinding(EventArgs e) {
 
@@ -608,98 +608,118 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class ListItemRepeater : Repeater {
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public int IndentPad {
-			get {
-				int s = 0;
-				try { s = int.Parse(ViewState["IndentPad"].ToString()); } catch { }
-				return s;
-			}
-			set {
-				ViewState["IndentPad"] = value.ToString();
-			}
-		}
+		//[Bindable(true)]
+		//[Category("Appearance")]
+		//[DefaultValue("")]
+		//[Localizable(true)]
+		//public int IndentPad {
+		//    get {
+		//        int s = 1;
+		//        try { s = int.Parse(ViewState["IndentPad"].ToString()); } catch { }
+		//        return s;
+		//    }
+		//    set {
+		//        ViewState["IndentPad"] = value.ToString();
+		//    }
+		//}
 
-		protected override void Render(HtmlTextWriter writer) {
-			int indent = writer.Indent;
+		//protected override void Render(HtmlTextWriter writer) {
+		//    int indent = writer.Indent++;
 
-			writer.Indent = indent + IndentPad;
+		//    writer.Indent = indent + IndentPad;
 
-			base.Render(writer);
+		//    base.Render(writer);
 
-			writer.Indent = indent;
-		}
+		//    writer.Indent = indent;
+		//    writer.Indent--;
+		//}
 
-		public override void RenderControl(HtmlTextWriter writer) {
-			int indent = writer.Indent;
+		//public override void RenderControl(HtmlTextWriter writer) {
+		//    int indent = writer.Indent++;
 
-			writer.Indent = indent + IndentPad;
+		//    writer.Indent = indent + IndentPad;
 
-			base.RenderControl(writer);
+		//    base.RenderControl(writer);
 
-			writer.Indent = indent;
-		}
+		//    writer.Indent = indent;
+		//    writer.Indent--;
+		//}
 
-		protected override void RenderChildren(HtmlTextWriter writer) {
-			int indent = writer.Indent;
+		//protected override void RenderChildren(HtmlTextWriter writer) {
+		//    int indent = writer.Indent++;
 
-			writer.Indent = indent + IndentPad + 1;
+		//    foreach (Control c in this.Controls) {
+		//        writer.Indent = indent;
+		//        if (c is ListItemRepeater) {
+		//            string html = "\t\t" + BaseServerControl.GetCtrlText(c).Replace("\r\n", "\r\n\t\t");
+		//            writer.Write(html);
+		//            writer.WriteLine("");
+		//        } else {
+		//            writer.Indent--;
+		//            c.RenderControl(writer);
+		//        }
+		//        writer.Indent = indent;
+		//    }
 
-			base.RenderChildren(writer);
-
-			writer.Indent = indent;
-		}
+		//    writer.Indent--;
+		//}
 	}
 
 	//========================================
 	public class ListItemPlaceHolder : PlaceHolder {
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public int IndentPad {
-			get {
-				int s = 0;
-				try { s = int.Parse(ViewState["IndentPad"].ToString()); } catch { }
-				return s;
-			}
-			set {
-				ViewState["IndentPad"] = value.ToString();
-			}
-		}
+		//[Bindable(true)]
+		//[Category("Appearance")]
+		//[DefaultValue("")]
+		//[Localizable(true)]
+		//public int IndentPad {
+		//    get {
+		//        int s = 1;
+		//        try { s = int.Parse(ViewState["IndentPad"].ToString()); } catch { }
+		//        return s;
+		//    }
+		//    set {
+		//        ViewState["IndentPad"] = value.ToString();
+		//    }
+		//}
 
-		protected override void Render(HtmlTextWriter writer) {
-			int indent = writer.Indent;
+		//protected override void Render(HtmlTextWriter writer) {
+		//    int indent = writer.Indent++;
 
-			writer.Indent = indent + IndentPad;
+		//    writer.Indent = indent + IndentPad;
 
-			base.Render(writer);
+		//    base.Render(writer);
 
-			writer.Indent = indent;
-		}
+		//    writer.Indent = indent;
+		//    writer.Indent--;
+		//}
 
-		public override void RenderControl(HtmlTextWriter writer) {
-			int indent = writer.Indent;
+		//public override void RenderControl(HtmlTextWriter writer) {
+		//    int indent = writer.Indent++;
 
-			writer.Indent = indent + IndentPad;
+		//    writer.Indent = indent + IndentPad;
 
-			base.RenderControl(writer);
+		//    base.RenderControl(writer);
 
-			writer.Indent = indent;
-		}
+		//    writer.Indent = indent;
+		//    writer.Indent--;
+		//}
 
 		protected override void RenderChildren(HtmlTextWriter writer) {
-			int indent = writer.Indent;
+			int indent1 = writer.Indent;
+			int indent2 = indent1++;
 
-			writer.Indent = indent + IndentPad + 1;
+			foreach (Control c in this.Controls) {
+				writer.Indent = indent1;
+				if (c is ListItemRepeater) {
+					writer.Indent = indent2;
+					writer.Write(BaseServerControl.GetCtrlText(c).Replace("\r\n", "\r\n\t"));
+				} else {
+					c.RenderControl(writer);
+				}
+			}
 
-			base.RenderChildren(writer);
-
-			writer.Indent = indent;
+			writer.Indent = indent1;
 		}
 	}
 
@@ -732,7 +752,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public void InstantiateIn(Control container) {
 
 			Literal litL = new Literal();
-			litL.Text = "\t" + HtmlTextWriter.EndTagLeftChars + "ul" + HtmlTextWriter.TagRightChar;
+			litL.Text = HtmlTextWriter.EndTagLeftChars + "ul" + HtmlTextWriter.TagRightChar;
 
 			container.Controls.Add(litL);
 		}
