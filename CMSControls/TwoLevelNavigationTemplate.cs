@@ -223,7 +223,7 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent++;
 			writer.Indent++;
 
-			writer.WriteLine("");
+			writer.WriteLine();
 
 			UpdateHyperLink(rTopNav);
 
@@ -236,16 +236,16 @@ namespace Carrotware.CMS.UI.Controls {
 			int indent = writer.Indent;
 
 			writer.WriteLine(HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\"" + HtmlTextWriter.TagRightChar);
-			writer.WriteLine("");
-
+			writer.WriteLine();
+			writer.Write("\t");
 			rTopNav.RenderControl(writer);
 
 			writer.Indent = indent;
 
 			//output.WriteLine("\t<!--  CLOSE  " + this.ClientID + " -->   ");
-			writer.WriteLine("");
+			writer.WriteLine();
 			writer.WriteLine(HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
-			writer.WriteLine("");
+			writer.WriteLine();
 
 			writer.Indent--;
 			writer.Indent--;
@@ -256,9 +256,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		//    writer.Indent = indent + 2;
 
-		//    //writer.WriteLine("");
+		//    //writer.WriteLine();
 		//    base.RenderChildren(writer);
-		//    //writer.WriteLine("");
+		//    //writer.WriteLine();
 
 		//    writer.Indent = indent;
 		//    writer.Indent--;
