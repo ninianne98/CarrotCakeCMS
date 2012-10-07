@@ -9,7 +9,7 @@
 	}
 	#cmsAdminToolbox2 {
 		right: 0 !important;
-		bottom: 100px !important;
+		bottom: 125px !important;
 		line-height: 15px !important;
 	}
 	.cmsNavigationBlock {
@@ -64,10 +64,11 @@
 		font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 		text-decoration: underline !important;
 	}
-	span.cmsFooterLinks {
+	span.cmsFooterLinks, p.cmsFooterLinks {
 		text-decoration: none !important;
 	}
 	.cmsFooterP {
+		color: #676F6A !important;
 		line-height: 20px !important;
 		text-align: center !important;
 		padding: 5px !important;
@@ -84,8 +85,10 @@
 		margin: 5px !important;
 		border: 2px dashed #676F6A !important;
 	}
-
-	.cmsNavFooterBox input:focus, .cmsNavFooterBox select:focus, .cmsNavFooterBox textarea:focus, .cmsNavFooterBox input, .cmsNavFooterBox select, .cmsNavFooterBox textarea {
+	
+	.cmsNavFooterBox input:focus, .cmsNavFooterBox select:focus, 
+	.cmsNavFooterBox textarea:focus, .cmsNavFooterBox input, 
+	.cmsNavFooterBox select, .cmsNavFooterBox textarea {
 		line-height: normal;
 		border: 1px solid #676F6A !important;
 		background: #FFFFFF !important;
@@ -112,6 +115,9 @@
 		<asp:DropDownList ID="ddlCMSLinks" runat="server" onchange="cmsNavPage(this);" DataTextField="NavMenuText" DataValueField="FileName"
 			ValidationGroup="cmsMenuLinkGroup">
 		</asp:DropDownList>
+	</p>
+	<p class="cmsFooterP cmsFooterLinks">
+		<asp:Literal runat="server" ID="litVersion"></asp:Literal>
 	</p>
 </div>
 <script language="javascript" type="text/javascript">

@@ -23,6 +23,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				currentPage = ContentPageHelper.GetSamplerView();
 			}
 
+			litVersion.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
+
 			CurrentPageID = currentPage.Root_ContentID;
 			lnkCurrent.HRef = currentPage.FileName;
 
