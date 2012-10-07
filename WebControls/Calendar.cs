@@ -294,6 +294,13 @@ namespace Carrotware.Web.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
+			int indent = output.Indent;
+
+			string CtrlID = this.ClientID;
+
+			output.Indent = indent + 3;
+			output.WriteLine();
+
 			DateTime Today = DateTime.Today.Date;
 			DateTime ThisMonth = DateTime.Today.Date;
 
@@ -313,10 +320,8 @@ namespace Carrotware.Web.UI.Controls {
 			string MonthName = ThisMonth.ToString("MMMM") + "  " + ThisMonth.Year.ToString();
 
 			int iDayOfWeek = 6;
-			int d = 1;
-			d -= iFirstDay;
-
-
+			int DayOfMonth = 1;
+			DayOfMonth -= iFirstDay;
 
 			List<DateTime> dates = new List<DateTime>();
 
@@ -334,76 +339,97 @@ namespace Carrotware.Web.UI.Controls {
 						 select Convert.ToDateTime(dd)).ToList();
 			}
 
-
 			StringBuilder sb = new StringBuilder();
 			sb.Append("");
 
-			while ((d <= iDaysInMonth) && (d <= 31) && (d >= -7)) {
-				sb.Append("<tr>");
+			int WeekNumber = 1;
 
-				for (int cal = 0; cal <= iDayOfWeek; cal++) {
+			while ((DayOfMonth <= iDaysInMonth) && (DayOfMonth <= 31) && (DayOfMonth >= -7)) {
+
+				for (int DayIndex = 0; DayIndex <= iDayOfWeek; DayIndex++) {
+					if (DayIndex == 0) {
+						sb.Append("<tr class=\"weekdayrow\" id=\"" + CtrlID + "-weekRow" + WeekNumber.ToString() + "\">\n");
+						WeekNumber++;
+					}
+
 					string strCaption = "&nbsp;";
 					string sClass = "normal";
 					DateTime cellDate = DateTime.MinValue;
-					if ((d >= 1) && (d <= iDaysInMonth)) {
-						cellDate = new DateTime(YearNumber, MonthNumber, d);
+
+					if ((DayOfMonth >= 1) && (DayOfMonth <= iDaysInMonth)) {
+						cellDate = new DateTime(YearNumber, MonthNumber, DayOfMonth);
 						if (!string.IsNullOrEmpty(JavascriptForDate)) {
-							strCaption = "&nbsp;<a href=\"javascript:" + JavascriptForDate + "('" + cellDate.ToString("yyyy-MM-dd") + "')\">" + d.ToString() + "&nbsp;";
+							strCaption = "&nbsp;<a href=\"javascript:" + JavascriptForDate + "('" + cellDate.ToString("yyyy-MM-dd") + "')\">" + DayOfMonth.ToString() + "&nbsp;";
 						} else {
-							strCaption = "&nbsp;" + d.ToString() + "&nbsp;";
+							strCaption = "&nbsp;" + DayOfMonth.ToString() + "&nbsp;";
 						}
 					}
 
 					if (strCaption != "&nbsp;") {
-						cellDate = new DateTime(YearNumber, MonthNumber, d);
+						cellDate = new DateTime(YearNumber, MonthNumber, DayOfMonth);
 						if (cellDate == Today) {
 							sClass = "today";
 						}
 
 						IEnumerable<DateTime> copyRows = (from c in dates
-										where c == cellDate.Date
-										select c);
+														  where c == cellDate.Date
+														  select c);
 						if (copyRows.Count() > 0) {
 							sClass = sClass + "sel";
 						}
 					}
-					d++;
-					string cell = "<td id=cellDay" + d.ToString() + " class=\"" + sClass + "\">" + strCaption + "</td>\r\n";
+
+					DayOfMonth++;
+
+					string cell = "\t<td id=\"" + CtrlID + "-cellDay" + DayOfMonth.ToString() + "\" class=\"" + sClass + "\">" + strCaption + "</td>\n";
 					sb.Append(cell);
 
-					if (cal == iDayOfWeek) {
-						sb.Append("</tr>\r\n <tr>");
-
+					if (DayIndex == iDayOfWeek) {
+						sb.Append("</tr>\n");
 					}
 				}
 
-				sb.Append("</tr>");
 			}
 
+			output.WriteLine("<table  id=\"" + CtrlID + "-CalTable\" class=\"calendarGrid\" cellspacing=\"0\" cellpadding=\"3\" align=\"center\" border=\"1\">");
+			output.WriteLine("	<tr class=\"calendarheadrow\">");
+			output.WriteLine("		<td class=\"head\" colspan=\"7\">");
+			output.WriteLine("			<table class=\"innerhead\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
+			output.WriteLine("				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
+			output.WriteLine("				<tr> <td class=\"head headtext\"> " + MonthName + " </td> </tr>");
+			output.WriteLine("				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
+			output.WriteLine("			</table>");
+			output.WriteLine("		</td>");
+			output.WriteLine("	</tr>");
+			output.WriteLine();
+			output.WriteLine("	<tr class=\"weekday\">");
+			output.WriteLine("		<td class=\"weekday\" width=\"38\"> SU </td>");
+			output.WriteLine("		<td class=\"weekday\" width=\"38\"> M </td>");
+			output.WriteLine("		<td class=\"weekday\" width=\"38\"> TU </td>");
+			output.WriteLine("		<td class=\"weekday\" width=\"38\"> W </td>");
+			output.WriteLine("		<td class=\"weekday\" width=\"38\"> TR </td>");
+			output.WriteLine("		<td class=\"weekday\" width=\"38\"> F </td>");
+			output.WriteLine("		<td class=\"weekday\" width=\"38\"> SA </td>");
+			output.WriteLine("	</tr>");
+			output.WriteLine();
 
-			output.Write("\r\n<table class=\"calendarGrid\" cellspacing=\"0\" cellpadding=\"3\" align=\"center\" border=\"1\">");
-			output.Write("\r\n	<tr>");
-			output.Write("\r\n		<td class=\"head\" colspan=\"7\">");
-			output.Write("\r\n			<table class=\"innerhead\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
-			output.Write("\r\n				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
-			output.Write("\r\n				<tr> <td class=\"head headtext\"> " + MonthName + " </td> </tr>");
-			output.Write("\r\n				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
-			output.Write("\r\n			</table>");
-			output.Write("\r\n		</td>");
-			output.Write("\r\n	</tr>");
-			output.Write("\r\n	<tr class=\"weekday\">");
-			output.Write("\r\n		<td class=\"weekday\" width=\"38\"> SU </td>");
-			output.Write("\r\n		<td class=\"weekday\" width=\"38\"> M </td>");
-			output.Write("\r\n		<td class=\"weekday\" width=\"38\"> TU </td>");
-			output.Write("\r\n		<td class=\"weekday\" width=\"38\"> W </td>");
-			output.Write("\r\n		<td class=\"weekday\" width=\"38\"> TR </td>");
-			output.Write("\r\n		<td class=\"weekday\" width=\"38\"> F </td>");
-			output.Write("\r\n		<td class=\"weekday\" width=\"38\"> SA </td>");
-			output.Write("\r\n	</tr>");
-			output.Write("\r\n	");
-			output.Write(sb.ToString());
-			output.Write("\r\n	");
-			output.Write("\r\n</table> ");
+			//output.Write(sb.ToString());
+
+			output.Indent = indent + 4;
+
+			string[] rows = sb.ToString().Split('\n');
+			int iRows = rows.Count();
+
+			for (int i = 0; i < iRows; i++) {
+				output.WriteLine(rows[i]);
+			}
+
+			output.Indent = indent + 3;
+
+			//output.WriteLine();
+			output.WriteLine("</table>");
+
+			output.Indent = indent;
 
 		}
 
