@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -28,7 +24,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public bool IncludeParent { get; set; }
 
-		public string SectionTitle { get; set; }
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string SectionTitle {
+			get {
+				string s = (string)ViewState["SectionTitle"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["SectionTitle"] = value;
+			}
+		}
 
 
 		protected List<SiteNav> GetSubNav() {
@@ -44,38 +52,48 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-			var lst = GetSubNav();
+			int indent = output.Indent;
 
-			if (lst.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
-				output.Write("<h2>" + SectionTitle + "</h2>\r\n");
+			List<SiteNav> lstNav = GetSubNav();
+
+			output.Indent = indent + 3;
+			output.WriteLine();
+
+			if (lstNav.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
+				output.WriteLine("<h2>" + SectionTitle + "</h2> ");
 			}
+
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
-			if (lst.Count > 0) {
-				output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">");
+			if (lstNav.Count > 0) {
+				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+				output.Indent++;
 
 				if (IncludeParent) {
-					if (lst.Count > 0) {
-						var p = GetParent(lst.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
+					if (lstNav.Count > 0) {
+						SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
 						IdentifyLinkAsInactive(p);
 						if (p != null) {
-							output.Write("<li class=\"parent-nav\"><a href=\"" + p.FileName + "\">" + p.NavMenuText + "</a></li>\r\n");
+							output.WriteLine("<li class=\"parent-nav\"><a href=\"" + p.FileName + "\">" + p.NavMenuText + "</a></li> ");
 						}
 					}
 				}
 
-				foreach (var c in lst) {
+				foreach (SiteNav c in lstNav) {
 					IdentifyLinkAsInactive(c);
 
-					output.Write("<li class=\"child-nav\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					output.WriteLine("<li class=\"child-nav\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				}
-				output.Write("</ul>");
+				output.Indent--;
+				output.WriteLine("</ul>");
 			} else {
-				output.Write("<!--span id=\"" + this.ClientID + "\"></span -->");
+				output.WriteLine("<!--span id=\"" + this.ClientID + "\"></span -->");
 			}
+
+			output.Indent = indent;
 		}
 
 

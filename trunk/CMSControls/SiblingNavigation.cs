@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:SiblingNavigation runat=server></{0}:SiblingNavigation>")]
-	public class SiblingNavigation : BaseServerControl  {
+	public class SiblingNavigation : BaseServerControl {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -40,35 +40,55 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		public string SectionTitle { get; set; }
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string SectionTitle {
+			get {
+				string s = (string)ViewState["SectionTitle"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["SectionTitle"] = value;
+			}
+		}
 
 
 		protected override void RenderContents(HtmlTextWriter output) {
+			int indent = output.Indent;
+			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
 
-			var lst = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
+			output.Indent = indent + 3;
+			output.WriteLine();
 
-			if (lst.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
-				output.Write("<h2>" + SectionTitle + "</h2>\r\n");
+			if (lstNav.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
+				output.WriteLine("<h2>" + SectionTitle + "</h2> ");
 			}
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
-			if (lst.Count > 0) {
-				output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">");
-				foreach (var c in lst) {
+
+			if (lstNav.Count > 0) {
+				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+				output.Indent++;
+				foreach (SiteNav c in lstNav) {
 					IdentifyLinkAsInactive(c);
 					if (SiteData.IsFilenameCurrentPage(c.FileName)) {
-						output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+						output.WriteLine("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 					} else {
-						output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+						output.WriteLine("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 					}
 				}
-				output.Write("</ul>");
+				output.Indent--;
+				output.WriteLine("</ul>");
 			} else {
-				output.Write("<!--span id=\"" + this.ClientID + "\"></span -->");
+				output.WriteLine("<!--span id=\"" + this.ClientID + "\"></span -->");
 			}
+
+			output.Indent = indent;
 		}
 
 

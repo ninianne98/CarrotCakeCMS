@@ -132,9 +132,9 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Indent = indent2;
 				IdentifyLinkAsInactive(c1);
 				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, ParentFileName)) {
-					output.Write("<li class=\"" + CSSSelected + "\">");
+					output.Write("<li class=\"level-0 " + CSSSelected + "\">");
 				} else {
-					output.Write("<li>");
+					output.Write("<li class=\"level-0\">");
 				}
 
 				output.Write(" <a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a> ");

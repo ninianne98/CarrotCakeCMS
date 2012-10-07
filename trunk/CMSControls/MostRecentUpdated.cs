@@ -17,7 +17,19 @@ namespace Carrotware.CMS.UI.Controls {
 	public class MostRecentUpdated : BaseServerControl {
 
 
-		public string UpdateTitle { get; set; }
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string UpdateTitle {
+			get {
+				string s = (string)ViewState["UpdateTitle"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["UpdateTitle"] = value;
+			}
+		}
 
 		public bool IncludeParent { get; set; }
 
@@ -27,18 +39,22 @@ namespace Carrotware.CMS.UI.Controls {
 			set { _TakeTop = value; }
 		}
 
-
 		protected List<SiteNav> GetUpdates() {
 			return navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-			var lst = GetUpdates();
+			int indent = output.Indent;
+
+			List<SiteNav> lstNav = GetUpdates();
+
+			output.Indent = indent + 3;
+			output.WriteLine();
 
 			if (string.IsNullOrEmpty(UpdateTitle)) {
-				output.Write("<h2>Most Recent Updates</h2>\r\n");
+				output.WriteLine("<h2>Most Recent Updates</h2> ");
 			} else {
-				output.Write("<h2>" + UpdateTitle + "</h2>\r\n");
+				output.WriteLine("<h2>" + UpdateTitle + "</h2> ");
 			}
 
 			string sCSS = "";
@@ -46,17 +62,22 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
-			output.Write("<ul " + sCSS + " id=\"" + this.ClientID + "\">\r\n");
+			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\"> ");
+			output.Indent++;
 
-			foreach (var c in lst) {
+			foreach (SiteNav c in lstNav) {
 				IdentifyLinkAsInactive(c);
 				if (SiteData.IsFilenameCurrentPage(c.FileName)) {
-					output.Write("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					output.WriteLine("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				} else {
-					output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					output.WriteLine("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				}
 			}
-			output.Write("</ul>\r\n");
+
+			output.Indent--;
+			output.WriteLine("</ul> ");
+
+			output.Indent = indent;
 		}
 
 

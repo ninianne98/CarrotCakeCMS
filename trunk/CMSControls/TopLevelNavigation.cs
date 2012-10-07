@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:TopLevelNavigation runat=server></{0}:TopLevelNavigation>")]
-	public class TopLevelNavigation : BaseServerControl  {
+	public class TopLevelNavigation : BaseServerControl {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -36,27 +36,37 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
+			int indent = output.Indent;
 
 			SiteNav pageNav = GetParentPage();
 			string sParent = pageNav.FileName.ToLower();
 
-			List<SiteNav> lst = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			List<SiteNav> lstNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+
+			output.Indent = indent + 3;
+			output.WriteLine();
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
-			output.Write("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
-			foreach (SiteNav c in lst) {
+			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+			output.Indent++;
+
+			foreach (SiteNav c in lstNav) {
 				IdentifyLinkAsInactive(c);
 				if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
-					output.Write("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					output.WriteLine("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				} else {
-					output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+					output.WriteLine("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				}
 			}
-			output.Write("</ul>");
+
+			output.Indent--;
+			output.WriteLine("</ul>");
+
+			output.Indent = indent;
 		}
 
 

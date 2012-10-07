@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ContentRichText runat=server></{0}:ContentRichText>")]
-	public class ContentRichText : WebControl, IWidget, IWidgetRawData {
+	public class ContentRichText : WebControl, IWidget, IWidgetRawData, ITextControl {
 
 		public string Text {
 			get {
@@ -62,11 +62,18 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
+			int indent = output.Indent;
+
+			output.Indent = indent + 3;
+			output.WriteLine();
+
 			this.Text = RawWidgetData;
 
-			output.Write("\r\n<!--  BEGIN  " + this.ClientID +"  -->\r\n");
+			output.WriteLine(" <!--  BEGIN  " + this.ClientID + "  --> ");
 			output.Write(RawWidgetData);
-			output.Write("\r\n<!--  END  " + this.ClientID + "  -->\r\n");
+			output.WriteLine(" <!--  END  " + this.ClientID + "  --> ");
+
+			output.Indent = indent;
 		}
 
 
