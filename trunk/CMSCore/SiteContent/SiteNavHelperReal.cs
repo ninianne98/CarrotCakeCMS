@@ -20,7 +20,7 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNavHelperReal() { }
 
-		private SiteNav MakeSiteNav(carrot_RootContent rc, carrot_Content c) {
+		internal static SiteNav MakeSiteNav(carrot_RootContent rc, carrot_Content c) {
 			var nav = new SiteNav();
 
 			if (rc == null) {
@@ -56,7 +56,7 @@ namespace Carrotware.CMS.Core {
 			return nav;
 		}
 
-		private SiteNav MakeSiteNav(vw_carrot_Content c) {
+		internal static SiteNav MakeSiteNav(vw_carrot_Content c) {
 			var nav = new SiteNav();
 
 			if (c == null) {

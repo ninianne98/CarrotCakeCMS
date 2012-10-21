@@ -32,9 +32,8 @@ namespace Carrotware.CMS.Core {
 
 		}
 
-
-		private ContentPage CreateContentPage(carrot_RootContent rc, carrot_Content c) {
-			var cont = new ContentPage();
+		internal static ContentPage CreateContentPage(carrot_RootContent rc, carrot_Content c) {
+			ContentPage cont = new ContentPage();
 
 			if (rc == null) {
 				rc = new carrot_RootContent();
@@ -79,7 +78,7 @@ namespace Carrotware.CMS.Core {
 			return cont;
 		}
 
-		private ContentPage CreateContentPage(vw_carrot_Content c) {
+		internal static ContentPage CreateContentPage(vw_carrot_Content c) {
 			var cont = new ContentPage();
 
 			if (c == null) {

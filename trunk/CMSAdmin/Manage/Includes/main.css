@@ -207,7 +207,7 @@ a:hover {
 	min-width: 720px;
 	margin: 0 auto 20px auto;
 	padding: 20px;
-	background: #FFFFFF url(/manage/images/content-bg.jpg) repeat-x left bottom;
+	background: #FFFFFF;
 }
 
 #content H1 {
