@@ -27,23 +27,25 @@ namespace Carrotware.CMS.Core {
 			return new Widget(rootWidgetID);
 		}
 
-		private Widget MakeWidget(vw_carrot_Widget ww) {
+		internal static Widget MakeWidget(vw_carrot_Widget ww) {
 
-			var w = new Widget();
+			Widget w = new Widget();
+			
+			if (ww != null) {
+				w.IsWidgetPendingDelete = false;
 
-			w.IsWidgetPendingDelete = false;
+				w.WidgetDataID = ww.WidgetDataID;
+				w.EditDate = ww.EditDate;
+				w.IsLatestVersion = ww.IsLatestVersion;
+				w.ControlProperties = ww.ControlProperties;
 
-			w.WidgetDataID = ww.WidgetDataID;
-			w.EditDate = ww.EditDate;
-			w.IsLatestVersion = ww.IsLatestVersion;
-			w.ControlProperties = ww.ControlProperties;
-
-			w.Root_WidgetID = ww.Root_WidgetID;
-			w.Root_ContentID = ww.Root_ContentID;
-			w.WidgetOrder = ww.WidgetOrder;
-			w.ControlPath = ww.ControlPath;
-			w.PlaceholderName = ww.PlaceholderName;
-			w.IsWidgetActive = ww.WidgetActive;
+				w.Root_WidgetID = ww.Root_WidgetID;
+				w.Root_ContentID = ww.Root_ContentID;
+				w.WidgetOrder = ww.WidgetOrder;
+				w.ControlPath = ww.ControlPath;
+				w.PlaceholderName = ww.PlaceholderName;
+				w.IsWidgetActive = ww.WidgetActive;
+			}
 
 			return w;
 		}
