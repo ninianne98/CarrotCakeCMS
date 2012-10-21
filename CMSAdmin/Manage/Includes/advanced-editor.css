@@ -235,6 +235,19 @@
 }
 
 /* edit menu for widgets */
+
+#cmsEditMenuList-inner p, #cmsEditMenuList-inner ul, #cmsEditMenuList-inner ol, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
+	line-height: normal;
+	margin: 0px;
+	padding: 1px;
+	text-align: left;
+	font-size: small;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	background-color: transparent;
+	border: 0px solid transparent;
+}
+
+
 #cmsEditMenuList {
 	float: right !important;
 	width: 24px !important;
@@ -360,6 +373,13 @@
 	background: transparent !important;
 }
 
+.cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren {
+	background: #8DC0A3 !important;
+}
+
+.cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner ul, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a:hover {
+	color: #ffffff !important;
+}
 
 p.cmsToolItem {
 	margin: 0;
