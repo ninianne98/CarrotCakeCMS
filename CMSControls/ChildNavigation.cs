@@ -46,7 +46,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected SiteNav GetParent(Guid? Root_ContentID) {
 			SiteNav pageNav = null;
 			if (Root_ContentID != null) {
-				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, new Guid(Root_ContentID.ToString()));
+				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, Root_ContentID.Value);
 			}
 			return pageNav;
 		}

@@ -78,6 +78,7 @@
     <Compile Include="ConfigHelper\ObjectProperty.cs" />
     <Compile Include="ConfigHelper\VirtualDirectory.cs" />
     <Compile Include="ConfigHelper\VirtualFileSystem.cs" />
+    <Compile Include="CompiledQueries.cs" />
     <Compile Include="SiteContent\ContentPage.cs" />
     <Compile Include="SiteContent\ContentPageExport.cs" />
     <Compile Include="SiteContent\ContentPageHelper.cs" />

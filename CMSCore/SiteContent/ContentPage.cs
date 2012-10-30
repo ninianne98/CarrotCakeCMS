@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using Carrotware.CMS.Data;
-using System.Text.RegularExpressions;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -56,10 +57,7 @@ namespace Carrotware.CMS.Core {
 
 		public void ResetHeartbeatLock() {
 
-			carrot_RootContent rc = (from r in db.carrot_RootContents
-									 where r.Root_ContentID == this.Root_ContentID
-									   && r.SiteID == this.SiteID
-									 select r).FirstOrDefault();
+			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
 
 			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
 			rc.Heartbeat_UserId = null;
@@ -68,10 +66,7 @@ namespace Carrotware.CMS.Core {
 
 		public void RecordHeartbeatLock(Guid currentUserID) {
 
-			carrot_RootContent rc = (from r in db.carrot_RootContents
-									 where r.Root_ContentID == this.Root_ContentID
-									 && r.SiteID == this.SiteID
-									 select r).FirstOrDefault();
+			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
 
 			rc.Heartbeat_UserId = currentUserID;
 			rc.EditHeartbeat = DateTime.Now;
@@ -95,25 +90,18 @@ namespace Carrotware.CMS.Core {
 			return bLock;
 		}
 
+
 		private void FixMeta() {
 			this.MetaKeyword = string.IsNullOrEmpty(this.MetaKeyword) ? String.Empty : this.MetaKeyword;
 			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? String.Empty : this.MetaDescription;
-
 		}
+
 
 		public void SavePageEdit() {
 
-			carrot_RootContent rc = (from r in db.carrot_RootContents
-									 where r.Root_ContentID == this.Root_ContentID
-									   && r.SiteID == this.SiteID
-									 select r).FirstOrDefault();
+			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
 
-			carrot_Content oldC = (from ct in db.carrot_Contents
-								   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-								   where ct.Root_ContentID == this.Root_ContentID
-									   && r.SiteID == this.SiteID
-									   && ct.IsLatestVersion == true
-								   select ct).FirstOrDefault();
+			carrot_Content oldC = CompiledQueries.cqGetLatestContent(db, this.SiteID, this.Root_ContentID);
 
 			bool bNew = false;
 
@@ -174,10 +162,7 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageAsDraft() {
 
-			carrot_RootContent rc = (from r in db.carrot_RootContents
-									 where r.Root_ContentID == this.Root_ContentID
-									   && r.SiteID == this.SiteID
-									 select r).FirstOrDefault();
+			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
 
 			bool bNew = false;
 
