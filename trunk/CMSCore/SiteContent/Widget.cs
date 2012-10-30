@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Linq;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,45 +28,39 @@ namespace Carrotware.CMS.Core {
 
 		public Widget(Guid rootWidgetID) {
 
-			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
-								   where r.Root_WidgetID == rootWidgetID
-									  && r.IsLatestVersion == true
-								   select r).FirstOrDefault();
+			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetLatestWidget(db, rootWidgetID);
 
-			SetVals(w);
+			SetVals(items.FirstOrDefault());
 		}
 
 		public void LoadPageWidgetVersion(Guid widgetDataID) {
 
-			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
-								   where r.WidgetDataID == widgetDataID
-								   select r).FirstOrDefault();
+			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgetData(db, widgetDataID);
 
+			SetVals(items.FirstOrDefault());
+		}
+
+
+		public Widget(vw_carrot_Widget w) {
 			SetVals(w);
 		}
 
-		public Widget(carrot_WidgetData w) {
-			SetVals(w);
-		}
+		private void SetVals(vw_carrot_Widget w) {
 
-		private void SetVals(carrot_WidgetData w) {
+			if (w != null) {
+				this.IsWidgetPendingDelete = false;
 
-			vw_carrot_Widget ww = db.vw_carrot_Widgets.Where(x => x.Root_WidgetID == w.Root_WidgetID && x.IsLatestVersion == true).FirstOrDefault();
+				this.WidgetDataID = w.WidgetDataID;
+				this.EditDate = w.EditDate;
+				this.IsLatestVersion = w.IsLatestVersion;
+				this.ControlProperties = w.ControlProperties;
 
-			this.IsWidgetPendingDelete = false;
-
-			this.WidgetDataID = w.WidgetDataID;
-			this.EditDate = w.EditDate;
-			this.IsLatestVersion = w.IsLatestVersion;
-			this.ControlProperties = w.ControlProperties;
-
-			if (ww != null) {
-				this.Root_WidgetID = ww.Root_WidgetID;
-				this.Root_ContentID = ww.Root_ContentID;
-				this.WidgetOrder = ww.WidgetOrder;
-				this.ControlPath = ww.ControlPath;
-				this.PlaceholderName = ww.PlaceholderName;
-				this.IsWidgetActive = ww.WidgetActive;
+				this.Root_WidgetID = w.Root_WidgetID;
+				this.Root_ContentID = w.Root_ContentID;
+				this.WidgetOrder = w.WidgetOrder;
+				this.ControlPath = w.ControlPath;
+				this.PlaceholderName = w.PlaceholderName;
+				this.IsWidgetActive = w.WidgetActive;
 			}
 		}
 
@@ -85,10 +80,7 @@ namespace Carrotware.CMS.Core {
 		public void Save() {
 
 			if (!this.IsWidgetPendingDelete) {
-				carrot_Widget w = (from r in db.carrot_Widgets
-								   orderby r.WidgetOrder
-								   where r.Root_WidgetID == this.Root_WidgetID
-								   select r).FirstOrDefault();
+				carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID).FirstOrDefault();
 
 				bool bAdd = false;
 				if (w == null) {
@@ -115,10 +107,7 @@ namespace Carrotware.CMS.Core {
 				wd.ControlProperties = this.ControlProperties;
 				wd.EditDate = DateTime.Now;
 
-				carrot_WidgetData oldWD = (from ww in db.carrot_WidgetDatas
-										   where ww.Root_WidgetID == w.Root_WidgetID
-											  && ww.IsLatestVersion == true
-										   select ww).FirstOrDefault();
+				carrot_WidgetData oldWD = CompiledQueries.cqGetWidgetDataByRootID(db, this.Root_WidgetID).FirstOrDefault();
 
 				//only add a new entry if the widget has some sort of change in the data stored.
 				if (oldWD != null) {
@@ -144,26 +133,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public void Delete() {
-			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
-								   where r.WidgetDataID == this.WidgetDataID
-								   select r).FirstOrDefault();
-
-			if (w != null) {
-				db.carrot_WidgetDatas.DeleteOnSubmit(w);
-				db.SubmitChanges();
-			}
-		}
-
 		public void DeleteAll() {
 
-			List<carrot_WidgetData> w1 = (from r in db.carrot_WidgetDatas
-										  where r.Root_WidgetID == this.Root_WidgetID
-										  select r).ToList();
+			List<carrot_WidgetData> w1 = CompiledQueries.cqGetWidgetDataByRootAll(db, this.Root_WidgetID).ToList();
 
-			List<carrot_Widget> w2 = (from r in db.carrot_Widgets
-									  where r.Root_WidgetID == this.Root_WidgetID
-									  select r).ToList();
+			List<carrot_Widget> w2 = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID).ToList();
 
 			bool bPendingDel = false;
 
@@ -188,9 +162,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public void Disable() {
-			carrot_Widget w = (from r in db.carrot_Widgets
-							   where r.Root_WidgetID == this.Root_WidgetID
-							   select r).FirstOrDefault();
+			carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID).FirstOrDefault();
 
 			if (w != null) {
 				w.WidgetActive = false;

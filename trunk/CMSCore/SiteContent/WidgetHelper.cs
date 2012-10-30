@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
-using System.Data;
 using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
@@ -30,7 +31,7 @@ namespace Carrotware.CMS.Core {
 		internal static Widget MakeWidget(vw_carrot_Widget ww) {
 
 			Widget w = new Widget();
-			
+
 			if (ww != null) {
 				w.IsWidgetPendingDelete = false;
 
@@ -50,14 +51,13 @@ namespace Carrotware.CMS.Core {
 			return w;
 		}
 
-		public List<Widget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
-			var w = (from r in db.vw_carrot_Widgets
-					 orderby r.WidgetOrder
-					 where r.Root_ContentID == rootContentID
-						&& r.IsLatestVersion == true
-						&& (r.WidgetActive == bActiveOnly || bActiveOnly == null)
-					 select MakeWidget(r)).ToList();
 
+		public List<Widget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
+
+			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgets(db, rootContentID, bActiveOnly);
+
+			List<Widget> w = (from r in items
+							  select MakeWidget(r)).ToList();
 			return w;
 		}
 
@@ -65,11 +65,11 @@ namespace Carrotware.CMS.Core {
 		public void UpdateContentWidgets(Guid rootContentID) {
 
 			var ww = (from rr in db.carrot_Widgets
-					 orderby rr.WidgetOrder
-					 where rr.Root_ContentID == rootContentID
-					 && (rr.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")
-							|| rr.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx"))
-					 select rr).ToList();
+					  orderby rr.WidgetOrder
+					  where rr.Root_ContentID == rootContentID
+					  && (rr.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")
+							 || rr.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx"))
+					  select rr).ToList();
 
 			bool bEdit = false;
 
@@ -90,18 +90,18 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
-			var w = (from r in db.vw_carrot_Widgets
-					 orderby r.EditDate descending
-					 where r.Root_WidgetID == rootWidgetID
-					 select MakeWidget(r)).ToList();
+			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgetVersionHistory(db, rootWidgetID);
+
+			List<Widget> w = (from r in items
+							  select MakeWidget(r)).ToList();
 
 			return w;
 		}
 
+
 		public Widget GetWidgetVersion(Guid widgetDataID) {
-			var w = (from r in db.vw_carrot_Widgets
-					 where r.WidgetDataID == widgetDataID
-					 select MakeWidget(r)).FirstOrDefault();
+			Widget w = (from r in CompiledQueries.cqGetWidgetData(db, widgetDataID)
+						select MakeWidget(r)).FirstOrDefault();
 
 			return w;
 		}
