@@ -24,10 +24,16 @@ namespace Carrotware.CMS.Core {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public Widget() { }
+		public Widget() {
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
+		}
 
 		public Widget(Guid rootWidgetID) {
-
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
 			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetLatestWidget(db, rootWidgetID);
 
 			SetVals(items.FirstOrDefault());
@@ -42,6 +48,9 @@ namespace Carrotware.CMS.Core {
 
 
 		public Widget(vw_carrot_Widget w) {
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
 			SetVals(w);
 		}
 

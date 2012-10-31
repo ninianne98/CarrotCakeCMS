@@ -23,7 +23,9 @@ namespace Carrotware.CMS.Core {
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
 		public ContentPage() {
-
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
 		}
 
 

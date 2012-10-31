@@ -19,7 +19,11 @@ namespace Carrotware.CMS.Core {
 	public class SiteNavHelperReal : IDisposable, ISiteNavHelper {
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public SiteNavHelperReal() { }
+		public SiteNavHelperReal() {
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
+		}
 
 		internal static SiteNav MakeSiteNav(carrot_RootContent rc, carrot_Content c) {
 			var nav = new SiteNav();
