@@ -23,7 +23,11 @@ namespace Carrotware.CMS.Core {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public SiteData() { }
+		public SiteData() {
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
+		}
 
 		public SiteData(carrot_Site s) {
 

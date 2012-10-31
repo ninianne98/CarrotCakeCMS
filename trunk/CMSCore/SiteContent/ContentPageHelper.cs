@@ -30,7 +30,9 @@ namespace Carrotware.CMS.Core {
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
 		public ContentPageHelper() {
-
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
 		}
 
 		internal static ContentPage CreateContentPage(carrot_RootContent rc, carrot_Content c) {
@@ -512,8 +514,10 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPage GetLatestContent(Guid siteID, Guid rootContentID) {
 
-			ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByID(db, siteID, null, rootContentID)
-								   select CreateContentPage(ct)).FirstOrDefault();
+			//ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByID(db, siteID, null, rootContentID)
+			//                       select CreateContentPage(ct)).FirstOrDefault();
+
+			ContentPage content = CompiledQueries.cqGetLatestContentByID(db, siteID, null, rootContentID).Select(ct => CreateContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -522,8 +526,11 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPage GetLatestContent(Guid siteID, bool? active, string sPage) {
 
-			ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByURL(db, siteID, active, sPage)
-								   select CreateContentPage(ct)).FirstOrDefault();
+			//ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByURL(db, siteID, active, sPage)
+			//                       select CreateContentPage(ct)).FirstOrDefault();
+
+			ContentPage content = CompiledQueries.cqGetLatestContentByURL(db, siteID, active, sPage).Select(ct => CreateContentPage(ct)).FirstOrDefault();
+
 			return content;
 		}
 
@@ -531,8 +538,10 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPage FindHome(Guid siteID) {
 
-			ContentPage content = (from ct in CompiledQueries.cqFindHome(db, siteID, true)
-								   select CreateContentPage(ct)).FirstOrDefault();
+			//ContentPage content = (from ct in CompiledQueries.cqFindHome(db, siteID, true)
+			//                       select CreateContentPage(ct)).FirstOrDefault();
+
+			ContentPage content = CompiledQueries.cqFindHome(db, siteID, true).Select(ct => CreateContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -548,8 +557,10 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
 
-			ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByURL(db, siteID, null, urlFileName)
-								   select CreateContentPage(ct)).FirstOrDefault();
+			//ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByURL(db, siteID, null, urlFileName)
+			//                       select CreateContentPage(ct)).FirstOrDefault();
+
+			ContentPage content = CompiledQueries.cqGetLatestContentByURL(db, siteID, null, urlFileName).Select(ct => CreateContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}
@@ -558,10 +569,12 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage FindHome(Guid siteID, bool? active) {
-			IQueryable<vw_carrot_Content> items = CompiledQueries.cqFindHome(db, siteID, active);
+			//IQueryable<vw_carrot_Content> items = CompiledQueries.cqFindHome(db, siteID, active);
 
-			ContentPage content = (from ct in items
-								   select CreateContentPage(ct)).FirstOrDefault();
+			//ContentPage content = (from ct in items
+			//                       select CreateContentPage(ct)).FirstOrDefault();
+
+			ContentPage content = CompiledQueries.cqFindHome(db, siteID, active).Select(ct => CreateContentPage(ct)).FirstOrDefault();
 
 			return content;
 		}

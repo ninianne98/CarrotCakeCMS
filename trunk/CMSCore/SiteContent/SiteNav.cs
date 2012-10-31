@@ -20,7 +20,11 @@ namespace Carrotware.CMS.Core {
 	public class SiteNav : IDisposable, ISiteContent {
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public SiteNav() { }
+		public SiteNav() {
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
+		}
 
 
 		public ContentPage GetContentPage() {

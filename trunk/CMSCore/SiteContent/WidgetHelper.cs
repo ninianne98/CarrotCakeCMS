@@ -22,7 +22,11 @@ namespace Carrotware.CMS.Core {
 
 		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
 
-		public WidgetHelper() { }
+		public WidgetHelper() {
+#if DEBUG
+			db.Log = new DebugTextWriter();
+#endif
+		}
 
 		public Widget Get(Guid rootWidgetID) {
 			return new Widget(rootWidgetID);
