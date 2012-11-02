@@ -130,7 +130,11 @@ namespace Carrotware.Web.UI.Controls {
 
 			output.Write("\r\n<script  type=\"text/javascript\">\r\n");
 			output.Write("\r\nfunction Show" + this.ClientID + "(){\r\n");
-			output.Write("alert('" + key.Substring(0, 3) + "' + '" + key.Substring(3) + "');\r\n");
+			if (!string.IsNullOrEmpty(key)) {
+				output.Write("alert('" + key.Substring(0, 3) + "' + '" + key.Substring(3) + "');\r\n");
+			} else {
+				output.Write("alert('no code');\r\n");
+			}
 			output.Write("}\r\n");
 			output.Write("</script>\r\n");
 
