@@ -22,35 +22,37 @@ namespace Carrotware.CMS.Core {
 
 	public class Widget : IDisposable {
 
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+
 
 		public Widget() {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 		}
 
 		public Widget(Guid rootWidgetID) {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
-			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetLatestWidget(db, rootWidgetID);
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
+			vw_carrot_Widget item = CompiledQueries.cqGetLatestWidget(db, rootWidgetID);
 
-			SetVals(items.FirstOrDefault());
+			SetVals(item);
 		}
 
 		public void LoadPageWidgetVersion(Guid widgetDataID) {
 
-			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgetData(db, widgetDataID);
+			vw_carrot_Widget item = CompiledQueries.cqGetWidgetDataByID_VW(db, widgetDataID);
 
-			SetVals(items.FirstOrDefault());
+			SetVals(item);
 		}
 
 
 		public Widget(vw_carrot_Widget w) {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 			SetVals(w);
 		}
 
@@ -89,7 +91,7 @@ namespace Carrotware.CMS.Core {
 		public void Save() {
 
 			if (!this.IsWidgetPendingDelete) {
-				carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID).FirstOrDefault();
+				carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
 
 				bool bAdd = false;
 				if (w == null) {
@@ -116,7 +118,7 @@ namespace Carrotware.CMS.Core {
 				wd.ControlProperties = this.ControlProperties;
 				wd.EditDate = DateTime.Now;
 
-				carrot_WidgetData oldWD = CompiledQueries.cqGetWidgetDataByRootID(db, this.Root_WidgetID).FirstOrDefault();
+				carrot_WidgetData oldWD = CompiledQueries.cqGetWidgetDataByRootID(db, this.Root_WidgetID);
 
 				//only add a new entry if the widget has some sort of change in the data stored.
 				if (oldWD != null) {
@@ -146,7 +148,7 @@ namespace Carrotware.CMS.Core {
 
 			List<carrot_WidgetData> w1 = CompiledQueries.cqGetWidgetDataByRootAll(db, this.Root_WidgetID).ToList();
 
-			List<carrot_Widget> w2 = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID).ToList();
+			carrot_Widget w2 = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
 
 			bool bPendingDel = false;
 
@@ -158,10 +160,12 @@ namespace Carrotware.CMS.Core {
 			}
 
 			if (w2 != null) {
-				foreach (carrot_Widget w in w2) {
-					db.carrot_Widgets.DeleteOnSubmit(w);
-					bPendingDel = true;
-				}
+				db.carrot_Widgets.DeleteOnSubmit(w2);
+				bPendingDel = true;
+				//foreach (carrot_Widget w in w2) {
+				//    db.carrot_Widgets.DeleteOnSubmit(w);
+				//    bPendingDel = true;
+				//}
 			}
 
 			if (bPendingDel) {
@@ -171,7 +175,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public void Disable() {
-			carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID).FirstOrDefault();
+			carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
 
 			if (w != null) {
 				w.WidgetActive = false;

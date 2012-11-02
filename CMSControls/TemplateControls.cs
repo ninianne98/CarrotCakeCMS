@@ -113,7 +113,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public bool IsSelected {
 			get {
 				bool s = false;
-				try { s = (bool)ViewState["IsSelected"]; } catch { }
+				if (ViewState["IsSelected"] != null) {
+					try { s = (bool)ViewState["IsSelected"]; } catch { }
+				}
 				return s;
 			}
 			set {
@@ -129,7 +131,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public bool UseDefaultText {
 			get {
 				bool s = true;
-				try { s = (bool)ViewState["UseDefaultText"]; } catch { }
+				if (ViewState["UseDefaultText"] != null) {
+					try { s = (bool)ViewState["UseDefaultText"]; } catch { }
+				}
 				return s;
 			}
 			set {
@@ -146,7 +150,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public Guid ContentID {
 			get {
 				Guid s = Guid.Empty;
-				try { s = new Guid(ViewState["ContentID"].ToString()); } catch { }
+				if (ViewState["ContentID"] != null) {
+					try { s = new Guid(ViewState["ContentID"].ToString()); } catch { }
+				}
 				return s;
 			}
 			set {
@@ -319,7 +325,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public bool IsSelected {
 			get {
 				bool s = false;
-				try { s = (bool)ViewState["IsSelected"]; } catch { }
+				if (ViewState["IsSelected"] != null) {
+					try { s = (bool)ViewState["IsSelected"]; } catch { }
+				}
 				return s;
 			}
 			set {

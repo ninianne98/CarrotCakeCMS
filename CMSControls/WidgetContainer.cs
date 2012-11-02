@@ -31,7 +31,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public bool IsAdminMode {
 			get {
 				bool s = false;
-				try { s = (bool)ViewState["IsAdminMode"]; } catch { }
+				if (ViewState["IsAdminMode"] != null) {
+					try { s = (bool)ViewState["IsAdminMode"]; } catch { }
+				}
 				return s;
 			}
 			set {

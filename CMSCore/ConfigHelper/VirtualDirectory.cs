@@ -31,7 +31,9 @@ namespace Carrotware.CMS.Core {
 		public static bool HasRegisteredRoutes {
 			get {
 				bool c = false;
-				try { c = (bool)HttpContext.Current.Cache[ContentKey]; } catch { }
+				if (HttpContext.Current.Cache[ContentKey] != null) {
+					try { c = (bool)HttpContext.Current.Cache[ContentKey]; } catch { }
+				}
 				return c;
 			}
 			set {

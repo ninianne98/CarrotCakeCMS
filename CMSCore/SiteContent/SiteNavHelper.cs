@@ -120,7 +120,7 @@ namespace Carrotware.CMS.Core {
 		public static List<string> GetSiteDirectoryPaths() {
 			List<string> lstContent = null;
 
-			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 
 				lstContent = (from ct in _db.vw_carrot_Contents
 							  where ct.IsLatestVersion == true

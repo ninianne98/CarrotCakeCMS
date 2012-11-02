@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Admin {
 			ContentPage p = null;
 
 			if (guidRootID != Guid.Empty) {
-				p = pageHelper.GetLatestContent(SiteID, guidRootID);
+				p = pageHelper.FindContentByID(SiteID, guidRootID);
 				if (!IsPostBack) {
 					LoadGrid();
 				}
@@ -76,7 +76,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected void gvPages_DataBound(object sender, EventArgs e) {
 
-			var current = pageHelper.GetLatestContent(SiteID, guidRootID);
+			var current = pageHelper.FindContentByID(SiteID, guidRootID);
 
 			foreach (GridViewRow dgItem in gvPages.Rows) {
 				Image imgActive = (Image)dgItem.FindControl("imgActive");

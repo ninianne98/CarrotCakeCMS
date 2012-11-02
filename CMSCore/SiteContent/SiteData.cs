@@ -21,12 +21,14 @@ using Carrotware.CMS.Data;
 namespace Carrotware.CMS.Core {
 	public class SiteData : IDisposable {
 
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+
 
 		public SiteData() {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
+//#if DEBUG
+//            db.Log = new DebugTextWriter();
+//#endif
 		}
 
 		public SiteData(carrot_Site s) {

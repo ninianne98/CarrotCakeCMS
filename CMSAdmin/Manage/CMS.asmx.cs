@@ -31,7 +31,8 @@ namespace Carrotware.CMS.UI.Admin {
 
 	public class CMS : System.Web.Services.WebService {
 
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 		private ContentPageHelper pageHelper = new ContentPageHelper();
 		private WidgetHelper widgetHelper = new WidgetHelper();
@@ -132,20 +133,19 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		private void LoadGuids() {
-			if (!string.IsNullOrEmpty(CurrentEditPage)) {
-				ContentPageHelper pageHelper = new ContentPageHelper();
-				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, CurrentEditPage.ToString().ToLower());
-				CurrentPageGuid = filePage.Root_ContentID;
-			} else {
-				if (CurrentPageGuid != Guid.Empty) {
-					ContentPageHelper pageHelper = new ContentPageHelper();
-					filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, CurrentPageGuid);
-					CurrentEditPage = filePage.FileName;
+			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+				if (!string.IsNullOrEmpty(CurrentEditPage)) {
+					filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, CurrentEditPage);
+					CurrentPageGuid = filePage.Root_ContentID;
 				} else {
-					filePage = new ContentPage();
+					if (CurrentPageGuid != Guid.Empty) {
+						filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, CurrentPageGuid);
+						CurrentEditPage = filePage.FileName;
+					} else {
+						filePage = new ContentPage();
+					}
 				}
 			}
-
 		}
 
 
@@ -403,11 +403,11 @@ namespace Carrotware.CMS.UI.Admin {
 					return "FAIL";
 				}
 
-				var fn = pageHelper.FindByFilename(SiteData.CurrentSiteID, TheFileName);
+				ContentPage fn = pageHelper.FindByFilename(SiteData.CurrentSiteID, TheFileName);
 
-				var cp = pageHelper.GetLatestContent(SiteData.CurrentSiteID, CurrentPageGuid);
+				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSiteID, CurrentPageGuid);
 
-				if (cp == null) {
+				if (cp == null && CurrentPageGuid != Guid.Empty) {
 					cp = pageHelper.GetVersion(SiteData.CurrentSiteID, CurrentPageGuid);
 				}
 

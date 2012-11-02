@@ -18,12 +18,14 @@ using System.Text.RegularExpressions;
 namespace Carrotware.CMS.Core {
 
 	public class SiteNav : IDisposable, ISiteContent {
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+
 
 		public SiteNav() {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
+//#if DEBUG
+//            db.Log = new DebugTextWriter();
+//#endif
 		}
 
 
@@ -33,7 +35,7 @@ namespace Carrotware.CMS.Core {
 				cp = ContentPageHelper.GetSamplerView();
 			} else {
 				using (ContentPageHelper cph = new ContentPageHelper()) {
-					cp = cph.GetLatestContent(this.SiteID, this.Root_ContentID);
+					cp = cph.FindContentByID(this.SiteID, this.Root_ContentID);
 				}
 			}
 			return cp;

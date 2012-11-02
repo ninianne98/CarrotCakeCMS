@@ -18,7 +18,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			ContentPage currentPage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName);
+			ContentPage currentPage = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 			if (SiteData.IsPageSampler && currentPage == null) {
 				currentPage = ContentPageHelper.GetSamplerView();
 			}
@@ -49,10 +49,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					lnkParent.Visible = false;
 				}
 
-				var filePage = pageHelper.FindHome(SiteData.CurrentSiteID, null);
+				ContentPage homePage = pageHelper.FindHome(SiteData.CurrentSiteID);
 
 				List<SiteNav> lstNavTop = null;
-				if (filePage != null && filePage.Root_ContentID == CurrentPageID) {
+				if (homePage != null && homePage.Root_ContentID == CurrentPageID) {
 					lstNavTop = (from n in navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor)
 								 where n.Root_ContentID != CurrentPageID
 								 orderby n.NavOrder

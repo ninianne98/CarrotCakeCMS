@@ -20,12 +20,14 @@ namespace Carrotware.CMS.Core {
 
 	public class WidgetHelper : IDisposable {
 
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+
 
 		public WidgetHelper() {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 		}
 
 		public Widget Get(Guid rootWidgetID) {
@@ -58,7 +60,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<Widget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
 
-			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgets(db, rootContentID, bActiveOnly);
+			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetLatestWidgets(db, rootContentID, bActiveOnly);
 
 			List<Widget> w = (from r in items
 							  select MakeWidget(r)).ToList();
@@ -94,7 +96,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
-			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgetVersionHistory(db, rootWidgetID);
+			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgetVersionHistory_VW(db, rootWidgetID);
 
 			List<Widget> w = (from r in items
 							  select MakeWidget(r)).ToList();
@@ -104,22 +106,21 @@ namespace Carrotware.CMS.Core {
 
 
 		public Widget GetWidgetVersion(Guid widgetDataID) {
-			Widget w = (from r in CompiledQueries.cqGetWidgetData(db, widgetDataID)
-						select MakeWidget(r)).FirstOrDefault();
+			Widget w = MakeWidget(CompiledQueries.cqGetWidgetDataByID_VW(db, widgetDataID));
 
 			return w;
 		}
 
 		public void RemoveVersions(List<Guid> lstDel) {
 
-			var oldW = (from w in db.carrot_WidgetDatas
-						orderby w.EditDate descending
-						where lstDel.Contains(w.WidgetDataID)
-						&& w.IsLatestVersion != true
-						select w).ToList();
+			IQueryable<carrot_WidgetData> oldW = (from w in db.carrot_WidgetDatas
+												  orderby w.EditDate descending
+												  where lstDel.Contains(w.WidgetDataID)
+												  && w.IsLatestVersion != true
+												  select w);
 
-			if (oldW.Count > 0) {
-				foreach (var c in oldW) {
+			if (oldW.Count() > 0) {
+				foreach (carrot_WidgetData c in oldW) {
 					db.carrot_WidgetDatas.DeleteOnSubmit(c);
 				}
 				db.SubmitChanges();
@@ -127,9 +128,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void Delete(Guid widgetDataID) {
-			var w = (from r in db.carrot_WidgetDatas
-					 where r.WidgetDataID == widgetDataID
-					 select r).FirstOrDefault();
+			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
+								   where r.WidgetDataID == widgetDataID
+								   select r).FirstOrDefault();
 
 			if (w != null) {
 				db.carrot_WidgetDatas.DeleteOnSubmit(w);
@@ -138,9 +139,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void Disable(Guid rootWidgetID) {
-			var w = (from r in db.carrot_Widgets
-					 where r.Root_WidgetID == rootWidgetID
-					 select r).FirstOrDefault();
+			carrot_Widget w = (from r in db.carrot_Widgets
+							   where r.Root_WidgetID == rootWidgetID
+							   select r).FirstOrDefault();
 
 			if (w != null) {
 				w.WidgetActive = false;
@@ -150,25 +151,25 @@ namespace Carrotware.CMS.Core {
 
 		public void DeleteAll(Guid rootWidgetID) {
 
-			var w1 = (from r in db.carrot_WidgetDatas
-					  where r.Root_WidgetID == rootWidgetID
-					  select r).ToList();
+			IQueryable<carrot_WidgetData> w1 = (from r in db.carrot_WidgetDatas
+												where r.Root_WidgetID == rootWidgetID
+												select r);
 
-			var w2 = (from r in db.carrot_Widgets
-					  where r.Root_WidgetID == rootWidgetID
-					  select r).ToList();
+			IQueryable<carrot_Widget> w2 = (from r in db.carrot_Widgets
+											where r.Root_WidgetID == rootWidgetID
+											select r);
 
 			bool bPendingDel = false;
 
 			if (w1 != null) {
-				foreach (var w in w1) {
+				foreach (carrot_WidgetData w in w1) {
 					db.carrot_WidgetDatas.DeleteOnSubmit(w);
 					bPendingDel = true;
 				}
 			}
 
 			if (w2 != null) {
-				foreach (var w in w2) {
+				foreach (carrot_Widget w in w2) {
 					db.carrot_Widgets.DeleteOnSubmit(w);
 					bPendingDel = true;
 				}

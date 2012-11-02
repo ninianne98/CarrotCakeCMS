@@ -25,8 +25,13 @@ namespace Carrotware.CMS.Core {
 
 	public class CMSConfigHelper : IDisposable {
 
-		public CMSConfigHelper() {
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
+		public CMSConfigHelper() {
+//#if DEBUG
+//            db.Log = new DebugTextWriter();
+//#endif
 		}
 
 		private enum CMSConfigFileType {
@@ -39,7 +44,6 @@ namespace Carrotware.CMS.Core {
 			SiteMapping
 		}
 
-		private CarrotCMSDataContext db = new CarrotCMSDataContext();
 
 		#region IDisposable Members
 
@@ -621,14 +625,14 @@ namespace Carrotware.CMS.Core {
 		public void OverrideKey(Guid guidContentID) {
 			filePage = null;
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
+				filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidContentID);
 			}
 		}
 
 		public void OverrideKey(string sPageName) {
 			filePage = null;
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, sPageName.ToLower());
+				filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, sPageName);
 			}
 		}
 
@@ -637,14 +641,14 @@ namespace Carrotware.CMS.Core {
 		protected void LoadGuids() {
 			if (filePage == null) {
 				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-					if (SiteData.CurrentScriptName.ToString().ToLower().StartsWith("/manage/")) {
+					if (SiteData.CurrentScriptName.ToLower().StartsWith("/manage/")) {
 						Guid guidPage = Guid.Empty;
 						if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
 							guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
 						}
-						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidPage);
+						filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidPage);
 					} else {
-						filePage = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, SiteData.CurrentScriptName.ToString().ToLower());
+						filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 					}
 					if (SiteData.IsPageSampler && filePage == null) {
 						filePage = ContentPageHelper.GetSamplerView();
@@ -713,7 +717,7 @@ namespace Carrotware.CMS.Core {
 
 		public static void SaveSerialized(Guid itemID, string sKey, string sData) {
 
-			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				bool bAdd = false;
 
 				var itm = (from c in _db.carrot_SerialCaches
@@ -746,7 +750,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string GetSerialized(Guid itemID, string sKey) {
 			string sData = "";
-			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 
 				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
@@ -765,7 +769,7 @@ namespace Carrotware.CMS.Core {
 
 		public static bool ClearSerialized(Guid itemID, string sKey) {
 			bool bRet = false;
-			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				var itm = (from c in _db.carrot_SerialCaches
 						   where c.ItemID == itemID
 						   && c.EditUserId == SecurityData.CurrentUserGuid

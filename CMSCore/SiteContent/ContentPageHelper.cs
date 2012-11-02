@@ -27,12 +27,14 @@ namespace Carrotware.CMS.Core {
 	public class ContentPageHelper : IDisposable {
 
 
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+
 
 		public ContentPageHelper() {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 		}
 
 		internal static ContentPage CreateContentPage(carrot_RootContent rc, carrot_Content c) {
@@ -169,23 +171,23 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<ContentPage> GetLatestContentList(Guid siteID) {
-
-			List<ContentPage> lstContent = (from ct in CompiledQueries.cqGetLatestContentListA(db, siteID, null)
-											select CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CompiledQueries.cqGetLatestContentListA(db, siteID, null).Select(ct => CreateContentPage(ct)).ToList();
 
 			return lstContent;
 		}
 
 
-		public int GetContentPagedListCount(Guid siteID, bool bActiveOnly) {
-
-			IQueryable<vw_carrot_Content> items = CompiledQueries.cqGetLatestContentListB(db, siteID, bActiveOnly);
-
-			int iCount = items.Count();
+		public int GetSitePageCount(Guid siteID, bool bActiveOnly) {
+			int iCount = CompiledQueries.cqGetLatestContentListB(db, siteID, bActiveOnly).Count();
 
 			return iCount;
 		}
 
+		public int GetSitePageCount(Guid siteID) {
+			int iCount = CompiledQueries.cqGetLatestContentListB(db, siteID, false).Count();
+
+			return iCount;
+		}
 
 		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageNumber, string sortField, string sortDir) {
 			return GetLatestContentPagedList(siteID, bActiveOnly, 10, pageNumber, sortField, sortDir);
@@ -445,30 +447,20 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
 		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootContentID) {
-			List<ContentPage> content = (from ct in db.vw_carrot_Contents
-										 orderby ct.EditDate descending
-										 where ct.SiteID == siteID
-										  && ct.Root_ContentID == rootContentID
-										 select CreateContentPage(ct)).ToList();
+			List<ContentPage> content = CompiledQueries.cqGetVersionHistory(db, siteID, rootContentID).Select(ct => CreateContentPage(ct)).ToList();
+
 			return content;
 		}
 
 		public ContentPage GetVersion(Guid siteID, Guid contentID) {
-			ContentPage content = (from ct in db.vw_carrot_Contents
-								   orderby ct.EditDate descending
-								   where ct.SiteID == siteID
-									&& ct.ContentID == contentID
-								   select CreateContentPage(ct)).FirstOrDefault();
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetContentByContentID(db, siteID, contentID));
+
 			return content;
 		}
 
-
 		public List<ContentPage> GetLatestContentList(Guid siteID, bool? active) {
-
-			List<ContentPage> lstContent = (from ct in CompiledQueries.cqGetLatestContentListA(db, siteID, active)
-											select CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CompiledQueries.cqGetLatestContentListA(db, siteID, active).Select(ct => CreateContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -512,68 +504,31 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public ContentPage GetLatestContent(Guid siteID, Guid rootContentID) {
-
-			//ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByID(db, siteID, null, rootContentID)
-			//                       select CreateContentPage(ct)).FirstOrDefault();
-
-			ContentPage content = CompiledQueries.cqGetLatestContentByID(db, siteID, null, rootContentID).Select(ct => CreateContentPage(ct)).FirstOrDefault();
+		public ContentPage FindContentByID(Guid siteID, Guid rootContentID) {
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByID(db, siteID, null, rootContentID));
 
 			return content;
 		}
 
-
-
-		public ContentPage GetLatestContent(Guid siteID, bool? active, string sPage) {
-
-			//ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByURL(db, siteID, active, sPage)
-			//                       select CreateContentPage(ct)).FirstOrDefault();
-
-			ContentPage content = CompiledQueries.cqGetLatestContentByURL(db, siteID, active, sPage).Select(ct => CreateContentPage(ct)).FirstOrDefault();
-
-			return content;
-		}
-
-
-
-		public ContentPage FindHome(Guid siteID) {
-
-			//ContentPage content = (from ct in CompiledQueries.cqFindHome(db, siteID, true)
-			//                       select CreateContentPage(ct)).FirstOrDefault();
-
-			ContentPage content = CompiledQueries.cqFindHome(db, siteID, true).Select(ct => CreateContentPage(ct)).FirstOrDefault();
-
-			return content;
-		}
-
-
-		public int GetSitePageCount(Guid siteID) {
-			int content = (from r in db.carrot_RootContents
-						   where r.SiteID == siteID
-						   select r).Count();
+		public ContentPage GetLatestContentByURL(Guid siteID, bool? active, string sPage) {
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByURL(db, siteID, active, sPage));
 
 			return content;
 		}
 
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
-
-			//ContentPage content = (from ct in CompiledQueries.cqGetLatestContentByURL(db, siteID, null, urlFileName)
-			//                       select CreateContentPage(ct)).FirstOrDefault();
-
-			ContentPage content = CompiledQueries.cqGetLatestContentByURL(db, siteID, null, urlFileName).Select(ct => CreateContentPage(ct)).FirstOrDefault();
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByURL(db, siteID, null, urlFileName));
 
 			return content;
 		}
 
+		public ContentPage FindHome(Guid siteID) {
+			ContentPage content = CompiledQueries.cqFindHome(db, siteID, true).Select(ct => CreateContentPage(ct)).FirstOrDefault();
 
-
+			return content;
+		}
 
 		public ContentPage FindHome(Guid siteID, bool? active) {
-			//IQueryable<vw_carrot_Content> items = CompiledQueries.cqFindHome(db, siteID, active);
-
-			//ContentPage content = (from ct in items
-			//                       select CreateContentPage(ct)).FirstOrDefault();
-
 			ContentPage content = CompiledQueries.cqFindHome(db, siteID, active).Select(ct => CreateContentPage(ct)).FirstOrDefault();
 
 			return content;
