@@ -37,6 +37,7 @@ namespace Carrotware.CMS.Core {
 			//#endif
 		}
 
+		/*
 		internal static ContentPage CreateContentPage(carrot_RootContent rc, carrot_Content c) {
 			ContentPage cont = new ContentPage();
 
@@ -82,42 +83,40 @@ namespace Carrotware.CMS.Core {
 
 			return cont;
 		}
+		*/
 
 		internal static ContentPage CreateContentPage(vw_carrot_Content c) {
-			var cont = new ContentPage();
+			ContentPage cont = null;
 
-			if (c == null) {
-				c = new vw_carrot_Content();
-				c.Root_ContentID = Guid.NewGuid();
-				c.ContentID = c.Root_ContentID;
-				c.PageActive = true;
+			if (c != null) {
+				cont = new ContentPage();
+
+				cont.Root_ContentID = c.Root_ContentID;
+				cont.SiteID = c.SiteID;
+				cont.Heartbeat_UserId = c.Heartbeat_UserId;
+				cont.EditHeartbeat = c.EditHeartbeat;
+				cont.FileName = c.FileName;
+				cont.CreateDate = c.CreateDate;
+
+				cont.PageActive = c.PageActive;
+
+				cont.ContentID = c.ContentID;
+				cont.Parent_ContentID = c.Parent_ContentID;
+				cont.IsLatestVersion = c.IsLatestVersion.Value;
+				cont.TitleBar = c.TitleBar;
+				cont.NavMenuText = c.NavMenuText;
+				cont.PageHead = c.PageHead;
+				cont.PageText = c.PageText;
+				cont.LeftPageText = c.LeftPageText;
+				cont.RightPageText = c.RightPageText;
+				cont.NavOrder = c.NavOrder;
+				cont.EditUserId = c.EditUserId;
+				cont.EditDate = c.EditDate;
+				cont.TemplateFile = c.TemplateFile;
+
+				cont.MetaDescription = c.MetaDescription;
+				cont.MetaKeyword = c.MetaKeyword;
 			}
-
-			cont.Root_ContentID = c.Root_ContentID;
-			cont.SiteID = c.SiteID;
-			cont.Heartbeat_UserId = c.Heartbeat_UserId;
-			cont.EditHeartbeat = c.EditHeartbeat;
-			cont.FileName = c.FileName;
-			cont.CreateDate = c.CreateDate;
-
-			cont.PageActive = c.PageActive;
-
-			cont.ContentID = c.ContentID;
-			cont.Parent_ContentID = c.Parent_ContentID;
-			cont.IsLatestVersion = c.IsLatestVersion.Value;
-			cont.TitleBar = c.TitleBar;
-			cont.NavMenuText = c.NavMenuText;
-			cont.PageHead = c.PageHead;
-			cont.PageText = c.PageText;
-			cont.LeftPageText = c.LeftPageText;
-			cont.RightPageText = c.RightPageText;
-			cont.NavOrder = c.NavOrder;
-			cont.EditUserId = c.EditUserId;
-			cont.EditDate = c.EditDate;
-			cont.TemplateFile = c.TemplateFile;
-
-			cont.MetaDescription = c.MetaDescription;
-			cont.MetaKeyword = c.MetaKeyword;
 
 			return cont;
 		}

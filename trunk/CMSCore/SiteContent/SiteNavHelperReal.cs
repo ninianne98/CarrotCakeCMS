@@ -27,6 +27,7 @@ namespace Carrotware.CMS.Core {
 			//#endif
 		}
 
+		/*
 		internal static SiteNav MakeSiteNav(carrot_RootContent rc, carrot_Content c) {
 			var nav = new SiteNav();
 
@@ -62,33 +63,32 @@ namespace Carrotware.CMS.Core {
 
 			return nav;
 		}
+		*/
+
 
 		internal static SiteNav MakeSiteNav(vw_carrot_Content c) {
-			var nav = new SiteNav();
+			SiteNav nav = null;
 
-			if (c == null) {
-				c = new vw_carrot_Content();
-				c.Root_ContentID = Guid.NewGuid();
-				c.ContentID = c.Root_ContentID;
-				c.PageActive = true;
+			if (c != null) {
+				nav = new SiteNav();
+
+				nav.Root_ContentID = c.Root_ContentID;
+				nav.SiteID = c.SiteID;
+				nav.FileName = c.FileName;
+				nav.PageActive = c.PageActive;
+				nav.CreateDate = c.CreateDate;
+				nav.EditUserId = c.EditUserId;
+
+				nav.ContentID = c.ContentID;
+				nav.Parent_ContentID = c.Parent_ContentID;
+				nav.TitleBar = c.TitleBar;
+				nav.NavMenuText = c.NavMenuText;
+				nav.PageHead = c.PageHead;
+				nav.PageText = c.PageText;
+				nav.NavOrder = c.NavOrder;
+				nav.EditDate = c.EditDate;
+				nav.TemplateFile = c.TemplateFile;
 			}
-
-			nav.Root_ContentID = c.Root_ContentID;
-			nav.SiteID = c.SiteID;
-			nav.FileName = c.FileName;
-			nav.PageActive = c.PageActive;
-			nav.CreateDate = c.CreateDate;
-			nav.EditUserId = c.EditUserId;
-
-			nav.ContentID = c.ContentID;
-			nav.Parent_ContentID = c.Parent_ContentID;
-			nav.TitleBar = c.TitleBar;
-			nav.NavMenuText = c.NavMenuText;
-			nav.PageHead = c.PageHead;
-			nav.PageText = c.PageText;
-			nav.NavOrder = c.NavOrder;
-			nav.EditDate = c.EditDate;
-			nav.TemplateFile = c.TemplateFile;
 
 			return nav;
 		}
