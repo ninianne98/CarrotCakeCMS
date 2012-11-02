@@ -68,15 +68,20 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static Bitmap GetCachedCaptcha() {
-			var medGreen = ColorTranslator.FromHtml("#69785F");
-			var medOrange = ColorTranslator.FromHtml("#C46314");
+			Color medGreen = ColorTranslator.FromHtml("#69785F");
+			Color medOrange = ColorTranslator.FromHtml("#C46314");
 			return GetCaptchaImage(medGreen, Color.White, medOrange);
 		}
 
 		public static string GetKey() {
 			string guid = "";
 			try {
-				guid = HttpContext.Current.Session["captcha_key"].ToString();
+				if (HttpContext.Current.Session["captcha_key"] != null) {
+					guid = HttpContext.Current.Session["captcha_key"].ToString();
+				} else {
+					guid = Guid.NewGuid().ToString().Substring(0, 6);
+					HttpContext.Current.Session["captcha_key"] = guid;
+				}
 			} catch {
 				guid = Guid.NewGuid().ToString().Substring(0, 6);
 				HttpContext.Current.Session["captcha_key"] = guid;

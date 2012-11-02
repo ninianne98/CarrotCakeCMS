@@ -274,7 +274,11 @@ namespace Carrotware.Web.UI.Controls {
 		public DateTime CalendarDate {
 			get {
 				DateTime c = DateTime.Today;
-				try { c = Convert.ToDateTime(ViewState["CalendarDate"].ToString()); } catch { ViewState["CalendarDate"] = DateTime.Today.ToString(); }
+				if (ViewState["CalendarDate"] != null) {
+					try { c = Convert.ToDateTime(ViewState["CalendarDate"].ToString()); } catch { }
+				} else {
+					ViewState["CalendarDate"] = DateTime.Today.ToString();
+				}
 				YearNumber = c.Year;
 				MonthNumber = c.Month;
 				return c;
