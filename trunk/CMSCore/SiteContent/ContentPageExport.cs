@@ -31,7 +31,7 @@ namespace Carrotware.CMS.Core {
 			List<Widget> widgets = null;
 
 			using (ContentPageHelper cph = new ContentPageHelper()) {
-				cp = cph.GetLatestContent(SiteData.CurrentSiteID, rootContentID);
+				cp = cph.FindContentByID(SiteData.CurrentSiteID, rootContentID);
 			}
 
 			using (WidgetHelper pwh = new WidgetHelper()) {
@@ -68,9 +68,9 @@ namespace Carrotware.CMS.Core {
 			ParentFileName = "";
 
 			if (ThePage.Parent_ContentID != null) {
-				var parent = new ContentPage();
+				ContentPage parent = new ContentPage();
 				using (ContentPageHelper cph = new ContentPageHelper()) {
-					parent = cph.GetLatestContent(SiteData.CurrentSiteID, (Guid)ThePage.Parent_ContentID);
+					parent = cph.FindContentByID(SiteData.CurrentSiteID, ThePage.Parent_ContentID.Value);
 				}
 				ParentFileName = parent.FileName;
 				OriginalParentContentID = parent.Root_ContentID;

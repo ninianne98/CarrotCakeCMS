@@ -20,7 +20,8 @@ using Carrotware.CMS.UI.Base;
 namespace Carrotware.CMS.UI.Admin {
 	public class AdminBasePage : BasePage {
 
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		protected CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//protected CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {

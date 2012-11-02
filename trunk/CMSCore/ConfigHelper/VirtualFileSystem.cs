@@ -50,7 +50,7 @@ namespace Carrotware.CMS.Core {
 
 			if (context.User.Identity.IsAuthenticated) {
 				try {
-					if (!string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
+					if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
 						if (context.Request.UrlReferrer.AbsolutePath.ToLower().Contains(FormsAuthentication.LoginUrl.ToLower())
 							|| FormsAuthentication.LoginUrl.ToLower() == sFileRequested.ToLower()) {
 							sFileRequested = "/Manage/default.aspx";
@@ -188,9 +188,11 @@ namespace Carrotware.CMS.Core {
 		void hand_PreRenderComplete(object sender, EventArgs e) {
 			if (!bAlreadyDone) {
 				try {
-					HttpContext.Current.RewritePath(sVirtualReqFile,
-							HttpContext.Current.Items[REQ_PATH].ToString(),
-							HttpContext.Current.Items[REQ_QUERY].ToString());
+					if (HttpContext.Current.Items[REQ_PATH] != null && HttpContext.Current.Items[REQ_QUERY] != null) {
+						HttpContext.Current.RewritePath(sVirtualReqFile,
+								HttpContext.Current.Items[REQ_PATH].ToString(),
+								HttpContext.Current.Items[REQ_QUERY].ToString());
+					}
 				} catch (Exception ex) { }
 				bAlreadyDone = true;
 			}

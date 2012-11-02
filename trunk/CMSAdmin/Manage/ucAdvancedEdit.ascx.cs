@@ -42,12 +42,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				EditorPrefs.EditorSelectedTabIdx = "0";
 			}
 
-			var pageContents = new ContentPage();
+			ContentPage pageContents = new ContentPage();
 			if (guidContentID == Guid.Empty) {
-				var pageName = SiteData.CurrentScriptName;
-				pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
+				pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 			} else {
-				pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, guidContentID);
+				pageContents = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidContentID);
 			}
 
 			if (cmsHelper.ToolboxPlugins.Count > 0) {

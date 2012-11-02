@@ -121,7 +121,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public Unit MenuWidth {
 			get {
 				Unit s = new Unit("940px");
-				try { s = new Unit(ViewState["MenuWidth"].ToString()); } catch { }
+				if (ViewState["MenuWidth"] != null) {
+					try { s = new Unit(ViewState["MenuWidth"].ToString()); } catch { }
+				}
 				return s;
 			}
 			set {
@@ -137,7 +139,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public Unit FontSize {
 			get {
 				Unit s = new Unit("14px");
-				try { s = new Unit(ViewState["FontSize"].ToString()); } catch { }
+				if (ViewState["FontSize"] != null) {
+					try { s = new Unit(ViewState["FontSize"].ToString()); } catch { }
+				}
 				return s;
 			}
 			set {
@@ -152,7 +156,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public Unit MenuHeight {
 			get {
 				Unit s = new Unit("60px");
-				try { s = new Unit(ViewState["MenuHeight"].ToString()); } catch { }
+				if (ViewState["MenuHeight"] != null) {
+					try { s = new Unit(ViewState["MenuHeight"].ToString()); } catch { }
+				}
 				return s;
 			}
 			set {
@@ -167,7 +173,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public Unit SubMenuWidth {
 			get {
 				Unit s = new Unit("300px");
-				try { s = new Unit(ViewState["SubMenuWidth"].ToString()); } catch { }
+				if (ViewState["SubMenuWidth"] != null) {
+					try { s = new Unit(ViewState["SubMenuWidth"].ToString()); } catch { }
+				}
 				return s;
 			}
 			set {

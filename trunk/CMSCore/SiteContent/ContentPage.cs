@@ -20,12 +20,14 @@ namespace Carrotware.CMS.Core {
 
 	public class ContentPage : IDisposable, ISiteContent {
 
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+
 
 		public ContentPage() {
-#if DEBUG
-			db.Log = new DebugTextWriter();
-#endif
+//#if DEBUG
+//            db.Log = new DebugTextWriter();
+//#endif
 		}
 
 

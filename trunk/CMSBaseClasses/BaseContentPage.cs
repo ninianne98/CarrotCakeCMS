@@ -43,7 +43,9 @@ namespace Carrotware.CMS.UI.Base {
 		protected string PageTitlePattern {
 			get {
 				string x = "{0} - {1}";
-				try { x = System.Configuration.ConfigurationManager.AppSettings["CarrotPageTitlePattern"].ToString(); } catch { }
+				if (System.Configuration.ConfigurationManager.AppSettings["CarrotPageTitlePattern"] != null) {
+					try { x = System.Configuration.ConfigurationManager.AppSettings["CarrotPageTitlePattern"].ToString(); } catch { }
+				}
 				return x;
 			}
 		}
@@ -93,16 +95,16 @@ namespace Carrotware.CMS.UI.Base {
 
 			if (path.Length < 3) {
 				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
-					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, null);
+					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID);
 				} else {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 				}
 			} else {
 				string pageName = path;
 				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
-					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, null, pageName);
+					pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, pageName);
 				} else {
-					pageContents = pageHelper.GetLatestContent(SiteData.CurrentSiteID, true, pageName);
+					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, true, pageName);
 				}
 			}
 
@@ -225,17 +227,17 @@ namespace Carrotware.CMS.UI.Base {
 
 					//find each placeholder in use ONCE!
 					List<LabeledControl> lstPlaceholders = (from d in pageWidgets
-														  where d.Root_ContentID == pageContents.Root_ContentID
-														  select new LabeledControl {
-															  ControlLabel = d.PlaceholderName,
-															  KeyControl = FindTheControl(d.PlaceholderName, page)
-														  }).Distinct().ToList();
+															where d.Root_ContentID == pageContents.Root_ContentID
+															select new LabeledControl {
+																ControlLabel = d.PlaceholderName,
+																KeyControl = FindTheControl(d.PlaceholderName, page)
+															}).Distinct().ToList();
 
 					List<Widget> lstWidget = (from d in pageWidgets
-												  where d.Root_ContentID == pageContents.Root_ContentID
-													&& d.IsWidgetActive == true
-													&& d.IsWidgetPendingDelete == false
-												  select d).ToList();
+											  where d.Root_ContentID == pageContents.Root_ContentID
+												&& d.IsWidgetActive == true
+												&& d.IsWidgetPendingDelete == false
+											  select d).ToList();
 
 					Assembly a = Assembly.GetExecutingAssembly();
 
@@ -267,7 +269,7 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (theWidget.ControlPath.ToLower().StartsWith("class:")) {
 								try {
-										string className = theWidget.ControlPath.Replace("CLASS:", "");
+									string className = theWidget.ControlPath.Replace("CLASS:", "");
 									Type t = Type.GetType(className);
 									Object o = Activator.CreateInstance(t);
 

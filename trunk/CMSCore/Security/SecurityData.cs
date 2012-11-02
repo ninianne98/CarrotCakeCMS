@@ -30,7 +30,7 @@ namespace Carrotware.CMS.Core {
 			//usrs2.RemoveAll(x => usrKeys.Contains(x.ProviderUserKey.ToString()));
 			//usrs = usrs.Union(usrs2).ToList();
 
-			using (CarrotCMSDataContext _db = new CarrotCMSDataContext()) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				usrs = (from u in _db.aspnet_Users
 						join m in _db.aspnet_Memberships on u.UserId equals m.UserId
 						where u.UserName.ToLower().Contains(searchTerm)

@@ -22,9 +22,15 @@ using System.Text.RegularExpressions;
 namespace Carrotware.CMS.Core {
 
 	public class SiteMapOrderHelper : IDisposable {
-		protected CarrotCMSDataContext db = new CarrotCMSDataContext();
+		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
-		public SiteMapOrderHelper() { }
+
+		public SiteMapOrderHelper() {
+//#if DEBUG
+//            db.Log = new DebugTextWriter();
+//#endif
+		}
 
 
 		public List<SiteMapOrder> CreateSiteMapList(string sMapText) {

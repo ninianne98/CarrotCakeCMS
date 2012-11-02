@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Admin {
 					pageContents = pageHelper.GetVersion(SiteID, guidVersionContentID);
 				}
 				if (guidContentID != Guid.Empty && pageContents == null) {
-					pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+					pageContents = pageHelper.FindContentByID(SiteID, guidContentID);
 				}
 
 				if (guidImportContentID != Guid.Empty) {
@@ -188,7 +188,7 @@ namespace Carrotware.CMS.UI.Admin {
 				pageContents = pageHelper.GetVersion(SiteID, guidVersionContentID);
 			}
 			if (guidContentID != Guid.Empty && pageContents == null) {
-				pageContents = pageHelper.GetLatestContent(SiteID, guidContentID);
+				pageContents = pageHelper.FindContentByID(SiteID, guidContentID);
 			}
 			if (guidImportContentID != Guid.Empty) {
 				pageContents = ContentPageExport.GetSerializedContentPageExport(guidImportContentID).ThePage;
