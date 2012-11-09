@@ -20,7 +20,7 @@ namespace Carrotware.CMS.Core {
 
 		//internal static CarrotCMSDataContext dbConn = new CarrotCMSDataContext();
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_RootContent> cqGetRootContent =
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_RootContent> cqGetRootContentTbl =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID) =>
 					  (from r in ctx.carrot_RootContents
@@ -29,13 +29,13 @@ namespace Carrotware.CMS.Core {
 					   select r).FirstOrDefault());
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_Content> cqGetLatestContent =
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_Content> cqGetLatestContentTbl =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID) =>
 					  (from ct in ctx.carrot_Contents
 					   join r in ctx.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 					   where r.SiteID == siteID
-						   && ct.Root_ContentID == rootContentID
+						   && r.Root_ContentID == rootContentID
 						   && ct.IsLatestVersion == true
 					   select ct).FirstOrDefault());
 
@@ -60,18 +60,7 @@ namespace Carrotware.CMS.Core {
 					 select ct).FirstOrDefault());
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_Content>> cqTopLevelNavigationAll =
-		CompiledQuery.Compile(
-				(CarrotCMSDataContext ctx, Guid siteID) =>
-					(from ct in ctx.vw_carrot_Contents
-					 orderby ct.NavOrder, ct.NavMenuText
-					 where ct.SiteID == siteID
-						 && ct.Parent_ContentID == null
-						 && ct.IsLatestVersion == true
-					 select ct));
-
-
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqTopLevelNavigationAllActive =
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqTopLevelPages =
 		CompiledQuery.Compile(
 				(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
 					(from ct in ctx.vw_carrot_Contents
@@ -83,46 +72,35 @@ namespace Carrotware.CMS.Core {
 					 select ct));
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool?, string, vw_carrot_Content> cqGetLatestContentByURL =
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, string, vw_carrot_Content> cqGetLatestContentByURL =
 		CompiledQuery.Compile(
-					(CarrotCMSDataContext ctx, Guid siteID, bool? active, string sPage) =>
+					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sPage) =>
 					  (from ct in ctx.vw_carrot_Contents
 					   where ct.SiteID == siteID
 							&& ct.FileName.ToLower() == sPage.ToLower()
 							&& ct.IsLatestVersion == true
-							&& (ct.PageActive == active || active == null)
+							&& (ct.PageActive == true || bActiveOnly == false)
 					   select ct).FirstOrDefault());
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool?, Guid?, vw_carrot_Content> cqGetLatestContentByID =
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, Guid, vw_carrot_Content> cqGetLatestContentByID =
 		CompiledQuery.Compile(
-					(CarrotCMSDataContext ctx, Guid siteID, bool? active, Guid? rootContentID) =>
-					(from ct in ctx.vw_carrot_Contents
-					 where ct.SiteID == siteID
-					 && ct.Root_ContentID == rootContentID
-					 && ct.IsLatestVersion == true
-					 && (ct.PageActive == active || active == null)
-					 select ct).FirstOrDefault());
-
-
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, bool, IQueryable<vw_carrot_Content>> cqGetLatestActiveContent =
-		CompiledQuery.Compile(
-				(CarrotCMSDataContext ctx, Guid siteID, Guid? rootContentID, bool bActiveOnly) =>
+					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, Guid rootContentID) =>
 					(from ct in ctx.vw_carrot_Contents
 					 where ct.SiteID == siteID
 						 && ct.Root_ContentID == rootContentID
 						 && ct.IsLatestVersion == true
 						 && (ct.PageActive == true || bActiveOnly == false)
-					 select ct));
+					 select ct).FirstOrDefault());
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, bool, IQueryable<vw_carrot_Content>> cqGetLatestActiveParentContent =
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, bool, IQueryable<vw_carrot_Content>> cqGetLatestContentByParent =
 		CompiledQuery.Compile(
-				(CarrotCMSDataContext ctx, Guid siteID, Guid? ParentID, bool bActiveOnly) =>
+				(CarrotCMSDataContext ctx, Guid siteID, Guid? parentContentID, bool bActiveOnly) =>
 					(from ct in ctx.vw_carrot_Contents
 					 orderby ct.NavOrder, ct.NavMenuText
 					 where ct.SiteID == siteID
-						 && ct.Parent_ContentID == ParentID
+						 && ct.Parent_ContentID == parentContentID
 						 && ct.IsLatestVersion == true
 						 && (ct.PageActive == true || bActiveOnly == false)
 					 select ct));
@@ -139,37 +117,27 @@ namespace Carrotware.CMS.Core {
 					   select ct));
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool?, IQueryable<vw_carrot_Content>> cqFindHome =
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, vw_carrot_Content> cqFindHome =
 		CompiledQuery.Compile(
-				(CarrotCMSDataContext ctx, Guid siteID, bool? active) =>
+				(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
 					(from ct in ctx.vw_carrot_Contents
 					 orderby ct.NavOrder ascending
 					 where ct.SiteID == siteID
 							&& ct.NavOrder < 1
 							&& ct.IsLatestVersion == true
-							&& (ct.PageActive == active || active == null)
-					 select ct));
+							&& (ct.PageActive == true || bActiveOnly == false)
+					 select ct).FirstOrDefault());
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool?, IQueryable<vw_carrot_Content>> cqGetLatestContentListA =
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqGetLatestContentList =
 		CompiledQuery.Compile(
-					(CarrotCMSDataContext ctx, Guid siteID, bool? active) =>
+					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
 					  (from ct in ctx.vw_carrot_Contents
 					   orderby ct.NavOrder, ct.NavMenuText
 					   where ct.SiteID == siteID
 						&& ct.IsLatestVersion == true
-						&& (ct.PageActive == active || active == null)
+						&& (ct.PageActive == true || bActiveOnly == false)
 					   select ct));
-
-
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqGetLatestContentListB =
-		CompiledQuery.Compile(
-					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
-					  (from c in ctx.vw_carrot_Contents
-					   where c.SiteID == siteID
-						  && c.IsLatestVersion == true
-						  && (c.PageActive == true || bActiveOnly == false)
-					   select c));
 
 
 		//===============================
@@ -233,14 +201,14 @@ namespace Carrotware.CMS.Core {
 					   select r));
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool?, IQueryable<vw_carrot_Widget>> cqGetLatestWidgets =
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Widget>> cqGetLatestWidgets =
 		CompiledQuery.Compile(
-					(CarrotCMSDataContext ctx, Guid rootContentID, bool? active) =>
+					(CarrotCMSDataContext ctx, Guid rootContentID, bool bActiveOnly) =>
 					  (from r in ctx.vw_carrot_Widgets
 					   orderby r.WidgetOrder
 					   where r.Root_ContentID == rootContentID
 						  && r.IsLatestVersion == true
-						  && (r.WidgetActive == active || active == null)
+						  && (r.WidgetActive == true || bActiveOnly == false)
 					   select r));
 
 

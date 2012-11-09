@@ -43,8 +43,8 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.FindHome(siteID);
 		}
 
-		public SiteNav FindHome(Guid siteID, bool? active) {
-			return _navHelper.FindHome(siteID, active);
+		public SiteNav FindHome(Guid siteID, bool bActiveOnly) {
+			return _navHelper.FindHome(siteID, bActiveOnly);
 		}
 
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
@@ -63,8 +63,8 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.GetLatestVersion(siteID, rootContentID);
 		}
 
-		public SiteNav GetLatestVersion(Guid siteID, bool? active, string sPage) {
-			return _navHelper.GetLatestVersion(siteID, active, sPage);
+		public SiteNav GetLatestVersion(Guid siteID, bool bActiveOnly, string sPage) {
+			return _navHelper.GetLatestVersion(siteID, bActiveOnly, sPage);
 		}
 
 		public List<SiteNav> GetMasterNavigation(Guid siteID, bool bActiveOnly) {

@@ -34,7 +34,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected void LoadGrid() {
 
-			var lstCont = pageHelper.GetLatestContentList(SiteID);
+			var lstCont = pageHelper.GetAllLatestContentList(SiteID);
 
 			gvPages.DataSource = lstCont;
 			gvPages.DataBind();

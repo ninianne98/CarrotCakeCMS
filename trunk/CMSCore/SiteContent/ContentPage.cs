@@ -25,9 +25,9 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage() {
-//#if DEBUG
-//            db.Log = new DebugTextWriter();
-//#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 		}
 
 
@@ -61,7 +61,7 @@ namespace Carrotware.CMS.Core {
 
 		public void ResetHeartbeatLock() {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
 			rc.Heartbeat_UserId = null;
@@ -70,7 +70,7 @@ namespace Carrotware.CMS.Core {
 
 		public void RecordHeartbeatLock(Guid currentUserID) {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 			rc.Heartbeat_UserId = currentUserID;
 			rc.EditHeartbeat = DateTime.Now;
@@ -103,9 +103,9 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageEdit() {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
-			carrot_Content oldC = CompiledQueries.cqGetLatestContent(db, this.SiteID, this.Root_ContentID);
+			carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
 
 			bool bNew = false;
 
@@ -166,7 +166,7 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageAsDraft() {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, this.SiteID, this.Root_ContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 			bool bNew = false;
 

@@ -58,7 +58,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public List<Widget> GetWidgets(Guid rootContentID, bool? bActiveOnly) {
+		public List<Widget> GetWidgets(Guid rootContentID, bool bActiveOnly) {
 
 			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetLatestWidgets(db, rootContentID, bActiveOnly);
 

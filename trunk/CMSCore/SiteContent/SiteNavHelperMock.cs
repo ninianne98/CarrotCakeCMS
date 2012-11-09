@@ -118,7 +118,7 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerView();
 		}
 
-		public SiteNav GetLatestVersion(Guid siteID, bool? active, string sPage) {
+		public SiteNav GetLatestVersion(Guid siteID, bool bActiveOnly, string sPage) {
 
 			return SiteNavHelper.GetSamplerView();
 		}
@@ -133,7 +133,7 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerView();
 		}
 
-		public SiteNav FindHome(Guid siteID, bool? active) {
+		public SiteNav FindHome(Guid siteID, bool bActiveOnly) {
 
 			return SiteNavHelper.GetSamplerView();
 		}

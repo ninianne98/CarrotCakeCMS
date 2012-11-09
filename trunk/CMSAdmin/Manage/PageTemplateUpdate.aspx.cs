@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void SetTemplateGrid() {
-			gvApply.DataSource = pageHelper.GetLatestContentList(SiteID);
+			gvApply.DataSource = pageHelper.GetAllLatestContentList(SiteID);
 			gvApply.DataBind();
 
 		}
