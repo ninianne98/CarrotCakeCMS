@@ -21,6 +21,7 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
+
 namespace Carrotware.CMS.Core {
 
 	public class CMSConfigHelper : IDisposable {
@@ -29,9 +30,9 @@ namespace Carrotware.CMS.Core {
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 		public CMSConfigHelper() {
-//#if DEBUG
-//            db.Log = new DebugTextWriter();
-//#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 		}
 
 		private enum CMSConfigFileType {
@@ -662,13 +663,15 @@ namespace Carrotware.CMS.Core {
 			get {
 				ContentPage c = null;
 				try {
-					var sXML = GetSerialized(keyAdminContent);
-					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					Object genpref = null;
-					using (StringReader stringReader = new StringReader(sXML)) {
-						genpref = xmlSerializer.Deserialize(stringReader);
+					string sXML = GetSerialized(keyAdminContent);
+					if (!string.IsNullOrEmpty(sXML)) {
+						XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
+						Object genpref = null;
+						using (StringReader stringReader = new StringReader(sXML)) {
+							genpref = xmlSerializer.Deserialize(stringReader);
+						}
+						c = genpref as ContentPage;
 					}
-					c = genpref as ContentPage;
 				} catch (Exception ex) { }
 				return c;
 			}
@@ -690,13 +693,15 @@ namespace Carrotware.CMS.Core {
 		public List<Widget> cmsAdminWidget {
 			get {
 				List<Widget> c = null;
-				var sXML = GetSerialized(keyAdminWidget);
-				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
-				Object genpref = null;
-				using (StringReader stringReader = new StringReader(sXML)) {
-					genpref = xmlSerializer.Deserialize(stringReader);
+				string sXML = GetSerialized(keyAdminWidget);
+				if (!string.IsNullOrEmpty(sXML)) {
+					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
+					Object genpref = null;
+					using (StringReader stringReader = new StringReader(sXML)) {
+						genpref = xmlSerializer.Deserialize(stringReader);
+					}
+					c = genpref as List<Widget>;
 				}
-				c = genpref as List<Widget>;
 				return c;
 			}
 			set {
@@ -720,12 +725,7 @@ namespace Carrotware.CMS.Core {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				bool bAdd = false;
 
-				var itm = (from c in _db.carrot_SerialCaches
-						   where c.ItemID == itemID
-						   && c.EditUserId == SecurityData.CurrentUserGuid
-						   && c.KeyType == sKey
-						   && c.SiteID == SiteData.CurrentSiteID
-						   select c).FirstOrDefault();
+				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(_db, itemID, sKey);
 
 				if (itm == null) {
 					bAdd = true;
@@ -752,12 +752,7 @@ namespace Carrotware.CMS.Core {
 			string sData = "";
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 
-				var itm = (from c in _db.carrot_SerialCaches
-						   where c.ItemID == itemID
-						   && c.EditUserId == SecurityData.CurrentUserGuid
-						   && c.KeyType == sKey
-						   && c.SiteID == SiteData.CurrentSiteID
-						   select c).FirstOrDefault();
+				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(_db, itemID, sKey);
 
 				if (itm != null) {
 					sData = itm.SerializedData;
@@ -770,12 +765,8 @@ namespace Carrotware.CMS.Core {
 		public static bool ClearSerialized(Guid itemID, string sKey) {
 			bool bRet = false;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				var itm = (from c in _db.carrot_SerialCaches
-						   where c.ItemID == itemID
-						   && c.EditUserId == SecurityData.CurrentUserGuid
-						   && c.KeyType == sKey
-						   && c.SiteID == SiteData.CurrentSiteID
-						   select c).FirstOrDefault();
+
+				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(_db, itemID, sKey);
 
 				if (itm != null) {
 					_db.carrot_SerialCaches.DeleteOnSubmit(itm);

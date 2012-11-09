@@ -222,7 +222,61 @@ namespace Carrotware.CMS.Core {
 		//                     && ct.IsLatestVersion == true
 		//                     && (lstTop.Contains(ct.Root_ContentID) || lstTop.Contains(ct.Parent_ContentID.Value))
 		//               select ct));
+
+
+		//=================================
+
+		//internal static readonly Func<CarrotCMSDataContext, Guid, Guid, Guid, string, carrot_SerialCache> cqGetSerialCacheTbl123 =
+		//CompiledQuery.Compile(
+		//    (CarrotCMSDataContext ctx, Guid siteID, Guid userID, Guid itemID, string sKey) =>
+		//        (from c in ctx.carrot_SerialCaches
+		//         where c.ItemID == itemID
+		//             && c.KeyType == sKey
+		//             && c.SiteID == siteID
+		//             && c.EditUserId == userID
+		//         select c).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, SearchParameterObject, carrot_SerialCache> cqGetSerialCacheTbl =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, SearchParameterObject searchParm) =>
+			(from c in ctx.carrot_SerialCaches
+			 where c.ItemID == searchParm.ItemID
+					&& c.KeyType == searchParm.KeyType
+					&& c.SiteID == searchParm.SiteID
+					&& c.EditUserId == searchParm.UserId
+			 select c).FirstOrDefault());
+
+
+		internal static carrot_SerialCache SearchSeriaCache(CarrotCMSDataContext ctx, Guid siteID, Guid userID, Guid itemID, string keyType) {
+			SearchParameterObject searchParm = new SearchParameterObject();
+			searchParm.UserId = userID;
+			searchParm.SiteID = siteID;
+			searchParm.ItemID = itemID;
+			searchParm.KeyType = keyType;
+
+			return cqGetSerialCacheTbl(ctx, searchParm);
+		}
+
+		internal static carrot_SerialCache SearchSeriaCache(CarrotCMSDataContext ctx, Guid itemID, string keyType) {
+
+			return SearchSeriaCache(ctx, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid, itemID, keyType);
+		}
+
 	}
 
+
+	internal class SearchParameterObject {
+		public Guid ItemID { get; set; }
+		public Guid SiteID { get; set; }
+		public Guid UserId { get; set; }
+		public string KeyType { get; set; }
+
+		public Guid ParentContentID { get; set; }
+		public bool ActiveOnly { get; set; }
+		public Guid RootContentID { get; set; }
+		public string FileName { get; set; }
+		public Guid ContentID { get; set; }
+	}
 
 }

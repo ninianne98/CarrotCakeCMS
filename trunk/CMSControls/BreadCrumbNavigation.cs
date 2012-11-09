@@ -27,7 +27,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public bool DisplayAsList {
 			get {
 				bool s = false;
-				try { s = (bool)ViewState["DisplayAsList"]; } catch { }
+				if (ViewState["DisplayAsList"] != null) {
+					try { s = (bool)ViewState["DisplayAsList"]; } catch { }
+				}
 				return s;
 			}
 			set {
