@@ -169,21 +169,21 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public List<ContentPage> GetLatestContentList(Guid siteID) {
-			List<ContentPage> lstContent = CompiledQueries.cqGetLatestContentListA(db, siteID, null).Select(ct => CreateContentPage(ct)).ToList();
+		public List<ContentPage> GetAllLatestContentList(Guid siteID) {
+			List<ContentPage> lstContent = CompiledQueries.cqGetLatestContentList(db, siteID, false).Select(ct => CreateContentPage(ct)).ToList();
 
 			return lstContent;
 		}
 
 
 		public int GetSitePageCount(Guid siteID, bool bActiveOnly) {
-			int iCount = CompiledQueries.cqGetLatestContentListB(db, siteID, bActiveOnly).Count();
+			int iCount = CompiledQueries.cqGetLatestContentList(db, siteID, bActiveOnly).Count();
 
 			return iCount;
 		}
 
 		public int GetSitePageCount(Guid siteID) {
-			int iCount = CompiledQueries.cqGetLatestContentListB(db, siteID, false).Count();
+			int iCount = CompiledQueries.cqGetLatestContentList(db, siteID, false).Count();
 
 			return iCount;
 		}
@@ -202,7 +202,7 @@ namespace Carrotware.CMS.Core {
 
 		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID) {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, siteID, rootContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
 			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
 			rc.Heartbeat_UserId = null;
@@ -211,7 +211,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool RecordHeartbeatLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, siteID, rootContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
 			if (rc != null) {
 				rc.Heartbeat_UserId = currentUserID;
@@ -225,7 +225,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID) {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, SiteData.CurrentSiteID, rootContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, SiteData.CurrentSiteID, rootContentID);
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
@@ -243,7 +243,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, siteID, rootContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
@@ -261,7 +261,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsPageLocked(Guid rootContentID, Guid siteID) {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, siteID, rootContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
@@ -295,7 +295,7 @@ namespace Carrotware.CMS.Core {
 
 		public Guid GetCurrentEditUser(Guid rootContentID, Guid siteID) {
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContent(db, siteID, rootContentID);
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
 			if (rc != null) {
 				return (Guid)rc.Heartbeat_UserId;
@@ -340,7 +340,7 @@ namespace Carrotware.CMS.Core {
 				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_Content), sortField);
 			}
 
-			query1 = CompiledQueries.cqGetLatestContentListB(db, siteID, bActiveOnly);
+			query1 = CompiledQueries.cqGetLatestContentList(db, siteID, bActiveOnly);
 
 			if (IsContentProp) {
 				query1 = ReflectionUtilities.SortByParm<vw_carrot_Content>(query1, sortField, sortDir);
@@ -458,8 +458,8 @@ namespace Carrotware.CMS.Core {
 			return content;
 		}
 
-		public List<ContentPage> GetLatestContentList(Guid siteID, bool? active) {
-			List<ContentPage> lstContent = CompiledQueries.cqGetLatestContentListA(db, siteID, active).Select(ct => CreateContentPage(ct)).ToList();
+		public List<ContentPage> GetLatestContentList(Guid siteID, bool bActiveOnly) {
+			List<ContentPage> lstContent = CompiledQueries.cqGetLatestContentList(db, siteID, bActiveOnly).Select(ct => CreateContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -504,31 +504,31 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage FindContentByID(Guid siteID, Guid rootContentID) {
-			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByID(db, siteID, null, rootContentID));
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByID(db, siteID, false, rootContentID));
 
 			return content;
 		}
 
-		public ContentPage GetLatestContentByURL(Guid siteID, bool? active, string sPage) {
-			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByURL(db, siteID, active, sPage));
+		public ContentPage GetLatestContentByURL(Guid siteID, bool bActiveOnly, string sPage) {
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByURL(db, siteID, bActiveOnly, sPage));
 
 			return content;
 		}
 
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
-			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByURL(db, siteID, null, urlFileName));
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentByURL(db, siteID, false, urlFileName));
 
 			return content;
 		}
 
 		public ContentPage FindHome(Guid siteID) {
-			ContentPage content = CompiledQueries.cqFindHome(db, siteID, true).Select(ct => CreateContentPage(ct)).FirstOrDefault();
+			ContentPage content = CreateContentPage(CompiledQueries.cqFindHome(db, siteID, true));
 
 			return content;
 		}
 
-		public ContentPage FindHome(Guid siteID, bool? active) {
-			ContentPage content = CompiledQueries.cqFindHome(db, siteID, active).Select(ct => CreateContentPage(ct)).FirstOrDefault();
+		public ContentPage FindHome(Guid siteID, bool bActiveOnly) {
+			ContentPage content = CreateContentPage(CompiledQueries.cqFindHome(db, siteID, bActiveOnly));
 
 			return content;
 		}

@@ -35,7 +35,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			using (WidgetHelper pwh = new WidgetHelper()) {
-				widgets = pwh.GetWidgets(rootContentID, null);
+				widgets = pwh.GetWidgets(rootContentID, false);
 			}
 
 			SetVals(cp, widgets);

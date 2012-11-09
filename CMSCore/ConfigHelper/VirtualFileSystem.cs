@@ -97,23 +97,20 @@ namespace Carrotware.CMS.Core {
 					SiteNav navData = null;
 
 					try {
-
+						bool bIsHomePage = false;
 						if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
-							if (bIgnorePublishState) {
-								navData = navHelper.FindHome(SiteData.CurrentSiteID, null);
-							} else {
-								navData = navHelper.FindHome(SiteData.CurrentSiteID, true);
-							}
+
+							navData = navHelper.FindHome(SiteData.CurrentSiteID, !bIgnorePublishState);
+
 							if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
 								sFileRequested = navData.FileName;
+								bIsHomePage = true;
 							}
 						}
 
-						string pageName = sFileRequested;
-						if (bIgnorePublishState) {
-							navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, null, pageName);
-						} else {
-							navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, true, pageName);
+						if (!bIsHomePage) {
+							string pageName = sFileRequested;
+							navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, pageName);
 						}
 
 						if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {

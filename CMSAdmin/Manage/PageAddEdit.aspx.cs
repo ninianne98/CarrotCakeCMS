@@ -89,7 +89,7 @@ namespace Carrotware.CMS.UI.Admin {
 					}
 				}
 
-				List<ContentPage> lstContent = pageHelper.GetLatestContentList(SiteID);
+				List<ContentPage> lstContent = pageHelper.GetAllLatestContentList(SiteID);
 
 				ddlTemplate.DataSource = cmsHelper.Templates;
 				ddlTemplate.DataBind();

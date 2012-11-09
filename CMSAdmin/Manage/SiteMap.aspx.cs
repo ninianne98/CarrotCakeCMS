@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				rpSub.ItemTemplate = rpTop.ItemTemplate;
 
-				lstSite = (from c in pageHelper.GetLatestContentList(SiteID)
+				lstSite = (from c in pageHelper.GetAllLatestContentList(SiteID)
 						   orderby c.TemplateFile
 						   select c).ToList();
 
