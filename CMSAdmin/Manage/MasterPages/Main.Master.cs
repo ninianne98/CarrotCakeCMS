@@ -21,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 
 			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.MasterPages.Main.Ctrl");
 
-			litCMSBuildInfo.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
+			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 
 			HideWhenNoSiteProfileExists();
 
