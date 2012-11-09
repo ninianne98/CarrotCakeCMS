@@ -40,7 +40,7 @@ namespace Carrotware.CMS.UI.Admin {
 				Response.Redirect("./default.aspx");
 			}
 
-			litCMSBuildInfo.Text = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
+			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 		}
 
 		protected void cmdLogon_Click(object sender, EventArgs e) {

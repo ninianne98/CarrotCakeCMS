@@ -73,6 +73,8 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected void LoadPageControls(Control page) {
 
+			theSite = siteHelper.GetCurrentSite();
+
 			HtmlMeta metaType = new HtmlMeta();
 			metaType.Attributes["property"] = "og:type";
 			metaType.Content = "website";
@@ -80,10 +82,8 @@ namespace Carrotware.CMS.UI.Base {
 
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
-			metaGenerator.Content = string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
+			metaGenerator.Content = SiteData.CarrotCakeCMSVersion;
 			Page.Header.Controls.Add(metaGenerator);
-
-			theSite = siteHelper.GetCurrentSite();
 
 			if (theSite != null) {
 				if (theSite.BlockIndex) {
@@ -182,10 +182,10 @@ namespace Carrotware.CMS.UI.Base {
 					Page.Header.Controls.Add(metaTitle);
 				}
 
-				if (!string.IsNullOrEmpty(SiteData.CurrentSite.SiteName)) {
+				if (!string.IsNullOrEmpty(theSite.SiteName)) {
 					HtmlMeta metaSite = new HtmlMeta();
 					metaSite.Attributes["property"] = "og:site_name";
-					metaSite.Content = SiteData.CurrentSite.SiteName;
+					metaSite.Content = theSite.SiteName;
 					Page.Header.Controls.Add(metaSite);
 				}
 

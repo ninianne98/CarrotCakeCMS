@@ -26,9 +26,9 @@ namespace Carrotware.CMS.Core {
 
 
 		public SiteData() {
-//#if DEBUG
-//            db.Log = new DebugTextWriter();
-//#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 		}
 
 		public SiteData(carrot_Site s) {
@@ -416,9 +416,9 @@ namespace Carrotware.CMS.Core {
 			}
 			*/
 		}
-		
+
 		public static bool IsFilenameCurrentPage(string sCurrentFile) {
-			
+
 			if (string.IsNullOrEmpty(sCurrentFile)) {
 				return false;
 			}
@@ -466,6 +466,13 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static string CurrentDLLVersion {
+			get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+		}
+
+		public static string CarrotCakeCMSVersion {
+			get { return string.Format("CarrotCake CMS {0}", CurrentDLLVersion); }
+		}
 
 		public static string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
