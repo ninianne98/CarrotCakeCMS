@@ -59,23 +59,15 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<Widget> GetWidgets(Guid rootContentID, bool bActiveOnly) {
-
-			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetLatestWidgets(db, rootContentID, bActiveOnly);
-
-			List<Widget> w = (from r in items
+			List<Widget> w = (from r in CompiledQueries.cqGetLatestWidgets(db, rootContentID, bActiveOnly)
 							  select MakeWidget(r)).ToList();
+
 			return w;
 		}
 
 
 		public void UpdateContentWidgets(Guid rootContentID) {
-
-			var ww = (from rr in db.carrot_Widgets
-					  orderby rr.WidgetOrder
-					  where rr.Root_ContentID == rootContentID
-					  && (rr.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")
-							 || rr.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx"))
-					  select rr).ToList();
+			IQueryable<carrot_Widget> ww = CompiledQueries.cqGetOldEditContentWidgets(db, rootContentID);
 
 			bool bEdit = false;
 
@@ -96,9 +88,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
-			IQueryable<vw_carrot_Widget> items = CompiledQueries.cqGetWidgetVersionHistory_VW(db, rootWidgetID);
-
-			List<Widget> w = (from r in items
+			List<Widget> w = (from r in CompiledQueries.cqGetWidgetVersionHistory_VW(db, rootWidgetID)
 							  select MakeWidget(r)).ToList();
 
 			return w;
@@ -120,17 +110,13 @@ namespace Carrotware.CMS.Core {
 												  select w);
 
 			if (oldW.Count() > 0) {
-				foreach (carrot_WidgetData c in oldW) {
-					db.carrot_WidgetDatas.DeleteOnSubmit(c);
-				}
+				db.carrot_WidgetDatas.DeleteAllOnSubmit(oldW);
 				db.SubmitChanges();
 			}
 		}
 
 		public void Delete(Guid widgetDataID) {
-			carrot_WidgetData w = (from r in db.carrot_WidgetDatas
-								   where r.WidgetDataID == widgetDataID
-								   select r).FirstOrDefault();
+			carrot_WidgetData w = CompiledQueries.cqGetWidgetDataByID_TBL(db, widgetDataID);
 
 			if (w != null) {
 				db.carrot_WidgetDatas.DeleteOnSubmit(w);
@@ -139,9 +125,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void Disable(Guid rootWidgetID) {
-			carrot_Widget w = (from r in db.carrot_Widgets
-							   where r.Root_WidgetID == rootWidgetID
-							   select r).FirstOrDefault();
+			carrot_Widget w = CompiledQueries.cqGetRootWidget(db, rootWidgetID);
 
 			if (w != null) {
 				w.WidgetActive = false;
@@ -150,29 +134,20 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void DeleteAll(Guid rootWidgetID) {
+			List<carrot_WidgetData> w1 = CompiledQueries.cqGetWidgetDataByRootAll(db, rootWidgetID).ToList();
 
-			IQueryable<carrot_WidgetData> w1 = (from r in db.carrot_WidgetDatas
-												where r.Root_WidgetID == rootWidgetID
-												select r);
-
-			IQueryable<carrot_Widget> w2 = (from r in db.carrot_Widgets
-											where r.Root_WidgetID == rootWidgetID
-											select r);
+			carrot_Widget w2 = CompiledQueries.cqGetRootWidget(db, rootWidgetID);
 
 			bool bPendingDel = false;
 
-			if (w1 != null) {
-				foreach (carrot_WidgetData w in w1) {
-					db.carrot_WidgetDatas.DeleteOnSubmit(w);
-					bPendingDel = true;
-				}
+			if (w1 != null && w1.Count() > 0) {
+				db.carrot_WidgetDatas.DeleteAllOnSubmit(w1);
+				bPendingDel = true;
 			}
 
 			if (w2 != null) {
-				foreach (carrot_Widget w in w2) {
-					db.carrot_Widgets.DeleteOnSubmit(w);
-					bPendingDel = true;
-				}
+				db.carrot_Widgets.DeleteOnSubmit(w2);
+				bPendingDel = true;
 			}
 
 			if (bPendingDel) {

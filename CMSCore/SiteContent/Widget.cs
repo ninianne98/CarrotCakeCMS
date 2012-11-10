@@ -152,20 +152,14 @@ namespace Carrotware.CMS.Core {
 
 			bool bPendingDel = false;
 
-			if (w1 != null) {
-				foreach (carrot_WidgetData w in w1) {
-					db.carrot_WidgetDatas.DeleteOnSubmit(w);
-					bPendingDel = true;
-				}
+			if (w1 != null && w1.Count > 0) {
+				db.carrot_WidgetDatas.DeleteAllOnSubmit(w1);
+				bPendingDel = true;
 			}
 
 			if (w2 != null) {
 				db.carrot_Widgets.DeleteOnSubmit(w2);
 				bPendingDel = true;
-				//foreach (carrot_Widget w in w2) {
-				//    db.carrot_Widgets.DeleteOnSubmit(w);
-				//    bPendingDel = true;
-				//}
 			}
 
 			if (bPendingDel) {

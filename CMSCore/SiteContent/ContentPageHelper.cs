@@ -246,7 +246,7 @@ namespace Carrotware.CMS.Core {
 			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
 			bool bLock = false;
-			if (rc.Heartbeat_UserId != null) {
+			if (rc != null && rc.Heartbeat_UserId != null) {
 				if (rc.Heartbeat_UserId != currentUserID
 						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
 					bLock = true;
@@ -476,9 +476,7 @@ namespace Carrotware.CMS.Core {
 											   select ct).ToList();
 
 			if (lstContent.Count > 0) {
-				foreach (carrot_Content c in lstContent) {
-					db.carrot_Contents.DeleteOnSubmit(c);
-				}
+				db.carrot_Contents.DeleteAllOnSubmit(lstContent);
 				db.SubmitChanges();
 			}
 		}
