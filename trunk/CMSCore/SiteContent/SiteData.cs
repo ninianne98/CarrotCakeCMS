@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -43,9 +44,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteData Get(Guid siteID) {
-			var s = (from r in db.carrot_Sites
-					 where r.SiteID == siteID
-					 select r).FirstOrDefault();
+			carrot_Site s = CompiledQueries.cqGetSiteByID(db, siteID);
 
 			if (s != null) {
 				return new SiteData(s);
@@ -91,9 +90,7 @@ namespace Carrotware.CMS.Core {
 
 		public void Save() {
 
-			var s = (from r in db.carrot_Sites
-					 where r.SiteID == this.SiteID
-					 select r).FirstOrDefault();
+			carrot_Site s = CompiledQueries.cqGetSiteByID(db, this.SiteID);
 
 			bool bNew = false;
 			if (s == null) {
@@ -149,10 +146,10 @@ namespace Carrotware.CMS.Core {
 			}
 
 			// by this point, the user is probably an editor, make sure they have rights to this site
-			var lstSites = (from l in db.carrot_UserSiteMappings
-							where l.UserId == userID
-								 && l.SiteID == siteID
-							select l.SiteID).ToList();
+			List<Guid> lstSites = (from l in db.carrot_UserSiteMappings
+								   where l.UserId == userID
+										&& l.SiteID == siteID
+								   select l.SiteID).ToList();
 
 			if (lstSites.Count > 0) {
 				return true;
@@ -164,18 +161,15 @@ namespace Carrotware.CMS.Core {
 
 		public void CleanUpSerialData() {
 
-			var lst = (from c in db.carrot_SerialCaches
-					   where c.EditDate < DateTime.Now.AddHours(-6)
-					   && c.SiteID == CurrentSiteID
-					   select c).ToList();
+			List<carrot_SerialCache> lst = (from c in db.carrot_SerialCaches
+											where c.EditDate < DateTime.Now.AddHours(-6)
+											&& c.SiteID == CurrentSiteID
+											select c).ToList();
 
 			if (lst.Count > 0) {
-				foreach (var l in lst) {
-					db.carrot_SerialCaches.DeleteOnSubmit(l);
-				}
+				db.carrot_SerialCaches.DeleteAllOnSubmit(lst);
 				db.SubmitChanges();
 			}
-
 		}
 
 
@@ -200,7 +194,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				if (_site == Guid.Empty) {
-					var s = CMSConfigHelper.DynSite;
+					DynamicSite s = CMSConfigHelper.DynSite;
 					if (s != null) {
 						_site = s.SiteID;
 					}
@@ -480,7 +474,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string ReferringPage {
 			get {
-				var r = SiteData.CurrentScriptName;
+				string r = SiteData.CurrentScriptName;
 				try { r = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
 				if (string.IsNullOrEmpty(r))
 					r = DefaultDirectoryFilename;

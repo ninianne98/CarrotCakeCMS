@@ -142,6 +142,15 @@ namespace Carrotware.CMS.Core {
 
 		//===============================
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<carrot_Widget>> cqGetOldEditContentWidgets =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid rootContentID) =>
+				(from r in ctx.carrot_Widgets
+				 where r.Root_ContentID == rootContentID
+				 && (r.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")
+						|| r.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx"))
+				 select r));
+
 
 		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_Widget> cqGetRootWidget =
 		CompiledQuery.Compile(
@@ -262,6 +271,16 @@ namespace Carrotware.CMS.Core {
 
 			return SearchSeriaCache(ctx, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid, itemID, keyType);
 		}
+
+
+		//=====================
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_Site> cqGetSiteByID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID) =>
+				(from r in ctx.carrot_Sites
+				 where r.SiteID == siteID
+				 select r).FirstOrDefault());
 
 	}
 
