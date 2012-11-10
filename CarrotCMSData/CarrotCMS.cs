@@ -19,22 +19,7 @@ using System.Net;
 namespace Carrotware.CMS.Data {
 	public partial class CarrotCMSDataContext {
 
-#if DEBUG
-		private static Stopwatch ThisWatch = new Stopwatch();
-
-		private static void Connection_StateChange(object sender, StateChangeEventArgs e) {
-			if (e.OriginalState == ConnectionState.Closed && e.CurrentState == ConnectionState.Open) {
-				ThisWatch.Reset();
-				ThisWatch.Start();
-			} else if (e.OriginalState == ConnectionState.Open && e.CurrentState == ConnectionState.Closed) {
-				ThisWatch.Stop();
-				Debug.Write("--------------------------------------\r\n");
-				Debug.Write(string.Format("SQL took {0}ms \r\n", ThisWatch.ElapsedMilliseconds));
-			}
-		}
-#endif
-
-
+		private static int iDBConnCounter = 0;
 
 		private static string connString = ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"].ConnectionString;
 
@@ -47,11 +32,10 @@ namespace Carrotware.CMS.Data {
 		public static CarrotCMSDataContext GetDataContext(string connection) {
 #if DEBUG
 			CarrotCMSDataContext _db = new CarrotCMSDataContext(connection);
-			if (Debugger.IsAttached) {
-				string sKey = Guid.NewGuid().ToString();
-
-				_db.Connection.StateChange += Connection_StateChange;
-				_db.Log = new DebugTextWriter();
+			DataDiagnostic dd = new DataDiagnostic(_db, iDBConnCounter);
+			iDBConnCounter++;
+			if (iDBConnCounter > 4096) {
+				iDBConnCounter = 0;
 			}
 			return _db;
 #endif
@@ -62,11 +46,10 @@ namespace Carrotware.CMS.Data {
 		public static CarrotCMSDataContext GetDataContext(IDbConnection connection) {
 #if DEBUG
 			CarrotCMSDataContext _db = new CarrotCMSDataContext(connection);
-			if (Debugger.IsAttached) {
-				string sKey = Guid.NewGuid().ToString();
-
-				_db.Connection.StateChange += Connection_StateChange;
-				_db.Log = new DebugTextWriter();
+			DataDiagnostic dd = new DataDiagnostic(_db, iDBConnCounter);
+			iDBConnCounter++;
+			if (iDBConnCounter > 4096) {
+				iDBConnCounter = 0;
 			}
 			return _db;
 #endif
