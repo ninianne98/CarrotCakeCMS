@@ -2,6 +2,7 @@
 	Inherits="Carrotware.CMS.UI.Admin.PageTemplateUpdate" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <%@ Register Src="ucPageMenuItems.ascx" TagName="ucPageMenuItems" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -21,11 +22,40 @@
 				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 				</asp:DropDownList>
 			</td>
+			<td valign="top">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				show content:
+			</td>
+			<td valign="top">
+				<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+				<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+			</td>
+			<td valign="top">
+			</td>
+		</tr>
+		<tr runat="server" id="trFilter">
+			<td valign="top" class="tablecaption">
+				filter:
+			</td>
+			<td valign="top">
+				<!-- parent page plugin-->
+				<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
+				<div style="clear: both; height: 2px;">
+				</div>
+			</td>
+			<td valign="top">
+				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
+			</td>
 		</tr>
 	</table>
-	<br />
+	<p>
+		<br />
+	</p>
 	<div id="SortableGrid">
-		<carrot:CarrotGridView CssClass="datatable" DefaultSort="TemplateFile ASC" ID="gvApply" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+		<carrot:CarrotGridView CssClass="datatable" DefaultSort="TemplateFile ASC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<Columns>
 				<asp:TemplateField ItemStyle-HorizontalAlign="Center">

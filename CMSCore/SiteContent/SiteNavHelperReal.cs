@@ -243,7 +243,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
+		public List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 
 			List<SiteNav> lstContent = (from ct in CompiledQueries.cqGetLatestContentByParent(db, siteID, ParentID, bActiveOnly).ToList()
 										select MakeSiteNav(ct)).ToList();

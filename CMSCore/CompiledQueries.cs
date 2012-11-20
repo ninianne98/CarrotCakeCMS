@@ -106,6 +106,17 @@ namespace Carrotware.CMS.Core {
 					 select ct));
 
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, bool, IQueryable<vw_carrot_Content>> cqGetLatestContentWithParent =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid siteID, Guid? parentContentID, bool bActiveOnly) =>
+					(from ct in ctx.vw_carrot_Contents
+					 orderby ct.NavOrder, ct.NavMenuText
+					 where ct.SiteID == siteID
+						 && (ct.Parent_ContentID == parentContentID || ct.Root_ContentID == parentContentID)
+						 && ct.IsLatestVersion == true
+						 && (ct.PageActive == true || bActiveOnly == false)
+					 select ct));
+
 		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqSiteNavAll =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
@@ -281,6 +292,35 @@ namespace Carrotware.CMS.Core {
 				(from r in ctx.carrot_Sites
 				 where r.SiteID == siteID
 				 select r).FirstOrDefault());
+
+
+
+
+		//=====================
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, Guid?, IQueryable<vw_carrot_Content>> cqGetOtherNotPage =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, Guid? parentContentID) =>
+					  (from r in ctx.vw_carrot_Contents
+					   orderby r.NavOrder, r.NavMenuText
+					   where r.SiteID == siteID
+							&& r.IsLatestVersion == true
+							&& r.Root_ContentID != rootContentID
+							&& (r.Parent_ContentID == parentContentID
+								 || (r.Parent_ContentID == null && parentContentID == Guid.Empty))
+					   select r));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, IQueryable<vw_carrot_Content>> cqGetLatestPage =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, Guid? rootContentID) =>
+					  (from r in ctx.vw_carrot_Contents
+					   orderby r.NavOrder, r.NavMenuText
+					   where r.SiteID == siteID
+						   && r.IsLatestVersion == true
+						   && r.Root_ContentID == rootContentID
+					   select r));
+
 
 	}
 

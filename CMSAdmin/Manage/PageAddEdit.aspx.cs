@@ -65,6 +65,9 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (!IsPostBack) {
+
+				ParentPagePicker.RootContentID = Guid.Empty;
+
 				ContentPage pageContents = null;
 				if (guidVersionContentID != Guid.Empty) {
 					pageContents = pageHelper.GetVersion(SiteID, guidVersionContentID);
@@ -150,8 +153,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 					chkActive.Checked = Convert.ToBoolean(pageContents.PageActive);
 
-					if (pageContents.Parent_ContentID != null) {
-						txtParent.Text = pageContents.Parent_ContentID.ToString();
+					if (pageContents.Parent_ContentID.HasValue) {
+						//txtParent.Text = pageContents.Parent_ContentID.ToString();
+						ParentPagePicker.SelectedPage = pageContents.Parent_ContentID.Value;
 					}
 					if (pageContents.TemplateFile != null) {
 						try { ddlTemplate.SelectedValue = pageContents.TemplateFile.ToLower(); } catch { }
@@ -160,6 +164,7 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 			}
 
+			ParentPagePicker.RootContentID = guidRootContentID;
 
 			if (string.IsNullOrEmpty(reBody.Text)) {
 				reBody.Text = "<p>&nbsp;</p>";
@@ -227,8 +232,14 @@ namespace Carrotware.CMS.UI.Admin {
 
 			pageContents.PageActive = chkActive.Checked;
 
-			if (txtParent.Text.Length > 5) {
-				pageContents.Parent_ContentID = new Guid(txtParent.Text);
+			//if (txtParent.Text.Length > 5) {
+			//    pageContents.Parent_ContentID = new Guid(txtParent.Text);
+			//} else {
+			//    pageContents.Parent_ContentID = null;
+			//}
+
+			if (ParentPagePicker.SelectedPage.HasValue) {
+				pageContents.Parent_ContentID = ParentPagePicker.SelectedPage.Value;
 			} else {
 				pageContents.Parent_ContentID = null;
 			}

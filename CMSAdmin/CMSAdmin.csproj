@@ -187,6 +187,13 @@
     <Compile Include="Manage\ucPageMenuItems.ascx.designer.cs">
       <DependentUpon>ucPageMenuItems.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\ucSitePageDrillDown.ascx.cs">
+      <DependentUpon>ucSitePageDrillDown.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ucSitePageDrillDown.ascx.designer.cs">
+      <DependentUpon>ucSitePageDrillDown.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\ucTextContent.ascx.cs">
       <DependentUpon>ucTextContent.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -683,6 +690,7 @@
     <Content Include="Manage\tiny_mce\utils\mctabs.js" />
     <Content Include="Manage\tiny_mce\utils\validate.js" />
     <Content Include="Manage\ucPageMenuItems.ascx" />
+    <Content Include="Manage\ucSitePageDrillDown.ascx" />
     <Content Include="Manage\UserGroupAddEdit.aspx" />
     <Content Include="Manage\UserGroups.aspx" />
     <Content Include="Manage\WidgetHistory.aspx" />

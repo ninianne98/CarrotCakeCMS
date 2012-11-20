@@ -184,13 +184,13 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
         
         /// <summary>
-        /// txtParent control.
+        /// ParentPagePicker control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtParent;
+        protected global::Carrotware.CMS.UI.Admin.Manage.ucSitePageDrillDown ParentPagePicker;
         
         /// <summary>
         /// ddlTemplate control.

@@ -32,22 +32,31 @@ namespace Carrotware.CMS.UI.Admin {
 				ddlTemplate.DataSource = cmsHelper.Templates;
 				ddlTemplate.DataBind();
 
-				SetTemplateGrid();
+				SetGrid(false, null);
 			}
 		}
 
-		protected void SetTemplateGrid() {
-			gvApply.DataSource = pageHelper.GetAllLatestContentList(SiteID);
-			gvApply.DataBind();
 
+		protected void SetGrid(bool bAll, Guid? guidParentID) {
+			List<ContentPage> lstContent = null;
+			if (bAll) {
+				lstContent = pageHelper.GetAllLatestContentList(SiteID);
+			} else {
+				if (guidParentID == null) {
+					lstContent = pageHelper.GetTopNavigation(SiteID, false);
+				} else {
+					lstContent = pageHelper.GetParentWithChildNavigation(SiteID, guidParentID, false);
+				}
+			}
+			gvPages.DataSource = lstContent;
+			gvPages.DataBind();
 		}
-
 
 
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
 			List<Guid> lstUpd = new List<Guid>();
 
-			foreach (GridViewRow row in gvApply.Rows) {
+			foreach (GridViewRow row in gvPages.Rows) {
 				var chkReMap = (CheckBox)row.FindControl("chkReMap");
 
 				if (chkReMap.Checked) {
@@ -55,12 +64,32 @@ namespace Carrotware.CMS.UI.Admin {
 					Guid gRoot = new Guid(hdnContentID.Value);
 
 					lstUpd.Add(gRoot);
-				}				
+				}
 			}
 
 			pageHelper.BulkUpdateTemplate(SiteData.CurrentSiteID, lstUpd, ddlTemplate.SelectedValue);
 
-			SetTemplateGrid();
+			SetGrid(rdoFilterResults2.Checked, ParentPagePicker.SelectedPage);
+		}
+
+		protected void btnFilter_Click(object sender, EventArgs e) {
+			LoadGrid();
+		}
+
+		protected void rdoFilterResults_CheckedChanged(object sender, EventArgs e) {
+			LoadGrid();
+		}
+
+		private void LoadGrid() {
+			trFilter.Attributes["style"] = "display:none;";
+
+			if (rdoFilterResults2.Checked) {
+				trFilter.Attributes["style"] = "display:none;";
+				SetGrid(true, Guid.Empty);
+			} else {
+				trFilter.Attributes["style"] = "";
+				SetGrid(false, ParentPagePicker.SelectedPage);
+			}
 		}
 
 	}

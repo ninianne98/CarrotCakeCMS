@@ -31,13 +31,58 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.DropDownList ddlTemplate;
         
         /// <summary>
-        /// gvApply control.
+        /// rdoFilterResults1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvApply;
+        protected global::System.Web.UI.WebControls.RadioButton rdoFilterResults1;
+        
+        /// <summary>
+        /// rdoFilterResults2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdoFilterResults2;
+        
+        /// <summary>
+        /// trFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trFilter;
+        
+        /// <summary>
+        /// ParentPagePicker control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Admin.Manage.ucSitePageDrillDown ParentPagePicker;
+        
+        /// <summary>
+        /// btnFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFilter;
+        
+        /// <summary>
+        /// gvPages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
         
         /// <summary>
         /// btnSaveMapping control.

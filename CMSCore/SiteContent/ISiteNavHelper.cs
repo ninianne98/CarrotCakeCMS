@@ -18,7 +18,7 @@ namespace Carrotware.CMS.Core {
 		SiteNav FindHome(Guid siteID);
 		SiteNav FindHome(Guid siteID, bool bActiveOnly);
 
-		List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly);
+		List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly);
 		List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly);
 
 		List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly);
