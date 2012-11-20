@@ -31,11 +31,12 @@ namespace Carrotware.CMS.UI.Admin {
 
 	public class CMS : System.Web.Services.WebService {
 
-		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		//private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 		private ContentPageHelper pageHelper = new ContentPageHelper();
 		private WidgetHelper widgetHelper = new WidgetHelper();
+		private SiteMapOrderHelper sitemapHelper = new SiteMapOrderHelper();
 
 		private Guid CurrentPageGuid = Guid.Empty;
 		private ContentPage filePage = null;
@@ -54,7 +55,7 @@ namespace Carrotware.CMS.UI.Admin {
 			get {
 				ContentPage c = null;
 				try {
-					var sXML = GetSerialized(CMSConfigHelper.keyAdminContent);
+					string sXML = GetSerialized(CMSConfigHelper.keyAdminContent);
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
 					Object genpref = null;
 					using (StringReader stringReader = new StringReader(sXML)) {
@@ -83,7 +84,7 @@ namespace Carrotware.CMS.UI.Admin {
 		public List<Widget> cmsAdminWidget {
 			get {
 				List<Widget> c = null;
-				var sXML = GetSerialized(CMSConfigHelper.keyAdminWidget);
+				string sXML = GetSerialized(CMSConfigHelper.keyAdminWidget);
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
 				Object genpref = null;
 				using (StringReader stringReader = new StringReader(sXML)) {
@@ -156,12 +157,12 @@ namespace Carrotware.CMS.UI.Admin {
 			string sFixed = "";
 			if (!string.IsNullOrEmpty(sContent)) {
 				sFixed = sContent;
-				var b = "<!-- <#|BEGIN_CARROT_CMS|#> -->";
-				var iB = sFixed.IndexOf(b);
+				string b = "<!-- <#|BEGIN_CARROT_CMS|#> -->";
+				int iB = sFixed.IndexOf(b);
 				if (iB > 0) {
 					sFixed = sFixed.Substring(iB + b.Length);
 
-					var e = "<!-- <#|END_CARROT_CMS|#> -->";
+					string e = "<!-- <#|END_CARROT_CMS|#> -->";
 					var iE = sFixed.IndexOf(e);
 					sFixed = sFixed.Substring(0, iE);
 				}
@@ -176,11 +177,11 @@ namespace Carrotware.CMS.UI.Admin {
 			try {
 				CurrentPageGuid = new Guid(PageID);
 
-				var bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
+				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 				//only allow admin/editors to record a lock
 				if ((SecurityData.IsAdmin || SecurityData.IsEditor) && !bLock) {
-					var bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
+					bool bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 					if (bRet) {
 						return DateTime.Now.ToString();
@@ -269,22 +270,25 @@ namespace Carrotware.CMS.UI.Admin {
 
 			List<SiteMapOrder> lstSiteMap = new List<SiteMapOrder>();
 
-			var lst = (from ct in db.carrot_Contents
-					   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-					   orderby ct.NavOrder, ct.NavMenuText
-					   where r.SiteID == SiteData.CurrentSiteID
-							 && r.Root_ContentID != ContPageID
-							 && ct.IsLatestVersion == true
-							 && (ct.Parent_ContentID == ParentID
-								 || (ct.Parent_ContentID == null && ParentID == Guid.Empty))
-					   select new SiteMapOrder {
-						   NavLevel = -1,
-						   NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
-						   NavOrder = ct.NavOrder,
-						   PageActive = Convert.ToBoolean(r.PageActive),
-						   Parent_ContentID = ct.Parent_ContentID,
-						   Root_ContentID = ct.Root_ContentID
-					   }).ToList();
+			List<SiteMapOrder> lst = sitemapHelper.GetChildPages(SiteData.CurrentSiteID, ParentID, ContPageID);
+
+			//List<SiteMapOrder> lst = (from ct in db.carrot_Contents
+			//                          join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+			//                          orderby ct.NavOrder, ct.NavMenuText
+			//                          where r.SiteID == SiteData.CurrentSiteID
+			//                                && r.Root_ContentID != ContPageID
+			//                                && ct.IsLatestVersion == true
+			//                                && (ct.Parent_ContentID == ParentID
+			//                                    || (ct.Parent_ContentID == null && ParentID == Guid.Empty))
+			//                          select new SiteMapOrder {
+			//                              NavLevel = -1,
+			//                              NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
+			//                              NavOrder = ct.NavOrder,
+			//                              PageActive = Convert.ToBoolean(r.PageActive),
+			//                              Parent_ContentID = ct.Parent_ContentID,
+			//                              Root_ContentID = ct.Root_ContentID
+			//                          }).ToList();
+
 
 			lstSiteMap = (from l in lst
 						  orderby l.NavOrder, l.NavMenuText
@@ -324,21 +328,22 @@ namespace Carrotware.CMS.UI.Admin {
 			while (iLenB < iLenA) {
 				iLenB = lstSiteMap.Count;
 
-				var cont = (from r in db.carrot_RootContents
-							join ct in db.carrot_Contents on r.Root_ContentID equals ct.Root_ContentID
-							orderby ct.NavOrder, ct.NavMenuText
-							where r.SiteID == SiteData.CurrentSiteID
-								&& ct.IsLatestVersion == true
-								&& ct.Root_ContentID == ContentPageID
+				SiteMapOrder cont = sitemapHelper.GetPageWithLevel(SiteData.CurrentSiteID, ContentPageID, iLevel);
 
-							select new SiteMapOrder {
-								NavLevel = iLevel,
-								NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
-								NavOrder = ct.NavOrder,
-								PageActive = Convert.ToBoolean(r.PageActive),
-								Parent_ContentID = ct.Parent_ContentID,
-								Root_ContentID = ct.Root_ContentID
-							}).FirstOrDefault();
+				//SiteMapOrder cont = (from r in db.carrot_RootContents
+				//                     join ct in db.carrot_Contents on r.Root_ContentID equals ct.Root_ContentID
+				//                     orderby ct.NavOrder, ct.NavMenuText
+				//                     where r.SiteID == SiteData.CurrentSiteID
+				//                         && ct.IsLatestVersion == true
+				//                         && ct.Root_ContentID == ContentPageID
+				//                     select new SiteMapOrder {
+				//                         NavLevel = iLevel,
+				//                         NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
+				//                         NavOrder = ct.NavOrder,
+				//                         PageActive = Convert.ToBoolean(r.PageActive),
+				//                         Parent_ContentID = ct.Parent_ContentID,
+				//                         Root_ContentID = ct.Root_ContentID
+				//                     }).FirstOrDefault();
 
 				iLevel++;
 				if (cont != null) {
@@ -362,7 +367,7 @@ namespace Carrotware.CMS.UI.Admin {
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 
-				var c = cmsAdminContent;
+				ContentPage c = cmsAdminContent;
 
 				c.TemplateFile = TheTemplate;
 
@@ -429,7 +434,7 @@ namespace Carrotware.CMS.UI.Admin {
 				//WidgetAddition = CMSConfigHelper.DecodeBase64(WidgetAddition);
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
-				var w = WidgetDropped.Split('\t');
+				string[] w = WidgetDropped.Split('\t');
 
 				Guid guidWidget = Guid.Empty;
 				if (w.Length > 2) {
@@ -442,22 +447,22 @@ namespace Carrotware.CMS.UI.Admin {
 					}
 				}
 
-				var cacheWidget = cmsAdminWidget;
+				List<Widget> cacheWidget = cmsAdminWidget;
 
-				var ww1 = (from w1 in cacheWidget
-						   where w1.Root_WidgetID == guidWidget
-						   select w1).FirstOrDefault();
+				Widget ww1 = (from w1 in cacheWidget
+							  where w1.Root_WidgetID == guidWidget
+							  select w1).FirstOrDefault();
 
 				if (ww1 != null) {
 					ww1.WidgetOrder = -1;
 					ww1.PlaceholderName = WidgetTarget;
 				}
 
-				var ww2 = (from w1 in cacheWidget
-						   where w1.PlaceholderName.ToLower() == WidgetTarget.ToLower()
-						   && w1.WidgetOrder >= 0
-						   orderby w1.WidgetOrder
-						   select w1).ToList();
+				List<Widget> ww2 = (from w1 in cacheWidget
+									where w1.PlaceholderName.ToLower() == WidgetTarget.ToLower()
+									&& w1.WidgetOrder >= 0
+									orderby w1.WidgetOrder
+									select w1).ToList();
 
 				int iW = 1;
 				foreach (var w2 in ww2) {

@@ -47,7 +47,7 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.FindHome(siteID, bActiveOnly);
 		}
 
-		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
+		public List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 			return _navHelper.GetChildNavigation(siteID, ParentID, bActiveOnly);
 		}
 

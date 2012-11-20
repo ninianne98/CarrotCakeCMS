@@ -29,16 +29,44 @@ namespace Carrotware.CMS.UI.Admin {
 
 			siteHelper.CleanUpSerialData();
 
+			SetGrid(rdoFilterResults2.Checked, ParentPagePicker.SelectedPage);
+		}
+
+
+		protected void SetGrid(bool bAll, Guid? guidParentID) {
+			List<ContentPage> lstContent = null;
+			if (bAll) {
+				lstContent = pageHelper.GetAllLatestContentList(SiteID);
+			} else {
+				if (guidParentID == null) {
+					lstContent = pageHelper.GetTopNavigation(SiteID, false);
+				} else {
+					lstContent = pageHelper.GetParentWithChildNavigation(SiteID, guidParentID, false);
+				}
+			}
+			gvPages.DataSource = lstContent;
+			gvPages.DataBind();
+		}
+
+
+		protected void btnFilter_Click(object sender, EventArgs e) {
 			LoadGrid();
 		}
 
-		protected void LoadGrid() {
+		protected void rdoFilterResults_CheckedChanged(object sender, EventArgs e) {
+			LoadGrid();
+		}
 
-			var lstCont = pageHelper.GetAllLatestContentList(SiteID);
+		private void LoadGrid() {
+			trFilter.Attributes["style"] = "display:none;";
 
-			gvPages.DataSource = lstCont;
-			gvPages.DataBind();
-
+			if (rdoFilterResults2.Checked) {
+				trFilter.Attributes["style"] = "display:none;";
+				SetGrid(true, Guid.Empty);
+			} else {
+				trFilter.Attributes["style"] = "";
+				SetGrid(false, ParentPagePicker.SelectedPage);
+			}
 		}
 
 	}

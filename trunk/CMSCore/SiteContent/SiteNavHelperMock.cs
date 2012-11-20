@@ -98,7 +98,7 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerView();
 		}
 
-		public List<SiteNav> GetChildNavigation(Guid siteID, Guid ParentID, bool bActiveOnly) {
+		public List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 
 			return SiteNavHelper.GetSamplerFakeNav(ParentID);
 		}

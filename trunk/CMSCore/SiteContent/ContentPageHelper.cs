@@ -238,6 +238,7 @@ namespace Carrotware.CMS.Core {
 					bLock = false;
 				}
 			}
+
 			return bLock;
 		}
 
@@ -531,6 +532,38 @@ namespace Carrotware.CMS.Core {
 			return content;
 		}
 
+		public List<ContentPage> GetChildNavigation(Guid siteID, string sParentPage, bool bActiveOnly) {
+
+			vw_carrot_Content c = CompiledQueries.cqGetLatestContentByURL(db, siteID, false, sParentPage);
+
+			if (c != null) {
+				return GetChildNavigation(siteID, c.Root_ContentID, bActiveOnly);
+			} else {
+				return null;
+			}
+		}
+
+		public List<ContentPage> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
+
+			List<ContentPage> lstContent = (from ct in CompiledQueries.cqGetLatestContentByParent(db, siteID, ParentID, bActiveOnly).ToList()
+											select CreateContentPage(ct)).ToList();
+
+			return lstContent;
+		}
+
+		public List<ContentPage> GetParentWithChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
+
+			List<ContentPage> lstContent = (from ct in CompiledQueries.cqGetLatestContentWithParent(db, siteID, ParentID, bActiveOnly).ToList()
+											select CreateContentPage(ct)).ToList();
+
+			return lstContent;
+		}
+
+		public List<ContentPage> GetTopNavigation(Guid siteID, bool bActiveOnly) {
+			List<ContentPage> lstContent = CompiledQueries.cqTopLevelPages(db, siteID, bActiveOnly).Select(ct => CreateContentPage(ct)).ToList();
+
+			return lstContent;
+		}
 
 
 		#region IDisposable Members

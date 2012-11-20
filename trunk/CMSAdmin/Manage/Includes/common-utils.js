@@ -149,7 +149,9 @@ function checkFloatNumber(obj) {
 	}
 }
 
+
 //====================================
+
 
 var TheURL = '';
 var RefreshPage = 0;
@@ -191,6 +193,8 @@ function LoadWindow() {
 	return false;
 }
 
+
+//======================================
 
 var IsDirty = 0;
 
@@ -246,3 +250,25 @@ function UpdateAjaxErrorMsg() {
 $(document).ready(function () {
 	UpdateAjaxErrorMsg();
 });
+
+
+//===========================
+
+var cmsConfirmLeavingPage = true;
+
+function cmsGetPageStatus() {
+	return cmsConfirmLeavingPage;
+}
+
+function cmsMakeOKToLeave() {
+	cmsConfirmLeavingPage = false;
+}
+
+function cmsMakeNotOKToLeave() {
+	cmsConfirmLeavingPage = true;
+}
+
+function cmsRequireConfirmToLeave(confirmLeave) {
+	cmsConfirmLeavingPage = confirmLeave;
+}
+
