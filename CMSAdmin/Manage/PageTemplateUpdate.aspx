@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Bulk Apply Templates/Skins" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageTemplateUpdate.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.PageTemplateUpdate" %>
+	Inherits="Carrotware.CMS.UI.Admin.Manage.PageTemplateUpdate" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
@@ -39,6 +39,7 @@
 		<tr runat="server" id="trFilter">
 			<td valign="top" class="tablecaption">
 				filter:
+				<br />
 			</td>
 			<td valign="top">
 				<!-- parent page plugin-->
@@ -67,54 +68,13 @@
 						<asp:HiddenField ID="hdnContentID" runat="server" Value='<%# Eval("Root_ContentID") %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Template File
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("TemplateFile")%>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Titlebar
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("TitleBar")%>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Page Header
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("PageHead")%>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Filename
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("FileName")%>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Nav Menu Text
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("NavMenuText")%>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Last Edited
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# String.Format("{0:d}", Eval("EditDate"))%>
-					</ItemTemplate>
-				</asp:TemplateField>
+				<asp:BoundField HeaderText="Template File" DataField="TemplateFile" />
+				<asp:BoundField HeaderText="Titlebar" DataField="Titlebar" />
+				<asp:BoundField HeaderText="Page Header" DataField="PageHead" />
+				<asp:BoundField HeaderText="Filename" DataField="Filename" />
+				<asp:BoundField HeaderText="Nav Menu Text" DataField="NavMenuText" />
+				<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0:d}" />
+				<asp:BoundField HeaderText="Created On" DataField="CreateDate" DataFormatString="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
 					ShowBooleanImage="true" />
 			</Columns>

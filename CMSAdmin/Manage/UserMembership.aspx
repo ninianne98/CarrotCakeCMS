@@ -1,4 +1,4 @@
-<%@ Page Title="Manage Users" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.UserMembership" %>
+<%@ Page Title="Manage Users" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.UserMembership" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -18,12 +18,13 @@
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./User.aspx?id={0}", Eval("ProviderUserKey")) %>'><img class="imgNoBorder" src="/Manage/images/application_edit.png" alt="Edit" title="Edit" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./User.aspx?id={0}", Eval("UserId")) %>'><img class="imgNoBorder" src="/Manage/images/application_edit.png" alt="Edit" title="Edit" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField SortExpression="Username" HeaderText="Username" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="email" HeaderText="Email" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="CreationDate" HeaderText="Created On" DataField="CreationDate" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="FullName_LastFirst" HeaderText="Name" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="EmailAddress" HeaderText="Email" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataFieldFormat="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsLockedOut" HeaderText="Status" ShowBooleanImage="true" AlternateTextTrue="Locked Out"
 					AlternateTextFalse="Unlocked" ImagePathTrue="/Manage/images/lock.png" ImagePathFalse="/Manage/images/user.png" />
 			</Columns>

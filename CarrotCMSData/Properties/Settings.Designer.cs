@@ -26,7 +26,7 @@ namespace Carrotware.CMS.Data.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost\\sql2008express;Initial Catalog=CarrotwareCMS;Integrated Sec" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Localhost\\SQL2008EXPRESS;Initial Catalog=CarrotwareCMS;Integrated Sec" +
             "urity=True")]
         public string CarrotwareCMSConnectionString {
             get {

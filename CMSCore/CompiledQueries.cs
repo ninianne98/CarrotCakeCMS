@@ -39,7 +39,6 @@ namespace Carrotware.CMS.Core {
 						   && ct.IsLatestVersion == true
 					   select ct).FirstOrDefault());
 
-
 		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, IQueryable<vw_carrot_Content>> cqGetVersionHistory =
 		CompiledQuery.Compile(
 				(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID) =>
@@ -68,7 +67,21 @@ namespace Carrotware.CMS.Core {
 					 where ct.SiteID == siteID
 						 && ct.Parent_ContentID == null
 						 && ct.IsLatestVersion == true
+						 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
 						 && (ct.PageActive == true || bActiveOnly == false)
+					 select ct));
+
+
+		internal static readonly Func<CarrotCMSDataContext, SearchParameterObject, IQueryable<vw_carrot_Content>> cqPostsByDateRange =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from ct in ctx.vw_carrot_Contents
+					 orderby ct.NavOrder, ct.NavMenuText
+					 where ct.SiteID == sp.SiteID
+						 && ct.IsLatestVersion == true
+						 && (ct.CreateDate >= sp.DateBegin && ct.CreateDate <= sp.DateEnd)
+						 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
+						 && (ct.PageActive == true || sp.ActiveOnly == false)
 					 select ct));
 
 
@@ -82,6 +95,33 @@ namespace Carrotware.CMS.Core {
 							&& (ct.PageActive == true || bActiveOnly == false)
 					   select ct).FirstOrDefault());
 
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, DateTime, string, vw_carrot_Content> cqGetLatestContentBySlug =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, DateTime datePublished, string sPageSlug) =>
+					  (from ct in ctx.vw_carrot_Contents
+					   where ct.SiteID == siteID
+							&& ct.PageSlug.ToLower() == sPageSlug.ToLower()
+							&& (ct.CreateDate.Date == datePublished.Date)
+							&& ct.IsLatestVersion == true
+					   select ct).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, string, vw_carrot_CategoryURL> cqGetCategoryByURL =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, string sPage) =>
+					  (from ct in ctx.vw_carrot_CategoryURLs
+					   where ct.SiteID == siteID
+							&& ct.CategoryUrl.ToLower() == sPage.ToLower()
+					   select ct).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, string, vw_carrot_TagURL> cqGetTagByURL =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, string sPage) =>
+					  (from ct in ctx.vw_carrot_TagURLs
+					   where ct.SiteID == siteID
+							&& ct.TagUrl.ToLower() == sPage.ToLower()
+					   select ct).FirstOrDefault());
 
 		internal static readonly Func<CarrotCMSDataContext, Guid, bool, Guid, vw_carrot_Content> cqGetLatestContentByID =
 		CompiledQuery.Compile(
@@ -114,17 +154,79 @@ namespace Carrotware.CMS.Core {
 					 where ct.SiteID == siteID
 						 && (ct.Parent_ContentID == parentContentID || ct.Root_ContentID == parentContentID)
 						 && ct.IsLatestVersion == true
+						 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
 						 && (ct.PageActive == true || bActiveOnly == false)
 					 select ct));
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqSiteNavAll =
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqContentNavAll =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
 					  (from ct in ctx.vw_carrot_Contents
 					   orderby ct.NavOrder, ct.NavMenuText
 					   where ct.SiteID == siteID
 							 && ct.IsLatestVersion == true
+							 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
 							 && (ct.PageActive == true || bActiveOnly == false)
+					   select ct));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqBlogNavAll =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
+					  (from ct in ctx.vw_carrot_Contents
+					   orderby ct.NavOrder, ct.NavMenuText
+					   where ct.SiteID == siteID
+							 && ct.IsLatestVersion == true
+							  && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
+							 && (ct.PageActive == true || bActiveOnly == false)
+					   select ct));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<carrot_RootContent>> cqBlogAllRootTbl =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
+					  (from ct in ctx.carrot_RootContents
+					   where ct.SiteID == siteID
+							  && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
+							 && (ct.PageActive == true || bActiveOnly == false)
+					   select ct));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<string>> cqBlogDupFileNames =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID) =>
+					  (ctx.carrot_RootContents.Where(c => c.SiteID == siteID && c.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry))
+						   .GroupBy(g => g.FileName)
+						   .Where(g => g.Count() > 1)
+						   .Select(g => g.Key)));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<carrot_RootContent>> cqGeRootContentListByURLTbl =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, Guid entryType, string sPage) =>
+					  (from r in ctx.carrot_RootContents
+					   orderby r.CreateDate descending
+					   where r.SiteID == siteID
+							&& r.ContentTypeID == entryType
+							&& r.FileName.ToLower() == sPage.ToLower()
+					   select r));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, bool, IQueryable<carrot_RootContent>> cqGetAllRootByType =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, Guid entryType, bool bActiveOnly) =>
+					  (from r in ctx.carrot_RootContents
+					   where r.SiteID == siteID
+							&& r.ContentTypeID == entryType
+							 && (r.PageActive == true || bActiveOnly == false)
+					   select r));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<vw_carrot_Content>> cqGeRootContentListNoMatchByURL =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, string sPage) =>
+					  (from ct in ctx.vw_carrot_Contents
+					   where ct.SiteID == siteID
+						   && ct.FileName.ToLower() == sPage.ToLower()
+						   && ct.Root_ContentID != rootContentID
 					   select ct));
 
 
@@ -147,8 +249,50 @@ namespace Carrotware.CMS.Core {
 					   orderby ct.NavOrder, ct.NavMenuText
 					   where ct.SiteID == siteID
 						&& ct.IsLatestVersion == true
+						&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
 						&& (ct.PageActive == true || bActiveOnly == false)
 					   select ct));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, IQueryable<vw_carrot_Content>> cqGetLatestBlogList =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) =>
+					  (from ct in ctx.vw_carrot_Contents
+					   orderby ct.NavOrder, ct.NavMenuText
+					   where ct.SiteID == siteID
+						&& ct.IsLatestVersion == true
+						&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
+						&& (ct.PageActive == true || bActiveOnly == false)
+					   select ct));
+
+		//===============================
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_ContentComment> cqGetContentCommentByID =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid contentCommentID) =>
+					  (from r in ctx.carrot_ContentComments
+					   orderby r.CreateDate descending
+					   where r.ContentCommentID == contentCommentID
+					   select r).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_ContentComment> cqGetContentCommentsTbl =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid rootContentID, Guid contentCommentID) =>
+					  (from r in ctx.carrot_ContentComments
+					   orderby r.CreateDate descending
+					   where r.ContentCommentID == contentCommentID
+						   && r.Root_ContentID == rootContentID
+					   select r).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<carrot_ContentComment>> cqGetContentCommentsListTbl =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid rootContentID) =>
+					  (from r in ctx.carrot_ContentComments
+					   orderby r.CreateDate descending
+					   where r.Root_ContentID == rootContentID
+					   select r));
 
 
 		//===============================
@@ -293,7 +437,143 @@ namespace Carrotware.CMS.Core {
 				 where r.SiteID == siteID
 				 select r).FirstOrDefault());
 
+		//=====================
 
+		internal static readonly Func<CarrotCMSDataContext, string, carrot_ContentType> cqGetContentTypeByName =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, string contentTypeValue) =>
+				(from r in ctx.carrot_ContentTypes
+				 where r.ContentTypeValue.ToLower() == contentTypeValue.ToLower()
+				 select r).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_ContentType> cqGetContentTypeByID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid contentTypeID) =>
+				(from r in ctx.carrot_ContentTypes
+				 where r.ContentTypeID == contentTypeID
+				 select r).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, IQueryable<carrot_ContentType>> cqGetContentTypes =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx) =>
+				(from r in ctx.carrot_ContentTypes
+				 select r));
+
+
+		//==========================
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_ContentTag> cqGetContentTagByID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid contentTagID) =>
+				(from c in ctx.carrot_ContentTags
+				 where c.ContentTagID == contentTagID
+				 select c).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_ContentCategory> cqGetContentCategoryByID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid contentCategoryID) =>
+				(from c in ctx.carrot_ContentCategories
+				 where c.ContentCategoryID == contentCategoryID
+				 select c).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_TagCounted>> cqGetContentTagBySiteID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID) =>
+				(from c in ctx.vw_carrot_TagCounteds
+				 where c.SiteID == siteID
+				 select c));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_CategoryCounted>> cqGetContentCategoryBySiteID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID) =>
+				(from c in ctx.vw_carrot_CategoryCounteds
+				 where c.SiteID == siteID
+				 select c));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<carrot_ContentTag>> cqGetContentTagNoMatch =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, Guid contentTagID, string slug) =>
+				(from r in ctx.carrot_ContentTags
+				 where r.SiteID == siteID
+					&& r.ContentTagID != contentTagID
+					&& r.TagSlug.ToLower() == slug.ToLower()
+				 select r));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<carrot_ContentCategory>> cqGetContentCategoryNoMatch =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, Guid contentCategoryID, string slug) =>
+				(from r in ctx.carrot_ContentCategories
+				 where r.SiteID == siteID
+					&& r.ContentCategoryID != contentCategoryID
+					&& r.CategorySlug.ToLower() == slug.ToLower()
+				 select r));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<carrot_ContentTag>> cqGetContentTagByContentID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid rootContentID) =>
+				(from r in ctx.carrot_ContentTags
+				 join c in ctx.carrot_TagContentMappings on r.ContentTagID equals c.ContentTagID
+				 where c.Root_ContentID == rootContentID
+				 select r));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<carrot_ContentCategory>> cqGetContentCategoryByContentID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid rootContentID) =>
+				(from r in ctx.carrot_ContentCategories
+				 join c in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals c.ContentCategoryID
+				 where c.Root_ContentID == rootContentID
+				 select r));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<carrot_TagContentMapping>> cqGetContentTagMapByContentID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid rootContentID) =>
+				(from r in ctx.carrot_ContentTags
+				 join c in ctx.carrot_TagContentMappings on r.ContentTagID equals c.ContentTagID
+				 where c.Root_ContentID == rootContentID
+				 select c));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<carrot_CategoryContentMapping>> cqGetContentCategoryMapByContentID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid rootContentID) =>
+				(from r in ctx.carrot_ContentCategories
+				 join c in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals c.ContentCategoryID
+				 where c.Root_ContentID == rootContentID
+				 select c));
+
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, string, IQueryable<vw_carrot_Content>> cqGetContentByTagURL =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sTagURL) =>
+				(from r in ctx.vw_carrot_TagURLs
+				 join m in ctx.carrot_TagContentMappings on r.ContentTagID equals m.ContentTagID
+				 join ct in ctx.vw_carrot_Contents on m.Root_ContentID equals ct.Root_ContentID
+				 where r.SiteID == siteID
+					 && ct.SiteID == siteID
+					 && r.TagUrl.ToLower() == sTagURL.ToLower()
+					 && (ct.PageActive == true || bActiveOnly == false)
+					 && ct.IsLatestVersion == true
+				 select ct));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, bool, string, IQueryable<vw_carrot_Content>> cqGetContentByCategoryURL =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sCatURL) =>
+				(from r in ctx.vw_carrot_CategoryURLs
+				 join m in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals m.ContentCategoryID
+				 join ct in ctx.vw_carrot_Contents on m.Root_ContentID equals ct.Root_ContentID
+				 where r.SiteID == siteID
+					 && ct.SiteID == siteID
+					 && r.CategoryUrl.ToLower() == sCatURL.ToLower()
+					 && (ct.PageActive == true || bActiveOnly == false)
+					 && ct.IsLatestVersion == true
+				 select ct));
 
 
 		//=====================
@@ -301,41 +581,69 @@ namespace Carrotware.CMS.Core {
 		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, Guid?, IQueryable<vw_carrot_Content>> cqGetOtherNotPage =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, Guid? parentContentID) =>
-					  (from r in ctx.vw_carrot_Contents
-					   orderby r.NavOrder, r.NavMenuText
-					   where r.SiteID == siteID
-							&& r.IsLatestVersion == true
-							&& r.Root_ContentID != rootContentID
-							&& (r.Parent_ContentID == parentContentID
-								 || (r.Parent_ContentID == null && parentContentID == Guid.Empty))
-					   select r));
+					  (from ct in ctx.vw_carrot_Contents
+					   orderby ct.NavOrder, ct.NavMenuText
+					   where ct.SiteID == siteID
+							&& ct.IsLatestVersion == true
+							&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
+							&& ct.Root_ContentID != rootContentID
+							&& (ct.Parent_ContentID == parentContentID
+								 || (ct.Parent_ContentID == null && parentContentID == Guid.Empty))
+					   select ct));
 
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, IQueryable<vw_carrot_Content>> cqGetLatestPage =
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, IQueryable<vw_carrot_Content>> cqGetLatestContentPages =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid? rootContentID) =>
-					  (from r in ctx.vw_carrot_Contents
-					   orderby r.NavOrder, r.NavMenuText
-					   where r.SiteID == siteID
-						   && r.IsLatestVersion == true
-						   && r.Root_ContentID == rootContentID
-					   select r));
+					  (from ct in ctx.vw_carrot_Contents
+					   orderby ct.NavOrder, ct.NavMenuText
+					   where ct.SiteID == siteID
+						   && ct.IsLatestVersion == true
+						   && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
+						   && ct.Root_ContentID == rootContentID
+					   select ct));
 
 
-	}
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid?, IQueryable<vw_carrot_Content>> cqGetLatestBlogPages =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, Guid? rootContentID) =>
+					  (from ct in ctx.vw_carrot_Contents
+					   orderby ct.NavOrder, ct.NavMenuText
+					   where ct.SiteID == siteID
+						   && ct.IsLatestVersion == true
+						   && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
+						   && ct.Root_ContentID == rootContentID
+					   select ct));
 
+		//=========================================
 
-	internal class SearchParameterObject {
-		public Guid ItemID { get; set; }
-		public Guid SiteID { get; set; }
-		public Guid UserId { get; set; }
-		public string KeyType { get; set; }
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_UserData> cqFindUserTblByID =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid UserId) =>
+					(from ct in ctx.carrot_UserDatas
+					 where ct.UserId == UserId
+					 select ct).FirstOrDefault());
 
-		public Guid ParentContentID { get; set; }
-		public bool ActiveOnly { get; set; }
-		public Guid RootContentID { get; set; }
-		public string FileName { get; set; }
-		public Guid ContentID { get; set; }
+		internal static readonly Func<CarrotCMSDataContext, Guid, vw_carrot_UserData> cqFindUserByID =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid UserId) =>
+					(from ct in ctx.vw_carrot_UserDatas
+					 where ct.UserId == UserId
+					 select ct).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, string, vw_carrot_UserData> cqFindUserByName =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, string userName) =>
+					(from ct in ctx.vw_carrot_UserDatas
+					 where ct.UserName.ToLower() == userName.ToLower()
+					 select ct).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, IQueryable<vw_carrot_UserData>> cqGetUserList =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx) =>
+					(from ct in ctx.vw_carrot_UserDatas
+					 select ct));
+
 	}
 
 }

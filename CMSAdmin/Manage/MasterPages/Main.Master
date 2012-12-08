@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.Master.cs" Inherits="Carrotware.CMS.UI.Admin.MasterPages.Main" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.Master.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.MasterPages.Main" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -80,14 +80,29 @@
 		<div id="menu">
 			<div id="menu-inner">
 				<ul>
-					<li runat="server" id="tabMain"><a href="/Manage/">Home</a></li>
+					<li runat="server" id="tabMainTop"><a href="javascript:void(0)" class="lnkPopup">Home </a>
+						<ul class="children">
+							<li runat="server" id="tabMain"><a href="/Manage/">Site Info</a> </li>
+							<li runat="server" id="tabContentSkin"><a href="/Manage/SiteSkinIndex.aspx">Edit Site Skins</a> </li>
+							<li runat="server" id="tabContentSiteMap"><a href="/Manage/SiteMap.aspx">Edit Site Map</a> </li>
+							<li runat="server" id="tabImportContent"><a href="/Manage/PageImport.aspx">Import Content</a> </li>
+						</ul>
+					</li>
 					<%-- <li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Pages</a> </li> --%>
-					<li runat="server" id="tabContentTop"><a href="javascript:void(0)" class="lnkPopup">Content </a>
+					<li runat="server" id="tabContentTop"><a href="javascript:void(0)" class="lnkPopup">Pages </a>
 						<ul class="children">
 							<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Page Index</a> </li>
 							<li runat="server" id="tabContentTemplate"><a href="/Manage/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
-							<li runat="server" id="tabContentSiteMap"><a href="/Manage/SiteMap.aspx">Edit Site Map</a> </li>
-							<li runat="server" id="tabContentSkin"><a href="/Manage/SiteSkinIndex.aspx">Edit Site Skins</a> </li>
+							<li runat="server" id="tabContentCommentIndex"><a href="/Manage/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
+						</ul>
+					</li>
+					<li runat="server" id="tabBlogTop"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
+						<ul class="children">
+							<li runat="server" id="tabBlogContent"><a href="/Manage/BlogPostIndex.aspx">Blog Post Index</a> </li>
+							<li runat="server" id="tabBlogTemplate"><a href="/Manage/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
+							<li runat="server" id="tabBlogCategoryIndex"><a href="/Manage/CategoryIndex.aspx">Blog Category Index</a> </li>
+							<li runat="server" id="tabBlogTagIndex"><a href="/Manage/TagIndex.aspx">Blog Tag Index</a> </li>
+							<li runat="server" id="tabBlogCommentIndex"><a href="/Manage/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
 						</ul>
 					</li>
 					<li runat="server" id="tabModules"><a href="/Manage/ModuleIndex.aspx">Modules</a> </li>
@@ -112,7 +127,7 @@
 				</ul>
 			</div>
 		</div>
-		<div style="height: 2px; width: 1000px; clear: both; border: 1px dashed #ffffff !important;">
+		<div style="height: 2px; width: 1100px; clear: both; border: 1px dashed #ffffff !important;">
 		</div>
 		<div id="content">
 			<div class="pad-content">

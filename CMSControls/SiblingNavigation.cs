@@ -57,7 +57,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 			int indent = output.Indent;
-			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
+			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 
 			output.Indent = indent + 3;
 			output.WriteLine();

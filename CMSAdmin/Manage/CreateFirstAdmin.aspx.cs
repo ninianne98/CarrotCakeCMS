@@ -21,7 +21,7 @@ using Carrotware.CMS.UI.Base;
 */
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class CreateFirstAdmin : BasePage {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();

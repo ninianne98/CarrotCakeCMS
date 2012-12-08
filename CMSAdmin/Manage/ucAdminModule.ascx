@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdminModule.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.ucAdminModule" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdminModule.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdminModule" %>
 <style type="text/css">
 	.selectedModule {
 		font-weight: bolder;

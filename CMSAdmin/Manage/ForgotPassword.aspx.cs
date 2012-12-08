@@ -9,7 +9,7 @@ using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class ForgotPassword : BasePage {
 		protected void Page_Load(object sender, EventArgs e) {
 			divLogonLink.Visible = false;

@@ -10,6 +10,9 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class ucEditNotifier : BaseUserControl {
 
+		public string EditPageURL = "";
+		public string PageIndexURL = "";
+
 		protected SiteNavHelper navHelper = new SiteNavHelper();
 
 		public Guid CurrentPageID {
@@ -18,7 +21,15 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			ContentPage currentPage = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+
+			string sCurrentPage = SiteData.CurrentScriptName;
+			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
+
+			if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+				sCurrentPage = sScrubbedURL;
+			}
+
+			ContentPage currentPage = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
 			if (SiteData.IsPageSampler && currentPage == null) {
 				currentPage = ContentPageHelper.GetSamplerView();
 			}
@@ -26,7 +37,15 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			litVersion.Text = SiteData.CarrotCakeCMSVersion;
 
 			CurrentPageID = currentPage.Root_ContentID;
-			lnkCurrent.HRef = currentPage.FileName;
+			lnkCurrent.HRef = SiteData.CurrentScriptName;
+
+			EditPageURL = SiteFilename.PageAddEditURL;
+			PageIndexURL = SiteFilename.PageIndexURL;
+
+			if (currentPage.ContentType == ContentPageType.PageType.BlogEntry) {
+				EditPageURL = SiteFilename.BlogPostAddEditURL;
+				PageIndexURL = SiteFilename.BlogPostIndexURL;
+			}
 
 			if (!IsPostBack) {
 				List<SiteNav> nav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, CurrentPageID, !SecurityData.IsAuthEditor);

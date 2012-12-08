@@ -1,0 +1,21 @@
+﻿	<script type="text/javascript">
+
+		function {CONTROL_PREFIX}_ValidateComments(sender, args) {
+			var txtValue = args.Value;
+			args.IsValid = true;
+			if (txtValue.indexOf('<') > -1 || txtValue.indexOf('>') > -1) {
+				alert("invalid characters encountered: cannot include < or > ");
+				args.IsValid = false;
+				return;
+			}
+
+			if (txtValue.length > 1024) {
+				alert("comments are too long ");
+				args.IsValid = false;
+				return;
+			}
+
+			args.IsValid = true;
+		}
+
+	</script>

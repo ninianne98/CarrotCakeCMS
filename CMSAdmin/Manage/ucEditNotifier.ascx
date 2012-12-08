@@ -102,9 +102,9 @@
 </style>
 <div class="cmsNavFooterBox">
 	<p class="cmsFooterP">
-		<a class="cmsFooterLinks" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">EDIT</a> 
-		<a class="cmsFooterLinks" target="_top" href="<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
-		<a class="cmsFooterLinks" target="_top" href="/Manage/PageIndex.aspx">PAGE INDEX</a> 
+		<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">EDIT</a> 
+		<a class="cmsFooterLinks" target="_top" href="<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
+		<a class="cmsFooterLinks" target="_top" href="<%=PageIndexURL %>">CONTENT INDEX</a> 
 		<a class="cmsFooterLinks" target="_top" href="/Manage/ModuleIndex.aspx">MODULE INDEX</a>
 	</p>
 	<p class="cmsFooterP">
@@ -132,16 +132,16 @@
 <div id="cmsAdminToolbox1" class="cmsNavigationBlock">
 	<div class="cmsNavBox2">
 		<div class="cmsNavBox1">
-			<a class="cmsNavImageLink" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
+			<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">
 				<img border="0" alt="EDIT" title="EDIT" src="/Manage/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true">
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>?carrotedit=true">
 				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/Manage/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="PAGE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/PageIndex.aspx">
-				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/Manage/images/table.png" /></a>
+			<a title="CONTENT INDEX" class="cmsNavImageLink" target="_top" href="<%=PageIndexURL %>">
+				<img border="0" alt="CONTENT INDEX" title="CONTENT INDEX" src="/Manage/images/table.png" /></a>
 		</div>
 		<div class="cmsNavBox2">
 			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/ModuleIndex.aspx">
@@ -152,16 +152,16 @@
 <div id="cmsAdminToolbox2" class="cmsNavigationBlock">
 	<div class="cmsNavBox2">
 		<div class="cmsNavBox1">
-			<a class="cmsNavImageLink" target="_blank" href="/Manage/PageAddEdit.aspx?id=<%=CurrentPageID %>">
+			<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">
 				<img border="0" alt="EDIT" title="EDIT" src="/Manage/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?carrotedit=true">
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>?carrotedit=true">
 				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/Manage/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="PAGE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/PageIndex.aspx">
-				<img border="0" alt="PAGE INDEX" title="PAGE INDEX" src="/Manage/images/table.png" /></a>
+			<a title="CONTENT INDEX" class="cmsNavImageLink" target="_top" href="<%=PageIndexURL %>">
+				<img border="0" alt="CONTENT INDEX" title="CONTENT INDEX" src="/Manage/images/table.png" /></a>
 		</div>
 		<div class="cmsNavBox2">
 			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/Manage/ModuleIndex.aspx">

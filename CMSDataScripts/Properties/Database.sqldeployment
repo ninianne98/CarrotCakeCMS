@@ -2,13 +2,13 @@
 <DeploymentConfigurationSettings xmlns="urn:Microsoft.VisualStudio.Data.Schema.Package.DeploymentConfigurationSettings">
   <Version>1.0</Version>
   <Properties>
-    <AlwaysCreateNewDatabase>True</AlwaysCreateNewDatabase>
+    <AlwaysCreateNewDatabase>False</AlwaysCreateNewDatabase>
     <BlockIncrementalDeploymentIfDataLoss>True</BlockIncrementalDeploymentIfDataLoss>
     <DeployDatabaseProperties>True</DeployDatabaseProperties>
     <DeploymentCollationPreference>UseSourceModelCollation</DeploymentCollationPreference>
     <DoNotUseAlterAssemblyStatementsToUpdateCLRTypes>False</DoNotUseAlterAssemblyStatementsToUpdateCLRTypes>
     <GenerateDropsIfNotInProject>False</GenerateDropsIfNotInProject>
-    <PerformDatabaseBackup>True</PerformDatabaseBackup>
+    <PerformDatabaseBackup>False</PerformDatabaseBackup>
     <SingleUserMode>False</SingleUserMode>
   </Properties>
 </DeploymentConfigurationSettings>

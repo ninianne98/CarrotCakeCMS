@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
     
     
     public partial class Default {
@@ -20,6 +20,15 @@ namespace Carrotware.CMS.UI.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnResetVars;
+        
+        /// <summary>
+        /// btnExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnExport;
         
         /// <summary>
         /// litID control.
@@ -49,6 +58,24 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
+        /// txtTagline control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTagline;
+        
+        /// <summary>
+        /// txtTitleBar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTitleBar;
+        
+        /// <summary>
         /// txtURL control.
         /// </summary>
         /// <remarks>
@@ -65,6 +92,15 @@ namespace Carrotware.CMS.UI.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        
+        /// <summary>
+        /// chkHide control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkHide;
         
         /// <summary>
         /// txtKey control.
@@ -85,13 +121,67 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.TextBox txtDescription;
         
         /// <summary>
-        /// chkHide control.
+        /// txtFoldersValid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkHide;
+        protected global::System.Web.UI.WebControls.TextBox txtFoldersValid;
+        
+        /// <summary>
+        /// RequiredFieldValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        
+        /// <summary>
+        /// txtFolderPath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFolderPath;
+        
+        /// <summary>
+        /// txtCategoryPath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCategoryPath;
+        
+        /// <summary>
+        /// txtTagPath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTagPath;
+        
+        /// <summary>
+        /// ddlDatePattern control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDatePattern;
+        
+        /// <summary>
+        /// ParentPagePicker control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Admin.Manage.ucSitePageDrillDown ParentPagePicker;
         
         /// <summary>
         /// btnSave control.
@@ -108,9 +198,9 @@ namespace Carrotware.CMS.UI.Admin {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.MasterPages.Main Master {
+        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.Main Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.MasterPages.Main)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.Main)(base.Master));
             }
         }
     }

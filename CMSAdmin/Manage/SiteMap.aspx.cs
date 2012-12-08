@@ -16,7 +16,7 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class SiteMap : AdminBasePage {
 		List<ContentPage> lstSite = new List<ContentPage>();
 

@@ -23,9 +23,9 @@ namespace Carrotware.CMS.Core {
 
 
 		public SiteNav() {
-//#if DEBUG
-//            db.Log = new DebugTextWriter();
-//#endif
+			//#if DEBUG
+			//            db.Log = new DebugTextWriter();
+			//#endif
 		}
 
 
@@ -42,25 +42,34 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public string PageTextSummary {
-			get {
-				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+		//public string PageTextSummary {
+		//    get {
+		//        string txt = !string.IsNullOrEmpty(PageText) ? PageText.Replace("   ", " ").Replace("  ", " ") : "";
 
-				if (txt.Length > 512) {
-					return txt.Substring(0, 500) + "........";
-				} else {
-					return txt;
-				}
-			}
-		}
+		//        if (txt.Length > 300) {
+		//            return txt.Substring(0, 256) + "[.....]";
+		//        } else {
+		//            return txt;
+		//        }
+		//    }
+		//}
 
 		public string PageTextPlainSummary {
 			get {
 				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("&nbsp;", " ").Replace('\u00A0', ' ');
+
+				txt = Regex.Replace(txt, @"<!--(\n|.)*-->", " ");
+				if (txt.Length > 4096) {
+					txt = txt.Substring(0, 4096);
+				}
+
 				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
 
-				if (txt.Length > 512) {
-					return txt.Substring(0, 500) + "........";
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ").Replace("  ", " ");
+
+				if (txt.Length > 300) {
+					return txt.Substring(0, 256) + "[.....]";
 				} else {
 					return txt;
 				}
@@ -99,10 +108,47 @@ namespace Carrotware.CMS.Core {
 		public bool PageActive { get; set; }
 		public Guid SiteID { get; set; }
 
+		public ContentPageType.PageType ContentType { get; set; }
 		public string TemplateFile { get; set; }
+
+		private List<ContentTag> _contentTags = null;
+		public List<ContentTag> ContentTags {
+			get {
+				if (_contentTags == null) {
+					_contentTags = ContentTag.BuildTagList(this.Root_ContentID);
+				}
+				return _contentTags;
+			}
+			set {
+				_contentTags = value;
+			}
+		}
+
+		private List<ContentCategory> _ContentCategories = null;
+		public List<ContentCategory> ContentCategories {
+			get {
+				if (_ContentCategories == null) {
+					_ContentCategories = ContentCategory.BuildCategoryList(this.Root_ContentID);
+				}
+				return _ContentCategories;
+			}
+			set {
+				_ContentCategories = value;
+			}
+		}
 
 
 		#region IDisposable Members
+
+
+
+		ExtendedUserData _user = null;
+		public ExtendedUserData GetUserInfo() {
+			if (_user == null && this.EditUserId.HasValue) {
+				_user = new ExtendedUserData(this.EditUserId.Value);
+			}
+			return _user;
+		}
 
 
 		public override bool Equals(Object obj) {

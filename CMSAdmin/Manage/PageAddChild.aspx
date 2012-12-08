@@ -34,7 +34,7 @@
 		});
 
 		function editFilenameCallback(data, status) {
-			if (data.d == "PASS") {
+			if (data.d == "OK") {
 				$('#<%= txtFileValid.ClientID %>').val('VALID');
 			} else {
 				$('#<%= txtFileValid.ClientID %>').val('');

@@ -1,4 +1,6 @@
-﻿CREATE VIEW [dbo].[vw_carrot_Widget]
+﻿
+
+CREATE VIEW [dbo].[vw_carrot_Widget]
 AS 
 
 
@@ -7,5 +9,5 @@ SELECT w.Root_WidgetID, w.Root_ContentID, w.WidgetOrder, w.PlaceholderName, w.Co
 FROM carrot_Widget AS w 
 	INNER JOIN carrot_WidgetData AS wd ON w.Root_WidgetID = wd.Root_WidgetID 
 	INNER JOIN carrot_RootContent AS cr ON w.Root_ContentID = cr.Root_ContentID
-
+  
 

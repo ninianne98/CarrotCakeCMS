@@ -19,7 +19,7 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	/// <summary>
 	/// Summary description for CMS
 	/// </summary>
@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Admin {
 		protected List<ContentPage> lstActivePages {
 			get {
 				if (_pages == null) {
-					_pages = pageHelper.GetLatestContentList(SiteData.CurrentSiteID, true);
+					_pages = pageHelper.GetLatestContentList(SiteData.CurrentSite.SiteID, true);
 				}
 				return _pages;
 			}
@@ -136,11 +136,11 @@ namespace Carrotware.CMS.UI.Admin {
 		private void LoadGuids() {
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
 				if (!string.IsNullOrEmpty(CurrentEditPage)) {
-					filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, CurrentEditPage);
+					filePage = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, CurrentEditPage);
 					CurrentPageGuid = filePage.Root_ContentID;
 				} else {
 					if (CurrentPageGuid != Guid.Empty) {
-						filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, CurrentPageGuid);
+						filePage = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
 						CurrentEditPage = filePage.FileName;
 					} else {
 						filePage = new ContentPage();
@@ -177,11 +177,11 @@ namespace Carrotware.CMS.UI.Admin {
 			try {
 				CurrentPageGuid = new Guid(PageID);
 
-				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
+				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
 
 				//only allow admin/editors to record a lock
 				if ((SecurityData.IsAdmin || SecurityData.IsEditor) && !bLock) {
-					bool bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
+					bool bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
 
 					if (bRet) {
 						return DateTime.Now.ToString();
@@ -204,7 +204,7 @@ namespace Carrotware.CMS.UI.Admin {
 			try {
 				CurrentPageGuid = new Guid(ThisPage);
 
-				pageHelper.ResetHeartbeatLock(CurrentPageGuid, SiteData.CurrentSiteID);
+				pageHelper.ResetHeartbeatLock(CurrentPageGuid, SiteData.CurrentSite.SiteID);
 
 				GetSetUserEditState("", "", "", "");
 
@@ -254,6 +254,7 @@ namespace Carrotware.CMS.UI.Admin {
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<SiteMapOrder> GetChildPages(string PageID, string CurrPageID) {
+
 			Guid? ParentID = Guid.Empty;
 			if (!string.IsNullOrEmpty(PageID)) {
 				if (PageID.Length > 20) {
@@ -269,34 +270,16 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			List<SiteMapOrder> lstSiteMap = new List<SiteMapOrder>();
+			if (SiteData.CurrentSite != null) {
+				List<SiteMapOrder> lst = sitemapHelper.GetChildPages(SiteData.CurrentSite.SiteID, ParentID, ContPageID);
 
-			List<SiteMapOrder> lst = sitemapHelper.GetChildPages(SiteData.CurrentSiteID, ParentID, ContPageID);
-
-			//List<SiteMapOrder> lst = (from ct in db.carrot_Contents
-			//                          join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-			//                          orderby ct.NavOrder, ct.NavMenuText
-			//                          where r.SiteID == SiteData.CurrentSiteID
-			//                                && r.Root_ContentID != ContPageID
-			//                                && ct.IsLatestVersion == true
-			//                                && (ct.Parent_ContentID == ParentID
-			//                                    || (ct.Parent_ContentID == null && ParentID == Guid.Empty))
-			//                          select new SiteMapOrder {
-			//                              NavLevel = -1,
-			//                              NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
-			//                              NavOrder = ct.NavOrder,
-			//                              PageActive = Convert.ToBoolean(r.PageActive),
-			//                              Parent_ContentID = ct.Parent_ContentID,
-			//                              Root_ContentID = ct.Root_ContentID
-			//                          }).ToList();
-
-
-			lstSiteMap = (from l in lst
-						  orderby l.NavOrder, l.NavMenuText
-						  where l.Parent_ContentID != ContPageID || l.Parent_ContentID == null
-						  select l).ToList();
+				lstSiteMap = (from l in lst
+							  orderby l.NavOrder, l.NavMenuText
+							  where l.Parent_ContentID != ContPageID || l.Parent_ContentID == null
+							  select l).ToList();
+			}
 
 			return lstSiteMap;
-
 		}
 
 		[WebMethod]
@@ -304,7 +287,6 @@ namespace Carrotware.CMS.UI.Admin {
 		public List<SiteMapOrder> GetPageCrumbs(string PageID, string CurrPageID) {
 
 			Guid? ContentPageID = Guid.Empty;
-
 			if (!string.IsNullOrEmpty(PageID)) {
 				if (PageID.Length > 20) {
 					ContentPageID = new Guid(PageID);
@@ -325,25 +307,10 @@ namespace Carrotware.CMS.UI.Admin {
 			int iLenB = 0;
 			int iLenA = 1;
 
-			while (iLenB < iLenA) {
+			while (iLenB < iLenA && SiteData.CurrentSite != null) {
 				iLenB = lstSiteMap.Count;
 
-				SiteMapOrder cont = sitemapHelper.GetPageWithLevel(SiteData.CurrentSiteID, ContentPageID, iLevel);
-
-				//SiteMapOrder cont = (from r in db.carrot_RootContents
-				//                     join ct in db.carrot_Contents on r.Root_ContentID equals ct.Root_ContentID
-				//                     orderby ct.NavOrder, ct.NavMenuText
-				//                     where r.SiteID == SiteData.CurrentSiteID
-				//                         && ct.IsLatestVersion == true
-				//                         && ct.Root_ContentID == ContentPageID
-				//                     select new SiteMapOrder {
-				//                         NavLevel = iLevel,
-				//                         NavMenuText = (r.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
-				//                         NavOrder = ct.NavOrder,
-				//                         PageActive = Convert.ToBoolean(r.PageActive),
-				//                         Parent_ContentID = ct.Parent_ContentID,
-				//                         Root_ContentID = ct.Root_ContentID
-				//                     }).FirstOrDefault();
+				SiteMapOrder cont = sitemapHelper.GetPageWithLevel(SiteData.CurrentSite.SiteID, ContentPageID, iLevel);
 
 				iLevel++;
 				if (cont != null) {
@@ -381,6 +348,40 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string ValidateBlogFolders(string FolderPath, string CategoryPath, string TagPath) {
+			try {
+				string sFolderPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(FolderPath));
+				string sCategoryPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(CategoryPath));
+				string sTagPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(TagPath));
+
+				if (string.IsNullOrEmpty(sFolderPath) || string.IsNullOrEmpty(sCategoryPath) || string.IsNullOrEmpty(sTagPath)
+					|| sFolderPath.Length < 2 || sCategoryPath.Length < 2 || sTagPath.Length < 2) {
+					return "FAIL";
+				}
+
+				if (SiteData.CurrentSite != null
+					&& !string.IsNullOrEmpty(sFolderPath)
+					&& sCategoryPath.ToLower() != sTagPath.ToLower()) {
+
+					var i1 = pageHelper.FindCountPagesBeginingWith(SiteData.CurrentSite.SiteID, sFolderPath);
+
+					if (i1 < 1) {
+						return "OK";
+					}
+				}
+
+				if (SiteData.CurrentSite == null) {
+					return "OK";
+				}
+
+				return "FAIL";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
+
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -391,6 +392,61 @@ namespace Carrotware.CMS.UI.Admin {
 			List<MembershipUser> lstUsers = SecurityData.GetUserSearch(search);
 
 			return lstUsers.OrderBy(x => x.UserName).ToList();
+		}
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string ValidateUniqueCategory(string TheSlug, string ItemID) {
+			try {
+				Guid CurrentItemGuid = new Guid(ItemID);
+				TheSlug = CMSConfigHelper.DecodeBase64(TheSlug);
+				TheSlug = ContentPageHelper.ScrubSlug(TheSlug);
+
+				if (string.IsNullOrEmpty(TheSlug)) {
+					return "FAIL";
+				}
+				if (TheSlug.Length < 1) {
+					return "FAIL";
+				}
+
+				int iCount = ContentCategory.GetSimilar(SiteData.CurrentSite.SiteID, CurrentItemGuid, TheSlug);
+
+				if (iCount < 1) {
+					return "OK";
+				}
+
+				return "FAIL";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
+
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string ValidateUniqueTag(string TheSlug, string ItemID) {
+			try {
+				Guid CurrentItemGuid = new Guid(ItemID);
+				TheSlug = CMSConfigHelper.DecodeBase64(TheSlug);
+				TheSlug = ContentPageHelper.ScrubSlug(TheSlug);
+
+				if (string.IsNullOrEmpty(TheSlug)) {
+					return "FAIL";
+				}
+				if (TheSlug.Length < 1) {
+					return "FAIL";
+				}
+
+				int iCount = ContentTag.GetSimilar(SiteData.CurrentSite.SiteID, CurrentItemGuid, TheSlug);
+
+				if (iCount < 1) {
+					return "OK";
+				}
+
+				return "FAIL";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
 		}
 
 
@@ -404,20 +460,27 @@ namespace Carrotware.CMS.UI.Admin {
 
 				TheFileName = TheFileName.ToLower();
 
-				if (TheFileName == "/default.aspx") {
+				if (TheFileName == SiteData.DefaultDirectoryFilename || TheFileName.Length < 6) {
 					return "FAIL";
 				}
 
-				ContentPage fn = pageHelper.FindByFilename(SiteData.CurrentSiteID, TheFileName);
+				if (TheFileName.StartsWith(SiteData.CurrentSite.BlogFolderPath.ToLower())
+					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogCategoryPath.ToLower())
+					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogTagPath.ToLower())) {
 
-				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSiteID, CurrentPageGuid);
+					return "FAIL";
+				}
+
+				ContentPage fn = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, TheFileName);
+
+				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
 
 				if (cp == null && CurrentPageGuid != Guid.Empty) {
-					cp = pageHelper.GetVersion(SiteData.CurrentSiteID, CurrentPageGuid);
+					cp = pageHelper.GetVersion(SiteData.CurrentSite.SiteID, CurrentPageGuid);
 				}
 
 				if (fn == null || (fn != null && cp != null && fn.Root_ContentID == cp.Root_ContentID)) {
-					return "PASS";
+					return "OK";
 				} else {
 					return "FAIL";
 				}
@@ -426,6 +489,55 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string ValidateUniqueBlogFilename(string ThePageSlug, string PageID) {
+			try {
+				CurrentPageGuid = new Guid(PageID);
+				ThePageSlug = CMSConfigHelper.DecodeBase64(ThePageSlug);
+				ThePageSlug = ContentPageHelper.ScrubFilename(CurrentPageGuid, ThePageSlug);
+
+				ThePageSlug = ThePageSlug.ToLower();
+
+				DateTime datePublished = DateTime.Now.Date;
+				string TheFileName = ThePageSlug;
+
+				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
+
+				if (cp != null) {
+					datePublished = cp.CreateDate;
+				}
+				if (cp == null && CurrentPageGuid != Guid.Empty) {
+					ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(CurrentPageGuid);
+					if (cpe != null) {
+						datePublished = cpe.ThePage.CreateDate;
+					}
+				}
+
+				TheFileName = ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, datePublished, ThePageSlug);
+				//TheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, TheFileName);
+
+				if (ThePageSlug == SiteData.DefaultDirectoryFilename || TheFileName == SiteData.DefaultDirectoryFilename || TheFileName.Length < 6) {
+					return "FAIL";
+				}
+
+				ContentPage fn1 = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, TheFileName);
+				//ContentPage fn2 = pageHelper.FindByPageSlug(SiteData.CurrentSite.SiteID, datePublished, ThePageSlug);
+
+				if (cp == null && CurrentPageGuid != Guid.Empty) {
+					cp = pageHelper.GetVersion(SiteData.CurrentSite.SiteID, CurrentPageGuid);
+				}
+
+				if (fn1 == null || (fn1 != null && cp != null && fn1.Root_ContentID == cp.Root_ContentID)) {
+					return "OK";
+				} else {
+					return "FAIL";
+				}
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -572,7 +684,7 @@ namespace Carrotware.CMS.UI.Admin {
 						if (ww.ControlProperties.Length < 768) {
 							return ww.ControlProperties;
 						} else {
-							return ww.ControlProperties.Substring(0, 700) + ".........";
+							return ww.ControlProperties.Substring(0, 700) + "[.....]";
 						}
 					}
 				}
@@ -606,7 +718,7 @@ namespace Carrotware.CMS.UI.Admin {
 						if (ww.ControlProperties.Length < 768) {
 							return ww.ControlProperties;
 						} else {
-							return ww.ControlProperties.Substring(0, 700) + ".........";
+							return ww.ControlProperties.Substring(0, 700) + "[.....]";
 						}
 					}
 				}
@@ -747,8 +859,8 @@ namespace Carrotware.CMS.UI.Admin {
 				LoadGuids();
 				CurrentEditPage = filePage.FileName.ToLower();
 
-				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
-				Guid guidUser = pageHelper.GetCurrentEditUser(CurrentPageGuid, SiteData.CurrentSiteID);
+				bool bLock = pageHelper.IsPageLocked(CurrentPageGuid, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
+				Guid guidUser = pageHelper.GetCurrentEditUser(CurrentPageGuid, SiteData.CurrentSite.SiteID);
 
 				if (bLock || guidUser != SecurityData.CurrentUserGuid) {
 					return "Cannot publish changes, not current editing user.";

@@ -256,6 +256,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 
+			lstTwoLevelNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 		}
 
 		protected override void OnInit(EventArgs e) {
@@ -295,7 +296,7 @@ namespace Carrotware.CMS.UI.Controls {
 			foreach (SiteNav c1 in lstNav) {
 				output.Indent = indent2;
 				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
-				IdentifyLinkAsInactive(c1);
+
 				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
 					output.WriteLine("<li class=\"level-1 " + CSSSelected + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				} else {
@@ -308,7 +309,6 @@ namespace Carrotware.CMS.UI.Controls {
 					output.WriteLine("<ul class=\"" + CSSULClassLower + "\">");
 					output.Indent++;
 					foreach (SiteNav c2 in cc) {
-						IdentifyLinkAsInactive(c2);
 						if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
 							output.WriteLine("<li class=\"level-2 " + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
 						} else {
@@ -472,11 +472,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 				sCSS = sCSS.Replace("{MENU_ID}", "#" + this.ClientID + "-inner");
 				sCSS = sCSS.Replace("{MENU_WRAPPER_ID}", "#" + this.ClientID + "");
-				sCSS = "<style type=\"text/css\">" + sCSS + "</style>";
+				sCSS = "<style type=\"text/css\">\r\n" + sCSS + "\r\n</style>";
 
 				sCSS7 = sCSS7.Replace("{MENU_ID}", "#" + this.ClientID + "-inner");
 				sCSS7 = sCSS7.Replace("{MENU_WRAPPER_ID}", "#" + this.ClientID + "");
-				sCSS7 = "<!--[if IE 7]> <style type=\"text/css\">" + sCSS7 + "</style> <![endif]-->";
+				sCSS7 = "<!--[if IE 7]> <style type=\"text/css\">\r\n" + sCSS7 + "\r\n</style> <![endif]-->";
 
 				Literal link = new Literal();
 				link.Text = sCSS;

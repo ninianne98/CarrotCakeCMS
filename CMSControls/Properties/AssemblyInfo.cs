@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web.UI;
 
-
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
@@ -33,19 +32,29 @@ using System.Web.UI;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("4.2.*")]
-[assembly: AssemblyFileVersion("4.2.0.0")]
+[assembly: AssemblyVersion("4.3.*")]
+[assembly: AssemblyFileVersion("4.3.0.0")]
 
 [assembly: TagPrefix("SiblingNavigation", "carrot")]
 [assembly: TagPrefix("TopLevelNavigation", "carrot")]
 [assembly: TagPrefix("BreadCrumbNavigation", "carrot")]
 [assembly: TagPrefix("SecondLevelNavigation", "carrot")]
+[assembly: TagPrefix("PagedDataSummary", "carrot")]
+[assembly: TagPrefix("SiteMetaWordList", "carrot")]
+[assembly: TagPrefix("PostMetaWordList", "carrot")]
 
 [assembly: TagPrefix("TwoLevelNavigation", "carrot")]
 [assembly: TagPrefix("TwoLevelNavigationTemplate", "carrot")]
-[assembly: TagPrefix("NavLinkForTemplate", "carrot")]
+
 [assembly: TagPrefix("ListItemNavText", "carrot")]
+
+[assembly: TagPrefix("NavLinkForTemplate", "carrot")]
 [assembly: TagPrefix("ListItemWrapper", "carrot")]
+
+[assembly: TagPrefix("NavLinkForPagerTemplate", "carrot")]
+[assembly: TagPrefix("ListItemWrapperForPager", "carrot")]
+[assembly: TagPrefix("NavPageNumberDisplay", "carrot")]
+[assembly: TagPrefix("ContentCommentForm", "carrot")]
 
 [assembly: TagPrefix("MultiLevelNavigation", "carrot")]
 [assembly: TagPrefix("ChildNavigation", "carrot")]
@@ -58,5 +67,10 @@ using System.Web.UI;
 [assembly: TagPrefix("ContentPlainText", "carrot")]
 [assembly: TagPrefix("ContentRichText", "carrot")]
 
+[assembly: TagPrefix("IFrameWidgetWrapper", "carrot")]
+[assembly: TagPrefix("RSSFeed", "carrot")]
+
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu7.txt", "text/css")]
+
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ContentCommentFormScripts.txt", "text/javascript")]

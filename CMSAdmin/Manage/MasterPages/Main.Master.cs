@@ -10,7 +10,7 @@ using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
 using Carrotware.Web.UI.Controls;
 
-namespace Carrotware.CMS.UI.Admin.MasterPages {
+namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 	public partial class Main : AdminBaseMasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!SecurityData.IsAdmin) {
@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 			tabUserAdmin.Visible = tabUserSecurity.Visible;
 			tabGroupAdmin.Visible = tabUserSecurity.Visible;
 
-			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.MasterPages.Main.Ctrl");
+			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.Manage.MasterPages.Main.Ctrl");
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 
@@ -42,8 +42,11 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 				tabContentTop.Visible = true;
 			}
 
+			tabBlogTop.Visible = tabContentTop.Visible;
 			tabContent.Visible = tabContentTop.Visible;
 			tabModules.Visible = tabContentTop.Visible;
+			tabContentSiteMap.Visible = tabContentTop.Visible;
+			tabImportContent.Visible = tabContentTop.Visible;
 		}
 
 
@@ -57,7 +60,20 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 
 			switch (sectionID) {
 				case SectionID.Home:
+					tabMainTop.Attributes["class"] = "current";
 					tabMain.Attributes["class"] = "current";
+					break;
+				case SectionID.ContentSkinEdit:
+					tabMainTop.Attributes["class"] = "current";
+					tabContentSkin.Attributes["class"] = "current";
+					break;
+				case SectionID.ContentSiteMap:
+					tabMainTop.Attributes["class"] = "current";
+					tabContentSiteMap.Attributes["class"] = "current";
+					break;
+				case SectionID.ContentImport:
+					tabMainTop.Attributes["class"] = "current";
+					tabImportContent.Attributes["class"] = "current";
 					break;
 
 				case SectionID.Content:
@@ -68,14 +84,11 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 					tabContentTop.Attributes["class"] = "current";
 					tabContentTemplate.Attributes["class"] = "current";
 					break;
-				case SectionID.ContentSkinEdit:
+				case SectionID.PageComment:
 					tabContentTop.Attributes["class"] = "current";
-					tabContentSkin.Attributes["class"] = "current";
+					tabContentCommentIndex.Attributes["class"] = "current";
 					break;
-				case SectionID.ContentSiteMap:
-					tabContentTop.Attributes["class"] = "current";
-					tabContentSiteMap.Attributes["class"] = "current";
-					break;
+
 				case SectionID.UserAdmin:
 					tabUserSecurity.Attributes["class"] = "current";
 					tabUserAdmin.Attributes["class"] = "current";
@@ -84,8 +97,34 @@ namespace Carrotware.CMS.UI.Admin.MasterPages {
 					tabUserSecurity.Attributes["class"] = "current";
 					tabGroupAdmin.Attributes["class"] = "current";
 					break;
+
 				case SectionID.Modules:
 					tabModules.Attributes["class"] = "current";
+					break;
+
+				case SectionID.BlogContent:
+					tabBlogTop.Attributes["class"] = "current";
+					tabBlogContent.Attributes["class"] = "current";
+					break;
+				case SectionID.BlogIndex:
+					tabBlogTop.Attributes["class"] = "current";
+					tabBlogContent.Attributes["class"] = "current";
+					break;
+				case SectionID.BlogCategory:
+					tabBlogTop.Attributes["class"] = "current";
+					tabBlogCategoryIndex.Attributes["class"] = "current";
+					break;
+				case SectionID.BlogTag:
+					tabBlogTop.Attributes["class"] = "current";
+					tabBlogTagIndex.Attributes["class"] = "current";
+					break;
+				case SectionID.BlogTemplate:
+					tabBlogTop.Attributes["class"] = "current";
+					tabBlogTemplate.Attributes["class"] = "current";
+					break;
+				case SectionID.BlogComment:
+					tabBlogTop.Attributes["class"] = "current";
+					tabBlogCommentIndex.Attributes["class"] = "current";
 					break;
 
 			}

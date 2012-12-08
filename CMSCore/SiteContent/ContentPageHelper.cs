@@ -37,53 +37,6 @@ namespace Carrotware.CMS.Core {
 			//#endif
 		}
 
-		/*
-		internal static ContentPage CreateContentPage(carrot_RootContent rc, carrot_Content c) {
-			ContentPage cont = new ContentPage();
-
-			if (rc == null) {
-				rc = new carrot_RootContent();
-				rc.Root_ContentID = Guid.NewGuid();
-				rc.PageActive = true;
-			}
-			if (c == null) {
-				c = new carrot_Content();
-				c.ContentID = rc.Root_ContentID;
-				c.Root_ContentID = rc.Root_ContentID;
-			}
-
-			if (c.Root_ContentID == rc.Root_ContentID) {
-
-				cont.Root_ContentID = rc.Root_ContentID;
-				cont.SiteID = rc.SiteID;
-				cont.Heartbeat_UserId = rc.Heartbeat_UserId;
-				cont.EditHeartbeat = rc.EditHeartbeat;
-				cont.FileName = rc.FileName;
-				cont.CreateDate = rc.CreateDate;
-
-				cont.PageActive = rc.PageActive;
-
-				cont.ContentID = c.ContentID;
-				cont.Parent_ContentID = c.Parent_ContentID;
-				cont.IsLatestVersion = c.IsLatestVersion.Value;
-				cont.TitleBar = c.TitleBar;
-				cont.NavMenuText = c.NavMenuText;
-				cont.PageHead = c.PageHead;
-				cont.PageText = c.PageText;
-				cont.LeftPageText = c.LeftPageText;
-				cont.RightPageText = c.RightPageText;
-				cont.NavOrder = c.NavOrder;
-				cont.EditUserId = c.EditUserId;
-				cont.EditDate = c.EditDate;
-				cont.TemplateFile = c.TemplateFile;
-
-				cont.MetaDescription = c.MetaDescription;
-				cont.MetaKeyword = c.MetaKeyword;
-			}
-
-			return cont;
-		}
-		*/
 
 		internal static ContentPage CreateContentPage(vw_carrot_Content c) {
 			ContentPage cont = null;
@@ -100,6 +53,9 @@ namespace Carrotware.CMS.Core {
 
 				cont.PageActive = c.PageActive;
 
+				cont.PageSlug = c.PageSlug;
+				cont.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
+
 				cont.ContentID = c.ContentID;
 				cont.Parent_ContentID = c.Parent_ContentID;
 				cont.IsLatestVersion = c.IsLatestVersion.Value;
@@ -114,11 +70,83 @@ namespace Carrotware.CMS.Core {
 				cont.EditDate = c.EditDate;
 				cont.TemplateFile = c.TemplateFile;
 
+				if (string.IsNullOrEmpty(cont.PageSlug) && cont.ContentType == ContentPageType.PageType.BlogEntry) {
+					cont.PageSlug = c.FileName;
+				}
+
 				cont.MetaDescription = c.MetaDescription;
 				cont.MetaKeyword = c.MetaKeyword;
 			}
 
 			return cont;
+		}
+
+		public static string CreateBlogDatePrefix(Guid siteID, DateTime dateCreated) {
+			string FileName = "";
+
+			var ss = SiteData.GetSiteByID(siteID);
+			if (ss.Blog_DatePattern.Length > 1) {
+				FileName = "/" + dateCreated.ToString(ss.Blog_DatePattern) + "/";
+			} else {
+				FileName = "/";
+			}
+
+			return ScrubPath(FileName);
+		}
+
+		public static string CreateFileNameFromSlug(Guid siteID, DateTime dateCreated, string PageSlug) {
+			string FileName = "";
+
+			FileName = "/" + CreateBlogDatePrefix(siteID, dateCreated) + "/" + PageSlug;
+
+			return ScrubFilename(Guid.Empty, FileName);
+		}
+
+		public void BulkFileNameFromSlug(Guid siteID, string NewDatePattern) {
+
+			if (string.IsNullOrEmpty(NewDatePattern)) {
+				NewDatePattern = "yyyy/MM/dd";
+			}
+			NewDatePattern = NewDatePattern.Trim();
+
+			IQueryable<carrot_RootContent> query = CompiledQueries.cqBlogAllRootTbl(db, siteID, false);
+			query.ToList().ForEach(q => q.FileName = ScrubFilename(q.Root_ContentID, "/" + q.CreateDate.ToString(NewDatePattern) + "/" + q.PageSlug));
+			db.SubmitChanges();
+
+			IQueryable<string> query2 = CompiledQueries.cqBlogDupFileNames(db, siteID);
+
+			Guid contentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry);
+
+			foreach (string fileName in query2) {
+				int iDupCtr = 1;
+				IQueryable<carrot_RootContent> query3 = CompiledQueries.cqGeRootContentListByURLTbl(db, siteID, contentTypeID, fileName);
+
+				foreach (carrot_RootContent item in query3) {
+					int c = -1;
+					string sNewFilename = ScrubFilename(item.Root_ContentID, "/" + item.CreateDate.ToString(NewDatePattern) + "/" + item.PageSlug);
+					string sSlug = item.PageSlug;
+
+					c = CompiledQueries.cqGeRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
+
+					if (c > 0) {
+						sNewFilename = sNewFilename.Substring(0, sNewFilename.Length - 5) + "-" + item.CreateDate.ToString("yyyy-MM-dd") + ".aspx";
+						sSlug = sSlug.Substring(0, sSlug.Length - 5) + "-" + item.CreateDate.ToString("yyyy-MM-dd") + ".aspx";
+
+						c = CompiledQueries.cqGeRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
+
+						if (c > 0) {
+							sNewFilename = sNewFilename.Substring(0, sNewFilename.Length - 5) + "-" + iDupCtr.ToString() + ".aspx";
+							sSlug = sSlug.Substring(0, sSlug.Length - 5) + "-" + iDupCtr.ToString() + ".aspx";
+						}
+					}
+
+					item.PageSlug = sSlug;
+					item.FileName = sNewFilename;
+					iDupCtr++;
+					db.SubmitChanges();
+				}
+			}
+
 		}
 
 		public static string ScrubFilename(Guid rootContentID, string FileName) {
@@ -133,25 +161,11 @@ namespace Carrotware.CMS.Core {
 				newFileName = @"/" + newFileName;
 			}
 
-			newFileName = newFileName.Replace(" ", "-");
-			newFileName = newFileName.Replace("'", "-");
-			newFileName = newFileName.Replace("\"", "-");
-			newFileName = newFileName.Replace("*", "-star-");
-			newFileName = newFileName.Replace("%", "-percent-");
-			newFileName = newFileName.Replace("&", "-n-");
-			newFileName = newFileName.Replace("--", "-").Replace("--", "-");
-			newFileName = newFileName.Replace(@"//", @"/").Replace(@"//", @"/");
-			newFileName = newFileName.Trim();
-
-			newFileName = Regex.Replace(newFileName, "[:\"*?<>|]+", "-");
-			newFileName = Regex.Replace(newFileName, @"[^0-9a-zA-Z.-/_]+", "-");
-
-			newFileName = newFileName.Replace("--", "-").Replace("--", "-");
-
+			newFileName = ScrubSpecial(newFileName);
 
 			if (newFileName.EndsWith(@"/")) {
 				newFileName = newFileName + SiteData.DefaultDirectoryFilename;
-				newFileName = newFileName.Replace(@"//", @"/");
+				newFileName = newFileName.Replace("//", "/");
 			}
 
 			if (newFileName.ToLower().EndsWith(".htm")) {
@@ -168,37 +182,241 @@ namespace Carrotware.CMS.Core {
 			return newFileName;
 		}
 
+		private static string ScrubSpecial(string sInput) {
+			string sOutput = sInput;
+
+			sOutput = sOutput.Replace(" ", "-");
+			sOutput = sOutput.Replace("'", "-");
+			sOutput = sOutput.Replace("\"", "-");
+			sOutput = sOutput.Replace("*", "-star-");
+			sOutput = sOutput.Replace("%", "-percent-");
+			sOutput = sOutput.Replace("&", "-n-");
+
+			sOutput = sOutput.Replace("--", "-").Replace("--", "-");
+			sOutput = sOutput.Replace("//", "/").Replace("//", "/");
+			sOutput = sOutput.Trim();
+
+			sOutput = Regex.Replace(sOutput, "[:\"*?<>|]+", "-");
+			sOutput = Regex.Replace(sOutput, @"[^0-9a-zA-Z.-/_]+", "-");
+
+			sOutput = sOutput.Replace("--", "-").Replace("--", "-");
+			sOutput = sOutput.Replace("//", "/").Replace("//", "/");
+			sOutput = sOutput.Trim();
+
+			return sOutput;
+		}
+
+
+		public static string ScrubSlug(string SlugValue) {
+			string newSlug = SlugValue;
+
+			newSlug = newSlug.Replace(@"\", "");
+			newSlug = newSlug.Replace(@"/", "");
+
+			newSlug = ScrubSpecial(newSlug);
+
+			return newSlug;
+		}
+
+
+		public static string ScrubPath(string FilePath) {
+			string newFilePath = FilePath;
+
+			newFilePath = newFilePath.Replace(@"\", @"/");
+
+			if (!newFilePath.StartsWith(@"/")) {
+				newFilePath = @"/" + newFilePath;
+			}
+			if (!newFilePath.EndsWith(@"/")) {
+				newFilePath = newFilePath + @"/";
+			}
+
+			newFilePath = ScrubSpecial(newFilePath);
+
+			newFilePath = newFilePath.Replace("//", "/");
+
+			return newFilePath;
+		}
 
 		public List<ContentPage> GetAllLatestContentList(Guid siteID) {
-			List<ContentPage> lstContent = CompiledQueries.cqGetLatestContentList(db, siteID, false).Select(ct => CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CannedQueries.GetAllContentListUnordered(db, siteID).Select(ct => CreateContentPage(ct)).ToList();
+
+			return lstContent;
+		}
+
+		public List<ContentPage> GetAllLatestBlogList(Guid siteID) {
+			List<ContentPage> lstContent = CannedQueries.GetAllBlogListUnordered(db, siteID).Select(ct => CreateContentPage(ct)).ToList();
 
 			return lstContent;
 		}
 
 
-		public int GetSitePageCount(Guid siteID, bool bActiveOnly) {
-			int iCount = CompiledQueries.cqGetLatestContentList(db, siteID, bActiveOnly).Count();
-
+		public int GetSitePageCount(Guid siteID, ContentPageType.PageType entryType, bool bActiveOnly) {
+			int iCount = CannedQueries.GetAllByTypeListUnordered(db, siteID, bActiveOnly, entryType).Count();
 			return iCount;
 		}
 
-		public int GetSitePageCount(Guid siteID) {
-			int iCount = CompiledQueries.cqGetLatestContentList(db, siteID, false).Count();
-
+		public int GetSitePageCount(Guid siteID, ContentPageType.PageType entryType) {
+			int iCount = CannedQueries.GetAllByTypeListUnordered(db, siteID, false, entryType).Count();
 			return iCount;
 		}
 
-		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageNumber, string sortField, string sortDir) {
-			return GetLatestContentPagedList(siteID, bActiveOnly, 10, pageNumber, sortField, sortDir);
+		public int GetSiteContentCount(Guid siteID) {
+			int iCount = CannedQueries.GetLatestContentListUnordered(db, siteID, false).Count();
+			return iCount;
 		}
 
-		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageNumber) {
-			return GetLatestContentPagedList(siteID, bActiveOnly, 10, pageNumber, "", "");
+
+		public List<ContentPage> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageNumber, string sortField, string sortDir) {
+			return GetLatestContentPagedList(siteID, ContentPageType.PageType.BlogEntry, bActiveOnly, pageNumber, sortField, sortDir);
 		}
 
-		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber) {
-			return GetLatestContentPagedList(siteID, bActiveOnly, pageSize, pageNumber, "", "");
+		public List<ContentPage> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageNumber) {
+			return GetLatestContentPagedList(siteID, ContentPageType.PageType.BlogEntry, bActiveOnly, pageNumber);
 		}
+
+		public List<ContentPage> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber) {
+			return GetLatestContentPagedList(siteID, ContentPageType.PageType.BlogEntry, bActiveOnly, pageSize, pageNumber);
+		}
+
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageNumber, string sortField, string sortDir) {
+			return GetLatestContentPagedList(siteID, postType, bActiveOnly, 10, pageNumber, sortField, sortDir);
+		}
+
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageNumber) {
+			return GetLatestContentPagedList(siteID, postType, bActiveOnly, 10, pageNumber, "", "");
+		}
+
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageSize, int pageNumber) {
+			return GetLatestContentPagedList(siteID, postType, bActiveOnly, pageSize, pageNumber, "", "");
+		}
+
+		public List<ContentPage> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+
+			return GetLatestContentPagedList(siteID, ContentPageType.PageType.BlogEntry, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
+		}
+
+		public List<ContentPage> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly,
+					int pageSize, int pageNumber, string sortField, string sortDir) {
+
+			IQueryable<vw_carrot_Content> query1 = null;
+
+			if (postType == ContentPageType.PageType.ContentEntry) {
+				query1 = CannedQueries.GetLatestContentListUnordered(db, siteID, bActiveOnly);
+			} else {
+				query1 = CannedQueries.GetLatestBlogListUnordered(db, siteID, bActiveOnly);
+			}
+
+			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
+		}
+
+		public int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly) {
+
+			IQueryable<vw_carrot_Content> query1 = null;
+			Guid siteID = currentSite.SiteID;
+			bool bFound = false;
+
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+				query1 = CannedQueries.GetContentByCategoryURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
+				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.dateBegin, p.dateEnd, bActiveOnly);
+				bFound = true;
+			}
+			if (!bFound) {
+				query1 = CannedQueries.GetLatestBlogListUnordered(db, siteID, bActiveOnly);
+			}
+
+			return query1.Count();
+		}
+
+
+		public List<ContentPage> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly,
+			int pageSize, int pageNumber, string sortField, string sortDir) {
+
+			IQueryable<vw_carrot_Content> query1 = null;
+			Guid siteID = currentSite.SiteID;
+			bool bFound = false;
+
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+				query1 = CannedQueries.GetContentByCategoryURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
+				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.dateBegin, p.dateEnd, bActiveOnly);
+				bFound = true;
+			}
+			if (!bFound) {
+				query1 = CannedQueries.GetLatestBlogListUnordered(db, siteID, bActiveOnly);
+			}
+
+			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
+		}
+
+
+		public List<ContentPage> PerformDataPagingQueryableContent(Guid siteID, bool bActiveOnly,
+				int pageSize, int pageNumber, string sortField, string sortDir, IQueryable<vw_carrot_Content> QueryInput) {
+
+			IEnumerable<ContentPage> lstContent = new List<ContentPage>();
+
+			int startRec = pageNumber * pageSize;
+
+			if (pageSize < 0 || pageSize > 200) {
+				pageSize = 25;
+			}
+
+			if (pageNumber < 0 || pageNumber > 10000) {
+				pageNumber = 0;
+			}
+
+			if (string.IsNullOrEmpty(sortField)) {
+				sortField = "CreateDate";
+			}
+
+			if (string.IsNullOrEmpty(sortDir)) {
+				sortDir = "DESC";
+			}
+
+			bool IsContentProp = false;
+
+			sortDir = sortDir.ToUpper();
+
+			sortField = (from p in ReflectionUtilities.GetPropertyStrings(typeof(vw_carrot_Content))
+						 where p.ToLower().Trim() == sortField.ToLower().Trim()
+						 select p).FirstOrDefault();
+
+			if (!string.IsNullOrEmpty(sortField)) {
+				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_Content), sortField);
+			}
+
+			if (IsContentProp) {
+				QueryInput = ReflectionUtilities.SortByParm<vw_carrot_Content>(QueryInput, sortField, sortDir);
+			} else {
+				QueryInput = (from c in QueryInput
+							  orderby c.CreateDate descending
+							  where c.SiteID == siteID
+								 && c.IsLatestVersion == true
+								 && (c.PageActive == bActiveOnly || bActiveOnly == false)
+							  select c).AsQueryable();
+			}
+
+			lstContent = (from q in QueryInput
+						  select CreateContentPage(q)).Skip(startRec).Take(pageSize);
+
+			return lstContent.ToList();
+		}
+
 
 		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID) {
 
@@ -223,24 +441,6 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
-		public bool IsPageLocked(Guid rootContentID) {
-
-			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, SiteData.CurrentSiteID, rootContentID);
-
-			bool bLock = false;
-			if (rc.Heartbeat_UserId != null) {
-				if (rc.Heartbeat_UserId != SecurityData.CurrentUserGuid
-						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
-					bLock = true;
-				}
-				if (rc.Heartbeat_UserId == SecurityData.CurrentUserGuid
-					|| rc.Heartbeat_UserId == null) {
-					bLock = false;
-				}
-			}
-
-			return bLock;
-		}
 
 		public bool IsPageLocked(Guid rootContentID, Guid siteID, Guid currentUserID) {
 
@@ -306,62 +506,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
-		public List<ContentPage> GetLatestContentPagedList(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
-			int startRec = pageNumber * pageSize;
-
-			if (pageSize < 0 || pageSize > 200) {
-				pageSize = 25;
-			}
-
-			if (pageNumber < 0 || pageNumber > 10000) {
-				pageNumber = 0;
-			}
-
-			if (string.IsNullOrEmpty(sortField)) {
-				sortField = "CreateDate";
-			}
-
-			if (string.IsNullOrEmpty(sortDir)) {
-				sortDir = "DESC";
-			}
-
-			bool IsContentProp = false;
-
-			sortDir = sortDir.ToUpper();
-
-			IQueryable<vw_carrot_Content> query1 = null;
-			IEnumerable<ContentPage> query2 = new List<ContentPage>();
-
-			sortField = (from p in ReflectionUtilities.GetPropertyStrings(typeof(vw_carrot_Content))
-						 where p.ToLower().Trim() == sortField.ToLower().Trim()
-						 select p).FirstOrDefault();
-
-			if (!string.IsNullOrEmpty(sortField)) {
-				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_Content), sortField);
-			}
-
-			query1 = CompiledQueries.cqGetLatestContentList(db, siteID, bActiveOnly);
-
-			if (IsContentProp) {
-				query1 = ReflectionUtilities.SortByParm<vw_carrot_Content>(query1, sortField, sortDir);
-			}
-
-			if (!IsContentProp) {
-				query1 = (from c in query1
-						  orderby c.CreateDate descending
-						  where c.SiteID == siteID
-							 && c.IsLatestVersion == true
-							 && (c.PageActive == bActiveOnly || bActiveOnly == false)
-						  select c).AsQueryable();
-			}
-
-			query2 = (from q in query1
-					  select CreateContentPage(q)).Skip(startRec).Take(pageSize);
-
-			return query2.ToList();
-		}
-
 		public ContentPage CopyContentPageToNew(ContentPage pageSource) {
 			ContentPage pageNew = new ContentPage();
 			pageNew.ContentID = Guid.NewGuid();
@@ -387,6 +531,12 @@ namespace Carrotware.CMS.Core {
 			pageNew.TemplateFile = pageSource.TemplateFile;
 			pageNew.MetaDescription = pageSource.MetaDescription;
 			pageNew.MetaKeyword = pageSource.MetaKeyword;
+
+			pageNew.ContentType = pageSource.ContentType;
+			pageNew.PageSlug = pageSource.PageSlug;
+
+			pageNew.ContentCategories = pageSource.ContentCategories;
+			pageNew.ContentTags = pageSource.ContentTags;
 
 			return pageNew;
 		}
@@ -442,6 +592,32 @@ namespace Carrotware.CMS.Core {
 			pageNew.FileName = SiteData.PreviewTemplateFilePage;
 			pageNew.MetaDescription = "Meta Description";
 			pageNew.MetaKeyword = "Meta Keyword";
+
+			pageNew.ContentType = ContentPageType.PageType.BlogEntry;
+			pageNew.PageSlug = "sampler-page-view";
+
+			List<ContentCategory> lstK = new List<ContentCategory>();
+			List<ContentTag> lstT = new List<ContentTag>();
+
+			for (int i = 0; i < 5; i++) {
+				ContentCategory k = new ContentCategory {
+					ContentCategoryID = Guid.NewGuid(),
+					CategoryText = "Keyword Text " + i.ToString(),
+					CategorySlug = "keyword-slug-" + i.ToString()
+				};
+				ContentTag t = new ContentTag {
+					ContentTagID = Guid.NewGuid(),
+					TagText = "Tag Text " + i.ToString(),
+					TagSlug = "tag-slug-" + i.ToString()
+				};
+
+				lstK.Add(k);
+				lstT.Add(t);
+			}
+
+
+			pageNew.ContentCategories = lstK;
+			pageNew.ContentTags = lstT;
 
 			return pageNew;
 		}
@@ -520,6 +696,34 @@ namespace Carrotware.CMS.Core {
 			return content;
 		}
 
+		public ContentPage FindByPageSlug(Guid siteID, DateTime datePublished, string urlPageSlug) {
+			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentBySlug(db, siteID, datePublished, urlPageSlug));
+
+			return content;
+		}
+
+		public List<ContentPage> FindPagesBeginingWith(Guid siteID, string sFolderPath) {
+			List<ContentPage> lstContent = (from ct in GetPagesBeginingWith(siteID, sFolderPath).ToList()
+											select CreateContentPage(ct)).ToList();
+
+			return lstContent;
+		}
+
+		public int FindCountPagesBeginingWith(Guid siteID, string sFolderPath) {
+			sFolderPath = ("/" + sFolderPath.ToLower() + "/").Replace("//", "/");
+			return GetPagesBeginingWith(siteID, sFolderPath).Count();
+		}
+
+		private IQueryable<vw_carrot_Content> GetPagesBeginingWith(Guid siteID, string sFolderPath) {
+			IQueryable<vw_carrot_Content> query = (from ct in db.vw_carrot_Contents
+												   where ct.SiteID == siteID
+														&& ct.FileName.ToLower().StartsWith(sFolderPath.ToLower())
+														&& ct.IsLatestVersion == true
+												   select ct);
+
+			return query;
+		}
+
 		public ContentPage FindHome(Guid siteID) {
 			ContentPage content = CreateContentPage(CompiledQueries.cqFindHome(db, siteID, true));
 
@@ -565,6 +769,17 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
+		public List<ContentPage> GetPostsByDateRange(Guid siteID, DateTime dateMidpoint, int iDayRange, bool bActiveOnly) {
+			SearchParameterObject sp = new SearchParameterObject();
+			sp.SiteID = siteID;
+			sp.DateBegin = dateMidpoint.AddDays(0 - iDayRange);
+			sp.DateEnd = dateMidpoint.AddDays(iDayRange);
+			sp.ActiveOnly = bActiveOnly;
+
+			List<ContentPage> lstContent = CompiledQueries.cqPostsByDateRange(db, sp).Select(ct => CreateContentPage(ct)).ToList();
+
+			return lstContent;
+		}
 
 		#region IDisposable Members
 

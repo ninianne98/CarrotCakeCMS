@@ -15,7 +15,7 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class ucGenericContent : BaseShellUserControl, IWidget, IWidgetRawData {
 
 		#region IWidget Members

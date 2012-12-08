@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -13,9 +13,38 @@ namespace Carrotware.Web.UI.Controls {
 	[ToolboxData("<{0}:Captcha runat=server></{0}:Captcha>")]
 
 	[ValidationPropertyAttribute("CaptchaText")]
-	public class Captcha : BaseWebControl {
+	public class Captcha : BaseWebControl, ITextControl {
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string Text {
+			get {
+				return this.CaptchaText;
+			}
+
+			set {
+				this.CaptchaText = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public string CaptchaText {
+			get {
+				String s = (String)ViewState["Text"];
+				return ((s == null) ? String.Empty : s);
+			}
+
+			set {
+				ViewState["Text"] = value;
+			}
+		}
+
+		public string ValidationGroup {
 			get;
 			set;
 		}

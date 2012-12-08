@@ -20,7 +20,7 @@ using Carrotware.CMS.UI.Base;
 */
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class Logon : BasePage {
 
 		// http://msdn.microsoft.com/en-us/library/system.web.ui.webcontrols.login.aspx

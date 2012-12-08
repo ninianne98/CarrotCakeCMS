@@ -73,8 +73,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.IsLatestVersion = true;
 				pageContents.EditDate = DateTime.Now;
 				pageContents.NavOrder = parentPageContents.NavOrder + 1;
-
 				pageContents.PageActive = false;
+				pageContents.ContentType = ContentPageType.PageType.ContentEntry;
 
 				pageContents.SavePageEdit();
 

@@ -43,21 +43,6 @@ namespace Carrotware.CMS.Core {
 			return sd;
 		}
 
-		public List<Widget> GetAllWidgetsAndUnsaved() {
-			CMSConfigHelper ch = new CMSConfigHelper();
-			List<Widget> widgets = new List<Widget>();
-			if (ch.cmsAdminContent == null) {
-				using (WidgetHelper h = new WidgetHelper()) {
-					widgets = h.GetWidgets(this.Root_ContentID, true);
-				}
-			} else {
-				widgets = (from w in ch.cmsAdminWidget
-						   orderby w.WidgetOrder
-						   select w).ToList();
-			}
-
-			return widgets;
-		}
 
 		public void ResetHeartbeatLock() {
 
@@ -95,37 +80,104 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public void LoadAttributes() {
+			var lstC = this.ContentCategories;
+			var lstT = this.ContentTags;
+		}
+
+		public List<Widget> GetWidgetList() {
+			List<Widget> widgets = null;
+
+			using (WidgetHelper pwh = new WidgetHelper()) {
+				widgets = pwh.GetWidgets(this.Root_ContentID, false);
+			}
+
+			return widgets;
+		}
+
+
+		public List<Widget> GetAllWidgetsOrUnsaved() {
+			List<Widget> widgets = new List<Widget>();
+			using (CMSConfigHelper ch = new CMSConfigHelper()) {
+				if (ch.cmsAdminContent == null) {
+					widgets = this.GetWidgetList();
+				} else {
+					widgets = (from w in ch.cmsAdminWidget
+							   orderby w.WidgetOrder
+							   select w).ToList();
+				}
+			}
+			return widgets;
+		}
+
 		private void FixMeta() {
 			this.MetaKeyword = string.IsNullOrEmpty(this.MetaKeyword) ? String.Empty : this.MetaKeyword;
 			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? String.Empty : this.MetaDescription;
 		}
 
 
-		public void SavePageEdit() {
+		private void SaveKeywordsAndTags() {
+			List<carrot_TagContentMapping> oldContentTags = CompiledQueries.cqGetContentTagMapByContentID(db, this.Root_ContentID).ToList();
+			List<carrot_CategoryContentMapping> oldContentCategories = CompiledQueries.cqGetContentCategoryMapByContentID(db, this.Root_ContentID).ToList();
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
+			List<carrot_TagContentMapping> newContentTags = (from x in ContentTags
+															 select new carrot_TagContentMapping {
+																 ContentTagID = x.ContentTagID,
+																 Root_ContentID = this.Root_ContentID,
+																 TagContentMappingID = Guid.NewGuid()
+															 }).ToList();
 
-			carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
+			List<carrot_CategoryContentMapping> newContentCategories = (from x in ContentCategories
+																		select new carrot_CategoryContentMapping {
+																			ContentCategoryID = x.ContentCategoryID,
+																			Root_ContentID = this.Root_ContentID,
+																			CategoryContentMappingID = Guid.NewGuid()
+																		}).ToList();
 
-			bool bNew = false;
 
-			if (rc == null) {
-				rc = new carrot_RootContent();
-				rc.Root_ContentID = this.Root_ContentID;
-				rc.PageActive = true;
-				rc.SiteID = this.SiteID;
-				rc.CreateDate = DateTime.Now;
-				db.carrot_RootContents.InsertOnSubmit(rc);
-				bNew = true;
+			foreach (carrot_TagContentMapping s in newContentTags) {
+				db.carrot_TagContentMappings.InsertOnSubmit(s);
+			}
+			foreach (carrot_CategoryContentMapping s in newContentCategories) {
+				db.carrot_CategoryContentMappings.InsertOnSubmit(s);
 			}
 
-			carrot_Content c = new carrot_Content();
-			if (bNew) {
-				c.ContentID = this.Root_ContentID;
-			} else {
-				c.ContentID = Guid.NewGuid();
-				oldC.IsLatestVersion = false;
+			if (oldContentTags.Count > 0) {
+				db.carrot_TagContentMappings.DeleteAllOnSubmit(oldContentTags);
 			}
+			if (oldContentCategories.Count > 0) {
+				db.carrot_CategoryContentMappings.DeleteAllOnSubmit(oldContentCategories);
+			}
+		}
+
+
+		private void PerformCommonSaveRoot(carrot_RootContent rc) {
+
+			rc.Root_ContentID = this.Root_ContentID;
+			rc.PageActive = true;
+			rc.SiteID = this.SiteID;
+			rc.CreateDate = DateTime.Now;
+			rc.ContentTypeID = ContentPageType.GetIDByType(this.ContentType);
+
+			if (this.CreateDate.Year > 1950) {
+				rc.CreateDate = this.CreateDate;
+			}
+
+		}
+
+
+		private void PerformCommonSave(carrot_RootContent rc, carrot_Content c) {
+
+			c.NavOrder = this.NavOrder;
+
+			if (this.ContentType == ContentPageType.PageType.BlogEntry) {
+				this.PageSlug = ContentPageHelper.ScrubFilename(this.Root_ContentID, this.PageSlug);
+				this.FileName = ContentPageHelper.CreateFileNameFromSlug(this.SiteID, rc.CreateDate, this.PageSlug);
+				c.NavOrder = 10;
+			}
+
+			rc.PageSlug = this.PageSlug;
+
 			c.Root_ContentID = this.Root_ContentID;
 
 			rc.Heartbeat_UserId = this.Heartbeat_UserId;
@@ -143,7 +195,7 @@ namespace Carrotware.CMS.Core {
 			c.PageText = this.PageText;
 			c.LeftPageText = this.LeftPageText;
 			c.RightPageText = this.RightPageText;
-			c.NavOrder = this.NavOrder;
+
 			c.EditUserId = this.EditUserId;
 			c.EditDate = DateTime.Now;
 			c.TemplateFile = this.TemplateFile;
@@ -158,7 +210,40 @@ namespace Carrotware.CMS.Core {
 			this.EditDate = c.EditDate;
 			this.CreateDate = rc.CreateDate;
 
+		}
+
+
+		public void SavePageEdit() {
+
+			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
+
+			carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
+
+			bool bNew = false;
+
+			if (rc == null) {
+				rc = new carrot_RootContent();
+
+				PerformCommonSaveRoot(rc);
+
+				db.carrot_RootContents.InsertOnSubmit(rc);
+				bNew = true;
+			}
+
+			carrot_Content c = new carrot_Content();
+			if (bNew) {
+				c.ContentID = this.Root_ContentID;
+			} else {
+				c.ContentID = Guid.NewGuid();
+				oldC.IsLatestVersion = false;
+			}
+
+			PerformCommonSave(rc, c);
+
 			db.carrot_Contents.InsertOnSubmit(c);
+
+			SaveKeywordsAndTags();
+
 			db.SubmitChanges();
 
 		}
@@ -172,10 +257,9 @@ namespace Carrotware.CMS.Core {
 
 			if (rc == null) {
 				rc = new carrot_RootContent();
-				rc.Root_ContentID = this.Root_ContentID;
-				rc.PageActive = true;
-				rc.SiteID = this.SiteID;
-				rc.CreateDate = DateTime.Now;
+
+				PerformCommonSaveRoot(rc);
+
 				db.carrot_RootContents.InsertOnSubmit(rc);
 				bNew = true;
 			}
@@ -186,70 +270,82 @@ namespace Carrotware.CMS.Core {
 			} else {
 				c.ContentID = Guid.NewGuid();
 			}
-			c.Root_ContentID = this.Root_ContentID;
 
-			rc.Heartbeat_UserId = this.Heartbeat_UserId;
-			rc.EditHeartbeat = this.EditHeartbeat;
-			rc.FileName = this.FileName;
-			rc.PageActive = this.PageActive;
+			PerformCommonSave(rc, c);
 
-			rc.FileName = ContentPageHelper.ScrubFilename(this.Root_ContentID, rc.FileName);
-
-			c.Parent_ContentID = this.Parent_ContentID;
 			c.IsLatestVersion = false; // draft, leave existing version latest
 
-			c.TitleBar = this.TitleBar;
-			c.NavMenuText = this.NavMenuText;
-			c.PageHead = this.PageHead;
-			c.PageText = this.PageText;
-			c.LeftPageText = this.LeftPageText;
-			c.RightPageText = this.RightPageText;
-			c.NavOrder = this.NavOrder;
-			c.EditUserId = this.EditUserId;
-			c.EditDate = DateTime.Now;
-			c.TemplateFile = this.TemplateFile;
-
-			FixMeta();
-			c.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
-			c.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
-
-			this.Root_ContentID = rc.Root_ContentID;
-			this.ContentID = c.ContentID;
-			this.FileName = rc.FileName;
-			this.EditDate = c.EditDate;
-			this.CreateDate = rc.CreateDate;
-
 			db.carrot_Contents.InsertOnSubmit(c);
+
+			SaveKeywordsAndTags();
+
 			db.SubmitChanges();
 		}
 
 
-
+		public ContentPageType.PageType ContentType { get; set; }
+		public string PageSlug { get; set; }
 
 		public Guid ContentID { get; set; }
+		public Guid Root_ContentID { get; set; }
 		public DateTime EditDate { get; set; }
 		public DateTime CreateDate { get; set; }
 		public Guid? EditUserId { get; set; }
 		public bool IsLatestVersion { get; set; }
-		public string LeftPageText { get; set; }
-		public string NavMenuText { get; set; }
-		public int? NavOrder { get; set; }
-		public string PageHead { get; set; }
-		public string PageText { get; set; }
-		public Guid? Parent_ContentID { get; set; }
-		public string RightPageText { get; set; }
-		public Guid Root_ContentID { get; set; }
 		public string TemplateFile { get; set; }
+		public string FileName { get; set; }
+		public string PageHead { get; set; }
 		public string TitleBar { get; set; }
+		public string NavMenuText { get; set; }
+		public string PageText { get; set; }
+		public string LeftPageText { get; set; }
+		public string RightPageText { get; set; }
+		public int? NavOrder { get; set; }
+		public Guid? Parent_ContentID { get; set; }
 
 		public DateTime? EditHeartbeat { get; set; }
-		public string FileName { get; set; }
 		public Guid? Heartbeat_UserId { get; set; }
 		public bool PageActive { get; set; }
 		public Guid SiteID { get; set; }
 
 		public string MetaDescription { get; set; }
 		public string MetaKeyword { get; set; }
+
+
+		private List<ContentTag> _contentTags = null;
+		public List<ContentTag> ContentTags {
+			get {
+				if (_contentTags == null) {
+					_contentTags = ContentTag.BuildTagList(this.Root_ContentID);
+				}
+				return _contentTags;
+			}
+			set {
+				_contentTags = value;
+			}
+		}
+
+		private List<ContentCategory> _contentCategories = null;
+		public List<ContentCategory> ContentCategories {
+			get {
+				if (_contentCategories == null) {
+					_contentCategories = ContentCategory.BuildCategoryList(this.Root_ContentID);
+				}
+				return _contentCategories;
+			}
+			set {
+				_contentCategories = value;
+			}
+		}
+		
+		ExtendedUserData _user = null;
+		public ExtendedUserData GetUserInfo() {
+			if (_user == null && this.EditUserId.HasValue) {
+				_user = new ExtendedUserData(this.EditUserId.Value);
+			}
+			return _user;
+		}
+
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -268,29 +364,23 @@ namespace Carrotware.CMS.Core {
 			return ContentID.GetHashCode() ^ SiteID.GetHashCode() ^ Root_ContentID.GetHashCode() ^ FileName.GetHashCode();
 		}
 
-		public string PageTextSummary {
-			get {
-				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
-				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
-				txt = Regex.Replace(txt, @"<!--(\n|.)*-->", " ");
-				if (txt.Length > 4096) {
-					txt = txt.Substring(0, 4096);
-				}
+		//public string PageTextSummary {
+		//    get {
+		//        string txt = !string.IsNullOrEmpty(PageText) ? PageText.Replace("   ", " ").Replace("  ", " ") : "";
 
-				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ");
-
-				if (txt.Length > 512) {
-					return txt.Substring(0, 500) + "........";
-				} else {
-					return txt;
-				}
-			}
-		}
+		//        if (txt.Length > 600) {
+		//            return txt.Substring(0, 512) + "[.....]";
+		//        } else {
+		//            return txt;
+		//        }
+		//    }
+		//}
 
 		public string PageTextPlainSummary {
 			get {
 				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
-				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("&nbsp;", " ").Replace('\u00A0', ' ');
+
 				txt = Regex.Replace(txt, @"<!--(\n|.)*-->", " ");
 				if (txt.Length > 4096) {
 					txt = txt.Substring(0, 4096);
@@ -298,10 +388,10 @@ namespace Carrotware.CMS.Core {
 
 				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
 
-				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ");
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ").Replace("  ", " ");
 
-				if (txt.Length > 512) {
-					return txt.Substring(0, 500) + "........";
+				if (txt.Length > 600) {
+					return txt.Substring(0, 512) + "[.....]";
 				} else {
 					return txt;
 				}
@@ -321,6 +411,10 @@ namespace Carrotware.CMS.Core {
 					return "/";
 				}
 			}
+		}
+
+		public string RequestedFileName {
+			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
 
 

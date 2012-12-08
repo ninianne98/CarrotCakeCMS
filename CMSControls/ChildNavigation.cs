@@ -40,7 +40,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected List<SiteNav> GetSubNav() {
-			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
+			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 		}
 
 		protected SiteNav GetParent(Guid? Root_ContentID) {

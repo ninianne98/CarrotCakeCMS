@@ -78,6 +78,41 @@
     <Compile Include="Manage\about.aspx.designer.cs">
       <DependentUpon>about.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\BlogPostAddEdit.aspx.cs">
+      <DependentUpon>BlogPostAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\BlogPostAddEdit.aspx.designer.cs">
+      <DependentUpon>BlogPostAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\BlogPostIndex.aspx.cs">
+      <DependentUpon>BlogPostIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\BlogPostIndex.aspx.designer.cs">
+      <DependentUpon>BlogPostIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\BlogPostTemplateUpdate.aspx.cs">
+      <DependentUpon>BlogPostTemplateUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\BlogPostTemplateUpdate.aspx.designer.cs">
+      <DependentUpon>BlogPostTemplateUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\CategoryAddEdit.aspx.cs">
+      <DependentUpon>CategoryAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\CategoryAddEdit.aspx.designer.cs">
+      <DependentUpon>CategoryAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\CategoryIndex.aspx.cs">
+      <DependentUpon>CategoryIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\CategoryIndex.aspx.designer.cs">
+      <DependentUpon>CategoryIndex.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\CMS.asmx.cs">
       <DependentUpon>CMS.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -95,6 +130,48 @@
     </Compile>
     <Compile Include="Manage\ContentEdit.aspx.designer.cs">
       <DependentUpon>ContentEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\CommentAddEdit.aspx.cs">
+      <DependentUpon>CommentAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\CommentAddEdit.aspx.designer.cs">
+      <DependentUpon>CommentAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\CommentIndex.aspx.cs">
+      <DependentUpon>CommentIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\CommentIndex.aspx.designer.cs">
+      <DependentUpon>CommentIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\SiteImport.aspx.cs">
+      <DependentUpon>SiteImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\SiteImport.aspx.designer.cs">
+      <DependentUpon>SiteImport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\TagAddEdit.aspx.cs">
+      <DependentUpon>TagAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\TagAddEdit.aspx.designer.cs">
+      <DependentUpon>TagAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\TagIndex.aspx.cs">
+      <DependentUpon>TagIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\TagIndex.aspx.designer.cs">
+      <DependentUpon>TagIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\ucBlogMenuItems.ascx.cs">
+      <DependentUpon>ucBlogMenuItems.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ucBlogMenuItems.ascx.designer.cs">
+      <DependentUpon>ucBlogMenuItems.ascx</DependentUpon>
     </Compile>
     <Compile Include="Manage\CreateFirstAdmin.aspx.cs">
       <DependentUpon>CreateFirstAdmin.aspx</DependentUpon>
@@ -362,20 +439,35 @@
     <Compile Include="Manage\WidgetList.aspx.designer.cs">
       <DependentUpon>WidgetList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\wp-SiteImport.aspx.cs">
+      <DependentUpon>wp-SiteImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\wp-SiteImport.aspx.designer.cs">
+      <DependentUpon>wp-SiteImport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RSS.aspx.cs">
+      <DependentUpon>RSS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RSS.aspx.designer.cs">
+      <DependentUpon>RSS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SiteFilename.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarrotCMSData\CMSData.csproj">
       <Project>{88CC5073-9F28-42EB-A502-133DB06865A7}</Project>
       <Name>CMSData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CMSCore\CMSCore.csproj">
-      <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
-      <Name>CMSCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CMSControls\CMSControls.csproj">
       <Project>{2DEB6A0C-B032-4B78-96BD-CC9271473CA1}</Project>
       <Name>CMSControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSCore\CMSCore.csproj">
+      <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
+      <Name>CMSCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\CMSBaseClasses\CMSBaseClasses.csproj">
       <Project>{B2F5F85A-ECF8-4E1D-B2B4-15EB7F6A0ED5}</Project>
@@ -396,29 +488,144 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="citrus-island\citrus1-index.aspx" />
+    <Content Include="citrus-island\citrus1-post.aspx" />
     <Content Include="global.asax" />
-    <Content Include="Manage\CreateFirstAdmin.aspx" />
-    <Content Include="Manage\DatabaseSetup.aspx" />
-    <Content Include="Manage\Images\house.png" />
-    <Content Include="Manage\Images\house_go.png" />
-    <Content Include="Manage\Images\webpage.png" />
-    <Content Include="Manage\ModulePopup.aspx" />
+    <Content Include="Manage\BlogPostAddEdit.aspx" />
+    <Content Include="Manage\BlogPostIndex.aspx" />
+    <Content Include="Manage\BlogPostTemplateUpdate.aspx" />
+    <Content Include="Manage\CategoryAddEdit.aspx" />
+    <Content Include="Manage\CategoryIndex.aspx" />
+    <Content Include="Manage\CommentAddEdit.aspx" />
+    <Content Include="Manage\CommentIndex.aspx" />
+    <Content Include="Manage\Images\accept.png" />
+    <Content Include="Manage\Images\add.png" />
+    <Content Include="Manage\Images\ani-drip.gif" />
+    <Content Include="Manage\Images\ani-flower.gif" />
+    <Content Include="Manage\Images\ani-smallbar.gif" />
+    <Content Include="Manage\Images\application.png" />
+    <Content Include="Manage\Images\application_edit.png" />
+    <Content Include="Manage\Images\application_lightning.png" />
     <Content Include="Manage\Images\application_side_expand.png" />
+    <Content Include="Manage\Images\application_view_icons.png" />
+    <Content Include="Manage\Images\application_view_tile.png" />
+    <Content Include="Manage\Images\arrow_in.png" />
+    <Content Include="Manage\Images\audio.png" />
+    <Content Include="Manage\Images\back.png" />
+    <Content Include="Manage\Images\balloons\balloon_bottom.png" />
+    <Content Include="Manage\Images\balloons\balloon_bottomLeft.png" />
+    <Content Include="Manage\Images\balloons\balloon_bottomRight.png" />
+    <Content Include="Manage\Images\balloons\balloon_left.png" />
+    <Content Include="Manage\Images\balloons\balloon_right.png" />
+    <Content Include="Manage\Images\balloons\balloon_tail.png" />
+    <Content Include="Manage\Images\balloons\balloon_top.png" />
+    <Content Include="Manage\Images\balloons\balloon_topLeft.png" />
+    <Content Include="Manage\Images\balloons\balloon_topRight.png" />
     <Content Include="Manage\Images\book_next.png" />
     <Content Include="Manage\Images\book_previous.png" />
+    <Content Include="Manage\Images\brick.png" />
+    <Content Include="Manage\Images\bullet_toggle_minus.png" />
+    <Content Include="Manage\Images\bullet_toggle_plus.png" />
+    <Content Include="Manage\Images\calendar.gif" />
+    <Content Include="Manage\Images\cancel.png" />
+    <Content Include="Manage\Images\carrotcake.png" />
+    <Content Include="Manage\Images\carrotpower.png" />
+    <Content Include="Manage\Images\carrot_med.png" />
+    <Content Include="Manage\Images\carrot_sm.png" />
+    <Content Include="Manage\Images\chart_organisation.png" />
+    <Content Include="Manage\Images\cog.png" />
+    <Content Include="Manage\Images\cog_edit.png" />
     <Content Include="Manage\Images\cog_go.png" />
+    <Content Include="Manage\Images\comment.png" />
+    <Content Include="Manage\Images\comments.png" />
+    <Content Include="Manage\Images\compress.png" />
+    <Content Include="Manage\Images\content-bg.gif" />
+    <Content Include="Manage\Images\cross.png" />
+    <Content Include="Manage\Images\doc.png" />
+    <Content Include="Manage\Images\document.png" />
+    <Content Include="Manage\Images\error.png" />
+    <Content Include="Manage\Images\exclamation.png" />
+    <Content Include="Manage\Images\file_doc.png" />
+    <Content Include="Manage\Images\film.png" />
+    <Content Include="Manage\Images\flag_blue.png" />
+    <Content Include="Manage\Images\flag_green.png" />
+    <Content Include="Manage\Images\flag_orange.png" />
+    <Content Include="Manage\Images\flag_pink.png" />
+    <Content Include="Manage\Images\flag_purple.png" />
+    <Content Include="Manage\Images\flag_red.png" />
+    <Content Include="Manage\Images\flag_yellow.png" />
+    <Content Include="Manage\Images\folder.png" />
+    <Content Include="Manage\Images\folder_up.png" />
+    <Content Include="Manage\Images\footer.gif" />
+    <Content Include="Manage\Images\group.png" />
     <Content Include="Manage\Images\heading-bg-gradient.png" />
+    <Content Include="Manage\Images\heading-bg.png" />
+    <Content Include="Manage\Images\house.png" />
+    <Content Include="Manage\Images\house_go.png" />
+    <Content Include="Manage\Images\html.png" />
     <Content Include="Manage\Images\html2.png" />
     <Content Include="Manage\Images\html_go.png" />
+    <Content Include="Manage\Images\image.png" />
+    <Content Include="Manage\Images\layout.png" />
+    <Content Include="Manage\Images\layout_content.png" />
+    <Content Include="Manage\Images\layout_edit.png" />
+    <Content Include="Manage\Images\lock.png" />
+    <Content Include="Manage\Images\logonbox.gif" />
+    <Content Include="Manage\Images\menu-a.gif" />
     <Content Include="Manage\Images\menu-div.png" />
     <Content Include="Manage\Images\mini-spinner1-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner2-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner3-6F997D.gif" />
+    <Content Include="Manage\Images\navitembg.gif" />
+    <Content Include="Manage\Images\overlays.png" />
+    <Content Include="Manage\Images\package.png" />
+    <Content Include="Manage\Images\page.png" />
+    <Content Include="Manage\Images\page_add.png" />
+    <Content Include="Manage\Images\page_edit.png" />
+    <Content Include="Manage\Images\page_gear.png" />
+    <Content Include="Manage\Images\page_paintbrush.png" />
+    <Content Include="Manage\Images\page_white.png" />
+    <Content Include="Manage\Images\page_white_text.png" />
+    <Content Include="Manage\Images\page_white_wrench.png" />
+    <Content Include="Manage\Images\page_world.png" />
+    <Content Include="Manage\Images\pdf.png" />
+    <Content Include="Manage\Images\pencil.png" />
+    <Content Include="Manage\Images\plain.png" />
+    <Content Include="Manage\Images\plugin.png" />
+    <Content Include="Manage\Images\Ring-64px-72A584.gif" />
+    <Content Include="Manage\Images\Ring-64px-A7B2A0.gif" />
+    <Content Include="Manage\Images\script.png" />
+    <Content Include="Manage\Images\script_add.png" />
+    <Content Include="Manage\Images\script_code.png" />
+    <Content Include="Manage\Images\script_code_red.png" />
+    <Content Include="Manage\Images\script_edit.png" />
+    <Content Include="Manage\Images\shield.png" />
+    <Content Include="Manage\Images\Snake-64px-72A584.gif" />
+    <Content Include="Manage\Images\Snake-64px-A7B2A0.gif" />
+    <Content Include="Manage\Images\spacer.gif" />
+    <Content Include="Manage\Images\spreadsheet.png" />
+    <Content Include="Manage\Images\table.png" />
+    <Content Include="Manage\Images\table_go.png" />
+    <Content Include="Manage\Images\thumb_down.png" />
+    <Content Include="Manage\Images\thumb_up.png" />
+    <Content Include="Manage\Images\tick.png" />
     <Content Include="Manage\Images\ui-anim_basic_16x16.gif" />
     <Content Include="Manage\Images\user.png" />
     <Content Include="Manage\Images\user_gray.png" />
+    <Content Include="Manage\Images\user_green.png" />
     <Content Include="Manage\Images\user_orange.png" />
     <Content Include="Manage\Images\user_red.png" />
+    <Content Include="Manage\Images\video.png" />
+    <Content Include="Manage\Images\webpage.png" />
+    <Content Include="Manage\Images\wordprocessing.png" />
+    <Content Include="Manage\Images\x.png" />
+    <Content Include="Manage\SiteImport.aspx" />
+    <Content Include="Manage\TagAddEdit.aspx" />
+    <Content Include="Manage\TagIndex.aspx" />
+    <Content Include="Manage\ucBlogMenuItems.ascx" />
+    <Content Include="Manage\CreateFirstAdmin.aspx" />
+    <Content Include="Manage\DatabaseSetup.aspx" />
+    <Content Include="Manage\ModulePopup.aspx" />
     <Content Include="Manage\Includes\advanced-editor.js" />
     <Content Include="Manage\Includes\common-utils.js" />
     <Content Include="Manage\Includes\tinymce-config.js" />
@@ -443,23 +650,6 @@
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen-scoped2.css" />
     <Content Include="Manage\glossyseagreen\css\jquery-ui-glossyseagreen.css" />
     <Content Include="Manage\glossyseagreen\js\jquery-ui-glossyseagreen.js" />
-    <Content Include="Manage\Images\application_lightning.png" />
-    <Content Include="Manage\Images\arrow_in.png" />
-    <Content Include="Manage\Images\balloons\balloon_bottom.png" />
-    <Content Include="Manage\Images\balloons\balloon_bottomLeft.png" />
-    <Content Include="Manage\Images\balloons\balloon_bottomRight.png" />
-    <Content Include="Manage\Images\balloons\balloon_left.png" />
-    <Content Include="Manage\Images\balloons\balloon_right.png" />
-    <Content Include="Manage\Images\balloons\balloon_tail.png" />
-    <Content Include="Manage\Images\balloons\balloon_top.png" />
-    <Content Include="Manage\Images\balloons\balloon_topLeft.png" />
-    <Content Include="Manage\Images\balloons\balloon_topRight.png" />
-    <Content Include="Manage\Images\cog.png" />
-    <Content Include="Manage\Images\cog_edit.png" />
-    <Content Include="Manage\Images\page_edit.png" />
-    <Content Include="Manage\Images\page_gear.png" />
-    <Content Include="Manage\Images\page_paintbrush.png" />
-    <Content Include="Manage\Images\page_white_wrench.png" />
     <Content Include="Manage\Includes\advanced-editor.css" />
     <Content Include="Manage\Includes\floating-menu.js" />
     <Content Include="Manage\Includes\tooltiphelper.css" />
@@ -695,6 +885,8 @@
     <Content Include="Manage\UserGroups.aspx" />
     <Content Include="Manage\WidgetHistory.aspx" />
     <Content Include="Manage\WidgetList.aspx" />
+    <Content Include="Manage\wp-SiteImport.aspx" />
+    <Content Include="RSS.aspx" />
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>
@@ -754,82 +946,9 @@
     <Content Include="citrus-island\index.html" />
     <Content Include="citrus-island\style.css" />
     <Content Include="Default.aspx" />
-    <Content Include="env.aspx" />
     <Content Include="GPL-LICENSE.txt" />
     <Content Include="Manage\about.aspx" />
     <Content Include="Manage\ContentEdit.aspx" />
-    <Content Include="Manage\Images\accept.png" />
-    <Content Include="Manage\Images\add.png" />
-    <Content Include="Manage\Images\ani-drip.gif" />
-    <Content Include="Manage\Images\ani-flower.gif" />
-    <Content Include="Manage\Images\ani-smallbar.gif" />
-    <Content Include="Manage\Images\application.png" />
-    <Content Include="Manage\Images\application_edit.png" />
-    <Content Include="Manage\Images\application_view_icons.png" />
-    <Content Include="Manage\Images\application_view_tile.png" />
-    <Content Include="Manage\Images\audio.png" />
-    <Content Include="Manage\Images\back.png" />
-    <Content Include="Manage\Images\brick.png" />
-    <Content Include="Manage\Images\bullet_toggle_minus.png" />
-    <Content Include="Manage\Images\bullet_toggle_plus.png" />
-    <Content Include="Manage\Images\calendar.gif" />
-    <Content Include="Manage\Images\cancel.png" />
-    <Content Include="Manage\Images\carrotcake.png" />
-    <Content Include="Manage\Images\carrotpower.png" />
-    <Content Include="Manage\Images\carrot_med.png" />
-    <Content Include="Manage\Images\carrot_sm.png" />
-    <Content Include="Manage\Images\chart_organisation.png" />
-    <Content Include="Manage\Images\compress.png" />
-    <Content Include="Manage\Images\content-bg.gif" />
-    <Content Include="Manage\Images\cross.png" />
-    <Content Include="Manage\Images\doc.png" />
-    <Content Include="Manage\Images\document.png" />
-    <Content Include="Manage\Images\exclamation.png" />
-    <Content Include="Manage\Images\file_doc.png" />
-    <Content Include="Manage\Images\film.png" />
-    <Content Include="Manage\Images\folder.png" />
-    <Content Include="Manage\Images\folder_up.png" />
-    <Content Include="Manage\Images\footer.gif" />
-    <Content Include="Manage\Images\group.png" />
-    <Content Include="Manage\Images\heading-bg.png" />
-    <Content Include="Manage\Images\html.png" />
-    <Content Include="Manage\Images\image.png" />
-    <Content Include="Manage\Images\layout.png" />
-    <Content Include="Manage\Images\layout_content.png" />
-    <Content Include="Manage\Images\layout_edit.png" />
-    <Content Include="Manage\Images\lock.png" />
-    <Content Include="Manage\Images\logonbox.gif" />
-    <Content Include="Manage\Images\menu-a.gif" />
-    <Content Include="Manage\Images\navitembg.gif" />
-    <Content Include="Manage\Images\overlays.png" />
-    <Content Include="Manage\Images\package.png" />
-    <Content Include="Manage\Images\page.png" />
-    <Content Include="Manage\Images\page_add.png" />
-    <Content Include="Manage\Images\page_white.png" />
-    <Content Include="Manage\Images\page_white_text.png" />
-    <Content Include="Manage\Images\page_world.png" />
-    <Content Include="Manage\Images\pdf.png" />
-    <Content Include="Manage\Images\pencil.png" />
-    <Content Include="Manage\Images\plain.png" />
-    <Content Include="Manage\Images\plugin.png" />
-    <Content Include="Manage\Images\Ring-64px-72A584.gif" />
-    <Content Include="Manage\Images\Ring-64px-A7B2A0.gif" />
-    <Content Include="Manage\Images\script.png" />
-    <Content Include="Manage\Images\script_add.png" />
-    <Content Include="Manage\Images\script_code.png" />
-    <Content Include="Manage\Images\script_code_red.png" />
-    <Content Include="Manage\Images\script_edit.png" />
-    <Content Include="Manage\Images\Snake-64px-72A584.gif" />
-    <Content Include="Manage\Images\Snake-64px-A7B2A0.gif" />
-    <Content Include="Manage\Images\spacer.gif" />
-    <Content Include="Manage\Images\spreadsheet.png" />
-    <Content Include="Manage\Images\table.png" />
-    <Content Include="Manage\Images\table_go.png" />
-    <Content Include="Manage\Images\tick.png" />
-    <Content Include="Manage\Images\user_green.png" />
-    <Content Include="Manage\Images\video.png" />
-    <Content Include="Manage\Images\wordprocessing.png" />
-    <Content Include="Manage\Images\x.png" />
     <Content Include="Manage\PageEdit.aspx" />
     <Content Include="Manage\ucEditNotifier.ascx" />
     <Content Include="Manage\ucTextContent.ascx" />

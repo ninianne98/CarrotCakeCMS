@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.Web.UI.Controls;
 
-namespace Carrotware.CMS.UI.Admin.MasterPages {
+namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 	public partial class Public : AdminBaseMasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
 
-			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.MasterPages.Public.Ctrl");
+			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.Manage.MasterPages.Public.Ctrl");
 
 		}
 	}

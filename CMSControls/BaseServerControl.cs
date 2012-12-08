@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
@@ -34,6 +35,12 @@ namespace Carrotware.CMS.UI.Controls {
 			SiteID = SiteData.CurrentSiteID;
 		}
 
+		protected bool IsPostBack {
+			get {
+				return HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper() != "GET" ? true : false;
+			}
+		}
+
 		protected override void OnInit(EventArgs e) {
 			SetSiteID();
 
@@ -46,6 +53,15 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
+		}
+
+
+		protected void BaseRender(HtmlTextWriter writer) {
+			base.Render(writer);
+		}
+
+		protected void BaseRenderContents(HtmlTextWriter output) {
+			base.RenderContents(output);
 		}
 
 		protected string GetParentPageName() {
@@ -65,7 +81,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected SiteNav GetParentPage() {
 
-			SiteNav pageNav = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			SiteNav pageNav = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
 
 			//assign bogus page name for comp purposes
 			if (pageNav == null) {

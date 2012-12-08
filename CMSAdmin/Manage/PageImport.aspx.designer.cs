@@ -13,15 +13,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
     public partial class PageImport {
         
         /// <summary>
-        /// ucPageMenuItems1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Carrotware.CMS.UI.Admin.Manage.ucPageMenuItems ucPageMenuItems1;
-        
-        /// <summary>
         /// lblWarning control.
         /// </summary>
         /// <remarks>
@@ -54,9 +45,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.MasterPages.Main Master {
+        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.Main Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.MasterPages.Main)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.Main)(base.Master));
             }
         }
     }

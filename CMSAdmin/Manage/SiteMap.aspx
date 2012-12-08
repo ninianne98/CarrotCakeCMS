@@ -1,5 +1,5 @@
 ﻿<%@ Page ValidateRequest="false" Title="Site Map" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteMap.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.SiteMap" %>
+	Inherits="Carrotware.CMS.UI.Admin.Manage.SiteMap" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

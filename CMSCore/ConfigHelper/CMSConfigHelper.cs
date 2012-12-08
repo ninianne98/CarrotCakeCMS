@@ -429,13 +429,19 @@ namespace Carrotware.CMS.Core {
 					//_p1.Add(new CMSPlugin { Caption = "     Generic HTML &#0134;", FilePath = "~/Manage/ucGenericContent.ascx" });
 					//_p1.Add(new CMSPlugin { Caption = "     Plain Text &#0134;", FilePath = "~/Manage/ucTextContent.ascx" });
 
-					_p1.Add(new CMSPlugin { Caption = "     Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "     Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "       Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "       Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { Caption = "   Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "   Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "  Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "  Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "       Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "       Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "      Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "      Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "     Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "   Meta List - Site &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "   Meta List - Post &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = " Comment Form &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = " IFRAME content wrapper &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.IFrameWidgetWrapper, Carrotware.CMS.UI.Controls" });
+
 
 					List<CMSPlugin> _p2 = (from d in ds.Tables[0].AsEnumerable()
 										   select new CMSPlugin {
@@ -782,8 +788,9 @@ namespace Carrotware.CMS.Core {
 
 		private void SaveSerialized(string sKey, string sData) {
 			LoadGuids();
-
-			CMSConfigHelper.SaveSerialized(filePage.Root_ContentID, sKey, sData);
+			if (filePage != null) {
+				CMSConfigHelper.SaveSerialized(filePage.Root_ContentID, sKey, sData);
+			}
 		}
 
 
@@ -791,16 +798,20 @@ namespace Carrotware.CMS.Core {
 			string sData = "";
 			LoadGuids();
 
-			sData = CMSConfigHelper.GetSerialized(filePage.Root_ContentID, sKey);
-
+			if (filePage != null) {
+				sData = CMSConfigHelper.GetSerialized(filePage.Root_ContentID, sKey);
+			}
 			return sData;
 		}
 
 
 		private bool ClearSerialized(string sKey) {
 			LoadGuids();
-
-			return CMSConfigHelper.ClearSerialized(filePage.Root_ContentID, sKey); ;
+			if (filePage != null) {
+				return CMSConfigHelper.ClearSerialized(filePage.Root_ContentID, sKey);
+			} else {
+				return false;
+			}
 		}
 
 	}

@@ -19,7 +19,7 @@ using Carrotware.CMS.UI.Base;
 */
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class DatabaseSetup : BasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -58,6 +58,7 @@ namespace Carrotware.CMS.UI.Admin {
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep04());
 					}
 					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep05());
+					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep06());
 				} else {
 					HandleResponse("Database up-to-date ");
 				}

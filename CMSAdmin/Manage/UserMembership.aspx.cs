@@ -11,7 +11,7 @@ using Carrotware.CMS.Data;
 using Carrotware.CMS.UI.Base;
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class UserMembership : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -23,12 +23,11 @@ namespace Carrotware.CMS.UI.Admin {
 
 
 		protected void LoadGrid() {
-			List<MembershipUser> usrs = SecurityData.GetUserList();
+			List<ExtendedUserData> usrs = ExtendedUserData.GetUserList();
 
 			dvMembers.DataSource = usrs;
 			dvMembers.DataBind();
 		}
-
 
 
 	}

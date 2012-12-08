@@ -122,7 +122,7 @@ namespace Carrotware.CMS.Core {
 
 		public SiteMapOrder GetPageWithLevel(Guid siteID, Guid? contentID, int iLevel) {
 
-			SiteMapOrder cont = (from ct in CompiledQueries.cqGetLatestPage(db, siteID, contentID).ToList()
+			SiteMapOrder cont = (from ct in CompiledQueries.cqGetLatestContentPages(db, siteID, contentID).ToList()
 								 select new SiteMapOrder {
 									 NavLevel = iLevel,
 									 NavMenuText = (ct.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
@@ -138,7 +138,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteMapOrder> GetAdminPageList(Guid siteID, Guid contentID) {
 
-			List<SiteMapOrder> lstSite = (from ct in CompiledQueries.cqSiteNavAll(db, siteID, false).ToList()
+			List<SiteMapOrder> lstSite = (from ct in CompiledQueries.cqContentNavAll(db, siteID, false).ToList()
 										  select new SiteMapOrder {
 											  NavLevel = -1,
 											  NavMenuText = ct.NavMenuText,

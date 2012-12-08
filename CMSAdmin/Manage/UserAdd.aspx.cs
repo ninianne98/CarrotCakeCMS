@@ -11,7 +11,7 @@ using Carrotware.CMS.Core;
 using Carrotware.CMS.Data;
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class UserAdd : AdminBasePage {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserAdmin);

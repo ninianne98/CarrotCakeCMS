@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Setup Database" Language="C#" MasterPageFile="~/Manage/MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="DatabaseSetup.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.DatabaseSetup" %>
+	Inherits="Carrotware.CMS.UI.Admin.Manage.DatabaseSetup" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>

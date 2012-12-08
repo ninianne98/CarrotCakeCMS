@@ -19,7 +19,7 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class FileBrowser : AdminBasePage {
 		public string sQueryPath = "";
 		public string sQueryMode = "1";
@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin {
 				lnkUp.Visible = true;
 			}
 			sQueryPath = sQueryPath.StartsWith(@"/") ? sQueryPath : @"/" + sQueryPath;
-			sQueryPath.Replace(@"//", @"/").Replace(@"//", @"/");
+			sQueryPath.Replace("//", "/").Replace("//", "/");
 
 			if (lnkUp.Visible) {
 				lnkUp.NavigateUrl = SiteData.CurrentScriptName + "?useTiny=" + sQueryMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";

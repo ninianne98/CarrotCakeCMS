@@ -17,7 +17,7 @@ using System.Web;
 
 
 namespace Carrotware.CMS.Interface {
-	public class BaseShellUserControl : System.Web.UI.UserControl {
+	public abstract class BaseShellUserControl : System.Web.UI.UserControl {
 
 		protected string CurrentDLLVersion {
 			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
@@ -27,7 +27,6 @@ namespace Carrotware.CMS.Interface {
 		public string CurrentScriptName {
 			get { return Request.ServerVariables["script_name"].ToString(); }
 		}
-
 
 	}
 }
