@@ -55,19 +55,38 @@ namespace Carrotware.CMS.Core {
 			site.wxrVersion = rssNode.SelectSingleNode("channel/wp:wxr_version", rssNamespace).InnerText;
 
 			site.Categories = new List<InfoKVP>();
+
 			XmlNodeList catNodes = doc.SelectNodes("//rss/channel/wp:category", rssNamespace);
 			foreach (XmlNode node in catNodes) {
 				string slug = node.SelectSingleNode("wp:category_nicename", rssNamespace).InnerText;
 				string title = node.SelectSingleNode("wp:cat_name", rssNamespace).InnerText;
 				site.Categories.Add(new InfoKVP(slug, title));
 			}
+			catNodes = doc.SelectNodes("//rss/channel/item/category[@domain='category']");
+			foreach (XmlNode node in catNodes) {
+				if (node.Attributes["nicename"] != null) {
+					string slug = node.Attributes["nicename"].InnerText;
+					string title = node.InnerText;
+					site.Categories.Add(new InfoKVP(slug, title));
+				}
+			}
+
 
 			site.Tags = new List<InfoKVP>();
+
 			XmlNodeList tagNodes = doc.SelectNodes("//rss/channel/wp:tag", rssNamespace);
 			foreach (XmlNode node in tagNodes) {
 				string slug = node.SelectSingleNode("wp:tag_slug", rssNamespace).InnerText;
 				string title = node.SelectSingleNode("wp:tag_name", rssNamespace).InnerText;
 				site.Tags.Add(new InfoKVP(slug, title));
+			}
+			tagNodes = doc.SelectNodes("//rss/channel/item/category[@domain='post_tag']");
+			foreach (XmlNode node in tagNodes) {
+				if (node.Attributes["nicename"] != null) {
+					string slug = node.Attributes["nicename"].InnerText;
+					string title = node.InnerText;
+					site.Tags.Add(new InfoKVP(slug, title));
+				}
 			}
 
 			XmlNodeList nodes = doc.SelectNodes("//rss/channel/item");
@@ -131,7 +150,7 @@ namespace Carrotware.CMS.Core {
 
 
 				wpp.Categories = new List<string>();
-				XmlNodeList nodesCat = node.SelectNodes("category");
+				XmlNodeList nodesCat = node.SelectNodes("category[@domain='category']");
 				foreach (XmlNode n in nodesCat) {
 					if (n.Attributes["nicename"] != null) {
 						wpp.Categories.Add(n.Attributes["nicename"].Value);
@@ -139,7 +158,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				wpp.Tags = new List<string>();
-				XmlNodeList nodesTag = node.SelectNodes("tag");
+				XmlNodeList nodesTag = node.SelectNodes("category[@domain='post_tag']");
 				foreach (XmlNode n in nodesTag) {
 					if (n.Attributes["nicename"] != null) {
 						wpp.Tags.Add(n.Attributes["nicename"].Value);

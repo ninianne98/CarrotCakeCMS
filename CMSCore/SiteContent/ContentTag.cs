@@ -39,6 +39,21 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is ContentTag) {
+				ContentTag p = (ContentTag)obj;
+				return (this.SiteID == p.SiteID
+						&& this.TagSlug.ToLower() == p.TagSlug.ToLower());
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return TagSlug.GetHashCode() ^ SiteID.GetHashCode();
+		}
 
 		internal static ContentTag CreateTag(vw_carrot_TagCounted c) {
 			ContentTag cc = null;

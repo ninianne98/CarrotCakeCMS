@@ -39,6 +39,21 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is ContentCategory) {
+				ContentCategory p = (ContentCategory)obj;
+				return (this.SiteID == p.SiteID
+						&& this.CategorySlug.ToLower() == p.CategorySlug.ToLower());
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return CategorySlug.GetHashCode() ^ SiteID.GetHashCode();
+		}
 
 		internal static ContentCategory CreateCategory(vw_carrot_CategoryCounted c) {
 			ContentCategory cc = null;
