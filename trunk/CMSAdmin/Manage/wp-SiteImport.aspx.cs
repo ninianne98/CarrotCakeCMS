@@ -82,21 +82,21 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				litMessage.Text = "<p>Imported Tags and Categories</p>";
 
-				List<ContentTag> lstTag = (from l in wpSite.Tags
+				List<ContentTag> lstTag = (from l in wpSite.Tags.Distinct()
 										   select new ContentTag {
 											   ContentTagID = Guid.NewGuid(),
 											   SiteID = site.SiteID,
 											   TagSlug = l.InfoKey,
 											   TagText = l.InfoLabel
-										   }).ToList();
+										   }).Distinct().ToList();
 
-				List<ContentCategory> lstCat = (from l in wpSite.Categories
+				List<ContentCategory> lstCat = (from l in wpSite.Categories.Distinct()
 												select new ContentCategory {
 													ContentCategoryID = Guid.NewGuid(),
 													SiteID = site.SiteID,
 													CategorySlug = l.InfoKey,
 													CategoryText = l.InfoLabel
-												}).ToList();
+												}).Distinct().ToList();
 
 				foreach (var v in lstTag) {
 					v.Save();

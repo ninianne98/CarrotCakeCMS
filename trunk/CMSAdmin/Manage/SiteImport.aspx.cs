@@ -81,7 +81,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				litMessage.Text = "<p>Imported Tags and Categories</p>";
 
-				List<ContentTag> lstTag = (from l in exSite.TheTags
+				List<ContentTag> lstTag = (from l in exSite.TheTags.Distinct()
 										   select new ContentTag {
 											   ContentTagID = Guid.NewGuid(),
 											   SiteID = site.SiteID,
@@ -89,7 +89,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 											   TagText = l.TagText
 										   }).ToList();
 
-				List<ContentCategory> lstCat = (from l in exSite.TheCategories
+				List<ContentCategory> lstCat = (from l in exSite.TheCategories.Distinct()
 												select new ContentCategory {
 													ContentCategoryID = Guid.NewGuid(),
 													SiteID = site.SiteID,
