@@ -5,6 +5,8 @@
     [EditHeartbeat]    DATETIME         NULL,
     [FileName]         VARCHAR (256)    NOT NULL,
     [PageActive]       BIT              NOT NULL,
-    [CreateDate]       DATETIME         NOT NULL
+    [CreateDate]       DATETIME         NOT NULL,
+    [PageSlug]         VARCHAR (256)    NULL,
+    [ContentTypeID]    UNIQUEIDENTIFIER NOT NULL
 );
 

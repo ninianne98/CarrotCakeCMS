@@ -251,20 +251,6 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent--;
 		}
 
-		//protected override void RenderChildren(HtmlTextWriter writer) {
-		//    int indent = writer.Indent++;
-
-		//    writer.Indent = indent + 2;
-
-		//    //writer.WriteLine();
-		//    base.RenderChildren(writer);
-		//    //writer.WriteLine();
-
-		//    writer.Indent = indent;
-		//    writer.Indent--;
-		//}
-
-
 		protected void LoadData() {
 
 			ParentPageNav = GetParentPage();
@@ -275,9 +261,7 @@ namespace Carrotware.CMS.UI.Controls {
 				lstTwoLevelNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			}
 
-			foreach (var nav in lstTwoLevelNav.Where(n => !n.PageActive)) {
-				IdentifyLinkAsInactive(nav);
-			}
+			lstTwoLevelNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 		}
 
 

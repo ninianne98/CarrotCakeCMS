@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
     
     
     public partial class PageAddEdit {
@@ -292,6 +292,15 @@ namespace Carrotware.CMS.UI.Admin {
         protected global::System.Web.UI.WebControls.CheckBox chkDraft;
         
         /// <summary>
+        /// pnlReview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlReview;
+        
+        /// <summary>
         /// ddlVersions control.
         /// </summary>
         /// <remarks>
@@ -333,9 +342,9 @@ namespace Carrotware.CMS.UI.Admin {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.MasterPages.Main Master {
+        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.Main Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.MasterPages.Main)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.Main)(base.Master));
             }
         }
     }

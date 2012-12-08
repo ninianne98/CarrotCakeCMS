@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Reflection;
-using System.Data;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -47,14 +47,108 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 
+		public string CurrentSort {
+			get {
+				return SortParm;
+			}
+		}
+
+		public string LinkButtonCommands {
+			get {
+				String s = ViewState["LinkButtonCommands"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["LinkButtonCommands"] = value;
+			}
+		}
+
+		public string GetClickedCommand() {
+
+			HttpRequest request = HttpContext.Current.Request;
+			KeyValuePair<string, string> pair = new KeyValuePair<string, string>(" -- ", "");
+
+			if (request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper() == "POST"
+				&& request.Form["__EVENTARGUMENT"] != null) {
+
+				string arg = request.Form["__EVENTARGUMENT"].ToString();
+				string tgt = request.Form["__EVENTTARGET"].ToString();
+
+				if (tgt.Contains("lnkHead")
+					&& tgt.Contains(this.ClientID.Replace("_", "$"))
+					&& tgt.Contains("$" + this.ID + "$")) {
+					string[] btn = this.LinkButtonCommands.Split(';');
+					string[] parms = tgt.Split('$');
+					string sKey = parms[parms.Length - 1];
+
+					Dictionary<string, string> lst = new Dictionary<string, string>();
+					foreach (string b1 in btn) {
+						if (!string.IsNullOrEmpty(b1)) {
+							string[] b2 = b1.Split('|');
+							lst.Add(b2[0], b2[1]);
+							if (b2[0].EndsWith(sKey)) {
+								break;
+							}
+						}
+					}
+
+					pair = (from d in lst
+							where d.Key.EndsWith(sKey)
+							select d).FirstOrDefault();
+				}
+			}
+
+			return pair.Value;
+		}
+
+
+		public string PredictNewSort {
+			get {
+				string sSort = DefaultSort;
+				string sNewSortField = GetClickedCommand();
+
+				if (!string.IsNullOrEmpty(sNewSortField)) {
+					string sCurrentSortField = string.IsNullOrEmpty(SortField) ? "" : SortField;
+					string sSortDir = string.IsNullOrEmpty(SortDir) ? "" : SortDir;
+
+					if (sCurrentSortField.ToLower().Trim() != sNewSortField.ToLower().Trim()) {
+						SortDir = string.Empty;  //previous sort not the same field, force ASC
+					}
+					sCurrentSortField = sNewSortField;
+
+					if (sSortDir.Trim().ToUpper().IndexOf("ASC") < 0) {
+						sSortDir = "ASC";
+					} else {
+						sSortDir = "DESC";
+					}
+
+					sSort = sCurrentSortField + "   " + sSortDir;
+				}
+
+				return sSort;
+			}
+		}
+
+
+
 		private string SortField {
-			get;
-			set;
+			get {
+				String s = ViewState["SortField"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["SortField"] = value;
+			}
 		}
 
 		private string SortDir {
-			get;
-			set;
+			get {
+				String s = ViewState["SortDir"] as String;
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["SortDir"] = value;
+			}
 		}
 
 		private string SortUpIndicator {
@@ -80,18 +174,18 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 
-		public void SetHeaderClick(Control TheControl, EventHandler CmdFunc) {
-			//add the command click event to the link buttons on the datagrid heading
+		//public void SetHeaderClick(Control TheControl, EventHandler CmdFunc) {
+		//    //add the command click event to the link buttons on the datagrid heading
 
-			foreach (Control c in TheControl.Controls) {
-				if (c is LinkButton) {
-					LinkButton lb = (LinkButton)c;
-					lb.Click += new EventHandler(CmdFunc);
-				} else {
-					SetHeaderClick(c, CmdFunc);
-				}
-			}
-		}
+		//    foreach (Control c in TheControl.Controls) {
+		//        if (c is LinkButton) {
+		//            LinkButton lb = (LinkButton)c;
+		//            lb.Click += new EventHandler(CmdFunc);
+		//        } else {
+		//            SetHeaderClick(c, CmdFunc);
+		//        }
+		//    }
+		//}
 
 
 		private void SetData() {
@@ -252,6 +346,7 @@ namespace Carrotware.Web.UI.Controls {
 				SortParm = string.Empty;
 			}
 
+			this.LinkButtonCommands = "";
 			if (this.Rows.Count > 0) {
 				WalkGridSetClick(this.HeaderRow);
 			}
@@ -292,6 +387,7 @@ namespace Carrotware.Web.UI.Controls {
 				if (c is LinkButton) {
 					LinkButton lb = (LinkButton)c;
 					lb.Click += new EventHandler(this.lblSort_Command);
+					LinkButtonCommands += lb.ClientID + "|" + lb.CommandName + ";";
 				} else {
 					WalkGridSetClick(c);
 				}

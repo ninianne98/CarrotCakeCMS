@@ -11,7 +11,7 @@ using Carrotware.CMS.Data;
 using Carrotware.CMS.UI.Base;
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class User : AdminBasePage {
 
 		public Guid userID = Guid.Empty;
@@ -86,6 +86,10 @@ namespace Carrotware.CMS.UI.Admin {
 
 					chkLocked.Checked = usr.IsLockedOut;
 
+					ExtendedUserData ud = new ExtendedUserData(usr.UserName);
+					txtNickName.Text = ud.UserNickName;
+					txtFirstName.Text = ud.FirstName;
+					txtLastName.Text = ud.LastName;
 
 					gvRoles.DataSource = dsRoles;
 					gvRoles.DataBind();
@@ -119,6 +123,12 @@ namespace Carrotware.CMS.UI.Admin {
 				MembershipUser usr = Membership.GetUser(userID);
 				usr.Email = Email.Text;
 				Membership.UpdateUser(usr);
+
+				ExtendedUserData ud = new ExtendedUserData(usr.UserName);
+				ud.UserNickName = txtNickName.Text;
+				ud.FirstName = txtFirstName.Text;
+				ud.LastName = txtLastName.Text;
+				ud.Save();
 
 				if (!chkLocked.Checked) {
 					usr.UnlockUser();

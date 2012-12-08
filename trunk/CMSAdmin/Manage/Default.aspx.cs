@@ -18,14 +18,14 @@ using Carrotware.CMS.UI.Base;
 */
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 
 	public partial class Default : AdminBasePage {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.Home);
-
+			btnExport.Visible = false;
 
 			litID.Text = SiteData.CurrentSiteID.ToString();
 			try {
@@ -35,12 +35,32 @@ namespace Carrotware.CMS.UI.Admin {
 					txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
 					txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
 
+					txtFolderPath.Text = "archive";
+					txtCategoryPath.Text = "category";
+					txtTagPath.Text = "tag";
+					ddlDatePattern.SelectedValue = "yyyy/MM/dd";
+					txtTitleBar.Text = SiteData.PageTitlePattern;
+
 					if (site != null) {
+						btnExport.Visible = true;
+
 						txtSiteName.Text = site.SiteName;
+						txtTagline.Text = site.SiteTagline;
+						txtTitleBar.Text = site.SiteTitlebarPattern;
 						txtURL.Text = site.MainURL;
 						txtKey.Text = site.MetaKeyword;
 						txtDescription.Text = site.MetaDescription;
 						chkHide.Checked = site.BlockIndex;
+
+						txtFolderPath.Text = site.Blog_FolderPath;
+						txtCategoryPath.Text = site.Blog_CategoryPath;
+						txtTagPath.Text = site.Blog_TagPath;
+
+						if (!string.IsNullOrEmpty(site.Blog_DatePattern)) {
+							try { ddlDatePattern.SelectedValue = site.Blog_DatePattern; } catch { }
+						}
+
+						ParentPagePicker.SelectedPage = site.Blog_Root_ContentID;
 					}
 
 					if (site == null) {
@@ -62,6 +82,7 @@ namespace Carrotware.CMS.UI.Admin {
 		protected void btnSave_Click(object sender, EventArgs e) {
 
 			SiteData site = siteHelper.GetCurrentSite();
+			string sDatePatternOld = "yy-MM-dd";
 
 			if (site == null) {
 				site = new SiteData();
@@ -69,14 +90,30 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			if (site != null) {
+				sDatePatternOld = site.Blog_DatePattern;
+
 				site.SiteName = txtSiteName.Text;
+				site.SiteTagline = txtTagline.Text;
+				site.SiteTitlebarPattern = txtTitleBar.Text;
 				site.MainURL = txtURL.Text;
 				site.MetaKeyword = txtKey.Text;
 				site.MetaDescription = txtDescription.Text;
 				site.BlockIndex = chkHide.Checked;
+
+				site.Blog_FolderPath = txtFolderPath.Text;
+				site.Blog_CategoryPath = txtCategoryPath.Text;
+				site.Blog_TagPath = txtTagPath.Text;
+				site.Blog_DatePattern = ddlDatePattern.SelectedValue;
+				site.Blog_Root_ContentID = ParentPagePicker.SelectedPage;
 			}
 
 			site.Save();
+
+			if (sDatePatternOld != ddlDatePattern.SelectedValue) {
+				using (ContentPageHelper cph = new ContentPageHelper()) {
+					cph.BulkFileNameFromSlug(SiteID, ddlDatePattern.SelectedValue);
+				}
+			}
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}

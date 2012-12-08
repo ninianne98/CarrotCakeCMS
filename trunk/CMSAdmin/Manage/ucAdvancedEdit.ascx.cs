@@ -42,11 +42,23 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				EditorPrefs.EditorSelectedTabIdx = "0";
 			}
 
+			string sCurrentPage = SiteData.CurrentScriptName;
+			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
+
+			if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+				sCurrentPage = sScrubbedURL;
+			}
+
 			ContentPage pageContents = new ContentPage();
 			if (guidContentID == Guid.Empty) {
-				pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+				pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
 			} else {
 				pageContents = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidContentID);
+			}
+
+			if (pageContents.ContentType == ContentPageType.PageType.BlogEntry) {
+				btnAddChild.Visible = false;
+				btnSortChildPages.Visible = false;
 			}
 
 			if (cmsHelper.ToolboxPlugins.Count > 0) {
@@ -74,6 +86,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				guidContentID = pageContents.Root_ContentID;
 
 				if (cmsHelper.cmsAdminContent == null) {
+					pageContents.LoadAttributes();
 					cmsHelper.cmsAdminContent = pageContents;
 				} else {
 					pageContents = cmsHelper.cmsAdminContent;

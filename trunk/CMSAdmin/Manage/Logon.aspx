@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Logon" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="Logon.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Logon" %>
+﻿<%@ Page Title="Logon" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="Logon.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.Logon" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>

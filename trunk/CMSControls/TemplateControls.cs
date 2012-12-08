@@ -1,7 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -247,35 +251,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		bool bFoundCtrl = false;
-		Control fndCtrl = null;
-
-		private Control FindSubControl(Control X, string txt) {
-
-			bFoundCtrl = false;
-			fndCtrl = null;
-
-			FindSubControl2(X, txt.ToLower().Trim());
-
-			return fndCtrl;
-		}
-
-		private void FindSubControl2(Control X, string txt) {
-			foreach (Control c in X.Controls) {
-				if (!bFoundCtrl) {
-					if (c is ITextControl) {
-						ITextControl lnk = (ITextControl)c;
-						if (lnk.Text.ToLower().Trim().Contains(txt)) {
-							fndCtrl = c;
-						}
-						bFoundCtrl = true;
-					} else {
-						FindSubControl2(c, txt);
-					}
-				}
-			}
-		}
-
 	}
 
 
@@ -503,7 +478,14 @@ namespace Carrotware.CMS.UI.Controls {
 			NavOrder,
 			EditUserId,
 			EditDate,
-			TemplateFile
+			TemplateFile,
+			UserName,
+			EmailAddress,
+			UserNickName,
+			FirstName,
+			LastName,
+			FullName_FirstLast,
+			FullName_LastFirst,
 		}
 
 		[Bindable(true)]
@@ -598,12 +580,40 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnDataBinding(EventArgs e) {
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+			string sFieldValue = string.Empty;
 
-			string sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
+			if (NavTextFieldName.UserName == DataField ||
+					NavTextFieldName.EmailAddress == DataField ||
+					NavTextFieldName.UserNickName == DataField ||
+					NavTextFieldName.FirstName == DataField ||
+					NavTextFieldName.LastName == DataField ||
+					NavTextFieldName.FullName_FirstLast == DataField ||
+					NavTextFieldName.FullName_LastFirst == DataField) {
+
+				string sValue = "";
+				using (SiteNav sn = (SiteNav)DataBinder.GetDataItem(container)) {
+					if (sn != null) {
+						using (ExtendedUserData c = sn.GetUserInfo()) {
+							object obj = ReflectionUtilities.GetPropertyValue(c, DataField.ToString());
+							if (obj != null) {
+								sValue = obj.ToString();
+							}
+						}
+					}
+				}
+
+				sFieldValue = string.Format(FieldFormat, sValue);
+
+			} else {
+				sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
+
+			}
+
+			this.Text = sFieldValue;
+
 			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
 			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
 
-			this.Text = sFieldValue;
 			this.NavigateUrl = sFileName;
 			this.ContentID = pageID;
 
@@ -616,102 +626,12 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class ListItemRepeater : Repeater {
 
-		//[Bindable(true)]
-		//[Category("Appearance")]
-		//[DefaultValue("")]
-		//[Localizable(true)]
-		//public int IndentPad {
-		//    get {
-		//        int s = 1;
-		//        try { s = int.Parse(ViewState["IndentPad"].ToString()); } catch { }
-		//        return s;
-		//    }
-		//    set {
-		//        ViewState["IndentPad"] = value.ToString();
-		//    }
-		//}
 
-		//protected override void Render(HtmlTextWriter writer) {
-		//    int indent = writer.Indent++;
-
-		//    writer.Indent = indent + IndentPad;
-
-		//    base.Render(writer);
-
-		//    writer.Indent = indent;
-		//    writer.Indent--;
-		//}
-
-		//public override void RenderControl(HtmlTextWriter writer) {
-		//    int indent = writer.Indent++;
-
-		//    writer.Indent = indent + IndentPad;
-
-		//    base.RenderControl(writer);
-
-		//    writer.Indent = indent;
-		//    writer.Indent--;
-		//}
-
-		//protected override void RenderChildren(HtmlTextWriter writer) {
-		//    int indent = writer.Indent++;
-
-		//    foreach (Control c in this.Controls) {
-		//        writer.Indent = indent;
-		//        if (c is ListItemRepeater) {
-		//            string html = "\t\t" + BaseServerControl.GetCtrlText(c).Replace("\r\n", "\r\n\t\t");
-		//            writer.Write(html);
-		//            writer.WriteLine();
-		//        } else {
-		//            writer.Indent--;
-		//            c.RenderControl(writer);
-		//        }
-		//        writer.Indent = indent;
-		//    }
-
-		//    writer.Indent--;
-		//}
 	}
 
 	//========================================
 	public class ListItemPlaceHolder : PlaceHolder {
 
-		//[Bindable(true)]
-		//[Category("Appearance")]
-		//[DefaultValue("")]
-		//[Localizable(true)]
-		//public int IndentPad {
-		//    get {
-		//        int s = 1;
-		//        try { s = int.Parse(ViewState["IndentPad"].ToString()); } catch { }
-		//        return s;
-		//    }
-		//    set {
-		//        ViewState["IndentPad"] = value.ToString();
-		//    }
-		//}
-
-		//protected override void Render(HtmlTextWriter writer) {
-		//    int indent = writer.Indent++;
-
-		//    writer.Indent = indent + IndentPad;
-
-		//    base.Render(writer);
-
-		//    writer.Indent = indent;
-		//    writer.Indent--;
-		//}
-
-		//public override void RenderControl(HtmlTextWriter writer) {
-		//    int indent = writer.Indent++;
-
-		//    writer.Indent = indent + IndentPad;
-
-		//    base.RenderControl(writer);
-
-		//    writer.Indent = indent;
-		//    writer.Indent--;
-		//}
 
 		protected override void RenderChildren(HtmlTextWriter writer) {
 			int indent1 = writer.Indent;
@@ -806,6 +726,600 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 	}
 
+	//========================================
+	public class DefaultContentCommentFormThanks : ITemplate {
+
+		public DefaultContentCommentFormThanks() {
+
+		}
+
+		public void InstantiateIn(Control container) {
+
+			PlaceHolder ph = new PlaceHolder();
+			ph.ID = "DefaultContentCommentFormThanks";
+
+			ph.Controls.Add(new Literal { Text = "<p> Thank you for your comment </p>" });
+
+			container.Controls.Add(ph);
+		}
+	}
+
+	//========================================
+	public class DefaultContentCommentEntryForm : ITemplate {
+
+		public DefaultContentCommentEntryForm() {
+
+		}
+
+		public void InstantiateIn(Control container) {
+
+			PlaceHolder ph = new PlaceHolder();
+			ph.ID = "DefaultContentCommentForm";
+
+			string sValidationScript = String.Empty;
+			string sScriptPrefix = "Carrot" + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
+
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Controls.ContentCommentFormScripts.txt"))) {
+				sValidationScript = oTextStream.ReadToEnd();
+			}
+
+			sValidationScript = sValidationScript.Replace("{CONTROL_PREFIX}", sScriptPrefix);
+
+			string sVG = "ContentCommentForm";
+
+			ph.Controls.Add(new Literal { Text = sValidationScript });
+
+			ph.Controls.Add(new Literal { Text = "<div>\r\n " });
+			ph.Controls.Add(new Label { ID = "ContentCommentFormMsg", Text = " " });
+			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
+
+			ph.Controls.Add(new Literal { Text = "<div>\r\n " });
+			ph.Controls.Add(new Literal { Text = " Name: " });
+			ph.Controls.Add(new TextBox { ID = "CommenterName", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
+			ph.Controls.Add(new RequiredFieldValidator {
+				ID = "CommenterNameValid",
+				ControlToValidate = "CommenterName",
+				ErrorMessage = "*",
+				ValidationGroup = sVG
+			});
+
+			ph.Controls.Add(new Literal { Text = "<br />\r\n E-mail: " });
+			ph.Controls.Add(new TextBox { ID = "CommenterEmail", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
+			ph.Controls.Add(new RequiredFieldValidator {
+				ID = "CommenterEmailValid",
+				ControlToValidate = "CommenterEmail",
+				ErrorMessage = "*",
+				ValidationGroup = sVG
+			});
+
+			ph.Controls.Add(new Literal { Text = "<br />\r\n Comment:  " });
+			ph.Controls.Add(new CustomValidator {
+				ID = "VisitorCommentsValid",
+				ControlToValidate = "VisitorComments",
+				ErrorMessage = "**",
+				ClientValidationFunction = sScriptPrefix + "_ValidateComments",
+				ValidationGroup = sVG
+			});
+
+			ph.Controls.Add(new Literal { Text = "\r\n<br />\r\n" });
+			ph.Controls.Add(new TextBox { ID = "VisitorComments", Columns = 40, MaxLength = 1024, Rows = 8, TextMode = TextBoxMode.MultiLine });
+
+			ph.Controls.Add(new Literal { Text = "<br />\r\n " });
+			ph.Controls.Add(new RequiredFieldValidator {
+				ID = "ContentCommentCaptchaValid",
+				ControlToValidate = "ContentCommentCaptcha",
+				ErrorMessage = "**",
+				ValidationGroup = sVG
+			});
+			ph.Controls.Add(new Captcha { ID = "ContentCommentCaptcha", ValidationGroup = sVG });
+
+
+			ph.Controls.Add(new Literal { Text = "\r\n<br />\r\n" });
+			ph.Controls.Add(new Button { ID = "SubmitCommentButton", Text = "Submit Comment", ValidationGroup = sVG });
+			ph.Controls.Add(new Literal { Text = "\r\n<br />\r\n" });
+			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
+
+			container.Controls.Add(ph);
+		}
+
+	}
+
+
+	//========================================
+	public class DefaultPagerTemplate : ITemplate {
+
+		public DefaultPagerTemplate() {
+
+		}
+
+		public void InstantiateIn(Control container) {
+			Literal litL = new Literal();
+			litL.Text = " [ ";
+			Literal litR = new Literal();
+			litR.Text = " ]   ";
+
+			NavLinkForPagerTemplate lnkBtn = new NavLinkForPagerTemplate();
+			lnkBtn.ID = "lnkBtn";
+			lnkBtn.CSSSelected = "selected";
+
+			lnkBtn.DataBinding += new EventHandler(lnkBtn_DataBinding);
+
+			container.Controls.Add(litL);
+			container.Controls.Add(lnkBtn);
+			container.Controls.Add(litR);
+		}
+
+		private void lnkBtn_DataBinding(object sender, EventArgs e) {
+			NavLinkForPagerTemplate lnkBtn = (NavLinkForPagerTemplate)sender;
+			RepeaterItem container = (RepeaterItem)lnkBtn.NamingContainer;
+
+			string sTxt = DataBinder.Eval(container, "DataItem").ToString();
+			lnkBtn.LinkText = sTxt;
+			lnkBtn.PageNumber = int.Parse(sTxt);
+		}
+
+	}
+
+	//========================================
+	public class DefaultSummaryTemplate : ITemplate {
+
+		public DefaultSummaryTemplate() {
+
+		}
+
+		public void InstantiateIn(Control container) {
+
+			Literal litContent0 = new Literal();
+			litContent0.Text = "\r\n<div>\r\n<p>\r\n<b><a href='{0}'>{1}</a></b> <br />\r\n{2} <br />\r\nPosted On: {3} \r\n</p> \r\n<p>";
+			litContent0.DataBinding += new EventHandler(litContent_DataBinding);
+
+			Literal litContent1 = new Literal();
+			litContent1.Text = " <br /> ";
+
+			Literal litContent2 = new Literal();
+			litContent2.Text = " </p> \r\n</div> \r\n";
+
+			PostMetaWordList pc = new PostMetaWordList();
+			pc.ContentType = PostMetaWordList.MetaDataType.Category;
+			pc.DataBinding += new EventHandler(pmwlList_DataBinding);
+			pc.MetaDataTitle = "Categories: ";
+			pc.HtmlTagNameOuter = "span";
+			pc.HtmlTagNameInner = "span";
+
+			PostMetaWordList pt = new PostMetaWordList();
+			pt.ContentType = PostMetaWordList.MetaDataType.Tag;
+			pt.DataBinding += new EventHandler(pmwlList_DataBinding);
+			pt.MetaDataTitle = "Tags: ";
+			pt.HtmlTagNameOuter = "span";
+			pt.HtmlTagNameInner = "span";
+
+			container.Controls.Add(litContent0);
+			container.Controls.Add(pc);
+			container.Controls.Add(litContent1);
+			container.Controls.Add(pt);
+			container.Controls.Add(litContent2);
+		}
+
+		private void pmwlList_DataBinding(object sender, EventArgs e) {
+			PostMetaWordList pmContent = (PostMetaWordList)sender;
+			RepeaterItem container = (RepeaterItem)pmContent.NamingContainer;
+			Guid guidSender = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
+			pmContent.AssignedRootContentID = guidSender;
+		}
+
+		private void litContent_DataBinding(object sender, EventArgs e) {
+			Literal litContent = (Literal)sender;
+			RepeaterItem container = (RepeaterItem)litContent.NamingContainer;
+			string sTxt0 = litContent.Text;
+
+			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+			string sTxt3 = DataBinder.Eval(container, "DataItem.PageTextPlainSummary").ToString();
+			string sTxt4 = DataBinder.Eval(container, "DataItem.CreateDate").ToString();
+
+			litContent.Text = String.Format(sTxt0, sTxt1, sTxt2, sTxt3, sTxt4);
+		}
+	}
+
+	[DefaultProperty("Text")]
+	[ToolboxData("<{0}:NavPageNumberDisplay runat=server></{0}:NavPageNumberDisplay>")]
+
+	public class NavPageNumberDisplay : Control {
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public int PageNumber {
+			get {
+				int s = 0;
+				try { s = int.Parse(ViewState["PageNumber"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["PageNumber"] = value.ToString();
+			}
+		}
+
+		private Literal litPageNbr = new Literal();
+
+		private void LoadCtrsl() {
+
+			litPageNbr.Text = PageNumber.ToString();
+
+			this.Controls.Clear();
+			this.Controls.Add(litPageNbr);
+		}
+
+		protected override void OnDataBinding(EventArgs e) {
+
+			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+
+			int PageNbr = int.Parse(DataBinder.Eval(container, "DataItem").ToString());
+
+			this.PageNumber = PageNbr;
+
+			LoadCtrsl();
+
+			base.OnDataBinding(e);
+		}
+
+	}
+
+
+	//========================================
+
+	[DefaultProperty("Text")]
+	[ToolboxData("<{0}:NavLinkForPagerTemplate runat=server></{0}:NavLinkForPagerTemplate>")]
+
+	public class NavLinkForPagerTemplate : Control, IActivatePageNavItem {
+
+		public string LinkText {
+			get {
+				return lnkBtn.Text;
+			}
+
+			set {
+				lnkBtn.Text = value;
+			}
+		}
+
+		public string ToolTip {
+			get {
+				return lnkBtn.ToolTip;
+			}
+
+			set {
+				lnkBtn.ToolTip = value;
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CssClassNormal {
+			get {
+				string s = (string)ViewState["CssClassNormal"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["CssClassNormal"] = value;
+				SetCSS();
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CSSSelected {
+			get {
+				string s = (string)ViewState["CSSSelected"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["CSSSelected"] = value;
+				SetCSS();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool IsSelected {
+			get {
+				bool s = false;
+				if (ViewState["IsSelected"] != null) {
+					try { s = (bool)ViewState["IsSelected"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["IsSelected"] = value;
+				SetCSS();
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public bool UseDefaultText {
+			get {
+				bool s = true;
+				if (ViewState["UseDefaultText"] != null) {
+					try { s = (bool)ViewState["UseDefaultText"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["UseDefaultText"] = value;
+				SetCSS();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public int PageNumber {
+			get {
+				int s = 0;
+				try { s = int.Parse(ViewState["PageNumber"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["PageNumber"] = value.ToString();
+			}
+		}
+
+
+		private void SetCSS() {
+
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
+				string sCSS = "";
+				string sSelCss = "";
+
+				if (IsSelected) {
+					sSelCss = CSSSelected.Trim();
+				}
+
+				sCSS = string.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
+
+				lnkBtn.CssClass = sCSS.Trim();
+			}
+		}
+
+		private string sBtnName = "lnkPagerBtn";
+
+		private string _linkText = string.Empty;
+
+		private LinkButton lnkBtn = new LinkButton();
+		private ListItemPlaceHolder ph = new ListItemPlaceHolder();
+
+		protected override void OnDataBinding(EventArgs e) {
+
+			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+
+			int PageNbr = int.Parse(DataBinder.Eval(container, "DataItem").ToString());
+
+			lnkBtn.ID = sBtnName + PageNbr.ToString();
+			lnkBtn.Click += new EventHandler(this.lnkBtn_Click);
+
+			_linkText = PageNbr.ToString();
+
+			this.PageNumber = PageNbr;
+
+			LoadCtrsl();
+
+			base.OnDataBinding(e);
+		}
+
+		protected void lnkBtn_Click(object sender, EventArgs e) {
+
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+
+			base.OnPreRender(e);
+
+			AssignVals();
+		}
+
+
+		private void AssignVals() {
+
+			SetCSS();
+
+			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.LinkText)) {
+				if (UseDefaultText) {
+					this.LinkText = _linkText;
+				}
+			}
+		}
+
+
+		private void LoadCtrsl() {
+
+			int iMax = this.Controls.Count;
+			lnkBtn.Controls.Clear();
+
+			for (int i = 0; i < iMax; i++) {
+				lnkBtn.Controls.Add(this.Controls[0]);
+			}
+
+			this.Controls.Add(lnkBtn);
+			this.Controls.Add(ph);
+
+		}
+
+
+	}
+
+	//========================================
+
+	[DefaultProperty("Text")]
+	[ToolboxData("<{0}:ListItemWrapperForPager runat=server></{0}:ListItemWrapperForPager>")]
+
+	public class ListItemWrapperForPager : Control, IActivatePageNavItem {
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CssClassNormal {
+			get {
+				string s = (string)ViewState["CssClassNormal"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["CssClassNormal"] = value;
+				SetTag();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CSSSelected {
+			get {
+				string s = (string)ViewState["CSSSelected"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["CSSSelected"] = value;
+				SetTag();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool IsSelected {
+			get {
+				bool s = false;
+				if (ViewState["IsSelected"] != null) {
+					try { s = (bool)ViewState["IsSelected"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["IsSelected"] = value;
+				SetTag();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public int PageNumber {
+			get {
+				int s = 0;
+				try { s = int.Parse(ViewState["PageNumber"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["PageNumber"] = value.ToString();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string HtmlTagName {
+			get {
+				string s = (string)ViewState["HtmlTagName"];
+				return ((s == null) ? "div" : s);
+			}
+			set {
+				ViewState["HtmlTagName"] = value;
+				SetTag();
+			}
+		}
+
+		private Literal litOpen = new Literal();
+		private Literal litClose = new Literal();
+		private Control ctrlAll = new Control();
+
+		private void LoadCtrsl() {
+			int iMax = this.Controls.Count;
+
+			SetTag();
+
+			ctrlAll.Controls.Clear();
+			ctrlAll.Controls.Add(litOpen);
+
+			//instead of wind/unwind, pop stack X times
+			for (int i = 0; i < iMax; i++) {
+				ctrlAll.Controls.Add(this.Controls[0]);
+			}
+
+			ListItemPlaceHolder ph = new ListItemPlaceHolder();
+
+			ctrlAll.Controls.Add(ph);
+			ctrlAll.Controls.Add(litClose);
+
+			this.Controls.Clear();
+			this.Controls.Add(ctrlAll);
+
+		}
+
+
+		private void SetTag() {
+
+			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
+			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
+
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
+				string sCSS = "";
+				string sSelCss = "";
+
+				if (IsSelected) {
+					sSelCss = CSSSelected.Trim();
+				}
+
+				if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(sSelCss)) {
+					sCSS = string.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
+				}
+
+				litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + HtmlTextWriter.TagRightChar;
+			}
+		}
+
+
+		protected override void OnDataBinding(EventArgs e) {
+
+			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+
+			int PageNbr = int.Parse(DataBinder.Eval(container, "DataItem").ToString());
+
+			this.PageNumber = PageNbr;
+
+			SetTag();
+
+			LoadCtrsl();
+
+			base.OnDataBinding(e);
+		}
+
+	}
+
+
 
 	//========================================
 	public interface IActivateNavItem {
@@ -824,6 +1338,17 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
+	public interface IActivatePageNavItem {
+
+		string CSSSelected { get; set; }
+
+		string CssClassNormal { get; set; }
+
+		bool IsSelected { get; set; }
+
+		int PageNumber { get; set; }
+
+	}
 
 
 }

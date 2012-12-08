@@ -103,13 +103,13 @@ namespace Carrotware.CMS.Core {
 
 		public void RemoveVersions(List<Guid> lstDel) {
 
-			IQueryable<carrot_WidgetData> oldW = (from w in db.carrot_WidgetDatas
-												  orderby w.EditDate descending
-												  where lstDel.Contains(w.WidgetDataID)
-												  && w.IsLatestVersion != true
-												  select w);
+			List<carrot_WidgetData> oldW = (from w in db.carrot_WidgetDatas
+											orderby w.EditDate descending
+											where lstDel.Contains(w.WidgetDataID)
+											&& w.IsLatestVersion != true
+											select w).ToList();
 
-			if (oldW.Count() > 0) {
+			if (oldW.Count > 0) {
 				db.carrot_WidgetDatas.DeleteAllOnSubmit(oldW);
 				db.SubmitChanges();
 			}
@@ -140,7 +140,7 @@ namespace Carrotware.CMS.Core {
 
 			bool bPendingDel = false;
 
-			if (w1 != null && w1.Count() > 0) {
+			if (w1 != null && w1.Count > 0) {
 				db.carrot_WidgetDatas.DeleteAllOnSubmit(w1);
 				bPendingDel = true;
 			}

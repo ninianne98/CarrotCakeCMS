@@ -29,7 +29,7 @@
 <script type="text/javascript">
 
 	var cmsWebSvc = "/Manage/CMS.asmx";
-	var cmsThisPage = "<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>";
+	var cmsThisPage = "<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>";
 	var cmsThisPageID = "<%=guidContentID.ToString() %>";
 
 	var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";

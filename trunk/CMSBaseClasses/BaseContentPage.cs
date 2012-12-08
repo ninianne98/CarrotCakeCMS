@@ -39,17 +39,6 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentPage pageContents = new ContentPage();
 		protected List<Widget> pageWidgets = new List<Widget>();
 
-
-		protected string PageTitlePattern {
-			get {
-				string x = "{0} - {1}";
-				if (System.Configuration.ConfigurationManager.AppSettings["CarrotPageTitlePattern"] != null) {
-					try { x = System.Configuration.ConfigurationManager.AppSettings["CarrotPageTitlePattern"].ToString(); } catch { }
-				}
-				return x;
-			}
-		}
-
 		private int iCtrl = 0;
 
 		private string CtrlId {
@@ -75,11 +64,6 @@ namespace Carrotware.CMS.UI.Base {
 
 			theSite = siteHelper.GetCurrentSite();
 
-			HtmlMeta metaType = new HtmlMeta();
-			metaType.Attributes["property"] = "og:type";
-			metaType.Content = "website";
-			Page.Header.Controls.Add(metaType);
-
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
 			metaGenerator.Content = SiteData.CarrotCakeCMSVersion;
@@ -94,18 +78,23 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-			string path = SiteData.CurrentScriptName.ToLower();
+			string sCurrentPage = SiteData.CurrentScriptName;
+			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
+
+			if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+				sCurrentPage = sScrubbedURL;
+			}
 
 			pageContents = null;
 
-			if (path.Length < 3) {
+			if (sCurrentPage.Length < 3) {
 				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID);
 				} else {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 				}
 			} else {
-				string pageName = path;
+				string pageName = sCurrentPage;
 				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 					pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, pageName);
 				} else {
@@ -146,10 +135,21 @@ namespace Carrotware.CMS.UI.Base {
 				if (!string.IsNullOrEmpty(metaKey.Content)) {
 					Page.Header.Controls.Add(metaKey);
 				}
+
+				HtmlMeta metaType = new HtmlMeta();
+				metaType.Attributes["property"] = "og:type";
+				if (pageContents.ContentType == ContentPageType.PageType.BlogEntry) {
+					metaType.Content = "blog";
+				} else {
+					metaType.Content = "website";
+				}
+
+				Page.Header.Controls.Add(metaType);
 			}
 
 			if (SecurityData.AdvancedEditMode) {
 				if (cmsHelper.cmsAdminContent == null) {
+					pageContents.LoadAttributes();
 					cmsHelper.cmsAdminContent = pageContents;
 					cmsHelper.cmsAdminWidget = (from w in pageWidgets
 												orderby w.WidgetOrder
@@ -178,7 +178,7 @@ namespace Carrotware.CMS.UI.Base {
 				if (!string.IsNullOrEmpty(Page.Title)) {
 					HtmlMeta metaTitle = new HtmlMeta();
 					metaTitle.Attributes["property"] = "og:title";
-					metaTitle.Content = Page.Title;
+					metaTitle.Content = pageContents.TitleBar;
 					Page.Header.Controls.Add(metaTitle);
 				}
 
@@ -264,11 +264,9 @@ namespace Carrotware.CMS.UI.Base {
 
 					foreach (Widget theWidget in lstWidget) {
 
-						//WidgetContainer plcHolder = (WidgetContainer)FindTheControl(theWidget.PlaceholderName, page);
 						WidgetContainer plcHolder = (WidgetContainer)(from d in lstPlaceholders
 																	  where d.ControlLabel == theWidget.PlaceholderName
 																	  select d.KeyControl).FirstOrDefault();
-
 						if (plcHolder != null) {
 							Control widget = new Control();
 
@@ -379,12 +377,12 @@ namespace Carrotware.CMS.UI.Base {
 
 
 		private string SetPageTitle(ContentPage pageData) {
-
-			string sPageTitle = string.Format(PageTitlePattern, theSite.SiteName, pageData.TitleBar);
-
+			string sPattern = SiteData.CurrentTitlePattern;
 			if (!pageData.PageActive) {
-				sPageTitle = string.Format(PageTitlePattern, "* UNPUBLISHED * " + theSite.SiteName, pageData.TitleBar);
+				sPattern = "* UNPUBLISHED * " + SiteData.CurrentTitlePattern;
 			}
+
+			string sPageTitle = string.Format(sPattern, theSite.SiteName, pageData.TitleBar, pageData.PageHead, pageData.NavMenuText);
 
 			return sPageTitle;
 		}

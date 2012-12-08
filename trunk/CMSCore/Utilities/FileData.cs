@@ -179,7 +179,7 @@ namespace Carrotware.CMS.Core {
 					_path = _path.Substring(0, _path.LastIndexOf(@"/"));
 				}
 				_path = _path + @"/";
-				_path = _path.Replace(@"\", @"/").Replace(@"///", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+				_path = _path.Replace(@"\", @"/").Replace(@"///", @"/").Replace("//", "/").Replace("//", "/");
 			}
 			return _path;
 		}

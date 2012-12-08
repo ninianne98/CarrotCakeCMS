@@ -33,18 +33,29 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private string sVirtualReqFile = String.Empty;
+		private string sRequestedURL = String.Empty;
 		private bool bAlreadyDone = false;
+		private bool bURLOverride = false;
+
 
 		public void ProcessRequest(HttpContext context) {
-
+			SiteNav navData = null;
 			string sFileRequested = context.Request.Path;
+			sRequestedURL = sFileRequested;
+
+			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
+
+			if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
+				sFileRequested = sScrubbedURL;
+				bURLOverride = true;
+			}
 
 			VirtualDirectory.RegisterRoutes();
 
 			if (!string.IsNullOrEmpty(sFileRequested)) {
 				sFileRequested = sFileRequested.Replace(@"\", @"/");
 				if (sFileRequested.EndsWith("/") || !sFileRequested.ToLower().EndsWith(".aspx")) {
-					sFileRequested = (sFileRequested + SiteData.DefaultDirectoryFilename).Replace(@"//", @"/");
+					sFileRequested = (sFileRequested + SiteData.DefaultDirectoryFilename).Replace("//", "/");
 				}
 			}
 
@@ -94,7 +105,6 @@ namespace Carrotware.CMS.Core {
 						}
 					}
 
-					SiteNav navData = null;
 
 					try {
 						bool bIsHomePage = false;
@@ -146,6 +156,11 @@ namespace Carrotware.CMS.Core {
 						}
 
 						sVirtualReqFile = sFileRequested;
+
+						if (bURLOverride) {
+							sVirtualReqFile = sRequestedURL;
+							sFileRequested = sRequestedURL;
+						}
 
 						RewriteCMSPath(context, sSelectedTemplate, queryString);
 

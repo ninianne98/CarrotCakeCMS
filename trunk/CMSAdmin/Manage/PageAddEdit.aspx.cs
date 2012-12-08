@@ -16,7 +16,7 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class PageAddEdit : AdminBasePage {
 
 		public Guid guidContentID = Guid.Empty;
@@ -48,7 +48,7 @@ namespace Carrotware.CMS.UI.Admin {
 				guidImportContentID = new Guid(Request.QueryString["importid"].ToString());
 			}
 
-			if (pageHelper.GetSitePageCount(SiteID) < 1) {
+			if (pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry) < 1) {
 				txtSort.Text = "0";
 			}
 
@@ -77,10 +77,10 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 
 				if (guidImportContentID != Guid.Empty) {
-					ContentPageExport cpe = ContentPageExport.GetSerializedContentPageExport(guidImportContentID);
+					ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID);
 					if (cpe != null) {
 						pageContents = cpe.ThePage;
-						pageContents.CreateDate = DateTime.Now;
+						//pageContents.CreateDate = DateTime.Now;
 						pageContents.EditDate = DateTime.Now;
 
 						ContentPage par = pageHelper.FindByFilename(SiteID, cpe.ParentFileName);
@@ -101,6 +101,9 @@ namespace Carrotware.CMS.UI.Admin {
 				divEditing.Visible = false;
 
 				if (pageContents != null) {
+					if (pageContents.ContentType != ContentPageType.PageType.ContentEntry) {
+						Response.Redirect(SiteFilename.BlogPostAddEditURL + "?id=" + Request.QueryString.ToString());
+					}
 
 					guidRootContentID = pageContents.Root_ContentID;
 
@@ -176,6 +179,9 @@ namespace Carrotware.CMS.UI.Admin {
 				reRightBody.Text = "<p>&nbsp;</p>";
 			}
 
+			if (ddlVersions.Items.Count < 1) {
+				pnlReview.Visible = false;
+			}
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
@@ -196,10 +202,10 @@ namespace Carrotware.CMS.UI.Admin {
 				pageContents = pageHelper.FindContentByID(SiteID, guidContentID);
 			}
 			if (guidImportContentID != Guid.Empty) {
-				pageContents = ContentPageExport.GetSerializedContentPageExport(guidImportContentID).ThePage;
+				pageContents = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID).ThePage;
 				if (pageContents != null) {
 					pageContents.SiteID = SiteID;
-					pageContents.CreateDate = DateTime.Now;
+					//pageContents.CreateDate = DateTime.Now;
 					pageContents.EditDate = DateTime.Now;
 				}
 			}
@@ -209,6 +215,7 @@ namespace Carrotware.CMS.UI.Admin {
 				pageContents.Root_ContentID = Guid.NewGuid();
 				pageContents.ContentID = pageContents.ContentID;
 				pageContents.SiteID = SiteID;
+				pageContents.CreateDate = DateTime.Now;
 			}
 
 			pageContents.IsLatestVersion = true;
@@ -232,11 +239,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			pageContents.PageActive = chkActive.Checked;
 
-			//if (txtParent.Text.Length > 5) {
-			//    pageContents.Parent_ContentID = new Guid(txtParent.Text);
-			//} else {
-			//    pageContents.Parent_ContentID = null;
-			//}
+			pageContents.ContentType = ContentPageType.PageType.ContentEntry;
 
 			if (ParentPagePicker.SelectedPage.HasValue) {
 				pageContents.Parent_ContentID = ParentPagePicker.SelectedPage.Value;
@@ -254,7 +257,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 			//if importing, copy in all meta data possible
 			if (guidImportContentID != Guid.Empty) {
-				List<Widget> widgets = ContentPageExport.GetSerializedContentPageExport(guidImportContentID).ThePageWidgets;
+				List<Widget> widgets = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID).ThePageWidgets;
 
 				foreach (var wd in widgets) {
 					wd.Root_ContentID = pageContents.Root_ContentID;
@@ -264,7 +267,7 @@ namespace Carrotware.CMS.UI.Admin {
 					wd.Save();
 				}
 
-				ContentPageExport.RemoveSerializedContentPageExport(guidImportContentID);
+				ContentImportExportUtils.RemoveSerializedExportData(guidImportContentID);
 			}
 
 			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {

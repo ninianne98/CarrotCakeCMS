@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 
 	public partial class UserPassword : AdminBasePage {
 
@@ -18,6 +18,11 @@ namespace Carrotware.CMS.UI.Admin {
 
 			if (!IsPostBack) {
 				txtEmail.Text = SecurityData.CurrentUser.Email;
+				ExtendedUserData ud = new ExtendedUserData(SecurityData.CurrentUser.UserName);
+				txtNickName.Text = ud.UserNickName;
+				txtFirstName.Text = ud.FirstName;
+				txtLastName.Text = ud.LastName;
+
 			} else {
 				lblEmail.Text = "";
 			}
@@ -28,7 +33,14 @@ namespace Carrotware.CMS.UI.Admin {
 			MembershipUser usr = SecurityData.CurrentUser;
 			usr.Email = txtEmail.Text;
 			Membership.UpdateUser(usr);
-			lblEmail.Text = "Email Updated";
+
+			ExtendedUserData ud = new ExtendedUserData(SecurityData.CurrentUser.UserName);
+			ud.UserNickName = txtNickName.Text;
+			ud.FirstName = txtFirstName.Text;
+			ud.LastName = txtLastName.Text;
+			ud.Save();
+
+			lblEmail.Text = "Profile Updated";
 		}
 
 

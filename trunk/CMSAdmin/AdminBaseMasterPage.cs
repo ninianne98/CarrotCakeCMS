@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
-using System.IO;
-
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -26,13 +25,22 @@ namespace Carrotware.CMS.UI.Admin {
 		public enum SectionID {
 			Home,
 			Content,
+			PageComment,
 			ContentTemplate,
 			ContentSkinEdit,
 			ContentSiteMap,
+			ContentImport,
+			SiteImport,
 			UserAdmin,
 			GroupAdmin,
 			UserFn,
-			Modules
+			Modules,
+			BlogIndex,
+			BlogContent,
+			BlogCategory,
+			BlogTag,
+			BlogTemplate,
+			BlogComment
 		}
 
 

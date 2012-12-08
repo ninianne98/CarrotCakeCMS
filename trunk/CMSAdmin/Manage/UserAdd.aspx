@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Create User" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserAdd.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.UserAdd" %>
+	Inherits="Carrotware.CMS.UI.Admin.Manage.UserAdd" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

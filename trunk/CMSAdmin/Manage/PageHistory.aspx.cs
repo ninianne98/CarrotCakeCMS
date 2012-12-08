@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class PageHistory : AdminBasePage {
 
 		public Guid guidRootID = Guid.Empty;

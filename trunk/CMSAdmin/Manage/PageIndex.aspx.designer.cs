@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
     
     
     public partial class PageIndex {
@@ -81,9 +81,9 @@ namespace Carrotware.CMS.UI.Admin {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.MasterPages.Main Master {
+        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.Main Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.MasterPages.Main)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.Main)(base.Master));
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿<%@ Page ValidateRequest="false" Title="PageAddEdit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageAddEdit.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.PageAddEdit" %>
+	Inherits="Carrotware.CMS.UI.Admin.Manage.PageAddEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
@@ -13,7 +13,7 @@
 
 
 		function exportPage() {
-			window.open("./PageExport.aspx?id=" + thePageID);
+			window.open("<%=Carrotware.CMS.UI.Admin.SiteFilename.DataExportURL %>?id=" + thePageID);
 		}
 
 		function openPage() {
@@ -76,7 +76,11 @@
 
 
 		function editFilenameCallback(data, status) {
-			if (data.d == "PASS") {
+			if (data.d != "FAIL" && data.d != "OK") {
+				cmsAlertModal(data.d);
+			}
+
+			if (data.d == "OK") {
 				$('#<%= txtFileValid.ClientID %>').val('VALID');
 			} else {
 				$('#<%= txtFileValid.ClientID %>').val('');
@@ -134,7 +138,7 @@
 					"Yes": function () {
 						cmsMakeOKToLeave();
 						cmsRecordCancellation();
-						window.setTimeout("location.href = './PageIndex.aspx';", 800);
+						window.setTimeout("location.href = '<%=Carrotware.CMS.UI.Admin.SiteFilename.PageIndexURL %>';", 800);
 						$(this).dialog("close");
 					}
 				}
@@ -329,6 +333,7 @@
 			<tr>
 				<td valign="top" class="tablecaption">
 					parent page:
+					<br />
 				</td>
 				<td valign="top">
 					<!-- parent page plugin-->
@@ -423,16 +428,18 @@
 					<td valign="top">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</td>
-					<td valign="top" align="right">
-						<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
-						</asp:DropDownList>
-					</td>
-					<td valign="top">
-						&nbsp;&nbsp;
-					</td>
-					<td valign="top" align="left">
-						<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
-					</td>
+					<asp:Panel runat="server" ID="pnlReview">
+						<td valign="top" align="right">
+							<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
+							</asp:DropDownList>
+						</td>
+						<td valign="top">
+							&nbsp;&nbsp;
+						</td>
+						<td valign="top" align="left">
+							<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
+						</td>
+					</asp:Panel>
 				</tr>
 			</table>
 		</asp:Panel>

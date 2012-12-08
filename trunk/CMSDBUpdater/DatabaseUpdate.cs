@@ -243,7 +243,7 @@ namespace Carrotware.CMS.DBUpdater {
 				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
 						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 51) {
+				if (table1.Rows.Count < 52) {
 					return true;
 				}
 			}
@@ -260,7 +260,7 @@ namespace Carrotware.CMS.DBUpdater {
 				//query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 				query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 36) {
+				if (table1.Rows.Count < 40) {
 					return true;
 				}
 
@@ -268,7 +268,7 @@ namespace Carrotware.CMS.DBUpdater {
 				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
 						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
 				DataTable table2 = GetData(query);
-				if (table2.Rows.Count < 51) {
+				if (table2.Rows.Count < 52) {
 					return true;
 				}
 
@@ -424,11 +424,11 @@ namespace Carrotware.CMS.DBUpdater {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
 			//string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
-			string query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+			string query = "select distinct [view_name], [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget')  and column_name in ('Root_WidgetID', 'Root_ContentID') ";
 
 			DataTable table1 = GetData(query);
 
-			if (table1.Rows.Count < 36) {
+			if (table1.Rows.Count < 6) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER05.sql", false);
 				res.Response = "CMS DB added vw_carrot_Content and vw_carrot_Widget";
 				return res;
@@ -437,6 +437,26 @@ namespace Carrotware.CMS.DBUpdater {
 			res.Response = "CMS DB vw_carrot_Content and vw_carrot_Widget already added";
 			return res;
 		}
+
+
+		public DatabaseUpdateResponse AlterStep06() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			//string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+			string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID') ";
+
+			DataTable table1 = GetData(query);
+
+			if (table1.Rows.Count < 3) {
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER06.sql", false);
+				res.Response = "CMS DB created carrot_ContentType, carrot_ContentTag, carrot_ContentCategory";
+				return res;
+			}
+
+			res.Response = "CMS DB carrot_ContentType, carrot_ContentTag, carrot_ContentCategory already created";
+			return res;
+		}
+
 
 		public Exception ExecScriptContents(string sScriptContents, bool bIgnoreErr) {
 			SetConn();

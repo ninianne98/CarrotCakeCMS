@@ -17,10 +17,21 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
 			}
 
-			ContentPageExport content = ContentPageExport.GetExportPage(guidContentID);
-			string theXML = ContentPageExport.GetExportXML(content);
+			string theXML = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
+			string fileName = "export.xml";
 
-			string fileName = content.ThePage.NavMenuText + "_" + guidContentID.ToString() + ".xml";
+			if (guidContentID != Guid.Empty) {
+				ContentPageExport content = ContentImportExportUtils.GetExportPage(SiteData.CurrentSiteID, guidContentID);
+				theXML = ContentImportExportUtils.GetExportXML<ContentPageExport>(content);
+
+				fileName = "page_" + content.ThePage.NavMenuText + "_" + guidContentID.ToString() + ".xml";
+			} else {
+				SiteExport site = ContentImportExportUtils.GetExportSite(SiteData.CurrentSiteID);
+				theXML = ContentImportExportUtils.GetExportXML<SiteExport>(site);
+
+				fileName = "site_" + site.TheSite.SiteName + "_" + site.TheSite.SiteID.ToString() + ".xml";
+			}
+
 			fileName = fileName.Replace(" ", "_");
 
 			Response.Expires = 5;

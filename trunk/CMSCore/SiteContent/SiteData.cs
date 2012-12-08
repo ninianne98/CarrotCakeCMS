@@ -4,6 +4,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.ServiceModel.Syndication;
+using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Xml;
@@ -38,19 +40,82 @@ namespace Carrotware.CMS.Core {
 			this.MetaKeyword = s.MetaKeyword;
 			this.MetaDescription = s.MetaDescription;
 			this.SiteName = s.SiteName;
-			this.SiteFolder = s.SiteFolder;
+			this.SiteTagline = s.SiteTagline;
+			this.SiteTitlebarPattern = s.SiteTitlebarPattern;
 			this.MainURL = s.MainURL;
 			this.BlockIndex = s.BlockIndex;
+
+			this.Blog_Root_ContentID = s.Blog_Root_ContentID;
+
+			this.Blog_FolderPath = string.IsNullOrEmpty(s.Blog_FolderPath) ? "" : s.Blog_FolderPath;
+			this.Blog_CategoryPath = string.IsNullOrEmpty(s.Blog_CategoryPath) ? "" : s.Blog_CategoryPath;
+			this.Blog_TagPath = string.IsNullOrEmpty(s.Blog_TagPath) ? "" : s.Blog_TagPath;
+			this.Blog_DatePattern = string.IsNullOrEmpty(s.Blog_DatePattern) ? "yyyy/MM/dd" : s.Blog_DatePattern;
+
+			if (string.IsNullOrEmpty(this.SiteTitlebarPattern)) {
+				this.SiteTitlebarPattern = PageTitlePattern;
+			}
 		}
 
-		public SiteData Get(Guid siteID) {
-			carrot_Site s = CompiledQueries.cqGetSiteByID(db, siteID);
-
-			if (s != null) {
-				return new SiteData(s);
-			} else {
-				return null;
+		public static string PageTitlePattern {
+			get {
+				string pattern = "[[CARROT_SITENAME]] - [[CARROT_PAGE_TITLEBAR]]";
+				if (ConfigurationManager.AppSettings["CarrotPageTitlePattern"] != null) {
+					try { pattern = ConfigurationManager.AppSettings["CarrotPageTitlePattern"].ToString(); } catch { }
+					if (pattern.Contains("{0}") || pattern.Contains("{1}")) {
+						pattern = "[[CARROT_SITENAME]] - [[CARROT_PAGE_TITLEBAR]]";
+					}
+				}
+				return pattern;
 			}
+		}
+
+
+		public static string CurrentTitlePattern {
+			get {
+				string pattern = "{0} - {1}";
+				SiteData s = CurrentSite;
+				if (!string.IsNullOrEmpty(s.SiteTitlebarPattern)) {
+					pattern = s.SiteTitlebarPattern;
+					pattern = pattern.Replace("[[CARROT_SITENAME]]", "{0}");
+					pattern = pattern.Replace("[[CARROT_PAGE_TITLEBAR]]", "{1}");
+					pattern = pattern.Replace("[[CARROT_PAGE_PAGEHEAD]]", "{2}");
+					pattern = pattern.Replace("[[CARROT_PAGE_NAVMENUTEXT]]", "{3}");
+				}
+
+				return pattern;
+			}
+		}
+
+
+		public static SiteData GetSiteByID(Guid siteID) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_Site s = CompiledQueries.cqGetSiteByID(_db, siteID);
+
+				if (s != null) {
+					return new SiteData(s);
+				} else {
+					return null;
+				}
+			}
+		}
+
+
+
+		public List<ContentCategory> GetCategoryList() {
+
+			List<ContentCategory> _types = (from d in CompiledQueries.cqGetContentCategoryBySiteID(db, this.SiteID)
+											select ContentCategory.CreateCategory(d)).ToList();
+
+			return _types;
+		}
+
+		public List<ContentTag> GetTagList() {
+
+			List<ContentTag> _types = (from d in CompiledQueries.cqGetContentTagBySiteID(db, this.SiteID)
+									   select ContentTag.CreateTag(d)).ToList();
+
+			return _types;
 		}
 
 
@@ -61,9 +126,8 @@ namespace Carrotware.CMS.Core {
 				SiteData currentSite = null;
 				try { currentSite = (SiteData)HttpContext.Current.Cache[ContentKey]; } catch { }
 				if (currentSite == null) {
-					using (SiteData sd = new SiteData()) {
-						currentSite = sd.Get(CurrentSiteID);
-					}
+					currentSite = SiteData.GetSiteByID(CurrentSiteID);
+
 					if (currentSite != null) {
 						HttpContext.Current.Cache.Insert(ContentKey, currentSite, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 					} else {
@@ -113,18 +177,23 @@ namespace Carrotware.CMS.Core {
 			s.MetaDescription = this.MetaDescription.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
 
 			s.SiteName = this.SiteName;
-			s.SiteFolder = this.SiteFolder;
+			s.SiteTagline = this.SiteTagline;
+			s.SiteTitlebarPattern = this.SiteTitlebarPattern;
 			s.MainURL = this.MainURL;
 			s.BlockIndex = this.BlockIndex;
+
+			s.Blog_FolderPath = ContentPageHelper.ScrubSlug(this.Blog_FolderPath);
+			s.Blog_CategoryPath = ContentPageHelper.ScrubSlug(this.Blog_CategoryPath);
+			s.Blog_TagPath = ContentPageHelper.ScrubSlug(this.Blog_TagPath);
+
+			s.Blog_Root_ContentID = this.Blog_Root_ContentID;
+			s.Blog_DatePattern = string.IsNullOrEmpty(this.Blog_DatePattern) ? "yyyy/MM/dd" : this.Blog_DatePattern;
 
 			if (bNew) {
 				db.carrot_Sites.InsertOnSubmit(s);
 			}
 			db.SubmitChanges();
 
-			//if (SiteData.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted) {
-			//    System.Web.HttpRuntime.UnloadAppDomain();
-			//}
 		}
 
 		private void FixMeta() {
@@ -146,12 +215,12 @@ namespace Carrotware.CMS.Core {
 			}
 
 			// by this point, the user is probably an editor, make sure they have rights to this site
-			List<Guid> lstSites = (from l in db.carrot_UserSiteMappings
-								   where l.UserId == userID
-										&& l.SiteID == siteID
-								   select l.SiteID).ToList();
+			IQueryable<Guid> lstSiteIDs = (from l in db.carrot_UserSiteMappings
+										   where l.UserId == userID
+												&& l.SiteID == siteID
+										   select l.SiteID);
 
-			if (lstSites.Count > 0) {
+			if (lstSiteIDs.Count() > 0) {
 				return true;
 			}
 
@@ -204,6 +273,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+
 		private static string _siteQS = null;
 		public static string OldSiteQuerystring {
 			get {
@@ -249,8 +319,27 @@ namespace Carrotware.CMS.Core {
 		public string MetaKeyword { get; set; }
 		public Guid SiteID { get; set; }
 		public string SiteName { get; set; }
-		public string SiteFolder { get; set; }
+		public string SiteTagline { get; set; }
+		public string SiteTitlebarPattern { get; set; }
 
+		public Guid? Blog_Root_ContentID { get; set; }
+		public string Blog_FolderPath { get; set; }
+		public string Blog_CategoryPath { get; set; }
+		public string Blog_TagPath { get; set; }
+		public string Blog_DatePattern { get; set; }
+
+		public string BlogFolderPath {
+			get { return ("/" + this.Blog_FolderPath + "/").Replace("//", "/"); }
+		}
+		public string BlogCategoryPath {
+			get { return ("/" + this.BlogFolderPath + "/" + this.Blog_CategoryPath + "/").Replace("//", "/"); }
+		}
+		public string BlogTagPath {
+			get { return ("/" + this.BlogFolderPath + "/" + this.Blog_TagPath + "/").Replace("//", "/"); }
+		}
+		public string BlogDateFolderPath {
+			get { return ("/" + this.BlogFolderPath + "/date/").Replace("//", "/"); }
+		}
 		#region IDisposable Members
 
 		public void Dispose() {
@@ -421,7 +510,8 @@ namespace Carrotware.CMS.Core {
 				sCurrentFile = sCurrentFile.Substring(0, sCurrentFile.IndexOf("?"));
 			}
 
-			if (sCurrentFile.ToLower() == SiteData.CurrentScriptName.ToLower()) {
+			if (sCurrentFile.ToLower() == SiteData.CurrentScriptName.ToLower()
+				|| sCurrentFile.ToLower() == SiteData.AlternateCurrentScriptName.ToLower()) {
 				return true;
 			}
 			return false;
@@ -434,10 +524,14 @@ namespace Carrotware.CMS.Core {
 			get { return "/Manage/PlainTemplate.aspx".ToLower(); }
 		}
 		public static string VirtualCMSEditPrefix {
-			get { return "/cms/carrotcake/edit/".ToLower(); }
+			get { return ("/carrotcake/edit-" + CurrentSiteID.ToString() + "/").ToLower(); }
 		}
 		public static string PreviewTemplateFilePage {
 			get { return VirtualCMSEditPrefix + "templatepreview/Page.aspx"; }
+		}
+
+		public static string SiteSearchPageName {
+			get { return "/search.aspx".ToLower(); }
 		}
 
 		public static bool IsPageSampler {
@@ -472,6 +566,46 @@ namespace Carrotware.CMS.Core {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
 
+		public static string AlternateCurrentScriptName {
+			get {
+				string sCurrentPage = CurrentScriptName;
+				if (!CurrentScriptName.ToLower().StartsWith("/manage/")) {
+					string sScrubbedURL = CheckForSpecialURL(SiteData.CurrentSite);
+
+					if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+						sCurrentPage = sScrubbedURL;
+					}
+				}
+
+				return sCurrentPage;
+			}
+		}
+
+
+		public static string CheckForSpecialURL(SiteData site) {
+			string sRequestedURL = HttpContext.Current.Request.Path;
+			string sFileRequested = sRequestedURL;
+
+			if (site != null) {
+				if (sFileRequested.ToLower().StartsWith(site.BlogFolderPath.ToLower())) {
+					if (sFileRequested.ToLower().StartsWith(site.BlogCategoryPath.ToLower())
+						|| sFileRequested.ToLower().StartsWith(site.BlogTagPath.ToLower())
+						|| sFileRequested.ToLower().StartsWith(site.BlogDateFolderPath.ToLower())) {
+						if (site.Blog_Root_ContentID.HasValue) {
+							using (SiteNavHelper navHelper = new SiteNavHelper()) {
+								SiteNav blogNavPage = navHelper.GetLatestVersion(site.SiteID, site.Blog_Root_ContentID.Value);
+								if (blogNavPage != null) {
+									sRequestedURL = blogNavPage.FileName;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return sRequestedURL;
+		}
+
 		public static string ReferringPage {
 			get {
 				string r = SiteData.CurrentScriptName;
@@ -482,7 +616,170 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		//==========BEGIN RSS=================
+
+		public enum RSSFeedInclude {
+			Unknown,
+			BlogAndPages,
+			BlogOnly,
+			PageOnly
+		}
+
+
+		public static string RssDocType { get { return "application/rss+xml"; } }
+
+		public string GetRSSFeed(RSSFeedInclude feedData) {
+			SyndicationFeed feed = CreateRecentItemFeed(feedData);
+
+			StringBuilder sb = new StringBuilder();
+			XmlWriterSettings settings = new XmlWriterSettings();
+			settings.Indent = true;
+			settings.Encoding = Encoding.UTF8;
+			settings.CheckCharacters = true;
+
+			using (XmlWriter xw = XmlWriter.Create(sb, settings)) {
+				Rss20FeedFormatter rssFormatter = new Rss20FeedFormatter(feed);
+				rssFormatter.WriteTo(xw);
+			}
+
+			string xml = sb.ToString();
+			xml = xml.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"", "<?xml version=\"1.0\" encoding=\"utf-8\"");
+
+			return xml;
+		}
+
+		private SyndicationFeed CreateRecentItemFeed(RSSFeedInclude feedData) {
+			List<SyndicationItem> syndicationItems = GetRecentPagesOrPosts(feedData);
+
+			return new SyndicationFeed(syndicationItems) {
+				Title = new TextSyndicationContent(this.SiteName),
+				Description = new TextSyndicationContent(this.SiteTagline)
+			};
+		}
+
+		private List<SyndicationItem> GetRecentPagesOrPosts(RSSFeedInclude feedData) {
+
+			List<SyndicationItem> syndRSS = new List<SyndicationItem>();
+			List<SiteNav> lst = new List<SiteNav>();
+
+			ContentPageType PageType = new ContentPageType();
+
+			using (SiteNavHelper navHelper = new SiteNavHelper()) {
+				if (feedData == RSSFeedInclude.PageOnly || feedData == RSSFeedInclude.BlogAndPages) {
+					List<SiteNav> lst1 = navHelper.GetLatest(this.SiteID, 10, true);
+					lst = lst.Union(lst1).ToList();
+				}
+				if (feedData == RSSFeedInclude.BlogOnly || feedData == RSSFeedInclude.BlogAndPages) {
+					List<SiteNav> lst1 = navHelper.GetLatestPosts(this.SiteID, 15, true);
+					lst = lst.Union(lst1).ToList();
+				}
+			}
+
+			foreach (SiteNav sn in lst) {
+				SyndicationItem si = new SyndicationItem();
+
+				string sPageURI = (this.MainURL + "/" + sn.FileName).Replace("://", "¤¤¤").Replace("//", "/").Replace("//", "/").Replace("¤¤¤", "://");
+				if (!sPageURI.ToLower().StartsWith("http")) {
+					sPageURI = "http://" + sPageURI;
+				}
+				Uri PageURI = new Uri(sPageURI);
+
+				si.Content = new TextSyndicationContent(sn.PageTextPlainSummary);
+				si.Title = new TextSyndicationContent(sn.NavMenuText);
+				si.Links.Add(SyndicationLink.CreateSelfLink(PageURI));
+				si.AddPermalink(PageURI);
+
+				si.LastUpdatedTime = sn.EditDate;
+				si.PublishDate = sn.CreateDate;
+
+				syndRSS.Add(si);
+			}
+
+			return syndRSS.OrderByDescending(p => p.PublishDate).ToList();
+		}
+
+		//==========END RSS=================
+
 	}
 
 
+	//============================================
+
+	public class BlogDatePathParser {
+		string _FileName = String.Empty;
+		SiteData _site = new SiteData();
+
+		public DateTime dateBegin = DateTime.MinValue;
+		public DateTime dateEnd = DateTime.MaxValue;
+
+		public int? Month { get; set; }
+		public int? Day { get; set; }
+		public int? Year { get; set; }
+
+
+		public BlogDatePathParser() {
+			_FileName = SiteData.CurrentScriptName;
+			_site = SiteData.CurrentSite;
+
+			ParseString();
+		}
+
+		public BlogDatePathParser(SiteData site) {
+			_FileName = SiteData.CurrentScriptName;
+			_site = site;
+
+			ParseString();
+		}
+
+		public BlogDatePathParser(string FolderPath) {
+			_FileName = FolderPath;
+			_site = SiteData.CurrentSite;
+
+			ParseString();
+		}
+
+		public BlogDatePathParser(SiteData site, string FolderPath) {
+			_FileName = FolderPath;
+			_site = site;
+
+			ParseString();
+		}
+
+		private void ParseString() {
+			_FileName = _FileName.Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
+			string sFile = _FileName.ToLower().Replace(_site.BlogDateFolderPath, "");
+
+			if (sFile.IndexOf(SiteData.SiteSearchPageName) > 0) {
+				sFile = sFile.ToLower().Replace(SiteData.SiteSearchPageName, "");
+			}
+
+			string[] parms = sFile.Split('/');
+			if (parms.Length > 2) {
+				Day = int.Parse(parms[2]);
+			}
+			if (parms.Length > 1) {
+				Month = int.Parse(parms[1]);
+			}
+			if (parms.Length > 0) {
+				Year = int.Parse(parms[0]);
+			}
+
+			if (Month == null && Day == null) {
+				dateBegin = new DateTime(Convert.ToInt32(this.Year), 1, 1);
+				dateEnd = dateBegin.AddYears(1).AddMilliseconds(-1);
+			}
+			if (Month != null && Day == null) {
+				dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), 1);
+				dateEnd = dateBegin.AddMonths(1).AddMilliseconds(-1);
+			}
+			if (Month != null && Day != null) {
+				dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), Convert.ToInt32(this.Day));
+				dateEnd = dateBegin.AddDays(1).AddMilliseconds(-1);
+			}
+
+		}
+
+
+
+	}
 }

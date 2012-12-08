@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.PageHistory" %>
+	Inherits="Carrotware.CMS.UI.Admin.Manage.PageHistory" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

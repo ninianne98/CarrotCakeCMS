@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Create First Admin" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="CreateFirstAdmin.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.CreateFirstAdmin" %>
+	Inherits="Carrotware.CMS.UI.Admin.Manage.CreateFirstAdmin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<style type="text/css">

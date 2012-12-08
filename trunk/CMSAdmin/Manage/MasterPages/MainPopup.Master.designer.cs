@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Carrotware.CMS.UI.Admin.MasterPages {
+namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
     
     
     public partial class MainPopup {

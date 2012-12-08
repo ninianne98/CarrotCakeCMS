@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.UI.Admin.Manage {
     
     
     public partial class ModulePopup {
@@ -36,9 +36,9 @@ namespace Carrotware.CMS.UI.Admin {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.MasterPages.MainPopup Master {
+        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.MainPopup Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.MasterPages.MainPopup)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.MainPopup)(base.Master));
             }
         }
     }

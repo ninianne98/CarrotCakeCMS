@@ -69,6 +69,7 @@
 		getCrumbs();
 
 		setTimeout("hideMnu();", 250);
+		setTimeout("hideMnu();", 500);
 
 		$('#' + menuOuter).bind("mouseenter", function (e) {
 			showMnu();

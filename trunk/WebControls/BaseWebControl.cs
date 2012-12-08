@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -34,16 +35,6 @@ namespace Carrotware.Web.UI.Controls {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
 
-		public string Text {
-			get {
-				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
-			}
-
-			set {
-				ViewState["Text"] = value;
-			}
-		}
 
 		protected override void Render(HtmlTextWriter writer) {
 			RenderContents(writer);

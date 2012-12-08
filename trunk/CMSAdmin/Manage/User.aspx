@@ -1,5 +1,4 @@
-﻿<%@ Page Title="User" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="User.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.User" %>
+﻿<%@ Page Title="User" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="User.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.User" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -16,9 +15,9 @@
 			</td>
 			<td>
 				<asp:Label ID="lblUserName" runat="server" Columns="60" MaxLength="100"></asp:Label>
-				<asp:TextBox Width="140px" ID="UserName" runat="server" MaxLength="50" />
-				<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="!" ToolTip="Username is required."
-					ValidationGroup="createWizard" Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="140px" ID="UserName" runat="server" MaxLength="50" />
+				<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="!" ToolTip="Username is required." ValidationGroup="createWizard"
+					Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
 			</td>
 		</tr>
 		<tr>
@@ -27,9 +26,33 @@
 					<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />&nbsp;&nbsp;</b>
 			</td>
 			<td>
-				<asp:TextBox Width="200px" ID="Email" runat="server" MaxLength="100" />
+				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="200px" ID="Email" runat="server" MaxLength="100" />
 				<asp:RequiredFieldValidator ID="EmailRequired" runat="server" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required." ValidationGroup="createWizard"
 					Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+			</td>
+		</tr>
+		<tr>
+			<td class="tablecontents">
+				<b class="caption">Nickname</b>
+			</td>
+			<td class="tablecontents">
+				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtNickName" runat="server" />
+			</td>
+		</tr>
+		<tr>
+			<td class="tablecontents">
+				<b class="caption">First Name</b>
+			</td>
+			<td class="tablecontents">
+				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtFirstName" runat="server" />
+			</td>
+		</tr>
+		<tr>
+			<td class="tablecontents">
+				<b class="caption">Last Name</b>
+			</td>
+			<td class="tablecontents">
+				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtLastName" runat="server" />
 			</td>
 		</tr>
 		<tr>
