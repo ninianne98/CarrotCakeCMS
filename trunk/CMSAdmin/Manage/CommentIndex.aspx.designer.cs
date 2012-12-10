@@ -40,13 +40,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         protected global::System.Web.UI.WebControls.HiddenField hdnPageNbr;
         
         /// <summary>
-        /// rpPagedSummary control.
+        /// rpDataPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpPagedSummary;
+        protected global::System.Web.UI.WebControls.Repeater rpDataPager;
         
         /// <summary>
         /// Master property.

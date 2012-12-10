@@ -14,8 +14,8 @@ namespace Carrotware.CMS.Core {
 		bool PageActive { get; set; }
 		string PageHead { get; set; }
 		string PageText { get; set; }
+		string PageTextPlainSummaryMedium { get; }
 		string PageTextPlainSummary { get; }
-		//string PageTextSummary { get; }
 		Guid? Parent_ContentID { get; set; }
 		Guid Root_ContentID { get; set; }
 		Guid SiteID { get; set; }

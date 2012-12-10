@@ -437,6 +437,7 @@ namespace Carrotware.CMS.Core {
 					_p1.Add(new CMSPlugin { Caption = "      Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "      Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "     Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { Caption = "     Paged Comments &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "   Meta List - Site &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "   Meta List - Post &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = " Comment Form &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });

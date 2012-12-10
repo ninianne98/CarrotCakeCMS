@@ -48,13 +48,12 @@ namespace Carrotware.CMS.UI.Controls {
 				string sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget\" id=\"cmsContentEditLink\" href=\"javascript:cmsManageWidgetList('" + this.ID + "')\">\r\n"
 							+ " Widgets </a></li> \r\n";
 
-
 				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
 
 				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
 							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit + " </ul> </li> </ul> </div> </div>";
 
-				string sPrefix = "<div id=\"cms_" + this.ClientID + "\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
+				string sPrefix = "<div style=\"clear: both;\"></div>\r\n<div id=\"cms_" + this.ClientID + "\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
 						"<div class=\"cmsWidgetControlTitle\"><div class=\"cmsWidgetControlIDZone\">\r\n" +
 						"<div id=\"cmsWidgetContainerName\">" + this.ID + "</div> " + sMenu + "</div></div>\r\n" +
 						"<div class=\"cmsTargetArea cmsTargetMove cmsWidgetControl\" id=\"cms_" + this.ClientID + "\" > \r\n";

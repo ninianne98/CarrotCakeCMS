@@ -62,6 +62,9 @@
     <Compile Include="ContentRichText.cs" />
     <Compile Include="BreadCrumbNavigation.cs" />
     <Compile Include="IFrameWidgetWrapper.cs" />
+    <Compile Include="PagedComments.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PostMetaWordList.cs" />
     <Compile Include="RSSFeed.cs">
       <SubType>Code</SubType>

@@ -238,6 +238,38 @@ namespace Carrotware.CMS.Core {
 			return newFilePath;
 		}
 
+		public string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
+			Guid siteID = currentSite.SiteID;
+
+			string sTitle = String.Empty;
+
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+				vw_carrot_CategoryURL query = CompiledQueries.cqGetCategoryByURL(db, siteID, sFilterPath);
+				sTitle = query.CategoryText;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+				vw_carrot_TagURL query = CompiledQueries.cqGetTagByURL(db, siteID, sFilterPath);
+				sTitle = query.TagText;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
+				TimeSpan ts = p.dateEnd - p.dateBegin;
+
+				int daysDelta = ts.Days;
+				if (daysDelta < 370 && daysDelta > 90) {
+					sTitle = "Year " + p.dateBegin.ToString("yyyy");
+				}
+				if (daysDelta < 36 && daysDelta > 3) {
+					sTitle = p.dateBegin.ToString("MMMM yyyy");
+				}
+				if (daysDelta < 5) {
+					sTitle = p.dateBegin.ToString("MMMM dd, yyyy");
+				}
+			}
+
+			return sTitle;
+		}
+
 		public List<ContentPage> GetAllLatestContentList(Guid siteID) {
 			List<ContentPage> lstContent = CannedQueries.GetAllContentListUnordered(db, siteID).Select(ct => CreateContentPage(ct)).ToList();
 

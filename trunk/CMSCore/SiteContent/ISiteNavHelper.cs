@@ -23,8 +23,13 @@ namespace Carrotware.CMS.Core {
 		List<SiteNav> GetChildNavigation(Guid siteID, string sParentPage, bool bActiveOnly);
 
 		int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly);
-
 		List<SiteNav> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
+
+		int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly);
+		List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
+
+		string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath);
+
 		List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly);
 		List<SiteNav> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly);
 

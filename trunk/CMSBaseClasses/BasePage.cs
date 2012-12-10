@@ -54,11 +54,13 @@ namespace Carrotware.CMS.UI.Base {
 
 		public bool IsPageRefreshJavaScript {
 			get {
-				string arg = Request["__EVENTARGUMENT"].ToString();
-				string tgt = Request["__EVENTTARGET"].ToString();
-				if (!string.IsNullOrEmpty(arg) && !string.IsNullOrEmpty(tgt)) {
-					if (tgt.ToLower() == "pagerefresh" && arg.ToLower() == "javascript") {
-						return true;
+				if (Request.Form["__EVENTARGUMENT"] != null) {
+					string arg = Request["__EVENTARGUMENT"].ToString();
+					string tgt = Request["__EVENTTARGET"].ToString();
+					if (!string.IsNullOrEmpty(arg) && !string.IsNullOrEmpty(tgt)) {
+						if (tgt.ToLower() == "pagerefresh" && arg.ToLower() == "javascript") {
+							return true;
+						}
 					}
 				}
 				return false;
