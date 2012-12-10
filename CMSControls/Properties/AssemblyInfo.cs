@@ -40,6 +40,7 @@ using System.Web.UI;
 [assembly: TagPrefix("BreadCrumbNavigation", "carrot")]
 [assembly: TagPrefix("SecondLevelNavigation", "carrot")]
 [assembly: TagPrefix("PagedDataSummary", "carrot")]
+[assembly: TagPrefix("PagedComments", "carrot")]
 [assembly: TagPrefix("SiteMetaWordList", "carrot")]
 [assembly: TagPrefix("PostMetaWordList", "carrot")]
 
@@ -47,6 +48,7 @@ using System.Web.UI;
 [assembly: TagPrefix("TwoLevelNavigationTemplate", "carrot")]
 
 [assembly: TagPrefix("ListItemNavText", "carrot")]
+[assembly: TagPrefix("ListItemCommentText", "carrot")]
 
 [assembly: TagPrefix("NavLinkForTemplate", "carrot")]
 [assembly: TagPrefix("ListItemWrapper", "carrot")]

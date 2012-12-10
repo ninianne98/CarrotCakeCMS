@@ -208,8 +208,30 @@ namespace Carrotware.CMS.Core {
 		public int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly) {
 			return 10;
 		}
+		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly) {
+			return 10;
+		}
+
+		public string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
+			string sTitle = String.Empty;
+
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+				sTitle = "Category 1";
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+				sTitle = "Tag 1";
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+				sTitle = DateTime.Now.ToString("MMMM yyyy");
+			}
+
+			return sTitle;
+		}
 
 		public List<SiteNav> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return SiteNavHelper.GetSamplerFakeNav(pageSize);
+		}
+		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return SiteNavHelper.GetSamplerFakeNav(pageSize);
 		}
 

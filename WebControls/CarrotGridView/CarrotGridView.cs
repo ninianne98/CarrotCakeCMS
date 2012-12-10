@@ -74,9 +74,17 @@ namespace Carrotware.Web.UI.Controls {
 				string arg = request.Form["__EVENTARGUMENT"].ToString();
 				string tgt = request.Form["__EVENTTARGET"].ToString();
 
-				if (tgt.Contains("lnkHead")
-					&& tgt.Contains(this.ClientID.Replace("_", "$"))
-					&& tgt.Contains("$" + this.ID + "$")) {
+				string sParm = this.ClientID.Replace(this.ID, "").Replace("_", "$");
+				if (string.IsNullOrEmpty(sParm)) {
+					sParm = this.ID + "$";
+				} else {
+					sParm = (sParm + "$" + this.ID).Replace("$$", "$");
+				}
+
+				if (tgt.StartsWith(sParm)
+					&& tgt.Contains("$lnkHead")
+					&& tgt.Contains(this.ID + "$")) {
+
 					string[] btn = this.LinkButtonCommands.Split(';');
 					string[] parms = tgt.Split('$');
 					string sKey = parms[parms.Length - 1];

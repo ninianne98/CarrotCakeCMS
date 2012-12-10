@@ -474,18 +474,18 @@ namespace Carrotware.CMS.UI.Controls {
 			TitleBar,
 			NavMenuText,
 			PageHead,
+			PageTextPlainSummaryMedium,
 			PageTextPlainSummary,
 			NavOrder,
 			EditUserId,
 			EditDate,
-			TemplateFile,
-			UserName,
-			EmailAddress,
-			UserNickName,
-			FirstName,
-			LastName,
-			FullName_FirstLast,
-			FullName_LastFirst,
+			Author_UserName,
+			Author_EmailAddress,
+			Author_UserNickName,
+			Author_FirstName,
+			Author_LastName,
+			Author_FullName_FirstLast,
+			Author_FullName_LastFirst,
 		}
 
 		[Bindable(true)]
@@ -554,7 +554,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public NavTextFieldName DataField {
 			get {
 				string s = (string)ViewState["DataField"];
-				NavTextFieldName c = (NavTextFieldName)Enum.Parse(typeof(NavTextFieldName), "NavMenuText", true);
+				NavTextFieldName c = NavTextFieldName.NavMenuText;
 				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (NavTextFieldName)Enum.Parse(typeof(NavTextFieldName), s, true);
@@ -572,8 +572,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			output.Write(this.Text);
 
-			//base.Render(output);
-
 		}
 
 
@@ -582,19 +580,14 @@ namespace Carrotware.CMS.UI.Controls {
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 			string sFieldValue = string.Empty;
 
-			if (NavTextFieldName.UserName == DataField ||
-					NavTextFieldName.EmailAddress == DataField ||
-					NavTextFieldName.UserNickName == DataField ||
-					NavTextFieldName.FirstName == DataField ||
-					NavTextFieldName.LastName == DataField ||
-					NavTextFieldName.FullName_FirstLast == DataField ||
-					NavTextFieldName.FullName_LastFirst == DataField) {
+			if (DataField.ToString().StartsWith("Author_")) {
+				string sField = DataField.ToString().Replace("Author_", "");
 
 				string sValue = "";
 				using (SiteNav sn = (SiteNav)DataBinder.GetDataItem(container)) {
 					if (sn != null) {
 						using (ExtendedUserData c = sn.GetUserInfo()) {
-							object obj = ReflectionUtilities.GetPropertyValue(c, DataField.ToString());
+							object obj = ReflectionUtilities.GetPropertyValue(c, sField);
 							if (obj != null) {
 								sValue = obj.ToString();
 							}
@@ -775,26 +768,31 @@ namespace Carrotware.CMS.UI.Controls {
 			ph.Controls.Add(new Label { ID = "ContentCommentFormMsg", Text = " " });
 			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
 
-			ph.Controls.Add(new Literal { Text = "<div>\r\n " });
-			ph.Controls.Add(new Literal { Text = " Name: " });
-			ph.Controls.Add(new TextBox { ID = "CommenterName", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
+			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form-outer\">\r\n" });
+
+			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\"> Name: " });
 			ph.Controls.Add(new RequiredFieldValidator {
 				ID = "CommenterNameValid",
 				ControlToValidate = "CommenterName",
 				ErrorMessage = "*",
 				ValidationGroup = sVG
 			});
+			ph.Controls.Add(new Literal { Text = " </label> " });
+			ph.Controls.Add(new TextBox { ID = "CommenterName", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
+			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
 
-			ph.Controls.Add(new Literal { Text = "<br />\r\n E-mail: " });
-			ph.Controls.Add(new TextBox { ID = "CommenterEmail", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
+			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\">  E-mail: " });
 			ph.Controls.Add(new RequiredFieldValidator {
 				ID = "CommenterEmailValid",
 				ControlToValidate = "CommenterEmail",
 				ErrorMessage = "*",
 				ValidationGroup = sVG
 			});
+			ph.Controls.Add(new Literal { Text = " </label> " });
+			ph.Controls.Add(new TextBox { ID = "CommenterEmail", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
+			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
 
-			ph.Controls.Add(new Literal { Text = "<br />\r\n Comment:  " });
+			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\"> Comment:  " });
 			ph.Controls.Add(new CustomValidator {
 				ID = "VisitorCommentsValid",
 				ControlToValidate = "VisitorComments",
@@ -802,11 +800,11 @@ namespace Carrotware.CMS.UI.Controls {
 				ClientValidationFunction = sScriptPrefix + "_ValidateComments",
 				ValidationGroup = sVG
 			});
-
-			ph.Controls.Add(new Literal { Text = "\r\n<br />\r\n" });
+			ph.Controls.Add(new Literal { Text = " </label> " });
 			ph.Controls.Add(new TextBox { ID = "VisitorComments", Columns = 40, MaxLength = 1024, Rows = 8, TextMode = TextBoxMode.MultiLine });
+			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
 
-			ph.Controls.Add(new Literal { Text = "<br />\r\n " });
+			ph.Controls.Add(new Literal { Text = "<div style=\"clear: both;\"></div>\r\n<div class=\"comment-form-captcha\"> " });
 			ph.Controls.Add(new RequiredFieldValidator {
 				ID = "ContentCommentCaptchaValid",
 				ControlToValidate = "ContentCommentCaptcha",
@@ -814,11 +812,12 @@ namespace Carrotware.CMS.UI.Controls {
 				ValidationGroup = sVG
 			});
 			ph.Controls.Add(new Captcha { ID = "ContentCommentCaptcha", ValidationGroup = sVG });
+			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
 
-
-			ph.Controls.Add(new Literal { Text = "\r\n<br />\r\n" });
+			ph.Controls.Add(new Literal { Text = "<div style=\"clear: both;\"></div><br />\r\n<div class=\"comment-form-button\">" });
 			ph.Controls.Add(new Button { ID = "SubmitCommentButton", Text = "Submit Comment", ValidationGroup = sVG });
-			ph.Controls.Add(new Literal { Text = "\r\n<br />\r\n" });
+			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
+
 			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
 
 			container.Controls.Add(ph);
@@ -922,6 +921,154 @@ namespace Carrotware.CMS.UI.Controls {
 			litContent.Text = String.Format(sTxt0, sTxt1, sTxt2, sTxt3, sTxt4);
 		}
 	}
+
+	public class DefaultCommentTemplate : ITemplate {
+
+		public DefaultCommentTemplate() {
+
+		}
+
+		public void InstantiateIn(Control container) {
+
+			Literal litContent0 = new Literal();
+			litContent0.Text = "\r\n<div>\r\n <p><b>{0} </b> <br>\r\n Commented On: {1} <br />\r\n{2} <br />\r\n </p> </div> \r\n";
+			litContent0.DataBinding += new EventHandler(litContent_DataBinding);
+
+			container.Controls.Add(litContent0);
+		}
+
+		private void litContent_DataBinding(object sender, EventArgs e) {
+			Literal litContent = (Literal)sender;
+			RepeaterItem container = (RepeaterItem)litContent.NamingContainer;
+			string sTxt0 = litContent.Text;
+
+			bool IsApproved = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.IsApproved").ToString());
+
+			string sTxt1 = DataBinder.Eval(container, "DataItem.CommenterName").ToString();
+			string sTxt2 = DataBinder.Eval(container, "DataItem.CreateDate").ToString();
+			string sTxt3 = DataBinder.Eval(container, "DataItem.PostCommentText").ToString();
+
+			if (!IsApproved) {
+				sTxt1 = String.Format("{0}{0} {1}", BaseServerControl.InactivePagePrefix, sTxt1);
+			}
+
+			litContent.Text = String.Format(sTxt0, sTxt1, sTxt2, sTxt3);
+		}
+	}
+
+
+
+
+	//========================================
+	[DefaultProperty("Text")]
+	[ToolboxData("<{0}:ListItemCommentText runat=server></{0}:ListItemCommentText>")]
+	public class ListItemCommentText : Control, ITextControl {
+
+		public enum CommentTextFieldName {
+			ContentCommentID,
+			Root_ContentID,
+			CreateDate,
+			CommenterIP,
+			CommenterName,
+			CommenterEmail,
+			PostCommentText,
+			IsApproved,
+			IsSpam
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public Guid ContentCommentID {
+			get {
+				Guid s = Guid.Empty;
+				try { s = new Guid(ViewState["ContentCommentID"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["ContentCommentID"] = value;
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string Text {
+			get {
+				string s = (string)ViewState["Text"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["Text"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("{0}")]
+		[Localizable(true)]
+		public string FieldFormat {
+			get {
+				String s = ViewState["FieldFormat"] as String;
+				return ((s == null) ? "{0}" : s);
+			}
+			set {
+				ViewState["FieldFormat"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("NavMenuText")]
+		[Localizable(true)]
+		public CommentTextFieldName DataField {
+			get {
+				string s = (string)ViewState["DataField"];
+				CommentTextFieldName c = CommentTextFieldName.CommenterName;
+				if (!string.IsNullOrEmpty(s)) {
+					try {
+						c = (CommentTextFieldName)Enum.Parse(typeof(CommentTextFieldName), s, true);
+					} catch (Exception ex) { }
+				}
+				return c;
+			}
+			set {
+				ViewState["DataField"] = value.ToString();
+			}
+		}
+
+
+		protected override void Render(HtmlTextWriter output) {
+
+			output.Write(this.Text);
+
+		}
+
+
+		protected override void OnDataBinding(EventArgs e) {
+
+			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+
+			bool IsApproved = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.IsApproved").ToString());
+			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
+
+			this.ContentCommentID = pageID;
+
+			string sTxt1 = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
+			if (!IsApproved) {
+				sTxt1 = String.Format("{0} {1}", BaseServerControl.InactivePagePrefix, sTxt1);
+			}
+			this.Text = sTxt1;
+
+			base.OnDataBinding(e);
+		}
+
+
+	}
+
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:NavPageNumberDisplay runat=server></{0}:NavPageNumberDisplay>")]

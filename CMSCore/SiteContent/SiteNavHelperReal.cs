@@ -495,6 +495,38 @@ namespace Carrotware.CMS.Core {
 			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
 		}
 
+		public string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
+			Guid siteID = currentSite.SiteID;
+
+			string sTitle = String.Empty;
+
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+				vw_carrot_CategoryURL query = CompiledQueries.cqGetCategoryByURL(db, siteID, sFilterPath);
+				sTitle = query.CategoryText;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+				vw_carrot_TagURL query = CompiledQueries.cqGetTagByURL(db, siteID, sFilterPath);
+				sTitle = query.TagText;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
+				TimeSpan ts = p.dateEnd - p.dateBegin;
+
+				int daysDelta = ts.Days;
+				if (daysDelta > 90) {
+					sTitle = "Year " + p.dateBegin.ToString("yyyy");
+				}
+				if (daysDelta < 36) {
+					sTitle = p.dateBegin.ToString("MMMM yyyy");
+				}
+				if (daysDelta < 5) {
+					sTitle = p.dateBegin.ToString("MMMM dd, yyyy");
+				}
+			}
+
+			return sTitle;
+		}
+
 		public int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly) {
 
 			IQueryable<vw_carrot_Content> query1 = null;
@@ -521,6 +553,14 @@ namespace Carrotware.CMS.Core {
 			return query1.Count();
 		}
 
+		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly) {
+
+			Guid siteID = currentSite.SiteID;
+
+			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetContentByCategoryIDs(db, siteID, bActiveOnly, lstCategories);
+
+			return query1.Count();
+		}
 
 		public List<SiteNav> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly,
 			int pageSize, int pageNumber, string sortField, string sortDir) {
@@ -549,6 +589,13 @@ namespace Carrotware.CMS.Core {
 			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
 		}
 
+		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			Guid siteID = currentSite.SiteID;
+
+			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetContentByCategoryIDs(db, siteID, bActiveOnly, lstCategories);
+
+			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
+		}
 
 		public List<SiteNav> PerformDataPagingQueryableContent(Guid siteID, bool bActiveOnly,
 				int pageSize, int pageNumber, string sortField, string sortDir, IQueryable<vw_carrot_Content> QueryInput) {

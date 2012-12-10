@@ -78,8 +78,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter w) {
 			if (IsAdminMode) {
 
-
-				string sPrefix = "<div id=\"cms_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
+				string sPrefix = "<div style=\"clear: both;\"></div>\r\n<div id=\"cms_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
 							" <div class=\"cmsContentContainerTitle\">\r\n" +
 							"<a title=\"Edit " + this.ClientID + "\" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"cmsContentContainerInnerTitle\" " +
 							" href=\"javascript:cmsShowEditContentForm('" + ZoneChar + "','html'); \"> " +
@@ -87,11 +86,10 @@ namespace Carrotware.CMS.UI.Controls {
 							"<div class=\"cmsWidgetControl\" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n" +
 							"<!-- <#|BEGIN_CARROT_CMS|#> -->\r\n";
 
-				//w.Write("<div id=\"" + this.ClientID + "\" style=\"width:250px; background:#DAE816; color:#CF26DB; \"><div style=\"background:#CF26DB; color:#DAE816; \">title</div><br />\r\n"); 
 				w.Write(sPrefix);
 
 			} else {
-				w.Write("\r\n");
+				w.WriteLine();
 			}
 
 			base.Render(w);
@@ -99,7 +97,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (IsAdminMode) {
 				w.Write("\r\n<!-- <#|END_CARROT_CMS|#> -->\r\n</div>\r\n<div style=\"clear: both; \"></div>\r\n</div></div>\r\n");
 			} else {
-				w.Write("\r\n");
+				w.WriteLine();
 			}
 		}
 

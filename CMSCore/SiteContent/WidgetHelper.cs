@@ -66,25 +66,25 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public void UpdateContentWidgets(Guid rootContentID) {
-			IQueryable<carrot_Widget> ww = CompiledQueries.cqGetOldEditContentWidgets(db, rootContentID);
+		//public void UpdateContentWidgets(Guid rootContentID) {
+		//    IQueryable<carrot_Widget> ww = CompiledQueries.cqGetOldEditContentWidgets(db, rootContentID);
 
-			bool bEdit = false;
+		//    bool bEdit = false;
 
-			foreach (var w in ww) {
-				bEdit = true;
-				if (w.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")) {
-					w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls";
-				}
-				if (w.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx")) {
-					w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls";
-				}
-			}
+		//    foreach (var w in ww) {
+		//        bEdit = true;
+		//        if (w.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")) {
+		//            w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls";
+		//        }
+		//        if (w.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx")) {
+		//            w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls";
+		//        }
+		//    }
 
-			if (bEdit) {
-				db.SubmitChanges();
-			}
-		}
+		//    if (bEdit) {
+		//        db.SubmitChanges();
+		//    }
+		//}
 
 
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {

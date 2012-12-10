@@ -337,7 +337,7 @@ namespace Carrotware.CMS.Core {
 				_contentCategories = value;
 			}
 		}
-		
+
 		ExtendedUserData _user = null;
 		public ExtendedUserData GetUserInfo() {
 			if (_user == null && this.EditUserId.HasValue) {
@@ -364,34 +364,34 @@ namespace Carrotware.CMS.Core {
 			return ContentID.GetHashCode() ^ SiteID.GetHashCode() ^ Root_ContentID.GetHashCode() ^ FileName.GetHashCode();
 		}
 
-		//public string PageTextSummary {
-		//    get {
-		//        string txt = !string.IsNullOrEmpty(PageText) ? PageText.Replace("   ", " ").Replace("  ", " ") : "";
 
-		//        if (txt.Length > 600) {
-		//            return txt.Substring(0, 512) + "[.....]";
-		//        } else {
-		//            return txt;
-		//        }
-		//    }
-		//}
-
-		public string PageTextPlainSummary {
+		public string PageTextPlainSummaryMedium {
 			get {
 				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
 				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("&nbsp;", " ").Replace('\u00A0', ' ');
 
 				txt = Regex.Replace(txt, @"<!--(\n|.)*-->", " ");
+				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ").Replace("  ", " ");
+
 				if (txt.Length > 4096) {
 					txt = txt.Substring(0, 4096);
 				}
 
-				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
+				if (txt.Length > 800) {
+					return txt.Substring(0, 768).Trim() + "[.....]";
+				} else {
+					return txt;
+				}
+			}
+		}
 
-				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ").Replace("  ", " ");
+		public string PageTextPlainSummary {
+			get {
+				string txt = PageTextPlainSummaryMedium;
 
-				if (txt.Length > 600) {
-					return txt.Substring(0, 512) + "[.....]";
+				if (txt.Length > 300) {
+					return txt.Substring(0, 256).Trim() + "[.....]";
 				} else {
 					return txt;
 				}

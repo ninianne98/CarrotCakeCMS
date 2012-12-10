@@ -21,8 +21,8 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[ToolboxData("<{0}:PagedDataSummary runat=server></{0}:PagedDataSummary>")]
-	public class PagedDataSummary : BaseServerControl, INamingContainer {
+	[ToolboxData("<{0}:PagedComments runat=server></{0}:PagedComments>")]
+	public class PagedComments : BaseServerControl, INamingContainer {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -95,74 +95,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string DelimetedSelectedCategoriesString {
-			get {
-				String s = (String)ViewState["DelimetedCategoryString"];
-				return ((s == null) ? "" : s);
-			}
-			set {
-				ViewState["DelimetedCategoryString"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
-		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
-		public SummaryContentType ContentType {
-			get {
-				String s = (String)ViewState["ContentType"];
-				SummaryContentType c = SummaryContentType.Blog;
-				if (!string.IsNullOrEmpty(s)) {
-					c = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), s, true);
-				}
-				return c;
-			}
-
-			set {
-				ViewState["ContentType"] = value.ToString();
-			}
-		}
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstContentType {
-			get {
-				Dictionary<string, string> _dict = new Dictionary<string, string>();
-				_dict.Add("Blog", "Blog");
-				_dict.Add("ContentPage", "Content Page");
-				_dict.Add("SpecifiedCategories", "Specified Categories");
-				return _dict;
-			}
-		}
-
-		public enum SummaryContentType {
-			Blog,
-			ContentPage,
-			SpecifiedCategories,
-		}
-
-
-		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstCategories")]
-		public List<Guid> SelectedCategories { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstCategories {
-			get {
-
-				Dictionary<string, string> _dict = (from c in SiteData.CurrentSite.GetCategoryList()
-													orderby c.CategoryText
-													where c.SiteID == SiteData.CurrentSiteID
-													select c).ToList().ToDictionary(k => k.ContentCategoryID.ToString(), v => v.CategoryText + " (" + v.CategorySlug + ")");
-
-				return _dict;
-			}
-		}
-
 
 
 		[Bindable(true)]
@@ -228,19 +160,19 @@ namespace Carrotware.CMS.UI.Controls {
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate SummaryHeaderTemplate { get; set; }
+		public virtual ITemplate CommentHeaderTemplate { get; set; }
 
 		[DefaultValue("")]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate SummaryTemplate { get; set; }
+		public virtual ITemplate CommentTemplate { get; set; }
 
 		[DefaultValue("")]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate SummaryFooterTemplate { get; set; }
+		public virtual ITemplate CommentFooterTemplate { get; set; }
 
 
 
@@ -263,8 +195,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public virtual ITemplate PagerFooterTemplate { get; set; }
 
 
-		private Repeater rpDetails = new Repeater();
-		private Repeater rpPagedSummary = new Repeater();
+		private Repeater rpComments = new Repeater();
+		private Repeater rpPagedComment = new Repeater();
 		private HiddenField hdnPageNbr = new HiddenField();
 
 		protected override void OnInit(EventArgs e) {
@@ -274,8 +206,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnInit(e);
 
-			if (SummaryTemplate == null) {
-				SummaryTemplate = new DefaultSummaryTemplate();
+			if (CommentTemplate == null) {
+				CommentTemplate = new DefaultCommentTemplate();
 			}
 			if (PagerTemplate == null) {
 				PagerTemplate = new DefaultPagerTemplate();
@@ -289,18 +221,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 			HttpContext context = HttpContext.Current;
 
-			rpDetails.EnableViewState = this.EnableViewState;
-			rpPagedSummary.EnableViewState = true;
+			rpComments.EnableViewState = this.EnableViewState;
+			rpPagedComment.EnableViewState = true;
 
-			rpDetails.ID = "rpDetails";
-			rpDetails.ItemTemplate = SummaryTemplate;
-			rpDetails.HeaderTemplate = SummaryHeaderTemplate;
-			rpDetails.FooterTemplate = SummaryFooterTemplate;
+			rpComments.ID = "rpComments";
+			rpComments.ItemTemplate = CommentTemplate;
+			rpComments.HeaderTemplate = CommentHeaderTemplate;
+			rpComments.FooterTemplate = CommentFooterTemplate;
 
-			rpPagedSummary.ID = "rpPagedSummary";
-			rpPagedSummary.ItemTemplate = PagerTemplate;
-			rpPagedSummary.HeaderTemplate = PagerHeaderTemplate;
-			rpPagedSummary.FooterTemplate = PagerFooterTemplate;
+			rpPagedComment.ID = "rpPagedComment";
+			rpPagedComment.ItemTemplate = PagerTemplate;
+			rpPagedComment.HeaderTemplate = PagerHeaderTemplate;
+			rpPagedComment.FooterTemplate = PagerFooterTemplate;
 
 			if (IsPostBack) {
 				if (context.Request.Form["__EVENTARGUMENT"] != null) {
@@ -315,7 +247,7 @@ namespace Carrotware.CMS.UI.Controls {
 					if (tgt.StartsWith(sParm)
 						&& tgt.Contains(this.ID + "$")
 						&& tgt.Contains("$" + sBtnName)
-						&& tgt.Contains("$" + rpPagedSummary.ID + "$")) {
+						&& tgt.Contains("$" + rpPagedComment.ID + "$")) {
 						string[] parms = tgt.Split('$');
 						int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
 						PageNumber = pg;
@@ -332,46 +264,20 @@ namespace Carrotware.CMS.UI.Controls {
 				OrderBy = "createdate  desc";
 			}
 
-			List<SiteNav> lstContents = null;
-			OrderBy = OrderBy.Replace("|", "  ");
-
-			string sSortFld = string.Empty;
-			string sSortDir = string.Empty;
-
-			if (!string.IsNullOrEmpty(OrderBy)) {
-				int pos = OrderBy.LastIndexOf(" ");
-				sSortFld = OrderBy.Substring(0, pos).Trim();
-				sSortDir = OrderBy.Substring(pos).Trim();
-			}
+			List<PostComment> lstContents = new List<PostComment>();
 
 			int TotalPages = 0;
 			int TotalRecords = 0;
 			int iPageNbr = PageNumber - 1;
 
-			ContentPageType.PageType viewContentType = ContentPageType.PageType.BlogEntry;
-
-			switch (ContentType) {
-				case SummaryContentType.Blog:
-					viewContentType = ContentPageType.PageType.BlogEntry;
-					TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
-					lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
-					break;
-				case SummaryContentType.ContentPage:
-					viewContentType = ContentPageType.PageType.ContentEntry;
-					TotalRecords = navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor);
-					lstContents = navHelper.GetLatestContentPagedList(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
-					break;
-				case SummaryContentType.SpecifiedCategories:
-					viewContentType = ContentPageType.PageType.BlogEntry;
-					TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor);
-					lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
-					break;
+			SiteNav sn = navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+			if (sn != null) {
+				TotalRecords = PostComment.GetCommentCountByContent(sn.Root_ContentID, !SecurityData.IsAuthEditor);
+				lstContents = PostComment.GetCommentsByContentPageNumber(sn.Root_ContentID, iPageNbr, PageSize, OrderBy, !SecurityData.IsAuthEditor);
 			}
 
-			lstContents.ToList().ForEach(q => IdentifyLinkAsInactive(q));
-
-			rpDetails.DataSource = lstContents;
-			rpDetails.DataBind();
+			rpComments.DataSource = lstContents;
+			rpComments.DataBind();
 
 			TotalPages = TotalRecords / PageSize;
 
@@ -383,14 +289,14 @@ namespace Carrotware.CMS.UI.Controls {
 				List<int> pagelist = new List<int>();
 				pagelist = Enumerable.Range(1, TotalPages).ToList();
 
-				rpPagedSummary.DataSource = pagelist;
-				rpPagedSummary.DataBind();
+				rpPagedComment.DataSource = pagelist;
+				rpPagedComment.DataBind();
 			}
 
-			WalkCtrlsForAssignment(rpPagedSummary);
+			WalkCtrlsForAssignment(rpPagedComment);
 
-			this.Controls.Add(rpDetails);
-			this.Controls.Add(rpPagedSummary);
+			this.Controls.Add(rpComments);
+			this.Controls.Add(rpPagedComment);
 
 			writer.Indent++;
 			writer.Indent++;
@@ -400,11 +306,11 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Write("\r\n<span id=\"" + this.ClientID + "\">\r\n");
 
 			if (PagerBelowContent) {
-				RenderWrappedControl(writer, rpDetails, CSSPageListing);
-				RenderWrappedControl(writer, rpPagedSummary, CSSPageFooter);
+				RenderWrappedControl(writer, rpComments, CSSPageListing);
+				RenderWrappedControl(writer, rpPagedComment, CSSPageFooter);
 			} else {
-				RenderWrappedControl(writer, rpPagedSummary, CSSPageFooter);
-				RenderWrappedControl(writer, rpDetails, CSSPageListing);
+				RenderWrappedControl(writer, rpPagedComment, CSSPageFooter);
+				RenderWrappedControl(writer, rpComments, CSSPageListing);
 			}
 
 			hdnPageNbr.RenderControl(writer);
@@ -417,6 +323,7 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent--;
 
 		}
+
 
 		private void RenderWrappedControl(HtmlTextWriter writer, Control ctrl, string sCSSValue) {
 			writer.WriteLine();
@@ -431,7 +338,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-			string[] delimCat = DelimetedSelectedCategoriesString.Replace(",", ";").Replace("|", ";").Split(';');
 
 			try {
 
@@ -451,37 +357,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 					CSSPageFooter = GetParmValue("CSSPageFooter", "");
 
-					//DelimetedSelectedCategoriesString = GetParmValue("DelimetedCategoryString", "");
-
-					ContentType = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), GetParmValue("ContentType", "Blog"), true);
-
-					SelectedCategories = new List<Guid>();
-
-					List<string> lstCategories = GetParmValueList("SelectedCategories");
-					foreach (string sCat in delimCat) {
-						if (!string.IsNullOrEmpty(sCat)) {
-							SelectedCategories.Add(new Guid(sCat));
-						}
-					}
-					foreach (string sCat in lstCategories) {
-						if (!string.IsNullOrEmpty(sCat)) {
-							SelectedCategories.Add(new Guid(sCat));
-						}
-					}
-
-				} else {
-					if (delimCat.Length > 0) {
-						SelectedCategories = new List<Guid>();
-
-						foreach (string sCat in delimCat) {
-							if (!string.IsNullOrEmpty(sCat)) {
-								SelectedCategories.Add(new Guid(sCat));
-							}
-						}
-					}
-				}
-				if (SelectedCategories.Count > 0) {
-					ContentType = SummaryContentType.SpecifiedCategories;
 				}
 			} catch (Exception ex) {
 			}

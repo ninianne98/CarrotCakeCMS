@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
-using System.Web.Caching;
-using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Controls;
-using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -25,6 +19,8 @@ using Carrotware.Web.UI.Controls;
 *
 * Date: October 2011
 */
+
+
 namespace Carrotware.CMS.UI.Base {
 	public class BaseContentPage : BasePage {
 
@@ -43,7 +39,7 @@ namespace Carrotware.CMS.UI.Base {
 
 		private string CtrlId {
 			get {
-				return "WidgetID_" + (iCtrl++);
+				return "WidgetCtrlId" + (iCtrl++);
 			}
 		}
 
@@ -94,11 +90,10 @@ namespace Carrotware.CMS.UI.Base {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, true);
 				}
 			} else {
-				string pageName = sCurrentPage;
 				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
-					pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, pageName);
+					pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
 				} else {
-					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, true, pageName);
+					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, true, sCurrentPage);
 				}
 			}
 
@@ -110,7 +105,7 @@ namespace Carrotware.CMS.UI.Base {
 				guidContentID = pageContents.Root_ContentID;
 			}
 
-			widgetHelper.UpdateContentWidgets(guidContentID);
+			//widgetHelper.UpdateContentWidgets(guidContentID);
 
 			pageWidgets = widgetHelper.GetWidgets(guidContentID, !SecurityData.AdvancedEditMode);
 
@@ -204,6 +199,21 @@ namespace Carrotware.CMS.UI.Base {
 				contCenter.DatabaseKey = pageContents.Root_ContentID;
 				contLeft.DatabaseKey = pageContents.Root_ContentID;
 				contRight.DatabaseKey = pageContents.Root_ContentID;
+
+				if (!pageContents.PageActive) {
+					pageContents.PageHead = String.Format("{0} {1}", BaseServerControl.InactivePagePrefix, pageContents.PageHead);
+					pageContents.NavMenuText = String.Format("{0} {1}", BaseServerControl.InactivePagePrefix, pageContents.NavMenuText);
+				}
+
+				//do stuff to page title
+				string sTitleAddendum = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+				if (!string.IsNullOrEmpty(sTitleAddendum)) {
+					if (!string.IsNullOrEmpty(pageContents.PageHead)) {
+						pageContents.PageHead = pageContents.PageHead.Trim() + ":  " + sTitleAddendum;
+					} else {
+						pageContents.PageHead = sTitleAddendum;
+					}
+				}
 
 				if (Page.User.Identity.IsAuthenticated) {
 

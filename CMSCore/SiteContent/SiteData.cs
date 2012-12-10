@@ -329,17 +329,47 @@ namespace Carrotware.CMS.Core {
 		public string Blog_DatePattern { get; set; }
 
 		public string BlogFolderPath {
-			get { return ("/" + this.Blog_FolderPath + "/").Replace("//", "/"); }
+			get { return RemoveDupeSlashes("/" + this.Blog_FolderPath + "/"); }
 		}
 		public string BlogCategoryPath {
-			get { return ("/" + this.BlogFolderPath + "/" + this.Blog_CategoryPath + "/").Replace("//", "/"); }
+			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/" + this.Blog_CategoryPath + "/"); }
 		}
 		public string BlogTagPath {
-			get { return ("/" + this.BlogFolderPath + "/" + this.Blog_TagPath + "/").Replace("//", "/"); }
+			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/" + this.Blog_TagPath + "/"); }
 		}
 		public string BlogDateFolderPath {
-			get { return ("/" + this.BlogFolderPath + "/date/").Replace("//", "/"); }
+			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/date/"); }
 		}
+
+		public string DefaultCanonicalURL {
+			get { return RemoveDupeSlashesURL(this.MainURL + "/" + CurrentScriptName); }
+		}
+		public string ConstructedCanonicalURL(ContentPage cp) {
+			return RemoveDupeSlashesURL(this.MainURL + "/" + cp.FileName);
+		}
+		public string ConstructedCanonicalURL(SiteNav nav) {
+			return RemoveDupeSlashesURL(this.MainURL + "/" + nav.FileName);
+		}
+
+		private string RemoveDupeSlashes(string sInput) {
+			if (!string.IsNullOrEmpty(sInput)) {
+				return sInput.Replace("//", "/").Replace("//", "/");
+			} else {
+				return String.Empty;
+			}
+		}
+
+		private string RemoveDupeSlashesURL(string sInput) {
+			if (!string.IsNullOrEmpty(sInput)) {
+				if (!sInput.ToLower().StartsWith("http")) {
+					sInput = "http://" + sInput;
+				}
+				return RemoveDupeSlashes(sInput.Replace("://", "¤¤¤")).Replace("¤¤¤", "://");
+			} else {
+				return String.Empty;
+			}
+		}
+
 		#region IDisposable Members
 
 		public void Dispose() {
@@ -678,13 +708,11 @@ namespace Carrotware.CMS.Core {
 			foreach (SiteNav sn in lst) {
 				SyndicationItem si = new SyndicationItem();
 
-				string sPageURI = (this.MainURL + "/" + sn.FileName).Replace("://", "¤¤¤").Replace("//", "/").Replace("//", "/").Replace("¤¤¤", "://");
-				if (!sPageURI.ToLower().StartsWith("http")) {
-					sPageURI = "http://" + sPageURI;
-				}
+				string sPageURI = RemoveDupeSlashesURL(this.ConstructedCanonicalURL(sn));
+
 				Uri PageURI = new Uri(sPageURI);
 
-				si.Content = new TextSyndicationContent(sn.PageTextPlainSummary);
+				si.Content = new TextSyndicationContent(sn.PageTextPlainSummaryMedium);
 				si.Title = new TextSyndicationContent(sn.NavMenuText);
 				si.Links.Add(SyndicationLink.CreateSelfLink(PageURI));
 				si.AddPermalink(PageURI);

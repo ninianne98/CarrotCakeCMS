@@ -66,7 +66,7 @@
 	<br />
 	<asp:HiddenField ID="hdnPageSize" Value="20" runat="server" />
 	<asp:HiddenField ID="hdnPageNbr" Value="1" runat="server" />
-	<asp:Repeater runat="server" ID="rpPagedSummary">
+	<asp:Repeater runat="server" ID="rpDataPager">
 		<HeaderTemplate>
 			<div class="datafooter ui-helper-clearfix ui-widget-content ui-corner-all ui-corner-all">
 		</HeaderTemplate>

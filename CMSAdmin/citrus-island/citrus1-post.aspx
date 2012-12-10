@@ -111,7 +111,45 @@
 						</div>
 					</CommentEntryTemplate>--%>
 				</carrot:ContentCommentForm>
+				<div style="clear: both;">
+				</div>
 				<br />
+				<hr />
+				<div style="clear: both;">
+				</div>
+				<carrot:PagedComments ID="PagedComments1" runat="server" PageSize="5" CSSSelectedPage="selected">
+					<CommentHeaderTemplate>
+						<div>
+					</CommentHeaderTemplate>
+					<CommentTemplate>
+						<div>
+							<p>
+								<b>
+									<carrot:ListItemCommentText runat="server" ID="ListItemCommentText1" DataField="CommenterName" />
+								</b>
+								<carrot:ListItemCommentText runat="server" ID="ListItemCommentText2" DataField="CreateDate" FieldFormat="{0:d}" />
+								<br />
+								<carrot:ListItemCommentText runat="server" ID="ListItemCommentText3" DataField="PostCommentText" />
+							</p>
+						</div>
+					</CommentTemplate>
+					<CommentFooterTemplate>
+						</div>
+					</CommentFooterTemplate>
+					<PagerHeaderTemplate>
+						<div class="pagerfooterlinks">
+					</PagerHeaderTemplate>
+					<PagerTemplate>
+						<carrot:ListItemWrapperForPager HtmlTagName="div" ID="ListItemWrapperForPager1" runat="server" CSSSelected="selectedwrap" CssClassNormal="pagerlink">
+							<carrot:NavLinkForPagerTemplate ID="lnkBtn" CSSSelected="selected" runat="server" />
+						</carrot:ListItemWrapperForPager>
+					</PagerTemplate>
+					<PagerFooterTemplate>
+						</div>
+					</PagerFooterTemplate>
+				</carrot:PagedComments>
+				<div style="clear: both;">
+				</div>
 			</div>
 			<div style="clear: both;">
 			</div>

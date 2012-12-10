@@ -48,11 +48,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					string arg = Request.Form["__EVENTARGUMENT"].ToString();
 					string tgt = Request.Form["__EVENTTARGET"].ToString();
 
-					if (tgt.Contains("lnkHead") && tgt.Contains("$" + gvPages.ID + "$")) {
+					if (tgt.Contains("$lnkHead") && tgt.Contains("$" + gvPages.ID + "$")) {
 						bHeadClicked = true;
 					}
 
-					if (tgt.Contains(sBtnName) && tgt.Contains("$" + rpPagedSummary.ID + "$")) {
+					if (tgt.Contains("$" + sBtnName) && tgt.Contains("$" + rpDataPager.ID + "$")) {
 						string[] parms = tgt.Split('$');
 						int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
 						PageNumber = pg;
@@ -91,8 +91,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				List<int> pagelist = new List<int>();
 				pagelist = Enumerable.Range(1, TotalPages).ToList();
 
-				rpPagedSummary.DataSource = pagelist;
-				rpPagedSummary.DataBind();
+				rpDataPager.DataSource = pagelist;
+				rpDataPager.DataBind();
 			}
 
 			string sSort = gvPages.CurrentSort;
@@ -105,8 +105,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			gvPages.DataSource = comments;
 			gvPages.DataBind();
 
-			WalkCtrlsForAssignment(rpPagedSummary);
-
+			WalkCtrlsForAssignment(rpDataPager);
 		}
 
 		private void WalkCtrlsForAssignment(Control X) {

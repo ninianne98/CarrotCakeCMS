@@ -38,7 +38,7 @@
 			<carrot:TwoLevelNavigation MenuWidth="960px" MenuHeight="10px" FontSize="11px" ForeColor="#FFFFFF" BackColor="#F4845A" runat="server" ID="TwoLevelNavigation1" />
 		</div>
 		<div id="sidebar">
-			<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" ContentType="DateMonth" MetaDataTitle="Dates" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" ContentType="DateMonth" MetaDataTitle="Dates" TakeTop="14" />
 			<carrot:SiteMetaWordList ID="SiteMetaWordList2" runat="server" ContentType="Category" MetaDataTitle="Categories" ShowUseCount="true" />
 			<carrot:SiteMetaWordList ID="SiteMetaWordList3" runat="server" ContentType="Tag" MetaDataTitle="Tags" ShowUseCount="true" />
 			<carrot:WidgetContainer ID="phLeftTop" runat="server">
@@ -69,7 +69,7 @@
 								&nbsp;|&nbsp;
 								<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="CreateDate" FieldFormat="{0:d}" />
 								<%--by
-								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="FullName_FirstLast" />--%>
+								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="Author_FullName_FirstLast" />--%>
 								<%--<%# String.Format("{0}", DataBinder.Eval(Container.DataItem, "EditDate"))%>--%>
 							</b>
 							<br />

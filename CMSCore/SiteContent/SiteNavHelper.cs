@@ -142,9 +142,19 @@ namespace Carrotware.CMS.Core {
 		public int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly) {
 			return _navHelper.GetFilteredContentPagedCount(currentSite, sFilterPath, bActiveOnly);
 		}
+		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly) {
+			return _navHelper.GetFilteredContentByIDPagedCount(currentSite, lstCategories, bActiveOnly);
+		}
+
+		public string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
+			return _navHelper.GetBlogHeadingFromURL(currentSite, sFilterPath);
+		}
 
 		public List<SiteNav> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return _navHelper.GetFilteredContentPagedList(currentSite, sFilterPath, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
+		}
+		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return _navHelper.GetFilteredContentByIDPagedList(currentSite, lstCategories, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
 
 		public List<SiteNav> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageNumber) {

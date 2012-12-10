@@ -387,3 +387,8 @@ input.button {
 	color: #75A54B;
 }
 
+.aligncenter, div.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}

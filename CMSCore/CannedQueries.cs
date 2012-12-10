@@ -105,6 +105,18 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
+		internal static IQueryable<vw_carrot_Content> GetContentByCategoryIDs(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, List<Guid> lstCategories) {
+			return (from r in ctx.vw_carrot_CategoryURLs
+					join m in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals m.ContentCategoryID
+					join ct in ctx.vw_carrot_Contents on m.Root_ContentID equals ct.Root_ContentID
+					where r.SiteID == siteID
+						&& ct.SiteID == siteID
+						&& lstCategories.Contains(r.ContentCategoryID)
+						&& (ct.PageActive == true || bActiveOnly == false)
+						&& ct.IsLatestVersion == true
+					select ct);
+		}
+
 
 		internal static IQueryable<vw_carrot_CategoryURL> GetCategoryURLs(CarrotCMSDataContext ctx, Guid siteID) {
 			return (from ct in ctx.vw_carrot_CategoryURLs
@@ -157,6 +169,14 @@ namespace Carrotware.CMS.Core {
 					join c in ctx.carrot_RootContents on r.Root_ContentID equals c.Root_ContentID
 					orderby r.CreateDate descending
 					where c.SiteID == siteID
+					select r);
+		}
+
+		internal static IQueryable<carrot_ContentComment> GetContentPageComments(CarrotCMSDataContext ctx, Guid rootContentID, bool bActiveOnly) {
+			return (from r in ctx.carrot_ContentComments
+					orderby r.CreateDate descending
+					where r.Root_ContentID == rootContentID
+					&& (r.IsApproved == true || bActiveOnly == false)
 					select r);
 		}
 
