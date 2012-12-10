@@ -42,15 +42,30 @@ namespace Carrotware.CMS.Core {
 			SiteNav navData = null;
 			string sFileRequested = context.Request.Path;
 			sRequestedURL = sFileRequested;
+			string sScrubbedURL = sFileRequested;
 
-			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
-			if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
-				sFileRequested = sScrubbedURL;
-				bURLOverride = true;
+			try {
+				sScrubbedURL = SiteData.AlternateCurrentScriptName;
+
+				if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
+					sFileRequested = sScrubbedURL;
+					bURLOverride = true;
+				}
+
+				VirtualDirectory.RegisterRoutes();
+			} catch (Exception ex) {
+				//assumption is database is probably empty / needs updating, so trigger the under construction view
+				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+					if (navData == null) {
+						navData = SiteNavHelper.GetEmptyHome();
+					}
+				} else {
+					//something bad has gone down, toss back the error
+					throw;
+				}
 			}
 
-			VirtualDirectory.RegisterRoutes();
 
 			if (!string.IsNullOrEmpty(sFileRequested)) {
 				sFileRequested = sFileRequested.Replace(@"\", @"/");
