@@ -1,11 +1,10 @@
 
-
 IF NOT EXISTS( select * from information_schema.columns 
 		where table_name = 'carrot_ContentType' and column_name = 'ContentTypeValue') BEGIN 
 
 	CREATE TABLE [dbo].[carrot_ContentType](
 		[ContentTypeID] [uniqueidentifier] NOT NULL,
-		[ContentTypeValue] [varchar](256) NULL,
+		[ContentTypeValue] [nvarchar](256) NULL,
 	 CONSTRAINT [carrot_ContentType_PK] PRIMARY KEY CLUSTERED 
 	(
 		[ContentTypeID] ASC
@@ -124,9 +123,9 @@ END
 IF NOT EXISTS( select * from information_schema.columns 
 		where table_name = 'carrot_Sites' and column_name = 'SiteTagline') BEGIN
 
-	ALTER TABLE [dbo].[carrot_Sites] ADD [SiteTagline] varchar(1024) NULL
+	ALTER TABLE [dbo].[carrot_Sites] ADD [SiteTagline] [nvarchar](1024) NULL
 	
-	ALTER TABLE [dbo].[carrot_Sites] ADD [SiteTitlebarPattern] varchar(1024) NULL
+	ALTER TABLE [dbo].[carrot_Sites] ADD [SiteTitlebarPattern] [nvarchar](1024) NULL
 
 END
 
@@ -136,13 +135,13 @@ IF NOT EXISTS( select * from information_schema.columns
 
 	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_Root_ContentID] [uniqueidentifier] NULL
 	
-	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_FolderPath] varchar(256) NULL
+	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_FolderPath] [nvarchar](64) NULL
 	
-	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_CategoryPath] varchar(256) NULL
+	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_CategoryPath] [nvarchar](64) NULL
 	
-	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_TagPath] varchar(256) NULL
+	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_TagPath] [nvarchar](64) NULL
 	
-	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_DatePattern] varchar(64) NULL
+	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_DatePattern] [nvarchar](32) NULL
 
 END
 
@@ -150,7 +149,7 @@ END
 IF NOT EXISTS( select * from information_schema.columns 
 		where table_name = 'carrot_RootContent' and column_name = 'PageSlug') BEGIN
 	
-	ALTER TABLE [dbo].[carrot_RootContent] ADD [PageSlug] varchar(256) NULL
+	ALTER TABLE [dbo].[carrot_RootContent] ADD [PageSlug] [nvarchar](256) NULL
 	
 END	
 
@@ -449,6 +448,12 @@ IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_carrot_Conte
 
 END	
 
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_carrot_ContentComment_CreateDate]') ) BEGIN
+
+	ALTER TABLE [dbo].[carrot_ContentComment] DROP CONSTRAINT [DF_carrot_ContentComment_CreateDate]
+
+END	
+
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_carrot_ContentComment_Root_ContentID]')  ) BEGIN
 
 	ALTER TABLE [dbo].[carrot_ContentComment] DROP CONSTRAINT [FK_carrot_ContentComment_Root_ContentID]
@@ -467,7 +472,8 @@ IF NOT EXISTS( select * from information_schema.columns
 			[CommenterIP] [nvarchar](32) NOT NULL,
 			[CommenterName] [nvarchar](256) NOT NULL,
 			[CommenterEmail] [nvarchar](256) NOT NULL,
-			[PostComment] [nvarchar](4000) NOT NULL,
+			[CommenterURL] [nvarchar](128) NOT NULL,
+			[PostComment] [nvarchar](max) NOT NULL,
 			[IsApproved] [bit] NOT NULL,
 			[IsSpam] [bit] NOT NULL,
 		 CONSTRAINT [PK_carrot_ContentComment] PRIMARY KEY NONCLUSTERED 
@@ -476,9 +482,37 @@ IF NOT EXISTS( select * from information_schema.columns
 		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 		) ON [PRIMARY]
 
+END
+
+GO
+
+IF NOT EXISTS( select * from information_schema.columns 
+		where table_name = 'carrot_ContentComment' and column_name = 'CommenterURL') BEGIN
+
+	ALTER TABLE [dbo].[carrot_ContentComment] ADD [CommenterURL] [nvarchar](128) NULL
 
 END
 
+GO
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterURL] [nvarchar](128)  NULL
+
+GO
+
+UPDATE [dbo].[carrot_ContentComment] 
+SET [CommenterURL] = ''
+WHERE ISNULL([CommenterURL], '') = ''
+
+GO
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterURL] [nvarchar](128) NOT NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [PostComment] [nvarchar](max) NULL
 
 GO
 
@@ -496,16 +530,10 @@ ALTER TABLE [dbo].[carrot_ContentComment] ADD  CONSTRAINT [DF_carrot_ContentComm
 GO
 
 
-
-IF NOT EXISTS( select * from information_schema.columns 
-		where table_name = 'carrot_ContentComment' and column_name = 'IsApproved') BEGIN
-
-	ALTER TABLE [dbo].[carrot_ContentComment] ADD [IsApproved] bit NOT NULL
-	
-END
-
+ALTER TABLE [dbo].[carrot_ContentComment] ADD  CONSTRAINT [DF_carrot_ContentComment_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
 
 GO
+
 
 --=====================
 
@@ -766,6 +794,174 @@ SELECT   m.UserId, ud.UserNickName, ud.FirstName, ud.LastName, m.LoweredEmail, m
                       m.UserName, m.LastActivityDate
 FROM      vw_aspnet_MembershipUsers    AS m 
 LEFT JOIN carrot_UserData AS ud ON m.UserId = ud.UserId
+
+
+GO
+
+--============
+
+ALTER TABLE [dbo].[carrot_WidgetData] 
+	ALTER COLUMN  [ControlProperties] [nvarchar](max) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Widget] 
+	ALTER COLUMN  [PlaceholderName] [nvarchar](256) NOT NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Widget] 
+	ALTER COLUMN  [ControlPath] [nvarchar](512) NOT NULL
+
+GO
+
+--============
+
+ALTER TABLE [dbo].[carrot_RootContent] 
+	ALTER COLUMN  [FileName] [nvarchar](256) NOT NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_RootContent] 
+	ALTER COLUMN  [PageSlug] [nvarchar](256) NULL
+
+GO
+
+--============
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [TitleBar] [nvarchar](256) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [NavMenuText] [nvarchar](256) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [PageHead] [nvarchar](256) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [PageText] [nvarchar](max) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [LeftPageText] [nvarchar](max) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [RightPageText] [nvarchar](max) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [TemplateFile] [nvarchar](256) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [MetaKeyword] [nvarchar](1024) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [MetaDescription] [nvarchar](1024) NULL
+
+GO
+
+--============
+
+ALTER TABLE [dbo].[carrot_SerialCache] 
+	ALTER COLUMN  [SerializedData] [nvarchar](max) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_SerialCache] 
+	ALTER COLUMN  [KeyType] [nvarchar](256) NULL
+
+GO
+
+--============
+
+ALTER TABLE [dbo].[carrot_ContentType] 
+	ALTER COLUMN  [ContentTypeValue] [nvarchar](256) NOT NULL
+
+GO
+
+--============
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [MetaKeyword] [nvarchar](1024) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [MetaDescription] [nvarchar](1024) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [SiteName] [nvarchar](256) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [MainURL] [nvarchar](128) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [Blog_FolderPath] [nvarchar](64) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [Blog_CategoryPath] [nvarchar](64) NULL
+
+GO
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [Blog_TagPath] [nvarchar](64) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [Blog_DatePattern] [nvarchar](32) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [SiteTagline] [nvarchar](1024) NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_Sites] 
+	ALTER COLUMN  [SiteTitlebarPattern] [nvarchar](1024) NULL
+
+GO
+
+--====================
+
+GO
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[vw_carrot_Widget]'))
+DROP VIEW [dbo].[vw_carrot_Widget]
+GO
+
+CREATE VIEW [dbo].[vw_carrot_Widget]
+AS 
+
+
+SELECT w.Root_WidgetID, w.Root_ContentID, w.WidgetOrder, w.PlaceholderName, w.ControlPath, w.WidgetActive, 
+	wd.WidgetDataID, wd.IsLatestVersion, wd.EditDate, wd.ControlProperties, cr.SiteID
+FROM carrot_Widget AS w 
+	INNER JOIN carrot_WidgetData AS wd ON w.Root_WidgetID = wd.Root_WidgetID 
+	INNER JOIN carrot_RootContent AS cr ON w.Root_ContentID = cr.Root_ContentID
+  
 
 
 GO

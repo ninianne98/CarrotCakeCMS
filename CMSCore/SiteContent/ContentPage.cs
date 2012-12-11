@@ -311,6 +311,19 @@ namespace Carrotware.CMS.Core {
 		public string MetaDescription { get; set; }
 		public string MetaKeyword { get; set; }
 
+		private int _commentCount = -1;
+		public int CommentCount {
+			get {
+				if (_commentCount < 0) {
+					_commentCount = PostComment.GetCommentCountByContent(this.Root_ContentID, !SecurityData.IsAuthEditor);
+				}
+				return _commentCount;
+			}
+			set {
+				_commentCount = value;
+			}
+		}
+
 
 		private List<ContentTag> _contentTags = null;
 		public List<ContentTag> ContentTags {

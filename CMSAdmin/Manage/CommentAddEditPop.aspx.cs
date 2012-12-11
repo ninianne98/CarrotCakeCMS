@@ -18,7 +18,7 @@ using Carrotware.CMS.UI.Base;
 
 
 namespace Carrotware.CMS.UI.Admin.Manage {
-	public partial class CommentAddEdit : AdminBasePage {
+	public partial class CommentAddEditPop : AdminBasePage {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogComment);
 

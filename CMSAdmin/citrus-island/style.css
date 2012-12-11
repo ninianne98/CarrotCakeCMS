@@ -387,6 +387,18 @@ input.button {
 	color: #75A54B;
 }
 
+.input-form {
+	background-color: #FAFAFA;
+	border: 1px solid #F2F2F2;
+	margin: 10px;
+	padding: 5px;
+}
+
+.inputform p, .padding10 {
+	padding: 10px;
+	clear: both;
+}
+
 .aligncenter, div.aligncenter {
 	display: block;
 	margin-left: auto;

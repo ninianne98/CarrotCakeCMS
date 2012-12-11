@@ -87,7 +87,7 @@
 					Site Name
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="200" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="100" Columns="80" Style="width: 425px;"
 						runat="server"></asp:TextBox>
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
@@ -178,7 +178,7 @@
 					Blog Feature Folder
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="200" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="80" Style="width: 425px;"
 						runat="server" onblur="CheckFolderPrefixes()"></asp:TextBox>
 				</td>
 			</tr>
@@ -187,7 +187,7 @@
 					Blog Category Path
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="200" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="80" Style="width: 425px;"
 						runat="server" onblur="CheckFolderPrefixes()"></asp:TextBox>
 				</td>
 			</tr>
@@ -196,8 +196,8 @@
 					Blog Tag Path
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="200" Columns="80" Style="width: 425px;"
-						runat="server" onblur="CheckFolderPrefixes()"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="80" Style="width: 425px;" runat="server"
+						onblur="CheckFolderPrefixes()"></asp:TextBox>
 				</td>
 			</tr>
 			<tr>

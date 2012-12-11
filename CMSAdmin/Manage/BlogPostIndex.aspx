@@ -78,6 +78,12 @@
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
+						<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/CommentIndexPop.aspx?id=<%#Eval("Root_ContentID") %>');">
+							<img class="imgNoBorder" src="/Manage/images/comments.png" alt="View Comments" title="View Comments" /></a>
+					</ItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField>
+					<ItemTemplate>
 						<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/Manage/PageHistory.aspx?id=<%#Eval("Root_ContentID") %>');">
 							<img class="imgNoBorder" src="/Manage/images/layout_content.png" alt="View Page History" title="View Page History" /></a>
 					</ItemTemplate>

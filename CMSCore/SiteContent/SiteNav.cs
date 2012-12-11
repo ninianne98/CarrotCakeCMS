@@ -17,16 +17,9 @@ using System.Text.RegularExpressions;
 
 namespace Carrotware.CMS.Core {
 
-	public class SiteNav : IDisposable, ISiteContent {
-		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
-		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+	public class SiteNav : ISiteContent {
 
-
-		public SiteNav() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
-		}
+		public SiteNav() { }
 
 
 		public ContentPage GetContentPage() {
@@ -110,6 +103,19 @@ namespace Carrotware.CMS.Core {
 		public ContentPageType.PageType ContentType { get; set; }
 		public string TemplateFile { get; set; }
 
+		private int _commentCount = -1;
+		public int CommentCount {
+			get {
+				if (_commentCount < 0) {
+					_commentCount = PostComment.GetCommentCountByContent(this.Root_ContentID, !SecurityData.IsAuthEditor);
+				}
+				return _commentCount;
+			}
+			set {
+				_commentCount = value;
+			}
+		}
+
 		private List<ContentTag> _contentTags = null;
 		public List<ContentTag> ContentTags {
 			get {
@@ -137,10 +143,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		#region IDisposable Members
-
-
-
 		ExtendedUserData _user = null;
 		public ExtendedUserData GetUserInfo() {
 			if (_user == null && this.EditUserId.HasValue) {
@@ -166,15 +168,6 @@ namespace Carrotware.CMS.Core {
 		public override int GetHashCode() {
 			return ContentID.GetHashCode() ^ SiteID.GetHashCode() ^ Root_ContentID.GetHashCode() ^ FileName.GetHashCode();
 		}
-
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 
 	}
 

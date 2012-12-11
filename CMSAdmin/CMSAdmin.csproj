@@ -145,6 +145,20 @@
     <Compile Include="Manage\CommentIndex.aspx.designer.cs">
       <DependentUpon>CommentIndex.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\CommentAddEditPop.aspx.cs">
+      <DependentUpon>CommentAddEditPop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\CommentAddEditPop.aspx.designer.cs">
+      <DependentUpon>CommentAddEditPop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\CommentIndexPop.aspx.cs">
+      <DependentUpon>CommentIndexPop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\CommentIndexPop.aspx.designer.cs">
+      <DependentUpon>CommentIndexPop.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\SiteImport.aspx.cs">
       <DependentUpon>SiteImport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -249,6 +263,20 @@
     </Compile>
     <Compile Include="Manage\SiteSkinIndex.aspx.designer.cs">
       <DependentUpon>SiteSkinIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\ucCommentAddEdit.ascx.cs">
+      <DependentUpon>ucCommentAddEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ucCommentAddEdit.ascx.designer.cs">
+      <DependentUpon>ucCommentAddEdit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\ucCommentIndex.ascx.cs">
+      <DependentUpon>ucCommentIndex.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\ucCommentIndex.ascx.designer.cs">
+      <DependentUpon>ucCommentIndex.ascx</DependentUpon>
     </Compile>
     <Compile Include="Manage\ucEditNotifier.ascx.cs">
       <DependentUpon>ucEditNotifier.ascx</DependentUpon>
@@ -498,6 +526,8 @@
     <Content Include="Manage\CategoryIndex.aspx" />
     <Content Include="Manage\CommentAddEdit.aspx" />
     <Content Include="Manage\CommentIndex.aspx" />
+    <Content Include="Manage\CommentAddEditPop.aspx" />
+    <Content Include="Manage\CommentIndexPop.aspx" />
     <Content Include="Manage\Images\accept.png" />
     <Content Include="Manage\Images\add.png" />
     <Content Include="Manage\Images\ani-drip.gif" />
@@ -879,6 +909,8 @@
     <Content Include="Manage\tiny_mce\utils\form_utils.js" />
     <Content Include="Manage\tiny_mce\utils\mctabs.js" />
     <Content Include="Manage\tiny_mce\utils\validate.js" />
+    <Content Include="Manage\ucCommentAddEdit.ascx" />
+    <Content Include="Manage\ucCommentIndex.ascx" />
     <Content Include="Manage\ucPageMenuItems.ascx" />
     <Content Include="Manage\ucSitePageDrillDown.ascx" />
     <Content Include="Manage\UserGroupAddEdit.aspx" />

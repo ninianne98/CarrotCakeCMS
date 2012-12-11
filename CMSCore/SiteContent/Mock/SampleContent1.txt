@@ -1,6 +1,13 @@
 ﻿<p><img title="" src="Carrotware.CMS.Core.SiteContent.Mock.sample1.png" alt="" align="left" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi arcu, lacinia scelerisque blandit nec, mattis non nibh. Curabitur quis urna at massa placerat auctor. Quisque et mauris sapien, a consectetur nulla. Cum <a title="" href="#">sociis natoque penatibus et magnis dis</a> parturient montes, nascetur ridiculus mus. Nullam pellentesque, turpis a gravida porta, nibh libero feugiat augue, vel interdum erat lectus nec lorem. </p>
 
-<p>Phasellus vel odio felis, a venenatis tellus. Nullam sit amet ligula vitae tellus laoreet accumsan eu nec odio. Sed tincidunt congue euismod. Pellentesque sollicitudin erat massa. <a title="" href="#">Quisque lacinia</a>, metus in pretium lobortis, ipsum leo semper mauris, at gravida est nisl sit amet metus. Pellentesque quis massa eget odio lobortis pharetra.</p>
+<fieldset style="width: 75%px;">
+	<legend>
+		<label>
+			Nullam sit amet ligula vitae tellus laoreet
+		</label>
+	</legend>
+	<p>Phasellus vel odio felis, a venenatis tellus. Nullam sit amet ligula vitae tellus laoreet accumsan eu nec odio. Sed tincidunt congue euismod. Pellentesque sollicitudin erat massa. <a title="" href="#">Quisque lacinia</a>, metus in pretium lobortis, ipsum leo semper mauris, at gravida est nisl sit amet metus. Pellentesque quis massa eget odio lobortis pharetra.</p>
+</fieldset>
 
 <ul>
 <li>This is an nordered list Item 1</li>
@@ -21,6 +28,8 @@
 <li>This is an ordered list Item 3</li>
 <li>This is an ordered list Item 4</li>
 </ol>
+
+<br />
 
 <table>
 <tbody>
@@ -50,6 +59,8 @@
 </tr>
 </tbody>
 </table>
+
+<br />
 
 <!--
 <p><img title="" src="Carrotware.CMS.Core.SiteContent.Mock.sample3.png" alt="" align="right" /> Aliquam rhoncus, massa eget congue accumsan, turpis ante vestibulum ligula, sed auctor ligula quam at quam. Integer fringilla, diam vitae egestas elementum, erat tellus lacinia neque, posuere eleifend turpis quam quis mi. Cras bibendum varius lacus, a varius quam lacinia non. Duis ac purus id dolor aliquam interdum. Sed nec luctus nunc. In id felis vitae massa adipiscing lacinia. Aenean placerat massa sit amet tortor porttitor adipiscing. Donec iaculis nisi fringilla mi pretium at sodales tellus suscipit. Maecenas ac sollicitudin urna. Suspendisse sed purus a libero fermentum rhoncus. </p>

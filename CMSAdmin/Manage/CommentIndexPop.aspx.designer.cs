@@ -10,7 +10,7 @@
 namespace Carrotware.CMS.UI.Admin.Manage {
     
     
-    public partial class CommentIndex {
+    public partial class CommentIndexPop {
         
         /// <summary>
         /// ucCommentIndex1 control.
@@ -27,9 +27,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.Main Master {
+        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.MainPopup Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.Main)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.MainPopup)(base.Master));
             }
         }
     }

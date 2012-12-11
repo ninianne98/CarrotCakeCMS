@@ -476,6 +476,7 @@ namespace Carrotware.CMS.UI.Controls {
 			PageHead,
 			PageTextPlainSummaryMedium,
 			PageTextPlainSummary,
+			CommentCount,
 			NavOrder,
 			EditUserId,
 			EditDate,
@@ -584,13 +585,12 @@ namespace Carrotware.CMS.UI.Controls {
 				string sField = DataField.ToString().Replace("Author_", "");
 
 				string sValue = "";
-				using (SiteNav sn = (SiteNav)DataBinder.GetDataItem(container)) {
-					if (sn != null) {
-						using (ExtendedUserData c = sn.GetUserInfo()) {
-							object obj = ReflectionUtilities.GetPropertyValue(c, sField);
-							if (obj != null) {
-								sValue = obj.ToString();
-							}
+				SiteNav sn = (SiteNav)DataBinder.GetDataItem(container);
+				if (sn != null) {
+					using (ExtendedUserData c = sn.GetUserInfo()) {
+						object obj = ReflectionUtilities.GetPropertyValue(c, sField);
+						if (obj != null) {
+							sValue = obj.ToString();
 						}
 					}
 				}
@@ -770,6 +770,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form-outer\">\r\n" });
 
+			// CommenterName
 			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\"> Name: " });
 			ph.Controls.Add(new RequiredFieldValidator {
 				ID = "CommenterNameValid",
@@ -781,6 +782,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ph.Controls.Add(new TextBox { ID = "CommenterName", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
 			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
 
+			// CommenterEmail
 			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\">  E-mail: " });
 			ph.Controls.Add(new RequiredFieldValidator {
 				ID = "CommenterEmailValid",
@@ -792,6 +794,13 @@ namespace Carrotware.CMS.UI.Controls {
 			ph.Controls.Add(new TextBox { ID = "CommenterEmail", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
 			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
 
+			// CommenterURL
+			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\">  Website: " });
+			ph.Controls.Add(new Literal { Text = " </label> " });
+			ph.Controls.Add(new TextBox { ID = "CommenterURL", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
+			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
+
+			// VisitorComments
 			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\"> Comment:  " });
 			ph.Controls.Add(new CustomValidator {
 				ID = "VisitorCommentsValid",
@@ -804,6 +813,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ph.Controls.Add(new TextBox { ID = "VisitorComments", Columns = 40, MaxLength = 1024, Rows = 8, TextMode = TextBoxMode.MultiLine });
 			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
 
+			// ContentCommentCaptcha
 			ph.Controls.Add(new Literal { Text = "<div style=\"clear: both;\"></div>\r\n<div class=\"comment-form-captcha\"> " });
 			ph.Controls.Add(new RequiredFieldValidator {
 				ID = "ContentCommentCaptchaValid",
@@ -814,6 +824,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ph.Controls.Add(new Captcha { ID = "ContentCommentCaptcha", ValidationGroup = sVG });
 			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
 
+			// SubmitCommentButton
 			ph.Controls.Add(new Literal { Text = "<div style=\"clear: both;\"></div><br />\r\n<div class=\"comment-form-button\">" });
 			ph.Controls.Add(new Button { ID = "SubmitCommentButton", Text = "Submit Comment", ValidationGroup = sVG });
 			ph.Controls.Add(new Literal { Text = "</div>\r\n" });

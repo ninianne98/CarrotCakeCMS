@@ -39,27 +39,6 @@ namespace Carrotware.CMS.Data
     partial void Insertcarrot_UserSiteMapping(carrot_UserSiteMapping instance);
     partial void Updatecarrot_UserSiteMapping(carrot_UserSiteMapping instance);
     partial void Deletecarrot_UserSiteMapping(carrot_UserSiteMapping instance);
-    partial void Insertcarrot_SerialCache(carrot_SerialCache instance);
-    partial void Updatecarrot_SerialCache(carrot_SerialCache instance);
-    partial void Deletecarrot_SerialCache(carrot_SerialCache instance);
-    partial void Insertcarrot_Widget(carrot_Widget instance);
-    partial void Updatecarrot_Widget(carrot_Widget instance);
-    partial void Deletecarrot_Widget(carrot_Widget instance);
-    partial void Insertcarrot_WidgetData(carrot_WidgetData instance);
-    partial void Updatecarrot_WidgetData(carrot_WidgetData instance);
-    partial void Deletecarrot_WidgetData(carrot_WidgetData instance);
-    partial void Insertcarrot_ContentType(carrot_ContentType instance);
-    partial void Updatecarrot_ContentType(carrot_ContentType instance);
-    partial void Deletecarrot_ContentType(carrot_ContentType instance);
-    partial void Insertcarrot_Content(carrot_Content instance);
-    partial void Updatecarrot_Content(carrot_Content instance);
-    partial void Deletecarrot_Content(carrot_Content instance);
-    partial void Insertcarrot_Site(carrot_Site instance);
-    partial void Updatecarrot_Site(carrot_Site instance);
-    partial void Deletecarrot_Site(carrot_Site instance);
-    partial void Insertcarrot_RootContent(carrot_RootContent instance);
-    partial void Updatecarrot_RootContent(carrot_RootContent instance);
-    partial void Deletecarrot_RootContent(carrot_RootContent instance);
     partial void Insertcarrot_ContentTag(carrot_ContentTag instance);
     partial void Updatecarrot_ContentTag(carrot_ContentTag instance);
     partial void Deletecarrot_ContentTag(carrot_ContentTag instance);
@@ -72,15 +51,36 @@ namespace Carrotware.CMS.Data
     partial void Insertcarrot_TagContentMapping(carrot_TagContentMapping instance);
     partial void Updatecarrot_TagContentMapping(carrot_TagContentMapping instance);
     partial void Deletecarrot_TagContentMapping(carrot_TagContentMapping instance);
-    partial void Insertcarrot_ContentComment(carrot_ContentComment instance);
-    partial void Updatecarrot_ContentComment(carrot_ContentComment instance);
-    partial void Deletecarrot_ContentComment(carrot_ContentComment instance);
     partial void Insertaspnet_Role(aspnet_Role instance);
     partial void Updateaspnet_Role(aspnet_Role instance);
     partial void Deleteaspnet_Role(aspnet_Role instance);
     partial void Insertcarrot_UserData(carrot_UserData instance);
     partial void Updatecarrot_UserData(carrot_UserData instance);
     partial void Deletecarrot_UserData(carrot_UserData instance);
+    partial void Insertcarrot_ContentType(carrot_ContentType instance);
+    partial void Updatecarrot_ContentType(carrot_ContentType instance);
+    partial void Deletecarrot_ContentType(carrot_ContentType instance);
+    partial void Insertcarrot_RootContent(carrot_RootContent instance);
+    partial void Updatecarrot_RootContent(carrot_RootContent instance);
+    partial void Deletecarrot_RootContent(carrot_RootContent instance);
+    partial void Insertcarrot_WidgetData(carrot_WidgetData instance);
+    partial void Updatecarrot_WidgetData(carrot_WidgetData instance);
+    partial void Deletecarrot_WidgetData(carrot_WidgetData instance);
+    partial void Insertcarrot_Widget(carrot_Widget instance);
+    partial void Updatecarrot_Widget(carrot_Widget instance);
+    partial void Deletecarrot_Widget(carrot_Widget instance);
+    partial void Insertcarrot_ContentComment(carrot_ContentComment instance);
+    partial void Updatecarrot_ContentComment(carrot_ContentComment instance);
+    partial void Deletecarrot_ContentComment(carrot_ContentComment instance);
+    partial void Insertcarrot_Content(carrot_Content instance);
+    partial void Updatecarrot_Content(carrot_Content instance);
+    partial void Deletecarrot_Content(carrot_Content instance);
+    partial void Insertcarrot_SerialCache(carrot_SerialCache instance);
+    partial void Updatecarrot_SerialCache(carrot_SerialCache instance);
+    partial void Deletecarrot_SerialCache(carrot_SerialCache instance);
+    partial void Insertcarrot_Site(carrot_Site instance);
+    partial void Updatecarrot_Site(carrot_Site instance);
+    partial void Deletecarrot_Site(carrot_Site instance);
     #endregion
 		
 		public CarrotCMSDataContext() : 
@@ -137,62 +137,6 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<carrot_SerialCache> carrot_SerialCaches
-		{
-			get
-			{
-				return this.GetTable<carrot_SerialCache>();
-			}
-		}
-		
-		public System.Data.Linq.Table<carrot_Widget> carrot_Widgets
-		{
-			get
-			{
-				return this.GetTable<carrot_Widget>();
-			}
-		}
-		
-		public System.Data.Linq.Table<carrot_WidgetData> carrot_WidgetDatas
-		{
-			get
-			{
-				return this.GetTable<carrot_WidgetData>();
-			}
-		}
-		
-		public System.Data.Linq.Table<carrot_ContentType> carrot_ContentTypes
-		{
-			get
-			{
-				return this.GetTable<carrot_ContentType>();
-			}
-		}
-		
-		public System.Data.Linq.Table<carrot_Content> carrot_Contents
-		{
-			get
-			{
-				return this.GetTable<carrot_Content>();
-			}
-		}
-		
-		public System.Data.Linq.Table<carrot_Site> carrot_Sites
-		{
-			get
-			{
-				return this.GetTable<carrot_Site>();
-			}
-		}
-		
-		public System.Data.Linq.Table<carrot_RootContent> carrot_RootContents
-		{
-			get
-			{
-				return this.GetTable<carrot_RootContent>();
-			}
-		}
-		
 		public System.Data.Linq.Table<carrot_ContentTag> carrot_ContentTags
 		{
 			get
@@ -222,30 +166,6 @@ namespace Carrotware.CMS.Data
 			get
 			{
 				return this.GetTable<carrot_TagContentMapping>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vw_carrot_Content> vw_carrot_Contents
-		{
-			get
-			{
-				return this.GetTable<vw_carrot_Content>();
-			}
-		}
-		
-		public System.Data.Linq.Table<vw_carrot_Widget> vw_carrot_Widgets
-		{
-			get
-			{
-				return this.GetTable<vw_carrot_Widget>();
-			}
-		}
-		
-		public System.Data.Linq.Table<carrot_ContentComment> carrot_ContentComments
-		{
-			get
-			{
-				return this.GetTable<carrot_ContentComment>();
 			}
 		}
 		
@@ -305,11 +225,91 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		public System.Data.Linq.Table<carrot_ContentType> carrot_ContentTypes
+		{
+			get
+			{
+				return this.GetTable<carrot_ContentType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_RootContent> carrot_RootContents
+		{
+			get
+			{
+				return this.GetTable<carrot_RootContent>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_WidgetData> carrot_WidgetDatas
+		{
+			get
+			{
+				return this.GetTable<carrot_WidgetData>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_Widget> carrot_Widgets
+		{
+			get
+			{
+				return this.GetTable<carrot_Widget>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_ContentComment> carrot_ContentComments
+		{
+			get
+			{
+				return this.GetTable<carrot_ContentComment>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_Content> carrot_Contents
+		{
+			get
+			{
+				return this.GetTable<carrot_Content>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_SerialCache> carrot_SerialCaches
+		{
+			get
+			{
+				return this.GetTable<carrot_SerialCache>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vw_carrot_Content> vw_carrot_Contents
+		{
+			get
+			{
+				return this.GetTable<vw_carrot_Content>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vw_carrot_Widget> vw_carrot_Widgets
+		{
+			get
+			{
+				return this.GetTable<vw_carrot_Widget>();
+			}
+		}
+		
 		public System.Data.Linq.Table<vw_carrot_UserData> vw_carrot_UserDatas
 		{
 			get
 			{
 				return this.GetTable<vw_carrot_UserData>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_Site> carrot_Sites
+		{
+			get
+			{
+				return this.GetTable<carrot_Site>();
 			}
 		}
 	}
@@ -338,9 +338,9 @@ namespace Carrotware.CMS.Data
 		
 		private EntitySet<carrot_UserSiteMapping> _carrot_UserSiteMappings;
 		
-		private EntitySet<carrot_Content> _carrot_Contents;
-		
 		private EntityRef<carrot_UserData> _carrot_UserData;
+		
+		private EntitySet<carrot_Content> _carrot_Contents;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -366,8 +366,8 @@ namespace Carrotware.CMS.Data
 		{
 			this._aspnet_Membership = default(EntityRef<aspnet_Membership>);
 			this._carrot_UserSiteMappings = new EntitySet<carrot_UserSiteMapping>(new Action<carrot_UserSiteMapping>(this.attach_carrot_UserSiteMappings), new Action<carrot_UserSiteMapping>(this.detach_carrot_UserSiteMappings));
-			this._carrot_Contents = new EntitySet<carrot_Content>(new Action<carrot_Content>(this.attach_carrot_Contents), new Action<carrot_Content>(this.detach_carrot_Contents));
 			this._carrot_UserData = default(EntityRef<carrot_UserData>);
+			this._carrot_Contents = new EntitySet<carrot_Content>(new Action<carrot_Content>(this.attach_carrot_Contents), new Action<carrot_Content>(this.detach_carrot_Contents));
 			OnCreated();
 		}
 		
@@ -553,19 +553,6 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_Content", Storage="_carrot_Contents", ThisKey="UserId", OtherKey="EditUserId")]
-		public EntitySet<carrot_Content> carrot_Contents
-		{
-			get
-			{
-				return this._carrot_Contents;
-			}
-			set
-			{
-				this._carrot_Contents.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_UserData", Storage="_carrot_UserData", ThisKey="UserId", OtherKey="UserId", IsUnique=true, IsForeignKey=false)]
 		public carrot_UserData carrot_UserData
 		{
@@ -592,6 +579,19 @@ namespace Carrotware.CMS.Data
 					}
 					this.SendPropertyChanged("carrot_UserData");
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_Content", Storage="_carrot_Contents", ThisKey="UserId", OtherKey="EditUserId")]
+		public EntitySet<carrot_Content> carrot_Contents
+		{
+			get
+			{
+				return this._carrot_Contents;
+			}
+			set
+			{
+				this._carrot_Contents.Assign(value);
 			}
 		}
 		
@@ -1415,2218 +1415,6 @@ namespace Carrotware.CMS.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_SerialCache")]
-	public partial class carrot_SerialCache : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _SerialCacheID;
-		
-		private System.Guid _SiteID;
-		
-		private System.Guid _ItemID;
-		
-		private System.Guid _EditUserId;
-		
-		private string _KeyType;
-		
-		private string _SerializedData;
-		
-		private System.DateTime _EditDate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSerialCacheIDChanging(System.Guid value);
-    partial void OnSerialCacheIDChanged();
-    partial void OnSiteIDChanging(System.Guid value);
-    partial void OnSiteIDChanged();
-    partial void OnItemIDChanging(System.Guid value);
-    partial void OnItemIDChanged();
-    partial void OnEditUserIdChanging(System.Guid value);
-    partial void OnEditUserIdChanged();
-    partial void OnKeyTypeChanging(string value);
-    partial void OnKeyTypeChanged();
-    partial void OnSerializedDataChanging(string value);
-    partial void OnSerializedDataChanged();
-    partial void OnEditDateChanging(System.DateTime value);
-    partial void OnEditDateChanged();
-    #endregion
-		
-		public carrot_SerialCache()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialCacheID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid SerialCacheID
-		{
-			get
-			{
-				return this._SerialCacheID;
-			}
-			set
-			{
-				if ((this._SerialCacheID != value))
-				{
-					this.OnSerialCacheIDChanging(value);
-					this.SendPropertyChanging();
-					this._SerialCacheID = value;
-					this.SendPropertyChanged("SerialCacheID");
-					this.OnSerialCacheIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					this.OnSiteIDChanging(value);
-					this.SendPropertyChanging();
-					this._SiteID = value;
-					this.SendPropertyChanged("SiteID");
-					this.OnSiteIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ItemID
-		{
-			get
-			{
-				return this._ItemID;
-			}
-			set
-			{
-				if ((this._ItemID != value))
-				{
-					this.OnItemIDChanging(value);
-					this.SendPropertyChanging();
-					this._ItemID = value;
-					this.SendPropertyChanged("ItemID");
-					this.OnItemIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid EditUserId
-		{
-			get
-			{
-				return this._EditUserId;
-			}
-			set
-			{
-				if ((this._EditUserId != value))
-				{
-					this.OnEditUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._EditUserId = value;
-					this.SendPropertyChanged("EditUserId");
-					this.OnEditUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KeyType", DbType="VarChar(256)")]
-		public string KeyType
-		{
-			get
-			{
-				return this._KeyType;
-			}
-			set
-			{
-				if ((this._KeyType != value))
-				{
-					this.OnKeyTypeChanging(value);
-					this.SendPropertyChanging();
-					this._KeyType = value;
-					this.SendPropertyChanged("KeyType");
-					this.OnKeyTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerializedData", DbType="VarChar(MAX)")]
-		public string SerializedData
-		{
-			get
-			{
-				return this._SerializedData;
-			}
-			set
-			{
-				if ((this._SerializedData != value))
-				{
-					this.OnSerializedDataChanging(value);
-					this.SendPropertyChanging();
-					this._SerializedData = value;
-					this.SendPropertyChanged("SerializedData");
-					this.OnSerializedDataChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
-		public System.DateTime EditDate
-		{
-			get
-			{
-				return this._EditDate;
-			}
-			set
-			{
-				if ((this._EditDate != value))
-				{
-					this.OnEditDateChanging(value);
-					this.SendPropertyChanging();
-					this._EditDate = value;
-					this.SendPropertyChanged("EditDate");
-					this.OnEditDateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Widget")]
-	public partial class carrot_Widget : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Root_WidgetID;
-		
-		private System.Guid _Root_ContentID;
-		
-		private int _WidgetOrder;
-		
-		private string _PlaceholderName;
-		
-		private string _ControlPath;
-		
-		private bool _WidgetActive;
-		
-		private EntitySet<carrot_WidgetData> _carrot_WidgetDatas;
-		
-		private EntityRef<carrot_RootContent> _carrot_RootContent;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnRoot_WidgetIDChanging(System.Guid value);
-    partial void OnRoot_WidgetIDChanged();
-    partial void OnRoot_ContentIDChanging(System.Guid value);
-    partial void OnRoot_ContentIDChanged();
-    partial void OnWidgetOrderChanging(int value);
-    partial void OnWidgetOrderChanged();
-    partial void OnPlaceholderNameChanging(string value);
-    partial void OnPlaceholderNameChanged();
-    partial void OnControlPathChanging(string value);
-    partial void OnControlPathChanged();
-    partial void OnWidgetActiveChanging(bool value);
-    partial void OnWidgetActiveChanged();
-    #endregion
-		
-		public carrot_Widget()
-		{
-			this._carrot_WidgetDatas = new EntitySet<carrot_WidgetData>(new Action<carrot_WidgetData>(this.attach_carrot_WidgetDatas), new Action<carrot_WidgetData>(this.detach_carrot_WidgetDatas));
-			this._carrot_RootContent = default(EntityRef<carrot_RootContent>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_WidgetID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Root_WidgetID
-		{
-			get
-			{
-				return this._Root_WidgetID;
-			}
-			set
-			{
-				if ((this._Root_WidgetID != value))
-				{
-					this.OnRoot_WidgetIDChanging(value);
-					this.SendPropertyChanging();
-					this._Root_WidgetID = value;
-					this.SendPropertyChanged("Root_WidgetID");
-					this.OnRoot_WidgetIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_ContentID
-		{
-			get
-			{
-				return this._Root_ContentID;
-			}
-			set
-			{
-				if ((this._Root_ContentID != value))
-				{
-					if (this._carrot_RootContent.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRoot_ContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._Root_ContentID = value;
-					this.SendPropertyChanged("Root_ContentID");
-					this.OnRoot_ContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetOrder", DbType="Int NOT NULL")]
-		public int WidgetOrder
-		{
-			get
-			{
-				return this._WidgetOrder;
-			}
-			set
-			{
-				if ((this._WidgetOrder != value))
-				{
-					this.OnWidgetOrderChanging(value);
-					this.SendPropertyChanging();
-					this._WidgetOrder = value;
-					this.SendPropertyChanged("WidgetOrder");
-					this.OnWidgetOrderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlaceholderName", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
-		public string PlaceholderName
-		{
-			get
-			{
-				return this._PlaceholderName;
-			}
-			set
-			{
-				if ((this._PlaceholderName != value))
-				{
-					this.OnPlaceholderNameChanging(value);
-					this.SendPropertyChanging();
-					this._PlaceholderName = value;
-					this.SendPropertyChanged("PlaceholderName");
-					this.OnPlaceholderNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlPath", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
-		public string ControlPath
-		{
-			get
-			{
-				return this._ControlPath;
-			}
-			set
-			{
-				if ((this._ControlPath != value))
-				{
-					this.OnControlPathChanging(value);
-					this.SendPropertyChanging();
-					this._ControlPath = value;
-					this.SendPropertyChanged("ControlPath");
-					this.OnControlPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetActive", DbType="Bit NOT NULL")]
-		public bool WidgetActive
-		{
-			get
-			{
-				return this._WidgetActive;
-			}
-			set
-			{
-				if ((this._WidgetActive != value))
-				{
-					this.OnWidgetActiveChanging(value);
-					this.SendPropertyChanging();
-					this._WidgetActive = value;
-					this.SendPropertyChanged("WidgetActive");
-					this.OnWidgetActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Widget_carrot_WidgetData", Storage="_carrot_WidgetDatas", ThisKey="Root_WidgetID", OtherKey="Root_WidgetID")]
-		public EntitySet<carrot_WidgetData> carrot_WidgetDatas
-		{
-			get
-			{
-				return this._carrot_WidgetDatas;
-			}
-			set
-			{
-				this._carrot_WidgetDatas.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Widget", Storage="_carrot_RootContent", ThisKey="Root_ContentID", OtherKey="Root_ContentID", IsForeignKey=true)]
-		public carrot_RootContent carrot_RootContent
-		{
-			get
-			{
-				return this._carrot_RootContent.Entity;
-			}
-			set
-			{
-				carrot_RootContent previousValue = this._carrot_RootContent.Entity;
-				if (((previousValue != value) 
-							|| (this._carrot_RootContent.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._carrot_RootContent.Entity = null;
-						previousValue.carrot_Widgets.Remove(this);
-					}
-					this._carrot_RootContent.Entity = value;
-					if ((value != null))
-					{
-						value.carrot_Widgets.Add(this);
-						this._Root_ContentID = value.Root_ContentID;
-					}
-					else
-					{
-						this._Root_ContentID = default(System.Guid);
-					}
-					this.SendPropertyChanged("carrot_RootContent");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_carrot_WidgetDatas(carrot_WidgetData entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Widget = this;
-		}
-		
-		private void detach_carrot_WidgetDatas(carrot_WidgetData entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Widget = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_WidgetData")]
-	public partial class carrot_WidgetData : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _WidgetDataID;
-		
-		private System.Guid _Root_WidgetID;
-		
-		private System.Nullable<bool> _IsLatestVersion;
-		
-		private System.DateTime _EditDate;
-		
-		private string _ControlProperties;
-		
-		private EntityRef<carrot_Widget> _carrot_Widget;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnWidgetDataIDChanging(System.Guid value);
-    partial void OnWidgetDataIDChanged();
-    partial void OnRoot_WidgetIDChanging(System.Guid value);
-    partial void OnRoot_WidgetIDChanged();
-    partial void OnIsLatestVersionChanging(System.Nullable<bool> value);
-    partial void OnIsLatestVersionChanged();
-    partial void OnEditDateChanging(System.DateTime value);
-    partial void OnEditDateChanged();
-    partial void OnControlPropertiesChanging(string value);
-    partial void OnControlPropertiesChanged();
-    #endregion
-		
-		public carrot_WidgetData()
-		{
-			this._carrot_Widget = default(EntityRef<carrot_Widget>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetDataID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid WidgetDataID
-		{
-			get
-			{
-				return this._WidgetDataID;
-			}
-			set
-			{
-				if ((this._WidgetDataID != value))
-				{
-					this.OnWidgetDataIDChanging(value);
-					this.SendPropertyChanging();
-					this._WidgetDataID = value;
-					this.SendPropertyChanged("WidgetDataID");
-					this.OnWidgetDataIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_WidgetID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_WidgetID
-		{
-			get
-			{
-				return this._Root_WidgetID;
-			}
-			set
-			{
-				if ((this._Root_WidgetID != value))
-				{
-					if (this._carrot_Widget.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRoot_WidgetIDChanging(value);
-					this.SendPropertyChanging();
-					this._Root_WidgetID = value;
-					this.SendPropertyChanged("Root_WidgetID");
-					this.OnRoot_WidgetIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
-		{
-			get
-			{
-				return this._IsLatestVersion;
-			}
-			set
-			{
-				if ((this._IsLatestVersion != value))
-				{
-					this.OnIsLatestVersionChanging(value);
-					this.SendPropertyChanging();
-					this._IsLatestVersion = value;
-					this.SendPropertyChanged("IsLatestVersion");
-					this.OnIsLatestVersionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
-		public System.DateTime EditDate
-		{
-			get
-			{
-				return this._EditDate;
-			}
-			set
-			{
-				if ((this._EditDate != value))
-				{
-					this.OnEditDateChanging(value);
-					this.SendPropertyChanging();
-					this._EditDate = value;
-					this.SendPropertyChanged("EditDate");
-					this.OnEditDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlProperties", DbType="VarChar(MAX)")]
-		public string ControlProperties
-		{
-			get
-			{
-				return this._ControlProperties;
-			}
-			set
-			{
-				if ((this._ControlProperties != value))
-				{
-					this.OnControlPropertiesChanging(value);
-					this.SendPropertyChanging();
-					this._ControlProperties = value;
-					this.SendPropertyChanged("ControlProperties");
-					this.OnControlPropertiesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Widget_carrot_WidgetData", Storage="_carrot_Widget", ThisKey="Root_WidgetID", OtherKey="Root_WidgetID", IsForeignKey=true)]
-		public carrot_Widget carrot_Widget
-		{
-			get
-			{
-				return this._carrot_Widget.Entity;
-			}
-			set
-			{
-				carrot_Widget previousValue = this._carrot_Widget.Entity;
-				if (((previousValue != value) 
-							|| (this._carrot_Widget.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._carrot_Widget.Entity = null;
-						previousValue.carrot_WidgetDatas.Remove(this);
-					}
-					this._carrot_Widget.Entity = value;
-					if ((value != null))
-					{
-						value.carrot_WidgetDatas.Add(this);
-						this._Root_WidgetID = value.Root_WidgetID;
-					}
-					else
-					{
-						this._Root_WidgetID = default(System.Guid);
-					}
-					this.SendPropertyChanged("carrot_Widget");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_ContentType")]
-	public partial class carrot_ContentType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _ContentTypeID;
-		
-		private string _ContentTypeValue;
-		
-		private EntitySet<carrot_RootContent> _carrot_RootContents;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnContentTypeIDChanging(System.Guid value);
-    partial void OnContentTypeIDChanged();
-    partial void OnContentTypeValueChanging(string value);
-    partial void OnContentTypeValueChanged();
-    #endregion
-		
-		public carrot_ContentType()
-		{
-			this._carrot_RootContents = new EntitySet<carrot_RootContent>(new Action<carrot_RootContent>(this.attach_carrot_RootContents), new Action<carrot_RootContent>(this.detach_carrot_RootContents));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid ContentTypeID
-		{
-			get
-			{
-				return this._ContentTypeID;
-			}
-			set
-			{
-				if ((this._ContentTypeID != value))
-				{
-					this.OnContentTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._ContentTypeID = value;
-					this.SendPropertyChanged("ContentTypeID");
-					this.OnContentTypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeValue", DbType="VarChar(256)")]
-		public string ContentTypeValue
-		{
-			get
-			{
-				return this._ContentTypeValue;
-			}
-			set
-			{
-				if ((this._ContentTypeValue != value))
-				{
-					this.OnContentTypeValueChanging(value);
-					this.SendPropertyChanging();
-					this._ContentTypeValue = value;
-					this.SendPropertyChanged("ContentTypeValue");
-					this.OnContentTypeValueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_ContentType_carrot_RootContent", Storage="_carrot_RootContents", ThisKey="ContentTypeID", OtherKey="ContentTypeID")]
-		public EntitySet<carrot_RootContent> carrot_RootContents
-		{
-			get
-			{
-				return this._carrot_RootContents;
-			}
-			set
-			{
-				this._carrot_RootContents.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_carrot_RootContents(carrot_RootContent entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_ContentType = this;
-		}
-		
-		private void detach_carrot_RootContents(carrot_RootContent entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_ContentType = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Content")]
-	public partial class carrot_Content : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _ContentID;
-		
-		private System.Guid _Root_ContentID;
-		
-		private System.Nullable<System.Guid> _Parent_ContentID;
-		
-		private System.Nullable<bool> _IsLatestVersion;
-		
-		private string _TitleBar;
-		
-		private string _NavMenuText;
-		
-		private string _PageHead;
-		
-		private string _PageText;
-		
-		private string _LeftPageText;
-		
-		private string _RightPageText;
-		
-		private System.Nullable<int> _NavOrder;
-		
-		private System.Nullable<System.Guid> _EditUserId;
-		
-		private System.DateTime _EditDate;
-		
-		private string _TemplateFile;
-		
-		private string _MetaKeyword;
-		
-		private string _MetaDescription;
-		
-		private EntityRef<aspnet_User> _aspnet_User;
-		
-		private EntityRef<carrot_RootContent> _carrot_RootContent;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnContentIDChanging(System.Guid value);
-    partial void OnContentIDChanged();
-    partial void OnRoot_ContentIDChanging(System.Guid value);
-    partial void OnRoot_ContentIDChanged();
-    partial void OnParent_ContentIDChanging(System.Nullable<System.Guid> value);
-    partial void OnParent_ContentIDChanged();
-    partial void OnIsLatestVersionChanging(System.Nullable<bool> value);
-    partial void OnIsLatestVersionChanged();
-    partial void OnTitleBarChanging(string value);
-    partial void OnTitleBarChanged();
-    partial void OnNavMenuTextChanging(string value);
-    partial void OnNavMenuTextChanged();
-    partial void OnPageHeadChanging(string value);
-    partial void OnPageHeadChanged();
-    partial void OnPageTextChanging(string value);
-    partial void OnPageTextChanged();
-    partial void OnLeftPageTextChanging(string value);
-    partial void OnLeftPageTextChanged();
-    partial void OnRightPageTextChanging(string value);
-    partial void OnRightPageTextChanged();
-    partial void OnNavOrderChanging(System.Nullable<int> value);
-    partial void OnNavOrderChanged();
-    partial void OnEditUserIdChanging(System.Nullable<System.Guid> value);
-    partial void OnEditUserIdChanged();
-    partial void OnEditDateChanging(System.DateTime value);
-    partial void OnEditDateChanged();
-    partial void OnTemplateFileChanging(string value);
-    partial void OnTemplateFileChanged();
-    partial void OnMetaKeywordChanging(string value);
-    partial void OnMetaKeywordChanged();
-    partial void OnMetaDescriptionChanging(string value);
-    partial void OnMetaDescriptionChanged();
-    #endregion
-		
-		public carrot_Content()
-		{
-			this._aspnet_User = default(EntityRef<aspnet_User>);
-			this._carrot_RootContent = default(EntityRef<carrot_RootContent>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid ContentID
-		{
-			get
-			{
-				return this._ContentID;
-			}
-			set
-			{
-				if ((this._ContentID != value))
-				{
-					this.OnContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._ContentID = value;
-					this.SendPropertyChanged("ContentID");
-					this.OnContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_ContentID
-		{
-			get
-			{
-				return this._Root_ContentID;
-			}
-			set
-			{
-				if ((this._Root_ContentID != value))
-				{
-					if (this._carrot_RootContent.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRoot_ContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._Root_ContentID = value;
-					this.SendPropertyChanged("Root_ContentID");
-					this.OnRoot_ContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parent_ContentID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Parent_ContentID
-		{
-			get
-			{
-				return this._Parent_ContentID;
-			}
-			set
-			{
-				if ((this._Parent_ContentID != value))
-				{
-					this.OnParent_ContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._Parent_ContentID = value;
-					this.SendPropertyChanged("Parent_ContentID");
-					this.OnParent_ContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
-		{
-			get
-			{
-				return this._IsLatestVersion;
-			}
-			set
-			{
-				if ((this._IsLatestVersion != value))
-				{
-					this.OnIsLatestVersionChanging(value);
-					this.SendPropertyChanging();
-					this._IsLatestVersion = value;
-					this.SendPropertyChanged("IsLatestVersion");
-					this.OnIsLatestVersionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TitleBar", DbType="VarChar(256)")]
-		public string TitleBar
-		{
-			get
-			{
-				return this._TitleBar;
-			}
-			set
-			{
-				if ((this._TitleBar != value))
-				{
-					this.OnTitleBarChanging(value);
-					this.SendPropertyChanging();
-					this._TitleBar = value;
-					this.SendPropertyChanged("TitleBar");
-					this.OnTitleBarChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavMenuText", DbType="VarChar(256)")]
-		public string NavMenuText
-		{
-			get
-			{
-				return this._NavMenuText;
-			}
-			set
-			{
-				if ((this._NavMenuText != value))
-				{
-					this.OnNavMenuTextChanging(value);
-					this.SendPropertyChanging();
-					this._NavMenuText = value;
-					this.SendPropertyChanged("NavMenuText");
-					this.OnNavMenuTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageHead", DbType="VarChar(256)")]
-		public string PageHead
-		{
-			get
-			{
-				return this._PageHead;
-			}
-			set
-			{
-				if ((this._PageHead != value))
-				{
-					this.OnPageHeadChanging(value);
-					this.SendPropertyChanging();
-					this._PageHead = value;
-					this.SendPropertyChanged("PageHead");
-					this.OnPageHeadChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageText", DbType="VarChar(MAX)")]
-		public string PageText
-		{
-			get
-			{
-				return this._PageText;
-			}
-			set
-			{
-				if ((this._PageText != value))
-				{
-					this.OnPageTextChanging(value);
-					this.SendPropertyChanging();
-					this._PageText = value;
-					this.SendPropertyChanged("PageText");
-					this.OnPageTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeftPageText", DbType="VarChar(MAX)")]
-		public string LeftPageText
-		{
-			get
-			{
-				return this._LeftPageText;
-			}
-			set
-			{
-				if ((this._LeftPageText != value))
-				{
-					this.OnLeftPageTextChanging(value);
-					this.SendPropertyChanging();
-					this._LeftPageText = value;
-					this.SendPropertyChanged("LeftPageText");
-					this.OnLeftPageTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RightPageText", DbType="VarChar(MAX)")]
-		public string RightPageText
-		{
-			get
-			{
-				return this._RightPageText;
-			}
-			set
-			{
-				if ((this._RightPageText != value))
-				{
-					this.OnRightPageTextChanging(value);
-					this.SendPropertyChanging();
-					this._RightPageText = value;
-					this.SendPropertyChanged("RightPageText");
-					this.OnRightPageTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
-		public System.Nullable<int> NavOrder
-		{
-			get
-			{
-				return this._NavOrder;
-			}
-			set
-			{
-				if ((this._NavOrder != value))
-				{
-					this.OnNavOrderChanging(value);
-					this.SendPropertyChanging();
-					this._NavOrder = value;
-					this.SendPropertyChanged("NavOrder");
-					this.OnNavOrderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> EditUserId
-		{
-			get
-			{
-				return this._EditUserId;
-			}
-			set
-			{
-				if ((this._EditUserId != value))
-				{
-					if (this._aspnet_User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnEditUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._EditUserId = value;
-					this.SendPropertyChanged("EditUserId");
-					this.OnEditUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
-		public System.DateTime EditDate
-		{
-			get
-			{
-				return this._EditDate;
-			}
-			set
-			{
-				if ((this._EditDate != value))
-				{
-					this.OnEditDateChanging(value);
-					this.SendPropertyChanging();
-					this._EditDate = value;
-					this.SendPropertyChanged("EditDate");
-					this.OnEditDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateFile", DbType="NVarChar(256)")]
-		public string TemplateFile
-		{
-			get
-			{
-				return this._TemplateFile;
-			}
-			set
-			{
-				if ((this._TemplateFile != value))
-				{
-					this.OnTemplateFileChanging(value);
-					this.SendPropertyChanging();
-					this._TemplateFile = value;
-					this.SendPropertyChanged("TemplateFile");
-					this.OnTemplateFileChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="VarChar(1000)")]
-		public string MetaKeyword
-		{
-			get
-			{
-				return this._MetaKeyword;
-			}
-			set
-			{
-				if ((this._MetaKeyword != value))
-				{
-					this.OnMetaKeywordChanging(value);
-					this.SendPropertyChanging();
-					this._MetaKeyword = value;
-					this.SendPropertyChanged("MetaKeyword");
-					this.OnMetaKeywordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="VarChar(2000)")]
-		public string MetaDescription
-		{
-			get
-			{
-				return this._MetaDescription;
-			}
-			set
-			{
-				if ((this._MetaDescription != value))
-				{
-					this.OnMetaDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._MetaDescription = value;
-					this.SendPropertyChanged("MetaDescription");
-					this.OnMetaDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_Content", Storage="_aspnet_User", ThisKey="EditUserId", OtherKey="UserId", IsForeignKey=true)]
-		public aspnet_User aspnet_User
-		{
-			get
-			{
-				return this._aspnet_User.Entity;
-			}
-			set
-			{
-				aspnet_User previousValue = this._aspnet_User.Entity;
-				if (((previousValue != value) 
-							|| (this._aspnet_User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._aspnet_User.Entity = null;
-						previousValue.carrot_Contents.Remove(this);
-					}
-					this._aspnet_User.Entity = value;
-					if ((value != null))
-					{
-						value.carrot_Contents.Add(this);
-						this._EditUserId = value.UserId;
-					}
-					else
-					{
-						this._EditUserId = default(Nullable<System.Guid>);
-					}
-					this.SendPropertyChanged("aspnet_User");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Content", Storage="_carrot_RootContent", ThisKey="Root_ContentID", OtherKey="Root_ContentID", IsForeignKey=true)]
-		public carrot_RootContent carrot_RootContent
-		{
-			get
-			{
-				return this._carrot_RootContent.Entity;
-			}
-			set
-			{
-				carrot_RootContent previousValue = this._carrot_RootContent.Entity;
-				if (((previousValue != value) 
-							|| (this._carrot_RootContent.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._carrot_RootContent.Entity = null;
-						previousValue.carrot_Contents.Remove(this);
-					}
-					this._carrot_RootContent.Entity = value;
-					if ((value != null))
-					{
-						value.carrot_Contents.Add(this);
-						this._Root_ContentID = value.Root_ContentID;
-					}
-					else
-					{
-						this._Root_ContentID = default(System.Guid);
-					}
-					this.SendPropertyChanged("carrot_RootContent");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Sites")]
-	public partial class carrot_Site : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _SiteID;
-		
-		private string _SiteName;
-		
-		private string _SiteTagline;
-		
-		private string _MetaKeyword;
-		
-		private string _MetaDescription;
-		
-		private string _SiteTitlebarPattern;
-		
-		private string _MainURL;
-		
-		private bool _BlockIndex;
-		
-		private System.Nullable<System.Guid> _Blog_Root_ContentID;
-		
-		private string _Blog_FolderPath;
-		
-		private string _Blog_CategoryPath;
-		
-		private string _Blog_TagPath;
-		
-		private string _Blog_DatePattern;
-		
-		private EntitySet<carrot_UserSiteMapping> _carrot_UserSiteMappings;
-		
-		private EntitySet<carrot_RootContent> _carrot_RootContents;
-		
-		private EntitySet<carrot_ContentTag> _carrot_ContentTags;
-		
-		private EntitySet<carrot_ContentCategory> _carrot_ContentCategories;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSiteIDChanging(System.Guid value);
-    partial void OnSiteIDChanged();
-    partial void OnSiteNameChanging(string value);
-    partial void OnSiteNameChanged();
-    partial void OnSiteTaglineChanging(string value);
-    partial void OnSiteTaglineChanged();
-    partial void OnMetaKeywordChanging(string value);
-    partial void OnMetaKeywordChanged();
-    partial void OnMetaDescriptionChanging(string value);
-    partial void OnMetaDescriptionChanged();
-    partial void OnSiteTitlebarPatternChanging(string value);
-    partial void OnSiteTitlebarPatternChanged();
-    partial void OnMainURLChanging(string value);
-    partial void OnMainURLChanged();
-    partial void OnBlockIndexChanging(bool value);
-    partial void OnBlockIndexChanged();
-    partial void OnBlog_Root_ContentIDChanging(System.Nullable<System.Guid> value);
-    partial void OnBlog_Root_ContentIDChanged();
-    partial void OnBlog_FolderPathChanging(string value);
-    partial void OnBlog_FolderPathChanged();
-    partial void OnBlog_CategoryPathChanging(string value);
-    partial void OnBlog_CategoryPathChanged();
-    partial void OnBlog_TagPathChanging(string value);
-    partial void OnBlog_TagPathChanged();
-    partial void OnBlog_DatePatternChanging(string value);
-    partial void OnBlog_DatePatternChanged();
-    #endregion
-		
-		public carrot_Site()
-		{
-			this._carrot_UserSiteMappings = new EntitySet<carrot_UserSiteMapping>(new Action<carrot_UserSiteMapping>(this.attach_carrot_UserSiteMappings), new Action<carrot_UserSiteMapping>(this.detach_carrot_UserSiteMappings));
-			this._carrot_RootContents = new EntitySet<carrot_RootContent>(new Action<carrot_RootContent>(this.attach_carrot_RootContents), new Action<carrot_RootContent>(this.detach_carrot_RootContents));
-			this._carrot_ContentTags = new EntitySet<carrot_ContentTag>(new Action<carrot_ContentTag>(this.attach_carrot_ContentTags), new Action<carrot_ContentTag>(this.detach_carrot_ContentTags));
-			this._carrot_ContentCategories = new EntitySet<carrot_ContentCategory>(new Action<carrot_ContentCategory>(this.attach_carrot_ContentCategories), new Action<carrot_ContentCategory>(this.detach_carrot_ContentCategories));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					this.OnSiteIDChanging(value);
-					this.SendPropertyChanging();
-					this._SiteID = value;
-					this.SendPropertyChanged("SiteID");
-					this.OnSiteIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteName", DbType="VarChar(256)")]
-		public string SiteName
-		{
-			get
-			{
-				return this._SiteName;
-			}
-			set
-			{
-				if ((this._SiteName != value))
-				{
-					this.OnSiteNameChanging(value);
-					this.SendPropertyChanging();
-					this._SiteName = value;
-					this.SendPropertyChanged("SiteName");
-					this.OnSiteNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTagline", DbType="VarChar(1024)")]
-		public string SiteTagline
-		{
-			get
-			{
-				return this._SiteTagline;
-			}
-			set
-			{
-				if ((this._SiteTagline != value))
-				{
-					this.OnSiteTaglineChanging(value);
-					this.SendPropertyChanging();
-					this._SiteTagline = value;
-					this.SendPropertyChanged("SiteTagline");
-					this.OnSiteTaglineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="VarChar(1000)")]
-		public string MetaKeyword
-		{
-			get
-			{
-				return this._MetaKeyword;
-			}
-			set
-			{
-				if ((this._MetaKeyword != value))
-				{
-					this.OnMetaKeywordChanging(value);
-					this.SendPropertyChanging();
-					this._MetaKeyword = value;
-					this.SendPropertyChanged("MetaKeyword");
-					this.OnMetaKeywordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="VarChar(2000)")]
-		public string MetaDescription
-		{
-			get
-			{
-				return this._MetaDescription;
-			}
-			set
-			{
-				if ((this._MetaDescription != value))
-				{
-					this.OnMetaDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._MetaDescription = value;
-					this.SendPropertyChanged("MetaDescription");
-					this.OnMetaDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTitlebarPattern", DbType="VarChar(1024)")]
-		public string SiteTitlebarPattern
-		{
-			get
-			{
-				return this._SiteTitlebarPattern;
-			}
-			set
-			{
-				if ((this._SiteTitlebarPattern != value))
-				{
-					this.OnSiteTitlebarPatternChanging(value);
-					this.SendPropertyChanging();
-					this._SiteTitlebarPattern = value;
-					this.SendPropertyChanged("SiteTitlebarPattern");
-					this.OnSiteTitlebarPatternChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MainURL", DbType="VarChar(256)")]
-		public string MainURL
-		{
-			get
-			{
-				return this._MainURL;
-			}
-			set
-			{
-				if ((this._MainURL != value))
-				{
-					this.OnMainURLChanging(value);
-					this.SendPropertyChanging();
-					this._MainURL = value;
-					this.SendPropertyChanged("MainURL");
-					this.OnMainURLChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlockIndex", DbType="Bit NOT NULL")]
-		public bool BlockIndex
-		{
-			get
-			{
-				return this._BlockIndex;
-			}
-			set
-			{
-				if ((this._BlockIndex != value))
-				{
-					this.OnBlockIndexChanging(value);
-					this.SendPropertyChanging();
-					this._BlockIndex = value;
-					this.SendPropertyChanged("BlockIndex");
-					this.OnBlockIndexChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_Root_ContentID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Blog_Root_ContentID
-		{
-			get
-			{
-				return this._Blog_Root_ContentID;
-			}
-			set
-			{
-				if ((this._Blog_Root_ContentID != value))
-				{
-					this.OnBlog_Root_ContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_Root_ContentID = value;
-					this.SendPropertyChanged("Blog_Root_ContentID");
-					this.OnBlog_Root_ContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_FolderPath", DbType="VarChar(256)")]
-		public string Blog_FolderPath
-		{
-			get
-			{
-				return this._Blog_FolderPath;
-			}
-			set
-			{
-				if ((this._Blog_FolderPath != value))
-				{
-					this.OnBlog_FolderPathChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_FolderPath = value;
-					this.SendPropertyChanged("Blog_FolderPath");
-					this.OnBlog_FolderPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_CategoryPath", DbType="VarChar(256)")]
-		public string Blog_CategoryPath
-		{
-			get
-			{
-				return this._Blog_CategoryPath;
-			}
-			set
-			{
-				if ((this._Blog_CategoryPath != value))
-				{
-					this.OnBlog_CategoryPathChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_CategoryPath = value;
-					this.SendPropertyChanged("Blog_CategoryPath");
-					this.OnBlog_CategoryPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_TagPath", DbType="VarChar(256)")]
-		public string Blog_TagPath
-		{
-			get
-			{
-				return this._Blog_TagPath;
-			}
-			set
-			{
-				if ((this._Blog_TagPath != value))
-				{
-					this.OnBlog_TagPathChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_TagPath = value;
-					this.SendPropertyChanged("Blog_TagPath");
-					this.OnBlog_TagPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_DatePattern", DbType="VarChar(64)")]
-		public string Blog_DatePattern
-		{
-			get
-			{
-				return this._Blog_DatePattern;
-			}
-			set
-			{
-				if ((this._Blog_DatePattern != value))
-				{
-					this.OnBlog_DatePatternChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_DatePattern = value;
-					this.SendPropertyChanged("Blog_DatePattern");
-					this.OnBlog_DatePatternChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_UserSiteMapping", Storage="_carrot_UserSiteMappings", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_UserSiteMapping> carrot_UserSiteMappings
-		{
-			get
-			{
-				return this._carrot_UserSiteMappings;
-			}
-			set
-			{
-				this._carrot_UserSiteMappings.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_RootContent", Storage="_carrot_RootContents", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_RootContent> carrot_RootContents
-		{
-			get
-			{
-				return this._carrot_RootContents;
-			}
-			set
-			{
-				this._carrot_RootContents.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentTag", Storage="_carrot_ContentTags", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_ContentTag> carrot_ContentTags
-		{
-			get
-			{
-				return this._carrot_ContentTags;
-			}
-			set
-			{
-				this._carrot_ContentTags.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentCategory", Storage="_carrot_ContentCategories", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_ContentCategory> carrot_ContentCategories
-		{
-			get
-			{
-				return this._carrot_ContentCategories;
-			}
-			set
-			{
-				this._carrot_ContentCategories.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-		
-		private void attach_carrot_RootContents(carrot_RootContent entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_RootContents(carrot_RootContent entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-		
-		private void attach_carrot_ContentTags(carrot_ContentTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_ContentTags(carrot_ContentTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-		
-		private void attach_carrot_ContentCategories(carrot_ContentCategory entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_ContentCategories(carrot_ContentCategory entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_RootContent")]
-	public partial class carrot_RootContent : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Root_ContentID;
-		
-		private System.Guid _SiteID;
-		
-		private System.Nullable<System.Guid> _Heartbeat_UserId;
-		
-		private System.Nullable<System.DateTime> _EditHeartbeat;
-		
-		private string _FileName;
-		
-		private bool _PageActive;
-		
-		private System.DateTime _CreateDate;
-		
-		private System.Guid _ContentTypeID;
-		
-		private string _PageSlug;
-		
-		private EntitySet<carrot_Widget> _carrot_Widgets;
-		
-		private EntitySet<carrot_Content> _carrot_Contents;
-		
-		private EntitySet<carrot_CategoryContentMapping> _carrot_CategoryContentMappings;
-		
-		private EntitySet<carrot_TagContentMapping> _carrot_TagContentMappings;
-		
-		private EntitySet<carrot_ContentComment> _carrot_ContentComments;
-		
-		private EntityRef<carrot_ContentType> _carrot_ContentType;
-		
-		private EntityRef<carrot_Site> _carrot_Site;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnRoot_ContentIDChanging(System.Guid value);
-    partial void OnRoot_ContentIDChanged();
-    partial void OnSiteIDChanging(System.Guid value);
-    partial void OnSiteIDChanged();
-    partial void OnHeartbeat_UserIdChanging(System.Nullable<System.Guid> value);
-    partial void OnHeartbeat_UserIdChanged();
-    partial void OnEditHeartbeatChanging(System.Nullable<System.DateTime> value);
-    partial void OnEditHeartbeatChanged();
-    partial void OnFileNameChanging(string value);
-    partial void OnFileNameChanged();
-    partial void OnPageActiveChanging(bool value);
-    partial void OnPageActiveChanged();
-    partial void OnCreateDateChanging(System.DateTime value);
-    partial void OnCreateDateChanged();
-    partial void OnContentTypeIDChanging(System.Guid value);
-    partial void OnContentTypeIDChanged();
-    partial void OnPageSlugChanging(string value);
-    partial void OnPageSlugChanged();
-    #endregion
-		
-		public carrot_RootContent()
-		{
-			this._carrot_Widgets = new EntitySet<carrot_Widget>(new Action<carrot_Widget>(this.attach_carrot_Widgets), new Action<carrot_Widget>(this.detach_carrot_Widgets));
-			this._carrot_Contents = new EntitySet<carrot_Content>(new Action<carrot_Content>(this.attach_carrot_Contents), new Action<carrot_Content>(this.detach_carrot_Contents));
-			this._carrot_CategoryContentMappings = new EntitySet<carrot_CategoryContentMapping>(new Action<carrot_CategoryContentMapping>(this.attach_carrot_CategoryContentMappings), new Action<carrot_CategoryContentMapping>(this.detach_carrot_CategoryContentMappings));
-			this._carrot_TagContentMappings = new EntitySet<carrot_TagContentMapping>(new Action<carrot_TagContentMapping>(this.attach_carrot_TagContentMappings), new Action<carrot_TagContentMapping>(this.detach_carrot_TagContentMappings));
-			this._carrot_ContentComments = new EntitySet<carrot_ContentComment>(new Action<carrot_ContentComment>(this.attach_carrot_ContentComments), new Action<carrot_ContentComment>(this.detach_carrot_ContentComments));
-			this._carrot_ContentType = default(EntityRef<carrot_ContentType>);
-			this._carrot_Site = default(EntityRef<carrot_Site>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Root_ContentID
-		{
-			get
-			{
-				return this._Root_ContentID;
-			}
-			set
-			{
-				if ((this._Root_ContentID != value))
-				{
-					this.OnRoot_ContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._Root_ContentID = value;
-					this.SendPropertyChanged("Root_ContentID");
-					this.OnRoot_ContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					if (this._carrot_Site.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSiteIDChanging(value);
-					this.SendPropertyChanging();
-					this._SiteID = value;
-					this.SendPropertyChanged("SiteID");
-					this.OnSiteIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Heartbeat_UserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Heartbeat_UserId
-		{
-			get
-			{
-				return this._Heartbeat_UserId;
-			}
-			set
-			{
-				if ((this._Heartbeat_UserId != value))
-				{
-					this.OnHeartbeat_UserIdChanging(value);
-					this.SendPropertyChanging();
-					this._Heartbeat_UserId = value;
-					this.SendPropertyChanged("Heartbeat_UserId");
-					this.OnHeartbeat_UserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditHeartbeat", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EditHeartbeat
-		{
-			get
-			{
-				return this._EditHeartbeat;
-			}
-			set
-			{
-				if ((this._EditHeartbeat != value))
-				{
-					this.OnEditHeartbeatChanging(value);
-					this.SendPropertyChanging();
-					this._EditHeartbeat = value;
-					this.SendPropertyChanged("EditHeartbeat");
-					this.OnEditHeartbeatChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
-		public string FileName
-		{
-			get
-			{
-				return this._FileName;
-			}
-			set
-			{
-				if ((this._FileName != value))
-				{
-					this.OnFileNameChanging(value);
-					this.SendPropertyChanging();
-					this._FileName = value;
-					this.SendPropertyChanged("FileName");
-					this.OnFileNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageActive", DbType="Bit NOT NULL")]
-		public bool PageActive
-		{
-			get
-			{
-				return this._PageActive;
-			}
-			set
-			{
-				if ((this._PageActive != value))
-				{
-					this.OnPageActiveChanging(value);
-					this.SendPropertyChanging();
-					this._PageActive = value;
-					this.SendPropertyChanged("PageActive");
-					this.OnPageActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ContentTypeID
-		{
-			get
-			{
-				return this._ContentTypeID;
-			}
-			set
-			{
-				if ((this._ContentTypeID != value))
-				{
-					if (this._carrot_ContentType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnContentTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._ContentTypeID = value;
-					this.SendPropertyChanged("ContentTypeID");
-					this.OnContentTypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageSlug", DbType="VarChar(256)")]
-		public string PageSlug
-		{
-			get
-			{
-				return this._PageSlug;
-			}
-			set
-			{
-				if ((this._PageSlug != value))
-				{
-					this.OnPageSlugChanging(value);
-					this.SendPropertyChanging();
-					this._PageSlug = value;
-					this.SendPropertyChanged("PageSlug");
-					this.OnPageSlugChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Widget", Storage="_carrot_Widgets", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
-		public EntitySet<carrot_Widget> carrot_Widgets
-		{
-			get
-			{
-				return this._carrot_Widgets;
-			}
-			set
-			{
-				this._carrot_Widgets.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Content", Storage="_carrot_Contents", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
-		public EntitySet<carrot_Content> carrot_Contents
-		{
-			get
-			{
-				return this._carrot_Contents;
-			}
-			set
-			{
-				this._carrot_Contents.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_CategoryContentMapping", Storage="_carrot_CategoryContentMappings", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
-		public EntitySet<carrot_CategoryContentMapping> carrot_CategoryContentMappings
-		{
-			get
-			{
-				return this._carrot_CategoryContentMappings;
-			}
-			set
-			{
-				this._carrot_CategoryContentMappings.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_TagContentMapping", Storage="_carrot_TagContentMappings", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
-		public EntitySet<carrot_TagContentMapping> carrot_TagContentMappings
-		{
-			get
-			{
-				return this._carrot_TagContentMappings;
-			}
-			set
-			{
-				this._carrot_TagContentMappings.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_ContentComment", Storage="_carrot_ContentComments", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
-		public EntitySet<carrot_ContentComment> carrot_ContentComments
-		{
-			get
-			{
-				return this._carrot_ContentComments;
-			}
-			set
-			{
-				this._carrot_ContentComments.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_ContentType_carrot_RootContent", Storage="_carrot_ContentType", ThisKey="ContentTypeID", OtherKey="ContentTypeID", IsForeignKey=true)]
-		public carrot_ContentType carrot_ContentType
-		{
-			get
-			{
-				return this._carrot_ContentType.Entity;
-			}
-			set
-			{
-				carrot_ContentType previousValue = this._carrot_ContentType.Entity;
-				if (((previousValue != value) 
-							|| (this._carrot_ContentType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._carrot_ContentType.Entity = null;
-						previousValue.carrot_RootContents.Remove(this);
-					}
-					this._carrot_ContentType.Entity = value;
-					if ((value != null))
-					{
-						value.carrot_RootContents.Add(this);
-						this._ContentTypeID = value.ContentTypeID;
-					}
-					else
-					{
-						this._ContentTypeID = default(System.Guid);
-					}
-					this.SendPropertyChanged("carrot_ContentType");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_RootContent", Storage="_carrot_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
-		public carrot_Site carrot_Site
-		{
-			get
-			{
-				return this._carrot_Site.Entity;
-			}
-			set
-			{
-				carrot_Site previousValue = this._carrot_Site.Entity;
-				if (((previousValue != value) 
-							|| (this._carrot_Site.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._carrot_Site.Entity = null;
-						previousValue.carrot_RootContents.Remove(this);
-					}
-					this._carrot_Site.Entity = value;
-					if ((value != null))
-					{
-						value.carrot_RootContents.Add(this);
-						this._SiteID = value.SiteID;
-					}
-					else
-					{
-						this._SiteID = default(System.Guid);
-					}
-					this.SendPropertyChanged("carrot_Site");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_carrot_Widgets(carrot_Widget entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = this;
-		}
-		
-		private void detach_carrot_Widgets(carrot_Widget entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = null;
-		}
-		
-		private void attach_carrot_Contents(carrot_Content entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = this;
-		}
-		
-		private void detach_carrot_Contents(carrot_Content entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = null;
-		}
-		
-		private void attach_carrot_CategoryContentMappings(carrot_CategoryContentMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = this;
-		}
-		
-		private void detach_carrot_CategoryContentMappings(carrot_CategoryContentMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = null;
-		}
-		
-		private void attach_carrot_TagContentMappings(carrot_TagContentMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = this;
-		}
-		
-		private void detach_carrot_TagContentMappings(carrot_TagContentMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = null;
-		}
-		
-		private void attach_carrot_ContentComments(carrot_ContentComment entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = this;
-		}
-		
-		private void detach_carrot_ContentComments(carrot_ContentComment entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_RootContent = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_ContentTag")]
 	public partial class carrot_ContentTag : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4385,967 +2173,6 @@ namespace Carrotware.CMS.Data
 					if ((value != null))
 					{
 						value.carrot_TagContentMappings.Add(this);
-						this._Root_ContentID = value.Root_ContentID;
-					}
-					else
-					{
-						this._Root_ContentID = default(System.Guid);
-					}
-					this.SendPropertyChanged("carrot_RootContent");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Content")]
-	public partial class vw_carrot_Content
-	{
-		
-		private System.Guid _Root_ContentID;
-		
-		private System.Guid _SiteID;
-		
-		private System.Nullable<System.Guid> _Heartbeat_UserId;
-		
-		private System.Nullable<System.DateTime> _EditHeartbeat;
-		
-		private string _FileName;
-		
-		private bool _PageActive;
-		
-		private System.DateTime _CreateDate;
-		
-		private System.Guid _ContentID;
-		
-		private System.Nullable<System.Guid> _Parent_ContentID;
-		
-		private System.Nullable<bool> _IsLatestVersion;
-		
-		private string _TitleBar;
-		
-		private string _NavMenuText;
-		
-		private string _PageHead;
-		
-		private string _PageText;
-		
-		private string _LeftPageText;
-		
-		private string _RightPageText;
-		
-		private System.Nullable<int> _NavOrder;
-		
-		private System.Nullable<System.Guid> _EditUserId;
-		
-		private System.DateTime _EditDate;
-		
-		private string _TemplateFile;
-		
-		private string _MetaKeyword;
-		
-		private string _MetaDescription;
-		
-		private System.Guid _ContentTypeID;
-		
-		private string _ContentTypeValue;
-		
-		private string _PageSlug;
-		
-		public vw_carrot_Content()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_ContentID
-		{
-			get
-			{
-				return this._Root_ContentID;
-			}
-			set
-			{
-				if ((this._Root_ContentID != value))
-				{
-					this._Root_ContentID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					this._SiteID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Heartbeat_UserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Heartbeat_UserId
-		{
-			get
-			{
-				return this._Heartbeat_UserId;
-			}
-			set
-			{
-				if ((this._Heartbeat_UserId != value))
-				{
-					this._Heartbeat_UserId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditHeartbeat", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EditHeartbeat
-		{
-			get
-			{
-				return this._EditHeartbeat;
-			}
-			set
-			{
-				if ((this._EditHeartbeat != value))
-				{
-					this._EditHeartbeat = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
-		public string FileName
-		{
-			get
-			{
-				return this._FileName;
-			}
-			set
-			{
-				if ((this._FileName != value))
-				{
-					this._FileName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageActive", DbType="Bit NOT NULL")]
-		public bool PageActive
-		{
-			get
-			{
-				return this._PageActive;
-			}
-			set
-			{
-				if ((this._PageActive != value))
-				{
-					this._PageActive = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this._CreateDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ContentID
-		{
-			get
-			{
-				return this._ContentID;
-			}
-			set
-			{
-				if ((this._ContentID != value))
-				{
-					this._ContentID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parent_ContentID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Parent_ContentID
-		{
-			get
-			{
-				return this._Parent_ContentID;
-			}
-			set
-			{
-				if ((this._Parent_ContentID != value))
-				{
-					this._Parent_ContentID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
-		{
-			get
-			{
-				return this._IsLatestVersion;
-			}
-			set
-			{
-				if ((this._IsLatestVersion != value))
-				{
-					this._IsLatestVersion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TitleBar", DbType="VarChar(256)")]
-		public string TitleBar
-		{
-			get
-			{
-				return this._TitleBar;
-			}
-			set
-			{
-				if ((this._TitleBar != value))
-				{
-					this._TitleBar = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavMenuText", DbType="VarChar(256)")]
-		public string NavMenuText
-		{
-			get
-			{
-				return this._NavMenuText;
-			}
-			set
-			{
-				if ((this._NavMenuText != value))
-				{
-					this._NavMenuText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageHead", DbType="VarChar(256)")]
-		public string PageHead
-		{
-			get
-			{
-				return this._PageHead;
-			}
-			set
-			{
-				if ((this._PageHead != value))
-				{
-					this._PageHead = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageText", DbType="VarChar(MAX)")]
-		public string PageText
-		{
-			get
-			{
-				return this._PageText;
-			}
-			set
-			{
-				if ((this._PageText != value))
-				{
-					this._PageText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeftPageText", DbType="VarChar(MAX)")]
-		public string LeftPageText
-		{
-			get
-			{
-				return this._LeftPageText;
-			}
-			set
-			{
-				if ((this._LeftPageText != value))
-				{
-					this._LeftPageText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RightPageText", DbType="VarChar(MAX)")]
-		public string RightPageText
-		{
-			get
-			{
-				return this._RightPageText;
-			}
-			set
-			{
-				if ((this._RightPageText != value))
-				{
-					this._RightPageText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
-		public System.Nullable<int> NavOrder
-		{
-			get
-			{
-				return this._NavOrder;
-			}
-			set
-			{
-				if ((this._NavOrder != value))
-				{
-					this._NavOrder = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> EditUserId
-		{
-			get
-			{
-				return this._EditUserId;
-			}
-			set
-			{
-				if ((this._EditUserId != value))
-				{
-					this._EditUserId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
-		public System.DateTime EditDate
-		{
-			get
-			{
-				return this._EditDate;
-			}
-			set
-			{
-				if ((this._EditDate != value))
-				{
-					this._EditDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateFile", DbType="NVarChar(256)")]
-		public string TemplateFile
-		{
-			get
-			{
-				return this._TemplateFile;
-			}
-			set
-			{
-				if ((this._TemplateFile != value))
-				{
-					this._TemplateFile = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="VarChar(1000)")]
-		public string MetaKeyword
-		{
-			get
-			{
-				return this._MetaKeyword;
-			}
-			set
-			{
-				if ((this._MetaKeyword != value))
-				{
-					this._MetaKeyword = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="VarChar(2000)")]
-		public string MetaDescription
-		{
-			get
-			{
-				return this._MetaDescription;
-			}
-			set
-			{
-				if ((this._MetaDescription != value))
-				{
-					this._MetaDescription = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ContentTypeID
-		{
-			get
-			{
-				return this._ContentTypeID;
-			}
-			set
-			{
-				if ((this._ContentTypeID != value))
-				{
-					this._ContentTypeID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeValue", DbType="VarChar(256)")]
-		public string ContentTypeValue
-		{
-			get
-			{
-				return this._ContentTypeValue;
-			}
-			set
-			{
-				if ((this._ContentTypeValue != value))
-				{
-					this._ContentTypeValue = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageSlug", DbType="VarChar(256)")]
-		public string PageSlug
-		{
-			get
-			{
-				return this._PageSlug;
-			}
-			set
-			{
-				if ((this._PageSlug != value))
-				{
-					this._PageSlug = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Widget")]
-	public partial class vw_carrot_Widget
-	{
-		
-		private System.Guid _Root_WidgetID;
-		
-		private System.Guid _Root_ContentID;
-		
-		private int _WidgetOrder;
-		
-		private string _PlaceholderName;
-		
-		private string _ControlPath;
-		
-		private bool _WidgetActive;
-		
-		private System.Guid _WidgetDataID;
-		
-		private System.Nullable<bool> _IsLatestVersion;
-		
-		private System.DateTime _EditDate;
-		
-		private string _ControlProperties;
-		
-		private System.Guid _SiteID;
-		
-		public vw_carrot_Widget()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_WidgetID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_WidgetID
-		{
-			get
-			{
-				return this._Root_WidgetID;
-			}
-			set
-			{
-				if ((this._Root_WidgetID != value))
-				{
-					this._Root_WidgetID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_ContentID
-		{
-			get
-			{
-				return this._Root_ContentID;
-			}
-			set
-			{
-				if ((this._Root_ContentID != value))
-				{
-					this._Root_ContentID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetOrder", DbType="Int NOT NULL")]
-		public int WidgetOrder
-		{
-			get
-			{
-				return this._WidgetOrder;
-			}
-			set
-			{
-				if ((this._WidgetOrder != value))
-				{
-					this._WidgetOrder = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlaceholderName", DbType="VarChar(256) NOT NULL", CanBeNull=false)]
-		public string PlaceholderName
-		{
-			get
-			{
-				return this._PlaceholderName;
-			}
-			set
-			{
-				if ((this._PlaceholderName != value))
-				{
-					this._PlaceholderName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlPath", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
-		public string ControlPath
-		{
-			get
-			{
-				return this._ControlPath;
-			}
-			set
-			{
-				if ((this._ControlPath != value))
-				{
-					this._ControlPath = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetActive", DbType="Bit NOT NULL")]
-		public bool WidgetActive
-		{
-			get
-			{
-				return this._WidgetActive;
-			}
-			set
-			{
-				if ((this._WidgetActive != value))
-				{
-					this._WidgetActive = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetDataID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid WidgetDataID
-		{
-			get
-			{
-				return this._WidgetDataID;
-			}
-			set
-			{
-				if ((this._WidgetDataID != value))
-				{
-					this._WidgetDataID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
-		{
-			get
-			{
-				return this._IsLatestVersion;
-			}
-			set
-			{
-				if ((this._IsLatestVersion != value))
-				{
-					this._IsLatestVersion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
-		public System.DateTime EditDate
-		{
-			get
-			{
-				return this._EditDate;
-			}
-			set
-			{
-				if ((this._EditDate != value))
-				{
-					this._EditDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlProperties", DbType="VarChar(MAX)")]
-		public string ControlProperties
-		{
-			get
-			{
-				return this._ControlProperties;
-			}
-			set
-			{
-				if ((this._ControlProperties != value))
-				{
-					this._ControlProperties = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					this._SiteID = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_ContentComment")]
-	public partial class carrot_ContentComment : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _ContentCommentID;
-		
-		private System.Guid _Root_ContentID;
-		
-		private System.DateTime _CreateDate;
-		
-		private string _CommenterIP;
-		
-		private string _CommenterName;
-		
-		private string _CommenterEmail;
-		
-		private string _PostComment;
-		
-		private bool _IsApproved;
-		
-		private bool _IsSpam;
-		
-		private EntityRef<carrot_RootContent> _carrot_RootContent;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnContentCommentIDChanging(System.Guid value);
-    partial void OnContentCommentIDChanged();
-    partial void OnRoot_ContentIDChanging(System.Guid value);
-    partial void OnRoot_ContentIDChanged();
-    partial void OnCreateDateChanging(System.DateTime value);
-    partial void OnCreateDateChanged();
-    partial void OnCommenterIPChanging(string value);
-    partial void OnCommenterIPChanged();
-    partial void OnCommenterNameChanging(string value);
-    partial void OnCommenterNameChanged();
-    partial void OnCommenterEmailChanging(string value);
-    partial void OnCommenterEmailChanged();
-    partial void OnPostCommentChanging(string value);
-    partial void OnPostCommentChanged();
-    partial void OnIsApprovedChanging(bool value);
-    partial void OnIsApprovedChanged();
-    partial void OnIsSpamChanging(bool value);
-    partial void OnIsSpamChanged();
-    #endregion
-		
-		public carrot_ContentComment()
-		{
-			this._carrot_RootContent = default(EntityRef<carrot_RootContent>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentCommentID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid ContentCommentID
-		{
-			get
-			{
-				return this._ContentCommentID;
-			}
-			set
-			{
-				if ((this._ContentCommentID != value))
-				{
-					this.OnContentCommentIDChanging(value);
-					this.SendPropertyChanging();
-					this._ContentCommentID = value;
-					this.SendPropertyChanged("ContentCommentID");
-					this.OnContentCommentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_ContentID
-		{
-			get
-			{
-				return this._Root_ContentID;
-			}
-			set
-			{
-				if ((this._Root_ContentID != value))
-				{
-					if (this._carrot_RootContent.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRoot_ContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._Root_ContentID = value;
-					this.SendPropertyChanged("Root_ContentID");
-					this.OnRoot_ContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterIP", DbType="NVarChar(32) NOT NULL", CanBeNull=false)]
-		public string CommenterIP
-		{
-			get
-			{
-				return this._CommenterIP;
-			}
-			set
-			{
-				if ((this._CommenterIP != value))
-				{
-					this.OnCommenterIPChanging(value);
-					this.SendPropertyChanging();
-					this._CommenterIP = value;
-					this.SendPropertyChanged("CommenterIP");
-					this.OnCommenterIPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
-		public string CommenterName
-		{
-			get
-			{
-				return this._CommenterName;
-			}
-			set
-			{
-				if ((this._CommenterName != value))
-				{
-					this.OnCommenterNameChanging(value);
-					this.SendPropertyChanging();
-					this._CommenterName = value;
-					this.SendPropertyChanged("CommenterName");
-					this.OnCommenterNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterEmail", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
-		public string CommenterEmail
-		{
-			get
-			{
-				return this._CommenterEmail;
-			}
-			set
-			{
-				if ((this._CommenterEmail != value))
-				{
-					this.OnCommenterEmailChanging(value);
-					this.SendPropertyChanging();
-					this._CommenterEmail = value;
-					this.SendPropertyChanged("CommenterEmail");
-					this.OnCommenterEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostComment", DbType="NVarChar(4000) NOT NULL", CanBeNull=false)]
-		public string PostComment
-		{
-			get
-			{
-				return this._PostComment;
-			}
-			set
-			{
-				if ((this._PostComment != value))
-				{
-					this.OnPostCommentChanging(value);
-					this.SendPropertyChanging();
-					this._PostComment = value;
-					this.SendPropertyChanged("PostComment");
-					this.OnPostCommentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsApproved", DbType="Bit NOT NULL")]
-		public bool IsApproved
-		{
-			get
-			{
-				return this._IsApproved;
-			}
-			set
-			{
-				if ((this._IsApproved != value))
-				{
-					this.OnIsApprovedChanging(value);
-					this.SendPropertyChanging();
-					this._IsApproved = value;
-					this.SendPropertyChanged("IsApproved");
-					this.OnIsApprovedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSpam", DbType="Bit NOT NULL")]
-		public bool IsSpam
-		{
-			get
-			{
-				return this._IsSpam;
-			}
-			set
-			{
-				if ((this._IsSpam != value))
-				{
-					this.OnIsSpamChanging(value);
-					this.SendPropertyChanging();
-					this._IsSpam = value;
-					this.SendPropertyChanged("IsSpam");
-					this.OnIsSpamChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_ContentComment", Storage="_carrot_RootContent", ThisKey="Root_ContentID", OtherKey="Root_ContentID", IsForeignKey=true)]
-		public carrot_RootContent carrot_RootContent
-		{
-			get
-			{
-				return this._carrot_RootContent.Entity;
-			}
-			set
-			{
-				carrot_RootContent previousValue = this._carrot_RootContent.Entity;
-				if (((previousValue != value) 
-							|| (this._carrot_RootContent.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._carrot_RootContent.Entity = null;
-						previousValue.carrot_ContentComments.Remove(this);
-					}
-					this._carrot_RootContent.Entity = value;
-					if ((value != null))
-					{
-						value.carrot_ContentComments.Add(this);
 						this._Root_ContentID = value.Root_ContentID;
 					}
 					else
@@ -6242,6 +3069,2741 @@ namespace Carrotware.CMS.Data
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_ContentType")]
+	public partial class carrot_ContentType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ContentTypeID;
+		
+		private string _ContentTypeValue;
+		
+		private EntitySet<carrot_RootContent> _carrot_RootContents;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnContentTypeIDChanging(System.Guid value);
+    partial void OnContentTypeIDChanged();
+    partial void OnContentTypeValueChanging(string value);
+    partial void OnContentTypeValueChanged();
+    #endregion
+		
+		public carrot_ContentType()
+		{
+			this._carrot_RootContents = new EntitySet<carrot_RootContent>(new Action<carrot_RootContent>(this.attach_carrot_RootContents), new Action<carrot_RootContent>(this.detach_carrot_RootContents));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid ContentTypeID
+		{
+			get
+			{
+				return this._ContentTypeID;
+			}
+			set
+			{
+				if ((this._ContentTypeID != value))
+				{
+					this.OnContentTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContentTypeID = value;
+					this.SendPropertyChanged("ContentTypeID");
+					this.OnContentTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeValue", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string ContentTypeValue
+		{
+			get
+			{
+				return this._ContentTypeValue;
+			}
+			set
+			{
+				if ((this._ContentTypeValue != value))
+				{
+					this.OnContentTypeValueChanging(value);
+					this.SendPropertyChanging();
+					this._ContentTypeValue = value;
+					this.SendPropertyChanged("ContentTypeValue");
+					this.OnContentTypeValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_ContentType_carrot_RootContent", Storage="_carrot_RootContents", ThisKey="ContentTypeID", OtherKey="ContentTypeID")]
+		public EntitySet<carrot_RootContent> carrot_RootContents
+		{
+			get
+			{
+				return this._carrot_RootContents;
+			}
+			set
+			{
+				this._carrot_RootContents.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_carrot_RootContents(carrot_RootContent entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_ContentType = this;
+		}
+		
+		private void detach_carrot_RootContents(carrot_RootContent entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_ContentType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_RootContent")]
+	public partial class carrot_RootContent : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Root_ContentID;
+		
+		private System.Guid _SiteID;
+		
+		private System.Nullable<System.Guid> _Heartbeat_UserId;
+		
+		private System.Nullable<System.DateTime> _EditHeartbeat;
+		
+		private string _FileName;
+		
+		private bool _PageActive;
+		
+		private System.DateTime _CreateDate;
+		
+		private System.Guid _ContentTypeID;
+		
+		private string _PageSlug;
+		
+		private EntitySet<carrot_CategoryContentMapping> _carrot_CategoryContentMappings;
+		
+		private EntitySet<carrot_TagContentMapping> _carrot_TagContentMappings;
+		
+		private EntitySet<carrot_Widget> _carrot_Widgets;
+		
+		private EntitySet<carrot_ContentComment> _carrot_ContentComments;
+		
+		private EntitySet<carrot_Content> _carrot_Contents;
+		
+		private EntityRef<carrot_ContentType> _carrot_ContentType;
+		
+		private EntityRef<carrot_Site> _carrot_Site;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnRoot_ContentIDChanging(System.Guid value);
+    partial void OnRoot_ContentIDChanged();
+    partial void OnSiteIDChanging(System.Guid value);
+    partial void OnSiteIDChanged();
+    partial void OnHeartbeat_UserIdChanging(System.Nullable<System.Guid> value);
+    partial void OnHeartbeat_UserIdChanged();
+    partial void OnEditHeartbeatChanging(System.Nullable<System.DateTime> value);
+    partial void OnEditHeartbeatChanged();
+    partial void OnFileNameChanging(string value);
+    partial void OnFileNameChanged();
+    partial void OnPageActiveChanging(bool value);
+    partial void OnPageActiveChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnContentTypeIDChanging(System.Guid value);
+    partial void OnContentTypeIDChanged();
+    partial void OnPageSlugChanging(string value);
+    partial void OnPageSlugChanged();
+    #endregion
+		
+		public carrot_RootContent()
+		{
+			this._carrot_CategoryContentMappings = new EntitySet<carrot_CategoryContentMapping>(new Action<carrot_CategoryContentMapping>(this.attach_carrot_CategoryContentMappings), new Action<carrot_CategoryContentMapping>(this.detach_carrot_CategoryContentMappings));
+			this._carrot_TagContentMappings = new EntitySet<carrot_TagContentMapping>(new Action<carrot_TagContentMapping>(this.attach_carrot_TagContentMappings), new Action<carrot_TagContentMapping>(this.detach_carrot_TagContentMappings));
+			this._carrot_Widgets = new EntitySet<carrot_Widget>(new Action<carrot_Widget>(this.attach_carrot_Widgets), new Action<carrot_Widget>(this.detach_carrot_Widgets));
+			this._carrot_ContentComments = new EntitySet<carrot_ContentComment>(new Action<carrot_ContentComment>(this.attach_carrot_ContentComments), new Action<carrot_ContentComment>(this.detach_carrot_ContentComments));
+			this._carrot_Contents = new EntitySet<carrot_Content>(new Action<carrot_Content>(this.attach_carrot_Contents), new Action<carrot_Content>(this.detach_carrot_Contents));
+			this._carrot_ContentType = default(EntityRef<carrot_ContentType>);
+			this._carrot_Site = default(EntityRef<carrot_Site>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this.OnRoot_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Root_ContentID = value;
+					this.SendPropertyChanged("Root_ContentID");
+					this.OnRoot_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					if (this._carrot_Site.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSiteIDChanging(value);
+					this.SendPropertyChanging();
+					this._SiteID = value;
+					this.SendPropertyChanged("SiteID");
+					this.OnSiteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Heartbeat_UserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Heartbeat_UserId
+		{
+			get
+			{
+				return this._Heartbeat_UserId;
+			}
+			set
+			{
+				if ((this._Heartbeat_UserId != value))
+				{
+					this.OnHeartbeat_UserIdChanging(value);
+					this.SendPropertyChanging();
+					this._Heartbeat_UserId = value;
+					this.SendPropertyChanged("Heartbeat_UserId");
+					this.OnHeartbeat_UserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditHeartbeat", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EditHeartbeat
+		{
+			get
+			{
+				return this._EditHeartbeat;
+			}
+			set
+			{
+				if ((this._EditHeartbeat != value))
+				{
+					this.OnEditHeartbeatChanging(value);
+					this.SendPropertyChanging();
+					this._EditHeartbeat = value;
+					this.SendPropertyChanged("EditHeartbeat");
+					this.OnEditHeartbeatChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this.OnFileNameChanging(value);
+					this.SendPropertyChanging();
+					this._FileName = value;
+					this.SendPropertyChanged("FileName");
+					this.OnFileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageActive", DbType="Bit NOT NULL")]
+		public bool PageActive
+		{
+			get
+			{
+				return this._PageActive;
+			}
+			set
+			{
+				if ((this._PageActive != value))
+				{
+					this.OnPageActiveChanging(value);
+					this.SendPropertyChanging();
+					this._PageActive = value;
+					this.SendPropertyChanged("PageActive");
+					this.OnPageActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ContentTypeID
+		{
+			get
+			{
+				return this._ContentTypeID;
+			}
+			set
+			{
+				if ((this._ContentTypeID != value))
+				{
+					if (this._carrot_ContentType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContentTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContentTypeID = value;
+					this.SendPropertyChanged("ContentTypeID");
+					this.OnContentTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageSlug", DbType="NVarChar(256)")]
+		public string PageSlug
+		{
+			get
+			{
+				return this._PageSlug;
+			}
+			set
+			{
+				if ((this._PageSlug != value))
+				{
+					this.OnPageSlugChanging(value);
+					this.SendPropertyChanging();
+					this._PageSlug = value;
+					this.SendPropertyChanged("PageSlug");
+					this.OnPageSlugChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_CategoryContentMapping", Storage="_carrot_CategoryContentMappings", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
+		public EntitySet<carrot_CategoryContentMapping> carrot_CategoryContentMappings
+		{
+			get
+			{
+				return this._carrot_CategoryContentMappings;
+			}
+			set
+			{
+				this._carrot_CategoryContentMappings.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_TagContentMapping", Storage="_carrot_TagContentMappings", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
+		public EntitySet<carrot_TagContentMapping> carrot_TagContentMappings
+		{
+			get
+			{
+				return this._carrot_TagContentMappings;
+			}
+			set
+			{
+				this._carrot_TagContentMappings.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Widget", Storage="_carrot_Widgets", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
+		public EntitySet<carrot_Widget> carrot_Widgets
+		{
+			get
+			{
+				return this._carrot_Widgets;
+			}
+			set
+			{
+				this._carrot_Widgets.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_ContentComment", Storage="_carrot_ContentComments", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
+		public EntitySet<carrot_ContentComment> carrot_ContentComments
+		{
+			get
+			{
+				return this._carrot_ContentComments;
+			}
+			set
+			{
+				this._carrot_ContentComments.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Content", Storage="_carrot_Contents", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
+		public EntitySet<carrot_Content> carrot_Contents
+		{
+			get
+			{
+				return this._carrot_Contents;
+			}
+			set
+			{
+				this._carrot_Contents.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_ContentType_carrot_RootContent", Storage="_carrot_ContentType", ThisKey="ContentTypeID", OtherKey="ContentTypeID", IsForeignKey=true)]
+		public carrot_ContentType carrot_ContentType
+		{
+			get
+			{
+				return this._carrot_ContentType.Entity;
+			}
+			set
+			{
+				carrot_ContentType previousValue = this._carrot_ContentType.Entity;
+				if (((previousValue != value) 
+							|| (this._carrot_ContentType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._carrot_ContentType.Entity = null;
+						previousValue.carrot_RootContents.Remove(this);
+					}
+					this._carrot_ContentType.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_RootContents.Add(this);
+						this._ContentTypeID = value.ContentTypeID;
+					}
+					else
+					{
+						this._ContentTypeID = default(System.Guid);
+					}
+					this.SendPropertyChanged("carrot_ContentType");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_RootContent", Storage="_carrot_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
+		public carrot_Site carrot_Site
+		{
+			get
+			{
+				return this._carrot_Site.Entity;
+			}
+			set
+			{
+				carrot_Site previousValue = this._carrot_Site.Entity;
+				if (((previousValue != value) 
+							|| (this._carrot_Site.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._carrot_Site.Entity = null;
+						previousValue.carrot_RootContents.Remove(this);
+					}
+					this._carrot_Site.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_RootContents.Add(this);
+						this._SiteID = value.SiteID;
+					}
+					else
+					{
+						this._SiteID = default(System.Guid);
+					}
+					this.SendPropertyChanged("carrot_Site");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_carrot_CategoryContentMappings(carrot_CategoryContentMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = this;
+		}
+		
+		private void detach_carrot_CategoryContentMappings(carrot_CategoryContentMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = null;
+		}
+		
+		private void attach_carrot_TagContentMappings(carrot_TagContentMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = this;
+		}
+		
+		private void detach_carrot_TagContentMappings(carrot_TagContentMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = null;
+		}
+		
+		private void attach_carrot_Widgets(carrot_Widget entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = this;
+		}
+		
+		private void detach_carrot_Widgets(carrot_Widget entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = null;
+		}
+		
+		private void attach_carrot_ContentComments(carrot_ContentComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = this;
+		}
+		
+		private void detach_carrot_ContentComments(carrot_ContentComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = null;
+		}
+		
+		private void attach_carrot_Contents(carrot_Content entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = this;
+		}
+		
+		private void detach_carrot_Contents(carrot_Content entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_WidgetData")]
+	public partial class carrot_WidgetData : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _WidgetDataID;
+		
+		private System.Guid _Root_WidgetID;
+		
+		private System.Nullable<bool> _IsLatestVersion;
+		
+		private System.DateTime _EditDate;
+		
+		private string _ControlProperties;
+		
+		private EntityRef<carrot_Widget> _carrot_Widget;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWidgetDataIDChanging(System.Guid value);
+    partial void OnWidgetDataIDChanged();
+    partial void OnRoot_WidgetIDChanging(System.Guid value);
+    partial void OnRoot_WidgetIDChanged();
+    partial void OnIsLatestVersionChanging(System.Nullable<bool> value);
+    partial void OnIsLatestVersionChanged();
+    partial void OnEditDateChanging(System.DateTime value);
+    partial void OnEditDateChanged();
+    partial void OnControlPropertiesChanging(string value);
+    partial void OnControlPropertiesChanged();
+    #endregion
+		
+		public carrot_WidgetData()
+		{
+			this._carrot_Widget = default(EntityRef<carrot_Widget>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetDataID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid WidgetDataID
+		{
+			get
+			{
+				return this._WidgetDataID;
+			}
+			set
+			{
+				if ((this._WidgetDataID != value))
+				{
+					this.OnWidgetDataIDChanging(value);
+					this.SendPropertyChanging();
+					this._WidgetDataID = value;
+					this.SendPropertyChanged("WidgetDataID");
+					this.OnWidgetDataIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_WidgetID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_WidgetID
+		{
+			get
+			{
+				return this._Root_WidgetID;
+			}
+			set
+			{
+				if ((this._Root_WidgetID != value))
+				{
+					if (this._carrot_Widget.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoot_WidgetIDChanging(value);
+					this.SendPropertyChanging();
+					this._Root_WidgetID = value;
+					this.SendPropertyChanged("Root_WidgetID");
+					this.OnRoot_WidgetIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
+		public System.Nullable<bool> IsLatestVersion
+		{
+			get
+			{
+				return this._IsLatestVersion;
+			}
+			set
+			{
+				if ((this._IsLatestVersion != value))
+				{
+					this.OnIsLatestVersionChanging(value);
+					this.SendPropertyChanging();
+					this._IsLatestVersion = value;
+					this.SendPropertyChanged("IsLatestVersion");
+					this.OnIsLatestVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EditDate
+		{
+			get
+			{
+				return this._EditDate;
+			}
+			set
+			{
+				if ((this._EditDate != value))
+				{
+					this.OnEditDateChanging(value);
+					this.SendPropertyChanging();
+					this._EditDate = value;
+					this.SendPropertyChanged("EditDate");
+					this.OnEditDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlProperties", DbType="NVarChar(MAX)")]
+		public string ControlProperties
+		{
+			get
+			{
+				return this._ControlProperties;
+			}
+			set
+			{
+				if ((this._ControlProperties != value))
+				{
+					this.OnControlPropertiesChanging(value);
+					this.SendPropertyChanging();
+					this._ControlProperties = value;
+					this.SendPropertyChanged("ControlProperties");
+					this.OnControlPropertiesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Widget_carrot_WidgetData", Storage="_carrot_Widget", ThisKey="Root_WidgetID", OtherKey="Root_WidgetID", IsForeignKey=true)]
+		public carrot_Widget carrot_Widget
+		{
+			get
+			{
+				return this._carrot_Widget.Entity;
+			}
+			set
+			{
+				carrot_Widget previousValue = this._carrot_Widget.Entity;
+				if (((previousValue != value) 
+							|| (this._carrot_Widget.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._carrot_Widget.Entity = null;
+						previousValue.carrot_WidgetDatas.Remove(this);
+					}
+					this._carrot_Widget.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_WidgetDatas.Add(this);
+						this._Root_WidgetID = value.Root_WidgetID;
+					}
+					else
+					{
+						this._Root_WidgetID = default(System.Guid);
+					}
+					this.SendPropertyChanged("carrot_Widget");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Widget")]
+	public partial class carrot_Widget : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Root_WidgetID;
+		
+		private System.Guid _Root_ContentID;
+		
+		private int _WidgetOrder;
+		
+		private string _PlaceholderName;
+		
+		private string _ControlPath;
+		
+		private bool _WidgetActive;
+		
+		private EntitySet<carrot_WidgetData> _carrot_WidgetDatas;
+		
+		private EntityRef<carrot_RootContent> _carrot_RootContent;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnRoot_WidgetIDChanging(System.Guid value);
+    partial void OnRoot_WidgetIDChanged();
+    partial void OnRoot_ContentIDChanging(System.Guid value);
+    partial void OnRoot_ContentIDChanged();
+    partial void OnWidgetOrderChanging(int value);
+    partial void OnWidgetOrderChanged();
+    partial void OnPlaceholderNameChanging(string value);
+    partial void OnPlaceholderNameChanged();
+    partial void OnControlPathChanging(string value);
+    partial void OnControlPathChanged();
+    partial void OnWidgetActiveChanging(bool value);
+    partial void OnWidgetActiveChanged();
+    #endregion
+		
+		public carrot_Widget()
+		{
+			this._carrot_WidgetDatas = new EntitySet<carrot_WidgetData>(new Action<carrot_WidgetData>(this.attach_carrot_WidgetDatas), new Action<carrot_WidgetData>(this.detach_carrot_WidgetDatas));
+			this._carrot_RootContent = default(EntityRef<carrot_RootContent>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_WidgetID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Root_WidgetID
+		{
+			get
+			{
+				return this._Root_WidgetID;
+			}
+			set
+			{
+				if ((this._Root_WidgetID != value))
+				{
+					this.OnRoot_WidgetIDChanging(value);
+					this.SendPropertyChanging();
+					this._Root_WidgetID = value;
+					this.SendPropertyChanged("Root_WidgetID");
+					this.OnRoot_WidgetIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					if (this._carrot_RootContent.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoot_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Root_ContentID = value;
+					this.SendPropertyChanged("Root_ContentID");
+					this.OnRoot_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetOrder", DbType="Int NOT NULL")]
+		public int WidgetOrder
+		{
+			get
+			{
+				return this._WidgetOrder;
+			}
+			set
+			{
+				if ((this._WidgetOrder != value))
+				{
+					this.OnWidgetOrderChanging(value);
+					this.SendPropertyChanging();
+					this._WidgetOrder = value;
+					this.SendPropertyChanged("WidgetOrder");
+					this.OnWidgetOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlaceholderName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string PlaceholderName
+		{
+			get
+			{
+				return this._PlaceholderName;
+			}
+			set
+			{
+				if ((this._PlaceholderName != value))
+				{
+					this.OnPlaceholderNameChanging(value);
+					this.SendPropertyChanging();
+					this._PlaceholderName = value;
+					this.SendPropertyChanged("PlaceholderName");
+					this.OnPlaceholderNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlPath", DbType="NVarChar(512) NOT NULL", CanBeNull=false)]
+		public string ControlPath
+		{
+			get
+			{
+				return this._ControlPath;
+			}
+			set
+			{
+				if ((this._ControlPath != value))
+				{
+					this.OnControlPathChanging(value);
+					this.SendPropertyChanging();
+					this._ControlPath = value;
+					this.SendPropertyChanged("ControlPath");
+					this.OnControlPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetActive", DbType="Bit NOT NULL")]
+		public bool WidgetActive
+		{
+			get
+			{
+				return this._WidgetActive;
+			}
+			set
+			{
+				if ((this._WidgetActive != value))
+				{
+					this.OnWidgetActiveChanging(value);
+					this.SendPropertyChanging();
+					this._WidgetActive = value;
+					this.SendPropertyChanged("WidgetActive");
+					this.OnWidgetActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Widget_carrot_WidgetData", Storage="_carrot_WidgetDatas", ThisKey="Root_WidgetID", OtherKey="Root_WidgetID")]
+		public EntitySet<carrot_WidgetData> carrot_WidgetDatas
+		{
+			get
+			{
+				return this._carrot_WidgetDatas;
+			}
+			set
+			{
+				this._carrot_WidgetDatas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Widget", Storage="_carrot_RootContent", ThisKey="Root_ContentID", OtherKey="Root_ContentID", IsForeignKey=true)]
+		public carrot_RootContent carrot_RootContent
+		{
+			get
+			{
+				return this._carrot_RootContent.Entity;
+			}
+			set
+			{
+				carrot_RootContent previousValue = this._carrot_RootContent.Entity;
+				if (((previousValue != value) 
+							|| (this._carrot_RootContent.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._carrot_RootContent.Entity = null;
+						previousValue.carrot_Widgets.Remove(this);
+					}
+					this._carrot_RootContent.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_Widgets.Add(this);
+						this._Root_ContentID = value.Root_ContentID;
+					}
+					else
+					{
+						this._Root_ContentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("carrot_RootContent");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_carrot_WidgetDatas(carrot_WidgetData entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Widget = this;
+		}
+		
+		private void detach_carrot_WidgetDatas(carrot_WidgetData entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Widget = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_ContentComment")]
+	public partial class carrot_ContentComment : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ContentCommentID;
+		
+		private System.Guid _Root_ContentID;
+		
+		private System.DateTime _CreateDate;
+		
+		private string _CommenterIP;
+		
+		private string _CommenterName;
+		
+		private string _CommenterEmail;
+		
+		private string _PostComment;
+		
+		private bool _IsApproved;
+		
+		private bool _IsSpam;
+		
+		private string _CommenterURL;
+		
+		private EntityRef<carrot_RootContent> _carrot_RootContent;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnContentCommentIDChanging(System.Guid value);
+    partial void OnContentCommentIDChanged();
+    partial void OnRoot_ContentIDChanging(System.Guid value);
+    partial void OnRoot_ContentIDChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnCommenterIPChanging(string value);
+    partial void OnCommenterIPChanged();
+    partial void OnCommenterNameChanging(string value);
+    partial void OnCommenterNameChanged();
+    partial void OnCommenterEmailChanging(string value);
+    partial void OnCommenterEmailChanged();
+    partial void OnPostCommentChanging(string value);
+    partial void OnPostCommentChanged();
+    partial void OnIsApprovedChanging(bool value);
+    partial void OnIsApprovedChanged();
+    partial void OnIsSpamChanging(bool value);
+    partial void OnIsSpamChanged();
+    partial void OnCommenterURLChanging(string value);
+    partial void OnCommenterURLChanged();
+    #endregion
+		
+		public carrot_ContentComment()
+		{
+			this._carrot_RootContent = default(EntityRef<carrot_RootContent>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentCommentID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid ContentCommentID
+		{
+			get
+			{
+				return this._ContentCommentID;
+			}
+			set
+			{
+				if ((this._ContentCommentID != value))
+				{
+					this.OnContentCommentIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContentCommentID = value;
+					this.SendPropertyChanged("ContentCommentID");
+					this.OnContentCommentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					if (this._carrot_RootContent.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoot_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Root_ContentID = value;
+					this.SendPropertyChanged("Root_ContentID");
+					this.OnRoot_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterIP", DbType="NVarChar(32) NOT NULL", CanBeNull=false)]
+		public string CommenterIP
+		{
+			get
+			{
+				return this._CommenterIP;
+			}
+			set
+			{
+				if ((this._CommenterIP != value))
+				{
+					this.OnCommenterIPChanging(value);
+					this.SendPropertyChanging();
+					this._CommenterIP = value;
+					this.SendPropertyChanged("CommenterIP");
+					this.OnCommenterIPChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string CommenterName
+		{
+			get
+			{
+				return this._CommenterName;
+			}
+			set
+			{
+				if ((this._CommenterName != value))
+				{
+					this.OnCommenterNameChanging(value);
+					this.SendPropertyChanging();
+					this._CommenterName = value;
+					this.SendPropertyChanged("CommenterName");
+					this.OnCommenterNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterEmail", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string CommenterEmail
+		{
+			get
+			{
+				return this._CommenterEmail;
+			}
+			set
+			{
+				if ((this._CommenterEmail != value))
+				{
+					this.OnCommenterEmailChanging(value);
+					this.SendPropertyChanging();
+					this._CommenterEmail = value;
+					this.SendPropertyChanged("CommenterEmail");
+					this.OnCommenterEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostComment", DbType="NVarChar(MAX)")]
+		public string PostComment
+		{
+			get
+			{
+				return this._PostComment;
+			}
+			set
+			{
+				if ((this._PostComment != value))
+				{
+					this.OnPostCommentChanging(value);
+					this.SendPropertyChanging();
+					this._PostComment = value;
+					this.SendPropertyChanged("PostComment");
+					this.OnPostCommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsApproved", DbType="Bit NOT NULL")]
+		public bool IsApproved
+		{
+			get
+			{
+				return this._IsApproved;
+			}
+			set
+			{
+				if ((this._IsApproved != value))
+				{
+					this.OnIsApprovedChanging(value);
+					this.SendPropertyChanging();
+					this._IsApproved = value;
+					this.SendPropertyChanged("IsApproved");
+					this.OnIsApprovedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSpam", DbType="Bit NOT NULL")]
+		public bool IsSpam
+		{
+			get
+			{
+				return this._IsSpam;
+			}
+			set
+			{
+				if ((this._IsSpam != value))
+				{
+					this.OnIsSpamChanging(value);
+					this.SendPropertyChanging();
+					this._IsSpam = value;
+					this.SendPropertyChanged("IsSpam");
+					this.OnIsSpamChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterURL", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string CommenterURL
+		{
+			get
+			{
+				return this._CommenterURL;
+			}
+			set
+			{
+				if ((this._CommenterURL != value))
+				{
+					this.OnCommenterURLChanging(value);
+					this.SendPropertyChanging();
+					this._CommenterURL = value;
+					this.SendPropertyChanged("CommenterURL");
+					this.OnCommenterURLChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_ContentComment", Storage="_carrot_RootContent", ThisKey="Root_ContentID", OtherKey="Root_ContentID", IsForeignKey=true)]
+		public carrot_RootContent carrot_RootContent
+		{
+			get
+			{
+				return this._carrot_RootContent.Entity;
+			}
+			set
+			{
+				carrot_RootContent previousValue = this._carrot_RootContent.Entity;
+				if (((previousValue != value) 
+							|| (this._carrot_RootContent.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._carrot_RootContent.Entity = null;
+						previousValue.carrot_ContentComments.Remove(this);
+					}
+					this._carrot_RootContent.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_ContentComments.Add(this);
+						this._Root_ContentID = value.Root_ContentID;
+					}
+					else
+					{
+						this._Root_ContentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("carrot_RootContent");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Content")]
+	public partial class carrot_Content : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ContentID;
+		
+		private System.Guid _Root_ContentID;
+		
+		private System.Nullable<System.Guid> _Parent_ContentID;
+		
+		private System.Nullable<bool> _IsLatestVersion;
+		
+		private string _TitleBar;
+		
+		private string _NavMenuText;
+		
+		private string _PageHead;
+		
+		private string _PageText;
+		
+		private string _LeftPageText;
+		
+		private string _RightPageText;
+		
+		private System.Nullable<int> _NavOrder;
+		
+		private System.Nullable<System.Guid> _EditUserId;
+		
+		private System.DateTime _EditDate;
+		
+		private string _TemplateFile;
+		
+		private string _MetaKeyword;
+		
+		private string _MetaDescription;
+		
+		private EntityRef<aspnet_User> _aspnet_User;
+		
+		private EntityRef<carrot_RootContent> _carrot_RootContent;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnContentIDChanging(System.Guid value);
+    partial void OnContentIDChanged();
+    partial void OnRoot_ContentIDChanging(System.Guid value);
+    partial void OnRoot_ContentIDChanged();
+    partial void OnParent_ContentIDChanging(System.Nullable<System.Guid> value);
+    partial void OnParent_ContentIDChanged();
+    partial void OnIsLatestVersionChanging(System.Nullable<bool> value);
+    partial void OnIsLatestVersionChanged();
+    partial void OnTitleBarChanging(string value);
+    partial void OnTitleBarChanged();
+    partial void OnNavMenuTextChanging(string value);
+    partial void OnNavMenuTextChanged();
+    partial void OnPageHeadChanging(string value);
+    partial void OnPageHeadChanged();
+    partial void OnPageTextChanging(string value);
+    partial void OnPageTextChanged();
+    partial void OnLeftPageTextChanging(string value);
+    partial void OnLeftPageTextChanged();
+    partial void OnRightPageTextChanging(string value);
+    partial void OnRightPageTextChanged();
+    partial void OnNavOrderChanging(System.Nullable<int> value);
+    partial void OnNavOrderChanged();
+    partial void OnEditUserIdChanging(System.Nullable<System.Guid> value);
+    partial void OnEditUserIdChanged();
+    partial void OnEditDateChanging(System.DateTime value);
+    partial void OnEditDateChanged();
+    partial void OnTemplateFileChanging(string value);
+    partial void OnTemplateFileChanged();
+    partial void OnMetaKeywordChanging(string value);
+    partial void OnMetaKeywordChanged();
+    partial void OnMetaDescriptionChanging(string value);
+    partial void OnMetaDescriptionChanged();
+    #endregion
+		
+		public carrot_Content()
+		{
+			this._aspnet_User = default(EntityRef<aspnet_User>);
+			this._carrot_RootContent = default(EntityRef<carrot_RootContent>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid ContentID
+		{
+			get
+			{
+				return this._ContentID;
+			}
+			set
+			{
+				if ((this._ContentID != value))
+				{
+					this.OnContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContentID = value;
+					this.SendPropertyChanged("ContentID");
+					this.OnContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					if (this._carrot_RootContent.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoot_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Root_ContentID = value;
+					this.SendPropertyChanged("Root_ContentID");
+					this.OnRoot_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parent_ContentID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Parent_ContentID
+		{
+			get
+			{
+				return this._Parent_ContentID;
+			}
+			set
+			{
+				if ((this._Parent_ContentID != value))
+				{
+					this.OnParent_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Parent_ContentID = value;
+					this.SendPropertyChanged("Parent_ContentID");
+					this.OnParent_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
+		public System.Nullable<bool> IsLatestVersion
+		{
+			get
+			{
+				return this._IsLatestVersion;
+			}
+			set
+			{
+				if ((this._IsLatestVersion != value))
+				{
+					this.OnIsLatestVersionChanging(value);
+					this.SendPropertyChanging();
+					this._IsLatestVersion = value;
+					this.SendPropertyChanged("IsLatestVersion");
+					this.OnIsLatestVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TitleBar", DbType="NVarChar(256)")]
+		public string TitleBar
+		{
+			get
+			{
+				return this._TitleBar;
+			}
+			set
+			{
+				if ((this._TitleBar != value))
+				{
+					this.OnTitleBarChanging(value);
+					this.SendPropertyChanging();
+					this._TitleBar = value;
+					this.SendPropertyChanged("TitleBar");
+					this.OnTitleBarChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavMenuText", DbType="NVarChar(256)")]
+		public string NavMenuText
+		{
+			get
+			{
+				return this._NavMenuText;
+			}
+			set
+			{
+				if ((this._NavMenuText != value))
+				{
+					this.OnNavMenuTextChanging(value);
+					this.SendPropertyChanging();
+					this._NavMenuText = value;
+					this.SendPropertyChanged("NavMenuText");
+					this.OnNavMenuTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageHead", DbType="NVarChar(256)")]
+		public string PageHead
+		{
+			get
+			{
+				return this._PageHead;
+			}
+			set
+			{
+				if ((this._PageHead != value))
+				{
+					this.OnPageHeadChanging(value);
+					this.SendPropertyChanging();
+					this._PageHead = value;
+					this.SendPropertyChanged("PageHead");
+					this.OnPageHeadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageText", DbType="NVarChar(MAX)")]
+		public string PageText
+		{
+			get
+			{
+				return this._PageText;
+			}
+			set
+			{
+				if ((this._PageText != value))
+				{
+					this.OnPageTextChanging(value);
+					this.SendPropertyChanging();
+					this._PageText = value;
+					this.SendPropertyChanged("PageText");
+					this.OnPageTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeftPageText", DbType="NVarChar(MAX)")]
+		public string LeftPageText
+		{
+			get
+			{
+				return this._LeftPageText;
+			}
+			set
+			{
+				if ((this._LeftPageText != value))
+				{
+					this.OnLeftPageTextChanging(value);
+					this.SendPropertyChanging();
+					this._LeftPageText = value;
+					this.SendPropertyChanged("LeftPageText");
+					this.OnLeftPageTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RightPageText", DbType="NVarChar(MAX)")]
+		public string RightPageText
+		{
+			get
+			{
+				return this._RightPageText;
+			}
+			set
+			{
+				if ((this._RightPageText != value))
+				{
+					this.OnRightPageTextChanging(value);
+					this.SendPropertyChanging();
+					this._RightPageText = value;
+					this.SendPropertyChanged("RightPageText");
+					this.OnRightPageTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
+		public System.Nullable<int> NavOrder
+		{
+			get
+			{
+				return this._NavOrder;
+			}
+			set
+			{
+				if ((this._NavOrder != value))
+				{
+					this.OnNavOrderChanging(value);
+					this.SendPropertyChanging();
+					this._NavOrder = value;
+					this.SendPropertyChanged("NavOrder");
+					this.OnNavOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> EditUserId
+		{
+			get
+			{
+				return this._EditUserId;
+			}
+			set
+			{
+				if ((this._EditUserId != value))
+				{
+					if (this._aspnet_User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEditUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._EditUserId = value;
+					this.SendPropertyChanged("EditUserId");
+					this.OnEditUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EditDate
+		{
+			get
+			{
+				return this._EditDate;
+			}
+			set
+			{
+				if ((this._EditDate != value))
+				{
+					this.OnEditDateChanging(value);
+					this.SendPropertyChanging();
+					this._EditDate = value;
+					this.SendPropertyChanged("EditDate");
+					this.OnEditDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateFile", DbType="NVarChar(256)")]
+		public string TemplateFile
+		{
+			get
+			{
+				return this._TemplateFile;
+			}
+			set
+			{
+				if ((this._TemplateFile != value))
+				{
+					this.OnTemplateFileChanging(value);
+					this.SendPropertyChanging();
+					this._TemplateFile = value;
+					this.SendPropertyChanged("TemplateFile");
+					this.OnTemplateFileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="NVarChar(1024)")]
+		public string MetaKeyword
+		{
+			get
+			{
+				return this._MetaKeyword;
+			}
+			set
+			{
+				if ((this._MetaKeyword != value))
+				{
+					this.OnMetaKeywordChanging(value);
+					this.SendPropertyChanging();
+					this._MetaKeyword = value;
+					this.SendPropertyChanged("MetaKeyword");
+					this.OnMetaKeywordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="NVarChar(1024)")]
+		public string MetaDescription
+		{
+			get
+			{
+				return this._MetaDescription;
+			}
+			set
+			{
+				if ((this._MetaDescription != value))
+				{
+					this.OnMetaDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._MetaDescription = value;
+					this.SendPropertyChanged("MetaDescription");
+					this.OnMetaDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_Content", Storage="_aspnet_User", ThisKey="EditUserId", OtherKey="UserId", IsForeignKey=true)]
+		public aspnet_User aspnet_User
+		{
+			get
+			{
+				return this._aspnet_User.Entity;
+			}
+			set
+			{
+				aspnet_User previousValue = this._aspnet_User.Entity;
+				if (((previousValue != value) 
+							|| (this._aspnet_User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._aspnet_User.Entity = null;
+						previousValue.carrot_Contents.Remove(this);
+					}
+					this._aspnet_User.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_Contents.Add(this);
+						this._EditUserId = value.UserId;
+					}
+					else
+					{
+						this._EditUserId = default(Nullable<System.Guid>);
+					}
+					this.SendPropertyChanged("aspnet_User");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_Content", Storage="_carrot_RootContent", ThisKey="Root_ContentID", OtherKey="Root_ContentID", IsForeignKey=true)]
+		public carrot_RootContent carrot_RootContent
+		{
+			get
+			{
+				return this._carrot_RootContent.Entity;
+			}
+			set
+			{
+				carrot_RootContent previousValue = this._carrot_RootContent.Entity;
+				if (((previousValue != value) 
+							|| (this._carrot_RootContent.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._carrot_RootContent.Entity = null;
+						previousValue.carrot_Contents.Remove(this);
+					}
+					this._carrot_RootContent.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_Contents.Add(this);
+						this._Root_ContentID = value.Root_ContentID;
+					}
+					else
+					{
+						this._Root_ContentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("carrot_RootContent");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_SerialCache")]
+	public partial class carrot_SerialCache : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _SerialCacheID;
+		
+		private System.Guid _SiteID;
+		
+		private System.Guid _ItemID;
+		
+		private System.Guid _EditUserId;
+		
+		private string _KeyType;
+		
+		private string _SerializedData;
+		
+		private System.DateTime _EditDate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSerialCacheIDChanging(System.Guid value);
+    partial void OnSerialCacheIDChanged();
+    partial void OnSiteIDChanging(System.Guid value);
+    partial void OnSiteIDChanged();
+    partial void OnItemIDChanging(System.Guid value);
+    partial void OnItemIDChanged();
+    partial void OnEditUserIdChanging(System.Guid value);
+    partial void OnEditUserIdChanged();
+    partial void OnKeyTypeChanging(string value);
+    partial void OnKeyTypeChanged();
+    partial void OnSerializedDataChanging(string value);
+    partial void OnSerializedDataChanged();
+    partial void OnEditDateChanging(System.DateTime value);
+    partial void OnEditDateChanged();
+    #endregion
+		
+		public carrot_SerialCache()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialCacheID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid SerialCacheID
+		{
+			get
+			{
+				return this._SerialCacheID;
+			}
+			set
+			{
+				if ((this._SerialCacheID != value))
+				{
+					this.OnSerialCacheIDChanging(value);
+					this.SendPropertyChanging();
+					this._SerialCacheID = value;
+					this.SendPropertyChanged("SerialCacheID");
+					this.OnSerialCacheIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this.OnSiteIDChanging(value);
+					this.SendPropertyChanging();
+					this._SiteID = value;
+					this.SendPropertyChanged("SiteID");
+					this.OnSiteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ItemID
+		{
+			get
+			{
+				return this._ItemID;
+			}
+			set
+			{
+				if ((this._ItemID != value))
+				{
+					this.OnItemIDChanging(value);
+					this.SendPropertyChanging();
+					this._ItemID = value;
+					this.SendPropertyChanged("ItemID");
+					this.OnItemIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid EditUserId
+		{
+			get
+			{
+				return this._EditUserId;
+			}
+			set
+			{
+				if ((this._EditUserId != value))
+				{
+					this.OnEditUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._EditUserId = value;
+					this.SendPropertyChanged("EditUserId");
+					this.OnEditUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KeyType", DbType="NVarChar(256)")]
+		public string KeyType
+		{
+			get
+			{
+				return this._KeyType;
+			}
+			set
+			{
+				if ((this._KeyType != value))
+				{
+					this.OnKeyTypeChanging(value);
+					this.SendPropertyChanging();
+					this._KeyType = value;
+					this.SendPropertyChanged("KeyType");
+					this.OnKeyTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerializedData", DbType="NVarChar(MAX)")]
+		public string SerializedData
+		{
+			get
+			{
+				return this._SerializedData;
+			}
+			set
+			{
+				if ((this._SerializedData != value))
+				{
+					this.OnSerializedDataChanging(value);
+					this.SendPropertyChanging();
+					this._SerializedData = value;
+					this.SendPropertyChanged("SerializedData");
+					this.OnSerializedDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EditDate
+		{
+			get
+			{
+				return this._EditDate;
+			}
+			set
+			{
+				if ((this._EditDate != value))
+				{
+					this.OnEditDateChanging(value);
+					this.SendPropertyChanging();
+					this._EditDate = value;
+					this.SendPropertyChanged("EditDate");
+					this.OnEditDateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Content")]
+	public partial class vw_carrot_Content
+	{
+		
+		private System.Guid _Root_ContentID;
+		
+		private System.Guid _SiteID;
+		
+		private System.Nullable<System.Guid> _Heartbeat_UserId;
+		
+		private System.Nullable<System.DateTime> _EditHeartbeat;
+		
+		private string _FileName;
+		
+		private bool _PageActive;
+		
+		private System.DateTime _CreateDate;
+		
+		private System.Guid _ContentID;
+		
+		private System.Nullable<System.Guid> _Parent_ContentID;
+		
+		private System.Nullable<bool> _IsLatestVersion;
+		
+		private string _TitleBar;
+		
+		private string _NavMenuText;
+		
+		private string _PageHead;
+		
+		private string _PageText;
+		
+		private string _LeftPageText;
+		
+		private string _RightPageText;
+		
+		private System.Nullable<int> _NavOrder;
+		
+		private System.Nullable<System.Guid> _EditUserId;
+		
+		private System.DateTime _EditDate;
+		
+		private string _TemplateFile;
+		
+		private string _MetaKeyword;
+		
+		private string _MetaDescription;
+		
+		private System.Guid _ContentTypeID;
+		
+		private string _ContentTypeValue;
+		
+		private string _PageSlug;
+		
+		public vw_carrot_Content()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this._Root_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Heartbeat_UserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Heartbeat_UserId
+		{
+			get
+			{
+				return this._Heartbeat_UserId;
+			}
+			set
+			{
+				if ((this._Heartbeat_UserId != value))
+				{
+					this._Heartbeat_UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditHeartbeat", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EditHeartbeat
+		{
+			get
+			{
+				return this._EditHeartbeat;
+			}
+			set
+			{
+				if ((this._EditHeartbeat != value))
+				{
+					this._EditHeartbeat = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this._FileName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageActive", DbType="Bit NOT NULL")]
+		public bool PageActive
+		{
+			get
+			{
+				return this._PageActive;
+			}
+			set
+			{
+				if ((this._PageActive != value))
+				{
+					this._PageActive = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ContentID
+		{
+			get
+			{
+				return this._ContentID;
+			}
+			set
+			{
+				if ((this._ContentID != value))
+				{
+					this._ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parent_ContentID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Parent_ContentID
+		{
+			get
+			{
+				return this._Parent_ContentID;
+			}
+			set
+			{
+				if ((this._Parent_ContentID != value))
+				{
+					this._Parent_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
+		public System.Nullable<bool> IsLatestVersion
+		{
+			get
+			{
+				return this._IsLatestVersion;
+			}
+			set
+			{
+				if ((this._IsLatestVersion != value))
+				{
+					this._IsLatestVersion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TitleBar", DbType="NVarChar(256)")]
+		public string TitleBar
+		{
+			get
+			{
+				return this._TitleBar;
+			}
+			set
+			{
+				if ((this._TitleBar != value))
+				{
+					this._TitleBar = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavMenuText", DbType="NVarChar(256)")]
+		public string NavMenuText
+		{
+			get
+			{
+				return this._NavMenuText;
+			}
+			set
+			{
+				if ((this._NavMenuText != value))
+				{
+					this._NavMenuText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageHead", DbType="NVarChar(256)")]
+		public string PageHead
+		{
+			get
+			{
+				return this._PageHead;
+			}
+			set
+			{
+				if ((this._PageHead != value))
+				{
+					this._PageHead = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageText", DbType="NVarChar(MAX)")]
+		public string PageText
+		{
+			get
+			{
+				return this._PageText;
+			}
+			set
+			{
+				if ((this._PageText != value))
+				{
+					this._PageText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeftPageText", DbType="NVarChar(MAX)")]
+		public string LeftPageText
+		{
+			get
+			{
+				return this._LeftPageText;
+			}
+			set
+			{
+				if ((this._LeftPageText != value))
+				{
+					this._LeftPageText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RightPageText", DbType="NVarChar(MAX)")]
+		public string RightPageText
+		{
+			get
+			{
+				return this._RightPageText;
+			}
+			set
+			{
+				if ((this._RightPageText != value))
+				{
+					this._RightPageText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
+		public System.Nullable<int> NavOrder
+		{
+			get
+			{
+				return this._NavOrder;
+			}
+			set
+			{
+				if ((this._NavOrder != value))
+				{
+					this._NavOrder = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> EditUserId
+		{
+			get
+			{
+				return this._EditUserId;
+			}
+			set
+			{
+				if ((this._EditUserId != value))
+				{
+					this._EditUserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EditDate
+		{
+			get
+			{
+				return this._EditDate;
+			}
+			set
+			{
+				if ((this._EditDate != value))
+				{
+					this._EditDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateFile", DbType="NVarChar(256)")]
+		public string TemplateFile
+		{
+			get
+			{
+				return this._TemplateFile;
+			}
+			set
+			{
+				if ((this._TemplateFile != value))
+				{
+					this._TemplateFile = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="NVarChar(1024)")]
+		public string MetaKeyword
+		{
+			get
+			{
+				return this._MetaKeyword;
+			}
+			set
+			{
+				if ((this._MetaKeyword != value))
+				{
+					this._MetaKeyword = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="NVarChar(1024)")]
+		public string MetaDescription
+		{
+			get
+			{
+				return this._MetaDescription;
+			}
+			set
+			{
+				if ((this._MetaDescription != value))
+				{
+					this._MetaDescription = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ContentTypeID
+		{
+			get
+			{
+				return this._ContentTypeID;
+			}
+			set
+			{
+				if ((this._ContentTypeID != value))
+				{
+					this._ContentTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeValue", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string ContentTypeValue
+		{
+			get
+			{
+				return this._ContentTypeValue;
+			}
+			set
+			{
+				if ((this._ContentTypeValue != value))
+				{
+					this._ContentTypeValue = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageSlug", DbType="NVarChar(256)")]
+		public string PageSlug
+		{
+			get
+			{
+				return this._PageSlug;
+			}
+			set
+			{
+				if ((this._PageSlug != value))
+				{
+					this._PageSlug = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Widget")]
+	public partial class vw_carrot_Widget
+	{
+		
+		private System.Guid _Root_WidgetID;
+		
+		private System.Guid _Root_ContentID;
+		
+		private int _WidgetOrder;
+		
+		private string _PlaceholderName;
+		
+		private string _ControlPath;
+		
+		private bool _WidgetActive;
+		
+		private System.Guid _WidgetDataID;
+		
+		private System.Nullable<bool> _IsLatestVersion;
+		
+		private System.DateTime _EditDate;
+		
+		private string _ControlProperties;
+		
+		private System.Guid _SiteID;
+		
+		public vw_carrot_Widget()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_WidgetID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_WidgetID
+		{
+			get
+			{
+				return this._Root_WidgetID;
+			}
+			set
+			{
+				if ((this._Root_WidgetID != value))
+				{
+					this._Root_WidgetID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this._Root_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetOrder", DbType="Int NOT NULL")]
+		public int WidgetOrder
+		{
+			get
+			{
+				return this._WidgetOrder;
+			}
+			set
+			{
+				if ((this._WidgetOrder != value))
+				{
+					this._WidgetOrder = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlaceholderName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string PlaceholderName
+		{
+			get
+			{
+				return this._PlaceholderName;
+			}
+			set
+			{
+				if ((this._PlaceholderName != value))
+				{
+					this._PlaceholderName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlPath", DbType="NVarChar(512) NOT NULL", CanBeNull=false)]
+		public string ControlPath
+		{
+			get
+			{
+				return this._ControlPath;
+			}
+			set
+			{
+				if ((this._ControlPath != value))
+				{
+					this._ControlPath = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetActive", DbType="Bit NOT NULL")]
+		public bool WidgetActive
+		{
+			get
+			{
+				return this._WidgetActive;
+			}
+			set
+			{
+				if ((this._WidgetActive != value))
+				{
+					this._WidgetActive = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WidgetDataID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid WidgetDataID
+		{
+			get
+			{
+				return this._WidgetDataID;
+			}
+			set
+			{
+				if ((this._WidgetDataID != value))
+				{
+					this._WidgetDataID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
+		public System.Nullable<bool> IsLatestVersion
+		{
+			get
+			{
+				return this._IsLatestVersion;
+			}
+			set
+			{
+				if ((this._IsLatestVersion != value))
+				{
+					this._IsLatestVersion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EditDate
+		{
+			get
+			{
+				return this._EditDate;
+			}
+			set
+			{
+				if ((this._EditDate != value))
+				{
+					this._EditDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ControlProperties", DbType="NVarChar(MAX)")]
+		public string ControlProperties
+		{
+			get
+			{
+				return this._ControlProperties;
+			}
+			set
+			{
+				if ((this._ControlProperties != value))
+				{
+					this._ControlProperties = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
+				}
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_UserData")]
 	public partial class vw_carrot_UserData
 	{
@@ -6446,6 +6008,468 @@ namespace Carrotware.CMS.Data
 					this._LastActivityDate = value;
 				}
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Sites")]
+	public partial class carrot_Site : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _SiteID;
+		
+		private string _MetaKeyword;
+		
+		private string _MetaDescription;
+		
+		private string _SiteName;
+		
+		private string _MainURL;
+		
+		private bool _BlockIndex;
+		
+		private System.Nullable<System.Guid> _Blog_Root_ContentID;
+		
+		private string _Blog_FolderPath;
+		
+		private string _Blog_CategoryPath;
+		
+		private string _Blog_TagPath;
+		
+		private string _Blog_DatePattern;
+		
+		private string _SiteTagline;
+		
+		private string _SiteTitlebarPattern;
+		
+		private EntitySet<carrot_UserSiteMapping> _carrot_UserSiteMappings;
+		
+		private EntitySet<carrot_ContentTag> _carrot_ContentTags;
+		
+		private EntitySet<carrot_ContentCategory> _carrot_ContentCategories;
+		
+		private EntitySet<carrot_RootContent> _carrot_RootContents;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSiteIDChanging(System.Guid value);
+    partial void OnSiteIDChanged();
+    partial void OnMetaKeywordChanging(string value);
+    partial void OnMetaKeywordChanged();
+    partial void OnMetaDescriptionChanging(string value);
+    partial void OnMetaDescriptionChanged();
+    partial void OnSiteNameChanging(string value);
+    partial void OnSiteNameChanged();
+    partial void OnMainURLChanging(string value);
+    partial void OnMainURLChanged();
+    partial void OnBlockIndexChanging(bool value);
+    partial void OnBlockIndexChanged();
+    partial void OnBlog_Root_ContentIDChanging(System.Nullable<System.Guid> value);
+    partial void OnBlog_Root_ContentIDChanged();
+    partial void OnBlog_FolderPathChanging(string value);
+    partial void OnBlog_FolderPathChanged();
+    partial void OnBlog_CategoryPathChanging(string value);
+    partial void OnBlog_CategoryPathChanged();
+    partial void OnBlog_TagPathChanging(string value);
+    partial void OnBlog_TagPathChanged();
+    partial void OnBlog_DatePatternChanging(string value);
+    partial void OnBlog_DatePatternChanged();
+    partial void OnSiteTaglineChanging(string value);
+    partial void OnSiteTaglineChanged();
+    partial void OnSiteTitlebarPatternChanging(string value);
+    partial void OnSiteTitlebarPatternChanged();
+    #endregion
+		
+		public carrot_Site()
+		{
+			this._carrot_UserSiteMappings = new EntitySet<carrot_UserSiteMapping>(new Action<carrot_UserSiteMapping>(this.attach_carrot_UserSiteMappings), new Action<carrot_UserSiteMapping>(this.detach_carrot_UserSiteMappings));
+			this._carrot_ContentTags = new EntitySet<carrot_ContentTag>(new Action<carrot_ContentTag>(this.attach_carrot_ContentTags), new Action<carrot_ContentTag>(this.detach_carrot_ContentTags));
+			this._carrot_ContentCategories = new EntitySet<carrot_ContentCategory>(new Action<carrot_ContentCategory>(this.attach_carrot_ContentCategories), new Action<carrot_ContentCategory>(this.detach_carrot_ContentCategories));
+			this._carrot_RootContents = new EntitySet<carrot_RootContent>(new Action<carrot_RootContent>(this.attach_carrot_RootContents), new Action<carrot_RootContent>(this.detach_carrot_RootContents));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this.OnSiteIDChanging(value);
+					this.SendPropertyChanging();
+					this._SiteID = value;
+					this.SendPropertyChanged("SiteID");
+					this.OnSiteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="NVarChar(1024)")]
+		public string MetaKeyword
+		{
+			get
+			{
+				return this._MetaKeyword;
+			}
+			set
+			{
+				if ((this._MetaKeyword != value))
+				{
+					this.OnMetaKeywordChanging(value);
+					this.SendPropertyChanging();
+					this._MetaKeyword = value;
+					this.SendPropertyChanged("MetaKeyword");
+					this.OnMetaKeywordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="NVarChar(1024)")]
+		public string MetaDescription
+		{
+			get
+			{
+				return this._MetaDescription;
+			}
+			set
+			{
+				if ((this._MetaDescription != value))
+				{
+					this.OnMetaDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._MetaDescription = value;
+					this.SendPropertyChanged("MetaDescription");
+					this.OnMetaDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteName", DbType="NVarChar(256)")]
+		public string SiteName
+		{
+			get
+			{
+				return this._SiteName;
+			}
+			set
+			{
+				if ((this._SiteName != value))
+				{
+					this.OnSiteNameChanging(value);
+					this.SendPropertyChanging();
+					this._SiteName = value;
+					this.SendPropertyChanged("SiteName");
+					this.OnSiteNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MainURL", DbType="NVarChar(128)")]
+		public string MainURL
+		{
+			get
+			{
+				return this._MainURL;
+			}
+			set
+			{
+				if ((this._MainURL != value))
+				{
+					this.OnMainURLChanging(value);
+					this.SendPropertyChanging();
+					this._MainURL = value;
+					this.SendPropertyChanged("MainURL");
+					this.OnMainURLChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlockIndex", DbType="Bit NOT NULL")]
+		public bool BlockIndex
+		{
+			get
+			{
+				return this._BlockIndex;
+			}
+			set
+			{
+				if ((this._BlockIndex != value))
+				{
+					this.OnBlockIndexChanging(value);
+					this.SendPropertyChanging();
+					this._BlockIndex = value;
+					this.SendPropertyChanged("BlockIndex");
+					this.OnBlockIndexChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_Root_ContentID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Blog_Root_ContentID
+		{
+			get
+			{
+				return this._Blog_Root_ContentID;
+			}
+			set
+			{
+				if ((this._Blog_Root_ContentID != value))
+				{
+					this.OnBlog_Root_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_Root_ContentID = value;
+					this.SendPropertyChanged("Blog_Root_ContentID");
+					this.OnBlog_Root_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_FolderPath", DbType="NVarChar(64)")]
+		public string Blog_FolderPath
+		{
+			get
+			{
+				return this._Blog_FolderPath;
+			}
+			set
+			{
+				if ((this._Blog_FolderPath != value))
+				{
+					this.OnBlog_FolderPathChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_FolderPath = value;
+					this.SendPropertyChanged("Blog_FolderPath");
+					this.OnBlog_FolderPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_CategoryPath", DbType="NVarChar(64)")]
+		public string Blog_CategoryPath
+		{
+			get
+			{
+				return this._Blog_CategoryPath;
+			}
+			set
+			{
+				if ((this._Blog_CategoryPath != value))
+				{
+					this.OnBlog_CategoryPathChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_CategoryPath = value;
+					this.SendPropertyChanged("Blog_CategoryPath");
+					this.OnBlog_CategoryPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_TagPath", DbType="NVarChar(64)")]
+		public string Blog_TagPath
+		{
+			get
+			{
+				return this._Blog_TagPath;
+			}
+			set
+			{
+				if ((this._Blog_TagPath != value))
+				{
+					this.OnBlog_TagPathChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_TagPath = value;
+					this.SendPropertyChanged("Blog_TagPath");
+					this.OnBlog_TagPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_DatePattern", DbType="NVarChar(32)")]
+		public string Blog_DatePattern
+		{
+			get
+			{
+				return this._Blog_DatePattern;
+			}
+			set
+			{
+				if ((this._Blog_DatePattern != value))
+				{
+					this.OnBlog_DatePatternChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_DatePattern = value;
+					this.SendPropertyChanged("Blog_DatePattern");
+					this.OnBlog_DatePatternChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTagline", DbType="NVarChar(1024)")]
+		public string SiteTagline
+		{
+			get
+			{
+				return this._SiteTagline;
+			}
+			set
+			{
+				if ((this._SiteTagline != value))
+				{
+					this.OnSiteTaglineChanging(value);
+					this.SendPropertyChanging();
+					this._SiteTagline = value;
+					this.SendPropertyChanged("SiteTagline");
+					this.OnSiteTaglineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTitlebarPattern", DbType="NVarChar(1024)")]
+		public string SiteTitlebarPattern
+		{
+			get
+			{
+				return this._SiteTitlebarPattern;
+			}
+			set
+			{
+				if ((this._SiteTitlebarPattern != value))
+				{
+					this.OnSiteTitlebarPatternChanging(value);
+					this.SendPropertyChanging();
+					this._SiteTitlebarPattern = value;
+					this.SendPropertyChanged("SiteTitlebarPattern");
+					this.OnSiteTitlebarPatternChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_UserSiteMapping", Storage="_carrot_UserSiteMappings", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_UserSiteMapping> carrot_UserSiteMappings
+		{
+			get
+			{
+				return this._carrot_UserSiteMappings;
+			}
+			set
+			{
+				this._carrot_UserSiteMappings.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentTag", Storage="_carrot_ContentTags", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_ContentTag> carrot_ContentTags
+		{
+			get
+			{
+				return this._carrot_ContentTags;
+			}
+			set
+			{
+				this._carrot_ContentTags.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentCategory", Storage="_carrot_ContentCategories", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_ContentCategory> carrot_ContentCategories
+		{
+			get
+			{
+				return this._carrot_ContentCategories;
+			}
+			set
+			{
+				this._carrot_ContentCategories.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_RootContent", Storage="_carrot_RootContents", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_RootContent> carrot_RootContents
+		{
+			get
+			{
+				return this._carrot_RootContents;
+			}
+			set
+			{
+				this._carrot_RootContents.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
+		}
+		
+		private void attach_carrot_ContentTags(carrot_ContentTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_ContentTags(carrot_ContentTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
+		}
+		
+		private void attach_carrot_ContentCategories(carrot_ContentCategory entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_ContentCategories(carrot_ContentCategory entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
+		}
+		
+		private void attach_carrot_RootContents(carrot_RootContent entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_RootContents(carrot_RootContent entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
 		}
 	}
 }

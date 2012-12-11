@@ -65,11 +65,11 @@
 					<div>
 						<p>
 							<b class="green" style="font-size: 110%;">
-								<carrot:NavLinkForTemplate CssClassNormal="green" ID="lnk1" runat="server" UseDefaultText="true" />
+								<carrot:NavLinkForTemplate CssClassNormal="green" ID="NavLinkForTemplate1" runat="server" UseDefaultText="true" />
 								&nbsp;|&nbsp;
 								<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="CreateDate" FieldFormat="{0:d}" />
 								<%--by
-								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="Author_FullName_FirstLast" />--%>
+								<carrot:ListItemNavText runat="server" ID="ListItemNavText11" DataField="Author_FullName_FirstLast" />--%>
 								<%--<%# String.Format("{0}", DataBinder.Eval(Container.DataItem, "EditDate"))%>--%>
 							</b>
 							<br />
@@ -79,6 +79,15 @@
 							<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
 							<br />
 							<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl2" runat="server" ContentType="Tag" MetaDataTitle="Tags:" />
+						</p>
+						<p class="post-footer align-right">
+							<carrot:NavLinkForTemplate CssClassNormal="readmore" ID="NavLinkForTemplate2" runat="server" UseDefaultText="false">
+								Read more</carrot:NavLinkForTemplate>
+							<span class="comments">Comments
+								<carrot:ListItemNavText runat="server" ID="ListItemNavText4" DataField="CommentCount" FieldFormat=" ({0}) " />
+							</span><span class="date">
+								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="CreateDate" FieldFormat="{0:MMM d, yyyy}" />
+							</span>
 						</p>
 					</div>
 				</SummaryTemplate>

@@ -1,7 +1,7 @@
-﻿<%@ Page Title="CommentAddEdit" Language="C#" MasterPageFile="~/Manage/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CommentAddEdit.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.Manage.CommentAddEdit" %>
+﻿<%@ Page Title="CommentAddEdit" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="CommentAddEditPop.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Manage.CommentAddEditPop" %>
 
-<%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Register Src="ucCommentAddEdit.ascx" TagName="ucCommentAddEdit" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -9,7 +9,7 @@
 	Comment Add/Edit
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<uc1:ucCommentAddEdit ID="ucCommentAddEdit1" runat="server" ReturnPage="CommentIndex.aspx" IsFullSite="true" />
+	<uc1:ucCommentAddEdit ID="ucCommentAddEdit1" runat="server" ReturnPage="CommentIndexPop.aspx" IsFullSite="false" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

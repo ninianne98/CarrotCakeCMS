@@ -441,6 +441,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 					PagerBelowContent = Convert.ToBoolean(GetParmValue("PagerBelowContent", "true"));
 
+					ShowPager = Convert.ToBoolean(GetParmValue("ShowPager", "true"));
+
 					EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
 
 					OrderBy = GetParmValue("OrderBy", "createdate  desc");

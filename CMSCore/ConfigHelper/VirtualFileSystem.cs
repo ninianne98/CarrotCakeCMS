@@ -186,8 +186,6 @@ namespace Carrotware.CMS.Core {
 
 					}
 
-					navData.Dispose();
-
 				} else {
 					sVirtualReqFile = sFileRequested;
 

@@ -180,6 +180,7 @@ namespace Carrotware.CMS.UI.Controls {
 				TextBox txtCommenterName = (TextBox)GetEntryFormControl("CommenterName");
 				TextBox txtCommenterEmail = (TextBox)GetEntryFormControl("CommenterEmail");
 				TextBox txtVisitorComments = (TextBox)GetEntryFormControl("VisitorComments");
+				TextBox txtCommenterURL = (TextBox)GetEntryFormControl("CommenterURL");
 
 				string sIP = request.ServerVariables["REMOTE_ADDR"].ToString();
 
@@ -190,9 +191,20 @@ namespace Carrotware.CMS.UI.Controls {
 				pc.IsApproved = false;
 				pc.IsSpam = false;
 				pc.CommenterIP = sIP;
-				pc.CommenterName = txtCommenterName.Text;
-				pc.CommenterEmail = txtCommenterEmail.Text;
-				pc.PostCommentText = txtVisitorComments.Text;
+
+				if (txtCommenterName != null) {
+					pc.CommenterName = txtCommenterName.Text;
+				}
+				if (txtCommenterEmail != null) {
+					pc.CommenterEmail = txtCommenterEmail.Text;
+				}
+				if (txtVisitorComments != null) {
+					pc.PostCommentText = txtVisitorComments.Text;
+				}
+				if (txtCommenterURL != null) {
+					pc.CommenterURL = txtCommenterURL.Text;
+				}
+
 				pc.Save();
 
 				//if (lbl != null && txt1 != null && txt2 != null) {
