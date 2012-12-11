@@ -122,7 +122,15 @@ namespace Carrotware.CMS.Core {
 			string myFileSizeF;
 			long myFileSize;
 
-			var f = new FileData();
+			FileData f = new FileData();
+			f.FolderPath = "";
+			f.FileName = myFile;
+			f.FileSize = 0;
+			f.FileExtension = "";
+			f.FileSizeFriendly = "0b";
+			f.FileDate = DateTime.MinValue.Date;
+			f.MimeType = "x-application/octet-stream";
+
 
 			myFileName = Path.GetFileName(myFile).Trim();
 			if (myFileName.Length > 0 && File.Exists(sPath + "/" + myFileName)) {
