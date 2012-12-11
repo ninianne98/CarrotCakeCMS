@@ -36,16 +36,6 @@ namespace Carrotware.CMS.UI.Base {
 			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
 		}
 
-		private List<ContentPage> _pages = null;
-		protected List<ContentPage> lstActivePages {
-			get {
-				if (_pages == null) {
-					_pages = pageHelper.GetLatestContentList(SiteID, true);
-				}
-				return _pages;
-			}
-		}
-
 		protected Guid SiteID {
 			get {
 				return SiteData.CurrentSiteID;

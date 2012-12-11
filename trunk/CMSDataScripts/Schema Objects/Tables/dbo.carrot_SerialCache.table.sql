@@ -3,8 +3,8 @@
     [SiteID]         UNIQUEIDENTIFIER NOT NULL,
     [ItemID]         UNIQUEIDENTIFIER NOT NULL,
     [EditUserId]     UNIQUEIDENTIFIER NOT NULL,
-    [KeyType]        VARCHAR (256)    NULL,
-    [SerializedData] VARCHAR (MAX)    NULL,
+    [KeyType]        NVARCHAR (256)   NULL,
+    [SerializedData] NVARCHAR (MAX)   NULL,
     [EditDate]       DATETIME         NOT NULL
 );
 

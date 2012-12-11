@@ -63,7 +63,7 @@
 			</p>
 			<div>
 				<carrot:ContentCommentForm runat="server" ID="commentFrm">
-					<%--<CommentEntryTemplate>
+					<CommentEntryTemplate>
 						<script type="text/javascript">
 
 							function ValidateComments(sender, args) {
@@ -88,28 +88,39 @@
 						<div>
 							<asp:Label ID="ContentCommentFormMsg" runat="server" Text="" />
 						</div>
-						<div>
-							name:
-							<asp:TextBox runat="server" ID="CommenterName" Columns="40" MaxLength="100" ValidationGroup="ContentCommentForm" />
-							<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterName" ErrorMessage="*" />
-							<br />
-							email:
-							<asp:TextBox runat="server" ID="CommenterEmail" Columns="40" MaxLength="100" ValidationGroup="ContentCommentForm" />
-							<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterEmail" ErrorMessage="*" />
-							<br />
-							comment:
-							<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="VisitorComments" ClientValidationFunction="ValidateComments"
-								EnableClientScript="true" ErrorMessage="**" />
-							<br />
-							<asp:TextBox runat="server" ID="VisitorComments" TextMode="MultiLine" Rows="8" Columns="40" MaxLength="1024" />
-							<br />
-							<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="ContentCommentCaptcha"
-								ErrorMessage="**" />
-							<carrot:Captcha runat="server" ID="ContentCommentCaptcha" ValidationGroup="ContentCommentForm" />
-							<br />
-							<asp:Button ID="SubmitCommentButton" runat="server" Text="Submit Comment" ValidationGroup="ContentCommentForm" />
+						<div class="input-form">
+							<p class="padding10">
+								<label>
+									name:
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterName" ErrorMessage="*" />
+								</label>
+								<asp:TextBox runat="server" ID="CommenterName" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
+								<label>
+									email:
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterEmail" ErrorMessage="*" />
+								</label>
+								<asp:TextBox runat="server" ID="CommenterEmail" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
+								<label>
+									website:
+								</label>
+								<asp:TextBox runat="server" ID="CommenterURL" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
+								<label>
+									comment:
+									<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="VisitorComments" ClientValidationFunction="ValidateComments"
+										EnableClientScript="true" ErrorMessage="**" />
+								</label>
+								<asp:TextBox runat="server" ID="VisitorComments" TextMode="MultiLine" Rows="8" Columns="40" MaxLength="1024" />
+								<div class="padding10">
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="ContentCommentCaptcha"
+										ErrorMessage="**" />
+									<carrot:Captcha runat="server" ID="ContentCommentCaptcha" ValidationGroup="ContentCommentForm" />
+								</div>
+								<div class="padding10">
+									<asp:Button ID="SubmitCommentButton" CssClass="button padding10" runat="server" Text="Submit Comment" ValidationGroup="ContentCommentForm" />
+								</div>
+							</p>
 						</div>
-					</CommentEntryTemplate>--%>
+					</CommentEntryTemplate>
 				</carrot:ContentCommentForm>
 				<div style="clear: both;">
 				</div>

@@ -10,16 +10,16 @@
 namespace Carrotware.CMS.UI.Admin.Manage {
     
     
-    public partial class CommentIndex {
+    public partial class CommentAddEditPop {
         
         /// <summary>
-        /// ucCommentIndex1 control.
+        /// ucCommentAddEdit1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.CMS.UI.Admin.Manage.ucCommentIndex ucCommentIndex1;
+        protected global::Carrotware.CMS.UI.Admin.Manage.ucCommentAddEdit ucCommentAddEdit1;
         
         /// <summary>
         /// Master property.
@@ -27,9 +27,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.Main Master {
+        public new Carrotware.CMS.UI.Admin.Manage.MasterPages.MainPopup Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.Main)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.Manage.MasterPages.MainPopup)(base.Master));
             }
         }
     }

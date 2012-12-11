@@ -3,7 +3,7 @@
 	font-size: 12px;
 	font-family: Verdana, Helvetica, Sans-Serif;
 }
-
+/*
 a {
 	text-decoration: none;
 }
@@ -16,6 +16,16 @@ a:active {
 a:visited {
 	color: #0191D8;
 }
+a:hover {
+	text-decoration: underline;
+}
+*/
+
+a {
+	color: #333333;
+	text-decoration: none;
+}
+
 a:hover {
 	text-decoration: underline;
 }

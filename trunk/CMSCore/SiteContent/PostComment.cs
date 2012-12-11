@@ -29,6 +29,7 @@ namespace Carrotware.CMS.Core {
 		public string CommenterIP { get; set; }
 		public string CommenterName { get; set; }
 		public string CommenterEmail { get; set; }
+		public string CommenterURL { get; set; }
 		public string PostCommentText { get; set; }
 		public bool IsApproved { get; set; }
 		public bool IsSpam { get; set; }
@@ -45,6 +46,7 @@ namespace Carrotware.CMS.Core {
 				cont.CommenterIP = c.CommenterIP;
 				cont.CommenterName = c.CommenterName;
 				cont.CommenterEmail = c.CommenterEmail;
+				cont.CommenterURL = c.CommenterURL;
 				cont.PostCommentText = c.PostComment;
 				cont.CreateDate = c.CreateDate;
 				cont.IsApproved = c.IsApproved;
@@ -76,10 +78,10 @@ namespace Carrotware.CMS.Core {
 			c.CommenterIP = this.CommenterIP;
 			c.CommenterName = this.CommenterName;
 			c.CommenterEmail = this.CommenterEmail;
+			c.CommenterURL = this.CommenterURL;
 			c.PostComment = this.PostCommentText;
 			c.IsApproved = this.IsApproved;
 			c.IsSpam = this.IsSpam;
-
 
 			if (bNew) {
 				db.carrot_ContentComments.InsertOnSubmit(c);

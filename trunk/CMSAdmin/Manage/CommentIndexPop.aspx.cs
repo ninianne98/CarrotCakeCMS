@@ -19,23 +19,12 @@ using Carrotware.CMS.UI.Controls;
 
 
 namespace Carrotware.CMS.UI.Admin.Manage {
-	public partial class CommentIndex : AdminBasePage {
-		private ContentPageType.PageType pageType = ContentPageType.PageType.BlogEntry;
+	public partial class CommentIndexPop : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
-
-			if (!string.IsNullOrEmpty(Request.QueryString["type"])) {
-				pageType = ContentPageType.GetTypeByName(Request.QueryString["type"].ToString());
-			}
-
-			if (pageType == ContentPageType.PageType.ContentEntry) {
-				Master.ActivateTab(AdminBaseMasterPage.SectionID.PageComment);
-			} else {
-				Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogComment);
-			}
+			
 
 		}
-
 
 	}
 }

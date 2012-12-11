@@ -3,10 +3,10 @@
     [SiteID]           UNIQUEIDENTIFIER NOT NULL,
     [Heartbeat_UserId] UNIQUEIDENTIFIER NULL,
     [EditHeartbeat]    DATETIME         NULL,
-    [FileName]         VARCHAR (256)    NOT NULL,
+    [FileName]         NVARCHAR (256)   NOT NULL,
     [PageActive]       BIT              NOT NULL,
     [CreateDate]       DATETIME         NOT NULL,
-    [PageSlug]         VARCHAR (256)    NULL,
-    [ContentTypeID]    UNIQUEIDENTIFIER NOT NULL
+    [ContentTypeID]    UNIQUEIDENTIFIER NOT NULL,
+    [PageSlug]         NVARCHAR (256)   NULL
 );
 
