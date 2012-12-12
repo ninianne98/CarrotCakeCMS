@@ -189,6 +189,10 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.GetLatestContentPagedList(siteID, postType, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
 
+		public List<SiteNav> GetLatestContentSearchList(Guid siteID, string searchTerm, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return _navHelper.GetLatestContentSearchList(siteID, searchTerm, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
+		}
+
 		public int GetSiteContentCount(Guid siteID) {
 			return _navHelper.GetSiteContentCount(siteID);
 		}
@@ -199,6 +203,10 @@ namespace Carrotware.CMS.Core {
 
 		public int GetSitePageCount(Guid siteID, ContentPageType.PageType entryType, bool bActiveOnly) {
 			return _navHelper.GetSitePageCount(siteID, entryType, bActiveOnly);
+		}
+
+		public int GetSiteSearchCount(Guid siteID, string searchTerm, bool bActiveOnly) {
+			return _navHelper.GetSiteSearchCount(siteID, searchTerm, bActiveOnly);
 		}
 
 		public List<SiteNav> PerformDataPagingQueryableContent(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir, IQueryable<vw_carrot_Content> QueryInput) {

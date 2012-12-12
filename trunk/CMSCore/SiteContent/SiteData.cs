@@ -341,6 +341,14 @@ namespace Carrotware.CMS.Core {
 			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/date/"); }
 		}
 
+		public string SiteSearchPath {
+			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/" + SiteSearchPageName); }
+		}
+
+		public static string SiteSearchPageName {
+			get { return "/search.aspx".ToLower(); }
+		}
+
 		public string DefaultCanonicalURL {
 			get { return RemoveDupeSlashesURL(this.MainURL + "/" + CurrentScriptName); }
 		}
@@ -560,10 +568,6 @@ namespace Carrotware.CMS.Core {
 			get { return VirtualCMSEditPrefix + "templatepreview/Page.aspx"; }
 		}
 
-		public static string SiteSearchPageName {
-			get { return "/search.aspx".ToLower(); }
-		}
-
 		public static bool IsPageSampler {
 			get {
 				string _prefix = (SiteData.VirtualCMSEditPrefix + "templatepreview/").ToLower();
@@ -616,11 +620,12 @@ namespace Carrotware.CMS.Core {
 			string sRequestedURL = HttpContext.Current.Request.Path;
 			string sFileRequested = sRequestedURL;
 
-			if (site != null) {
+			if (!sRequestedURL.ToLower().StartsWith("/manage/") && site != null) {
 				if (sFileRequested.ToLower().StartsWith(site.BlogFolderPath.ToLower())) {
 					if (sFileRequested.ToLower().StartsWith(site.BlogCategoryPath.ToLower())
 						|| sFileRequested.ToLower().StartsWith(site.BlogTagPath.ToLower())
-						|| sFileRequested.ToLower().StartsWith(site.BlogDateFolderPath.ToLower())) {
+						|| sFileRequested.ToLower().StartsWith(site.BlogDateFolderPath.ToLower())
+						|| sFileRequested.ToLower().StartsWith(site.SiteSearchPath.ToLower())) {
 						if (site.Blog_Root_ContentID.HasValue) {
 							using (SiteNavHelper navHelper = new SiteNavHelper()) {
 								SiteNav blogNavPage = navHelper.GetLatestVersion(site.SiteID, site.Blog_Root_ContentID.Value);

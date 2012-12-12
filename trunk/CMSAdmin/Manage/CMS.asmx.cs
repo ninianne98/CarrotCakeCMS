@@ -356,10 +356,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				string sCategoryPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(CategoryPath));
 				string sTagPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(TagPath));
 
-				if (string.IsNullOrEmpty(sFolderPath) || string.IsNullOrEmpty(sCategoryPath) || string.IsNullOrEmpty(sTagPath)
-					|| sFolderPath.Length < 2 || sCategoryPath.Length < 2 || sTagPath.Length < 2) {
+				if (string.IsNullOrEmpty(sFolderPath) || string.IsNullOrEmpty(sCategoryPath) || string.IsNullOrEmpty(sTagPath)) {
 					return "FAIL";
 				}
+				if (sFolderPath.Length < 1 || sCategoryPath.Length < 1 || sTagPath.Length < 1) {
+					return "FAIL";
+				}
+
 
 				if (SiteData.CurrentSite != null
 					&& !string.IsNullOrEmpty(sFolderPath)

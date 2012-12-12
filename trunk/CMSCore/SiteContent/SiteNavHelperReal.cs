@@ -523,9 +523,28 @@ namespace Carrotware.CMS.Core {
 					sTitle = p.dateBegin.ToString("MMMM dd, yyyy");
 				}
 			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
+				sTitle = "Search Results";
+			}
 
 			return sTitle;
 		}
+
+
+		public int GetSiteSearchCount(Guid siteID, string searchTerm, bool bActiveOnly) {
+
+			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetContentSiteSearch(db, siteID, bActiveOnly, searchTerm);
+
+			return query1.Count();
+		}
+
+		public List<SiteNav> GetLatestContentSearchList(Guid siteID, string searchTerm, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+
+			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetContentSiteSearch(db, siteID, bActiveOnly, searchTerm);
+
+			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
+		}
+
 
 		public int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly) {
 

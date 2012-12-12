@@ -212,6 +212,14 @@ namespace Carrotware.CMS.Core {
 			return 10;
 		}
 
+		public int GetSiteSearchCount(Guid siteID, string searchTerm, bool bActiveOnly) {
+			return 10;
+		}
+
+		public List<SiteNav> GetLatestContentSearchList(Guid siteID, string searchTerm, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return SiteNavHelper.GetSamplerFakeNav(pageSize);
+		}
+
 		public string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
 			string sTitle = String.Empty;
 
@@ -223,6 +231,9 @@ namespace Carrotware.CMS.Core {
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				sTitle = DateTime.Now.ToString("MMMM yyyy");
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
+				sTitle = "Search Results";
 			}
 
 			return sTitle;

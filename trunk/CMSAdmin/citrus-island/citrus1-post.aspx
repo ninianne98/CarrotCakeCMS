@@ -7,8 +7,9 @@
 	<carrot:jqueryui runat="server" ID="jqueryui1" />
 	<title>Citrus Island</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<asp:PlaceHolder ID="myCSS" runat="server">
+	<asp:PlaceHolder ID="myPageHead" runat="server">
 		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+		<link rel="canonical" href="<%= theSite.DefaultCanonicalURL %>" />
 	</asp:PlaceHolder>
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 </head>
@@ -16,14 +17,16 @@
 	<form id="form1" runat="server">
 	<div id="wrap">
 		<div id="header">
-			<%--<form method="post" class="search" action="http://www.free-css.com/">
-			<p>
-				<input name="search_query" class="textbox" type="text" />
-				<input name="search" class="button" value="Search" type="submit" />
-			</p>
-			</form>--%>
-			<p class="search">
-			</p>
+			<carrot:SearchBox ID="search1" runat="server">
+				<SearchTemplate>
+					<div class="search">
+						<p>
+							<asp:TextBox ID="SearchText" runat="server" CssClass="textbox" MaxLength="40" />
+							<asp:Button ID="btnSiteSearch" runat="server" CssClass="button" Text="Search" />
+						</p>
+					</div>
+				</SearchTemplate>
+			</carrot:SearchBox>
 			<asp:PlaceHolder ID="myHeading" runat="server">
 				<h1 id="logo">
 					<a href="/">
@@ -64,27 +67,7 @@
 			<div>
 				<carrot:ContentCommentForm runat="server" ID="commentFrm">
 					<CommentEntryTemplate>
-						<script type="text/javascript">
-
-							function ValidateComments(sender, args) {
-								var txtValue = args.Value;
-								args.IsValid = true;
-								if (txtValue.indexOf('<') > -1 || txtValue.indexOf('>') > -1) {
-									alert("invalid characters encountered: cannot include < or > ");
-									args.IsValid = false;
-									return;
-								}
-
-								if (txtValue.length > 1024) {
-									alert("comments are too long ");
-									args.IsValid = false;
-									return;
-								}
-
-								args.IsValid = true;
-							}
-
-						</script>
+						<carrot:jsHelperLib runat="server" ID="jsHelperLib1" />
 						<div>
 							<asp:Label ID="ContentCommentFormMsg" runat="server" Text="" />
 						</div>
@@ -106,7 +89,7 @@
 								<asp:TextBox runat="server" ID="CommenterURL" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
 								<label>
 									comment:
-									<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="VisitorComments" ClientValidationFunction="ValidateComments"
+									<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="VisitorComments" ClientValidationFunction="__carrotware_ValidateLongText"
 										EnableClientScript="true" ErrorMessage="**" />
 								</label>
 								<asp:TextBox runat="server" ID="VisitorComments" TextMode="MultiLine" Rows="8" Columns="40" MaxLength="1024" />

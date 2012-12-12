@@ -117,6 +117,21 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
+		internal static IQueryable<vw_carrot_Content> GetContentSiteSearch(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string searchTerm) {
+			return (from ct in ctx.vw_carrot_Contents
+					where ct.SiteID == siteID
+						&& (ct.PageText.Contains(searchTerm)
+								|| ct.LeftPageText.Contains(searchTerm)
+								|| ct.RightPageText.Contains(searchTerm)
+								|| ct.TitleBar.Contains(searchTerm)
+								|| ct.MetaDescription.Contains(searchTerm)
+								|| ct.MetaKeyword.Contains(searchTerm)
+							)
+						&& (ct.PageActive == true || bActiveOnly == false)
+						&& ct.IsLatestVersion == true
+					select ct);
+		}
+
 
 		internal static IQueryable<vw_carrot_CategoryURL> GetCategoryURLs(CarrotCMSDataContext ctx, Guid siteID) {
 			return (from ct in ctx.vw_carrot_CategoryURLs

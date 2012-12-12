@@ -142,7 +142,7 @@ input.button {
 	color: #75A54B;
 }
 /* search #searchform */
-#searchform.search {
+#searchform.search, div.search {
 	position: absolute;
 	top: 15px;
 	right: 5px;
@@ -151,7 +151,7 @@ input.button {
 	border: none;
 	background-color: transparent;
 }
-#searchform.search input.textbox {
+#searchform.search input.textbox, div.search input.textbox{
 	margin: 0;
 	width: 120px;
 	border: 1px solid #CCC;
@@ -159,7 +159,7 @@ input.button {
 	color: #333;
 	vertical-align: top;
 }
-#searchform.search input.button {
+#searchform.search input.button, div.search input.button, div.search input.submit {
 	width: 60px;
 	vertical-align: top;
 }

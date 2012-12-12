@@ -24,35 +24,38 @@
 			<td valign="top">
 			</td>
 		</tr>
+	</table>
+	<table>
 		<tr>
 			<td valign="top" class="tablecaption">
 				show content:
 			</td>
-			<td valign="top">
+			<td valign="top" colspan="3">
 				<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 				<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
-			</td>
-			<td valign="top">
 			</td>
 		</tr>
 		<tr runat="server" id="trFilter">
 			<td valign="top" class="tablecaption">
-				filter:
+				post filter:
 				<br />
+			</td>
+			<td valign="top">
+				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
+			</td>
+			<td valign="top">
+				&nbsp;&nbsp;
 			</td>
 			<td valign="top">
 				<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server"></asp:TextBox>
 				<asp:DropDownList ID="ddlDateRange" runat="server">
-					<asp:ListItem Text="15 Days +/-" Value="15" />
 					<asp:ListItem Text="30 Days +/-" Value="30" />
 					<asp:ListItem Text="60 Days +/-" Value="60" />
 					<asp:ListItem Text="90 Days +/-" Value="90" />
+					<asp:ListItem Text="120 Days +/-" Value="120" />
 				</asp:DropDownList>
 				<div style="clear: both; height: 2px;">
 				</div>
-			</td>
-			<td valign="top">
-				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
 			</td>
 		</tr>
 	</table>

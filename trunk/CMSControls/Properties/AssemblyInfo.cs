@@ -70,9 +70,8 @@ using System.Web.UI;
 [assembly: TagPrefix("ContentRichText", "carrot")]
 
 [assembly: TagPrefix("IFrameWidgetWrapper", "carrot")]
+[assembly: TagPrefix("SearchBox", "carrot")]
 [assembly: TagPrefix("RSSFeed", "carrot")]
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu7.txt", "text/css")]
-
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ContentCommentFormScripts.txt", "text/javascript")]

@@ -749,20 +749,9 @@ namespace Carrotware.CMS.UI.Controls {
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultContentCommentForm";
 
-			string sValidationScript = String.Empty;
-			string sScriptPrefix = "Carrot" + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
-
-			Assembly _assembly = Assembly.GetExecutingAssembly();
-
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Controls.ContentCommentFormScripts.txt"))) {
-				sValidationScript = oTextStream.ReadToEnd();
-			}
-
-			sValidationScript = sValidationScript.Replace("{CONTROL_PREFIX}", sScriptPrefix);
+			string sValidationMethodName = "__carrotware_ValidateLongText";
 
 			string sVG = "ContentCommentForm";
-
-			ph.Controls.Add(new Literal { Text = sValidationScript });
 
 			ph.Controls.Add(new Literal { Text = "<div>\r\n " });
 			ph.Controls.Add(new Label { ID = "ContentCommentFormMsg", Text = " " });
@@ -806,7 +795,7 @@ namespace Carrotware.CMS.UI.Controls {
 				ID = "VisitorCommentsValid",
 				ControlToValidate = "VisitorComments",
 				ErrorMessage = "**",
-				ClientValidationFunction = sScriptPrefix + "_ValidateComments",
+				ClientValidationFunction = sValidationMethodName,
 				ValidationGroup = sVG
 			});
 			ph.Controls.Add(new Literal { Text = " </label> " });
@@ -831,11 +820,44 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
 
+
+			jsHelperLib js = new jsHelperLib();
+			container.Controls.Add(js);
 			container.Controls.Add(ph);
 		}
 
 	}
 
+	//========================================
+	public class DefaultSearchBoxForm : ITemplate {
+
+		public DefaultSearchBoxForm() {
+
+		}
+
+		public void InstantiateIn(Control container) {
+
+			PlaceHolder ph = new PlaceHolder();
+			ph.ID = "DefaultSearchBoxForm";
+
+			ph.Controls.Add(new Literal { Text = "<div class=\"search-form-outer\">\r\n" });
+
+			// SearchText
+			ph.Controls.Add(new Literal { Text = "<div class=\"search-form-text\"> " });
+			ph.Controls.Add(new TextBox { ID = "SearchText", Columns = 16, MaxLength = 40 });
+			ph.Controls.Add(new Literal { Text = " </div>\r\n" });
+
+			// btnSiteSearch
+			ph.Controls.Add(new Literal { Text = "<div class=\"search-form-button\"> " });
+			ph.Controls.Add(new Button { ID = "btnSiteSearch", Text = "Search" });
+			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
+
+			ph.Controls.Add(new Literal { Text = " </div>\r\n" });
+
+			container.Controls.Add(ph);
+		}
+
+	}
 
 	//========================================
 	public class DefaultPagerTemplate : ITemplate {
