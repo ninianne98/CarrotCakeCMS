@@ -85,15 +85,6 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentSkin;
         
         /// <summary>
-        /// tabContentSiteMap control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentSiteMap;
-        
-        /// <summary>
         /// tabImportContent control.
         /// </summary>
         /// <remarks>
@@ -128,6 +119,15 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentTemplate;
+        
+        /// <summary>
+        /// tabContentSiteMap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentSiteMap;
         
         /// <summary>
         /// tabContentCommentIndex control.

@@ -83,6 +83,7 @@
     <Compile Include="CarrotGridView\CarrotLinkButtonCmdTemplate.cs" />
     <Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
     <Compile Include="CarrotHttpHandler.cs" />
+    <Compile Include="jsHelperLib.cs" />
     <Compile Include="jquery.cs" />
     <Compile Include="jquerybasic.cs" />
     <Compile Include="jqueryui.cs" />
@@ -90,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="calendar.txt" />
+    <EmbeddedResource Include="jsHelperLibrary.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="captcha\CAPTCHA.aspx">

@@ -144,6 +144,7 @@ namespace Carrotware.CMS.UI.Controls {
 			Blog,
 			ContentPage,
 			SpecifiedCategories,
+			SiteSearch
 		}
 
 
@@ -347,8 +348,16 @@ namespace Carrotware.CMS.UI.Controls {
 			int TotalPages = 0;
 			int TotalRecords = 0;
 			int iPageNbr = PageNumber - 1;
+			string sSearchTerm = String.Empty;
 
 			ContentPageType.PageType viewContentType = ContentPageType.PageType.BlogEntry;
+
+			if (SiteData.CurrentScriptName.ToLower() == SiteData.CurrentSite.SiteSearchPath.ToLower()) {
+				ContentType = SummaryContentType.SiteSearch;
+				if (HttpContext.Current.Request.QueryString["search"] != null) {
+					sSearchTerm = HttpContext.Current.Request.QueryString["search"].ToString();
+				}
+			}
 
 			switch (ContentType) {
 				case SummaryContentType.Blog:
@@ -366,7 +375,12 @@ namespace Carrotware.CMS.UI.Controls {
 					TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor);
 					lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
 					break;
+				case SummaryContentType.SiteSearch:
+					TotalRecords = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor);
+					lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
+					break;
 			}
+
 
 			lstContents.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 

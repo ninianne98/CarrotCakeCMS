@@ -84,7 +84,6 @@
 						<ul class="children">
 							<li runat="server" id="tabMain"><a href="/Manage/">Site Info</a> </li>
 							<li runat="server" id="tabContentSkin"><a href="/Manage/SiteSkinIndex.aspx">Edit Site Skins</a> </li>
-							<li runat="server" id="tabContentSiteMap"><a href="/Manage/SiteMap.aspx">Edit Site Map</a> </li>
 							<li runat="server" id="tabImportContent"><a href="/Manage/PageImport.aspx">Import Content</a> </li>
 						</ul>
 					</li>
@@ -93,6 +92,7 @@
 						<ul class="children">
 							<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Page Index</a> </li>
 							<li runat="server" id="tabContentTemplate"><a href="/Manage/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
+							<li runat="server" id="tabContentSiteMap"><a href="/Manage/SiteMap.aspx">Edit Site Map</a> </li>
 							<li runat="server" id="tabContentCommentIndex"><a href="/Manage/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
 						</ul>
 					</li>

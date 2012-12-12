@@ -17,26 +17,30 @@
 			<td valign="top" class="tablecaption">
 				show content:
 			</td>
-			<td valign="top">
+			<td valign="top" colspan="3">
 				<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 				<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 			</td>
-			<td valign="top">
-			</td>
 		</tr>
+		<br />
 		<tr runat="server" id="trFilter">
 			<td valign="top" class="tablecaption">
-				filter:
+				page filter:
 				<br />
+			</td>
+			<td valign="top">
+				<div style="clear: both; height: 2px;">
+				</div>
+				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
+			</td>
+			<td valign="top">
+				&nbsp;&nbsp;
 			</td>
 			<td valign="top">
 				<!-- parent page plugin-->
 				<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
 				<div style="clear: both; height: 2px;">
 				</div>
-			</td>
-			<td valign="top">
-				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
 			</td>
 		</tr>
 	</table>

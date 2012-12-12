@@ -53,6 +53,8 @@ namespace Carrotware.CMS.Core {
 		List<SiteNav> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageSize, int pageNumber);
 		List<SiteNav> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
 
+		List<SiteNav> GetLatestContentSearchList(Guid siteID, string searchTerm, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
+
 		SiteNav GetLatestVersion(Guid siteID, bool bActiveOnly, string sPage);
 		SiteNav GetLatestVersion(Guid siteID, Guid rootContentID);
 
@@ -74,6 +76,7 @@ namespace Carrotware.CMS.Core {
 		int GetSiteContentCount(Guid siteID);
 		int GetSitePageCount(Guid siteID, ContentPageType.PageType entryType);
 		int GetSitePageCount(Guid siteID, ContentPageType.PageType entryType, bool bActiveOnly);
+		int GetSiteSearchCount(Guid siteID, string searchTerm, bool bActiveOnly);
 
 		List<SiteNav> GetTopNavigation(Guid siteID, bool bActiveOnly);
 		List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly);

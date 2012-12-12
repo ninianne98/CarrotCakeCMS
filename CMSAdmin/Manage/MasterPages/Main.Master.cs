@@ -67,10 +67,6 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 					tabMainTop.Attributes["class"] = "current";
 					tabContentSkin.Attributes["class"] = "current";
 					break;
-				case SectionID.ContentSiteMap:
-					tabMainTop.Attributes["class"] = "current";
-					tabContentSiteMap.Attributes["class"] = "current";
-					break;
 				case SectionID.ContentImport:
 					tabMainTop.Attributes["class"] = "current";
 					tabImportContent.Attributes["class"] = "current";
@@ -87,6 +83,10 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 				case SectionID.PageComment:
 					tabContentTop.Attributes["class"] = "current";
 					tabContentCommentIndex.Attributes["class"] = "current";
+					break;
+				case SectionID.ContentSiteMap:
+					tabContentTop.Attributes["class"] = "current";
+					tabContentSiteMap.Attributes["class"] = "current";
 					break;
 
 				case SectionID.UserAdmin:

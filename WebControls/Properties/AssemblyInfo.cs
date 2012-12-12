@@ -47,6 +47,9 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.accept.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.cancel.png", "image/png")]
 
+[assembly: WebResource("Carrotware.Web.UI.Controls.jsHelperLibrary.js", "text/javascript")]
+[assembly: TagPrefix("jsHelperLib", "carrot")]
+
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery132.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery142.js", "text/javascript")]
@@ -57,7 +60,6 @@ using System.Web.UI;
 
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-8-21.js", "text/javascript")]
-
 [assembly: TagPrefix("jquerybasic", "carrot")]
 
 
