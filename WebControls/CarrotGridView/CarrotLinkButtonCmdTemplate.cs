@@ -178,7 +178,7 @@ namespace Carrotware.Web.UI.Controls {
 				imgBool.CssClass = _css;
 			}
 			imgBool.AlternateText = _field;
-			imgBool.ImageUrl = "noimage.png";
+			imgBool.ImageUrl = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
 
 			imgBool.DataBinding += new EventHandler(imgBool_DataBinding);
 
@@ -202,4 +202,55 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 	}
+
+
+
+	//=========================================
+
+	public class CarrotImageItemTemplate : ITemplate {
+		private List<CarrotImageColumnData> _images { get; set; }
+		private string _field { get; set; }
+		private string _css { get; set; }
+
+		public CarrotImageItemTemplate(string fieldParm, string cssStyle, List<CarrotImageColumnData> lstImage) {
+			_field = fieldParm;
+			_css = cssStyle;
+			_images = lstImage;
+		}
+
+		public void InstantiateIn(Control container) {
+
+			Image imgEnum = new Image();
+			if (!string.IsNullOrEmpty(_css)) {
+				imgEnum.CssClass = _css;
+			}
+			imgEnum.AlternateText = _field;
+			imgEnum.ImageUrl = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
+
+			imgEnum.DataBinding += new EventHandler(imgEnum_DataBinding);
+
+			container.Controls.Add(imgEnum);
+		}
+
+		private void imgEnum_DataBinding(object sender, EventArgs e) {
+			Image imgEnum = (Image)sender;
+			GridViewRow container = (GridViewRow)imgEnum.NamingContainer;
+
+			string sValue = DataBinder.Eval(container, "DataItem." + _field).ToString();
+
+			CarrotImageColumnData img = (from i in _images
+										 where i.KeyValue.ToLower() == sValue.ToLower()
+										 select i).FirstOrDefault();
+			if (img != null) {
+				imgEnum.ImageUrl = img.ImagePath;
+				imgEnum.AlternateText = img.ImageAltText;
+			} else {
+				imgEnum.AlternateText = "[" + _field + "] IMAGE DEF MISSING";
+			}
+			imgEnum.ToolTip = imgEnum.AlternateText;
+		}
+
+	}
+
+
 }

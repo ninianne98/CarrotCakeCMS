@@ -49,7 +49,11 @@ namespace Carrotware.CMS.Core {
 				if (!string.IsNullOrEmpty(this.LastName)) {
 					return String.Format("{0} {1}", this.FirstName, this.LastName);
 				} else {
-					return this.UserName;
+					if (!string.IsNullOrEmpty(this.UserName)) {
+						return this.UserName;
+					} else {
+						return "Unknown User";
+					}
 				}
 			}
 		}
@@ -59,7 +63,11 @@ namespace Carrotware.CMS.Core {
 				if (!string.IsNullOrEmpty(this.LastName)) {
 					return String.Format("{0}, {1}", this.LastName, this.FirstName);
 				} else {
-					return this.UserName;
+					if (!string.IsNullOrEmpty(this.UserName)) {
+						return this.UserName;
+					} else {
+						return "Unknown User";
+					}
 				}
 			}
 		}

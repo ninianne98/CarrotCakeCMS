@@ -590,6 +590,7 @@
     <Content Include="Manage\Images\group.png" />
     <Content Include="Manage\Images\heading-bg-gradient.png" />
     <Content Include="Manage\Images\heading-bg.png" />
+    <Content Include="Manage\Images\heading-gradient.png" />
     <Content Include="Manage\Images\house.png" />
     <Content Include="Manage\Images\house_go.png" />
     <Content Include="Manage\Images\html.png" />
@@ -603,6 +604,7 @@
     <Content Include="Manage\Images\logonbox.gif" />
     <Content Include="Manage\Images\menu-a.gif" />
     <Content Include="Manage\Images\menu-div.png" />
+    <Content Include="Manage\Images\menu-gradient.png" />
     <Content Include="Manage\Images\mini-spinner1-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner2-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner3-6F997D.gif" />
@@ -931,7 +933,6 @@
     <Content Include="Manage\Includes\logon.css" />
     <Content Include="Manage\Includes\main.css" />
     <Content Include="Manage\Includes\mainpopup.css" />
-    <Content Include="Manage\Includes\menu.css" />
     <Content Include="Manage\Includes\modal.css" />
     <Content Include="Manage\Includes\richedit.css" />
     <Content Include="Manage\Includes\TableStyles.css" />

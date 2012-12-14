@@ -64,6 +64,9 @@ namespace Carrotware.CMS.Core {
 		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates) {
 			return _navHelper.GetMonthBlogUpdateList(siteID, iUpdates);
 		}
+		public List<ContentDateLinks> GetSingleMonthBlogUpdateList(SiteData currentSite, DateTime monthDate, bool bActiveOnly) {
+			return _navHelper.GetSingleMonthBlogUpdateList(currentSite, monthDate, bActiveOnly);
+		}
 		public List<IContentMetaInfo> GetCategoryList(Guid siteID, int iUpdates) {
 			return _navHelper.GetCategoryList(siteID, iUpdates);
 		}
@@ -334,7 +337,7 @@ namespace Carrotware.CMS.Core {
 			navNew.PageActive = true;
 			navNew.EditDate = DateTime.Now.AddMinutes(-30);
 			navNew.CreateDate = DateTime.Today.AddDays(-1);
-
+			navNew.EditUserId = Guid.NewGuid();
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
 			navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();
 

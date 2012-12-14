@@ -86,32 +86,32 @@ namespace Carrotware.Web.UI.Controls {
 				guid = Guid.NewGuid().ToString().Substring(0, 6);
 				HttpContext.Current.Session["captcha_key"] = guid;
 			}
-			return guid;
+			return guid.ToUpper();
 		}
 
 
 		public static Bitmap GetCaptchaImage(Color fg, Color bg, Color n) {
-			int imageHeight = 50;
 			int topPadding = 2; // top and bottom padding in pixels
 			int sidePadding = 3; // side padding in pixels
 
 			SolidBrush textBrush = new SolidBrush(fg);
-			Font font = new Font("Verdana", 28, FontStyle.Bold);
+			Font font = new Font(FontFamily.GenericSansSerif, 32, FontStyle.Bold);
 
 			string guid = GetKey();
 
-			Bitmap bitmap = new Bitmap(500, 500);
-			Graphics graphics = Graphics.FromImage(bitmap);
+			Bitmap bmpCaptcha = new Bitmap(500, 500);
+			Graphics graphics = Graphics.FromImage(bmpCaptcha);
 			SizeF textSize = graphics.MeasureString(guid, font);
 
-			bitmap.Dispose();
+			bmpCaptcha.Dispose();
 			graphics.Dispose();
 
 			int bitmapWidth = sidePadding * 2 + (int)textSize.Width;
-			bitmap = new Bitmap(bitmapWidth, imageHeight);
-			graphics = Graphics.FromImage(bitmap);
+			int bitmapHeight = topPadding * 2 + (int)textSize.Height;
+			bmpCaptcha = new Bitmap(bitmapWidth, bitmapHeight);
+			graphics = Graphics.FromImage(bmpCaptcha);
 
-			Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+			Rectangle rect = new Rectangle(0, 0, bmpCaptcha.Width, bmpCaptcha.Height);
 
 			HatchBrush hatch1 = new HatchBrush(HatchStyle.SmallGrid, n, bg);
 
@@ -124,11 +124,16 @@ namespace Carrotware.Web.UI.Controls {
 			HttpContext.Current.Response.ContentType = "image/x-png";
 
 			using (MemoryStream memStream = new MemoryStream()) {
-				bitmap.Save(memStream, ImageFormat.Png);
+				bmpCaptcha.Save(memStream, ImageFormat.Png);
 			}
+
+			textBrush.Dispose();
+			font.Dispose();
+			hatch1.Dispose();
+			hatch2.Dispose();
 			graphics.Dispose();
 
-			return bitmap;
+			return bmpCaptcha;
 		}
 
 

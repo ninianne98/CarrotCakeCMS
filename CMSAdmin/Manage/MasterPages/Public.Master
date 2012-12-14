@@ -6,7 +6,6 @@
 	<title>Public</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
 	<link href="/Manage/includes/logon.css" rel="stylesheet" type="text/css" />
-	<link href="/Manage/includes/menu.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 
 		$(document).ready(function () {

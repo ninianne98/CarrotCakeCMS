@@ -1,9 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdminModule.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdminModule" %>
-<style type="text/css">
-	.selectedModule {
-		font-weight: bolder;
-	}
-</style>
 <table width="95%">
 	<tr>
 		<asp:Panel ID="pnlNav" runat="server">

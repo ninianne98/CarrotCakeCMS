@@ -122,7 +122,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 				Dictionary<string, string> _dict = new Dictionary<string, string>();
 
-				_dict.Add("default", "default");
+				_dict.Add("pp_default", "default");
 				_dict.Add("light_square", "light square");
 				_dict.Add("light_rounded", "light rounded");
 				_dict.Add("facebook", "facebook");
@@ -206,7 +206,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				} catch (Exception ex) { }
 
 				try {
-					string sFoundVal = GetParmValue("WindowWidth", "500");
+					string sFoundVal = GetParmValueDefaultEmpty("WindowWidth", "500");
 
 					if (!string.IsNullOrEmpty(sFoundVal)) {
 						WindowWidth = Convert.ToInt32(sFoundVal);
@@ -214,7 +214,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				} catch (Exception ex) { }
 
 				try {
-					string sFoundVal = GetParmValue("ThumbSize1", "150");
+					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize1", "150");
 
 					if (!string.IsNullOrEmpty(sFoundVal)) {
 						ThumbSize1 = Convert.ToInt32(sFoundVal);
@@ -222,7 +222,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				} catch (Exception ex) { }
 
 				try {
-					string sFoundVal = GetParmValue("ThumbSize2", "200");
+					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize2", "200");
 
 					if (!string.IsNullOrEmpty(sFoundVal)) {
 						ThumbSize2 = Convert.ToInt32(sFoundVal);

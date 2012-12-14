@@ -71,6 +71,15 @@ namespace Carrotware.CMS.Interface {
 			return ret;
 		}
 
+		protected string GetParmValueDefaultEmpty(string sKey, string sDefault) {
+			string ret = null;
+			ret = GetParmValue(sKey, sDefault);
+
+			ret = string.IsNullOrEmpty(ret) ? sDefault : ret;
+
+			return ret;
+		}
+
 		protected List<string> GetParmValueList(string sKey) {
 
 			sKey = sKey.EndsWith("|") ? sKey : sKey + "|";

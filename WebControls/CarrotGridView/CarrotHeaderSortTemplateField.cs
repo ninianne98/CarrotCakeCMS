@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Reflection;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -116,6 +117,45 @@ namespace Carrotware.Web.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool ShowEnumImage {
+			get {
+				String s = (String)ViewState["ShowEnumImage"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["ShowEnumImage"] = value.ToString();
+			}
+		}
+
+
+
+		private List<CarrotImageColumnData> imageList = null;
+
+		[
+		Category("Behavior"),
+		Description("The ImageSelectors collection"),
+		DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
+		Editor(typeof(CarrotImageColumnDataCollectionEditor), typeof(UITypeEditor)),
+		NotifyParentProperty(true),
+		Browsable(true),
+		TemplateContainer(typeof(CarrotImageColumnData)),
+		PersistenceMode(PersistenceMode.InnerProperty)
+		]
+		public List<CarrotImageColumnData> ImageSelectors {
+			get {
+				if (imageList == null) {
+					imageList = new List<CarrotImageColumnData>();
+				}
+				return imageList;
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
 		public string AlternateTextTrue {
@@ -141,22 +181,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["AlternateTextFalse"] = value;
 			}
 		}
-
-		//[Bindable(true)]
-		//[Category("Appearance")]
-		//[DefaultValue("")]
-		//[Localizable(true)]
-		//public string SortBy {
-		//    get {
-		//        String s = ViewState["SortBy"] as String;
-		//        return ((s == null) ? String.Empty : s);
-		//    }
-		//    set {
-		//        ViewState["SortBy"] = value;
-		//    }
-		//}
-
-
 
 	}
 }

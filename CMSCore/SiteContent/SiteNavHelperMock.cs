@@ -100,6 +100,27 @@ namespace Carrotware.CMS.Core {
 			return GetCategoryList(siteID, 5);
 		}
 
+		public List<ContentDateLinks> GetSingleMonthBlogUpdateList(SiteData currentSite, DateTime monthDate, bool bActiveOnly) {
+			List<ContentDateLinks> lstContent = new List<ContentDateLinks>();
+			int n = 0;
+			monthDate = monthDate.AddDays(0 - monthDate.Day).AddDays(1);
+			DateTime dateNow = monthDate;
+
+			while (n < 28) {
+				dateNow = monthDate.AddDays(n);
+
+				ContentDateLinks cc = new ContentDateLinks();
+				cc.TheSite = currentSite;
+				cc.UseCount = n;
+				cc.PostDate = dateNow;
+				lstContent.Add(cc);
+
+				n = n + 3;
+			}
+
+			return lstContent;
+		}
+
 		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates) {
 			List<IContentMetaInfo> lstContent = new List<IContentMetaInfo>();
 			int n = 0;

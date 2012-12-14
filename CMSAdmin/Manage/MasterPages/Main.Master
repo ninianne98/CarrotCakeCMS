@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 	<title>Main</title>
-	<link href="/Manage/includes/main.css" rel="stylesheet" type="text/css" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
+	<link href="/Manage/includes/main.css" rel="stylesheet" type="text/css" />
 	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.simplemodal.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
@@ -58,74 +58,67 @@
 	<!-- /TinyMCE -->
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>
-	<style type="text/css">
-		#cms-simplemodal-container, .cms-simplemodal-container {
-			height: 550px;
-			width: 925px;
-			z-index: 5000;
-		}
-	</style>
 </head>
 <body>
 	<form id="form1" runat="server">
-	<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
-	<div id="cmsAjaxMainDiv">
-		<div style="display: none">
-			<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+	<div id="headercontainer">
+		<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
+		<div id="cmsAjaxMainDiv">
+			<div id="header">
+				<h2>
+					CarrotCake CMS</h2>
+			</div>
+			<div style="display: none">
+				<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+			</div>
 		</div>
-		<div id="header">
-			<h2>
-				CarrotCake CMS</h2>
-		</div>
-		<div id="menu">
-			<div id="menu-inner">
-				<ul>
-					<li runat="server" id="tabMainTop"><a href="javascript:void(0)" class="lnkPopup">Home </a>
-						<ul class="children">
-							<li runat="server" id="tabMain"><a href="/Manage/">Site Info</a> </li>
-							<li runat="server" id="tabContentSkin"><a href="/Manage/SiteSkinIndex.aspx">Edit Site Skins</a> </li>
-							<li runat="server" id="tabImportContent"><a href="/Manage/PageImport.aspx">Import Content</a> </li>
-						</ul>
-					</li>
-					<%-- <li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Pages</a> </li> --%>
-					<li runat="server" id="tabContentTop"><a href="javascript:void(0)" class="lnkPopup">Pages </a>
-						<ul class="children">
-							<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Page Index</a> </li>
-							<li runat="server" id="tabContentTemplate"><a href="/Manage/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
-							<li runat="server" id="tabContentSiteMap"><a href="/Manage/SiteMap.aspx">Edit Site Map</a> </li>
-							<li runat="server" id="tabContentCommentIndex"><a href="/Manage/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
-						</ul>
-					</li>
-					<li runat="server" id="tabBlogTop"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
-						<ul class="children">
-							<li runat="server" id="tabBlogContent"><a href="/Manage/BlogPostIndex.aspx">Blog Post Index</a> </li>
-							<li runat="server" id="tabBlogTemplate"><a href="/Manage/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
-							<li runat="server" id="tabBlogCategoryIndex"><a href="/Manage/CategoryIndex.aspx">Blog Category Index</a> </li>
-							<li runat="server" id="tabBlogTagIndex"><a href="/Manage/TagIndex.aspx">Blog Tag Index</a> </li>
-							<li runat="server" id="tabBlogCommentIndex"><a href="/Manage/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
-						</ul>
-					</li>
-					<li runat="server" id="tabModules"><a href="/Manage/ModuleIndex.aspx">Modules</a> </li>
-					<li><a href="javascript:void(0)" class="lnkPopup" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
-					<%-- 
+		<div id="nav-menu-container">
+			<ul id="nav-menu">
+				<li runat="server" id="tabMainTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Home </a>
+					<ul class="children">
+						<li runat="server" id="tabMain"><a href="/Manage/">Site Info</a> </li>
+						<li runat="server" id="tabContentSkin"><a href="/Manage/SiteSkinIndex.aspx">Edit Site Skins</a> </li>
+						<li runat="server" id="tabImportContent"><a href="/Manage/PageImport.aspx">Import Content</a> </li>
+					</ul>
+				</li>
+				<%-- <li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Pages</a> </li> --%>
+				<li runat="server" id="tabContentTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Pages </a>
+					<ul class="children">
+						<li runat="server" id="tabContent"><a href="/Manage/PageIndex.aspx">Page Index</a> </li>
+						<li runat="server" id="tabContentTemplate"><a href="/Manage/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
+						<li runat="server" id="tabContentSiteMap"><a href="/Manage/SiteMap.aspx">Edit Site Map</a> </li>
+						<li runat="server" id="tabContentCommentIndex"><a href="/Manage/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
+					</ul>
+				</li>
+				<li runat="server" id="tabBlogTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
+					<ul class="children">
+						<li runat="server" id="tabBlogContent"><a href="/Manage/BlogPostIndex.aspx">Blog Post Index</a> </li>
+						<li runat="server" id="tabBlogTemplate"><a href="/Manage/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
+						<li runat="server" id="tabBlogCategoryIndex"><a href="/Manage/CategoryIndex.aspx">Blog Category Index</a> </li>
+						<li runat="server" id="tabBlogTagIndex"><a href="/Manage/TagIndex.aspx">Blog Tag Index</a> </li>
+						<li runat="server" id="tabBlogCommentIndex"><a href="/Manage/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
+					</ul>
+				</li>
+				<li runat="server" id="tabModules"><a href="/Manage/ModuleIndex.aspx">Modules</a> </li>
+				<li><a href="javascript:void(0)" class="lnkPopup" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
+				<%-- 
 					<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Users</a> </li>
 					<li runat="server" id="tabGroupAdmin"><a href="/Manage/UserGroups.aspx">Groups</a> </li>
-					--%>
-					<li runat="server" id="tabUserSecurity"><a href="javascript:void(0)" class="lnkPopup">Security </a>
-						<ul class="children">
-							<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Users</a> </li>
-							<li runat="server" id="tabGroupAdmin"><a href="/Manage/UserGroups.aspx">Groups</a> </li>
-						</ul>
-					</li>
-					<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">My Profile</a> </li>
-					<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
-					<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
-					<li>
-						<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=Carrotware.CMS.Core.SecurityData.CurrentUser.UserName%></asp:LinkButton>
-					</li>
-					<li><a href="javascript:void(0)">&nbsp;</a></li>
-				</ul>
-			</div>
+				--%>
+				<li runat="server" id="tabUserSecurity" class="sub"><a href="javascript:void(0)" class="lnkPopup">Security </a>
+					<ul class="children">
+						<li runat="server" id="tabUserAdmin"><a href="/Manage/UserMembership.aspx">Users</a> </li>
+						<li runat="server" id="tabGroupAdmin"><a href="/Manage/UserGroups.aspx">Groups</a> </li>
+					</ul>
+				</li>
+				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/UserPassword.aspx?');">My Profile</a> </li>
+				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/Manage/About.aspx?');">About</a></li>
+				<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
+				<li>
+					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=Carrotware.CMS.Core.SecurityData.CurrentUser.UserName%></asp:LinkButton>
+				</li>
+				<li><a href="javascript:void(0)">&nbsp;</a></li>
+			</ul>
 		</div>
 		<div style="height: 2px; width: 1100px; clear: both; border: 1px dashed #ffffff !important;">
 		</div>

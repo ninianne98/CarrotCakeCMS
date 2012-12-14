@@ -1,25 +1,11 @@
-﻿BODY {
-	background-color: #97AC88;
+﻿/*
+Main Popup CarrotCake CMS stylesheet
+*/
+BODY {
+	background-color: #ffffff;
 	font-size: 12px;
 	font-family: Verdana, Helvetica, Sans-Serif;
 }
-/*
-a {
-	text-decoration: none;
-}
-a:link {
-	color: #0191D8;
-}
-a:active {
-	color: #0191D8;
-}
-a:visited {
-	color: #0191D8;
-}
-a:hover {
-	text-decoration: underline;
-}
-*/
 
 a {
 	color: #333333;
@@ -132,3 +118,4 @@ fieldset legend label {
 fieldset legend label.inline {
 	display: inline;
 }
+

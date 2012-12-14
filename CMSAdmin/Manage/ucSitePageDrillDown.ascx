@@ -1,37 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucSitePageDrillDown.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucSitePageDrillDown" %>
 <script src="/Manage/Includes/common-utils.js" type="text/javascript"></script>
-<style type="text/css">
-	div.scroll {
-		height: 100px;
-		width: 340px;
-		overflow: auto;
-		padding: 2px;
-		position: absolute;
-		z-index: 999;
-	}
-	div.scrollcontainer {
-		height: 110px;
-		width: 350px;
-		padding: 4px;
-		position: absolute;
-		z-index: 999;
-	}
-	div.scrollcontainerhide {
-		display: none;
-	}
-	div.scrollcontainerheight {
-		height: 5px;
-		width: 75px;
-	}
-	div.menuitems {
-		margin-top: 2px;
-		margin-left: 2px;
-		padding: 6px;
-	}
-	div.menuitems {
-		padding: 4px;
-	}
-</style>
+
 <script type="text/javascript">
 
 	var thisPageID = '<%=RootContentID.ToString() %>';

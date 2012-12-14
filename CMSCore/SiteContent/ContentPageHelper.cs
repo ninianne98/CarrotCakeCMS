@@ -264,7 +264,7 @@ namespace Carrotware.CMS.Core {
 					sTitle = p.dateBegin.ToString("MMMM yyyy");
 				}
 				if (daysDelta < 5) {
-					sTitle = p.dateBegin.ToString("MMMM dd, yyyy");
+					sTitle = p.dateBegin.ToString("MMMM d, yyyy");
 				}
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
