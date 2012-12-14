@@ -1,17 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucCommentIndex.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucCommentIndex" %>
-<style type="text/css">
-	.pagerlink, .sel-pagerlink {
-		float: left;
-		margin: 2px 2px 2px 2px;
-		padding: 5px 5px 5px 5px;
-	}
-	.datafooter {
-		margin: 2px 2px 2px 2px;
-		padding: 2px 2px 2px 2px;
-		clear: both;
-		width: 50%;
-	}
-</style>
 <p>
 	<br />
 </p>

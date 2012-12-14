@@ -176,6 +176,8 @@ namespace Carrotware.CMS.Core {
 		#endregion
 	}
 
+	//======================================
+
 	public class ContentDateTally : IContentMetaInfo {
 		public Guid TallyID { get; set; }
 		public SiteData TheSite { get; set; }
@@ -199,8 +201,8 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaInfoURL {
 			get {
-				this.DateURL = (this.TheSite.BlogDateFolderPath + this.CreateDate.ToString("/yyyy/MM/") + SiteData.SiteSearchPageName).Replace("//", "/");
-				return this.DateURL.Replace("//", "/").Replace("//", "/");
+				this.DateURL = (this.TheSite.BuildMonthSearchLink(this.CreateDate));
+				return this.DateURL;
 			}
 		}
 
@@ -209,4 +211,62 @@ namespace Carrotware.CMS.Core {
 		}
 		#endregion
 	}
+
+	//======================================
+
+	public class ContentDateLinks : IContentMetaInfo {
+
+		private SiteData _site = new SiteData();
+		public SiteData TheSite {
+			get {
+				return _site;
+			}
+			set {
+				_site = value;
+				setDate();
+			}
+		}
+
+		private DateTime _postDate = DateTime.MinValue;
+		public DateTime PostDate {
+			get {
+				setDate();
+				return _postDate;
+			}
+			set { _postDate = value; }
+		}
+
+		private void setDate() {
+			this.DateURL = (this.TheSite.BuildDateSearchLink(_postDate));
+		}
+
+		public string DateURL { get; set; }
+		public int? UseCount { get; set; }
+
+		#region IContentMetaInfo Members
+
+		public Guid ContentMetaInfoID {
+			get { return Guid.Empty; }
+		}
+
+		public string MetaInfoText {
+			get {
+				return this.PostDate.ToString("MMMM d, yyyy");
+			}
+		}
+
+		public string MetaInfoURL {
+			get {
+				setDate();
+				return this.DateURL;
+			}
+		}
+
+		public int MetaInfoCount {
+			get { return this.UseCount == null ? 0 : Convert.ToInt32(this.UseCount); }
+		}
+		#endregion
+	}
+
+
 }

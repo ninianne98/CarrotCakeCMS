@@ -20,7 +20,7 @@ using System.Web.UI.WebControls;
 
 namespace Carrotware.Web.UI.Controls {
 
-	[DefaultProperty("Text"), ToolboxData("<{0}:CarrotGridView runat=server></{0}:CarrotGridView>")]
+	[ToolboxData("<{0}:CarrotGridView runat=server></{0}:CarrotGridView>")]
 
 	public class CarrotGridView : GridView {
 
@@ -182,20 +182,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 
-		//public void SetHeaderClick(Control TheControl, EventHandler CmdFunc) {
-		//    //add the command click event to the link buttons on the datagrid heading
-
-		//    foreach (Control c in TheControl.Controls) {
-		//        if (c is LinkButton) {
-		//            LinkButton lb = (LinkButton)c;
-		//            lb.Click += new EventHandler(CmdFunc);
-		//        } else {
-		//            SetHeaderClick(c, CmdFunc);
-		//        }
-		//    }
-		//}
-
-
 		private void SetData() {
 			foreach (DataControlField c in this.Columns) {
 				if (c is CarrotHeaderSortTemplateField) {
@@ -207,11 +193,11 @@ namespace Carrotware.Web.UI.Controls {
 					}
 
 					if (ctf.ItemTemplate == null) {
-						if (!string.IsNullOrEmpty(ctf.DataField) && !ctf.ShowBooleanImage) {
+						if (!string.IsNullOrEmpty(ctf.DataField) && !ctf.ShowBooleanImage && !ctf.ShowEnumImage) {
 							ctf.ItemTemplate = new CarrotAutoItemTemplate(ctf.DataField, ctf.DataFieldFormat);
 						}
 
-						if (ctf.ShowBooleanImage) {
+						if (ctf.ShowBooleanImage && !ctf.ShowEnumImage) {
 							CarrotBooleanImageItemTemplate iImageItemTemplate = new CarrotBooleanImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass);
 							if (!string.IsNullOrEmpty(ctf.AlternateTextTrue) || !string.IsNullOrEmpty(ctf.AlternateTextFalse)) {
 								iImageItemTemplate.SetVerbiage(ctf.AlternateTextTrue, ctf.AlternateTextFalse);
@@ -222,6 +208,9 @@ namespace Carrotware.Web.UI.Controls {
 							ctf.ItemTemplate = iImageItemTemplate;
 						}
 
+						if (ctf.ShowEnumImage) {
+							ctf.ItemTemplate = new CarrotImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass, ctf.ImageSelectors);
+						}
 					}
 				}
 			}

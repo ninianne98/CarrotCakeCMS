@@ -57,77 +57,79 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 
 
 		public void ActivateTab(SectionID sectionID) {
+			string sCSSTop = "current sub";
+			string sCSSLower = "current";
 
 			switch (sectionID) {
 				case SectionID.Home:
-					tabMainTop.Attributes["class"] = "current";
-					tabMain.Attributes["class"] = "current";
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabMain.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.ContentSkinEdit:
-					tabMainTop.Attributes["class"] = "current";
-					tabContentSkin.Attributes["class"] = "current";
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabContentSkin.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.ContentImport:
-					tabMainTop.Attributes["class"] = "current";
-					tabImportContent.Attributes["class"] = "current";
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabImportContent.Attributes["class"] = sCSSLower;
 					break;
 
 				case SectionID.Content:
-					tabContentTop.Attributes["class"] = "current";
-					tabContent.Attributes["class"] = "current";
+					tabContentTop.Attributes["class"] = sCSSTop;
+					tabContent.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.ContentTemplate:
-					tabContentTop.Attributes["class"] = "current";
-					tabContentTemplate.Attributes["class"] = "current";
+					tabContentTop.Attributes["class"] = sCSSTop;
+					tabContentTemplate.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.PageComment:
-					tabContentTop.Attributes["class"] = "current";
-					tabContentCommentIndex.Attributes["class"] = "current";
+					tabContentTop.Attributes["class"] = sCSSTop;
+					tabContentCommentIndex.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.ContentSiteMap:
-					tabContentTop.Attributes["class"] = "current";
-					tabContentSiteMap.Attributes["class"] = "current";
+					tabContentTop.Attributes["class"] = sCSSTop;
+					tabContentSiteMap.Attributes["class"] = sCSSLower;
 					break;
 
 				case SectionID.UserAdmin:
-					tabUserSecurity.Attributes["class"] = "current";
-					tabUserAdmin.Attributes["class"] = "current";
+					tabUserSecurity.Attributes["class"] = sCSSTop;
+					tabUserAdmin.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.GroupAdmin:
-					tabUserSecurity.Attributes["class"] = "current";
-					tabGroupAdmin.Attributes["class"] = "current";
+					tabUserSecurity.Attributes["class"] = sCSSTop;
+					tabGroupAdmin.Attributes["class"] = sCSSLower;
 					break;
 
 				case SectionID.Modules:
-					tabModules.Attributes["class"] = "current";
+					tabModules.Attributes["class"] = sCSSLower;
 					break;
 
 				case SectionID.BlogContent:
-					tabBlogTop.Attributes["class"] = "current";
-					tabBlogContent.Attributes["class"] = "current";
+					tabBlogTop.Attributes["class"] = sCSSTop;
+					tabBlogContent.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.BlogIndex:
-					tabBlogTop.Attributes["class"] = "current";
-					tabBlogContent.Attributes["class"] = "current";
+					tabBlogTop.Attributes["class"] = sCSSTop;
+					tabBlogContent.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.BlogCategory:
-					tabBlogTop.Attributes["class"] = "current";
-					tabBlogCategoryIndex.Attributes["class"] = "current";
+					tabBlogTop.Attributes["class"] = sCSSTop;
+					tabBlogCategoryIndex.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.BlogTag:
-					tabBlogTop.Attributes["class"] = "current";
-					tabBlogTagIndex.Attributes["class"] = "current";
+					tabBlogTop.Attributes["class"] = sCSSTop;
+					tabBlogTagIndex.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.BlogTemplate:
-					tabBlogTop.Attributes["class"] = "current";
-					tabBlogTemplate.Attributes["class"] = "current";
+					tabBlogTop.Attributes["class"] = sCSSTop;
+					tabBlogTemplate.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.BlogComment:
-					tabBlogTop.Attributes["class"] = "current";
-					tabBlogCommentIndex.Attributes["class"] = "current";
+					tabBlogTop.Attributes["class"] = sCSSTop;
+					tabBlogCommentIndex.Attributes["class"] = sCSSLower;
 					break;
-
 			}
+
 		}
 
 		protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e) {

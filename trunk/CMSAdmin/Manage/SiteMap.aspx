@@ -19,7 +19,7 @@
 			border: 0;
 		}
 		#cmsSiteMap li {
-			list-style: none; /* background: no-repeat url(images/page.png); */
+			list-style: none;
 			padding: 0;
 			margin: 0;
 			padding-left: 15px;
@@ -56,7 +56,6 @@
 	<script type="text/javascript">
 		var handleCssClass = 'img.image-handle';
 
-
 		$(document).ready(function () {
 
 			$("ol.sortable").bind("sortupdate", function (event, ui) {
@@ -92,14 +91,11 @@
 
 		});
 
-
-
 		function itterateTree() {
 			$("#cmsSiteMap li").each(function (i) {
 				setListItem(this);
 			});
 		}
-
 
 		function itterateTreeSetToggle() {
 			$("#cmsSiteMap li span.page-status").each(function (i) {

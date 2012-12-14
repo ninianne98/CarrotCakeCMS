@@ -46,6 +46,7 @@ using System.Web.UI;
 [assembly: TagPrefix("CarrotHeaderSortTemplateField", "carrot")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.accept.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.cancel.png", "image/png")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.attach.png", "image/png")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jsHelperLibrary.js", "text/javascript")]
 [assembly: TagPrefix("jsHelperLib", "carrot")]

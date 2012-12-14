@@ -53,9 +53,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
@@ -82,7 +84,11 @@
     <Compile Include="CarrotGridView\CarrotGridView.cs" />
     <Compile Include="CarrotGridView\CarrotLinkButtonCmdTemplate.cs" />
     <Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
+    <Compile Include="CarrotGridView\CarrotImageColumnData.cs" />
+    <Compile Include="CarrotGridView\CarrotImageColumnDataCollectionEditor.cs" />
     <Compile Include="CarrotHttpHandler.cs" />
+    <Compile Include="CollectionHelpers\GuidItem.cs" />
+    <Compile Include="CollectionHelpers\GuidItemCollectionEditor.cs" />
     <Compile Include="jsHelperLib.cs" />
     <Compile Include="jquery.cs" />
     <Compile Include="jquerybasic.cs" />
@@ -246,6 +252,9 @@
   <ItemGroup>
     <EmbeddedResource Include="CarrotGridView\accept.png" />
     <EmbeddedResource Include="CarrotGridView\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CarrotGridView\attach.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

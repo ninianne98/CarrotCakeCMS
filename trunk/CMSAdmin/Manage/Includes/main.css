@@ -1,8 +1,10 @@
-
+/*
+Main CarrotCake CMS stylesheet
+*/
 body {
 	margin: 0;
 	padding: 0;
-	background: #FFFFFF url(/manage/images/heading-bg-gradient.png) repeat-x; /* background: #FFFFFF url(/manage/images/heading-bg.png) repeat-x; */
+	background: #ffffff;
 	font-family: Georgia, Times New Roman, Serif;
 	color: #000000;
 	font-size: 12px;
@@ -16,13 +18,16 @@ h1, h2, h3 {
 	color: #69775F;
 }
 
-h2 {
-	font-size: 18px;
+H1 {
+	font-size: 24px;
 }
 
-h3 {
-	letter-spacing: 2px;
-	font-size: 11px;
+H2 {
+	font-size: 20px;
+}
+
+H3 {
+	font-size: 16px;
 }
 
 .headingColor {
@@ -41,7 +46,10 @@ a:hover {
 }
 
 /* Header */
-
+#headercontainer {
+	height: 115px;
+	background: #7DAD8E url(/manage/images/heading-gradient.png) repeat-x;
+}
 #header {
 	width: 950px;
 	height: 110px;
@@ -68,138 +76,92 @@ a:hover {
 	font-size: 28px;
 }
 
+
 /* Menu */
 
-#menu {
-	width: 1100px;
-	height: 50px;
-	margin-left: 50px;
-	margin-right: 50px;
-}
-
-#menu ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-#menu li {
-	display: inline;
-	font: normal 12px "Trebuchet MS" , Arial, Helvetica, sans-serif;
-}
-
-#menu a {
-	display: block;
-	float: left;
-	padding: 10px 20px 0 20px;
-	background: url(/manage/images/menu-div.png) no-repeat; /* background: url(/manage/images/menu-a.gif) no-repeat; */
-	text-decoration: none;
-	font: normal 12px "Trebuchet MS" , Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-}
-
-#menu a:hover {
-	color: #FFFFFF;
-}
-
-#menu .current a {
-	color: #FFFFFF;
-	font-weight: bold;
-	font-size: 14px;
-	padding: 10px 18px 0 18px;
-}
-
-#menu .current li {
-}
-
-
-
-#menu-inner {
-	width: 99%;
-	height: 20px;
-	float: left;
-	z-index: 60;
-}
-
-#menu-inner ul li {
-	float: left;
-}
-
-#menu-inner ul {
-	clear: both;
-	list-style: none;
-	line-height: normal;
-	margin-left: 30px;
-}
-
-#menu-inner ul li a, #menu-inner ul li.selected a {
-	display: block;
-	float: left;
-}
-
-#menu-inner li .children {
-	display: none;
-	clear: both;
-	background: #3C3C3C;
-	color: #ffffff;
-	padding: 5px 10px 5px 10px;
-	border-left: 2px solid #636363;
-	border-right: 2px solid #636363;
-	border-bottom: 2px solid #636363;
-}
-
-#menu-inner li:hover .children {
-	list-style-type: none;
-	display: block;
-	position: absolute;
-	text-align: left;
-	float: left;
-	padding-left: 0px;
-	padding-bottom: 0px;
-	margin-top: 25px;
-	margin-left: 0px;
-	margin-right: 5px;
-	z-index: 70;
-	font-weight: bold;
-	width: 150px;
-}
-
-#menu-inner .current .children li a {
+#nav-menu-container {
+	font: normal 14px "Trebuchet MS" , Arial, Helvetica, sans-serif;
+	background: #5B5B5B url(/manage/images/menu-gradient.png) repeat-x;
+	padding-left: 50px;
 	font-weight: normal;
-	font-size: 12px;
 }
 
-#menu-inner .current .children li.current a {
-	font-weight: bold;
-	font-size: 14px;
-}
-
-#menu-inner .children li {
-	background: none;
-	background: #3C3C3C;
-	color: #ffffff;
-	width: 150px;
-	padding: 5px 0px 5px 5px;
-	margin: 2px 2px 2px 2px;
-}
-
-#menu-inner .children li a, #menu-inner .children li a:hover {
-	padding: 0;
+#nav-menu {
 	margin: 0;
-	float: left;
-	text-align: left;
+	padding: 0 1em;
+	height: 3em;
+	list-style: none;
+	z-index: 990;
 }
 
-#menu-inner li:hover .children li a {
-	background: #3C3C3C;
+#nav-menu > li {
+	float: left;
+	height: 100%;
+	margin-right: 0.3em;
+	padding: 0 1em;
+}
+
+#nav-menu > li > a {
+	float: left;
+	height: 100%;
 	color: #ffffff;
 	text-decoration: none;
-	clear: both;
+	line-height: 3;
+}
+#nav-menu > li.current > a {
+	font-weight: bolder;
 }
 
-#menu-inner li:hover .children li a:hover {
+#nav-menu > li.current > ul > li > a {
+	font-weight: normal;
+}
+
+#nav-menu > li > a:hover {
 	text-decoration: underline;
 }
+
+#nav-menu > li.sub {
+	position: relative;
+	z-index: 998;
+}
+
+#nav-menu > li.sub ul {
+	width: 14em;
+	margin: 0;
+	padding: 0.4em 0;
+	list-style: none;
+	background: #2D2D2D;
+	position: absolute;
+	top: -1000em;
+}
+
+#nav-menu > li.sub ul li {
+	width: 90%;
+	margin: 0 auto 0.2em auto;
+}
+
+#nav-menu > li.sub ul li a {
+	height: 100%;
+	display: block;
+	padding: 0.3em;
+	color: #fff;
+	text-decoration: none;
+}
+
+#nav-menu > li.current ul li.current a {
+	font-weight: bolder;
+}
+
+#nav-menu > li.sub ul li a:hover {
+	background: #878787;
+	text-decoration: underline;
+}
+
+#nav-menu > li.sub:hover ul {
+	top: 3em;
+}
+
+
 
 /* Content */
 
@@ -281,13 +243,11 @@ a .imgNoBorder {
 	margin: 0px;
 }
 
-
-
 /* Footer */
 
 #footer {
 	height: 50px;
-	padding: 20px; /* background: #2D2D2D url(/manage/images/footer.gif) repeat-x; */
+	padding: 20px;
 	background: #333333;
 	border-top: 5px solid #000000;
 }
@@ -316,6 +276,23 @@ a .imgNoBorder {
 	color: #676F6A;
 }
 
+.ui-autocomplete-loading {
+	background: white url('/Manage/images/mini-spinner3-6F997D.gif') right center no-repeat;
+}
+
+.ui-autocomplete {
+	max-height: 150px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 20px;
+}
+
+#cms-simplemodal-container, .cms-simplemodal-container {
+	height: 550px;
+	width: 925px;
+	z-index: 5000;
+}
+
 .picker-area {
 	padding: 4px;
 }
@@ -330,6 +307,22 @@ a .imgNoBorder {
 	overflow: auto;
 	padding: 2px;
 	width: 99%;
+}
+
+.selectedModule {
+	font-weight: bolder;
+}
+
+.pagerlink, .sel-pagerlink {
+	float: left;
+	margin: 2px 2px 2px 2px;
+	padding: 5px 5px 5px 5px;
+}
+.datafooter {
+	margin: 2px 2px 2px 2px;
+	padding: 2px 2px 2px 2px;
+	clear: both;
+	width: 50%;
 }
 
 /* fieldset */
@@ -353,3 +346,39 @@ fieldset legend label {
 fieldset legend label.inline {
 	display: inline;
 }
+
+/*
+drilldown stuff
+*/
+
+div.scroll {
+	height: 100px;
+	width: 340px;
+	overflow: auto;
+	padding: 2px;
+	position: absolute;
+	z-index: 999;
+}
+div.scrollcontainer {
+	height: 110px;
+	width: 350px;
+	padding: 4px;
+	position: absolute;
+	z-index: 999;
+}
+div.scrollcontainerhide {
+	display: none;
+}
+div.scrollcontainerheight {
+	height: 5px;
+	width: 75px;
+}
+div.menuitems {
+	margin-top: 2px;
+	margin-left: 2px;
+	padding: 6px;
+}
+div.menuitems {
+	padding: 4px;
+}
+

@@ -849,7 +849,7 @@ function cmsGenericEdit(PageId, WidgetId) {
 
 function cmsLaunchWindow(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="910" height="540" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="850" height="540" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 		css: { width: '900px', height: '540px' },

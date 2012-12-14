@@ -359,6 +359,13 @@ namespace Carrotware.CMS.Core {
 			return RemoveDupeSlashesURL(this.MainURL + "/" + nav.FileName);
 		}
 
+		public string BuildDateSearchLink(DateTime postDate) {
+			return RemoveDupeSlashes(this.BlogDateFolderPath + postDate.ToString("/yyyy/MM/dd/") + SiteData.SiteSearchPageName);
+		}
+		public string BuildMonthSearchLink(DateTime postDate) {
+			return RemoveDupeSlashes(this.BlogDateFolderPath + postDate.ToString("/yyyy/MM/") + SiteData.SiteSearchPageName);
+		}
+
 		private string RemoveDupeSlashes(string sInput) {
 			if (!string.IsNullOrEmpty(sInput)) {
 				return sInput.Replace("//", "/").Replace("//", "/");
@@ -511,7 +518,7 @@ namespace Carrotware.CMS.Core {
 						}
 					}
 
-					if (!string.IsNullOrEmpty(redirectPage)) {
+					if (!string.IsNullOrEmpty(redirectPage) && !sQS.ToLower().Contains("aspxerrorpath")) {
 						context.Response.Redirect(redirectPage + "?aspxerrorpath=" + sReqURL + sQS);
 					}
 				}

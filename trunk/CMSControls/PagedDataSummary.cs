@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -95,17 +97,23 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string DelimetedSelectedCategoriesString {
+		private List<GuidItem> guidList = null;
+		[
+		Category("Behavior"),
+		Description("The GuidItem collection"),
+		DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
+		Editor(typeof(GuidItemCollectionEditor), typeof(UITypeEditor)),
+		NotifyParentProperty(true),
+		Browsable(true),
+		TemplateContainer(typeof(GuidItem)),
+		PersistenceMode(PersistenceMode.InnerProperty)
+		]
+		public List<GuidItem> CategoryGuidList {
 			get {
-				String s = (String)ViewState["DelimetedCategoryString"];
-				return ((s == null) ? "" : s);
-			}
-			set {
-				ViewState["DelimetedCategoryString"] = value;
+				if (guidList == null) {
+					guidList = new List<GuidItem>();
+				}
+				return guidList;
 			}
 		}
 
@@ -148,8 +156,25 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
+		private List<Guid> _guids = null;
+
 		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstCategories")]
-		public List<Guid> SelectedCategories { get; set; }
+		public List<Guid> SelectedCategories {
+			get {
+				if (_guids == null) {
+					if (CategoryGuidList.Count > 0) {
+						_guids = (from n in CategoryGuidList select n.GuidValue).ToList();
+					} else {
+						_guids = new List<Guid>();
+					}
+				}
+				return _guids;
+			}
+			set {
+				_guids = value;
+			}
+		}
+
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
@@ -445,7 +470,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-			string[] delimCat = DelimetedSelectedCategoriesString.Replace(",", ";").Replace("|", ";").Split(';');
 
 			try {
 
@@ -474,25 +498,9 @@ namespace Carrotware.CMS.UI.Controls {
 					SelectedCategories = new List<Guid>();
 
 					List<string> lstCategories = GetParmValueList("SelectedCategories");
-					foreach (string sCat in delimCat) {
-						if (!string.IsNullOrEmpty(sCat)) {
-							SelectedCategories.Add(new Guid(sCat));
-						}
-					}
 					foreach (string sCat in lstCategories) {
 						if (!string.IsNullOrEmpty(sCat)) {
 							SelectedCategories.Add(new Guid(sCat));
-						}
-					}
-
-				} else {
-					if (delimCat.Length > 0) {
-						SelectedCategories = new List<Guid>();
-
-						foreach (string sCat in delimCat) {
-							if (!string.IsNullOrEmpty(sCat)) {
-								SelectedCategories.Add(new Guid(sCat));
-							}
 						}
 					}
 				}
