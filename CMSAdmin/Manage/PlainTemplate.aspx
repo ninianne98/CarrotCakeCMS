@@ -35,13 +35,13 @@
 			margin-top: 0;
 			line-height: 180%;
 		}
-		ul, ol {
-		}
 		a {
 			text-decoration: none;
 			color: #424242;
 		}
 		a:hover {
+			text-decoration: underline;
+			color: #333333;
 		}
 		#wrapper {
 			width: 980px;
@@ -63,9 +63,9 @@
 		
 		#menu {
 			width: 940px;
-			height: 80px;
 			margin: 0 auto;
 			padding: 0;
+			padding-bottom: 10px;
 		}
 		
 		/* Page */
@@ -76,9 +76,7 @@
 			padding: 0px 0px 0px 0px;
 		}
 		#page-bgtop {
-			padding: 20px 0px;
-		}
-		#page-bgbtm {
+			padding: 10px 0px;
 		}
 		
 		/* Content */
@@ -86,14 +84,10 @@
 		#content {
 			float: right;
 			width: 580px;
-			padding: 30px 0px 0px 0px;
+			padding: 20px 0px 0px 0px;
 		}
 		.post {
 			margin-bottom: 15px;
-		}
-		.post-bgtop {
-		}
-		.post-bgbtm {
 		}
 		.post .title {
 			height: 38px;
@@ -191,51 +185,31 @@
 <body>
 	<form id="form1" runat="server">
 	<div id="wrapper">
-		<h1 id="logo">
-			<asp:PlaceHolder ID="myHeading" runat="server"><a href="/">
-				<%=theSite.SiteName%></a></asp:PlaceHolder>
-		</h1>
+		<asp:PlaceHolder ID="myHeading" runat="server">
+			<h1 id="logo">
+				<a href="/">
+					<%=theSite.SiteName%>
+				</a>
+			</h1>
+			<p>
+				<%=theSite.SiteTagline%>
+			</p>
+		</asp:PlaceHolder>
 		<div id="menu">
-			<%--<carrot:TopLevelNavigation MenuWidth="960px" MenuHeight="44px" ForeColor="#000000"
-                BackColor="#FFFFFF" runat="server" OverrideCSS="button-style.css" ID="TopLevelNavigation1" />--%>
-			<carrot:TwoLevelNavigation MenuWidth="960px" FontSize="14px" MenuHeight="44px" ForeColor="#424242" BackColor="#FFFFFF" runat="server" ID="TwoLevelNavigation1" />
+			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878" SubFGColor="#ffffff"
+				UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
 		</div>
 		<!-- end #menu -->
 		<div id="page">
 			<carrot:BreadCrumbNavigation runat="server" ID="BreadCrumbNavigation1" />
 			<div id="page-bgtop">
 				<div id="page-bgbtm">
-					<div id="content">
-						<div class="post">
-							<h2>
-								<asp:Literal ID="litPageHeading" runat="server"></asp:Literal></h2>
-							<div class="entry">
-								<carrot:WidgetContainer ID="phCenterTop" runat="server">
-								</carrot:WidgetContainer>
-								<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server"></carrot:ContentContainer>
-								<carrot:WidgetContainer ID="phCenterBottom" runat="server">
-								</carrot:WidgetContainer>
-							</div>
-							<div style="clear: both;">
-							</div>
-							<div class="entry">
-								<carrot:WidgetContainer ID="phRightTop" runat="server">
-								</carrot:WidgetContainer>
-								<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server"></carrot:ContentContainer>
-								<carrot:WidgetContainer ID="phRightBottom" runat="server">
-								</carrot:WidgetContainer>
-							</div>
-						</div>
-						<div style="clear: both;">
-							&nbsp;</div>
-					</div>
-					<!-- end #content -->
 					<div id="sidebar">
 						<ul>
 							<li>
 								<carrot:WidgetContainer ID="phLeftTop" runat="server">
 								</carrot:WidgetContainer>
-								<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server"></carrot:ContentContainer>
+								<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
 								<carrot:WidgetContainer ID="phLeftBottom" runat="server">
 								</carrot:WidgetContainer>
 							</li>
@@ -251,6 +225,31 @@
 						</ul>
 					</div>
 					<!-- end #sidebar -->
+					<div id="content">
+						<div class="post">
+							<h2>
+								<asp:Literal ID="litPageHeading" runat="server"></asp:Literal></h2>
+							<div class="entry">
+								<carrot:WidgetContainer ID="phCenterTop" runat="server">
+								</carrot:WidgetContainer>
+								<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
+								<carrot:WidgetContainer ID="phCenterBottom" runat="server">
+								</carrot:WidgetContainer>
+							</div>
+							<div style="clear: both;">
+							</div>
+							<div class="entry">
+								<carrot:WidgetContainer ID="phRightTop" runat="server">
+								</carrot:WidgetContainer>
+								<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server" />
+								<carrot:WidgetContainer ID="phRightBottom" runat="server">
+								</carrot:WidgetContainer>
+							</div>
+						</div>
+						<div style="clear: both;">
+							&nbsp;</div>
+					</div>
+					<!-- end #content -->
 					<div style="clear: both;">
 						&nbsp;</div>
 				</div>
@@ -267,19 +266,6 @@
 	</div>
 	<!-- end #footer -->
 	<asp:Panel ID="pnlHiddenControls" Visible="false" runat="server">
-		<br />
-		<carrot:WidgetContainer ID="phExtraZone1" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone2" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone3" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone4" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone5" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone6" runat="server">
-		</carrot:WidgetContainer>
 	</asp:Panel>
 	</form>
 </body>

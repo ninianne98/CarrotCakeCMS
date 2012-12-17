@@ -31,11 +31,6 @@ Released   : 20090703
 	<form id="form1" runat="server">
 	<div id="wrapper">
 		<div id="header">
-			<%--
-			<div id="menu">
-				<carrot:TopLevelNavigation CSSSelected="current_page_item" runat="server" ID="TopLevelNavigation1" />
-			</div>
-			--%>
 			<div id="menu-wrapper">
 				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="14px" ForeColor="#FFFFFF" SelBGColor="#9D0708" HoverBGColor="#D4260B" SubBGColor="#8E1318" />
 			</div>
@@ -75,6 +70,52 @@ Released   : 20090703
 						<carrot:WidgetContainer ID="phCenterTop" runat="server">
 						</carrot:WidgetContainer>
 						<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
+						<div style="clear: both;">
+						</div>
+						<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" OrderBy="GoLiveDate  DESC" CSSSelectedPage="selected">
+							<SummaryHeaderTemplate>
+								<div>
+							</SummaryHeaderTemplate>
+							<SummaryTemplate>
+								<div class="post">
+									<h2 class="title">
+										<carrot:ListItemNavText runat="server" ID="ListItemNavText5" DataField="NavMenuText" />
+									</h2>
+									<p class="date">
+										<carrot:ListItemNavText runat="server" ID="ListItemNavText6" DataField="GoLiveDate" FieldFormat="{0:M.d.yyyy}" />
+									</p>
+									<div class="entry">
+										<p>
+											<carrot:ListItemNavText runat="server" ID="ListItemNavText2" DataField="PageTextPlainSummaryMedium" />
+										</p>
+										<p class="links">
+											<carrot:NavLinkForTemplate CssClassNormal="comments" ID="NavLinkForTemplate3" runat="server" UseDefaultText="false">
+												<carrot:ListItemNavText runat="server" ID="ListItemNavText7" DataField="CommentCount" FieldFormat="Comments ({0})" />
+											</carrot:NavLinkForTemplate>
+											&nbsp;&nbsp;&nbsp;
+											<carrot:NavLinkForTemplate ID="NavLinkForTemplate2" runat="server" UseDefaultText="false">
+												Full article</carrot:NavLinkForTemplate>
+										</p>
+									</div>
+								</div>
+							</SummaryTemplate>
+							<SummaryFooterTemplate>
+								</div>
+							</SummaryFooterTemplate>
+							<PagerHeaderTemplate>
+								<div class="pagerfooterlinks">
+							</PagerHeaderTemplate>
+							<PagerTemplate>
+								<carrot:ListItemWrapperForPager HtmlTagName="div" ID="wrap" runat="server" CSSSelected="selectedwrap" CssClassNormal="pagerlink">
+									<carrot:NavLinkForPagerTemplate ID="lnkBtn" CSSSelected="selected" runat="server" />
+								</carrot:ListItemWrapperForPager>
+							</PagerTemplate>
+							<PagerFooterTemplate>
+								</div>
+							</PagerFooterTemplate>
+						</carrot:PagedDataSummary>
+						<div style="clear: both;">
+						</div>
 						<carrot:WidgetContainer ID="phCenterBottom" runat="server">
 						</carrot:WidgetContainer>
 					</div>
@@ -84,13 +125,13 @@ Released   : 20090703
 			<div id="sidebar">
 				<ul>
 					<li>
-						<carrot:ChildNavigation SectionTitle="Child Pages" runat="server" ID="SecondLevelNavigation2"></carrot:ChildNavigation>
+						<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" ContentType="DateMonth" MetaDataTitle="Dates" TakeTop="12" />
 					</li>
 					<li>
-						<carrot:SecondLevelNavigation SectionTitle="Section Pages" runat="server" ID="SecondLevelNavigation1"></carrot:SecondLevelNavigation>
+						<carrot:SiteMetaWordList ID="SiteMetaWordList2" runat="server" ContentType="Category" MetaDataTitle="Categories" ShowUseCount="true" />
 					</li>
 					<li>
-						<carrot:MostRecentUpdated UpdateTitle="Recent Updates" runat="server" ID="MostRecentUpdated1"></carrot:MostRecentUpdated>
+						<carrot:SiteMetaWordList ID="SiteMetaWordList3" runat="server" ContentType="Tag" MetaDataTitle="Tags" ShowUseCount="true" />
 					</li>
 				</ul>
 			</div>

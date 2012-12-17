@@ -480,6 +480,8 @@ namespace Carrotware.CMS.UI.Controls {
 			NavOrder,
 			EditUserId,
 			EditDate,
+			GoLiveDate,
+			RetireDate,
 			Author_UserName,
 			Author_EmailAddress,
 			Author_UserNickName,

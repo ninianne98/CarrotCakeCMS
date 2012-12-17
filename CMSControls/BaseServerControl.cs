@@ -34,6 +34,19 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private static Page CachedPage {
+			get {
+				if (_CachedPage == null)
+					_CachedPage = new Page();
+				return _CachedPage;
+			}
+		}
+		private static Page _CachedPage;
+
+		public static string GetWebResourceUrl(Type type, string resource) {
+			return CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+		}
+
 		protected override void OnInit(EventArgs e) {
 			SetSiteID();
 

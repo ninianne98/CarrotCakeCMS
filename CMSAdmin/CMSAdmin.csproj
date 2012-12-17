@@ -522,12 +522,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="abundant\abundant-index.aspx" />
     <Content Include="citrus-island\citrus2.aspx" />
     <Content Include="citrus-island\citrus1-index.aspx" />
     <Content Include="citrus-island\citrus1-post.aspx" />
-    <Content Include="citrus-island\images\bg2.gif" />
-    <Content Include="citrus-island\images\menubg2.gif" />
-    <Content Include="citrus-island\style2.css" />
     <Content Include="global.asax" />
     <Content Include="Manage\BlogPostAddEdit.aspx" />
     <Content Include="Manage\BlogPostIndex.aspx" />
@@ -1054,7 +1052,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="cmsTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Manage\tiny_mce\tiny_mce.zip" />

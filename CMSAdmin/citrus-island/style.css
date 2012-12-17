@@ -151,7 +151,7 @@ input.button {
 	border: none;
 	background-color: transparent;
 }
-#searchform.search input.textbox, div.search input.textbox{
+#searchform.search input.textbox, div.search input.textbox {
 	margin: 0;
 	width: 120px;
 	border: 1px solid #CCC;
@@ -394,6 +394,7 @@ input.button {
 	padding: 5px;
 }
 
+
 .inputform p, .padding10 {
 	padding: 10px;
 	clear: both;
@@ -403,4 +404,13 @@ input.button {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+
+img.rssimage, .rssimage img {
+	border: 0px solid #ffffff;
+}
+
+.rsszone {
+	padding-left: 60px;
 }

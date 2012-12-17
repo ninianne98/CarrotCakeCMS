@@ -75,3 +75,4 @@ using System.Web.UI;
 [assembly: TagPrefix("PostCalendar", "carrot")]
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.feed.png", "image/png")]
