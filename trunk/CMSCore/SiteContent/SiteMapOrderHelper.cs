@@ -138,7 +138,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteMapOrder> GetAdminPageList(Guid siteID, Guid contentID) {
 
-			List<SiteMapOrder> lstSite = (from ct in CompiledQueries.cqContentNavAll(db, siteID, false).ToList()
+			List<SiteMapOrder> lstSite = (from ct in CompiledQueries.ContentNavAll(db, siteID, false).ToList()
 										  select new SiteMapOrder {
 											  NavLevel = -1,
 											  NavMenuText = ct.NavMenuText,

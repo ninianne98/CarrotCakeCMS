@@ -114,7 +114,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			if (Convert.ToBoolean(sPop)) {
 				return String.Format("javascript:ShowWindowNoRefresh('{0}?pi={1}&pf={2}');", "./ModulePopup.aspx", Eval("PluginID"), Eval("PluginParm"));
 			} else {
-				return String.Format("{0}?pi={1}&pf={2}", Carrotware.CMS.Core.SiteData.CurrentScriptName, Eval("PluginID"), Eval("PluginParm"));
+				return String.Format("{0}?pi={1}&pf={2}", SiteData.CurrentScriptName, Eval("PluginID"), Eval("PluginParm"));
 			}
 
 		}

@@ -87,7 +87,10 @@ namespace Carrotware.CMS.Core {
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
 		public Guid? EditUserId { get; set; }
+		public string TemplateFile { get; set; }
 		public DateTime CreateDate { get; set; }
+		public DateTime GoLiveDate { get; set; }
+		public DateTime RetireDate { get; set; }
 		public string NavMenuText { get; set; }
 		public int? NavOrder { get; set; }
 		public string PageHead { get; set; }
@@ -101,7 +104,26 @@ namespace Carrotware.CMS.Core {
 		public Guid SiteID { get; set; }
 
 		public ContentPageType.PageType ContentType { get; set; }
-		public string TemplateFile { get; set; }
+
+
+		public bool IsRetired {
+			get {
+				if (this.RetireDate < DateTime.Now) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		public bool IsUnReleased {
+			get {
+				if (this.GoLiveDate > DateTime.Now) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
 
 		private int _commentCount = -1;
 		public int CommentCount {

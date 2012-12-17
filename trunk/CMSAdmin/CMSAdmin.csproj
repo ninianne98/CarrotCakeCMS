@@ -166,6 +166,13 @@
     <Compile Include="Manage\SiteImport.aspx.designer.cs">
       <DependentUpon>SiteImport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\SiteTemplateUpdate.aspx.cs">
+      <DependentUpon>SiteTemplateUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\SiteTemplateUpdate.aspx.designer.cs">
+      <DependentUpon>SiteTemplateUpdate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\TagAddEdit.aspx.cs">
       <DependentUpon>TagAddEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -518,6 +525,9 @@
     <Content Include="citrus-island\citrus2.aspx" />
     <Content Include="citrus-island\citrus1-index.aspx" />
     <Content Include="citrus-island\citrus1-post.aspx" />
+    <Content Include="citrus-island\images\bg2.gif" />
+    <Content Include="citrus-island\images\menubg2.gif" />
+    <Content Include="citrus-island\style2.css" />
     <Content Include="global.asax" />
     <Content Include="Manage\BlogPostAddEdit.aspx" />
     <Content Include="Manage\BlogPostIndex.aspx" />
@@ -651,7 +661,10 @@
     <Content Include="Manage\Images\webpage.png" />
     <Content Include="Manage\Images\wordprocessing.png" />
     <Content Include="Manage\Images\x.png" />
+    <Content Include="Manage\Includes\jquery.ui.timepicker.css" />
+    <Content Include="Manage\Includes\jquery.ui.timepicker.js" />
     <Content Include="Manage\SiteImport.aspx" />
+    <Content Include="Manage\SiteTemplateUpdate.aspx" />
     <Content Include="Manage\TagAddEdit.aspx" />
     <Content Include="Manage\TagIndex.aspx" />
     <Content Include="Manage\ucBlogMenuItems.ascx" />
@@ -1041,6 +1054,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="cmsTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Manage\tiny_mce\tiny_mce.zip" />

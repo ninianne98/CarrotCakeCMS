@@ -117,8 +117,8 @@ namespace Carrotware.CMS.Core {
 
 
 		private void SaveKeywordsAndTags() {
-			List<carrot_TagContentMapping> oldContentTags = CompiledQueries.cqGetContentTagMapByContentID(db, this.Root_ContentID).ToList();
-			List<carrot_CategoryContentMapping> oldContentCategories = CompiledQueries.cqGetContentCategoryMapByContentID(db, this.Root_ContentID).ToList();
+			IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(db, this.Root_ContentID);
+			IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(db, this.Root_ContentID);
 
 			List<carrot_TagContentMapping> newContentTags = (from x in ContentTags
 															 select new carrot_TagContentMapping {
@@ -142,12 +142,8 @@ namespace Carrotware.CMS.Core {
 				db.carrot_CategoryContentMappings.InsertOnSubmit(s);
 			}
 
-			if (oldContentTags.Count > 0) {
-				db.carrot_TagContentMappings.DeleteAllOnSubmit(oldContentTags);
-			}
-			if (oldContentCategories.Count > 0) {
-				db.carrot_CategoryContentMappings.DeleteAllOnSubmit(oldContentCategories);
-			}
+			db.carrot_TagContentMappings.DeleteBatch(oldContentTags);
+			db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
 		}
 
 
@@ -158,6 +154,9 @@ namespace Carrotware.CMS.Core {
 			rc.SiteID = this.SiteID;
 			rc.CreateDate = DateTime.Now;
 			rc.ContentTypeID = ContentPageType.GetIDByType(this.ContentType);
+
+			rc.GoLiveDate = this.GoLiveDate;
+			rc.RetireDate = this.RetireDate;
 
 			if (this.CreateDate.Year > 1950) {
 				rc.CreateDate = this.CreateDate;
@@ -175,6 +174,9 @@ namespace Carrotware.CMS.Core {
 				this.FileName = ContentPageHelper.CreateFileNameFromSlug(this.SiteID, rc.CreateDate, this.PageSlug);
 				c.NavOrder = 10;
 			}
+
+			rc.GoLiveDate = this.GoLiveDate;
+			rc.RetireDate = this.RetireDate;
 
 			rc.PageSlug = this.PageSlug;
 
@@ -209,9 +211,21 @@ namespace Carrotware.CMS.Core {
 			this.FileName = rc.FileName;
 			this.EditDate = c.EditDate;
 			this.CreateDate = rc.CreateDate;
+			this.GoLiveDate = rc.GoLiveDate;
+			this.RetireDate = rc.RetireDate;
 
 		}
 
+		public void ApplyTemplate() {
+
+			carrot_Content c = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
+
+			if (c != null) {
+				c.TemplateFile = this.TemplateFile;
+
+				db.SubmitChanges();
+			}
+		}
 
 		public void SavePageEdit() {
 
@@ -290,6 +304,8 @@ namespace Carrotware.CMS.Core {
 		public Guid Root_ContentID { get; set; }
 		public DateTime EditDate { get; set; }
 		public DateTime CreateDate { get; set; }
+		public DateTime GoLiveDate { get; set; }
+		public DateTime RetireDate { get; set; }
 		public Guid? EditUserId { get; set; }
 		public bool IsLatestVersion { get; set; }
 		public string TemplateFile { get; set; }
@@ -310,6 +326,25 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaDescription { get; set; }
 		public string MetaKeyword { get; set; }
+
+		public bool IsRetired {
+			get {
+				if (this.RetireDate < DateTime.Now) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		public bool IsUnReleased {
+			get {
+				if (this.GoLiveDate > DateTime.Now) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
 
 		private int _commentCount = -1;
 		public int CommentCount {

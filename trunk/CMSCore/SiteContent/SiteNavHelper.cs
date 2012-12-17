@@ -248,6 +248,8 @@ namespace Carrotware.CMS.Core {
 			navData.PageText = "NO PAGE CONTENT";
 			navData.EditDate = DateTime.Now.Date.AddMinutes(-15);
 			navData.CreateDate = DateTime.Now.Date.AddMinutes(-30);
+			navData.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
+			navData.RetireDate = DateTime.Now.Date.AddDays(90);
 			navData.ContentType = ContentPageType.PageType.ContentEntry;
 			return navData;
 		}
@@ -274,6 +276,8 @@ namespace Carrotware.CMS.Core {
 				nav.NavMenuText = nav.NavMenuText + " " + n.ToString();
 				nav.CreateDate = nav.CreateDate.AddHours((0 - n) * 25);
 				nav.EditDate = nav.CreateDate.AddHours((0 - n) * 16);
+				nav.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
+				nav.RetireDate = DateTime.Now.Date.AddDays(90);
 
 				if (n > 0 || rootParentID != null) {
 					nav.Root_ContentID = Guid.NewGuid();
@@ -337,6 +341,8 @@ namespace Carrotware.CMS.Core {
 			navNew.PageActive = true;
 			navNew.EditDate = DateTime.Now.AddMinutes(-30);
 			navNew.CreateDate = DateTime.Today.AddDays(-1);
+			navNew.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
+			navNew.RetireDate = DateTime.Now.Date.AddDays(90);
 			navNew.EditUserId = Guid.NewGuid();
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
 			navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();

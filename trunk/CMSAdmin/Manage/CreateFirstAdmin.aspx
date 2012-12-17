@@ -9,7 +9,11 @@
 	</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div id="CreateUserForm" style="width: 375px;">
+	<div style="height: 20px; width: 18px; float: right; border: 1px solid #ffffff; clear: both;">
+		<a href="/">
+			<img class="imgNoBorder" src="/Manage/images/house_go.png" alt="Homepage" title="Homepage" /></a>
+	</div>
+	<div id="CreateUserForm" style="width: 360px;">
 		<asp:CreateUserWizard ID="createWizard" runat="server" Visible="false" OnCreatingUser="createWizard_CreatingUser" OnCreatedUser="createWizard_CreatedUser"
 			CreateUserButtonType="Button" CancelButtonText="Cancel" CancelButtonType="Button" CancelDestinationPageUrl="./Logon.aspx" DisplayCancelButton="true"
 			LoginCreatedUser="false" RequireEmail="true">

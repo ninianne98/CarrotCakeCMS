@@ -188,11 +188,10 @@ namespace Carrotware.CMS.UI.Controls {
 			ContentDateTally lastMonth = new ContentDateTally { CreateDate = ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
 			ContentDateTally nextMonth = new ContentDateTally { CreateDate = ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
 
-
 			output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
 
-			if (!string.IsNullOrEmpty(CalendarHead) && lstCalendar.Count > 0) {
+			if (!string.IsNullOrEmpty(CalendarHead)) {
 				output.WriteLine("<h2 class=\"calendar-caption\">" + CalendarHead + "  </h2> ");
 			}
 
@@ -239,14 +238,19 @@ namespace Carrotware.CMS.UI.Controls {
 					if ((DayOfMonth >= 1) && (DayOfMonth <= iDaysInMonth)) {
 						cellDate = new DateTime(YearNumber, MonthNumber, DayOfMonth);
 
+						string sTD = "<td";
+						if (cellDate.Date == DateTime.Now.Date) {
+							sTD = "<td id=\"today\"";
+						}
+
 						ContentDateLinks cal = (from n in lstCalendar
 												where n.PostDate.Date == cellDate.Date
 												select n).FirstOrDefault();
 						if (cal != null) {
-							output.WriteLine("			<td " + sCSSClassDateLink + ">");
+							output.WriteLine("			" + sTD + " " + sCSSClassDateLink + ">");
 							output.WriteLine("				<a href=\"" + cal.MetaInfoURL + "\"> " + cellDate.Day.ToString() + " </a>");
 						} else {
-							output.WriteLine("			<td>");
+							output.WriteLine("			" + sTD + ">");
 							output.WriteLine("				" + cellDate.Day.ToString() + " ");
 						}
 						output.WriteLine("			</td>");
@@ -263,17 +267,25 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			output.WriteLine("		</tbody>");
 
+			// as a bot crawler abuse stopper
+
+
 			output.WriteLine("		<tfoot id=\"" + this.ClientID + "-foot\" " + sCSSClassTableFoot + ">");
 			output.WriteLine("		<tr>");
 			output.WriteLine("			<td colspan=\"3\" id=\"prev\" class=\"cal-prev\">");
-			output.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.CreateDate.ToString("MMM") + "</a>");
+			if (lastMonth.CreateDate >= DateTime.Now.AddYears(-5)) {
+				output.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.CreateDate.ToString("MMM") + "</a>");
+			}
 			output.WriteLine("			</td>");
 			output.WriteLine("			<td class=\"pad\"> &nbsp; </td>");
 			output.WriteLine("			<td colspan=\"3\" id=\"next\" class=\"cal-prev\">");
-			output.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.CreateDate.ToString("MMM") + " &raquo;</a>");
+			if (nextMonth.CreateDate <= DateTime.Now.AddYears(5)) {
+				output.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.CreateDate.ToString("MMM") + " &raquo;</a>");
+			}
 			output.WriteLine("			</td>");
 			output.WriteLine("		</tr>");
 			output.WriteLine("		</tfoot>");
+
 
 
 			output.WriteLine("	</table>");

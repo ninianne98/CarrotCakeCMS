@@ -26,20 +26,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		}
 
-		public string MakeStar(bool bFlag) {
-			if (bFlag) {
-				return "&nbsp; ";
-			} else {
-				return "&#9746; ";
-			}
-		}
-
 		protected void DoDataBind() {
 			List<SiteNav> lstNav = null;
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
 				lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SecurityData.IsAuthEditor);
 			}
+
+			lstNav.ToList().ForEach(q => CMSConfigHelper.IdentifyLinkAsInactive(q));
 
 			if (bClickedSort && ddlAlternateSort.SelectedIndex > 0) {
 				switch (ddlAlternateSort.SelectedValue) {

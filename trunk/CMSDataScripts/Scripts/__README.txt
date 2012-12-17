@@ -28,4 +28,9 @@ If coming from an earlier version, run these scripts
 
 		** ALTER 05 - create combined content view.sql     (from before 2012-09-08)
 
-		** ALTER 06 - create blog tables and views.sql     (from before 2012-11-30)
+		** ALTER 06 - create blog tables and views.sql     (from before 2012-11-19)
+
+		** ALTER 07 - create date based publishing.sql     (from before 2012-12-15)
+
+
+

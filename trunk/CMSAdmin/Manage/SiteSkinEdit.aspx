@@ -1,7 +1,8 @@
-﻿<%@ Page Title="Site Skin Edit" ValidateRequest="false" Language="C#" MasterPageFile="~/Manage/MasterPages/Main.Master" AutoEventWireup="true"
-	CodeBehind="SiteSkinEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.SiteSkinEdit" %>
+﻿<%@ Page Title="Site Skin Edit" ValidateRequest="false" Language="C#" MasterPageFile="~/Manage/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteSkinEdit.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Manage.SiteSkinEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -10,11 +11,11 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h2>
 		<asp:Literal ID="litSkinFileName" runat="server"></asp:Literal>
-		[<a href="<%= String.Format("{0}?path={1}", Carrotware.CMS.Core.SiteData.CurrentScriptName, sTemplateFileQS) %>">Edit</a>]
+		[<a href="<%= String.Format("{0}?path={1}", SiteData.CurrentScriptName, sTemplateFileQS) %>">Edit</a>]
 	</h2>
 	<p>
-		<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageContents" ID="RequiredFieldValidator1"
-			runat="server" ErrorMessage="Skin File Contents Required" Display="Dynamic"></asp:RequiredFieldValidator>&nbsp;
+		<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageContents" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Skin File Contents Required"
+			Display="Dynamic"></asp:RequiredFieldValidator>&nbsp;
 	</p>
 	<table width="100%">
 		<tr>
@@ -26,7 +27,7 @@
 					<ul>
 						<asp:Repeater ID="rpFiles" runat="server">
 							<ItemTemplate>
-								<li><a href="<%# String.Format("{0}?path={1}&alt={2}", Carrotware.CMS.Core.SiteData.CurrentScriptName, sTemplateFileQS, EncodePath(String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName"))) ) %>">
+								<li><a href="<%# String.Format("{0}?path={1}&alt={2}", SiteData.CurrentScriptName, sTemplateFileQS, EncodePath(String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName"))) ) %>">
 									<%# String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) %>
 								</a>
 									<br />
@@ -46,9 +47,8 @@
 					<b>Viewing file:
 						<asp:Literal ID="litEditFileName" runat="server"></asp:Literal>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<asp:Literal ID="litDateMod" runat="server"></asp:Literal></b>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
+						<asp:Literal ID="litDateMod" runat="server"></asp:Literal></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
 				</p>
 				<asp:TextBox Style="height: 450px; width: 790px;" ID="txtPageContents" runat="server" TextMode="MultiLine" Rows="15" Columns="100" />
 				<p>

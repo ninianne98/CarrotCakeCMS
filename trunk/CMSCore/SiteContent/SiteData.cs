@@ -230,15 +230,15 @@ namespace Carrotware.CMS.Core {
 
 		public void CleanUpSerialData() {
 
-			List<carrot_SerialCache> lst = (from c in db.carrot_SerialCaches
-											where c.EditDate < DateTime.Now.AddHours(-6)
-											&& c.SiteID == CurrentSiteID
-											select c).ToList();
+			IQueryable<carrot_SerialCache> lst = (from c in db.carrot_SerialCaches
+												  where c.EditDate < DateTime.Now.AddHours(-6)
+												  && c.SiteID == CurrentSiteID
+												  select c);
 
-			if (lst.Count > 0) {
-				db.carrot_SerialCaches.DeleteAllOnSubmit(lst);
-				db.SubmitChanges();
-			}
+
+			db.carrot_SerialCaches.DeleteBatch(lst);
+			db.SubmitChanges();
+
 		}
 
 
@@ -595,12 +595,37 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		private static Version CurrentVersion {
+			get { return Assembly.GetExecutingAssembly().GetName().Version; }
+		}
+
 		public static string CurrentDLLVersion {
-			get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+			get { return CurrentVersion.ToString(); }
+		}
+
+		public static string CurrentDLLMajorMinorVersion {
+			get {
+				Version v = CurrentVersion;
+				return v.Major.ToString() + "." + v.Minor.ToString();
+			}
 		}
 
 		public static string CarrotCakeCMSVersion {
-			get { return string.Format("CarrotCake CMS {0}", CurrentDLLVersion); }
+			get {
+#if DEBUG
+				return string.Format("CarrotCake CMS {0} DEBUG MODE", CurrentDLLVersion);
+#endif
+				return string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
+			}
+		}
+
+		public static string CarrotCakeCMSVersionMM {
+			get {
+#if DEBUG
+				return string.Format("CarrotCake CMS {0} (debug)", CurrentDLLMajorMinorVersion);
+#endif
+				return string.Format("CarrotCake CMS {0}", CurrentDLLMajorMinorVersion);
+			}
 		}
 
 		public static string CurrentScriptName {

@@ -146,14 +146,14 @@ namespace Carrotware.CMS.Core {
 
 		public void DeleteAll() {
 
-			List<carrot_WidgetData> w1 = CompiledQueries.cqGetWidgetDataByRootAll(db, this.Root_WidgetID).ToList();
+			IQueryable<carrot_WidgetData> w1 = CannedQueries.GetWidgetDataByRootAll(db, this.Root_WidgetID);
 
 			carrot_Widget w2 = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
 
 			bool bPendingDel = false;
 
-			if (w1 != null && w1.Count > 0) {
-				db.carrot_WidgetDatas.DeleteAllOnSubmit(w1);
+			if (w1 != null) {
+				db.carrot_WidgetDatas.DeleteBatch(w1);
 				bPendingDel = true;
 			}
 

@@ -170,6 +170,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 							cp.Parent_ContentID = navParent.Root_ContentID;
 						}
 
+						cp.RetireDate = DateTime.Now.AddYears(200);
+						cp.GoLiveDate = DateTime.Now;
+
 						cp.SavePageEdit();
 
 						iOrder++;
@@ -202,6 +205,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						if (navData != null) {
 							cp.Root_ContentID = navData.Root_ContentID;
 						}
+
+						cp.RetireDate = DateTime.Now.AddYears(200);
+						cp.GoLiveDate = DateTime.Now;
 
 						cp.SavePageEdit();
 					}

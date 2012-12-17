@@ -3203,6 +3203,10 @@ namespace Carrotware.CMS.Data
 		
 		private System.DateTime _CreateDate;
 		
+		private System.DateTime _GoLiveDate;
+		
+		private System.DateTime _RetireDate;
+		
 		private System.Guid _ContentTypeID;
 		
 		private string _PageSlug;
@@ -3239,6 +3243,10 @@ namespace Carrotware.CMS.Data
     partial void OnPageActiveChanged();
     partial void OnCreateDateChanging(System.DateTime value);
     partial void OnCreateDateChanged();
+    partial void OnGoLiveDateChanging(System.DateTime value);
+    partial void OnGoLiveDateChanged();
+    partial void OnRetireDateChanging(System.DateTime value);
+    partial void OnRetireDateChanged();
     partial void OnContentTypeIDChanging(System.Guid value);
     partial void OnContentTypeIDChanged();
     partial void OnPageSlugChanging(string value);
@@ -3397,6 +3405,46 @@ namespace Carrotware.CMS.Data
 					this._CreateDate = value;
 					this.SendPropertyChanged("CreateDate");
 					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDate
+		{
+			get
+			{
+				return this._GoLiveDate;
+			}
+			set
+			{
+				if ((this._GoLiveDate != value))
+				{
+					this.OnGoLiveDateChanging(value);
+					this.SendPropertyChanging();
+					this._GoLiveDate = value;
+					this.SendPropertyChanged("GoLiveDate");
+					this.OnGoLiveDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
+		public System.DateTime RetireDate
+		{
+			get
+			{
+				return this._RetireDate;
+			}
+			set
+			{
+				if ((this._RetireDate != value))
+				{
+					this.OnRetireDateChanging(value);
+					this.SendPropertyChanging();
+					this._RetireDate = value;
+					this.SendPropertyChanged("RetireDate");
+					this.OnRetireDateChanged();
 				}
 			}
 		}
@@ -5154,7 +5202,15 @@ namespace Carrotware.CMS.Data
 		
 		private bool _PageActive;
 		
+		private bool _IsRetired;
+		
+		private bool _IsUnReleased;
+		
 		private System.DateTime _CreateDate;
+		
+		private System.DateTime _GoLiveDate;
+		
+		private System.DateTime _RetireDate;
 		
 		private System.Guid _ContentID;
 		
@@ -5292,6 +5348,38 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRetired", DbType="Bit NOT NULL")]
+		public bool IsRetired
+		{
+			get
+			{
+				return this._IsRetired;
+			}
+			set
+			{
+				if ((this._IsRetired != value))
+				{
+					this._IsRetired = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsUnReleased", DbType="Bit NOT NULL")]
+		public bool IsUnReleased
+		{
+			get
+			{
+				return this._IsUnReleased;
+			}
+			set
+			{
+				if ((this._IsUnReleased != value))
+				{
+					this._IsUnReleased = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
 		public System.DateTime CreateDate
 		{
@@ -5304,6 +5392,38 @@ namespace Carrotware.CMS.Data
 				if ((this._CreateDate != value))
 				{
 					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDate
+		{
+			get
+			{
+				return this._GoLiveDate;
+			}
+			set
+			{
+				if ((this._GoLiveDate != value))
+				{
+					this._GoLiveDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
+		public System.DateTime RetireDate
+		{
+			get
+			{
+				return this._RetireDate;
+			}
+			set
+			{
+				if ((this._RetireDate != value))
+				{
+					this._RetireDate = value;
 				}
 			}
 		}

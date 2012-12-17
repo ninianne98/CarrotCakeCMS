@@ -1,4 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucEditNotifier.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucEditNotifier" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
+
 <div style="clear: both;">
 	&nbsp;</div>
 <style type="text/css">
@@ -103,7 +105,7 @@
 <div class="cmsNavFooterBox">
 	<p class="cmsFooterP">
 		<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">EDIT</a> 
-		<a class="cmsFooterLinks" target="_top" href="<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
+		<a class="cmsFooterLinks" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
 		<a class="cmsFooterLinks" target="_top" href="<%=PageIndexURL %>">CONTENT INDEX</a> 
 		<a class="cmsFooterLinks" target="_top" href="/Manage/ModuleIndex.aspx">MODULE INDEX</a>
 	</p>
@@ -118,6 +120,10 @@
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
 		<asp:Literal runat="server" ID="litVersion"></asp:Literal>
+	</p>
+	<p class="cmsFooterP cmsFooterLinks">
+		Release Date: <asp:Literal runat="server" ID="litRelease"></asp:Literal> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		Retire Date: <asp:Literal runat="server" ID="litRetire"></asp:Literal>
 	</p>
 </div>
 <script language="javascript" type="text/javascript">
@@ -136,7 +142,7 @@
 				<img border="0" alt="EDIT" title="EDIT" src="/Manage/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>?carrotedit=true">
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">
 				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/Manage/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
@@ -156,7 +162,7 @@
 				<img border="0" alt="EDIT" title="EDIT" src="/Manage/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
-			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>?carrotedit=true">
+			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">
 				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/Manage/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">

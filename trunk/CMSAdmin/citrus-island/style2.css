@@ -1,0 +1,17 @@
+﻿body {
+	margin: 0;
+	padding: 0;
+	font: 70%/1.5em Verdana, Tahoma, Arial,sans-serif;
+	color: #333;
+	background: #FFF url(images/bg2.gif) repeat-x;
+	text-align: center;
+}
+
+
+#menu-wrapper {
+	clear: both;
+	background: #FF9966 url(images/menubg2.gif) repeat-x;
+	height: 35px;
+	margin: 0;
+	font: Tahoma, Verdana, Arial, Sans-Serif;
+}

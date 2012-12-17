@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<asp:PlaceHolder ID="myPageHead" runat="server">
 		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="<%=pageContents.TemplateFolderPath %>style2.css" rel="stylesheet" type="text/css" media="screen" />
 		<link rel="canonical" href="<%= theSite.DefaultCanonicalURL %>" />
 	</asp:PlaceHolder>
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
@@ -37,8 +38,8 @@
 				</h2>
 			</asp:PlaceHolder>
 		</div>
-		<div id="menu">
-			<carrot:TwoLevelNavigation MenuWidth="960px" MenuHeight="10px" FontSize="11px" ForeColor="#FFFFFF" BackColor="#F4845A" runat="server" ID="TwoLevelNavigation1" />
+		<div id="menu-wrapper">
+			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="10px" ForeColor="#FFFFFF" BackColor="#F4845A" />
 		</div>
 		<div id="sidebar">
 			<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" ContentType="Category" MetaDataTitle="Categories" />

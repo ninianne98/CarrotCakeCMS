@@ -89,7 +89,6 @@
 			</HeaderTemplate>
 			<ItemTemplate>
 				<li class="ui-state-default" id='<%# Eval("Root_ContentID")%>'>
-					<%#MakeStar(Convert.ToBoolean(Eval("PageActive")))%>
 					Head:
 					<%# Eval("PageHead")%>
 					&nbsp;&nbsp;&nbsp; Nav:

@@ -24,13 +24,6 @@ namespace Carrotware.CMS.UI.Controls {
 		protected SiteData siteHelper = new SiteData();
 		protected SiteNavHelper navHelper = new SiteNavHelper();
 
-
-		public static string InactivePagePrefix {
-			get {
-				return "&#9746; ";
-			}
-		}
-
 		protected void SetSiteID() {
 			SiteID = SiteData.CurrentSiteID;
 		}
@@ -105,26 +98,10 @@ namespace Carrotware.CMS.UI.Controls {
 			return sb.ToString();
 		}
 
-		public static string IdentifyTextAsInactive(bool bStatus, string sLinkText) {
-
-			if (!bStatus) {
-				sLinkText = InactivePagePrefix + sLinkText;
-			}
-
-			return sLinkText;
-		}
 
 		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
-
-			if (!nav.PageActive) {
-				nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
-				nav.PageHead = InactivePagePrefix + nav.PageHead;
-				nav.TitleBar = InactivePagePrefix + nav.TitleBar;
-			}
-
-			return nav;
+			return CMSConfigHelper.IdentifyLinkAsInactive(nav);
 		}
-
 
 	}
 }

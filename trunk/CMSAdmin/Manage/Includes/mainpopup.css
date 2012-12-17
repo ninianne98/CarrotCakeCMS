@@ -96,6 +96,9 @@ a .imgNoBorder {
 	outline: none;
 }
 
+.dateRegion, .ui-datepicker-trigger {
+	margin-right: 5px;
+}
 
 /* fieldset */
 

@@ -30,7 +30,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		SiteMapOrder orderHelper = new SiteMapOrder();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentAdd);
 			lblUpdated.Text = DateTime.Now.ToString();
 
 			SiteData site = siteHelper.GetCurrentSite();
@@ -65,6 +65,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 
 			if (!IsPostBack) {
+
+				txtReleaseDate.Text = DateTime.Today.ToShortDateString();
+				txtReleaseTime.Text = DateTime.Today.ToShortTimeString();
+				txtRetireDate.Text = DateTime.Today.AddYears(200).ToShortDateString();
+				txtRetireTime.Text = DateTime.Today.AddYears(200).ToShortTimeString();
 
 				ParentPagePicker.RootContentID = Guid.Empty;
 
@@ -156,6 +161,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 					chkActive.Checked = Convert.ToBoolean(pageContents.PageActive);
 
+					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
+					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();
+					txtRetireDate.Text = pageContents.RetireDate.ToShortDateString();
+					txtRetireTime.Text = pageContents.RetireDate.ToShortTimeString();
+
 					if (pageContents.Parent_ContentID.HasValue) {
 						//txtParent.Text = pageContents.Parent_ContentID.ToString();
 						ParentPagePicker.SelectedPage = pageContents.Parent_ContentID.Value;
@@ -218,6 +228,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.CreateDate = DateTime.Now;
 			}
 
+			pageContents.RetireDate = DateTime.Now.AddYears(200);
+			pageContents.GoLiveDate = DateTime.Now;
+
 			pageContents.IsLatestVersion = true;
 
 			pageContents.TemplateFile = ddlTemplate.SelectedValue;
@@ -247,6 +260,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.Parent_ContentID = null;
 			}
 
+			pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
+			pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
 			pageContents.EditUserId = SecurityData.CurrentUserGuid;
 
 			if (!chkDraft.Checked) {

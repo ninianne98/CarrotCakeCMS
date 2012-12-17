@@ -24,6 +24,11 @@
 			constrainInput: true
 		});
 	});
+
+	$('.timeRegion').timepicker({
+		showPeriod: true,
+		showLeadingZero: true
+	});
 }
 
 var htmlAjaxSpinnerTable = '<table style="TableSpinner"><tr><td><img style="RingSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>';
@@ -168,10 +173,10 @@ function ShowWindow(theURL) {
 
 function LaunchWindow(theURL) {
 	TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="910" height="540" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="880" height="490" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
-		css: { width: '900px', height: '540px' },
+		css: { width: '860px', height: '500px' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }

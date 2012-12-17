@@ -43,6 +43,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					txtDescription.Text = pageContents.MetaDescription;
 					txtKey.Text = pageContents.MetaKeyword;
 
+					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
+					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();
+					txtRetireDate.Text = pageContents.RetireDate.ToShortDateString();
+					txtRetireTime.Text = pageContents.RetireDate.ToShortTimeString();
+
 					lblUpdated.Text = pageContents.EditDate.ToString();
 
 					chkActive.Checked = Convert.ToBoolean(pageContents.PageActive);
@@ -64,6 +69,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				pageContents.EditDate = DateTime.Now;
 
+				pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
+				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
 				pageContents.PageActive = chkActive.Checked;
 
 				cmsHelper.cmsAdminContent = pageContents;

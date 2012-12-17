@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class PageIndex : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.Content);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentAdd);
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {

@@ -94,13 +94,16 @@
 							<img class="imgNoBorder" src="/Manage/images/chart_organisation.png" alt="Sort Sub Pages" title="Sort Sub Pages" /></a>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="titlebar" HeaderText="Titlebar" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="pagehead" HeaderText="Page Header" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename" DataField="Filename" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text" DataField="NavMenuText" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Active" AlternateTextFalse="Inactive"
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
+					AlternateTextFalse="Active" ImagePathTrue="/Manage/images/flag_yellow.png" ImagePathFalse="/Manage/images/page_world.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
+					AlternateTextFalse="Active" ImagePathTrue="/Manage/images/flag_yellow.png" ImagePathFalse="/Manage/images/page_world.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Published" AlternateTextFalse="Inactive"
 					AlternateTextTrue="Active" ShowBooleanImage="true" />
 			</Columns>
 		</carrot:CarrotGridView>

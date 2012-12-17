@@ -984,7 +984,7 @@ namespace Carrotware.CMS.UI.Controls {
 			string sTxt3 = DataBinder.Eval(container, "DataItem.PostCommentText").ToString();
 
 			if (!IsApproved) {
-				sTxt1 = String.Format("{0}{0} {1}", BaseServerControl.InactivePagePrefix, sTxt1);
+				sTxt1 = String.Format("{0}{0} {1}", CMSConfigHelper.InactivePagePrefix, sTxt1);
 			}
 
 			litContent.Text = String.Format(sTxt0, sTxt1, sTxt2, sTxt3);
@@ -1094,7 +1094,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			string sTxt1 = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
 			if (!IsApproved) {
-				sTxt1 = String.Format("{0} {1}", BaseServerControl.InactivePagePrefix, sTxt1);
+				sTxt1 = String.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, sTxt1);
 			}
 			this.Text = sTxt1;
 
