@@ -127,10 +127,10 @@
         <elementListCompartment Id="e64e5238-5211-4efb-a516-e1aa4eee4064" absoluteBounds="11.39, 1.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" absoluteBounds="10.5, 5, 2, 2.5401025390625">
+    <classShape Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" absoluteBounds="10.5, 5, 2, 2.9247054036458326">
       <DataClassMoniker Name="/CarrotCMSDataContext/carrot_RootContent" />
       <nestedChildShapes>
-        <elementListCompartment Id="a41d80f6-9d4a-44ce-ace1-d8ef9dda20cc" absoluteBounds="10.515, 5.46, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a41d80f6-9d4a-44ce-ace1-d8ef9dda20cc" absoluteBounds="10.515, 5.46, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(12.34375 : 7.5401025390625); (12.34375 : 11.3181469726562); (11.5 : 11.3181469726562)]" fixedFrom="NotFixed" fixedTo="NotFixed">
@@ -219,10 +219,10 @@
         <elementListCompartment Id="2c8970a2-13ab-474d-992e-5770bc1140da" absoluteBounds="0.515, 10.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d5df1f8e-0f94-4428-a9db-27a877095cba" absoluteBounds="0.5, 13.25, 2, 5.6169254557291657">
+    <classShape Id="d5df1f8e-0f94-4428-a9db-27a877095cba" absoluteBounds="0.5, 13.25, 2, 6.3861311848958344">
       <DataClassMoniker Name="/CarrotCMSDataContext/vw_carrot_Content" />
       <nestedChildShapes>
-        <elementListCompartment Id="0b22062b-48f2-402d-b557-6da138cbb1d3" absoluteBounds="0.515, 13.71, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0b22062b-48f2-402d-b557-6da138cbb1d3" absoluteBounds="0.515, 13.71, 1.9700000000000002, 5.826131184895833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="314796fe-1dcf-4860-85a0-8f847cb87af7" absoluteBounds="6.25, 18.25, 2, 2.9247054036458331">

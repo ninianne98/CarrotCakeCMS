@@ -162,6 +162,19 @@ a:hover {
 }
 
 
+#nav-menu > li:hover {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+#nav-menu > li:hover a {
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+}
+#nav-menu > li.sub ul li a {
+	padding: 0.4em;
+	margin: 0 auto 0.2em auto;
+}
+
 
 /* Content */
 
@@ -323,6 +336,10 @@ a .imgNoBorder {
 	padding: 2px 2px 2px 2px;
 	clear: both;
 	width: 50%;
+}
+
+.dateRegion, .ui-datepicker-trigger {
+	margin-right: 5px;
 }
 
 /* fieldset */

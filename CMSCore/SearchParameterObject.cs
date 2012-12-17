@@ -5,6 +5,17 @@ using System.Text;
 
 namespace Carrotware.CMS.Core {
 	internal class SearchParameterObject {
+
+		public SearchParameterObject() {
+			this.DateCompare = DateTime.Now;
+			this.DateBegin = DateTime.MinValue;
+			this.DateEnd = DateTime.MaxValue;
+			this.SiteID = Guid.Empty;
+			this.ParentContentID = Guid.Empty;
+			this.RootContentID = Guid.Empty;
+			this.ActiveOnly = true;
+		}
+
 		public Guid ItemID { get; set; }
 		public Guid SiteID { get; set; }
 		public Guid UserId { get; set; }
@@ -13,7 +24,7 @@ namespace Carrotware.CMS.Core {
 		public Guid ContentTypeID { get; set; }
 		public ContentPageType.PageType ContentType { get; set; }
 
-		public Guid ParentContentID { get; set; }
+		public Guid? ParentContentID { get; set; }
 		public bool ActiveOnly { get; set; }
 		public Guid RootContentID { get; set; }
 		public string FileName { get; set; }
@@ -21,6 +32,7 @@ namespace Carrotware.CMS.Core {
 
 		public DateTime DateBegin { get; set; }
 		public DateTime DateEnd { get; set; }
+		public DateTime DateCompare { get; set; }
 
 		public Guid GuidParm1 { get; set; }
 		public Guid GuidParm2 { get; set; }

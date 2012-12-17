@@ -1,3 +1,8 @@
+-- 2012-11-19
+-- addition of blogging tables
+
+-- USE [CarrotwareCMS]
+GO
 
 IF NOT EXISTS( select * from information_schema.columns 
 		where table_name = 'carrot_ContentType' and column_name = 'ContentTypeValue') BEGIN 

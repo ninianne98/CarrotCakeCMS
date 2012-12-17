@@ -76,6 +76,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.PageActive = false;
 				pageContents.ContentType = ContentPageType.PageType.ContentEntry;
 
+				pageContents.RetireDate = DateTime.Now.AddYears(200);
+				pageContents.GoLiveDate = DateTime.Now;
+
 				pageContents.SavePageEdit();
 
 				pnlAdd.Visible = false;

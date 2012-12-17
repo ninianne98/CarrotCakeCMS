@@ -32,6 +32,24 @@
 		</tr>
 		<tr>
 			<td valign="top" class="tablecaption">
+				release date:
+			</td>
+			<td valign="top">
+				<asp:TextBox ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
+				<asp:TextBox ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				retire date:
+			</td>
+			<td valign="top">
+				<asp:TextBox ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
+				<asp:TextBox ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
 				title bar:
 			</td>
 			<td valign="top">

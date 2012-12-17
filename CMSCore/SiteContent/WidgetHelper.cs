@@ -103,16 +103,14 @@ namespace Carrotware.CMS.Core {
 
 		public void RemoveVersions(List<Guid> lstDel) {
 
-			List<carrot_WidgetData> oldW = (from w in db.carrot_WidgetDatas
-											orderby w.EditDate descending
-											where lstDel.Contains(w.WidgetDataID)
-											&& w.IsLatestVersion != true
-											select w).ToList();
+			IQueryable<carrot_WidgetData> oldW = (from w in db.carrot_WidgetDatas
+												  orderby w.EditDate descending
+												  where lstDel.Contains(w.WidgetDataID)
+												  && w.IsLatestVersion != true
+												  select w);
 
-			if (oldW.Count > 0) {
-				db.carrot_WidgetDatas.DeleteAllOnSubmit(oldW);
-				db.SubmitChanges();
-			}
+			db.carrot_WidgetDatas.DeleteBatch(oldW);
+			db.SubmitChanges();
 		}
 
 		public void Delete(Guid widgetDataID) {
@@ -134,14 +132,14 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void DeleteAll(Guid rootWidgetID) {
-			List<carrot_WidgetData> w1 = CompiledQueries.cqGetWidgetDataByRootAll(db, rootWidgetID).ToList();
+			IQueryable<carrot_WidgetData> w1 = CannedQueries.GetWidgetDataByRootAll(db, rootWidgetID);
 
 			carrot_Widget w2 = CompiledQueries.cqGetRootWidget(db, rootWidgetID);
 
 			bool bPendingDel = false;
 
-			if (w1 != null && w1.Count > 0) {
-				db.carrot_WidgetDatas.DeleteAllOnSubmit(w1);
+			if (w1 != null) {
+				db.carrot_WidgetDatas.DeleteBatch(w1);
 				bPendingDel = true;
 			}
 

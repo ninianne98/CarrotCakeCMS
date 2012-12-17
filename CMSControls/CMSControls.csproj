@@ -92,9 +92,6 @@
     <EmbeddedResource Include="TopMenu.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TopMenu7.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CMSCore\CMSCore.csproj">
       <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
       <Name>CMSCore</Name>

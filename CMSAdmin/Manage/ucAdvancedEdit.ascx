@@ -1,4 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.Manage.ucAdvancedEdit" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <carrot:jquery runat="server" ID="jquery1" />
 <carrot:jqueryui runat="server" ID="jqueryui1" />
 <link href="/Manage/glossyseagreen/css/jquery-ui-glossyseagreen-scoped2.css" rel="stylesheet" type="text/css" />
@@ -29,7 +30,7 @@
 <script type="text/javascript">
 
 	var cmsWebSvc = "/Manage/CMS.asmx";
-	var cmsThisPage = "<%=Carrotware.CMS.Core.SiteData.AlternateCurrentScriptName %>";
+	var cmsThisPage = "<%=SiteData.AlternateCurrentScriptName %>";
 	var cmsThisPageID = "<%=guidContentID.ToString() %>";
 
 	var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";
@@ -55,7 +56,7 @@
 
 	cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
 
-	cmsSetPreviewFileName('<%=Carrotware.CMS.Core.SiteData.PreviewTemplateFilePage %>');
+	cmsSetPreviewFileName('<%=SiteData.PreviewTemplateFilePage %>');
 
 </script>
 <div style="display: none;">

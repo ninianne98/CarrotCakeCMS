@@ -2,6 +2,7 @@
 	Inherits="Carrotware.CMS.UI.Admin.Manage.BlogPostAddEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		var webSvc = "/Manage/CMS.asmx";
@@ -199,7 +200,7 @@
 		});
 
 		var cmsTemplateDDL = '#<%=ddlTemplate.ClientID%>';
-		var cmsTemplatePreview = '<%=Carrotware.CMS.Core.SiteData.PreviewTemplateFilePage %>';
+		var cmsTemplatePreview = '<%=SiteData.PreviewTemplateFilePage %>';
 
 		function cmsPreviewTemplate() {
 			var tmpl = $(cmsTemplateDDL).val();
@@ -252,6 +253,24 @@
 				<td valign="top">
 					<asp:Label ID="lblCreatDate" runat="server"></asp:Label><br />
 					<br />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					release date:
+				</td>
+				<td valign="top">
+					<asp:TextBox ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
+					<asp:TextBox ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					retire date:
+				</td>
+				<td valign="top">
+					<asp:TextBox ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
+					<asp:TextBox ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
 				</td>
 			</tr>
 			<tr>
@@ -492,7 +511,7 @@
 						},
 						"Yes": function () {
 							cmsMakeOKToLeave();
-							window.setTimeout('location.href = \'<%=Carrotware.CMS.Core.SiteData.CurrentScriptName %>?versionid=' + qs + '\'', 500);
+							window.setTimeout('location.href = \'<%=SiteData.CurrentScriptName %>?versionid=' + qs + '\'', 500);
 							$(this).dialog("close");
 						}
 					}

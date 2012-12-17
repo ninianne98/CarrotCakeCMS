@@ -21,7 +21,7 @@ using Carrotware.CMS.UI.Base;
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class PageImport : AdminBasePage {
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentImport);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.DataImport);
 
 			lblWarning.Text = "";
 			lblWarning.Attributes["style"] = "color: #000000;";

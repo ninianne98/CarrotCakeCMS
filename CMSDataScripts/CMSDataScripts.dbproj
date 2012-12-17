@@ -657,6 +657,9 @@
     <Build Include="Schema Objects\Security\Schemas\aspnet_Roles_ReportingAccess.schema.sql">
       <SubType>Code</SubType>
     </Build>
+    <NotInBuild Include="Scripts\ALTER 07 - create date based publishing.sql">
+      <SubType>Code</SubType>
+    </NotInBuild>
   </ItemGroup>
   <ItemGroup>
     <NotInBuild Include="Scripts\Post-Deployment\create_groups_and_roles.sql">
@@ -696,6 +699,9 @@
       <SubType>NotInBuild</SubType>
     </NotInBuild>
     <NotInBuild Include="Scripts\create tblFAQ.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\Post-Deployment\insert_content_types.sql">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
   </ItemGroup>

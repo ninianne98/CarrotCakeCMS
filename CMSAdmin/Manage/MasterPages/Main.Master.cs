@@ -22,6 +22,7 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.Manage.MasterPages.Main.Ctrl");
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
+			litVersion.Text = SiteData.CarrotCakeCMSVersionMM;
 
 			HideWhenNoSiteProfileExists();
 
@@ -45,6 +46,7 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 			tabBlogTop.Visible = tabContentTop.Visible;
 			tabContent.Visible = tabContentTop.Visible;
 			tabModules.Visible = tabContentTop.Visible;
+			tabMainTemplate.Visible = tabContentTop.Visible;
 			tabContentSiteMap.Visible = tabContentTop.Visible;
 			tabImportContent.Visible = tabContentTop.Visible;
 		}
@@ -61,20 +63,24 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 			string sCSSLower = "current";
 
 			switch (sectionID) {
-				case SectionID.Home:
+				case SectionID.SiteInfo:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabMain.Attributes["class"] = sCSSLower;
+					break;
+				case SectionID.SiteTemplate:
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabMainTemplate.Attributes["class"] = sCSSLower;
 					break;
 				case SectionID.ContentSkinEdit:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabContentSkin.Attributes["class"] = sCSSLower;
 					break;
-				case SectionID.ContentImport:
+				case SectionID.DataImport:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabImportContent.Attributes["class"] = sCSSLower;
 					break;
 
-				case SectionID.Content:
+				case SectionID.ContentAdd:
 					tabContentTop.Attributes["class"] = sCSSTop;
 					tabContent.Attributes["class"] = sCSSLower;
 					break;
@@ -104,7 +110,7 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 					tabModules.Attributes["class"] = sCSSLower;
 					break;
 
-				case SectionID.BlogContent:
+				case SectionID.BlogContentAdd:
 					tabBlogTop.Attributes["class"] = sCSSTop;
 					tabBlogContent.Attributes["class"] = sCSSLower;
 					break;

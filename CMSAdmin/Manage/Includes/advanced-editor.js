@@ -311,8 +311,8 @@ function cmsPreviewTemplate() {
 	var editFrame = $('#cmsModalFrame');
 	var editIFrame = $('#cmsFrameEditor');
 
-	$(editIFrame).attr('width', '910');
-	$(editIFrame).attr('height', '480');
+	$(editIFrame).attr('width', '880');
+	$(editIFrame).attr('height', '415');
 
 	var btnApply = ' <input type="button" id="btnApplyTemplate" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
 	var btnClose = ' <input type="button" id="btnCloseTemplate" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
@@ -849,14 +849,8 @@ function cmsGenericEdit(PageId, WidgetId) {
 
 function cmsLaunchWindow(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="850" height="540" src="' + TheURL + '" /> </div>');
 
-	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-		css: { width: '900px', height: '540px' },
-		fadeOut: 1000,
-		timeout: 1200,
-		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
-	});
+	cmsSetiFrameSource(theURL);
 
 	cmsSaveToolbarPosition();
 	setTimeout("cmsLoadWindow();", 800);
@@ -877,16 +871,22 @@ function cmsLoadWindow() {
 	return false;
 }
 
-function cmsLaunchWindowOnly(theURL) {
+function cmsSetiFrameSource(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="910" height="540" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="880" height="460" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-		css: { width: '900px', height: '540px' },
+		css: { width: '860px', height: '440px' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
+}
+
+function cmsLaunchWindowOnly(theURL) {
+	var TheURL = theURL;
+
+	cmsSetiFrameSource(theURL);
 
 	cmsSaveToolbarPosition();
 	setTimeout("cmsLoadWindowOnly();", 800);

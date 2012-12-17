@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.Home);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteInfo);
 			btnExport.Visible = false;
 
 			litID.Text = SiteData.CurrentSiteID.ToString();

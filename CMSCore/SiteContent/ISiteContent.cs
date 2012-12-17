@@ -6,6 +6,8 @@ namespace Carrotware.CMS.Core {
 
 		Guid ContentID { get; set; }
 		DateTime CreateDate { get; set; }
+		DateTime GoLiveDate { get; set; }
+		DateTime RetireDate { get; set; }
 		DateTime EditDate { get; set; }
 		Guid? EditUserId { get; set; }
 		string FileName { get; set; }
@@ -23,6 +25,9 @@ namespace Carrotware.CMS.Core {
 		string TemplateFolderPath { get; }
 		string TitleBar { get; set; }
 		ContentPageType.PageType ContentType { get; set; }
+
+		bool IsRetired { get; }
+		bool IsUnReleased { get; }
 
 		List<ContentTag> ContentTags { get; set; }
 		List<ContentCategory> ContentCategories { get; set; }

@@ -272,6 +272,12 @@ namespace Carrotware.CMS.DBUpdater {
 					return true;
 				}
 
+				query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 2) {
+					return true;
+				}
+
 				query = "select distinct table_name from [information_schema].[columns] where table_name in ('tblSites', 'tblRootContent', 'tblContent', 'tblWidget') ";
 				table1 = GetData(query);
 				if (table1.Rows.Count >= 4) {
@@ -457,6 +463,22 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
+		public DatabaseUpdateResponse AlterStep07() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
+
+			DataTable table1 = GetData(query);
+
+			if (table1.Rows.Count < 2) {
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER07.sql", false);
+				res.Response = "CMS DB created cols RetireDate and GoLiveDate in carrot_RootContent";
+				return res;
+			}
+
+			res.Response = "CMS DB cols RetireDate and GoLiveDate in carrot_RootContent already created";
+			return res;
+		}
 
 		public Exception ExecScriptContents(string sScriptContents, bool bIgnoreErr) {
 			SetConn();

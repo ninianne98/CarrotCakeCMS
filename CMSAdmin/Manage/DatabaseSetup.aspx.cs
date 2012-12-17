@@ -26,6 +26,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			DatabaseUpdate du = new DatabaseUpdate();
 			litMsg.Text = "";
 
+			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
+
 			//FormsAuthentication.SignOut();
 
 			btnLogin.Visible = false;
@@ -59,6 +61,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					}
 					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep05());
 					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep06());
+					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep07());
 				} else {
 					HandleResponse("Database up-to-date ");
 				}

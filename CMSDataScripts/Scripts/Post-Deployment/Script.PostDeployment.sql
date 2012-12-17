@@ -12,3 +12,9 @@ Post-Deployment Script Template
 
 :r .\create_groups_and_roles.sql
 
+GO
+
+:r .\insert_content_types.sql
+
+GO
+

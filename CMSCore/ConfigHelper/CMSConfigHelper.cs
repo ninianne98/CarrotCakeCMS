@@ -609,6 +609,68 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		//===================
+
+		public static string InactivePagePrefix {
+			get {
+				return "&#9746; ";
+			}
+		}
+		public static string RetiredPagePrefix {
+			get {
+				return "&#9851; ";
+			}
+		}
+		public static string UnreleasedPagePrefix {
+			get {
+				return "&#9888; ";
+			}
+		}
+
+
+		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
+
+			if (!nav.PageActive) {
+				nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
+				nav.PageHead = InactivePagePrefix + nav.PageHead;
+				nav.TitleBar = InactivePagePrefix + nav.TitleBar;
+			}
+			if (nav.IsRetired) {
+				nav.NavMenuText = RetiredPagePrefix + nav.NavMenuText;
+				nav.PageHead = RetiredPagePrefix + nav.PageHead;
+				nav.TitleBar = RetiredPagePrefix + nav.TitleBar;
+			}
+			if (nav.IsUnReleased) {
+				nav.NavMenuText = UnreleasedPagePrefix + nav.NavMenuText;
+				nav.PageHead = UnreleasedPagePrefix + nav.PageHead;
+				nav.TitleBar = UnreleasedPagePrefix + nav.TitleBar;
+			}
+			return nav;
+		}
+
+		public static ContentPage IdentifyLinkAsInactive(ContentPage cp) {
+
+			if (!cp.PageActive) {
+				cp.NavMenuText = InactivePagePrefix + cp.NavMenuText;
+				cp.PageHead = InactivePagePrefix + cp.PageHead;
+				cp.TitleBar = InactivePagePrefix + cp.TitleBar;
+			}
+			if (cp.IsRetired) {
+				cp.NavMenuText = RetiredPagePrefix + cp.NavMenuText;
+				cp.PageHead = RetiredPagePrefix + cp.PageHead;
+				cp.TitleBar = RetiredPagePrefix + cp.TitleBar;
+			}
+			if (cp.IsUnReleased) {
+				cp.NavMenuText = UnreleasedPagePrefix + cp.NavMenuText;
+				cp.PageHead = UnreleasedPagePrefix + cp.PageHead;
+				cp.TitleBar = UnreleasedPagePrefix + cp.TitleBar;
+			}
+			return cp;
+		}
+
+
+		//=====================
+
 
 		public static string DecodeBase64(string ValIn) {
 			string val = "";

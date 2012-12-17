@@ -200,10 +200,7 @@ namespace Carrotware.CMS.UI.Base {
 				contLeft.DatabaseKey = pageContents.Root_ContentID;
 				contRight.DatabaseKey = pageContents.Root_ContentID;
 
-				if (!pageContents.PageActive) {
-					pageContents.PageHead = String.Format("{0} {1}", BaseServerControl.InactivePagePrefix, pageContents.PageHead);
-					pageContents.NavMenuText = String.Format("{0} {1}", BaseServerControl.InactivePagePrefix, pageContents.NavMenuText);
-				}
+				pageContents = CMSConfigHelper.IdentifyLinkAsInactive(pageContents);
 
 				//do stuff to page title
 				string sTitleAddendum = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
@@ -387,10 +384,18 @@ namespace Carrotware.CMS.UI.Base {
 
 
 		private string SetPageTitle(ContentPage pageData) {
-			string sPattern = SiteData.CurrentTitlePattern;
+			string sPrefix = "";
+
 			if (!pageData.PageActive) {
-				sPattern = "* UNPUBLISHED * " + SiteData.CurrentTitlePattern;
+				sPrefix = "* UNPUBLISHED * ";
 			}
+			if (pageData.RetireDate < DateTime.Now) {
+				sPrefix = "* RETIRED * ";
+			}
+			if (pageData.GoLiveDate > DateTime.Now) {
+				sPrefix = "* UNRELEASED * ";
+			}
+			string sPattern = sPrefix + SiteData.CurrentTitlePattern;
 
 			string sPageTitle = string.Format(sPattern, theSite.SiteName, pageData.TitleBar, pageData.PageHead, pageData.NavMenuText);
 

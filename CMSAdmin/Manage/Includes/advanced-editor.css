@@ -1,7 +1,7 @@
 ﻿/* General Editor Styles */
 #cms-simplemodal-container, .cms-simplemodal-container {
-	height: 550px;
-	width: 925px;
+	height: 480px;
+	width: 900px;
 	z-index: 5000;
 }
 

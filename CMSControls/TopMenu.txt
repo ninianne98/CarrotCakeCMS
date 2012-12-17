@@ -1,135 +1,120 @@
-﻿{MENU_WRAPPER_ID} p, {MENU_WRAPPER_ID} ul, {MENU_WRAPPER_ID} ol, {MENU_WRAPPER_ID} li, {MENU_WRAPPER_ID} a {
-	line-height: normal;
-	background: none;
+﻿/* BEGIN MENU {MENU_ID} */
+
+{MENU_ID} ul, {MENU_ID} ol, {MENU_ID} li, {MENU_ID} a {
+	text-align: left;
 	padding: 0;
 	margin: 0;
-}
-
-
-{MENU_WRAPPER_ID} {
-	width: {MENU_WIDTH};
-	height: {MENU_HEIGHT};
-	margin: 0 auto;
-}
-
-{MENU_WRAPPER_ID} ul li a {
-	padding: 0;
-	margin: 0;
-	font-size: {FONT_SIZE};
+	font: {FONT_SIZE};
 }
 
 {MENU_ID} {
-	background: none;
-	width: {MENU_WIDTH};
-	height: {MENU_HEIGHT};
-	float: left;
-	z-index: 60;
+	font: {FONT_SIZE};
+	margin: 0;
+	padding: 0 1em;
+	background: transparent;
+	height: 3em;
+	list-style: none;
 	{TOP_BACKGROUND_STYLE}
 }
 
-{MENU_ID} ul.{MENU_UL_TOP} li {
-	text-align: center;
+{MENU_ID} > li {
 	float: left;
+	height: 100%;
+	margin-right: 0.5em;
+	padding: 0 1em;
+	z-index: 995;
 }
 
-{MENU_ID} ul.{MENU_UL_TOP} {
-	clear: both;
-	padding: {MENU_TOP_PAD} 0px 0px 0px;
-	list-style: none;
-	line-height: normal;
-	margin-left: 30px;
-}
-
-
-{MENU_ID} ul.{MENU_UL_TOP} li a, 
-{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a {
-	background: none;
-	display: block;
+{MENU_ID} > li > a {
 	float: left;
-	margin-right: 3px;
-	padding: {LINK_PAD1} {LINK_PAD2} {LINK_PAD1} {LINK_PAD2};
+	height: 100%;
+	color: {FORE_HEX};
 	text-decoration: none;
-	text-align: center;
-	text-transform: uppercase;
-	font-size: {FONT_SIZE};
-	font-weight: bold;
-	color: {FORE_HEX};
-	{ITEM_BACKGROUND_STYLE}
+	line-height: 3;
 }
 
-
-{MENU_ID} ul.{MENU_UL_TOP} li a, 
-{MENU_ID} ul.{MENU_UL_TOP} li a:hover, 
-{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a, 
-{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a:hover {
-	margin-right: 3px;
-	padding: {LINK_PAD1} {LINK_PAD2} {LINK_PAD1} {LINK_PAD2};
-}
-
-{MENU_ID} ul.{MENU_UL_TOP} li a:hover, 
-{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a, 
-{MENU_ID} ul.{MENU_UL_TOP} li.{MENU_SELECT_CLASS} a:hover {
-	background: {FORE_HEX};
-	color: {BG_HEX};
-}
-
-{MENU_ID} li .{MENU_UL_LOWER} {
-	text-align: left;
-	display: none;
-	clear: both;
-}
-
-{MENU_ID} li:hover .{MENU_UL_LOWER} {
-	color: {FORE_HEX};
-	list-style-type: none;
-	display: block;
-	position: absolute;
-	text-align: left;
-	float: left;
-	background-color: {FORE_HEX};
-	padding-left: 0px;
-	padding-bottom: 0px;
-	margin-top: {LINK_PAD2};
-	margin-left: 0px;
-	margin-right: {LINK_PAD1};
-	z-index: 70;
-	border-width: 1px;
-	border-style: solid;
-	border-color: {BG_HEX};
-	border-collapse: collapse;
-	font-size: {FONT_SIZE};
-	font-weight: bold;
-	color: {FORE_HEX};
-	width: {SUB_MENU_WIDTH};
-}
-
-{MENU_ID} .{MENU_UL_LOWER} li {
-	text-align: left;
-	border-width: 1px;
-	border-style: solid;
-	border-color: {BG_HEX};
-	width: {SUB_MENU_WIDTH};
-}
-
-{MENU_ID} .{MENU_UL_LOWER} li a,
-{MENU_ID} .{MENU_UL_LOWER} li a:hover {
-	float: left;
-	padding: {MENU_TOP_2_PAD} {MENU_TOP_3_PAD} {MENU_TOP_2_PAD} {MENU_TOP_3_PAD};
-	text-align: left;
-}
-
-
-{MENU_ID} li:hover .{MENU_UL_LOWER} li a {
-	text-align: left;
-	color: {BG_HEX};
-	text-decoration: none;
-	clear: both;
-}
-
-
-{MENU_ID} li:hover .{MENU_UL_LOWER} li a:hover {
-	text-align: left;
+{MENU_ID} > li > a:hover {
+	color: {HOVER_FORE_HEX};
 	text-decoration: underline;
-	font-weight: bold;
 }
 
+{MENU_ID} > li:hover, {MENU_ID} > li:hover a {
+	background: {HOVER_BG_HEX};
+	color: {HOVER_FORE_HEX};
+	text-decoration: underline;
+}
+{MENU_ID} > li:hover ul li, {MENU_ID} > li:hover ul li a {
+	background: {SUB_BG_HEX};
+	color: {SUB_FORE_HEX};
+	text-decoration: none;
+}
+
+{MENU_ID} > li.{MENU_SELECT_CLASS}, {MENU_ID} > li.{MENU_SELECT_CLASS} a {
+	font-weight: bold;
+	color: {SEL_FORE_HEX};
+	background: {SEL_BG_HEX};
+}
+{MENU_ID} > li.{MENU_SELECT_CLASS} ul, {MENU_ID} > li.{MENU_SELECT_CLASS} ul li a {
+	font-weight: normal;
+	color: {SEL_FORE_HEX};
+	background: transparent;
+}
+{MENU_ID} > li.{MENU_SELECT_CLASS} > a:hover {
+	color: {SEL_FORE_HEX};
+	text-decoration: underline;
+}
+
+{MENU_ID} > li.{MENU_HASCHILD_CLASS} {
+	position: relative;
+}
+
+{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul {
+	width: 14em;
+	margin: 0;
+	padding: 0.5em 0;
+	list-style: none;
+	background: {SUB_BG_HEX};
+	position: absolute;
+	top: -1000em;
+	z-index: 998;
+}
+
+{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li {
+	width: 90%;
+	margin: 0 auto 0.2em auto;
+}
+
+{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li a {
+	height: 100%;
+	display: block;
+	padding: 0.4em;
+	color: {SUB_FORE_HEX};
+	text-decoration: none;
+}
+
+{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li a:hover {
+	background: {HOVER_BG_HEX};
+	color: {HOVER_FORE_HEX};
+	text-decoration: underline;
+}
+
+{MENU_ID} > li.{MENU_HASCHILD_CLASS}:hover ul {
+	top: 3em;
+}
+
+{MENU_ID} > li:hover {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+{MENU_ID} > li:hover a {
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+}
+
+{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li a {
+	padding: 0.4em;
+	margin: 0 auto 0.2em auto;
+}
+
+/* END MENU {MENU_ID} */

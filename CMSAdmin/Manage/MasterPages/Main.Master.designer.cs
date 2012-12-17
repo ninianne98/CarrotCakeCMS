@@ -49,6 +49,15 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
+        /// litVersion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litVersion;
+        
+        /// <summary>
         /// cmdDummy control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,15 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContentSkin;
+        
+        /// <summary>
+        /// tabMainTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabMainTemplate;
         
         /// <summary>
         /// tabImportContent control.
