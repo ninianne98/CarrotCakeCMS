@@ -1,4 +1,3 @@
-
 /*
 Design by Free CSS Templates
 http://www.freecsstemplates.org
@@ -6,92 +5,92 @@ Released for free under a Creative Commons Attribution 2.5 License
 */
 
 body {
-    margin: 0px;
-    padding: 0;
-    background: #1D0304;
-    line-height: 25px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    color: #E3B49C;
+	margin: 0px;
+	padding: 0;
+	background: #1D0304;
+	line-height: 25px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #E3B49C;
 }
 
 h1, h2, h3 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman" , Times, serif;
-    font-weight: normal;
-    color: #649632;
+	margin: 0;
+	font-family: Georgia, "Times New Roman" , Times, serif;
+	font-weight: normal;
+	color: #649632;
 }
 
 h1 {
-    font-size: 44px;
+	font-size: 44px;
 }
 
 h2 {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 h3 {
 }
 
 p, ul, ol {
-    margin-top: 0;
-    text-align: justify;
+	margin-top: 0;
+	text-align: justify;
 }
 
 ul, ol {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
 }
 
 blockquote {
 }
 
 a {
-    color: #FFFFFF;
+	color: #FFFFFF;
 }
 
 a:hover {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 a img {
-    border: none;
+	border: none;
 }
 
 img.left {
-    float: left;
-    margin: 7px 30px 0 0;
+	float: left;
+	margin: 7px 30px 0 0;
 }
 
 img.right {
-    float: right;
-    margin: 7px 0 0 30px;
+	float: right;
+	margin: 7px 0 0 30px;
 }
 
 hr {
-    display: none;
+	display: none;
 }
 
 .list1 {
 }
 
 .list1 li {
-    float: left;
-    line-height: normal;
+	float: left;
+	line-height: normal;
 }
 
 .list1 li img {
-    margin: 0 30px 30px 0;
+	margin: 0 30px 30px 0;
 }
 
 .list1 li.alt img {
-    margin-right: 0;
+	margin-right: 0;
 }
 
 #wrapper {
-    width: 100%;
-    background: #97080D url(images/img02.jpg) repeat-x left top;
+	width: 100%;
+	background: #97080D url(images/img02.jpg) repeat-x left top;
 }
 
 /* Header */
@@ -100,268 +99,278 @@ hr {
 }
 
 #header {
-    width: 1000px;
-    height: 204px;
-    margin: 0 auto;
-    background: url(images/img03.jpg) no-repeat left top;
+	width: 1000px;
+	height: 204px;
+	margin: 0 auto;
+	background: url(images/img03.jpg) no-repeat left top;
 }
 
 /* Menu */
 
+#menu-wrapper {
+	float: left;
+}
+
+#menu-wrapper ul {
+	margin: 0;
+	padding-top: 115px;
+	padding-left: 30px;
+}
+
+
 #menu {
-    float: left;
+	float: left;
 }
 
 #menu ul {
-    margin: 0;
-    padding-top: 125px;
-    list-style: none;
-    line-height: normal;
-    padding-left: 20px;
+	margin: 0;
+	padding-top: 125px;
+	list-style: none;
+	line-height: normal;
+	padding-left: 20px;
 }
 
 #menu li {
-    display: block;
-    float: left;
+	display: block;
+	float: left;
 }
 
 #menu a {
-    display: block;
-    float: left;
-    padding: 0px 30px;
-    background: url(images/img05.jpg) no-repeat left 5px;
-    text-decoration: none;
-    font: 16px Arial, Helvetica, sans-serif;
-    color: #FFFFFF;
+	display: block;
+	float: left;
+	padding: 0px 30px;
+	background: url(images/img05.jpg) no-repeat left 5px;
+	text-decoration: none;
+	font: 16px Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
 }
 
 #menu a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 #menu .current_page_item, #menu ul li a.current_page_item {
-    display: block;
-    margin: 0px;
-    background: none;
-    background-color: #990000;
-    color: #FFFFFF;
+	display: block;
+	margin: 0px;
+	background: none;
+	background-color: #990000;
+	color: #FFFFFF;
 }
 
 /* Search */
 
 #search {
-    float: right;
-    height: 44px;
+	float: right;
+	height: 44px;
 }
 
-#search form {
-    float: right;
-    margin: 0;
-    padding: 10px 20px 0 0;
+#search form, #searcharea {
+	float: right;
+	margin: 0;
+	padding: 10px 10px 0 0;
+	font: 14px Arial, Helvetica, sans-serif;
 }
 
 #search fieldset {
-    margin: 0;
-    padding: 0;
-    border: none;
+	margin: 0;
+	padding: 0;
+	border: none;
 }
 
-#search input {
-    float: left;
-    padding: 0;
-    height: 20px;
-    font: 12px Arial, Helvetica, sans-serif;
-    border: none;
+#search input, #searcharea input {
+	float: left;
+	font: 14px Arial, Helvetica, sans-serif;
+	border: none;
 }
 
-#search-text {
-    width: 135px;
-    height: 14px;
-    margin: 0px 6px 0px 0px;
-    padding: 3px 0 0 5px;
-    color: #658453;
+#search-text, #searcharea .textbox {
+	margin: 4px 6px 2px 0px;
+	padding: 2px 6px 2px 0px;
 }
 
 #search-submit {
-    padding: 0px;
-    margin: 0px;
-    height: 21px;
-    margin-left: 4px;
-    color: #39561D;
+	padding: 0px;
+	margin: 0px;
+	margin-left: 4px;
+	color: #DA6508;
+	background: #350407;
 }
 
 /* Page */
 
 #page {
-    width: 980px;
-    margin: 0 auto;
-    padding: 0px;
+	width: 980px;
+	margin: 0 auto;
+	padding: 0px;
 }
 
 /** LOGO */
 
 #logo {
-    width: 1000px;
-    height: 446px;
-    margin: 0 auto;
-    background: url(images/img04.jpg) no-repeat left top;
+	width: 1000px;
+	height: 446px;
+	margin: 0 auto;
+	background: url(images/img04.jpg) no-repeat left top;
 }
 
 #logo h1, #logo p {
-    margin: 0;
-    padding: 0px;
-    line-height: normal;
+	margin: 0;
+	padding: 0px;
+	line-height: normal;
 }
 
 #logo h1 {
-    padding-right: 60px;
-    padding-top: 140px;
-    text-align: right;
-    font-size: 70px;
+	padding-right: 60px;
+	padding-top: 140px;
+	text-align: right;
+	font-size: 70px;
 }
 
 #logo h1 a {
-    text-decoration: none;
-    text-transform: lowercase;
-    color: #FFFFFF;
+	text-decoration: none;
+	text-transform: lowercase;
+	color: #FFFFFF;
 }
 
 #logo h1 a:hover {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 #logo p {
-    text-align: right;
-    font: italic 13px Georgia, "Times New Roman" , Times, serif;
-    color: #FFFFFF;
+	padding-top: 20px;
+	padding-right: 60px;
+	text-align: right;
+	font: italic 13px Georgia, "Times New Roman" , Times, serif;
+	color: #FFFFFF;
+	font-size: 16px;
 }
 
 #logo p a {
-    padding-right: 108px;
-    text-decoration: none;
-    color: #FFFFFF;
+	padding-right: 108px;
+	text-decoration: none;
+	color: #FFFFFF;
 }
 
 #logo p a:hover {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 /* Content */
 
 #content {
-    float: right;
-    width: 640px;
+	float: right;
+	width: 640px;
 }
 
 /* Post */
 
 .post {
-    margin-bottom: 25px;
+	margin-bottom: 25px;
 }
 
 .post .title {
-    height: 30px;
-    margin-bottom: 3px;
-    border-bottom: #A5131A dashed 1px;
-    text-transform: uppercase;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    color: #FFFFFF;
+	height: 30px;
+	margin-bottom: 3px;
+	border-bottom: #A5131A dashed 1px;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color: #FFFFFF;
 }
 
 .post .date {
-    float: right;
-    margin-top: -35px;
-    padding-right: 20px;
-    font-family: Georgia, "Times New Roman" , Times, serif;
-    font-weight: normal;
-    font-size: 18px;
-    color: #FFFFFF;
+	float: right;
+	margin-top: -35px;
+	padding-right: 20px;
+	font-family: Georgia, "Times New Roman" , Times, serif;
+	font-weight: normal;
+	font-size: 18px;
+	color: #FFFFFF;
 }
 
 .post .meta {
-    margin: -30px 0 3px 25px;
-    padding: 2px 30px 2px 0px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
-    font-size: 10px;
-    color: #B6ACA2;
+	margin: -30px 0 3px 25px;
+	padding: 2px 30px 2px 0px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 10px;
+	color: #B6ACA2;
 }
 
 .post .meta a {
-    color: #B6ACA2;
+	color: #B6ACA2;
 }
 
 .post .entry {
-    padding: 20px 0px;
+	padding: 20px 0px;
 }
 
 .post .links {
-    margin: 0 250px 0 0;
-    padding: 0 0 0 0px;
+	margin: 0 250px 0 0;
+	padding: 0 0 0 0px;
 }
 
 .post .links .comments {
 }
 
 .post .links .permalink {
-    padding-left: 17px;
+	padding-left: 17px;
 }
 
 /* Sidebar */
 
 #sidebar {
-    float: left;
-    width: 290px;
-    border-right: #A5131A dashed 1px;
+	float: left;
+	width: 290px;
+	border-right: #A5131A dashed 1px;
 }
 
 #sidebar ul {
-    margin: 0;
-    padding: 0px 40px 0px 0px;
-    list-style: none;
-    line-height: normal;
-    border: none;
+	margin: 0;
+	padding: 0px 40px 0px 0px;
+	list-style: none;
+	line-height: normal;
+	border: none;
 }
 
 #sidebar li {
-    margin-bottom: 30px;
-    padding: 0 0 20px 0px;
+	margin-bottom: 30px;
+	padding: 0 0 20px 0px;
 }
 
 #sidebar li ul {
-    line-height: 200%;
-    background: none;
+	line-height: 200%;
+	background: none;
 }
 
 #sidebar li li {
-    margin: 0;
-    padding: 3px 20px;
-    background: none;
+	margin: 0;
+	padding: 3px 20px;
+	background: none;
 }
 
 #sidebar p {
-    margin: 0;
-    padding: 0 20px;
+	margin: 0;
+	padding: 0 20px;
 }
 
 #sidebar h2 {
-    height: 42px;
-    margin: 0 0 20px 0px;
-    padding: 18px 0px 0px 45px;
-    background: url(images/img06.gif) no-repeat left top;
-    text-transform: uppercase;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: #FFFFFF;
+	height: 42px;
+	margin: 0 0 20px 0px;
+	padding: 18px 0px 0px 45px;
+	background: url(images/img06.gif) no-repeat left top;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
 }
 
 
 #sidebar p {
-    line-height: 200%;
-    padding-bottom: 20px;
+	line-height: 200%;
+	padding-bottom: 20px;
 }
 
 #sidebar a {
@@ -373,63 +382,92 @@ hr {
 }
 
 #calendar caption {
-    padding-bottom: 5px;
-    font-weight: bold;
+	padding-bottom: 5px;
+	font-weight: bold;
 }
 
 #calendar table {
-    width: 100%;
-    border-collapse: collapse;
-    border-right: 1px solid #F5F2EF;
+	width: 100%;
+	border-collapse: collapse;
+	border-right: 1px solid #F5F2EF;
 }
 
 #calendar thead th {
-    padding: 5px 0;
-    text-align: center;
-    border-top: 1px solid #F5F2EF;
-    border-left: 1px solid #F5F2EF;
-    background: #F5F2EF;
+	padding: 5px 0;
+	text-align: center;
+	border-top: 1px solid #F5F2EF;
+	border-left: 1px solid #F5F2EF;
+	background: #F5F2EF;
 }
 
 #calendar tbody td {
-    padding: 5px 0;
-    text-align: center;
-    border-top: 1px solid #F5F2EF;
-    border-left: 1px solid #F5F2EF;
+	padding: 5px 0;
+	text-align: center;
+	border-top: 1px solid #F5F2EF;
+	border-left: 1px solid #F5F2EF;
 }
 
 #calendar tfoot td {
-    padding: 5px;
+	padding: 5px;
 }
 
 #calendar tfoot #next {
-    text-align: right;
+	text-align: right;
 }
 
 #calendar #today {
-    background: #E7F1E1;
+	background: #E7F1E1;
 }
 
 /* Footer */
 
 #footer {
-    width: 980px;
-    height: 170px;
-    margin: 0 auto;
-    padding: 0;
-    background: url(images/img01.jpg) no-repeat left top;
+	width: 980px;
+	height: 170px;
+	margin: 0 auto;
+	padding: 0;
+	background: url(images/img01.jpg) no-repeat left top;
 }
 
 #footer p {
-    margin: 0;
-    padding: 20px 0;
-    text-align: center;
-    text-transform: uppercase;
-    line-height: normal;
-    font-size: 10px;
-    color: #FFFFFF;
+	margin: 0;
+	padding: 20px 0;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: normal;
+	font-size: 10px;
+	color: #FFFFFF;
 }
 
 #footer a {
-    color: #FFFFFF;
+	color: #FFFFFF;
+}
+
+
+.pagerfooterlinks {
+	line-height: normal;
+}
+
+.pagerfooterlinks .pagerlink {
+	margin: 2px 2px 2px 2px;
+	padding: 5px 5px 5px 5px;
+	border: 1px solid #350407;
+	background-color: #7A090B;
+	float: left;
+}
+
+.pagerfooterlinks .pagerlink a {
+	margin: 2px 2px 2px 2px;
+	padding: 5px 5px 5px 5px;
+	font-weight: normal;
+}
+
+.pagerfooterlinks .pagerlink a.selected {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.pagerfooterlinks .selectedwrap {
+	background-color: #DA5C08;
+	font-weight: bold;
 }

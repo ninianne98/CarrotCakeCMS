@@ -61,6 +61,13 @@
 			<br />
 		</div>
 		<div id="rightbar">
+			<div class="padding10">
+				<div class="rsszone">
+					<carrot:RSSFeed runat="server" ID="RSSFeed2" RSSFeedType="BlogOnly" CssClass="rssimage" RenderRSSMode="ImageLink" />
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<carrot:RSSFeed runat="server" ID="RSSFeed3" RSSFeedType="PageOnly" CssClass="rssimage" RenderRSSMode="ImageLink" />
+				</div>
+			</div>
 			<carrot:WidgetContainer ID="phRightTop" runat="server">
 			</carrot:WidgetContainer>
 			<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server"></carrot:ContentContainer>

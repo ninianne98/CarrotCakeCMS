@@ -301,6 +301,34 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public Color UnSelBGColor {
+			get {
+				string s = (string)ViewState["UnSelBGColor"];
+				return ((s == null) ? ColorTranslator.FromHtml("Transparent") : ColorTranslator.FromHtml(s));
+			}
+			set {
+				ViewState["UnSelBGColor"] = ColorTranslator.ToHtml(value);
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public Color UnSelFGColor {
+			get {
+				string s = (string)ViewState["UnSelFGColor"];
+				return ((s == null) ? ForeColor : ColorTranslator.FromHtml(s));
+			}
+			set {
+				ViewState["UnSelFGColor"] = ColorTranslator.ToHtml(value);
+			}
+		}
 
 
 		[Bindable(true)]
@@ -529,6 +557,15 @@ namespace Carrotware.CMS.UI.Controls {
 							HoverBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 
+						sTmp = GetParmValue("UnSelFGColor", "");
+						if (!string.IsNullOrEmpty(sTmp)) {
+							UnSelFGColor = ColorTranslator.FromHtml(sTmp);
+						}
+						sTmp = GetParmValue("UnSelBGColor", "");
+						if (!string.IsNullOrEmpty(sTmp)) {
+							UnSelBGColor = ColorTranslator.FromHtml(sTmp);
+						}
+
 						sTmp = GetParmValue("SelFGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
 							SelFGColor = ColorTranslator.FromHtml(sTmp);
@@ -569,6 +606,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 				sCSS = sCSS.Replace("{SEL_FORE_HEX}", ColorTranslator.ToHtml(SelFGColor));
 				sCSS = sCSS.Replace("{SEL_BG_HEX}", ColorTranslator.ToHtml(SelBGColor));
+
+				sCSS = sCSS.Replace("{UNSEL_FORE_HEX}", ColorTranslator.ToHtml(UnSelFGColor));
+				sCSS = sCSS.Replace("{UNSEL_BG_HEX}", ColorTranslator.ToHtml(UnSelBGColor));
 
 				sCSS = sCSS.Replace("{SUB_FORE_HEX}", ColorTranslator.ToHtml(SubFGColor));
 				sCSS = sCSS.Replace("{SUB_BG_HEX}", ColorTranslator.ToHtml(SubBGColor));
@@ -611,7 +651,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 				sCSS = sCSS.Replace("{MENU_ID}", "#" + this.ClientID + "");
 				sCSS = sCSS.Replace("{MENU_WRAPPER_ID}", "#" + this.ClientID + "-wrapper");
-				sCSS = "\r\n<style type=\"text/css\">\r\n" + sCSS + "\r\n</style>\r\n";
+				sCSS = "\r\n\t<style type=\"text/css\">\r\n" + sCSS + "\r\n\t</style>\r\n";
 
 				Literal link = new Literal();
 				link.Text = sCSS;
