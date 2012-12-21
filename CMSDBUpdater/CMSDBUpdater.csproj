@@ -83,6 +83,18 @@
     <EmbeddedResource Include="DataScripts\ALTER07.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)\DataScripts\CREATE01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\CREATE 01 - whole database.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 01 - add meta fields to content.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER02.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 02 - new widget structure.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER03.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER04.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER05.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER06.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER07.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql" /F /R /Y /I
+
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

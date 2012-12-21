@@ -1,4 +1,4 @@
-﻿-- 2012-12-15
+-- 2012-12-15
 -- added new columns to carrot_RootContent
 
 -- USE [CarrotwareCMS]
@@ -191,6 +191,7 @@ GO
 
 CREATE PROCEDURE [dbo].[carrot_BlogMonthlyTallies]
     @SiteID uniqueidentifier,
+    @ActiveOnly bit,    
     @TakeTop int = 10
 
 /*
@@ -213,13 +214,12 @@ SET NOCOUNT ON
     DECLARE @ContentTypeID uniqueidentifier
     SELECT  @ContentTypeID = (select top 1 ct.ContentTypeID from dbo.carrot_ContentType ct where ct.ContentTypeValue = 'BlogEntry')
 
-
 	DECLARE @tblTallies TABLE(
 		RowID int identity(1,1),
 		SiteID uniqueidentifier,
 		ContentCount int,
 		DateMonth date,
-		DateSlug nvarchar(50)
+		DateSlug nvarchar(64)
 	)
 	
 	insert into @tblTallies(SiteID, ContentCount, DateMonth, DateSlug)
@@ -227,14 +227,13 @@ SET NOCOUNT ON
 		FROM   (SELECT Root_ContentID, SiteID, ContentTypeID, 
 					CONVERT(datetime, CONVERT(nvarchar(25), GoLiveDateLocal, 112)) AS DateMonth, 
 					DATENAME(MONTH, GoLiveDateLocal) + ' ' + CAST(YEAR(GoLiveDateLocal) as nvarchar(50)) AS DateSlug
-				FROM (SELECT Root_ContentID, SiteID, ContentTypeID, (GoLiveDateLocal - DAY(GoLiveDateLocal) + 1) as GoLiveDateLocal
-					FROM (SELECT Root_ContentID, SiteID, ContentTypeID, GoLiveDateLocal
-							FROM [dbo].[carrot_RootContent]
-							WHERE SiteID = @SiteID
-								AND PageActive = 1
-								AND GoLiveDate < @UTCDate
-								AND RetireDate > @UTCDate
-								AND ContentTypeID = @ContentTypeID ) AS Y) AS X) AS Z
+			FROM (SELECT Root_ContentID, SiteID, ContentTypeID, (GoLiveDateLocal - DAY(GoLiveDateLocal) + 1) as GoLiveDateLocal
+				FROM [dbo].[carrot_RootContent]
+				WHERE SiteID = @SiteID
+					AND (PageActive = 1 OR @ActiveOnly = 0)
+					AND (GoLiveDate < @UTCDate OR @ActiveOnly = 0)
+					AND (RetireDate > @UTCDate OR @ActiveOnly = 0)
+					AND ContentTypeID = @ContentTypeID ) AS Y) AS Z
 
 		GROUP BY SiteID, DateMonth, DateSlug
 		ORDER BY DateMonth DESC
