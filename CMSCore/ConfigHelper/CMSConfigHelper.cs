@@ -609,6 +609,35 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static TimeZoneInfo GetLocalTimeZoneInfo() {
+			TimeZoneInfo oTZ = TimeZoneInfo.Local;
+
+			return oTZ;
+		}
+
+		public static TimeZoneInfo GetSiteTimeZoneInfo(string timeZoneIdentifier) {
+			TimeZoneInfo oTZ = GetLocalTimeZoneInfo();
+
+			if (!string.IsNullOrEmpty(timeZoneIdentifier)) {
+				try { oTZ = TimeZoneInfo.FindSystemTimeZoneById(timeZoneIdentifier); } catch { }
+			}
+
+			return oTZ;
+		}
+
+		public static DateTime ConvertUTCToSiteTime(DateTime dateUTC, string timeZoneIdentifier) {
+			TimeZoneInfo oTZ = GetSiteTimeZoneInfo(timeZoneIdentifier);
+
+			return TimeZoneInfo.ConvertTimeFromUtc(dateUTC, oTZ);
+		}
+
+		public static DateTime ConvertSiteTimeToUTC(DateTime dateSite, string timeZoneIdentifier) {
+			TimeZoneInfo oTZ = GetSiteTimeZoneInfo(timeZoneIdentifier);
+
+			return TimeZoneInfo.ConvertTimeToUtc(dateSite, oTZ);
+		}
+
+
 		//===================
 
 		public static string InactivePagePrefix {
@@ -807,7 +836,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				itm.SerializedData = sData;
-				itm.EditDate = DateTime.Now;
+				itm.EditDate = DateTime.UtcNow;
 
 				if (bAdd) {
 					_db.carrot_SerialCaches.InsertOnSubmit(itm);

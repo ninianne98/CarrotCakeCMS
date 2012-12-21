@@ -7,13 +7,14 @@
 	<title>Main</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
 	<link href="/Manage/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/main.css" rel="stylesheet" type="text/css" />
+	<link href="/Manage/includes/common.css" rel="stylesheet" type="text/css" />
 	<script src="/Manage/includes/base64.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.simplemodal.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.blockUI.js" type="text/javascript"></script>
 	<script src="/Manage/includes/common-utils.js" type="text/javascript"></script>
 	<script src="/Manage/includes/jquery.ui.timepicker.js" type="text/javascript"></script>
-	<link href="/Manage/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/Manage/includes/TableStyles.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 
@@ -64,9 +65,9 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-	<div id="headercontainer">
-		<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
-		<div id="cmsAjaxMainDiv">
+	<div id="cmsAjaxMainDiv">
+		<div id="headercontainer">
+			<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
 			<div id="header">
 				<h2>
 					<asp:Literal ID="litVersion" runat="server" /></h2>
@@ -119,7 +120,7 @@
 				<li><a href="javascript:void(0)">&nbsp;</a></li>
 			</ul>
 		</div>
-		<div style="height: 2px; width: 1100px; clear: both; border: 1px dashed #ffffff !important;">
+		<div style="height: 2px; width: 1000px; clear: both; border: 1px dashed #ffffff !important;">
 		</div>
 		<div id="content">
 			<div class="pad-content">
@@ -159,6 +160,9 @@
 				</asp:PlaceHolder>
 				<br />
 				<asp:Literal ID="litCMSBuildInfo" runat="server" />
+				<br />
+				Site Time:
+				<asp:Literal ID="litServerTime" runat="server" />
 				<br />
 			</p>
 		</div>

@@ -136,7 +136,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						cp.ContentID = Guid.NewGuid();
 						cp.SiteID = site.SiteID;
 						cp.ContentType = ContentPageType.PageType.ContentEntry;
-						cp.EditDate = DateTime.Now;
+						cp.EditDate = SiteData.CurrentSite.Now;
 						cp.EditUserId = SecurityData.CurrentUserGuid;
 						cp.NavOrder = iOrder;
 						cp.TemplateFile = ddlTemplatePage.SelectedValue;
@@ -170,8 +170,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 							cp.Parent_ContentID = navParent.Root_ContentID;
 						}
 
-						cp.RetireDate = DateTime.Now.AddYears(200);
-						cp.GoLiveDate = DateTime.Now;
+						cp.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
+						cp.GoLiveDate = SiteData.CurrentSite.Now;
 
 						cp.SavePageEdit();
 
@@ -194,7 +194,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						cp.SiteID = site.SiteID;
 						cp.Parent_ContentID = null;
 						cp.ContentType = ContentPageType.PageType.BlogEntry;
-						cp.EditDate = DateTime.Now;
+						cp.EditDate = SiteData.CurrentSite.Now;
 						cp.EditUserId = SecurityData.CurrentUserGuid;
 						cp.NavOrder = 10;
 						cp.TemplateFile = ddlTemplatePost.SelectedValue;
@@ -206,8 +206,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 							cp.Root_ContentID = navData.Root_ContentID;
 						}
 
-						cp.RetireDate = DateTime.Now.AddYears(200);
-						cp.GoLiveDate = DateTime.Now;
+						cp.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
+						cp.GoLiveDate = SiteData.CurrentSite.Now;
 
 						cp.SavePageEdit();
 					}

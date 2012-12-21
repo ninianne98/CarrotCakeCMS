@@ -39,10 +39,12 @@ namespace Carrotware.CMS.Core {
 			Widget w = new Widget();
 
 			if (ww != null) {
+				SiteData site = SiteData.GetSiteFromCache(ww.SiteID);
+
 				w.IsWidgetPendingDelete = false;
 
 				w.WidgetDataID = ww.WidgetDataID;
-				w.EditDate = ww.EditDate;
+				w.EditDate = site.ConvertUTCToSiteTime(ww.EditDate);
 				w.IsLatestVersion = ww.IsLatestVersion;
 				w.ControlProperties = ww.ControlProperties;
 

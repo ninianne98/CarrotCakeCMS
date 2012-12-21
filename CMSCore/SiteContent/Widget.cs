@@ -56,22 +56,24 @@ namespace Carrotware.CMS.Core {
 			SetVals(w);
 		}
 
-		private void SetVals(vw_carrot_Widget w) {
+		private void SetVals(vw_carrot_Widget ww) {
 
-			if (w != null) {
+			if (ww != null) {
+				SiteData site = SiteData.GetSiteFromCache(ww.SiteID);
+
 				this.IsWidgetPendingDelete = false;
 
-				this.WidgetDataID = w.WidgetDataID;
-				this.EditDate = w.EditDate;
-				this.IsLatestVersion = w.IsLatestVersion;
-				this.ControlProperties = w.ControlProperties;
+				this.WidgetDataID = ww.WidgetDataID;
+				this.EditDate = site.ConvertUTCToSiteTime(ww.EditDate);
+				this.IsLatestVersion = ww.IsLatestVersion;
+				this.ControlProperties = ww.ControlProperties;
 
-				this.Root_WidgetID = w.Root_WidgetID;
-				this.Root_ContentID = w.Root_ContentID;
-				this.WidgetOrder = w.WidgetOrder;
-				this.ControlPath = w.ControlPath;
-				this.PlaceholderName = w.PlaceholderName;
-				this.IsWidgetActive = w.WidgetActive;
+				this.Root_WidgetID = ww.Root_WidgetID;
+				this.Root_ContentID = ww.Root_ContentID;
+				this.WidgetOrder = ww.WidgetOrder;
+				this.ControlPath = ww.ControlPath;
+				this.PlaceholderName = ww.PlaceholderName;
+				this.IsWidgetActive = ww.WidgetActive;
 			}
 		}
 
@@ -86,7 +88,6 @@ namespace Carrotware.CMS.Core {
 		public bool IsWidgetActive { get; set; }
 		public bool IsWidgetPendingDelete { get; set; }
 		public DateTime EditDate { get; set; }
-
 
 		public void Save() {
 
@@ -116,7 +117,7 @@ namespace Carrotware.CMS.Core {
 				wd.WidgetDataID = Guid.NewGuid();
 				wd.IsLatestVersion = true;
 				wd.ControlProperties = this.ControlProperties;
-				wd.EditDate = DateTime.Now;
+				wd.EditDate = DateTime.UtcNow;
 
 				carrot_WidgetData oldWD = CompiledQueries.cqGetWidgetDataByRootID(db, this.Root_WidgetID);
 

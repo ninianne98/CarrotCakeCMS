@@ -50,11 +50,41 @@
 			}
 		}
 
+		function GenerateBlogFilePrefix() {
+			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
+			var pageTitle = $('#<%= txtPageSlug.ClientID %>').val();
+			var myPage = MakeStringSafe(pageTitle);
+
+			var webMthd = webSvc + "/GenerateBlogFilePrefix";
+
+			$.ajax({
+				type: "POST",
+				url: webMthd,
+				data: "{'ThePageSlug': '" + myPage + "', 'GoLiveDate': '" + sGoLiveDate + "'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: editPrefixCallback,
+				error: cmsAjaxFailed
+			});
+
+		}
+
+		function editPrefixCallback(data, status) {
+			if (data.d != "FAIL") {
+
+				$('#<%= lblPrefix.ClientID %>').html(data.d);
+			} else {
+				$('#<%= lblPrefix.ClientID %>').html('/0000/00/00/file.aspx');
+			}
+		}
 
 		function CheckFileName() {
+			GenerateBlogFilePrefix();
+
 			thePage = $('#<%= txtPageSlug.ClientID %>').val();
 
 			$('#<%= txtFileValid.ClientID %>').val('');
+			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
 
 			var webMthd = webSvc + "/ValidateUniqueBlogFilename";
 			var myPage = MakeStringSafe(thePage);
@@ -62,7 +92,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'ThePageSlug': '" + myPage + "', 'PageID': '" + thePageID + "'}",
+				data: "{'ThePageSlug': '" + myPage + "', 'GoLiveDate': '" + sGoLiveDate + "', 'PageID': '" + thePageID + "'}",
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,
@@ -234,7 +264,7 @@
 					<table cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="175" valign="top">
-								<asp:Label ID="lblUpdated" runat="server"></asp:Label>
+								<asp:Label ID="lblUpdated" runat="server" />
 							</td>
 							<td width="175" valign="top">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -251,7 +281,7 @@
 					create date:
 				</td>
 				<td valign="top">
-					<asp:Label ID="lblCreatDate" runat="server"></asp:Label><br />
+					<asp:Label ID="lblCreatDate" runat="server" /><br />
 					<br />
 				</td>
 			</tr>
@@ -260,8 +290,10 @@
 					release date:
 				</td>
 				<td valign="top">
-					<asp:TextBox ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
-					<asp:TextBox ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16"
+						onblur="GenerateBlogFilePrefix()" onchange="GenerateBlogFilePrefix()" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10"
+						onblur="GenerateBlogFilePrefix()" />
 				</td>
 			</tr>
 			<tr>
@@ -269,8 +301,8 @@
 					retire date:
 				</td>
 				<td valign="top">
-					<asp:TextBox ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
-					<asp:TextBox ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
 				</td>
 			</tr>
 			<tr>
@@ -285,13 +317,23 @@
 			</tr>
 			<tr>
 				<td valign="top" class="tablecaption">
+					<br />
+				</td>
+				<td valign="top">
+					<div style="padding: 3px;" class=" ui-widget-content ui-corner-all ">
+						<asp:Label ID="lblPrefix" runat="server" Text="/yy/mm/dd/" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
 					filename:
 				</td>
 				<td valign="top">
-					<asp:Label ID="lblPrefix" runat="server" Text="/yy/mm/dd/"></asp:Label>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug" runat="server" Columns="45"
-						MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
-							<img class="imgNoBorder" src="/Manage/images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
+						MaxLength="200" />
+					&nbsp; <a href="javascript:void(0)" onclick="openPage();">
+						<img class="imgNoBorder" src="/Manage/images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageSlug" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
@@ -315,8 +357,16 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
-					<%--<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>--%>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					thumbnail:
+					<br />
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="45" MaxLength="200" />
+					<input type="button" id="Button1" class="staticButton" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>');return false;" />
 				</td>
 			</tr>
 			<tr>

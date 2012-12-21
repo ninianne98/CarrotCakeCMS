@@ -27,8 +27,7 @@ namespace Carrotware.CMS.Core {
 			cpe.ThePage.ContentID = cpe.NewRootContentID;
 			cpe.ThePage.SiteID = SiteData.CurrentSiteID;
 			cpe.ThePage.EditUserId = SecurityData.CurrentUserGuid;
-			//cpe.ThePage.CreateDate = DateTime.Now;
-			cpe.ThePage.EditDate = DateTime.Now;
+			cpe.ThePage.EditDate = DateTime.UtcNow;
 
 			foreach (var w in cpe.ThePageWidgets) {
 				w.Root_ContentID = cpe.NewRootContentID;
@@ -52,7 +51,7 @@ namespace Carrotware.CMS.Core {
 			wps.NewSiteID = Guid.NewGuid();
 
 			wps.Content.Where(p => p.PostType == WordPressPost.WPPostType.BlogPost).ToList()
-				.ForEach(q => q.ImportFileName = ("/" + q.PostDate.ToString(sd.Blog_DatePattern) + "/" + q.ImportFileSlug));
+				.ForEach(q => q.ImportFileName = ("/" + sd.ConvertUTCToSiteTime(q.PostDateUTC).ToString(sd.Blog_DatePattern) + "/" + q.ImportFileSlug));
 
 			wps.Content.ToList().ForEach(r => r.ImportFileName = r.ImportFileName.Replace("//", "/"));
 
@@ -67,7 +66,7 @@ namespace Carrotware.CMS.Core {
 				cont.ContentID = Guid.NewGuid();
 
 				cont.EditUserId = SecurityData.CurrentUserGuid;
-				cont.EditDate = DateTime.Now;
+				cont.EditDate = DateTime.UtcNow;
 				cont.TemplateFile = SiteData.DefaultTemplateFilename;
 
 				cont.Root_ContentID = c.ImportRootID;
@@ -76,7 +75,7 @@ namespace Carrotware.CMS.Core {
 				cont.NavOrder = c.PostOrder;
 				cont.Parent_ContentID = c.ImportParentRootID;
 
-				cont.CreateDate = c.PostDate;
+				cont.CreateDate = site.ConvertUTCToSiteTime(c.PostDateUTC);
 				cont.PageActive = c.IsPublished;
 				cont.ContentType = ContentPageType.PageType.Unknown;
 
@@ -97,7 +96,7 @@ namespace Carrotware.CMS.Core {
 				cont.PageText = c.PostContent;
 				cont.LeftPageText = "";
 				cont.RightPageText = "";
-				
+
 				cont.MetaDescription = "";
 				cont.MetaKeyword = "";
 

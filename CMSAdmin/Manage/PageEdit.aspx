@@ -35,8 +35,8 @@
 				release date:
 			</td>
 			<td valign="top">
-				<asp:TextBox ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
-				<asp:TextBox ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
 			</td>
 		</tr>
 		<tr>
@@ -44,8 +44,8 @@
 				retire date:
 			</td>
 			<td valign="top">
-				<asp:TextBox ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
-				<asp:TextBox ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
 			</td>
 		</tr>
 		<tr>

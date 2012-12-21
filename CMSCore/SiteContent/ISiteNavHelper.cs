@@ -35,7 +35,7 @@ namespace Carrotware.CMS.Core {
 
 		List<IContentMetaInfo> GetTagList(Guid siteID, int iUpdates);
 		List<IContentMetaInfo> GetCategoryList(Guid siteID, int iUpdates);
-		List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates);
+		List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates, bool bActiveOnly);
 
 		List<ContentDateLinks> GetSingleMonthBlogUpdateList(SiteData currentSite, DateTime monthDate, bool bActiveOnly);
 

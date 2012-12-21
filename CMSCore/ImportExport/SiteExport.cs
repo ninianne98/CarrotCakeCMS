@@ -23,7 +23,7 @@ namespace Carrotware.CMS.Core {
 
 		public SiteExport() {
 			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.Now;
+			ExportDate = DateTime.UtcNow;
 
 			TheSite = new SiteData();
 			ThePages = new List<ContentPageExport>();
@@ -50,7 +50,7 @@ namespace Carrotware.CMS.Core {
 
 		private void SetVals(SiteData s, List<ContentPageExport> pages) {
 			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.Now;
+			ExportDate = DateTime.UtcNow;
 
 			NewSiteID = Guid.NewGuid();
 

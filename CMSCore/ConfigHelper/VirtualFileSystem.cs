@@ -44,8 +44,9 @@ namespace Carrotware.CMS.Core {
 			sRequestedURL = sFileRequested;
 			string sScrubbedURL = sFileRequested;
 
+			sRequestedURL = SiteData.AppendDefaultPath(sRequestedURL);
 
-			try {
+			//try {
 				sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
 				if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
@@ -54,25 +55,20 @@ namespace Carrotware.CMS.Core {
 				}
 
 				VirtualDirectory.RegisterRoutes();
-			} catch (Exception ex) {
-				//assumption is database is probably empty / needs updating, so trigger the under construction view
-				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
-					if (navData == null) {
-						navData = SiteNavHelper.GetEmptyHome();
-					}
-				} else {
-					//something bad has gone down, toss back the error
-					throw;
-				}
-			}
 
+			//} catch (Exception ex) {
+			//    //assumption is database is probably empty / needs updating, so trigger the under construction view
+			//    if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+			//        if (navData == null) {
+			//            navData = SiteNavHelper.GetEmptyHome();
+			//        }
+			//    } else {
+			//        //something bad has gone down, toss back the error
+			//        throw;
+			//    }
+			//}
 
-			if (!string.IsNullOrEmpty(sFileRequested)) {
-				sFileRequested = sFileRequested.Replace(@"\", @"/");
-				if (sFileRequested.EndsWith("/") || !sFileRequested.ToLower().EndsWith(".aspx")) {
-					sFileRequested = (sFileRequested + SiteData.DefaultDirectoryFilename).Replace("//", "/");
-				}
-			}
+			sFileRequested = SiteData.AppendDefaultPath(sFileRequested);
 
 			if (context.User.Identity.IsAuthenticated) {
 				try {
@@ -121,7 +117,7 @@ namespace Carrotware.CMS.Core {
 					}
 
 
-					try {
+					//try {
 						bool bIsHomePage = false;
 						if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
 
@@ -142,17 +138,17 @@ namespace Carrotware.CMS.Core {
 							navData = SiteNavHelper.GetEmptyHome();
 						}
 
-					} catch (Exception ex) {
-						//assumption is database is probably empty / needs updating, so trigger the under construction view
-						if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
-							if (navData == null) {
-								navData = SiteNavHelper.GetEmptyHome();
-							}
-						} else {
-							//something bad has gone down, toss back the error
-							throw;
-						}
-					}
+					//} catch (Exception ex) {
+					//    //assumption is database is probably empty / needs updating, so trigger the under construction view
+					//    if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+					//        if (navData == null) {
+					//            navData = SiteNavHelper.GetEmptyHome();
+					//        }
+					//    } else {
+					//        //something bad has gone down, toss back the error
+					//        throw;
+					//    }
+					//}
 
 					if (navData != null) {
 						string sSelectedTemplate = navData.TemplateFile;
@@ -199,14 +195,26 @@ namespace Carrotware.CMS.Core {
 
 		private void RewriteCMSPath(HttpContext context, string sTmplateFile, string sQuery) {
 
-			context.RewritePath(sVirtualReqFile, string.Empty, sQuery);
+			try {
+				context.RewritePath(sVirtualReqFile, string.Empty, sQuery);
 
-			//cannot work in med trust
-			//Page hand = (Page)PageParser.GetCompiledPageInstance(sFileRequested, context.Server.MapPath(sRealFile), context);
+				//cannot work in med trust
+				//Page hand = (Page)PageParser.GetCompiledPageInstance(sFileRequested, context.Server.MapPath(sRealFile), context);
 
-			Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(sTmplateFile, typeof(Page));
-			hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
-			hand.ProcessRequest(context);
+				Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(sTmplateFile, typeof(Page));
+				hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
+				hand.ProcessRequest(context);
+
+			} catch (Exception ex) {
+				//assumption is database is probably empty / needs updating, so trigger the under construction view
+				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+					SiteData.ManuallyWriteDefaultFile(context);
+				} else {
+					//something bad has gone down, toss back the error
+					throw;
+				}
+			}
+
 		}
 
 

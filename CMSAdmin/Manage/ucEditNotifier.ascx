@@ -11,7 +11,7 @@
 	}
 	#cmsAdminToolbox2 {
 		right: 0 !important;
-		bottom: 125px !important;
+		bottom: 150px !important;
 		line-height: 15px !important;
 	}
 	.cmsNavigationBlock {
@@ -120,6 +120,9 @@
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
 		<asp:Literal runat="server" ID="litVersion"></asp:Literal>
+	</p>
+	<p class="cmsFooterP cmsFooterLinks">
+		<asp:Literal runat="server" ID="litTemplate"></asp:Literal>
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
 		Release Date: <asp:Literal runat="server" ID="litRelease"></asp:Literal> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 

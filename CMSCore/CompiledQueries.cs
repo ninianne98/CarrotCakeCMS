@@ -62,7 +62,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> TopLevelPages(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry),
 				ContentType = ContentPageType.PageType.ContentEntry,
 				ActiveOnly = bActiveOnly
@@ -89,7 +89,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> PostsByDateRange(CarrotCMSDataContext ctx, Guid siteID, DateTime dateBegin, DateTime dateEnd, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry),
 				ContentType = ContentPageType.PageType.BlogEntry,
 				DateBegin = dateBegin,
@@ -117,7 +117,7 @@ namespace Carrotware.CMS.Core {
 		internal static vw_carrot_Content GetLatestContentByURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sPage) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ActiveOnly = bActiveOnly,
 				FileName = sPage
 			};
@@ -170,7 +170,7 @@ namespace Carrotware.CMS.Core {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
 				RootContentID = rootContentID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ActiveOnly = bActiveOnly
 			};
 
@@ -194,7 +194,7 @@ namespace Carrotware.CMS.Core {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
 				ParentContentID = parentContentID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ActiveOnly = bActiveOnly
 			};
 
@@ -221,7 +221,7 @@ namespace Carrotware.CMS.Core {
 				ParentContentID = parentContentID,
 				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry),
 				ContentType = ContentPageType.PageType.ContentEntry,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ActiveOnly = bActiveOnly
 			};
 
@@ -245,7 +245,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> ContentNavAll(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry),
 				ContentType = ContentPageType.PageType.ContentEntry,
 				ActiveOnly = bActiveOnly
@@ -271,7 +271,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> BlogNavAll(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry),
 				ContentType = ContentPageType.PageType.BlogEntry,
 				ActiveOnly = bActiveOnly
@@ -357,7 +357,7 @@ namespace Carrotware.CMS.Core {
 		internal static vw_carrot_Content FindHome(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ActiveOnly = bActiveOnly
 			};
 
@@ -381,7 +381,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> GetLatestContentList(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry),
 				ContentType = ContentPageType.PageType.ContentEntry,
 				ActiveOnly = bActiveOnly
@@ -407,7 +407,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> GetLatestBlogList(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry),
 				ContentType = ContentPageType.PageType.BlogEntry,
 				ActiveOnly = bActiveOnly
@@ -554,7 +554,7 @@ namespace Carrotware.CMS.Core {
 		internal static carrot_SerialCache SearchSeriaCache(CarrotCMSDataContext ctx, Guid siteID, Guid userID, Guid itemID, string keyType) {
 			SearchParameterObject searchParm = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				UserId = userID,
 				ItemID = itemID,
 				KeyType = keyType
@@ -692,7 +692,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> GetContentByTagURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sTagURL) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				FileName = sTagURL,
 				ActiveOnly = bActiveOnly
 			};
@@ -719,7 +719,7 @@ namespace Carrotware.CMS.Core {
 		internal static IQueryable<vw_carrot_Content> GetContentByCategoryURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sCatURL) {
 			SearchParameterObject sp = new SearchParameterObject {
 				SiteID = siteID,
-				DateCompare = DateTime.Now,
+				DateCompare = DateTime.UtcNow,
 				FileName = sCatURL,
 				ActiveOnly = bActiveOnly
 			};

@@ -201,14 +201,6 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<vw_carrot_ContentDateTally> vw_carrot_ContentDateTallies
-		{
-			get
-			{
-				return this.GetTable<vw_carrot_ContentDateTally>();
-			}
-		}
-		
 		public System.Data.Linq.Table<aspnet_Role> aspnet_Roles
 		{
 			get
@@ -281,14 +273,6 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<vw_carrot_Content> vw_carrot_Contents
-		{
-			get
-			{
-				return this.GetTable<vw_carrot_Content>();
-			}
-		}
-		
 		public System.Data.Linq.Table<vw_carrot_Widget> vw_carrot_Widgets
 		{
 			get
@@ -311,6 +295,43 @@ namespace Carrotware.CMS.Data
 			{
 				return this.GetTable<carrot_Site>();
 			}
+		}
+		
+		public System.Data.Linq.Table<vw_carrot_Content> vw_carrot_Contents
+		{
+			get
+			{
+				return this.GetTable<vw_carrot_Content>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_ContentTally> carrot_ContentTallies
+		{
+			get
+			{
+				return this.GetTable<carrot_ContentTally>();
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.carrot_BlogDateFilenameUpdate")]
+		public int carrot_BlogDateFilenameUpdate([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SiteID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> siteID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), siteID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.carrot_UpdateGoLiveLocal")]
+		public int carrot_UpdateGoLiveLocal([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SiteID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> siteID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UTCOffsetInMinutes", DbType="Int")] System.Nullable<int> uTCOffsetInMinutes)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), siteID, uTCOffsetInMinutes);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.carrot_BlogMonthlyTallies")]
+		public ISingleResult<carrot_ContentTally> carrot_BlogMonthlyTallies([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SiteID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> siteID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ActiveOnly", DbType="Bit")] System.Nullable<bool> activeOnly, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TakeTop", DbType="Int")] System.Nullable<int> takeTop)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), siteID, activeOnly, takeTop);
+			return ((ISingleResult<carrot_ContentTally>)(result.ReturnValue));
 		}
 	}
 	
@@ -2601,141 +2622,6 @@ namespace Carrotware.CMS.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_ContentDateTally")]
-	public partial class vw_carrot_ContentDateTally
-	{
-		
-		private System.Nullable<int> _ContentCount;
-		
-		private System.Guid _SiteID;
-		
-		private System.Nullable<System.DateTime> _DateMonth;
-		
-		private string _DateSlug;
-		
-		private System.Nullable<bool> _IsLatestVersion;
-		
-		private System.Guid _ContentTypeID;
-		
-		private string _ContentTypeValue;
-		
-		public vw_carrot_ContentDateTally()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentCount", DbType="Int")]
-		public System.Nullable<int> ContentCount
-		{
-			get
-			{
-				return this._ContentCount;
-			}
-			set
-			{
-				if ((this._ContentCount != value))
-				{
-					this._ContentCount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					this._SiteID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateMonth", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateMonth
-		{
-			get
-			{
-				return this._DateMonth;
-			}
-			set
-			{
-				if ((this._DateMonth != value))
-				{
-					this._DateMonth = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateSlug", DbType="VarChar(25)")]
-		public string DateSlug
-		{
-			get
-			{
-				return this._DateSlug;
-			}
-			set
-			{
-				if ((this._DateSlug != value))
-				{
-					this._DateSlug = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
-		{
-			get
-			{
-				return this._IsLatestVersion;
-			}
-			set
-			{
-				if ((this._IsLatestVersion != value))
-				{
-					this._IsLatestVersion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ContentTypeID
-		{
-			get
-			{
-				return this._ContentTypeID;
-			}
-			set
-			{
-				if ((this._ContentTypeID != value))
-				{
-					this._ContentTypeID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeValue", DbType="VarChar(256)")]
-		public string ContentTypeValue
-		{
-			get
-			{
-				return this._ContentTypeValue;
-			}
-			set
-			{
-				if ((this._ContentTypeValue != value))
-				{
-					this._ContentTypeValue = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.aspnet_Roles")]
 	public partial class aspnet_Role : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3207,9 +3093,13 @@ namespace Carrotware.CMS.Data
 		
 		private System.DateTime _RetireDate;
 		
+		private System.DateTime _GoLiveDateLocal;
+		
 		private System.Guid _ContentTypeID;
 		
 		private string _PageSlug;
+		
+		private string _PageThumbnail;
 		
 		private EntitySet<carrot_CategoryContentMapping> _carrot_CategoryContentMappings;
 		
@@ -3247,10 +3137,14 @@ namespace Carrotware.CMS.Data
     partial void OnGoLiveDateChanged();
     partial void OnRetireDateChanging(System.DateTime value);
     partial void OnRetireDateChanged();
+    partial void OnGoLiveDateLocalChanging(System.DateTime value);
+    partial void OnGoLiveDateLocalChanged();
     partial void OnContentTypeIDChanging(System.Guid value);
     partial void OnContentTypeIDChanged();
     partial void OnPageSlugChanging(string value);
     partial void OnPageSlugChanged();
+    partial void OnPageThumbnailChanging(string value);
+    partial void OnPageThumbnailChanged();
     #endregion
 		
 		public carrot_RootContent()
@@ -3449,6 +3343,26 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDateLocal", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDateLocal
+		{
+			get
+			{
+				return this._GoLiveDateLocal;
+			}
+			set
+			{
+				if ((this._GoLiveDateLocal != value))
+				{
+					this.OnGoLiveDateLocalChanging(value);
+					this.SendPropertyChanging();
+					this._GoLiveDateLocal = value;
+					this.SendPropertyChanged("GoLiveDateLocal");
+					this.OnGoLiveDateLocalChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
 		public System.Guid ContentTypeID
 		{
@@ -3489,6 +3403,26 @@ namespace Carrotware.CMS.Data
 					this._PageSlug = value;
 					this.SendPropertyChanged("PageSlug");
 					this.OnPageSlugChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageThumbnail", DbType="NVarChar(128)")]
+		public string PageThumbnail
+		{
+			get
+			{
+				return this._PageThumbnail;
+			}
+			set
+			{
+				if ((this._PageThumbnail != value))
+				{
+					this.OnPageThumbnailChanging(value);
+					this.SendPropertyChanging();
+					this._PageThumbnail = value;
+					this.SendPropertyChanged("PageThumbnail");
+					this.OnPageThumbnailChanged();
 				}
 			}
 		}
@@ -3717,7 +3651,7 @@ namespace Carrotware.CMS.Data
 		
 		private System.Guid _Root_WidgetID;
 		
-		private System.Nullable<bool> _IsLatestVersion;
+		private bool _IsLatestVersion;
 		
 		private System.DateTime _EditDate;
 		
@@ -3733,7 +3667,7 @@ namespace Carrotware.CMS.Data
     partial void OnWidgetDataIDChanged();
     partial void OnRoot_WidgetIDChanging(System.Guid value);
     partial void OnRoot_WidgetIDChanged();
-    partial void OnIsLatestVersionChanging(System.Nullable<bool> value);
+    partial void OnIsLatestVersionChanging(bool value);
     partial void OnIsLatestVersionChanged();
     partial void OnEditDateChanging(System.DateTime value);
     partial void OnEditDateChanged();
@@ -3791,8 +3725,8 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit NOT NULL")]
+		public bool IsLatestVersion
 		{
 			get
 			{
@@ -4488,7 +4422,7 @@ namespace Carrotware.CMS.Data
 		
 		private System.Nullable<System.Guid> _Parent_ContentID;
 		
-		private System.Nullable<bool> _IsLatestVersion;
+		private bool _IsLatestVersion;
 		
 		private string _TitleBar;
 		
@@ -4528,7 +4462,7 @@ namespace Carrotware.CMS.Data
     partial void OnRoot_ContentIDChanged();
     partial void OnParent_ContentIDChanging(System.Nullable<System.Guid> value);
     partial void OnParent_ContentIDChanged();
-    partial void OnIsLatestVersionChanging(System.Nullable<bool> value);
+    partial void OnIsLatestVersionChanging(bool value);
     partial void OnIsLatestVersionChanged();
     partial void OnTitleBarChanging(string value);
     partial void OnTitleBarChanged();
@@ -4627,8 +4561,8 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit NOT NULL")]
+		public bool IsLatestVersion
 		{
 			get
 			{
@@ -5186,537 +5120,6 @@ namespace Carrotware.CMS.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Content")]
-	public partial class vw_carrot_Content
-	{
-		
-		private System.Guid _Root_ContentID;
-		
-		private System.Guid _SiteID;
-		
-		private System.Nullable<System.Guid> _Heartbeat_UserId;
-		
-		private System.Nullable<System.DateTime> _EditHeartbeat;
-		
-		private string _FileName;
-		
-		private bool _PageActive;
-		
-		private bool _IsRetired;
-		
-		private bool _IsUnReleased;
-		
-		private System.DateTime _CreateDate;
-		
-		private System.DateTime _GoLiveDate;
-		
-		private System.DateTime _RetireDate;
-		
-		private System.Guid _ContentID;
-		
-		private System.Nullable<System.Guid> _Parent_ContentID;
-		
-		private System.Nullable<bool> _IsLatestVersion;
-		
-		private string _TitleBar;
-		
-		private string _NavMenuText;
-		
-		private string _PageHead;
-		
-		private string _PageText;
-		
-		private string _LeftPageText;
-		
-		private string _RightPageText;
-		
-		private System.Nullable<int> _NavOrder;
-		
-		private System.Nullable<System.Guid> _EditUserId;
-		
-		private System.DateTime _EditDate;
-		
-		private string _TemplateFile;
-		
-		private string _MetaKeyword;
-		
-		private string _MetaDescription;
-		
-		private System.Guid _ContentTypeID;
-		
-		private string _ContentTypeValue;
-		
-		private string _PageSlug;
-		
-		public vw_carrot_Content()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid Root_ContentID
-		{
-			get
-			{
-				return this._Root_ContentID;
-			}
-			set
-			{
-				if ((this._Root_ContentID != value))
-				{
-					this._Root_ContentID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					this._SiteID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Heartbeat_UserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Heartbeat_UserId
-		{
-			get
-			{
-				return this._Heartbeat_UserId;
-			}
-			set
-			{
-				if ((this._Heartbeat_UserId != value))
-				{
-					this._Heartbeat_UserId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditHeartbeat", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EditHeartbeat
-		{
-			get
-			{
-				return this._EditHeartbeat;
-			}
-			set
-			{
-				if ((this._EditHeartbeat != value))
-				{
-					this._EditHeartbeat = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
-		public string FileName
-		{
-			get
-			{
-				return this._FileName;
-			}
-			set
-			{
-				if ((this._FileName != value))
-				{
-					this._FileName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageActive", DbType="Bit NOT NULL")]
-		public bool PageActive
-		{
-			get
-			{
-				return this._PageActive;
-			}
-			set
-			{
-				if ((this._PageActive != value))
-				{
-					this._PageActive = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRetired", DbType="Bit NOT NULL")]
-		public bool IsRetired
-		{
-			get
-			{
-				return this._IsRetired;
-			}
-			set
-			{
-				if ((this._IsRetired != value))
-				{
-					this._IsRetired = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsUnReleased", DbType="Bit NOT NULL")]
-		public bool IsUnReleased
-		{
-			get
-			{
-				return this._IsUnReleased;
-			}
-			set
-			{
-				if ((this._IsUnReleased != value))
-				{
-					this._IsUnReleased = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this._CreateDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
-		public System.DateTime GoLiveDate
-		{
-			get
-			{
-				return this._GoLiveDate;
-			}
-			set
-			{
-				if ((this._GoLiveDate != value))
-				{
-					this._GoLiveDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
-		public System.DateTime RetireDate
-		{
-			get
-			{
-				return this._RetireDate;
-			}
-			set
-			{
-				if ((this._RetireDate != value))
-				{
-					this._RetireDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ContentID
-		{
-			get
-			{
-				return this._ContentID;
-			}
-			set
-			{
-				if ((this._ContentID != value))
-				{
-					this._ContentID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parent_ContentID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Parent_ContentID
-		{
-			get
-			{
-				return this._Parent_ContentID;
-			}
-			set
-			{
-				if ((this._Parent_ContentID != value))
-				{
-					this._Parent_ContentID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
-		{
-			get
-			{
-				return this._IsLatestVersion;
-			}
-			set
-			{
-				if ((this._IsLatestVersion != value))
-				{
-					this._IsLatestVersion = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TitleBar", DbType="NVarChar(256)")]
-		public string TitleBar
-		{
-			get
-			{
-				return this._TitleBar;
-			}
-			set
-			{
-				if ((this._TitleBar != value))
-				{
-					this._TitleBar = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavMenuText", DbType="NVarChar(256)")]
-		public string NavMenuText
-		{
-			get
-			{
-				return this._NavMenuText;
-			}
-			set
-			{
-				if ((this._NavMenuText != value))
-				{
-					this._NavMenuText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageHead", DbType="NVarChar(256)")]
-		public string PageHead
-		{
-			get
-			{
-				return this._PageHead;
-			}
-			set
-			{
-				if ((this._PageHead != value))
-				{
-					this._PageHead = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageText", DbType="NVarChar(MAX)")]
-		public string PageText
-		{
-			get
-			{
-				return this._PageText;
-			}
-			set
-			{
-				if ((this._PageText != value))
-				{
-					this._PageText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeftPageText", DbType="NVarChar(MAX)")]
-		public string LeftPageText
-		{
-			get
-			{
-				return this._LeftPageText;
-			}
-			set
-			{
-				if ((this._LeftPageText != value))
-				{
-					this._LeftPageText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RightPageText", DbType="NVarChar(MAX)")]
-		public string RightPageText
-		{
-			get
-			{
-				return this._RightPageText;
-			}
-			set
-			{
-				if ((this._RightPageText != value))
-				{
-					this._RightPageText = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
-		public System.Nullable<int> NavOrder
-		{
-			get
-			{
-				return this._NavOrder;
-			}
-			set
-			{
-				if ((this._NavOrder != value))
-				{
-					this._NavOrder = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> EditUserId
-		{
-			get
-			{
-				return this._EditUserId;
-			}
-			set
-			{
-				if ((this._EditUserId != value))
-				{
-					this._EditUserId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
-		public System.DateTime EditDate
-		{
-			get
-			{
-				return this._EditDate;
-			}
-			set
-			{
-				if ((this._EditDate != value))
-				{
-					this._EditDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateFile", DbType="NVarChar(256)")]
-		public string TemplateFile
-		{
-			get
-			{
-				return this._TemplateFile;
-			}
-			set
-			{
-				if ((this._TemplateFile != value))
-				{
-					this._TemplateFile = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="NVarChar(1024)")]
-		public string MetaKeyword
-		{
-			get
-			{
-				return this._MetaKeyword;
-			}
-			set
-			{
-				if ((this._MetaKeyword != value))
-				{
-					this._MetaKeyword = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="NVarChar(1024)")]
-		public string MetaDescription
-		{
-			get
-			{
-				return this._MetaDescription;
-			}
-			set
-			{
-				if ((this._MetaDescription != value))
-				{
-					this._MetaDescription = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid ContentTypeID
-		{
-			get
-			{
-				return this._ContentTypeID;
-			}
-			set
-			{
-				if ((this._ContentTypeID != value))
-				{
-					this._ContentTypeID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeValue", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
-		public string ContentTypeValue
-		{
-			get
-			{
-				return this._ContentTypeValue;
-			}
-			set
-			{
-				if ((this._ContentTypeValue != value))
-				{
-					this._ContentTypeValue = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageSlug", DbType="NVarChar(256)")]
-		public string PageSlug
-		{
-			get
-			{
-				return this._PageSlug;
-			}
-			set
-			{
-				if ((this._PageSlug != value))
-				{
-					this._PageSlug = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Widget")]
 	public partial class vw_carrot_Widget
 	{
@@ -5735,7 +5138,7 @@ namespace Carrotware.CMS.Data
 		
 		private System.Guid _WidgetDataID;
 		
-		private System.Nullable<bool> _IsLatestVersion;
+		private bool _IsLatestVersion;
 		
 		private System.DateTime _EditDate;
 		
@@ -5859,8 +5262,8 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit")]
-		public System.Nullable<bool> IsLatestVersion
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit NOT NULL")]
+		public bool IsLatestVersion
 		{
 			get
 			{
@@ -6149,6 +5552,8 @@ namespace Carrotware.CMS.Data
 		
 		private bool _BlockIndex;
 		
+		private string _TimeZone;
+		
 		private System.Nullable<System.Guid> _Blog_Root_ContentID;
 		
 		private string _Blog_FolderPath;
@@ -6187,6 +5592,8 @@ namespace Carrotware.CMS.Data
     partial void OnMainURLChanged();
     partial void OnBlockIndexChanging(bool value);
     partial void OnBlockIndexChanged();
+    partial void OnTimeZoneChanging(string value);
+    partial void OnTimeZoneChanged();
     partial void OnBlog_Root_ContentIDChanging(System.Nullable<System.Guid> value);
     partial void OnBlog_Root_ContentIDChanged();
     partial void OnBlog_FolderPathChanging(string value);
@@ -6328,6 +5735,26 @@ namespace Carrotware.CMS.Data
 					this._BlockIndex = value;
 					this.SendPropertyChanged("BlockIndex");
 					this.OnBlockIndexChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeZone", DbType="NVarChar(128)")]
+		public string TimeZone
+		{
+			get
+			{
+				return this._TimeZone;
+			}
+			set
+			{
+				if ((this._TimeZone != value))
+				{
+					this.OnTimeZoneChanging(value);
+					this.SendPropertyChanging();
+					this._TimeZone = value;
+					this.SendPropertyChanged("TimeZone");
+					this.OnTimeZoneChanged();
 				}
 			}
 		}
@@ -6590,6 +6017,672 @@ namespace Carrotware.CMS.Data
 		{
 			this.SendPropertyChanging();
 			entity.carrot_Site = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Content")]
+	public partial class vw_carrot_Content
+	{
+		
+		private System.Guid _Root_ContentID;
+		
+		private System.Guid _SiteID;
+		
+		private System.Nullable<System.Guid> _Heartbeat_UserId;
+		
+		private System.Nullable<System.DateTime> _EditHeartbeat;
+		
+		private string _FileName;
+		
+		private bool _PageActive;
+		
+		private System.DateTime _CreateDate;
+		
+		private System.Guid _ContentID;
+		
+		private System.Nullable<System.Guid> _Parent_ContentID;
+		
+		private bool _IsLatestVersion;
+		
+		private string _TitleBar;
+		
+		private string _NavMenuText;
+		
+		private string _PageHead;
+		
+		private string _PageText;
+		
+		private string _LeftPageText;
+		
+		private string _RightPageText;
+		
+		private System.Nullable<int> _NavOrder;
+		
+		private System.Nullable<System.Guid> _EditUserId;
+		
+		private System.DateTime _EditDate;
+		
+		private string _TemplateFile;
+		
+		private string _MetaKeyword;
+		
+		private string _MetaDescription;
+		
+		private System.Guid _ContentTypeID;
+		
+		private string _ContentTypeValue;
+		
+		private string _PageSlug;
+		
+		private string _PageThumbnail;
+		
+		private string _TimeZone;
+		
+		private System.DateTime _RetireDate;
+		
+		private System.DateTime _GoLiveDate;
+		
+		private System.DateTime _GoLiveDateLocal;
+		
+		private System.Nullable<bool> _IsRetired;
+		
+		private System.Nullable<bool> _IsUnReleased;
+		
+		public vw_carrot_Content()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this._Root_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Heartbeat_UserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Heartbeat_UserId
+		{
+			get
+			{
+				return this._Heartbeat_UserId;
+			}
+			set
+			{
+				if ((this._Heartbeat_UserId != value))
+				{
+					this._Heartbeat_UserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditHeartbeat", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EditHeartbeat
+		{
+			get
+			{
+				return this._EditHeartbeat;
+			}
+			set
+			{
+				if ((this._EditHeartbeat != value))
+				{
+					this._EditHeartbeat = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this._FileName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageActive", DbType="Bit NOT NULL")]
+		public bool PageActive
+		{
+			get
+			{
+				return this._PageActive;
+			}
+			set
+			{
+				if ((this._PageActive != value))
+				{
+					this._PageActive = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ContentID
+		{
+			get
+			{
+				return this._ContentID;
+			}
+			set
+			{
+				if ((this._ContentID != value))
+				{
+					this._ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parent_ContentID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Parent_ContentID
+		{
+			get
+			{
+				return this._Parent_ContentID;
+			}
+			set
+			{
+				if ((this._Parent_ContentID != value))
+				{
+					this._Parent_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsLatestVersion", DbType="Bit NOT NULL")]
+		public bool IsLatestVersion
+		{
+			get
+			{
+				return this._IsLatestVersion;
+			}
+			set
+			{
+				if ((this._IsLatestVersion != value))
+				{
+					this._IsLatestVersion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TitleBar", DbType="NVarChar(256)")]
+		public string TitleBar
+		{
+			get
+			{
+				return this._TitleBar;
+			}
+			set
+			{
+				if ((this._TitleBar != value))
+				{
+					this._TitleBar = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavMenuText", DbType="NVarChar(256)")]
+		public string NavMenuText
+		{
+			get
+			{
+				return this._NavMenuText;
+			}
+			set
+			{
+				if ((this._NavMenuText != value))
+				{
+					this._NavMenuText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageHead", DbType="NVarChar(256)")]
+		public string PageHead
+		{
+			get
+			{
+				return this._PageHead;
+			}
+			set
+			{
+				if ((this._PageHead != value))
+				{
+					this._PageHead = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageText", DbType="NVarChar(MAX)")]
+		public string PageText
+		{
+			get
+			{
+				return this._PageText;
+			}
+			set
+			{
+				if ((this._PageText != value))
+				{
+					this._PageText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LeftPageText", DbType="NVarChar(MAX)")]
+		public string LeftPageText
+		{
+			get
+			{
+				return this._LeftPageText;
+			}
+			set
+			{
+				if ((this._LeftPageText != value))
+				{
+					this._LeftPageText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RightPageText", DbType="NVarChar(MAX)")]
+		public string RightPageText
+		{
+			get
+			{
+				return this._RightPageText;
+			}
+			set
+			{
+				if ((this._RightPageText != value))
+				{
+					this._RightPageText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
+		public System.Nullable<int> NavOrder
+		{
+			get
+			{
+				return this._NavOrder;
+			}
+			set
+			{
+				if ((this._NavOrder != value))
+				{
+					this._NavOrder = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditUserId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> EditUserId
+		{
+			get
+			{
+				return this._EditUserId;
+			}
+			set
+			{
+				if ((this._EditUserId != value))
+				{
+					this._EditUserId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EditDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EditDate
+		{
+			get
+			{
+				return this._EditDate;
+			}
+			set
+			{
+				if ((this._EditDate != value))
+				{
+					this._EditDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TemplateFile", DbType="NVarChar(256)")]
+		public string TemplateFile
+		{
+			get
+			{
+				return this._TemplateFile;
+			}
+			set
+			{
+				if ((this._TemplateFile != value))
+				{
+					this._TemplateFile = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="NVarChar(1024)")]
+		public string MetaKeyword
+		{
+			get
+			{
+				return this._MetaKeyword;
+			}
+			set
+			{
+				if ((this._MetaKeyword != value))
+				{
+					this._MetaKeyword = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="NVarChar(1024)")]
+		public string MetaDescription
+		{
+			get
+			{
+				return this._MetaDescription;
+			}
+			set
+			{
+				if ((this._MetaDescription != value))
+				{
+					this._MetaDescription = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ContentTypeID
+		{
+			get
+			{
+				return this._ContentTypeID;
+			}
+			set
+			{
+				if ((this._ContentTypeID != value))
+				{
+					this._ContentTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeValue", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string ContentTypeValue
+		{
+			get
+			{
+				return this._ContentTypeValue;
+			}
+			set
+			{
+				if ((this._ContentTypeValue != value))
+				{
+					this._ContentTypeValue = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageSlug", DbType="NVarChar(256)")]
+		public string PageSlug
+		{
+			get
+			{
+				return this._PageSlug;
+			}
+			set
+			{
+				if ((this._PageSlug != value))
+				{
+					this._PageSlug = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageThumbnail", DbType="NVarChar(128)")]
+		public string PageThumbnail
+		{
+			get
+			{
+				return this._PageThumbnail;
+			}
+			set
+			{
+				if ((this._PageThumbnail != value))
+				{
+					this._PageThumbnail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeZone", DbType="NVarChar(128)")]
+		public string TimeZone
+		{
+			get
+			{
+				return this._TimeZone;
+			}
+			set
+			{
+				if ((this._TimeZone != value))
+				{
+					this._TimeZone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
+		public System.DateTime RetireDate
+		{
+			get
+			{
+				return this._RetireDate;
+			}
+			set
+			{
+				if ((this._RetireDate != value))
+				{
+					this._RetireDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDate
+		{
+			get
+			{
+				return this._GoLiveDate;
+			}
+			set
+			{
+				if ((this._GoLiveDate != value))
+				{
+					this._GoLiveDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDateLocal", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDateLocal
+		{
+			get
+			{
+				return this._GoLiveDateLocal;
+			}
+			set
+			{
+				if ((this._GoLiveDateLocal != value))
+				{
+					this._GoLiveDateLocal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRetired", DbType="Bit")]
+		public System.Nullable<bool> IsRetired
+		{
+			get
+			{
+				return this._IsRetired;
+			}
+			set
+			{
+				if ((this._IsRetired != value))
+				{
+					this._IsRetired = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsUnReleased", DbType="Bit")]
+		public System.Nullable<bool> IsUnReleased
+		{
+			get
+			{
+				return this._IsUnReleased;
+			}
+			set
+			{
+				if ((this._IsUnReleased != value))
+				{
+					this._IsUnReleased = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class carrot_ContentTally
+	{
+		
+		private System.Nullable<int> _ContentCount;
+		
+		private System.Guid _SiteID;
+		
+		private System.Nullable<System.DateTime> _DateMonth;
+		
+		private string _DateSlug;
+		
+		public carrot_ContentTally()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentCount")]
+		public System.Nullable<int> ContentCount
+		{
+			get
+			{
+				return this._ContentCount;
+			}
+			set
+			{
+				if ((this._ContentCount != value))
+				{
+					this._ContentCount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateMonth")]
+		public System.Nullable<System.DateTime> DateMonth
+		{
+			get
+			{
+				return this._DateMonth;
+			}
+			set
+			{
+				if ((this._DateMonth != value))
+				{
+					this._DateMonth = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateSlug")]
+		public string DateSlug
+		{
+			get
+			{
+				return this._DateSlug;
+			}
+			set
+			{
+				if ((this._DateSlug != value))
+				{
+					this._DateSlug = value;
+				}
+			}
 		}
 	}
 }

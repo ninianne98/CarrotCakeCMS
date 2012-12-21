@@ -129,7 +129,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private DateTime ThisMonth {
 			get {
 				if (_date.Year < 1900) {
-					_date = DateTime.Now.Date;
+					_date = SiteData.CurrentSite.Now.Date;
 					string sFilterPath = SiteData.CurrentScriptName;
 					if (sFilterPath.ToLower().StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())) {
 						BlogDatePathParser p = new BlogDatePathParser(SiteData.CurrentSite, sFilterPath);
@@ -185,8 +185,8 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSSClassTableFoot = " class=\"" + CSSClassTableFoot + "\" ";
 			}
 
-			ContentDateTally lastMonth = new ContentDateTally { CreateDate = ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
-			ContentDateTally nextMonth = new ContentDateTally { CreateDate = ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
+			ContentDateTally lastMonth = new ContentDateTally { GoLiveDate = ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
+			ContentDateTally nextMonth = new ContentDateTally { GoLiveDate = ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
 
 			output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
@@ -239,7 +239,7 @@ namespace Carrotware.CMS.UI.Controls {
 						cellDate = new DateTime(YearNumber, MonthNumber, DayOfMonth);
 
 						string sTD = "<td";
-						if (cellDate.Date == DateTime.Now.Date) {
+						if (cellDate.Date == SiteData.CurrentSite.Now.Date) {
 							sTD = "<td id=\"today\"";
 						}
 
@@ -273,14 +273,14 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("		<tfoot id=\"" + this.ClientID + "-foot\" " + sCSSClassTableFoot + ">");
 			output.WriteLine("		<tr>");
 			output.WriteLine("			<td colspan=\"3\" id=\"prev\" class=\"cal-prev\">");
-			if (lastMonth.CreateDate >= DateTime.Now.AddYears(-5)) {
-				output.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.CreateDate.ToString("MMM") + "</a>");
+			if (lastMonth.GoLiveDate >= SiteData.CurrentSite.Now.AddYears(-5)) {
+				output.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.GoLiveDate.ToString("MMM") + "</a>");
 			}
 			output.WriteLine("			</td>");
 			output.WriteLine("			<td class=\"pad\"> &nbsp; </td>");
 			output.WriteLine("			<td colspan=\"3\" id=\"next\" class=\"cal-prev\">");
-			if (nextMonth.CreateDate <= DateTime.Now.AddYears(5)) {
-				output.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.CreateDate.ToString("MMM") + " &raquo;</a>");
+			if (nextMonth.GoLiveDate <= SiteData.CurrentSite.Now.AddYears(5)) {
+				output.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.GoLiveDate.ToString("MMM") + " &raquo;</a>");
 			}
 			output.WriteLine("			</td>");
 			output.WriteLine("		</tr>");

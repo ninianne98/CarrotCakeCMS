@@ -19,6 +19,12 @@ namespace Carrotware.CMS.UI.Admin.Manage.MasterPages {
 			tabUserAdmin.Visible = tabUserSecurity.Visible;
 			tabGroupAdmin.Visible = tabUserSecurity.Visible;
 
+			if (SiteData.CurrentSite != null) {
+				litServerTime.Text = SiteData.CurrentSite.Now.ToString() + " " + SiteData.CurrentSite.TimeZoneIdentifier;
+			} else {
+				litServerTime.Text = DateTime.UtcNow.ToString() + " UTC";
+			}
+
 			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.Manage.MasterPages.Main.Ctrl");
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;

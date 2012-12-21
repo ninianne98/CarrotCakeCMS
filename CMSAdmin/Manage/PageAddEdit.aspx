@@ -239,7 +239,7 @@
 					<table cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="175" valign="top">
-								<asp:Label ID="lblUpdated" runat="server"></asp:Label>
+								<asp:Label ID="lblUpdated" runat="server" />
 							</td>
 							<td width="175" valign="top">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -256,7 +256,7 @@
 					create date:
 				</td>
 				<td valign="top">
-					<asp:Label ID="lblCreatDate" runat="server"></asp:Label><br />
+					<asp:Label ID="lblCreatDate" runat="server" /><br />
 					<br />
 				</td>
 			</tr>
@@ -265,8 +265,8 @@
 					release date:
 				</td>
 				<td valign="top">
-					<asp:TextBox ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
-					<asp:TextBox ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
 				</td>
 			</tr>
 			<tr>
@@ -274,8 +274,8 @@
 					retire date:
 				</td>
 				<td valign="top">
-					<asp:TextBox ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
-					<asp:TextBox ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
 				</td>
 			</tr>
 			<tr>
@@ -319,12 +319,20 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
-					<%--<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>--%>
 				</td>
 			</tr>
 			<tr>
 				<td valign="top" class="tablecaption">
+					thumbnail:
+					<br />
+				</td>
+				<td valign="top">
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="45" MaxLength="200" />
+					<input type="button" id="Button1" class="staticButton" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>');return false;" />
+				</td>
+			</tr>
+			<tr>
+				<td width="125" class="tablecaption" valign="top">
 					meta keywords:
 				</td>
 				<td valign="top">

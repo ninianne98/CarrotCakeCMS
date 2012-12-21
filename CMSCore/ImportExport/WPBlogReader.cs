@@ -113,7 +113,7 @@ namespace Carrotware.CMS.Core {
 
 				wpp.PostName = ContentPageHelper.ScrubSlug(wpp.PostName);
 
-				wpp.PostDate = Convert.ToDateTime(node.SelectSingleNode("wp:post_date", rssNamespace).InnerText);
+				wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date_gmt", rssNamespace).InnerText);
 				wpp.PostContent = node.SelectSingleNode("content:encoded", rssNamespace).InnerText;
 
 				if (string.IsNullOrEmpty(wpp.PostContent)) {
@@ -186,7 +186,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
-			lstWPP.RemoveAll(x => x.PostType == WordPressPost.WPPostType.Attachment);
+			lstWPP.RemoveAll(x => x.PostType == WordPressPost.WPPostType.Attachment || x.PostType == WordPressPost.WPPostType.Unknown);
 
 			site.Content = lstWPP;
 

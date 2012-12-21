@@ -58,7 +58,7 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected void LoadPageControls(Control page) {
 
-			theSite = siteHelper.GetCurrentSite();
+			theSite = SiteData.CurrentSite;
 
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
@@ -184,12 +184,12 @@ namespace Carrotware.CMS.UI.Base {
 					Page.Header.Controls.Add(metaSite);
 				}
 
-				DateTime dtModified = pageContents.EditDate;
+				DateTime dtModified = theSite.ConvertSiteTimeToLocalServer(pageContents.EditDate);
 				string strModifed = dtModified.ToString("r");
 				Response.AppendHeader("Last-Modified", strModifed);
 				Response.Cache.SetLastModified(dtModified);
 
-				DateTime dtExpire = System.DateTime.Now.AddMinutes(1);
+				DateTime dtExpire = DateTime.Now.AddMinutes(1);
 				Response.Cache.SetExpires(dtExpire);
 
 				contCenter.Text = pageContents.PageText;
@@ -389,10 +389,10 @@ namespace Carrotware.CMS.UI.Base {
 			if (!pageData.PageActive) {
 				sPrefix = "* UNPUBLISHED * ";
 			}
-			if (pageData.RetireDate < DateTime.Now) {
+			if (pageData.RetireDate < theSite.Now) {
 				sPrefix = "* RETIRED * ";
 			}
-			if (pageData.GoLiveDate > DateTime.Now) {
+			if (pageData.GoLiveDate > theSite.Now) {
 				sPrefix = "* UNRELEASED * ";
 			}
 			string sPattern = sPrefix + SiteData.CurrentTitlePattern;

@@ -72,7 +72,7 @@ Released   : 20090703
 						<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
 						<div style="clear: both;">
 						</div>
-						<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" OrderBy="GoLiveDate  DESC" CSSSelectedPage="selected">
+						<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="8" OrderBy="CreateDate  DESC" CSSSelectedPage="selected">
 							<SummaryHeaderTemplate>
 								<div>
 							</SummaryHeaderTemplate>

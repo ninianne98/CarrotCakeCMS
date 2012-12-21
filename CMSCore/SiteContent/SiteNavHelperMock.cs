@@ -121,13 +121,13 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
-		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates) {
+		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates, bool bActiveOnly) {
 			List<IContentMetaInfo> lstContent = new List<IContentMetaInfo>();
 			int n = 0;
-			DateTime dateNow = DateTime.Now.Date;
+			DateTime dateNow = DateTime.UtcNow.Date;
 
 			while (n < iUpdates) {
-				dateNow = DateTime.Now.Date.AddMonths(0 - n);
+				dateNow = DateTime.UtcNow.Date.AddMonths(0 - n);
 
 				ContentCategory cc = new ContentCategory();
 				cc.SiteID = siteID;
@@ -251,7 +251,7 @@ namespace Carrotware.CMS.Core {
 				sTitle = "Tag 1";
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
-				sTitle = DateTime.Now.ToString("MMMM yyyy");
+				sTitle = DateTime.UtcNow.ToString("MMMM yyyy");
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
 				sTitle = "Search Results";

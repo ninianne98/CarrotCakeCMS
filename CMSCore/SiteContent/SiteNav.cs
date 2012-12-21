@@ -108,7 +108,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsRetired {
 			get {
-				if (this.RetireDate < DateTime.Now) {
+				if (this.RetireDate < SiteData.CurrentSite.Now) {
 					return true;
 				} else {
 					return false;
@@ -117,7 +117,7 @@ namespace Carrotware.CMS.Core {
 		}
 		public bool IsUnReleased {
 			get {
-				if (this.GoLiveDate > DateTime.Now) {
+				if (this.GoLiveDate > SiteData.CurrentSite.Now) {
 					return true;
 				} else {
 					return false;

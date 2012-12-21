@@ -61,8 +61,8 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetLatestPosts(siteID, iUpdates, bActiveOnly);
 		}
-		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates) {
-			return _navHelper.GetMonthBlogUpdateList(siteID, iUpdates);
+		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates, bool bActiveOnly) {
+			return _navHelper.GetMonthBlogUpdateList(siteID, iUpdates, bActiveOnly);
 		}
 		public List<ContentDateLinks> GetSingleMonthBlogUpdateList(SiteData currentSite, DateTime monthDate, bool bActiveOnly) {
 			return _navHelper.GetSingleMonthBlogUpdateList(currentSite, monthDate, bActiveOnly);
@@ -246,9 +246,9 @@ namespace Carrotware.CMS.Core {
 			navData.TitleBar = "NONE";
 			navData.PageActive = false;
 			navData.PageText = "NO PAGE CONTENT";
-			navData.EditDate = DateTime.Now.Date.AddMinutes(-15);
-			navData.CreateDate = DateTime.Now.Date.AddMinutes(-30);
-			navData.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
+			navData.EditDate = DateTime.Now.Date.AddDays(-1);
+			navData.CreateDate = DateTime.Now.Date.AddDays(-10);
+			navData.GoLiveDate = DateTime.Now.Date.AddDays(1);
 			navData.RetireDate = DateTime.Now.Date.AddDays(90);
 			navData.ContentType = ContentPageType.PageType.ContentEntry;
 			return navData;
@@ -336,14 +336,15 @@ namespace Carrotware.CMS.Core {
 
 			navNew.NavOrder = -1;
 			navNew.TitleBar = "Template Preview - TITLE";
-			navNew.NavMenuText = "Template PV - NAV";
+			navNew.NavMenuText = "Template PV - NAV"; ;
 			navNew.PageHead = "Template Preview - HEAD";
 			navNew.PageActive = true;
-			navNew.EditDate = DateTime.Now.AddMinutes(-30);
-			navNew.CreateDate = DateTime.Today.AddDays(-1);
-			navNew.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
-			navNew.RetireDate = DateTime.Now.Date.AddDays(90);
-			navNew.EditUserId = Guid.NewGuid();
+			navNew.EditUserId = SecurityData.CurrentUserGuid;
+			navNew.EditDate = DateTime.Now.AddDays(-1);
+			navNew.CreateDate = DateTime.Now.AddDays(-14);
+			navNew.GoLiveDate = navNew.EditDate.AddHours(-5);
+			navNew.RetireDate = navNew.CreateDate.AddYears(5);
+
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
 			navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();
 

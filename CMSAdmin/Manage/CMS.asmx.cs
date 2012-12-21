@@ -184,7 +184,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					bool bRet = pageHelper.RecordHeartbeatLock(CurrentPageGuid, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
 
 					if (bRet) {
-						return DateTime.Now.ToString();
+						return SiteData.CurrentSite.Now.ToString();
 					} else {
 						return Convert.ToDateTime("12/31/1899").ToString();
 					}
@@ -492,34 +492,48 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 		}
 
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string GenerateBlogFilePrefix(string ThePageSlug, string GoLiveDate) {
+			try {
+				DateTime goLiveDate = Convert.ToDateTime(GoLiveDate);
+				ThePageSlug = CMSConfigHelper.DecodeBase64(ThePageSlug);
+
+
+				return ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, goLiveDate, ThePageSlug);
+
+			} catch (Exception ex) {
+				return "FAIL";
+			}
+		}
+
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public string ValidateUniqueBlogFilename(string ThePageSlug, string PageID) {
+		public string ValidateUniqueBlogFilename(string ThePageSlug, string GoLiveDate, string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
+				DateTime goLiveDate = Convert.ToDateTime(GoLiveDate);
 				ThePageSlug = CMSConfigHelper.DecodeBase64(ThePageSlug);
 				ThePageSlug = ContentPageHelper.ScrubFilename(CurrentPageGuid, ThePageSlug);
 
 				ThePageSlug = ThePageSlug.ToLower();
 
-				DateTime datePublished = DateTime.Now.Date;
 				string TheFileName = ThePageSlug;
 
 				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
 
 				if (cp != null) {
-					datePublished = cp.CreateDate;
+					goLiveDate = cp.GoLiveDate;
 				}
 				if (cp == null && CurrentPageGuid != Guid.Empty) {
 					ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(CurrentPageGuid);
 					if (cpe != null) {
-						datePublished = cpe.ThePage.CreateDate;
+						goLiveDate = cpe.ThePage.GoLiveDate;
 					}
 				}
 
-				TheFileName = ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, datePublished, ThePageSlug);
-				//TheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, TheFileName);
+				TheFileName = ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, goLiveDate, ThePageSlug);
 
 				if (ThePageSlug == SiteData.DefaultDirectoryFilename || TheFileName == SiteData.DefaultDirectoryFilename || TheFileName.Length < 6) {
 					return "FAIL";
@@ -634,7 +648,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 							rWidg.Root_ContentID = cmsAdminContent.Root_ContentID;
 							rWidg.IsWidgetActive = true;
 							rWidg.IsLatestVersion = true;
-							rWidg.EditDate = DateTime.Now;
+							rWidg.EditDate = SiteData.CurrentSite.Now;
 							inputWid.Add(rWidg);
 						}
 						iW++;
@@ -646,7 +660,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					if (z == null) {
 						cacheWidget.Add(wd);
 					} else {
-						z.EditDate = DateTime.Now;
+						z.EditDate = SiteData.CurrentSite.Now;
 						z.PlaceholderName = wd.PlaceholderName; // if moving zones
 
 						var i = cacheWidget.IndexOf(z);
@@ -750,7 +764,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					foreach (var w in ww) {
 						w.IsWidgetPendingDelete = true;
 						w.IsWidgetActive = false;
-						w.EditDate = DateTime.Now;
+						w.EditDate = SiteData.CurrentSite.Now;
 					}
 				}
 
@@ -779,7 +793,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				if (ww != null) {
 					foreach (var w in ww) {
 						w.IsWidgetActive = false;
-						w.EditDate = DateTime.Now;
+						w.EditDate = SiteData.CurrentSite.Now;
 					}
 				}
 
@@ -807,7 +821,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						 select w).FirstOrDefault();
 
 				c.ControlProperties = ZoneText;
-				c.EditDate = DateTime.Now;
+				c.EditDate = SiteData.CurrentSite.Now;
 
 				cmsAdminWidget = cacheWidget;
 
@@ -831,7 +845,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				CurrentEditPage = filePage.FileName.ToLower();
 
 				var c = cmsAdminContent;
-				c.EditDate = DateTime.Now;
+				c.EditDate = SiteData.CurrentSite.Now;
 				c.EditUserId = SecurityData.CurrentUserGuid;
 				c.ContentID = Guid.NewGuid();
 

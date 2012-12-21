@@ -23,6 +23,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class FileBrowser : AdminBasePage {
 		public string sQueryPath = "";
 		public string sQueryMode = "1";
+		public string sReturnMode = "0";
 
 		protected FileDataHelper helpFile = new FileDataHelper();
 
@@ -30,6 +31,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			sQueryPath = Request.QueryString["fldrpath"];
 			try { sQueryMode = Request.QueryString["useTiny"]; } catch { }
+			try { sReturnMode = Request.QueryString["returnvalue"]; } catch { }
 
 			if (sQueryMode != "1") {
 				sQueryMode = "0";
@@ -39,6 +41,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			} else {
 				sQueryMode = "1";
 				litFileMgr.Visible = false;
+			}
+
+			if (sReturnMode == "1") {
+				btnReturnFile.Visible = true;
 			}
 
 			if (!string.IsNullOrEmpty(sQueryPath)) {
@@ -57,7 +63,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			sQueryPath.Replace("//", "/").Replace("//", "/");
 
 			if (lnkUp.Visible) {
-				lnkUp.NavigateUrl = SiteData.CurrentScriptName + "?useTiny=" + sQueryMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
+				lnkUp.NavigateUrl = SiteData.CurrentScriptName + "?useTiny=" + sQueryMode + "&returnvalue=" + sReturnMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
 			}
 			if (!IsPostBack) {
 				LoadLists();

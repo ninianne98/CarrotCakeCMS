@@ -43,15 +43,17 @@ namespace Carrotware.CMS.Core {
 
 			if (c != null) {
 				cont = new ContentPage();
+				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
 
 				cont.Root_ContentID = c.Root_ContentID;
 				cont.SiteID = c.SiteID;
 				cont.Heartbeat_UserId = c.Heartbeat_UserId;
 				cont.EditHeartbeat = c.EditHeartbeat;
 				cont.FileName = c.FileName;
-				cont.CreateDate = c.CreateDate;
-				cont.GoLiveDate = c.GoLiveDate;
-				cont.RetireDate = c.RetireDate;
+				cont.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
+				cont.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);
+				cont.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
+				cont.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
 
 				cont.PageActive = c.PageActive;
 
@@ -60,7 +62,7 @@ namespace Carrotware.CMS.Core {
 
 				cont.ContentID = c.ContentID;
 				cont.Parent_ContentID = c.Parent_ContentID;
-				cont.IsLatestVersion = c.IsLatestVersion.Value;
+				cont.IsLatestVersion = c.IsLatestVersion;
 				cont.TitleBar = c.TitleBar;
 				cont.NavMenuText = c.NavMenuText;
 				cont.PageHead = c.PageHead;
@@ -69,8 +71,8 @@ namespace Carrotware.CMS.Core {
 				cont.RightPageText = c.RightPageText;
 				cont.NavOrder = c.NavOrder;
 				cont.EditUserId = c.EditUserId;
-				cont.EditDate = c.EditDate;
 				cont.TemplateFile = c.TemplateFile;
+				cont.Thumbnail = c.PageThumbnail;
 
 				if (string.IsNullOrEmpty(cont.PageSlug) && cont.ContentType == ContentPageType.PageType.BlogEntry) {
 					cont.PageSlug = c.FileName;
@@ -142,12 +144,12 @@ namespace Carrotware.CMS.Core {
 			db.SubmitChanges();
 		}
 
-		public static string CreateBlogDatePrefix(Guid siteID, DateTime dateCreated) {
+		public static string CreateBlogDatePrefix(Guid siteID, DateTime goLiveDate) {
 			string FileName = "";
 
-			var ss = SiteData.GetSiteByID(siteID);
+			var ss = SiteData.GetSiteFromCache(siteID);
 			if (ss.Blog_DatePattern.Length > 1) {
-				FileName = "/" + dateCreated.ToString(ss.Blog_DatePattern) + "/";
+				FileName = "/" + goLiveDate.ToString(ss.Blog_DatePattern) + "/";
 			} else {
 				FileName = "/";
 			}
@@ -155,10 +157,10 @@ namespace Carrotware.CMS.Core {
 			return ScrubPath(FileName);
 		}
 
-		public static string CreateFileNameFromSlug(Guid siteID, DateTime dateCreated, string PageSlug) {
+		public static string CreateFileNameFromSlug(Guid siteID, DateTime goLiveDate, string PageSlug) {
 			string FileName = "";
 
-			FileName = "/" + CreateBlogDatePrefix(siteID, dateCreated) + "/" + PageSlug;
+			FileName = "/" + CreateBlogDatePrefix(siteID, goLiveDate) + "/" + PageSlug;
 
 			return ScrubFilename(Guid.Empty, FileName);
 		}
@@ -170,9 +172,17 @@ namespace Carrotware.CMS.Core {
 			}
 			NewDatePattern = NewDatePattern.Trim();
 
-			IQueryable<carrot_RootContent> query = CompiledQueries.cqBlogAllRootTbl(db, siteID);
-			query.ToList().ForEach(q => q.FileName = ScrubFilename(q.Root_ContentID, "/" + q.CreateDate.ToString(NewDatePattern) + "/" + q.PageSlug));
-			db.SubmitChanges();
+			SiteData site = SiteData.GetSiteFromCache(siteID);
+
+			//candidate for a stored proc
+			//IQueryable<carrot_RootContent> query = CompiledQueries.cqBlogAllRootTbl(db, siteID);
+			//query.ToList().ForEach(q => q.FileName = ScrubFilename(q.Root_ContentID, "/" + q.CreateDate.ToString(NewDatePattern) + "/" + q.PageSlug));
+			//db.SubmitChanges();
+
+			db.carrot_UpdateGoLiveLocal(siteID, (int)site.SiteTimeZoneInfo.BaseUtcOffset.TotalMinutes);
+
+			db.carrot_BlogDateFilenameUpdate(siteID);
+
 
 			IQueryable<string> query2 = CompiledQueries.cqBlogDupFileNames(db, siteID);
 
@@ -184,7 +194,7 @@ namespace Carrotware.CMS.Core {
 
 				foreach (carrot_RootContent item in query3) {
 					int c = -1;
-					string sNewFilename = ScrubFilename(item.Root_ContentID, "/" + item.CreateDate.ToString(NewDatePattern) + "/" + item.PageSlug);
+					string sNewFilename = ScrubFilename(item.Root_ContentID, "/" + item.GoLiveDate.ToString(NewDatePattern) + "/" + item.PageSlug);
 					string sSlug = item.PageSlug;
 
 					c = CompiledQueries.cqGeRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
@@ -525,7 +535,7 @@ namespace Carrotware.CMS.Core {
 
 			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
-			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
+			rc.EditHeartbeat = DateTime.UtcNow.AddHours(-2);
 			rc.Heartbeat_UserId = null;
 			db.SubmitChanges();
 		}
@@ -536,7 +546,7 @@ namespace Carrotware.CMS.Core {
 
 			if (rc != null) {
 				rc.Heartbeat_UserId = currentUserID;
-				rc.EditHeartbeat = DateTime.Now;
+				rc.EditHeartbeat = DateTime.UtcNow;
 				db.SubmitChanges();
 				return true;
 			}
@@ -552,7 +562,7 @@ namespace Carrotware.CMS.Core {
 			bool bLock = false;
 			if (rc != null && rc.Heartbeat_UserId != null) {
 				if (rc.Heartbeat_UserId != currentUserID
-						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+						&& rc.EditHeartbeat.Value > DateTime.UtcNow.AddMinutes(-2)) {
 					bLock = true;
 				}
 				if (rc.Heartbeat_UserId == currentUserID
@@ -570,7 +580,7 @@ namespace Carrotware.CMS.Core {
 			bool bLock = false;
 			if (rc.Heartbeat_UserId != null) {
 				if (rc.Heartbeat_UserId != SecurityData.CurrentUserGuid
-						&& rc.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+						&& rc.EditHeartbeat.Value > DateTime.UtcNow.AddMinutes(-2)) {
 					bLock = true;
 				}
 				if (rc.Heartbeat_UserId == SecurityData.CurrentUserGuid
@@ -586,7 +596,7 @@ namespace Carrotware.CMS.Core {
 			bool bLock = false;
 			if (cp.Heartbeat_UserId != null) {
 				if (cp.Heartbeat_UserId != SecurityData.CurrentUserGuid
-						&& cp.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+						&& cp.EditHeartbeat.Value > DateTime.UtcNow.AddMinutes(-2)) {
 					bLock = true;
 				}
 				if (cp.Heartbeat_UserId == SecurityData.CurrentUserGuid
@@ -610,6 +620,9 @@ namespace Carrotware.CMS.Core {
 
 
 		public ContentPage CopyContentPageToNew(ContentPage pageSource) {
+
+			SiteData site = SiteData.GetSiteFromCache(pageSource.SiteID);
+
 			ContentPage pageNew = new ContentPage();
 			pageNew.ContentID = Guid.NewGuid();
 			pageNew.SiteID = pageSource.SiteID;
@@ -628,7 +641,7 @@ namespace Carrotware.CMS.Core {
 			pageNew.PageHead = pageSource.PageHead;
 			pageNew.PageActive = pageSource.PageActive;
 			pageNew.EditUserId = SecurityData.CurrentUserGuid;
-			pageNew.EditDate = DateTime.Now;
+			pageNew.EditDate = site.Now;
 			pageNew.CreateDate = pageSource.CreateDate;
 			pageNew.GoLiveDate = pageSource.GoLiveDate;
 			pageNew.RetireDate = pageSource.RetireDate;
@@ -690,9 +703,9 @@ namespace Carrotware.CMS.Core {
 			pageNew.PageHead = "Template Preview - HEAD";
 			pageNew.PageActive = true;
 			pageNew.EditUserId = SecurityData.CurrentUserGuid;
-			pageNew.EditDate = DateTime.Now.AddMinutes(-30);
-			pageNew.CreateDate = DateTime.Today.AddDays(-1);
-			pageNew.GoLiveDate = pageNew.EditDate.AddMinutes(-5);
+			pageNew.EditDate = DateTime.Now.AddDays(-1);
+			pageNew.CreateDate = DateTime.Now.AddDays(-14);
+			pageNew.GoLiveDate = pageNew.EditDate.AddHours(-5);
 			pageNew.RetireDate = pageNew.CreateDate.AddYears(5);
 
 			pageNew.TemplateFile = SiteData.PreviewTemplateFile;

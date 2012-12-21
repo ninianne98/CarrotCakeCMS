@@ -30,7 +30,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			siteHelper.CleanUpSerialData();
 
 			if (!IsPostBack) {
-				txtDate.Text = DateTime.Now.ToShortDateString();
+				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
 			}
 
 			LoadGrid();
@@ -63,7 +63,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			if (rdoFilterResults2.Checked) {
 				trFilter.Attributes["style"] = "display:none;";
-				SetGrid(true, DateTime.Now, 0);
+				SetGrid(true, SiteData.CurrentSite.Now, 0);
 			} else {
 				trFilter.Attributes["style"] = "";
 				SetGrid(false, Convert.ToDateTime(txtDate.Text), int.Parse(ddlDateRange.SelectedValue));

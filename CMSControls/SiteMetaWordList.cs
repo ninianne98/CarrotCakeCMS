@@ -111,7 +111,7 @@ namespace Carrotware.CMS.UI.Controls {
 					lst = navHelper.GetCategoryList(SiteData.CurrentSiteID, TakeTop);
 					break;
 				case MetaDataType.DateMonth:
-					lst = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, TakeTop);
+					lst = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
 					break;
 				default:
 					break;

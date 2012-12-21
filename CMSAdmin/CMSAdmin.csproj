@@ -577,7 +577,6 @@
     <Content Include="Manage\Images\comment.png" />
     <Content Include="Manage\Images\comments.png" />
     <Content Include="Manage\Images\compress.png" />
-    <Content Include="Manage\Images\content-bg.gif" />
     <Content Include="Manage\Images\cross.png" />
     <Content Include="Manage\Images\doc.png" />
     <Content Include="Manage\Images\document.png" />
@@ -594,10 +593,7 @@
     <Content Include="Manage\Images\flag_yellow.png" />
     <Content Include="Manage\Images\folder.png" />
     <Content Include="Manage\Images\folder_up.png" />
-    <Content Include="Manage\Images\footer.gif" />
     <Content Include="Manage\Images\group.png" />
-    <Content Include="Manage\Images\heading-bg-gradient.png" />
-    <Content Include="Manage\Images\heading-bg.png" />
     <Content Include="Manage\Images\heading-gradient.png" />
     <Content Include="Manage\Images\house.png" />
     <Content Include="Manage\Images\house_go.png" />
@@ -610,13 +606,10 @@
     <Content Include="Manage\Images\layout_edit.png" />
     <Content Include="Manage\Images\lock.png" />
     <Content Include="Manage\Images\logonbox.gif" />
-    <Content Include="Manage\Images\menu-a.gif" />
-    <Content Include="Manage\Images\menu-div.png" />
     <Content Include="Manage\Images\menu-gradient.png" />
     <Content Include="Manage\Images\mini-spinner1-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner2-6F997D.gif" />
     <Content Include="Manage\Images\mini-spinner3-6F997D.gif" />
-    <Content Include="Manage\Images\navitembg.gif" />
     <Content Include="Manage\Images\overlays.png" />
     <Content Include="Manage\Images\package.png" />
     <Content Include="Manage\Images\page.png" />
@@ -659,6 +652,7 @@
     <Content Include="Manage\Images\webpage.png" />
     <Content Include="Manage\Images\wordprocessing.png" />
     <Content Include="Manage\Images\x.png" />
+    <Content Include="Manage\Includes\common.css" />
     <Content Include="Manage\Includes\jquery.ui.timepicker.css" />
     <Content Include="Manage\Includes\jquery.ui.timepicker.js" />
     <Content Include="Manage\SiteImport.aspx" />

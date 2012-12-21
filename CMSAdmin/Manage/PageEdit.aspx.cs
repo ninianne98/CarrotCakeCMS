@@ -67,7 +67,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.MetaDescription = txtDescription.Text;
 				pageContents.MetaKeyword = txtKey.Text;
 
-				pageContents.EditDate = DateTime.Now;
+				pageContents.EditDate = SiteData.CurrentSite.Now;
 
 				pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
 				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);

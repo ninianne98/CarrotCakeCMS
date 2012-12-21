@@ -38,6 +38,7 @@ using System.Web.UI;
 
 
 
+[assembly: WebResource("Carrotware.CMS.Core.SiteContent.Default.htm", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm", "text/plain")]
 
 [assembly: WebResource("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt", "text/plain")]

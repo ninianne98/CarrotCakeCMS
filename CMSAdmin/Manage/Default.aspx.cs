@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -25,64 +26,70 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteInfo);
-			btnExport.Visible = false;
 
 			litID.Text = SiteData.CurrentSiteID.ToString();
-			try {
-				if (!IsPostBack) {
 
-					SiteData site = siteHelper.GetCurrentSite();
-					txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
-					txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
+			if (!IsPostBack) {
+				btnExport.Visible = false;
 
-					txtFolderPath.Text = "archive";
-					txtCategoryPath.Text = "category";
-					txtTagPath.Text = "tag";
-					ddlDatePattern.SelectedValue = "yyyy/MM/dd";
-					txtTitleBar.Text = SiteData.PageTitlePattern;
-
-					if (site != null) {
-						btnExport.Visible = true;
-
-						txtSiteName.Text = site.SiteName;
-						txtTagline.Text = site.SiteTagline;
-						txtTitleBar.Text = site.SiteTitlebarPattern;
-						txtURL.Text = site.MainURL;
-						txtKey.Text = site.MetaKeyword;
-						txtDescription.Text = site.MetaDescription;
-						chkHide.Checked = site.BlockIndex;
-
-						txtFolderPath.Text = site.Blog_FolderPath;
-						txtCategoryPath.Text = site.Blog_CategoryPath;
-						txtTagPath.Text = site.Blog_TagPath;
-
-						if (!string.IsNullOrEmpty(site.Blog_DatePattern)) {
-							try { ddlDatePattern.SelectedValue = site.Blog_DatePattern; } catch { }
-						}
-
-						ParentPagePicker.SelectedPage = site.Blog_Root_ContentID;
-					}
-
-					if (site == null) {
-						btnSave.Text = "Click to Create Site";
-					}
-				}
-
-				siteHelper.CleanUpSerialData();
-
-			} catch (Exception ex) {
-				if (DatabaseUpdate.SystemNeedsChecking(ex)) {
+				if (DatabaseUpdate.AreCMSTablesIncomplete()) {
 					Response.Redirect("./DatabaseSetup.aspx");
 				}
-				//if the error is not the kind DatabaseUpdate recomends checking the database for, make sure the error is sent back to the user
-				throw;
+
+				SiteData site = siteHelper.GetCurrentSite();
+				txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
+				txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
+
+				txtFolderPath.Text = "archive";
+				txtCategoryPath.Text = "category";
+				txtTagPath.Text = "tag";
+				ddlDatePattern.SelectedValue = "yyyy/MM/dd";
+				txtTitleBar.Text = SiteData.PageTitlePattern;
+
+				ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
+
+				ddlTimeZone.DataSource = timeZones;
+				ddlTimeZone.DataBind();
+
+				ddlTimeZone.SelectedValue = TimeZoneInfo.Local.Id;
+
+				if (site != null) {
+					btnExport.Visible = true;
+
+					txtSiteName.Text = site.SiteName;
+					txtTagline.Text = site.SiteTagline;
+					txtTitleBar.Text = site.SiteTitlebarPattern;
+					txtURL.Text = site.MainURL;
+					txtKey.Text = site.MetaKeyword;
+					txtDescription.Text = site.MetaDescription;
+					chkHide.Checked = site.BlockIndex;
+
+					txtFolderPath.Text = site.Blog_FolderPath;
+					txtCategoryPath.Text = site.Blog_CategoryPath;
+					txtTagPath.Text = site.Blog_TagPath;
+
+					try { ddlTimeZone.SelectedValue = site.TimeZoneIdentifier; } catch { }
+
+					if (!string.IsNullOrEmpty(site.Blog_DatePattern)) {
+						try { ddlDatePattern.SelectedValue = site.Blog_DatePattern; } catch { }
+					}
+
+					ParentPagePicker.SelectedPage = site.Blog_Root_ContentID;
+				}
+
+				if (site == null) {
+					btnSave.Text = "Click to Create Site";
+				}
 			}
+
+			siteHelper.CleanUpSerialData();
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
 			SiteData site = siteHelper.GetCurrentSite();
 			string sDatePatternOld = "yy-MM-dd";
+			string sTimezoneOld = "ZZZ";
 
 			if (site == null) {
 				site = new SiteData();
@@ -91,6 +98,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			if (site != null) {
 				sDatePatternOld = site.Blog_DatePattern;
+				sTimezoneOld = site.TimeZoneIdentifier;
 
 				site.SiteName = txtSiteName.Text;
 				site.SiteTagline = txtTagline.Text;
@@ -99,17 +107,19 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				site.MetaKeyword = txtKey.Text;
 				site.MetaDescription = txtDescription.Text;
 				site.BlockIndex = chkHide.Checked;
+				site.TimeZoneIdentifier = ddlTimeZone.SelectedValue;
 
 				site.Blog_FolderPath = txtFolderPath.Text;
 				site.Blog_CategoryPath = txtCategoryPath.Text;
 				site.Blog_TagPath = txtTagPath.Text;
 				site.Blog_DatePattern = ddlDatePattern.SelectedValue;
 				site.Blog_Root_ContentID = ParentPagePicker.SelectedPage;
+
 			}
 
 			site.Save();
 
-			if (sDatePatternOld != ddlDatePattern.SelectedValue) {
+			if (sDatePatternOld != ddlDatePattern.SelectedValue || sTimezoneOld != ddlTimeZone.SelectedValue) {
 				using (ContentPageHelper cph = new ContentPageHelper()) {
 					cph.BulkFileNameFromSlug(SiteID, ddlDatePattern.SelectedValue);
 				}
@@ -119,8 +129,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 		}
 
 		protected void btnResetVars_Click(object sender, EventArgs e) {
-			CMSConfigHelper cmsHelper = new CMSConfigHelper();
-			cmsHelper.ResetConfigs();
+			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+				cmsHelper.ResetConfigs();
+			}
 		}
 
 	}
