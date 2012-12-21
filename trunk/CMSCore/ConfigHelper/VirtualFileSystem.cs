@@ -47,14 +47,14 @@ namespace Carrotware.CMS.Core {
 			sRequestedURL = SiteData.AppendDefaultPath(sRequestedURL);
 
 			//try {
-				sScrubbedURL = SiteData.AlternateCurrentScriptName;
+			sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
-				if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
-					sFileRequested = sScrubbedURL;
-					bURLOverride = true;
-				}
+			if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
+				sFileRequested = sScrubbedURL;
+				bURLOverride = true;
+			}
 
-				VirtualDirectory.RegisterRoutes();
+			VirtualDirectory.RegisterRoutes();
 
 			//} catch (Exception ex) {
 			//    //assumption is database is probably empty / needs updating, so trigger the under construction view
@@ -117,7 +117,7 @@ namespace Carrotware.CMS.Core {
 					}
 
 
-					//try {
+					try {
 						bool bIsHomePage = false;
 						if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
 
@@ -138,17 +138,17 @@ namespace Carrotware.CMS.Core {
 							navData = SiteNavHelper.GetEmptyHome();
 						}
 
-					//} catch (Exception ex) {
-					//    //assumption is database is probably empty / needs updating, so trigger the under construction view
-					//    if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
-					//        if (navData == null) {
-					//            navData = SiteNavHelper.GetEmptyHome();
-					//        }
-					//    } else {
-					//        //something bad has gone down, toss back the error
-					//        throw;
-					//    }
-					//}
+					} catch (Exception ex) {
+						//assumption is database is probably empty / needs updating, so trigger the under construction view
+						if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+							if (navData == null) {
+								navData = SiteNavHelper.GetEmptyHome();
+							}
+						} else {
+							//something bad has gone down, toss back the error
+							throw;
+						}
+					}
 
 					if (navData != null) {
 						string sSelectedTemplate = navData.TemplateFile;
