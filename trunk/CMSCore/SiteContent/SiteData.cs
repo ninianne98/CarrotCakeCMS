@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -36,6 +37,11 @@ namespace Carrotware.CMS.Core {
 
 		public SiteData(carrot_Site s) {
 
+			if (s != null && string.IsNullOrEmpty(s.TimeZone)) {
+				s.TimeZone = SiteTimeZoneInfo.Id;
+			}
+
+			this.TimeZoneIdentifier = s.TimeZone;
 			this.SiteID = s.SiteID;
 			this.MetaKeyword = s.MetaKeyword;
 			this.MetaDescription = s.MetaDescription;
@@ -93,6 +99,9 @@ namespace Carrotware.CMS.Core {
 				carrot_Site s = CompiledQueries.cqGetSiteByID(_db, siteID);
 
 				if (s != null) {
+#if DEBUG
+					Debug.WriteLine("Grabbed site : GetSiteByID(Guid siteID) " + siteID.ToString());
+#endif
 					return new SiteData(s);
 				} else {
 					return null;
@@ -120,21 +129,27 @@ namespace Carrotware.CMS.Core {
 
 
 		private static string SiteKeyPrefix = "cms_SiteData_";
+
+		public static SiteData GetSiteFromCache(Guid siteID) {
+
+			string ContentKey = SiteKeyPrefix + siteID.ToString();
+			SiteData currentSite = null;
+			try { currentSite = (SiteData)HttpContext.Current.Cache[ContentKey]; } catch { }
+			if (currentSite == null) {
+				currentSite = GetSiteByID(siteID);
+				if (currentSite != null) {
+					HttpContext.Current.Cache.Insert(ContentKey, currentSite, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+				} else {
+					HttpContext.Current.Cache.Remove(ContentKey);
+				}
+			}
+			return currentSite;
+
+		}
+
 		public static SiteData CurrentSite {
 			get {
-				string ContentKey = SiteKeyPrefix + CurrentSiteID.ToString();
-				SiteData currentSite = null;
-				try { currentSite = (SiteData)HttpContext.Current.Cache[ContentKey]; } catch { }
-				if (currentSite == null) {
-					currentSite = SiteData.GetSiteByID(CurrentSiteID);
-
-					if (currentSite != null) {
-						HttpContext.Current.Cache.Insert(ContentKey, currentSite, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
-					} else {
-						HttpContext.Current.Cache.Remove(ContentKey);
-					}
-				}
-				return currentSite;
+				return GetSiteFromCache(CurrentSiteID);
 			}
 			set {
 				string ContentKey = SiteKeyPrefix + CurrentSiteID.ToString();
@@ -171,6 +186,8 @@ namespace Carrotware.CMS.Core {
 			}
 
 			s.SiteID = this.SiteID;
+
+			s.TimeZone = this.TimeZoneIdentifier;
 
 			FixMeta();
 			s.MetaKeyword = this.MetaKeyword.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("  ", " ");
@@ -231,7 +248,7 @@ namespace Carrotware.CMS.Core {
 		public void CleanUpSerialData() {
 
 			IQueryable<carrot_SerialCache> lst = (from c in db.carrot_SerialCaches
-												  where c.EditDate < DateTime.Now.AddHours(-6)
+												  where c.EditDate < DateTime.UtcNow.AddHours(-6)
 												  && c.SiteID == CurrentSiteID
 												  select c);
 
@@ -312,6 +329,46 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public DateTime Now {
+			get {
+				return SiteData.CurrentSite.ConvertUTCToSiteTime(DateTime.UtcNow);
+			}
+		}
+
+		public TimeZoneInfo SiteTimeZoneInfo {
+			get {
+				TimeZoneInfo oTZ = TimeZoneInfo.Local;
+
+				if (!string.IsNullOrEmpty(this.TimeZoneIdentifier)) {
+					try { oTZ = TimeZoneInfo.FindSystemTimeZoneById(this.TimeZoneIdentifier); } catch { }
+				}
+
+				return oTZ;
+			}
+		}
+
+		public DateTime ConvertUTCToSiteTime(DateTime dateUTC) {
+
+			return TimeZoneInfo.ConvertTimeFromUtc(dateUTC, SiteTimeZoneInfo);
+		}
+		public DateTime ConvertSiteTimeToUTC(DateTime dateSite) {
+
+			return TimeZoneInfo.ConvertTimeToUtc(dateSite, SiteTimeZoneInfo);
+		}
+
+
+		public DateTime ConvertSiteTimeToLocalServer(DateTime dateSite) {
+			//DateTime dateSiteSrc = new DateTime(dateSite.Ticks, DateTimeKind.Unspecified);
+			DateTime dateSiteSrc = DateTime.SpecifyKind(dateSite, DateTimeKind.Unspecified);
+			DateTime utc = TimeZoneInfo.ConvertTimeToUtc(dateSiteSrc, SiteTimeZoneInfo);
+
+			return TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZoneInfo.Local);
+		}
+		public DateTime ConvertUTCToLocalServer(DateTime dateUTC) {
+
+			return TimeZoneInfo.ConvertTimeFromUtc(dateUTC, TimeZoneInfo.Local);
+		}
+
 
 		public bool BlockIndex { get; set; }
 		public string MainURL { get; set; }
@@ -321,6 +378,7 @@ namespace Carrotware.CMS.Core {
 		public string SiteName { get; set; }
 		public string SiteTagline { get; set; }
 		public string SiteTitlebarPattern { get; set; }
+		public string TimeZoneIdentifier { get; set; }
 
 		public Guid? Blog_Root_ContentID { get; set; }
 		public string Blog_FolderPath { get; set; }
@@ -395,6 +453,28 @@ namespace Carrotware.CMS.Core {
 
 		#endregion
 
+		public static void ManuallyWriteDefaultFile(HttpContext context) {
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+
+			string sBody = String.Empty;
+
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Default.htm"))) {
+				sBody = oTextStream.ReadToEnd();
+			}
+			if (CurrentSite != null) {
+				sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
+			} else {
+				sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
+			}
+
+			context.Response.ContentType = "text/html";
+			context.Response.Clear();
+			context.Response.BufferOutput = true;
+
+			context.Response.Write(sBody);
+			context.Response.Flush();
+			context.Response.End();
+		}
 
 		private static string FormatToHTML(string inputString) {
 			string outputString = String.Empty;
@@ -439,7 +519,11 @@ namespace Carrotware.CMS.Core {
 				sBody = sBody.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
 			}
 
-			sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
+			if (CurrentSite != null) {
+				sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
+			} else {
+				sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
+			}
 
 			sBody = sBody.Replace("{CONTENT_DETAIL}", "");
 			sBody = sBody.Replace("{STACK_TRACE}", "");
@@ -632,14 +716,34 @@ namespace Carrotware.CMS.Core {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
 
+		public static string AppendDefaultPath(string sRequestedURL) {
+			if (!string.IsNullOrEmpty(sRequestedURL)) {
+				sRequestedURL = sRequestedURL.Replace(@"\", @"/");
+				if (sRequestedURL.EndsWith("/") || !sRequestedURL.ToLower().EndsWith(".aspx")) {
+					sRequestedURL = (sRequestedURL + SiteData.DefaultDirectoryFilename).Replace("//", "/");
+				}
+			}
+
+			return sRequestedURL;
+		}
+
 		public static string AlternateCurrentScriptName {
 			get {
 				string sCurrentPage = CurrentScriptName;
 				if (!CurrentScriptName.ToLower().StartsWith("/manage/")) {
-					string sScrubbedURL = CheckForSpecialURL(SiteData.CurrentSite);
 
-					if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
-						sCurrentPage = sScrubbedURL;
+					string sScrubbedURL = CheckForSpecialURL(CurrentSite);
+
+					if (sScrubbedURL.ToLower() == sCurrentPage.ToLower()) {
+						sCurrentPage = AppendDefaultPath(sCurrentPage);
+					}
+
+					if (!sScrubbedURL.ToLower().StartsWith(sCurrentPage.ToLower())
+						&& !sCurrentPage.ToLower().EndsWith(DefaultDirectoryFilename)) {
+
+						if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+							sCurrentPage = sScrubbedURL;
+						}
 					}
 				}
 

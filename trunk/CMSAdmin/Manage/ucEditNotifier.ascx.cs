@@ -37,6 +37,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			litVersion.Text = SiteData.CarrotCakeCMSVersion;
 			litRelease.Text = currentPage.GoLiveDate.ToString();
 			litRetire.Text = currentPage.RetireDate.ToString();
+			litTemplate.Text = currentPage.TemplateFile;
 
 			CurrentPageID = currentPage.Root_ContentID;
 			lnkCurrent.HRef = SiteData.CurrentScriptName;

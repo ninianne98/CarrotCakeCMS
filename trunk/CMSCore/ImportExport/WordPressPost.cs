@@ -28,7 +28,7 @@ namespace Carrotware.CMS.Core {
 		public string PostTitle { get; set; }
 		public string PostName { get; set; }
 		public string PostContent { get; set; }
-		public DateTime PostDate { get; set; }
+		public DateTime PostDateUTC { get; set; }
 		public bool IsPublished { get; set; }
 
 		public int PostOrder { get; set; }

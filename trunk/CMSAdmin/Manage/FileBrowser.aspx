@@ -89,6 +89,14 @@
 			window.opener.cmsSetFileName(fld.val());
 		}
 
+		function cmsSetFileNameReturn() {
+			var fldN = '#txtSelectedFile';
+			var fld = $(fldN);
+			window.parent.cmsSetFileNameReturn(fld.val());
+
+			return false;
+		}
+
 	</script>
 	<asp:Literal runat="server" ID="pnlTiny">
 	
@@ -190,7 +198,7 @@
 							<img src="/manage/images/folder.png" alt="folder" />
 						</td>
 						<td>
-							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}", Eval("FolderPath"), sQueryMode ) %>'>
+							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}", Eval("FolderPath"),  sQueryMode, sReturnMode ) %>'>
 								<%# String.Format( "{0}", Eval("FileName") ).ToUpper() %></a>
 						</td>
 						<td>
@@ -363,6 +371,7 @@
 			Selected File:
 			<asp:TextBox ID="txtSelectedFile" Columns="50" runat="server"></asp:TextBox>
 			<asp:Button Visible="false" ID="btnSelectedFile" runat="server" Text="Return Selection" OnClientClick="FileBrowserDialogue.mySubmit();" />
+			<asp:Button Visible="false" ID="btnReturnFile" runat="server" Text="Select File" OnClientClick="return cmsSetFileNameReturn();" />
 		</p>
 	</div>
 	<asp:Literal runat="server" ID="pnlTiny2">

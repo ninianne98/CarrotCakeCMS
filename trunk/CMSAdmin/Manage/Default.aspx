@@ -74,12 +74,11 @@
 			<tr>
 				<td valign="top" class="tablecaption" style="width: 175px;">
 					Site ID
-					<br />
 				</td>
 				<td valign="top">
-					<asp:Literal ID="litID" runat="server"></asp:Literal>
-					<br />
-					<br />
+					<div style="padding: 5px; padding-left: 10px; width: 275px;" class=" ui-widget-content ui-corner-all ">
+						<asp:Literal ID="litID" runat="server" />
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -88,7 +87,7 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="100" Columns="80" Style="width: 425px;"
-						runat="server"></asp:TextBox>
+						runat="server" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 				</td>
@@ -99,7 +98,7 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagline" MaxLength="512" Columns="80" Style="width: 425px;"
-						runat="server"></asp:TextBox>
+						runat="server" />
 				</td>
 			</tr>
 			<tr>
@@ -108,7 +107,16 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitleBar" MaxLength="512" Columns="80" Style="width: 425px;"
-						runat="server"></asp:TextBox>
+						runat="server" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					Site Time Zone
+				</td>
+				<td valign="top">
+					<asp:DropDownList ID="ddlTimeZone" runat="server" DataTextField="DisplayName" DataValueField="Id">
+					</asp:DropDownList>
 				</td>
 			</tr>
 			<tr>
@@ -116,7 +124,7 @@
 					Site URL
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;" runat="server" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtURL" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 				</td>
@@ -143,7 +151,7 @@
 					Meta Keywords
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
@@ -151,7 +159,7 @@
 					Meta Description
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 		</table>
@@ -179,7 +187,7 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="80" Style="width: 425px;"
-						runat="server" onblur="CheckFolderPrefixes()"></asp:TextBox>
+						runat="server" onblur="CheckFolderPrefixes()" />
 				</td>
 			</tr>
 			<tr>
@@ -188,7 +196,7 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="80" Style="width: 425px;"
-						runat="server" onblur="CheckFolderPrefixes()"></asp:TextBox>
+						runat="server" onblur="CheckFolderPrefixes()" />
 				</td>
 			</tr>
 			<tr>
@@ -197,7 +205,7 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="80" Style="width: 425px;" runat="server"
-						onblur="CheckFolderPrefixes()"></asp:TextBox>
+						onblur="CheckFolderPrefixes()" />
 				</td>
 			</tr>
 			<tr>

@@ -90,7 +90,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string OrderBy {
 			get {
 				String s = (String)ViewState["OrderBy"];
-				return ((s == null) ? "createdate  desc" : s);
+				return ((s == null) ? "GoLiveDate  desc" : s);
 			}
 			set {
 				ViewState["OrderBy"] = value;
@@ -355,7 +355,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (string.IsNullOrEmpty(OrderBy)) {
-				OrderBy = "createdate  desc";
+				OrderBy = "GoLiveDate  desc";
 			}
 
 			List<SiteNav> lstContents = null;
@@ -483,7 +483,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
 
-					OrderBy = GetParmValue("OrderBy", "createdate  desc");
+					OrderBy = GetParmValue("OrderBy", "GoLiveDate  desc");
 
 					CSSSelectedPage = GetParmValue("CSSSelectedPage", "SelectedCurrentPager");
 

@@ -91,7 +91,7 @@ namespace Carrotware.CMS.UI.Controls {
 			lit2.Text = "</div>";
 
 			Button btnNone = new Button();
-			btnNone.ID = "btn_" + DateTime.Now.Ticks.ToString();
+			btnNone.ID = "btn_" + DateTime.UtcNow.Ticks.ToString();
 
 			phEntry.Controls.AddAt(0, lit2);
 			phEntry.Controls.AddAt(0, btnNone);
@@ -187,7 +187,7 @@ namespace Carrotware.CMS.UI.Controls {
 				PostComment pc = new PostComment();
 				pc.ContentCommentID = Guid.NewGuid();
 				pc.Root_ContentID = navData.Root_ContentID;
-				pc.CreateDate = DateTime.Now;
+				pc.CreateDate = DateTime.UtcNow;
 				pc.IsApproved = false;
 				pc.IsSpam = false;
 				pc.CommenterIP = sIP;

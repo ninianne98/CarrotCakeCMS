@@ -181,7 +181,7 @@ namespace Carrotware.CMS.Core {
 	public class ContentDateTally : IContentMetaInfo {
 		public Guid TallyID { get; set; }
 		public SiteData TheSite { get; set; }
-		public DateTime CreateDate { get; set; }
+		public DateTime GoLiveDate { get; set; }
 		public string DateCaption { get; set; }
 		public string DateSlug { get; set; }
 		public string DateURL { get; set; }
@@ -195,13 +195,13 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaInfoText {
 			get {
-				return this.CreateDate.ToString("MMMM yyyy");
+				return this.GoLiveDate.ToString("MMMM yyyy");
 			}
 		}
 
 		public string MetaInfoURL {
 			get {
-				this.DateURL = (this.TheSite.BuildMonthSearchLink(this.CreateDate));
+				this.DateURL = (this.TheSite.BuildMonthSearchLink(this.GoLiveDate));
 				return this.DateURL;
 			}
 		}

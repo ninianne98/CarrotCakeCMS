@@ -23,7 +23,7 @@ namespace Carrotware.CMS.Core {
 
 		public ContentPageExport() {
 			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.Now;
+			ExportDate = DateTime.UtcNow;
 
 			ThePage = new ContentPage();
 			ThePageWidgets = new List<Widget>();
@@ -48,7 +48,7 @@ namespace Carrotware.CMS.Core {
 
 		private void SetVals(ContentPage cp, List<Widget> widgets) {
 			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.Now;
+			ExportDate = DateTime.UtcNow;
 			Guid siteID = cp.SiteID;
 
 			NewRootContentID = Guid.NewGuid();
@@ -83,7 +83,6 @@ namespace Carrotware.CMS.Core {
 
 			ThePage.Root_ContentID = NewRootContentID;
 			ThePage.ContentID = NewRootContentID;
-			//ThePage.CreateDate = DateTime.Now;
 
 			foreach (var w in ThePageWidgets) {
 				w.Root_ContentID = NewRootContentID;

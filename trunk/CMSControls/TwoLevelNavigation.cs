@@ -38,6 +38,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string ExtraCSS {
+			get {
+				string s = (string)ViewState["ExtraCSS"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["ExtraCSS"] = value;
+			}
+		}
+
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -147,6 +161,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
+		[Obsolete("This property is obsolete, do not use.")]
 		public Unit MenuWidth {
 			get {
 				Unit s = new Unit("940px");
@@ -182,6 +197,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
+		[Obsolete("This property is obsolete, do not use.")]
 		public Unit MenuHeight {
 			get {
 				Unit s = new Unit("60px");
@@ -199,6 +215,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
+		[Obsolete("This property is obsolete, do not use.")]
 		public Unit SubMenuWidth {
 			get {
 				Unit s = new Unit("300px");
@@ -232,6 +249,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
+		[Obsolete("This property is obsolete, do not use.")]
 		public string ItemBackgroundStyle {
 			get {
 				String s = (String)ViewState["ItemBackgroundStyle"];
@@ -455,13 +473,13 @@ namespace Carrotware.CMS.UI.Controls {
 				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
 				string sChild = " ";
 				if (cc.Count > 0) {
-					sChild = " level-1-haschildren " + CSSHasChildren + " ";
+					sChild = " level1-haschildren " + CSSHasChildren + " ";
 				}
 
 				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
-					output.WriteLine("<li class=\"level-1 " + CSSSelected + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+					output.WriteLine("<li class=\"level1 " + CSSSelected + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				} else {
-					output.WriteLine("<li class=\"level-1 " + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+					output.WriteLine("<li class=\"level1 " + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				}
 
 				output.Indent++;
@@ -471,9 +489,9 @@ namespace Carrotware.CMS.UI.Controls {
 					output.Indent++;
 					foreach (SiteNav c2 in cc) {
 						if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
-							output.WriteLine("<li class=\"level-2 " + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
+							output.WriteLine("<li class=\"level2 " + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
 						} else {
-							output.WriteLine("<li class=\"level-2\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
+							output.WriteLine("<li class=\"level2\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
 						}
 					}
 					output.Indent = indent3;
@@ -507,6 +525,7 @@ namespace Carrotware.CMS.UI.Controls {
 					string sTmp = "";
 
 					OverrideCSS = GetParmValue("OverrideCSS", "");
+					ExtraCSS = GetParmValue("ExtraCSS", "");
 
 					sTmp = GetParmValue("AutoStylingDisabled", "false");
 					if (!string.IsNullOrEmpty(sTmp)) {
@@ -666,6 +685,15 @@ namespace Carrotware.CMS.UI.Controls {
 					Page.Header.Controls.Add(link);
 				}
 			}
+			
+			if (!string.IsNullOrEmpty(ExtraCSS)) {
+				HtmlLink link = new HtmlLink();
+				link.Href = ExtraCSS;
+				link.Attributes.Add("rel", "stylesheet");
+				link.Attributes.Add("type", "text/css");
+				Page.Header.Controls.Add(link);
+			}
+
 
 			if (!AutoStylingDisabled) {
 				WrapList = false;

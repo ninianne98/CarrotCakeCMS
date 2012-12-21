@@ -72,6 +72,7 @@ namespace Carrotware.CMS.DBUpdater {
 		public static bool SystemNeedsChecking(Exception ex) {
 			//assumption is database is probably empty / needs updating, so trigger the under construction view
 
+			//if ((ex is SqlException || ex is HttpUnhandledException) && ex != null) {
 			if (ex is SqlException && ex != null) {
 				string msg = ex.Message.ToLower();
 				if (ex.InnerException != null) {
@@ -84,6 +85,7 @@ namespace Carrotware.CMS.DBUpdater {
 				if (msg.Contains("invalid object name")
 					//|| msg.Contains("no process is on the other end of the pipe")
 					|| msg.Contains("invalid column name")
+					|| msg.Contains("could not find stored procedure")
 					|| msg.Contains("not found")) {
 
 					return true;
@@ -234,9 +236,15 @@ namespace Carrotware.CMS.DBUpdater {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+				query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 36) {
+				if (table1.Rows.Count < 5) {
+					return true;
+				}
+
+				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 31) {
 					return true;
 				}
 
@@ -257,6 +265,18 @@ namespace Carrotware.CMS.DBUpdater {
 				string query = "";
 				DataTable table1 = null;
 
+				query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 5) {
+					return true;
+				}
+
+				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 31) {
+					return true;
+				}
+
 				//query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 				query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
 				table1 = GetData(query);
@@ -269,12 +289,6 @@ namespace Carrotware.CMS.DBUpdater {
 						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
 				DataTable table2 = GetData(query);
 				if (table2.Rows.Count < 52) {
-					return true;
-				}
-
-				query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 2) {
 					return true;
 				}
 
@@ -449,11 +463,13 @@ namespace Carrotware.CMS.DBUpdater {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
 			//string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
-			string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID') ";
+			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID') ";
+			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites', 'carrot_RootContent') and column_name in('TimeZone', 'PageThumbnail') ";
+			string query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
 
 			DataTable table1 = GetData(query);
 
-			if (table1.Rows.Count < 3) {
+			if (table1.Rows.Count < 5) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER06.sql", false);
 				res.Response = "CMS DB created carrot_ContentType, carrot_ContentTag, carrot_ContentCategory";
 				return res;
@@ -466,17 +482,20 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep07() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
+			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
+			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites') and column_name in('TimeZone') ";
+			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites', 'carrot_RootContent') and column_name in('TimeZone', 'PageThumbnail') ";
+			string query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
 
 			DataTable table1 = GetData(query);
 
-			if (table1.Rows.Count < 2) {
+			if (table1.Rows.Count < 5) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER07.sql", false);
-				res.Response = "CMS DB created cols RetireDate and GoLiveDate in carrot_RootContent";
+				res.Response = "CMS DB created cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent";
 				return res;
 			}
 
-			res.Response = "CMS DB cols RetireDate and GoLiveDate in carrot_RootContent already created";
+			res.Response = "CMS DB cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent already created";
 			return res;
 		}
 

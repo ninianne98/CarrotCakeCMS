@@ -36,14 +36,6 @@ H3 {
 	font-weight: bold;
 }
 
-a {
-	color: #333333;
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
 
 /* Header */
 #headercontainer {
@@ -193,29 +185,6 @@ a:hover {
 	font-size: 18px;
 }
 
-.pad-content {
-	margin-left: 40px;
-	margin-right: 40px;
-	padding-left: 10px;
-	padding-right: 10px;
-	min-height: 400px;
-}
-
-.imgNoBorder {
-	padding: 0px;
-	margin: 0px;
-	padding: 1px;
-	border: none;
-	border: 0;
-}
-
-a .imgNoBorder {
-	border-width: 0;
-	margin: 0px;
-	padding: 0px;
-	border: none;
-	outline: none;
-}
 
 .pageNodeDrillDown1 {
 	padding: 0px;
@@ -272,96 +241,10 @@ a .imgNoBorder {
 }
 
 
-/*  OTHER */
-
-.caption, .tablecaption {
-	font-weight: bold;
-}
-
-
-/* correction for jquery ui */
-
-.ui-widget-header a, .ui-widget-header, .ui-widget p, .ui-widget ul, .ui-widget li, .ui-widget ol, .ui-widget h1, .ui-widget h2, .ui-widget h3, .ui-widget div, .ui-widget span, .ui-widget input, .ui-widget select, .ui-widget button, .ui-widget textarea, .ui-widget a {
-	line-height: normal;
-	text-align: left;
-	font-size: small;
-	font-family: Lucida Grande, Lucida Sans Arial, sans-serif;
-	color: #676F6A;
-}
-
-.ui-autocomplete-loading {
-	background: white url('/Manage/images/mini-spinner3-6F997D.gif') right center no-repeat;
-}
-
-.ui-autocomplete {
-	max-height: 150px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	padding-right: 20px;
-}
-
 #cms-simplemodal-container, .cms-simplemodal-container {
-	height: 550px;
-	width: 925px;
+	height: 525px;
+	width: 905px;
 	z-index: 5000;
-}
-
-.picker-area {
-	padding: 4px;
-}
-.scroll-container {
-	height: 80px;
-	padding: 4px;
-	width: 99%;
-	z-index: 999;
-}
-.scroll-area {
-	height: 75px;
-	overflow: auto;
-	padding: 2px;
-	width: 99%;
-}
-
-.selectedModule {
-	font-weight: bolder;
-}
-
-.pagerlink, .sel-pagerlink {
-	float: left;
-	margin: 2px 2px 2px 2px;
-	padding: 5px 5px 5px 5px;
-}
-.datafooter {
-	margin: 2px 2px 2px 2px;
-	padding: 2px 2px 2px 2px;
-	clear: both;
-	width: 50%;
-}
-
-.dateRegion, .ui-datepicker-trigger {
-	margin-right: 5px;
-}
-
-/* fieldset */
-
-fieldset {
-	margin: 1em 0px;
-	padding: 1em;
-	border: 1px solid #ccc;
-}
-
-fieldset legend label {
-	display: block;
-	font-size: 16px;
-	margin: 0;
-	padding: 0;
-	font-weight: bold;
-	font-family: Georgia, Times New Roman, Serif;
-	color: #69775F;
-}
-
-fieldset legend label.inline {
-	display: inline;
 }
 
 /*

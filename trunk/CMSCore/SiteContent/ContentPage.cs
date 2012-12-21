@@ -48,7 +48,7 @@ namespace Carrotware.CMS.Core {
 
 			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
-			rc.EditHeartbeat = DateTime.Now.AddHours(-2);
+			rc.EditHeartbeat = DateTime.UtcNow.AddHours(-2);
 			rc.Heartbeat_UserId = null;
 			db.SubmitChanges();
 		}
@@ -58,7 +58,7 @@ namespace Carrotware.CMS.Core {
 			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 			rc.Heartbeat_UserId = currentUserID;
-			rc.EditHeartbeat = DateTime.Now;
+			rc.EditHeartbeat = DateTime.UtcNow;
 
 			db.SubmitChanges();
 		}
@@ -68,7 +68,7 @@ namespace Carrotware.CMS.Core {
 			bool bLock = false;
 			if (this.Heartbeat_UserId != null) {
 				if (this.Heartbeat_UserId != SecurityData.CurrentUserGuid
-						&& this.EditHeartbeat.Value > DateTime.Now.AddMinutes(-2)) {
+						&& this.EditHeartbeat.Value > DateTime.UtcNow.AddMinutes(-2)) {
 					bLock = true;
 				}
 				if (this.Heartbeat_UserId == SecurityData.CurrentUserGuid
@@ -147,43 +147,46 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		private void PerformCommonSaveRoot(carrot_RootContent rc) {
+		private void PerformCommonSaveRoot(SiteData pageSite, carrot_RootContent rc) {
 
 			rc.Root_ContentID = this.Root_ContentID;
 			rc.PageActive = true;
 			rc.SiteID = this.SiteID;
-			rc.CreateDate = DateTime.Now;
 			rc.ContentTypeID = ContentPageType.GetIDByType(this.ContentType);
 
-			rc.GoLiveDate = this.GoLiveDate;
-			rc.RetireDate = this.RetireDate;
+			rc.CreateDate = DateTime.UtcNow;
+			rc.GoLiveDate = pageSite.ConvertSiteTimeToUTC(this.GoLiveDate);
+			rc.RetireDate = pageSite.ConvertSiteTimeToUTC(this.RetireDate);
 
 			if (this.CreateDate.Year > 1950) {
-				rc.CreateDate = this.CreateDate;
+				rc.CreateDate = pageSite.ConvertSiteTimeToUTC(this.CreateDate);
 			}
 
 		}
 
 
-		private void PerformCommonSave(carrot_RootContent rc, carrot_Content c) {
+		private void PerformCommonSave(SiteData pageSite, carrot_RootContent rc, carrot_Content c) {
 
 			c.NavOrder = this.NavOrder;
 
 			if (this.ContentType == ContentPageType.PageType.BlogEntry) {
 				this.PageSlug = ContentPageHelper.ScrubFilename(this.Root_ContentID, this.PageSlug);
-				this.FileName = ContentPageHelper.CreateFileNameFromSlug(this.SiteID, rc.CreateDate, this.PageSlug);
+				this.FileName = ContentPageHelper.CreateFileNameFromSlug(this.SiteID, this.GoLiveDate, this.PageSlug);
 				c.NavOrder = 10;
 			}
 
-			rc.GoLiveDate = this.GoLiveDate;
-			rc.RetireDate = this.RetireDate;
+			rc.GoLiveDateLocal = this.GoLiveDate;
+			rc.GoLiveDate = pageSite.ConvertSiteTimeToUTC(this.GoLiveDate);
+			rc.RetireDate = pageSite.ConvertSiteTimeToUTC(this.RetireDate);
 
 			rc.PageSlug = this.PageSlug;
+			rc.PageThumbnail = this.Thumbnail;
 
 			c.Root_ContentID = this.Root_ContentID;
 
 			rc.Heartbeat_UserId = this.Heartbeat_UserId;
 			rc.EditHeartbeat = this.EditHeartbeat;
+
 			rc.FileName = this.FileName;
 			rc.PageActive = this.PageActive;
 
@@ -199,7 +202,7 @@ namespace Carrotware.CMS.Core {
 			c.RightPageText = this.RightPageText;
 
 			c.EditUserId = this.EditUserId;
-			c.EditDate = DateTime.Now;
+			c.EditDate = DateTime.UtcNow;
 			c.TemplateFile = this.TemplateFile;
 
 			FixMeta();
@@ -209,10 +212,10 @@ namespace Carrotware.CMS.Core {
 			this.Root_ContentID = rc.Root_ContentID;
 			this.ContentID = c.ContentID;
 			this.FileName = rc.FileName;
-			this.EditDate = c.EditDate;
-			this.CreateDate = rc.CreateDate;
-			this.GoLiveDate = rc.GoLiveDate;
-			this.RetireDate = rc.RetireDate;
+			this.EditDate = pageSite.ConvertUTCToSiteTime(c.EditDate);
+			this.CreateDate = pageSite.ConvertUTCToSiteTime(rc.CreateDate);
+			this.GoLiveDate = pageSite.ConvertUTCToSiteTime(rc.GoLiveDate);
+			this.RetireDate = pageSite.ConvertUTCToSiteTime(rc.RetireDate);
 
 		}
 
@@ -229,6 +232,8 @@ namespace Carrotware.CMS.Core {
 
 		public void SavePageEdit() {
 
+			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
+
 			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 			carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
@@ -238,7 +243,7 @@ namespace Carrotware.CMS.Core {
 			if (rc == null) {
 				rc = new carrot_RootContent();
 
-				PerformCommonSaveRoot(rc);
+				PerformCommonSaveRoot(site, rc);
 
 				db.carrot_RootContents.InsertOnSubmit(rc);
 				bNew = true;
@@ -252,7 +257,7 @@ namespace Carrotware.CMS.Core {
 				oldC.IsLatestVersion = false;
 			}
 
-			PerformCommonSave(rc, c);
+			PerformCommonSave(site, rc, c);
 
 			db.carrot_Contents.InsertOnSubmit(c);
 
@@ -262,8 +267,9 @@ namespace Carrotware.CMS.Core {
 
 		}
 
-
 		public void SavePageAsDraft() {
+
+			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
 			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
@@ -272,7 +278,7 @@ namespace Carrotware.CMS.Core {
 			if (rc == null) {
 				rc = new carrot_RootContent();
 
-				PerformCommonSaveRoot(rc);
+				PerformCommonSaveRoot(site, rc);
 
 				db.carrot_RootContents.InsertOnSubmit(rc);
 				bNew = true;
@@ -285,7 +291,7 @@ namespace Carrotware.CMS.Core {
 				c.ContentID = Guid.NewGuid();
 			}
 
-			PerformCommonSave(rc, c);
+			PerformCommonSave(site, rc, c);
 
 			c.IsLatestVersion = false; // draft, leave existing version latest
 
@@ -309,6 +315,7 @@ namespace Carrotware.CMS.Core {
 		public Guid? EditUserId { get; set; }
 		public bool IsLatestVersion { get; set; }
 		public string TemplateFile { get; set; }
+		public string Thumbnail { get; set; }
 		public string FileName { get; set; }
 		public string PageHead { get; set; }
 		public string TitleBar { get; set; }
@@ -329,7 +336,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsRetired {
 			get {
-				if (this.RetireDate < DateTime.Now) {
+				if (this.RetireDate < SiteData.CurrentSite.Now) {
 					return true;
 				} else {
 					return false;
@@ -338,7 +345,7 @@ namespace Carrotware.CMS.Core {
 		}
 		public bool IsUnReleased {
 			get {
-				if (this.GoLiveDate > DateTime.Now) {
+				if (this.GoLiveDate > SiteData.CurrentSite.Now) {
 					return true;
 				} else {
 					return false;

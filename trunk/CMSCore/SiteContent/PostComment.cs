@@ -43,12 +43,12 @@ namespace Carrotware.CMS.Core {
 
 				cont.ContentCommentID = c.ContentCommentID;
 				cont.Root_ContentID = c.Root_ContentID;
+				cont.CreateDate = SiteData.CurrentSite.ConvertUTCToSiteTime(c.CreateDate);
 				cont.CommenterIP = c.CommenterIP;
 				cont.CommenterName = c.CommenterName;
 				cont.CommenterEmail = c.CommenterEmail;
 				cont.CommenterURL = c.CommenterURL;
 				cont.PostCommentText = c.PostComment;
-				cont.CreateDate = c.CreateDate;
 				cont.IsApproved = c.IsApproved;
 				cont.IsSpam = c.IsSpam;
 
@@ -65,7 +65,7 @@ namespace Carrotware.CMS.Core {
 
 			if (c == null) {
 				c = new carrot_ContentComment();
-				c.CreateDate = DateTime.Now;
+				c.CreateDate = DateTime.UtcNow;
 				bNew = true;
 			}
 

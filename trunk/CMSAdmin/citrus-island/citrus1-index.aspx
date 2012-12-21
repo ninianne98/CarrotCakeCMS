@@ -9,7 +9,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<asp:PlaceHolder ID="myPageHead" runat="server">
 		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
-		<link href="<%=pageContents.TemplateFolderPath %>style2.css" rel="stylesheet" type="text/css" media="screen" />
 		<link rel="canonical" href="<%= theSite.DefaultCanonicalURL %>" />
 	</asp:PlaceHolder>
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />

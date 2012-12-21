@@ -140,7 +140,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						w.WidgetOrder = iPos;
 					}
 
-					w.EditDate = DateTime.Now;
+					w.EditDate = SiteData.CurrentSite.Now;
 				}
 			}
 

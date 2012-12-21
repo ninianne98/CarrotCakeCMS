@@ -173,7 +173,7 @@ function ShowWindow(theURL) {
 
 function LaunchWindow(theURL) {
 	TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="880" height="490" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="890" height="490" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
 		css: { width: '860px', height: '500px' },
@@ -256,6 +256,30 @@ $(document).ready(function () {
 	UpdateAjaxErrorMsg();
 });
 
+//=======================
+
+var fldNameRet = '';
+
+function cmsFileBrowserOpenReturn(fldN) {
+	fldN = '#' + fldN;
+	var fld = $(fldN);
+	fldNameRet = fld.attr('id');
+
+	ShowWindowNoRefresh('/Manage/FileBrowser.aspx?returnvalue=1&fldrpath=/');
+
+	return false;
+}
+
+
+function cmsSetFileNameReturn(v) {
+	var fldN = '#' + fldNameRet;
+	var fld = $(fldN);
+	fld.val(v);
+
+	setTimeout("$.modal.close();", 200);
+
+	return false;
+}
 
 //===========================
 

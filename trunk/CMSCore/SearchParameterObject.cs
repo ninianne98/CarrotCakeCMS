@@ -7,7 +7,7 @@ namespace Carrotware.CMS.Core {
 	internal class SearchParameterObject {
 
 		public SearchParameterObject() {
-			this.DateCompare = DateTime.Now;
+			this.DateCompare = DateTime.UtcNow;
 			this.DateBegin = DateTime.MinValue;
 			this.DateEnd = DateTime.MaxValue;
 			this.SiteID = Guid.Empty;

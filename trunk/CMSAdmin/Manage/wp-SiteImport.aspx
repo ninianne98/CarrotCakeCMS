@@ -119,7 +119,7 @@
 					<asp:BoundField DataField="ImportFileName" HeaderText="File Name" />
 					<asp:BoundField DataField="PostTitle" HeaderText="Post Title" />
 					<%--<asp:BoundField DataField="PostType" HeaderText="Post Type" />--%>
-					<asp:BoundField DataField="PostDate" HeaderText="Created On" DataFormatString="{0:d}" />
+					<asp:BoundField DataField="PostDateUTC" HeaderText="Created On" DataFormatString="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsPublished" HeaderText="Published" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
 						ShowBooleanImage="true" />
 				</Columns>
@@ -151,13 +151,13 @@
 			records
 		</p>
 		<div id="SortableGrid">
-			<carrot:CarrotGridView CssClass="datatable" DefaultSort="PostDate ASC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+			<carrot:CarrotGridView CssClass="datatable" DefaultSort="PostDateUTC ASC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 				<Columns>
 					<asp:BoundField DataField="ImportFileName" HeaderText="File Name" />
 					<asp:BoundField DataField="PostTitle" HeaderText="Post Title" />
 					<%--<asp:BoundField DataField="PostType" HeaderText="Post Type" />--%>
-					<asp:BoundField DataField="PostDate" HeaderText="Created On" DataFormatString="{0:d}" />
+					<asp:BoundField DataField="PostDateUTC" HeaderText="Created On" DataFormatString="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsPublished" HeaderText="Published" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
 						ShowBooleanImage="true" />
 				</Columns>

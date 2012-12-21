@@ -18,16 +18,23 @@ using System.Configuration;
 namespace Carrotware.CMS.Core {
 
 	public class FileData {
-		public FileData() { }
+		public FileData() {
+			this.FolderPath = "";
+			this.FileName = "unknown";
+			this.FileSize = 0;
+			this.FileExtension = "";
+			this.FileSizeFriendly = "0B";
+			this.FileDate = DateTime.MinValue.Date;
+			this.MimeType = "x-application/octet-stream";
+		}
+
 		public string FileName { get; set; }
 		public string FileExtension { get; set; }
 		public DateTime FileDate { get; set; }
 		public int FileSize { get; set; }
 		public string FileSizeFriendly { get; set; }
 		public string FolderPath { get; set; }
-
 		public string MimeType { get; set; }
-
 	}
 
 	public class FileDataHelper {
@@ -72,7 +79,8 @@ namespace Carrotware.CMS.Core {
 			string myFileName;
 			string myFileDate;
 
-			var f = new FileData();
+			FileData f = new FileData();
+			f.FileName = myFile;
 
 			myFileName = Path.GetFileName(myFile).Trim();
 			if (myFileName.Length > 0) {
@@ -98,8 +106,8 @@ namespace Carrotware.CMS.Core {
 			if (Directory.Exists(sPath)) {
 				foreach (string myFile in Directory.GetDirectories(sPath, "*.*")) {
 					string myFileName;
-					var f = new FileData();
-
+					FileData f = new FileData();
+					f.FileName = myFile;
 					myFileName = Path.GetFileName(myFile).Trim();
 					if (myFileName.Length > 0) {
 						f = GetFolderInfo(sQuery, myFile);
@@ -123,14 +131,7 @@ namespace Carrotware.CMS.Core {
 			long myFileSize;
 
 			FileData f = new FileData();
-			f.FolderPath = "";
 			f.FileName = myFile;
-			f.FileSize = 0;
-			f.FileExtension = "";
-			f.FileSizeFriendly = "0b";
-			f.FileDate = DateTime.MinValue.Date;
-			f.MimeType = "x-application/octet-stream";
-
 
 			myFileName = Path.GetFileName(myFile).Trim();
 			if (myFileName.Length > 0 && File.Exists(sPath + "/" + myFileName)) {
@@ -222,7 +223,7 @@ namespace Carrotware.CMS.Core {
 
 					myFileName = Path.GetFileName(myFile).Trim();
 
-					var f = new FileData();
+					FileData f = new FileData();
 					f.FileName = myFileName;
 
 					if (myFileName.Length > 0) {

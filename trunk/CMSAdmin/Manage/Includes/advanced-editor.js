@@ -311,8 +311,8 @@ function cmsPreviewTemplate() {
 	var editFrame = $('#cmsModalFrame');
 	var editIFrame = $('#cmsFrameEditor');
 
-	$(editIFrame).attr('width', '880');
-	$(editIFrame).attr('height', '415');
+	$(editIFrame).attr('width', '890');
+	$(editIFrame).attr('height', '450');
 
 	var btnApply = ' <input type="button" id="btnApplyTemplate" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
 	var btnClose = ' <input type="button" id="btnCloseTemplate" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
@@ -873,10 +873,10 @@ function cmsLoadWindow() {
 
 function cmsSetiFrameSource(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="880" height="460" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="890" height="490" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/Manage/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-		css: { width: '860px', height: '440px' },
+		css: { width: '870px', height: '500px' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }

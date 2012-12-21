@@ -28,14 +28,16 @@ namespace Carrotware.CMS.Core {
 
 			if (c != null) {
 				nav = new SiteNav();
+				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
 
 				nav.Root_ContentID = c.Root_ContentID;
 				nav.SiteID = c.SiteID;
 				nav.FileName = c.FileName;
 				nav.PageActive = c.PageActive;
-				nav.CreateDate = c.CreateDate;
-				nav.GoLiveDate = c.GoLiveDate;
-				nav.RetireDate = c.RetireDate;
+				nav.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
+				nav.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);
+				nav.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
+				nav.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
 				nav.EditUserId = c.EditUserId;
 				nav.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
 				nav.ContentID = c.ContentID;
@@ -45,7 +47,6 @@ namespace Carrotware.CMS.Core {
 				nav.PageHead = c.PageHead;
 				nav.PageText = c.PageText;
 				nav.NavOrder = c.NavOrder;
-				nav.EditDate = c.EditDate;
 				nav.TemplateFile = c.TemplateFile;
 			}
 
@@ -71,8 +72,8 @@ namespace Carrotware.CMS.Core {
 						  orderby ct.NavOrder, ct.NavMenuText
 						  where ct.SiteID == siteID
 								&& (ct.PageActive == true || bActiveOnly == false)
-								&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-								&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+								&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+								&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 								&& ct.IsLatestVersion == true
 								&& (lstTop.Contains(ct.Root_ContentID) || lstTop.Contains(ct.Parent_ContentID.Value))
 						  select CreateSiteNav(ct)).ToList();
@@ -101,8 +102,8 @@ namespace Carrotware.CMS.Core {
 						  where ct.SiteID == siteID
 								&& ct.IsLatestVersion == true
 								&& (ct.PageActive == true || bActiveOnly == false)
-								&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-								&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+								&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+								&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 								&& (!lstTop.Contains(ct.Root_ContentID) && lstTop.Contains(ct.Parent_ContentID.Value))
 						  select ct.Root_ContentID).Distinct().ToList();
 
@@ -115,8 +116,8 @@ namespace Carrotware.CMS.Core {
 						  orderby ct.NavOrder, ct.NavMenuText
 						  where ct.SiteID == siteID
 								&& (ct.PageActive == true || bActiveOnly == false)
-								&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-								&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+								&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+								&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 								&& ct.IsLatestVersion == true
 								&& lstTop.Contains(ct.Root_ContentID)
 						  select CreateSiteNav(ct)).ToList();
@@ -232,7 +233,7 @@ namespace Carrotware.CMS.Core {
 			SiteNav nav1 = GetPageNavigation(siteID, rootContentID);
 
 			if (nav1.ContentType == ContentPageType.PageType.BlogEntry) {
-				Guid? parentid = SiteData.GetSiteByID(siteID).Blog_Root_ContentID;
+				Guid? parentid = SiteData.GetSiteFromCache(siteID).Blog_Root_ContentID;
 				nav1.Parent_ContentID = parentid;
 			}
 
@@ -302,21 +303,22 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
-		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates) {
+		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates, bool bActiveOnly) {
 
-			SiteData site = SiteData.GetSiteByID(siteID);
+			SiteData site = SiteData.GetSiteFromCache(siteID);
 
-			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetBlogContentTallies(db, siteID)
+			List<carrot_ContentTally> lstContentTally = db.carrot_BlogMonthlyTallies(siteID, bActiveOnly, iUpdates).ToList();
+
+			List<IContentMetaInfo> lstContent = (from ct in lstContentTally
 												 orderby ct.DateMonth descending
 												 select (IContentMetaInfo)(
 												 new ContentDateTally {
 													 DateCaption = ct.DateSlug,
-													 CreateDate = Convert.ToDateTime(ct.DateMonth),
+													 GoLiveDate = Convert.ToDateTime(ct.DateMonth),
 													 UseCount = Convert.ToInt32(ct.ContentCount),
 													 TheSite = site,
 													 TallyID = Guid.NewGuid()
-												 })).Take(iUpdates).ToList();
-
+												 })).ToList();
 
 			return lstContent;
 		}
@@ -388,7 +390,7 @@ namespace Carrotware.CMS.Core {
 			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetLatestBlogListDateRange(db, currentSite.SiteID, dateBegin, dateEnd, bActiveOnly);
 
 			lstContent = (from p in query1
-						  group p by p.CreateDate.Date into g
+						  group p by p.GoLiveDateLocal.Date into g
 						  select new ContentDateLinks { PostDate = g.Key, UseCount = g.Count() }).ToList();
 
 			lstContent.ToList().ForEach(q => q.TheSite = currentSite);

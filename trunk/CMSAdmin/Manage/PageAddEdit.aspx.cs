@@ -31,7 +31,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentAdd);
-			lblUpdated.Text = DateTime.Now.ToString();
+			lblUpdated.Text = SiteData.CurrentSite.Now.ToString();
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {
@@ -65,11 +65,12 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 
 			if (!IsPostBack) {
-
-				txtReleaseDate.Text = DateTime.Today.ToShortDateString();
-				txtReleaseTime.Text = DateTime.Today.ToShortTimeString();
-				txtRetireDate.Text = DateTime.Today.AddYears(200).ToShortDateString();
-				txtRetireTime.Text = DateTime.Today.AddYears(200).ToShortTimeString();
+				DateTime dtSite = SiteData.CurrentSite.Now.AddMinutes(-10);
+				txtReleaseDate.Text = dtSite.ToShortDateString();
+				txtReleaseTime.Text = dtSite.ToShortTimeString();
+				dtSite = SiteData.CurrentSite.Now.AddMinutes(10);
+				txtRetireDate.Text = dtSite.AddYears(200).ToShortDateString();
+				txtRetireTime.Text = dtSite.AddYears(200).ToShortTimeString();
 
 				ParentPagePicker.RootContentID = Guid.Empty;
 
@@ -85,8 +86,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID);
 					if (cpe != null) {
 						pageContents = cpe.ThePage;
-						//pageContents.CreateDate = DateTime.Now;
-						pageContents.EditDate = DateTime.Now;
+						pageContents.EditDate = SiteData.CurrentSite.Now;
 
 						ContentPage par = pageHelper.FindByFilename(SiteID, cpe.ParentFileName);
 						if (par != null) {
@@ -146,6 +146,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					txtNav.Text = pageContents.NavMenuText;
 					txtHead.Text = pageContents.PageHead;
 					txtFileName.Text = pageContents.FileName;
+					txtThumb.Text = pageContents.Thumbnail;
 
 					txtDescription.Text = pageContents.MetaDescription;
 					txtKey.Text = pageContents.MetaKeyword;
@@ -167,7 +168,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					txtRetireTime.Text = pageContents.RetireDate.ToShortTimeString();
 
 					if (pageContents.Parent_ContentID.HasValue) {
-						//txtParent.Text = pageContents.Parent_ContentID.ToString();
 						ParentPagePicker.SelectedPage = pageContents.Parent_ContentID.Value;
 					}
 					if (pageContents.TemplateFile != null) {
@@ -215,8 +215,8 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID).ThePage;
 				if (pageContents != null) {
 					pageContents.SiteID = SiteID;
-					//pageContents.CreateDate = DateTime.Now;
-					pageContents.EditDate = DateTime.Now;
+					//pageContents.CreateDate = SiteData.CurrentSite.SiteTime;
+					pageContents.EditDate = SiteData.CurrentSite.Now;
 				}
 			}
 
@@ -225,13 +225,14 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.Root_ContentID = Guid.NewGuid();
 				pageContents.ContentID = pageContents.ContentID;
 				pageContents.SiteID = SiteID;
-				pageContents.CreateDate = DateTime.Now;
+				pageContents.CreateDate = SiteData.CurrentSite.Now;
 			}
 
-			pageContents.RetireDate = DateTime.Now.AddYears(200);
-			pageContents.GoLiveDate = DateTime.Now;
+			pageContents.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
+			pageContents.GoLiveDate = DateTime.UtcNow;
 
 			pageContents.IsLatestVersion = true;
+			pageContents.Thumbnail = txtThumb.Text;
 
 			pageContents.TemplateFile = ddlTemplate.SelectedValue;
 
@@ -243,7 +244,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			pageContents.MetaDescription = txtDescription.Text;
 			pageContents.MetaKeyword = txtKey.Text;
 
-			pageContents.EditDate = DateTime.Now;
+			pageContents.EditDate = SiteData.CurrentSite.Now;
 			pageContents.NavOrder = int.Parse(txtSort.Text);
 
 			pageContents.PageText = reBody.Text;
@@ -278,7 +279,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					wd.Root_ContentID = pageContents.Root_ContentID;
 					wd.Root_WidgetID = Guid.NewGuid();
 					wd.WidgetDataID = Guid.NewGuid();
-					wd.EditDate = DateTime.Now;
+					wd.EditDate = SiteData.CurrentSite.Now;
 					wd.Save();
 				}
 

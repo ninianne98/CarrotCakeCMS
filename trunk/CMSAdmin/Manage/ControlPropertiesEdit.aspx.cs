@@ -311,7 +311,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 
 			w.SaveDefaultControlProperties(props);
-			w.EditDate = DateTime.Now;
+			w.EditDate = SiteData.CurrentSite.Now;
 
 			List<Widget> lstPageWidgets = cmsHelper.cmsAdminWidget;
 			lstPageWidgets.RemoveAll(x => x.Root_WidgetID == guidWidget);

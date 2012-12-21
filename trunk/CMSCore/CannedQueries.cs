@@ -23,8 +23,8 @@ namespace Carrotware.CMS.Core {
 					where ct.SiteID == siteID
 					&& ct.IsLatestVersion == true
 					&& (ct.PageActive == true || bActiveOnly == false)
-					&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-					&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+					&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+					&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 					&& ct.IsLatestVersion == true
 					&& ct.ContentTypeID == ContentPageType.GetIDByType(entryType)
 					select ct);
@@ -48,15 +48,6 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
-		internal static IQueryable<vw_carrot_ContentDateTally> GetBlogContentTallies(CarrotCMSDataContext ctx, Guid siteID) {
-			return (from ct in ctx.vw_carrot_ContentDateTallies
-					orderby ct.DateMonth descending
-					where ct.SiteID == siteID
-					 && ct.IsLatestVersion == true
-					 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
-					select ct);
-		}
-
 		internal static IQueryable<vw_carrot_Content> GetLatestContentList(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			return (from ct in ctx.vw_carrot_Contents
 					orderby ct.NavOrder, ct.NavMenuText
@@ -64,8 +55,8 @@ namespace Carrotware.CMS.Core {
 					 && ct.IsLatestVersion == true
 					 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
 					 && (ct.PageActive == true || bActiveOnly == false)
-					 && (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-					 && (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+					 && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+					 && (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 					select ct);
 		}
 
@@ -83,8 +74,8 @@ namespace Carrotware.CMS.Core {
 					 && ct.CreateDate.Date <= dateEnd.Date
 					 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					 && (ct.PageActive == true || bActiveOnly == false)
-					 && (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-					 && (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+					 && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+					 && (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 					select ct);
 		}
 
@@ -95,8 +86,8 @@ namespace Carrotware.CMS.Core {
 					 && ct.IsLatestVersion == true
 					 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					 && (ct.PageActive == true || bActiveOnly == false)
-					 && (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-					 && (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+					 && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+					 && (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 					select ct);
 		}
 
@@ -108,8 +99,8 @@ namespace Carrotware.CMS.Core {
 						&& ct.SiteID == siteID
 						&& r.TagUrl.ToLower() == sTagURL.ToLower()
 						&& (ct.PageActive == true || bActiveOnly == false)
-						&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-						&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 						&& ct.IsLatestVersion == true
 					select ct);
 		}
@@ -122,8 +113,8 @@ namespace Carrotware.CMS.Core {
 						&& ct.SiteID == siteID
 						&& r.CategoryUrl.ToLower() == sCatURL.ToLower()
 						&& (ct.PageActive == true || bActiveOnly == false)
-						&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-						&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 						&& ct.IsLatestVersion == true
 					select ct);
 		}
@@ -136,8 +127,8 @@ namespace Carrotware.CMS.Core {
 						&& ct.SiteID == siteID
 						&& lstCategories.Contains(r.ContentCategoryID)
 						&& (ct.PageActive == true || bActiveOnly == false)
-						&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-						&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 						&& ct.IsLatestVersion == true
 					select ct);
 		}
@@ -153,8 +144,8 @@ namespace Carrotware.CMS.Core {
 								|| ct.MetaKeyword.Contains(searchTerm)
 							)
 						&& (ct.PageActive == true || bActiveOnly == false)
-						&& (ct.GoLiveDate < DateTime.Now || bActiveOnly == false)
-						&& (ct.RetireDate > DateTime.Now || bActiveOnly == false)
+						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 						&& ct.IsLatestVersion == true
 					select ct);
 		}
@@ -180,6 +171,13 @@ namespace Carrotware.CMS.Core {
 					where c.IsLatestVersion == true
 						 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					select c);
+		}
+
+		internal static IQueryable<carrot_RootContent> GetBlogAllRootTbl(CarrotCMSDataContext ctx, Guid siteID) {
+			return (from ct in ctx.carrot_RootContents
+					where ct.SiteID == siteID
+					where ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
+					select ct);
 		}
 
 		internal static IQueryable<carrot_Content> GetContentAllContentTbl(CarrotCMSDataContext ctx, Guid siteID) {

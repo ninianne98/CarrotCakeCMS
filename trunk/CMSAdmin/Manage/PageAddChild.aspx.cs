@@ -67,17 +67,17 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.MetaKeyword = txtKey.Text;
 
 				pageContents.Heartbeat_UserId = SecurityData.CurrentUserGuid;
-				pageContents.EditHeartbeat = DateTime.Now;
+				pageContents.EditHeartbeat = DateTime.UtcNow;
 
 				pageContents.EditUserId = SecurityData.CurrentUserGuid;
 				pageContents.IsLatestVersion = true;
-				pageContents.EditDate = DateTime.Now;
+				pageContents.EditDate = SiteData.CurrentSite.Now;
 				pageContents.NavOrder = parentPageContents.NavOrder + 1;
 				pageContents.PageActive = false;
 				pageContents.ContentType = ContentPageType.PageType.ContentEntry;
 
-				pageContents.RetireDate = DateTime.Now.AddYears(200);
-				pageContents.GoLiveDate = DateTime.Now;
+				pageContents.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
+				pageContents.GoLiveDate = SiteData.CurrentSite.Now;
 
 				pageContents.SavePageEdit();
 

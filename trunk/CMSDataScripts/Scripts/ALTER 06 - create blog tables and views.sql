@@ -2,6 +2,39 @@
 -- addition of blogging tables
 
 -- USE [CarrotwareCMS]
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [IsLatestVersion] [bit] NULL
+
+GO
+
+UPDATE [dbo].[carrot_Content] 
+SET [IsLatestVersion] = 0
+WHERE ISNULL([IsLatestVersion], 0) = 0
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [IsLatestVersion] [bit] NOT NULL
+
+GO
+
+ALTER TABLE [dbo].[carrot_WidgetData] 
+	ALTER COLUMN  [IsLatestVersion] [bit] NULL
+
+GO
+
+UPDATE [dbo].[carrot_WidgetData] 
+SET [IsLatestVersion] = 0
+WHERE ISNULL([IsLatestVersion], 0) = 0
+
+GO
+
+ALTER TABLE [dbo].[carrot_WidgetData] 
+	ALTER COLUMN  [IsLatestVersion] [bit] NOT NULL
+
 GO
 
 IF NOT EXISTS( select * from information_schema.columns 
@@ -77,8 +110,8 @@ WHERE [ContentTypeID] is null
 
 UPDATE carrot_Content
 SET NavOrder = 10
-FROM carrot_RootContent 
-	INNER JOIN carrot_Content ON carrot_RootContent.Root_ContentID = carrot_Content.Root_ContentID
+FROM [dbo].carrot_RootContent 
+	INNER JOIN [dbo].carrot_Content ON carrot_RootContent.Root_ContentID = carrot_Content.Root_ContentID
 WHERE carrot_RootContent.ContentTypeID <> @ContentTypeID
 
 
@@ -159,6 +192,14 @@ IF NOT EXISTS( select * from information_schema.columns
 END	
 
 
+IF NOT EXISTS( select * from information_schema.columns 
+		where table_name = 'carrot_RootContent' and column_name = 'PageThumbnail') BEGIN
+	
+	ALTER TABLE [dbo].[carrot_RootContent] ADD [PageThumbnail] [nvarchar](128) NULL
+	
+END	
+
+
 GO
 
 update [dbo].[carrot_Widget]
@@ -184,8 +225,8 @@ where isnull([Blog_DatePattern], '') = ''
 
 
 --SELECT s.SiteID, rc.[FileName]
---FROM carrot_Sites AS s 
---INNER JOIN carrot_RootContent AS rc ON s.SiteID = rc.SiteID
+--FROM [dbo].carrot_Sites AS s 
+--INNER JOIN [dbo].carrot_RootContent AS rc ON s.SiteID = rc.SiteID
 --where rc.[FileName] like rtrim(ltrim(s.Blog_FolderPath)) + '%'
 
 
@@ -195,20 +236,20 @@ set [Blog_FolderPath] = ltrim(rtrim([Blog_FolderPath]))
 
 update s
 set Blog_FolderPath = 'archive1'
-FROM carrot_Sites AS s 
-INNER JOIN carrot_RootContent AS rc ON s.SiteID = rc.SiteID
+FROM [dbo].carrot_Sites AS s 
+INNER JOIN [dbo].carrot_RootContent AS rc ON s.SiteID = rc.SiteID
 where rc.[FileName] like '/'+s.Blog_FolderPath+'/' + '%'
 
 update s
 set Blog_FolderPath = 'archive2'
-FROM carrot_Sites AS s 
-INNER JOIN carrot_RootContent AS rc ON s.SiteID = rc.SiteID
+FROM [dbo].carrot_Sites AS s 
+INNER JOIN [dbo].carrot_RootContent AS rc ON s.SiteID = rc.SiteID
 where rc.[FileName] like '/'+s.Blog_FolderPath+'/' + '%'
 
 update s
 set Blog_FolderPath = 'archive3'
-FROM carrot_Sites AS s 
-INNER JOIN carrot_RootContent AS rc ON s.SiteID = rc.SiteID
+FROM [dbo].carrot_Sites AS s 
+INNER JOIN [dbo].carrot_RootContent AS rc ON s.SiteID = rc.SiteID
 where rc.[FileName] like '/'+s.Blog_FolderPath+'/' + '%'
 
 
@@ -540,57 +581,6 @@ ALTER TABLE [dbo].[carrot_ContentComment] ADD  CONSTRAINT [DF_carrot_ContentComm
 GO
 
 
---=====================
-
-
---IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[carrot_RootContent_carrot_Sites_FK]') 
---			AND parent_object_id = OBJECT_ID(N'[carrot_Sites]'))
---	ALTER TABLE [dbo].[carrot_Sites] DROP CONSTRAINT [carrot_RootContent_carrot_Sites_FK]
-
---GO
-
---ALTER TABLE [dbo].[carrot_Sites]  WITH CHECK ADD  CONSTRAINT [carrot_RootContent_carrot_Sites_FK] FOREIGN KEY([Blog_Root_ContentID])
---	REFERENCES [dbo].[carrot_RootContent] ([Root_ContentID])
-
---GO
-
---ALTER TABLE [dbo].[carrot_Sites] CHECK CONSTRAINT [carrot_RootContent_carrot_Sites_FK]
-
---GO
-
-
-GO
-
---=============== BEGIN UPDATE Content View===================
-
-GO
-
-IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[vw_carrot_Content]'))
-	DROP VIEW [dbo].[vw_carrot_Content]
-
-GO
-
-
-CREATE VIEW [dbo].[vw_carrot_Content]
-AS 
-
-
-SELECT rc.Root_ContentID, rc.SiteID, rc.Heartbeat_UserId, rc.EditHeartbeat, rc.[FileName], rc.PageActive, 
-		rc.CreateDate, c.ContentID, c.Parent_ContentID, c.IsLatestVersion, c.TitleBar, c.NavMenuText, c.PageHead, 
-		c.PageText, c.LeftPageText, c.RightPageText, c.NavOrder, c.EditUserId, c.EditDate, c.TemplateFile, c.MetaKeyword, c.MetaDescription,
-		ct.ContentTypeID, ct.ContentTypeValue, rc.PageSlug
-FROM dbo.carrot_Content AS c 
-INNER JOIN dbo.carrot_RootContent AS rc ON c.Root_ContentID = rc.Root_ContentID
-INNER JOIN dbo.carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
-  
-
-
-GO
-
---=============== END UPDATE Content View===================
-
- 
-
 --=============== BEGIN UPDATE Category View===================
 
 GO
@@ -664,8 +654,8 @@ AS
 
 SELECT  s.SiteID, cc.ContentCategoryID, cc.CategoryText, ISNULL(cc2.TheCount, 0) AS UseCount, 
 		'/'+s.Blog_FolderPath +'/'+ s.Blog_CategoryPath +'/'+ cc.CategorySlug + '.aspx' as CategoryUrl
-FROM         carrot_Sites AS s 
-INNER JOIN carrot_ContentCategory AS cc ON s.SiteID = cc.SiteID
+FROM [dbo].carrot_Sites AS s 
+INNER JOIN [dbo].carrot_ContentCategory AS cc ON s.SiteID = cc.SiteID
 LEFT JOIN
       (SELECT ContentCategoryID, COUNT(Root_ContentID) AS TheCount
         FROM dbo.carrot_CategoryContentMapping
@@ -694,8 +684,8 @@ AS
 
 SELECT  s.SiteID, cc.ContentTagID, cc.TagText, ISNULL(cc2.TheCount, 0) AS UseCount, 
 		'/'+s.Blog_FolderPath +'/'+ s.Blog_TagPath +'/'+ cc.TagSlug + '.aspx' as TagUrl
-FROM         carrot_Sites AS s 
-INNER JOIN carrot_ContentTag AS cc ON s.SiteID = cc.SiteID
+FROM [dbo].carrot_Sites AS s 
+INNER JOIN [dbo].carrot_ContentTag AS cc ON s.SiteID = cc.SiteID
 LEFT JOIN
       (SELECT ContentTagID, COUNT(Root_ContentID) AS TheCount
         FROM dbo.carrot_TagContentMapping
@@ -707,35 +697,6 @@ GO
 
 --=============== END UPDATE TagURL View===================
 
-
-
---=============== BEGIN UPDATE Date Tally View===================
-
-GO
-
-IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[vw_carrot_ContentDateTally]'))
-	DROP VIEW [dbo].[vw_carrot_ContentDateTally]
-
-GO
-
-
-CREATE VIEW [dbo].[vw_carrot_ContentDateTally]
-AS 
-
-
-SELECT COUNT(Root_ContentID) AS ContentCount, SiteID, DateMonth, DateSlug, IsLatestVersion, ContentTypeID, ContentTypeValue
-FROM   (SELECT Root_ContentID, SiteID, IsLatestVersion, ContentTypeID, ContentTypeValue, 
-			CONVERT(datetime, CONVERT(varchar(25), CreateDate - DAY(CreateDate) + 1, 112)) AS DateMonth, 
-			CONVERT(varchar(25), CreateDate - DAY(CreateDate) + 1, 112) AS DateSlug
-			FROM vw_carrot_Content) AS X
-GROUP BY SiteID, DateMonth, DateSlug, IsLatestVersion, ContentTypeID, ContentTypeValue
-
-  
-
-
-GO
-
---=============== END UPDATE Date Tally View===================
 
 
 
@@ -780,7 +741,6 @@ ALTER TABLE [dbo].[carrot_UserData] CHECK CONSTRAINT [FK_carrot_UserData_UserId]
 
 GO
 
-
 --=============== BEGIN UPDATE TagURL View===================
 
 GO
@@ -797,8 +757,8 @@ AS
 
 SELECT   m.UserId, ud.UserNickName, ud.FirstName, ud.LastName, m.LoweredEmail, m.IsApproved, m.IsLockedOut, m.CreateDate, m.LastLoginDate, 
                       m.UserName, m.LastActivityDate
-FROM      vw_aspnet_MembershipUsers    AS m 
-LEFT JOIN carrot_UserData AS ud ON m.UserId = ud.UserId
+FROM      [dbo].vw_aspnet_MembershipUsers    AS m 
+LEFT JOIN [dbo].carrot_UserData AS ud ON m.UserId = ud.UserId
 
 
 GO
@@ -963,9 +923,9 @@ AS
 
 SELECT w.Root_WidgetID, w.Root_ContentID, w.WidgetOrder, w.PlaceholderName, w.ControlPath, w.WidgetActive, 
 	wd.WidgetDataID, wd.IsLatestVersion, wd.EditDate, wd.ControlProperties, cr.SiteID
-FROM carrot_Widget AS w 
-	INNER JOIN carrot_WidgetData AS wd ON w.Root_WidgetID = wd.Root_WidgetID 
-	INNER JOIN carrot_RootContent AS cr ON w.Root_ContentID = cr.Root_ContentID
+FROM [dbo].carrot_Widget AS w 
+	INNER JOIN [dbo].carrot_WidgetData AS wd ON w.Root_WidgetID = wd.Root_WidgetID 
+	INNER JOIN [dbo].carrot_RootContent AS cr ON w.Root_ContentID = cr.Root_ContentID
   
 
 
