@@ -55,8 +55,8 @@
 	</asp:Panel>
 	<asp:Panel runat="server" ID="pnlAdd">
 		<p>
-			This creates a blank and unpublished page (no content) under the currently being edited page. Will have the same template as the currently being
-			edited page.
+			This creates a blank and unpublished page (no content) under the currently being edited page. Will have the same template as the currently being edited
+			page.
 		</p>
 		<table width="700">
 			<tr>
@@ -74,8 +74,8 @@
 					filename:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
-						Columns="45" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
+						MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
@@ -99,8 +99,6 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
-					<%--<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtHead" ID="RequiredFieldValidator3" runat="server"
-					ErrorMessage="Required" Display="Dynamic"></asp:RequiredFieldValidator>--%>
 				</td>
 			</tr>
 			<tr>
@@ -108,8 +106,8 @@
 					meta keywords:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
-						Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
+						TextMode="MultiLine" runat="server"></asp:TextBox>
 				</td>
 			</tr>
 			<tr>
@@ -117,8 +115,7 @@
 					meta description:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
-						runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
 				</td>
 			</tr>
 		</table>

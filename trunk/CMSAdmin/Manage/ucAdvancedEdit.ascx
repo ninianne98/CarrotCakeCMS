@@ -58,6 +58,10 @@
 
 	cmsSetPreviewFileName('<%=SiteData.PreviewTemplateFilePage %>');
 
+	function cmsSetFileNameOverride() {
+		cmsOverridePageName("<%=FileName %>");
+	}
+
 </script>
 <div style="display: none;">
 	<img src="/manage/images/cog.png" alt="" />
@@ -153,7 +157,7 @@
 									<br />
 								</p>
 								<p>
-									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" onclick="cmsShowEditPageInfo();" />
+									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" />
 								</p>
 								<p>
 									<input runat="server" id="btnAddChild" type="button" value="Create Sub Page" onclick="cmsShowAddChildPage();" />
@@ -193,7 +197,7 @@
 	</div>
 	<div id="CMSsavedconfirm" title="Page Saved!">
 		<p id="CMSsavedconfirmmsg">
-			The page has been saved. Click OK to return to browse mode. Redirecting in 10 seconds...</p>
+			The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...</p>
 	</div>
 	<div id="CMScancelconfirm" title="Quit Editor?">
 		<p id="CMScancelconfirmmsg">

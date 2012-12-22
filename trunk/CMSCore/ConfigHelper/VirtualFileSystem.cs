@@ -46,27 +46,27 @@ namespace Carrotware.CMS.Core {
 
 			sRequestedURL = SiteData.AppendDefaultPath(sRequestedURL);
 
-			//try {
-			sScrubbedURL = SiteData.AlternateCurrentScriptName;
+			try {
+				sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
-			if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
-				sFileRequested = sScrubbedURL;
-				bURLOverride = true;
+				if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
+					sFileRequested = sScrubbedURL;
+					bURLOverride = true;
+				}
+
+				VirtualDirectory.RegisterRoutes();
+
+			} catch (Exception ex) {
+				//assumption is database is probably empty / needs updating, so trigger the under construction view
+				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+					if (navData == null) {
+						navData = SiteNavHelper.GetEmptyHome();
+					}
+				} else {
+					//something bad has gone down, toss back the error
+					throw;
+				}
 			}
-
-			VirtualDirectory.RegisterRoutes();
-
-			//} catch (Exception ex) {
-			//    //assumption is database is probably empty / needs updating, so trigger the under construction view
-			//    if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
-			//        if (navData == null) {
-			//            navData = SiteNavHelper.GetEmptyHome();
-			//        }
-			//    } else {
-			//        //something bad has gone down, toss back the error
-			//        throw;
-			//    }
-			//}
 
 			sFileRequested = SiteData.AppendDefaultPath(sFileRequested);
 

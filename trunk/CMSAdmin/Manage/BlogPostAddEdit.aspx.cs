@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -156,7 +156,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					reLeftBody.Text = pageContents.LeftPageText;
 					reRightBody.Text = pageContents.RightPageText;
 
-					chkActive.Checked = Convert.ToBoolean(pageContents.PageActive);
+					chkActive.Checked = pageContents.PageActive;
 
 					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
 					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();
@@ -169,21 +169,9 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 						try { ddlTemplate.SelectedValue = pageContents.TemplateFile.ToLower(); } catch { }
 					}
 
-					foreach (RepeaterItem r in rpCat.Items) {
-						CheckBox chk = (CheckBox)r.FindControl("chk");
-						Guid id = new Guid(chk.Attributes["value"].ToString());
-						if (pageContents.ContentCategories.Where(x => x.ContentCategoryID == id).Count() > 0) {
-							chk.Checked = true;
-						}
-					}
+					PreselectCheckboxRepeater(rpCat, pageContents.ContentCategories.Cast<IContentMetaInfo>().ToList());
 
-					foreach (RepeaterItem r in rpTag.Items) {
-						CheckBox chk = (CheckBox)r.FindControl("chk");
-						Guid id = new Guid(chk.Attributes["value"].ToString());
-						if (pageContents.ContentTags.Where(x => x.ContentTagID == id).Count() > 0) {
-							chk.Checked = true;
-						}
-					}
+					PreselectCheckboxRepeater(rpTag, pageContents.ContentTags.Cast<IContentMetaInfo>().ToList());
 				}
 			}
 
@@ -201,6 +189,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pnlReview.Visible = false;
 			}
 		}
+
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			SavePage(false);
@@ -271,21 +260,13 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			List<ContentCategory> lstCat = new List<ContentCategory>();
 			List<ContentTag> lstTag = new List<ContentTag>();
 
-			foreach (RepeaterItem r in rpCat.Items) {
-				CheckBox chk = (CheckBox)r.FindControl("chk");
-				Guid id = new Guid(chk.Attributes["value"].ToString());
-				if (chk.Checked) {
-					lstCat.Add(SiteData.CurrentSite.GetCategoryList().Where(x => x.ContentCategoryID == id).FirstOrDefault());
-				}
-			}
+			lstCat = (from cr in CollectCheckboxRepeater(rpCat)
+					  join l in SiteData.CurrentSite.GetCategoryList() on cr equals l.ContentCategoryID
+					  select l).ToList();
 
-			foreach (RepeaterItem r in rpTag.Items) {
-				CheckBox chk = (CheckBox)r.FindControl("chk");
-				Guid id = new Guid(chk.Attributes["value"].ToString());
-				if (chk.Checked) {
-					lstTag.Add(SiteData.CurrentSite.GetTagList().Where(x => x.ContentTagID == id).FirstOrDefault());
-				}
-			}
+			lstTag = (from cr in CollectCheckboxRepeater(rpTag)
+					  join l in SiteData.CurrentSite.GetTagList() on cr equals l.ContentTagID
+					  select l).ToList();
 
 			pageContents.ContentCategories = lstCat;
 			pageContents.ContentTags = lstTag;

@@ -21,6 +21,9 @@ function cmsSetServiceParms(serviceURL, pagePath, pageID, timeTck) {
 	timeTick = timeTck;
 }
 
+function cmsOverridePageName(pagePath) {
+	thisPageNav = pagePath;
+}
 
 var cmsConfirmLeavingPage = true;
 
@@ -458,15 +461,28 @@ function cmsSaveWidgetsCallback(data, status) {
 
 function cmsSavePageCallback(data, status) {
 	if (data.d == "OK") {
+		cmsSetFileNameOverride();
 		CMSBusyShort();
-		//cmsAlertModal("Saved");
 		cmsMakeOKToLeave();
-		cmsNotifySaved()
+		cmsNotifySaved();
 		window.setTimeout("location.href = \'" + thisPageNav + "\'", 10000);
+		iCount = 10;
+		cmsCountdownWindow();
 	} else {
 		cmsAlertModal(data.d);
 	}
 }
+
+var iCount = 0;
+function cmsCountdownWindow() {
+	if (iCount >= 0) {
+		iCount--;
+		$('#cmsSaveCountdown').html(iCount);
+
+		setTimeout("cmsCountdownWindow();", 1025);
+	}
+}
+
 
 function cmsNotifySaved() {
 	$("#CMSsavedconfirm").dialog("destroy");
@@ -586,12 +602,17 @@ function cmsManageWidgetHistory(widgetID) {
 }
 
 function cmsShowEditPageInfo() {
-	//cmsAlertModal("cmsShowEditPageInfo");
+
 	cmsLaunchWindow('/Manage/PageEdit.aspx?pageid=' + thisPageID);
 }
 
+function cmsShowEditPostInfo() {
+
+	cmsLaunchWindow('/Manage/BlogPostEdit.aspx?pageid=' + thisPageID);
+}
+
 function cmsShowAddChildPage() {
-	//cmsAlertModal("cmsShowEditPageInfo");
+
 	cmsLaunchWindow('/Manage/PageAddChild.aspx?pageid=' + thisPageID);
 }
 

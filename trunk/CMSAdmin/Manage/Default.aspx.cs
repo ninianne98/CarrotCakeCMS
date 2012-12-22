@@ -121,7 +121,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 			if (sDatePatternOld != ddlDatePattern.SelectedValue || sTimezoneOld != ddlTimeZone.SelectedValue) {
 				using (ContentPageHelper cph = new ContentPageHelper()) {
-					cph.BulkFileNameFromSlug(SiteID, ddlDatePattern.SelectedValue);
+					cph.BulkBlogFileNameUpdateFromDate(SiteID);
 				}
 			}
 

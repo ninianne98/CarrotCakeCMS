@@ -137,11 +137,15 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
 				if (!string.IsNullOrEmpty(CurrentEditPage)) {
 					filePage = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, CurrentEditPage);
-					CurrentPageGuid = filePage.Root_ContentID;
+					if (filePage != null) {
+						CurrentPageGuid = filePage.Root_ContentID;
+					}
 				} else {
 					if (CurrentPageGuid != Guid.Empty) {
 						filePage = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
-						CurrentEditPage = filePage.FileName;
+						if (filePage != null) {
+							CurrentEditPage = filePage.FileName;
+						}
 					} else {
 						filePage = new ContentPage();
 					}
@@ -894,6 +898,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					}
 
 					newContent.SavePageEdit();
+
+					if (newContent.ContentType == ContentPageType.PageType.BlogEntry) {
+						pageHelper.ResolveDuplicateBlogURLs(newContent.SiteID);
+					}
 
 					cmsAdminWidget = new List<Widget>();
 					cmsAdminContent = null;

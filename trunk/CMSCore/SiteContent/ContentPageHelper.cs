@@ -165,36 +165,32 @@ namespace Carrotware.CMS.Core {
 			return ScrubFilename(Guid.Empty, FileName);
 		}
 
-		public void BulkFileNameFromSlug(Guid siteID, string NewDatePattern) {
-
-			if (string.IsNullOrEmpty(NewDatePattern)) {
-				NewDatePattern = "yyyy/MM/dd";
-			}
-			NewDatePattern = NewDatePattern.Trim();
+		public void BulkBlogFileNameUpdateFromDate(Guid siteID) {
 
 			SiteData site = SiteData.GetSiteFromCache(siteID);
-
-			//candidate for a stored proc
-			//IQueryable<carrot_RootContent> query = CompiledQueries.cqBlogAllRootTbl(db, siteID);
-			//query.ToList().ForEach(q => q.FileName = ScrubFilename(q.Root_ContentID, "/" + q.CreateDate.ToString(NewDatePattern) + "/" + q.PageSlug));
-			//db.SubmitChanges();
 
 			db.carrot_UpdateGoLiveLocal(siteID, (int)site.SiteTimeZoneInfo.BaseUtcOffset.TotalMinutes);
 
 			db.carrot_BlogDateFilenameUpdate(siteID);
 
+			ResolveDuplicateBlogURLs(siteID);
+		}
 
-			IQueryable<string> query2 = CompiledQueries.cqBlogDupFileNames(db, siteID);
+		public void ResolveDuplicateBlogURLs(Guid siteID) {
+			SiteData site = SiteData.GetSiteFromCache(siteID);
+			string SiteDatePattern = site.Blog_DatePattern;
+
+			IQueryable<string> queryFindDups = CompiledQueries.cqBlogDupFileNames(db, siteID);
 
 			Guid contentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry);
 
-			foreach (string fileName in query2) {
+			foreach (string fileName in queryFindDups) {
 				int iDupCtr = 1;
-				IQueryable<carrot_RootContent> query3 = CompiledQueries.cqGeRootContentListByURLTbl(db, siteID, contentTypeID, fileName);
+				IQueryable<carrot_RootContent> queryContentShareFilename = CompiledQueries.cqGeRootContentListByURLTbl(db, siteID, contentTypeID, fileName);
 
-				foreach (carrot_RootContent item in query3) {
+				foreach (carrot_RootContent item in queryContentShareFilename) {
 					int c = -1;
-					string sNewFilename = ScrubFilename(item.Root_ContentID, "/" + item.GoLiveDate.ToString(NewDatePattern) + "/" + item.PageSlug);
+					string sNewFilename = ScrubFilename(item.Root_ContentID, "/" + item.GoLiveDate.ToString(SiteDatePattern) + "/" + item.PageSlug);
 					string sSlug = item.PageSlug;
 
 					c = CompiledQueries.cqGeRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
@@ -217,7 +213,6 @@ namespace Carrotware.CMS.Core {
 					db.SubmitChanges();
 				}
 			}
-
 		}
 
 		public static string ScrubFilename(Guid rootContentID, string FileName) {

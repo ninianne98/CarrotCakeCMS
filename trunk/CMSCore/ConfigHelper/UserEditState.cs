@@ -32,7 +32,11 @@ namespace Carrotware.CMS.Core {
 
 		public static string ContentKey {
 			get {
-				return "cms_UserEditState_" + SecurityData.CurrentUser.UserName.ToLower();
+				if (SecurityData.CurrentUser != null) {
+					return "cms_UserEditState_" + SecurityData.CurrentUser.UserName.ToLower();
+				} else {
+					return "cms_UserEditState_anonymous";
+				}
 			}
 		}
 
