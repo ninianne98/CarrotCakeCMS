@@ -159,6 +159,13 @@
     <Compile Include="Manage\CommentIndexPop.aspx.designer.cs">
       <DependentUpon>CommentIndexPop.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\BlogPostEdit.aspx.cs">
+      <DependentUpon>BlogPostEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\BlogPostEdit.aspx.designer.cs">
+      <DependentUpon>BlogPostEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\SiteImport.aspx.cs">
       <DependentUpon>SiteImport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -306,13 +313,6 @@
     <Compile Include="Manage\ucSitePageDrillDown.ascx.designer.cs">
       <DependentUpon>ucSitePageDrillDown.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Manage\ucTextContent.ascx.cs">
-      <DependentUpon>ucTextContent.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Manage\ucTextContent.ascx.designer.cs">
-      <DependentUpon>ucTextContent.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Manage\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -410,13 +410,6 @@
     </Compile>
     <Compile Include="Manage\ucAdvancedEdit.ascx.designer.cs">
       <DependentUpon>ucAdvancedEdit.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Manage\ucGenericContent.ascx.cs">
-      <DependentUpon>ucGenericContent.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Manage\ucGenericContent.ascx.designer.cs">
-      <DependentUpon>ucGenericContent.ascx</DependentUpon>
     </Compile>
     <Compile Include="Manage\User.aspx.cs">
       <DependentUpon>User.aspx</DependentUpon>
@@ -536,6 +529,7 @@
     <Content Include="Manage\CommentIndex.aspx" />
     <Content Include="Manage\CommentAddEditPop.aspx" />
     <Content Include="Manage\CommentIndexPop.aspx" />
+    <Content Include="Manage\BlogPostEdit.aspx" />
     <Content Include="Manage\Images\accept.png" />
     <Content Include="Manage\Images\add.png" />
     <Content Include="Manage\Images\ani-drip.gif" />
@@ -949,7 +943,6 @@
     <Content Include="Manage\PageAddEdit.aspx" />
     <Content Include="Manage\PageIndex.aspx" />
     <Content Include="Manage\ucAdvancedEdit.ascx" />
-    <Content Include="Manage\ucGenericContent.ascx" />
     <Content Include="Manage\User.aspx" />
     <Content Include="Manage\UserAdd.aspx" />
     <Content Include="Manage\UserMembership.aspx" />
@@ -989,7 +982,6 @@
     <Content Include="Manage\ContentEdit.aspx" />
     <Content Include="Manage\PageEdit.aspx" />
     <Content Include="Manage\ucEditNotifier.ascx" />
-    <Content Include="Manage\ucTextContent.ascx" />
     <Content Include="MIT-LICENSE.txt" />
     <Content Include="Site_4\images\block_h.png" />
     <Content Include="Site_4\images\block_s.png" />

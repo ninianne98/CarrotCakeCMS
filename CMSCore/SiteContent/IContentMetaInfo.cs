@@ -6,5 +6,8 @@ namespace Carrotware.CMS.Core {
 		string MetaInfoText { get; }
 		string MetaInfoURL { get; }
 		int MetaInfoCount { get; }
+
+		void SetValue(Guid ContentMetaInfoID);
+
 	}
 }

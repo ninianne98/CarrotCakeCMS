@@ -134,7 +134,7 @@ namespace Carrotware.CMS.Core {
 			get {
 				Guid _currentUserGuid = Guid.Empty;
 				if (HttpContext.Current.User.Identity.IsAuthenticated) {
-					if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
+					if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) && CurrentUser != null) {
 						_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
 					}
 				}

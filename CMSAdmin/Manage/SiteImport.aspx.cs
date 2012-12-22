@@ -213,7 +213,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					}
 
 					using (ContentPageHelper cph = new ContentPageHelper()) {
-						cph.BulkFileNameFromSlug(site.SiteID, site.Blog_DatePattern);
+						cph.BulkBlogFileNameUpdateFromDate(site.SiteID);
 					}
 				}
 

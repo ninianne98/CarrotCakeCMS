@@ -89,6 +89,7 @@
     <Compile Include="ImportExport\WPBlogReader.cs" />
     <Compile Include="SearchParameterObject.cs" />
     <Compile Include="Security\ExtendedUserData.cs" />
+    <Compile Include="SiteContent\AuxContentMetaInfo.cs" />
     <Compile Include="SiteContent\ContentCategory.cs" />
     <Compile Include="SiteContent\ContentPage.cs" />
     <Compile Include="ImportExport\ContentPageExport.cs" />

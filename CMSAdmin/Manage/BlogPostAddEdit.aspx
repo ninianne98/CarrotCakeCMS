@@ -432,9 +432,9 @@
 							</div>
 						</div>
 					</div>
+					<div style="clear: both;">
+					</div>
 				</td>
-				<div style="clear: both;">
-				</div>
 			</tr>
 		</table>
 		<table width="700">

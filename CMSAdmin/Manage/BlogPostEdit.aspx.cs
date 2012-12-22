@@ -18,7 +18,7 @@ using Carrotware.CMS.UI.Base;
 */
 
 namespace Carrotware.CMS.UI.Admin.Manage {
-	public partial class PageEdit : AdminBasePage {
+	public partial class BlogPostEdit : AdminBasePage {
 
 		public Guid guidContentID = Guid.Empty;
 		ContentPage pageContents = null;
@@ -36,6 +36,12 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				if (!IsPostBack) {
 
+					rpCat.DataSource = SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText);
+					rpCat.DataBind();
+
+					rpTag.DataSource = SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText);
+					rpTag.DataBind();
+
 					txtTitle.Text = pageContents.TitleBar;
 					txtNav.Text = pageContents.NavMenuText;
 					txtHead.Text = pageContents.PageHead;
@@ -51,9 +57,12 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					lblUpdated.Text = pageContents.EditDate.ToString();
 
 					chkActive.Checked = pageContents.PageActive;
+
+					PreselectCheckboxRepeater(rpCat, pageContents.ContentCategories.Cast<IContentMetaInfo>().ToList());
+
+					PreselectCheckboxRepeater(rpTag, pageContents.ContentTags.Cast<IContentMetaInfo>().ToList());
 				}
 			}
-
 		}
 
 
@@ -72,6 +81,22 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
 				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
 				pageContents.PageActive = chkActive.Checked;
+
+				List<ContentCategory> lstCat = new List<ContentCategory>();
+				List<ContentTag> lstTag = new List<ContentTag>();
+
+				lstCat = (from cr in CollectCheckboxRepeater(rpCat)
+						  join l in SiteData.CurrentSite.GetCategoryList() on cr equals l.ContentCategoryID
+						  select l).ToList();
+
+				lstTag = (from cr in CollectCheckboxRepeater(rpTag)
+						  join l in SiteData.CurrentSite.GetTagList() on cr equals l.ContentTagID
+						  select l).ToList();
+
+				pageContents.ContentCategories = lstCat;
+				pageContents.ContentTags = lstTag;
+
+				pageContents.FileName = ContentPageHelper.CreateFileNameFromSlug(pageContents.SiteID, pageContents.GoLiveDate, pageContents.PageSlug);
 
 				cmsHelper.cmsAdminContent = pageContents;
 

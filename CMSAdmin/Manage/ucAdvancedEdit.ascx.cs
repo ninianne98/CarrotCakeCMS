@@ -24,8 +24,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 		public Guid guidContentID = Guid.Empty;
 		public bool bLocked = false;
-
+		public ContentPageType.PageType PageType = ContentPageType.PageType.Unknown;
 		public UserEditState EditorPrefs = null;
+
+		public string FileName = "";
 
 		protected void Page_Load(object sender, EventArgs e) {
 
@@ -56,9 +58,19 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 				pageContents = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidContentID);
 			}
 
+			PageType = pageContents.ContentType;
+			FileName = pageContents.FileName;
+
+			btnEditCoreInfo.Attributes["onclick"] = "cmsShowEditPageInfo();";
+
 			if (pageContents.ContentType == ContentPageType.PageType.BlogEntry) {
+				btnEditCoreInfo.Attributes["onclick"] = "cmsShowEditPostInfo();";
 				btnAddChild.Visible = false;
 				btnSortChildPages.Visible = false;
+			}
+
+			if (cmsHelper.cmsAdminContent != null) {
+				FileName = cmsHelper.cmsAdminContent.FileName;
 			}
 
 			if (cmsHelper.ToolboxPlugins.Count > 0) {

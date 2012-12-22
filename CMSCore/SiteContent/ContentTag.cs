@@ -157,6 +157,10 @@ namespace Carrotware.CMS.Core {
 
 		#region IContentMetaInfo Members
 
+		public void SetValue(Guid ContentMetaInfoID) {
+			this.ContentTagID = ContentMetaInfoID; 
+		}
+
 		public Guid ContentMetaInfoID {
 			get { return this.ContentTagID; }
 		}

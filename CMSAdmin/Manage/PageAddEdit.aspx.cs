@@ -160,7 +160,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 					reLeftBody.Text = pageContents.LeftPageText;
 					reRightBody.Text = pageContents.RightPageText;
 
-					chkActive.Checked = Convert.ToBoolean(pageContents.PageActive);
+					chkActive.Checked = pageContents.PageActive;
 
 					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
 					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();

@@ -1,10 +1,10 @@
-﻿<%@ Page Title="Edit Page Info" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageEdit.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.Manage.PageEdit" %>
+﻿<%@ Page Title="Edit Post Info" Language="C#" MasterPageFile="~/Manage/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="BlogPostEdit.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.Manage.BlogPostEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
-	Edit Page Info
+	Edit Post Info
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h2>
@@ -90,6 +90,47 @@
 			</td>
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+			</td>
+		</tr>
+	</table>
+	<table width="700">
+		<tr>
+			<td width="350" valign="top">
+				<div style="width: 340px; clear: both;">
+					<div class="picker-area ui-widget-header ui-state-default ui-corner-top" style="width: 340px">
+						categories</div>
+					<div class="picker-area ui-widget-content ui-corner-bottom scroll-container" style="width: 340px">
+						<div class="scroll-area">
+							<asp:Repeater ID="rpCat" runat="server">
+								<ItemTemplate>
+									<asp:CheckBox runat="server" ID="chk" Text='<%#Eval("CategoryText") %>' value='<%#Eval("ContentCategoryID") %>' /><br />
+								</ItemTemplate>
+							</asp:Repeater>
+						</div>
+					</div>
+				</div>
+				<div style="clear: both;">
+				</div>
+			</td>
+			<td>
+				&nbsp;&nbsp;
+			</td>
+			<td width="350" valign="top">
+				<div style="width: 340px; clear: both;">
+					<div class="picker-area ui-widget-header ui-state-default ui-corner-top" style="width: 340px">
+						tags</div>
+					<div class="picker-area ui-widget-content ui-corner-bottom scroll-container" style="width: 340px">
+						<div class="scroll-area">
+							<asp:Repeater ID="rpTag" runat="server">
+								<ItemTemplate>
+									<asp:CheckBox runat="server" ID="chk" Text='<%#Eval("TagText") %>' value='<%#Eval("ContentTagID") %>' /><br />
+								</ItemTemplate>
+							</asp:Repeater>
+						</div>
+					</div>
+				</div>
+				<div style="clear: both;">
+				</div>
 			</td>
 		</tr>
 	</table>

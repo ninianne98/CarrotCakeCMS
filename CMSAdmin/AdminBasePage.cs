@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Data;
 using Carrotware.CMS.UI.Base;
@@ -41,7 +42,27 @@ namespace Carrotware.CMS.UI.Admin {
 
 		}
 
+		public void PreselectCheckboxRepeater(Repeater repeater, List<IContentMetaInfo> lst) {
+			foreach (RepeaterItem r in repeater.Items) {
+				CheckBox chk = (CheckBox)r.FindControl("chk");
+				Guid id = new Guid(chk.Attributes["value"].ToString());
+				if (lst.Where(x => x.ContentMetaInfoID == id).Count() > 0) {
+					chk.Checked = true;
+				}
+			}
+		}
 
+		public List<Guid> CollectCheckboxRepeater(Repeater repeater) {
+			List<Guid> lst = new List<Guid>();
+			foreach (RepeaterItem r in repeater.Items) {
+				CheckBox chk = (CheckBox)r.FindControl("chk");
+				Guid id = new Guid(chk.Attributes["value"].ToString());
+				if (chk.Checked) {
+					lst.Add(id);
+				}
+			}
+			return lst;
+		}
 
 	}
 }

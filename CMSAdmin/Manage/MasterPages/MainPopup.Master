@@ -63,8 +63,8 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-	<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
 	<div id="cmsAjaxMainDiv">
+		<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
 		<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
 			<ContentTemplate>
 				<h1 class="headingColor">
@@ -81,14 +81,21 @@
 		</asp:ContentPlaceHolder>
 	</div>
 	<asp:PlaceHolder ID="plcFooter" runat="server" />
-	<div style="display: none">
 		<div style="display: none">
-			<div id="divCMSModal" title="CMS Alert">
-				<div id="divCMSModalMsg">
-					&nbsp;</div>
+			<div id="cms-basic-modal-content">
+				<div id="cmsModalFrame">
+				</div>
+			</div>
+			<div style="display: none">
+				<img src="/manage/images/x.png" alt="x" />
+			</div>
+			<div style="display: none">
+				<div id="divCMSModal" title="CMS Alert">
+					<div id="divCMSModalMsg">
+						&nbsp;</div>
+				</div>
 			</div>
 		</div>
-	</div>
 	</form>
 </body>
 </html>
