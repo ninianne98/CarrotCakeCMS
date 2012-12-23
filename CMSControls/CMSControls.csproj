@@ -60,9 +60,11 @@
     <Compile Include="BaseServerControl.cs" />
     <Compile Include="ChildNavigation.cs" />
     <Compile Include="ContentCommentForm.cs" />
+    <Compile Include="ContentPageControls.cs" />
     <Compile Include="ContentPlainText.cs" />
     <Compile Include="ContentRichText.cs" />
     <Compile Include="BreadCrumbNavigation.cs" />
+    <Compile Include="ControlUtilities.cs" />
     <Compile Include="PostCalendar.cs" />
     <Compile Include="SearchBox.cs" />
     <Compile Include="IFrameWidgetWrapper.cs" />

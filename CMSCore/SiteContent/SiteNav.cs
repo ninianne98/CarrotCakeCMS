@@ -100,6 +100,7 @@ namespace Carrotware.CMS.Core {
 		public string TitleBar { get; set; }
 
 		public string FileName { get; set; }
+		public string Thumbnail { get; set; }
 		public bool PageActive { get; set; }
 		public Guid SiteID { get; set; }
 

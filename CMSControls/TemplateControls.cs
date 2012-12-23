@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -223,13 +224,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.LinkText)) {
-				//var ctrl = FindSubControl(this, _linkText);
-				//if (ctrl == null) {
-				//    this.Text = _linkText;
-				//}
-				//if (!this.HasControls()) {
-				//    this.Text = _linkText;
-				//}
 				if (UseDefaultText) {
 					this.LinkText = _linkText;
 				}
@@ -426,18 +420,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		//protected override void RenderChildren(HtmlTextWriter writer) {
-		//    int indent = writer.Indent++;
-
-		//    writer.Indent = indent + 2;
-
-		//    //writer.WriteLine();
-		//    base.RenderChildren(writer);
-		//    //writer.WriteLine();
-
-		//    writer.Indent = indent;
-		//    writer.Indent--;
-		//}
 
 		protected override void OnDataBinding(EventArgs e) {
 
@@ -452,6 +434,129 @@ namespace Carrotware.CMS.UI.Controls {
 			SetTag();
 
 			LoadCtrsl();
+
+			base.OnDataBinding(e);
+		}
+
+	}
+
+
+	//========================================
+	/*
+	 
+	<carrot:ListItemImageThumb runat="server" ID="ListItemImageThumb1" PerformURLResize="true" ScaleImage="true" ThumbSize="180" />
+	 
+	*/
+	[ToolboxData("<{0}:ListItemImageThumb runat=server></{0}:ListItemImageThumb>")]
+	public class ListItemImageThumb : Image {
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public Guid ContentID {
+			get {
+				Guid s = Guid.Empty;
+				try { s = new Guid(ViewState["ContentID"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["ContentID"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public int ThumbSize {
+			get {
+				int s = 100;
+				try { s = int.Parse(ViewState["ThumbSize"].ToString()); } catch { }
+				return s;
+			}
+			set {
+				ViewState["ThumbSize"] = value.ToString();
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool ScaleImage {
+			get {
+				bool s = true;
+				if (ViewState["ScaleImage"] != null) {
+					try { s = (bool)ViewState["ScaleImage"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["ScaleImage"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool PerformURLResize {
+			get {
+				bool s = false;
+				if (ViewState["PerformURLResize"] != null) {
+					try { s = (bool)ViewState["PerformURLResize"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["PerformURLResize"] = value;
+			}
+		}
+
+		private bool bIsBound = false;
+
+		protected override void Render(HtmlTextWriter output) {
+
+			base.Render(output);
+
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+
+
+			base.OnPreRender(e);
+		}
+
+
+		private void SetFileInfo(string sFieldValue) {
+			if (string.IsNullOrEmpty(sFieldValue)) {
+				this.Visible = false;
+			}
+
+			if (PerformURLResize && !string.IsNullOrEmpty(sFieldValue)) {
+				sFieldValue = string.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
+			}
+
+			this.ImageUrl = sFieldValue;
+		}
+
+		protected override void OnDataBinding(EventArgs e) {
+
+			bIsBound = true;
+
+			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+			string sFieldValue = string.Empty;
+
+			if (DataBinder.Eval(container, "DataItem.Thumbnail") != null) {
+				sFieldValue = DataBinder.Eval(container, "DataItem.Thumbnail").ToString();
+			}
+
+			SetFileInfo(sFieldValue);
+
+			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
+
+			this.ContentID = pageID;
 
 			base.OnDataBinding(e);
 		}
@@ -982,7 +1087,7 @@ namespace Carrotware.CMS.UI.Controls {
 			bool IsApproved = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.IsApproved").ToString());
 
 			string sTxt1 = DataBinder.Eval(container, "DataItem.CommenterName").ToString();
-			string sTxt2 = DataBinder.Eval(container, "DataItem.CreateDate").ToString();
+			string sTxt2 = DataBinder.Eval(container, "DataItem.GoLiveDate").ToString();
 			string sTxt3 = DataBinder.Eval(container, "DataItem.PostCommentText").ToString();
 
 			if (!IsApproved) {

@@ -465,7 +465,7 @@ function cmsSavePageCallback(data, status) {
 		CMSBusyShort();
 		cmsMakeOKToLeave();
 		cmsNotifySaved();
-		window.setTimeout("location.href = \'" + thisPageNav + "\'", 10000);
+		//window.setTimeout("location.href = \'" + thisPageNav + "\'", 10000);
 		iCount = 10;
 		cmsCountdownWindow();
 	} else {
@@ -475,11 +475,13 @@ function cmsSavePageCallback(data, status) {
 
 var iCount = 0;
 function cmsCountdownWindow() {
-	if (iCount >= 0) {
+	if (iCount > 0) {
 		iCount--;
 		$('#cmsSaveCountdown').html(iCount);
 
-		setTimeout("cmsCountdownWindow();", 1025);
+		setTimeout("cmsCountdownWindow();", 1100);
+	} else {
+		window.setTimeout("location.href = \'" + thisPageNav + "\'", 250);
 	}
 }
 

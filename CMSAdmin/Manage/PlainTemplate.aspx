@@ -185,16 +185,14 @@
 <body>
 	<form id="form1" runat="server">
 	<div id="wrapper">
-		<asp:PlaceHolder ID="myHeading" runat="server">
-			<h1 id="logo">
-				<a href="/">
-					<%=theSite.SiteName%>
-				</a>
-			</h1>
-			<p>
-				<%=theSite.SiteTagline%>
-			</p>
-		</asp:PlaceHolder>
+		<h1 id="logo">
+			<a href="/">
+				<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" />
+			</a>
+		</h1>
+		<p>
+			<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
+		</p>
 		<div id="menu">
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878" SubFGColor="#ffffff"
 				UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />

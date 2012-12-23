@@ -33,6 +33,7 @@ namespace Carrotware.CMS.Core {
 				nav.Root_ContentID = c.Root_ContentID;
 				nav.SiteID = c.SiteID;
 				nav.FileName = c.FileName;
+				nav.Thumbnail = c.PageThumbnail;
 				nav.PageActive = c.PageActive;
 				nav.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
 				nav.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);

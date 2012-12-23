@@ -62,7 +62,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (lstNav.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
+			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
 				output.WriteLine("<h2>" + SectionTitle + "</h2> ");
 			}
 
@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
-			if (lstNav.Count > 0) {
+			if (lstNav != null && lstNav.Count > 0) {
 				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 				output.Indent++;
 				foreach (SiteNav c in lstNav) {

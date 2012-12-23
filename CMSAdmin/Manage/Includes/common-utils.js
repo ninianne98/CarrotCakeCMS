@@ -46,8 +46,8 @@ function BlockUI(elementID) {
 					left: '45%',
 					textAlign: 'center'
 				},
-				fadeOut: 2000,
-				timeout: 3000,
+				fadeOut: 4000,
+				timeout: 5000,
 				overlayCSS: {
 					backgroundColor: '#FFFFFF',
 					opacity: 0.6,

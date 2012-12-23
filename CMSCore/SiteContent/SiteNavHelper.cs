@@ -25,7 +25,7 @@ namespace Carrotware.CMS.Core {
 		private ISiteNavHelper _navHelper = null;
 
 		public SiteNavHelper() {
-			if (SiteData.IsPageSampler) {
+			if ((SiteData.IsPageSampler || SiteData.IsPageReal) && !SiteData.IsCurrentPageSpecial) {
 				_navHelper = new SiteNavHelperMock();
 			} else {
 				_navHelper = new SiteNavHelperReal();
