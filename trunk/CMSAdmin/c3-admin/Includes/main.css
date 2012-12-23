@@ -1,0 +1,284 @@
+/*
+Main CarrotCake CMS stylesheet
+*/
+body {
+	margin: 0;
+	padding: 0;
+	background: #ffffff;
+	font-family: Georgia, Times New Roman, Serif;
+	color: #000000;
+	font-size: 12px;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	font-family: Georgia, Times New Roman, Serif;
+	color: #69775F;
+}
+
+H1 {
+	font-size: 24px;
+}
+
+H2 {
+	font-size: 20px;
+}
+
+H3 {
+	font-size: 16px;
+}
+
+.headingColor {
+	color: #69775F;
+	font-family: Georgia, Times New Roman, Serif;
+	font-weight: bold;
+}
+
+
+/* Header */
+#headercontainer {
+	height: 115px;
+	background: #7DAD8E url(/c3-admin/images/heading-gradient.png) repeat-x;
+}
+#header {
+	width: 950px;
+	height: 110px;
+	margin-left: 50px;
+	margin-right: 50px;
+	font-family: Georgia, Times New Roman, Serif;
+}
+
+#header h1, #header h2 {
+	font-weight: bold;
+	color: #FFFFFF;
+	font-family: Georgia, Times New Roman, Serif;
+}
+
+#header h1 {
+	float: left;
+	padding: 30px 0 0 20px;
+	font-size: 36px;
+}
+
+#header h2 {
+	float: left;
+	padding: 40px 20px 0 0;
+	font-size: 28px;
+}
+
+
+/* Menu */
+
+#nav-menu-container {
+	font: normal 14px "Trebuchet MS" , Arial, Helvetica, sans-serif;
+	background: #5B5B5B url(/c3-admin/images/menu-gradient.png) repeat-x;
+	padding-left: 50px;
+	font-weight: normal;
+}
+
+#nav-menu {
+	margin: 0;
+	padding: 0 1em;
+	height: 3em;
+	list-style: none;
+	z-index: 990;
+}
+
+#nav-menu > li {
+	float: left;
+	height: 100%;
+	margin-right: 0.3em;
+	padding: 0 1em;
+}
+
+#nav-menu > li > a {
+	float: left;
+	height: 100%;
+	color: #ffffff;
+	text-decoration: none;
+	line-height: 3;
+}
+#nav-menu > li.current > a {
+	font-weight: bolder;
+}
+
+#nav-menu > li.current > ul > li > a {
+	font-weight: normal;
+}
+
+#nav-menu > li > a:hover {
+	text-decoration: underline;
+}
+
+#nav-menu > li.sub {
+	position: relative;
+	z-index: 998;
+}
+
+#nav-menu > li.sub ul {
+	width: 14em;
+	margin: 0;
+	padding: 0.4em 0;
+	list-style: none;
+	background: #2D2D2D;
+	position: absolute;
+	top: -1000em;
+}
+
+#nav-menu > li.sub ul li {
+	width: 90%;
+	margin: 0 auto 0.2em auto;
+}
+
+#nav-menu > li.sub ul li a {
+	height: 100%;
+	display: block;
+	padding: 0.3em;
+	color: #fff;
+	text-decoration: none;
+}
+
+#nav-menu > li.current ul li.current a {
+	font-weight: bolder;
+}
+
+#nav-menu > li.sub ul li a:hover {
+	background: #878787;
+	text-decoration: underline;
+}
+
+#nav-menu > li.sub:hover ul {
+	top: 3em;
+}
+
+
+#nav-menu > li:hover {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+#nav-menu > li:hover a {
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+}
+#nav-menu > li.sub ul li a {
+	padding: 0.4em;
+	margin: 0 auto 0.2em auto;
+}
+
+
+/* Content */
+
+#content {
+	min-width: 720px;
+	margin: 0 auto 20px auto;
+	padding: 20px;
+	background: #FFFFFF;
+}
+
+#content H1 {
+	font-size: 24px;
+}
+
+#content H2 {
+	font-size: 18px;
+}
+
+
+.pageNodeDrillDown1 {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+	min-height: 45px;
+}
+
+.pageNodeDrillDown2 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+}
+
+.pageNodeDrillDown3 {
+	padding: 4px;
+	margin: 2px;
+	float: left;
+	margin-right: 5px;
+}
+
+.pageNodeDrillDown4 {
+	padding: 0px;
+	margin: 2px;
+	position: relative;
+	width: 100px;
+}
+
+.pageNodeDrillDown5 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+	margin-top: 0px;
+}
+
+.pageNodeDrillDown6 {
+	padding: 2px;
+	margin: 0px;
+}
+
+/* Footer */
+
+#footer {
+	height: 50px;
+	padding: 20px;
+	background: #333333;
+	border-top: 5px solid #000000;
+}
+
+
+#footer p {
+	text-align: center;
+	color: #FFFFFF;
+}
+
+
+#cms-simplemodal-container, .cms-simplemodal-container {
+	height: 525px;
+	width: 905px;
+	z-index: 5000;
+}
+
+/*
+drilldown stuff
+*/
+
+div.scroll {
+	height: 100px;
+	width: 340px;
+	overflow: auto;
+	padding: 2px;
+	position: absolute;
+	z-index: 999;
+}
+div.scrollcontainer {
+	height: 110px;
+	width: 350px;
+	padding: 4px;
+	position: absolute;
+	z-index: 999;
+}
+div.scrollcontainerhide {
+	display: none;
+}
+div.scrollcontainerheight {
+	height: 5px;
+	width: 75px;
+}
+div.menuitems {
+	margin-top: 2px;
+	margin-left: 2px;
+	padding: 6px;
+}
+div.menuitems {
+	padding: 4px;
+}
+

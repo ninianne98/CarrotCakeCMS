@@ -213,7 +213,7 @@
 						</div>
 						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
 						</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ Carrotware.CMS.Core.CMSConfigHelper.EncodeBase64(Eval("FolderPath").ToString() + Eval("FileName").ToString()))%>">
-							<img class="imgNoBorder" src="/Manage/images/pencil.png" alt="Edit" title="Edit" />
+							<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
 						</a></li>
 				</ItemTemplate>
 			</asp:Repeater>
@@ -234,7 +234,7 @@
 						</div>
 						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
 						</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ Carrotware.CMS.Core.CMSConfigHelper.EncodeBase64(Eval("FolderPath").ToString() + Eval("FileName").ToString()))%>">
-							<img class="imgNoBorder" src="/Manage/images/pencil.png" alt="Edit" title="Edit" />
+							<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
 						</a></li>
 				</ItemTemplate>
 			</asp:Repeater>

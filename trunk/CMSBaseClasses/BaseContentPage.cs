@@ -232,7 +232,7 @@ namespace Carrotware.CMS.UI.Base {
 
 						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 							if (!SiteData.IsPageSampler && !IsPageTemplate) {
-								Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
+								Control editor = Page.LoadControl(SiteData.AdminFolderPath + "ucEditNotifier.ascx");
 								Page.Form.Controls.Add(editor);
 							}
 						}
@@ -251,7 +251,7 @@ namespace Carrotware.CMS.UI.Base {
 						contLeft.Text = pageContents.LeftPageText;
 						contRight.Text = pageContents.RightPageText;
 
-						Control editor = Page.LoadControl("~/Manage/ucAdvancedEdit.ascx");
+						Control editor = Page.LoadControl(SiteData.AdminFolderPath + "ucAdvancedEdit.ascx");
 						Page.Form.Controls.Add(editor);
 
 						MarkWidgets(page, true);

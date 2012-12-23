@@ -2,7 +2,7 @@
 
 Your password has been reset to: {%%Password%%}
 
-		{%%SiteURL%%}/Manage/
+		{%%SiteURL%%}/c3-admin/
 
 -- CMS Site
 

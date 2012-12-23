@@ -5,7 +5,7 @@
 			<ItemStyle HorizontalAlign="Left" VerticalAlign="Top"></ItemStyle>
 			<ItemTemplate>
 				<asp:HyperLink ID="lnkedit" runat="server" NavigateUrl='<%#CreateLink("FAQAdminAddEdit", String.Format("id={0}", DataBinder.Eval(Container, "DataItem.FaqID") )) %>'>
-                      <img border="0" src="/Manage/images/pencil.png" alt="Edit" title="Edit" style="margin-right: 20px;" />
+                      <img border="0" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" style="margin-right: 20px;" />
 				</asp:HyperLink>
 			</ItemTemplate>
 		</asp:TemplateColumn>

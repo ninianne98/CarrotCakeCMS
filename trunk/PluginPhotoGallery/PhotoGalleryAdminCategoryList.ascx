@@ -9,14 +9,14 @@
 			<asp:TemplateField>
 				<ItemTemplate>
 					<asp:HyperLink ID="lnkedit1" runat="server" NavigateUrl='<%#CreateLink("CategoryEdit", String.Format("id={0}", Eval("GalleryID")) ) %>'>
-						<img class="imgNoBorder" src="/Manage/images/pencil.png" alt="Edit" title="Edit" />
+						<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
 					</asp:HyperLink>
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:TemplateField>
 				<ItemTemplate>
 					<asp:HyperLink ID="lnkedit2" runat="server" NavigateUrl='<%#CreateLink("EditGallery", String.Format("id={0}", Eval("GalleryID")) ) %>'>
-						<img class="imgNoBorder" src="/Manage/images/image.png" alt="Edit Contents" title="Edit Contents" />
+						<img class="imgNoBorder" src="/c3-admin/images/image.png" alt="Edit Contents" title="Edit Contents" />
 					</asp:HyperLink>
 				</ItemTemplate>
 			</asp:TemplateField>

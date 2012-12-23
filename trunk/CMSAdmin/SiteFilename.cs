@@ -7,26 +7,26 @@ namespace Carrotware.CMS.UI.Admin {
 	public static class SiteFilename {
 
 		public static string PageAddEditURL {
-			get { return "/Manage/PageAddEdit.aspx"; }
+			get { return "/c3-admin/PageAddEdit.aspx"; }
 		}
 		public static string PageIndexURL {
-			get { return "/Manage/PageIndex.aspx"; }
+			get { return "/c3-admin/PageIndex.aspx"; }
 		}
 		public static string BlogPostAddEditURL {
-			get { return "/Manage/BlogPostAddEdit.aspx"; }
+			get { return "/c3-admin/BlogPostAddEdit.aspx"; }
 		}
 		public static string BlogPostIndexURL {
-			get { return "/Manage/BlogPostIndex.aspx"; }
+			get { return "/c3-admin/BlogPostIndex.aspx"; }
 		}
 
 		public static string DataExportURL {
-			get { return "/Manage/PageExport.aspx"; }
+			get { return "/c3-admin/PageExport.aspx"; }
 		}
 		public static string SiteImportURL {
-			get { return "/Manage/SiteImport.aspx"; }
+			get { return "/c3-admin/SiteImport.aspx"; }
 		}
 		public static string WPSiteImportURL {
-			get { return "/Manage/wp-SiteImport.aspx"; }
+			get { return "/c3-admin/wp-SiteImport.aspx"; }
 		}
 
 	}

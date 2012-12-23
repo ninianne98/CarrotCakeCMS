@@ -650,7 +650,7 @@ namespace Carrotware.CMS.Core {
 			get { return "/default.aspx".ToLower(); }
 		}
 		public static string DefaultTemplateFilename {
-			get { return "/Manage/PlainTemplate.aspx".ToLower(); }
+			get { return "/c3-admin/PlainTemplate.aspx".ToLower(); }
 		}
 		public static string VirtualCMSEditPrefix {
 			get { return ("/carrotcake/edit-" + CurrentSiteID.ToString() + "/").ToLower(); }
@@ -695,13 +695,13 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsCurrentPageSpecial {
 			get {
-				return SiteData.SpecialFiles.Contains(CurrentScriptName.ToLower()) || CurrentScriptName.ToLower().StartsWith("/manage/");
+				return SiteData.SpecialFiles.Contains(CurrentScriptName.ToLower()) || CurrentScriptName.ToLower().StartsWith(AdminFolderPath);
 			}
 		}
 
 		public static bool IsPageSpecial(string sPageName) {
 
-			return SiteData.SpecialFiles.Contains(sPageName.ToLower()) || sPageName.ToLower().StartsWith("/manage/");
+			return SiteData.SpecialFiles.Contains(sPageName.ToLower()) || sPageName.ToLower().StartsWith(AdminFolderPath);
 		}
 
 		public static string PreviewTemplateFile {
@@ -765,10 +765,22 @@ namespace Carrotware.CMS.Core {
 			return sRequestedURL;
 		}
 
+		public static string AdminDefaultFile {
+			get {
+				return (AdminFolderPath + DefaultDirectoryFilename).Replace("//", "/");
+			}
+		}
+
+		public static string AdminFolderPath {
+			get {
+				return "/c3-admin/";
+			}
+		}
+
 		public static string AlternateCurrentScriptName {
 			get {
 				string sCurrentPage = CurrentScriptName;
-				if (!CurrentScriptName.ToLower().StartsWith("/manage/")) {
+				if (!CurrentScriptName.ToLower().StartsWith(AdminFolderPath)) {
 
 					string sScrubbedURL = CheckForSpecialURL(CurrentSite);
 
@@ -794,7 +806,7 @@ namespace Carrotware.CMS.Core {
 			string sRequestedURL = HttpContext.Current.Request.Path;
 			string sFileRequested = sRequestedURL;
 
-			if (!sRequestedURL.ToLower().StartsWith("/manage/") && site != null) {
+			if (!sRequestedURL.ToLower().StartsWith(AdminFolderPath) && site != null) {
 				if (sFileRequested.ToLower().StartsWith(site.BlogFolderPath.ToLower())) {
 					if (sFileRequested.ToLower().StartsWith(site.BlogCategoryPath.ToLower())
 						|| sFileRequested.ToLower().StartsWith(site.BlogTagPath.ToLower())
