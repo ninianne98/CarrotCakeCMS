@@ -48,15 +48,13 @@ Released   : 20090703
 					</div>
 				</SearchTemplate>
 			</carrot:SearchBox>
-			<asp:PlaceHolder ID="myHeading" runat="server">
-				<h1>
-					<a href="/">
-						<%=theSite.SiteName%></a>
-				</h1>
-				<p>
-					<em>
-						<%=theSite.SiteTagline%></em></p>
-			</asp:PlaceHolder>
+			<h1>
+				<a href="/">
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
+			</h1>
+			<p>
+				<em>
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" /></em></p>
 		</div>
 		<hr />
 		<!-- end #logo -->

@@ -28,12 +28,13 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentContainer contRight { get; set; }
 		protected ContentContainer contLeft { get; set; }
 
-		protected SiteData theSite { get; set; }
+		public SiteData theSite { get; set; }
+		public ContentPage pageContents { get; set; }
+		public List<Widget> pageWidgets { get; set; }
 
-		protected Guid guidContentID = Guid.Empty;
+		public Guid guidContentID = Guid.Empty;
 
-		protected ContentPage pageContents = new ContentPage();
-		protected List<Widget> pageWidgets = new List<Widget>();
+		public bool IsPageTemplate = false;
 
 		private int iCtrl = 0;
 
@@ -59,6 +60,8 @@ namespace Carrotware.CMS.UI.Base {
 		protected void LoadPageControls(Control page) {
 
 			theSite = SiteData.CurrentSite;
+			pageContents = null;
+			pageWidgets = new List<Widget>();
 
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
@@ -81,8 +84,6 @@ namespace Carrotware.CMS.UI.Base {
 				sCurrentPage = sScrubbedURL;
 			}
 
-			pageContents = null;
-
 			if (sCurrentPage.Length < 3) {
 				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID);
@@ -97,8 +98,16 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
-			if (SiteData.IsPageSampler && pageContents == null) {
+			if (pageContents == null && SiteData.IsPageReal) {
+				IsPageTemplate = true;
+			}
+
+			if ((SiteData.IsPageSampler || IsPageTemplate) && pageContents == null) {
 				pageContents = ContentPageHelper.GetSamplerView();
+			}
+
+			if (IsPageTemplate) {
+				pageContents.TemplateFile = sCurrentPage;
 			}
 
 			if (pageContents != null) {
@@ -222,7 +231,7 @@ namespace Carrotware.CMS.UI.Base {
 					if (!SecurityData.AdvancedEditMode) {
 
 						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
-							if (!SiteData.IsPageSampler) {
+							if (!SiteData.IsPageSampler && !IsPageTemplate) {
 								Control editor = Page.LoadControl("~/Manage/ucEditNotifier.ascx");
 								Page.Form.Controls.Add(editor);
 							}

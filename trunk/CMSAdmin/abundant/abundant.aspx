@@ -53,15 +53,13 @@ Released   : 20090703
 					</div>
 				</SearchTemplate>
 			</carrot:SearchBox>
-			<asp:PlaceHolder ID="myHeading" runat="server">
-				<h1>
-					<a href="/">
-						<%=theSite.SiteName%></a>
-				</h1>
-				<p>
-					<em>
-						<%=theSite.SiteTagline%></em></p>
-			</asp:PlaceHolder>
+			<h1>
+				<a href="/">
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
+			</h1>
+			<p>
+				<em>
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" /></em></p>
 		</div>
 		<hr />
 		<!-- end #logo -->
@@ -72,6 +70,12 @@ Released   : 20090703
 					<h2 class="title">
 						<asp:Literal ID="litPageHeading" runat="server" /></h2>
 					<div class="entry">
+						<p>
+							By
+							<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="Author_FullName_FirstLast" />
+							on
+							<carrot:ContentPageProperty runat="server" ID="ContentPageProperty2" DataField="GoLiveDate" FieldFormat="{0:MMMM d, yyyy}" />
+						</p>
 						<carrot:WidgetContainer ID="phCenterTop" runat="server">
 						</carrot:WidgetContainer>
 						<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />

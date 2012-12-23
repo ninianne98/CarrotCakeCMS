@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using Carrotware.CMS.Interface;
 using System.ComponentModel;
-
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,14 +18,27 @@ using System.ComponentModel;
 
 
 namespace Carrotware.CMS.Core {
-	public class ReflectionUtilities {
-
-		public ReflectionUtilities() { }
-
+	public static class ReflectionUtilities {
 
 		public static Object GetPropertyValue(Object obj, string property) {
 			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
 			return propertyInfo.GetValue(obj, null);
+		}
+
+		public static Object GetPropertyValueFlat(Object obj, string property) {
+			PropertyInfo[] propertyInfos = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+			PropertyInfo propertyInfo = null;
+			foreach (PropertyInfo info in propertyInfos) {
+				if (info.Name == property) {
+					propertyInfo = info;
+					break;
+				}
+			}
+			if (propertyInfo != null) {
+				return propertyInfo.GetValue(obj, null);
+			} else {
+				return null;
+			}
 		}
 
 		public static bool DoesPropertyExist(Object obj, string property) {
@@ -153,7 +165,7 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 			}
- 
+
 			return String.Empty;
 		}
 

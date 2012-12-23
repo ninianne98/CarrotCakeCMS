@@ -661,9 +661,47 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsPageSampler {
 			get {
-				string _prefix = (SiteData.VirtualCMSEditPrefix + "templatepreview/").ToLower();
-				return SiteData.CurrentScriptName.ToLower().StartsWith(_prefix);
+				string _prefix = (VirtualCMSEditPrefix + "templatepreview/").ToLower();
+				return CurrentScriptName.ToLower().StartsWith(_prefix);
 			}
+		}
+
+		public static bool IsPageReal {
+			get {
+				if (CurrentScriptName.ToLower() != DefaultDirectoryFilename.ToLower()
+						&& File.Exists(HttpContext.Current.Server.MapPath(CurrentScriptName))) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		static private List<string> _specialFiles = null;
+
+		public static List<string> SpecialFiles {
+			get {
+				if (_specialFiles == null) {
+					_specialFiles = new List<string>();
+					_specialFiles.Add(DefaultTemplateFilename);
+					_specialFiles.Add(DefaultDirectoryFilename);
+					_specialFiles.Add("/rss.aspx");
+					_specialFiles.Add("/xmlrpc.aspx");
+				}
+
+				return _specialFiles;
+			}
+		}
+
+		public static bool IsCurrentPageSpecial {
+			get {
+				return SiteData.SpecialFiles.Contains(CurrentScriptName.ToLower()) || CurrentScriptName.ToLower().StartsWith("/manage/");
+			}
+		}
+
+		public static bool IsPageSpecial(string sPageName) {
+
+			return SiteData.SpecialFiles.Contains(sPageName.ToLower()) || sPageName.ToLower().StartsWith("/manage/");
 		}
 
 		public static string PreviewTemplateFile {
@@ -720,7 +758,7 @@ namespace Carrotware.CMS.Core {
 			if (!string.IsNullOrEmpty(sRequestedURL)) {
 				sRequestedURL = sRequestedURL.Replace(@"\", @"/");
 				if (sRequestedURL.EndsWith("/") || !sRequestedURL.ToLower().EndsWith(".aspx")) {
-					sRequestedURL = (sRequestedURL + SiteData.DefaultDirectoryFilename).Replace("//", "/");
+					sRequestedURL = (sRequestedURL + DefaultDirectoryFilename).Replace("//", "/");
 				}
 			}
 

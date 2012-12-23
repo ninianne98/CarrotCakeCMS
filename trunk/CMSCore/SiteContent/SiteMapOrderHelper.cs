@@ -105,9 +105,15 @@ namespace Carrotware.CMS.Core {
 			db.SubmitChanges();
 		}
 
-		public List<SiteMapOrder> GetChildPages(Guid siteID, Guid? ParentID, Guid contentID) {
+		public List<SiteMapOrder> GetChildPages(Guid siteID, Guid? parentID, Guid contentID) {
 
-			List<SiteMapOrder> lst = (from ct in CompiledQueries.cqGetOtherNotPage(db, siteID, contentID, ParentID).ToList()
+			List<vw_carrot_Content> lstOtherPages = CompiledQueries.cqGetOtherNotPage(db, siteID, contentID, parentID).ToList();
+
+			if (lstOtherPages.Count < 1 && contentID == Guid.Empty && parentID == Guid.Empty) {
+				lstOtherPages = CompiledQueries.TopLevelPages(db, siteID, false).ToList();
+			}
+
+			List<SiteMapOrder> lst = (from ct in lstOtherPages
 									  select new SiteMapOrder {
 										  NavLevel = -1,
 										  NavMenuText = (ct.PageActive ? "" : "{*U*} ") + ct.NavMenuText,

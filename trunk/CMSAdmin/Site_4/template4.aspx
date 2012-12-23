@@ -56,11 +56,12 @@
 				<div class="art-header-inner">
 					<div class="art-logo">
 						<h1 class="art-logo-name">
-							<asp:PlaceHolder ID="myHeading" runat="server"><a href="/">
-								<%=theSite.SiteName%></a></asp:PlaceHolder>
+							<a href="/">
+								<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
 						</h1>
-						<!--h2 class="art-logo-text">
-							Enter Site Slogan</h2-->
+						<h2 class="art-logo-text">
+							<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
+						</h2>
 					</div>
 				</div>
 			</div>
@@ -74,14 +75,6 @@
 			</div>
 			<div class="art-nav-outer">
 				<div class="art-nav-wrapper">
-					<%--<div class="art-nav-inner">--%>
-					<%--<ul class="art-hmenu">
-							<li><a href="./new-page.html" class="active"><span class="l"></span><span class="r"></span><span class="t">New Page</span></a>
-							</li>
-							<li><a href="./new-page-2.html"><span class="l"></span><span class="r"></span><span class="t">New Page 2</span></a> </li>
-						</ul>--%>
-					<%--<carrot:TopLevelNavigation CSSSelected="active" CssClass="art-hmenu" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" />--%>
-					<%--</div>--%>
 					<carrot:TwoLevelNavigationTemplate runat="server" CssClass="art-nav-inner" CSSSelected="active" ID="TwoLevelNavigationTemplate1" ShowSecondLevel="false">
 						<TopNavHeaderTemplate>
 							<ul class="art-hmenu">
@@ -91,7 +84,7 @@
 								<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" UseDefaultText="false">
 									<span class="l"></span><span class="r"></span><span class="t">
 										<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="NavMenuText" />
-										<%--<%# Eval("NavMenuText").ToString()%>--%></span>
+									</span>
 								</carrot:NavLinkForTemplate>
 							</carrot:ListItemWrapper>
 						</TopNavTemplate>
@@ -149,11 +142,6 @@
 								<div class="art-vmenublock-body">
 									<div class="art-vmenublockcontent">
 										<div class="art-vmenublockcontent-body">
-											<!--<ul class="art-vmenu">
-											<li><a href="./new-page.html" class="active"><span class="l"></span><span class="r"></span><span class="t">New Page</span></a>
-											</li>
-											<li><a href="./new-page-2.html"><span class="l"></span><span class="r"></span><span class="t">New Page 2</span></a> </li>
-											</ul>-->
 											<carrot:ChildNavigation CssClass="art-vmenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
 											<carrot:SiblingNavigation CssClass="art-vmenu" CSSSelected="active" runat="server" ID="ChildNavigation2" />
 											<div class="cleared">
@@ -263,19 +251,6 @@
 		</carrot:WidgetContainer>
 		<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server"></carrot:ContentContainer>
 		<carrot:WidgetContainer ID="phRightBottom" runat="server">
-		</carrot:WidgetContainer>
-		<br />
-		<carrot:WidgetContainer ID="phExtraZone1" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone2" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone3" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone4" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone5" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone6" runat="server">
 		</carrot:WidgetContainer>
 	</asp:Panel>
 	</form>

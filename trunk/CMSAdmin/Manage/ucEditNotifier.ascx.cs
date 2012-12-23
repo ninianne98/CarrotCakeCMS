@@ -6,12 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using System.IO;
 
 namespace Carrotware.CMS.UI.Admin.Manage {
 	public partial class ucEditNotifier : BaseUserControl {
 
 		public string EditPageURL = "";
 		public string PageIndexURL = "";
+		public bool IsPageTemplate = false;
 
 		protected SiteNavHelper navHelper = new SiteNavHelper();
 
@@ -30,7 +32,12 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 
 			ContentPage currentPage = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
-			if (SiteData.IsPageSampler && currentPage == null) {
+
+			if (currentPage == null && SiteData.IsPageReal) {
+				IsPageTemplate = true;
+			}
+
+			if ((SiteData.IsPageSampler || IsPageTemplate) && currentPage == null) {
 				currentPage = ContentPageHelper.GetSamplerView();
 			}
 
@@ -53,18 +60,10 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			if (!IsPostBack) {
 				List<SiteNav> nav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, CurrentPageID, !SecurityData.IsAuthEditor);
 
-				//SiteNav pageContents1 = navHelper.GetPageNavigation(SiteData.CurrentSiteID, CurrentPageID);
-				//if (pageContents1 != null) {
-				//    pageContents1.NavMenuText = "Current: " + pageContents1.NavMenuText;
-				//    pageContents1.NavOrder = -100;
-				//    nav.Add(pageContents1);
-				//}
-
 				SiteNav pageContents2 = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, CurrentPageID);
 				if (pageContents2 != null) {
 					pageContents2.NavMenuText = "Parent: " + pageContents2.NavMenuText;
 					pageContents2.NavOrder = -110;
-					//nav.Add(pageContents2);
 					lnkParent.Visible = true;
 					lnkParent.HRef = pageContents2.FileName;
 				} else {
@@ -89,18 +88,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 									 SiteID = n.SiteID
 								 }).ToList();
 				}
-
-				//SiteNav pageContents3 = new SiteNav();
-				//pageContents3.PageActive = true;
-				//pageContents3.ContentID = Guid.Empty;
-				//pageContents3.Root_ContentID = Guid.Empty;
-				//pageContents3.SiteID = SiteID;
-				//pageContents3.FileName = "/default.aspx";
-				//pageContents3.FileName = "/default.aspx";
-				//pageContents3.NavMenuText = "Homepage";
-				//pageContents3.PageHead = "Homepage";
-				//pageContents3.NavOrder = -120;
-				//nav.Add(pageContents3);
 
 				List<SiteNav> lstNav = (from n in nav
 										orderby n.NavOrder
@@ -133,8 +120,6 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 			}
 
 		}
-
-
 
 	}
 }

@@ -72,7 +72,11 @@ namespace Carrotware.Web.UI.Controls {
 			int iThumb = 150;
 			string sImageIn = context.Request.QueryString["thumb"];
 			string sImg = sImageIn;
-			string sScale = context.Request.QueryString["scale"];
+			
+			string sScale = "false";
+			if (context.Request.QueryString["scale"] != null) {
+				sScale = context.Request.QueryString["scale"].ToLower();
+			}
 
 			if (context.Request.QueryString["square"] != null) {
 				string sImgPX = context.Request.QueryString["square"];

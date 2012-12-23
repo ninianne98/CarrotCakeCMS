@@ -15,25 +15,26 @@
 	<form id="form1" runat="server">
 	<div id="wrap">
 		<div id="header">
-			<%--<form method="post" class="search" action="http://www.free-css.com/">
-			<p>
-				<input name="search_query" class="textbox" type="text" />
-				<input name="search" class="button" value="Search" type="submit" />
-			</p>
-			</form>--%>
-			<p class="search">
-			</p>
+			<carrot:SearchBox ID="search1" runat="server">
+				<SearchTemplate>
+					<div class="search">
+						<p>
+							<asp:TextBox ID="SearchText" runat="server" CssClass="textbox" MaxLength="40" />
+							<asp:Button ID="btnSiteSearch" runat="server" CssClass="button" Text="Search" />
+						</p>
+					</div>
+				</SearchTemplate>
+			</carrot:SearchBox>
 			<h1 id="logo">
-				<asp:PlaceHolder ID="myHeading" runat="server"><a href="/">
-					<%=theSite.SiteName%></a></asp:PlaceHolder>
+				<a href="/">
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
 			</h1>
-			<%--<h2 id="slogan">
-			</h2>--%>
+			<h2 id="slogan">
+				<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
+			</h2>
 		</div>
 		<div id="menu">
 			<carrot:TopLevelNavigation CSSSelected="current" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" />
-			<%--<carrot:TwoLevelNavigation MenuWidth="960px" MenuHeight="10px" FontSize="11px" ForeColor="#FFFFFF" BackColor="#F4845A" runat="server"
-				ID="TwoLevelNavigation1" />--%>
 		</div>
 		<div id="sidebar">
 			<carrot:ChildNavigation SectionTitle="Child Pages" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
@@ -71,28 +72,14 @@
 			<div id="footer-left">
 				<asp:PlaceHolder ID="myFooter" runat="server">
 					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
-					All rights reserved. 
-					| Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a> <br />
-					 Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> 
-					| Valid <a target="_blank" href="http://validator.w3.org/check/referer">XHTML</a> 
+					All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
+					<br />
+					Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> | Valid <a target="_blank" href="http://validator.w3.org/check/referer">XHTML</a>
 					| <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> </asp:PlaceHolder>
 			</div>
 		</div>
 	</div>
 	<asp:Panel ID="pnlHiddenControls" Visible="false" runat="server">
-		<br />
-		<carrot:WidgetContainer ID="phExtraZone1" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone2" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone3" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone4" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone5" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone6" runat="server">
-		</carrot:WidgetContainer>
 	</asp:Panel>
 	</form>
 </body>

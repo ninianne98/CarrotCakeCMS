@@ -48,15 +48,22 @@ using System.Web.UI;
 [assembly: TagPrefix("TwoLevelNavigationTemplate", "carrot")]
 
 [assembly: TagPrefix("ListItemNavText", "carrot")]
-[assembly: TagPrefix("ListItemCommentText", "carrot")]
-
+[assembly: TagPrefix("ListItemImageThumb", "carrot")]
 [assembly: TagPrefix("NavLinkForTemplate", "carrot")]
 [assembly: TagPrefix("ListItemWrapper", "carrot")]
+
+[assembly: TagPrefix("ContentCommentForm", "carrot")]
+[assembly: TagPrefix("ListItemCommentText", "carrot")]
+
+
+[assembly: TagPrefix("SiteDataProperty", "carrot")]
+[assembly: TagPrefix("ContentPageProperty", "carrot")]
+[assembly: TagPrefix("ContentPageImageThumb", "carrot")]
 
 [assembly: TagPrefix("NavLinkForPagerTemplate", "carrot")]
 [assembly: TagPrefix("ListItemWrapperForPager", "carrot")]
 [assembly: TagPrefix("NavPageNumberDisplay", "carrot")]
-[assembly: TagPrefix("ContentCommentForm", "carrot")]
+
 
 [assembly: TagPrefix("MultiLevelNavigation", "carrot")]
 [assembly: TagPrefix("ChildNavigation", "carrot")]

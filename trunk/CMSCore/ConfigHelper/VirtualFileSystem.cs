@@ -116,7 +116,6 @@ namespace Carrotware.CMS.Core {
 						}
 					}
 
-
 					try {
 						bool bIsHomePage = false;
 						if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {

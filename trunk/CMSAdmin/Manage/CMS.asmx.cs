@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Script.Services;
 using System.Web.Security;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -467,7 +465,7 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				TheFileName = TheFileName.ToLower();
 
-				if (TheFileName == SiteData.DefaultDirectoryFilename || TheFileName.Length < 6) {
+				if (SiteData.IsPageSpecial(TheFileName) || TheFileName.Length < 6) {
 					return "FAIL";
 				}
 
@@ -539,12 +537,11 @@ namespace Carrotware.CMS.UI.Admin.Manage {
 
 				TheFileName = ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, goLiveDate, ThePageSlug);
 
-				if (ThePageSlug == SiteData.DefaultDirectoryFilename || TheFileName == SiteData.DefaultDirectoryFilename || TheFileName.Length < 6) {
+				if (SiteData.IsPageSpecial(TheFileName) || TheFileName.Length < 6) {
 					return "FAIL";
 				}
 
 				ContentPage fn1 = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, TheFileName);
-				//ContentPage fn2 = pageHelper.FindByPageSlug(SiteData.CurrentSite.SiteID, datePublished, ThePageSlug);
 
 				if (cp == null && CurrentPageGuid != Guid.Empty) {
 					cp = pageHelper.GetVersion(SiteData.CurrentSite.SiteID, CurrentPageGuid);

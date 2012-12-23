@@ -27,15 +27,13 @@
 					</div>
 				</SearchTemplate>
 			</carrot:SearchBox>
-			<asp:PlaceHolder ID="myHeading" runat="server">
-				<h1 id="logo">
-					<a href="/">
-						<%=theSite.SiteName%></a>
-				</h1>
-				<h2 id="slogan">
-					<%=theSite.SiteTagline%>
-				</h2>
-			</asp:PlaceHolder>
+			<h1 id="logo">
+				<a href="/">
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
+			</h1>
+			<h2 id="slogan">
+				<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
+			</h2>
 		</div>
 		<div id="menu-wrapper">
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="10px" ForeColor="#FFFFFF" BackColor="#F4845A" />
@@ -91,19 +89,6 @@
 		</div>
 	</div>
 	<asp:Panel ID="pnlHiddenControls" Visible="false" runat="server">
-		<br />
-		<carrot:WidgetContainer ID="phExtraZone1" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone2" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone3" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone4" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone5" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:WidgetContainer ID="phExtraZone6" runat="server">
-		</carrot:WidgetContainer>
 	</asp:Panel>
 	</form>
 </body>

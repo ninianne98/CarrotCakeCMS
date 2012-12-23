@@ -11,6 +11,7 @@ namespace Carrotware.CMS.Core {
 		DateTime EditDate { get; set; }
 		Guid? EditUserId { get; set; }
 		string FileName { get; set; }
+		string Thumbnail { get; set; }
 		string NavMenuText { get; set; }
 		int? NavOrder { get; set; }
 		bool PageActive { get; set; }
