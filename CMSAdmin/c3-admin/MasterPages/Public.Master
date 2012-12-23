@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Public.master.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Public" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+	<title>Public</title>
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
+	<link href="/c3-admin/includes/logon.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$("input:button, input:submit").button();
+		});
+	</script>
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+	</asp:ContentPlaceHolder>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<center>
+		<div class="greenborder2-small">
+			<div class="greenborder-small" runat="server" id="divGreen">
+				<div style="text-align: left;">
+					<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+					</asp:ContentPlaceHolder>
+				</div>
+			</div>
+		</div>
+	</center>
+	<div style="display: none">
+		<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+	</div>
+	<asp:PlaceHolder ID="plcFooter" runat="server" />
+	</form>
+</body>
+</html>

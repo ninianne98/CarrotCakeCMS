@@ -466,8 +466,8 @@ namespace Carrotware.CMS.Core {
 		//    (CarrotCMSDataContext ctx, Guid rootContentID) =>
 		//        (from r in ctx.carrot_Widgets
 		//         where r.Root_ContentID == rootContentID
-		//         && (r.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")
-		//                || r.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx"))
+		//         && (r.ControlPath.ToLower().Contains("/c3-admin/ucgenericcontent.ascx")
+		//                || r.ControlPath.ToLower().Contains("/c3-admin/uctextcontent.ascx"))
 		//         select r));
 
 		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_Widget> cqGetRootWidget =

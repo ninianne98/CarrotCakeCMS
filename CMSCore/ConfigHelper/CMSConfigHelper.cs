@@ -426,8 +426,8 @@ namespace Carrotware.CMS.Core {
 
 					List<CMSPlugin> _p1 = new List<CMSPlugin>();
 
-					//_p1.Add(new CMSPlugin { Caption = "     Generic HTML &#0134;", FilePath = "~/Manage/ucGenericContent.ascx" });
-					//_p1.Add(new CMSPlugin { Caption = "     Plain Text &#0134;", FilePath = "~/Manage/ucTextContent.ascx" });
+					//_p1.Add(new CMSPlugin { Caption = "     Generic HTML &#0134;", FilePath = "~/c3-admin/ucGenericContent.ascx" });
+					//_p1.Add(new CMSPlugin { Caption = "     Plain Text &#0134;", FilePath = "~/c3-admin/ucTextContent.ascx" });
 
 					_p1.Add(new CMSPlugin { Caption = "       Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { Caption = "       Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
@@ -740,7 +740,7 @@ namespace Carrotware.CMS.Core {
 		protected void LoadGuids() {
 			if (filePage == null) {
 				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-					if (SiteData.CurrentScriptName.ToLower().StartsWith("/manage/")) {
+					if (SiteData.CurrentScriptName.ToLower().StartsWith(SiteData.AdminFolderPath)) {
 						Guid guidPage = Guid.Empty;
 						if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
 							guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());

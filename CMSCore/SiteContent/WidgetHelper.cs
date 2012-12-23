@@ -75,10 +75,10 @@ namespace Carrotware.CMS.Core {
 
 		//    foreach (var w in ww) {
 		//        bEdit = true;
-		//        if (w.ControlPath.ToLower().Contains("/manage/ucgenericcontent.ascx")) {
+		//        if (w.ControlPath.ToLower().Contains("/c3-admin/ucgenericcontent.ascx")) {
 		//            w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls";
 		//        }
-		//        if (w.ControlPath.ToLower().Contains("/manage/uctextcontent.ascx")) {
+		//        if (w.ControlPath.ToLower().Contains("/c3-admin/uctextcontent.ascx")) {
 		//            w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls";
 		//        }
 		//    }

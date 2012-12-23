@@ -20,7 +20,7 @@
 						changeMonth: true,
 						changeYear: true,
 						showOn: 'button',
-						buttonImage: '/Manage/images/calendar.gif',
+						buttonImage: '/c3-admin/images/calendar.gif',
 						buttonImageOnly: true,
 						constrainInput: true
 					});

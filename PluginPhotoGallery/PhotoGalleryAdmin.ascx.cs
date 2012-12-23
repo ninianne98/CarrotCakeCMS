@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				}
 			}
 
-			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/manage/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith(SiteData.AdminFolderPath));
 			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/bin/"));
 			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/obj/"));
 			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/app_data/"));
@@ -190,7 +190,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				flsWorking = flsWorking.Union(imgs).ToList();
 			}
 
-			flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("image") && (x.FolderPath.ToLower().StartsWith("/manage/") == false)).ToList();
+			flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("image") && (x.FolderPath.ToLower().StartsWith(SiteData.AdminFolderPath) == false)).ToList();
 
 			if (dtFilter != null) {
 				DateTime dtFlt = Convert.ToDateTime(dtFilter);

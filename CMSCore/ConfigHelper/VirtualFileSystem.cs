@@ -75,7 +75,7 @@ namespace Carrotware.CMS.Core {
 					if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
 						if (context.Request.UrlReferrer.AbsolutePath.ToLower().Contains(FormsAuthentication.LoginUrl.ToLower())
 							|| FormsAuthentication.LoginUrl.ToLower() == sFileRequested.ToLower()) {
-							sFileRequested = "/Manage/default.aspx";
+							sFileRequested = SiteData.AdminDefaultFile;
 						}
 					}
 				} catch (Exception ex) { }

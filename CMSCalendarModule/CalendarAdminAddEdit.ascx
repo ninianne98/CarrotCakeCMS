@@ -59,7 +59,7 @@
 				changeMonth: true,
 				changeYear: true,
 				showOn: 'button',
-				buttonImage: '/manage/images/calendar.gif',
+				buttonImage: '/c3-admin/images/calendar.gif',
 				buttonImageOnly: true,
 
 				popupContainer: '#<%=divDatePicker.ClientID%>',
