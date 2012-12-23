@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "databas
 		CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql = CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql
 		CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql = CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql
 		CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql = CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql
+		CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql = CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql
 		CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql = CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql
 		CMSDataScripts\Scripts\CREATE 01 - whole database.sql = CMSDataScripts\Scripts\CREATE 01 - whole database.sql
 		CMSDataScripts\Scripts\CREATE 02 - default user.sql = CMSDataScripts\Scripts\CREATE 02 - default user.sql
