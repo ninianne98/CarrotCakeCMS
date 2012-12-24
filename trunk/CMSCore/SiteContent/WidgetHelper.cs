@@ -68,27 +68,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		//public void UpdateContentWidgets(Guid rootContentID) {
-		//    IQueryable<carrot_Widget> ww = CompiledQueries.cqGetOldEditContentWidgets(db, rootContentID);
-
-		//    bool bEdit = false;
-
-		//    foreach (var w in ww) {
-		//        bEdit = true;
-		//        if (w.ControlPath.ToLower().Contains("/c3-admin/ucgenericcontent.ascx")) {
-		//            w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls";
-		//        }
-		//        if (w.ControlPath.ToLower().Contains("/c3-admin/uctextcontent.ascx")) {
-		//            w.ControlPath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls";
-		//        }
-		//    }
-
-		//    if (bEdit) {
-		//        db.SubmitChanges();
-		//    }
-		//}
-
-
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
 			List<Widget> w = (from r in CompiledQueries.cqGetWidgetVersionHistory_VW(db, rootWidgetID)
 							  select MakeWidget(r)).ToList();

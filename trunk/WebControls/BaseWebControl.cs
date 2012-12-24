@@ -19,8 +19,10 @@ namespace Carrotware.Web.UI.Controls {
 
 		private static Page CachedPage {
 			get {
-				if (_CachedPage == null)
+				if (_CachedPage == null) {
 					_CachedPage = new Page();
+					_CachedPage.AppRelativeVirtualPath = "~/";
+				}
 				return _CachedPage;
 			}
 		}

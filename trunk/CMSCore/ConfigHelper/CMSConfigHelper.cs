@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
-using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -94,8 +92,10 @@ namespace Carrotware.CMS.Core {
 
 		private static Page CachedPage {
 			get {
-				if (_CachedPage == null)
+				if (_CachedPage == null) {
 					_CachedPage = new Page();
+					_CachedPage.AppRelativeVirtualPath = "~/";
+				}
 				return _CachedPage;
 			}
 		}

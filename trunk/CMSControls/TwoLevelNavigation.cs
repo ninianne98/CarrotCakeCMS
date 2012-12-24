@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -609,13 +607,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 			if (string.IsNullOrEmpty(OverrideCSS) && !AutoStylingDisabled) {
-				string sCSS = String.Empty;
 
-				Assembly _assembly = Assembly.GetExecutingAssembly();
-
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt"))) {
-					sCSS = oTextStream.ReadToEnd();
-				}
+				string sCSS = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt");
 
 				sCSS = sCSS.Replace("{FORE_HEX}", ColorTranslator.ToHtml(ForeColor));
 				sCSS = sCSS.Replace("{BG_HEX}", ColorTranslator.ToHtml(BackColor));
@@ -685,7 +678,7 @@ namespace Carrotware.CMS.UI.Controls {
 					Page.Header.Controls.Add(link);
 				}
 			}
-			
+
 			if (!string.IsNullOrEmpty(ExtraCSS)) {
 				HtmlLink link = new HtmlLink();
 				link.Href = ExtraCSS;

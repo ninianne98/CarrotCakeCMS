@@ -83,3 +83,12 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.feed.png", "image/png")]
+
+
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucSearchForm.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucSimplePager1.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucSimplePager2.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx", "text/plain")]
+
