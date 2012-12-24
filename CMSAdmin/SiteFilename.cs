@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Carrotware.CMS.Core;
+
 
 namespace Carrotware.CMS.UI.Admin {
 	public static class SiteFilename {
 
 		public static string PageAddEditURL {
-			get { return "/c3-admin/PageAddEdit.aspx"; }
+			get { return SiteData.AdminFolderPath + "PageAddEdit.aspx"; }
 		}
 		public static string PageIndexURL {
-			get { return "/c3-admin/PageIndex.aspx"; }
+			get { return SiteData.AdminFolderPath + "PageIndex.aspx"; }
 		}
 		public static string BlogPostAddEditURL {
-			get { return "/c3-admin/BlogPostAddEdit.aspx"; }
+			get { return SiteData.AdminFolderPath + "BlogPostAddEdit.aspx"; }
 		}
 		public static string BlogPostIndexURL {
-			get { return "/c3-admin/BlogPostIndex.aspx"; }
+			get { return SiteData.AdminFolderPath + "BlogPostIndex.aspx"; }
 		}
 
 		public static string DataExportURL {
-			get { return "/c3-admin/PageExport.aspx"; }
+			get { return SiteData.AdminFolderPath + "PageExport.aspx"; }
 		}
 		public static string SiteImportURL {
-			get { return "/c3-admin/SiteImport.aspx"; }
+			get { return SiteData.AdminFolderPath + "SiteImport.aspx"; }
 		}
 		public static string WPSiteImportURL {
-			get { return "/c3-admin/wp-SiteImport.aspx"; }
+			get { return SiteData.AdminFolderPath + "wp-SiteImport.aspx"; }
 		}
 
 	}

@@ -650,7 +650,7 @@ namespace Carrotware.CMS.Core {
 			get { return "/default.aspx".ToLower(); }
 		}
 		public static string DefaultTemplateFilename {
-			get { return "/c3-admin/PlainTemplate.aspx".ToLower(); }
+			get { return SiteData.AdminFolderPath + "PlainTemplate.aspx".ToLower(); }
 		}
 		public static string VirtualCMSEditPrefix {
 			get { return ("/carrotcake/edit-" + CurrentSiteID.ToString() + "/").ToLower(); }

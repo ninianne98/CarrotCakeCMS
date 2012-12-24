@@ -1,12 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
-using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -849,7 +846,40 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class DefaultContentCommentEntryForm : ITemplate {
 
+
+		private Control GetCtrl() {
+
+			//string content = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.ucContactForm.ascx");
+
+			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucContactForm.ascx");
+
+			return userControl;
+		}
+
+
 		public DefaultContentCommentEntryForm() {
+
+		}
+
+
+		public void InstantiateIn(Control container) {
+			PlaceHolder ph = new PlaceHolder();
+			ph.ID = "DefaultContentCommentForm";
+
+			Control control = GetCtrl();
+
+			ph.Controls.Add(control);
+
+			container.Controls.Add(ph);
+		}
+
+	}
+
+	//========================================
+	/*
+	public class DefaultContentCommentEntryFormB : ITemplate {
+
+		public DefaultContentCommentEntryFormB() {
 
 		}
 
@@ -936,6 +966,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
+	*/
+
 
 	//========================================
 	public class DefaultSearchBoxForm : ITemplate {
@@ -944,24 +976,35 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
+		private Control GetCtrl() {
+
+			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucSearchForm.ascx");
+
+			return userControl;
+		}
+
 		public void InstantiateIn(Control container) {
 
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultSearchBoxForm";
 
-			ph.Controls.Add(new Literal { Text = "<div class=\"search-form-outer\">\r\n" });
+			Control c = GetCtrl();
 
-			// SearchText
-			ph.Controls.Add(new Literal { Text = "<div class=\"search-form-text\"> " });
-			ph.Controls.Add(new TextBox { ID = "SearchText", Columns = 16, MaxLength = 40 });
-			ph.Controls.Add(new Literal { Text = " </div>\r\n" });
+			ph.Controls.Add(c);
 
-			// btnSiteSearch
-			ph.Controls.Add(new Literal { Text = "<div class=\"search-form-button\"> " });
-			ph.Controls.Add(new Button { ID = "btnSiteSearch", Text = "Search" });
-			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
+			//ph.Controls.Add(new Literal { Text = "<div class=\"search-form-outer\">\r\n" });
 
-			ph.Controls.Add(new Literal { Text = " </div>\r\n" });
+			//// SearchText
+			//ph.Controls.Add(new Literal { Text = "<div class=\"search-form-text\"> " });
+			//ph.Controls.Add(new TextBox { ID = "SearchText", Columns = 16, MaxLength = 40 });
+			//ph.Controls.Add(new Literal { Text = " </div>\r\n" });
+
+			//// btnSiteSearch
+			//ph.Controls.Add(new Literal { Text = "<div class=\"search-form-button\"> " });
+			//ph.Controls.Add(new Button { ID = "btnSiteSearch", Text = "Search" });
+			//ph.Controls.Add(new Literal { Text = "</div>\r\n" });
+
+			//ph.Controls.Add(new Literal { Text = " </div>\r\n" });
 
 			container.Controls.Add(ph);
 		}
@@ -975,21 +1018,43 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		public void InstantiateIn(Control container) {
-			Literal litL = new Literal();
-			litL.Text = " [ ";
-			Literal litR = new Literal();
-			litR.Text = " ]   ";
+		private Control GetCtrl() {
 
-			NavLinkForPagerTemplate lnkBtn = new NavLinkForPagerTemplate();
-			lnkBtn.ID = "lnkBtn";
-			lnkBtn.CSSSelected = "selected";
+			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucSimplePager1.ascx");
+
+			return userControl;
+		}
+
+		ControlUtilities cu = new ControlUtilities();
+
+		public void InstantiateIn(Control container) {
+
+			PlaceHolder ph = new PlaceHolder();
+
+			Control c = GetCtrl();
+
+			NavLinkForPagerTemplate lnkBtn = (NavLinkForPagerTemplate)cu.FindControl("lnkBtn", c);
 
 			lnkBtn.DataBinding += new EventHandler(lnkBtn_DataBinding);
 
-			container.Controls.Add(litL);
-			container.Controls.Add(lnkBtn);
-			container.Controls.Add(litR);
+			ph.Controls.Add(c);
+
+			container.Controls.Add(ph);
+
+			//Literal litL = new Literal();
+			//litL.Text = " [ ";
+			//Literal litR = new Literal();
+			//litR.Text = " ]   ";
+
+			//NavLinkForPagerTemplate lnkBtn = new NavLinkForPagerTemplate();
+			//lnkBtn.ID = "lnkBtn";
+			//lnkBtn.CSSSelected = "selected";
+
+			//lnkBtn.DataBinding += new EventHandler(lnkBtn_DataBinding);
+
+			//container.Controls.Add(litL);
+			//container.Controls.Add(lnkBtn);
+			//container.Controls.Add(litR);
 		}
 
 		private void lnkBtn_DataBinding(object sender, EventArgs e) {
@@ -1010,37 +1075,29 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
+		private Control GetCtrl() {
+
+			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
+
+			return userControl;
+		}
+
+		ControlUtilities cu = new ControlUtilities();
+
 		public void InstantiateIn(Control container) {
+			PlaceHolder ph = new PlaceHolder();
 
-			Literal litContent0 = new Literal();
-			litContent0.Text = "\r\n<div>\r\n<p>\r\n<b><a href='{0}'>{1}</a></b> <br />\r\n{2} <br />\r\nPosted On: {3} \r\n</p> \r\n<p>";
-			litContent0.DataBinding += new EventHandler(litContent_DataBinding);
+			Control c = GetCtrl();
 
-			Literal litContent1 = new Literal();
-			litContent1.Text = " <br /> ";
+			PostMetaWordList wplCat = (PostMetaWordList)cu.FindControl("wplCat", c);
+			PostMetaWordList wpltag = (PostMetaWordList)cu.FindControl("wpltag", c);
 
-			Literal litContent2 = new Literal();
-			litContent2.Text = " </p> \r\n</div> \r\n";
+			wplCat.DataBinding += new EventHandler(pmwlList_DataBinding);
+			wpltag.DataBinding += new EventHandler(pmwlList_DataBinding);
 
-			PostMetaWordList pc = new PostMetaWordList();
-			pc.ContentType = PostMetaWordList.MetaDataType.Category;
-			pc.DataBinding += new EventHandler(pmwlList_DataBinding);
-			pc.MetaDataTitle = "Categories: ";
-			pc.HtmlTagNameOuter = "span";
-			pc.HtmlTagNameInner = "span";
+			ph.Controls.Add(c);
 
-			PostMetaWordList pt = new PostMetaWordList();
-			pt.ContentType = PostMetaWordList.MetaDataType.Tag;
-			pt.DataBinding += new EventHandler(pmwlList_DataBinding);
-			pt.MetaDataTitle = "Tags: ";
-			pt.HtmlTagNameOuter = "span";
-			pt.HtmlTagNameInner = "span";
-
-			container.Controls.Add(litContent0);
-			container.Controls.Add(pc);
-			container.Controls.Add(litContent1);
-			container.Controls.Add(pt);
-			container.Controls.Add(litContent2);
+			container.Controls.Add(ph);
 		}
 
 		private void pmwlList_DataBinding(object sender, EventArgs e) {
@@ -1050,18 +1107,7 @@ namespace Carrotware.CMS.UI.Controls {
 			pmContent.AssignedRootContentID = guidSender;
 		}
 
-		private void litContent_DataBinding(object sender, EventArgs e) {
-			Literal litContent = (Literal)sender;
-			RepeaterItem container = (RepeaterItem)litContent.NamingContainer;
-			string sTxt0 = litContent.Text;
 
-			string sTxt1 = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			string sTxt2 = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
-			string sTxt3 = DataBinder.Eval(container, "DataItem.PageTextPlainSummary").ToString();
-			string sTxt4 = DataBinder.Eval(container, "DataItem.CreateDate").ToString();
-
-			litContent.Text = String.Format(sTxt0, sTxt1, sTxt2, sTxt3, sTxt4);
-		}
 	}
 
 	public class DefaultCommentTemplate : ITemplate {
@@ -1070,35 +1116,28 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
+		private Control GetCtrl() {
+
+			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
+
+			return userControl;
+		}
+
+		ControlUtilities cu = new ControlUtilities();
+
 		public void InstantiateIn(Control container) {
 
-			Literal litContent0 = new Literal();
-			litContent0.Text = "\r\n<div>\r\n <p><b>{0} </b> <br>\r\n Commented On: {1} <br />\r\n{2} <br />\r\n </p> </div> \r\n";
-			litContent0.DataBinding += new EventHandler(litContent_DataBinding);
+			PlaceHolder ph = new PlaceHolder();
 
-			container.Controls.Add(litContent0);
+			Control c = GetCtrl();
+
+			ph.Controls.Add(c);
+
+			container.Controls.Add(ph);
+
 		}
 
-		private void litContent_DataBinding(object sender, EventArgs e) {
-			Literal litContent = (Literal)sender;
-			RepeaterItem container = (RepeaterItem)litContent.NamingContainer;
-			string sTxt0 = litContent.Text;
-
-			bool IsApproved = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.IsApproved").ToString());
-
-			string sTxt1 = DataBinder.Eval(container, "DataItem.CommenterName").ToString();
-			string sTxt2 = DataBinder.Eval(container, "DataItem.GoLiveDate").ToString();
-			string sTxt3 = DataBinder.Eval(container, "DataItem.PostCommentText").ToString();
-
-			if (!IsApproved) {
-				sTxt1 = String.Format("{0}{0} {1}", CMSConfigHelper.InactivePagePrefix, sTxt1);
-			}
-
-			litContent.Text = String.Format(sTxt0, sTxt1, sTxt2, sTxt3);
-		}
 	}
-
-
 
 
 	//========================================

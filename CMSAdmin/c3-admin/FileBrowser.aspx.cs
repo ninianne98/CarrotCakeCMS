@@ -91,7 +91,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (FileImageLink(sMime).ToLower() == "image") {
 				return String.Format("{0}{1}", sPath, sFile).ToLower();
 			} else {
-				return "/c3-admin/images/document.png";
+				return SiteData.AdminFolderPath + "images/document.png";
 			}
 		}
 

@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TopMenu.txt" />
+    <EmbeddedResource Include="ucContactForm.ascx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMSCore\CMSCore.csproj">
@@ -112,6 +113,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="feed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ucSearchForm.ascx" />
+    <EmbeddedResource Include="ucSimplePager1.ascx" />
+    <EmbeddedResource Include="ucSimplePager2.ascx" />
+    <EmbeddedResource Include="ucSummaryDisplay.ascx" />
+    <EmbeddedResource Include="ucCommentDisplay.ascx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

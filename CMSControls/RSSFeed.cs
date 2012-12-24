@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
@@ -92,7 +86,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["ImageURI"];
 				if (string.IsNullOrEmpty(s)) {
-					s = GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
+					s = ControlUtilities.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
 				}
 				return s;
 			}
