@@ -483,9 +483,11 @@ namespace Carrotware.CMS.Core {
 			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Default.htm"))) {
 				sBody = oTextStream.ReadToEnd();
 			}
-			if (CurrentSite != null) {
-				sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
-			} else {
+			try {
+				if (CurrentSite != null) {
+					sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
+				}
+			} catch {
 				sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
 			}
 

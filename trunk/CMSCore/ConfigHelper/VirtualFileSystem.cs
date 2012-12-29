@@ -195,6 +195,13 @@ namespace Carrotware.CMS.Core {
 		private void RewriteCMSPath(HttpContext context, string sTmplateFile, string sQuery) {
 
 			try {
+				if (string.IsNullOrEmpty(sVirtualReqFile)) {
+					sVirtualReqFile = SiteData.DefaultDirectoryFilename;
+				}
+				if (string.IsNullOrEmpty(sTmplateFile)) {
+					sTmplateFile = SiteData.DefaultTemplateFilename;
+				}
+
 				context.RewritePath(sVirtualReqFile, string.Empty, sQuery);
 
 				//cannot work in med trust

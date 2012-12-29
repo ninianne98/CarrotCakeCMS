@@ -105,9 +105,12 @@ namespace Carrotware.CMS.Core {
 
 			List<vw_carrot_Content> lstOtherPages = CompiledQueries.cqGetOtherNotPage(db, siteID, contentID, parentID).ToList();
 
-			if (lstOtherPages.Count < 1 && contentID == Guid.Empty && parentID == Guid.Empty) {
+			if (lstOtherPages.Count < 1 && parentID == Guid.Empty) {
 				lstOtherPages = CompiledQueries.TopLevelPages(db, siteID, false).ToList();
 			}
+
+			lstOtherPages.RemoveAll(x => x.Root_ContentID == contentID);
+			lstOtherPages.RemoveAll(x => x.Parent_ContentID == contentID);
 
 			List<SiteMapOrder> lst = (from ct in lstOtherPages
 									  select new SiteMapOrder {
