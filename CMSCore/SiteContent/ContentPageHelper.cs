@@ -692,8 +692,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage GetVersion(Guid siteID, Guid contentID) {
-			ContentPage content = new ContentPage(CompiledQueries.cqGetContentByContentID(db, siteID, contentID));
-
+			ContentPage content = null;
+			vw_carrot_Content cont = CompiledQueries.cqGetContentByContentID(db, siteID, contentID);
+			if (cont != null) {
+				content = new ContentPage(cont);
+			}
 			return content;
 		}
 
@@ -735,26 +738,38 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage FindContentByID(Guid siteID, Guid rootContentID) {
-			ContentPage content = new ContentPage(CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID));
-
+			ContentPage content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID);
+			if (cont != null) {
+				content = new ContentPage(cont);
+			}
 			return content;
 		}
 
 		public ContentPage GetLatestContentByURL(Guid siteID, bool bActiveOnly, string sPage) {
-			ContentPage content = new ContentPage(CompiledQueries.GetLatestContentByURL(db, siteID, bActiveOnly, sPage));
-
+			ContentPage content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByURL(db, siteID, bActiveOnly, sPage);
+			if (cont != null) {
+				content = new ContentPage(cont);
+			}
 			return content;
 		}
 
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
-			ContentPage content = new ContentPage(CompiledQueries.GetLatestContentByURL(db, siteID, false, urlFileName));
-
+			ContentPage content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByURL(db, siteID, false, urlFileName);
+			if (cont != null) {
+				content = new ContentPage(cont);
+			}
 			return content;
 		}
 
 		public ContentPage FindByPageSlug(Guid siteID, DateTime datePublished, string urlPageSlug) {
-			ContentPage content = new ContentPage(CompiledQueries.cqGetLatestContentBySlug(db, siteID, datePublished, urlPageSlug));
-
+			ContentPage content = null;
+			vw_carrot_Content cont = CompiledQueries.cqGetLatestContentBySlug(db, siteID, datePublished, urlPageSlug);
+			if (cont != null) {
+				content = new ContentPage(cont);
+			}
 			return content;
 		}
 
@@ -781,14 +796,20 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage FindHome(Guid siteID) {
-			ContentPage content = new ContentPage(CompiledQueries.FindHome(db, siteID, true));
-
+			ContentPage content = null;
+			vw_carrot_Content cont = CompiledQueries.FindHome(db, siteID, true);
+			if (cont != null) {
+				content = new ContentPage(cont);
+			}
 			return content;
 		}
 
 		public ContentPage FindHome(Guid siteID, bool bActiveOnly) {
-			ContentPage content = new ContentPage(CompiledQueries.FindHome(db, siteID, bActiveOnly));
-
+			ContentPage content = null;
+			vw_carrot_Content cont = CompiledQueries.FindHome(db, siteID, bActiveOnly);
+			if (cont != null) {
+				content = new ContentPage(cont);
+			}
 			return content;
 		}
 

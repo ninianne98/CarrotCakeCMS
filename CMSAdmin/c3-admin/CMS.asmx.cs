@@ -221,10 +221,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public string SendTrackbackPageBatch(string ThisPage) {
 			try {
 				CurrentPageGuid = new Guid(ThisPage);
-
-				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
-				cp.SaveTrackbackTop();
-
+				if (CurrentPageGuid != Guid.Empty) {
+					ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
+					cp.SaveTrackbackTop();
+				}
 				return "OK";
 			} catch (Exception ex) {
 				return ex.ToString();

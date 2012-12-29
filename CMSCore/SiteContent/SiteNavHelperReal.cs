@@ -102,8 +102,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private SiteNav GetPageNavigation(Guid siteID, Guid rootContentID, bool bActiveOnly) {
-			SiteNav content = new SiteNav(CompiledQueries.GetLatestContentByID(db, siteID, bActiveOnly, rootContentID));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByID(db, siteID, bActiveOnly, rootContentID);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
@@ -174,15 +177,21 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
 
-			SiteNav content = new SiteNav(CompiledQueries.GetLatestContentByURL(db, siteID, false, sPage));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByURL(db, siteID, false, sPage);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
 		public SiteNav GetPageNavigation(Guid siteID, Guid rootContentID) {
 
-			SiteNav content = new SiteNav(CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
@@ -322,32 +331,47 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteNav GetLatestVersion(Guid siteID, Guid rootContentID) {
-			SiteNav content = new SiteNav(CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
 		public SiteNav GetLatestVersion(Guid siteID, bool bActiveOnly, string sPage) {
-			SiteNav content = new SiteNav(CompiledQueries.GetLatestContentByURL(db, siteID, bActiveOnly, sPage));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByURL(db, siteID, bActiveOnly, sPage);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
 		public SiteNav FindByFilename(Guid siteID, string urlFileName) {
-			SiteNav content = new SiteNav(CompiledQueries.GetLatestContentByURL(db, siteID, false, urlFileName));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.GetLatestContentByURL(db, siteID, false, urlFileName);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
 		public SiteNav FindHome(Guid siteID) {
-			SiteNav content = new SiteNav(CompiledQueries.FindHome(db, siteID, true));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.FindHome(db, siteID, true);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
 		public SiteNav FindHome(Guid siteID, bool bActiveOnly) {
-			SiteNav content = new SiteNav(CompiledQueries.FindHome(db, siteID, bActiveOnly));
-
+			SiteNav content = null;
+			vw_carrot_Content cont = CompiledQueries.FindHome(db, siteID, bActiveOnly);
+			if (cont != null) {
+				content = new SiteNav(cont);
+			}
 			return content;
 		}
 
