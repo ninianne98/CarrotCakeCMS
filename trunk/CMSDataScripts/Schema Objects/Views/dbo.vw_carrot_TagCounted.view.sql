@@ -1,6 +1,4 @@
-﻿
-
-CREATE VIEW [dbo].[vw_carrot_TagCounted]
+﻿CREATE VIEW [dbo].[vw_carrot_TagCounted]
 AS 
 
 
@@ -10,6 +8,4 @@ LEFT JOIN
       (SELECT ContentTagID, COUNT(Root_ContentID) AS TheCount
         FROM dbo.carrot_TagContentMapping
         GROUP BY ContentTagID) AS cc2 ON cc.ContentTagID = cc2.ContentTagID
-  
-
 

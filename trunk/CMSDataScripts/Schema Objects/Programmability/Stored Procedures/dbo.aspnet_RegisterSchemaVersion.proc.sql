@@ -22,3 +22,4 @@ BEGIN
     INSERT  dbo.aspnet_SchemaVersions( Feature, CompatibleSchemaVersion, IsCurrentVersion )
     VALUES( LOWER( @Feature ), @CompatibleSchemaVersion, @IsCurrentVersion )
 END
+

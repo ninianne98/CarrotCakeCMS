@@ -55,3 +55,4 @@ BEGIN
     FROM    #PageIndexForUsers
     RETURN @TotalRecords
 END
+

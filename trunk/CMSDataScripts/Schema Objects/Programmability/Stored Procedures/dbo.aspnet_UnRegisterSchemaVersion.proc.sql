@@ -6,3 +6,4 @@ BEGIN
     DELETE FROM dbo.aspnet_SchemaVersions
         WHERE   Feature = LOWER(@Feature) AND @CompatibleSchemaVersion = CompatibleSchemaVersion
 END
+

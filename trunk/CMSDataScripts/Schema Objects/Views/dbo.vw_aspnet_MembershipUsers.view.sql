@@ -24,3 +24,4 @@
             [dbo].[aspnet_Users].[LastActivityDate]
   FROM [dbo].[aspnet_Membership] INNER JOIN [dbo].[aspnet_Users]
       ON [dbo].[aspnet_Membership].[UserId] = [dbo].[aspnet_Users].[UserId]
+

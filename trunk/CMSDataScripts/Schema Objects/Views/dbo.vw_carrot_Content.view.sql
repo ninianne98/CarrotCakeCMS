@@ -1,16 +1,15 @@
-﻿
-
-CREATE VIEW [dbo].[vw_carrot_Content]
+﻿CREATE VIEW [dbo].[vw_carrot_Content]
 AS 
 
-
-SELECT rc.Root_ContentID, rc.SiteID, rc.Heartbeat_UserId, rc.EditHeartbeat, rc.[FileName], rc.PageActive, 
+select rc.Root_ContentID, rc.SiteID, rc.Heartbeat_UserId, rc.EditHeartbeat, rc.[FileName], rc.PageActive, 
 		rc.CreateDate, c.ContentID, c.Parent_ContentID, c.IsLatestVersion, c.TitleBar, c.NavMenuText, c.PageHead, 
 		c.PageText, c.LeftPageText, c.RightPageText, c.NavOrder, c.EditUserId, c.EditDate, c.TemplateFile, c.MetaKeyword, c.MetaDescription,
-		ct.ContentTypeID, ct.ContentTypeValue, rc.PageSlug
-FROM dbo.carrot_Content AS c 
-INNER JOIN dbo.carrot_RootContent AS rc ON c.Root_ContentID = rc.Root_ContentID
-INNER JOIN dbo.carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
-  
-
+		ct.ContentTypeID, ct.ContentTypeValue, rc.PageSlug, rc.PageThumbnail, s.TimeZone,
+		rc.RetireDate, rc.GoLiveDate, rc.GoLiveDateLocal,
+		cast(case when rc.RetireDate < GetUTCDate() then 1 else 0 end as bit) as IsRetired,
+		cast(case when rc.GoLiveDate > GetUTCDate() then 1 else 0 end as bit) as IsUnReleased
+from [dbo].carrot_RootContent AS rc 
+inner join [dbo].carrot_Sites AS s ON rc.SiteID = s.SiteID 
+inner join [dbo].carrot_Content AS c ON rc.Root_ContentID = c.Root_ContentID 
+inner join [dbo].carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
 

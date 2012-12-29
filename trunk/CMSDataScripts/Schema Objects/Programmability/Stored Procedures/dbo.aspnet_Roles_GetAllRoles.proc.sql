@@ -11,3 +11,4 @@ BEGIN
     FROM   dbo.aspnet_Roles WHERE ApplicationId = @ApplicationId
     ORDER BY RoleName
 END
+
