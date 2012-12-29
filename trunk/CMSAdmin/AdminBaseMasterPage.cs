@@ -30,6 +30,7 @@ namespace Carrotware.CMS.UI.Admin {
 			ContentTemplate,
 			ContentSkinEdit,
 			ContentSiteMap,
+			SiteExport,
 			DataImport,
 			SiteImport,
 			UserAdmin,

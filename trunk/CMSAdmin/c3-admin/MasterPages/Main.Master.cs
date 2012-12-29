@@ -49,6 +49,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				tabContentTop.Visible = true;
 			}
 
+			tabExportSite.Visible = tabContentTop.Visible;
 			tabBlogTop.Visible = tabContentTop.Visible;
 			tabContent.Visible = tabContentTop.Visible;
 			tabModules.Visible = tabContentTop.Visible;
@@ -85,6 +86,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabImportContent.Attributes["class"] = sCSSLower;
 					break;
+				case SectionID.SiteExport:
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabExportSite.Attributes["class"] = sCSSLower;
+					break;
+
 
 				case SectionID.ContentAdd:
 					tabContentTop.Attributes["class"] = sCSSTop;

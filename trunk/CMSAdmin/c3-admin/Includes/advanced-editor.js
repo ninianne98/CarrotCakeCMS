@@ -9,6 +9,7 @@ function cmsSetPageStatus(stat) {
 var webSvc = "/c3-admin/CMS.asmx";
 var thisPage = ""; // used in escaped fashion
 var thisPageNav = "";  // used non-escaped (redirects)
+var thisPageNavSaved = "";  // used non-escaped (redirects)
 var thisPageID = "";
 var timeTick = "";
 
@@ -22,7 +23,7 @@ function cmsSetServiceParms(serviceURL, pagePath, pageID, timeTck) {
 }
 
 function cmsOverridePageName(pagePath) {
-	thisPageNav = pagePath;
+	thisPageNavSaved = pagePath;
 }
 
 var cmsConfirmLeavingPage = true;
@@ -424,6 +425,7 @@ function cmsApplyChanges() {
 
 }
 
+
 function cmsUpdateHeartbeat(data, status) {
 	var hb = $('#cmsHeartBeat');
 	hb.empty().append('HB:  ');
@@ -461,7 +463,6 @@ function cmsSaveWidgetsCallback(data, status) {
 
 function cmsSavePageCallback(data, status) {
 	if (data.d == "OK") {
-		cmsSetFileNameOverride();
 		CMSBusyShort();
 		cmsMakeOKToLeave();
 		cmsNotifySaved();
@@ -479,9 +480,9 @@ function cmsCountdownWindow() {
 		iCount--;
 		$('#cmsSaveCountdown').html(iCount);
 
-		setTimeout("cmsCountdownWindow();", 1100);
+		setTimeout("cmsCountdownWindow();", 1025);
 	} else {
-		window.setTimeout("location.href = \'" + thisPageNav + "\'", 250);
+		window.setTimeout("location.href = \'" + thisPageNavSaved + "\'", 250);
 	}
 }
 
@@ -501,7 +502,7 @@ function cmsNotifySaved() {
 		buttons: {
 			"OK": function () {
 				cmsMakeOKToLeave();
-				window.setTimeout("location.href = \'" + thisPageNav + "\'", 500);
+				window.setTimeout("location.href = \'" + thisPageNavSaved + "\'", 250);
 				$(this).dialog("close");
 			}
 		}
@@ -511,10 +512,6 @@ function cmsNotifySaved() {
 }
 
 
-function cmsCancelEdit0() {
-	cmsMakeOKToLeave();
-	window.setTimeout("location.href = \'" + thisPageNav + "\'", 1500);
-}
 
 function cmsRecordCancellation() {
 
@@ -558,6 +555,54 @@ function cmsCancelEdit() {
 	});
 
 	cmsFixDialog('CMScancelconfirmmsg');
+}
+
+
+
+function cmsSendTrackbackBatch() {
+
+	var webMthd = webSvc + "/SendTrackbackBatch";
+
+	$.ajax({
+		type: "POST",
+		url: webMthd,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: cmsAjaxGeneralCallback,
+		error: cmsAjaxFailedSwallow
+	});
+
+	setTimeout("cmsSendTrackbackBatch();", 15000);
+}
+
+setTimeout("cmsSendTrackbackBatch();", 3000);
+
+function cmsSendTrackbackPageBatch() {
+
+	var webMthd = webSvc + "/SendTrackbackPageBatch";
+
+	$.ajax({
+		type: "POST",
+		url: webMthd,
+		data: "{'ThisPage': '" + thePageID + "'}",
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: cmsAjaxGeneralCallback,
+		error: cmsAjaxFailedSwallow
+	});
+
+	setTimeout("cmsSendTrackbackPageBatch();", 3000);
+}
+
+setTimeout("cmsSendTrackbackPageBatch();", 1500);
+
+
+function cmsAjaxFailedSwallow(request) {
+	var s = "";
+	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
+	s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
+	s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
+	// cmsAlertModal(s);
 }
 
 function cmsAjaxFailed(request) {
@@ -943,3 +988,4 @@ function cmsDirtyPageRefresh() {
 	window.setTimeout('cmsMakeOKToLeave();', 700);
 	window.setTimeout("location.href = \'" + thisPageNav + "?carrotedit=true&carrottick=" + timeTick + "\'", 800);
 }
+

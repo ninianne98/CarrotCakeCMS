@@ -1,8 +1,8 @@
 ﻿<%@ Page ValidateRequest="false" Title="BlogPostAddEdit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostAddEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostAddEdit" %>
 
-<%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
+<%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		var webSvc = "/c3-admin/CMS.asmx";
@@ -13,7 +13,7 @@
 
 
 		function exportPage() {
-			window.open("<%=Carrotware.CMS.UI.Admin.SiteFilename.DataExportURL %>?id=" + thePageID);
+			window.open("<%=SiteFilename.DataExportURL %>?id=" + thePageID);
 		}
 
 		function openPage() {
@@ -68,6 +68,8 @@
 			});
 
 		}
+
+		setTimeout("cmsSendTrackbackPageBatch();", 1500);
 
 		function editPrefixCallback(data, status) {
 			if (data.d != "FAIL") {
@@ -164,7 +166,7 @@
 					"Yes": function () {
 						cmsMakeOKToLeave();
 						cmsRecordCancellation();
-						window.setTimeout("location.href = '<%=Carrotware.CMS.UI.Admin.SiteFilename.BlogPostIndexURL %>';", 800);
+						window.setTimeout("location.href = '<%=SiteFilename.BlogPostIndexURL %>';", 800);
 						$(this).dialog("close");
 					}
 				}
@@ -463,6 +465,7 @@
 				<li><a href="#pagecontent-tabs-0">Left</a></li>
 				<li><a href="#pagecontent-tabs-1">Center</a></li>
 				<li><a href="#pagecontent-tabs-3">Right</a></li>
+				<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
 			</ul>
 			<div id="pagecontent-tabs-0">
 				<div style="height: 325px; margin-bottom: 10px;">
@@ -489,6 +492,28 @@
 						<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
 					<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 					<br />
+				</div>
+			</div>
+			<div id="pagecontent-tabs-4">
+				<div style="height: 310px; margin-bottom: 10px;">
+					<div runat="server" id="divTrackback">
+						new trackbacks, one per line<br />
+					</div>
+					<asp:TextBox Style="height: 125px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
+					<div class="scroll-container" style="height: 175px; width: 780px;">
+						<div class="scroll-area" style="height: 170px; width: 775px;">
+							<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+								AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+								<Columns>
+									<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
+									<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
+									<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
+									<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked" AlternateTextTrue="Tracked"
+										ShowBooleanImage="true" />
+								</Columns>
+							</carrot:CarrotGridView>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -604,7 +629,7 @@
 		}
 
 		function SaveCommon() {
-			cmsMakeOKToLeave();
+			cmsSaveMakeOKAndCancelLeave();
 			var ret = tinyMCE.triggerSave();
 			CheckFileName();
 			return true;
@@ -612,11 +637,11 @@
 
 		function ClickSaveBtn() {
 			$('#<%=btnSave.ClientID %>').click();
-			setTimeout("cmsMakeNotOKToLeave();", 2500);
+			//setTimeout("cmsMakeNotOKToLeave();", 2500);
 		}
 		function ClickSaveVisitBtn() {
 			$('#<%=btnSaveVisit.ClientID %>').click();
-			setTimeout("cmsMakeNotOKToLeave();", 2500);
+			//setTimeout("cmsMakeNotOKToLeave();", 2500);
 		}
 	</script>
 	<script type="text/javascript">

@@ -213,10 +213,17 @@ namespace Carrotware.CMS.Core {
 		public static WordPressSite DeserializeWPExport(string sXML) {
 			WPBlogReader wbp = new WPBlogReader();
 			XmlDocument doc = wbp.LoadText(sXML);
-			WordPressSite site = wbp.ParseDoc(doc);
+			//WordPressSite site = wbp.GetContent(doc);
+			WordPressSite site = wbp.GetAllData(doc);
 			return site;
 		}
 
+		public static WordPressSite DeserializeWPExportAll(string sXML) {
+			WPBlogReader wbp = new WPBlogReader();
+			XmlDocument doc = wbp.LoadText(sXML);
+			WordPressSite site = wbp.GetAllData(doc);
+			return site;
+		}
 
 		public static void SaveSerializedDataExport<T>(Guid guidKey, T theData) {
 

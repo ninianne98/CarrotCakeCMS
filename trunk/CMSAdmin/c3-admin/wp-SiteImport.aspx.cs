@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -39,6 +40,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litDate.Text = wpSite.ExtractDate.ToString();
 
 				if (!IsPostBack) {
+
+					BuildFolderList();
+
 					gvPages.DataSource = (from c in wpSite.Content
 										  where c.PostType == WordPressPost.WPPostType.Page
 										  orderby c.PostOrder
@@ -65,6 +69,62 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 		}
+
+		protected void GrabAttachments(WordPressPost wpPage) {
+			if (chkFileGrab.Checked) {
+
+				int iPost = wpPage.PostID;
+
+				List<WordPressPost> lstA = (from a in wpSite.Content
+											where a.PostType == WordPressPost.WPPostType.Attachment
+											&& a.ParentPostID == iPost
+											select a).Distinct().ToList();
+
+				lstA.ToList().ForEach(q => q.ImportFileSlug = ddlFolders.SelectedValue + "/" + q.ImportFileSlug);
+				lstA.ToList().ForEach(q => q.ImportFileSlug = q.ImportFileSlug.Replace("//", "/").Replace("//", "/"));
+
+				foreach (var img in lstA) {
+					img.ImportFileSlug = img.ImportFileSlug.Replace("//", "/").Replace("//", "/");
+
+					cmsHelper.GetFile(img.AttachmentURL, img.ImportFileSlug);
+					string sURL1 = img.AttachmentURL.Substring(img.AttachmentURL.IndexOf("://") + 3);
+					string sURLLess = sURL1.Substring(sURL1.IndexOf("/"));
+
+					wpPage.PostContent = wpPage.PostContent.Replace(img.AttachmentURL, img.ImportFileSlug);
+				}
+
+			}
+		}
+
+		protected void BuildFolderList() {
+			List<FileData> lstFolders = new List<FileData>();
+
+			string sRoot = Server.MapPath("~/");
+
+			string[] subdirs;
+			try {
+				subdirs = Directory.GetDirectories(sRoot);
+			} catch {
+				subdirs = null;
+			}
+
+
+			if (subdirs != null) {
+				foreach (string theDir in subdirs) {
+					string w = FileDataHelper.MakeWebFolderPath(theDir);
+					lstFolders.Add(new FileData { FileName = w, FolderPath = w, FileDate = DateTime.Now });
+				}
+			}
+
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith(SiteData.AdminFolderPath));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/bin/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/obj/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/app_data/"));
+
+			ddlFolders.DataSource = lstFolders.OrderBy(f => f.FileName);
+			ddlFolders.DataBind();
+		}
+
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			SiteData.CurrentSite = null;
@@ -104,6 +164,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				foreach (var v in lstCat) {
 					v.Save();
 				}
+
 			}
 
 
@@ -131,6 +192,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										 where c.PostType == WordPressPost.WPPostType.Page
 										 orderby c.PostOrder, c.PostTitle
 										 select c).ToList()) {
+
+						GrabAttachments(wpp);
 
 						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(site, wpp);
 						cp.SiteID = site.SiteID;
@@ -163,13 +226,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						if (navHome != null && navHome.FileName.ToLower() == cp.FileName.ToLower()) {
 							cp.NavOrder = 0;
 						}
-						//if the file url in the upload has an existing ID, use that, not the ID from the queue
-						if (navParent != null) {
-							cp.Parent_ContentID = navParent.Root_ContentID;
-						}
 
-						cp.RetireDate = cp.CreateDate.AddYears(200);
-						cp.GoLiveDate = cp.CreateDate.AddMinutes(-5);
+						cp.RetireDate = CalcNearestFiveMinTime(cp.CreateDate).AddYears(200);
+						cp.GoLiveDate = CalcNearestFiveMinTime(cp.CreateDate).AddMinutes(-5);
+
+						//if URL exists already, make this become a new version in the current series
+						if (navData != null) {
+							cp.Root_ContentID = navData.Root_ContentID;
+							cp.RetireDate = navData.RetireDate;
+							cp.GoLiveDate = navData.GoLiveDate;
+						}
 
 						cp.SavePageEdit();
 
@@ -185,6 +251,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										 orderby c.PostOrder
 										 select c).ToList()) {
 
+						GrabAttachments(wpp);
+
 						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(site, wpp);
 						cp.SiteID = site.SiteID;
 						cp.Parent_ContentID = null;
@@ -196,13 +264,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 						SiteNav navData = navHelper.GetLatestVersion(site.SiteID, false, cp.FileName.ToLower());
 
+						cp.RetireDate = CalcNearestFiveMinTime(cp.CreateDate).AddYears(200);
+						cp.GoLiveDate = CalcNearestFiveMinTime(cp.CreateDate).AddMinutes(-5);
+
 						//if URL exists already, make this become a new version in the current series
 						if (navData != null) {
 							cp.Root_ContentID = navData.Root_ContentID;
+							cp.RetireDate = navData.RetireDate;
+							cp.GoLiveDate = navData.GoLiveDate;
 						}
-
-						cp.RetireDate = cp.CreateDate.AddYears(200);
-						cp.GoLiveDate = cp.CreateDate.AddMinutes(-5);
 
 						cp.SavePageEdit();
 					}

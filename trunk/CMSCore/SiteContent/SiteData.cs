@@ -29,11 +29,7 @@ namespace Carrotware.CMS.Core {
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 
-		public SiteData() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
-		}
+		public SiteData() { }
 
 		public SiteData(carrot_Site s) {
 
@@ -50,6 +46,8 @@ namespace Carrotware.CMS.Core {
 			this.SiteTitlebarPattern = s.SiteTitlebarPattern;
 			this.MainURL = s.MainURL;
 			this.BlockIndex = s.BlockIndex;
+			this.SendTrackbacks = s.SendTrackbacks;
+			this.AcceptTrackbacks = s.AcceptTrackbacks;
 
 			this.Blog_Root_ContentID = s.Blog_Root_ContentID;
 
@@ -110,11 +108,10 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
 		public List<ContentCategory> GetCategoryList() {
 
 			List<ContentCategory> _types = (from d in CompiledQueries.cqGetContentCategoryBySiteID(db, this.SiteID)
-											select ContentCategory.CreateCategory(d)).ToList();
+											select new ContentCategory(d)).ToList();
 
 			return _types;
 		}
@@ -122,11 +119,29 @@ namespace Carrotware.CMS.Core {
 		public List<ContentTag> GetTagList() {
 
 			List<ContentTag> _types = (from d in CompiledQueries.cqGetContentTagBySiteID(db, this.SiteID)
-									   select ContentTag.CreateTag(d)).ToList();
+									   select new ContentTag(d)).ToList();
 
 			return _types;
 		}
 
+		public void SendTrackbackQueue() {
+			if (this.SendTrackbacks) {
+
+				List<TrackBackEntry> lstTBQ = TrackBackEntry.GetTrackBackSiteQueue(this.SiteID);
+
+				foreach (TrackBackEntry t in lstTBQ) {
+					if (t.CreateDate > this.Now.AddMinutes(-30)) {
+						try {
+							TrackBacker tb = new TrackBacker();
+							t.TrackBackResponse = tb.SendTrackback(t.Root_ContentID, this.SiteID, t.TrackBackURL);
+							t.TrackedBack = true;
+							t.Save();
+						} catch (Exception ex) { }
+
+					}
+				}
+			}
+		}
 
 		private static string SiteKeyPrefix = "cms_SiteData_";
 
@@ -198,6 +213,8 @@ namespace Carrotware.CMS.Core {
 			s.SiteTitlebarPattern = this.SiteTitlebarPattern;
 			s.MainURL = this.MainURL;
 			s.BlockIndex = this.BlockIndex;
+			s.SendTrackbacks = this.SendTrackbacks;
+			s.AcceptTrackbacks = this.AcceptTrackbacks;
 
 			s.Blog_FolderPath = ContentPageHelper.ScrubSlug(this.Blog_FolderPath);
 			s.Blog_CategoryPath = ContentPageHelper.ScrubSlug(this.Blog_CategoryPath);
@@ -370,6 +387,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public bool SendTrackbacks { get; set; }
+		public bool AcceptTrackbacks { get; set; }
 		public bool BlockIndex { get; set; }
 		public string MainURL { get; set; }
 		public string MetaDescription { get; set; }
@@ -409,6 +428,9 @@ namespace Carrotware.CMS.Core {
 
 		public string DefaultCanonicalURL {
 			get { return RemoveDupeSlashesURL(this.MainURL + "/" + CurrentScriptName); }
+		}
+		public string ConstructedCanonicalURL(string sFileName) {
+			return RemoveDupeSlashesURL(this.MainURL + "/" + sFileName);
 		}
 		public string ConstructedCanonicalURL(ContentPage cp) {
 			return RemoveDupeSlashesURL(this.MainURL + "/" + cp.FileName);
@@ -685,8 +707,9 @@ namespace Carrotware.CMS.Core {
 					_specialFiles = new List<string>();
 					_specialFiles.Add(DefaultTemplateFilename);
 					_specialFiles.Add(DefaultDirectoryFilename);
-					_specialFiles.Add("/rss.aspx");
-					_specialFiles.Add("/xmlrpc.aspx");
+					//_specialFiles.Add("/feed/rss.ashx");
+					//_specialFiles.Add("/feed/sitemap.ashx");
+					//_specialFiles.Add("/feed/xmlrpc.ashx");
 				}
 
 				return _specialFiles;
@@ -771,9 +794,21 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		private static string _adminFolderPath = null;
 		public static string AdminFolderPath {
 			get {
-				return "/c3-admin/";
+				if (_adminFolderPath == null) {
+					if (ConfigurationManager.AppSettings["CarrotAdminFolderPath"] != null) {
+						_adminFolderPath = ConfigurationManager.AppSettings["CarrotAdminFolderPath"].ToString();
+						_adminFolderPath = ("/" + _adminFolderPath + "/").Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
+					} else {
+						_adminFolderPath = "/c3-admin/";
+					}
+					if (string.IsNullOrEmpty(_adminFolderPath) || _adminFolderPath.Length < 2) {
+						_adminFolderPath = "/c3-admin/";
+					}
+				}
+				return _adminFolderPath;
 			}
 		}
 
@@ -844,6 +879,26 @@ namespace Carrotware.CMS.Core {
 			BlogAndPages,
 			BlogOnly,
 			PageOnly
+		}
+
+		public void RenderRSSFeed(HttpContext context) {
+			SiteData.RSSFeedInclude FeedType = SiteData.RSSFeedInclude.BlogAndPages;
+
+			if (!string.IsNullOrEmpty(context.Request.QueryString["type"])) {
+				string feedType = context.Request.QueryString["type"].ToString();
+
+				FeedType = (SiteData.RSSFeedInclude)Enum.Parse(typeof(SiteData.RSSFeedInclude), feedType, true);
+			}
+
+			string sRSSXML = SiteData.CurrentSite.GetRSSFeed(FeedType);
+
+			context.Response.ContentType = SiteData.RssDocType;
+
+			context.Response.Write(sRSSXML);
+
+			context.Response.StatusCode = 200;
+			context.Response.StatusDescription = "OK";
+
 		}
 
 
@@ -997,7 +1052,6 @@ namespace Carrotware.CMS.Core {
 			}
 
 		}
-
 
 
 	}

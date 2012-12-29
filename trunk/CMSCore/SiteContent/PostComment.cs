@@ -33,35 +33,32 @@ namespace Carrotware.CMS.Core {
 		public string PostCommentText { get; set; }
 		public bool IsApproved { get; set; }
 		public bool IsSpam { get; set; }
+		public string NavMenuText { get; internal set; }
+		public string FileName { get; internal set; }
 
 
-		internal static PostComment CreatePostComment(carrot_ContentComment c) {
-			PostComment cont = null;
+		internal PostComment(vw_carrot_Comment c) {
 
 			if (c != null) {
-				cont = new PostComment();
-
-				cont.ContentCommentID = c.ContentCommentID;
-				cont.Root_ContentID = c.Root_ContentID;
-				cont.CreateDate = SiteData.CurrentSite.ConvertUTCToSiteTime(c.CreateDate);
-				cont.CommenterIP = c.CommenterIP;
-				cont.CommenterName = c.CommenterName;
-				cont.CommenterEmail = c.CommenterEmail;
-				cont.CommenterURL = c.CommenterURL;
-				cont.PostCommentText = c.PostComment;
-				cont.IsApproved = c.IsApproved;
-				cont.IsSpam = c.IsSpam;
-
+				this.ContentCommentID = c.ContentCommentID;
+				this.Root_ContentID = c.Root_ContentID;
+				this.CreateDate = SiteData.CurrentSite.ConvertUTCToSiteTime(c.CreateDate);
+				this.CommenterIP = c.CommenterIP;
+				this.CommenterName = c.CommenterName;
+				this.CommenterEmail = c.CommenterEmail;
+				this.CommenterURL = c.CommenterURL;
+				this.PostCommentText = c.PostComment;
+				this.IsApproved = c.IsApproved;
+				this.IsSpam = c.IsSpam;
+				this.NavMenuText = c.NavMenuText;
+				this.FileName = c.FileName;
 			}
-
-			return cont;
 		}
-
 
 
 		public void Save() {
 			bool bNew = false;
-			carrot_ContentComment c = CompiledQueries.cqGetContentCommentByID(db, this.ContentCommentID);
+			carrot_ContentComment c = CompiledQueries.cqGetContentCommentsTblByID(db, this.ContentCommentID);
 
 			if (c == null) {
 				c = new carrot_ContentComment();
@@ -94,12 +91,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
 		public static List<PostComment> GetCommentsBySitePageNumber(Guid siteID, int iPageNbr, int iPageSize, string SortBy, ContentPageType.PageType pageType) {
 			int startRec = iPageNbr * iPageSize;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				IQueryable<carrot_ContentComment> lstComments = (from c in CannedQueries.GetSiteContentCommentsByPostType(_db, siteID, pageType)
-																 select c);
+				IQueryable<vw_carrot_Comment> lstComments = (from c in CannedQueries.GetSiteContentCommentsByPostType(_db, siteID, pageType)
+															 select c);
 
 				return PaginateComments(lstComments, iPageNbr, iPageSize, SortBy).ToList();
 			}
@@ -108,14 +104,14 @@ namespace Carrotware.CMS.Core {
 		public static List<PostComment> GetCommentsByContentPageNumber(Guid rootContentID, int iPageNbr, int iPageSize, string SortBy, bool bActiveOnly) {
 			int startRec = iPageNbr * iPageSize;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				IQueryable<carrot_ContentComment> lstComments = (from c in CannedQueries.GetContentPageComments(_db, rootContentID, bActiveOnly)
-																 select c);
+				IQueryable<vw_carrot_Comment> lstComments = (from c in CannedQueries.GetContentPageComments(_db, rootContentID, bActiveOnly)
+															 select c);
 
 				return PaginateComments(lstComments, iPageNbr, iPageSize, SortBy).ToList();
 			}
 		}
 
-		public static List<PostComment> PaginateComments(IQueryable<carrot_ContentComment> lstComments, int iPageNbr, int iPageSize, string SortBy) {
+		public static List<PostComment> PaginateComments(IQueryable<vw_carrot_Comment> lstComments, int iPageNbr, int iPageSize, string SortBy) {
 			int startRec = iPageNbr * iPageSize;
 
 			string sortField = "";
@@ -135,9 +131,9 @@ namespace Carrotware.CMS.Core {
 				sortDir = "DESC";
 			}
 
-			lstComments = ReflectionUtilities.SortByParm<carrot_ContentComment>(lstComments, sortField, sortDir);
+			lstComments = ReflectionUtilities.SortByParm<vw_carrot_Comment>(lstComments, sortField, sortDir);
 
-			return lstComments.Skip(startRec).Take(iPageSize).ToList().Select(v => CreatePostComment(v)).ToList();
+			return lstComments.Skip(startRec).Take(iPageSize).ToList().Select(v => new PostComment(v)).ToList();
 		}
 
 
@@ -159,7 +155,7 @@ namespace Carrotware.CMS.Core {
 
 		public static PostComment GetContentCommentByID(Guid contentCommentID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				return CreatePostComment(CompiledQueries.cqGetContentCommentByID(_db, contentCommentID));
+				return new PostComment(CompiledQueries.cqGetContentCommentByID(_db, contentCommentID));
 			}
 		}
 
@@ -175,7 +171,7 @@ namespace Carrotware.CMS.Core {
 		public static List<PostComment> GetAllCommentsBySite(Guid siteID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				IQueryable<PostComment> s = (from c in CannedQueries.GetSiteContentComments(_db, siteID)
-											 select CreatePostComment(c));
+											 select new PostComment(c));
 
 				return s.ToList();
 			}

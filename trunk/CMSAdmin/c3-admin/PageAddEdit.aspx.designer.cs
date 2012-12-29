@@ -301,6 +301,33 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.TextBox reRightBody;
         
         /// <summary>
+        /// divTrackback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTrackback;
+        
+        /// <summary>
+        /// txtTrackback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTrackback;
+        
+        /// <summary>
+        /// gvTracks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvTracks;
+        
+        /// <summary>
         /// pnlButtons control.
         /// </summary>
         /// <remarks>

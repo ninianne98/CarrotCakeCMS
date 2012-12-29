@@ -21,6 +21,33 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav() { }
 
+		internal SiteNav(vw_carrot_Content c) {
+
+			if (c != null) {
+				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
+
+				this.Root_ContentID = c.Root_ContentID;
+				this.SiteID = c.SiteID;
+				this.FileName = c.FileName;
+				this.Thumbnail = c.PageThumbnail;
+				this.PageActive = c.PageActive;
+				this.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
+				this.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);
+				this.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
+				this.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
+				this.EditUserId = c.EditUserId;
+				this.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
+				this.ContentID = c.ContentID;
+				this.Parent_ContentID = c.Parent_ContentID;
+				this.TitleBar = c.TitleBar;
+				this.NavMenuText = c.NavMenuText;
+				this.PageHead = c.PageHead;
+				this.PageText = c.PageText;
+				this.NavOrder = c.NavOrder;
+				this.TemplateFile = c.TemplateFile;
+			}
+
+		}
 
 		public ContentPage GetContentPage() {
 			ContentPage cp = null;

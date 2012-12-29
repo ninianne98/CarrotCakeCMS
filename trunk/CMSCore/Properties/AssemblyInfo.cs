@@ -37,7 +37,6 @@ using System.Web.UI;
 [assembly: AssemblyFileVersion("4.3.0.0")]
 
 
-
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Default.htm", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm", "text/plain")]
 

@@ -31,60 +31,7 @@ namespace Carrotware.CMS.Core {
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 
-		public ContentPageHelper() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
-		}
-
-
-		internal static ContentPage CreateContentPage(vw_carrot_Content c) {
-			ContentPage cont = null;
-
-			if (c != null) {
-				cont = new ContentPage();
-				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
-
-				cont.Root_ContentID = c.Root_ContentID;
-				cont.SiteID = c.SiteID;
-				cont.Heartbeat_UserId = c.Heartbeat_UserId;
-				cont.EditHeartbeat = c.EditHeartbeat;
-				cont.FileName = c.FileName;
-				cont.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
-				cont.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);
-				cont.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
-				cont.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
-
-				cont.PageActive = c.PageActive;
-
-				cont.PageSlug = c.PageSlug;
-				cont.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
-
-				cont.ContentID = c.ContentID;
-				cont.Parent_ContentID = c.Parent_ContentID;
-				cont.IsLatestVersion = c.IsLatestVersion;
-				cont.TitleBar = c.TitleBar;
-				cont.NavMenuText = c.NavMenuText;
-				cont.PageHead = c.PageHead;
-				cont.PageText = c.PageText;
-				cont.LeftPageText = c.LeftPageText;
-				cont.RightPageText = c.RightPageText;
-				cont.NavOrder = c.NavOrder;
-				cont.EditUserId = c.EditUserId;
-				cont.TemplateFile = c.TemplateFile;
-				cont.Thumbnail = c.PageThumbnail;
-
-				if (string.IsNullOrEmpty(cont.PageSlug) && cont.ContentType == ContentPageType.PageType.BlogEntry) {
-					cont.PageSlug = c.FileName;
-				}
-
-				cont.MetaDescription = c.MetaDescription;
-				cont.MetaKeyword = c.MetaKeyword;
-			}
-
-			return cont;
-		}
-
+		public ContentPageHelper() { }
 
 
 		public void BulkUpdateTemplate(Guid siteID, List<Guid> lstUpd, string sTemplateFile) {
@@ -347,13 +294,13 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<ContentPage> GetAllLatestContentList(Guid siteID) {
-			List<ContentPage> lstContent = CannedQueries.GetAllContentList(db, siteID).Select(ct => CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CannedQueries.GetAllContentList(db, siteID).Select(ct => new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
 
 		public List<ContentPage> GetAllLatestBlogList(Guid siteID) {
-			List<ContentPage> lstContent = CannedQueries.GetAllBlogList(db, siteID).Select(ct => CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CannedQueries.GetAllBlogList(db, siteID).Select(ct => new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -520,7 +467,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			lstContent = (from q in QueryInput
-						  select CreateContentPage(q)).Skip(startRec).Take(pageSize);
+						  select new ContentPage(q)).Skip(startRec).Take(pageSize);
 
 			return lstContent.ToList();
 		}
@@ -739,19 +686,19 @@ namespace Carrotware.CMS.Core {
 
 
 		public List<ContentPage> GetVersionHistory(Guid siteID, Guid rootContentID) {
-			List<ContentPage> content = CompiledQueries.cqGetVersionHistory(db, siteID, rootContentID).Select(ct => CreateContentPage(ct)).ToList();
+			List<ContentPage> content = CompiledQueries.cqGetVersionHistory(db, siteID, rootContentID).Select(ct => new ContentPage(ct)).ToList();
 
 			return content;
 		}
 
 		public ContentPage GetVersion(Guid siteID, Guid contentID) {
-			ContentPage content = CreateContentPage(CompiledQueries.cqGetContentByContentID(db, siteID, contentID));
+			ContentPage content = new ContentPage(CompiledQueries.cqGetContentByContentID(db, siteID, contentID));
 
 			return content;
 		}
 
 		public List<ContentPage> GetLatestContentList(Guid siteID, bool bActiveOnly) {
-			List<ContentPage> lstContent = CompiledQueries.GetLatestContentList(db, siteID, bActiveOnly).Select(ct => CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CompiledQueries.GetLatestContentList(db, siteID, bActiveOnly).Select(ct => new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -788,32 +735,32 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage FindContentByID(Guid siteID, Guid rootContentID) {
-			ContentPage content = CreateContentPage(CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID));
+			ContentPage content = new ContentPage(CompiledQueries.GetLatestContentByID(db, siteID, false, rootContentID));
 
 			return content;
 		}
 
 		public ContentPage GetLatestContentByURL(Guid siteID, bool bActiveOnly, string sPage) {
-			ContentPage content = CreateContentPage(CompiledQueries.GetLatestContentByURL(db, siteID, bActiveOnly, sPage));
+			ContentPage content = new ContentPage(CompiledQueries.GetLatestContentByURL(db, siteID, bActiveOnly, sPage));
 
 			return content;
 		}
 
 		public ContentPage FindByFilename(Guid siteID, string urlFileName) {
-			ContentPage content = CreateContentPage(CompiledQueries.GetLatestContentByURL(db, siteID, false, urlFileName));
+			ContentPage content = new ContentPage(CompiledQueries.GetLatestContentByURL(db, siteID, false, urlFileName));
 
 			return content;
 		}
 
 		public ContentPage FindByPageSlug(Guid siteID, DateTime datePublished, string urlPageSlug) {
-			ContentPage content = CreateContentPage(CompiledQueries.cqGetLatestContentBySlug(db, siteID, datePublished, urlPageSlug));
+			ContentPage content = new ContentPage(CompiledQueries.cqGetLatestContentBySlug(db, siteID, datePublished, urlPageSlug));
 
 			return content;
 		}
 
 		public List<ContentPage> FindPagesBeginingWith(Guid siteID, string sFolderPath) {
 			List<ContentPage> lstContent = (from ct in GetPagesBeginingWith(siteID, sFolderPath).ToList()
-											select CreateContentPage(ct)).ToList();
+											select new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -834,15 +781,26 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPage FindHome(Guid siteID) {
-			ContentPage content = CreateContentPage(CompiledQueries.FindHome(db, siteID, true));
+			ContentPage content = new ContentPage(CompiledQueries.FindHome(db, siteID, true));
 
 			return content;
 		}
 
 		public ContentPage FindHome(Guid siteID, bool bActiveOnly) {
-			ContentPage content = CreateContentPage(CompiledQueries.FindHome(db, siteID, bActiveOnly));
+			ContentPage content = new ContentPage(CompiledQueries.FindHome(db, siteID, bActiveOnly));
 
 			return content;
+		}
+
+		public List<ContentPage> FindPageByTitleAndDate(Guid siteID, string sTitle, string sFileNameFrag, DateTime dateCreate) {
+			SiteData site = SiteData.GetSiteFromCache(siteID);
+
+			//DateTime dateUTC = site.ConvertSiteTimeToUTC(dateCreate);
+
+			List<ContentPage> lstContent = (from ct in CannedQueries.FindPageByTitleAndDate(db, siteID, sTitle, sFileNameFrag, dateCreate).ToList()
+											select new ContentPage(ct)).ToList();
+
+			return lstContent;
 		}
 
 		public List<ContentPage> GetChildNavigation(Guid siteID, string sParentPage, bool bActiveOnly) {
@@ -859,7 +817,7 @@ namespace Carrotware.CMS.Core {
 		public List<ContentPage> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 
 			List<ContentPage> lstContent = (from ct in CompiledQueries.GetLatestContentByParent(db, siteID, ParentID, bActiveOnly).ToList()
-											select CreateContentPage(ct)).ToList();
+											select new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -867,13 +825,13 @@ namespace Carrotware.CMS.Core {
 		public List<ContentPage> GetParentWithChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 
 			List<ContentPage> lstContent = (from ct in CompiledQueries.GetLatestContentWithParent(db, siteID, ParentID, bActiveOnly).ToList()
-											select CreateContentPage(ct)).ToList();
+											select new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
 
 		public List<ContentPage> GetTopNavigation(Guid siteID, bool bActiveOnly) {
-			List<ContentPage> lstContent = CompiledQueries.TopLevelPages(db, siteID, bActiveOnly).Select(ct => CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CompiledQueries.TopLevelPages(db, siteID, bActiveOnly).Select(ct => new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
@@ -883,7 +841,7 @@ namespace Carrotware.CMS.Core {
 			DateTime dateBegin = dateMidpoint.AddDays(0 - iDayRange);
 			DateTime dateEnd = dateMidpoint.AddDays(iDayRange);
 
-			List<ContentPage> lstContent = CompiledQueries.PostsByDateRange(db, siteID, dateBegin, dateEnd, bActiveOnly).Select(ct => CreateContentPage(ct)).ToList();
+			List<ContentPage> lstContent = CompiledQueries.PostsByDateRange(db, siteID, dateBegin, dateEnd, bActiveOnly).Select(ct => new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}

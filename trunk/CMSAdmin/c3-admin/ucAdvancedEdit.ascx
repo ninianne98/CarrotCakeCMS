@@ -58,9 +58,7 @@
 
 	cmsSetPreviewFileName('<%=SiteData.PreviewTemplateFilePage %>');
 
-	function cmsSetFileNameOverride() {
-		cmsOverridePageName("<%=FileName %>");
-	}
+	cmsOverridePageName('<%=EditedPageFileName %>');
 
 </script>
 <div style="display: none;">

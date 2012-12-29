@@ -55,53 +55,41 @@ namespace Carrotware.CMS.Core {
 			return CategorySlug.GetHashCode() ^ SiteID.GetHashCode();
 		}
 
-		internal static ContentCategory CreateCategory(vw_carrot_CategoryCounted c) {
-			ContentCategory cc = null;
+		internal ContentCategory(vw_carrot_CategoryCounted c) {
 			if (c != null) {
-				cc = new ContentCategory();
-				cc.ContentCategoryID = c.ContentCategoryID;
-				cc.SiteID = c.SiteID;
-				cc.CategorySlug = c.CategorySlug;
-				cc.CategoryText = c.CategoryText;
-				cc.UseCount = c.UseCount;
+				this.ContentCategoryID = c.ContentCategoryID;
+				this.SiteID = c.SiteID;
+				this.CategorySlug = c.CategorySlug;
+				this.CategoryText = c.CategoryText;
+				this.UseCount = c.UseCount;
 			}
-
-			return cc;
 		}
 
-		internal static ContentCategory CreateCategory(vw_carrot_CategoryURL c) {
-			ContentCategory cc = null;
+		internal ContentCategory(vw_carrot_CategoryURL c) {
 			if (c != null) {
-				cc = new ContentCategory();
-				cc.ContentCategoryID = c.ContentCategoryID;
-				cc.SiteID = c.SiteID;
-				cc.CategoryURL = c.CategoryUrl;
-				cc.CategoryText = c.CategoryText;
-				cc.UseCount = c.UseCount;
+				this.ContentCategoryID = c.ContentCategoryID;
+				this.SiteID = c.SiteID;
+				this.CategoryURL = c.CategoryUrl;
+				this.CategoryText = c.CategoryText;
+				this.UseCount = c.UseCount;
 			}
-
-			return cc;
 		}
 
 
-		internal static ContentCategory CreateCategory(carrot_ContentCategory c) {
-			ContentCategory cc = null;
+		internal ContentCategory(carrot_ContentCategory c) {
 			if (c != null) {
-				cc = new ContentCategory();
-				cc.ContentCategoryID = c.ContentCategoryID;
-				cc.SiteID = c.SiteID;
-				cc.CategorySlug = c.CategorySlug;
-				cc.CategoryText = c.CategoryText;
+				this.ContentCategoryID = c.ContentCategoryID;
+				this.SiteID = c.SiteID;
+				this.CategorySlug = c.CategorySlug;
+				this.CategoryText = c.CategoryText;
 			}
-
-			return cc;
 		}
 
 		public static ContentCategory Get(Guid CategoryID) {
 			ContentCategory _item = null;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_ContentCategory query = CompiledQueries.cqGetContentCategoryByID(_db, CategoryID);
-				_item = CreateCategory(query);
+				_item = new ContentCategory(query);
 			}
 
 			return _item;
@@ -126,7 +114,7 @@ namespace Carrotware.CMS.Core {
 				IQueryable<carrot_ContentCategory> query = CompiledQueries.cqGetContentCategoryByContentID(_db, rootContentID);
 
 				_types = (from d in query.ToList()
-						  select CreateCategory(d)).ToList();
+						  select new ContentCategory(d)).ToList();
 			}
 
 			return _types;
@@ -179,7 +167,6 @@ namespace Carrotware.CMS.Core {
 		}
 		#endregion
 	}
-
 
 
 }

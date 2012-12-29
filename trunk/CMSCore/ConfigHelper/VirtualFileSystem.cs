@@ -19,7 +19,7 @@ using Carrotware.CMS.DBUpdater;
 
 namespace Carrotware.CMS.Core {
 
-	public class VirtualFileSystem : IHttpHandler, IRequiresSessionState {
+	public class VirtualFileSystem : IHttpHandler, IRequiresSessionState, IDisposable {
 
 		private const string REQ_PATH = "RewriteOrigPath";
 		private const string REQ_QUERY = "RewriteOrigQuery";

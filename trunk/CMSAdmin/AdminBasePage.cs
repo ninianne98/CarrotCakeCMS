@@ -42,6 +42,16 @@ namespace Carrotware.CMS.UI.Admin {
 
 		}
 
+		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {
+
+			dateIn = dateIn.AddMinutes(-2);
+			int iMin = 5 * (dateIn.Minute / 5);
+
+			DateTime dateOut = dateIn.AddMinutes(0 - dateIn.Minute).AddMinutes(iMin);
+
+			return dateOut;
+		}
+
 		public void PreselectCheckboxRepeater(Repeater repeater, List<IContentMetaInfo> lst) {
 			foreach (RepeaterItem r in repeater.Items) {
 				CheckBox chk = (CheckBox)r.FindControl("chk");

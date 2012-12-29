@@ -65,6 +65,7 @@
     <Compile Include="ContentRichText.cs" />
     <Compile Include="BreadCrumbNavigation.cs" />
     <Compile Include="ControlUtilities.cs" />
+    <Compile Include="TrackBack.cs" />
     <Compile Include="PostCalendar.cs" />
     <Compile Include="SearchBox.cs" />
     <Compile Include="IFrameWidgetWrapper.cs" />
@@ -120,6 +121,7 @@
     <EmbeddedResource Include="ucSimplePager2.ascx" />
     <EmbeddedResource Include="ucSummaryDisplay.ascx" />
     <EmbeddedResource Include="ucCommentDisplay.ascx" />
+    <EmbeddedResource Include="Trackback.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

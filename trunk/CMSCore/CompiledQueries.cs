@@ -431,11 +431,19 @@ namespace Carrotware.CMS.Core {
 
 		//===============================
 
-
-		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_ContentComment> cqGetContentCommentByID =
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_ContentComment> cqGetContentCommentsTblByID =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid contentCommentID) =>
 					  (from r in ctx.carrot_ContentComments
+					   orderby r.CreateDate descending
+					   where r.ContentCommentID == contentCommentID
+					   select r).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, vw_carrot_Comment> cqGetContentCommentByID =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid contentCommentID) =>
+					  (from r in ctx.vw_carrot_Comments
 					   orderby r.CreateDate descending
 					   where r.ContentCommentID == contentCommentID
 					   select r).FirstOrDefault());
@@ -528,7 +536,6 @@ namespace Carrotware.CMS.Core {
 						  && r.IsLatestVersion == true
 						  && (r.WidgetActive == true || bActiveOnly == false)
 					   select r));
-
 
 
 		internal static readonly Func<CarrotCMSDataContext, SearchParameterObject, carrot_SerialCache> cqGetSerialCacheTbl =
@@ -801,6 +808,66 @@ namespace Carrotware.CMS.Core {
 				(CarrotCMSDataContext ctx) =>
 					(from ct in ctx.vw_carrot_UserDatas
 					 select ct));
+
+
+		//======================
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_TrackbackQueue> cqGetTrackbackTblByID =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid trackbackQueueID) =>
+					(from ct in ctx.carrot_TrackbackQueues
+					 orderby ct.CreateDate descending
+					 where ct.TrackbackQueueID == trackbackQueueID
+					 select ct).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, vw_carrot_TrackbackQueue> cqGetTrackbackByID =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid trackbackQueueID) =>
+					(from ct in ctx.vw_carrot_TrackbackQueues
+					 orderby ct.CreateDate descending
+					 where ct.TrackbackQueueID == trackbackQueueID
+					 select ct).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_TrackbackQueue>> cqGetTrackbackByRootID =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid rootContentID) =>
+					(from ct in ctx.vw_carrot_TrackbackQueues
+					 orderby ct.CreateDate descending
+					 where ct.Root_ContentID == rootContentID
+					 select ct));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_TrackbackQueue>> cqGetTrackbackByRootIDUnTracked =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid rootContentID) =>
+					(from ct in ctx.vw_carrot_TrackbackQueues
+					 orderby ct.CreateDate descending
+					 where ct.Root_ContentID == rootContentID
+						&& ct.TrackedBack == false
+					 select ct));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_TrackbackQueue>> cqGetTrackbackBySiteIDUnTracked =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid siteID) =>
+					(from ct in ctx.vw_carrot_TrackbackQueues
+					 orderby ct.CreateDate descending
+					 where ct.SiteID == siteID
+						&& ct.TrackedBack == false
+						&& ct.PageActive == true
+					 select ct).Take(20));
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, string, IQueryable<vw_carrot_TrackbackQueue>> cqGetTrackbackByRootIDAndUrl =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid rootContentID, string sURL) =>
+					(from ct in ctx.vw_carrot_TrackbackQueues
+					 orderby ct.CreateDate descending
+					 where ct.Root_ContentID == rootContentID
+						&& ct.TrackBackURL.ToLower() == sURL.ToLower()
+					 select ct));
+
 
 	}
 

@@ -319,9 +319,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
-
-
 		private static Dictionary<string, string> _dict = null;
 
 		public static Dictionary<string, string> MimeTypes {

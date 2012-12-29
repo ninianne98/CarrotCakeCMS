@@ -45,9 +45,26 @@ namespace Carrotware.CMS.Core {
 		public string ImportFileSlug { get; set; }
 		public string ImportFileName { get; set; }
 
+		public string AttachmentURL { get; set; }
 
 		public override string ToString() {
 			return PostTitle + " : " + PostType.ToString() + " , #" + PostID;
+		}
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is WordPressPost) {
+				WordPressPost p = (WordPressPost)obj;
+				return (this.PostID == p.PostID)
+						&& (this.PostDateUTC == p.PostDateUTC);
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return PostID.GetHashCode() ^ PostDateUTC.GetHashCode();
 		}
 
 	}

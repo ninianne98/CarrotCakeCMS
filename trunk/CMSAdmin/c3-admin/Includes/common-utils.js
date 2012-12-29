@@ -46,8 +46,8 @@ function BlockUI(elementID) {
 					left: '45%',
 					textAlign: 'center'
 				},
-				fadeOut: 4000,
-				timeout: 5000,
+				fadeOut: 80000,
+				timeout: 90000,
 				overlayCSS: {
 					backgroundColor: '#FFFFFF',
 					opacity: 0.6,
@@ -74,6 +74,8 @@ $(document).ready(function () {
 
 //===================
 
+var webSvc = "/c3-admin/CMS.asmx";
+
 function MakeStringSafe(val) {
 	val = Base64.encode(val);
 	return val;
@@ -90,6 +92,14 @@ function cmsAjaxFailed(request) {
 	s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
 	s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
 	cmsAlertModal(s);
+}
+
+function cmsAjaxFailedSwallow(request) {
+	var s = "";
+	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
+	s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
+	s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
+	//cmsAlertModal(s);
 }
 
 function cmsAjaxGeneralCallback(data, status) {
@@ -154,6 +164,68 @@ function checkFloatNumber(obj) {
 	}
 }
 
+function cmsSendTrackbackBatch() {
+
+	var webMthd = webSvc + "/SendTrackbackBatch";
+
+	$.ajax({
+		type: "POST",
+		url: webMthd,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: cmsAjaxGeneralCallback,
+		error: cmsAjaxFailedSwallow
+	});
+
+	setTimeout("cmsSendTrackbackBatch();", 10000);
+}
+
+//setTimeout("cmsSendTrackbackBatch();", 5000);
+
+
+function cmsSendTrackbackPageBatch() {
+
+	var webMthd = webSvc + "/SendTrackbackPageBatch";
+
+	$.ajax({
+		type: "POST",
+		url: webMthd,
+		data: "{'ThisPage': '" + thePageID + "'}",
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: cmsAjaxGeneralCallback,
+		error: cmsAjaxFailedSwallow
+	});
+
+	//alert(webMthd);
+
+	setTimeout("cmsSendTrackbackPageBatch();", 3000);
+}
+
+
+function cmsSaveMakeOKAndCancelLeave() {
+	cmsMakeOKToLeave();
+	if (cmsIsPageValid()) {
+		setTimeout("cmsMakeNotOKToLeave();", 20000);
+	} else {
+		setTimeout("cmsMakeNotOKToLeave();", 250);
+	}
+}
+
+function cmsIsPageValid() {
+
+	if (typeof (Page_ClientValidate) == 'function') {
+		Page_ClientValidate();
+	} else {
+		return true;
+	}
+
+	if (Page_IsValid) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 //====================================
 

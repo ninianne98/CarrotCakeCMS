@@ -78,6 +78,9 @@ namespace Carrotware.CMS.Data
     partial void Insertcarrot_SerialCache(carrot_SerialCache instance);
     partial void Updatecarrot_SerialCache(carrot_SerialCache instance);
     partial void Deletecarrot_SerialCache(carrot_SerialCache instance);
+    partial void Insertcarrot_TrackbackQueue(carrot_TrackbackQueue instance);
+    partial void Updatecarrot_TrackbackQueue(carrot_TrackbackQueue instance);
+    partial void Deletecarrot_TrackbackQueue(carrot_TrackbackQueue instance);
     partial void Insertcarrot_Site(carrot_Site instance);
     partial void Updatecarrot_Site(carrot_Site instance);
     partial void Deletecarrot_Site(carrot_Site instance);
@@ -289,14 +292,6 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<carrot_Site> carrot_Sites
-		{
-			get
-			{
-				return this.GetTable<carrot_Site>();
-			}
-		}
-		
 		public System.Data.Linq.Table<vw_carrot_Content> vw_carrot_Contents
 		{
 			get
@@ -310,6 +305,38 @@ namespace Carrotware.CMS.Data
 			get
 			{
 				return this.GetTable<carrot_ContentTally>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vw_carrot_Comment> vw_carrot_Comments
+		{
+			get
+			{
+				return this.GetTable<vw_carrot_Comment>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_TrackbackQueue> carrot_TrackbackQueues
+		{
+			get
+			{
+				return this.GetTable<carrot_TrackbackQueue>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vw_carrot_TrackbackQueue> vw_carrot_TrackbackQueues
+		{
+			get
+			{
+				return this.GetTable<vw_carrot_TrackbackQueue>();
+			}
+		}
+		
+		public System.Data.Linq.Table<carrot_Site> carrot_Sites
+		{
+			get
+			{
+				return this.GetTable<carrot_Site>();
 			}
 		}
 		
@@ -3111,6 +3138,8 @@ namespace Carrotware.CMS.Data
 		
 		private EntitySet<carrot_Content> _carrot_Contents;
 		
+		private EntitySet<carrot_TrackbackQueue> _carrot_TrackbackQueues;
+		
 		private EntityRef<carrot_ContentType> _carrot_ContentType;
 		
 		private EntityRef<carrot_Site> _carrot_Site;
@@ -3154,6 +3183,7 @@ namespace Carrotware.CMS.Data
 			this._carrot_Widgets = new EntitySet<carrot_Widget>(new Action<carrot_Widget>(this.attach_carrot_Widgets), new Action<carrot_Widget>(this.detach_carrot_Widgets));
 			this._carrot_ContentComments = new EntitySet<carrot_ContentComment>(new Action<carrot_ContentComment>(this.attach_carrot_ContentComments), new Action<carrot_ContentComment>(this.detach_carrot_ContentComments));
 			this._carrot_Contents = new EntitySet<carrot_Content>(new Action<carrot_Content>(this.attach_carrot_Contents), new Action<carrot_Content>(this.detach_carrot_Contents));
+			this._carrot_TrackbackQueues = new EntitySet<carrot_TrackbackQueue>(new Action<carrot_TrackbackQueue>(this.attach_carrot_TrackbackQueues), new Action<carrot_TrackbackQueue>(this.detach_carrot_TrackbackQueues));
 			this._carrot_ContentType = default(EntityRef<carrot_ContentType>);
 			this._carrot_Site = default(EntityRef<carrot_Site>);
 			OnCreated();
@@ -3492,6 +3522,19 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_TrackbackQueue", Storage="_carrot_TrackbackQueues", ThisKey="Root_ContentID", OtherKey="Root_ContentID")]
+		public EntitySet<carrot_TrackbackQueue> carrot_TrackbackQueues
+		{
+			get
+			{
+				return this._carrot_TrackbackQueues;
+			}
+			set
+			{
+				this._carrot_TrackbackQueues.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_ContentType_carrot_RootContent", Storage="_carrot_ContentType", ThisKey="ContentTypeID", OtherKey="ContentTypeID", IsForeignKey=true)]
 		public carrot_ContentType carrot_ContentType
 		{
@@ -3635,6 +3678,18 @@ namespace Carrotware.CMS.Data
 		}
 		
 		private void detach_carrot_Contents(carrot_Content entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = null;
+		}
+		
+		private void attach_carrot_TrackbackQueues(carrot_TrackbackQueue entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_RootContent = this;
+		}
+		
+		private void detach_carrot_TrackbackQueues(carrot_TrackbackQueue entity)
 		{
 			this.SendPropertyChanging();
 			entity.carrot_RootContent = null;
@@ -5534,492 +5589,6 @@ namespace Carrotware.CMS.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Sites")]
-	public partial class carrot_Site : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _SiteID;
-		
-		private string _MetaKeyword;
-		
-		private string _MetaDescription;
-		
-		private string _SiteName;
-		
-		private string _MainURL;
-		
-		private bool _BlockIndex;
-		
-		private string _TimeZone;
-		
-		private System.Nullable<System.Guid> _Blog_Root_ContentID;
-		
-		private string _Blog_FolderPath;
-		
-		private string _Blog_CategoryPath;
-		
-		private string _Blog_TagPath;
-		
-		private string _Blog_DatePattern;
-		
-		private string _SiteTagline;
-		
-		private string _SiteTitlebarPattern;
-		
-		private EntitySet<carrot_UserSiteMapping> _carrot_UserSiteMappings;
-		
-		private EntitySet<carrot_ContentTag> _carrot_ContentTags;
-		
-		private EntitySet<carrot_ContentCategory> _carrot_ContentCategories;
-		
-		private EntitySet<carrot_RootContent> _carrot_RootContents;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSiteIDChanging(System.Guid value);
-    partial void OnSiteIDChanged();
-    partial void OnMetaKeywordChanging(string value);
-    partial void OnMetaKeywordChanged();
-    partial void OnMetaDescriptionChanging(string value);
-    partial void OnMetaDescriptionChanged();
-    partial void OnSiteNameChanging(string value);
-    partial void OnSiteNameChanged();
-    partial void OnMainURLChanging(string value);
-    partial void OnMainURLChanged();
-    partial void OnBlockIndexChanging(bool value);
-    partial void OnBlockIndexChanged();
-    partial void OnTimeZoneChanging(string value);
-    partial void OnTimeZoneChanged();
-    partial void OnBlog_Root_ContentIDChanging(System.Nullable<System.Guid> value);
-    partial void OnBlog_Root_ContentIDChanged();
-    partial void OnBlog_FolderPathChanging(string value);
-    partial void OnBlog_FolderPathChanged();
-    partial void OnBlog_CategoryPathChanging(string value);
-    partial void OnBlog_CategoryPathChanged();
-    partial void OnBlog_TagPathChanging(string value);
-    partial void OnBlog_TagPathChanged();
-    partial void OnBlog_DatePatternChanging(string value);
-    partial void OnBlog_DatePatternChanged();
-    partial void OnSiteTaglineChanging(string value);
-    partial void OnSiteTaglineChanged();
-    partial void OnSiteTitlebarPatternChanging(string value);
-    partial void OnSiteTitlebarPatternChanged();
-    #endregion
-		
-		public carrot_Site()
-		{
-			this._carrot_UserSiteMappings = new EntitySet<carrot_UserSiteMapping>(new Action<carrot_UserSiteMapping>(this.attach_carrot_UserSiteMappings), new Action<carrot_UserSiteMapping>(this.detach_carrot_UserSiteMappings));
-			this._carrot_ContentTags = new EntitySet<carrot_ContentTag>(new Action<carrot_ContentTag>(this.attach_carrot_ContentTags), new Action<carrot_ContentTag>(this.detach_carrot_ContentTags));
-			this._carrot_ContentCategories = new EntitySet<carrot_ContentCategory>(new Action<carrot_ContentCategory>(this.attach_carrot_ContentCategories), new Action<carrot_ContentCategory>(this.detach_carrot_ContentCategories));
-			this._carrot_RootContents = new EntitySet<carrot_RootContent>(new Action<carrot_RootContent>(this.attach_carrot_RootContents), new Action<carrot_RootContent>(this.detach_carrot_RootContents));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					this.OnSiteIDChanging(value);
-					this.SendPropertyChanging();
-					this._SiteID = value;
-					this.SendPropertyChanged("SiteID");
-					this.OnSiteIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="NVarChar(1024)")]
-		public string MetaKeyword
-		{
-			get
-			{
-				return this._MetaKeyword;
-			}
-			set
-			{
-				if ((this._MetaKeyword != value))
-				{
-					this.OnMetaKeywordChanging(value);
-					this.SendPropertyChanging();
-					this._MetaKeyword = value;
-					this.SendPropertyChanged("MetaKeyword");
-					this.OnMetaKeywordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="NVarChar(1024)")]
-		public string MetaDescription
-		{
-			get
-			{
-				return this._MetaDescription;
-			}
-			set
-			{
-				if ((this._MetaDescription != value))
-				{
-					this.OnMetaDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._MetaDescription = value;
-					this.SendPropertyChanged("MetaDescription");
-					this.OnMetaDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteName", DbType="NVarChar(256)")]
-		public string SiteName
-		{
-			get
-			{
-				return this._SiteName;
-			}
-			set
-			{
-				if ((this._SiteName != value))
-				{
-					this.OnSiteNameChanging(value);
-					this.SendPropertyChanging();
-					this._SiteName = value;
-					this.SendPropertyChanged("SiteName");
-					this.OnSiteNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MainURL", DbType="NVarChar(128)")]
-		public string MainURL
-		{
-			get
-			{
-				return this._MainURL;
-			}
-			set
-			{
-				if ((this._MainURL != value))
-				{
-					this.OnMainURLChanging(value);
-					this.SendPropertyChanging();
-					this._MainURL = value;
-					this.SendPropertyChanged("MainURL");
-					this.OnMainURLChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlockIndex", DbType="Bit NOT NULL")]
-		public bool BlockIndex
-		{
-			get
-			{
-				return this._BlockIndex;
-			}
-			set
-			{
-				if ((this._BlockIndex != value))
-				{
-					this.OnBlockIndexChanging(value);
-					this.SendPropertyChanging();
-					this._BlockIndex = value;
-					this.SendPropertyChanged("BlockIndex");
-					this.OnBlockIndexChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeZone", DbType="NVarChar(128)")]
-		public string TimeZone
-		{
-			get
-			{
-				return this._TimeZone;
-			}
-			set
-			{
-				if ((this._TimeZone != value))
-				{
-					this.OnTimeZoneChanging(value);
-					this.SendPropertyChanging();
-					this._TimeZone = value;
-					this.SendPropertyChanged("TimeZone");
-					this.OnTimeZoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_Root_ContentID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Blog_Root_ContentID
-		{
-			get
-			{
-				return this._Blog_Root_ContentID;
-			}
-			set
-			{
-				if ((this._Blog_Root_ContentID != value))
-				{
-					this.OnBlog_Root_ContentIDChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_Root_ContentID = value;
-					this.SendPropertyChanged("Blog_Root_ContentID");
-					this.OnBlog_Root_ContentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_FolderPath", DbType="NVarChar(64)")]
-		public string Blog_FolderPath
-		{
-			get
-			{
-				return this._Blog_FolderPath;
-			}
-			set
-			{
-				if ((this._Blog_FolderPath != value))
-				{
-					this.OnBlog_FolderPathChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_FolderPath = value;
-					this.SendPropertyChanged("Blog_FolderPath");
-					this.OnBlog_FolderPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_CategoryPath", DbType="NVarChar(64)")]
-		public string Blog_CategoryPath
-		{
-			get
-			{
-				return this._Blog_CategoryPath;
-			}
-			set
-			{
-				if ((this._Blog_CategoryPath != value))
-				{
-					this.OnBlog_CategoryPathChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_CategoryPath = value;
-					this.SendPropertyChanged("Blog_CategoryPath");
-					this.OnBlog_CategoryPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_TagPath", DbType="NVarChar(64)")]
-		public string Blog_TagPath
-		{
-			get
-			{
-				return this._Blog_TagPath;
-			}
-			set
-			{
-				if ((this._Blog_TagPath != value))
-				{
-					this.OnBlog_TagPathChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_TagPath = value;
-					this.SendPropertyChanged("Blog_TagPath");
-					this.OnBlog_TagPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_DatePattern", DbType="NVarChar(32)")]
-		public string Blog_DatePattern
-		{
-			get
-			{
-				return this._Blog_DatePattern;
-			}
-			set
-			{
-				if ((this._Blog_DatePattern != value))
-				{
-					this.OnBlog_DatePatternChanging(value);
-					this.SendPropertyChanging();
-					this._Blog_DatePattern = value;
-					this.SendPropertyChanged("Blog_DatePattern");
-					this.OnBlog_DatePatternChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTagline", DbType="NVarChar(1024)")]
-		public string SiteTagline
-		{
-			get
-			{
-				return this._SiteTagline;
-			}
-			set
-			{
-				if ((this._SiteTagline != value))
-				{
-					this.OnSiteTaglineChanging(value);
-					this.SendPropertyChanging();
-					this._SiteTagline = value;
-					this.SendPropertyChanged("SiteTagline");
-					this.OnSiteTaglineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTitlebarPattern", DbType="NVarChar(1024)")]
-		public string SiteTitlebarPattern
-		{
-			get
-			{
-				return this._SiteTitlebarPattern;
-			}
-			set
-			{
-				if ((this._SiteTitlebarPattern != value))
-				{
-					this.OnSiteTitlebarPatternChanging(value);
-					this.SendPropertyChanging();
-					this._SiteTitlebarPattern = value;
-					this.SendPropertyChanged("SiteTitlebarPattern");
-					this.OnSiteTitlebarPatternChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_UserSiteMapping", Storage="_carrot_UserSiteMappings", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_UserSiteMapping> carrot_UserSiteMappings
-		{
-			get
-			{
-				return this._carrot_UserSiteMappings;
-			}
-			set
-			{
-				this._carrot_UserSiteMappings.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentTag", Storage="_carrot_ContentTags", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_ContentTag> carrot_ContentTags
-		{
-			get
-			{
-				return this._carrot_ContentTags;
-			}
-			set
-			{
-				this._carrot_ContentTags.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentCategory", Storage="_carrot_ContentCategories", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_ContentCategory> carrot_ContentCategories
-		{
-			get
-			{
-				return this._carrot_ContentCategories;
-			}
-			set
-			{
-				this._carrot_ContentCategories.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_RootContent", Storage="_carrot_RootContents", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<carrot_RootContent> carrot_RootContents
-		{
-			get
-			{
-				return this._carrot_RootContents;
-			}
-			set
-			{
-				this._carrot_RootContents.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-		
-		private void attach_carrot_ContentTags(carrot_ContentTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_ContentTags(carrot_ContentTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-		
-		private void attach_carrot_ContentCategories(carrot_ContentCategory entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_ContentCategories(carrot_ContentCategory entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-		
-		private void attach_carrot_RootContents(carrot_RootContent entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = this;
-		}
-		
-		private void detach_carrot_RootContents(carrot_RootContent entity)
-		{
-			this.SendPropertyChanging();
-			entity.carrot_Site = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Content")]
 	public partial class vw_carrot_Content
 	{
@@ -6683,6 +6252,1327 @@ namespace Carrotware.CMS.Data
 					this._DateSlug = value;
 				}
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_Comment")]
+	public partial class vw_carrot_Comment
+	{
+		
+		private System.Guid _ContentCommentID;
+		
+		private System.DateTime _CreateDate;
+		
+		private string _CommenterIP;
+		
+		private string _CommenterName;
+		
+		private string _CommenterEmail;
+		
+		private string _CommenterURL;
+		
+		private string _PostComment;
+		
+		private bool _IsApproved;
+		
+		private bool _IsSpam;
+		
+		private System.Guid _Root_ContentID;
+		
+		private System.Guid _SiteID;
+		
+		private string _FileName;
+		
+		private string _PageHead;
+		
+		private string _TitleBar;
+		
+		private string _NavMenuText;
+		
+		private System.Guid _ContentTypeID;
+		
+		private System.Nullable<bool> _IsRetired;
+		
+		private System.Nullable<bool> _IsUnReleased;
+		
+		private System.DateTime _RetireDate;
+		
+		private System.DateTime _GoLiveDate;
+		
+		public vw_carrot_Comment()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentCommentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ContentCommentID
+		{
+			get
+			{
+				return this._ContentCommentID;
+			}
+			set
+			{
+				if ((this._ContentCommentID != value))
+				{
+					this._ContentCommentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterIP", DbType="NVarChar(32) NOT NULL", CanBeNull=false)]
+		public string CommenterIP
+		{
+			get
+			{
+				return this._CommenterIP;
+			}
+			set
+			{
+				if ((this._CommenterIP != value))
+				{
+					this._CommenterIP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string CommenterName
+		{
+			get
+			{
+				return this._CommenterName;
+			}
+			set
+			{
+				if ((this._CommenterName != value))
+				{
+					this._CommenterName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterEmail", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string CommenterEmail
+		{
+			get
+			{
+				return this._CommenterEmail;
+			}
+			set
+			{
+				if ((this._CommenterEmail != value))
+				{
+					this._CommenterEmail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommenterURL", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string CommenterURL
+		{
+			get
+			{
+				return this._CommenterURL;
+			}
+			set
+			{
+				if ((this._CommenterURL != value))
+				{
+					this._CommenterURL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostComment", DbType="NVarChar(MAX)")]
+		public string PostComment
+		{
+			get
+			{
+				return this._PostComment;
+			}
+			set
+			{
+				if ((this._PostComment != value))
+				{
+					this._PostComment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsApproved", DbType="Bit NOT NULL")]
+		public bool IsApproved
+		{
+			get
+			{
+				return this._IsApproved;
+			}
+			set
+			{
+				if ((this._IsApproved != value))
+				{
+					this._IsApproved = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSpam", DbType="Bit NOT NULL")]
+		public bool IsSpam
+		{
+			get
+			{
+				return this._IsSpam;
+			}
+			set
+			{
+				if ((this._IsSpam != value))
+				{
+					this._IsSpam = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this._Root_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this._FileName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageHead", DbType="NVarChar(256)")]
+		public string PageHead
+		{
+			get
+			{
+				return this._PageHead;
+			}
+			set
+			{
+				if ((this._PageHead != value))
+				{
+					this._PageHead = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TitleBar", DbType="NVarChar(256)")]
+		public string TitleBar
+		{
+			get
+			{
+				return this._TitleBar;
+			}
+			set
+			{
+				if ((this._TitleBar != value))
+				{
+					this._TitleBar = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavMenuText", DbType="NVarChar(256)")]
+		public string NavMenuText
+		{
+			get
+			{
+				return this._NavMenuText;
+			}
+			set
+			{
+				if ((this._NavMenuText != value))
+				{
+					this._NavMenuText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ContentTypeID
+		{
+			get
+			{
+				return this._ContentTypeID;
+			}
+			set
+			{
+				if ((this._ContentTypeID != value))
+				{
+					this._ContentTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRetired", DbType="Bit")]
+		public System.Nullable<bool> IsRetired
+		{
+			get
+			{
+				return this._IsRetired;
+			}
+			set
+			{
+				if ((this._IsRetired != value))
+				{
+					this._IsRetired = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsUnReleased", DbType="Bit")]
+		public System.Nullable<bool> IsUnReleased
+		{
+			get
+			{
+				return this._IsUnReleased;
+			}
+			set
+			{
+				if ((this._IsUnReleased != value))
+				{
+					this._IsUnReleased = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
+		public System.DateTime RetireDate
+		{
+			get
+			{
+				return this._RetireDate;
+			}
+			set
+			{
+				if ((this._RetireDate != value))
+				{
+					this._RetireDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDate
+		{
+			get
+			{
+				return this._GoLiveDate;
+			}
+			set
+			{
+				if ((this._GoLiveDate != value))
+				{
+					this._GoLiveDate = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_TrackbackQueue")]
+	public partial class carrot_TrackbackQueue : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _TrackbackQueueID;
+		
+		private System.Guid _Root_ContentID;
+		
+		private string _TrackBackURL;
+		
+		private string _TrackBackResponse;
+		
+		private System.DateTime _ModifiedDate;
+		
+		private System.DateTime _CreateDate;
+		
+		private bool _TrackedBack;
+		
+		private EntityRef<carrot_RootContent> _carrot_RootContent;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTrackbackQueueIDChanging(System.Guid value);
+    partial void OnTrackbackQueueIDChanged();
+    partial void OnRoot_ContentIDChanging(System.Guid value);
+    partial void OnRoot_ContentIDChanged();
+    partial void OnTrackBackURLChanging(string value);
+    partial void OnTrackBackURLChanged();
+    partial void OnTrackBackResponseChanging(string value);
+    partial void OnTrackBackResponseChanged();
+    partial void OnModifiedDateChanging(System.DateTime value);
+    partial void OnModifiedDateChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnTrackedBackChanging(bool value);
+    partial void OnTrackedBackChanged();
+    #endregion
+		
+		public carrot_TrackbackQueue()
+		{
+			this._carrot_RootContent = default(EntityRef<carrot_RootContent>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackbackQueueID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid TrackbackQueueID
+		{
+			get
+			{
+				return this._TrackbackQueueID;
+			}
+			set
+			{
+				if ((this._TrackbackQueueID != value))
+				{
+					this.OnTrackbackQueueIDChanging(value);
+					this.SendPropertyChanging();
+					this._TrackbackQueueID = value;
+					this.SendPropertyChanged("TrackbackQueueID");
+					this.OnTrackbackQueueIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					if (this._carrot_RootContent.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoot_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Root_ContentID = value;
+					this.SendPropertyChanged("Root_ContentID");
+					this.OnRoot_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackBackURL", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string TrackBackURL
+		{
+			get
+			{
+				return this._TrackBackURL;
+			}
+			set
+			{
+				if ((this._TrackBackURL != value))
+				{
+					this.OnTrackBackURLChanging(value);
+					this.SendPropertyChanging();
+					this._TrackBackURL = value;
+					this.SendPropertyChanged("TrackBackURL");
+					this.OnTrackBackURLChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackBackResponse", DbType="NVarChar(2048)")]
+		public string TrackBackResponse
+		{
+			get
+			{
+				return this._TrackBackResponse;
+			}
+			set
+			{
+				if ((this._TrackBackResponse != value))
+				{
+					this.OnTrackBackResponseChanging(value);
+					this.SendPropertyChanging();
+					this._TrackBackResponse = value;
+					this.SendPropertyChanged("TrackBackResponse");
+					this.OnTrackBackResponseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModifiedDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ModifiedDate
+		{
+			get
+			{
+				return this._ModifiedDate;
+			}
+			set
+			{
+				if ((this._ModifiedDate != value))
+				{
+					this.OnModifiedDateChanging(value);
+					this.SendPropertyChanging();
+					this._ModifiedDate = value;
+					this.SendPropertyChanged("ModifiedDate");
+					this.OnModifiedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackedBack", DbType="Bit NOT NULL")]
+		public bool TrackedBack
+		{
+			get
+			{
+				return this._TrackedBack;
+			}
+			set
+			{
+				if ((this._TrackedBack != value))
+				{
+					this.OnTrackedBackChanging(value);
+					this.SendPropertyChanging();
+					this._TrackedBack = value;
+					this.SendPropertyChanged("TrackedBack");
+					this.OnTrackedBackChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_RootContent_carrot_TrackbackQueue", Storage="_carrot_RootContent", ThisKey="Root_ContentID", OtherKey="Root_ContentID", IsForeignKey=true)]
+		public carrot_RootContent carrot_RootContent
+		{
+			get
+			{
+				return this._carrot_RootContent.Entity;
+			}
+			set
+			{
+				carrot_RootContent previousValue = this._carrot_RootContent.Entity;
+				if (((previousValue != value) 
+							|| (this._carrot_RootContent.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._carrot_RootContent.Entity = null;
+						previousValue.carrot_TrackbackQueues.Remove(this);
+					}
+					this._carrot_RootContent.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_TrackbackQueues.Add(this);
+						this._Root_ContentID = value.Root_ContentID;
+					}
+					else
+					{
+						this._Root_ContentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("carrot_RootContent");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_TrackbackQueue")]
+	public partial class vw_carrot_TrackbackQueue
+	{
+		
+		private System.Guid _TrackbackQueueID;
+		
+		private string _TrackBackURL;
+		
+		private string _TrackBackResponse;
+		
+		private System.DateTime _CreateDate;
+		
+		private System.DateTime _ModifiedDate;
+		
+		private bool _TrackedBack;
+		
+		private System.Guid _Root_ContentID;
+		
+		private bool _PageActive;
+		
+		private System.Guid _SiteID;
+		
+		public vw_carrot_TrackbackQueue()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackbackQueueID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid TrackbackQueueID
+		{
+			get
+			{
+				return this._TrackbackQueueID;
+			}
+			set
+			{
+				if ((this._TrackbackQueueID != value))
+				{
+					this._TrackbackQueueID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackBackURL", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string TrackBackURL
+		{
+			get
+			{
+				return this._TrackBackURL;
+			}
+			set
+			{
+				if ((this._TrackBackURL != value))
+				{
+					this._TrackBackURL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackBackResponse", DbType="NVarChar(2048)")]
+		public string TrackBackResponse
+		{
+			get
+			{
+				return this._TrackBackResponse;
+			}
+			set
+			{
+				if ((this._TrackBackResponse != value))
+				{
+					this._TrackBackResponse = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModifiedDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ModifiedDate
+		{
+			get
+			{
+				return this._ModifiedDate;
+			}
+			set
+			{
+				if ((this._ModifiedDate != value))
+				{
+					this._ModifiedDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrackedBack", DbType="Bit NOT NULL")]
+		public bool TrackedBack
+		{
+			get
+			{
+				return this._TrackedBack;
+			}
+			set
+			{
+				if ((this._TrackedBack != value))
+				{
+					this._TrackedBack = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this._Root_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PageActive", DbType="Bit NOT NULL")]
+		public bool PageActive
+		{
+			get
+			{
+				return this._PageActive;
+			}
+			set
+			{
+				if ((this._PageActive != value))
+				{
+					this._PageActive = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.carrot_Sites")]
+	public partial class carrot_Site : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _SiteID;
+		
+		private string _MetaKeyword;
+		
+		private string _MetaDescription;
+		
+		private string _SiteName;
+		
+		private string _MainURL;
+		
+		private bool _BlockIndex;
+		
+		private string _SiteTagline;
+		
+		private string _SiteTitlebarPattern;
+		
+		private System.Nullable<System.Guid> _Blog_Root_ContentID;
+		
+		private string _Blog_FolderPath;
+		
+		private string _Blog_CategoryPath;
+		
+		private string _Blog_TagPath;
+		
+		private string _Blog_DatePattern;
+		
+		private string _TimeZone;
+		
+		private bool _SendTrackbacks;
+		
+		private bool _AcceptTrackbacks;
+		
+		private EntitySet<carrot_UserSiteMapping> _carrot_UserSiteMappings;
+		
+		private EntitySet<carrot_ContentTag> _carrot_ContentTags;
+		
+		private EntitySet<carrot_ContentCategory> _carrot_ContentCategories;
+		
+		private EntitySet<carrot_RootContent> _carrot_RootContents;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSiteIDChanging(System.Guid value);
+    partial void OnSiteIDChanged();
+    partial void OnMetaKeywordChanging(string value);
+    partial void OnMetaKeywordChanged();
+    partial void OnMetaDescriptionChanging(string value);
+    partial void OnMetaDescriptionChanged();
+    partial void OnSiteNameChanging(string value);
+    partial void OnSiteNameChanged();
+    partial void OnMainURLChanging(string value);
+    partial void OnMainURLChanged();
+    partial void OnBlockIndexChanging(bool value);
+    partial void OnBlockIndexChanged();
+    partial void OnSiteTaglineChanging(string value);
+    partial void OnSiteTaglineChanged();
+    partial void OnSiteTitlebarPatternChanging(string value);
+    partial void OnSiteTitlebarPatternChanged();
+    partial void OnBlog_Root_ContentIDChanging(System.Nullable<System.Guid> value);
+    partial void OnBlog_Root_ContentIDChanged();
+    partial void OnBlog_FolderPathChanging(string value);
+    partial void OnBlog_FolderPathChanged();
+    partial void OnBlog_CategoryPathChanging(string value);
+    partial void OnBlog_CategoryPathChanged();
+    partial void OnBlog_TagPathChanging(string value);
+    partial void OnBlog_TagPathChanged();
+    partial void OnBlog_DatePatternChanging(string value);
+    partial void OnBlog_DatePatternChanged();
+    partial void OnTimeZoneChanging(string value);
+    partial void OnTimeZoneChanged();
+    partial void OnSendTrackbacksChanging(bool value);
+    partial void OnSendTrackbacksChanged();
+    partial void OnAcceptTrackbacksChanging(bool value);
+    partial void OnAcceptTrackbacksChanged();
+    #endregion
+		
+		public carrot_Site()
+		{
+			this._carrot_UserSiteMappings = new EntitySet<carrot_UserSiteMapping>(new Action<carrot_UserSiteMapping>(this.attach_carrot_UserSiteMappings), new Action<carrot_UserSiteMapping>(this.detach_carrot_UserSiteMappings));
+			this._carrot_ContentTags = new EntitySet<carrot_ContentTag>(new Action<carrot_ContentTag>(this.attach_carrot_ContentTags), new Action<carrot_ContentTag>(this.detach_carrot_ContentTags));
+			this._carrot_ContentCategories = new EntitySet<carrot_ContentCategory>(new Action<carrot_ContentCategory>(this.attach_carrot_ContentCategories), new Action<carrot_ContentCategory>(this.detach_carrot_ContentCategories));
+			this._carrot_RootContents = new EntitySet<carrot_RootContent>(new Action<carrot_RootContent>(this.attach_carrot_RootContents), new Action<carrot_RootContent>(this.detach_carrot_RootContents));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this.OnSiteIDChanging(value);
+					this.SendPropertyChanging();
+					this._SiteID = value;
+					this.SendPropertyChanged("SiteID");
+					this.OnSiteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaKeyword", DbType="NVarChar(1024)")]
+		public string MetaKeyword
+		{
+			get
+			{
+				return this._MetaKeyword;
+			}
+			set
+			{
+				if ((this._MetaKeyword != value))
+				{
+					this.OnMetaKeywordChanging(value);
+					this.SendPropertyChanging();
+					this._MetaKeyword = value;
+					this.SendPropertyChanged("MetaKeyword");
+					this.OnMetaKeywordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetaDescription", DbType="NVarChar(1024)")]
+		public string MetaDescription
+		{
+			get
+			{
+				return this._MetaDescription;
+			}
+			set
+			{
+				if ((this._MetaDescription != value))
+				{
+					this.OnMetaDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._MetaDescription = value;
+					this.SendPropertyChanged("MetaDescription");
+					this.OnMetaDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteName", DbType="NVarChar(256)")]
+		public string SiteName
+		{
+			get
+			{
+				return this._SiteName;
+			}
+			set
+			{
+				if ((this._SiteName != value))
+				{
+					this.OnSiteNameChanging(value);
+					this.SendPropertyChanging();
+					this._SiteName = value;
+					this.SendPropertyChanged("SiteName");
+					this.OnSiteNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MainURL", DbType="NVarChar(128)")]
+		public string MainURL
+		{
+			get
+			{
+				return this._MainURL;
+			}
+			set
+			{
+				if ((this._MainURL != value))
+				{
+					this.OnMainURLChanging(value);
+					this.SendPropertyChanging();
+					this._MainURL = value;
+					this.SendPropertyChanged("MainURL");
+					this.OnMainURLChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BlockIndex", DbType="Bit NOT NULL")]
+		public bool BlockIndex
+		{
+			get
+			{
+				return this._BlockIndex;
+			}
+			set
+			{
+				if ((this._BlockIndex != value))
+				{
+					this.OnBlockIndexChanging(value);
+					this.SendPropertyChanging();
+					this._BlockIndex = value;
+					this.SendPropertyChanged("BlockIndex");
+					this.OnBlockIndexChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTagline", DbType="NVarChar(1024)")]
+		public string SiteTagline
+		{
+			get
+			{
+				return this._SiteTagline;
+			}
+			set
+			{
+				if ((this._SiteTagline != value))
+				{
+					this.OnSiteTaglineChanging(value);
+					this.SendPropertyChanging();
+					this._SiteTagline = value;
+					this.SendPropertyChanged("SiteTagline");
+					this.OnSiteTaglineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteTitlebarPattern", DbType="NVarChar(1024)")]
+		public string SiteTitlebarPattern
+		{
+			get
+			{
+				return this._SiteTitlebarPattern;
+			}
+			set
+			{
+				if ((this._SiteTitlebarPattern != value))
+				{
+					this.OnSiteTitlebarPatternChanging(value);
+					this.SendPropertyChanging();
+					this._SiteTitlebarPattern = value;
+					this.SendPropertyChanged("SiteTitlebarPattern");
+					this.OnSiteTitlebarPatternChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_Root_ContentID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Blog_Root_ContentID
+		{
+			get
+			{
+				return this._Blog_Root_ContentID;
+			}
+			set
+			{
+				if ((this._Blog_Root_ContentID != value))
+				{
+					this.OnBlog_Root_ContentIDChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_Root_ContentID = value;
+					this.SendPropertyChanged("Blog_Root_ContentID");
+					this.OnBlog_Root_ContentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_FolderPath", DbType="NVarChar(64)")]
+		public string Blog_FolderPath
+		{
+			get
+			{
+				return this._Blog_FolderPath;
+			}
+			set
+			{
+				if ((this._Blog_FolderPath != value))
+				{
+					this.OnBlog_FolderPathChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_FolderPath = value;
+					this.SendPropertyChanged("Blog_FolderPath");
+					this.OnBlog_FolderPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_CategoryPath", DbType="NVarChar(64)")]
+		public string Blog_CategoryPath
+		{
+			get
+			{
+				return this._Blog_CategoryPath;
+			}
+			set
+			{
+				if ((this._Blog_CategoryPath != value))
+				{
+					this.OnBlog_CategoryPathChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_CategoryPath = value;
+					this.SendPropertyChanged("Blog_CategoryPath");
+					this.OnBlog_CategoryPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_TagPath", DbType="NVarChar(64)")]
+		public string Blog_TagPath
+		{
+			get
+			{
+				return this._Blog_TagPath;
+			}
+			set
+			{
+				if ((this._Blog_TagPath != value))
+				{
+					this.OnBlog_TagPathChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_TagPath = value;
+					this.SendPropertyChanged("Blog_TagPath");
+					this.OnBlog_TagPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_DatePattern", DbType="NVarChar(32)")]
+		public string Blog_DatePattern
+		{
+			get
+			{
+				return this._Blog_DatePattern;
+			}
+			set
+			{
+				if ((this._Blog_DatePattern != value))
+				{
+					this.OnBlog_DatePatternChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_DatePattern = value;
+					this.SendPropertyChanged("Blog_DatePattern");
+					this.OnBlog_DatePatternChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeZone", DbType="NVarChar(128)")]
+		public string TimeZone
+		{
+			get
+			{
+				return this._TimeZone;
+			}
+			set
+			{
+				if ((this._TimeZone != value))
+				{
+					this.OnTimeZoneChanging(value);
+					this.SendPropertyChanging();
+					this._TimeZone = value;
+					this.SendPropertyChanged("TimeZone");
+					this.OnTimeZoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendTrackbacks", DbType="Bit NOT NULL")]
+		public bool SendTrackbacks
+		{
+			get
+			{
+				return this._SendTrackbacks;
+			}
+			set
+			{
+				if ((this._SendTrackbacks != value))
+				{
+					this.OnSendTrackbacksChanging(value);
+					this.SendPropertyChanging();
+					this._SendTrackbacks = value;
+					this.SendPropertyChanged("SendTrackbacks");
+					this.OnSendTrackbacksChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcceptTrackbacks", DbType="Bit NOT NULL")]
+		public bool AcceptTrackbacks
+		{
+			get
+			{
+				return this._AcceptTrackbacks;
+			}
+			set
+			{
+				if ((this._AcceptTrackbacks != value))
+				{
+					this.OnAcceptTrackbacksChanging(value);
+					this.SendPropertyChanging();
+					this._AcceptTrackbacks = value;
+					this.SendPropertyChanged("AcceptTrackbacks");
+					this.OnAcceptTrackbacksChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_UserSiteMapping", Storage="_carrot_UserSiteMappings", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_UserSiteMapping> carrot_UserSiteMappings
+		{
+			get
+			{
+				return this._carrot_UserSiteMappings;
+			}
+			set
+			{
+				this._carrot_UserSiteMappings.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentTag", Storage="_carrot_ContentTags", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_ContentTag> carrot_ContentTags
+		{
+			get
+			{
+				return this._carrot_ContentTags;
+			}
+			set
+			{
+				this._carrot_ContentTags.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_ContentCategory", Storage="_carrot_ContentCategories", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_ContentCategory> carrot_ContentCategories
+		{
+			get
+			{
+				return this._carrot_ContentCategories;
+			}
+			set
+			{
+				this._carrot_ContentCategories.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_Site_carrot_RootContent", Storage="_carrot_RootContents", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<carrot_RootContent> carrot_RootContents
+		{
+			get
+			{
+				return this._carrot_RootContents;
+			}
+			set
+			{
+				this._carrot_RootContents.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
+		}
+		
+		private void attach_carrot_ContentTags(carrot_ContentTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_ContentTags(carrot_ContentTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
+		}
+		
+		private void attach_carrot_ContentCategories(carrot_ContentCategory entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_ContentCategories(carrot_ContentCategory entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
+		}
+		
+		private void attach_carrot_RootContents(carrot_RootContent entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = this;
+		}
+		
+		private void detach_carrot_RootContents(carrot_RootContent entity)
+		{
+			this.SendPropertyChanging();
+			entity.carrot_Site = null;
 		}
 	}
 }

@@ -24,45 +24,15 @@ namespace Carrotware.CMS.Core {
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 
-		public WidgetHelper() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
-		}
+		public WidgetHelper() { }
 
 		public Widget Get(Guid rootWidgetID) {
 			return new Widget(rootWidgetID);
 		}
 
-		internal static Widget MakeWidget(vw_carrot_Widget ww) {
-
-			Widget w = new Widget();
-
-			if (ww != null) {
-				SiteData site = SiteData.GetSiteFromCache(ww.SiteID);
-
-				w.IsWidgetPendingDelete = false;
-
-				w.WidgetDataID = ww.WidgetDataID;
-				w.EditDate = site.ConvertUTCToSiteTime(ww.EditDate);
-				w.IsLatestVersion = ww.IsLatestVersion;
-				w.ControlProperties = ww.ControlProperties;
-
-				w.Root_WidgetID = ww.Root_WidgetID;
-				w.Root_ContentID = ww.Root_ContentID;
-				w.WidgetOrder = ww.WidgetOrder;
-				w.ControlPath = ww.ControlPath;
-				w.PlaceholderName = ww.PlaceholderName;
-				w.IsWidgetActive = ww.WidgetActive;
-			}
-
-			return w;
-		}
-
-
 		public List<Widget> GetWidgets(Guid rootContentID, bool bActiveOnly) {
 			List<Widget> w = (from r in CompiledQueries.cqGetLatestWidgets(db, rootContentID, bActiveOnly)
-							  select MakeWidget(r)).ToList();
+							  select new Widget(r)).ToList();
 
 			return w;
 		}
@@ -70,14 +40,14 @@ namespace Carrotware.CMS.Core {
 
 		public List<Widget> GetWidgetVersionHistory(Guid rootWidgetID) {
 			List<Widget> w = (from r in CompiledQueries.cqGetWidgetVersionHistory_VW(db, rootWidgetID)
-							  select MakeWidget(r)).ToList();
+							  select new Widget(r)).ToList();
 
 			return w;
 		}
 
 
 		public Widget GetWidgetVersion(Guid widgetDataID) {
-			Widget w = MakeWidget(CompiledQueries.cqGetWidgetDataByID_VW(db, widgetDataID));
+			Widget w = new Widget(CompiledQueries.cqGetWidgetDataByID_VW(db, widgetDataID));
 
 			return w;
 		}

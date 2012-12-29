@@ -1,8 +1,12 @@
 ﻿<%@ Page Title="Post Index" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostIndex.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostIndex" %>
 
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <%@ Register Src="ucBlogMenuItems.ascx" TagName="ucBlogMenuItems" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
+	<script type="text/javascript">
+		setTimeout("cmsSendTrackbackBatch();", 1500);
+	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Post Index
@@ -54,17 +58,17 @@
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit1" NavigateUrl='<%# String.Format("{0}?id={1}", Carrotware.CMS.UI.Admin.SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit1" NavigateUrl='<%# String.Format("{0}?id={1}", SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("{0}?mode=raw&id={1}", Carrotware.CMS.UI.Admin.SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("{0}?mode=raw&id={1}", SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit3" Target="_blank" NavigateUrl='<%# String.Format("{0}?id={1}", Carrotware.CMS.UI.Admin.SiteFilename.DataExportURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/html_go.png" alt="Export latest version of this page" title="Export latest version of this page" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit3" Target="_blank" NavigateUrl='<%# String.Format("{0}?id={1}", SiteFilename.DataExportURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/html_go.png" alt="Export latest version of this page" title="Export latest version of this page" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
@@ -89,9 +93,8 @@
 							<img class="imgNoBorder" src="/c3-admin/images/layout_content.png" alt="View Page History" title="View Page History" /></a>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="pagehead" HeaderText="Page Header" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename" DataField="Filename" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text" DataField="NavMenuText" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename" DataField="Filename" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"

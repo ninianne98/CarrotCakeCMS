@@ -82,6 +82,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataScripts\ALTER07.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataScripts\ALTER08.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)\DataScripts\CREATE01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\CREATE 01 - whole database.sql" /F /R /Y /I
@@ -92,6 +95,7 @@ xcopy "$(ProjectDir)\DataScripts\ALTER04.sql" "$(SolutionDir)\CMSDataScripts\Scr
 xcopy "$(ProjectDir)\DataScripts\ALTER05.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql" /F /R /Y /I
 xcopy "$(ProjectDir)\DataScripts\ALTER06.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql" /F /R /Y /I
 xcopy "$(ProjectDir)\DataScripts\ALTER07.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER08.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 08 - create trackback queue and comment view.sql" /F /R /Y /I
 
 </PostBuildEvent>
   </PropertyGroup>

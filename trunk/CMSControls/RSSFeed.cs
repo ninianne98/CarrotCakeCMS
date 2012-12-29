@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string RSSFeedURI {
 			get {
 				string s = (string)ViewState["RSSFeedURI"];
-				return ((s == null) ? "/RSS.aspx" : s);
+				return ((s == null) ? "/rss.ashx" : s);
 			}
 			set {
 				ViewState["RSSFeedURI"] = value;

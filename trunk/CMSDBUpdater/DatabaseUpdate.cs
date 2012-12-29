@@ -236,9 +236,10 @@ namespace Carrotware.CMS.DBUpdater {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+				//query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 5) {
+				if (table1.Rows.Count < 1) {
 					return true;
 				}
 
@@ -265,9 +266,10 @@ namespace Carrotware.CMS.DBUpdater {
 				string query = "";
 				DataTable table1 = null;
 
-				query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+				//query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 5) {
+				if (table1.Rows.Count < 1) {
 					return true;
 				}
 
@@ -496,6 +498,24 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 
 			res.Response = "CMS DB cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent already created";
+			return res;
+		}
+
+
+		public DatabaseUpdateResponse AlterStep08() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Comment') ";
+
+			DataTable table1 = GetData(query);
+
+			if (table1.Rows.Count < 1) {
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER08.sql", false);
+				res.Response = "CMS DB added vw_carrot_Comment";
+				return res;
+			}
+
+			res.Response = "CMS DB vw_carrot_Comment already added";
 			return res;
 		}
 

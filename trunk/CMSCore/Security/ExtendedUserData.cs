@@ -130,28 +130,24 @@ namespace Carrotware.CMS.Core {
 		public static List<ExtendedUserData> GetUserList() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				List<ExtendedUserData> lstUsr = (from u in CompiledQueries.cqGetUserList(_db)
-												 select CreateUserData(u)).ToList();
+												 select new ExtendedUserData(u)).ToList();
 				return lstUsr;
 			}
 		}
 
-		internal static ExtendedUserData CreateUserData(vw_carrot_UserData c) {
-			ExtendedUserData cont = null;
+		internal ExtendedUserData(vw_carrot_UserData c) {
 			if (c != null) {
-				cont = new ExtendedUserData();
-				cont.UserId = c.UserId;
-				cont.UserNickName = c.UserNickName;
-				cont.FirstName = c.FirstName;
-				cont.LastName = c.LastName;
-				cont.EmailAddress = c.LoweredEmail;
-				cont.IsLockedOut = c.IsLockedOut;
-				cont.UserName = c.UserName;
-				cont.LastActivityDate = c.LastActivityDate;
-				cont.CreateDate = c.CreateDate;
-				cont.LastLoginDate = c.LastLoginDate;
+				this.UserId = c.UserId;
+				this.UserNickName = c.UserNickName;
+				this.FirstName = c.FirstName;
+				this.LastName = c.LastName;
+				this.EmailAddress = c.LoweredEmail;
+				this.IsLockedOut = c.IsLockedOut;
+				this.UserName = c.UserName;
+				this.LastActivityDate = c.LastActivityDate;
+				this.CreateDate = c.CreateDate;
+				this.LastLoginDate = c.LastLoginDate;
 			}
-
-			return cont;
 		}
 
 

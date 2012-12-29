@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Carrotware.CMS.Core;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 
-namespace Carrotware.CMS.UI.Admin {
+namespace Carrotware.CMS.Core {
 	public static class SiteFilename {
 
 		public static string PageAddEditURL {
@@ -29,6 +37,16 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 		public static string WPSiteImportURL {
 			get { return SiteData.AdminFolderPath + "wp-SiteImport.aspx"; }
+		}
+
+		public static string AdminModuleControlPath {
+			get { return SiteData.AdminFolderPath + "ucAdminModule.ascx"; }
+		}
+		public static string EditNotifierControlPath {
+			get { return SiteData.AdminFolderPath + "ucEditNotifier.ascx"; }
+		}
+		public static string AdvancedEditControlPath {
+			get { return SiteData.AdminFolderPath + "ucAdvancedEdit.ascx"; }
 		}
 
 	}

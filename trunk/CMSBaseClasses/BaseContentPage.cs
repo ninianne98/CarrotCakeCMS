@@ -72,7 +72,7 @@ namespace Carrotware.CMS.UI.Base {
 				if (theSite.BlockIndex) {
 					HtmlMeta metaNoCrawl = new HtmlMeta();
 					metaNoCrawl.Name = "robots";
-					metaNoCrawl.Content = "noindex,nofollow";
+					metaNoCrawl.Content = "noindex,nofollow,noarchive";
 					Page.Header.Controls.Add(metaNoCrawl);
 				}
 			}
@@ -232,7 +232,7 @@ namespace Carrotware.CMS.UI.Base {
 
 						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 							if (!SiteData.IsPageSampler && !IsPageTemplate) {
-								Control editor = Page.LoadControl(SiteData.AdminFolderPath + "ucEditNotifier.ascx");
+								Control editor = Page.LoadControl(SiteFilename.EditNotifierControlPath);
 								Page.Form.Controls.Add(editor);
 							}
 						}
@@ -251,7 +251,7 @@ namespace Carrotware.CMS.UI.Base {
 						contLeft.Text = pageContents.LeftPageText;
 						contRight.Text = pageContents.RightPageText;
 
-						Control editor = Page.LoadControl(SiteData.AdminFolderPath + "ucAdvancedEdit.ascx");
+						Control editor = Page.LoadControl(SiteFilename.AdvancedEditControlPath);
 						Page.Form.Controls.Add(editor);
 
 						MarkWidgets(page, true);

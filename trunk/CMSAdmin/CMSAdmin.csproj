@@ -166,6 +166,13 @@
     <Compile Include="c3-admin\BlogPostEdit.aspx.designer.cs">
       <DependentUpon>BlogPostEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\SiteExport.aspx.cs">
+      <DependentUpon>SiteExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteExport.aspx.designer.cs">
+      <DependentUpon>SiteExport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\SiteImport.aspx.cs">
       <DependentUpon>SiteImport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -475,14 +482,6 @@
       <DependentUpon>wp-SiteImport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSS.aspx.cs">
-      <DependentUpon>RSS.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RSS.aspx.designer.cs">
-      <DependentUpon>RSS.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SiteFilename.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarrotCMSData\CMSData.csproj">
@@ -516,6 +515,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
+    <Content Include="c3-admin\SiteExport.aspx" />
     <Content Include="citrus-island\citrus2.aspx" />
     <Content Include="citrus-island\citrus1-index.aspx" />
     <Content Include="citrus-island\citrus1-post.aspx" />
@@ -919,7 +919,6 @@
     <Content Include="c3-admin\WidgetHistory.aspx" />
     <Content Include="c3-admin\WidgetList.aspx" />
     <Content Include="c3-admin\wp-SiteImport.aspx" />
-    <Content Include="RSS.aspx" />
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>

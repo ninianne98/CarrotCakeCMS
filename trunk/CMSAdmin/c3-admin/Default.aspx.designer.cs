@@ -22,15 +22,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.Button btnResetVars;
         
         /// <summary>
-        /// btnExport control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnExport;
-        
-        /// <summary>
         /// litID control.
         /// </summary>
         /// <remarks>
@@ -110,6 +101,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkHide;
+        
+        /// <summary>
+        /// chkSendTrackback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSendTrackback;
+        
+        /// <summary>
+        /// chkAcceptTrackbacks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAcceptTrackbacks;
         
         /// <summary>
         /// txtKey control.

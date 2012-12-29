@@ -48,11 +48,14 @@ a .imgNoBorder {
 	background-color: #ffffff;
 }
 
-
 .caption, .tablecaption {
 	font-weight: bold;
 }
 
+.table-subblock {
+	float: left;
+	padding-right: 40px;
+}
 
 /* correction for jquery ui */
 

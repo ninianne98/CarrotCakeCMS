@@ -37,5 +37,21 @@ namespace Carrotware.CMS.Core {
 		public override string ToString() {
 			return SiteTitle + " : " + SiteDescription;
 		}
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is WordPressSite) {
+				WordPressSite p = (WordPressSite)obj;
+				return (this.SiteTitle == p.SiteTitle)
+						&& (this.SiteURL == p.SiteURL);
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return SiteTitle.GetHashCode() ^ SiteURL.GetHashCode();
+		}
 	}
 }

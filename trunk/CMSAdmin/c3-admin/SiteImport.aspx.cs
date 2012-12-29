@@ -157,6 +157,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						//if URL exists already, make this become a new version in the current series
 						if (navData != null) {
 							cp.Root_ContentID = navData.Root_ContentID;
+
+							impCP.ThePage.RetireDate = navData.RetireDate;
+							impCP.ThePage.GoLiveDate = navData.GoLiveDate;
+
 							if (navData.NavOrder == 0) {
 								cp.NavOrder = 0;
 							}
@@ -170,8 +174,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							cp.Parent_ContentID = navParent.Root_ContentID;
 						}
 
-						cp.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
-						cp.GoLiveDate = SiteData.CurrentSite.Now;
+						cp.RetireDate = impCP.ThePage.RetireDate;
+						cp.GoLiveDate = impCP.ThePage.GoLiveDate;
 
 						cp.SavePageEdit();
 
@@ -204,10 +208,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						//if URL exists already, make this become a new version in the current series
 						if (navData != null) {
 							cp.Root_ContentID = navData.Root_ContentID;
+
+							impCP.ThePage.RetireDate = navData.RetireDate;
+							impCP.ThePage.GoLiveDate = navData.GoLiveDate;
 						}
 
-						cp.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
-						cp.GoLiveDate = SiteData.CurrentSite.Now;
+						cp.RetireDate = impCP.ThePage.RetireDate;
+						cp.GoLiveDate = impCP.ThePage.GoLiveDate;
 
 						cp.SavePageEdit();
 					}

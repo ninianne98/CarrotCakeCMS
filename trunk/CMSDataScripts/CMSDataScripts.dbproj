@@ -704,5 +704,8 @@
     <NotInBuild Include="Scripts\Post-Deployment\insert_content_types.sql">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 08 - create trackback queue and comment view.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>
