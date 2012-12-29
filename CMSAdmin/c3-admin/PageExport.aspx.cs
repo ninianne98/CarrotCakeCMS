@@ -10,12 +10,33 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class PageExport : AdminBasePage {
 
+		public enum ExportType {
+			BlogData,
+			ContentData,
+			AllData,
+		}
+
 		public Guid guidContentID = Guid.Empty;
+		public DateTime dateBegin = DateTime.MinValue;
+		public DateTime dateEnd = DateTime.MaxValue;
+		public ExportType ExportWhat = ExportType.AllData;
+
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
 			}
+
+			if (!string.IsNullOrEmpty(Request.QueryString["datebegin"])) {
+				dateBegin = Convert.ToDateTime(Request.QueryString["datebegin"].ToString()).Date;
+			}
+			if (!string.IsNullOrEmpty(Request.QueryString["dateend"])) {
+				dateEnd = Convert.ToDateTime(Request.QueryString["dateend"].ToString()).Date;
+			}
+			if (!string.IsNullOrEmpty(Request.QueryString["exportwhat"])) {
+				ExportWhat = (ExportType)Enum.Parse(typeof(ExportType), Request.QueryString["exportwhat"].ToString(), true); ;
+			}
+
 
 			string theXML = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
 			string fileName = "export.xml";
@@ -27,6 +48,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				fileName = "page_" + content.ThePage.NavMenuText + "_" + guidContentID.ToString() + ".xml";
 			} else {
 				SiteExport site = ContentImportExportUtils.GetExportSite(SiteData.CurrentSiteID);
+
+				site.ThePages.RemoveAll(x => x.ThePage.GoLiveDate < dateBegin);
+				site.ThePages.RemoveAll(x => x.ThePage.GoLiveDate > dateEnd);
+
+				if (ExportWhat == ExportType.BlogData) {
+					site.ThePages.RemoveAll(x => x.ThePage.ContentType == ContentPageType.PageType.ContentEntry);
+				}
+				if (ExportWhat == ExportType.ContentData) {
+					site.ThePages.RemoveAll(x => x.ThePage.ContentType == ContentPageType.PageType.BlogEntry);
+				}
+
 				theXML = ContentImportExportUtils.GetExportXML<SiteExport>(site);
 
 				fileName = "site_" + site.TheSite.SiteName + "_" + site.TheSite.SiteID.ToString() + ".xml";

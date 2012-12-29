@@ -14,6 +14,8 @@
 			<carrot:CarrotHeaderSortTemplateField SortExpression="CommenterName" HeaderText="Commenter Name" DataField="CommenterName" />
 			<carrot:CarrotHeaderSortTemplateField SortExpression="CommenterIP" HeaderText="IP Addy" DataField="CommenterIP" />
 			<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Date" DataField="CreateDate" />
+			<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Page Title" DataField="NavMenuText" />
+			<carrot:CarrotHeaderSortTemplateField SortExpression="FileName" HeaderText="Filename" DataField="FileName" />
 			<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsSpam" HeaderText="Spam" AlternateTextFalse="Not Spam" AlternateTextTrue="Spam"
 				ShowBooleanImage="true" ImagePathTrue="/c3-admin/images/error.png" ImagePathFalse="/c3-admin/images/comment.png" />
 			<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsApproved" HeaderText="Active" AlternateTextFalse="Inactive"

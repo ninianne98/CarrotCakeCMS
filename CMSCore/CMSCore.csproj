@@ -79,6 +79,7 @@
     <Compile Include="ConfigHelper\ConfigTypes.cs" />
     <Compile Include="ConfigHelper\ObjectProperty.cs" />
     <Compile Include="ConfigHelper\VirtualDirectory.cs" />
+    <Compile Include="ConfigHelper\VirtualFeed.cs" />
     <Compile Include="ConfigHelper\VirtualFileSystem.cs" />
     <Compile Include="CompiledQueries.cs" />
     <Compile Include="ImportExport\ContentImportExportUtils.cs" />
@@ -105,6 +106,8 @@
     <Compile Include="SiteContent\SiteMapOrderHelper.cs" />
     <Compile Include="SiteContent\SiteNav.cs" />
     <Compile Include="SiteContent\SiteNavHelperReal.cs" />
+    <Compile Include="SiteContent\TrackBackEntry.cs" />
+    <Compile Include="SiteFilename.cs" />
     <Compile Include="Utilities\EmailSender.cs" />
     <Compile Include="Utilities\GridSorting.cs" />
     <Compile Include="SiteContent\ISiteContent.cs" />
@@ -118,6 +121,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteContent\SiteData.cs" />
     <Compile Include="Utilities\ReflectionUtilities.cs" />
+    <Compile Include="Utilities\TrackbackHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarrotCMSData\CMSData.csproj">

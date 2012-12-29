@@ -48,6 +48,17 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
+		internal static IQueryable<vw_carrot_Content> FindPageByTitleAndDate(CarrotCMSDataContext ctx, Guid siteID, string sTitle, string sFileNameFrag, DateTime dateCreate) {
+			return (from ct in ctx.vw_carrot_Contents
+					orderby ct.NavOrder, ct.NavMenuText
+					where ct.SiteID == siteID
+					 && ct.IsLatestVersion == true
+					 && (ct.PageHead.ToLower() == sTitle.ToLower() || ct.TitleBar.ToLower() == sTitle.ToLower())
+					 && ct.FileName.ToLower().Contains(sFileNameFrag.ToLower())
+					 && ct.CreateDate.Date == dateCreate.Date
+					select ct);
+		}
+
 		internal static IQueryable<vw_carrot_Content> GetLatestContentList(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			return (from ct in ctx.vw_carrot_Contents
 					orderby ct.NavOrder, ct.NavMenuText
@@ -255,28 +266,26 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
-		internal static IQueryable<carrot_ContentComment> GetSiteContentComments(CarrotCMSDataContext ctx, Guid siteID) {
-			return (from r in ctx.carrot_ContentComments
-					join c in ctx.carrot_RootContents on r.Root_ContentID equals c.Root_ContentID
+		internal static IQueryable<vw_carrot_Comment> GetSiteContentComments(CarrotCMSDataContext ctx, Guid siteID) {
+			return (from r in ctx.vw_carrot_Comments
 					orderby r.CreateDate descending
-					where c.SiteID == siteID
+					where r.SiteID == siteID
 					select r);
 		}
 
-		internal static IQueryable<carrot_ContentComment> GetContentPageComments(CarrotCMSDataContext ctx, Guid rootContentID, bool bActiveOnly) {
-			return (from r in ctx.carrot_ContentComments
+		internal static IQueryable<vw_carrot_Comment> GetContentPageComments(CarrotCMSDataContext ctx, Guid rootContentID, bool bActiveOnly) {
+			return (from r in ctx.vw_carrot_Comments
 					orderby r.CreateDate descending
 					where r.Root_ContentID == rootContentID
-					&& (r.IsApproved == true || bActiveOnly == false)
+						&& (r.IsApproved == true || bActiveOnly == false)
 					select r);
 		}
 
-		internal static IQueryable<carrot_ContentComment> GetSiteContentCommentsByPostType(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType contentEntry) {
-			return (from r in ctx.carrot_ContentComments
-					join c in ctx.carrot_RootContents on r.Root_ContentID equals c.Root_ContentID
+		internal static IQueryable<vw_carrot_Comment> GetSiteContentCommentsByPostType(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType contentEntry) {
+			return (from r in ctx.vw_carrot_Comments
 					orderby r.CreateDate descending
-					where c.SiteID == siteID
-					 && c.ContentTypeID == ContentPageType.GetIDByType(contentEntry)
+					where r.SiteID == siteID
+						&& r.ContentTypeID == ContentPageType.GetIDByType(contentEntry)
 					select r);
 		}
 

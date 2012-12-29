@@ -13,6 +13,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
     public partial class wp_SiteImport {
         
         /// <summary>
+        /// chkFileGrab control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkFileGrab;
+        
+        /// <summary>
+        /// ddlFolders control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFolders;
+        
+        /// <summary>
         /// litMessage control.
         /// </summary>
         /// <remarks>

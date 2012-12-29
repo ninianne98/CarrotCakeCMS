@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Dashboard" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.Default" %>
 
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -49,9 +50,10 @@
 		}
 
 		function ExportContent() {
-			window.open('<%=Carrotware.CMS.UI.Admin.SiteFilename.DataExportURL %>');
+			window.open('<%=SiteFilename.DataExportURL %>');
 		}
 
+		setTimeout("cmsSendTrackbackBatch();", 1500);
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -60,8 +62,8 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
 		<asp:Button ValidationGroup="inputForm2" ID="btnResetVars" runat="server" Text="Refresh Configs" OnClick="btnResetVars_Click" />
-		&nbsp;&nbsp;&nbsp;
-		<input type="button" runat="server" id="btnExport" value="Export Site" onclick="ExportContent();" />
+		<%--&nbsp;&nbsp;&nbsp;
+		<input type="button" runat="server" id="btnExport" value="Export Site" onclick="ExportContent();" /> --%>
 		<br />
 	</p>
 	<fieldset style="width: 650px;">
@@ -135,6 +137,22 @@
 				</td>
 				<td valign="top">
 					<asp:CheckBox ID="chkHide" runat="server" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					Allow sending trackbacks
+				</td>
+				<td valign="top">
+					<asp:CheckBox ID="chkSendTrackback" runat="server" />
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
+					Accept incoming trackbacks
+				</td>
+				<td valign="top">
+					<asp:CheckBox ID="chkAcceptTrackbacks" runat="server" />
 				</td>
 			</tr>
 		</table>

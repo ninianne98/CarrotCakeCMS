@@ -65,7 +65,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
 		public static PageType GetTypeByID(Guid contentTypeID) {
 
 			ContentPageType _type = ContentPageTypeList.Where(t => t.ContentTypeID == contentTypeID).FirstOrDefault();
@@ -94,7 +93,6 @@ namespace Carrotware.CMS.Core {
 
 			return _type.ContentTypeID;
 		}
-
 
 
 		#region IDisposable Members

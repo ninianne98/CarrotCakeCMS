@@ -216,6 +216,34 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string SendTrackbackPageBatch(string ThisPage) {
+			try {
+				CurrentPageGuid = new Guid(ThisPage);
+
+				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
+				cp.SaveTrackbackTop();
+
+				return "OK";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
+
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string SendTrackbackBatch() {
+			try {
+				if (SiteData.CurrentSite != null) {
+					SiteData.CurrentSite.SendTrackbackQueue();
+				}
+				return "OK";
+			} catch (Exception ex) {
+				return ex.ToString();
+			}
+		}
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]

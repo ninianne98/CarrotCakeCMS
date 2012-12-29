@@ -26,16 +26,10 @@ namespace Carrotware.CMS.Core {
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 
-		public Widget() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
-		}
+		public Widget() { }
 
 		public Widget(Guid rootWidgetID) {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
+
 			vw_carrot_Widget item = CompiledQueries.cqGetLatestWidget(db, rootWidgetID);
 
 			SetVals(item);
@@ -50,9 +44,6 @@ namespace Carrotware.CMS.Core {
 
 
 		public Widget(vw_carrot_Widget w) {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
 			SetVals(w);
 		}
 
@@ -109,7 +100,7 @@ namespace Carrotware.CMS.Core {
 				w.WidgetOrder = this.WidgetOrder;
 				w.Root_ContentID = this.Root_ContentID;
 				w.PlaceholderName = this.PlaceholderName;
-				w.ControlPath = this.ControlPath;
+				w.ControlPath = this.ControlPath.Replace("~~/", "~/");
 				w.WidgetActive = this.IsWidgetActive;
 
 				carrot_WidgetData wd = new carrot_WidgetData();

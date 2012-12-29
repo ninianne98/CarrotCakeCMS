@@ -32,5 +32,7 @@ If coming from an earlier version, run these scripts
 
 		** ALTER 07 - create date based publishing.sql     (from before 2012-12-15)
 
+		** ALTER 08 - create trackback queue and comment view.sql     (from before 2012-12-28)
+
 
 

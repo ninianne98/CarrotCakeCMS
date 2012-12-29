@@ -4,6 +4,19 @@
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <%@ Register Src="ucBlogMenuItems.ascx" TagName="ucBlogMenuItems" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
+	<script type="text/javascript">
+		function CheckTheBoxes() {
+			$('#<%=gvPages.ClientID %> input[type=checkbox]').each(function () {
+				$(this).prop('checked', true);
+			});
+		}
+
+		function UncheckTheBoxes() {
+			$('#<%=gvPages.ClientID %> input[type=checkbox]').each(function () {
+				$(this).prop('checked', false);
+			});
+		}
+	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Bulk Apply Templates/Skins
@@ -61,6 +74,10 @@
 	</table>
 	<p>
 		<br />
+	</p>
+	<p>
+		<input type="button" value="Check All" onclick="CheckTheBoxes()" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="button" value="Uncheck All" onclick="UncheckTheBoxes()" />
 	</p>
 	<div id="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="TemplateFile ASC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"

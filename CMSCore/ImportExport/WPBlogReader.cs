@@ -31,8 +31,7 @@ namespace Carrotware.CMS.Core {
 			return doc;
 		}
 
-
-		public WordPressSite ParseDoc(XmlDocument doc) {
+		public WordPressSite GetAllData(XmlDocument doc) {
 			WordPressSite site = new WordPressSite();
 
 			List<WordPressPost> lstWPP = new List<WordPressPost>();
@@ -116,6 +115,10 @@ namespace Carrotware.CMS.Core {
 				wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date_gmt", rssNamespace).InnerText);
 				wpp.PostContent = node.SelectSingleNode("content:encoded", rssNamespace).InnerText;
 
+				if (node.SelectSingleNode("wp:attachment_url", rssNamespace) != null) {
+					wpp.AttachmentURL = node.SelectSingleNode("wp:attachment_url", rssNamespace).InnerText;
+				}
+
 				if (string.IsNullOrEmpty(wpp.PostContent)) {
 					wpp.PostContent = "";
 				}
@@ -142,6 +145,7 @@ namespace Carrotware.CMS.Core {
 						wpp.PostType = WordPressPost.WPPostType.Page;
 						break;
 				}
+
 
 				if (wpp.PostType == WordPressPost.WPPostType.BlogPost
 					|| (wpp.PostType == WordPressPost.WPPostType.Page && wpp.ParentPostID > 0)) {
@@ -174,6 +178,11 @@ namespace Carrotware.CMS.Core {
 				wpp.ImportFileSlug = ContentPageHelper.ScrubFilename(wpp.ImportRootID, "/" + wpp.PostName.Trim() + ".aspx");
 				wpp.ImportFileName = ContentPageHelper.ScrubFilename(wpp.ImportRootID, wpp.ImportFileSlug);
 
+				if (wpp.PostType == WordPressPost.WPPostType.Attachment) {
+					wpp.ImportFileSlug = wpp.AttachmentURL.Substring(wpp.AttachmentURL.LastIndexOf("/"));
+					wpp.ImportFileName = wpp.ImportFileSlug;
+				}
+
 				lstWPP.Add(wpp);
 			}
 
@@ -186,9 +195,16 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
-			lstWPP.RemoveAll(x => x.PostType == WordPressPost.WPPostType.Attachment || x.PostType == WordPressPost.WPPostType.Unknown);
-
 			site.Content = lstWPP;
+
+			return site;
+		}
+
+		public WordPressSite GetContent(XmlDocument doc) {
+
+			WordPressSite site = GetAllData(doc);
+
+			site.Content.RemoveAll(x => x.PostType == WordPressPost.WPPostType.Attachment || x.PostType == WordPressPost.WPPostType.Unknown);
 
 			return site;
 		}

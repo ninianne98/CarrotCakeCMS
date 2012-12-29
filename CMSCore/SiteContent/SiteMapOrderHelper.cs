@@ -26,11 +26,7 @@ namespace Carrotware.CMS.Core {
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 
-		public SiteMapOrderHelper() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
-		}
+		public SiteMapOrderHelper() { }
 
 
 		public List<SiteMapOrder> CreateSiteMapList(string sMapText) {

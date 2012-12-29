@@ -1,8 +1,20 @@
-﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageHistory" %>
+﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageHistory" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
+	<script type="text/javascript">
+		function CheckTheBoxes() {
+			$('#<%=gvPages.ClientID %> input[type=checkbox]').each(function () {
+				$(this).prop('checked', true);
+			});
+		}
+
+		function UncheckTheBoxes() {
+			$('#<%=gvPages.ClientID %> input[type=checkbox]').each(function () {
+				$(this).prop('checked', false);
+			});
+		}
+	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Page History
@@ -59,7 +71,13 @@
 		</script>
 	</asp:Panel>
 	<asp:Panel runat="server" ID="pnlHistory">
-		<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />
+		<p>
+			<input type="button" value="Check All" onclick="CheckTheBoxes()" />&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="Uncheck All" onclick="UncheckTheBoxes()" />
+		</p>
+		<p>
+			<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />
+		</p>
 		<div id="SortableGrid">
 			<carrot:CarrotGridView CssClass="datatable" DefaultSort="EditDate DESC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular" OnDataBound="gvPages_DataBound">

@@ -9,6 +9,7 @@ using System.Web.Caching;
 using System.Web.UI;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
+using System.Net;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -27,11 +28,7 @@ namespace Carrotware.CMS.Core {
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
-		public CMSConfigHelper() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
-		}
+		public CMSConfigHelper() { }
 
 		private enum CMSConfigFileType {
 			AdminMod,
@@ -345,6 +342,95 @@ namespace Carrotware.CMS.Core {
 			return _plugins;
 		}
 
+		public List<CMSPlugin> GetPluginsInFolder(string sPathPrefix) {
+			var _plugins = new List<CMSPlugin>();
+
+			if (!sPathPrefix.EndsWith("/")) {
+				sPathPrefix = sPathPrefix + "/";
+			}
+
+			if (!string.IsNullOrEmpty(sPathPrefix)) {
+				DataSet ds = ReadDataSetConfig(CMSConfigFileType.PublicCtrl, sPathPrefix);
+
+				var _p2 = (from d in ds.Tables[0].AsEnumerable()
+						   select new CMSPlugin {
+							   FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
+							   Caption = d.Field<string>("crtldesc")
+						   }).ToList();
+
+				_plugins = _plugins.Union(_p2).ToList();
+
+			}
+
+			return _plugins;
+		}
+
+
+		public CMSAdminModuleMenu GetCurrentAdminModuleControl() {
+			Guid ModuleID = Guid.Empty;
+			HttpRequest request = HttpContext.Current.Request;
+			string pf = String.Empty;
+			CMSAdminModuleMenu cc = null;
+
+			if (request.QueryString["pi"] != null) {
+				try { ModuleID = new Guid(request.QueryString["pi"].ToString()); } catch { }
+			}
+
+			if (request.QueryString["pf"] != null) {
+				pf = request.QueryString["pf"].ToString();
+
+				CMSAdminModule mod = (from m in AdminModules
+									  where m.PluginID == ModuleID
+									  select m).FirstOrDefault();
+
+				cc = (from m in mod.PluginMenus
+					  where m.PluginParm == pf
+					  select m).FirstOrDefault();
+
+			}
+
+			return cc;
+		}
+
+
+		public List<CMSAdminModuleMenu> GetCurrentAdminModuleControlList() {
+			Guid ModuleID = Guid.Empty;
+			HttpRequest request = HttpContext.Current.Request;
+			string pf = String.Empty;
+			List<CMSAdminModuleMenu> cc = null;
+
+			if (request.QueryString["pi"] != null) {
+				try { ModuleID = new Guid(request.QueryString["pi"].ToString()); } catch { }
+			}
+
+			if (request.QueryString["pf"] != null) {
+				pf = request.QueryString["pf"].ToString();
+
+				CMSAdminModule mod = (from m in AdminModules
+									  where m.PluginID == ModuleID
+									  select m).FirstOrDefault();
+
+				cc = (from m in mod.PluginMenus
+					  select m).ToList();
+
+			}
+
+			return cc;
+		}
+
+
+		public void GetFile(string sRemoteFile, string sLocalFile) {
+			Uri remoteFile = new Uri(sRemoteFile);
+			string sServerPath = HttpContext.Current.Server.MapPath(sLocalFile);
+			bool bExists = File.Exists(sServerPath);
+
+			if (!bExists) {
+				using (WebClient webClient = new WebClient()) {
+					webClient.DownloadFile(remoteFile, sServerPath);
+					//webClient.DownloadFileAsync(remoteFile, sServerPath);
+				}
+			}
+		}
 
 
 		private List<CMSAdminModule> GetModulesByDirectory() {
@@ -402,7 +488,6 @@ namespace Carrotware.CMS.Core {
 
 			return _plugins;
 		}
-
 
 
 		public List<CMSPlugin> ToolboxPlugins {
@@ -877,7 +962,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
 		private void SaveSerialized(string sKey, string sData) {
 			LoadGuids();
 			if (filePage != null) {
@@ -907,9 +991,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 	}
-
-
-
 
 
 }

@@ -65,10 +65,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (!IsPostBack) {
-				DateTime dtSite = SiteData.CurrentSite.Now.AddMinutes(-10);
+				DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 				txtReleaseDate.Text = dtSite.ToShortDateString();
 				txtReleaseTime.Text = dtSite.ToShortTimeString();
-				dtSite = SiteData.CurrentSite.Now.AddMinutes(10);
 				txtRetireDate.Text = dtSite.AddYears(200).ToShortDateString();
 				txtRetireTime.Text = dtSite.AddYears(200).ToShortTimeString();
 
@@ -162,6 +161,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					chkActive.Checked = pageContents.PageActive;
 
+					gvTracks.DataSource = pageContents.GetTrackbacks();
+					gvTracks.DataBind();
+
 					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
 					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();
 					txtRetireDate.Text = pageContents.RetireDate.ToShortDateString();
@@ -227,9 +229,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.SiteID = SiteID;
 				pageContents.CreateDate = SiteData.CurrentSite.Now;
 			}
-
-			pageContents.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
-			pageContents.GoLiveDate = DateTime.UtcNow;
+			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+			pageContents.GoLiveDate = dtSite.AddMinutes(-5);
+			pageContents.RetireDate = dtSite.AddYears(200);
 
 			pageContents.IsLatestVersion = true;
 			pageContents.Thumbnail = txtThumb.Text;
@@ -264,6 +266,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
 			pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
 			pageContents.EditUserId = SecurityData.CurrentUserGuid;
+
+			pageContents.NewTrackBackURLs = txtTrackback.Text;
+
 
 			if (!chkDraft.Checked) {
 				pageContents.SavePageEdit();

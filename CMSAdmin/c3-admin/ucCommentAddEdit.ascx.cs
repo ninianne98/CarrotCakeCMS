@@ -46,6 +46,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					chkApproved.Checked = item.IsApproved;
 					chkSpam.Checked = item.IsSpam;
 					guidRootContentID = item.Root_ContentID;
+					lblIP.Text = item.CommenterIP;
+					lblTitle.Text = item.NavMenuText;
+					lblFile.Text = item.FileName;
 				}
 			}
 

@@ -54,7 +54,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-
 		public static void RegisterRoutes(RouteCollection routes, bool OverrideRefresh) {
 
 			try {
@@ -105,7 +104,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 
 		#region IRouteHandler Members

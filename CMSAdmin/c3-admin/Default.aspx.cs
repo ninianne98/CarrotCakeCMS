@@ -30,7 +30,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			litID.Text = SiteData.CurrentSiteID.ToString();
 
 			if (!IsPostBack) {
-				btnExport.Visible = false;
+				//btnExport.Visible = false;
 
 				if (DatabaseUpdate.AreCMSTablesIncomplete()) {
 					Response.Redirect("./DatabaseSetup.aspx");
@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ddlTimeZone.SelectedValue = TimeZoneInfo.Local.Id;
 
 				if (site != null) {
-					btnExport.Visible = true;
+					//btnExport.Visible = true;
 
 					txtSiteName.Text = site.SiteName;
 					txtTagline.Text = site.SiteTagline;
@@ -62,7 +62,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtURL.Text = site.MainURL;
 					txtKey.Text = site.MetaKeyword;
 					txtDescription.Text = site.MetaDescription;
+
 					chkHide.Checked = site.BlockIndex;
+					chkSendTrackback.Checked = site.SendTrackbacks;
+					chkAcceptTrackbacks.Checked = site.AcceptTrackbacks;
 
 					txtFolderPath.Text = site.Blog_FolderPath;
 					txtCategoryPath.Text = site.Blog_CategoryPath;
@@ -107,6 +110,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				site.MetaKeyword = txtKey.Text;
 				site.MetaDescription = txtDescription.Text;
 				site.BlockIndex = chkHide.Checked;
+				site.SendTrackbacks = chkSendTrackback.Checked;
+				site.AcceptTrackbacks = chkAcceptTrackbacks.Checked;
+
 				site.TimeZoneIdentifier = ddlTimeZone.SelectedValue;
 
 				site.Blog_FolderPath = txtFolderPath.Text;

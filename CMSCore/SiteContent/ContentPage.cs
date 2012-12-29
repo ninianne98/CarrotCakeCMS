@@ -24,10 +24,50 @@ namespace Carrotware.CMS.Core {
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 
-		public ContentPage() {
-			//#if DEBUG
-			//            db.Log = new DebugTextWriter();
-			//#endif
+		public ContentPage() { }
+
+
+		internal ContentPage(vw_carrot_Content c) {
+
+			if (c != null) {
+				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
+
+				this.Root_ContentID = c.Root_ContentID;
+				this.SiteID = c.SiteID;
+				this.Heartbeat_UserId = c.Heartbeat_UserId;
+				this.EditHeartbeat = c.EditHeartbeat;
+				this.FileName = c.FileName;
+				this.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
+				this.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);
+				this.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
+				this.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
+
+				this.PageActive = c.PageActive;
+
+				this.PageSlug = c.PageSlug;
+				this.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
+
+				this.ContentID = c.ContentID;
+				this.Parent_ContentID = c.Parent_ContentID;
+				this.IsLatestVersion = c.IsLatestVersion;
+				this.TitleBar = c.TitleBar;
+				this.NavMenuText = c.NavMenuText;
+				this.PageHead = c.PageHead;
+				this.PageText = c.PageText;
+				this.LeftPageText = c.LeftPageText;
+				this.RightPageText = c.RightPageText;
+				this.NavOrder = c.NavOrder;
+				this.EditUserId = c.EditUserId;
+				this.TemplateFile = c.TemplateFile;
+				this.Thumbnail = c.PageThumbnail;
+
+				if (string.IsNullOrEmpty(this.PageSlug) && this.ContentType == ContentPageType.PageType.BlogEntry) {
+					this.PageSlug = c.FileName;
+				}
+
+				this.MetaDescription = c.MetaDescription;
+				this.MetaKeyword = c.MetaKeyword;
+			}
 		}
 
 
@@ -219,6 +259,61 @@ namespace Carrotware.CMS.Core {
 
 		}
 
+
+		public void SaveTrackbacks() {
+
+			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
+
+			if (!string.IsNullOrEmpty(this.NewTrackBackURLs)) {
+				this.NewTrackBackURLs = this.NewTrackBackURLs.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n");
+				string[] TBURLs = this.NewTrackBackURLs.Split('\n');
+				foreach (string sURL in TBURLs) {
+					List<TrackBackEntry> lstTB = TrackBackEntry.FindTrackbackByURL(this.Root_ContentID, sURL);
+					if (lstTB.Count < 1) {
+						TrackBackEntry tbe = new TrackBackEntry {
+							Root_ContentID = this.Root_ContentID,
+							TrackBackURL = sURL,
+							TrackedBack = false
+						};
+
+						tbe.Save();
+					}
+				}
+			}
+
+			if (this.IsLatestVersion && site.SendTrackbacks) {
+				List<TrackBackEntry> lstTBQ = TrackBackEntry.GetTrackBackQueue(this.Root_ContentID);
+				foreach (TrackBackEntry t in lstTBQ) {
+					if (t.CreateDate > site.Now.AddMinutes(-10)) {
+						try {
+							TrackBacker tb = new TrackBacker();
+							t.TrackBackResponse = tb.SendTrackback(t.Root_ContentID, site.SiteID, t.TrackBackURL);
+							t.TrackedBack = true;
+							t.Save();
+						} catch (Exception ex) { }
+					}
+				}
+			}
+		}
+
+
+		public void SaveTrackbackTop() {
+
+			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
+
+			if (this.IsLatestVersion && site.SendTrackbacks) {
+				TrackBackEntry t = TrackBackEntry.GetTrackBackQueue(this.Root_ContentID).FirstOrDefault();
+				if (t != null && t.CreateDate > site.Now.AddMinutes(-10)) {
+					try {
+						TrackBacker tb = new TrackBacker();
+						t.TrackBackResponse = tb.SendTrackback(t.Root_ContentID, site.SiteID, t.TrackBackURL);
+						t.TrackedBack = true;
+						t.Save();
+					} catch (Exception ex) { }
+				}
+			}
+		}
+
 		public void ApplyTemplate() {
 
 			carrot_Content c = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
@@ -265,6 +360,7 @@ namespace Carrotware.CMS.Core {
 
 			db.SubmitChanges();
 
+			SaveTrackbacks();
 		}
 
 		public void SavePageAsDraft() {
@@ -300,6 +396,9 @@ namespace Carrotware.CMS.Core {
 			SaveKeywordsAndTags();
 
 			db.SubmitChanges();
+
+			this.IsLatestVersion = c.IsLatestVersion;
+			SaveTrackbacks();
 		}
 
 
@@ -333,6 +432,9 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaDescription { get; set; }
 		public string MetaKeyword { get; set; }
+
+		public string NewTrackBackURLs { get; set; }
+
 
 		public bool IsRetired {
 			get {
@@ -399,6 +501,12 @@ namespace Carrotware.CMS.Core {
 				_user = new ExtendedUserData(this.EditUserId.Value);
 			}
 			return _user;
+		}
+
+
+		public List<TrackBackEntry> GetTrackbacks() {
+
+			return TrackBackEntry.GetPageTrackBackList(this.Root_ContentID);
 		}
 
 

@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected override void OnInit(EventArgs e) {
-			ucAdminModule c = (ucAdminModule)Page.LoadControl(SiteData.AdminFolderPath + "ucAdminModule.ascx");
+			ucAdminModule c = (ucAdminModule)Page.LoadControl(SiteFilename.AdminModuleControlPath);
 			c.HideList = true;
 			c.LoadModule();
 

@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public ContentPageType.PageType PageType = ContentPageType.PageType.Unknown;
 		public UserEditState EditorPrefs = null;
 
-		public string FileName = "";
+		public string EditedPageFileName = "";
 
 		protected void Page_Load(object sender, EventArgs e) {
 
@@ -59,7 +59,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			PageType = pageContents.ContentType;
-			FileName = pageContents.FileName;
+			EditedPageFileName = pageContents.FileName;
 
 			btnEditCoreInfo.Attributes["onclick"] = "cmsShowEditPageInfo();";
 
@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (cmsHelper.cmsAdminContent != null) {
-				FileName = cmsHelper.cmsAdminContent.FileName;
+				EditedPageFileName = cmsHelper.cmsAdminContent.FileName;
 			}
 
 			if (cmsHelper.ToolboxPlugins.Count > 0) {

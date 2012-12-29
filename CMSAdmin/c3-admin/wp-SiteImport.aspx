@@ -35,6 +35,21 @@
 	<p>
 		The below information (if checked) will be imported to the current site. You can always update the information after importing.
 	</p>
+	<table>
+		<tr>
+			<td valign="top">
+				<asp:CheckBox ID="chkFileGrab" runat="server" />
+				Attempt to download page/post attachments and place them in the selected folder.
+			</td>
+			<td valign="top">
+				&nbsp;&nbsp;&nbsp;
+			</td>
+			<td valign="top">
+				<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath">
+				</asp:DropDownList>
+			</td>
+		</tr>
+	</table>
 	<div style="display: none" id="importMessage">
 		<asp:Literal ID="litMessage" runat="server"></asp:Literal>
 	</div>

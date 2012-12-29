@@ -55,52 +55,40 @@ namespace Carrotware.CMS.Core {
 			return TagSlug.GetHashCode() ^ SiteID.GetHashCode();
 		}
 
-		internal static ContentTag CreateTag(vw_carrot_TagCounted c) {
-			ContentTag cc = null;
+		internal ContentTag(vw_carrot_TagCounted c) {
 			if (c != null) {
-				cc = new ContentTag();
-				cc.ContentTagID = c.ContentTagID;
-				cc.SiteID = c.SiteID;
-				cc.TagSlug = c.TagSlug;
-				cc.TagText = c.TagText;
-				cc.UseCount = c.UseCount;
+				this.ContentTagID = c.ContentTagID;
+				this.SiteID = c.SiteID;
+				this.TagSlug = c.TagSlug;
+				this.TagText = c.TagText;
+				this.UseCount = c.UseCount;
 			}
-
-			return cc;
 		}
 
-		internal static ContentTag CreateTag(vw_carrot_TagURL c) {
-			ContentTag cc = null;
+		internal ContentTag(vw_carrot_TagURL c) {
 			if (c != null) {
-				cc = new ContentTag();
-				cc.ContentTagID = c.ContentTagID;
-				cc.SiteID = c.SiteID;
-				cc.TagURL = c.TagUrl;
-				cc.TagText = c.TagText;
-				cc.UseCount = c.UseCount;
+				this.ContentTagID = c.ContentTagID;
+				this.SiteID = c.SiteID;
+				this.TagURL = c.TagUrl;
+				this.TagText = c.TagText;
+				this.UseCount = c.UseCount;
 			}
-
-			return cc;
 		}
 
-		internal static ContentTag CreateTag(carrot_ContentTag c) {
-			ContentTag cc = null;
+		internal ContentTag(carrot_ContentTag c) {
 			if (c != null) {
-				cc = new ContentTag();
-				cc.ContentTagID = c.ContentTagID;
-				cc.SiteID = c.SiteID;
-				cc.TagSlug = c.TagSlug;
-				cc.TagText = c.TagText;
+				this.ContentTagID = c.ContentTagID;
+				this.SiteID = c.SiteID;
+				this.TagSlug = c.TagSlug;
+				this.TagText = c.TagText;
 			}
-
-			return cc;
 		}
 
 		public static ContentTag Get(Guid TagID) {
 			ContentTag _item = null;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_ContentTag query = CompiledQueries.cqGetContentTagByID(_db, TagID);
-				_item = CreateTag(query);
+				_item = new ContentTag(query);
 			}
 
 			return _item;
@@ -125,7 +113,7 @@ namespace Carrotware.CMS.Core {
 				IQueryable<carrot_ContentTag> query = CompiledQueries.cqGetContentTagByContentID(_db, rootContentID);
 
 				_types = (from d in query.ToList()
-						  select CreateTag(d)).ToList();
+						  select new ContentTag(d)).ToList();
 			}
 
 			return _types;
@@ -158,7 +146,7 @@ namespace Carrotware.CMS.Core {
 		#region IContentMetaInfo Members
 
 		public void SetValue(Guid ContentMetaInfoID) {
-			this.ContentTagID = ContentMetaInfoID; 
+			this.ContentTagID = ContentMetaInfoID;
 		}
 
 		public Guid ContentMetaInfoID {

@@ -5,6 +5,7 @@
 <head id="Head1" runat="server">
 	<title>Public</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
+	<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/logon.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 
