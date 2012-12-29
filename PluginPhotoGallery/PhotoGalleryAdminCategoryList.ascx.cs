@@ -19,16 +19,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		private void LoadData() {
-			PhotoGalleryDataContext db = new PhotoGalleryDataContext();
 
-			var lstCont = (from c in db.tblGalleries
-						   where c.SiteID == SiteID
-						   select c).ToList();
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+				var lstCont = gh.GalleryGroupListGetBySiteID();
 
-
-			gvPages.DataSource = lstCont;
-			gvPages.DataBind();
-
+				gvPages.DataSource = lstCont;
+				gvPages.DataBind();
+			}
 		}
 
 

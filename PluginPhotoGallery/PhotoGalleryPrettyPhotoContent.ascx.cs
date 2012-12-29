@@ -12,8 +12,6 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryPrettyPhotoContent : WidgetParmData, IWidget, IWidgetEditStatus {
 
-		PhotoGalleryDataContext db = new PhotoGalleryDataContext();
-
 		[Description("Display gallery heading")]
 		public bool ShowHeading { get; set; }
 
@@ -31,11 +29,15 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				if (SiteID == Guid.Empty) {
 					SiteID = SiteData.CurrentSiteID;
 				}
+				Dictionary<string, string> _dict = null;
 
-				Dictionary<string, string> _dict = (from c in db.tblGalleries
-													orderby c.GalleryTitle
-													where c.SiteID == SiteID
-													select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
+				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+
+					_dict = (from c in gh.GalleryGroupListGetBySiteID()
+							 orderby c.GalleryTitle
+							 where c.SiteID == SiteID
+							 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
+				}
 
 				return _dict;
 			}
@@ -149,7 +151,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			return WindowWidth.ToString().ToLower();
 		}
 
-		private List<tblGalleryImageMeta> imageData = new List<tblGalleryImageMeta>();
+		private List<GalleryMetaData> imageData = new List<GalleryMetaData>();
 
 		public string GetImageBody(string sImg) {
 			var imgData = (from g in imageData
@@ -243,33 +245,30 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				PrettyPhotoSkin = "light_rounded";
 			}
 
-			var gal = (from g in db.tblGalleries
-					   where g.GalleryID == GalleryID
-							&& g.SiteID == SiteData.CurrentSiteID
-					   select g).FirstOrDefault();
 
-			imageData = new List<tblGalleryImageMeta>();
+			imageData = new List<GalleryMetaData>();
 
-			if (gal != null) {
+			List<GalleryImageEntry> gallery = null;
+
+
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+
+				var gal = gh.GalleryGroupGetByID(GalleryID);
 
 				litGalleryName.Text = gal.GalleryTitle;
 				pnlGalleryHead.Visible = ShowHeading;
 
-				List<tblGalleryImage> gallery = (from g in db.tblGalleryImages
-												 join gg in db.tblGalleries on g.GalleryID equals gg.GalleryID
-												 where g.GalleryID == GalleryID
-													 && gg.SiteID == SiteData.CurrentSiteID
-												 orderby g.ImageOrder ascending
-												 select g).ToList();
+				if (gal != null) {
 
-				List<string> imgNames = (from g in gallery
-										 select g.GalleryImage.ToLower()).ToList();
+					litGalleryName.Text = gal.GalleryTitle;
+					pnlGalleryHead.Visible = ShowHeading;
 
-				imageData = (from g in db.tblGalleryImageMetas
-							 where g.SiteID == SiteData.CurrentSiteID
-								 && imgNames.Contains(g.GalleryImage.ToLower())
-							 select g).ToList();
+					gallery = (from g in gal.GalleryImages
+							   orderby g.ImageOrder ascending
+							   select g).ToList();
 
+					imageData = gh.GetGalleryMetaDataListByGalleryID(GalleryID);
+				}
 
 				rpGallery.DataSource = gallery;
 				rpGallery.DataBind();

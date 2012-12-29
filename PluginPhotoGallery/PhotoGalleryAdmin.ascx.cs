@@ -14,9 +14,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryAdmin : AdminModule {
 
 		Guid gTheID = Guid.Empty;
-		protected PhotoGalleryDataContext db = new PhotoGalleryDataContext();
-		protected FileDataHelper fileHelper = new FileDataHelper();
 
+		protected FileDataHelper fileHelper = new FileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
 
@@ -80,20 +79,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void LoadLists() {
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
 
-			var gal = (from g in db.tblGalleries
-					   where g.GalleryID == gTheID
-					   select g).FirstOrDefault();
+				var gal = gh.GalleryGroupGetByID(gTheID);
 
-			if (gal != null) {
-				litGalleryName.Text = gal.GalleryTitle;
+				if (gal != null) {
+					litGalleryName.Text = gal.GalleryTitle;
 
-				rpGallery.DataSource = (from g in db.tblGalleryImages
-										where g.GalleryID == gTheID
-										orderby g.ImageOrder ascending
-										select fileHelper.GetFileInfo(g.GalleryImage, g.GalleryImage)).ToList();
+					rpGallery.DataSource = (from g in gal.GalleryImages
+											orderby g.ImageOrder ascending
+											select fileHelper.GetFileInfo(g.GalleryImage, g.GalleryImage)).ToList();
 
-				rpGallery.DataBind();
+					rpGallery.DataBind();
+				}
 			}
 
 			SetSourceFiles(null, "/");
@@ -174,8 +172,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				var fls = fileHelper.GetFiles(sPath);
 
 				var imgs = (from m in flsWorking.Union(fls).ToList()
-							  where m.MimeType.StartsWith("image")
-							  select m).ToList();
+							where m.MimeType.StartsWith("image")
+							select m).ToList();
 
 				flsWorking = flsWorking.Union(imgs).ToList();
 			}
@@ -202,53 +200,41 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
 
-			Dictionary<int, string> lstImages = ParseGalleryImages();
-			int iPos = 0;
+				Dictionary<int, string> lstImages = ParseGalleryImages();
+				int iPos = 0;
 
-			foreach (var img in lstImages) {
-				var bAdding = false;
+				foreach (var img in lstImages) {
 
-				if (!string.IsNullOrEmpty(img.Value)) {
+					if (!string.IsNullOrEmpty(img.Value)) {
 
-					var theImg = (from g in db.tblGalleryImages
-								  where g.GalleryID == gTheID
-								  && g.GalleryImage.ToLower() == img.Value
-								  orderby g.ImageOrder ascending
-								  select g).FirstOrDefault();
+						var theImg = gh.GalleryImageEntryGetByFilename(gTheID, img.Value);
 
-					if (theImg == null) {
-						bAdding = true;
-						theImg = new tblGalleryImage();
-						theImg.GalleryImage = img.Value;
-						theImg.GalleryImageID = Guid.NewGuid();
-						theImg.GalleryID = gTheID;
+						if (theImg == null) {
+							theImg = new GalleryImageEntry();
+							theImg.GalleryImage = img.Value;
+							theImg.GalleryImageID = Guid.Empty;
+							theImg.GalleryID = gTheID;
+						}
+
+						theImg.ImageOrder = iPos;
+
+						theImg.Save();
 					}
-					theImg.ImageOrder = iPos;
 
-					if (bAdding) {
-						db.tblGalleryImages.InsertOnSubmit(theImg);
-					}
+					iPos++;
 				}
-				iPos++;
-			}
 
 
-			if (lstImages.Count > 0) {
-				List<string> lst = (from l in lstImages
-									select l.Value.ToLower()).ToList();
+				if (lstImages.Count > 0) {
+					List<string> lst = (from l in lstImages
+										select l.Value.ToLower()).ToList();
 
-				var lstDel = (from g in db.tblGalleryImages
-							  where g.GalleryID == gTheID
-							  && !lst.Contains(g.GalleryImage.ToLower())
-							  select g).ToList();
-
-				foreach (var itm in lstDel) {
-					db.tblGalleryImages.DeleteOnSubmit(itm);
+					gh.GalleryImageCleanup(gTheID, lst);
 				}
-			}
 
-			db.SubmitChanges();
+			}
 
 			var QueryStringFile = CreateLink(ModuleName, "id=" + gTheID.ToString());
 

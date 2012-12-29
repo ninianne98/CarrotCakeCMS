@@ -88,6 +88,7 @@
     <EmbeddedResource Include="fancybox\fancybox.css" />
     <EmbeddedResource Include="fancybox\fancybox-p.js" />
     <EmbeddedResource Include="fancybox\mousewheel-p.js" />
+    <Content Include="PhotoGalleryAdminImportWP.ascx" />
     <Content Include="PhotoGalleryDatabase.ascx" />
     <Content Include="PhotoGalleryPrettyPhotoContent.ascx" />
     <Content Include="fancybox\README.txt" />
@@ -150,6 +151,18 @@
     <Content Include="Public.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GalleryObjects\GalleryBase.cs" />
+    <Compile Include="GalleryObjects\GalleryImageEntry.cs" />
+    <Compile Include="GalleryObjects\GalleryHelper.cs" />
+    <Compile Include="GalleryObjects\GalleryGroup.cs" />
+    <Compile Include="GalleryObjects\GalleryMetaData.cs" />
+    <Compile Include="PhotoGalleryAdminImportWP.ascx.cs">
+      <DependentUpon>PhotoGalleryAdminImportWP.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminImportWP.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryAdminImportWP.ascx</DependentUpon>
+    </Compile>
     <Compile Include="PhotoGalleryDatabase.ascx.cs">
       <DependentUpon>PhotoGalleryDatabase.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
