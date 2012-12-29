@@ -12,8 +12,6 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryPrettyPhoto : WidgetParmData, IWidget, IWidgetEditStatus {
 
-		PhotoGalleryDataContext db = new PhotoGalleryDataContext();
-
 		[Description("Display gallery heading")]
 		public bool ShowHeading { get; set; }
 
@@ -31,11 +29,15 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				if (SiteID == Guid.Empty) {
 					SiteID = SiteData.CurrentSiteID;
 				}
+				Dictionary<string, string> _dict = null;
 
-				Dictionary<string, string> _dict = (from c in db.tblGalleries
-													orderby c.GalleryTitle
-													where c.SiteID == SiteID
-													select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
+				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+
+					_dict = (from c in gh.GalleryGroupListGetBySiteID()
+							 orderby c.GalleryTitle
+							 where c.SiteID == SiteID
+							 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
+				}
 
 				return _dict;
 			}
@@ -147,24 +149,22 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				PrettyPhotoSkin = "light_rounded";
 			}
 
-			var gal = (from g in db.tblGalleries
-					   where g.GalleryID == GalleryID
-							&& g.SiteID == SiteData.CurrentSiteID
-					   select g).FirstOrDefault();
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
 
-			if (gal != null) {
+				var gal = gh.GalleryGroupGetByID(GalleryID);
 
-				litGalleryName.Text = gal.GalleryTitle;
-				pnlGalleryHead.Visible = ShowHeading;
+				if (gal != null) {
 
-				rpGallery.DataSource = (from g in db.tblGalleryImages
-										join gg in db.tblGalleries on g.GalleryID equals gg.GalleryID
-										where g.GalleryID == GalleryID
-											&& gg.SiteID == SiteData.CurrentSiteID
-										orderby g.ImageOrder ascending
-										select g).ToList();
+					litGalleryName.Text = gal.GalleryTitle;
+					pnlGalleryHead.Visible = ShowHeading;
 
-				rpGallery.DataBind();
+					rpGallery.DataSource = (from g in gal.GalleryImages
+											where g.GalleryID == GalleryID
+											orderby g.ImageOrder ascending
+											select g).ToList();
+
+					rpGallery.DataBind();
+				}
 			}
 
 			if (rpGallery.Items.Count > 0) {

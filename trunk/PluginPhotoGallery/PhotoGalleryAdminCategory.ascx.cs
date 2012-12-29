@@ -13,45 +13,39 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryAdminCategory : AdminModule {
 
 		Guid gTheID = Guid.Empty;
-		PhotoGalleryDataContext db = new PhotoGalleryDataContext();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				gTheID = new Guid(Request.QueryString["id"].ToString());
 			}
 			if (!IsPostBack) {
-				var gal = (from c in db.tblGalleries
-						   where c.SiteID == SiteID
-						   && c.GalleryID == gTheID
-						   select c).FirstOrDefault();
+				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+					var gal = gh.GalleryGroupGetByID(gTheID);
 
-				if (gal != null) {
-					txtGallery.Text = gal.GalleryTitle;
+					if (gal != null) {
+						txtGallery.Text = gal.GalleryTitle;
+					}
 				}
 			}
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			var gal = (from c in db.tblGalleries
-					   where c.SiteID == SiteID
-					   && c.GalleryID == gTheID
-					   select c).FirstOrDefault();
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
 
-			if (gal == null || gTheID == Guid.Empty) {
-				gal = new tblGallery();
-				gal.SiteID = SiteID;
-				gal.GalleryID = Guid.NewGuid();
+				var gal = gh.GalleryGroupGetByID(gTheID);
+
+				if (gal == null || gTheID == Guid.Empty) {
+					gal = new GalleryGroup();
+					gal.SiteID = SiteID;
+					gal.GalleryID = Guid.Empty;
+				}
+
+				gal.GalleryTitle = txtGallery.Text;
+
+				gal.Save();
 			}
 
-			gal.GalleryTitle = txtGallery.Text;
-
-			if (gal.GalleryID != gTheID) {
-				db.tblGalleries.InsertOnSubmit(gal);
-			}
-
-			db.SubmitChanges();
-
-			var QueryStringFile = CreateLink("CategoryList");
+			string QueryStringFile = CreateLink("CategoryList");
 
 			Response.Redirect(QueryStringFile);
 		}

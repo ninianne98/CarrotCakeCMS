@@ -13,9 +13,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		Guid gTheID = Guid.Empty;
 		public string sImageFile = "";
-		protected PhotoGalleryDataContext db = new PhotoGalleryDataContext();
-		protected FileDataHelper helpFile = new FileDataHelper();
 
+		protected FileDataHelper helpFile = new FileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
 
@@ -29,16 +28,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			litImgName.Text = sImageFile;
 
 			if (!IsPostBack) {
+				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+					var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
 
-				var meta = (from m in db.tblGalleryImageMetas
-							where m.SiteID == SiteData.CurrentSiteID
-							&& m.GalleryImage.ToLower() == sImageFile.ToLower()
-							select m).FirstOrDefault();
-
-
-				if (meta != null) {
-					txtMetaInfo.Text = meta.ImageMetaData;
-					txtTitle.Text = meta.ImageTitle;
+					if (meta != null) {
+						txtMetaInfo.Text = meta.ImageMetaData;
+						txtTitle.Text = meta.ImageTitle;
+					}
 				}
 			}
 
@@ -46,29 +42,22 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			bool bAdd = false;
 
-			var meta = (from m in db.tblGalleryImageMetas
-						where m.SiteID == SiteData.CurrentSiteID
-							&& m.GalleryImage.ToLower() == sImageFile.ToLower()
-						select m).FirstOrDefault();
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+				var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
 
-			if (meta == null) {
-				bAdd = true;
-				meta = new tblGalleryImageMeta();
-				meta.GalleryImageMetaID = Guid.NewGuid();
-				meta.SiteID = SiteID;
-				meta.GalleryImage = sImageFile.ToLower();
+				if (meta == null) {
+					meta = new GalleryMetaData();
+					meta.GalleryImageMetaID = Guid.Empty;
+					meta.SiteID = SiteID;
+					meta.GalleryImage = sImageFile.ToLower();
+				}
+
+				meta.ImageMetaData = txtMetaInfo.Text;
+				meta.ImageTitle = txtTitle.Text;
+
+				meta.Save();
 			}
-
-			meta.ImageMetaData = txtMetaInfo.Text;
-			meta.ImageTitle = txtTitle.Text;
-
-			if (bAdd) {
-				db.tblGalleryImageMetas.InsertOnSubmit(meta);
-			}
-
-			db.SubmitChanges();
 
 			Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
 		}

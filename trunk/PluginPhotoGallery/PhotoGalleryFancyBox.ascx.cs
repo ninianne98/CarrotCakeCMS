@@ -11,8 +11,6 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryFancyBox : WidgetParmData, IWidget, IWidgetEditStatus {
 
-		PhotoGalleryDataContext db = new PhotoGalleryDataContext();
-
 		public bool ShowHeading { get; set; }
 
 		public bool ScaleImage { get; set; }
@@ -27,11 +25,15 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				if (SiteID == Guid.Empty) {
 					SiteID = SiteData.CurrentSiteID;
 				}
+				Dictionary<string, string> _dict = null;
 
-				Dictionary<string, string> _dict = (from c in db.tblGalleries
-													orderby c.GalleryTitle
-													where c.SiteID == SiteID
-													select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
+				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+
+					_dict = (from c in gh.GalleryGroupListGetBySiteID()
+							 orderby c.GalleryTitle
+							 where c.SiteID == SiteID
+							 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
+				}
 
 				return _dict;
 			}
@@ -111,25 +113,28 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				} catch (Exception ex) { }
 			}
 
-			var gal = (from g in db.tblGalleries
-					   where g.GalleryID == GalleryID
-							&& g.SiteID == SiteData.CurrentSiteID
-					   select g).FirstOrDefault();
 
-			if (gal != null) {
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+
+				var gal = gh.GalleryGroupGetByID(GalleryID);
 
 				litGalleryName.Text = gal.GalleryTitle;
 				pnlGalleryHead.Visible = ShowHeading;
 
-				rpGallery.DataSource = (from g in db.tblGalleryImages
-										join gg in db.tblGalleries on g.GalleryID equals gg.GalleryID
-										where g.GalleryID == GalleryID
-											&& gg.SiteID == SiteData.CurrentSiteID
-										orderby g.ImageOrder ascending
-										select g).ToList();
+				if (gal != null) {
 
-				rpGallery.DataBind();
+					litGalleryName.Text = gal.GalleryTitle;
+					pnlGalleryHead.Visible = ShowHeading;
+
+					rpGallery.DataSource = (from g in gal.GalleryImages
+											where g.GalleryID == GalleryID
+											orderby g.ImageOrder ascending
+											select g).ToList();
+
+					rpGallery.DataBind();
+				}
 			}
+
 
 			if (rpGallery.Items.Count > 0) {
 				pnlGallery.Visible = true;
