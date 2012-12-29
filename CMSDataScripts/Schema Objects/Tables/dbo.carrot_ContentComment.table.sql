@@ -5,9 +5,9 @@
     [CommenterIP]      NVARCHAR (32)    NOT NULL,
     [CommenterName]    NVARCHAR (256)   NOT NULL,
     [CommenterEmail]   NVARCHAR (256)   NOT NULL,
+    [CommenterURL]     NVARCHAR (128)   NOT NULL,
     [PostComment]      NVARCHAR (MAX)   NULL,
     [IsApproved]       BIT              NOT NULL,
-    [IsSpam]           BIT              NOT NULL,
-    [CommenterURL]     NVARCHAR (128)   NOT NULL
+    [IsSpam]           BIT              NOT NULL
 );
 

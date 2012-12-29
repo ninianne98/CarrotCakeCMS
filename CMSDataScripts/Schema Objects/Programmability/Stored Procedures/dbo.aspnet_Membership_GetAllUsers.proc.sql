@@ -47,3 +47,4 @@ BEGIN
     ORDER BY u.UserName
     RETURN @TotalRecords
 END
+

@@ -18,3 +18,4 @@ BEGIN
             u.UserId = m.UserId
     RETURN(@NumOnline)
 END
+

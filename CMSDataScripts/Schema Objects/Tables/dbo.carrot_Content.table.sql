@@ -2,7 +2,7 @@
     [ContentID]        UNIQUEIDENTIFIER NOT NULL,
     [Root_ContentID]   UNIQUEIDENTIFIER NOT NULL,
     [Parent_ContentID] UNIQUEIDENTIFIER NULL,
-    [IsLatestVersion]  BIT              NULL,
+    [IsLatestVersion]  BIT              NOT NULL,
     [TitleBar]         NVARCHAR (256)   NULL,
     [NavMenuText]      NVARCHAR (256)   NULL,
     [PageHead]         NVARCHAR (256)   NULL,
