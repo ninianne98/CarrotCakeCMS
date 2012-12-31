@@ -65,6 +65,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CSSItem {
+			get {
+				string s = (string)ViewState["CSSItem"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["CSSItem"] = value;
+			}
+		}
+
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -448,6 +462,11 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
 			}
 
+			string sItemCSS = "";
+			if (!string.IsNullOrEmpty(CSSItem)) {
+				sItemCSS = string.Format(" {0} ", CSSItem);
+			}
+
 			output.WriteLine();
 
 			if (WrapList) {
@@ -475,9 +494,9 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 
 				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
-					output.WriteLine("<li class=\"level1 " + CSSSelected + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+					output.WriteLine("<li class=\"level1 " + sItemCSS + CSSSelected + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				} else {
-					output.WriteLine("<li class=\"level1 " + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+					output.WriteLine("<li class=\"level1 " + sItemCSS + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 				}
 
 				output.Indent++;
@@ -487,9 +506,9 @@ namespace Carrotware.CMS.UI.Controls {
 					output.Indent++;
 					foreach (SiteNav c2 in cc) {
 						if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
-							output.WriteLine("<li class=\"level2 " + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
+							output.WriteLine("<li class=\"level2 " + sItemCSS + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
 						} else {
-							output.WriteLine("<li class=\"level2\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
+							output.WriteLine("<li class=\"level2 " + sItemCSS + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
 						}
 					}
 					output.Indent = indent3;

@@ -1310,6 +1310,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			set {
+				lnkNav.Text = value;
 				lnkBtn.Text = value;
 			}
 		}
@@ -1320,6 +1321,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			set {
+				lnkNav.ToolTip = value;
 				lnkBtn.ToolTip = value;
 			}
 		}
@@ -1395,6 +1397,24 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public bool RenderAsHyperlink {
+			get {
+				bool s = false;
+				if (ViewState["RenderAsHyperlink"] != null) {
+					try { s = (bool)ViewState["RenderAsHyperlink"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["RenderAsHyperlink"] = value;
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
 		public int PageNumber {
@@ -1422,6 +1442,7 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = string.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
 
 				lnkBtn.CssClass = sCSS.Trim();
+				lnkNav.CssClass = sCSS.Trim();
 			}
 		}
 
@@ -1430,7 +1451,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private string _linkText = string.Empty;
 
 		private LinkButton lnkBtn = new LinkButton();
-		private ListItemPlaceHolder ph = new ListItemPlaceHolder();
+		private HyperLink lnkNav = new HyperLink();
 
 		protected override void OnDataBinding(EventArgs e) {
 
@@ -1441,9 +1462,20 @@ namespace Carrotware.CMS.UI.Controls {
 			lnkBtn.ID = sBtnName + PageNbr.ToString();
 			lnkBtn.Click += new EventHandler(this.lnkBtn_Click);
 
-			_linkText = PageNbr.ToString();
+			lnkNav.ID = sBtnName + "Lnk" + PageNbr.ToString();
 
+			_linkText = PageNbr.ToString();
 			this.PageNumber = PageNbr;
+
+			HttpContext context = HttpContext.Current;
+
+			string sSearch = "";
+			if (context.Request["search"] != null) {
+				sSearch = context.Request["search"].ToString();
+				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?PageNbr=" + PageNbr.ToString() + "&search=" + context.Server.UrlEncode(sSearch);
+			} else {
+				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?PageNbr=" + PageNbr.ToString();
+			}
 
 			LoadCtrsl();
 
@@ -1478,16 +1510,20 @@ namespace Carrotware.CMS.UI.Controls {
 
 			int iMax = this.Controls.Count;
 			lnkBtn.Controls.Clear();
+			lnkNav.Controls.Clear();
 
-			for (int i = 0; i < iMax; i++) {
-				lnkBtn.Controls.Add(this.Controls[0]);
+			if (RenderAsHyperlink) {
+				for (int i = 0; i < iMax; i++) {
+					lnkNav.Controls.Add(this.Controls[0]);
+				}
+				this.Controls.Add(lnkNav);
+			} else {
+				for (int i = 0; i < iMax; i++) {
+					lnkBtn.Controls.Add(this.Controls[0]);
+				}
+				this.Controls.Add(lnkBtn);
 			}
-
-			this.Controls.Add(lnkBtn);
-			this.Controls.Add(ph);
-
 		}
-
 
 	}
 

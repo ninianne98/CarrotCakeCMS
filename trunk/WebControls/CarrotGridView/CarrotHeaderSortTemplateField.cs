@@ -20,8 +20,7 @@ using System.Web.UI.WebControls;
 
 namespace Carrotware.Web.UI.Controls {
 
-	[DefaultProperty("Text"), ToolboxData("<{0}:CarrotHeaderSortTemplateField runat=server></{0}:CarrotHeaderSortTemplateField>")]
-
+	[ToolboxData("<{0}:CarrotHeaderSortTemplateField runat=server></{0}:CarrotHeaderSortTemplateField>")]
 	public class CarrotHeaderSortTemplateField : TemplateField {
 
 		public CarrotHeaderSortTemplateField()

@@ -348,6 +348,13 @@ namespace Carrotware.CMS.UI.Controls {
 						hdnPageNbr.Value = PageNumber.ToString();
 					}
 				}
+			} else {
+				if (context.Request["PageNbr"] != null) {
+					string sPage = context.Request["PageNbr"].ToString();
+					int pg = int.Parse(sPage);
+					PageNumber = pg;
+					hdnPageNbr.Value = PageNumber.ToString();
+				}
 			}
 
 			if (PageNumber <= 1 && !string.IsNullOrEmpty(hdnPageNbr.Value)) {

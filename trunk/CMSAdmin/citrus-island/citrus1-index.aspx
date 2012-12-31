@@ -8,9 +8,10 @@
 	<title>Citrus Island</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<asp:PlaceHolder ID="myPageHead" runat="server">
-		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+		<%--<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />--%>
 		<link rel="canonical" href="<%= theSite.DefaultCanonicalURL %>" />
 	</asp:PlaceHolder>
+	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 </head>
 <body>

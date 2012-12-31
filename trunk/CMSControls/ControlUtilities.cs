@@ -29,7 +29,11 @@ namespace Carrotware.CMS.UI.Controls {
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
-			return CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+			string sPath = "";
+
+			try { sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+
+			return sPath;
 		}
 
 		public static Control ParseControlByName(Type type, string resourceName) {
@@ -46,10 +50,11 @@ namespace Carrotware.CMS.UI.Controls {
 		public static string GetManifestResourceStream(string sResouceName) {
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 			string sReturn = null;
-
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
-				sReturn = oTextStream.ReadToEnd();
-			}
+			try {
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
+					sReturn = oTextStream.ReadToEnd();
+				}
+			} catch { }
 
 			return sReturn;
 		}

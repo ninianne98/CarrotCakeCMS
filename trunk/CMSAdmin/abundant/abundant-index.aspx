@@ -17,9 +17,12 @@ Released   : 20090703
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Abundant by Free CSS Templates</title>
+	<%--	
 	<asp:PlaceHolder ID="myCSS" runat="server">
 		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
 	</asp:PlaceHolder>
+	--%>
+	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("input:button, input:submit").button();

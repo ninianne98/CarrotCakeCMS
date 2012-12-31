@@ -82,10 +82,10 @@
     </Compile>
     <Compile Include="captcha\CaptchaImage.cs" />
     <Compile Include="CarrotGridView\CarrotGridView.cs" />
-    <Compile Include="CarrotGridView\CarrotLinkButtonCmdTemplate.cs" />
     <Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
     <Compile Include="CarrotGridView\CarrotImageColumnData.cs" />
     <Compile Include="CarrotGridView\CarrotImageColumnDataCollectionEditor.cs" />
+    <Compile Include="CarrotGridView\CarrotLinkButtonCmdTemplate.cs" />
     <Compile Include="CarrotHttpHandler.cs" />
     <Compile Include="CollectionHelpers\GuidItem.cs" />
     <Compile Include="CollectionHelpers\GuidItemCollectionEditor.cs" />

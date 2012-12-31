@@ -122,6 +122,7 @@
     <EmbeddedResource Include="ucSummaryDisplay.ascx" />
     <EmbeddedResource Include="ucCommentDisplay.ascx" />
     <EmbeddedResource Include="Trackback.txt" />
+    <EmbeddedResource Include="SearchBoxJS.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
