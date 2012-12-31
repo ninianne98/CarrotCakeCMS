@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				gal.Save();
 			}
 
-			string QueryStringFile = CreateLink("CategoryList");
+			string QueryStringFile = CreateLink("GalleryList");
 
 			Response.Redirect(QueryStringFile);
 		}

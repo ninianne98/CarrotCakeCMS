@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public GalleryHelper(Guid siteID) {
-			base.ThisSite = SiteData.GetSiteByID(siteID);
+			base.ThisSite = SiteData.GetSiteFromCache(siteID);
 		}
 
 
@@ -61,11 +61,9 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						  && !lst.Contains(g.GalleryImage.ToLower())
 						  select g).ToList();
 
-
 			db.tblGalleryImages.DeleteAllOnSubmit(lstDel);
 
 			db.SubmitChanges();
-
 		}
 
 		public List<GalleryMetaData> GetGalleryMetaDataListByGalleryID(Guid galleryID) {
@@ -89,6 +87,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			return ge;
 		}
 
+		public GalleryGroup GalleryGroupGetByName(string galleryTitle) {
+			GalleryGroup ge = null;
+
+			if (!string.IsNullOrEmpty(galleryTitle)) {
+				ge = (from c in db.tblGalleries
+					  where c.SiteID == this.ThisSite.SiteID
+					  && c.GalleryTitle.ToLower() == galleryTitle.ToLower()
+					  select new GalleryGroup(c)).FirstOrDefault();
+			}
+
+			return ge;
+		}
+
 		public List<GalleryGroup> GalleryGroupListGetBySiteID() {
 
 			List<GalleryGroup> ge = (from c in db.tblGalleries
@@ -99,15 +110,17 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public GalleryMetaData GalleryMetaDataGetByFilename(string galleryImage) {
+			GalleryMetaData ge = null;
 
-			GalleryMetaData ge = (from c in db.tblGalleryImageMetas
-								  where c.SiteID == this.ThisSite.SiteID
-								  && c.GalleryImage.ToLower() == galleryImage.ToLower()
-								  select new GalleryMetaData(c)).FirstOrDefault();
+			if (!string.IsNullOrEmpty(galleryImage)) {
+				ge = (from c in db.tblGalleryImageMetas
+					  where c.SiteID == this.ThisSite.SiteID
+					  && c.GalleryImage.ToLower() == galleryImage.ToLower()
+					  select new GalleryMetaData(c)).FirstOrDefault();
+			}
 
 			return ge;
 		}
-
 
 		public GalleryMetaData GalleryMetaDataGetByID(Guid galleryImageMetaID) {
 

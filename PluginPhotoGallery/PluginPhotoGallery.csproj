@@ -88,6 +88,8 @@
     <EmbeddedResource Include="fancybox\fancybox.css" />
     <EmbeddedResource Include="fancybox\fancybox-p.js" />
     <EmbeddedResource Include="fancybox\mousewheel-p.js" />
+    <Content Include="PhotoGalleryAdminExport.ascx" />
+    <Content Include="PhotoGalleryAdminImport.ascx" />
     <Content Include="PhotoGalleryAdminImportWP.ascx" />
     <Content Include="PhotoGalleryDatabase.ascx" />
     <Content Include="PhotoGalleryPrettyPhotoContent.ascx" />
@@ -152,10 +154,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GalleryObjects\GalleryBase.cs" />
+    <Compile Include="GalleryObjects\GalleryExportList.cs" />
     <Compile Include="GalleryObjects\GalleryImageEntry.cs" />
     <Compile Include="GalleryObjects\GalleryHelper.cs" />
     <Compile Include="GalleryObjects\GalleryGroup.cs" />
     <Compile Include="GalleryObjects\GalleryMetaData.cs" />
+    <Compile Include="PhotoGalleryAdminExport.ascx.cs">
+      <DependentUpon>PhotoGalleryAdminExport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminExport.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryAdminExport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminImport.ascx.cs">
+      <DependentUpon>PhotoGalleryAdminImport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PhotoGalleryAdminImport.ascx.designer.cs">
+      <DependentUpon>PhotoGalleryAdminImport.ascx</DependentUpon>
+    </Compile>
     <Compile Include="PhotoGalleryAdminImportWP.ascx.cs">
       <DependentUpon>PhotoGalleryAdminImportWP.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

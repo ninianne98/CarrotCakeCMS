@@ -10,7 +10,7 @@ using Carrotware.CMS.Core;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public partial class PhotoGalleryAdminCategoryList : AdminModule {
+	public partial class PhotoGalleryAdminGalleryList : AdminModule {
 
 
 		protected void Page_Load(object sender, EventArgs e) {

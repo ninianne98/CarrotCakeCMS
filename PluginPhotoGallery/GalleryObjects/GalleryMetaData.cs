@@ -36,27 +36,54 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		public void Save() {
 
-			tblGalleryImageMeta gal = (from c in db.tblGalleryImageMetas
-									   where c.GalleryImage.ToLower() == this.GalleryImage.ToLower()
-									   select c).FirstOrDefault();
+			if (!string.IsNullOrEmpty(this.GalleryImage)) {
 
-			if (gal == null || this.GalleryImageMetaID == Guid.Empty) {
-				gal = new tblGalleryImageMeta();
-				gal.SiteID = this.SiteID;
-				gal.GalleryImageMetaID = Guid.NewGuid();
-				gal.GalleryImage = this.GalleryImage;
+				tblGalleryImageMeta gal = (from c in db.tblGalleryImageMetas
+										   where c.GalleryImage.ToLower() == this.GalleryImage.ToLower()
+										   select c).FirstOrDefault();
+
+				if (gal == null || this.GalleryImageMetaID == Guid.Empty) {
+					gal = new tblGalleryImageMeta();
+					gal.SiteID = this.SiteID;
+					gal.GalleryImageMetaID = Guid.NewGuid();
+					gal.GalleryImage = this.GalleryImage;
+				}
+
+				gal.ImageTitle = this.ImageTitle;
+				gal.ImageMetaData = this.ImageMetaData;
+
+				if (gal.GalleryImageMetaID != this.GalleryImageMetaID) {
+					db.tblGalleryImageMetas.InsertOnSubmit(gal);
+				}
+
+				db.SubmitChanges();
+
+				this.GalleryImageMetaID = gal.GalleryImageMetaID;
 			}
-
-			gal.ImageTitle = this.ImageTitle;
-			gal.ImageMetaData = this.ImageMetaData;
-
-			if (gal.GalleryImageMetaID != this.GalleryImageMetaID) {
-				db.tblGalleryImageMetas.InsertOnSubmit(gal);
-			}
-
-			db.SubmitChanges();
-
 		}
+
+
+		public override string ToString() {
+			return ImageTitle;
+		}
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is GalleryMetaData) {
+				GalleryMetaData p = (GalleryMetaData)obj;
+				return (this.GalleryImageMetaID == p.GalleryImageMetaID)
+						&& (this.SiteID == p.SiteID)
+						&& (this.ImageTitle == p.ImageTitle);
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return GalleryImageMetaID.GetHashCode() ^ SiteID.GetHashCode() ^ ImageTitle.GetHashCode();
+		}
+
 
 		#region IDisposable Members
 

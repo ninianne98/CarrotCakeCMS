@@ -56,7 +56,30 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			db.SubmitChanges();
 
+			this.GalleryID = gal.GalleryID;
 		}
+
+		public override string ToString() {
+			return GalleryTitle;
+		}
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is GalleryGroup) {
+				GalleryGroup p = (GalleryGroup)obj;
+				return (this.GalleryID == p.GalleryID)
+						&& (this.SiteID == p.SiteID)
+						&& (this.GalleryTitle == p.GalleryTitle);
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return GalleryID.GetHashCode() ^ SiteID.GetHashCode() ^ GalleryTitle.GetHashCode();
+		}
+
 
 		#region IDisposable Members
 
