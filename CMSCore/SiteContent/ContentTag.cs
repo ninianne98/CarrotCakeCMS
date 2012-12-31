@@ -88,7 +88,9 @@ namespace Carrotware.CMS.Core {
 			ContentTag _item = null;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_ContentTag query = CompiledQueries.cqGetContentTagByID(_db, TagID);
-				_item = new ContentTag(query);
+				if (query != null) {
+					_item = new ContentTag(query);
+				}
 			}
 
 			return _item;
@@ -123,7 +125,7 @@ namespace Carrotware.CMS.Core {
 			bool bNew = false;
 			carrot_ContentTag s = CompiledQueries.cqGetContentTagByID(db, this.ContentTagID);
 
-			if (s == null) {
+			if (s == null || (s != null && s.ContentTagID == Guid.Empty)) {
 				s = new carrot_ContentTag();
 				s.ContentTagID = Guid.NewGuid();
 				s.SiteID = this.SiteID;
@@ -137,9 +139,9 @@ namespace Carrotware.CMS.Core {
 				db.carrot_ContentTags.InsertOnSubmit(s);
 			}
 
-			this.ContentTagID = s.ContentTagID;
-
 			db.SubmitChanges();
+
+			this.ContentTagID = s.ContentTagID;
 		}
 
 

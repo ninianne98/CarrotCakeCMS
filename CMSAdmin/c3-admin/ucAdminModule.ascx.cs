@@ -20,14 +20,19 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ucAdminModule : BaseUserControl {
 
-		Guid ModuleID = Guid.Empty;
-		string pf = string.Empty;
+		public Guid ModuleID { get; set; }
+
+		public string pf { get; set; }
 
 		public string SelMenu = "0";
 
 		public bool UseAjax { get; set; }
 
 		public bool HideList { get; set; }
+
+		public CMSAdminModule ModuleFamily { get; set; }
+
+		public CMSAdminModuleMenu PluginItem { get; set; }
 
 		protected bool bLoadModule = false;
 
@@ -66,6 +71,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		public void LoadModule() {
+			ModuleID = Guid.Empty;
+			pf = String.Empty;
 
 			if (Request.QueryString["pi"] != null) {
 				try { ModuleID = new Guid(Request.QueryString["pi"].ToString()); } catch { }
@@ -74,17 +81,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (Request.QueryString["pf"] != null) {
 				pf = Request.QueryString["pf"].ToString();
 
-				CMSAdminModule mod = (from m in cmsHelper.AdminModules
-									  where m.PluginID == ModuleID
-									  select m).FirstOrDefault();
+				ModuleFamily = (from m in cmsHelper.AdminModules
+								where m.PluginID == ModuleID
+								select m).FirstOrDefault();
 
-				var cc = (from m in mod.PluginMenus
-						  where m.PluginParm == pf
-						  select m).FirstOrDefault();
+				PluginItem = (from m in ModuleFamily.PluginMenus
+							  where m.PluginParm == pf
+							  select m).FirstOrDefault();
 
-				UseAjax = cc.UseAjax;
+				UseAjax = PluginItem.UseAjax;
 
-				Control c = Page.LoadControl(cc.ControlFile);
+				Control c = Page.LoadControl(PluginItem.ControlFile);
 				phAdminModule.Controls.Add(c);
 
 				if (c is IAdminModule) {
@@ -132,8 +139,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			}
 		}
-
-
 
 	}
 }

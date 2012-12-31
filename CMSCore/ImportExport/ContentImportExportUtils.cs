@@ -176,10 +176,14 @@ namespace Carrotware.CMS.Core {
 			CMSConfigHelper.ClearSerialized(rootContentID, keyPageImport);
 		}
 
+		public static string GetSerialized(Guid itemID) {
+			return CMSConfigHelper.GetSerialized(itemID, keyPageImport);
+		}
+
 		public static ContentPageExport GetSerializedContentPageExport(Guid rootContentID) {
 			ContentPageExport c = null;
 			try {
-				string sXML = CMSConfigHelper.GetSerialized(rootContentID, keyPageImport);
+				string sXML = GetSerialized(rootContentID);
 				c = GetSerialData<ContentPageExport>(sXML) as ContentPageExport;
 			} catch (Exception ex) { }
 			return c;
@@ -187,7 +191,7 @@ namespace Carrotware.CMS.Core {
 		public static SiteExport GetSerializedSiteExport(Guid siteID) {
 			SiteExport c = null;
 			try {
-				string sXML = CMSConfigHelper.GetSerialized(siteID, keyPageImport);
+				string sXML = GetSerialized(siteID);
 				c = GetSerialData<SiteExport>(sXML) as SiteExport;
 			} catch (Exception ex) { }
 			return c;
@@ -195,7 +199,7 @@ namespace Carrotware.CMS.Core {
 		public static WordPressSite GetSerializedWPExport(Guid siteID) {
 			WordPressSite c = null;
 			try {
-				string sXML = CMSConfigHelper.GetSerialized(siteID, keyPageImport);
+				string sXML = GetSerialized(siteID);
 				c = GetSerialData<WordPressSite>(sXML) as WordPressSite;
 			} catch (Exception ex) { }
 			return c;
@@ -240,7 +244,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private static Object GetSerialData<T>(string sXML) {
+		public static Object GetSerialData<T>(string sXML) {
 			Object obj = null;
 			try {
 				XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));

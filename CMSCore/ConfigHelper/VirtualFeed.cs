@@ -31,8 +31,8 @@ namespace Carrotware.CMS.Core {
 			}
 
 			if (sFileRequested.ToLower().EndsWith("/sitemap.ashx")) {
-				context.Response.Write("Not Yet Supported\r\n");
-				context.Response.Write(sFileRequested);
+				SiteMapHelper smh = new SiteMapHelper();
+				smh.RenderSiteMap(context);
 			}
 
 			if (sFileRequested.ToLower().EndsWith("/trackback.ashx")) {

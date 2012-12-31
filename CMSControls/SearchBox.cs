@@ -31,6 +31,19 @@ namespace Carrotware.CMS.UI.Controls {
 		[TemplateContainer(typeof(SearchBox))]
 		public ITemplate SearchTemplate { get; set; }
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string OverrideTextboxName {
+			get {
+				String s = (String)ViewState["OverrideTextboxName"];
+				return ((s == null) ? String.Empty : s);
+			}
+			set {
+				ViewState["OverrideTextboxName"] = value;
+			}
+		}
 
 		protected PlaceHolder phEntry = new PlaceHolder();
 		protected List<Control> EntryFormControls = new List<Control>();
@@ -81,30 +94,33 @@ namespace Carrotware.CMS.UI.Controls {
 
 			phEntry.Controls.Add(new jsHelperLib());
 
-			TextBox txtSearchText = (TextBox)GetEntryFormControl("SearchText");
+			TextBox txtSearchText = null;
+			if (string.IsNullOrEmpty(OverrideTextboxName)) {
+				txtSearchText = (TextBox)GetEntryFormControl("SearchText");
+
+				if (txtSearchText == null) {
+					txtSearchText = (TextBox)GetEntryFormControl(typeof(TextBox));
+				}
+			} else {
+				txtSearchText = new TextBox();
+				txtSearchText.ID = "over_" + OverrideTextboxName;
+			}
+
+			string sScript = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.SearchBoxJS.txt");
 
 			if (txtSearchText != null) {
-				string sJS = "\r\n\r\n <script type=\"text/javascript\"> \r\n" +
-					"\t function " + JS_SearchName + "() { \r\n" +
-					"\t\t var theSearchTerm = $('#" + this.ClientID + "_" + txtSearchText.ID + "').val(); \r\n" +
-					"\t\t __carrotware_RedirectWithQuerystringParm('" + SiteData.CurrentSite.SiteSearchPath + "', 'search', theSearchTerm); \r\n" +
-					"\t\t return false; \r\n " +
-					"\t } \r\n" +
-					"\r\n " +
-					"\t function " + JS_EnterSearch + "(e) { \r\n" +
-					"\t 	var obj = window.event ? event : e; \r\n" +
-					"\t 	var key = (window.event) ? event.keyCode : e.which; \r\n" +
-					"\t 	if ((key == 13) || (key == 10)) { \r\n" +
-					"\t 		obj.returnValue = false; \r\n" +
-					"\t 		obj.cancelBubble = true; \r\n" +
-					"\t 		" + JS_SearchName + "(); \r\n" +
-					"\t 		return false; \r\n" +
-					"\t 	} \r\n" +
-					"\t 	return true; \r\n" +
-					"\t } \r\n" +
-					" </script> \r\n\r\n";
+				sScript = sScript.Replace("{SEARCH_FUNC}", JS_SearchName);
+				sScript = sScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
 
-				phEntry.Controls.Add(new Literal { Text = sJS });
+				if (string.IsNullOrEmpty(OverrideTextboxName)) {
+					sScript = sScript.Replace("{SEARCH_TEXT}", this.ClientID + "_" + txtSearchText.ID);
+				} else {
+					sScript = sScript.Replace("{SEARCH_TEXT}", OverrideTextboxName);
+				}
+
+				sScript = sScript.Replace("{SEARCH_URL}", SiteData.CurrentSite.SiteSearchPath);
+
+				phEntry.Controls.Add(new Literal { Text = sScript });
 			}
 
 			this.Controls.Add(phEntry);
@@ -121,10 +137,24 @@ namespace Carrotware.CMS.UI.Controls {
 					select x).FirstOrDefault();
 		}
 
+		protected Control GetEntryFormControl(Type type) {
+
+			return (from x in EntryFormControls
+					where x.ID != null
+					&& x.GetType() == type
+					select x).FirstOrDefault();
+		}
+
 		private void FindEntryFormCtrls(Control X) {
 
 			foreach (Control c in X.Controls) {
 				EntryFormControls.Add(c);
+
+				if (c is LiteralControl) {
+					LiteralControl z = (LiteralControl)c;
+					z.Text = z.Text.Replace("{EXEC_SEARCH_FUNCTION}", "return " + JS_SearchName + "()");
+					z.Text = z.Text.Replace("{EXEC_SEARCH_FUNCTION_ENTER}", "return " + JS_EnterSearch + "(event)");
+				}
 
 				if (c is TextBox && c.ID != null) {
 					TextBox z = (TextBox)c;

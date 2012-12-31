@@ -28,6 +28,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				guidImportID = new Guid(Request.QueryString["importid"].ToString());
 			}
 
+			litTrust.Visible = false;
+			if (SiteData.CurrentTrustLevel != AspNetHostingPermissionLevel.Unrestricted) {
+				chkFileGrab.Checked = false;
+				chkFileGrab.Enabled = false;
+				litTrust.Visible = true;
+			}
+
 			litMessage.Text = "";
 
 			if (guidImportID != Guid.Empty) {
@@ -126,6 +133,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 
+		protected void RepairBody(WordPressPost wpp) {
+			wpp.PostContent = wpp.PostContent.Replace("\r\n", "\n");
+			wpp.PostContent = wpp.PostContent.Replace('\u00A0', ' ').Replace("\n\n\n\n", "\n\n\n").Replace("\n\n\n\n", "\n\n\n");
+			wpp.PostContent = wpp.PostContent.Trim();
+
+			if (chkFixBodies.Checked) {
+				wpp.PostContent = "<p>" + wpp.PostContent.Replace("\n\n", "</p><p>") + "</p>";
+				wpp.PostContent = wpp.PostContent.Replace("\n", "<br />\n");
+				wpp.PostContent = wpp.PostContent.Replace("</p><p>", "</p>\n<p>");
+			}
+		}
+
+
 		protected void btnSave_Click(object sender, EventArgs e) {
 			SiteData.CurrentSite = null;
 
@@ -194,6 +214,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										 select c).ToList()) {
 
 						GrabAttachments(wpp);
+						RepairBody(wpp);
 
 						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(site, wpp);
 						cp.SiteID = site.SiteID;
@@ -252,6 +273,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										 select c).ToList()) {
 
 						GrabAttachments(wpp);
+						RepairBody(wpp);
 
 						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(site, wpp);
 						cp.SiteID = site.SiteID;

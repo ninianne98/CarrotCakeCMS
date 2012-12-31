@@ -22,6 +22,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.CheckBox chkFileGrab;
         
         /// <summary>
+        /// litTrust control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTrust;
+        
+        /// <summary>
         /// ddlFolders control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlFolders;
+        
+        /// <summary>
+        /// chkFixBodies control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkFixBodies;
         
         /// <summary>
         /// litMessage control.

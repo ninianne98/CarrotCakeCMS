@@ -89,7 +89,9 @@ namespace Carrotware.CMS.Core {
 			ContentCategory _item = null;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_ContentCategory query = CompiledQueries.cqGetContentCategoryByID(_db, CategoryID);
-				_item = new ContentCategory(query);
+				if (query != null) {
+					_item = new ContentCategory(query);
+				}
 			}
 
 			return _item;
@@ -124,7 +126,7 @@ namespace Carrotware.CMS.Core {
 			bool bNew = false;
 			carrot_ContentCategory s = CompiledQueries.cqGetContentCategoryByID(db, this.ContentCategoryID);
 
-			if (s == null) {
+			if (s == null || (s != null && s.ContentCategoryID == Guid.Empty)) {
 				s = new carrot_ContentCategory();
 				s.ContentCategoryID = Guid.NewGuid();
 				s.SiteID = this.SiteID;
@@ -138,9 +140,9 @@ namespace Carrotware.CMS.Core {
 				db.carrot_ContentCategories.InsertOnSubmit(s);
 			}
 
-			this.ContentCategoryID = s.ContentCategoryID;
-
 			db.SubmitChanges();
+
+			this.ContentCategoryID = s.ContentCategoryID;
 		}
 
 

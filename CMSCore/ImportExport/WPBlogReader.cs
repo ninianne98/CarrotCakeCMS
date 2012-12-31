@@ -112,11 +112,42 @@ namespace Carrotware.CMS.Core {
 
 				wpp.PostName = ContentPageHelper.ScrubSlug(wpp.PostName);
 
-				wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date_gmt", rssNamespace).InnerText);
+				string postType = node.SelectSingleNode("wp:post_type", rssNamespace).InnerText;
+
+				switch (postType) {
+					case "attachment":
+						wpp.PostType = WordPressPost.WPPostType.Attachment;
+						break;
+					case "post":
+						wpp.PostType = WordPressPost.WPPostType.BlogPost;
+						break;
+					case "page":
+						wpp.PostType = WordPressPost.WPPostType.Page;
+						break;
+				}
+
+				wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date", rssNamespace).InnerText);
+				try { wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date_gmt", rssNamespace).InnerText); } catch { }
+
 				wpp.PostContent = node.SelectSingleNode("content:encoded", rssNamespace).InnerText;
 
 				if (node.SelectSingleNode("wp:attachment_url", rssNamespace) != null) {
 					wpp.AttachmentURL = node.SelectSingleNode("wp:attachment_url", rssNamespace).InnerText;
+				}
+
+				wpp.ImportFileSlug = ContentPageHelper.ScrubFilename(wpp.ImportRootID, "/" + wpp.PostName.Trim() + ".aspx");
+				wpp.ImportFileName = ContentPageHelper.ScrubFilename(wpp.ImportRootID, wpp.ImportFileSlug);
+
+				if (wpp.PostType == WordPressPost.WPPostType.Attachment) {
+					wpp.ImportFileSlug = wpp.AttachmentURL.Substring(wpp.AttachmentURL.LastIndexOf("/")).Replace("//", "/").Trim();
+					wpp.ImportFileName = wpp.ImportFileSlug;
+
+					if (node.SelectSingleNode("excerpt:encoded", rssNamespace) != null) {
+						wpp.PostTitle = node.SelectSingleNode("excerpt:encoded", rssNamespace).InnerText;
+					}
+					if (node.SelectSingleNode("content:encoded", rssNamespace) != null) {
+						wpp.PostContent = node.SelectSingleNode("content:encoded", rssNamespace).InnerText;
+					}
 				}
 
 				if (string.IsNullOrEmpty(wpp.PostContent)) {
@@ -132,26 +163,10 @@ namespace Carrotware.CMS.Core {
 					wpp.IsPublished = true;
 				}
 
-				string postType = node.SelectSingleNode("wp:post_type", rssNamespace).InnerText;
-
-				switch (postType) {
-					case "attachment":
-						wpp.PostType = WordPressPost.WPPostType.Attachment;
-						break;
-					case "post":
-						wpp.PostType = WordPressPost.WPPostType.BlogPost;
-						break;
-					case "page":
-						wpp.PostType = WordPressPost.WPPostType.Page;
-						break;
-				}
-
-
 				if (wpp.PostType == WordPressPost.WPPostType.BlogPost
 					|| (wpp.PostType == WordPressPost.WPPostType.Page && wpp.ParentPostID > 0)) {
 					wpp.PostOrder = wpp.PostOrder + 10;
 				}
-
 
 				wpp.Categories = new List<string>();
 				XmlNodeList nodesCat = node.SelectNodes("category[@domain='category']");
@@ -169,19 +184,7 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 
-				wpp.PostContent = wpp.PostContent.Replace('\u00A0', ' ').Replace("\n\n\n", "\n\n").Replace("\n\n\n", "\n\n");
-
-				wpp.PostContent = "<p>" + wpp.PostContent.Replace("\n\n", "</p><p>") + "</p>";
-				wpp.PostContent = wpp.PostContent.Replace("\n", "<br />\n");
-				wpp.PostContent = wpp.PostContent.Replace("</p><p>", "</p>\n<p>");
-
-				wpp.ImportFileSlug = ContentPageHelper.ScrubFilename(wpp.ImportRootID, "/" + wpp.PostName.Trim() + ".aspx");
-				wpp.ImportFileName = ContentPageHelper.ScrubFilename(wpp.ImportRootID, wpp.ImportFileSlug);
-
-				if (wpp.PostType == WordPressPost.WPPostType.Attachment) {
-					wpp.ImportFileSlug = wpp.AttachmentURL.Substring(wpp.AttachmentURL.LastIndexOf("/"));
-					wpp.ImportFileName = wpp.ImportFileSlug;
-				}
+				wpp.PostContent = wpp.PostContent.Replace('\u00A0', ' ').Replace("\n\n\n\n", "\n\n\n").Replace("\n\n\n\n", "\n\n\n");
 
 				lstWPP.Add(wpp);
 			}

@@ -1,0 +1,22 @@
+﻿<script type="text/javascript"> 
+	function {SEARCH_FUNC}() { 
+		var theSearchTerm = $('#{SEARCH_TEXT}').val(); 
+		__carrotware_RedirectWithQuerystringParm('{SEARCH_URL}', 'search', theSearchTerm); 
+		return false; 
+	} 
+
+	function {SEARCH_ENTERFUNC}(e) {
+		var obj = window.event ? event : e;
+		var key = (window.event) ? event.keyCode : e.which;
+
+		if ((key == 13) || (key == 10)) {
+			obj.returnValue = false;
+			obj.cancelBubble = true;
+			return {SEARCH_FUNC}();
+			return false;
+		}
+
+		return true;
+	}
+</script>
+ 

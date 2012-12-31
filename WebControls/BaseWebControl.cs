@@ -29,7 +29,11 @@ namespace Carrotware.Web.UI.Controls {
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
-			return CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+			string sPath = "";
+			
+			try { sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+
+			return sPath;
 		}
 
 

@@ -21,29 +21,29 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ModuleIndex : AdminBasePage {
 
-
-
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.Modules);
 
-		
 		}
 
-		protected override void OnInit(EventArgs e) {
-			ucAdminModule c = (ucAdminModule)Page.LoadControl(SiteFilename.AdminModuleControlPath);
-			c.HideList = false;
-			c.LoadModule();
 
-			if (c.UseAjax) {
-				phAjax.Controls.Add(c);
+		protected override void OnInit(EventArgs e) {
+			ucAdminModule loadedModule = (ucAdminModule)Page.LoadControl(SiteFilename.AdminModuleControlPath);
+			loadedModule.HideList = false;
+			loadedModule.LoadModule();
+
+			if (loadedModule.UseAjax) {
+				phAjax.Controls.Add(loadedModule);
 			} else {
-				phNoAjax.Controls.Add(c);
+				phNoAjax.Controls.Add(loadedModule);
+			}
+
+			if (loadedModule != null && loadedModule.ModuleFamily != null && loadedModule.PluginItem != null) {
+				this.Title = "Module: " + loadedModule.ModuleFamily.PluginName + " - " + loadedModule.PluginItem.Caption;
 			}
 
 			base.OnInit(e);
 		}
-
-
 
 	}
 }

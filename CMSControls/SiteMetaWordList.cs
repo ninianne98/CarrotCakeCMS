@@ -41,6 +41,21 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string CSSItem {
+			get {
+				string s = (string)ViewState["CSSItem"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["CSSItem"] = value;
+			}
+		}
+
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -137,6 +152,11 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
+			string sItemCSS = "";
+			if (!string.IsNullOrEmpty(CSSItem)) {
+				sItemCSS = string.Format(" {0} ", CSSItem);
+			}
+
 			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
 
@@ -147,9 +167,9 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 
 				if (SiteData.IsFilenameCurrentPage(c.MetaInfoURL)) {
-					output.WriteLine("<li class=\"meta-used-" + c.MetaInfoCount.ToString() + " selected\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
+					output.WriteLine("<li class=\"meta-used-" + c.MetaInfoCount.ToString() + sItemCSS + " selected\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
 				} else {
-					output.WriteLine("<li class=\"meta-used-" + c.MetaInfoCount.ToString() + "\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
+					output.WriteLine("<li class=\"meta-used-" + c.MetaInfoCount.ToString() + sItemCSS + "\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
 				}
 			}
 

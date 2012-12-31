@@ -100,10 +100,12 @@ namespace Carrotware.Web.UI.Controls {
 		private void litContent_DataBinding(object sender, EventArgs e) {
 			Literal litContent = (Literal)sender;
 			GridViewRow container = (GridViewRow)litContent.NamingContainer;
-
-			object oValue = DataBinder.Eval(container, "DataItem." + _field);
-
-			litContent.Text = String.Format(_format, oValue);
+			try {
+				object oValue = DataBinder.Eval(container, "DataItem." + _field);
+				litContent.Text = String.Format(_format, oValue);
+			} catch {
+				litContent.Text = _field;
+			}
 		}
 
 	}
@@ -172,7 +174,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void InstantiateIn(Control container) {
-
 			Image imgBool = new Image();
 			if (!string.IsNullOrEmpty(_css)) {
 				imgBool.CssClass = _css;
@@ -188,17 +189,22 @@ namespace Carrotware.Web.UI.Controls {
 		private void imgBool_DataBinding(object sender, EventArgs e) {
 			Image imgBool = (Image)sender;
 			GridViewRow container = (GridViewRow)imgBool.NamingContainer;
+			try {
+				bool bValue = Convert.ToBoolean(DataBinder.Eval(container, "DataItem." + _field).ToString());
 
-			bool bValue = Convert.ToBoolean(DataBinder.Eval(container, "DataItem." + _field).ToString());
-
-			if (bValue) {
-				imgBool.ImageUrl = _imageTrue;
-				imgBool.AlternateText = _verbiageTrue;
-			} else {
-				imgBool.ImageUrl = _imageFalse;
-				imgBool.AlternateText = _verbiageFalse;
+				if (bValue) {
+					imgBool.ImageUrl = _imageTrue;
+					imgBool.AlternateText = _verbiageTrue;
+				} else {
+					imgBool.ImageUrl = _imageFalse;
+					imgBool.AlternateText = _verbiageFalse;
+				}
+				imgBool.ToolTip = imgBool.AlternateText;
+			} catch {
+				imgBool.ImageUrl = _field + ".png";
+				imgBool.AlternateText = _field;
+				imgBool.ToolTip = _field;
 			}
-			imgBool.ToolTip = imgBool.AlternateText;
 		}
 
 	}
@@ -235,19 +241,24 @@ namespace Carrotware.Web.UI.Controls {
 		private void imgEnum_DataBinding(object sender, EventArgs e) {
 			Image imgEnum = (Image)sender;
 			GridViewRow container = (GridViewRow)imgEnum.NamingContainer;
+			try {
+				string sValue = DataBinder.Eval(container, "DataItem." + _field).ToString();
 
-			string sValue = DataBinder.Eval(container, "DataItem." + _field).ToString();
-
-			CarrotImageColumnData img = (from i in _images
-										 where i.KeyValue.ToLower() == sValue.ToLower()
-										 select i).FirstOrDefault();
-			if (img != null) {
-				imgEnum.ImageUrl = img.ImagePath;
-				imgEnum.AlternateText = img.ImageAltText;
-			} else {
-				imgEnum.AlternateText = "[" + _field + "] IMAGE DEF MISSING";
+				CarrotImageColumnData img = (from i in _images
+											 where i.KeyValue.ToLower() == sValue.ToLower()
+											 select i).FirstOrDefault();
+				if (img != null) {
+					imgEnum.ImageUrl = img.ImagePath;
+					imgEnum.AlternateText = img.ImageAltText;
+				} else {
+					imgEnum.AlternateText = "[" + _field + "] IMAGE DEF MISSING";
+				}
+				imgEnum.ToolTip = imgEnum.AlternateText;
+			} catch {
+				imgEnum.ImageUrl = _field + ".png";
+				imgEnum.AlternateText = _field;
+				imgEnum.ToolTip = _field;
 			}
-			imgEnum.ToolTip = imgEnum.AlternateText;
 		}
 
 	}

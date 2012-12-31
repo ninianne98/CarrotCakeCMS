@@ -39,7 +39,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			ContentTag item = ContentTag.Get(guidItemID);
-			if (item == null) {
+
+			if (item == null || (item != null && item.ContentTagID == Guid.Empty)) {
 				item = new ContentTag();
 				item.SiteID = SiteData.CurrentSiteID;
 				item.ContentTagID = Guid.NewGuid();

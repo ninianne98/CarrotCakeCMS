@@ -338,6 +338,8 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 			}
+			
+			_plugins.Where(x => x.FilePath.StartsWith("~~/")).ToList().ForEach(r => r.FilePath = r.FilePath.Replace("~~/", "~/"));
 
 			return _plugins;
 		}
@@ -352,15 +354,15 @@ namespace Carrotware.CMS.Core {
 			if (!string.IsNullOrEmpty(sPathPrefix)) {
 				DataSet ds = ReadDataSetConfig(CMSConfigFileType.PublicCtrl, sPathPrefix);
 
-				var _p2 = (from d in ds.Tables[0].AsEnumerable()
-						   select new CMSPlugin {
-							   FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
-							   Caption = d.Field<string>("crtldesc")
-						   }).ToList();
-
-				_plugins = _plugins.Union(_p2).ToList();
+				_plugins = (from d in ds.Tables[0].AsEnumerable()
+							select new CMSPlugin {
+								FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
+								Caption = d.Field<string>("crtldesc")
+							}).ToList();
 
 			}
+
+			_plugins.Where(x => x.FilePath.StartsWith("~~/")).ToList().ForEach(r => r.FilePath = r.FilePath.Replace("~~/", "~/"));
 
 			return _plugins;
 		}
@@ -536,6 +538,8 @@ namespace Carrotware.CMS.Core {
 										   }).ToList();
 
 					_plugins = _p1.Union(_p2).Union(GetPluginsByDirectory()).ToList();
+					
+					_plugins.Where(x => x.FilePath.StartsWith("~~/")).ToList().ForEach(r => r.FilePath = r.FilePath.Replace("~~/", "~/"));
 
 					HttpContext.Current.Cache.Insert(keyAdminToolboxModules, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
