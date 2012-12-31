@@ -58,13 +58,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
         protected global::Carrotware.CMS.UI.Plugins.PhotoGallery.PhotoGalleryFancyBox2 GalleryFancyBox2;
         
         /// <summary>
-        /// PhotoGalleryAdminCategoryList1 control.
+        /// PhotoGalleryAdminGalleryList1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.CMS.UI.Plugins.PhotoGallery.PhotoGalleryAdminCategoryList PhotoGalleryAdminCategoryList1;
+        protected global::System.Web.UI.UserControl PhotoGalleryAdminGalleryList1;
         
         /// <summary>
         /// PhotoGalleryAdmin1 control.

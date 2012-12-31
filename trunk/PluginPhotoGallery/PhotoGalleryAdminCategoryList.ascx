@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PhotoGalleryAdminCategoryList.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.PhotoGallery.PhotoGalleryAdminCategoryList" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PhotoGalleryAdminGalleryList.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.PhotoGallery.PhotoGalleryAdminGalleryList" %>
 <h2>
 	Photo Gallery : Category List</h2>
 <br />
@@ -8,14 +8,14 @@
 		<Columns>
 			<asp:TemplateField>
 				<ItemTemplate>
-					<asp:HyperLink ID="lnkedit1" runat="server" NavigateUrl='<%#CreateLink("CategoryEdit", String.Format("id={0}", Eval("GalleryID")) ) %>'>
+					<asp:HyperLink ID="lnkedit1" runat="server" NavigateUrl='<%#CreateLink("GalleryEdit", String.Format("id={0}", Eval("GalleryID")) ) %>'>
 						<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
 					</asp:HyperLink>
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:TemplateField>
 				<ItemTemplate>
-					<asp:HyperLink ID="lnkedit2" runat="server" NavigateUrl='<%#CreateLink("EditGallery", String.Format("id={0}", Eval("GalleryID")) ) %>'>
+					<asp:HyperLink ID="lnkedit2" runat="server" NavigateUrl='<%#CreateLink("EditGalleryImageList", String.Format("id={0}", Eval("GalleryID")) ) %>'>
 						<img class="imgNoBorder" src="/c3-admin/images/image.png" alt="Edit Contents" title="Edit Contents" />
 					</asp:HyperLink>
 				</ItemTemplate>

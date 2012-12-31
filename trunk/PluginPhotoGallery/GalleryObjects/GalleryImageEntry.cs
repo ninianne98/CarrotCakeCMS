@@ -52,6 +52,28 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			db.SubmitChanges();
 
+			this.GalleryImageID = gal.GalleryImageID;
+		}
+
+		public override string ToString() {
+			return GalleryImage;
+		}
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is GalleryImageEntry) {
+				GalleryImageEntry p = (GalleryImageEntry)obj;
+				return (this.GalleryImageID == p.GalleryImageID)
+						&& (this.GalleryID == p.GalleryID)
+						&& (this.GalleryImage == p.GalleryImage);
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return GalleryImageID.GetHashCode() ^ GalleryID.GetHashCode() ^ GalleryImage.GetHashCode();
 		}
 
 

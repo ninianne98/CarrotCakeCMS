@@ -10,7 +10,7 @@
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
     
     
-    public partial class PhotoGalleryAdminGalleryList {
+    public partial class PhotoGalleryAdminExport {
         
         /// <summary>
         /// gvPages control.
@@ -20,5 +20,14 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
+        
+        /// <summary>
+        /// btnExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExport;
     }
 }

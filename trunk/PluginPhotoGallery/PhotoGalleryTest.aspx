@@ -2,7 +2,7 @@
 
 <%@ Register Src="PhotoGalleryFancyBox.ascx" TagName="FB" TagPrefix="uc1" %>
 <%@ Register Src="PhotoGalleryFancyBox2.ascx" TagName="FB2" TagPrefix="uc1" %>
-<%@ Register Src="PhotoGalleryAdminCategoryList.ascx" TagName="PhotoGalleryAdminCategoryList" TagPrefix="uc2" %>
+<%@ Register Src="PhotoGalleryAdminGalleryList.ascx" TagName="PhotoGalleryAdminGalleryList" TagPrefix="uc2" %>
 <%@ Register Src="PhotoGalleryAdminCategory.ascx" TagName="PhotoGalleryAdminCategory" TagPrefix="uc2" %>
 <%@ Register Src="PhotoGalleryAdmin.ascx" TagName="PhotoGalleryAdmin" TagPrefix="uc2" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -75,14 +75,14 @@
 	<hr />
 	<a href="PhotoGalleryTest.aspx">PhotoGalleryTest.aspx</a>
 	<hr />
-	<uc2:PhotoGalleryAdminCategoryList ID="PhotoGalleryAdminCategoryList1" runat="server" SiteID="3BD253EA-AC65-4EB6-A4E7-BB097C2255A0" ModuleID="2D866DD3-54E1-434d-B77D-23CE7F07B934"
-		QueryStringFragment="pf=CategoryList&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" QueryStringPattern="pf={0}&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" ModuleName="CategoryList" />
+	<uc2:PhotoGalleryAdminGalleryList ID="PhotoGalleryAdminGalleryList1" runat="server" SiteID="3BD253EA-AC65-4EB6-A4E7-BB097C2255A0" ModuleID="2D866DD3-54E1-434d-B77D-23CE7F07B934"
+		QueryStringFragment="pf=GalleryList&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" QueryStringPattern="pf={0}&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" ModuleName="GalleryList" />
 	<hr />
 	<uc2:PhotoGalleryAdmin ID="PhotoGalleryAdmin1" runat="server" SiteID="3BD253EA-AC65-4EB6-A4E7-BB097C2255A0" ModuleID="2D866DD3-54E1-434d-B77D-23CE7F07B934"
-		QueryStringFragment="pf=EditGallery&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" QueryStringPattern="pf={0}&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" ModuleName="EditGallery" />
+		QueryStringFragment="pf=EditGalleryImageList&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" QueryStringPattern="pf={0}&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" ModuleName="EditGalleryImageList" />
 	<hr />
 	<uc2:PhotoGalleryAdminCategory ID="PhotoGalleryAdminCategory1" runat="server" SiteID="3BD253EA-AC65-4EB6-A4E7-BB097C2255A0" ModuleID="2D866DD3-54E1-434d-B77D-23CE7F07B934"
-		QueryStringFragment="pf=CategoryEdit&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" QueryStringPattern="pf={0}&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" ModuleName="CategoryEdit" />
+		QueryStringFragment="pf=CategoryEdit&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" QueryStringPattern="pf={0}&pi=2D866DD3-54E1-434d-B77D-23CE7F07B934" ModuleName="GalleryEdit" />
 	<hr />
 	<%--	<asp:ListBox DataTextField="FolderPath" DataValueField="FileName" Style="width: 600px" Rows="12" ID="lstFiles" runat="server">
 	</asp:ListBox>--%>

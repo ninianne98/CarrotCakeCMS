@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
-using System.IO;
+using Carrotware.CMS.Interface;
 
 
 
@@ -226,13 +226,10 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 					iPos++;
 				}
 
+				List<string> lst = (from l in lstImages
+									select l.Value.ToLower()).ToList();
 
-				if (lstImages.Count > 0) {
-					List<string> lst = (from l in lstImages
-										select l.Value.ToLower()).ToList();
-
-					gh.GalleryImageCleanup(gTheID, lst);
-				}
+				gh.GalleryImageCleanup(gTheID, lst);
 
 			}
 
