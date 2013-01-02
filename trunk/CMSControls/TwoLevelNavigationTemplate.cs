@@ -193,9 +193,9 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			List<SiteNav> lst = GetChildren(rootContentID);
+			List<SiteNav> lstNav = GetChildren(rootContentID);
 
-			if (lst.Count > 0) {
+			if (lstNav != null && lstNav.Count > 0) {
 				ListItemRepeater rSubNav = new ListItemRepeater();
 
 				rSubNav.ID = "rSubNav";
@@ -205,7 +205,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 				ctrl.Controls.Add(rSubNav);
 
-				rSubNav.DataSource = lst;
+				rSubNav.DataSource = lstNav;
 				rSubNav.DataBind();
 
 				rSubNav.EnableViewState = this.EnableViewState;

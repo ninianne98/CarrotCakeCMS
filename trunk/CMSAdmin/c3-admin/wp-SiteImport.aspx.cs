@@ -134,19 +134,23 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void RepairBody(WordPressPost wpp) {
-			wpp.PostContent = wpp.PostContent.Replace("\r\n", "\n");
-			wpp.PostContent = wpp.PostContent.Replace('\u00A0', ' ').Replace("\n\n\n\n", "\n\n\n").Replace("\n\n\n\n", "\n\n\n");
-			wpp.PostContent = wpp.PostContent.Trim();
+			wpp.CleanBody();
 
 			if (chkFixBodies.Checked) {
-				wpp.PostContent = "<p>" + wpp.PostContent.Replace("\n\n", "</p><p>") + "</p>";
-				wpp.PostContent = wpp.PostContent.Replace("\n", "<br />\n");
-				wpp.PostContent = wpp.PostContent.Replace("</p><p>", "</p>\n<p>");
+				wpp.RepairBody();
+			}
+		}
+
+		protected void btnSave_Click(object sender, EventArgs e) {
+			try {
+				ImportStuff();
+			} catch (Exception ex) {
+				litMessage.Text += ex.ToString();
 			}
 		}
 
 
-		protected void btnSave_Click(object sender, EventArgs e) {
+		private void ImportStuff() {
 			SiteData.CurrentSite = null;
 
 			SiteData site = SiteData.CurrentSite;
@@ -194,6 +198,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				site.SiteTagline = wpSite.SiteDescription;
 				site.Save();
 			}
+
+			wpSite.Comments.ForEach(r => r.ImportRootID = Guid.Empty);
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
 
@@ -243,6 +249,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 								cp.NavOrder = 0;
 							}
 						}
+
+						if (navParent != null) {
+							cp.Parent_ContentID = navParent.Root_ContentID;
+						} else {
+							if (parent != null) {
+								cp.Parent_ContentID = parent.ImportRootID;
+							}
+						}
 						//preserve homepage
 						if (navHome != null && navHome.FileName.ToLower() == cp.FileName.ToLower()) {
 							cp.NavOrder = 0;
@@ -259,6 +273,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						}
 
 						cp.SavePageEdit();
+
+						wpSite.Comments.Where(x => x.PostID == wpp.PostID).ToList().ForEach(r => r.ImportRootID = cp.Root_ContentID);
 
 						iOrder++;
 					}
@@ -297,6 +313,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						}
 
 						cp.SavePageEdit();
+
+						wpSite.Comments.Where(x => x.PostID == wpp.PostID).ToList().ForEach(r => r.ImportRootID = cp.Root_ContentID);
 					}
 
 					using (ContentPageHelper cph = new ContentPageHelper()) {
@@ -306,6 +324,48 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
+
+			wpSite.Comments.RemoveAll(r => r.ImportRootID == Guid.Empty);
+
+			if (wpSite.Comments.Count > 0) {
+				litMessage.Text += "<p>Imported Comments</p>";
+			}
+
+			foreach (WordPressComment wpc in wpSite.Comments) {
+				int iCommentCount = -1;
+
+				iCommentCount = PostComment.GetCommentCountByContent(site.SiteID, wpc.ImportRootID, wpc.CommentDateUTC, wpc.AuthorIP, wpc.CommentContent);
+				if (iCommentCount < 1) {
+					iCommentCount = PostComment.GetCommentCountByContent(site.SiteID, wpc.ImportRootID, wpc.CommentDateUTC, wpc.AuthorIP);
+				}
+
+				if (iCommentCount < 1) {
+					PostComment pc = new PostComment();
+					pc.ContentCommentID = Guid.NewGuid();
+					pc.Root_ContentID = wpc.ImportRootID;
+					pc.CreateDate = site.ConvertUTCToSiteTime(wpc.CommentDateUTC);
+					pc.IsApproved = false;
+					pc.IsSpam = false;
+
+					pc.CommenterIP = wpc.AuthorIP;
+					pc.CommenterName = wpc.Author;
+					pc.CommenterEmail = wpc.AuthorEmail;
+					pc.PostCommentText = wpc.CommentContent;
+					pc.CommenterURL = wpc.AuthorURL;
+
+					if (wpc.Approved == "1") {
+						pc.IsApproved = true;
+					}
+					if (wpc.Approved.ToLower() == "trash") {
+						pc.IsSpam = true;
+					}
+					if (wpc.Type.ToLower() == "trackback" || wpc.Type.ToLower() == "pingback") {
+						pc.CommenterEmail = wpc.Type;
+					}
+
+					pc.Save();
+				}
+			}
 
 		}
 

@@ -86,7 +86,8 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["ImageURI"];
 				if (string.IsNullOrEmpty(s)) {
-					s = ControlUtilities.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
+					//s = ControlUtilities.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
+					s = this.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
 				}
 				return s;
 			}

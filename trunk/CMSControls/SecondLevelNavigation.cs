@@ -36,19 +36,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected override void RenderContents(HtmlTextWriter output) {
-			var lst = GetSubNav();
+			var lstNav = GetSubNav();
 
-			if (lst.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
+			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
 				output.Write("<h2>" + SectionTitle + "</h2>\r\n");
 			}
 
-			if (lst.Count > 0) {
+			if (lstNav != null && lstNav.Count > 0) {
 
 				output.Write("<ul id=\"" + this.ClientID + "\">");
 
 				if (IncludeParent) {
-					if (lst.Count > 0) {
-						var p = GetParent(lst.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
+					if (lstNav != null && lstNav.Count > 0) {
+						var p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
 						IdentifyLinkAsInactive(p);
 						if (p != null) {
 							output.Write("<li class=\"parent-nav\"><a href=\"" + p.FileName + "\">" + p.NavMenuText + "</a></li>\r\n");
@@ -56,7 +56,7 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 
-				foreach (var c in lst) {
+				foreach (var c in lstNav) {
 					IdentifyLinkAsInactive(c);
 					if (SiteData.IsFilenameCurrentPage(c.FileName)) {
 						output.Write("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");

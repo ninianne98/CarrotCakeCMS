@@ -28,7 +28,14 @@
 	border: 1px solid #000000;
 }
 
-.tablehead a, #SortableGrid a {
+#SortableGrid, .SortableGrid {
+	margin: 2px 2px 2px 2px;
+	padding: 2px 2px 2px 2px;
+	display: inline-block;
+	clear: both;
+}
+
+table .tablehead a, #SortableGrid table a, .SortableGrid table a {
 	color: #ffffff;
 	cursor: pointer;
 	font-weight: bolder;

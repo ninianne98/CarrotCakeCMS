@@ -180,19 +180,17 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		private string _linkPage = string.Empty;
-		private string _linkText = string.Empty;
+		private string _linkNavURL = string.Empty;
+		private string _linkTextDefault = string.Empty;
 
 		private HyperLink lnk = new HyperLink();
-		private ListItemPlaceHolder ph = new ListItemPlaceHolder();
-
 
 		protected override void OnDataBinding(EventArgs e) {
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
-			_linkPage = DataBinder.Eval(container, "DataItem.FileName").ToString();
-			_linkText = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
+			_linkNavURL = DataBinder.Eval(container, "DataItem.FileName").ToString();
+			_linkTextDefault = DataBinder.Eval(container, "DataItem.NavMenuText").ToString();
 
 			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
 
@@ -216,13 +214,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 			SetCSS();
 
-			if (!string.IsNullOrEmpty(_linkPage) && string.IsNullOrEmpty(this.NavigateUrl)) {
-				this.NavigateUrl = _linkPage;
+			if (!string.IsNullOrEmpty(_linkNavURL) && string.IsNullOrEmpty(this.NavigateUrl)) {
+				this.NavigateUrl = _linkNavURL;
 			}
 
-			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.LinkText)) {
+			if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
 				if (UseDefaultText) {
-					this.LinkText = _linkText;
+					this.LinkText = _linkTextDefault;
 				}
 			}
 		}
@@ -238,7 +236,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			this.Controls.Add(lnk);
-			this.Controls.Add(ph);
 
 		}
 
@@ -511,8 +508,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private bool bIsBound = false;
-
 		protected override void Render(HtmlTextWriter output) {
 
 			base.Render(output);
@@ -539,8 +534,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
-			bIsBound = true;
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 			string sFieldValue = string.Empty;
@@ -847,11 +840,9 @@ namespace Carrotware.CMS.UI.Controls {
 	public class DefaultContentCommentEntryForm : ITemplate {
 
 
-		private Control GetCtrl() {
-
-			//string content = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.ucContactForm.ascx");
-
-			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucContactForm.ascx");
+		private Control GetCtrl(Control X) {
+			ControlUtilities cu = new ControlUtilities(X);
+			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucContactForm.ascx");
 
 			return userControl;
 		}
@@ -865,12 +856,12 @@ namespace Carrotware.CMS.UI.Controls {
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultContentCommentForm";
+			container.Controls.Add(ph);
 
-			Control control = GetCtrl();
+			Control control = GetCtrl(ph);
 
 			ph.Controls.Add(control);
 
-			container.Controls.Add(ph);
 		}
 
 	}
@@ -976,9 +967,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		private Control GetCtrl() {
-
-			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucSearchForm.ascx");
+		private Control GetCtrl(Control X) {
+			ControlUtilities cu = new ControlUtilities(X);
+			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucSearchForm.ascx");
 
 			return userControl;
 		}
@@ -987,9 +978,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultSearchBoxForm";
+			container.Controls.Add(ph);
 
-			Control c = GetCtrl();
-
+			Control c = GetCtrl(ph);
 			ph.Controls.Add(c);
 
 			//ph.Controls.Add(new Literal { Text = "<div class=\"search-form-outer\">\r\n" });
@@ -1006,7 +997,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			//ph.Controls.Add(new Literal { Text = " </div>\r\n" });
 
-			container.Controls.Add(ph);
+
 		}
 
 	}
@@ -1018,9 +1009,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		private Control GetCtrl() {
-
-			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucSimplePager1.ascx");
+		private Control GetCtrl(Control X) {
+			cu = new ControlUtilities(X);
+			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucSimplePager1.ascx");
 
 			return userControl;
 		}
@@ -1030,8 +1021,9 @@ namespace Carrotware.CMS.UI.Controls {
 		public void InstantiateIn(Control container) {
 
 			PlaceHolder ph = new PlaceHolder();
+			container.Controls.Add(ph);
 
-			Control c = GetCtrl();
+			Control c = GetCtrl(ph);
 
 			NavLinkForPagerTemplate lnkBtn = (NavLinkForPagerTemplate)cu.FindControl("lnkBtn", c);
 
@@ -1039,7 +1031,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ph.Controls.Add(c);
 
-			container.Controls.Add(ph);
 
 			//Literal litL = new Literal();
 			//litL.Text = " [ ";
@@ -1075,9 +1066,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		private Control GetCtrl() {
-
-			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
+		private Control GetCtrl(Control X) {
+			cu = new ControlUtilities(X);
+			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
 
 			return userControl;
 		}
@@ -1086,8 +1077,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
+			container.Controls.Add(ph);
 
-			Control c = GetCtrl();
+			Control c = GetCtrl(ph);
 
 			PostMetaWordList wplCat = (PostMetaWordList)cu.FindControl("wplCat", c);
 			PostMetaWordList wpltag = (PostMetaWordList)cu.FindControl("wpltag", c);
@@ -1097,7 +1089,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ph.Controls.Add(c);
 
-			container.Controls.Add(ph);
 		}
 
 		private void pmwlList_DataBinding(object sender, EventArgs e) {
@@ -1116,9 +1107,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		private Control GetCtrl() {
-
-			Control userControl = ControlUtilities.ParseControlByName(this.GetType(), "Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
+		private Control GetCtrl(Control X) {
+			cu = new ControlUtilities(X);
+			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
 
 			return userControl;
 		}
@@ -1128,12 +1119,11 @@ namespace Carrotware.CMS.UI.Controls {
 		public void InstantiateIn(Control container) {
 
 			PlaceHolder ph = new PlaceHolder();
+			container.Controls.Add(ph);
 
-			Control c = GetCtrl();
+			Control c = GetCtrl(ph);
 
 			ph.Controls.Add(c);
-
-			container.Controls.Add(ph);
 
 		}
 
@@ -1153,6 +1143,7 @@ namespace Carrotware.CMS.UI.Controls {
 			CommenterName,
 			CommenterEmail,
 			PostCommentText,
+			PostCommentEscaped,
 			IsApproved,
 			IsSpam
 		}
@@ -1304,25 +1295,30 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public class NavLinkForPagerTemplate : Control, IActivatePageNavItem {
 
+		private string _linkTextDefault = string.Empty;
+
+		private string _linkText = string.Empty;
+
 		public string LinkText {
 			get {
-				return lnkBtn.Text;
+				return _linkText;
 			}
 
 			set {
-				lnkNav.Text = value;
-				lnkBtn.Text = value;
+				_linkText = value;
+				SetText();
 			}
 		}
 
+		private string _toolTip = string.Empty;
 		public string ToolTip {
 			get {
-				return lnkBtn.ToolTip;
+				return _toolTip;
 			}
 
 			set {
-				lnkNav.ToolTip = value;
-				lnkBtn.ToolTip = value;
+				_toolTip = value;
+				SetText();
 			}
 		}
 
@@ -1428,6 +1424,12 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private void SetText() {
+			lnkNav.Text = _linkText;
+			lnkBtn.Text = _linkText;
+			lnkNav.ToolTip = _toolTip;
+			lnkBtn.ToolTip = _toolTip;
+		}
 
 		private void SetCSS() {
 
@@ -1448,14 +1450,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private string sBtnName = "lnkPagerBtn";
 
-		private string _linkText = string.Empty;
-
 		private LinkButton lnkBtn = new LinkButton();
 		private HyperLink lnkNav = new HyperLink();
 
 		protected override void OnDataBinding(EventArgs e) {
+			string sPageParm = "PageNbr";
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+			Repeater repeater = (Repeater)container.NamingContainer;
+
+			if (repeater != null && repeater.Parent != null) {
+				sPageParm = repeater.Parent.ID.ToString() + "Nbr";
+			}
 
 			int PageNbr = int.Parse(DataBinder.Eval(container, "DataItem").ToString());
 
@@ -1464,17 +1470,24 @@ namespace Carrotware.CMS.UI.Controls {
 
 			lnkNav.ID = sBtnName + "Lnk" + PageNbr.ToString();
 
-			_linkText = PageNbr.ToString();
+			_linkTextDefault = PageNbr.ToString();
 			this.PageNumber = PageNbr;
+
+			if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
+				if (UseDefaultText) {
+					_linkText = _linkTextDefault;
+				}
+			}
+			SetText();
 
 			HttpContext context = HttpContext.Current;
 
 			string sSearch = "";
 			if (context.Request["search"] != null) {
 				sSearch = context.Request["search"].ToString();
-				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?PageNbr=" + PageNbr.ToString() + "&search=" + context.Server.UrlEncode(sSearch);
+				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString() + "&search=" + context.Server.UrlEncode(sSearch);
 			} else {
-				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?PageNbr=" + PageNbr.ToString();
+				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString();
 			}
 
 			LoadCtrsl();
@@ -1498,11 +1511,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 			SetCSS();
 
-			if (!string.IsNullOrEmpty(_linkText) && string.IsNullOrEmpty(this.LinkText)) {
-				if (UseDefaultText) {
-					this.LinkText = _linkText;
-				}
-			}
+			//if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
+			//    if (UseDefaultText) {
+			//        this.LinkText = _linkTextDefault;
+			//    }
+			//}
 		}
 
 

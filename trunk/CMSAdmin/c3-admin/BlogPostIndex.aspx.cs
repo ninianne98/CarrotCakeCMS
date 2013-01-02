@@ -31,6 +31,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!IsPostBack) {
 				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
+				ddlSize.SelectedValue = pagedDataGrid.PageSize.ToString();
 			}
 
 			LoadGrid();
@@ -38,27 +39,59 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void SetGrid(bool bAll, DateTime dateRange, int dateRangeDays) {
+
+			int iRecCount = -1;
 			List<ContentPage> lstContent = null;
+
 			if (bAll) {
-				lstContent = pageHelper.GetAllLatestBlogList(SiteID);
+				pnlPager.Visible = true;
+				iRecCount = pageHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry, false);
+				pagedDataGrid.PageSize = int.Parse(ddlSize.SelectedValue);
 			} else {
-				// use date range
+				pnlPager.Visible = false;
 				lstContent = pageHelper.GetPostsByDateRange(SiteID, dateRange, dateRangeDays, false);
+				iRecCount = lstContent.Count();
+				pagedDataGrid.PageSize = iRecCount + 10;
 			}
-			gvPages.DataSource = lstContent;
-			gvPages.DataBind();
+
+			lblPages.Text = iRecCount.ToString();
+
+			pagedDataGrid.BuildSorting();
+
+			pagedDataGrid.TotalRecords = iRecCount;
+			string sSort = pagedDataGrid.SortingBy;
+			int iPgNbr = pagedDataGrid.PageNumber - 1;
+			int iPageSize = pagedDataGrid.PageSize;
+
+			if (bAll) {
+				lstContent = pageHelper.GetPagedSortedContent(SiteID, ContentPageType.PageType.BlogEntry, false, iPageSize, iPgNbr, sSort);
+			}
+
+			pagedDataGrid.DataSource = lstContent;
+			pagedDataGrid.DataBind();
+
 		}
 
 
 		protected void btnFilter_Click(object sender, EventArgs e) {
-			LoadGrid();
+			LoadGridClick();
 		}
 
 		protected void rdoFilterResults_CheckedChanged(object sender, EventArgs e) {
+			LoadGridClick();
+		}
+
+		protected void btnChangePage_Click(object sender, EventArgs e) {
+			LoadGridClick();
+		}
+
+		private void LoadGridClick() {
+			pagedDataGrid.PageNumber = 1;
 			LoadGrid();
 		}
 
 		private void LoadGrid() {
+
 			trFilter.Attributes["style"] = "display:none;";
 
 			if (rdoFilterResults2.Checked) {
@@ -69,6 +102,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				SetGrid(false, Convert.ToDateTime(txtDate.Text), int.Parse(ddlDateRange.SelectedValue));
 			}
 		}
+
 
 	}
 }

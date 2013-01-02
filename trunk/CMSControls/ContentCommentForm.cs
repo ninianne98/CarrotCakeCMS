@@ -187,7 +187,7 @@ namespace Carrotware.CMS.UI.Controls {
 				PostComment pc = new PostComment();
 				pc.ContentCommentID = Guid.NewGuid();
 				pc.Root_ContentID = navData.Root_ContentID;
-				pc.CreateDate = DateTime.UtcNow;
+				pc.CreateDate = SiteData.CurrentSite.Now;
 				pc.IsApproved = false;
 				pc.IsSpam = false;
 				pc.CommenterIP = sIP;

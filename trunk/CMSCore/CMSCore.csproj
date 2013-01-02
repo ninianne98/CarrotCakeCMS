@@ -85,6 +85,7 @@
     <Compile Include="ImportExport\ContentImportExportUtils.cs" />
     <Compile Include="ImportExport\SiteExport.cs" />
     <Compile Include="ImportExport\InfoKVP.cs" />
+    <Compile Include="ImportExport\WordPressComment.cs" />
     <Compile Include="ImportExport\WordPressPost.cs" />
     <Compile Include="ImportExport\WordPressSite.cs" />
     <Compile Include="ImportExport\WPBlogReader.cs" />

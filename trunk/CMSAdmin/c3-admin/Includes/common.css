@@ -103,13 +103,16 @@ a .imgNoBorder {
 .pagerlink, .sel-pagerlink {
 	float: left;
 	margin: 2px 2px 2px 2px;
+	padding: 5px 8px 5px 8px;
+}
+.pagerlink a {
+	margin: 2px 2px 2px 2px;
 	padding: 5px 5px 5px 5px;
 }
 .datafooter {
 	margin: 2px 2px 2px 2px;
 	padding: 2px 2px 2px 2px;
 	clear: both;
-	width: 50%;
 }
 
 .dateRegion, .ui-datepicker-trigger {

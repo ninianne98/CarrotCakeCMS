@@ -149,6 +149,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public enum SummaryContentType {
+			Unknown,
 			Blog,
 			ContentPage,
 			SpecifiedCategories,
@@ -349,9 +350,19 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 			} else {
-				if (context.Request["PageNbr"] != null) {
-					string sPage = context.Request["PageNbr"].ToString();
-					int pg = int.Parse(sPage);
+				string sPageParm = "PageNbr";
+				string sPageNbr = "";
+
+				if (context.Request[sPageParm] != null) {
+					sPageNbr = context.Request[sPageParm].ToString();
+				}
+
+				sPageParm = this.ID.ToString() + "Nbr";
+				if (context.Request[sPageParm] != null) {
+					sPageNbr = context.Request[sPageParm].ToString();
+				}
+				if (!string.IsNullOrEmpty(sPageNbr)) {
+					int pg = int.Parse(sPageNbr);
 					PageNumber = pg;
 					hdnPageNbr.Value = PageNumber.ToString();
 				}
@@ -365,7 +376,7 @@ namespace Carrotware.CMS.UI.Controls {
 				OrderBy = "GoLiveDate  desc";
 			}
 
-			List<SiteNav> lstContents = null;
+			List<SiteNav> lstContents = new List<SiteNav>();
 			OrderBy = OrderBy.Replace("|", "  ");
 
 			string sSortFld = string.Empty;
@@ -425,6 +436,9 @@ namespace Carrotware.CMS.UI.Controls {
 				TotalPages++;
 			}
 
+			this.Controls.Add(rpDetails);
+			this.Controls.Add(rpPagedSummary);
+
 			if (ShowPager && TotalPages > 1) {
 				List<int> pagelist = new List<int>();
 				pagelist = Enumerable.Range(1, TotalPages).ToList();
@@ -434,9 +448,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			WalkCtrlsForAssignment(rpPagedSummary);
-
-			this.Controls.Add(rpDetails);
-			this.Controls.Add(rpPagedSummary);
 
 			writer.Indent++;
 			writer.Indent++;

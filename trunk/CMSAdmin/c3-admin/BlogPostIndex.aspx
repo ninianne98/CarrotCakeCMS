@@ -21,8 +21,8 @@
 				show content:
 			</td>
 			<td valign="top" colspan="3">
-				<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
-				<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+				<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+				<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 			</td>
 		</tr>
 		<tr runat="server" id="trFilter">
@@ -52,58 +52,73 @@
 	<p>
 		<br />
 	</p>
+	<p>
+		<asp:Label ID="lblPages" runat="server" Text="Label" />
+		total records<br />
+		<asp:Panel ID="pnlPager" runat="server">
+			<asp:Button ID="btnChangePage" runat="server" Text="Change Page Size" OnClick="btnChangePage_Click" />
+			<asp:DropDownList ID="ddlSize" runat="server">
+				<asp:ListItem>10</asp:ListItem>
+				<asp:ListItem>25</asp:ListItem>
+				<asp:ListItem>50</asp:ListItem>
+				<asp:ListItem>100</asp:ListItem>
+			</asp:DropDownList>
+		</asp:Panel>
+	</p>
 	<div id="SortableGrid">
-		<carrot:CarrotGridView CssClass="datatable" DefaultSort="CreateDate desc" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
-			<Columns>
-				<asp:TemplateField>
-					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit1" NavigateUrl='<%# String.Format("{0}?id={1}", SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></asp:HyperLink>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("{0}?mode=raw&id={1}", SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit3" Target="_blank" NavigateUrl='<%# String.Format("{0}?id={1}", SiteFilename.DataExportURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/html_go.png" alt="Export latest version of this page" title="Export latest version of this page" /></asp:HyperLink>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<ItemTemplate>
-						<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit4" NavigateUrl='<%# String.Format("{0}", Eval("FileName")) %>'><img class="imgNoBorder" src="/c3-admin/images/html.png" alt="Visit Page" title="Visit Page" /></asp:HyperLink>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<ItemTemplate>
-						<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit5" NavigateUrl='<%# String.Format("{0}?carrotedit=true", Eval("FileName")) %>'><img class="imgNoBorder" src="/c3-admin/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<ItemTemplate>
-						<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/c3-admin/CommentIndexPop.aspx?id=<%#Eval("Root_ContentID") %>');">
-							<img class="imgNoBorder" src="/c3-admin/images/comments.png" alt="View Comments" title="View Comments" /></a>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<ItemTemplate>
-						<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/c3-admin/PageHistory.aspx?id=<%#Eval("Root_ContentID") %>');">
-							<img class="imgNoBorder" src="/c3-admin/images/layout_content.png" alt="View Page History" title="View Page History" /></a>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text" DataField="NavMenuText" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename" DataField="Filename" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
-					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
-					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Published" AlternateTextFalse="Inactive"
-					AlternateTextTrue="Active" ShowBooleanImage="true" />
-			</Columns>
-		</carrot:CarrotGridView>
+		<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="25">
+			<TheGrid ID="TheGrid1" runat="server" DefaultSort="CreateDate desc" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
+				RowStyle-CssClass="rowregular" CssClass="datatable">
+				<Columns>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<asp:HyperLink runat="server" ID="lnkEdit1" NavigateUrl='<%# String.Format("{0}?id={1}", SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></asp:HyperLink>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("{0}?mode=raw&id={1}", SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<asp:HyperLink runat="server" ID="lnkEdit3" Target="_blank" NavigateUrl='<%# String.Format("{0}?id={1}", SiteFilename.DataExportURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/html_go.png" alt="Export latest version of this page" title="Export latest version of this page" /></asp:HyperLink>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit4" NavigateUrl='<%# String.Format("{0}", Eval("FileName")) %>'><img class="imgNoBorder" src="/c3-admin/images/html.png" alt="Visit Page" title="Visit Page" /></asp:HyperLink>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit5" NavigateUrl='<%# String.Format("{0}?carrotedit=true", Eval("FileName")) %>'><img class="imgNoBorder" src="/c3-admin/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/c3-admin/CommentIndexPop.aspx?id=<%#Eval("Root_ContentID") %>');">
+								<img class="imgNoBorder" src="/c3-admin/images/comments.png" alt="View Comments" title="View Comments" /></a>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/c3-admin/PageHistory.aspx?id=<%#Eval("Root_ContentID") %>');">
+								<img class="imgNoBorder" src="/c3-admin/images/layout_content.png" alt="View Page History" title="View Page History" /></a>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text" DataField="NavMenuText" />
+					<carrot:CarrotHeaderSortTemplateField SortExpression="Filename" HeaderText="Filename" DataField="Filename" />
+					<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
+					<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
+						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
+						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Published" AlternateTextFalse="Inactive"
+						AlternateTextTrue="Active" ShowBooleanImage="true" />
+				</Columns>
+			</TheGrid>
+		</carrot:CarrotGridPaged>
 	</div>
 </asp:Content>

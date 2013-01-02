@@ -35,6 +35,7 @@ namespace Carrotware.CMS.Core {
 			WordPressSite site = new WordPressSite();
 
 			List<WordPressPost> lstWPP = new List<WordPressPost>();
+			List<WordPressComment> lstWPC = new List<WordPressComment>();
 
 			XmlNode rssNode = doc.SelectSingleNode("//rss");
 
@@ -126,7 +127,8 @@ namespace Carrotware.CMS.Core {
 						break;
 				}
 
-				wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date", rssNamespace).InnerText);
+				wpp.PostDateUTC = DateTime.UtcNow;
+				try { wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date", rssNamespace).InnerText); } catch { }
 				try { wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date_gmt", rssNamespace).InnerText); } catch { }
 
 				wpp.PostContent = node.SelectSingleNode("content:encoded", rssNamespace).InnerText;
@@ -184,21 +186,44 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 
-				wpp.PostContent = wpp.PostContent.Replace('\u00A0', ' ').Replace("\n\n\n\n", "\n\n\n").Replace("\n\n\n\n", "\n\n\n");
+				wpp.CleanBody();
 
 				lstWPP.Add(wpp);
+
+				//=================
+				XmlNodeList nodesC = node.SelectNodes("wp:comment", rssNamespace);
+				foreach (XmlNode nodeC in nodesC) {
+					WordPressComment wpc = new WordPressComment();
+					wpc.ImportRootID = Guid.Empty;
+					wpc.PostID = wpp.PostID;
+					wpc.CommentID = int.Parse(nodeC.SelectSingleNode("wp:comment_id", rssNamespace).InnerText);
+					wpc.Author = nodeC.SelectSingleNode("wp:comment_author", rssNamespace).InnerText;
+					wpc.AuthorIP = nodeC.SelectSingleNode("wp:comment_author_IP", rssNamespace).InnerText;
+					wpc.AuthorEmail = nodeC.SelectSingleNode("wp:comment_author_email", rssNamespace).InnerText;
+					wpc.AuthorURL = nodeC.SelectSingleNode("wp:comment_author_url", rssNamespace).InnerText;
+					wpc.CommentContent = nodeC.SelectSingleNode("wp:comment_content", rssNamespace).InnerText;
+
+					wpc.Approved = nodeC.SelectSingleNode("wp:comment_approved", rssNamespace).InnerText;
+					wpc.Type = nodeC.SelectSingleNode("wp:comment_type", rssNamespace).InnerText;
+
+					wpc.CommentDateUTC = DateTime.UtcNow;
+					try { wpc.CommentDateUTC = Convert.ToDateTime(nodeC.SelectSingleNode("wp:comment_date", rssNamespace).InnerText); } catch { }
+					try { wpc.CommentDateUTC = Convert.ToDateTime(nodeC.SelectSingleNode("wp:comment_date_gmt", rssNamespace).InnerText); } catch { }
+
+					lstWPC.Add(wpc);
+				}
 			}
 
 			foreach (WordPressPost w in lstWPP.Where(x => x.ParentPostID > 0 && x.PostType == WordPressPost.WPPostType.Page)) {
 				if (lstWPP.Where(x => x.PostID == w.ParentPostID
 							&& x.PostType == WordPressPost.WPPostType.Page).Count() > 0) {
 					WordPressPost p = lstWPP.Where(x => x.PostID == w.ParentPostID).FirstOrDefault();
-					w.ImportParentRootID = p.ImportRootID;
 					w.ImportFileName = "/" + p.PostName.Trim() + w.ImportFileSlug;
 				}
 			}
 
 			site.Content = lstWPP;
+			site.Comments = lstWPC;
 
 			return site;
 		}

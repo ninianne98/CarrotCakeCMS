@@ -19,21 +19,21 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public abstract class BaseServerControl : WidgetParmDataWebControl {
 
-
-		protected ContentPageHelper pageHelper = new ContentPageHelper();
-		protected SiteData siteHelper = new SiteData();
 		protected SiteNavHelper navHelper = new SiteNavHelper();
 
 		protected void SetSiteID() {
-			SiteID = SiteData.CurrentSiteID;
+			try {
+				SiteID = SiteData.CurrentSiteID;
+			} catch { }
 		}
 
 		protected bool IsPostBack {
 			get {
-				return HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper() != "GET" ? true : false;
+				string sReq = "GET";
+				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
+				return sReq != "GET" ? true : false;
 			}
 		}
-
 
 		protected override void OnInit(EventArgs e) {
 			SetSiteID();

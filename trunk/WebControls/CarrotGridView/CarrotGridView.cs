@@ -68,7 +68,8 @@ namespace Carrotware.Web.UI.Controls {
 			HttpRequest request = HttpContext.Current.Request;
 			KeyValuePair<string, string> pair = new KeyValuePair<string, string>(" -- ", "");
 
-			if (request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper() == "POST"
+			if (request.ServerVariables["REQUEST_METHOD"] != null &&
+				request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper() == "POST"
 				&& request.Form["__EVENTARGUMENT"] != null) {
 
 				string arg = request.Form["__EVENTARGUMENT"].ToString();

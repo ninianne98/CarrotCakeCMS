@@ -305,6 +305,23 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
+		public List<ContentPage> GetPagedSortedContent(Guid siteID, ContentPageType.PageType entryType, bool bActiveOnly, int pageSize, int pageNumber, string sSortParm) {
+
+			string sortField = "";
+			string sortDir = "";
+			IQueryable<vw_carrot_Content> query1 = null;
+
+			if (!string.IsNullOrEmpty(sSortParm)) {
+				int pos = sSortParm.LastIndexOf(" ");
+				sortField = sSortParm.Substring(0, pos).Trim();
+				sortDir = sSortParm.Substring(pos).Trim();
+			}
+
+			query1 = CannedQueries.GetAllByTypeList(db, siteID, bActiveOnly, entryType);
+
+			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
+		}
+
 
 		public int GetSitePageCount(Guid siteID, ContentPageType.PageType entryType, bool bActiveOnly) {
 			int iCount = CannedQueries.GetAllByTypeList(db, siteID, bActiveOnly, entryType).Count();

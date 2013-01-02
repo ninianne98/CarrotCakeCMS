@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ContentPageExport content = ContentImportExportUtils.GetExportPage(SiteData.CurrentSiteID, guidContentID);
 				theXML = ContentImportExportUtils.GetExportXML<ContentPageExport>(content);
 
-				fileName = "page_" + content.ThePage.NavMenuText + "_" + guidContentID.ToString() + ".xml";
+				fileName = "page_" + content.ThePage.NavMenuText + "_" + guidContentID.ToString();
 			} else {
 				SiteExport site = ContentImportExportUtils.GetExportSite(SiteData.CurrentSiteID);
 
@@ -61,8 +61,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				theXML = ContentImportExportUtils.GetExportXML<SiteExport>(site);
 
-				fileName = "site_" + site.TheSite.SiteName + "_" + site.TheSite.SiteID.ToString() + ".xml";
+				fileName = "site_" + site.TheSite.SiteName + "_" + site.TheSite.SiteID.ToString();
 			}
+
+			fileName = fileName + "-" + SiteData.CurrentSite.Now.ToString("yyyy-MM-dd") + ".xml";
 
 			fileName = fileName.Replace(" ", "_");
 

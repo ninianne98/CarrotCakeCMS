@@ -29,35 +29,70 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			siteHelper.CleanUpSerialData();
 
-			SetGrid(rdoFilterResults2.Checked, ParentPagePicker.SelectedPage);
-		}
+			if (!IsPostBack) {
+				ddlSize.SelectedValue = pagedDataGrid.PageSize.ToString();
+			}
 
+			LoadGrid();
+		}
 
 		protected void SetGrid(bool bAll, Guid? guidParentID) {
 			List<ContentPage> lstContent = null;
+			int iRecCount = -1;
+
 			if (bAll) {
-				lstContent = pageHelper.GetAllLatestContentList(SiteID);
+				pnlPager.Visible = true;
+				iRecCount = pageHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry, false);
+				pagedDataGrid.PageSize = int.Parse(ddlSize.SelectedValue);
 			} else {
+				pnlPager.Visible = false;
 				if (guidParentID == null) {
 					lstContent = pageHelper.GetTopNavigation(SiteID, false);
 				} else {
 					lstContent = pageHelper.GetParentWithChildNavigation(SiteID, guidParentID, false);
 				}
+				iRecCount = lstContent.Count();
+				pagedDataGrid.PageSize = iRecCount + 10;
 			}
-			gvPages.DataSource = lstContent;
-			gvPages.DataBind();
+
+			lblPages.Text = iRecCount.ToString();
+
+			pagedDataGrid.BuildSorting();
+
+			pagedDataGrid.TotalRecords = iRecCount;
+			string sSort = pagedDataGrid.SortingBy;
+			int iPgNbr = pagedDataGrid.PageNumber - 1;
+			int iPageSize = pagedDataGrid.PageSize;
+
+			if (bAll) {
+				lstContent = pageHelper.GetPagedSortedContent(SiteID, ContentPageType.PageType.ContentEntry, false, iPageSize, iPgNbr, sSort);
+			}
+
+			pagedDataGrid.DataSource = lstContent;
+			pagedDataGrid.DataBind();
+
 		}
 
 
 		protected void btnFilter_Click(object sender, EventArgs e) {
-			LoadGrid();
+			LoadGridClick();
 		}
 
 		protected void rdoFilterResults_CheckedChanged(object sender, EventArgs e) {
+			LoadGridClick();
+		}
+
+		protected void btnChangePage_Click(object sender, EventArgs e) {
+			LoadGridClick();
+		}
+
+		private void LoadGridClick() {
+			pagedDataGrid.PageNumber = 1;
 			LoadGrid();
 		}
 
 		private void LoadGrid() {
+
 			trFilter.Attributes["style"] = "display:none;";
 
 			if (rdoFilterResults2.Checked) {
@@ -67,6 +102,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				trFilter.Attributes["style"] = "";
 				SetGrid(false, ParentPagePicker.SelectedPage);
 			}
+
+			//SetGrid(rdoFilterResults2.Checked, ParentPagePicker.SelectedPage);
 		}
 
 	}
