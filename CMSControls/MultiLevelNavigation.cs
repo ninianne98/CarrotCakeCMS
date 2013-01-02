@@ -83,7 +83,7 @@ namespace Carrotware.CMS.UI.Controls {
 			int indent = output.Indent;
 			output.Indent = indent + 1;
 
-			if (cc.Count > 0) {
+			if (cc != null && cc.Count > 0) {
 				output.WriteLine();
 				output.WriteLine("<ul class=\"children level-" + iLevel + "\">");
 				int indent2 = output.Indent + 1;

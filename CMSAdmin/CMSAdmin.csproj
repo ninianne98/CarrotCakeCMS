@@ -515,6 +515,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
+    <Content Include="c3-admin\Images\calendar.png" />
     <Content Include="c3-admin\SiteExport.aspx" />
     <Content Include="citrus-island\citrus2.aspx" />
     <Content Include="citrus-island\citrus1-index.aspx" />
@@ -558,7 +559,6 @@
     <Content Include="c3-admin\Images\brick.png" />
     <Content Include="c3-admin\Images\bullet_toggle_minus.png" />
     <Content Include="c3-admin\Images\bullet_toggle_plus.png" />
-    <Content Include="c3-admin\Images\calendar.gif" />
     <Content Include="c3-admin\Images\cancel.png" />
     <Content Include="c3-admin\Images\carrotcake.png" />
     <Content Include="c3-admin\Images\carrotpower.png" />

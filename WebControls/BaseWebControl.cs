@@ -30,12 +30,19 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string GetWebResourceUrl(Type type, string resource) {
 			string sPath = "";
-			
+
 			try { sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
 
 			return sPath;
 		}
 
+		protected bool IsPostBack {
+			get {
+				string sReq = "GET";
+				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
+				return sReq != "GET" ? true : false;
+			}
+		}
 
 		protected string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
@@ -48,6 +55,15 @@ namespace Carrotware.Web.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
+		}
+
+
+		protected void BaseRender(HtmlTextWriter writer) {
+			base.Render(writer);
+		}
+
+		protected void BaseRenderContents(HtmlTextWriter output) {
+			base.RenderContents(output);
 		}
 
 

@@ -33,6 +33,8 @@ namespace Carrotware.CMS.Core {
 		public List<InfoKVP> Tags { get; set; }
 
 		public List<WordPressPost> Content { get; set; }
+		public List<WordPressComment> Comments { get; set; }
+
 
 		public override string ToString() {
 			return SiteTitle + " : " + SiteDescription;

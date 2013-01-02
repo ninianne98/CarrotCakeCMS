@@ -41,7 +41,6 @@ namespace Carrotware.CMS.Core {
 		public List<string> Tags { get; set; }
 
 		public Guid ImportRootID { get; set; }
-		public Guid? ImportParentRootID { get; set; }
 		public string ImportFileSlug { get; set; }
 		public string ImportFileName { get; set; }
 
@@ -65,6 +64,24 @@ namespace Carrotware.CMS.Core {
 
 		public override int GetHashCode() {
 			return PostID.GetHashCode() ^ PostDateUTC.GetHashCode();
+		}
+
+		public void CleanBody() {
+			if (string.IsNullOrEmpty(this.PostContent)) {
+				this.PostContent = "";
+			}
+
+			this.PostContent = this.PostContent.Replace("\r\n", "\n");
+			this.PostContent = this.PostContent.Replace('\u00A0', ' ').Replace("\n\n\n\n", "\n\n\n").Replace("\n\n\n\n", "\n\n\n");
+			this.PostContent = this.PostContent.Trim();
+		}
+
+		public void RepairBody() {
+			this.CleanBody();
+
+			this.PostContent = "<p>" + this.PostContent.Replace("\n\n", "</p><p>") + "</p>";
+			this.PostContent = this.PostContent.Replace("\n", "<br />\n");
+			this.PostContent = this.PostContent.Replace("</p><p>", "</p>\n<p>");
 		}
 
 	}

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseServerControl.cs" />
+    <Compile Include="CarrotGridPaged.cs" />
     <Compile Include="ChildNavigation.cs" />
     <Compile Include="ContentCommentForm.cs" />
     <Compile Include="ContentPageControls.cs" />
@@ -123,6 +124,7 @@
     <EmbeddedResource Include="ucCommentDisplay.ascx" />
     <EmbeddedResource Include="Trackback.txt" />
     <EmbeddedResource Include="SearchBoxJS.txt" />
+    <EmbeddedResource Include="ucFancyPager.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

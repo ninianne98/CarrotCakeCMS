@@ -73,7 +73,7 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Indent++;
 
 				if (IncludeParent) {
-					if (lstNav.Count > 0) {
+					if (lstNav != null && lstNav.Count > 0) {
 						SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
 						IdentifyLinkAsInactive(p);
 						if (p != null) {

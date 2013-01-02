@@ -89,6 +89,7 @@
     <Compile Include="CarrotHttpHandler.cs" />
     <Compile Include="CollectionHelpers\GuidItem.cs" />
     <Compile Include="CollectionHelpers\GuidItemCollectionEditor.cs" />
+    <Compile Include="BasicControlUtils.cs" />
     <Compile Include="jsHelperLib.cs" />
     <Compile Include="jquery.cs" />
     <Compile Include="jquerybasic.cs" />

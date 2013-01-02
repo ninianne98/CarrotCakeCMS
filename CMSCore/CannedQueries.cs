@@ -281,6 +281,29 @@ namespace Carrotware.CMS.Core {
 					select r);
 		}
 
+		internal static IQueryable<vw_carrot_Comment> FindCommentsByDate(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, DateTime postDate, string postIP, string sCommentText) {
+			return (from r in ctx.vw_carrot_Comments
+					orderby r.CreateDate descending
+					where r.SiteID == siteID
+						&& r.Root_ContentID == rootContentID
+						&& r.CreateDate.Date == postDate.Date
+						&& r.CommenterIP == postIP
+						&& r.PostComment.Trim() == sCommentText.Trim()
+					select r);
+		}
+
+		internal static IQueryable<vw_carrot_Comment> FindCommentsByDate(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, DateTime postDate, string postIP) {
+			return (from r in ctx.vw_carrot_Comments
+					orderby r.CreateDate descending
+					where r.SiteID == siteID
+						&& r.Root_ContentID == rootContentID
+						&& r.CreateDate.Date == postDate.Date
+						&& r.CreateDate.Hour == postDate.Hour
+						&& r.CreateDate.Minute == postDate.Minute
+						&& r.CommenterIP == postIP
+					select r);
+		}
+
 		internal static IQueryable<vw_carrot_Comment> GetSiteContentCommentsByPostType(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType contentEntry) {
 			return (from r in ctx.vw_carrot_Comments
 					orderby r.CreateDate descending

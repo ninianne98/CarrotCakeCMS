@@ -16,6 +16,67 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 	public class ControlUtilities {
+		private Page _page;
+
+		public ControlUtilities() {
+			ResetFind();
+			_page = null;
+		}
+
+		public void AssignPage(Control X) {
+			ResetFind();
+			
+			if (X != null && X is Control && ((Control)X).Page != null) {
+				_page = ((Control)X).Page;
+			} else {
+				_page = GetContainerPage(X);
+			}
+		}
+
+		public ControlUtilities(Control X) {
+			ResetFind();
+
+			if (X != null && X is Control && ((Control)X).Page != null) {
+				_page = ((Control)X).Page;
+			} else {
+				_page = GetContainerPage(X);
+			}
+		}
+
+		public ControlUtilities(Page X) {
+			ResetFind();
+			_page = X;
+		}
+
+		public Page GetContainerPage(object X) {
+			ResetFind();
+
+			Page foundPage = FindPage(X);
+
+			if (foundPage == null) {
+				foundPage = CachedPage;
+			}
+
+			return foundPage;
+		}
+
+		public string GetResourceUrl(Type type, string resource) {
+			string sPath = "";
+
+			if (_page != null) {
+				try { sPath = _page.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+			} else {
+				try { sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+			}
+
+			return sPath;
+		}
+
+		public Control CreateControlFromResource(Type type, string resourceName) {
+			string s = GetManifestResourceStream(resourceName);
+
+			return _page.ParseControl(s);
+		}
 
 		private static Page CachedPage {
 			get {
@@ -60,10 +121,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		public ControlUtilities() {
-			ResetFind();
-		}
-
 		public void ResetFind() {
 			bFoundPage = false;
 			page = null;
@@ -80,7 +137,13 @@ namespace Carrotware.CMS.UI.Controls {
 			page = null;
 
 			ContentPage cp = null;
-			Page foundPage = FindPage(X);
+			Page foundPage = null;
+
+			if (X is Control) {
+				foundPage = ((Control)X).Page;
+			} else {
+				foundPage = FindPage(X);
+			}
 
 			try {
 				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "pageContents");
@@ -111,8 +174,8 @@ namespace Carrotware.CMS.UI.Controls {
 			return sd;
 		}
 
-		bool bFoundPage = false;
-		Page page = null;
+		private bool bFoundPage = false;
+		private Page page = null;
 		public Page FindPage(object X) {
 
 			if (X is Page) {
@@ -131,8 +194,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		bool bFoundPlaceHolder = false;
-		PlaceHolder plcholder = null;
+		private bool bFoundPlaceHolder = false;
+		private PlaceHolder plcholder = null;
 		public PlaceHolder FindPlaceHolder(string ControlName, Control X) {
 
 			if (X is Page) {
@@ -156,8 +219,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		bool bFoundControl = false;
-		Control ctrl = null;
+		private bool bFoundControl = false;
+		private Control ctrl = null;
 		public Control FindControl(string ControlName, Control X) {
 
 			if (X is Page) {

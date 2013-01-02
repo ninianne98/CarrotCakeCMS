@@ -73,7 +73,7 @@ namespace Carrotware.CMS.Core {
 				cont.FileName = c.ImportFileName.Replace("//", "/");
 				cont.PageSlug = null;
 				cont.NavOrder = c.PostOrder;
-				cont.Parent_ContentID = c.ImportParentRootID;
+				cont.Parent_ContentID = null;
 
 				cont.CreateDate = site.ConvertUTCToSiteTime(c.PostDateUTC);
 				cont.PageActive = c.IsPublished;

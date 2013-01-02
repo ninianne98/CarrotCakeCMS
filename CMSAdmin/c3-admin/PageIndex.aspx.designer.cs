@@ -67,13 +67,49 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::Carrotware.CMS.UI.Admin.c3_admin.ucSitePageDrillDown ParentPagePicker;
         
         /// <summary>
-        /// gvPages control.
+        /// lblPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
+        protected global::System.Web.UI.WebControls.Label lblPages;
+        
+        /// <summary>
+        /// pnlPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPager;
+        
+        /// <summary>
+        /// btnChangePage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChangePage;
+        
+        /// <summary>
+        /// ddlSize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSize;
+        
+        /// <summary>
+        /// pagedDataGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Controls.CarrotGridPaged pagedDataGrid;
         
         /// <summary>
         /// Master property.

@@ -254,6 +254,23 @@ namespace Carrotware.CMS.UI.Controls {
 						hdnPageNbr.Value = PageNumber.ToString();
 					}
 				}
+			} else {
+				string sPageParm = "PageNbr";
+				string sPageNbr = "";
+
+				if (context.Request[sPageParm] != null) {
+					sPageNbr = context.Request[sPageParm].ToString();
+				}
+
+				sPageParm = this.ID.ToString() + "Nbr";
+				if (context.Request[sPageParm] != null) {
+					sPageNbr = context.Request[sPageParm].ToString();
+				}
+				if (!string.IsNullOrEmpty(sPageNbr)) {
+					int pg = int.Parse(sPageNbr);
+					PageNumber = pg;
+					hdnPageNbr.Value = PageNumber.ToString();
+				}
 			}
 
 			if (PageNumber <= 1 && !string.IsNullOrEmpty(hdnPageNbr.Value)) {
@@ -285,6 +302,9 @@ namespace Carrotware.CMS.UI.Controls {
 				TotalPages++;
 			}
 
+			this.Controls.Add(rpComments);
+			this.Controls.Add(rpPagedComment);
+
 			if (ShowPager && TotalPages > 1) {
 				List<int> pagelist = new List<int>();
 				pagelist = Enumerable.Range(1, TotalPages).ToList();
@@ -294,9 +314,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			WalkCtrlsForAssignment(rpPagedComment);
-
-			this.Controls.Add(rpComments);
-			this.Controls.Add(rpPagedComment);
 
 			writer.Indent++;
 			writer.Indent++;

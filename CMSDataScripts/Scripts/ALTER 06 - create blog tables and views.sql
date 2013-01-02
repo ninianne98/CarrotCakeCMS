@@ -518,7 +518,7 @@ IF NOT EXISTS( select * from information_schema.columns
 			[CommenterIP] [nvarchar](32) NOT NULL,
 			[CommenterName] [nvarchar](256) NOT NULL,
 			[CommenterEmail] [nvarchar](256) NOT NULL,
-			[CommenterURL] [nvarchar](128) NOT NULL,
+			[CommenterURL] [nvarchar](256) NOT NULL,
 			[PostComment] [nvarchar](max) NOT NULL,
 			[IsApproved] [bit] NOT NULL,
 			[IsSpam] [bit] NOT NULL,
@@ -530,7 +530,22 @@ IF NOT EXISTS( select * from information_schema.columns
 
 END
 
+
 GO
+
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterName] [nvarchar](256) NOT NULL
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterEmail] [nvarchar](256) NOT NULL
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterURL] [nvarchar](256) NOT NULL
+
+
+GO
+
 
 IF NOT EXISTS( select * from information_schema.columns 
 		where table_name = 'carrot_ContentComment' and column_name = 'CommenterURL') BEGIN

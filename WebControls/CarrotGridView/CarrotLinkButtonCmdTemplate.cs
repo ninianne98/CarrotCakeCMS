@@ -179,7 +179,6 @@ namespace Carrotware.Web.UI.Controls {
 				imgBool.CssClass = _css;
 			}
 			imgBool.AlternateText = _field;
-			imgBool.ImageUrl = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
 
 			imgBool.DataBinding += new EventHandler(imgBool_DataBinding);
 
@@ -189,6 +188,8 @@ namespace Carrotware.Web.UI.Controls {
 		private void imgBool_DataBinding(object sender, EventArgs e) {
 			Image imgBool = (Image)sender;
 			GridViewRow container = (GridViewRow)imgBool.NamingContainer;
+			imgBool.ImageUrl = imgBool.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
+
 			try {
 				bool bValue = Convert.ToBoolean(DataBinder.Eval(container, "DataItem." + _field).ToString());
 
@@ -201,7 +202,6 @@ namespace Carrotware.Web.UI.Controls {
 				}
 				imgBool.ToolTip = imgBool.AlternateText;
 			} catch {
-				imgBool.ImageUrl = _field + ".png";
 				imgBool.AlternateText = _field;
 				imgBool.ToolTip = _field;
 			}
@@ -231,7 +231,6 @@ namespace Carrotware.Web.UI.Controls {
 				imgEnum.CssClass = _css;
 			}
 			imgEnum.AlternateText = _field;
-			imgEnum.ImageUrl = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
 
 			imgEnum.DataBinding += new EventHandler(imgEnum_DataBinding);
 
@@ -241,6 +240,8 @@ namespace Carrotware.Web.UI.Controls {
 		private void imgEnum_DataBinding(object sender, EventArgs e) {
 			Image imgEnum = (Image)sender;
 			GridViewRow container = (GridViewRow)imgEnum.NamingContainer;
+			imgEnum.ImageUrl = imgEnum.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
+
 			try {
 				string sValue = DataBinder.Eval(container, "DataItem." + _field).ToString();
 
@@ -255,7 +256,6 @@ namespace Carrotware.Web.UI.Controls {
 				}
 				imgEnum.ToolTip = imgEnum.AlternateText;
 			} catch {
-				imgEnum.ImageUrl = _field + ".png";
 				imgEnum.AlternateText = _field;
 				imgEnum.ToolTip = _field;
 			}

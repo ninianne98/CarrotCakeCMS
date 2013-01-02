@@ -44,6 +44,8 @@ using System.Web.UI;
 [assembly: TagPrefix("SiteMetaWordList", "carrot")]
 [assembly: TagPrefix("PostMetaWordList", "carrot")]
 
+[assembly: TagPrefix("CarrotGridPaged", "carrot")]
+
 [assembly: TagPrefix("TwoLevelNavigation", "carrot")]
 [assembly: TagPrefix("TwoLevelNavigationTemplate", "carrot")]
 
@@ -91,8 +93,11 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSearchForm.ascx", "text/plain")]
+
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSimplePager1.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSimplePager2.ascx", "text/plain")]
+
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx", "text/plain")]
 
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx", "text/plain")]

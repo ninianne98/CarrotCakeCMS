@@ -11,41 +11,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
     
     
     public partial class ucCommentIndex {
-        
-        /// <summary>
-        /// gvPages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
-        
-        /// <summary>
-        /// hdnPageSize control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPageSize;
-        
-        /// <summary>
-        /// hdnPageNbr control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnPageNbr;
-        
-        /// <summary>
-        /// rpDataPager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpDataPager;
+
+		/// <summary>
+		/// pagedDataGrid control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::Carrotware.CMS.UI.Controls.CarrotGridPaged pagedDataGrid;
     }
 }

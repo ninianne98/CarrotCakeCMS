@@ -489,7 +489,7 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Indent = indent2;
 				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
 				string sChild = " ";
-				if (cc.Count > 0) {
+				if (cc != null && cc.Count > 0) {
 					sChild = " level1-haschildren " + CSSHasChildren + " ";
 				}
 
@@ -500,7 +500,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 
 				output.Indent++;
-				if (cc.Count > 0) {
+				if (cc != null && cc.Count > 0) {
 					int indent3 = output.Indent;
 					output.WriteLine("<ul class=\"" + CSSULClassLower + "\">");
 					output.Indent++;

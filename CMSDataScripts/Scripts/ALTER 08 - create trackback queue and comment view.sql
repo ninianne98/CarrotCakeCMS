@@ -1,6 +1,17 @@
 ﻿
 GO
 
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterName] [nvarchar](256) NOT NULL
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterEmail] [nvarchar](256) NOT NULL
+
+ALTER TABLE [dbo].[carrot_ContentComment] 
+	ALTER COLUMN  [CommenterURL] [nvarchar](256) NOT NULL
+
+GO
+
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[vw_carrot_Comment]'))
 DROP VIEW [dbo].[vw_carrot_Comment]
 GO

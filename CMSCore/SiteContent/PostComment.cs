@@ -31,6 +31,13 @@ namespace Carrotware.CMS.Core {
 		public string CommenterEmail { get; set; }
 		public string CommenterURL { get; set; }
 		public string PostCommentText { get; set; }
+
+		public string PostCommentEscaped {
+			get {
+				return this.PostCommentText.Replace("\r\n", "\n").Replace("<", " &lt; ").Replace(">", " &gt; ").Replace("\r", "\n").Replace("\n", "<br />");
+			}
+		}
+
 		public bool IsApproved { get; set; }
 		public bool IsSpam { get; set; }
 		public string NavMenuText { get; internal set; }
@@ -64,6 +71,10 @@ namespace Carrotware.CMS.Core {
 				c = new carrot_ContentComment();
 				c.CreateDate = DateTime.UtcNow;
 				bNew = true;
+
+				if (this.CreateDate.Year > 1950) {
+					c.CreateDate = SiteData.CurrentSite.ConvertSiteTimeToUTC(this.CreateDate);
+				}
 			}
 
 			if (this.ContentCommentID == Guid.Empty) {
@@ -152,6 +163,18 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static int GetCommentCountByContent(Guid siteID, Guid rootContentID, DateTime postDate, string postIP, string sCommentText) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				return (from c in CannedQueries.FindCommentsByDate(_db, siteID, rootContentID, postDate, postIP, sCommentText)
+						select c).Count();
+			}
+		}
+		public static int GetCommentCountByContent(Guid siteID, Guid rootContentID, DateTime postDate, string postIP) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				return (from c in CannedQueries.FindCommentsByDate(_db, siteID, rootContentID, postDate, postIP)
+						select c).Count();
+			}
+		}
 
 		public static PostComment GetContentCommentByID(Guid contentCommentID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {

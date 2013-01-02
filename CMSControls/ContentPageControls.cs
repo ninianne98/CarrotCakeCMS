@@ -294,7 +294,8 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
 
-			SiteData sd = cu.GetContainerSiteData(this);
+			//SiteData sd = cu.GetContainerSiteData(this);
+			SiteData sd = SiteData.CurrentSite;
 
 			if (sd != null) {
 				string sField = DataField.ToString();

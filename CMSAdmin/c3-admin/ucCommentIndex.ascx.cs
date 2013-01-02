@@ -21,8 +21,7 @@ using Carrotware.CMS.UI.Controls;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ucCommentIndex : BaseUserControl {
 		private int PageNumber = 1;
-		private string sBtnName = "lnkPagerBtn";
-		private bool bHeadClicked = true;
+
 		private ContentPageType.PageType pageType = ContentPageType.PageType.BlogEntry;
 		public Guid guidRootContentID = Guid.Empty;
 
@@ -37,99 +36,38 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				guidRootContentID = new Guid(Request.QueryString["id"].ToString());
 			}
 
-			if (!IsPostBack) {
-				bHeadClicked = false;
-				hdnPageNbr.Value = "1";
-				BindData();
-			} else {
-				if (Request.Form["__EVENTARGUMENT"] != null) {
-					string arg = Request.Form["__EVENTARGUMENT"].ToString();
-					string tgt = Request.Form["__EVENTTARGET"].ToString();
-
-					if (tgt.Contains("$lnkHead") && tgt.Contains("$" + gvPages.ID + "$")) {
-						bHeadClicked = true;
-					}
-
-					if (tgt.Contains("$" + sBtnName) && tgt.Contains("$" + rpDataPager.ID + "$")) {
-						string[] parms = tgt.Split('$');
-						int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
-						PageNumber = pg;
-						hdnPageNbr.Value = PageNumber.ToString();
-						bHeadClicked = false;
-					}
-				}
-			}
-
-			if (PageNumber <= 1 && !string.IsNullOrEmpty(hdnPageNbr.Value)) {
-				PageNumber = int.Parse(hdnPageNbr.Value);
-			}
-
-			if (IsPostBack) {
-				BindData();
-			}
-
+			BindData();
 		}
 
 
 		protected void BindData() {
-			int TotalPages = 0;
-			int PageSize = int.Parse(hdnPageSize.Value);
-
-			int TotalRecords = 0;
+			int iRecCount = -1;
 
 			if (guidRootContentID == Guid.Empty) {
-				TotalRecords = PostComment.GetCommentCountBySiteAndType(SiteData.CurrentSiteID, pageType);
+				iRecCount = PostComment.GetCommentCountBySiteAndType(SiteData.CurrentSiteID, pageType);
 			} else {
-				TotalRecords = PostComment.GetCommentCountByContent(guidRootContentID, false);
+				iRecCount = PostComment.GetCommentCountByContent(guidRootContentID, false);
 			}
 
-			int iPageNbr = PageNumber - 1;
+			pagedDataGrid.BuildSorting();
 
-			TotalPages = TotalRecords / PageSize;
-
-			if ((TotalRecords % PageSize) > 0) {
-				TotalPages++;
-			}
-
-			if (TotalPages > 1) {
-				List<int> pagelist = new List<int>();
-				pagelist = Enumerable.Range(1, TotalPages).ToList();
-
-				rpDataPager.DataSource = pagelist;
-				rpDataPager.DataBind();
-			}
-
-			string sSort = gvPages.CurrentSort;
-			if (bHeadClicked) {
-				sSort = gvPages.PredictNewSort;
-			}
+			pagedDataGrid.TotalRecords = iRecCount;
+			string sSort = pagedDataGrid.SortingBy;
+			int iPgNbr = pagedDataGrid.PageNumber - 1;
+			int iPageSize = pagedDataGrid.PageSize;
 
 			List<PostComment> comments = new List<PostComment>();
 
 			if (guidRootContentID == Guid.Empty) {
-				comments = PostComment.GetCommentsBySitePageNumber(SiteData.CurrentSiteID, iPageNbr, PageSize, sSort, pageType);
+				comments = PostComment.GetCommentsBySitePageNumber(SiteData.CurrentSiteID, iPgNbr, iPageSize, sSort, pageType);
 			} else {
-				comments = PostComment.GetCommentsByContentPageNumber(guidRootContentID, iPageNbr, PageSize, sSort, false);
+				comments = PostComment.GetCommentsByContentPageNumber(guidRootContentID, iPgNbr, iPageSize, sSort, false);
 			}
 
-			gvPages.DataSource = comments;
-			gvPages.DataBind();
+			pagedDataGrid.DataSource = comments;
+			pagedDataGrid.DataBind();
 
-			WalkCtrlsForAssignment(rpDataPager);
 		}
 
-		private void WalkCtrlsForAssignment(Control X) {
-			foreach (Control c in X.Controls) {
-				if (c is IActivatePageNavItem) {
-					IActivatePageNavItem btn = (IActivatePageNavItem)c;
-					if (btn.PageNumber == PageNumber) {
-						btn.IsSelected = true;
-					}
-					WalkCtrlsForAssignment(c);
-				} else {
-					WalkCtrlsForAssignment(c);
-				}
-			}
-		}
 	}
 }

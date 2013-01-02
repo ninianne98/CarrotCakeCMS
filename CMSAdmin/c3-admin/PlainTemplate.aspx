@@ -1,10 +1,33 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
+<script runat="server">
+
+	protected override void OnLoad(EventArgs e) {
+
+		base.OnLoad(e);
+
+		if (pageContents.Root_ContentID == theSite.Blog_Root_ContentID.Value) {
+			PagedDataSummary2.Visible = true;
+		} else {
+			PagedDataSummary2.Visible = false;
+			PagedDataSummary2.EnableViewState = false;
+			PagedDataSummary2.PageSize = 3;
+			PagedDataSummary2.ContentType = PagedDataSummary.SummaryContentType.Unknown;
+		}
+	}
+
+</script>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("input:button, input:submit, input:reset").button();
+		});
+
+	</script>
 	<title>plain</title>
 	<style type="text/css">
 		body {
@@ -180,6 +203,45 @@
 		#footer a {
 			color: #8A8A8A;
 		}
+		
+		/* OTHER */
+		
+		.aligncenter, div.aligncenter {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		.pagerfooterlinks {
+			line-height: normal;
+			color: #ffffff;
+		}
+		
+		.pagerfooterlinks .pagerlink {
+			margin: 2px 2px 2px 2px;
+			padding: 5px 5px 5px 5px;
+			border: 2px solid #333333;
+			background-color: #cccccc;
+			float: left;
+		}
+		
+		.pagerfooterlinks .pagerlink a {
+			margin: 2px 2px 2px 2px;
+			padding: 5px 5px 5px 5px;
+			font-weight: bold;
+			color: #666666;
+		}
+		
+		.pagerfooterlinks .pagerlink a.selected {
+			color: #ffffff;
+			font-weight: bold;
+		}
+		
+		.pagerfooterlinks .selectedwrap {
+			color: #ffffff;
+			background-color: #333333;
+			font-weight: bold;
+		}
 	</style>
 </head>
 <body>
@@ -196,6 +258,8 @@
 		<div id="menu">
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878" SubFGColor="#ffffff"
 				UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
+		</div>
+		<div style="clear: both;">
 		</div>
 		<!-- end #menu -->
 		<div id="page">
@@ -244,6 +308,38 @@
 								</carrot:WidgetContainer>
 							</div>
 						</div>
+						<carrot:PagedDataSummary ID="PagedDataSummary2" runat="server" ContentType="Blog" PageSize="8" Visible="false">
+							<SummaryHeaderTemplate>
+								<div>
+							</SummaryHeaderTemplate>
+							<SummaryTemplate>
+								<div class="entry">
+									<h2>
+										<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" UseDefaultText="true" />
+									</h2>
+									<p>
+										<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="PageTextPlainSummary" />
+									</p>
+									<p>
+										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
+									</p>
+								</div>
+							</SummaryTemplate>
+							<SummaryFooterTemplate>
+								</div>
+							</SummaryFooterTemplate>
+							<PagerHeaderTemplate>
+								<div class="pagerfooterlinks">
+							</PagerHeaderTemplate>
+							<PagerTemplate>
+								<carrot:ListItemWrapperForPager HtmlTagName="div" ID="wrap" runat="server" CSSSelected="selectedwrap" CssClassNormal="pagerlink">
+									<carrot:NavLinkForPagerTemplate ID="lnkBtn" CSSSelected="selected" runat="server" RenderAsHyperlink="true" />
+								</carrot:ListItemWrapperForPager>
+							</PagerTemplate>
+							<PagerFooterTemplate>
+								</div>
+							</PagerFooterTemplate>
+						</carrot:PagedDataSummary>
 						<div style="clear: both;">
 							&nbsp;</div>
 					</div>
@@ -254,6 +350,8 @@
 			</div>
 		</div>
 		<!-- end #page -->
+	</div>
+	<div style="clear: both;">
 	</div>
 	<div id="footer">
 		<p>
