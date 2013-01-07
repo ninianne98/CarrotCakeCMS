@@ -81,8 +81,8 @@ namespace Carrotware.CMS.Core {
 			return (from ct in ctx.vw_carrot_Contents
 					where ct.SiteID == siteID
 					 && ct.IsLatestVersion == true
-					 && ct.CreateDate.Date >= dateBegin.Date
-					 && ct.CreateDate.Date <= dateEnd.Date
+					 && ct.GoLiveDate.Date >= dateBegin.Date
+					 && ct.GoLiveDate.Date <= dateEnd.Date
 					 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					 && (ct.PageActive == true || bActiveOnly == false)
 					 && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
@@ -100,6 +100,17 @@ namespace Carrotware.CMS.Core {
 					 && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
 					 && (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 					select ct);
+		}
+
+		internal static Dictionary<string, float> GetTemplateCounts(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType pageType) {
+
+			Guid contentTypeID = ContentPageType.GetIDByType(pageType);
+
+			return (from ct in ctx.vw_carrot_Contents.Where(c => c.SiteID == siteID && c.ContentTypeID == contentTypeID && c.IsLatestVersion == true)
+					group ct by ct.TemplateFile.ToLower() into grp
+					orderby grp.Count() descending
+					select new KeyValuePair<string, float>(grp.Key.ToLower(), (float)grp.Count()))
+					.ToDictionary(t => t.Key, t => t.Value);
 		}
 
 		internal static IQueryable<vw_carrot_Content> GetContentByTagURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sTagURL) {

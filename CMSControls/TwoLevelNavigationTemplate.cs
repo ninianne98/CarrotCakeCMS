@@ -242,7 +242,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			writer.Indent = indent;
 
-			//output.WriteLine("\t<!--  CLOSE  " + this.ClientID + " -->   ");
 			writer.WriteLine();
 			writer.WriteLine(HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
 			writer.WriteLine();
@@ -315,8 +314,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void ModWrap(IActivateNavItem lnk) {
 
-			if (!string.IsNullOrEmpty(CSSSelected)) {
-				lnk.CSSSelected = CSSSelected;
+			if (!string.IsNullOrEmpty(this.CSSSelected)) {
+				lnk.CSSSelected = this.CSSSelected;
 			}
 
 			if ((SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) || AreFilenamesSame(lnk.NavigateUrl, ParentPageNav.FileName))
@@ -369,7 +368,7 @@ namespace Carrotware.CMS.UI.Controls {
 				link.Href = OverrideCSS;
 				link.Attributes.Add("rel", "stylesheet");
 				link.Attributes.Add("type", "text/css");
-				Page.Header.Controls.Add(link);
+				this.Page.Header.Controls.Add(link);
 			}
 
 

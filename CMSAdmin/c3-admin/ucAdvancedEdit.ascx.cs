@@ -121,27 +121,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 				}
 			}
-
 		}
-
-
-		private string ParseEdit(string sContent) {
-			string sFixed = "";
-			if (!string.IsNullOrEmpty(sContent)) {
-				sFixed = sContent;
-				var b = "<!-- <#|BEGIN_CARROT_CMS|#> -->";
-				var iB = sFixed.IndexOf(b);
-				if (iB > 0) {
-					sFixed = sFixed.Substring(iB + b.Length);
-
-					var e = "<!-- <#|END_CARROT_CMS|#> -->";
-					var iE = sFixed.IndexOf(e);
-					sFixed = sFixed.Substring(0, iE);
-				}
-			}
-			return sFixed.Trim();
-		}
-
 
 	}
 }

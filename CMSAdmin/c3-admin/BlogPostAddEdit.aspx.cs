@@ -100,6 +100,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				chkDraft.Visible = false;
 				divEditing.Visible = false;
 
+				Dictionary<string, float> dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
+				if (dictTemplates.Count > 0) {
+					try { ddlTemplate.SelectedValue = dictTemplates.First().Key; } catch { }
+				}
+
 				if (pageContents != null) {
 					if (pageContents.ContentType != ContentPageType.PageType.BlogEntry) {
 						Response.Redirect(SiteFilename.PageAddEditURL + "?id=" + Request.QueryString.ToString());

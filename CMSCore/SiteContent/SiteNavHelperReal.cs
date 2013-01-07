@@ -224,6 +224,26 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public SiteNav GetPrevPost(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			vw_carrot_Content c = CompiledQueries.GetPreviousPost(db, siteID, bActiveOnly, rootContentID);
+
+			if (c != null) {
+				return new SiteNav(c);
+			} else {
+				return null;
+			}
+		}
+
+		public SiteNav GetNextPost(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			vw_carrot_Content c = CompiledQueries.GetNextPost(db, siteID, bActiveOnly, rootContentID);
+
+			if (c != null) {
+				return new SiteNav(c);
+			} else {
+				return null;
+			}
+		}
+
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, Guid PageID, bool bActiveOnly) {
 
 			vw_carrot_Content c = CompiledQueries.GetLatestContentByID(db, siteID, false, PageID);
@@ -251,7 +271,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
 			List<SiteNav> lstContent = (from ct in CannedQueries.GetLatestContentList(db, siteID, bActiveOnly)
-										orderby ct.EditDate descending
+										orderby ct.GoLiveDate descending
 										select new SiteNav(ct)).Take(iUpdates).ToList();
 
 			return lstContent;
@@ -259,7 +279,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly) {
 			List<SiteNav> lstContent = (from ct in CannedQueries.GetLatestBlogList(db, siteID, bActiveOnly)
-										orderby ct.EditDate descending
+										orderby ct.GoLiveDate descending
 										select new SiteNav(ct)).Take(iUpdates).ToList();
 
 			return lstContent;

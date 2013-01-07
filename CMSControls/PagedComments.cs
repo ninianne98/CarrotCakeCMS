@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -234,42 +231,44 @@ namespace Carrotware.CMS.UI.Controls {
 			rpPagedComment.HeaderTemplate = PagerHeaderTemplate;
 			rpPagedComment.FooterTemplate = PagerFooterTemplate;
 
-			if (IsPostBack) {
-				if (context.Request.Form["__EVENTARGUMENT"] != null) {
-					string arg = context.Request.Form["__EVENTARGUMENT"].ToString();
-					string tgt = context.Request.Form["__EVENTTARGET"].ToString();
+			if (context != null) {
+				if (IsPostBack) {
+					if (context.Request.Form["__EVENTARGUMENT"] != null) {
+						string arg = context.Request.Form["__EVENTARGUMENT"].ToString();
+						string tgt = context.Request.Form["__EVENTTARGET"].ToString();
 
-					string sParm = this.ClientID.Replace(this.ID, "").Replace("_", "$");
-					if (string.IsNullOrEmpty(sParm)) {
-						sParm = this.ID + "$";
+						string sParm = this.ClientID.Replace(this.ID, "").Replace("_", "$");
+						if (string.IsNullOrEmpty(sParm)) {
+							sParm = this.ID + "$";
+						}
+
+						if (tgt.StartsWith(sParm)
+							&& tgt.Contains(this.ID + "$")
+							&& tgt.Contains("$" + sBtnName)
+							&& tgt.Contains("$" + rpPagedComment.ID + "$")) {
+							string[] parms = tgt.Split('$');
+							int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
+							PageNumber = pg;
+							hdnPageNbr.Value = PageNumber.ToString();
+						}
+					}
+				} else {
+					string sPageParm = "PageNbr";
+					string sPageNbr = "";
+
+					if (context.Request[sPageParm] != null) {
+						sPageNbr = context.Request[sPageParm].ToString();
 					}
 
-					if (tgt.StartsWith(sParm)
-						&& tgt.Contains(this.ID + "$")
-						&& tgt.Contains("$" + sBtnName)
-						&& tgt.Contains("$" + rpPagedComment.ID + "$")) {
-						string[] parms = tgt.Split('$');
-						int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
+					sPageParm = this.ID.ToString() + "Nbr";
+					if (context.Request[sPageParm] != null) {
+						sPageNbr = context.Request[sPageParm].ToString();
+					}
+					if (!string.IsNullOrEmpty(sPageNbr)) {
+						int pg = int.Parse(sPageNbr);
 						PageNumber = pg;
 						hdnPageNbr.Value = PageNumber.ToString();
 					}
-				}
-			} else {
-				string sPageParm = "PageNbr";
-				string sPageNbr = "";
-
-				if (context.Request[sPageParm] != null) {
-					sPageNbr = context.Request[sPageParm].ToString();
-				}
-
-				sPageParm = this.ID.ToString() + "Nbr";
-				if (context.Request[sPageParm] != null) {
-					sPageNbr = context.Request[sPageParm].ToString();
-				}
-				if (!string.IsNullOrEmpty(sPageNbr)) {
-					int pg = int.Parse(sPageNbr);
-					PageNumber = pg;
-					hdnPageNbr.Value = PageNumber.ToString();
 				}
 			}
 
@@ -288,10 +287,18 @@ namespace Carrotware.CMS.UI.Controls {
 			int iPageNbr = PageNumber - 1;
 
 			SiteNav sn = navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
-			if (sn != null) {
-				TotalRecords = PostComment.GetCommentCountByContent(sn.Root_ContentID, !SecurityData.IsAuthEditor);
-				lstContents = PostComment.GetCommentsByContentPageNumber(sn.Root_ContentID, iPageNbr, PageSize, OrderBy, !SecurityData.IsAuthEditor);
+			if (context != null) {
+				if (sn != null) {
+					TotalRecords = PostComment.GetCommentCountByContent(sn.Root_ContentID, !SecurityData.IsAuthEditor);
+					lstContents = PostComment.GetCommentsByContentPageNumber(sn.Root_ContentID, iPageNbr, PageSize, OrderBy, !SecurityData.IsAuthEditor);
+				}
+			} else {
+				TotalRecords = 0;
+				lstContents = new List<PostComment>();
 			}
+
+			this.Controls.Add(rpComments);
+			this.Controls.Add(rpPagedComment);
 
 			rpComments.DataSource = lstContents;
 			rpComments.DataBind();
@@ -301,9 +308,6 @@ namespace Carrotware.CMS.UI.Controls {
 			if ((TotalRecords % PageSize) > 0) {
 				TotalPages++;
 			}
-
-			this.Controls.Add(rpComments);
-			this.Controls.Add(rpPagedComment);
 
 			if (ShowPager && TotalPages > 1) {
 				List<int> pagelist = new List<int>();

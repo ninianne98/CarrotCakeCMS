@@ -21,21 +21,26 @@ using Carrotware.Web.UI.Controls;
 
 
 namespace Carrotware.CMS.UI.Controls {
+
+	[Designer(typeof(GeneralControlDesigner))]
+	[ParseChildren(true, "CommentEntryTemplate"), PersistChildren(true)]
 	[ToolboxData("<{0}:ContentCommentForm runat=server></{0}:ContentCommentForm>")]
 	public class ContentCommentForm : BaseServerControl, INamingContainer {
 
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateInstance(TemplateInstance.Single)]
-		[MergableProperty(false)]
+		[DefaultValue(null)]
 		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[TemplateContainer(typeof(ContentCommentForm))]
 		public ITemplate CommentEntryTemplate { get; set; }
 
 
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateInstance(TemplateInstance.Single)]
-		[MergableProperty(false)]
+		[DefaultValue(null)]
 		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[TemplateContainer(typeof(ContentCommentForm))]
 		public ITemplate CommentThanksTemplate { get; set; }
 
@@ -78,12 +83,14 @@ namespace Carrotware.CMS.UI.Controls {
 			if (CommentEntryTemplate != null) {
 				CommentEntryTemplate.InstantiateIn(phEntry);
 			}
+			this.Controls.Add(phEntry);
 
 			phThanks.Visible = false;
 			phThanks.Controls.Clear();
 			if (CommentThanksTemplate != null) {
 				CommentThanksTemplate.InstantiateIn(phThanks);
 			}
+			this.Controls.Add(phThanks);
 
 			Literal lit1 = new Literal();
 			lit1.Text = "<div style=\"display: none\">";
@@ -105,10 +112,6 @@ namespace Carrotware.CMS.UI.Controls {
 			if (lbl != null) {
 				lbl.Text = "&nbsp;";
 			}
-
-			this.Controls.Add(phEntry);
-
-			this.Controls.Add(phThanks);
 
 			base.CreateChildControls();
 		}

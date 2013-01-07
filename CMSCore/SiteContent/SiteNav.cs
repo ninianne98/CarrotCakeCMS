@@ -119,7 +119,7 @@ namespace Carrotware.CMS.Core {
 		public DateTime GoLiveDate { get; set; }
 		public DateTime RetireDate { get; set; }
 		public string NavMenuText { get; set; }
-		public int? NavOrder { get; set; }
+		public int NavOrder { get; set; }
 		public string PageHead { get; set; }
 		public string PageText { get; set; }
 		public Guid? Parent_ContentID { get; set; }
@@ -136,17 +136,26 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsRetired {
 			get {
-				if (this.RetireDate < SiteData.CurrentSite.Now) {
-					return true;
+				if (HttpContext.Current != null) {
+					if (this.RetireDate < SiteData.CurrentSite.Now) {
+						return true;
+					} else {
+						return false;
+					}
 				} else {
 					return false;
 				}
 			}
 		}
+
 		public bool IsUnReleased {
 			get {
-				if (this.GoLiveDate > SiteData.CurrentSite.Now) {
-					return true;
+				if (HttpContext.Current != null) {
+					if (this.GoLiveDate > SiteData.CurrentSite.Now) {
+						return true;
+					} else {
+						return false;
+					}
 				} else {
 					return false;
 				}

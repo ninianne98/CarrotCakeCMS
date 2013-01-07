@@ -73,7 +73,7 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav GetSiteNav() {
 			SiteNav sd = null;
-			if (SiteData.IsPageSampler) {
+			if (SiteData.IsPageSampler || HttpContext.Current == null) {
 				sd = SiteNavHelper.GetSamplerView();
 			} else {
 				using (SiteNavHelper sdh = new SiteNavHelper()) {
@@ -422,7 +422,7 @@ namespace Carrotware.CMS.Core {
 		public string PageText { get; set; }
 		public string LeftPageText { get; set; }
 		public string RightPageText { get; set; }
-		public int? NavOrder { get; set; }
+		public int NavOrder { get; set; }
 		public Guid? Parent_ContentID { get; set; }
 
 		public DateTime? EditHeartbeat { get; set; }

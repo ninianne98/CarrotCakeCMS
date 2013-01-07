@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Text;
-using System.IO;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 /*
@@ -18,9 +13,9 @@ using System.Web.UI.WebControls;
 */
 
 namespace Carrotware.CMS.UI.Controls {
-	[DefaultProperty("Text")]
+
 	[ToolboxData("<{0}:WidgetWrapper runat=server></{0}:WidgetWrapper>")]
-	public class WidgetWrapper : PlaceHolder {
+	public class WidgetWrapper : PlaceHolder, ICMSCoreControl {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -115,19 +110,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected override void Render(HtmlTextWriter w) {
-			if (IsAdminMode) {
+			if (this.IsAdminMode) {
 				string sEdit = "";
-				if (!string.IsNullOrEmpty(JSEditFunction)) {
-					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink\" href=\"javascript:" + JSEditFunction + "\">\r\n"
+				if (!string.IsNullOrEmpty(this.JSEditFunction)) {
+					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink\" href=\"javascript:" + this.JSEditFunction + "\">\r\n"
 							+ " Edit </a></li> \r\n";
-					sEdit += " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget2\" id=\"cmsContentEditLink\" href=\"javascript:cmsManageWidgetHistory('" + DatabaseKey + "')\">\r\n"
+					sEdit += " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget2\" id=\"cmsContentEditLink\" href=\"javascript:cmsManageWidgetHistory('" + this.DatabaseKey + "')\">\r\n"
 								+ " History </a></li> \r\n";
 				}
 
 				//string sShrink = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconShrink\" id=\"cmsContentLink\" href=\"javascript:cmsShrinkWidgetHeight('" + DatabaseKey + "');\">\r\n"
 				//                + " Shrink </a></li> \r\n";
 
-				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink\" href=\"javascript:cmsRemoveWidgetLink('" + DatabaseKey + "');\">\r\n"
+				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink\" href=\"javascript:cmsRemoveWidgetLink('" + this.DatabaseKey + "');\">\r\n"
 								+ " Remove </a></li> \r\n";
 
 				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
@@ -135,19 +130,19 @@ namespace Carrotware.CMS.UI.Controls {
 				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
 							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
 
-				string sPrefix = "<div id=\"" + DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
+				string sPrefix = "<div id=\"" + this.DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
 									+ "<div id=\"cms_" + this.ClientID + "\">"
 									+ "<div id=\"cmsWidgetHead\" class=\"cmsWidgetTitleBar\">"
-									+ "<div id=\"cmsControlPath\" title=\"" + ControlPath + "\" tooltip=\"" + ControlPath + "\">" + ControlTitle + "</div> " + sMenu + " </div>"
+									+ "<div id=\"cmsControlPath\" title=\"" + this.ControlPath + "\" tooltip=\"" + this.ControlPath + "\">" + this.ControlTitle + "</div> " + sMenu + " </div>"
 									+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
 									+ "<div class=\"cmsWidgetControl\" id=\"cmsControl\" >\r\n"
-									+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + DatabaseKey + "\"  />\r\n"
-									+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + Order + "\"  />\r\n";
+									+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + this.DatabaseKey + "\"  />\r\n"
+									+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + this.Order + "\"  />\r\n";
 
 				w.Write(sPrefix);
 
 			} else {
-				w.Write("\r\n<!--div id=\"" + this.ClientID + "\"-->\r\n");
+				w.WriteLine("<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>");
 			}
 
 			base.Render(w);
@@ -155,7 +150,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (IsAdminMode) {
 				w.Write("\r\n<div style=\"clear: both;\"></div> </div></div>\r\n");
 			} else {
-				w.Write("\r\n<!--/div--> <!-- END DIV " + this.ClientID + "\"-->\r\n");
+				w.WriteLine("<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>");
 			}
 
 		}

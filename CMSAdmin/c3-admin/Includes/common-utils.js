@@ -86,20 +86,22 @@ function cmsMakeStringSafe(val) {
 	return val;
 }
 
-function cmsAjaxFailed(request) {
-	var s = "";
-	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-	s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-	s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-	cmsAlertModal(s);
-}
-
 function cmsAjaxFailedSwallow(request) {
 	var s = "";
 	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
 	s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
 	s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-	//cmsAlertModal(s);
+	// cmsAlertModal(s);
+}
+
+function cmsAjaxFailed(request) {
+	var s = "";
+	if (request.status > 0) {
+		s = s + "<b>status: </b>" + request.status + '<br />\r\n';
+		s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
+		s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
+		cmsAlertModal(s);
+	}
 }
 
 function cmsAjaxGeneralCallback(data, status) {

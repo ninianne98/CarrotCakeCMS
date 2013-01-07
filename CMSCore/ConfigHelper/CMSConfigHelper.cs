@@ -102,6 +102,14 @@ namespace Carrotware.CMS.Core {
 			return CachedPage.ClientScript.GetWebResourceUrl(type, resource);
 		}
 
+		public static string GetWebResourceUrl(Control X, Type type, string resource) {
+			if (X != null && X.Page != null) {
+				return X.Page.ClientScript.GetWebResourceUrl(type, resource);
+			} else {
+				return GetWebResourceUrl(type, resource);
+			}
+		}
+
 		public static string DomainName {
 			get {
 				var domName = HttpContext.Current.Request.ServerVariables["HTTP_HOST"];
@@ -338,7 +346,7 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 			}
-			
+
 			_plugins.Where(x => x.FilePath.StartsWith("~~/")).ToList().ForEach(r => r.FilePath = r.FilePath.Replace("~~/", "~/"));
 
 			return _plugins;
@@ -538,7 +546,7 @@ namespace Carrotware.CMS.Core {
 										   }).ToList();
 
 					_plugins = _p1.Union(_p2).Union(GetPluginsByDirectory()).ToList();
-					
+
 					_plugins.Where(x => x.FilePath.StartsWith("~~/")).ToList().ForEach(r => r.FilePath = r.FilePath.Replace("~~/", "~/"));
 
 					HttpContext.Current.Cache.Insert(keyAdminToolboxModules, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);

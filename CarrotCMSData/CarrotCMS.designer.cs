@@ -4491,7 +4491,7 @@ namespace Carrotware.CMS.Data
 		
 		private string _RightPageText;
 		
-		private System.Nullable<int> _NavOrder;
+		private int _NavOrder;
 		
 		private System.Nullable<System.Guid> _EditUserId;
 		
@@ -4531,7 +4531,7 @@ namespace Carrotware.CMS.Data
     partial void OnLeftPageTextChanged();
     partial void OnRightPageTextChanging(string value);
     partial void OnRightPageTextChanged();
-    partial void OnNavOrderChanging(System.Nullable<int> value);
+    partial void OnNavOrderChanging(int value);
     partial void OnNavOrderChanged();
     partial void OnEditUserIdChanging(System.Nullable<System.Guid> value);
     partial void OnEditUserIdChanged();
@@ -4756,8 +4756,8 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
-		public System.Nullable<int> NavOrder
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int NOT NULL")]
+		public int NavOrder
 		{
 			get
 			{
@@ -5625,7 +5625,7 @@ namespace Carrotware.CMS.Data
 		
 		private string _RightPageText;
 		
-		private System.Nullable<int> _NavOrder;
+		private int _NavOrder;
 		
 		private System.Nullable<System.Guid> _EditUserId;
 		
@@ -5917,8 +5917,8 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int")]
-		public System.Nullable<int> NavOrder
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NavOrder", DbType="Int NOT NULL")]
+		public int NavOrder
 		{
 			get
 			{

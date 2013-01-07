@@ -155,24 +155,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private string CurrentEditPage = "";
 
 
-		private string ParseEdit(string sContent) {
-			string sFixed = "";
-			if (!string.IsNullOrEmpty(sContent)) {
-				sFixed = sContent;
-				string b = "<!-- <#|BEGIN_CARROT_CMS|#> -->";
-				int iB = sFixed.IndexOf(b);
-				if (iB > 0) {
-					sFixed = sFixed.Substring(iB + b.Length);
-
-					string e = "<!-- <#|END_CARROT_CMS|#> -->";
-					var iE = sFixed.IndexOf(e);
-					sFixed = sFixed.Substring(0, iE);
-				}
-			}
-			return sFixed.Trim();
-		}
-
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string RecordHeartbeat(string PageID) {
@@ -195,6 +177,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return DateTime.MinValue.ToString();
 			}
 		}
@@ -212,6 +196,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -227,6 +213,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -241,6 +229,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -253,6 +243,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -374,6 +366,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -411,6 +405,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "FAIL";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -450,6 +446,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "FAIL";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -478,10 +476,60 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "FAIL";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
 
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string GenerateNewFilename(string ThePageTitle, string GoLiveDate, string PageID, string Mode) {
+			try {
+				CurrentPageGuid = new Guid(PageID);
+
+				DateTime goLiveDate = Convert.ToDateTime(GoLiveDate);
+				string sThePageTitle = CMSConfigHelper.DecodeBase64(ThePageTitle);
+				string sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sThePageTitle);
+
+				if (Mode.ToLower() == "page") {
+					string sTestRes = ValidateUniqueFilename(CMSConfigHelper.EncodeBase64(sTheFileName), PageID);
+					if (sTestRes != "OK") {
+						for (int i = 1; i < 1000; i++) {
+							string sTestFile = CMSConfigHelper.DecodeBase64(ThePageTitle) + "-" + i.ToString();
+							sTestRes = ValidateUniqueFilename(CMSConfigHelper.EncodeBase64(sTestFile), PageID);
+							if (sTestRes == "OK") {
+								sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sTestFile);
+								break;
+							} else {
+								sTheFileName = "";
+							}
+						}
+					}
+				} else {
+					string sTestRes = ValidateUniqueBlogFilename(CMSConfigHelper.EncodeBase64(sTheFileName), GoLiveDate, PageID);
+					if (sTestRes != "OK") {
+						for (int i = 1; i < 1000; i++) {
+							string sTestFile = CMSConfigHelper.DecodeBase64(ThePageTitle) + "-" + i.ToString();
+							sTestRes = ValidateUniqueBlogFilename(CMSConfigHelper.EncodeBase64(sTestFile), GoLiveDate, PageID);
+							if (sTestRes == "OK") {
+								sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sTestFile);
+								break;
+							} else {
+								sTheFileName = "";
+							}
+						}
+					}
+				}
+
+				return ContentPageHelper.ScrubFilename(CurrentPageGuid, sTheFileName);
+			} catch (Exception ex) {
+
+				SiteData.WriteDebugException("webservice", ex);
+				return "FAIL";
+			}
+		}
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -518,6 +566,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					return "FAIL";
 				}
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -533,6 +583,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, goLiveDate, ThePageSlug);
 
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return "FAIL";
 			}
 		}
@@ -581,6 +633,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					return "FAIL";
 				}
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -630,6 +684,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				cmsAdminWidget = cacheWidget;
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -707,6 +763,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				cmsAdminWidget = cacheWidget;
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -737,6 +795,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return "FAIL";
 			}
 		}
@@ -771,6 +831,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return "FAIL";
 			}
 		}
@@ -801,6 +863,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -830,6 +894,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -856,6 +922,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -891,6 +959,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return "OK";
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}
@@ -937,6 +1007,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return "OK";
 
 			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
 				return ex.ToString();
 			}
 		}

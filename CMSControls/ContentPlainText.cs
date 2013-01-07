@@ -69,9 +69,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.Text = RawWidgetData;
 
-			output.WriteLine(" <!--  BEGIN  " + this.ClientID + "  --> ");
+			output.WriteLine();
 			output.Write(RawWidgetData);
-			output.WriteLine(" <!--  END  " + this.ClientID + "  --> ");
+			output.WriteLine();
 
 			output.Indent = indent;
 		}

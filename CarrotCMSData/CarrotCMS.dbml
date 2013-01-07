@@ -223,7 +223,7 @@
       <Column Name="PageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="LeftPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="RightPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="NavOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NavOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
@@ -292,7 +292,7 @@
       <Column Name="PageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="LeftPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="RightPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="NavOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NavOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />

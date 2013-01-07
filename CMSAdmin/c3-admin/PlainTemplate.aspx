@@ -6,7 +6,7 @@
 
 		base.OnLoad(e);
 
-		if (pageContents.Root_ContentID == theSite.Blog_Root_ContentID.Value) {
+		if (theSite.Blog_Root_ContentID.HasValue && pageContents.Root_ContentID == theSite.Blog_Root_ContentID.Value) {
 			PagedDataSummary2.Visible = true;
 		} else {
 			PagedDataSummary2.Visible = false;
@@ -276,13 +276,13 @@
 								</carrot:WidgetContainer>
 							</li>
 							<li>
-								<carrot:ChildNavigation SectionTitle="Child Pages" runat="server" ID="SecondLevelNavigation2"></carrot:ChildNavigation>
+								<carrot:ChildNavigation MetaDataTitle="Child Pages" runat="server" ID="SecondLevelNavigation2" />
 							</li>
 							<li>
-								<carrot:SecondLevelNavigation SectionTitle="Section Pages" runat="server" ID="SecondLevelNavigation1"></carrot:SecondLevelNavigation>
+								<carrot:SecondLevelNavigation MetaDataTitle="Section Pages" runat="server" ID="SecondLevelNavigation1" />
 							</li>
 							<li>
-								<carrot:MostRecentUpdated UpdateTitle="Recent Updates" runat="server" ID="MostRecentUpdated1"></carrot:MostRecentUpdated>
+								<carrot:MostRecentUpdated MetaDataTitle="Recent Updates" runat="server" ID="MostRecentUpdated1" />
 							</li>
 						</ul>
 					</div>
@@ -290,7 +290,7 @@
 					<div id="content">
 						<div class="post">
 							<h2>
-								<asp:Literal ID="litPageHeading" runat="server"></asp:Literal></h2>
+								<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="PageHead" /></h2>
 							<div class="entry">
 								<carrot:WidgetContainer ID="phCenterTop" runat="server">
 								</carrot:WidgetContainer>

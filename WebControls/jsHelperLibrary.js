@@ -72,6 +72,26 @@ function __carrotware_LoadJS() {
 	}
 }
 
+function __carrotware_PageValidate() {
+	setTimeout("__carrotware_IsPageValid();", 250);
+}
+
+function __carrotware_IsPageValid() {
+
+	if (typeof (Page_ClientValidate) == 'function') {
+		Page_ClientValidate();
+	} else {
+		return true;
+	}
+
+	if (Page_IsValid) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 //setTimeout('__carrotware_LoadJS()', 150);
 
 //====================================================

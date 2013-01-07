@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -16,7 +17,6 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:NavLinkForTemplate runat=server></{0}:NavLinkForTemplate>")]
 
 	public class NavLinkForTemplate : Control, IActivateNavItem {
@@ -199,6 +199,8 @@ namespace Carrotware.CMS.UI.Controls {
 			LoadCtrsl();
 
 			base.OnDataBinding(e);
+
+			AssignVals();
 		}
 
 
@@ -206,7 +208,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnPreRender(e);
 
-			AssignVals();
 		}
 
 
@@ -244,7 +245,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ListItemWrapper runat=server></{0}:ListItemWrapper>")]
 
 	public class ListItemWrapper : Control, IActivateNavItem {
@@ -520,11 +520,36 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 		}
 
+		ControlUtilities cu = new ControlUtilities();
 
-		private void SetFileInfo(string sFieldValue) {
+		private void SetFileInfo(string sImageName, string sTemplateFolderPath) {
+			string sFieldValue = sImageName;
+
+			if (string.IsNullOrEmpty(sFieldValue)) {
+				// if page itself has no image, see if the image had been specified directly
+				sFieldValue = this.ImageUrl;
+			}
 			if (string.IsNullOrEmpty(sFieldValue)) {
 				this.Visible = false;
 			}
+			if (!string.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
+				sFieldValue = sTemplateFolderPath + sFieldValue;
+			}
+
+			if (!string.IsNullOrEmpty(sFieldValue) && !File.Exists(HttpContext.Current.Server.MapPath(sFieldValue))) {
+				ContentPage cp = cu.GetContainerContentPage(this);
+				sFieldValue = sImageName;
+				if (string.IsNullOrEmpty(sFieldValue)) {
+					sFieldValue = this.ImageUrl;
+				}
+
+				if (cp != null) {
+					if (!string.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
+						sFieldValue = cp.TemplateFolderPath + sFieldValue;
+					}
+				}
+			}
+
 
 			if (PerformURLResize && !string.IsNullOrEmpty(sFieldValue)) {
 				sFieldValue = string.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
@@ -541,8 +566,9 @@ namespace Carrotware.CMS.UI.Controls {
 			if (DataBinder.Eval(container, "DataItem.Thumbnail") != null) {
 				sFieldValue = DataBinder.Eval(container, "DataItem.Thumbnail").ToString();
 			}
+			string sTemplatePath = DataBinder.Eval(container, "DataItem.TemplateFolderPath").ToString();
 
-			SetFileInfo(sFieldValue);
+			SetFileInfo(sFieldValue, sTemplatePath);
 
 			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
 
@@ -554,7 +580,6 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 	//========================================
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ListItemNavText runat=server></{0}:ListItemNavText>")]
 	public class ListItemNavText : Control, ITextControl {
 
@@ -676,29 +701,37 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnDataBinding(EventArgs e) {
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
+
 			string sFieldValue = string.Empty;
+			string sValue = "";
+			string sField = DataField.ToString();
 
-			if (DataField.ToString().StartsWith("Author_")) {
-				string sField = DataField.ToString().Replace("Author_", "");
+			try {
+				if (sField.StartsWith("Author_")) {
+					sField = sField.Replace("Author_", "");
 
-				string sValue = "";
-				SiteNav sn = (SiteNav)DataBinder.GetDataItem(container);
-				if (sn != null) {
-					using (ExtendedUserData c = sn.GetUserInfo()) {
-						if (c != null) {
-							object obj = ReflectionUtilities.GetPropertyValue(c, sField);
-							if (obj != null) {
-								sValue = obj.ToString();
+					SiteNav sn = (SiteNav)DataBinder.GetDataItem(container);
+					if (sn != null) {
+						using (ExtendedUserData c = sn.GetUserInfo()) {
+							if (c != null) {
+								object obj = ReflectionUtilities.GetPropertyValue(c, sField);
+								if (obj != null) {
+									sValue = obj.ToString();
+								}
 							}
 						}
 					}
+
+					sFieldValue = string.Format(FieldFormat, sValue);
+
+				} else {
+					sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + sField));
+
 				}
-
-				sFieldValue = string.Format(FieldFormat, sValue);
-
-			} else {
-				sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
-
+			} catch {
+				if (HttpContext.Current == null) {
+					sFieldValue = sField;
+				}
 			}
 
 			this.Text = sFieldValue;
@@ -1241,8 +1274,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
-
-	[DefaultProperty("Text")]
+	//================================================
 	[ToolboxData("<{0}:NavPageNumberDisplay runat=server></{0}:NavPageNumberDisplay>")]
 
 	public class NavPageNumberDisplay : Control {
@@ -1290,7 +1322,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:NavLinkForPagerTemplate runat=server></{0}:NavLinkForPagerTemplate>")]
 
 	public class NavLinkForPagerTemplate : Control, IActivatePageNavItem {
@@ -1441,7 +1472,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				sCSS = string.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
+				sCSS = string.Format("{0} {1}", CssClassNormal, sSelCss);
 
 				lnkBtn.CssClass = sCSS.Trim();
 				lnkNav.CssClass = sCSS.Trim();
@@ -1481,13 +1512,14 @@ namespace Carrotware.CMS.UI.Controls {
 			SetText();
 
 			HttpContext context = HttpContext.Current;
-
-			string sSearch = "";
-			if (context.Request["search"] != null) {
-				sSearch = context.Request["search"].ToString();
-				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString() + "&search=" + context.Server.UrlEncode(sSearch);
-			} else {
-				lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString();
+			if (context != null) {
+				string sSearch = "";
+				if (context.Request["search"] != null) {
+					sSearch = context.Request["search"].ToString();
+					lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString() + "&search=" + context.Server.UrlEncode(sSearch);
+				} else {
+					lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString();
+				}
 			}
 
 			LoadCtrsl();
@@ -1501,21 +1533,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 
-			base.OnPreRender(e);
-
-			AssignVals();
-		}
-
-
-		private void AssignVals() {
-
 			SetCSS();
 
-			//if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
-			//    if (UseDefaultText) {
-			//        this.LinkText = _linkTextDefault;
-			//    }
-			//}
+			base.OnPreRender(e);
 		}
 
 
@@ -1542,7 +1562,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ListItemWrapperForPager runat=server></{0}:ListItemWrapperForPager>")]
 
 	public class ListItemWrapperForPager : Control, IActivatePageNavItem {
@@ -1693,37 +1712,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
-	}
-
-
-
-	//========================================
-	public interface IActivateNavItem {
-
-		string CSSSelected { get; set; }
-
-		string CssClassNormal { get; set; }
-
-		string CssClassHasChild { get; set; }
-
-		bool IsSelected { get; set; }
-
-		string NavigateUrl { get; set; }
-
-		Guid ContentID { get; set; }
-
-	}
-
-	public interface IActivatePageNavItem {
-
-		string CSSSelected { get; set; }
-
-		string CssClassNormal { get; set; }
-
-		bool IsSelected { get; set; }
-
-		int PageNumber { get; set; }
 
 	}
 

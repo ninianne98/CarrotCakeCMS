@@ -21,6 +21,17 @@ ALTER TABLE [dbo].[carrot_Content]
 
 GO
 
+UPDATE [dbo].[carrot_Content]
+SET [NavOrder] = 5
+WHERE ISNULL([NavOrder], -1) = -1
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [NavOrder] [int] NOT NULL
+
+GO
+
 ALTER TABLE [dbo].[carrot_WidgetData] 
 	ALTER COLUMN  [IsLatestVersion] [bit] NULL
 

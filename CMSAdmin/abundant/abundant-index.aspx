@@ -17,11 +17,8 @@ Released   : 20090703
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Abundant by Free CSS Templates</title>
-	<%--	
-	<asp:PlaceHolder ID="myCSS" runat="server">
-		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
-	</asp:PlaceHolder>
-	--%>
+	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
+	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -66,14 +63,14 @@ Released   : 20090703
 			<div id="content">
 				<div class="post">
 					<h2 class="title">
-						<asp:Literal ID="litPageHeading" runat="server" /></h2>
+						<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="PageHead" /></h2>
 					<div class="entry">
 						<carrot:WidgetContainer ID="phCenterTop" runat="server">
 						</carrot:WidgetContainer>
 						<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
 						<div style="clear: both;">
 						</div>
-						<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="8" OrderBy="CreateDate  DESC" CSSSelectedPage="selected">
+						<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="8" CSSSelectedPage="selected">
 							<SummaryHeaderTemplate>
 								<div>
 							</SummaryHeaderTemplate>
