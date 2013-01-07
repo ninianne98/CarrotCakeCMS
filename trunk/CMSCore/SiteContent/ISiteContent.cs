@@ -13,7 +13,7 @@ namespace Carrotware.CMS.Core {
 		string FileName { get; set; }
 		string Thumbnail { get; set; }
 		string NavMenuText { get; set; }
-		int? NavOrder { get; set; }
+		int NavOrder { get; set; }
 		bool PageActive { get; set; }
 		string PageHead { get; set; }
 		string PageText { get; set; }

@@ -17,6 +17,7 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
+	[Designer(typeof(GeneralControlDesigner))]
 	[ToolboxData("<{0}:TrackBack runat=server></{0}:TrackBack>")]
 	public class TrackBack : BaseServerControl {
 

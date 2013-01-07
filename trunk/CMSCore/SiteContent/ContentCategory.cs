@@ -15,10 +15,7 @@ using Carrotware.CMS.Data;
 
 
 namespace Carrotware.CMS.Core {
-	public class ContentCategory : IDisposable, IContentMetaInfo {
-
-		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
-		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+	public class ContentCategory : IContentMetaInfo {
 
 		public ContentCategory() { }
 
@@ -29,15 +26,6 @@ namespace Carrotware.CMS.Core {
 		public string CategoryURL { get; set; }
 		public int? UseCount { get; set; }
 
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -123,26 +111,28 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void Save() {
-			bool bNew = false;
-			carrot_ContentCategory s = CompiledQueries.cqGetContentCategoryByID(db, this.ContentCategoryID);
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				bool bNew = false;
+				carrot_ContentCategory s = CompiledQueries.cqGetContentCategoryByID(_db, this.ContentCategoryID);
 
-			if (s == null || (s != null && s.ContentCategoryID == Guid.Empty)) {
-				s = new carrot_ContentCategory();
-				s.ContentCategoryID = Guid.NewGuid();
-				s.SiteID = this.SiteID;
-				bNew = true;
+				if (s == null || (s != null && s.ContentCategoryID == Guid.Empty)) {
+					s = new carrot_ContentCategory();
+					s.ContentCategoryID = Guid.NewGuid();
+					s.SiteID = this.SiteID;
+					bNew = true;
+				}
+
+				s.CategorySlug = ContentPageHelper.ScrubSlug(this.CategorySlug);
+				s.CategoryText = this.CategoryText;
+
+				if (bNew) {
+					_db.carrot_ContentCategories.InsertOnSubmit(s);
+				}
+
+				_db.SubmitChanges();
+
+				this.ContentCategoryID = s.ContentCategoryID;
 			}
-
-			s.CategorySlug = ContentPageHelper.ScrubSlug(this.CategorySlug);
-			s.CategoryText = this.CategoryText;
-
-			if (bNew) {
-				db.carrot_ContentCategories.InsertOnSubmit(s);
-			}
-
-			db.SubmitChanges();
-
-			this.ContentCategoryID = s.ContentCategoryID;
 		}
 
 

@@ -409,20 +409,27 @@ function cmsMoveWidgetZone(zone, val) {
 	});
 }
 
+var IsPublishing = false;
+
 function cmsApplyChanges() {
 
 	var webMthd = webSvc + "/PublishChanges";
+	
+	// prevent multiple submissions
+	if (!IsPublishing) {
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		data: "{'ThisPage': '" + thisPageID + "'}",
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSavePageCallback,
-		error: cmsAjaxFailed
-	});
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsSavePageCallback,
+			error: cmsAjaxFailed
+		});
+	}
 
+	IsPublishing = true;
 }
 
 
@@ -444,11 +451,16 @@ function cmsSaveContentCallback(data, status) {
 }
 
 function cmsAjaxGeneralCallback(data, status) {
-	if (data.d == "OK") {
-		CMSBusyShort();
-	} else {
+	//	if (data.d == "OK") {
+	//		CMSBusyShort();
+	//	} else {
+	//		cmsAlertModal(data.d);
+	//	}
+
+	if (data.d != "OK") {
 		cmsAlertModal(data.d);
 	}
+
 }
 
 function cmsSaveWidgetsCallback(data, status) {
@@ -596,7 +608,6 @@ function cmsSendTrackbackPageBatch() {
 
 setTimeout("cmsSendTrackbackPageBatch();", 1500);
 
-
 function cmsAjaxFailedSwallow(request) {
 	var s = "";
 	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
@@ -607,10 +618,12 @@ function cmsAjaxFailedSwallow(request) {
 
 function cmsAjaxFailed(request) {
 	var s = "";
-	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-	s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-	s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-	cmsAlertModal(s);
+	if (request.status > 0) {
+		s = s + "<b>status: </b>" + request.status + '<br />\r\n';
+		s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
+		s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
+		cmsAlertModal(s);
+	}
 }
 
 function cmsAlertModal(request) {
@@ -661,6 +674,10 @@ function cmsShowEditPostInfo() {
 function cmsShowAddChildPage() {
 
 	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?pageid=' + thisPageID);
+}
+function cmsShowAddTopPage() {
+
+	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?addtoplevel=true&pageid=' + thisPageID);
 }
 
 function cmsSortChildren() {
@@ -898,10 +915,11 @@ function cmsFixDialog(dialogname) {
 
 	var over = $(dilg).next(".ui-widget-overlay");
 	$(over).wrap("<div class=\"cmsGlossySeaGreen\" />");
+	$(over).css('zIndex', 9950001);
 
 	var d = $(dilg);
 	$(d).wrap("<div class=\"cmsGlossySeaGreen\" />");
-
+	$(d).css('zIndex', 9950005);
 }
 
 function cmsOverrideCSSScope(elm, xtra) {

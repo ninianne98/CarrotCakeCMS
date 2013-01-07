@@ -22,10 +22,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		public Guid guidImportID = Guid.Empty;
 		WordPressSite wpSite = null;
+		private int iPageCount = 0;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(Request.QueryString["importid"])) {
 				guidImportID = new Guid(Request.QueryString["importid"].ToString());
+			}
+
+			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
+
+			if (!IsPostBack) {
+				SetDDLDefaultTemplates();
 			}
 
 			litTrust.Visible = false;
@@ -74,6 +81,21 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lblPosts.Text = gvPosts.Rows.Count.ToString();
 
 				}
+			}
+		}
+
+		protected void SetDDLDefaultTemplates() {
+			float iThird = (float)(iPageCount - 1) / (float)3;
+			Dictionary<string, float> dictTemplates = null;
+
+			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.ContentEntry);
+			if (dictTemplates.Count > 0 && dictTemplates.First().Value >= iThird) {
+				try { ddlTemplatePage.SelectedValue = dictTemplates.First().Key; } catch { }
+			}
+
+			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
+			if (dictTemplates.Count > 0) {
+				try { ddlTemplatePost.SelectedValue = dictTemplates.First().Key; } catch { }
 			}
 		}
 

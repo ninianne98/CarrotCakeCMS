@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 /*
@@ -18,13 +14,10 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:SiteMetaWordList runat=server></{0}:SiteMetaWordList>")]
-	public class SiteMetaWordList : BaseServerControl {
+	public class SiteMetaWordList : BaseServerControl, IHeadedList {
 
 
 		[Bindable(true)]
@@ -41,6 +34,24 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public TagType HeadWrapTag {
+			get {
+				String s = (String)ViewState["HeadWrapTag"];
+				TagType c = TagType.H2;
+				if (!string.IsNullOrEmpty(s)) {
+					c = (TagType)Enum.Parse(typeof(TagType), s, true);
+				}
+				return c;
+			}
+
+			set {
+				ViewState["HeadWrapTag"] = value.ToString();
+			}
+		}
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -143,8 +154,8 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (!string.IsNullOrEmpty(MetaDataTitle)) {
-				output.WriteLine("<h2>" + MetaDataTitle + "</h2> ");
+			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(MetaDataTitle)) {
+				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
 			string sCSS = "";

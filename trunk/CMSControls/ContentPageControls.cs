@@ -16,23 +16,7 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-
-	/*
-		<carrot:ContentPageImageThumb runat="server" ID="ContentPageImageThumb1" PerformURLResize="true" ScaleImage="true" ThumbSize="180" />
-	 
-		<p>
-			By <carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="Author_FullName_FirstLast" />
-			on <carrot:ContentPageProperty runat="server" ID="ContentPageProperty2" DataField="GoLiveDate" FieldFormat="{0:MMMM d, yyyy}" />
-		</p>
-
-		<h1 id="logo">
-			<a href="/">
-				<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
-		</h1>
-		<h2 id="slogan">
-			<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
-		</h2>
-	 */
+	[Designer(typeof(GeneralControlDesigner))]
 	[ToolboxData("<{0}:ContentPageProperty runat=server></{0}:ContentPageProperty>")]
 	public class ContentPageProperty : Literal {
 
@@ -107,29 +91,35 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
+			string sField = DataField.ToString();
 
-			ContentPage cp = cu.GetContainerContentPage(this);
+			try {
+				ContentPage cp = cu.GetContainerContentPage(this);
 
-			if (cp != null) {
-				string sField = DataField.ToString();
-				if (sField.StartsWith("Author_")) {
-					sField = DataField.ToString().Replace("Author_", "");
+				if (cp != null) {
 
-					using (ExtendedUserData usr = cp.GetUserInfo()) {
-						if (usr != null) {
-							object objData = ReflectionUtilities.GetPropertyValue(usr, sField);
-							if (objData != null) {
-								sFieldValue = string.Format(FieldFormat, objData);
+					if (sField.StartsWith("Author_")) {
+						sField = DataField.ToString().Replace("Author_", "");
+
+						using (ExtendedUserData usr = cp.GetUserInfo()) {
+							if (usr != null) {
+								object objData = ReflectionUtilities.GetPropertyValue(usr, sField);
+								if (objData != null) {
+									sFieldValue = string.Format(FieldFormat, objData);
+								}
 							}
 						}
-					}
-				} else {
-					object objData = ReflectionUtilities.GetPropertyValue(cp, sField);
-					if (objData != null) {
-						sFieldValue = string.Format(FieldFormat, objData);
+					} else {
+						object objData = ReflectionUtilities.GetPropertyValue(cp, sField);
+						if (objData != null) {
+							sFieldValue = string.Format(FieldFormat, objData);
+						}
 					}
 				}
-
+			} catch {
+				if (HttpContext.Current == null) {
+					sFieldValue = sField;
+				}
 			}
 
 			this.Text = sFieldValue;
@@ -140,7 +130,133 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 	//========================================
+	[ToolboxData("<{0}:ContentPageNext runat=server></{0}:ContentPageNext>")]
+	public class ContentPageNext : HyperLink {
 
+		public enum CaptionSource {
+			TitleBar,
+			NavMenuText,
+			PageHead,
+		}
+
+		public enum NavDirection {
+			Unknown,
+			Prev,
+			Next,
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("NavMenuText")]
+		[Localizable(true)]
+		public CaptionSource CaptionDataField {
+			get {
+				string s = (string)ViewState["CaptionDataField"];
+				CaptionSource c = CaptionSource.NavMenuText;
+				if (!string.IsNullOrEmpty(s)) {
+					try {
+						c = (CaptionSource)Enum.Parse(typeof(CaptionSource), s, true);
+					} catch (Exception ex) { }
+				}
+				return c;
+			}
+			set {
+				ViewState["CaptionDataField"] = value.ToString();
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("Unknown")]
+		[Localizable(true)]
+		public NavDirection NavigationDirection {
+			get {
+				string s = (string)ViewState["NavigationDirection"];
+				NavDirection c = NavDirection.Unknown;
+				if (!string.IsNullOrEmpty(s)) {
+					try {
+						c = (NavDirection)Enum.Parse(typeof(NavDirection), s, true);
+					} catch (Exception ex) { }
+				}
+				return c;
+			}
+			set {
+				ViewState["NavigationDirection"] = value.ToString();
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public bool UseDefaultText {
+			get {
+				bool s = true;
+				if (ViewState["UseDefaultText"] != null) {
+					try { s = (bool)ViewState["UseDefaultText"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["UseDefaultText"] = value;
+			}
+		}
+
+
+		protected override void Render(HtmlTextWriter output) {
+
+			base.Render(output);
+
+		}
+
+		private ControlUtilities cu = new ControlUtilities();
+
+
+		protected override void OnPreRender(EventArgs e) {
+			string sFieldValue = string.Empty;
+
+			ContentPage cp = cu.GetContainerContentPage(this);
+			SiteNav navNext = new SiteNav();
+			if (NavigationDirection != NavDirection.Unknown) {
+				using (SiteNavHelper navHelper = new SiteNavHelper()) {
+
+					if (NavigationDirection == NavDirection.Prev) {
+						navNext = navHelper.GetPrevPost(SiteData.CurrentSiteID, cp.Root_ContentID, !SecurityData.IsAuthEditor);
+					}
+					if (NavigationDirection == NavDirection.Next) {
+						navNext = navHelper.GetNextPost(SiteData.CurrentSiteID, cp.Root_ContentID, !SecurityData.IsAuthEditor);
+					}
+
+					if (navNext != null) {
+						if (UseDefaultText) {
+							string sField = this.CaptionDataField.ToString();
+
+							object objData = ReflectionUtilities.GetPropertyValue(navNext, sField);
+							if (objData != null) {
+								sFieldValue = string.Format("{0}", objData);
+							}
+
+							this.Text = sFieldValue;
+						}
+
+						this.NavigateUrl = navNext.FileName;
+					} else {
+						this.Visible = false;
+					}
+				}
+			} else {
+				this.Visible = false;
+			}
+
+			base.OnPreRender(e);
+		}
+
+	}
+
+
+	//========================================
 	[ToolboxData("<{0}:ListItemImageThumb runat=server></{0}:ListItemImageThumb>")]
 	public class ContentPageImageThumb : Image {
 
@@ -193,28 +309,32 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void Render(HtmlTextWriter output) {
-
-			base.Render(output);
-
-		}
 
 		ControlUtilities cu = new ControlUtilities();
 
-		protected override void OnPreRender(EventArgs e) {
+		protected override void Render(HtmlTextWriter w) {
 
 			ContentPage cp = cu.GetContainerContentPage(this);
 
 			if (cp != null) {
-				SetFileInfo(cp.Thumbnail);
+				SetFileInfo(cp);
 			}
 
-			base.OnPreRender(e);
+			base.Render(w);
 		}
 
-		private void SetFileInfo(string sFieldValue) {
+		private void SetFileInfo(ContentPage cp) {
+			string sFieldValue = cp.Thumbnail;
+
+			if (string.IsNullOrEmpty(sFieldValue)) {
+				// if page itself has no image, see if the image had been specified directly
+				sFieldValue = this.ImageUrl;
+			}
 			if (string.IsNullOrEmpty(sFieldValue)) {
 				this.Visible = false;
+			}
+			if (!string.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
+				sFieldValue = cp.TemplateFolderPath + sFieldValue;
 			}
 
 			if (PerformURLResize && !string.IsNullOrEmpty(sFieldValue)) {
@@ -227,6 +347,29 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 	//========================================
+	[Designer(typeof(GeneralControlDesigner))]
+	[ToolboxData("<{0}:SiteCanonicalURL runat=server></{0}:SiteCanonicalURL>")]
+	public class SiteCanonicalURL : Literal {
+
+		protected override void OnPreRender(EventArgs e) {
+			string sFieldValue = string.Empty;
+
+			SiteData sd = SiteData.CurrentSite;
+
+			if (sd != null) {
+				sFieldValue = sd.DefaultCanonicalURL;
+			} else {
+				sFieldValue = SiteData.DefaultDirectoryFilename;
+			}
+
+			this.Text = string.Format("<link rel=\"canonical\" href=\"{0}\" />\r\n", sFieldValue);
+
+			base.OnPreRender(e);
+		}
+	}
+
+	//========================================
+	[Designer(typeof(GeneralControlDesigner))]
 	[ToolboxData("<{0}:SiteDataProperty runat=server></{0}:SiteDataProperty>")]
 	public class SiteDataProperty : Literal {
 
@@ -289,12 +432,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		ControlUtilities cu = new ControlUtilities();
-
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
 
-			//SiteData sd = cu.GetContainerSiteData(this);
 			SiteData sd = SiteData.CurrentSite;
 
 			if (sd != null) {
@@ -314,3 +454,21 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 }
+
+
+/*
+	<carrot:ContentPageImageThumb runat="server" ID="ContentPageImageThumb1" PerformURLResize="true" ScaleImage="true" ThumbSize="180" />
+	 
+	<p>
+		By <carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="Author_FullName_FirstLast" />
+		on <carrot:ContentPageProperty runat="server" ID="ContentPageProperty2" DataField="GoLiveDate" FieldFormat="{0:MMMM d, yyyy}" />
+	</p>
+
+	<h1 id="logo">
+		<a href="/">
+			<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
+	</h1>
+	<h2 id="slogan">
+		<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
+	</h2>
+ */

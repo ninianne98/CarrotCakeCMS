@@ -17,7 +17,6 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:TopLevelNavigation runat=server></{0}:TopLevelNavigation>")]
 	public class TopLevelNavigation : BaseServerControl {
 

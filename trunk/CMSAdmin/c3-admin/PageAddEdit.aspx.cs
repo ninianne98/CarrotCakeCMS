@@ -29,6 +29,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		string sPageMode = String.Empty;
 		SiteMapOrder orderHelper = new SiteMapOrder();
 
+		private int iPageCount = 0;
+
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentAdd);
 			lblUpdated.Text = SiteData.CurrentSite.Now.ToString();
@@ -37,6 +39,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (site == null) {
 				Response.Redirect("./Default.aspx");
 			}
+
+			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
 
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
@@ -48,7 +52,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				guidImportContentID = new Guid(Request.QueryString["importid"].ToString());
 			}
 
-			if (pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry) < 1) {
+			if (iPageCount < 1) {
 				txtSort.Text = "0";
 			}
 
@@ -103,6 +107,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				chkDraft.Visible = false;
 				divEditing.Visible = false;
+
+				float iThird = (float)(iPageCount - 1) / (float)3;
+
+				Dictionary<string, float> dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.ContentEntry);
+				if (dictTemplates.Count > 0 && dictTemplates.First().Value >= iThird) {
+					try { ddlTemplate.SelectedValue = dictTemplates.First().Key; } catch { }
+				}
 
 				if (pageContents != null) {
 					if (pageContents.ContentType != ContentPageType.PageType.ContentEntry) {

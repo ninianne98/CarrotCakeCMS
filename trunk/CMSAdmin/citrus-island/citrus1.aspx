@@ -1,33 +1,30 @@
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
+	<carrot:jquery runat="server" ID="jquery1" />
 	<carrot:jqueryui runat="server" ID="jqueryui1" />
+	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<title>Citrus Island</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<asp:PlaceHolder ID="myPageHead" runat="server">
-		<%--<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />--%>
-		<link rel="canonical" href="<%= theSite.DefaultCanonicalURL %>" />
-	</asp:PlaceHolder>
-	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
+	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 </head>
 <body>
 	<form id="form1" runat="server">
 	<div id="wrap">
 		<div id="header">
-			<carrot:SearchBox ID="search1" runat="server">
-				<SearchTemplate>
-					<div class="search">
+			<div class="search">
+				<carrot:SearchBox ID="search1" runat="server">
+					<SearchTemplate>
 						<p>
 							<asp:TextBox ID="SearchText" runat="server" CssClass="textbox" MaxLength="40" />
 							<asp:Button ID="btnSiteSearch" runat="server" CssClass="button" Text="Search" />
 						</p>
-					</div>
-				</SearchTemplate>
-			</carrot:SearchBox>
+					</SearchTemplate>
+				</carrot:SearchBox>
+			</div>
 			<h1 id="logo">
 				<a href="/">
 					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
@@ -40,20 +37,20 @@
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="10px" ForeColor="#FFFFFF" BackColor="#F4845A" />
 		</div>
 		<div id="sidebar">
-			<carrot:ChildNavigation SectionTitle="Child Pages" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
-			<carrot:SiblingNavigation SectionTitle="In This Section" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation2" />
+			<carrot:ChildNavigation MetaDataTitle="Child Pages" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
+			<carrot:SiblingNavigation MetaDataTitle="In This Section" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="SiblingNavigation1" />
 			<carrot:WidgetContainer ID="phLeftTop" runat="server">
 			</carrot:WidgetContainer>
-			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server"></carrot:ContentContainer>
+			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
 			<carrot:WidgetContainer ID="phLeftBottom" runat="server">
 			</carrot:WidgetContainer>
 		</div>
 		<div id="main">
 			<h1>
-				<asp:Literal ID="litPageHeading" runat="server" /></h1>
+				<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="PageHead" /></h1>
 			<carrot:WidgetContainer ID="phCenterTop" runat="server">
 			</carrot:WidgetContainer>
-			<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server"></carrot:ContentContainer>
+			<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
 			<carrot:WidgetContainer ID="phCenterBottom" runat="server">
 			</carrot:WidgetContainer>
 			<br />
@@ -66,9 +63,10 @@
 					<carrot:RSSFeed runat="server" ID="RSSFeed3" RSSFeedType="PageOnly" CssClass="rssimage" RenderRSSMode="ImageLink" />
 				</div>
 			</div>
+			<carrot:MostRecentUpdated MetaDataTitle="Recent Updates" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ID="MostRecentUpdated1" />
 			<carrot:WidgetContainer ID="phRightTop" runat="server">
 			</carrot:WidgetContainer>
-			<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server"></carrot:ContentContainer>
+			<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server" />
 			<carrot:WidgetContainer ID="phRightBottom" runat="server">
 			</carrot:WidgetContainer>
 		</div>

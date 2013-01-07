@@ -9,7 +9,7 @@
     [PageText]         NVARCHAR (MAX)   NULL,
     [LeftPageText]     NVARCHAR (MAX)   NULL,
     [RightPageText]    NVARCHAR (MAX)   NULL,
-    [NavOrder]         INT              NULL,
+    [NavOrder]         INT              NOT NULL,
     [EditUserId]       UNIQUEIDENTIFIER NULL,
     [EditDate]         DATETIME         NOT NULL,
     [TemplateFile]     NVARCHAR (256)   NULL,

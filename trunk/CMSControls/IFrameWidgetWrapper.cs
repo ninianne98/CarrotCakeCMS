@@ -22,7 +22,6 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:IFrameWidgetWrapper runat=server></{0}:IFrameWidgetWrapper>")]
 	public class IFrameWidgetWrapper : BaseServerControl {
 

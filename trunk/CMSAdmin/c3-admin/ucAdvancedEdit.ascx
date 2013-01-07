@@ -158,6 +158,9 @@
 									<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" />
 								</p>
 								<p>
+									<input runat="server" id="btnAddTop" type="button" value="Create Top Level Page" onclick="cmsShowAddTopPage();" />
+								</p>
+								<p>
 									<input runat="server" id="btnAddChild" type="button" value="Create Sub Page" onclick="cmsShowAddChildPage();" />
 								</p>
 								<p>

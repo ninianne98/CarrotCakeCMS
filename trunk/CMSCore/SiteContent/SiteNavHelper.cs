@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.UI;
 using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
@@ -21,10 +22,14 @@ namespace Carrotware.CMS.Core {
 		private ISiteNavHelper _navHelper = null;
 
 		public SiteNavHelper() {
-			if ((SiteData.IsPageSampler || SiteData.IsPageReal) && !SiteData.IsCurrentPageSpecial) {
-				_navHelper = new SiteNavHelperMock();
+			if (HttpContext.Current != null) {
+				if ((SiteData.IsPageSampler || SiteData.IsPageReal) && !SiteData.IsCurrentPageSpecial) {
+					_navHelper = new SiteNavHelperMock();
+				} else {
+					_navHelper = new SiteNavHelperReal();
+				}
 			} else {
-				_navHelper = new SiteNavHelperReal();
+				_navHelper = new SiteNavHelperMock();
 			}
 		}
 
@@ -84,6 +89,13 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav GetLatestVersion(Guid siteID, Guid rootContentID) {
 			return _navHelper.GetLatestVersion(siteID, rootContentID);
+		}
+
+		public SiteNav GetPrevPost(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			return _navHelper.GetPrevPost(siteID, rootContentID, bActiveOnly);
+		}
+		public SiteNav GetNextPost(Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			return _navHelper.GetNextPost(siteID, rootContentID, bActiveOnly);
 		}
 
 		public SiteNav GetLatestVersion(Guid siteID, bool bActiveOnly, string sPage) {
@@ -274,6 +286,7 @@ namespace Carrotware.CMS.Core {
 				nav.EditDate = nav.CreateDate.AddHours((0 - n) * 16);
 				nav.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
 				nav.RetireDate = DateTime.Now.Date.AddDays(90);
+				nav.CommentCount = (n * 2) + 1;
 
 				if (n > 0 || rootParentID != null) {
 					nav.Root_ContentID = Guid.NewGuid();
@@ -302,47 +315,77 @@ namespace Carrotware.CMS.Core {
 
 		}
 
+		public static string GetSampleBody() {
+			return GetSampleBody(null, "");
+		}
+
+		public static string GetSampleBody(string sContentSampleNumber) {
+			return GetSampleBody(null, sContentSampleNumber);
+		}
+
+		public static string GetSampleBody(Control X, string sContentSampleNumber) { // SampleContent2
+
+			if (string.IsNullOrEmpty(sContentSampleNumber)) {
+				sContentSampleNumber = "SampleContent2";
+			}
+
+			string sFile2 = " <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi arcu, lacinia scelerisque blandit nec, mattis non nibh.</p> \r\n <p> Curabitur quis urna at massa placerat auctor. Quisque et mauris sapien, a consectetur nulla.</p>";
+
+			try {
+				Assembly _assembly = Assembly.GetExecutingAssembly();
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock." + sContentSampleNumber + ".txt"))) {
+					sFile2 = oTextStream.ReadToEnd();
+				}
+
+				List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
+										   where i.Contains("SiteContent.Mock.sample")
+										   && i.EndsWith(".png")
+										   select i).ToList();
+
+				foreach (string img in imageNames) {
+					var imgURL = CMSConfigHelper.GetWebResourceUrl(X, typeof(SiteNav), img);
+					sFile2 = sFile2.Replace(img, imgURL);
+				}
+
+			} catch { }
+
+			return sFile2;
+		}
+
 		public static SiteNav GetSamplerView() {
 
-			string sFile2 = "";
-
-			Assembly _assembly = Assembly.GetExecutingAssembly();
-
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent2.txt"))) {
-				sFile2 = oTextStream.ReadToEnd();
-			}
-
-			List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
-									   where i.Contains("SiteContent.Mock.sample")
-									   && i.EndsWith(".png")
-									   select i).ToList();
-
-			foreach (string img in imageNames) {
-				var imgURL = CMSConfigHelper.GetWebResourceUrl(typeof(SiteNav), img);
-				sFile2 = sFile2.Replace(img, imgURL);
-			}
+			string sFile2 = GetSampleBody();
 
 			SiteNav navNew = new SiteNav();
-			navNew.Root_ContentID = SiteData.CurrentSiteID;
+			navNew.Root_ContentID = Guid.NewGuid();
 			navNew.ContentID = Guid.NewGuid();
-			navNew.SiteID = SiteData.CurrentSiteID;
-			navNew.Parent_ContentID = null;
-			navNew.ContentType = ContentPageType.PageType.ContentEntry;
-			navNew.PageText = "<h2>Content CENTER</h2>\r\n" + sFile2;
 
 			navNew.NavOrder = -1;
 			navNew.TitleBar = "Template Preview - TITLE";
 			navNew.NavMenuText = "Template PV - NAV"; ;
 			navNew.PageHead = "Template Preview - HEAD";
 			navNew.PageActive = true;
-			navNew.EditUserId = SecurityData.CurrentUserGuid;
+
 			navNew.EditDate = DateTime.Now.AddDays(-1);
 			navNew.CreateDate = DateTime.Now.AddDays(-14);
 			navNew.GoLiveDate = navNew.EditDate.AddHours(-5);
 			navNew.RetireDate = navNew.CreateDate.AddYears(5);
+			navNew.PageText = "<h2>Content CENTER</h2>\r\n";
 
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
-			navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();
+			if (HttpContext.Current != null) {
+				navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();
+			} else {
+				navNew.FileName = SiteData.PreviewTemplateFilePage + "?sampler=true";
+			}
+
+			navNew.PageText = "<h2>Content CENTER</h2>\r\n" + sFile2;
+
+			navNew.SiteID = SiteData.CurrentSiteID;
+			navNew.Parent_ContentID = null;
+			navNew.ContentType = ContentPageType.PageType.ContentEntry;
+
+			navNew.EditUserId = SecurityData.CurrentUserGuid;
 
 			return navNew;
 		}

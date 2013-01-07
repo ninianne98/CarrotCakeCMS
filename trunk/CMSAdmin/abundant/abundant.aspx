@@ -17,11 +17,8 @@ Released   : 20090703
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Abundant by Free CSS Templates</title>
-	<%--	
-	<asp:PlaceHolder ID="myCSS" runat="server">
-		<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
-	</asp:PlaceHolder>
-	--%>
+	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
+	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -71,7 +68,7 @@ Released   : 20090703
 			<div id="content">
 				<div class="post">
 					<h2 class="title">
-						<asp:Literal ID="litPageHeading" runat="server" /></h2>
+						<carrot:ContentPageProperty runat="server" ID="ContentPageProperty3" DataField="PageHead" /></h2>
 					<div class="entry">
 						<p>
 							By
@@ -91,13 +88,13 @@ Released   : 20090703
 			<div id="sidebar">
 				<ul>
 					<li>
-						<carrot:ChildNavigation SectionTitle="Child Pages" runat="server" ID="SecondLevelNavigation2"></carrot:ChildNavigation>
+						<carrot:ChildNavigation MetaDataTitle="Child Pages" runat="server" ID="SecondLevelNavigation2" />
 					</li>
 					<li>
-						<carrot:SecondLevelNavigation SectionTitle="Section Pages" runat="server" ID="SecondLevelNavigation1"></carrot:SecondLevelNavigation>
+						<carrot:SecondLevelNavigation MetaDataTitle="Section Pages" runat="server" ID="SecondLevelNavigation1" />
 					</li>
 					<li>
-						<carrot:MostRecentUpdated UpdateTitle="Recent Updates" runat="server" ID="MostRecentUpdated1"></carrot:MostRecentUpdated>
+						<carrot:MostRecentUpdated MetaDataTitle="Recent Updates" runat="server" ID="MostRecentUpdated1" />
 					</li>
 				</ul>
 			</div>

@@ -116,6 +116,66 @@
 			Page_ClientValidate();
 		}
 
+
+		function AutoGeneratePageFilename() {
+			var theTitle = $('#<%= txtTitle.ClientID %>').val();
+			var theFile = $('#<%= txtPageSlug.ClientID %>').val();
+			var theNav = $('#<%= txtNav.ClientID %>').val();
+
+			if (theTitle.length > 0 && theFile.length < 1 && theNav.length < 1) {
+				GeneratePageFilename();
+			}
+		}
+
+		function GeneratePageFilename() {
+			var theTitle = $('#<%= txtTitle.ClientID %>').val();
+			var theFile = $('#<%= txtPageSlug.ClientID %>').val();
+			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
+
+			if (theTitle.length > 0) {
+
+				var webMthd = webSvc + "/GenerateNewFilename";
+				var myPageTitle = MakeStringSafe(theTitle);
+
+				$.ajax({
+					type: "POST",
+					url: webMthd,
+					data: "{'ThePageTitle': '" + myPageTitle + "', 'GoLiveDate': '" + sGoLiveDate + "', 'PageID': '" + thePageID + "', 'Mode': 'blog'}",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: ajaxGeneratePageFilename,
+					error: cmsAjaxFailed
+				});
+			} else {
+				cmsAlertModal("Cannot create a filename with there is no title value assigned.");
+			}
+		}
+
+		function ajaxGeneratePageFilename(data, status) {
+			debugger;
+			if (data.d == "FAIL") {
+				cmsAlertModal(data.d);
+			} else {
+				var theTitle = $('#<%= txtTitle.ClientID %>').val();
+				var theFile = $('#<%= txtPageSlug.ClientID %>').val();
+				var theNav = $('#<%= txtNav.ClientID %>').val();
+				var theHead = $('#<%= txtHead.ClientID %>').val();
+
+				if (theFile.length < 3) {
+					$('#<%= txtPageSlug.ClientID %>').val(data.d);
+				}
+				if (theNav.length < 1) {
+					$('#<%= txtNav.ClientID %>').val(theTitle);
+				}
+				if (theHead.length < 1) {
+					$('#<%= txtHead.ClientID %>').val(theTitle);
+				}
+			}
+			CheckFileName();
+		}
+
+
+
 		/* <asp:placeholder ID="pnlHB" runat="server"> begin EditHB */
 
 		function EditHB() {
@@ -312,7 +372,10 @@
 					title bar:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
+						MaxLength="200" />
+					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
+						<img class="imgNoBorder" src="/c3-admin/images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 				</td>

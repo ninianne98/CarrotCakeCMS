@@ -21,13 +21,17 @@ using Carrotware.Web.UI.Controls;
 
 
 namespace Carrotware.CMS.UI.Controls {
+
+	[Designer(typeof(GeneralControlDesigner))]
+	[ParseChildren(true, "SearchTemplate"), PersistChildren(true)]
 	[ToolboxData("<{0}:SearchBox runat=server></{0}:SearchBox>")]
 	public class SearchBox : BaseServerControl, INamingContainer {
 
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateInstance(TemplateInstance.Single)]
-		[MergableProperty(false)]
+		[DefaultValue(null)]
 		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[TemplateContainer(typeof(SearchBox))]
 		public ITemplate SearchTemplate { get; set; }
 
@@ -46,6 +50,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected PlaceHolder phEntry = new PlaceHolder();
+		protected Literal litScript = new Literal();
+
 		protected List<Control> EntryFormControls = new List<Control>();
 
 		protected string JS_SearchName {
@@ -80,19 +86,23 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void CreateChildControls() {
 
+			string sScript = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.SearchBoxJS.txt");
+
 			if (SearchTemplate != null) {
 				this.Controls.Clear();
 			}
+			phEntry.Controls.Clear();
+
+			phEntry.Controls.Add(new jsHelperLib());
+			phEntry.Controls.Add(litScript);
+			this.Controls.Add(phEntry);
 
 			phEntry.Visible = true;
-			phEntry.Controls.Clear();
-			if (SearchTemplate != null) {
-				SearchTemplate.InstantiateIn(phEntry);
+			if (this.SearchTemplate != null) {
+				this.SearchTemplate.InstantiateIn(phEntry);
 			}
 
 			FindEntryFormCtrls(phEntry);
-
-			phEntry.Controls.Add(new jsHelperLib());
 
 			TextBox txtSearchText = null;
 			if (string.IsNullOrEmpty(OverrideTextboxName)) {
@@ -106,8 +116,6 @@ namespace Carrotware.CMS.UI.Controls {
 				txtSearchText.ID = "over_" + OverrideTextboxName;
 			}
 
-			string sScript = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.SearchBoxJS.txt");
-
 			if (txtSearchText != null) {
 				sScript = sScript.Replace("{SEARCH_FUNC}", JS_SearchName);
 				sScript = sScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
@@ -120,10 +128,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 				sScript = sScript.Replace("{SEARCH_URL}", SiteData.CurrentSite.SiteSearchPath);
 
-				phEntry.Controls.Add(new Literal { Text = sScript });
+				litScript.Text = sScript;
 			}
-
-			this.Controls.Add(phEntry);
 
 			base.CreateChildControls();
 		}

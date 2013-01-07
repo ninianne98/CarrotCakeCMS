@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Base {
 
 		private int iCtrl = 0;
 
-		private string CtrlId {
+		public string CtrlId {
 			get {
 				return "WidgetCtrlId" + (iCtrl++);
 			}
@@ -102,7 +102,7 @@ namespace Carrotware.CMS.UI.Base {
 				IsPageTemplate = true;
 			}
 
-			if ((SiteData.IsPageSampler || IsPageTemplate) && pageContents == null) {
+			if ((SiteData.IsPageSampler || IsPageTemplate || HttpContext.Current == null) && pageContents == null) {
 				pageContents = ContentPageHelper.GetSamplerView();
 			}
 
@@ -113,8 +113,6 @@ namespace Carrotware.CMS.UI.Base {
 			if (pageContents != null) {
 				guidContentID = pageContents.Root_ContentID;
 			}
-
-			//widgetHelper.UpdateContentWidgets(guidContentID);
 
 			pageWidgets = widgetHelper.GetWidgets(guidContentID, !SecurityData.AdvancedEditMode);
 
@@ -351,6 +349,7 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (SecurityData.AdvancedEditMode) {
 								WidgetWrapper plcWrapper = new WidgetWrapper();
+								plcWrapper.ID = "Wrap" + CtrlId;
 								plcWrapper.IsAdminMode = true;
 								plcWrapper.ControlPath = theWidget.ControlPath;
 								plcWrapper.ControlTitle = theWidget.ControlPath;

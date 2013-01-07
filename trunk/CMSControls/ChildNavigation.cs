@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
@@ -13,21 +14,15 @@ using Carrotware.CMS.Core;
 *
 * Date: October 2011
 */
-//  http://msdn.microsoft.com/en-us/library/yhzc935f.aspx
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ChildNavigation runat=server></{0}:ChildNavigation>")]
-	public class ChildNavigation : BaseServerControl {
-
+	public class ChildNavigation : BaseServerControl, IHeadedList {
 
 		public bool IncludeParent { get; set; }
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[Obsolete("This property is obsolete, do not use.")]
 		public string SectionTitle {
 			get {
 				string s = (string)ViewState["SectionTitle"];
@@ -38,15 +33,47 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string MetaDataTitle {
+			get {
+				string s = (string)ViewState["MetaDataTitle"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["MetaDataTitle"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public TagType HeadWrapTag {
+			get {
+				String s = (String)ViewState["HeadWrapTag"];
+				TagType c = TagType.H2;
+				if (!string.IsNullOrEmpty(s)) {
+					c = (TagType)Enum.Parse(typeof(TagType), s, true);
+				}
+				return c;
+			}
+
+			set {
+				ViewState["HeadWrapTag"] = value.ToString();
+			}
+		}
 
 		protected List<SiteNav> GetSubNav() {
 			return navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 		}
 
-		protected SiteNav GetParent(Guid? Root_ContentID) {
+		protected SiteNav GetParent(Guid? rootContentID) {
 			SiteNav pageNav = null;
-			if (Root_ContentID != null) {
-				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, Root_ContentID.Value);
+			if (rootContentID != null) {
+				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, rootContentID.Value);
 			}
 			return pageNav;
 		}
@@ -59,8 +86,8 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
-				output.WriteLine("<h2>" + SectionTitle + "</h2> ");
+			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
+				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
 			string sCSS = "";
@@ -90,7 +117,7 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Indent--;
 				output.WriteLine("</ul>");
 			} else {
-				output.WriteLine("<!--span id=\"" + this.ClientID + "\"></span -->");
+				output.WriteLine("<span style=\"display: none;\" id=\"" + this.ClientID + "\"></span>");
 			}
 
 			output.Indent = indent;

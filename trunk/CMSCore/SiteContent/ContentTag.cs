@@ -15,10 +15,7 @@ using Carrotware.CMS.Data;
 
 
 namespace Carrotware.CMS.Core {
-	public class ContentTag : IDisposable, IContentMetaInfo {
-
-		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
-		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
+	public class ContentTag : IContentMetaInfo {
 
 		public ContentTag() { }
 
@@ -28,16 +25,6 @@ namespace Carrotware.CMS.Core {
 		public string TagSlug { get; set; }
 		public string TagURL { get; set; }
 		public int? UseCount { get; set; }
-
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -122,26 +109,28 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void Save() {
-			bool bNew = false;
-			carrot_ContentTag s = CompiledQueries.cqGetContentTagByID(db, this.ContentTagID);
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				bool bNew = false;
+				carrot_ContentTag s = CompiledQueries.cqGetContentTagByID(_db, this.ContentTagID);
 
-			if (s == null || (s != null && s.ContentTagID == Guid.Empty)) {
-				s = new carrot_ContentTag();
-				s.ContentTagID = Guid.NewGuid();
-				s.SiteID = this.SiteID;
-				bNew = true;
+				if (s == null || (s != null && s.ContentTagID == Guid.Empty)) {
+					s = new carrot_ContentTag();
+					s.ContentTagID = Guid.NewGuid();
+					s.SiteID = this.SiteID;
+					bNew = true;
+				}
+
+				s.TagSlug = ContentPageHelper.ScrubSlug(this.TagSlug);
+				s.TagText = this.TagText;
+
+				if (bNew) {
+					_db.carrot_ContentTags.InsertOnSubmit(s);
+				}
+
+				_db.SubmitChanges();
+
+				this.ContentTagID = s.ContentTagID;
 			}
-
-			s.TagSlug = ContentPageHelper.ScrubSlug(this.TagSlug);
-			s.TagText = this.TagText;
-
-			if (bNew) {
-				db.carrot_ContentTags.InsertOnSubmit(s);
-			}
-
-			db.SubmitChanges();
-
-			this.ContentTagID = s.ContentTagID;
 		}
 
 

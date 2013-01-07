@@ -21,7 +21,7 @@ namespace Carrotware.CMS.Core {
 
 		public SiteMapOrder() { }
 
-		public int? NavOrder { get; set; }
+		public int NavOrder { get; set; }
 		public Guid? Parent_ContentID { get; set; }
 		public Guid Root_ContentID { get; set; }
 		public string NavMenuText { get; set; }

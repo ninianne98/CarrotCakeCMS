@@ -12,15 +12,11 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:MostRecentUpdated runat=server></{0}:MostRecentUpdated>")]
-	public class MostRecentUpdated : BaseServerControl {
+	public class MostRecentUpdated : BaseServerControl, IHeadedList {
 
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[Obsolete("This property is obsolete, do not use.")]
 		public string UpdateTitle {
 			get {
 				string s = (string)ViewState["UpdateTitle"];
@@ -28,6 +24,64 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				ViewState["UpdateTitle"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string MetaDataTitle {
+			get {
+				string s = (string)ViewState["MetaDataTitle"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["MetaDataTitle"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public TagType HeadWrapTag {
+			get {
+				String s = (String)ViewState["HeadWrapTag"];
+				TagType c = TagType.H2;
+				if (!string.IsNullOrEmpty(s)) {
+					c = (TagType)Enum.Parse(typeof(TagType), s, true);
+				}
+				return c;
+			}
+
+			set {
+				ViewState["HeadWrapTag"] = value.ToString();
+			}
+		}
+
+		public enum ListContentType {
+			Unknown,
+			Blog,
+			ContentPage,
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public ListContentType ContentType {
+			get {
+				String s = (String)ViewState["ContentType"];
+				ListContentType c = ListContentType.ContentPage;
+				if (!string.IsNullOrEmpty(s)) {
+					c = (ListContentType)Enum.Parse(typeof(ListContentType), s, true);
+				}
+				return c;
+			}
+
+			set {
+				ViewState["ContentType"] = value.ToString();
 			}
 		}
 
@@ -40,7 +94,15 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected List<SiteNav> GetUpdates() {
-			return navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+
+			switch (ContentType) {
+				case ListContentType.Blog:
+					return navHelper.GetLatestPosts(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+				case ListContentType.ContentPage:
+					return navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+			}
+
+			return new List<SiteNav>();
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
@@ -51,10 +113,8 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (string.IsNullOrEmpty(UpdateTitle)) {
-				output.WriteLine("<h2>Most Recent Updates</h2> ");
-			} else {
-				output.WriteLine("<h2>" + UpdateTitle + "</h2> ");
+			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
+				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
 			string sCSS = "";

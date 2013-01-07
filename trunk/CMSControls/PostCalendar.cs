@@ -22,7 +22,6 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:PostCalendar runat=server></{0}:PostCalendar>")]
 	public class PostCalendar : BaseServerControl {
 
@@ -129,13 +128,17 @@ namespace Carrotware.CMS.UI.Controls {
 		private DateTime ThisMonth {
 			get {
 				if (_date.Year < 1900) {
-					_date = SiteData.CurrentSite.Now.Date;
-					string sFilterPath = SiteData.CurrentScriptName;
-					if (sFilterPath.ToLower().StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())) {
-						BlogDatePathParser p = new BlogDatePathParser(SiteData.CurrentSite, sFilterPath);
-						if (p.dateBegin.Year > 1900) {
-							_date = p.dateBegin;
+					if (HttpContext.Current != null) {
+						_date = SiteData.CurrentSite.Now.Date;
+						string sFilterPath = SiteData.CurrentScriptName;
+						if (sFilterPath.ToLower().StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())) {
+							BlogDatePathParser p = new BlogDatePathParser(SiteData.CurrentSite, sFilterPath);
+							if (p.dateBegin.Year > 1900) {
+								_date = p.dateBegin;
+							}
 						}
+					} else {
+						_date = DateTime.UtcNow;
 					}
 				}
 				return _date;
@@ -144,7 +147,11 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected List<ContentDateLinks> GetMetaInfo() {
-			return navHelper.GetSingleMonthBlogUpdateList(SiteData.CurrentSite, ThisMonth, !SecurityData.IsAuthEditor);
+			if (HttpContext.Current != null) {
+				return navHelper.GetSingleMonthBlogUpdateList(SiteData.CurrentSite, ThisMonth, !SecurityData.IsAuthEditor);
+			} else {
+				return new List<ContentDateLinks>();
+			}
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
@@ -269,7 +276,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			// as a bot crawler abuse stopper
 
-
 			output.WriteLine("		<tfoot id=\"" + this.ClientID + "-foot\" " + sCSSClassTableFoot + ">");
 			output.WriteLine("		<tr>");
 			output.WriteLine("			<td colspan=\"3\" id=\"prev\" class=\"cal-prev\">");
@@ -286,10 +292,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("		</tr>");
 			output.WriteLine("		</tfoot>");
 
-
-
 			output.WriteLine("	</table>");
-
 
 			output.Indent--;
 			output.WriteLine("</div> ");

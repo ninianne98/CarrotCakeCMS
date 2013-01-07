@@ -22,7 +22,6 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:PostMetaWordList runat=server></{0}:PostMetaWordList>")]
 	public class PostMetaWordList : BaseServerControl {
 
@@ -202,14 +201,8 @@ namespace Carrotware.CMS.UI.Controls {
 				output.WriteLine("<" + sInner + " class=\"meta-caption\">" + MetaDataTitle + "  </" + sInner + "> ");
 			}
 
-			//if (lstNav.Count < 1) {
-			//    output.WriteLine("<" + sInner + " class=\"meta-caption\"> No Results </" + sInner + "> ");
-			//}
-
 			foreach (IContentMetaInfo c in lstNav) {
-
 				output.WriteLine("<" + sInner + " class=\"meta-used-" + c.MetaInfoCount.ToString() + "\"><a href=\"" + c.MetaInfoURL + "\">" + c.MetaInfoText + "</a></" + sInner + ">  ");
-
 			}
 
 			output.Indent--;

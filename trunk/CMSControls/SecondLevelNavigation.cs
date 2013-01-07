@@ -2,25 +2,68 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-
-//  http://msdn.microsoft.com/en-us/library/yhzc935f.aspx
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:SecondLevelNavigation runat=server></{0}:SecondLevelNavigation>")]
-	public class SecondLevelNavigation : BaseServerControl {
-
+	public class SecondLevelNavigation : BaseServerControl, IHeadedList {
 
 		public bool IncludeParent { get; set; }
 
-		public string SectionTitle { get; set; }
+		[Obsolete("This property is obsolete, do not use.")]
+		public string SectionTitle {
+			get {
+				string s = (string)ViewState["SectionTitle"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["SectionTitle"] = value;
+			}
+		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string MetaDataTitle {
+			get {
+				string s = (string)ViewState["MetaDataTitle"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["MetaDataTitle"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		[Localizable(true)]
+		public TagType HeadWrapTag {
+			get {
+				String s = (String)ViewState["HeadWrapTag"];
+				TagType c = TagType.H2;
+				if (!string.IsNullOrEmpty(s)) {
+					c = (TagType)Enum.Parse(typeof(TagType), s, true);
+				}
+				return c;
+			}
+
+			set {
+				ViewState["HeadWrapTag"] = value.ToString();
+			}
+		}
 
 		protected List<SiteNav> GetSubNav() {
 			return navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
@@ -38,8 +81,8 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			var lstNav = GetSubNav();
 
-			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(SectionTitle)) {
-				output.Write("<h2>" + SectionTitle + "</h2>\r\n");
+			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
+				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
 			if (lstNav != null && lstNav.Count > 0) {
@@ -66,10 +109,9 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 				output.Write("</ul>");
 			} else {
-				output.Write("<!--span id=\"" + this.ClientID + "\"></span -->");
+				output.WriteLine("<span style=\"display: none;\" id=\"" + this.ClientID + "\"></span>");
 			}
 		}
-
 
 	}
 }

@@ -1,33 +1,30 @@
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-	<carrot:jquery runat="server" ID="jquery1" JQVersion="1.6" />
+	<carrot:jquery runat="server" ID="jquery1" />
 	<carrot:jqueryui runat="server" ID="jqueryui1" />
+	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<title>Citrus Island</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<asp:PlaceHolder ID="myPageHead" runat="server">
-		<%--<link href="<%=pageContents.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />--%>
-		<link rel="canonical" href="<%= theSite.DefaultCanonicalURL %>" />
-	</asp:PlaceHolder>
-	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
+	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 </head>
 <body>
 	<form id="form1" runat="server">
 	<div id="wrap">
 		<div id="header">
-			<carrot:SearchBox ID="search1" runat="server">
-				<SearchTemplate>
-					<div class="search">
+			<div class="search">
+				<carrot:SearchBox ID="search1" runat="server">
+					<SearchTemplate>
 						<p>
 							<asp:TextBox ID="SearchText" runat="server" CssClass="textbox" MaxLength="40" />
 							<asp:Button ID="btnSiteSearch" runat="server" CssClass="button" Text="Search" />
 						</p>
-					</div>
-				</SearchTemplate>
-			</carrot:SearchBox>
+					</SearchTemplate>
+				</carrot:SearchBox>
+			</div>
 			<h1 id="logo">
 				<a href="/">
 					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
@@ -40,17 +37,17 @@
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="10px" ForeColor="#FFFFFF" BackColor="#F4845A" />
 		</div>
 		<div id="sidebar">
-			<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" ContentType="Category" MetaDataTitle="Categories" />
-			<carrot:SiteMetaWordList ID="SiteMetaWordList2" runat="server" ContentType="Tag" MetaDataTitle="Tags" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" runat="server" ContentType="Category" MetaDataTitle="Categories" CssClass="sidemenu" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" runat="server" ContentType="Tag" MetaDataTitle="Tags" CssClass="sidemenu" />
 			<carrot:WidgetContainer ID="phLeftTop" runat="server">
 			</carrot:WidgetContainer>
-			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server"></carrot:ContentContainer>
+			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
 			<carrot:WidgetContainer ID="phLeftBottom" runat="server">
 			</carrot:WidgetContainer>
 		</div>
 		<div id="main">
 			<h1>
-				<asp:Literal ID="litPageHeading" runat="server" /></h1>
+				<carrot:ContentPageProperty runat="server" ID="ContentPageProperty3" DataField="PageHead" /></h1>
 			<p>
 				By
 				<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="Author_FullName_FirstLast" />
@@ -59,7 +56,7 @@
 			</p>
 			<carrot:WidgetContainer ID="phCenterTop" runat="server">
 			</carrot:WidgetContainer>
-			<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server"></carrot:ContentContainer>
+			<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
 			<carrot:WidgetContainer ID="phCenterBottom" runat="server">
 			</carrot:WidgetContainer>
 			<div style="clear: both;">
@@ -106,6 +103,9 @@
 								<div class="padding10">
 									<asp:Button ID="SubmitCommentButton" CssClass="button padding10" runat="server" Text="Submit Comment" ValidationGroup="ContentCommentForm" />
 								</div>
+								<script type="text/javascript">
+									__carrotware_PageValidate();
+								</script>
 							</p>
 						</div>
 					</CommentEntryTemplate>
@@ -154,9 +154,25 @@
 			</div>
 		</div>
 		<div id="rightbar">
+			<div class="padding10">
+				<div class="rsszone">
+					<carrot:RSSFeed runat="server" ID="RSSFeed2" RSSFeedType="BlogOnly" CssClass="rssimage" RenderRSSMode="ImageLink" />
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<carrot:RSSFeed runat="server" ID="RSSFeed3" RSSFeedType="PageOnly" CssClass="rssimage" RenderRSSMode="ImageLink" />
+				</div>
+			</div>
+			<div class="padding10 ">
+				<div class="previous-next">
+					<span class="nav-previous">
+						<carrot:ContentPageNext runat="server" ID="prevLink" UseDefaultText="false" NavigationDirection="Prev"><span class="meta-nav">&larr;</span> Previous</carrot:ContentPageNext>
+					</span><span class="nav-next">
+						<carrot:ContentPageNext runat="server" ID="nextLink" UseDefaultText="false" NavigationDirection="Next"> Next <span class="meta-nav">&rarr;</span> </carrot:ContentPageNext>
+					</span>
+				</div>
+			</div>
 			<carrot:WidgetContainer ID="phRightTop" runat="server">
 			</carrot:WidgetContainer>
-			<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server"></carrot:ContentContainer>
+			<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server" />
 			<carrot:WidgetContainer ID="phRightBottom" runat="server">
 			</carrot:WidgetContainer>
 		</div>

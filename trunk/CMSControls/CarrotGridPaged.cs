@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Design;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,6 +15,7 @@ using Carrotware.Web.UI.Controls;
 *
 * Date: October 2011
 */
+
 
 
 namespace Carrotware.CMS.UI.Controls {
@@ -138,29 +137,32 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public void BuildSorting() {
 			HttpContext context = HttpContext.Current;
-			HttpRequest request = context.Request;
 
-			this.SortingBy = TheGrid.DefaultSort;
+			if (context != null) {
+				HttpRequest request = context.Request;
 
-			if (!IsPostBack) {
-				bHeadClicked = false;
-				hdnPageNbr.Value = "1";
-				SetSort();
-			} else {
-				if (request.Form["__EVENTARGUMENT"] != null) {
-					string arg = request.Form["__EVENTARGUMENT"].ToString();
-					string tgt = request.Form["__EVENTTARGET"].ToString();
+				this.SortingBy = TheGrid.DefaultSort;
 
-					if (tgt.Contains("$lnkHead") && tgt.Contains("$" + TheGrid.ID + "$")) {
-						bHeadClicked = true;
-					}
+				if (!IsPostBack) {
+					bHeadClicked = false;
+					hdnPageNbr.Value = "1";
+					SetSort();
+				} else {
+					if (request.Form["__EVENTARGUMENT"] != null) {
+						string arg = request.Form["__EVENTARGUMENT"].ToString();
+						string tgt = request.Form["__EVENTTARGET"].ToString();
 
-					if (tgt.Contains("$" + sBtnName) && tgt.Contains("$" + ThePager.ID + "$")) {
-						string[] parms = tgt.Split('$');
-						int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
-						PageNumber = pg;
-						hdnPageNbr.Value = PageNumber.ToString();
-						bHeadClicked = false;
+						if (tgt.Contains("$lnkHead") && tgt.Contains("$" + TheGrid.ID + "$")) {
+							bHeadClicked = true;
+						}
+
+						if (tgt.Contains("$" + sBtnName) && tgt.Contains("$" + ThePager.ID + "$")) {
+							string[] parms = tgt.Split('$');
+							int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
+							PageNumber = pg;
+							hdnPageNbr.Value = PageNumber.ToString();
+							bHeadClicked = false;
+						}
 					}
 				}
 			}

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Web.SessionState;
-using System.Text;
-using System.Web;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Drawing.Drawing2D;
+using System.Text;
+using System.Web;
+using System.Web.SessionState;
 
 
 
@@ -72,7 +72,18 @@ namespace Carrotware.Web.UI.Controls {
 			int iThumb = 150;
 			string sImageIn = context.Request.QueryString["thumb"];
 			string sImg = sImageIn;
-			
+
+			if (sImageIn.Contains("../") || sImageIn.Contains(@"..\")) {
+				throw new Exception("Cannot use relative paths.");
+			}
+			if (sImageIn.Contains(":")) {
+				throw new Exception("Cannot specify drive letters.");
+			}
+			if (sImageIn.Contains("//") || sImageIn.Contains(@"\\")) {
+				throw new Exception("Cannot use UNC paths.");
+			}
+
+
 			string sScale = "false";
 			if (context.Request.QueryString["scale"] != null) {
 				sScale = context.Request.QueryString["scale"].ToLower();
@@ -142,7 +153,6 @@ namespace Carrotware.Web.UI.Controls {
 				}
 			}
 
-
 			if (bmpThumb == null) {
 				context.Response.StatusCode = 404;
 				context.Response.StatusDescription = "Not Found";
@@ -167,9 +177,6 @@ namespace Carrotware.Web.UI.Controls {
 
 			context.Response.End();
 		}
-
-
-
 
 	}
 

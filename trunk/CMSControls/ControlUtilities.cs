@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public void AssignPage(Control X) {
 			ResetFind();
-			
+
 			if (X != null && X is Control && ((Control)X).Page != null) {
 				_page = ((Control)X).Page;
 			} else {
@@ -109,13 +109,14 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public static string GetManifestResourceStream(string sResouceName) {
-			Assembly _assembly = Assembly.GetExecutingAssembly();
 			string sReturn = null;
-			try {
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
-					sReturn = oTextStream.ReadToEnd();
-				}
-			} catch { }
+
+			//try {
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
+				sReturn = oTextStream.ReadToEnd();
+			}
+			//} catch { }
 
 			return sReturn;
 		}
@@ -133,18 +134,13 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public ContentPage GetContainerContentPage(object X) {
-			bFoundPage = false;
-			page = null;
+			ResetFind();
 
 			ContentPage cp = null;
 			Page foundPage = null;
 
-			if (X is Control) {
-				foundPage = ((Control)X).Page;
-			} else {
-				foundPage = FindPage(X);
-			}
-
+			foundPage = FindPage(X);
+			
 			try {
 				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "pageContents");
 
@@ -157,8 +153,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public SiteData GetContainerSiteData(object X) {
-			bFoundPage = false;
-			page = null;
+			ResetFind();
 
 			SiteData sd = null;
 			Page foundPage = FindPage(X);
@@ -178,14 +173,25 @@ namespace Carrotware.CMS.UI.Controls {
 		private Page page = null;
 		public Page FindPage(object X) {
 
-			if (X is Page) {
-				bFoundPage = true;
-				page = (Page)X;
-			} else {
-				if (!bFoundPage) {
-					if (X is Control) {
-						Control c = (Control)X;
-						FindPage(c.Parent);
+			if (!bFoundPage) {
+				if (X is Page) {
+					bFoundPage = true;
+					page = (Page)X;
+				} else {
+					if (!bFoundPage) {
+						if (X is Control && X != null) {
+							Control c = (Control)X;
+							if (c.Page != null) {
+								bFoundPage = true;
+								page = c.Page;
+							}
+						}
+						if (!bFoundPage) {
+							if (X is Control) {
+								Control c = (Control)X;
+								FindPage(c.Parent);
+							}
+						}
 					}
 				}
 			}

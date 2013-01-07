@@ -12,6 +12,17 @@ ALTER TABLE [dbo].[carrot_ContentComment]
 
 GO
 
+UPDATE [dbo].[carrot_Content]
+SET [NavOrder] = 5
+WHERE ISNULL([NavOrder], -1) = -1
+
+GO
+
+ALTER TABLE [dbo].[carrot_Content] 
+	ALTER COLUMN  [NavOrder] [int] NOT NULL
+
+GO
+
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[vw_carrot_Comment]'))
 DROP VIEW [dbo].[vw_carrot_Comment]
 GO
@@ -154,6 +165,26 @@ ALTER TABLE [dbo].[carrot_Sites]
 
 ALTER TABLE [dbo].[carrot_Sites] 
 	ALTER COLUMN  [AcceptTrackbacks] [bit] NOT NULL
+
+GO
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_Content]
+AS 
+
+select rc.Root_ContentID, rc.SiteID, rc.Heartbeat_UserId, rc.EditHeartbeat, rc.[FileName], rc.PageActive, 
+		rc.CreateDate, c.ContentID, c.Parent_ContentID, c.IsLatestVersion, c.TitleBar, c.NavMenuText, c.PageHead, 
+		c.PageText, c.LeftPageText, c.RightPageText, c.NavOrder, c.EditUserId, c.EditDate, c.TemplateFile, c.MetaKeyword, c.MetaDescription,
+		ct.ContentTypeID, ct.ContentTypeValue, rc.PageSlug, rc.PageThumbnail, s.TimeZone,
+		rc.RetireDate, rc.GoLiveDate, rc.GoLiveDateLocal,
+		cast(case when rc.RetireDate < GetUTCDate() then 1 else 0 end as bit) as IsRetired,
+		cast(case when rc.GoLiveDate > GetUTCDate() then 1 else 0 end as bit) as IsUnReleased
+from [dbo].carrot_RootContent AS rc 
+inner join [dbo].carrot_Sites AS s ON rc.SiteID = s.SiteID 
+inner join [dbo].carrot_Content AS c ON rc.Root_ContentID = c.Root_ContentID 
+inner join [dbo].carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
+
 
 GO
 

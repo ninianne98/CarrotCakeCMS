@@ -15,7 +15,6 @@ using Carrotware.CMS.Core;
 
 
 namespace Carrotware.CMS.UI.Controls {
-
 	[ToolboxData("<{0}:RSSFeed runat=server></{0}:RSSFeed>")]
 	public class RSSFeed : BaseServerControl {
 

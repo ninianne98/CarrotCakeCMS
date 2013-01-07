@@ -60,6 +60,7 @@ using System.Web.UI;
 
 [assembly: TagPrefix("SiteDataProperty", "carrot")]
 [assembly: TagPrefix("ContentPageProperty", "carrot")]
+[assembly: TagPrefix("ContentPageNext", "carrot")]
 [assembly: TagPrefix("ContentPageImageThumb", "carrot")]
 
 [assembly: TagPrefix("NavLinkForPagerTemplate", "carrot")]
@@ -81,6 +82,7 @@ using System.Web.UI;
 [assembly: TagPrefix("IFrameWidgetWrapper", "carrot")]
 [assembly: TagPrefix("SearchBox", "carrot")]
 [assembly: TagPrefix("RSSFeed", "carrot")]
+[assembly: TagPrefix("SiteCanonicalURL", "carrot")]
 [assembly: TagPrefix("TrackBack", "carrot")]
 [assembly: TagPrefix("PostCalendar", "carrot")]
 

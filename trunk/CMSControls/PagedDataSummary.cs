@@ -87,7 +87,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		public string OrderBy {
+		private string OrderBy {
 			get {
 				String s = (String)ViewState["OrderBy"];
 				return ((s == null) ? "GoLiveDate  desc" : s);
@@ -314,6 +314,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter writer) {
 
+			this.OrderBy = "GoLiveDate  desc";
+
 			HttpContext context = HttpContext.Current;
 
 			rpDetails.EnableViewState = this.EnableViewState;
@@ -329,42 +331,44 @@ namespace Carrotware.CMS.UI.Controls {
 			rpPagedSummary.HeaderTemplate = PagerHeaderTemplate;
 			rpPagedSummary.FooterTemplate = PagerFooterTemplate;
 
-			if (IsPostBack) {
-				if (context.Request.Form["__EVENTARGUMENT"] != null) {
-					string arg = context.Request.Form["__EVENTARGUMENT"].ToString();
-					string tgt = context.Request.Form["__EVENTTARGET"].ToString();
+			if (context != null) {
+				if (IsPostBack) {
+					if (context.Request.Form["__EVENTARGUMENT"] != null) {
+						string arg = context.Request.Form["__EVENTARGUMENT"].ToString();
+						string tgt = context.Request.Form["__EVENTTARGET"].ToString();
 
-					string sParm = this.ClientID.Replace(this.ID, "").Replace("_", "$");
-					if (string.IsNullOrEmpty(sParm)) {
-						sParm = this.ID + "$";
+						string sParm = this.ClientID.Replace(this.ID, "").Replace("_", "$");
+						if (string.IsNullOrEmpty(sParm)) {
+							sParm = this.ID + "$";
+						}
+
+						if (tgt.StartsWith(sParm)
+							&& tgt.Contains(this.ID + "$")
+							&& tgt.Contains("$" + sBtnName)
+							&& tgt.Contains("$" + rpPagedSummary.ID + "$")) {
+							string[] parms = tgt.Split('$');
+							int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
+							PageNumber = pg;
+							hdnPageNbr.Value = PageNumber.ToString();
+						}
+					}
+				} else {
+					string sPageParm = "PageNbr";
+					string sPageNbr = "";
+
+					if (context.Request[sPageParm] != null) {
+						sPageNbr = context.Request[sPageParm].ToString();
 					}
 
-					if (tgt.StartsWith(sParm)
-						&& tgt.Contains(this.ID + "$")
-						&& tgt.Contains("$" + sBtnName)
-						&& tgt.Contains("$" + rpPagedSummary.ID + "$")) {
-						string[] parms = tgt.Split('$');
-						int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
+					sPageParm = this.ID.ToString() + "Nbr";
+					if (context.Request[sPageParm] != null) {
+						sPageNbr = context.Request[sPageParm].ToString();
+					}
+					if (!string.IsNullOrEmpty(sPageNbr)) {
+						int pg = int.Parse(sPageNbr);
 						PageNumber = pg;
 						hdnPageNbr.Value = PageNumber.ToString();
 					}
-				}
-			} else {
-				string sPageParm = "PageNbr";
-				string sPageNbr = "";
-
-				if (context.Request[sPageParm] != null) {
-					sPageNbr = context.Request[sPageParm].ToString();
-				}
-
-				sPageParm = this.ID.ToString() + "Nbr";
-				if (context.Request[sPageParm] != null) {
-					sPageNbr = context.Request[sPageParm].ToString();
-				}
-				if (!string.IsNullOrEmpty(sPageNbr)) {
-					int pg = int.Parse(sPageNbr);
-					PageNumber = pg;
-					hdnPageNbr.Value = PageNumber.ToString();
 				}
 			}
 
@@ -395,37 +399,47 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ContentPageType.PageType viewContentType = ContentPageType.PageType.BlogEntry;
 
-			if (SiteData.CurrentScriptName.ToLower() == SiteData.CurrentSite.SiteSearchPath.ToLower()) {
-				ContentType = SummaryContentType.SiteSearch;
-				if (HttpContext.Current.Request.QueryString["search"] != null) {
-					sSearchTerm = HttpContext.Current.Request.QueryString["search"].ToString();
+			if (context != null) {
+				if (SiteData.CurrentScriptName.ToLower() == SiteData.CurrentSite.SiteSearchPath.ToLower()) {
+					ContentType = SummaryContentType.SiteSearch;
+					if (HttpContext.Current.Request.QueryString["search"] != null) {
+						sSearchTerm = HttpContext.Current.Request.QueryString["search"].ToString();
+					}
 				}
 			}
 
-			switch (ContentType) {
-				case SummaryContentType.Blog:
-					viewContentType = ContentPageType.PageType.BlogEntry;
-					TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
-					lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
-					break;
-				case SummaryContentType.ContentPage:
-					viewContentType = ContentPageType.PageType.ContentEntry;
-					TotalRecords = navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor);
-					lstContents = navHelper.GetLatestContentPagedList(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
-					break;
-				case SummaryContentType.SpecifiedCategories:
-					viewContentType = ContentPageType.PageType.BlogEntry;
-					TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor);
-					lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
-					break;
-				case SummaryContentType.SiteSearch:
-					TotalRecords = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor);
-					lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
-					break;
+			if (context != null) {
+				switch (ContentType) {
+					case SummaryContentType.Blog:
+						viewContentType = ContentPageType.PageType.BlogEntry;
+						TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
+						break;
+					case SummaryContentType.ContentPage:
+						viewContentType = ContentPageType.PageType.ContentEntry;
+						TotalRecords = navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetLatestContentPagedList(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
+						break;
+					case SummaryContentType.SpecifiedCategories:
+						viewContentType = ContentPageType.PageType.BlogEntry;
+						TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
+						break;
+					case SummaryContentType.SiteSearch:
+						TotalRecords = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
+						break;
+				}
+			} else {
+				viewContentType = ContentPageType.PageType.ContentEntry;
+				TotalRecords = navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, false);
+				lstContents = navHelper.GetLatestContentPagedList(Guid.NewGuid(), viewContentType, false, PageSize, iPageNbr, sSortFld, sSortDir);
 			}
 
-
 			lstContents.ToList().ForEach(q => IdentifyLinkAsInactive(q));
+
+			this.Controls.Add(rpDetails);
+			this.Controls.Add(rpPagedSummary);
 
 			rpDetails.DataSource = lstContents;
 			rpDetails.DataBind();
@@ -435,10 +449,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if ((TotalRecords % PageSize) > 0) {
 				TotalPages++;
 			}
-
-			this.Controls.Add(rpDetails);
-			this.Controls.Add(rpPagedSummary);
-
+			
 			if (ShowPager && TotalPages > 1) {
 				List<int> pagelist = new List<int>();
 				pagelist = Enumerable.Range(1, TotalPages).ToList();
@@ -453,7 +464,6 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent++;
 
 			writer.WriteLine();
-
 			writer.Write("\r\n<span id=\"" + this.ClientID + "\">\r\n");
 
 			if (PagerBelowContent) {

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
@@ -44,6 +44,9 @@ namespace Carrotware.CMS.Core {
 
 		List<IContentMetaInfo> GetTagListForPost(Guid siteID, int iUpdates, Guid rootContentID);
 		List<IContentMetaInfo> GetCategoryListForPost(Guid siteID, int iUpdates, Guid rootContentID);
+
+		SiteNav GetPrevPost(Guid siteID, Guid rootContentID, bool bActiveOnly);
+		SiteNav GetNextPost(Guid siteID, Guid rootContentID, bool bActiveOnly);
 
 		List<SiteNav> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageNumber);
 		List<SiteNav> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageNumber, string sortField, string sortDir);

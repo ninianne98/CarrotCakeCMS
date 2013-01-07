@@ -23,12 +23,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public Guid guidContentID = Guid.Empty;
 		ContentPage pageContents = null;
 		ContentPage parentPageContents = null;
+		public bool bAddTopLevelPage = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
 
 			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
 				guidContentID = new Guid(Request.QueryString["pageid"].ToString());
 			}
+			if (!string.IsNullOrEmpty(Request.QueryString["addtoplevel"])) {
+				bAddTopLevelPage = Convert.ToBoolean(Request.QueryString["addtoplevel"].ToString());
+			}
+
 			cmsHelper.OverrideKey(guidContentID);
 
 			if (cmsHelper.cmsAdminContent != null) {
@@ -44,53 +49,62 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			pageContents = new ContentPage();
+			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 
-			if (parentPageContents != null) {
-				pageContents.Root_ContentID = Guid.NewGuid();
-				pageContents.ContentID = pageContents.Root_ContentID;
-				pageContents.Parent_ContentID = parentPageContents.Root_ContentID;
+			Guid? parentContentID = null;
+			int iOrder = pageHelper.GetMaxNavOrder(SiteData.CurrentSite.SiteID) + 2;
 
-				pageContents.SiteID = SiteData.CurrentSiteID;
-
-				pageContents.TemplateFile = parentPageContents.TemplateFile;
-
-				pageContents.TitleBar = txtTitle.Text;
-				pageContents.NavMenuText = txtNav.Text;
-				pageContents.PageHead = txtHead.Text;
-				pageContents.FileName = txtFileName.Text;
-
-				pageContents.RightPageText = "<p>&nbsp;</p>";
-				pageContents.LeftPageText = "<p>&nbsp;</p>";
-				pageContents.PageText = "<p>&nbsp;</p>";
-
-				pageContents.MetaDescription = txtDescription.Text;
-				pageContents.MetaKeyword = txtKey.Text;
-
-				pageContents.Heartbeat_UserId = SecurityData.CurrentUserGuid;
-				pageContents.EditHeartbeat = DateTime.UtcNow;
-
-				pageContents.EditUserId = SecurityData.CurrentUserGuid;
-				pageContents.IsLatestVersion = true;
-				pageContents.EditDate = SiteData.CurrentSite.Now;
-				pageContents.NavOrder = parentPageContents.NavOrder + 1;
-				pageContents.PageActive = false;
-				pageContents.ContentType = ContentPageType.PageType.ContentEntry;
-
-				pageContents.RetireDate = SiteData.CurrentSite.Now.AddYears(200);
-				pageContents.GoLiveDate = SiteData.CurrentSite.Now;
-
-				pageContents.SavePageEdit();
-
-				pnlAdd.Visible = false;
-				pnlSaved.Visible = true;
-
-				litPageName.Text = pageContents.FileName;
-
-				if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
-					VirtualDirectory.RegisterRoutes(true);
+			if (!bAddTopLevelPage) {
+				if (parentPageContents != null) {
+					parentContentID = parentPageContents.Root_ContentID;
+					iOrder = parentPageContents.NavOrder + 2;
 				}
 			}
 
+			pageContents.Root_ContentID = Guid.NewGuid();
+			pageContents.ContentID = pageContents.Root_ContentID;
+			pageContents.Parent_ContentID = parentContentID;
+
+			pageContents.SiteID = SiteData.CurrentSiteID;
+
+			pageContents.TemplateFile = SiteData.DefaultTemplateFilename;
+
+			pageContents.TitleBar = txtTitle.Text;
+			pageContents.NavMenuText = txtNav.Text;
+			pageContents.PageHead = txtHead.Text;
+			pageContents.FileName = txtFileName.Text;
+
+			pageContents.RightPageText = "<p>&nbsp;</p>";
+			pageContents.LeftPageText = "<p>&nbsp;</p>";
+			pageContents.PageText = "<p>&nbsp;</p>";
+
+			pageContents.MetaDescription = txtDescription.Text;
+			pageContents.MetaKeyword = txtKey.Text;
+
+			pageContents.Heartbeat_UserId = SecurityData.CurrentUserGuid;
+			pageContents.EditHeartbeat = dtSite.AddMinutes(5);
+
+			pageContents.EditUserId = SecurityData.CurrentUserGuid;
+			pageContents.IsLatestVersion = true;
+			pageContents.EditDate = SiteData.CurrentSite.Now;
+			pageContents.NavOrder = iOrder;
+			pageContents.PageActive = false;
+			pageContents.ContentType = ContentPageType.PageType.ContentEntry;
+
+			pageContents.RetireDate = dtSite.AddYears(200);
+			pageContents.GoLiveDate = dtSite;
+
+			pageContents.SavePageEdit();
+
+			pnlAdd.Visible = false;
+			pnlSaved.Visible = true;
+
+			litPageName.Text = pageContents.FileName;
+
+			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
+				VirtualDirectory.RegisterRoutes(true);
+			}
 		}
+
 	}
 }

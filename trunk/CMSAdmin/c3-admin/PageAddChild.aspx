@@ -10,6 +10,63 @@
 		var thePage = '';
 
 
+		function AutoGeneratePageFilename() {
+			var theTitle = $('#<%= txtTitle.ClientID %>').val();
+			var theFile = $('#<%= txtFileName.ClientID %>').val();
+			var theNav = $('#<%= txtNav.ClientID %>').val();
+
+			if (theTitle.length > 0 && theFile.length < 1 && theNav.length < 1) {
+				GeneratePageFilename();
+			}
+		}
+
+		function GeneratePageFilename() {
+			var theTitle = $('#<%= txtTitle.ClientID %>').val();
+			var theFile = $('#<%= txtFileName.ClientID %>').val();
+			var sGoLiveDate = '<%=DateTime.Now.ToShortDateString() %>';
+
+			if (theTitle.length > 0) {
+
+				var webMthd = webSvc + "/GenerateNewFilename";
+				var myPageTitle = MakeStringSafe(theTitle);
+
+				$.ajax({
+					type: "POST",
+					url: webMthd,
+					data: "{'ThePageTitle': '" + myPageTitle + "', 'GoLiveDate': '" + sGoLiveDate + "', 'PageID': '" + thePageID + "', 'Mode': 'page'}",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: ajaxGeneratePageFilename,
+					error: cmsAjaxFailed
+				});
+			} else {
+				cmsAlertModal("Cannot create a filename with there is no title value assigned.");
+			}
+		}
+
+		function ajaxGeneratePageFilename(data, status) {
+			debugger;
+			if (data.d == "FAIL") {
+				cmsAlertModal(data.d);
+			} else {
+				var theTitle = $('#<%= txtTitle.ClientID %>').val();
+				var theFile = $('#<%= txtFileName.ClientID %>').val();
+				var theNav = $('#<%= txtNav.ClientID %>').val();
+				var theHead = $('#<%= txtHead.ClientID %>').val();
+
+				if (theFile.length < 3) {
+					$('#<%= txtFileName.ClientID %>').val(data.d);
+				}
+				if (theNav.length < 1) {
+					$('#<%= txtNav.ClientID %>').val(theTitle);
+				}
+				if (theHead.length < 1) {
+					$('#<%= txtHead.ClientID %>').val(theTitle);
+				}
+			}
+			CheckFileName();
+		}
+
 		function CheckFileName() {
 			thePage = $('#<%= txtFileName.ClientID %>').val();
 
@@ -55,8 +112,8 @@
 	</asp:Panel>
 	<asp:Panel runat="server" ID="pnlAdd">
 		<p>
-			This creates a blank and unpublished page (no content) under the currently being edited page. Will have the same template as the currently being edited
-			page.
+			This creates a blank and unpublished page (no content) with the specified filename and title etc. This new page will use the plain/default template. You
+			will have the opportunity to update the appearance when you visit the new page.
 		</p>
 		<table width="700">
 			<tr>
@@ -64,7 +121,10 @@
 					title bar:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
+						MaxLength="200" />
+					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
+						<img class="imgNoBorder" src="/c3-admin/images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 						Display="Dynamic"></asp:RequiredFieldValidator>
 				</td>

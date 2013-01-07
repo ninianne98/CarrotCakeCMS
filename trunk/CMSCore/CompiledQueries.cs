@@ -58,6 +58,11 @@ namespace Carrotware.CMS.Core {
 						&& ct.ContentID == contentID
 					 select ct).FirstOrDefault());
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, int> cqGetMaxOrderID =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid siteID) =>
+					(from ct in ctx.vw_carrot_Contents.Where(c => c.SiteID == siteID && c.IsLatestVersion == true)
+					 select ct.NavOrder).Max());
 
 		internal static IQueryable<vw_carrot_Content> TopLevelPages(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			SearchParameterObject sp = new SearchParameterObject {
@@ -779,6 +784,68 @@ namespace Carrotware.CMS.Core {
 						   && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 						   && ct.Root_ContentID == rootContentID
 					   select ct));
+
+
+		internal static vw_carrot_Content GetPreviousPost(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, Guid rootContentID) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				RootContentID = rootContentID,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly
+			};
+
+			return cqGetPreviousPost(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, vw_carrot_Content> cqGetPreviousPost =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from ct1 in ctx.vw_carrot_Contents
+					 join ct2 in ctx.vw_carrot_Contents on ct1.SiteID equals ct2.SiteID
+					 orderby ct1.GoLiveDate descending
+					 where ct1.SiteID == sp.SiteID
+							&& ct2.GoLiveDate >= ct1.GoLiveDate
+							&& ct2.ContentTypeID == ct1.ContentTypeID
+							&& ct2.Root_ContentID != ct1.Root_ContentID
+							&& ct2.Root_ContentID == sp.RootContentID
+							&& ct1.IsLatestVersion == true
+							&& ct2.IsLatestVersion == true
+							&& (ct1.PageActive == true || sp.ActiveOnly == false)
+							&& (ct1.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct1.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					 select ct1).FirstOrDefault());
+
+
+
+		internal static vw_carrot_Content GetNextPost(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, Guid rootContentID) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				RootContentID = rootContentID,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly
+			};
+
+			return cqGetNextPost(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, vw_carrot_Content> cqGetNextPost =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from ct1 in ctx.vw_carrot_Contents
+					 join ct2 in ctx.vw_carrot_Contents on ct1.SiteID equals ct2.SiteID
+					 orderby ct1.GoLiveDate ascending
+					 where ct1.SiteID == sp.SiteID
+							&& ct2.GoLiveDate <= ct1.GoLiveDate
+							&& ct2.ContentTypeID == ct1.ContentTypeID
+							&& ct2.Root_ContentID != ct1.Root_ContentID
+							&& ct2.Root_ContentID == sp.RootContentID
+							&& ct1.IsLatestVersion == true
+							&& ct2.IsLatestVersion == true
+							&& (ct1.PageActive == true || sp.ActiveOnly == false)
+							&& (ct1.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct1.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					 select ct1).FirstOrDefault());
+
 
 		//=========================================
 

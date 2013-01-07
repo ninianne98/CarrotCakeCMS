@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.UI;
-using System.Xml.Serialization;
 using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
@@ -198,6 +193,7 @@ namespace Carrotware.CMS.Core {
 		private static string ScrubSpecial(string sInput) {
 			string sOutput = sInput;
 
+			sOutput = sOutput.Replace("...", ".").Replace("...", ".").Replace("..", ".");
 			sOutput = sOutput.Replace(" ", "-");
 			sOutput = sOutput.Replace("'", "-");
 			sOutput = sOutput.Replace("\"", "-");
@@ -293,6 +289,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public Dictionary<string, float> GetPopularTemplateList(Guid siteID, ContentPageType.PageType pageType) {
+
+			Dictionary<string, float> lstTemps = CannedQueries.GetTemplateCounts(db, siteID, pageType);
+
+			return lstTemps;
+		}
+
 		public List<ContentPage> GetAllLatestContentList(Guid siteID) {
 			List<ContentPage> lstContent = CannedQueries.GetAllContentList(db, siteID).Select(ct => new ContentPage(ct)).ToList();
 
@@ -337,7 +340,11 @@ namespace Carrotware.CMS.Core {
 			int iCount = CannedQueries.GetLatestContentList(db, siteID, false).Count();
 			return iCount;
 		}
+		public int GetMaxNavOrder(Guid siteID) {
+			int iCount = CompiledQueries.cqGetMaxOrderID(db, siteID);
 
+			return iCount;
+		}
 
 		public List<ContentPage> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageNumber, string sortField, string sortDir) {
 			return GetLatestContentPagedList(siteID, ContentPageType.PageType.BlogEntry, bActiveOnly, pageNumber, sortField, sortDir);
@@ -624,26 +631,28 @@ namespace Carrotware.CMS.Core {
 			string sFile1 = "";
 			string sFile2 = "";
 
-			Assembly _assembly = Assembly.GetExecutingAssembly();
+			try {
+				Assembly _assembly = Assembly.GetExecutingAssembly();
 
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt"))) {
-				sFile1 = oTextStream.ReadToEnd();
-			}
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent2.txt"))) {
-				sFile2 = oTextStream.ReadToEnd();
-			}
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt"))) {
+					sFile1 = oTextStream.ReadToEnd();
+				}
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock.SampleContent2.txt"))) {
+					sFile2 = oTextStream.ReadToEnd();
+				}
 
-			List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
-									   where i.Contains("SiteContent.Mock.sample")
-									   && i.EndsWith(".png")
-									   select i).ToList();
+				List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
+										   where i.Contains("SiteContent.Mock.sample")
+										   && i.EndsWith(".png")
+										   select i).ToList();
 
-			foreach (string img in imageNames) {
-				var imgURL = CMSConfigHelper.GetWebResourceUrl(typeof(ContentPage), img);
-				sFile1 = sFile1.Replace(img, imgURL);
-				sFile2 = sFile2.Replace(img, imgURL);
-			}
+				foreach (string img in imageNames) {
+					var imgURL = CMSConfigHelper.GetWebResourceUrl(typeof(ContentPage), img);
+					sFile1 = sFile1.Replace(img, imgURL);
+					sFile2 = sFile2.Replace(img, imgURL);
+				}
 
+			} catch { }
 
 			ContentPage pageNew = new ContentPage();
 			pageNew.Root_ContentID = SiteData.CurrentSiteID;
