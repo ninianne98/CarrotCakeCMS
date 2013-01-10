@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using Carrotware.CMS.Interface;
-using System.ComponentModel;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,13 +20,20 @@ using System.ComponentModel;
 namespace Carrotware.CMS.Core {
 	public static class ReflectionUtilities {
 
+		public static BindingFlags PublicInstanceStatic {
+			get {
+				return BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
+			}
+		}
+
+
 		public static Object GetPropertyValue(Object obj, string property) {
-			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+			PropertyInfo propertyInfo = obj.GetType().GetProperty(property, PublicInstanceStatic);
 			return propertyInfo.GetValue(obj, null);
 		}
 
 		public static Object GetPropertyValueFlat(Object obj, string property) {
-			PropertyInfo[] propertyInfos = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+			PropertyInfo[] propertyInfos = obj.GetType().GetProperties(PublicInstanceStatic);
 			PropertyInfo propertyInfo = null;
 			foreach (PropertyInfo info in propertyInfos) {
 				if (info.Name == property) {
@@ -61,7 +68,7 @@ namespace Carrotware.CMS.Core {
 
 		public static List<PropertyInfo> GetProperties(Object obj) {
 
-			PropertyInfo[] info = obj.GetType().GetProperties();
+			PropertyInfo[] info = obj.GetType().GetProperties(PublicInstanceStatic);
 
 			List<PropertyInfo> props = (from i in info.AsEnumerable()
 										orderby i.Name
@@ -79,7 +86,7 @@ namespace Carrotware.CMS.Core {
 
 		public static List<PropertyInfo> GetProperties(Type type) {
 
-			PropertyInfo[] info = type.GetProperties();
+			PropertyInfo[] info = type.GetProperties(PublicInstanceStatic);
 
 			List<PropertyInfo> props = (from i in info.AsEnumerable()
 										orderby i.Name
@@ -137,16 +144,19 @@ namespace Carrotware.CMS.Core {
 				FieldMode = (prop.PropertyType.ToString().ToLower() == "system.boolean") ?
 						WidgetAttribute.FieldMode.CheckBox : WidgetAttribute.FieldMode.TextBox
 			};
-
-			foreach (Attribute attr in objprop.Props.GetCustomAttributes(true)) {
-				if (attr is WidgetAttribute) {
-					var widgetAttrib = attr as WidgetAttribute;
-					if (null != widgetAttrib) {
-						try { objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource; } catch { objprop.CompanionSourceFieldName = ""; }
-						try { objprop.FieldMode = widgetAttrib.Mode; } catch { objprop.FieldMode = WidgetAttribute.FieldMode.Unknown; }
+			try {
+				foreach (Attribute attr in objprop.Props.GetCustomAttributes(true)) {
+					if (attr is WidgetAttribute) {
+						var widgetAttrib = attr as WidgetAttribute;
+						if (null != widgetAttrib) {
+							try { objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource; } catch { objprop.CompanionSourceFieldName = ""; }
+							try { objprop.FieldMode = widgetAttrib.Mode; } catch { objprop.FieldMode = WidgetAttribute.FieldMode.Unknown; }
+						}
 					}
+
 				}
-			}
+			} catch (Exception ex) { }
+
 
 			objprop.FieldDescription = GetDescriptionAttribute(obj.GetType(), objprop.Name);
 

@@ -124,13 +124,23 @@ namespace Carrotware.CMS.Core {
 		private static DataSet ReadDataSetConfig(CMSConfigFileType cfg, string sPath) {
 			string sPlugCfg = "default.config";
 			string sRealPath = HttpContext.Current.Server.MapPath(sPath);
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 
 			int iExpectedTblCount = 1;
 
 			switch (cfg) {
 				case CMSConfigFileType.AdminModules:
-					sPlugCfg = sRealPath + "AdminModules.config";
+					sPlugCfg = sRealPath + config.ConfigFileLocation.AdminModules;
 					iExpectedTblCount = 2;
+					break;
+				case CMSConfigFileType.PublicControls:
+					sPlugCfg = sRealPath + config.ConfigFileLocation.PublicControls;
+					break;
+				case CMSConfigFileType.SiteSkins:
+					sPlugCfg = sRealPath + config.ConfigFileLocation.SiteSkins;
+					break;
+				case CMSConfigFileType.SiteMapping:
+					sPlugCfg = sRealPath + config.ConfigFileLocation.SiteMapping;
 					break;
 				case CMSConfigFileType.AdminMod:
 					sPlugCfg = sRealPath + "Admin.config";
@@ -139,17 +149,8 @@ namespace Carrotware.CMS.Core {
 				case CMSConfigFileType.PublicCtrl:
 					sPlugCfg = sRealPath + "Public.config";
 					break;
-				case CMSConfigFileType.PublicControls:
-					sPlugCfg = sRealPath + "PublicControls.config";
-					break;
 				case CMSConfigFileType.SkinDef:
 					sPlugCfg = sRealPath + "Skin.config";
-					break;
-				case CMSConfigFileType.SiteSkins:
-					sPlugCfg = sRealPath + "SiteSkins.config";
-					break;
-				case CMSConfigFileType.SiteMapping:
-					sPlugCfg = sRealPath + "SiteMapping.config";
 					break;
 				default:
 					sPlugCfg = sRealPath + "default.config";

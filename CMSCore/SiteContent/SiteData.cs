@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -53,20 +52,13 @@ namespace Carrotware.CMS.Core {
 			this.Blog_DatePattern = string.IsNullOrEmpty(s.Blog_DatePattern) ? "yyyy/MM/dd" : s.Blog_DatePattern;
 
 			if (string.IsNullOrEmpty(this.SiteTitlebarPattern)) {
-				this.SiteTitlebarPattern = PageTitlePattern;
+				this.SiteTitlebarPattern = DefaultPageTitlePattern;
 			}
 		}
 
-		public static string PageTitlePattern {
+		public static string DefaultPageTitlePattern {
 			get {
-				string pattern = "[[CARROT_SITENAME]] - [[CARROT_PAGE_TITLEBAR]]";
-				if (ConfigurationManager.AppSettings["CarrotPageTitlePattern"] != null) {
-					try { pattern = ConfigurationManager.AppSettings["CarrotPageTitlePattern"].ToString(); } catch { }
-					if (pattern.Contains("{0}") || pattern.Contains("{1}")) {
-						pattern = "[[CARROT_SITENAME]] - [[CARROT_PAGE_TITLEBAR]]";
-					}
-				}
-				return pattern;
+				return "[[CARROT_SITENAME]] - [[CARROT_PAGE_TITLEBAR]]";
 			}
 		}
 
@@ -306,8 +298,10 @@ namespace Carrotware.CMS.Core {
 			get {
 				Guid _site = Guid.Empty;
 				if (HttpContext.Current != null) {
-					if (ConfigurationManager.AppSettings["CarrotSiteID"] != null) {
-						_site = new Guid(ConfigurationManager.AppSettings["CarrotSiteID"].ToString());
+					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+					if (config.MainConfig != null
+						&& config.MainConfig.SiteID != null) {
+						_site = config.MainConfig.SiteID.Value;
 					}
 
 					if (_site == Guid.Empty) {
@@ -329,8 +323,10 @@ namespace Carrotware.CMS.Core {
 			get {
 				if (_siteQS == null) {
 					_siteQS = String.Empty;
-					if (ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"] != null) {
-						_siteQS = ConfigurationManager.AppSettings["CarrotOldSiteQuerystring"].ToString().ToLower();
+					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+					if (config.ExtraOptions != null
+						&& !string.IsNullOrEmpty(config.ExtraOptions.OldSiteQuerystring)) {
+						_siteQS = config.ExtraOptions.OldSiteQuerystring.ToLower();
 					}
 				}
 				return _siteQS;
@@ -604,8 +600,10 @@ namespace Carrotware.CMS.Core {
 		public static void WriteDebugException(string sSrc, Exception objErr) {
 			bool bWriteError = false;
 
-			if (System.Configuration.ConfigurationManager.AppSettings["CarrotWriteErrorLog"] != null) {
-				bWriteError = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["CarrotWriteErrorLog"].ToString());
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+
+			if (config.ExtraOptions != null && config.ExtraOptions.WriteErrorLog) {
+				bWriteError = config.ExtraOptions.WriteErrorLog;
 			}
 #if DEBUG
 			bWriteError = true; // always write erros when debug build
@@ -852,8 +850,9 @@ namespace Carrotware.CMS.Core {
 		public static string AdminFolderPath {
 			get {
 				if (_adminFolderPath == null) {
-					if (ConfigurationManager.AppSettings["CarrotAdminFolderPath"] != null) {
-						_adminFolderPath = ConfigurationManager.AppSettings["CarrotAdminFolderPath"].ToString();
+					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+					if (config.MainConfig != null && !string.IsNullOrEmpty(config.MainConfig.AdminFolderPath)) {
+						_adminFolderPath = config.MainConfig.AdminFolderPath;
 						_adminFolderPath = ("/" + _adminFolderPath + "/").Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
 					} else {
 						_adminFolderPath = "/c3-admin/";

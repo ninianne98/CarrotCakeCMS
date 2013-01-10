@@ -523,7 +523,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
-				return ContentPageHelper.ScrubFilename(CurrentPageGuid, sTheFileName);
+				return ContentPageHelper.ScrubFilename(CurrentPageGuid, sTheFileName).ToLower();
 			} catch (Exception ex) {
 
 				SiteData.WriteDebugException("webservice", ex);

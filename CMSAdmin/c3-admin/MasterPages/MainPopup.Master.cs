@@ -16,7 +16,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				pnlDirty.Visible = true;
 			}
 
-			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup.Ctrl");
+			LoadFooterCtrl(plcFooter, ControlLocation.PopupFooter);
 		}
 
 		// so that it is easy to toggle master pages

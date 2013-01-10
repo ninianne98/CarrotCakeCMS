@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Web.UI;
+using System.Web.UI.Design;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 /*
@@ -97,7 +98,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void Render(HtmlTextWriter w) {
-			
+
 			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
 
 				ControlUtilities cu = new ControlUtilities();
@@ -152,4 +153,36 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 	}
+
+	//=======================
+
+	public class ContentContainerDesigner : ControlDesigner {
+
+		public override string GetDesignTimeHtml() {
+			ContentContainer myctrl = (ContentContainer)base.ViewControl;
+			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "CMS, ");
+			string sID = myctrl.ID;
+
+			string sTextOut = "<span>[" + sType + " - " + sID + "]</span>\r\n";
+			string sPageOutText = "";
+
+			string sPageText = SiteNavHelper.GetSampleBody(myctrl, "SampleContent3");
+			if (myctrl.TextZone == ContentContainer.TextFieldZone.Unknown) {
+				myctrl.TextZone = ContentContainer.TextFieldZone.TextCenter;
+			}
+			sPageOutText = "<h2>Content D CENTER</h2>\r\n" + sPageText;
+			if (myctrl.ClientID.ToLower().Contains("left") || myctrl.TextZone == ContentContainer.TextFieldZone.TextLeft) {
+				sPageOutText = "<h2>Content D LEFT</h2>\r\n" + sPageText;
+			}
+
+			if (myctrl.ClientID.ToLower().Contains("right") || myctrl.TextZone == ContentContainer.TextFieldZone.TextRight) {
+				sPageOutText = "<h2>Content D RIGHT</h2>\r\n" + sPageText;
+			}
+
+			return sTextOut + sPageOutText;
+		}
+
+
+	}
+
 }

@@ -34,21 +34,24 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string BGColorDef {
 			get {
-				string s = (string)HttpContext.Current.Request.QueryString["bgcolor"];
-				return ((s == null) ? "#eeeeee" : DecodeColor(s));
+				string s = "#EEEEEE";
+				try { s = (string)HttpContext.Current.Request.QueryString["bgcolor"]; } catch { }
+				return ((s == null) ? "#EEEEEE" : DecodeColor(s));
 			}
 		}
 
 		public static string NColorDef {
 			get {
-				string s = (string)HttpContext.Current.Request.QueryString["ncolor"];
+				string s = "#C46314";
+				try { s = (string)HttpContext.Current.Request.QueryString["ncolor"]; } catch { }
 				return ((s == null) ? "#C46314" : DecodeColor(s));
 			}
 		}
 
 		public static string FGColorDef {
 			get {
-				string s = (string)HttpContext.Current.Request.QueryString["fgcolor"];
+				string s = "#69785F";
+				try { s = (string)HttpContext.Current.Request.QueryString["fgcolor"]; } catch { }
 				return ((s == null) ? "#69785F" : DecodeColor(s));
 			}
 		}
@@ -61,9 +64,10 @@ namespace Carrotware.Web.UI.Controls {
 				bValid = true;
 			}
 
-			guid = Guid.NewGuid().ToString().Substring(0, 6);
-			HttpContext.Current.Session["captcha_key"] = guid;
-
+			if (HttpContext.Current != null) {
+				guid = Guid.NewGuid().ToString().Substring(0, 6);
+				HttpContext.Current.Session["captcha_key"] = guid;
+			}
 			return bValid;
 		}
 
@@ -74,17 +78,19 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static string GetKey() {
-			string guid = "";
-			try {
-				if (HttpContext.Current.Session["captcha_key"] != null) {
-					guid = HttpContext.Current.Session["captcha_key"].ToString();
-				} else {
+			string guid = "ABCXYZ";
+			if (HttpContext.Current != null) {
+				try {
+					if (HttpContext.Current.Session["captcha_key"] != null) {
+						guid = HttpContext.Current.Session["captcha_key"].ToString();
+					} else {
+						guid = Guid.NewGuid().ToString().Substring(0, 6);
+						HttpContext.Current.Session["captcha_key"] = guid;
+					}
+				} catch {
 					guid = Guid.NewGuid().ToString().Substring(0, 6);
 					HttpContext.Current.Session["captcha_key"] = guid;
 				}
-			} catch {
-				guid = Guid.NewGuid().ToString().Substring(0, 6);
-				HttpContext.Current.Session["captcha_key"] = guid;
 			}
 			return guid.ToUpper();
 		}

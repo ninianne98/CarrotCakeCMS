@@ -18,6 +18,8 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:SiblingNavigation runat=server></{0}:SiblingNavigation>")]
 	public class SiblingNavigation : BaseServerControl, IHeadedList {
 
+		public int ItemCount { get; set; }
+
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -80,6 +82,10 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			int indent = output.Indent;
 			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
+
+			if (lstNav != null) {
+				this.ItemCount = lstNav.Count;
+			}
 
 			output.Indent = indent + 3;
 			output.WriteLine();

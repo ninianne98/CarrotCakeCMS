@@ -41,9 +41,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			cmsHelper.OverrideKey(guidPage);
 
 			Widget w = (from aw in cmsHelper.cmsAdminWidget
-							where aw.Root_WidgetID == guidWidget
-							orderby aw.WidgetOrder
-							select aw).FirstOrDefault();
+						where aw.Root_WidgetID == guidWidget
+						orderby aw.WidgetOrder
+						select aw).FirstOrDefault();
 
 			if (!IsPostBack) {
 
@@ -115,8 +115,20 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					props = props.Union(props_tmp).ToList();
 				}
 
+				List<string> limitedPropertyList = new List<string>();
+				if (widget is IWidgetLimitedProperties) {
+					limitedPropertyList = ((IWidgetLimitedProperties)(widget)).LimitedPropertyList;
+				} else {
+					limitedPropertyList = (from p in lstDefProps
+										   select p.Name.ToLower()).ToList();
+				}
+				if (limitedPropertyList != null && limitedPropertyList.Count > 0) {
+					limitedPropertyList = (from p in limitedPropertyList
+										   select p.ToLower()).ToList();
+				}
 
 				rpProps.DataSource = (from p in lstDefProps
+									  join l in limitedPropertyList on p.Name.ToLower() equals l.ToLower()
 									  where p.CanRead == true
 									  && p.CanWrite == true
 									  && !props.Contains(p)
@@ -264,9 +276,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void btnSave_Click(object sender, EventArgs e) {
 
 			Widget w = (from aw in cmsHelper.cmsAdminWidget
-							where aw.Root_WidgetID == guidWidget
-							orderby aw.WidgetOrder
-							select aw).FirstOrDefault();
+						where aw.Root_WidgetID == guidWidget
+						orderby aw.WidgetOrder
+						select aw).FirstOrDefault();
 
 			var props = new List<WidgetProps>();
 

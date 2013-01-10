@@ -1,10 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
-using System.Text;
-using System.Configuration;
 
 /*
 * CarrotCake CMS
@@ -58,10 +56,13 @@ namespace Carrotware.CMS.Core {
 		public List<string> BlockedTypes {
 			get {
 				if (_FileTypes == null) {
-					try { _FileTypes = ConfigurationManager.AppSettings["CarrotBlockFromFileManager"].ToString(); } catch { }
+					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+					if (config.FileManagerConfig != null && !string.IsNullOrEmpty(config.FileManagerConfig.BlockedExtensions)) {
+						_FileTypes = config.FileManagerConfig.BlockedExtensions;
+					}
 				}
 				if (_FileTypes == null) {
-					_FileTypes = "aspx;ascx;asmx;asax;config;dll";
+					_FileTypes = "aspx;ascx;asmx;asax;axd;dll;pdb;cs;master;config;xml;user;csproj;sln";
 				}
 				return _FileTypes.Split(';').ToList();
 			}

@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -21,7 +22,7 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:TwoLevelNavigation runat=server></{0}:TwoLevelNavigation>")]
-	public class TwoLevelNavigation : BaseServerControl {
+	public class TwoLevelNavigation : BaseServerControl, IWidgetLimitedProperties {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -545,6 +546,30 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent;
 		}
 
+		public List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("OverrideCSS");
+				lst.Add("ExtraCSS");
+				lst.Add("AutoStylingDisabled");
+				lst.Add("CSSSelected");
+				lst.Add("CSSHasChildren");
+				lst.Add("WrapList");
+				lst.Add("FontSize");
+				lst.Add("TopBackgroundStyle");
+				lst.Add("ForeColor");
+				lst.Add("BackColor");
+				lst.Add("HoverFGColor");
+				lst.Add("HoverBGColor");
+				lst.Add("UnSelFGColor");
+				lst.Add("UnSelBGColor");
+				lst.Add("SelFGColor");
+				lst.Add("SelBGColor");
+				lst.Add("SubFGColor");
+				lst.Add("SubBGColor");
+				return lst;
+			}
+		}
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
