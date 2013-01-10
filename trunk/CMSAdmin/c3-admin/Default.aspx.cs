@@ -44,7 +44,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				txtCategoryPath.Text = "category";
 				txtTagPath.Text = "tag";
 				ddlDatePattern.SelectedValue = "yyyy/MM/dd";
-				txtTitleBar.Text = SiteData.PageTitlePattern;
+				txtTitleBar.Text = SiteData.DefaultPageTitlePattern;
 
 				ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
 

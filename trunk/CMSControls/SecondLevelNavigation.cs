@@ -21,6 +21,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public bool IncludeParent { get; set; }
 
+		public int ItemCount { get; set; }
+
 		[Obsolete("This property is obsolete, do not use.")]
 		public string SectionTitle {
 			get {
@@ -83,6 +85,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
 				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
+			}
+
+			if (lstNav != null) {
+				this.ItemCount = lstNav.Count;
 			}
 
 			if (lstNav != null && lstNav.Count > 0) {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Permissions;
+using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
@@ -14,11 +16,15 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
+
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SiteMetaWordList runat=server></{0}:SiteMetaWordList>")]
+	[AspNetHostingPermissionAttribute(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+	[AspNetHostingPermissionAttribute(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
 	public class SiteMetaWordList : BaseServerControl, IHeadedList {
 
+		public int ItemCount { get; set; }
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -141,6 +147,10 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 				default:
 					break;
+			}
+
+			if (lst != null) {
+				this.ItemCount = lst.Count;
 			}
 
 			return lst;

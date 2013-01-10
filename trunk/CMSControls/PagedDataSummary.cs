@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -21,10 +22,13 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
+
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PagedDataSummary runat=server></{0}:PagedDataSummary>")]
-	public class PagedDataSummary : BaseServerControl, INamingContainer {
+	[AspNetHostingPermissionAttribute(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+	[AspNetHostingPermissionAttribute(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+	public class PagedDataSummary : BaseServerControl, INamingContainer, IWidgetLimitedProperties {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -101,10 +105,11 @@ namespace Carrotware.CMS.UI.Controls {
 		[
 		Category("Behavior"),
 		Description("The GuidItem collection"),
+		Browsable(false),
+		DefaultValue(null),
 		DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
 		Editor(typeof(GuidItemCollectionEditor), typeof(UITypeEditor)),
 		NotifyParentProperty(true),
-		Browsable(true),
 		TemplateContainer(typeof(GuidItem)),
 		PersistenceMode(PersistenceMode.InnerProperty)
 		]
@@ -449,7 +454,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if ((TotalRecords % PageSize) > 0) {
 				TotalPages++;
 			}
-			
+
 			if (ShowPager && TotalPages > 1) {
 				List<int> pagelist = new List<int>();
 				pagelist = Enumerable.Range(1, TotalPages).ToList();
@@ -497,6 +502,22 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.WriteLine();
 		}
 
+		public List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("PageSize");
+				lst.Add("PagerBelowContent");
+				lst.Add("ShowPager");
+				lst.Add("EnableViewState");
+				lst.Add("CSSSelectedPage");
+				lst.Add("CSSPageListing");
+				lst.Add("CSSPageFooter");
+				lst.Add("ContentType");
+				lst.Add("SelectedCategories");
+				return lst;
+			}
+		}
+
 		protected override void OnPreRender(EventArgs e) {
 
 			try {
@@ -511,7 +532,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
 
-					OrderBy = GetParmValue("OrderBy", "GoLiveDate  desc");
+					//OrderBy = GetParmValue("OrderBy", "GoLiveDate  desc");
 
 					CSSSelectedPage = GetParmValue("CSSSelectedPage", "SelectedCurrentPager");
 

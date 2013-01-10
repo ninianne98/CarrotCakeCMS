@@ -45,12 +45,28 @@ namespace Carrotware.CMS.UI.Admin {
 			BlogComment
 		}
 
+		protected enum ControlLocation {
+			PublicFooter,
+			PopupFooter,
+			MainFooter,
+		}
 
-		protected void LoadFooterCtrl(PlaceHolder plcHolder, string sCtrlKey) {
+		protected void LoadFooterCtrl(PlaceHolder plcHolder, ControlLocation CtrlKey) {
 			string sControlPath = "";
-			if (System.Configuration.ConfigurationManager.AppSettings[sCtrlKey] != null) {
-				sControlPath = System.Configuration.ConfigurationManager.AppSettings[sCtrlKey].ToString();
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+
+			switch (CtrlKey) {
+				case ControlLocation.PublicFooter:
+					sControlPath = config.AdminFooterControls.ControlPathPublic;
+					break;
+				case ControlLocation.PopupFooter:
+					sControlPath = config.AdminFooterControls.ControlPathPopup;
+					break;
+				case ControlLocation.MainFooter:
+					sControlPath = config.AdminFooterControls.ControlPathMain;
+					break;
 			}
+
 			if (!string.IsNullOrEmpty(sControlPath)) {
 				if (File.Exists(Server.MapPath(sControlPath))) {
 					Control ctrl = new Control();

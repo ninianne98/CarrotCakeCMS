@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.Design;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
@@ -22,7 +23,7 @@ using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[Designer(typeof(GeneralControlDesigner))]
+	[Designer(typeof(SearchBoxDesigner))]
 	[ParseChildren(true, "SearchTemplate"), PersistChildren(true)]
 	[ToolboxData("<{0}:SearchBox runat=server></{0}:SearchBox>")]
 	public class SearchBox : BaseServerControl, INamingContainer {
@@ -181,4 +182,44 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
+
+
+	//======================================
+
+	public class SearchBoxDesigner : ControlDesigner {
+
+		public override void Initialize(IComponent Component) {
+			base.Initialize(Component);
+			SetViewFlags(ViewFlags.TemplateEditing, true);
+		}
+
+		public override string GetDesignTimeHtml() {
+			Control myctrl = (Control)base.ViewControl;
+			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "CMS, ");
+			string sID = myctrl.ID;
+
+			string sTextOut = "[" + sType + " - " + sID + "]";
+
+			return "<span>" + sTextOut + "</span>";
+		}
+
+		public override TemplateGroupCollection TemplateGroups {
+			get {
+				TemplateGroupCollection collection = new TemplateGroupCollection();
+				TemplateGroup group;
+				TemplateDefinition template;
+				SearchBox control;
+
+				control = (SearchBox)Component;
+				group = new TemplateGroup("Item");
+				template = new TemplateDefinition(this, "SearchTemplate", control, "SearchTemplate", true);
+				group.AddTemplateDefinition(template);
+				collection.Add(group);
+
+				return collection;
+			}
+		}
+
+	}
+
 }

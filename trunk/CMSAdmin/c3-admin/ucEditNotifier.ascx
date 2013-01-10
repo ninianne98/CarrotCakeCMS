@@ -86,6 +86,8 @@
 		padding: 5px !important;
 		margin: 5px !important;
 		border: 2px dashed #676F6A !important;
+		margin-left: 40px !important;
+		margin-right: 40px !important;
 	}
 	
 	.cmsNavFooterBox input:focus, .cmsNavFooterBox select:focus, 

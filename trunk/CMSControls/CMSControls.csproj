@@ -61,7 +61,6 @@
     <Compile Include="CarrotGridPaged.cs" />
     <Compile Include="ChildNavigation.cs" />
     <Compile Include="ContentCommentForm.cs" />
-    <Compile Include="ContentContainerDesigner.cs" />
     <Compile Include="ContentPageControls.cs" />
     <Compile Include="ContentPlainText.cs" />
     <Compile Include="ContentRichText.cs" />

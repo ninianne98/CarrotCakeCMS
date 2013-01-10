@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,10 +18,13 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
+
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PagedComments runat=server></{0}:PagedComments>")]
-	public class PagedComments : BaseServerControl, INamingContainer {
+	[AspNetHostingPermissionAttribute(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+	[AspNetHostingPermissionAttribute(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+	public class PagedComments : BaseServerControl, INamingContainer, IWidgetLimitedProperties {
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -153,43 +158,43 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate CommentHeaderTemplate { get; set; }
+		public ITemplate CommentHeaderTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate CommentTemplate { get; set; }
+		public ITemplate CommentTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate CommentFooterTemplate { get; set; }
+		public ITemplate CommentFooterTemplate { get; set; }
 
 
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate PagerHeaderTemplate { get; set; }
+		public ITemplate PagerHeaderTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate PagerTemplate { get; set; }
+		public ITemplate PagerTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate PagerFooterTemplate { get; set; }
+		public ITemplate PagerFooterTemplate { get; set; }
 
 
 		private Repeater rpComments = new Repeater();
@@ -358,6 +363,22 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.WriteLine();
 		}
 
+		public List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("PageSize");
+				lst.Add("PagerBelowContent");
+				lst.Add("ShowPager");
+				lst.Add("EnableViewState");
+				lst.Add("OrderBy");
+				lst.Add("CSSSelectedPage");
+				lst.Add("CSSPageListing");
+				lst.Add("CSSPageFooter");
+
+				return lst;
+			}
+		}
+
 		protected override void OnPreRender(EventArgs e) {
 
 			try {
@@ -367,6 +388,8 @@ namespace Carrotware.CMS.UI.Controls {
 					PageSize = int.Parse(GetParmValue("PageSize", "10"));
 
 					PagerBelowContent = Convert.ToBoolean(GetParmValue("PagerBelowContent", "true"));
+
+					ShowPager = Convert.ToBoolean(GetParmValue("ShowPager", "true"));
 
 					EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
 

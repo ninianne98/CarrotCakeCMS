@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.Design;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
@@ -22,7 +23,7 @@ using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[Designer(typeof(GeneralControlDesigner))]
+	[Designer(typeof(ContentCommentFormDesigner))]
 	[ParseChildren(true, "CommentEntryTemplate"), PersistChildren(true)]
 	[ToolboxData("<{0}:ContentCommentForm runat=server></{0}:ContentCommentForm>")]
 	public class ContentCommentForm : BaseServerControl, INamingContainer {
@@ -221,4 +222,46 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
+
+
+
+	//======================================
+
+	public class ContentCommentFormDesigner : ControlDesigner {
+
+		public override void Initialize(IComponent Component) {
+			base.Initialize(Component);
+			SetViewFlags(ViewFlags.TemplateEditing, true);
+		}
+
+		public override string GetDesignTimeHtml() {
+			Control myctrl = (Control)base.ViewControl;
+			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "CMS, ");
+			string sID = myctrl.ID;
+
+			string sTextOut = "[" + sType + " - " + sID + "]";
+
+			return "<span>" + sTextOut + "</span>";
+		}
+
+		public override TemplateGroupCollection TemplateGroups {
+			get {
+				TemplateGroupCollection collection = new TemplateGroupCollection();
+				TemplateGroup group;
+				ContentCommentForm control;
+
+				control = (ContentCommentForm)Component;
+				group = new TemplateGroup("Item");
+
+				group.AddTemplateDefinition(new TemplateDefinition(this, "CommentEntryTemplate", control, "CommentEntryTemplate", true));
+				group.AddTemplateDefinition(new TemplateDefinition(this, "CommentThanksTemplate", control, "CommentThanksTemplate", true));
+
+				collection.Add(group);
+
+				return collection;
+			}
+		}
+
+	}
+
 }

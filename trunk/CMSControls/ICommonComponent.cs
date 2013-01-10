@@ -27,6 +27,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		TagType HeadWrapTag { get; set; }
 
+		int ItemCount { get; set; }
+
 
 	}
 

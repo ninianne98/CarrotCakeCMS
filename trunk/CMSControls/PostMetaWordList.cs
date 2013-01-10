@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -19,10 +20,11 @@ using Carrotware.CMS.Interface;
 */
 
 
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PostMetaWordList runat=server></{0}:PostMetaWordList>")]
+	[AspNetHostingPermissionAttribute(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
+	[AspNetHostingPermissionAttribute(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
 	public class PostMetaWordList : BaseServerControl {
 
 

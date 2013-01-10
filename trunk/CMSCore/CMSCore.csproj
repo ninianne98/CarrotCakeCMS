@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CannedQueries.cs" />
+    <Compile Include="ConfigHelper\CarrotCakeConfig.cs" />
     <Compile Include="ConfigHelper\CMSConfigHelper.cs" />
     <Compile Include="ConfigHelper\ConfigTypes.cs" />
     <Compile Include="ConfigHelper\ObjectProperty.cs" />

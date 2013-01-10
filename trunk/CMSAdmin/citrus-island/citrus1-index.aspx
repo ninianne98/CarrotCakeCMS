@@ -58,6 +58,8 @@
 			</div>
 			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected">
 				<SummaryHeaderTemplate>
+					<h1>
+						Contents</h1>
 					<div>
 				</SummaryHeaderTemplate>
 				<SummaryTemplate>
@@ -95,14 +97,7 @@
 				</PagerHeaderTemplate>
 				<PagerTemplate>
 					<carrot:ListItemWrapperForPager HtmlTagName="div" ID="wrap" runat="server" CSSSelected="selectedwrap" CssClassNormal="pagerlink">
-						<%--<div class="pagerlink">--%>
 						<carrot:NavLinkForPagerTemplate ID="lnkBtn" CSSSelected="selected" runat="server" />
-						<%--<carrot:NavLinkForPagerTemplate ID="lnkBtn" CSSSelected="selected" runat="server" UseDefaultText="false">
-							[[
-							<carrot:NavPageNumberDisplay ID="txt" runat="server" />
-							]]
-						</carrot:NavLinkForPagerTemplate>--%>
-						<%--</div>--%>
 					</carrot:ListItemWrapperForPager>
 				</PagerTemplate>
 				<PagerFooterTemplate>

@@ -15,6 +15,7 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:MostRecentUpdated runat=server></{0}:MostRecentUpdated>")]
 	public class MostRecentUpdated : BaseServerControl, IHeadedList {
 
+		public int ItemCount { get; set; }
 
 		[Obsolete("This property is obsolete, do not use.")]
 		public string UpdateTitle {
@@ -109,6 +110,10 @@ namespace Carrotware.CMS.UI.Controls {
 			int indent = output.Indent;
 
 			List<SiteNav> lstNav = GetUpdates();
+
+			if (lstNav != null) {
+				this.ItemCount = lstNav.Count;
+			}
 
 			output.Indent = indent + 3;
 			output.WriteLine();

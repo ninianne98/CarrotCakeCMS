@@ -101,43 +101,43 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate TopNavHeaderTemplate { get; set; }
+		public ITemplate TopNavHeaderTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate TopNavTemplate { get; set; }
+		public ITemplate TopNavTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate TopNavFooterTemplate { get; set; }
+		public ITemplate TopNavFooterTemplate { get; set; }
 
 
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate SubNavHeaderTemplate { get; set; }
+		public ITemplate SubNavHeaderTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate SubNavTemplate { get; set; }
+		public ITemplate SubNavTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
-		public virtual ITemplate SubNavFooterTemplate { get; set; }
+		public ITemplate SubNavFooterTemplate { get; set; }
 
 
 		private SiteNav ParentPageNav { get; set; }

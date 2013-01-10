@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				litServerTime.Text = DateTime.UtcNow.ToString() + " UTC";
 			}
 
-			LoadFooterCtrl(plcFooter, "Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Main.Ctrl");
+			LoadFooterCtrl(plcFooter, ControlLocation.MainFooter);
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 			litVersion.Text = SiteData.CarrotCakeCMSVersionMM;
