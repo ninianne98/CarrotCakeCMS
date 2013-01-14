@@ -32,8 +32,10 @@ namespace Carrotware.CMS.Core {
 			//SortUpIndicator = "&nbsp;&uarr;";
 			//SortDownIndicator = "&nbsp;&darr;";
 
-			SortDownIndicator = "&nbsp;&#x25BC;";
-			SortUpIndicator = "&nbsp;&#x25B2;";
+			//SortDownIndicator = "&nbsp;&#x25BC;";
+			//SortUpIndicator = "&nbsp;&#x25B2;";
+			SortDownIndicator = "&nbsp;&#9660;";
+			SortUpIndicator = "&nbsp;&#9650;";
 		}
 
 		public string DefaultSort {
