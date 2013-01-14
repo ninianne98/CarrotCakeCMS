@@ -491,13 +491,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				DateTime goLiveDate = Convert.ToDateTime(GoLiveDate);
 				string sThePageTitle = CMSConfigHelper.DecodeBase64(ThePageTitle);
+				if (string.IsNullOrEmpty(sThePageTitle)) {
+					sThePageTitle = CurrentPageGuid.ToString();
+				}
+				sThePageTitle = sThePageTitle.Replace("/", "-");
 				string sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sThePageTitle);
 
 				if (Mode.ToLower() == "page") {
 					string sTestRes = ValidateUniqueFilename(CMSConfigHelper.EncodeBase64(sTheFileName), PageID);
 					if (sTestRes != "OK") {
 						for (int i = 1; i < 1000; i++) {
-							string sTestFile = CMSConfigHelper.DecodeBase64(ThePageTitle) + "-" + i.ToString();
+							string sTestFile = sThePageTitle + "-" + i.ToString();
 							sTestRes = ValidateUniqueFilename(CMSConfigHelper.EncodeBase64(sTestFile), PageID);
 							if (sTestRes == "OK") {
 								sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sTestFile);
@@ -511,7 +515,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					string sTestRes = ValidateUniqueBlogFilename(CMSConfigHelper.EncodeBase64(sTheFileName), GoLiveDate, PageID);
 					if (sTestRes != "OK") {
 						for (int i = 1; i < 1000; i++) {
-							string sTestFile = CMSConfigHelper.DecodeBase64(ThePageTitle) + "-" + i.ToString();
+							string sTestFile = sThePageTitle + "-" + i.ToString();
 							sTestRes = ValidateUniqueBlogFilename(CMSConfigHelper.EncodeBase64(sTestFile), GoLiveDate, PageID);
 							if (sTestRes == "OK") {
 								sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sTestFile);
@@ -985,8 +989,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				List<Widget> pageWidgets = widgetHelper.GetWidgets(CurrentPageGuid, true);
 
 				if (cmsAdminContent != null) {
+					ContentPage oldContent = pageHelper.FindContentByID(SiteData.CurrentSiteID, CurrentPageGuid);
 
 					ContentPage newContent = pageHelper.CopyContentPageToNew(cmsAdminContent);
+					newContent.ContentID = Guid.NewGuid();
+					newContent.NavOrder = oldContent.NavOrder;
+					newContent.Parent_ContentID = oldContent.Parent_ContentID;
 
 					foreach (var wd in cmsAdminWidget) {
 						wd.Save();

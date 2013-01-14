@@ -19,8 +19,11 @@ namespace Carrotware.CMS.Core {
 		SiteNav FindHome(Guid siteID);
 		SiteNav FindHome(Guid siteID, bool bActiveOnly);
 
-		List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly);
-		List<SiteNav> GetChildNavigation(Guid siteID, string sParentPage, bool bActiveOnly);
+		List<SiteNav> GetChildNavigation(Guid siteID, Guid? parentPageID, bool bActiveOnly);
+		List<SiteNav> GetChildNavigation(Guid siteID, string parentPage, bool bActiveOnly);
+
+		int GetChildNavigationCount(Guid siteID, Guid? parentPageID, bool bActiveOnly);
+		int GetChildNavigationCount(Guid siteID, string parentPage, bool bActiveOnly);
 
 		int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly);
 		List<SiteNav> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
@@ -57,6 +60,9 @@ namespace Carrotware.CMS.Core {
 		List<SiteNav> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageNumber, string sortField, string sortDir);
 		List<SiteNav> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageSize, int pageNumber);
 		List<SiteNav> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
+
+		List<SiteNav> GetLatestChildContentPagedList(Guid siteID, Guid? parentPageID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
+		List<SiteNav> GetLatestChildContentPagedList(Guid siteID, string parentPage, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
 
 		List<SiteNav> GetLatestContentSearchList(Guid siteID, string searchTerm, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
 

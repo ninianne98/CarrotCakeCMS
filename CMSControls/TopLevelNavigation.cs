@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 /*
@@ -41,6 +41,8 @@ namespace Carrotware.CMS.UI.Controls {
 			string sParent = pageNav.FileName.ToLower();
 
 			List<SiteNav> lstNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
+			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
 			output.Indent = indent + 3;
 			output.WriteLine();
@@ -54,7 +56,6 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent++;
 
 			foreach (SiteNav c in lstNav) {
-				IdentifyLinkAsInactive(c);
 				if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
 					output.WriteLine("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				} else {

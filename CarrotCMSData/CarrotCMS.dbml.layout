@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.5, 23.625" name="CarrotCMS">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.5, 24.75" name="CarrotCMS">
   <DataContextMoniker Name="/CarrotCMSDataContext" />
   <nestedChildShapes>
     <classShape Id="cd974134-a453-4ace-8312-3387de04f46f" absoluteBounds="3.375, 0.5, 2, 2.1554996744791666">
@@ -14,20 +14,20 @@
         <elementListCompartment Id="29b47007-c199-4e54-beb7-367942f48834" absoluteBounds="0.51500000000000012, 1.085, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.375 : 1.64024983723958); (2.5 : 1.64024983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.375 : 1.64024983723958); (2.5 : 1.64024983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_aspnet_Membership" />
       <nodes>
         <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
         <classShapeMoniker Id="a3e71a3a-84b5-4623-9856-981c52dc5221" />
       </nodes>
     </associationConnector>
-    <classShape Id="08d6a657-8187-4451-8963-af564183571b" absoluteBounds="4.5, 3.5, 2, 1.3862939453125">
+    <classShape Id="08d6a657-8187-4451-8963-af564183571b" absoluteBounds="4, 3.5, 2, 1.3862939453125">
       <DataClassMoniker Name="/CarrotCMSDataContext/carrot_UserSiteMapping" />
       <nestedChildShapes>
-        <elementListCompartment Id="fbfeb5c1-0ed6-4807-856f-0e6aff2bc602" absoluteBounds="4.5150000000000006, 3.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="fbfeb5c1-0ed6-4807-856f-0e6aff2bc602" absoluteBounds="4.0150000000000006, 3.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.9375 : 2.65549967447917); (4.9375 : 3.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.6875 : 2.65549967447917); (4.6875 : 3.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_carrot_UserSiteMapping" />
       <nodes>
         <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
@@ -108,7 +108,7 @@
         <elementListCompartment Id="4af6c91f-5656-414b-b94f-0f34961404e7" absoluteBounds="0.515, 8.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.78125 : 2.65549967447917); (3.78125 : 9.76365397135417); (2.5 : 9.76365397135417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.65625 : 2.65549967447917); (3.65625 : 9.76365397135417); (2.5 : 9.76365397135417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_carrot_UserData" />
       <nodes>
         <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
@@ -121,27 +121,27 @@
         <elementListCompartment Id="e64e5238-5211-4efb-a516-e1aa4eee4064" absoluteBounds="10.64, 1.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" absoluteBounds="10.375, 5, 2, 3.3093082682291666">
+    <classShape Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" absoluteBounds="10.625, 5, 2, 3.6939111328125005">
       <DataClassMoniker Name="/CarrotCMSDataContext/carrot_RootContent" />
       <nestedChildShapes>
-        <elementListCompartment Id="a41d80f6-9d4a-44ce-ace1-d8ef9dda20cc" absoluteBounds="10.39, 5.46, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a41d80f6-9d4a-44ce-ace1-d8ef9dda20cc" absoluteBounds="10.64, 5.46, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(11.84375 : 8.1170068359375); (11.84375 : 11.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(11.96875 : 8.6939111328125); (11.96875 : 11.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_RootContent/carrot_RootContent_carrot_CategoryContentMapping" />
       <nodes>
         <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
         <classShapeMoniker Id="387d3ccd-a771-4bc5-9409-06cb083e2200" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(10.8125 : 8.1170068359375); (10.8125 : 9.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(10.9375 : 8.6939111328125); (10.9375 : 9.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_RootContent/carrot_RootContent_carrot_TagContentMapping" />
       <nodes>
         <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
         <classShapeMoniker Id="e749e846-478e-4ba9-bf9c-296fc917da2d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(11.3494410429174 : 2.44399251302083); (11.3494410429174 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(11.3885684358945 : 2.44399251302083); (11.3885684358945 : 5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_ContentType/carrot_ContentType_carrot_RootContent" />
       <nodes>
         <classShapeMoniker Id="36f91425-67f6-4ab3-97f9-9f3c06400ec7" />
@@ -167,7 +167,7 @@
         <classShapeMoniker Id="eada2b48-5cc3-45be-81b3-361ab2cb9c7d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(12.375 : 7.74600341796875); (14.125 : 7.74600341796875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(12.625 : 8.03445556640625); (14.125 : 8.03445556640625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_RootContent/carrot_RootContent_carrot_Widget" />
       <nodes>
         <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
@@ -180,27 +180,27 @@
         <elementListCompartment Id="a145557d-5e4f-427d-a585-c17913e138a4" absoluteBounds="15.265, 4.835, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(12.375 : 6.05370198567708); (15.25 : 6.05370198567708)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(12.625 : 6.05370198567708); (15.25 : 6.05370198567708)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_RootContent/carrot_RootContent_carrot_ContentComment" />
       <nodes>
         <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
         <classShapeMoniker Id="e3b3b8ad-cf9a-45d2-b3b0-e17c4c38ac14" />
       </nodes>
     </associationConnector>
-    <classShape Id="87746135-63e4-4e78-9f84-06a496581cde" absoluteBounds="7.375, 0.625, 2, 3.8862125651041666">
+    <classShape Id="87746135-63e4-4e78-9f84-06a496581cde" absoluteBounds="7.5, 0.5, 2, 3.8862125651041666">
       <DataClassMoniker Name="/CarrotCMSDataContext/carrot_Content" />
       <nestedChildShapes>
-        <elementListCompartment Id="21959730-170d-4ca9-af9f-996c1dc035fd" absoluteBounds="7.39, 1.085, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="21959730-170d-4ca9-af9f-996c1dc035fd" absoluteBounds="7.515, 0.96, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.375 : 1.64024983723958); (7.375 : 1.64024983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.375 : 1.57774983723958); (7.5 : 1.57774983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_carrot_Content" />
       <nodes>
         <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
         <classShapeMoniker Id="87746135-63e4-4e78-9f84-06a496581cde" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(10.84375 : 5); (10.84375 : 3.5088525390625); (9.375 : 3.5088525390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(10.625 : 5.26208888841712); (8.5 : 5.26208888841712); (8.5 : 4.38621256510417)]" fixedFrom="Caller" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_RootContent/carrot_RootContent_carrot_Content" />
       <nodes>
         <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
@@ -225,10 +225,10 @@
         <elementListCompartment Id="6ba247b7-3698-4a8d-8084-1c1d81feabf9" absoluteBounds="3.265, 13.835, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="791e119e-f342-458c-a8b7-33d6e3631d37" absoluteBounds="0.5, 13.375, 2, 6.9630354817708344">
+    <classShape Id="791e119e-f342-458c-a8b7-33d6e3631d37" absoluteBounds="0.5, 13, 2, 7.3476383463541666">
       <DataClassMoniker Name="/CarrotCMSDataContext/vw_carrot_Content" />
       <nestedChildShapes>
-        <elementListCompartment Id="064373b1-270e-4065-9150-1f5ecb8af9e1" absoluteBounds="0.515, 13.835, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="064373b1-270e-4065-9150-1f5ecb8af9e1" absoluteBounds="0.515, 13.46, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="d2cff1a9-d41a-40a1-8add-1e888ad3c538" absoluteBounds="8.875, 18.125, 2, 1.5785953776041666">
@@ -249,17 +249,17 @@
         <elementListCompartment Id="3c721110-3084-4e2a-aa87-5960b7b53512" absoluteBounds="14.765, 2.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(11.982428896525 : 5); (11.982428896525 : 3.17474659375); (14.75 : 3.17474659375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(12.2146418717891 : 5); (12.2146418717891 : 3.17474659375); (14.75 : 3.17474659375)]" fixedFrom="Caller" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_RootContent/carrot_RootContent_carrot_TrackbackQueue" />
       <nodes>
         <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
         <classShapeMoniker Id="e1fbbfc4-121c-4354-a4f3-68868d67aa01" />
       </nodes>
     </associationConnector>
-    <classShape Id="2eed05cf-1a6c-4491-a876-4e350eaab99c" absoluteBounds="0.5, 20.875, 2, 2.5401025390625">
+    <classShape Id="2eed05cf-1a6c-4491-a876-4e350eaab99c" absoluteBounds="8.875, 20, 2, 2.5401025390625">
       <DataClassMoniker Name="/CarrotCMSDataContext/vw_carrot_TrackbackQueue" />
       <nestedChildShapes>
-        <elementListCompartment Id="c37ebcb2-4eaa-4a25-a094-5e2974d7e69c" absoluteBounds="0.515, 21.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c37ebcb2-4eaa-4a25-a094-5e2974d7e69c" absoluteBounds="8.89, 20.46, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="36d9e4de-44a6-4a46-a737-9ed60c41d021" absoluteBounds="4.25, 5.625, 2, 3.8862125651041666">
@@ -268,31 +268,44 @@
         <elementListCompartment Id="ed5645ac-f06f-40fb-87cd-b6e3a0efe958" absoluteBounds="4.265, 6.085, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.375 : 5.625); (5.375 : 4.8862939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.125 : 5.625); (5.125 : 4.8862939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_Site/carrot_Site_carrot_UserSiteMapping" />
       <nodes>
         <classShapeMoniker Id="36d9e4de-44a6-4a46-a737-9ed60c41d021" />
         <classShapeMoniker Id="08d6a657-8187-4451-8963-af564183571b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.25 : 8.28929768880208); (7.375 : 8.28929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.25 : 8.28929768880208); (7.375 : 8.28929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_Site/carrot_Site_carrot_ContentTag" />
       <nodes>
         <classShapeMoniker Id="36d9e4de-44a6-4a46-a737-9ed60c41d021" />
         <classShapeMoniker Id="718d760d-baf9-4432-87dd-1821b08a0d73" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.625 : 9.51121256510417); (5.625 : 11.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.625 : 9.51121256510417); (5.625 : 11.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_Site/carrot_Site_carrot_ContentCategory" />
       <nodes>
         <classShapeMoniker Id="36d9e4de-44a6-4a46-a737-9ed60c41d021" />
         <classShapeMoniker Id="7848ff23-14f0-4feb-91a0-ce6e34676d20" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.25 : 6.53125); (10.375 : 6.53125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.25 : 6.02914485277581); (10.625 : 6.02914485277581)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/CarrotCMSDataContext/carrot_Site/carrot_Site_carrot_RootContent" />
       <nodes>
         <classShapeMoniker Id="36d9e4de-44a6-4a46-a737-9ed60c41d021" />
+        <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c63aa505-abaa-4938-a795-cf9b7137021d" absoluteBounds="0.5, 21.25, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/CarrotCMSDataContext/vw_carrot_ContentChild" />
+      <nestedChildShapes>
+        <elementListCompartment Id="02f15e0f-a640-4e9b-bc03-800b6c62b424" absoluteBounds="0.515, 21.71, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.1095889192175 : 2.65549967447917); (5.1095889192175 : 3.25); (6.5 : 3.25); (6.5 : 5.61657441110322); (10.625 : 5.61657441110322)]" fixedFrom="Caller" fixedTo="Caller">
+      <AssociationMoniker Name="/CarrotCMSDataContext/aspnet_User/aspnet_User_carrot_RootContent" />
+      <nodes>
+        <classShapeMoniker Id="cd974134-a453-4ace-8312-3387de04f46f" />
         <classShapeMoniker Id="b93c8e59-2aa1-4267-aeb0-a7645a751d56" />
       </nodes>
     </associationConnector>

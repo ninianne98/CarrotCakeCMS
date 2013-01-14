@@ -10,7 +10,7 @@
 namespace Carrotware.CMS.UI.Admin.c3_admin {
     
     
-    public partial class SiteMap {
+    public partial class SiteMapPop {
         
         /// <summary>
         /// ucSiteMap1 control.
@@ -27,9 +27,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Main Master {
+        public new Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup Master {
             get {
-                return ((Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Main)(base.Master));
+                return ((Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup)(base.Master));
             }
         }
     }

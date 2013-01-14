@@ -33,6 +33,18 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public enum SiteNavMode {
+			RealNav,
+			MockupNav,
+		}
+
+		public SiteNavHelper(SiteNavMode navMode) {
+			if (navMode == SiteNavMode.RealNav) {
+				_navHelper = new SiteNavHelperReal();
+			} else {
+				_navHelper = new SiteNavHelperMock();
+			}
+		}
 
 		#region ISiteNavHelper Members
 
@@ -51,9 +63,15 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 			return _navHelper.GetChildNavigation(siteID, ParentID, bActiveOnly);
 		}
-
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 			return _navHelper.GetChildNavigation(siteID, sParentID, bActiveOnly);
+		}
+
+		public int GetChildNavigationCount(Guid siteID, Guid? ParentID, bool bActiveOnly) {
+			return _navHelper.GetChildNavigationCount(siteID, ParentID, bActiveOnly);
+		}
+		public int GetChildNavigationCount(Guid siteID, string sParentID, bool bActiveOnly) {
+			return _navHelper.GetChildNavigationCount(siteID, sParentID, bActiveOnly);
 		}
 
 		public List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
@@ -202,6 +220,13 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetLatestContentSearchList(Guid siteID, string searchTerm, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return _navHelper.GetLatestContentSearchList(siteID, searchTerm, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
+		}
+
+		public List<SiteNav> GetLatestChildContentPagedList(Guid siteID, Guid? parentContentID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return _navHelper.GetLatestChildContentPagedList(siteID, parentContentID, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
+		}
+		public List<SiteNav> GetLatestChildContentPagedList(Guid siteID, string sParentPage, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return _navHelper.GetLatestChildContentPagedList(siteID, sParentPage, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
 
 		public int GetSiteContentCount(Guid siteID) {

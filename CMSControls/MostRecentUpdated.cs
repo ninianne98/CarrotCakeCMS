@@ -110,6 +110,8 @@ namespace Carrotware.CMS.UI.Controls {
 			int indent = output.Indent;
 
 			List<SiteNav> lstNav = GetUpdates();
+			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
+			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
 			if (lstNav != null) {
 				this.ItemCount = lstNav.Count;
@@ -131,7 +133,6 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent++;
 
 			foreach (SiteNav c in lstNav) {
-				IdentifyLinkAsInactive(c);
 				if (SiteData.IsFilenameCurrentPage(c.FileName)) {
 					output.WriteLine("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				} else {

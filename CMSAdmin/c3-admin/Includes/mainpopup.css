@@ -61,3 +61,8 @@ H3 {
 	font-size: 16px;
 }
 
+#cms-simplemodal-container, .cms-simplemodal-container {
+	height: 400px;
+	width: 650px;
+	z-index: 5100;
+}

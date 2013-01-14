@@ -340,6 +340,14 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		public System.Data.Linq.Table<vw_carrot_ContentChild> vw_carrot_ContentChilds
+		{
+			get
+			{
+				return this.GetTable<vw_carrot_ContentChild>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.carrot_BlogDateFilenameUpdate")]
 		public int carrot_BlogDateFilenameUpdate([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SiteID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> siteID)
 		{
@@ -388,6 +396,8 @@ namespace Carrotware.CMS.Data
 		
 		private EntityRef<carrot_UserData> _carrot_UserData;
 		
+		private EntitySet<carrot_RootContent> _carrot_RootContents;
+		
 		private EntitySet<carrot_Content> _carrot_Contents;
 		
     #region Extensibility Method Definitions
@@ -415,6 +425,7 @@ namespace Carrotware.CMS.Data
 			this._aspnet_Membership = default(EntityRef<aspnet_Membership>);
 			this._carrot_UserSiteMappings = new EntitySet<carrot_UserSiteMapping>(new Action<carrot_UserSiteMapping>(this.attach_carrot_UserSiteMappings), new Action<carrot_UserSiteMapping>(this.detach_carrot_UserSiteMappings));
 			this._carrot_UserData = default(EntityRef<carrot_UserData>);
+			this._carrot_RootContents = new EntitySet<carrot_RootContent>(new Action<carrot_RootContent>(this.attach_carrot_RootContents), new Action<carrot_RootContent>(this.detach_carrot_RootContents));
 			this._carrot_Contents = new EntitySet<carrot_Content>(new Action<carrot_Content>(this.attach_carrot_Contents), new Action<carrot_Content>(this.detach_carrot_Contents));
 			OnCreated();
 		}
@@ -630,6 +641,19 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_RootContent", Storage="_carrot_RootContents", ThisKey="UserId", OtherKey="CreateUserId")]
+		public EntitySet<carrot_RootContent> carrot_RootContents
+		{
+			get
+			{
+				return this._carrot_RootContents;
+			}
+			set
+			{
+				this._carrot_RootContents.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_Content", Storage="_carrot_Contents", ThisKey="UserId", OtherKey="EditUserId")]
 		public EntitySet<carrot_Content> carrot_Contents
 		{
@@ -670,6 +694,18 @@ namespace Carrotware.CMS.Data
 		}
 		
 		private void detach_carrot_UserSiteMappings(carrot_UserSiteMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.aspnet_User = null;
+		}
+		
+		private void attach_carrot_RootContents(carrot_RootContent entity)
+		{
+			this.SendPropertyChanging();
+			entity.aspnet_User = this;
+		}
+		
+		private void detach_carrot_RootContents(carrot_RootContent entity)
 		{
 			this.SendPropertyChanging();
 			entity.aspnet_User = null;
@@ -3116,17 +3152,21 @@ namespace Carrotware.CMS.Data
 		
 		private System.DateTime _CreateDate;
 		
+		private System.Guid _ContentTypeID;
+		
+		private string _PageSlug;
+		
+		private string _PageThumbnail;
+		
 		private System.DateTime _GoLiveDate;
 		
 		private System.DateTime _RetireDate;
 		
 		private System.DateTime _GoLiveDateLocal;
 		
-		private System.Guid _ContentTypeID;
+		private bool _ShowInSiteNav;
 		
-		private string _PageSlug;
-		
-		private string _PageThumbnail;
+		private System.Guid _CreateUserId;
 		
 		private EntitySet<carrot_CategoryContentMapping> _carrot_CategoryContentMappings;
 		
@@ -3141,6 +3181,8 @@ namespace Carrotware.CMS.Data
 		private EntitySet<carrot_TrackbackQueue> _carrot_TrackbackQueues;
 		
 		private EntityRef<carrot_ContentType> _carrot_ContentType;
+		
+		private EntityRef<aspnet_User> _aspnet_User;
 		
 		private EntityRef<carrot_Site> _carrot_Site;
 		
@@ -3162,18 +3204,22 @@ namespace Carrotware.CMS.Data
     partial void OnPageActiveChanged();
     partial void OnCreateDateChanging(System.DateTime value);
     partial void OnCreateDateChanged();
-    partial void OnGoLiveDateChanging(System.DateTime value);
-    partial void OnGoLiveDateChanged();
-    partial void OnRetireDateChanging(System.DateTime value);
-    partial void OnRetireDateChanged();
-    partial void OnGoLiveDateLocalChanging(System.DateTime value);
-    partial void OnGoLiveDateLocalChanged();
     partial void OnContentTypeIDChanging(System.Guid value);
     partial void OnContentTypeIDChanged();
     partial void OnPageSlugChanging(string value);
     partial void OnPageSlugChanged();
     partial void OnPageThumbnailChanging(string value);
     partial void OnPageThumbnailChanged();
+    partial void OnGoLiveDateChanging(System.DateTime value);
+    partial void OnGoLiveDateChanged();
+    partial void OnRetireDateChanging(System.DateTime value);
+    partial void OnRetireDateChanged();
+    partial void OnGoLiveDateLocalChanging(System.DateTime value);
+    partial void OnGoLiveDateLocalChanged();
+    partial void OnShowInSiteNavChanging(bool value);
+    partial void OnShowInSiteNavChanged();
+    partial void OnCreateUserIdChanging(System.Guid value);
+    partial void OnCreateUserIdChanged();
     #endregion
 		
 		public carrot_RootContent()
@@ -3185,6 +3231,7 @@ namespace Carrotware.CMS.Data
 			this._carrot_Contents = new EntitySet<carrot_Content>(new Action<carrot_Content>(this.attach_carrot_Contents), new Action<carrot_Content>(this.detach_carrot_Contents));
 			this._carrot_TrackbackQueues = new EntitySet<carrot_TrackbackQueue>(new Action<carrot_TrackbackQueue>(this.attach_carrot_TrackbackQueues), new Action<carrot_TrackbackQueue>(this.detach_carrot_TrackbackQueues));
 			this._carrot_ContentType = default(EntityRef<carrot_ContentType>);
+			this._aspnet_User = default(EntityRef<aspnet_User>);
 			this._carrot_Site = default(EntityRef<carrot_Site>);
 			OnCreated();
 		}
@@ -3333,66 +3380,6 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
-		public System.DateTime GoLiveDate
-		{
-			get
-			{
-				return this._GoLiveDate;
-			}
-			set
-			{
-				if ((this._GoLiveDate != value))
-				{
-					this.OnGoLiveDateChanging(value);
-					this.SendPropertyChanging();
-					this._GoLiveDate = value;
-					this.SendPropertyChanged("GoLiveDate");
-					this.OnGoLiveDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
-		public System.DateTime RetireDate
-		{
-			get
-			{
-				return this._RetireDate;
-			}
-			set
-			{
-				if ((this._RetireDate != value))
-				{
-					this.OnRetireDateChanging(value);
-					this.SendPropertyChanging();
-					this._RetireDate = value;
-					this.SendPropertyChanged("RetireDate");
-					this.OnRetireDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDateLocal", DbType="DateTime NOT NULL")]
-		public System.DateTime GoLiveDateLocal
-		{
-			get
-			{
-				return this._GoLiveDateLocal;
-			}
-			set
-			{
-				if ((this._GoLiveDateLocal != value))
-				{
-					this.OnGoLiveDateLocalChanging(value);
-					this.SendPropertyChanging();
-					this._GoLiveDateLocal = value;
-					this.SendPropertyChanged("GoLiveDateLocal");
-					this.OnGoLiveDateLocalChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContentTypeID", DbType="UniqueIdentifier NOT NULL")]
 		public System.Guid ContentTypeID
 		{
@@ -3453,6 +3440,110 @@ namespace Carrotware.CMS.Data
 					this._PageThumbnail = value;
 					this.SendPropertyChanged("PageThumbnail");
 					this.OnPageThumbnailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDate
+		{
+			get
+			{
+				return this._GoLiveDate;
+			}
+			set
+			{
+				if ((this._GoLiveDate != value))
+				{
+					this.OnGoLiveDateChanging(value);
+					this.SendPropertyChanging();
+					this._GoLiveDate = value;
+					this.SendPropertyChanged("GoLiveDate");
+					this.OnGoLiveDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
+		public System.DateTime RetireDate
+		{
+			get
+			{
+				return this._RetireDate;
+			}
+			set
+			{
+				if ((this._RetireDate != value))
+				{
+					this.OnRetireDateChanging(value);
+					this.SendPropertyChanging();
+					this._RetireDate = value;
+					this.SendPropertyChanged("RetireDate");
+					this.OnRetireDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDateLocal", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDateLocal
+		{
+			get
+			{
+				return this._GoLiveDateLocal;
+			}
+			set
+			{
+				if ((this._GoLiveDateLocal != value))
+				{
+					this.OnGoLiveDateLocalChanging(value);
+					this.SendPropertyChanging();
+					this._GoLiveDateLocal = value;
+					this.SendPropertyChanged("GoLiveDateLocal");
+					this.OnGoLiveDateLocalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShowInSiteNav", DbType="Bit NOT NULL")]
+		public bool ShowInSiteNav
+		{
+			get
+			{
+				return this._ShowInSiteNav;
+			}
+			set
+			{
+				if ((this._ShowInSiteNav != value))
+				{
+					this.OnShowInSiteNavChanging(value);
+					this.SendPropertyChanging();
+					this._ShowInSiteNav = value;
+					this.SendPropertyChanged("ShowInSiteNav");
+					this.OnShowInSiteNavChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreateUserId
+		{
+			get
+			{
+				return this._CreateUserId;
+			}
+			set
+			{
+				if ((this._CreateUserId != value))
+				{
+					if (this._aspnet_User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCreateUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._CreateUserId = value;
+					this.SendPropertyChanged("CreateUserId");
+					this.OnCreateUserIdChanged();
 				}
 			}
 		}
@@ -3565,6 +3656,40 @@ namespace Carrotware.CMS.Data
 						this._ContentTypeID = default(System.Guid);
 					}
 					this.SendPropertyChanged("carrot_ContentType");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="aspnet_User_carrot_RootContent", Storage="_aspnet_User", ThisKey="CreateUserId", OtherKey="UserId", IsForeignKey=true)]
+		public aspnet_User aspnet_User
+		{
+			get
+			{
+				return this._aspnet_User.Entity;
+			}
+			set
+			{
+				aspnet_User previousValue = this._aspnet_User.Entity;
+				if (((previousValue != value) 
+							|| (this._aspnet_User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._aspnet_User.Entity = null;
+						previousValue.carrot_RootContents.Remove(this);
+					}
+					this._aspnet_User.Entity = value;
+					if ((value != null))
+					{
+						value.carrot_RootContents.Add(this);
+						this._CreateUserId = value.UserId;
+					}
+					else
+					{
+						this._CreateUserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("aspnet_User");
 				}
 			}
 		}
@@ -5605,6 +5730,10 @@ namespace Carrotware.CMS.Data
 		
 		private bool _PageActive;
 		
+		private bool _ShowInSiteNav;
+		
+		private System.Guid _CreateUserId;
+		
 		private System.DateTime _CreateDate;
 		
 		private System.Guid _ContentID;
@@ -5753,6 +5882,38 @@ namespace Carrotware.CMS.Data
 				if ((this._PageActive != value))
 				{
 					this._PageActive = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShowInSiteNav", DbType="Bit NOT NULL")]
+		public bool ShowInSiteNav
+		{
+			get
+			{
+				return this._ShowInSiteNav;
+			}
+			set
+			{
+				if ((this._ShowInSiteNav != value))
+				{
+					this._ShowInSiteNav = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateUserId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreateUserId
+		{
+			get
+			{
+				return this._CreateUserId;
+			}
+			set
+			{
+				if ((this._CreateUserId != value))
+				{
+					this._CreateUserId = value;
 				}
 			}
 		}
@@ -7573,6 +7734,249 @@ namespace Carrotware.CMS.Data
 		{
 			this.SendPropertyChanging();
 			entity.carrot_Site = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vw_carrot_ContentChild")]
+	public partial class vw_carrot_ContentChild
+	{
+		
+		private System.Guid _SiteID;
+		
+		private System.Guid _Root_ContentID;
+		
+		private string _FileName;
+		
+		private System.DateTime _RetireDate;
+		
+		private System.DateTime _GoLiveDate;
+		
+		private System.Nullable<bool> _IsRetired;
+		
+		private System.Nullable<bool> _IsUnReleased;
+		
+		private System.Guid _Parent_ContentID;
+		
+		private string _ParentFileName;
+		
+		private System.DateTime _ParentRetireDate;
+		
+		private System.DateTime _ParentGoLiveDate;
+		
+		private System.Nullable<bool> _IsParentRetired;
+		
+		private System.Nullable<bool> _IsParentUnReleased;
+		
+		public vw_carrot_ContentChild()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					this._SiteID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Root_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Root_ContentID
+		{
+			get
+			{
+				return this._Root_ContentID;
+			}
+			set
+			{
+				if ((this._Root_ContentID != value))
+				{
+					this._Root_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this._FileName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RetireDate", DbType="DateTime NOT NULL")]
+		public System.DateTime RetireDate
+		{
+			get
+			{
+				return this._RetireDate;
+			}
+			set
+			{
+				if ((this._RetireDate != value))
+				{
+					this._RetireDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GoLiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime GoLiveDate
+		{
+			get
+			{
+				return this._GoLiveDate;
+			}
+			set
+			{
+				if ((this._GoLiveDate != value))
+				{
+					this._GoLiveDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRetired", DbType="Bit")]
+		public System.Nullable<bool> IsRetired
+		{
+			get
+			{
+				return this._IsRetired;
+			}
+			set
+			{
+				if ((this._IsRetired != value))
+				{
+					this._IsRetired = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsUnReleased", DbType="Bit")]
+		public System.Nullable<bool> IsUnReleased
+		{
+			get
+			{
+				return this._IsUnReleased;
+			}
+			set
+			{
+				if ((this._IsUnReleased != value))
+				{
+					this._IsUnReleased = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parent_ContentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Parent_ContentID
+		{
+			get
+			{
+				return this._Parent_ContentID;
+			}
+			set
+			{
+				if ((this._Parent_ContentID != value))
+				{
+					this._Parent_ContentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentFileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
+		public string ParentFileName
+		{
+			get
+			{
+				return this._ParentFileName;
+			}
+			set
+			{
+				if ((this._ParentFileName != value))
+				{
+					this._ParentFileName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentRetireDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ParentRetireDate
+		{
+			get
+			{
+				return this._ParentRetireDate;
+			}
+			set
+			{
+				if ((this._ParentRetireDate != value))
+				{
+					this._ParentRetireDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentGoLiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ParentGoLiveDate
+		{
+			get
+			{
+				return this._ParentGoLiveDate;
+			}
+			set
+			{
+				if ((this._ParentGoLiveDate != value))
+				{
+					this._ParentGoLiveDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsParentRetired", DbType="Bit")]
+		public System.Nullable<bool> IsParentRetired
+		{
+			get
+			{
+				return this._IsParentRetired;
+			}
+			set
+			{
+				if ((this._IsParentRetired != value))
+				{
+					this._IsParentRetired = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsParentUnReleased", DbType="Bit")]
+		public System.Nullable<bool> IsParentUnReleased
+		{
+			get
+			{
+				return this._IsParentUnReleased;
+			}
+			set
+			{
+				if ((this._IsParentUnReleased != value))
+				{
+					this._IsParentUnReleased = value;
+				}
+			}
 		}
 	}
 }

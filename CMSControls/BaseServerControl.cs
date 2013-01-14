@@ -88,6 +88,31 @@ namespace Carrotware.CMS.UI.Controls {
 			return pageNav;
 		}
 
+		protected SiteNav GetCurrentPage() {
+			SiteNav pageNav = null;
+			ControlUtilities cu = new ControlUtilities(this);
+			ContentPage cp = cu.GetContainerContentPage(this);
+
+			if (cp != null) {
+				pageNav = new SiteNav();
+				pageNav.Root_ContentID = cp.Root_ContentID;
+				pageNav.FileName = cp.FileName;
+				pageNav.TemplateFile = cp.TemplateFile;
+			} else {
+				pageNav = navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
+				//assign bogus page name for comp purposes
+				if (pageNav == null) {
+					pageNav = new SiteNav();
+					pageNav.Root_ContentID = Guid.Empty;
+					pageNav.FileName = "/##/##/";
+					pageNav.TemplateFile = "/##/##/";
+				}
+			}
+			pageNav.SiteID = SiteData.CurrentSiteID;
+
+			return pageNav;
+		}
+
 
 		public static string GetCtrlText(Control ctrl) {
 			StringBuilder sb = new StringBuilder();

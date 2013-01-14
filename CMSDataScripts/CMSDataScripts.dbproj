@@ -739,5 +739,8 @@
     <NotInBuild Include="Scripts\Post-Deployment\insert_content_types.sql">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 09 - parent child view and misc setting properties.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>

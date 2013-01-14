@@ -84,6 +84,8 @@ namespace Carrotware.CMS.UI.Controls {
 			int indent = output.Indent;
 
 			List<SiteNav> lstNav = GetSubNav();
+			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
+			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
 			if (lstNav != null) {
 				this.ItemCount = lstNav.Count;
@@ -108,16 +110,14 @@ namespace Carrotware.CMS.UI.Controls {
 				if (IncludeParent) {
 					if (lstNav != null && lstNav.Count > 0) {
 						SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
-						IdentifyLinkAsInactive(p);
 						if (p != null) {
+							p = IdentifyLinkAsInactive(p);
 							output.WriteLine("<li class=\"parent-nav\"><a href=\"" + p.FileName + "\">" + p.NavMenuText + "</a></li> ");
 						}
 					}
 				}
 
 				foreach (SiteNav c in lstNav) {
-					IdentifyLinkAsInactive(c);
-
 					output.WriteLine("<li class=\"child-nav\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				}
 				output.Indent--;

@@ -167,6 +167,9 @@
 									<input runat="server" id="btnSortChildPages" type="button" value="Sort Child/Sub Pages" onclick="cmsSortChildren();" />
 								</p>
 								<p>
+									<input runat="server" id="btnSiteMap" type="button" value="Site Map" onclick="cmsEditSiteMap();" />
+								</p>
+								<p>
 									<input runat="server" id="btnAllWidgets" type="button" value="View Full Widget List" onclick="cmsShowWidgetList();" />
 								</p>
 							</div>

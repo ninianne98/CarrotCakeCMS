@@ -1003,6 +1003,17 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static void CleanUpSerialData() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				IQueryable<carrot_SerialCache> lst = (from c in _db.carrot_SerialCaches
+													  where c.EditDate < DateTime.UtcNow.AddHours(-6)
+													  select c);
+
+				_db.carrot_SerialCaches.DeleteBatch(lst);
+				_db.SubmitChanges();
+			}
+		}
+
 	}
 
 

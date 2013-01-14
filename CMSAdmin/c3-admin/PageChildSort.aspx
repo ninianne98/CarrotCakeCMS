@@ -89,9 +89,10 @@
 			</HeaderTemplate>
 			<ItemTemplate>
 				<li class="ui-state-default" id='<%# Eval("Root_ContentID")%>'>
-					Head:
+					<%--Head:
 					<%# Eval("PageHead")%>
-					&nbsp;&nbsp;&nbsp; Nav:
+					&nbsp;&nbsp;&nbsp;--%>
+					Nav:
 					<%# Eval("NavMenuText")%>
 					&nbsp;&nbsp;&nbsp; File:
 					<%# Eval("FileName")%></li></ItemTemplate>

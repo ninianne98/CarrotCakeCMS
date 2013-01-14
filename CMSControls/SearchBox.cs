@@ -118,6 +118,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (txtSearchText != null) {
+				sScript = sScript.Replace("{SEARCH_PARAM}", SiteData.SearchQueryParameter);
 				sScript = sScript.Replace("{SEARCH_FUNC}", JS_SearchName);
 				sScript = sScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
 

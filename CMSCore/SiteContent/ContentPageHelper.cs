@@ -278,8 +278,8 @@ namespace Carrotware.CMS.Core {
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
 				string sSearchTerm = "";
-				if (HttpContext.Current.Request.QueryString["search"] != null) {
-					sSearchTerm = HttpContext.Current.Request.QueryString["search"].ToString();
+				if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
+					sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
 				}
 
 				sTitle = "Search results for '" + sSearchTerm + "' ";
@@ -601,6 +601,7 @@ namespace Carrotware.CMS.Core {
 
 			pageNew.IsLatestVersion = true;
 			pageNew.FileName = pageSource.FileName;
+			pageNew.Thumbnail = pageSource.Thumbnail;
 			pageNew.TitleBar = pageSource.TitleBar;
 			pageNew.NavMenuText = pageSource.NavMenuText;
 			pageNew.NavOrder = pageSource.NavOrder;
@@ -618,6 +619,8 @@ namespace Carrotware.CMS.Core {
 
 			pageNew.ContentType = pageSource.ContentType;
 			pageNew.PageSlug = pageSource.PageSlug;
+			pageNew.ShowInSiteNav = pageSource.ShowInSiteNav;
+			pageNew.CreateUserId = pageSource.CreateUserId;
 
 			pageNew.ContentCategories = pageSource.ContentCategories;
 			pageNew.ContentTags = pageSource.ContentTags;
@@ -852,13 +855,10 @@ namespace Carrotware.CMS.Core {
 
 		public List<ContentPage> GetChildNavigation(Guid siteID, string sParentPage, bool bActiveOnly) {
 
-			vw_carrot_Content c = CompiledQueries.GetLatestContentByURL(db, siteID, false, sParentPage);
+			List<ContentPage> lstContent = (from ct in CompiledQueries.GetLatestContentByParent(db, siteID, sParentPage, bActiveOnly).ToList()
+											select new ContentPage(ct)).ToList();
 
-			if (c != null) {
-				return GetChildNavigation(siteID, c.Root_ContentID, bActiveOnly);
-			} else {
-				return null;
-			}
+			return lstContent;
 		}
 
 		public List<ContentPage> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {

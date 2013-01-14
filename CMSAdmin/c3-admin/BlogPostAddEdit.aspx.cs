@@ -32,6 +32,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogContentAdd);
 			lblUpdated.Text = SiteData.CurrentSite.Now.ToString();
+			lblCreateDate.Text = SiteData.CurrentSite.Now.ToString();
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {
@@ -154,13 +155,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtSort.Text = pageContents.NavOrder.ToString();
 
 					lblUpdated.Text = pageContents.EditDate.ToString();
-					lblCreatDate.Text = pageContents.CreateDate.ToString();
+					lblCreateDate.Text = pageContents.CreateDate.ToString();
 
 					reBody.Text = pageContents.PageText;
 					reLeftBody.Text = pageContents.LeftPageText;
 					reRightBody.Text = pageContents.RightPageText;
 
 					chkActive.Checked = pageContents.PageActive;
+					//chkNavigation.Checked = pageContents.ShowInSiteNav;
 
 					gvTracks.DataSource = pageContents.GetTrackbacks();
 					gvTracks.DataBind();
@@ -256,6 +258,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.RightPageText = reRightBody.Text;
 
 			pageContents.PageActive = chkActive.Checked;
+			pageContents.ShowInSiteNav = true;
 
 			pageContents.ContentType = ContentPageType.PageType.BlogEntry;
 

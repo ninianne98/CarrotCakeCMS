@@ -36,6 +36,8 @@ namespace Carrotware.CMS.Core {
 				this.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
 				this.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
 				this.EditUserId = c.EditUserId;
+				this.ShowInSiteNav = c.ShowInSiteNav;
+				this.CreateUserId = c.CreateUserId;
 				this.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
 				this.ContentID = c.ContentID;
 				this.Parent_ContentID = c.Parent_ContentID;
@@ -114,6 +116,7 @@ namespace Carrotware.CMS.Core {
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
 		public Guid? EditUserId { get; set; }
+		public Guid CreateUserId { get; set; }
 		public string TemplateFile { get; set; }
 		public DateTime CreateDate { get; set; }
 		public DateTime GoLiveDate { get; set; }
@@ -129,6 +132,7 @@ namespace Carrotware.CMS.Core {
 		public string FileName { get; set; }
 		public string Thumbnail { get; set; }
 		public bool PageActive { get; set; }
+		public bool ShowInSiteNav { get; set; }
 		public Guid SiteID { get; set; }
 
 		public ContentPageType.PageType ContentType { get; set; }

@@ -18,14 +18,9 @@ using Carrotware.CMS.Data;
 
 namespace Carrotware.CMS.Core {
 
-	public class ContentPage : IDisposable, ISiteContent {
-
-		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
-		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
-
+	public class ContentPage : ISiteContent {
 
 		public ContentPage() { }
-
 
 		internal ContentPage(vw_carrot_Content c) {
 
@@ -43,6 +38,8 @@ namespace Carrotware.CMS.Core {
 				this.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
 
 				this.PageActive = c.PageActive;
+				this.ShowInSiteNav = c.ShowInSiteNav;
+				this.CreateUserId = c.CreateUserId;
 
 				this.PageSlug = c.PageSlug;
 				this.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
@@ -85,22 +82,24 @@ namespace Carrotware.CMS.Core {
 
 
 		public void ResetHeartbeatLock() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
-
-			rc.EditHeartbeat = DateTime.UtcNow.AddHours(-2);
-			rc.Heartbeat_UserId = null;
-			db.SubmitChanges();
+				rc.EditHeartbeat = DateTime.UtcNow.AddHours(-2);
+				rc.Heartbeat_UserId = null;
+				_db.SubmitChanges();
+			}
 		}
 
 		public void RecordHeartbeatLock(Guid currentUserID) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
+				rc.Heartbeat_UserId = currentUserID;
+				rc.EditHeartbeat = DateTime.UtcNow;
 
-			rc.Heartbeat_UserId = currentUserID;
-			rc.EditHeartbeat = DateTime.UtcNow;
-
-			db.SubmitChanges();
+				_db.SubmitChanges();
+			}
 		}
 
 		public bool IsPageLocked() {
@@ -157,33 +156,35 @@ namespace Carrotware.CMS.Core {
 
 
 		private void SaveKeywordsAndTags() {
-			IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(db, this.Root_ContentID);
-			IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(db, this.Root_ContentID);
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(_db, this.Root_ContentID);
+				IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(_db, this.Root_ContentID);
 
-			List<carrot_TagContentMapping> newContentTags = (from x in ContentTags
-															 select new carrot_TagContentMapping {
-																 ContentTagID = x.ContentTagID,
-																 Root_ContentID = this.Root_ContentID,
-																 TagContentMappingID = Guid.NewGuid()
-															 }).ToList();
+				List<carrot_TagContentMapping> newContentTags = (from x in ContentTags
+																 select new carrot_TagContentMapping {
+																	 ContentTagID = x.ContentTagID,
+																	 Root_ContentID = this.Root_ContentID,
+																	 TagContentMappingID = Guid.NewGuid()
+																 }).ToList();
 
-			List<carrot_CategoryContentMapping> newContentCategories = (from x in ContentCategories
-																		select new carrot_CategoryContentMapping {
-																			ContentCategoryID = x.ContentCategoryID,
-																			Root_ContentID = this.Root_ContentID,
-																			CategoryContentMappingID = Guid.NewGuid()
-																		}).ToList();
+				List<carrot_CategoryContentMapping> newContentCategories = (from x in ContentCategories
+																			select new carrot_CategoryContentMapping {
+																				ContentCategoryID = x.ContentCategoryID,
+																				Root_ContentID = this.Root_ContentID,
+																				CategoryContentMappingID = Guid.NewGuid()
+																			}).ToList();
 
 
-			foreach (carrot_TagContentMapping s in newContentTags) {
-				db.carrot_TagContentMappings.InsertOnSubmit(s);
+				foreach (carrot_TagContentMapping s in newContentTags) {
+					_db.carrot_TagContentMappings.InsertOnSubmit(s);
+				}
+				foreach (carrot_CategoryContentMapping s in newContentCategories) {
+					_db.carrot_CategoryContentMappings.InsertOnSubmit(s);
+				}
+
+				_db.carrot_TagContentMappings.DeleteBatch(oldContentTags);
+				_db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
 			}
-			foreach (carrot_CategoryContentMapping s in newContentCategories) {
-				db.carrot_CategoryContentMappings.InsertOnSubmit(s);
-			}
-
-			db.carrot_TagContentMappings.DeleteBatch(oldContentTags);
-			db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
 		}
 
 
@@ -195,6 +196,11 @@ namespace Carrotware.CMS.Core {
 			rc.ContentTypeID = ContentPageType.GetIDByType(this.ContentType);
 
 			rc.CreateDate = DateTime.UtcNow;
+			if (this.CreateUserId != Guid.Empty) {
+				rc.CreateUserId = this.CreateUserId;
+			} else {
+				rc.CreateUserId = SecurityData.CurrentUserGuid;
+			}
 			rc.GoLiveDate = pageSite.ConvertSiteTimeToUTC(this.GoLiveDate);
 			rc.RetireDate = pageSite.ConvertSiteTimeToUTC(this.RetireDate);
 
@@ -229,6 +235,7 @@ namespace Carrotware.CMS.Core {
 
 			rc.FileName = this.FileName;
 			rc.PageActive = this.PageActive;
+			rc.ShowInSiteNav = this.ShowInSiteNav;
 
 			rc.FileName = ContentPageHelper.ScrubFilename(this.Root_ContentID, rc.FileName);
 
@@ -315,90 +322,93 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void ApplyTemplate() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_Content c = CompiledQueries.cqGetLatestContentTbl(_db, this.SiteID, this.Root_ContentID);
 
-			carrot_Content c = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
+				if (c != null) {
+					c.TemplateFile = this.TemplateFile;
 
-			if (c != null) {
-				c.TemplateFile = this.TemplateFile;
-
-				db.SubmitChanges();
+					_db.SubmitChanges();
+				}
 			}
 		}
 
 		public void SavePageEdit() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
-			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
+				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
+				carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(_db, this.SiteID, this.Root_ContentID);
 
-			carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
+				bool bNew = false;
 
-			bool bNew = false;
+				if (rc == null) {
+					rc = new carrot_RootContent();
 
-			if (rc == null) {
-				rc = new carrot_RootContent();
+					PerformCommonSaveRoot(site, rc);
 
-				PerformCommonSaveRoot(site, rc);
+					_db.carrot_RootContents.InsertOnSubmit(rc);
+					bNew = true;
+				}
 
-				db.carrot_RootContents.InsertOnSubmit(rc);
-				bNew = true;
+				carrot_Content c = new carrot_Content();
+				if (bNew) {
+					c.ContentID = this.Root_ContentID;
+				} else {
+					c.ContentID = Guid.NewGuid();
+					oldC.IsLatestVersion = false;
+				}
+
+				PerformCommonSave(site, rc, c);
+
+				_db.carrot_Contents.InsertOnSubmit(c);
+
+				SaveKeywordsAndTags();
+
+				_db.SubmitChanges();
+
+				SaveTrackbacks();
 			}
-
-			carrot_Content c = new carrot_Content();
-			if (bNew) {
-				c.ContentID = this.Root_ContentID;
-			} else {
-				c.ContentID = Guid.NewGuid();
-				oldC.IsLatestVersion = false;
-			}
-
-			PerformCommonSave(site, rc, c);
-
-			db.carrot_Contents.InsertOnSubmit(c);
-
-			SaveKeywordsAndTags();
-
-			db.SubmitChanges();
-
-			SaveTrackbacks();
 		}
 
 		public void SavePageAsDraft() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
-			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
+				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
 
-			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
+				bool bNew = false;
 
-			bool bNew = false;
+				if (rc == null) {
+					rc = new carrot_RootContent();
 
-			if (rc == null) {
-				rc = new carrot_RootContent();
+					PerformCommonSaveRoot(site, rc);
 
-				PerformCommonSaveRoot(site, rc);
+					_db.carrot_RootContents.InsertOnSubmit(rc);
+					bNew = true;
+				}
 
-				db.carrot_RootContents.InsertOnSubmit(rc);
-				bNew = true;
+				carrot_Content c = new carrot_Content();
+				if (bNew) {
+					c.ContentID = this.Root_ContentID;
+				} else {
+					c.ContentID = Guid.NewGuid();
+				}
+
+				PerformCommonSave(site, rc, c);
+
+				c.IsLatestVersion = false; // draft, leave existing version latest
+
+				_db.carrot_Contents.InsertOnSubmit(c);
+
+				SaveKeywordsAndTags();
+
+				_db.SubmitChanges();
+
+				this.IsLatestVersion = c.IsLatestVersion;
+				SaveTrackbacks();
 			}
-
-			carrot_Content c = new carrot_Content();
-			if (bNew) {
-				c.ContentID = this.Root_ContentID;
-			} else {
-				c.ContentID = Guid.NewGuid();
-			}
-
-			PerformCommonSave(site, rc, c);
-
-			c.IsLatestVersion = false; // draft, leave existing version latest
-
-			db.carrot_Contents.InsertOnSubmit(c);
-
-			SaveKeywordsAndTags();
-
-			db.SubmitChanges();
-
-			this.IsLatestVersion = c.IsLatestVersion;
-			SaveTrackbacks();
 		}
 
 
@@ -412,6 +422,7 @@ namespace Carrotware.CMS.Core {
 		public DateTime GoLiveDate { get; set; }
 		public DateTime RetireDate { get; set; }
 		public Guid? EditUserId { get; set; }
+		public Guid CreateUserId { get; set; }
 		public bool IsLatestVersion { get; set; }
 		public string TemplateFile { get; set; }
 		public string Thumbnail { get; set; }
@@ -428,6 +439,7 @@ namespace Carrotware.CMS.Core {
 		public DateTime? EditHeartbeat { get; set; }
 		public Guid? Heartbeat_UserId { get; set; }
 		public bool PageActive { get; set; }
+		public bool ShowInSiteNav { get; set; }
 		public Guid SiteID { get; set; }
 
 		public string MetaDescription { get; set; }
@@ -580,16 +592,6 @@ namespace Carrotware.CMS.Core {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
 
-
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 	}
 
 

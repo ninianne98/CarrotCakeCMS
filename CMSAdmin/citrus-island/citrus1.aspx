@@ -36,6 +36,9 @@
 		<div id="menu-wrapper">
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="10px" ForeColor="#FFFFFF" BackColor="#F4845A" />
 		</div>
+		<div>
+			<carrot:BreadCrumbNavigation runat="server" ID="BreadCrumbNavigation1" CSSSelected="green" />
+		</div>
 		<div id="sidebar">
 			<carrot:ChildNavigation MetaDataTitle="Child Pages" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
 			<carrot:SiblingNavigation MetaDataTitle="In This Section" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="SiblingNavigation1" />

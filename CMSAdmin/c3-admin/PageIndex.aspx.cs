@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				Response.Redirect("./Default.aspx");
 			}
 
-			siteHelper.CleanUpSerialData();
+			CMSConfigHelper.CleanUpSerialData();
 
 			if (!IsPostBack) {
 				ddlSize.SelectedValue = pagedDataGrid.PageSize.ToString();

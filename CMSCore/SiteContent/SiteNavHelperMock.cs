@@ -157,7 +157,7 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerFakeNav(Guid.NewGuid());
 		}
 
-		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
+		public List<SiteNav> GetChildNavigation(Guid siteID, string sparentPageID, bool bActiveOnly) {
 
 			return SiteNavHelper.GetSamplerFakeNav(Guid.NewGuid());
 		}
@@ -167,6 +167,14 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerFakeNav(Guid.NewGuid());
 		}
 
+		public int GetChildNavigationCount(Guid siteID, Guid? parentPageID, bool bActiveOnly) {
+
+			return 15;
+		}
+		public int GetChildNavigationCount(Guid siteID, string sParentPage, bool bActiveOnly) {
+
+			return 15;
+		}
 		public SiteNav GetPageNavigation(Guid siteID, string sPage) {
 
 			return SiteNavHelper.GetSamplerView();
@@ -194,9 +202,9 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerView();
 		}
 
-		public List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
+		public List<SiteNav> GetChildNavigation(Guid siteID, Guid? parentPageID, bool bActiveOnly) {
 
-			return SiteNavHelper.GetSamplerFakeNav(ParentID);
+			return SiteNavHelper.GetSamplerFakeNav(parentPageID);
 		}
 
 		public List<SiteNav> GetSiblingNavigation(Guid siteID, Guid PageID, bool bActiveOnly) {
@@ -309,6 +317,13 @@ namespace Carrotware.CMS.Core {
 
 		public List<SiteNav> GetLatestContentPagedList(Guid siteID, ContentPageType.PageType postType, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return SiteNavHelper.GetSamplerFakeNav(pageSize);
+		}
+
+		public List<SiteNav> GetLatestChildContentPagedList(Guid siteID, Guid? parentContentID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return SiteNavHelper.GetSamplerFakeNav(pageSize, parentContentID);
+		}
+		public List<SiteNav> GetLatestChildContentPagedList(Guid siteID, string parentPage, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return SiteNavHelper.GetSamplerFakeNav(pageSize, Guid.NewGuid());
 		}
 
 		public int GetSiteContentCount(Guid siteID) {

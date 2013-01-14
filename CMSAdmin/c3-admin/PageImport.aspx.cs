@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			lblWarning.Text = "";
 			lblWarning.Attributes["style"] = "color: #000000;";
 
-			siteHelper.CleanUpSerialData();
+			CMSConfigHelper.CleanUpSerialData();
 		}
 
 		protected void btnUpload_Click(object sender, EventArgs e) {

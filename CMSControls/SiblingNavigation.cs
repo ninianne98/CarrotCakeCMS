@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 /*
@@ -82,6 +83,8 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			int indent = output.Indent;
 			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
+			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
+			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
 			if (lstNav != null) {
 				this.ItemCount = lstNav.Count;
@@ -103,7 +106,6 @@ namespace Carrotware.CMS.UI.Controls {
 				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 				output.Indent++;
 				foreach (SiteNav c in lstNav) {
-					IdentifyLinkAsInactive(c);
 					if (SiteData.IsFilenameCurrentPage(c.FileName)) {
 						output.WriteLine("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 					} else {

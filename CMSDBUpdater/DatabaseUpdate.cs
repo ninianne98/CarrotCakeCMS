@@ -243,16 +243,22 @@ namespace Carrotware.CMS.DBUpdater {
 					return true;
 				}
 
+				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_ContentChild') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 1) {
+					return true;
+				}
+
 				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 31) {
+				if (table1.Rows.Count < 34) {
 					return true;
 				}
 
 				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
 						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 52) {
+				if (table1.Rows.Count < 60) {
 					return true;
 				}
 			}
@@ -273,16 +279,15 @@ namespace Carrotware.CMS.DBUpdater {
 					return true;
 				}
 
-				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
+				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_ContentChild') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 31) {
+				if (table1.Rows.Count < 1) {
 					return true;
 				}
 
-				//query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
-				query = "select distinct [view_name] , [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
+				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
 				table1 = GetData(query);
-				if (table1.Rows.Count < 40) {
+				if (table1.Rows.Count < 34) {
 					return true;
 				}
 
@@ -290,7 +295,7 @@ namespace Carrotware.CMS.DBUpdater {
 				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
 						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
 				DataTable table2 = GetData(query);
-				if (table2.Rows.Count < 52) {
+				if (table2.Rows.Count < 60) {
 					return true;
 				}
 
@@ -505,7 +510,7 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep08() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Comment') ";
+			string query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
 
 			DataTable table1 = GetData(query);
 
@@ -516,6 +521,25 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 
 			res.Response = "CMS DB vw_carrot_Comment already added";
+			return res;
+		}
+
+
+
+		public DatabaseUpdateResponse AlterStep09() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			string query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
+
+			DataTable table1 = GetData(query);
+
+			if (table1.Rows.Count < 34) {
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER09.sql", false);
+				res.Response = "CMS DB added vw_carrot_ContentChild created ShowInSiteNav ";
+				return res;
+			}
+
+			res.Response = "CMS DB vw_carrot_ContentChild and ShowInSiteNav already exist ";
 			return res;
 		}
 

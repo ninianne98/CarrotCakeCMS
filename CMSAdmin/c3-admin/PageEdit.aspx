@@ -15,19 +15,7 @@
 				last updated:
 			</td>
 			<td width="575" valign="top">
-				<table cellpadding="0" cellspacing="0">
-					<tr>
-						<td width="175" valign="top">
-							<asp:Label ID="lblUpdated" runat="server"></asp:Label>
-						</td>
-						<td width="175" valign="top">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</td>
-						<td width="100" valign="top">
-							<asp:CheckBox ID="chkActive" runat="server" Text="published" />
-						</td>
-					</tr>
-				</table>
+				<asp:Label ID="lblUpdated" runat="server"></asp:Label>
 			</td>
 		</tr>
 		<tr>
@@ -74,6 +62,26 @@
 			</td>
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				thumbnail:
+				<br />
+			</td>
+			<td valign="top">
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="45" MaxLength="200" />
+				<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturnPop('<%=txtThumb.ClientID %>');return false;" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				&nbsp;
+			</td>
+			<td valign="top">
+				<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
+				&nbsp;&nbsp;&nbsp;
+				<asp:CheckBox ID="chkNavigation" runat="server" Text="Include in site navigation" Checked="true" />
 			</td>
 		</tr>
 		<tr>

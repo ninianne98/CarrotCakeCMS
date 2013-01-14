@@ -34,5 +34,7 @@ If coming from an earlier version, run these scripts
 
 		** ALTER 08 - create trackback queue and comment view.sql     (from before 2012-12-28)
 
+		** ALTER 09 - parent child view and misc setting properties.sql     (from before 2013-01-12)
+
 
 

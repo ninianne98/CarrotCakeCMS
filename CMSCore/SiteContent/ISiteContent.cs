@@ -10,6 +10,7 @@ namespace Carrotware.CMS.Core {
 		DateTime RetireDate { get; set; }
 		DateTime EditDate { get; set; }
 		Guid? EditUserId { get; set; }
+		Guid CreateUserId { get; set; }
 		string FileName { get; set; }
 		string Thumbnail { get; set; }
 		string NavMenuText { get; set; }
@@ -22,6 +23,7 @@ namespace Carrotware.CMS.Core {
 		Guid? Parent_ContentID { get; set; }
 		Guid Root_ContentID { get; set; }
 		Guid SiteID { get; set; }
+		bool ShowInSiteNav { get; set; }
 		string TemplateFile { get; set; }
 		string TemplateFolderPath { get; }
 		string TitleBar { get; set; }

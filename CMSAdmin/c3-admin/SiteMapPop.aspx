@@ -1,7 +1,6 @@
-﻿<%@ Page ValidateRequest="false" Title="Site Map" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteMap.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteMap" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="SiteMapPop.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteMapPop" %>
 
-<%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Register Src="ucSiteMap.ascx" TagName="ucSiteMap" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
