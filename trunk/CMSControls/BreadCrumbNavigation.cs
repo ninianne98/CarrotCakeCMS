@@ -82,10 +82,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			SiteNav pageNav = GetParentPage();
+			SiteNav pageNav = GetCurrentPage();
 			string sParent = pageNav.FileName.ToLower();
 
-			List<SiteNav> lst = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
+			List<SiteNav> lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
+			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
@@ -100,29 +101,29 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (DisplayAsList) {
 
-				output.Write("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
-				foreach (SiteNav c in lst) {
+				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+				foreach (SiteNav c in lstNav) {
 					IdentifyLinkAsInactive(c);
 					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
-						output.Write("<li class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+						output.WriteLine("<li class=\"" + sSelCSS + "\">" + c.NavMenuText + "</li> ");
 					} else {
-						output.Write("<li" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
+						output.WriteLine("<li" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 					}
 				}
-				output.Write("</ul>");
+				output.WriteLine("</ul>");
 
 			} else {
 
 				string sDivider = " " + TextDivider + " ";
 				int iCtr = 1;
-				int iMax = lst.Count;
-				output.Write("<div" + sCSS + " id=\"" + this.ClientID + "\">");
-				foreach (SiteNav c in lst) {
+				int iMax = lstNav.Count;
+				output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\">");
+				foreach (SiteNav c in lstNav) {
 					IdentifyLinkAsInactive(c);
 					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
-						output.Write("<span class=\"" + sSelCSS + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
+						output.WriteLine("<span class=\"" + sSelCSS + "\">" + c.NavMenuText + " " + sDivider + "</span> ");
 					} else {
-						output.Write("<span" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a>" + sDivider + "</span> \r\n");
+						output.WriteLine("<span" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a> " + sDivider + "</span> ");
 					}
 					iCtr++;
 
@@ -130,7 +131,7 @@ namespace Carrotware.CMS.UI.Controls {
 						sDivider = "";
 					}
 				}
-				output.Write("</div>");
+				output.WriteLine("</div>");
 
 			}
 		}

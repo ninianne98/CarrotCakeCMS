@@ -45,6 +45,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtTitle.Text = pageContents.TitleBar;
 					txtNav.Text = pageContents.NavMenuText;
 					txtHead.Text = pageContents.PageHead;
+					txtThumb.Text = pageContents.Thumbnail;
 
 					txtDescription.Text = pageContents.MetaDescription;
 					txtKey.Text = pageContents.MetaKeyword;
@@ -75,6 +76,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				pageContents.MetaDescription = txtDescription.Text;
 				pageContents.MetaKeyword = txtKey.Text;
+				pageContents.Thumbnail = txtThumb.Text;
 
 				pageContents.EditDate = SiteData.CurrentSite.Now;
 

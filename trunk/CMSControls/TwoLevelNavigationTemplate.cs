@@ -260,6 +260,7 @@ namespace Carrotware.CMS.UI.Controls {
 				lstTwoLevelNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			}
 
+			lstTwoLevelNav.RemoveAll(x => x.ShowInSiteNav == false);
 			lstTwoLevelNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 		}
 

@@ -180,6 +180,13 @@
     <Compile Include="c3-admin\SiteImport.aspx.designer.cs">
       <DependentUpon>SiteImport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\SiteMapPop.aspx.cs">
+      <DependentUpon>SiteMapPop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteMapPop.aspx.designer.cs">
+      <DependentUpon>SiteMapPop.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\SiteTemplateUpdate.aspx.cs">
       <DependentUpon>SiteTemplateUpdate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -312,6 +319,13 @@
     </Compile>
     <Compile Include="c3-admin\ucPageMenuItems.ascx.designer.cs">
       <DependentUpon>ucPageMenuItems.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucSiteMap.ascx.cs">
+      <DependentUpon>ucSiteMap.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucSiteMap.ascx.designer.cs">
+      <DependentUpon>ucSiteMap.ascx</DependentUpon>
     </Compile>
     <Compile Include="c3-admin\ucSitePageDrillDown.ascx.cs">
       <DependentUpon>ucSitePageDrillDown.ascx</DependentUpon>
@@ -516,7 +530,10 @@
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
     <Content Include="c3-admin\Images\calendar.png" />
+    <Content Include="c3-admin\Includes\filebrowser.css" />
     <Content Include="c3-admin\SiteExport.aspx" />
+    <Content Include="c3-admin\SiteMapPop.aspx" />
+    <Content Include="c3-admin\ucSiteMap.ascx" />
     <Content Include="citrus-island\citrus2.aspx" />
     <Content Include="citrus-island\citrus1-index.aspx" />
     <Content Include="citrus-island\citrus1-post.aspx" />

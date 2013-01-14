@@ -414,7 +414,7 @@ var IsPublishing = false;
 function cmsApplyChanges() {
 
 	var webMthd = webSvc + "/PublishChanges";
-	
+
 	// prevent multiple submissions
 	if (!IsPublishing) {
 
@@ -678,6 +678,10 @@ function cmsShowAddChildPage() {
 function cmsShowAddTopPage() {
 
 	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?addtoplevel=true&pageid=' + thisPageID);
+}
+function cmsEditSiteMap() {
+
+	cmsLaunchWindow('/c3-admin/SiteMapPop.aspx');
 }
 
 function cmsSortChildren() {

@@ -127,6 +127,13 @@ namespace Carrotware.CMS.Core {
 						break;
 				}
 
+				if (wpp.PostName.Length > 200 && wpp.PostType == WordPressPost.WPPostType.Page) {
+					wpp.PostName = wpp.PostName.Substring(0, 175).Trim();
+				}
+				if (wpp.PostName.Length > 255 && (wpp.PostType == WordPressPost.WPPostType.BlogPost || wpp.PostType == WordPressPost.WPPostType.Attachment)) {
+					wpp.PostName = wpp.PostName.Substring(0, 250).Trim();
+				}
+
 				wpp.PostDateUTC = DateTime.UtcNow;
 				try { wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date", rssNamespace).InnerText); } catch { }
 				try { wpp.PostDateUTC = Convert.ToDateTime(node.SelectSingleNode("wp:post_date_gmt", rssNamespace).InnerText); } catch { }

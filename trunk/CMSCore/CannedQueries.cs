@@ -172,6 +172,33 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
+		internal static IQueryable<vw_carrot_Content> GetLatestContentByParent(CarrotCMSDataContext ctx, Guid siteID, Guid? parentContentID, bool bActiveOnly) {
+			return (from ct in ctx.vw_carrot_Contents
+					orderby ct.NavOrder, ct.NavMenuText
+					where ct.SiteID == siteID
+						   && ct.Parent_ContentID == parentContentID
+						   && ct.Parent_ContentID != null
+						   && ct.IsLatestVersion == true
+						   && (ct.PageActive == true || bActiveOnly == false)
+						   && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						   && (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
+					select ct);
+		}
+
+		internal static IQueryable<vw_carrot_Content> GetLatestContentByParent(CarrotCMSDataContext ctx, Guid siteID, string parentPage, bool bActiveOnly) {
+			return (from ct in ctx.vw_carrot_Contents
+					join cp in ctx.vw_carrot_ContentChilds on ct.Root_ContentID equals cp.Root_ContentID
+					orderby ct.NavOrder, ct.NavMenuText
+					where ct.SiteID == siteID
+						   && cp.ParentFileName.ToLower() == parentPage.ToLower()
+						   && ct.IsLatestVersion == true
+						   && (ct.PageActive == true || bActiveOnly == false)
+						   && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						   && (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
+					select ct);
+		}
+
+
 		internal static IQueryable<carrot_CategoryContentMapping> GetContentCategoryMapByContentID(CarrotCMSDataContext ctx, Guid rootContentID) {
 			return (from r in ctx.carrot_ContentCategories
 					join c in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals c.ContentCategoryID

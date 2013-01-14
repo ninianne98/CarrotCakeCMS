@@ -203,10 +203,10 @@ namespace Carrotware.CMS.Core {
 				ActiveOnly = bActiveOnly
 			};
 
-			return cqGetLatestContentByParent(ctx, sp);
+			return cqGetLatestContentByParent1(ctx, sp);
 		}
 
-		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, IQueryable<vw_carrot_Content>> cqGetLatestContentByParent =
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, IQueryable<vw_carrot_Content>> cqGetLatestContentByParent1 =
 		CompiledQuery.Compile(
 				(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
 					(from ct in ctx.vw_carrot_Contents
@@ -218,6 +218,141 @@ namespace Carrotware.CMS.Core {
 							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
 							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
 					 select ct));
+
+		internal static IQueryable<vw_carrot_Content> GetLatestContentByParent(CarrotCMSDataContext ctx, Guid siteID, string parentPage, bool bActiveOnly) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				ParentFileName = parentPage,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly
+			};
+
+			return cqGetLatestContentByParent2(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, IQueryable<vw_carrot_Content>> cqGetLatestContentByParent2 =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from ct in ctx.vw_carrot_Contents
+					 join cp in ctx.vw_carrot_ContentChilds on ct.Root_ContentID equals cp.Root_ContentID
+					 orderby ct.NavOrder, ct.NavMenuText
+					 where ct.SiteID == sp.SiteID
+							&& cp.ParentFileName.ToLower() == sp.ParentFileName.ToLower()
+							&& ct.IsLatestVersion == true
+							&& (ct.PageActive == true || sp.ActiveOnly == false)
+							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					 select ct));
+
+
+
+
+		internal static IQueryable<vw_carrot_Content> GetLatestContentBySibling(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, bool bActiveOnly) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				RootContentID = rootContentID,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly
+			};
+
+			return cqGetLatestContentBySibling1(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, IQueryable<vw_carrot_Content>> cqGetLatestContentBySibling1 =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from cc1 in ctx.vw_carrot_ContentChilds
+					 join cc2 in ctx.vw_carrot_ContentChilds on cc1.Parent_ContentID equals cc2.Parent_ContentID
+					 join ct in ctx.vw_carrot_Contents on cc2.Root_ContentID equals ct.Root_ContentID
+					 orderby ct.NavOrder, ct.NavMenuText
+					 where ct.SiteID == sp.SiteID
+							&& cc1.Root_ContentID == sp.RootContentID
+							&& cc1.SiteID == sp.SiteID
+							&& cc2.SiteID == sp.SiteID
+							&& ct.IsLatestVersion == true
+							&& (ct.PageActive == true || sp.ActiveOnly == false)
+							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					 select ct));
+
+		internal static IQueryable<vw_carrot_Content> GetLatestContentBySibling(CarrotCMSDataContext ctx, Guid siteID, string sPage, bool bActiveOnly) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				FileName = sPage,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly
+			};
+
+			return cqGetLatestContentBySibling2(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, IQueryable<vw_carrot_Content>> cqGetLatestContentBySibling2 =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from cc1 in ctx.vw_carrot_ContentChilds
+					 join cc2 in ctx.vw_carrot_ContentChilds on cc1.Parent_ContentID equals cc2.Parent_ContentID
+					 join ct in ctx.vw_carrot_Contents on cc2.Root_ContentID equals ct.Root_ContentID
+					 orderby ct.NavOrder, ct.NavMenuText
+					 where ct.SiteID == sp.SiteID
+							&& cc1.FileName.ToLower() == sp.FileName.ToLower()
+							&& cc1.SiteID == sp.SiteID
+							&& cc2.SiteID == sp.SiteID
+							&& ct.IsLatestVersion == true
+							&& (ct.PageActive == true || sp.ActiveOnly == false)
+							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					 select ct));
+
+		internal static int GetContentCountByParent(CarrotCMSDataContext ctx, Guid siteID, Guid? parentContentID, bool bActiveOnly) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				ParentContentID = parentContentID,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly
+			};
+
+			return cqGetContentCountByParent1(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, int> cqGetContentCountByParent1 =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from ct in ctx.vw_carrot_Contents
+					 orderby ct.NavOrder, ct.NavMenuText
+					 where ct.SiteID == sp.SiteID
+							&& ct.Parent_ContentID == sp.ParentContentID
+							&& ct.IsLatestVersion == true
+							&& (ct.PageActive == true || sp.ActiveOnly == false)
+							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					 select ct).Count());
+
+
+		internal static int GetContentCountByParent(CarrotCMSDataContext ctx, Guid siteID, string parentPage, bool bActiveOnly) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				ParentFileName = parentPage,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly
+			};
+
+			return cqGetContentCountByParent2(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, int> cqGetContentCountByParent2 =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					(from ct in ctx.vw_carrot_Contents
+					 join cp in ctx.vw_carrot_ContentChilds on ct.Root_ContentID equals cp.Root_ContentID
+					 orderby ct.NavOrder, ct.NavMenuText
+					 where ct.SiteID == sp.SiteID
+							&& cp.ParentFileName.ToLower() == sp.ParentFileName.ToLower()
+							&& ct.IsLatestVersion == true
+							&& (ct.PageActive == true || sp.ActiveOnly == false)
+							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					 select ct).Count());
+
 
 
 		internal static IQueryable<vw_carrot_Content> GetLatestContentWithParent(CarrotCMSDataContext ctx, Guid siteID, Guid? parentContentID, bool bActiveOnly) {

@@ -1,7 +1,7 @@
 ﻿<script type="text/javascript"> 
 	function {SEARCH_FUNC}() { 
 		var theSearchTerm = $('#{SEARCH_TEXT}').val(); 
-		__carrotware_RedirectWithQuerystringParm('{SEARCH_URL}', 'search', theSearchTerm); 
+		__carrotware_RedirectWithQuerystringParm('{SEARCH_URL}', '{SEARCH_PARAM}', theSearchTerm); 
 		return false; 
 	} 
 

@@ -713,6 +713,9 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
+		public static string SearchQueryParameter {
+			get { return "search".ToLower(); }
+		}
 		public static string DefaultDirectoryFilename {
 			get { return "/default.aspx".ToLower(); }
 		}

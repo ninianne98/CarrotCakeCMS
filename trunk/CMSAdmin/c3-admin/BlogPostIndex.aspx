@@ -115,7 +115,7 @@
 						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
 						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
-					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Published" AlternateTextFalse="Inactive"
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Public" AlternateTextFalse="Inactive"
 						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>
 			</TheGrid>

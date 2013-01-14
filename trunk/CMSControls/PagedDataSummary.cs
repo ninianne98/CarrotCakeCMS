@@ -148,6 +148,7 @@ namespace Carrotware.CMS.UI.Controls {
 				Dictionary<string, string> _dict = new Dictionary<string, string>();
 				_dict.Add("Blog", "Blog");
 				_dict.Add("ContentPage", "Content Page");
+				_dict.Add("ChildContentPage", "Child Content Page");
 				_dict.Add("SpecifiedCategories", "Specified Categories");
 				return _dict;
 			}
@@ -157,6 +158,7 @@ namespace Carrotware.CMS.UI.Controls {
 			Unknown,
 			Blog,
 			ContentPage,
+			ChildContentPage,
 			SpecifiedCategories,
 			SiteSearch
 		}
@@ -407,8 +409,8 @@ namespace Carrotware.CMS.UI.Controls {
 			if (context != null) {
 				if (SiteData.CurrentScriptName.ToLower() == SiteData.CurrentSite.SiteSearchPath.ToLower()) {
 					ContentType = SummaryContentType.SiteSearch;
-					if (HttpContext.Current.Request.QueryString["search"] != null) {
-						sSearchTerm = HttpContext.Current.Request.QueryString["search"].ToString();
+					if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
+						sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
 					}
 				}
 			}
@@ -419,6 +421,11 @@ namespace Carrotware.CMS.UI.Controls {
 						viewContentType = ContentPageType.PageType.BlogEntry;
 						TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
 						lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
+						break;
+					case SummaryContentType.ChildContentPage:
+						viewContentType = ContentPageType.PageType.ContentEntry;
+						TotalRecords = navHelper.GetChildNavigationCount(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetLatestChildContentPagedList(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor, PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 					case SummaryContentType.ContentPage:
 						viewContentType = ContentPageType.PageType.ContentEntry;

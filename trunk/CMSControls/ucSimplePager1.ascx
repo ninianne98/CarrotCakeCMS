@@ -1,4 +1,4 @@
 ﻿<%@ Control Language="C#" %>
-[
-<carrot:NavLinkForPagerTemplate ID="lnkBtn" runat="server" CSSSelected="selected" />
-]
+<span class="pagerLink">[
+	<carrot:NavLinkForPagerTemplate ID="lnkBtn" runat="server" RenderAsHyperlink="true" CSSSelected="selected" />
+	] </span>

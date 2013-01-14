@@ -229,12 +229,15 @@ function cmsIsPageValid() {
 	}
 }
 
+
 //====================================
 
 
 var TheURL = '';
 var RefreshPage = 0;
 
+
+//============ full page
 function ShowWindowNoRefresh(theURL) {
 	RefreshPage = 0;
 	LaunchWindow(theURL);
@@ -258,6 +261,33 @@ function LaunchWindow(theURL) {
 
 	setTimeout("LoadWindow();", 800);
 }
+
+
+//============ popup page
+function ShowWindowNoRefreshPop(theURL) {
+	RefreshPage = 0;
+	LaunchWindowPop(theURL);
+}
+
+function ShowWindowPop(theURL) {
+	RefreshPage = 1;
+	LaunchWindowPop(theURL);
+}
+
+function LaunchWindowPop(theURL) {
+	TheURL = theURL;
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="640" height="390" src="' + TheURL + '" /> </div>');
+
+	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
+		css: { width: '630', height: '380' },
+		fadeOut: 1000,
+		timeout: 1200,
+		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
+	});
+
+	setTimeout("LoadWindow();", 800);
+}
+
 
 function LoadWindow() {
 	$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
@@ -344,6 +374,15 @@ function cmsFileBrowserOpenReturn(fldN) {
 	return false;
 }
 
+function cmsFileBrowserOpenReturnPop(fldN) {
+	fldN = '#' + fldN;
+	var fld = $(fldN);
+	fldNameRet = fld.attr('id');
+
+	ShowWindowNoRefreshPop('/c3-admin/FileBrowser.aspx?returnvalue=1&fldrpath=/');
+
+	return false;
+}
 
 function cmsSetFileNameReturn(v) {
 	var fldN = '#' + fldNameRet;

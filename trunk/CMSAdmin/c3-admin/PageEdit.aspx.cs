@@ -39,6 +39,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtTitle.Text = pageContents.TitleBar;
 					txtNav.Text = pageContents.NavMenuText;
 					txtHead.Text = pageContents.PageHead;
+					txtThumb.Text = pageContents.Thumbnail;
 
 					txtDescription.Text = pageContents.MetaDescription;
 					txtKey.Text = pageContents.MetaKeyword;
@@ -51,6 +52,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lblUpdated.Text = pageContents.EditDate.ToString();
 
 					chkActive.Checked = pageContents.PageActive;
+					chkNavigation.Checked = pageContents.ShowInSiteNav;
+
 				}
 			}
 
@@ -66,12 +69,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				pageContents.MetaDescription = txtDescription.Text;
 				pageContents.MetaKeyword = txtKey.Text;
+				pageContents.Thumbnail = txtThumb.Text;
 
 				pageContents.EditDate = SiteData.CurrentSite.Now;
 
 				pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
 				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
 				pageContents.PageActive = chkActive.Checked;
+				pageContents.ShowInSiteNav = chkNavigation.Checked;
 
 				cmsHelper.cmsAdminContent = pageContents;
 

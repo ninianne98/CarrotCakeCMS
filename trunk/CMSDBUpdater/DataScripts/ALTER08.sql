@@ -1,28 +1,4 @@
 ﻿
-GO
-
-ALTER TABLE [dbo].[carrot_ContentComment] 
-	ALTER COLUMN  [CommenterName] [nvarchar](256) NOT NULL
-
-ALTER TABLE [dbo].[carrot_ContentComment] 
-	ALTER COLUMN  [CommenterEmail] [nvarchar](256) NOT NULL
-
-ALTER TABLE [dbo].[carrot_ContentComment] 
-	ALTER COLUMN  [CommenterURL] [nvarchar](256) NOT NULL
-
-GO
-
-UPDATE [dbo].[carrot_Content]
-SET [NavOrder] = 5
-WHERE ISNULL([NavOrder], -1) = -1
-
-GO
-
-ALTER TABLE [dbo].[carrot_Content] 
-	ALTER COLUMN  [NavOrder] [int] NOT NULL
-
-GO
-
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[vw_carrot_Comment]'))
 DROP VIEW [dbo].[vw_carrot_Comment]
 GO
@@ -187,4 +163,7 @@ inner join [dbo].carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
 
 
 GO
+
+
+
 

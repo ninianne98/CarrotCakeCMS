@@ -4,77 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
-	<style type="text/css">
-		BODY {
-			background-color: #FFFFFF;
-			text-align: left;
-			font-size: 11px;
-			font-family: Arial, Helvetica, sans-serif;
-		}
-		a {
-			font-weight: bold;
-			text-decoration: none;
-		}
-		a:link {
-			color: #000099;
-		}
-		a:active {
-			color: #FFDB0D;
-		}
-		a:visited {
-			color: #BF9232;
-		}
-		a:hover {
-			text-decoration: underline;
-		}
-		div.scroll {
-			height: 175px;
-			width: 600px;
-			overflow: auto;
-			border: 1px solid #666;
-			padding: 2px;
-		}
-		td {
-			font-size: 11px;
-			color: #000000;
-			background-color: #FFFFFF;
-		}
-		th {
-			font-size: 11px;
-			color: #FFFFFF;
-			background-color: #97AC88;
-		}
-		.head2 {
-			color: #97AC88;
-		}
-		.ImgGroup {
-			position: relative;
-			z-index: 1200;
-		}
-		#imgWrapperMain {
-			min-height: 25px;
-			min-width: 25px;
-			padding: 8px;
-			position: absolute;
-			z-index: 2000;
-		}
-		.thumbpreview {
-			font-size: 12px;
-			color: #000000;
-			background-color: #B7D7C4;
-		}
-		#imgDimension {
-			font-size: 12px;
-			font-weight: bold;
-			text-align: left;
-		}
-	</style>
+	<link href="Includes/filebrowser.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$(function () {
-				$("input:button, input:submit, input:file").button();
-			});
+			$("input:button, input:submit, input:reset").button();
 		});
+
 	</script>
 	<script type="text/javascript">
 		function SetFile(val) {
@@ -190,11 +125,11 @@
 		<div class="scroll" id="folderZone">
 			<asp:Repeater ID="rpFolders" runat="server">
 				<HeaderTemplate>
-					<table cellpadding="2" cellspacing="0">
+					<table cellpadding="2" cellspacing="0" width="98%">
 				</HeaderTemplate>
 				<ItemTemplate>
 					<tr>
-						<td>
+						<td width="32">
 							<img src="/c3-admin/images/folder.png" alt="folder" />
 						</td>
 						<td>
@@ -204,7 +139,7 @@
 						<td>
 							&nbsp;&nbsp;
 						</td>
-						<td>
+						<td width="150">
 							<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
 						</td>
 					</tr>
@@ -216,29 +151,29 @@
 		<p>
 			<br />
 			Select a file to upload to the current folder:<br />
-			<asp:FileUpload ID="upFile" runat="server" />
+			<asp:FileUpload ID="upFile" runat="server" Width="400" />
 			<asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" /><br />
 			<asp:Label ID="lblWarning" runat="server"></asp:Label>
 		</p>
 		<div class="scroll" id="fileZone">
 			<asp:Repeater ID="rpFiles" runat="server">
 				<HeaderTemplate>
-					<table cellpadding="2" cellspacing="0">
-						<tr bgcolor="#F74902">
-							<th>
+					<table cellpadding="2" cellspacing="0" width="98%">
+						<tr class="headerRow">
+							<th width="20">
+							</th>
+							<th width="20">
+							</th>
+							<th class="headerRowText">
+								Filename
+							</th>
+							<th width="150" class="headerRowText">
+								Date
 							</th>
 							<th>
 							</th>
-							<th>
-								<font color="#FFFFFF">Filename</font>
-							</th>
-							<th>
-								<font color="#FFFFFF">Date</font>
-							</th>
-							<th>
-							</th>
-							<th>
-								<font color="#FFFFFF">Size</font>
+							<th width="80" class="headerRowText">
+								Size
 							</th>
 						</tr>
 				</HeaderTemplate>

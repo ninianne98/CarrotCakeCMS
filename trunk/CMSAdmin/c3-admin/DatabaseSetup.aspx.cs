@@ -63,6 +63,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep06());
 					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep07());
 					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep08());
+					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep09());
 				} else {
 					HandleResponse("Database up-to-date ");
 				}

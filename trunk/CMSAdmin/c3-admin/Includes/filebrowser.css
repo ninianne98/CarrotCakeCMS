@@ -1,0 +1,75 @@
+﻿body {
+	background-color: #FFFFFF;
+	text-align: left;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.headerRow {
+	background-color: #F74902;
+}
+.headerRowText {
+	color: #FFFFFF;
+}
+a {
+	font-weight: bold;
+	text-decoration: none;
+}
+a:link {
+	color: #000099;
+}
+a:active {
+	color: #FFDB0D;
+}
+a:visited {
+	color: #BF9232;
+}
+a:hover {
+	text-decoration: underline;
+}
+div.scroll {
+	height: 175px;
+	width: 90%;
+	overflow: auto;
+	border: 1px solid #666;
+	padding: 2px;
+}
+#folderZone {
+	height: 100px;
+}
+#fileZone {
+	height: 225px;
+}
+td {
+	font-size: 11px;
+	color: #000000;
+	background-color: #FFFFFF;
+}
+th {
+	font-size: 11px;
+	color: #FFFFFF;
+	background-color: #97AC88;
+}
+.head2 {
+	color: #97AC88;
+}
+.ImgGroup {
+	position: relative;
+	z-index: 1200;
+}
+#imgWrapperMain {
+	min-height: 25px;
+	min-width: 25px;
+	padding: 8px;
+	position: absolute;
+	z-index: 2000;
+}
+.thumbpreview {
+	font-size: 12px;
+	color: #000000;
+	background-color: #B7D7C4;
+}
+#imgDimension {
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+}

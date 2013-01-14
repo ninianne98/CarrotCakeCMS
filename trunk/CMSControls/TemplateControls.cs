@@ -1514,9 +1514,9 @@ namespace Carrotware.CMS.UI.Controls {
 			HttpContext context = HttpContext.Current;
 			if (context != null) {
 				string sSearch = "";
-				if (context.Request["search"] != null) {
-					sSearch = context.Request["search"].ToString();
-					lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString() + "&search=" + context.Server.UrlEncode(sSearch);
+				if (context.Request[SiteData.SearchQueryParameter] != null) {
+					sSearch = context.Request[SiteData.SearchQueryParameter].ToString();
+					lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString() + "&" + SiteData.SearchQueryParameter + "=" + context.Server.UrlEncode(sSearch);
 				} else {
 					lnkNav.NavigateUrl = SiteData.CurrentScriptName + "?" + sPageParm + "=" + PageNbr.ToString();
 				}

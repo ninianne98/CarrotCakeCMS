@@ -133,6 +133,18 @@
 			</tr>
 			<tr>
 				<td valign="top" class="tablecaption">
+					Index Page
+					<br />
+				</td>
+				<td valign="top">
+					<!-- parent page plugin-->
+					<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
+					<div style="clear: both; height: 2px;">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" class="tablecaption">
 					Hide from Search Engines
 				</td>
 				<td valign="top">
@@ -239,18 +251,6 @@
 						<asp:ListItem Value="yyyy/MMMM" Text="YYYY/MonthName" />
 						<asp:ListItem Value="yyyy" Text="YYYY" />
 					</asp:DropDownList>
-				</td>
-			</tr>
-			<tr>
-				<td valign="top" class="tablecaption">
-					Blog Index Page
-					<br />
-				</td>
-				<td valign="top">
-					<!-- parent page plugin-->
-					<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
-					<div style="clear: both; height: 2px;">
-					</div>
 				</td>
 			</tr>
 		</table>

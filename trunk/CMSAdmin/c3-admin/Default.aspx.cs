@@ -85,7 +85,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-			siteHelper.CleanUpSerialData();
+			CMSConfigHelper.CleanUpSerialData();
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {

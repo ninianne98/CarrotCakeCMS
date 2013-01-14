@@ -17,12 +17,12 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class SiteMap : AdminBasePage {
+	public partial class SiteMapPop : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSiteMap);
 
-		}
 
+		}
 	}
 }

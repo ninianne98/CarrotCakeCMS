@@ -25,6 +25,8 @@ namespace Carrotware.CMS.Core {
 		public ContentPageType.PageType ContentType { get; set; }
 
 		public Guid? ParentContentID { get; set; }
+		public string ParentFileName { get; set; }
+
 		public bool ActiveOnly { get; set; }
 		public Guid RootContentID { get; set; }
 		public string FileName { get; set; }
