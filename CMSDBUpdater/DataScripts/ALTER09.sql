@@ -76,7 +76,7 @@ GO
 
 UPDATE [dbo].[carrot_RootContent] 
 SET [ShowInSiteNav] = 1
-WHERE ISNULL([ShowInSiteNav], -1) = -1
+WHERE ISNULL([ShowInSiteNav], 1) = 1
 
 
 UPDATE RC
