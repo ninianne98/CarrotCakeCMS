@@ -48,13 +48,9 @@ namespace Carrotware.Web.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
 
-			sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
+			(new jquery()).RenderControl(output);
 
-			output.Write("<!-- JQuery 1.7.2 --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
-
-			sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-8-21.js");
-
-			output.Write("<!-- JQuery UI 1.8.21 --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
+			(new jqueryui()).RenderControl(output);
 
 			sJQFile = "";
 

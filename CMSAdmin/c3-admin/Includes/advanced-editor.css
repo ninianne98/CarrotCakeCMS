@@ -36,7 +36,7 @@
 	margin-bottom: 5px !important;
 }
 
-#cmsMainToolbox input:focus, #cmsMainToolbox select:focus, #cmsMainToolbox textarea:focus, #cmsMainToolbox input, #cmsMainToolbox select, #cmsMainToolbox textarea {
+#cmsMainToolbox input:focus, #cmsMainToolbox textarea:focus, #cmsMainToolbox input, #cmsMainToolbox textarea {
 	color: #000000;
 	background: #FFFFFF;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
@@ -93,6 +93,21 @@
 	padding: 0px !important;
 	border: 0px solid #dddddd !important;
 	background: transparent !important;
+}
+
+#cmsGlossySeaGreenID p, .cmsGlossySeaGreen p, #cmsMainToolbox p {
+	margin: 1px;
+	padding: 2px;
+}
+
+#cmsMainToolbox select:focus, #cmsMainToolbox select:hover, #cmsMainToolbox select, #cmsGlossySeaGreenID select, #cmsGlossySeaGreenID select:focus, #cmsGlossySeaGreenID select:hover {
+	margin: 1px !important;
+	padding: 1px !important;
+	font-size: 11px !important;
+	color: #000000 !important;
+	background: #FFFFFF !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	line-height: 16px !important;
 }
 
 .blockMsg table, .blockMsg tr, .blockMsg td {
