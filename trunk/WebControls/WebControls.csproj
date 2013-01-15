@@ -172,9 +172,6 @@
     <EmbeddedResource Include="jquery172.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jqueryui-1-8-21.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="jquerybasic\purple\ui-bg_flat_0_aaaaaa_40x100.png" />
     <EmbeddedResource Include="jquerybasic\purple\ui-bg_flat_0_eeeeee_40x100.png" />
     <EmbeddedResource Include="jquerybasic\purple\ui-bg_flat_55_994d53_40x100.png" />
@@ -248,9 +245,6 @@
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jquery180.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="CarrotGridView\accept.png" />
     <EmbeddedResource Include="CarrotGridView\cancel.png" />
   </ItemGroup>
@@ -258,6 +252,12 @@
     <EmbeddedResource Include="CarrotGridView\attach.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="jqueryui-1-9-2.js" />
+    <EmbeddedResource Include="jqueryui-1-7-3.js" />
+    <EmbeddedResource Include="jqueryui-1-8-24.js" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_fbe3da_40x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="jquery182.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
