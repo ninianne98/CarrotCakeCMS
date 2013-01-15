@@ -155,36 +155,35 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		private void SaveKeywordsAndTags() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(_db, this.Root_ContentID);
-				IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(_db, this.Root_ContentID);
+		private void SaveKeywordsAndTags(CarrotCMSDataContext _db) {
 
-				List<carrot_TagContentMapping> newContentTags = (from x in ContentTags
-																 select new carrot_TagContentMapping {
-																	 ContentTagID = x.ContentTagID,
-																	 Root_ContentID = this.Root_ContentID,
-																	 TagContentMappingID = Guid.NewGuid()
-																 }).ToList();
+			IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(_db, this.Root_ContentID);
+			IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(_db, this.Root_ContentID);
 
-				List<carrot_CategoryContentMapping> newContentCategories = (from x in ContentCategories
-																			select new carrot_CategoryContentMapping {
-																				ContentCategoryID = x.ContentCategoryID,
-																				Root_ContentID = this.Root_ContentID,
-																				CategoryContentMappingID = Guid.NewGuid()
-																			}).ToList();
+			List<carrot_TagContentMapping> newContentTags = (from x in ContentTags
+															 select new carrot_TagContentMapping {
+																 ContentTagID = x.ContentTagID,
+																 Root_ContentID = this.Root_ContentID,
+																 TagContentMappingID = Guid.NewGuid()
+															 }).ToList();
 
+			List<carrot_CategoryContentMapping> newContentCategories = (from x in ContentCategories
+																		select new carrot_CategoryContentMapping {
+																			ContentCategoryID = x.ContentCategoryID,
+																			Root_ContentID = this.Root_ContentID,
+																			CategoryContentMappingID = Guid.NewGuid()
+																		}).ToList();
 
-				foreach (carrot_TagContentMapping s in newContentTags) {
-					_db.carrot_TagContentMappings.InsertOnSubmit(s);
-				}
-				foreach (carrot_CategoryContentMapping s in newContentCategories) {
-					_db.carrot_CategoryContentMappings.InsertOnSubmit(s);
-				}
-
-				_db.carrot_TagContentMappings.DeleteBatch(oldContentTags);
-				_db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
+			foreach (carrot_TagContentMapping s in newContentTags) {
+				_db.carrot_TagContentMappings.InsertOnSubmit(s);
 			}
+			foreach (carrot_CategoryContentMapping s in newContentCategories) {
+				_db.carrot_CategoryContentMappings.InsertOnSubmit(s);
+			}
+
+			_db.carrot_TagContentMappings.DeleteBatch(oldContentTags);
+			_db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
+
 		}
 
 
@@ -364,7 +363,7 @@ namespace Carrotware.CMS.Core {
 
 				_db.carrot_Contents.InsertOnSubmit(c);
 
-				SaveKeywordsAndTags();
+				SaveKeywordsAndTags(_db);
 
 				_db.SubmitChanges();
 
@@ -402,7 +401,7 @@ namespace Carrotware.CMS.Core {
 
 				_db.carrot_Contents.InsertOnSubmit(c);
 
-				SaveKeywordsAndTags();
+				SaveKeywordsAndTags(_db);
 
 				_db.SubmitChanges();
 
