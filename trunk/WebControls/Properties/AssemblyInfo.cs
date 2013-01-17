@@ -163,8 +163,7 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css", "text/css", PerformSubstitution = true)]
 
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_flat_15_e58b8b_40x100.png", "image/png")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_flat_15_fbe3da_40x100.png", "image/png")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_flat_15_f9cecd_40x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_glass_100_b7d7c4_1x400.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_glass_100_dff6e8_1x400.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_glass_50_468b5e_1x400.png", "image/png")]
@@ -172,10 +171,9 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_hexagon_90_eeeeee_12x10.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_highlight-hard_100_f2f5f7_1x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_highlight-hard_70_000000_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_highlight-soft_25_f3ebba_1x100.png", "image/png")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_468b5e_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_753433_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_c7820f_256x240.png", "image/png")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_ffffff_256x240.png", "image/png")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_highlight-soft_25_fbf9ee_1x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_2e83ff_256x240.png", "image/png")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_468b5e_256x240.png", "image/png")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_cd0a0a_256x240.png", "image/png")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_ffffff_256x240.png", "image/png")]
 

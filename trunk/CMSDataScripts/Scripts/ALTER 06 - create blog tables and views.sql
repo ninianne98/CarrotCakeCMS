@@ -568,7 +568,7 @@ END
 GO
 
 ALTER TABLE [dbo].[carrot_ContentComment] 
-	ALTER COLUMN  [CommenterURL] [nvarchar](128)  NULL
+	ALTER COLUMN  [CommenterURL] [nvarchar](256)  NULL
 
 GO
 
@@ -579,7 +579,7 @@ WHERE ISNULL([CommenterURL], '') = ''
 GO
 
 ALTER TABLE [dbo].[carrot_ContentComment] 
-	ALTER COLUMN  [CommenterURL] [nvarchar](128) NOT NULL
+	ALTER COLUMN  [CommenterURL] [nvarchar](256) NOT NULL
 
 GO
 
@@ -600,7 +600,6 @@ GO
 ALTER TABLE [dbo].[carrot_ContentComment] ADD  CONSTRAINT [DF_carrot_ContentComment_ContentCommentID]  DEFAULT (newid()) FOR [ContentCommentID]
 
 GO
-
 
 ALTER TABLE [dbo].[carrot_ContentComment] ADD  CONSTRAINT [DF_carrot_ContentComment_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
 

@@ -1513,6 +1513,8 @@ namespace Carrotware.CMS.Data
 		
 		private string _TagSlug;
 		
+		private bool _IsPublic;
+		
 		private EntitySet<carrot_TagContentMapping> _carrot_TagContentMappings;
 		
 		private EntityRef<carrot_Site> _carrot_Site;
@@ -1529,6 +1531,8 @@ namespace Carrotware.CMS.Data
     partial void OnTagTextChanged();
     partial void OnTagSlugChanging(string value);
     partial void OnTagSlugChanged();
+    partial void OnIsPublicChanging(bool value);
+    partial void OnIsPublicChanged();
     #endregion
 		
 		public carrot_ContentTag()
@@ -1618,6 +1622,26 @@ namespace Carrotware.CMS.Data
 					this._TagSlug = value;
 					this.SendPropertyChanged("TagSlug");
 					this.OnTagSlugChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublic", DbType="Bit NOT NULL")]
+		public bool IsPublic
+		{
+			get
+			{
+				return this._IsPublic;
+			}
+			set
+			{
+				if ((this._IsPublic != value))
+				{
+					this.OnIsPublicChanging(value);
+					this.SendPropertyChanging();
+					this._IsPublic = value;
+					this.SendPropertyChanged("IsPublic");
+					this.OnIsPublicChanged();
 				}
 			}
 		}
@@ -1716,6 +1740,8 @@ namespace Carrotware.CMS.Data
 		
 		private string _CategorySlug;
 		
+		private bool _IsPublic;
+		
 		private EntitySet<carrot_CategoryContentMapping> _carrot_CategoryContentMappings;
 		
 		private EntityRef<carrot_Site> _carrot_Site;
@@ -1732,6 +1758,8 @@ namespace Carrotware.CMS.Data
     partial void OnCategoryTextChanged();
     partial void OnCategorySlugChanging(string value);
     partial void OnCategorySlugChanged();
+    partial void OnIsPublicChanging(bool value);
+    partial void OnIsPublicChanged();
     #endregion
 		
 		public carrot_ContentCategory()
@@ -1821,6 +1849,26 @@ namespace Carrotware.CMS.Data
 					this._CategorySlug = value;
 					this.SendPropertyChanged("CategorySlug");
 					this.OnCategorySlugChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublic", DbType="Bit NOT NULL")]
+		public bool IsPublic
+		{
+			get
+			{
+				return this._IsPublic;
+			}
+			set
+			{
+				if ((this._IsPublic != value))
+				{
+					this.OnIsPublicChanging(value);
+					this.SendPropertyChanging();
+					this._IsPublic = value;
+					this.SendPropertyChanged("IsPublic");
+					this.OnIsPublicChanged();
 				}
 			}
 		}
@@ -2299,6 +2347,8 @@ namespace Carrotware.CMS.Data
 		
 		private string _TagText;
 		
+		private bool _IsPublic;
+		
 		private string _TagSlug;
 		
 		private int _UseCount;
@@ -2355,6 +2405,22 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublic", DbType="Bit NOT NULL")]
+		public bool IsPublic
+		{
+			get
+			{
+				return this._IsPublic;
+			}
+			set
+			{
+				if ((this._IsPublic != value))
+				{
+					this._IsPublic = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagSlug", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
 		public string TagSlug
 		{
@@ -2397,6 +2463,8 @@ namespace Carrotware.CMS.Data
 		private System.Guid _SiteID;
 		
 		private string _CategoryText;
+		
+		private bool _IsPublic;
 		
 		private string _CategorySlug;
 		
@@ -2454,6 +2522,22 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublic", DbType="Bit NOT NULL")]
+		public bool IsPublic
+		{
+			get
+			{
+				return this._IsPublic;
+			}
+			set
+			{
+				if ((this._IsPublic != value))
+				{
+					this._IsPublic = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CategorySlug", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
 		public string CategorySlug
 		{
@@ -2496,6 +2580,8 @@ namespace Carrotware.CMS.Data
 		private System.Guid _ContentTagID;
 		
 		private string _TagText;
+		
+		private bool _IsPublic;
 		
 		private int _UseCount;
 		
@@ -2553,6 +2639,22 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublic", DbType="Bit NOT NULL")]
+		public bool IsPublic
+		{
+			get
+			{
+				return this._IsPublic;
+			}
+			set
+			{
+				if ((this._IsPublic != value))
+				{
+					this._IsPublic = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UseCount", DbType="Int NOT NULL")]
 		public int UseCount
 		{
@@ -2595,6 +2697,8 @@ namespace Carrotware.CMS.Data
 		private System.Guid _ContentCategoryID;
 		
 		private string _CategoryText;
+		
+		private bool _IsPublic;
 		
 		private int _UseCount;
 		
@@ -2648,6 +2752,22 @@ namespace Carrotware.CMS.Data
 				if ((this._CategoryText != value))
 				{
 					this._CategoryText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPublic", DbType="Bit NOT NULL")]
+		public bool IsPublic
+		{
+			get
+			{
+				return this._IsPublic;
+			}
+			set
+			{
+				if ((this._IsPublic != value))
+				{
+					this._IsPublic = value;
 				}
 			}
 		}

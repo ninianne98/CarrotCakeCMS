@@ -307,6 +307,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<IContentMetaInfo> GetTagList(Guid siteID, int iUpdates) {
 			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetTagURLs(db, siteID)
+												 where ct.IsPublic == true
 												 orderby ct.UseCount descending
 												 select (IContentMetaInfo)new ContentTag(ct)).Take(iUpdates).ToList();
 
@@ -315,6 +316,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<IContentMetaInfo> GetCategoryList(Guid siteID, int iUpdates) {
 			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetCategoryURLs(db, siteID)
+												 where ct.IsPublic == true
 												 orderby ct.UseCount descending
 												 select (IContentMetaInfo)new ContentCategory(ct)).Take(iUpdates).ToList();
 
@@ -343,6 +345,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<IContentMetaInfo> GetTagListForPost(Guid siteID, int iUpdates, string urlFileName) {
 			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetPostTagURLs(db, siteID, urlFileName)
+												 where ct.IsPublic == true
 												 orderby ct.TagText
 												 select (IContentMetaInfo)new ContentTag(ct)).Take(iUpdates).ToList();
 
@@ -350,6 +353,7 @@ namespace Carrotware.CMS.Core {
 		}
 		public List<IContentMetaInfo> GetCategoryListForPost(Guid siteID, int iUpdates, string urlFileName) {
 			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetPostCategoryURL(db, siteID, urlFileName)
+												 where ct.IsPublic == true
 												 orderby ct.CategoryText
 												 select (IContentMetaInfo)new ContentCategory(ct)).Take(iUpdates).ToList();
 
@@ -357,6 +361,7 @@ namespace Carrotware.CMS.Core {
 		}
 		public List<IContentMetaInfo> GetTagListForPost(Guid siteID, int iUpdates, Guid rootContentID) {
 			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetPostTagURLs(db, siteID, rootContentID)
+												 where ct.IsPublic == true
 												 orderby ct.TagText
 												 select (IContentMetaInfo)new ContentTag(ct)).Take(iUpdates).ToList();
 
@@ -364,6 +369,7 @@ namespace Carrotware.CMS.Core {
 		}
 		public List<IContentMetaInfo> GetCategoryListForPost(Guid siteID, int iUpdates, Guid rootContentID) {
 			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetPostCategoryURL(db, siteID, rootContentID)
+												 where ct.IsPublic == true
 												 orderby ct.CategoryText
 												 select (IContentMetaInfo)new ContentCategory(ct)).Take(iUpdates).ToList();
 

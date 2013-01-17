@@ -142,3 +142,101 @@ GO
 --==============================
 
 
+IF NOT EXISTS( select * from information_schema.columns 
+		where table_name = 'carrot_ContentTag' and column_name = 'IsPublic') BEGIN
+
+	ALTER TABLE [dbo].[carrot_ContentTag] ADD [IsPublic] [bit] NULL
+
+	ALTER TABLE [dbo].[carrot_ContentCategory] ADD [IsPublic] [bit] NULL
+
+END
+
+
+GO
+
+ALTER TABLE [dbo].[carrot_ContentTag] 
+	ALTER COLUMN  [IsPublic] [bit] NULL
+
+
+ALTER TABLE [dbo].[carrot_ContentCategory] 
+	ALTER COLUMN  [IsPublic] [bit] NULL
+
+GO
+
+UPDATE [dbo].[carrot_ContentTag] 
+SET [IsPublic] = 1
+WHERE ISNULL([IsPublic], 1) = 1
+
+
+UPDATE [dbo].[carrot_ContentCategory] 
+SET [IsPublic] = 1
+WHERE ISNULL([IsPublic], 1) = 1
+
+GO
+
+ALTER TABLE [dbo].[carrot_ContentTag] 
+	ALTER COLUMN  [IsPublic] [bit] NOT NULL
+
+
+ALTER TABLE [dbo].[carrot_ContentCategory] 
+	ALTER COLUMN  [IsPublic] [bit] NOT NULL
+
+GO
+
+--========================================
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_TagURL]
+AS 
+
+SELECT  s.SiteID, cc.ContentTagID, cc.TagText, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount,
+		'/'+s.Blog_FolderPath +'/'+ s.Blog_TagPath +'/'+ cc.TagSlug + '.aspx' as TagUrl
+FROM [dbo].carrot_Sites AS s 
+INNER JOIN [dbo].carrot_ContentTag AS cc ON s.SiteID = cc.SiteID
+LEFT JOIN
+      (SELECT ContentTagID, COUNT(Root_ContentID) AS TheCount
+        FROM dbo.carrot_TagContentMapping
+        GROUP BY ContentTagID) AS cc2 ON cc.ContentTagID = cc2.ContentTagID
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_TagCounted]
+AS 
+
+SELECT cc.ContentTagID, cc.SiteID, cc.TagText, cc.TagSlug, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount
+FROM dbo.carrot_ContentTag AS cc 
+LEFT JOIN
+      (SELECT ContentTagID, COUNT(Root_ContentID) AS TheCount
+        FROM dbo.carrot_TagContentMapping
+        GROUP BY ContentTagID) AS cc2 ON cc.ContentTagID = cc2.ContentTagID
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_CategoryURL]
+AS 
+
+SELECT  s.SiteID, cc.ContentCategoryID, cc.CategoryText, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount, 
+		'/'+s.Blog_FolderPath +'/'+ s.Blog_CategoryPath +'/'+ cc.CategorySlug + '.aspx' as CategoryUrl
+FROM [dbo].carrot_Sites AS s 
+INNER JOIN [dbo].carrot_ContentCategory AS cc ON s.SiteID = cc.SiteID
+LEFT JOIN
+      (SELECT ContentCategoryID, COUNT(Root_ContentID) AS TheCount
+        FROM dbo.carrot_CategoryContentMapping
+        GROUP BY ContentCategoryID) AS cc2 ON cc.ContentCategoryID = cc2.ContentCategoryID
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_CategoryCounted]
+AS 
+
+SELECT cc.ContentCategoryID, cc.SiteID, cc.CategoryText, cc.CategorySlug, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount
+FROM dbo.carrot_ContentCategory AS cc 
+LEFT JOIN
+      (SELECT ContentCategoryID, COUNT(Root_ContentID) AS TheCount
+        FROM dbo.carrot_CategoryContentMapping
+        GROUP BY ContentCategoryID) AS cc2 ON cc.ContentCategoryID = cc2.ContentCategoryID
+
+GO
+
+

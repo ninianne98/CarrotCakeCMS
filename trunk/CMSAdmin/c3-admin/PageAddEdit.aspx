@@ -17,40 +17,6 @@
 			window.open("<%=SiteFilename.DataExportURL %>?id=" + thePageID);
 		}
 
-		function openPage() {
-			var theURL = $('#<%= txtOldFile.ClientID %>').val();
-
-			if (theURL.length > 3) {
-				$("#divCMSCancelWinMsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
-
-				$("#divCMSCancelWin").dialog("destroy");
-
-				$("#divCMSCancelWin").dialog({
-					open: function () {
-						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
-					},
-
-					resizable: false,
-					height: 350,
-					width: 450,
-					modal: true,
-					buttons: {
-						"No": function () {
-							$(this).dialog("close");
-						},
-						"Yes": function () {
-							cmsMakeOKToLeave();
-							cmsRecordCancellation();
-							window.setTimeout("location.href = '" + theURL + "';", 800);
-							$(this).dialog("close");
-						}
-					}
-				});
-			} else {
-				cmsAlertModal("No saved page to show.");
-			}
-		}
-
 		function AutoGeneratePageFilename() {
 			var theTitle = $('#<%= txtTitle.ClientID %>').val();
 			var theFile = $('#<%= txtFileName.ClientID %>').val();
@@ -146,7 +112,62 @@
 			Page_ClientValidate();
 		}
 
-		/* <asp:placeholder ID="pnlHB" runat="server"> begin EditHB */
+		/*  <asp:PlaceHolder  ID="pnlHBEmpty" runat="server"> begin empty cancel functions */
+
+		function EditHB() { }
+
+		function cancelEditing() { }
+
+		function cmsRecordCancellation() { }
+
+
+		function openPage() {
+			var theURL = $('#<%= txtOldFile.ClientID %>').val();
+
+			if (theURL.length > 3) {
+				window.setTimeout("location.href = '" + theURL + "';", 250);
+			} else {
+				cmsAlertModal("No saved page to show.");
+			}
+		}
+
+		/*  </asp:PlaceHolder> */
+
+		/* <asp:PlaceHolder ID="pnlHB" runat="server"> begin EditHB */
+
+		function openPage() {
+			var theURL = $('#<%= txtOldFile.ClientID %>').val();
+
+			if (theURL.length > 3) {
+				$("#divCMSCancelWinMsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
+
+				$("#divCMSCancelWin").dialog("destroy");
+
+				$("#divCMSCancelWin").dialog({
+					open: function () {
+						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+					},
+
+					resizable: false,
+					height: 350,
+					width: 450,
+					modal: true,
+					buttons: {
+						"No": function () {
+							$(this).dialog("close");
+						},
+						"Yes": function () {
+							cmsMakeOKToLeave();
+							cmsRecordCancellation();
+							window.setTimeout("location.href = '" + theURL + "';", 800);
+							$(this).dialog("close");
+						}
+					}
+				});
+			} else {
+				cmsAlertModal("No saved page to show.");
+			}
+		}
 
 		function EditHB() {
 			setTimeout("EditHB();", 30 * 1000);
@@ -224,7 +245,7 @@
 		}
 
 
-		/* </asp:placeholder> */
+		/* </asp:PlaceHolder> */
 
 	</script>
 	<script type="text/javascript">
@@ -335,7 +356,7 @@
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="/c3-admin/images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -347,9 +368,9 @@
 						MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
 							<img class="imgNoBorder" src="/c3-admin/images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
 				</td>
 			</tr>
@@ -360,7 +381,7 @@
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -414,7 +435,7 @@
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="1" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>

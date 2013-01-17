@@ -255,6 +255,12 @@ namespace Carrotware.CMS.DBUpdater {
 					return true;
 				}
 
+				query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 2) {
+					return true;
+				}
+
 				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
 						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
 				table1 = GetData(query);
@@ -288,6 +294,12 @@ namespace Carrotware.CMS.DBUpdater {
 				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
 				table1 = GetData(query);
 				if (table1.Rows.Count < 34) {
+					return true;
+				}
+
+				query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
+				table1 = GetData(query);
+				if (table1.Rows.Count < 2) {
 					return true;
 				}
 
@@ -469,14 +481,15 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep06() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			//string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
-			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID') ";
 			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites', 'carrot_RootContent') and column_name in('TimeZone', 'PageThumbnail') ";
-			string query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
 
-			DataTable table1 = GetData(query);
+			string query1 = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+			DataTable table1 = GetData(query1);
 
-			if (table1.Rows.Count < 5) {
+			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID') ";
+			DataTable table2 = GetData(query2);
+
+			if (table1.Rows.Count < 5 || table1.Rows.Count < 3) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER06.sql", false);
 				res.Response = "CMS DB created carrot_ContentType, carrot_ContentTag, carrot_ContentCategory";
 				return res;
@@ -492,11 +505,16 @@ namespace Carrotware.CMS.DBUpdater {
 			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
 			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites') and column_name in('TimeZone') ";
 			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites', 'carrot_RootContent') and column_name in('TimeZone', 'PageThumbnail') ";
-			string query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+			string query1 = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
+			DataTable table1 = GetData(query1);
 
-			DataTable table1 = GetData(query);
+			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
+			DataTable table2 = GetData(query2);
 
-			if (table1.Rows.Count < 5) {
+			string query3 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
+			DataTable table3 = GetData(query3);
+
+			if (table1.Rows.Count < 5 || table2.Rows.Count < 2 || table3.Rows.Count < 2) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER07.sql", false);
 				res.Response = "CMS DB created cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent";
 				return res;
@@ -510,11 +528,13 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep08() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
+			string query1 = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
+			DataTable table1 = GetData(query1);
 
-			DataTable table1 = GetData(query);
+			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
+			DataTable table2 = GetData(query2);
 
-			if (table1.Rows.Count < 1) {
+			if (table1.Rows.Count < 1 || table1.Rows.Count < 2) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER08.sql", false);
 				res.Response = "CMS DB added vw_carrot_Comment";
 				return res;
@@ -529,11 +549,13 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep09() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
+			string query1 = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
+			DataTable table1 = GetData(query1);
 
-			DataTable table1 = GetData(query);
+			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
+			DataTable table2 = GetData(query2);
 
-			if (table1.Rows.Count < 34) {
+			if (table1.Rows.Count < 34 || table2.Rows.Count < 2) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER09.sql", false);
 				res.Response = "CMS DB added vw_carrot_ContentChild created ShowInSiteNav ";
 				return res;

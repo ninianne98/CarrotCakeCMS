@@ -144,6 +144,8 @@ ALTER TABLE [dbo].[carrot_Sites]
 
 GO
 
+--========================================
+
 GO
 
 ALTER VIEW [dbo].[vw_carrot_Content]

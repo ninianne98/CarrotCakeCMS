@@ -27,6 +27,8 @@
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField SortExpression="CategoryText" HeaderText="Text" DataField="CategoryText" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="CategorySlug" HeaderText="Slug" DataField="CategorySlug" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsPublic" HeaderText="Public" AlternateTextFalse="Not Public"
+					AlternateTextTrue="Public" ShowBooleanImage="true" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/flag_blue.png" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="UseCount" HeaderText="Count" DataField="UseCount" ItemStyle-HorizontalAlign="Center" />
 			</Columns>
 		</carrot:CarrotGridView>

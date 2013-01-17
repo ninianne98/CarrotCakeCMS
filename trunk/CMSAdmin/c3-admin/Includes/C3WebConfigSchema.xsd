@@ -45,6 +45,8 @@
 									<xs:attribute name="AdminModules" type="xs:string" use="optional" />
 									<xs:attribute name="SiteMapping" type="xs:string" use="optional" />
 									<xs:attribute name="SiteSkins" type="xs:string" use="optional" />
+									<xs:attribute name="TemplatePath" type="xs:string" use="optional" />
+									<xs:attribute name="PluginPath" type="xs:string" use="optional" />
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>

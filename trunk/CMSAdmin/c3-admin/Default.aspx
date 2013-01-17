@@ -91,7 +91,7 @@
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="100" Columns="80" Style="width: 425px;"
 						runat="server" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -128,7 +128,7 @@
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;" runat="server" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtURL" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -208,7 +208,7 @@
 				<td valign="top">
 					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFoldersValid" MaxLength="25" Columns="25" Style="display: none;" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFoldersValid" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Blog folder parameters are not unique or not provided"
-						Display="Dynamic"></asp:RequiredFieldValidator>
+						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
