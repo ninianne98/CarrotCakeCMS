@@ -129,7 +129,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						txtOldFile.Text = "";
 					}
 
-					var lstVer = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
+					List<ContentPage> lstVer = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
 
 					ddlVersions.DataSource = (from v in lstVer
 											  orderby v.EditDate descending
@@ -147,6 +147,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pnlButtons.Visible = !bLocked;
 					divEditing.Visible = bLocked;
 					chkDraft.Visible = !bLocked;
+					pnlHBEmpty.Visible = bLocked;
 
 					if (bLocked && pageContents.Heartbeat_UserId != null) {
 						var usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);

@@ -33,6 +33,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (item != null) {
 					txtSlug.Text = item.TagSlug;
 					txtLabel.Text = item.TagText;
+					chkPublic.Checked = item.IsPublic;
 				}
 			}
 		}
@@ -48,6 +49,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			item.TagSlug = txtSlug.Text;
 			item.TagText = txtLabel.Text;
+			item.IsPublic = chkPublic.Checked;
 
 			item.Save();
 

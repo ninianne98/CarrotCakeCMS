@@ -25,6 +25,7 @@ namespace Carrotware.CMS.Core {
 		public string CategorySlug { get; set; }
 		public string CategoryURL { get; set; }
 		public int? UseCount { get; set; }
+		public bool IsPublic { get; set; }
 
 
 		public override bool Equals(Object obj) {
@@ -50,6 +51,7 @@ namespace Carrotware.CMS.Core {
 				this.CategorySlug = c.CategorySlug;
 				this.CategoryText = c.CategoryText;
 				this.UseCount = c.UseCount;
+				this.IsPublic = c.IsPublic;
 			}
 		}
 
@@ -60,6 +62,7 @@ namespace Carrotware.CMS.Core {
 				this.CategoryURL = c.CategoryUrl;
 				this.CategoryText = c.CategoryText;
 				this.UseCount = c.UseCount;
+				this.IsPublic = c.IsPublic;
 			}
 		}
 
@@ -70,6 +73,7 @@ namespace Carrotware.CMS.Core {
 				this.SiteID = c.SiteID;
 				this.CategorySlug = c.CategorySlug;
 				this.CategoryText = c.CategoryText;
+				this.IsPublic = c.IsPublic;
 			}
 		}
 
@@ -124,6 +128,7 @@ namespace Carrotware.CMS.Core {
 
 				s.CategorySlug = ContentPageHelper.ScrubSlug(this.CategorySlug);
 				s.CategoryText = this.CategoryText;
+				s.IsPublic = this.IsPublic;
 
 				if (bNew) {
 					_db.carrot_ContentCategories.InsertOnSubmit(s);
@@ -152,6 +157,10 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaInfoURL {
 			get { return this.CategoryURL; }
+		}
+
+		public bool MetaIsPublic {
+			get { return this.IsPublic; }
 		}
 
 		public int MetaInfoCount {

@@ -26,6 +26,10 @@ namespace Carrotware.CMS.Core {
 			get { return this.TallyID; }
 		}
 
+		public bool MetaIsPublic {
+			get { return true; }
+		}
+
 		public string MetaInfoText {
 			get {
 				return this.GoLiveDate.ToString("MMMM yyyy");
@@ -84,6 +88,10 @@ namespace Carrotware.CMS.Core {
 
 		public Guid ContentMetaInfoID {
 			get { return Guid.Empty; }
+		}
+
+		public bool MetaIsPublic {
+			get { return true; }
 		}
 
 		public string MetaInfoText {

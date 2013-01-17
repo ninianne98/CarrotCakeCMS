@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Bulk Apply Templates/Skins" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageTemplateUpdate.aspx.cs"
+﻿<%@ Page Title="Bulk Apply Templates/Skins - Pages" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageTemplateUpdate.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageTemplateUpdate" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -26,20 +26,6 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<uc1:ucPageMenuItems ID="ucPageMenuItems1" runat="server" />
-	<table>
-		<tr>
-			<td valign="top" class="tablecaption">
-				template:
-			</td>
-			<td valign="top">
-				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
-				</asp:DropDownList>
-			</td>
-			<td valign="top">
-			</td>
-		</tr>
-	</table>
-	<br />
 	<table>
 		<tr>
 			<td valign="top" class="tablecaption">
@@ -71,9 +57,24 @@
 			</td>
 		</tr>
 	</table>
-	<p>
-		<br />
-	</p>
+	<br />
+	<table>
+		<tr>
+			<td valign="top" class="tablecaption">
+				template to apply to selected pages:
+			</td>
+			<td valign="top">
+				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+				</asp:DropDownList>
+			</td>
+			<td valign="top">
+			</td>
+		</tr>
+	</table>
+	<br />
+	<div style="height: 50px; margin-top: 10px; margin-bottom: 10px;">
+		<asp:Button ID="btnSaveMapping" runat="server" Text="Save" OnClick="btnSaveMapping_Click" />
+	</div>
 	<p>
 		<input type="button" value="Check All" onclick="CheckTheBoxes()" />&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" value="Uncheck All" onclick="UncheckTheBoxes()" />
@@ -84,7 +85,7 @@
 			<Columns>
 				<asp:TemplateField ItemStyle-HorizontalAlign="Center">
 					<HeaderTemplate>
-						Remap
+						&nbsp;
 					</HeaderTemplate>
 					<ItemTemplate>
 						<asp:CheckBox ID="chkReMap" runat="server" />
@@ -92,18 +93,16 @@
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:BoundField HeaderText="Template File" DataField="TemplateFile" />
-				<asp:BoundField HeaderText="Titlebar" DataField="Titlebar" />
-				<asp:BoundField HeaderText="Page Header" DataField="PageHead" />
-				<asp:BoundField HeaderText="Filename" DataField="Filename" />
 				<asp:BoundField HeaderText="Nav Menu Text" DataField="NavMenuText" />
+				<asp:BoundField HeaderText="Filename" DataField="Filename" />
 				<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0:d}" />
 				<asp:BoundField HeaderText="Created On" DataField="CreateDate" DataFormatString="{0:d}" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-					ShowBooleanImage="true" />
+				<asp:BoundField HeaderText="Go Live" DataField="GoLiveDate" DataFormatString="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteNav" HeaderText="Navigation" ShowBooleanImage="true" AlternateTextTrue="Yes"
+					AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/application_lightning.png" ImagePathFalse="/c3-admin/images/flag_blue.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" ShowBooleanImage="true" AlternateTextFalse="Inactive"
+					AlternateTextTrue="Active" />
 			</Columns>
 		</carrot:CarrotGridView>
-		<div style="height: 50px; margin-top: 10px; margin-bottom: 10px;">
-			<asp:Button ID="btnSaveMapping" runat="server" Text="Save" OnClick="btnSaveMapping_Click" />
-		</div>
 	</div>
 </asp:Content>

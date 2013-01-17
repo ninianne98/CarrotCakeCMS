@@ -25,6 +25,7 @@ namespace Carrotware.CMS.Core {
 		public string TagSlug { get; set; }
 		public string TagURL { get; set; }
 		public int? UseCount { get; set; }
+		public bool IsPublic { get; set; }
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -49,6 +50,7 @@ namespace Carrotware.CMS.Core {
 				this.TagSlug = c.TagSlug;
 				this.TagText = c.TagText;
 				this.UseCount = c.UseCount;
+				this.IsPublic = c.IsPublic;
 			}
 		}
 
@@ -59,6 +61,7 @@ namespace Carrotware.CMS.Core {
 				this.TagURL = c.TagUrl;
 				this.TagText = c.TagText;
 				this.UseCount = c.UseCount;
+				this.IsPublic = c.IsPublic;
 			}
 		}
 
@@ -68,6 +71,7 @@ namespace Carrotware.CMS.Core {
 				this.SiteID = c.SiteID;
 				this.TagSlug = c.TagSlug;
 				this.TagText = c.TagText;
+				this.IsPublic = c.IsPublic;
 			}
 		}
 
@@ -122,6 +126,7 @@ namespace Carrotware.CMS.Core {
 
 				s.TagSlug = ContentPageHelper.ScrubSlug(this.TagSlug);
 				s.TagText = this.TagText;
+				s.IsPublic = this.IsPublic;
 
 				if (bNew) {
 					_db.carrot_ContentTags.InsertOnSubmit(s);
@@ -150,6 +155,10 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaInfoURL {
 			get { return this.TagURL; }
+		}
+
+		public bool MetaIsPublic {
+			get { return this.IsPublic; }
 		}
 
 		public int MetaInfoCount {

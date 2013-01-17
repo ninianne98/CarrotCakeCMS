@@ -71,7 +71,7 @@
 	<p>
 		<asp:TextBox ValidationGroup="editGroupName" ID="txtRoleName" onkeypress="return ProcessKeyPress(event)" Width="300px" MaxLength="100" runat="server"></asp:TextBox>
 		<asp:RequiredFieldValidator ValidationGroup="editGroupName" ControlToValidate="txtRoleName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-			Display="Dynamic"></asp:RequiredFieldValidator>
+			Display="Dynamic" />
 	</p>
 	<p>
 		<br />
@@ -117,7 +117,7 @@
 							<b>Search: </b><span id="spanResults"></span>
 							<asp:TextBox ValidationGroup="addUsers" ID="txtSearch" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100" runat="server" />
 							<asp:RequiredFieldValidator ValidationGroup="addUsers" ControlToValidate="txtSearch" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-								Display="Dynamic"></asp:RequiredFieldValidator>
+								Display="Dynamic" />
 							<asp:HiddenField ID="hdnUserID" runat="server" />
 						</p>
 						<p style="text-align: right;">

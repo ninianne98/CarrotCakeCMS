@@ -29,12 +29,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!IsPostBack) {
 				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
+				ContentPage cp = pageHelper.GetLatestPosts(SiteData.CurrentSiteID, 2, false).FirstOrDefault();
+				if (cp != null) {
+					txtDate.Text = cp.GoLiveDate.ToShortDateString();
+				}
+
 				ddlTemplate.DataSource = cmsHelper.Templates;
 				ddlTemplate.DataBind();
 
 				LoadGrid();
 			}
-		
+
 		}
 
 

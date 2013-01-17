@@ -36,6 +36,11 @@ namespace Carrotware.CMS.Core {
 	}
 
 	public class CMSPlugin {
+		public CMSPlugin() {
+			this.SortOrder = 1000;
+		}
+
+		public int SortOrder { get; set; }
 		public string FilePath { get; set; }
 		public string Caption { get; set; }
 	}

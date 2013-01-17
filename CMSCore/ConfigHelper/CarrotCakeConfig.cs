@@ -165,6 +165,18 @@ namespace Carrotware.CMS.Core {
 			set { this["AdminModules"] = value; }
 		}
 
+		[ConfigurationProperty("TemplatePath", DefaultValue = "~/cmsTemplates/", IsRequired = false)]
+		public String TemplatePath {
+			get { return (String)this["TemplatePath"]; }
+			set { this["TemplatePath"] = value; }
+		}
+
+		[ConfigurationProperty("PluginPath", DefaultValue = "~/cmsPlugins/", IsRequired = false)]
+		public String PluginPath {
+			get { return (String)this["PluginPath"]; }
+			set { this["PluginPath"] = value; }
+		}
+
 	}
 
 	//==============================

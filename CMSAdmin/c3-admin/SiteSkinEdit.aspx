@@ -15,7 +15,7 @@
 	</h2>
 	<p>
 		<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageContents" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Skin File Contents Required"
-			Display="Dynamic"></asp:RequiredFieldValidator>&nbsp;
+			Display="Dynamic" />&nbsp;
 	</p>
 	<table width="100%">
 		<tr>

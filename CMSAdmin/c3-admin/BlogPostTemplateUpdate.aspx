@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Blog Bulk Apply Templates/Skins" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostTemplateUpdate.aspx.cs"
+﻿<%@ Page Title="Blog Bulk Apply Templates/Skins - Posts" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostTemplateUpdate.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostTemplateUpdate" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -28,19 +28,6 @@
 	<table>
 		<tr>
 			<td valign="top" class="tablecaption">
-				template:
-			</td>
-			<td valign="top">
-				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
-				</asp:DropDownList>
-			</td>
-			<td valign="top">
-			</td>
-		</tr>
-	</table>
-	<table>
-		<tr>
-			<td valign="top" class="tablecaption">
 				show content:
 			</td>
 			<td valign="top" colspan="3">
@@ -50,11 +37,8 @@
 		</tr>
 		<tr runat="server" id="trFilter">
 			<td valign="top" class="tablecaption">
-				post filter:
+				go live date post filter:
 				<br />
-			</td>
-			<td valign="top">
-				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
 			</td>
 			<td valign="top">
 				&nbsp;&nbsp;
@@ -70,11 +54,32 @@
 				<div style="clear: both; height: 2px;">
 				</div>
 			</td>
+			<td valign="top">
+				&nbsp;&nbsp;
+			</td>
+			<td valign="top">
+				<asp:Button ID="btnFilter" runat="server" Text="Apply" OnClick="btnFilter_Click" />
+			</td>
 		</tr>
 	</table>
-	<p>
-		<br />
-	</p>
+	<br />
+	<table>
+		<tr>
+			<td valign="top" class="tablecaption">
+				template to apply to selected posts:
+			</td>
+			<td valign="top">
+				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+				</asp:DropDownList>
+			</td>
+			<td valign="top">
+			</td>
+		</tr>
+	</table>
+	<br />
+	<div style="height: 50px; margin-top: 10px; margin-bottom: 10px;">
+		<asp:Button ID="btnSaveMapping" runat="server" Text="Save" OnClick="btnSaveMapping_Click" />
+	</div>
 	<p>
 		<input type="button" value="Check All" onclick="CheckTheBoxes()" />&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" value="Uncheck All" onclick="UncheckTheBoxes()" />
@@ -85,7 +90,7 @@
 			<Columns>
 				<asp:TemplateField ItemStyle-HorizontalAlign="Center">
 					<HeaderTemplate>
-						Remap
+						&nbsp;
 					</HeaderTemplate>
 					<ItemTemplate>
 						<asp:CheckBox ID="chkReMap" runat="server" />
@@ -93,18 +98,14 @@
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:BoundField HeaderText="Template File" DataField="TemplateFile" />
-				<asp:BoundField HeaderText="Titlebar" DataField="Titlebar" />
-				<asp:BoundField HeaderText="Page Header" DataField="PageHead" />
-				<asp:BoundField HeaderText="Filename" DataField="Filename" />
 				<asp:BoundField HeaderText="Nav Menu Text" DataField="NavMenuText" />
+				<asp:BoundField HeaderText="Filename" DataField="Filename" />
 				<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0:d}" />
 				<asp:BoundField HeaderText="Created On" DataField="CreateDate" DataFormatString="{0:d}" />
+				<asp:BoundField HeaderText="Go Live" DataField="GoLiveDate" DataFormatString="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
 					ShowBooleanImage="true" />
 			</Columns>
 		</carrot:CarrotGridView>
-		<div style="height: 50px; margin-top: 10px; margin-bottom: 10px;">
-			<asp:Button ID="btnSaveMapping" runat="server" Text="Save" OnClick="btnSaveMapping_Click" />
-		</div>
 	</div>
 </asp:Content>

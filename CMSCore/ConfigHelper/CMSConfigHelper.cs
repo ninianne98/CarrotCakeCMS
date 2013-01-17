@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
-using System.Net;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -316,7 +316,9 @@ namespace Carrotware.CMS.Core {
 		private List<CMSPlugin> GetPluginsByDirectory() {
 			var _plugins = new List<CMSPlugin>();
 
-			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsPlugins/");
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+
+			string sPlugCfg = HttpContext.Current.Server.MapPath(config.ConfigFileLocation.PluginPath);
 
 			if (Directory.Exists(sPlugCfg)) {
 
@@ -338,6 +340,7 @@ namespace Carrotware.CMS.Core {
 
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
 									   select new CMSPlugin {
+										   SortOrder = 100,
 										   FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
 										   Caption = d.Field<string>("crtldesc")
 									   }).ToList();
@@ -365,6 +368,7 @@ namespace Carrotware.CMS.Core {
 
 				_plugins = (from d in ds.Tables[0].AsEnumerable()
 							select new CMSPlugin {
+								SortOrder = 100,
 								FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
 								Caption = d.Field<string>("crtldesc")
 							}).ToList();
@@ -447,7 +451,9 @@ namespace Carrotware.CMS.Core {
 		private List<CMSAdminModule> GetModulesByDirectory() {
 			var _plugins = new List<CMSAdminModule>();
 
-			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsPlugins/");
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+
+			string sPlugCfg = HttpContext.Current.Server.MapPath(config.ConfigFileLocation.PluginPath);
 
 			if (Directory.Exists(sPlugCfg)) {
 
@@ -519,29 +525,32 @@ namespace Carrotware.CMS.Core {
 
 				if (!bCached) {
 					DataSet ds = ReadDataSetConfig(CMSConfigFileType.PublicControls, "~/");
+					int iSortOrder = 0;
 
 					List<CMSPlugin> _p1 = new List<CMSPlugin>();
 
-					//_p1.Add(new CMSPlugin { Caption = "     Generic HTML &#0134;", FilePath = "~/c3-admin/ucGenericContent.ascx" });
-					//_p1.Add(new CMSPlugin { Caption = "     Plain Text &#0134;", FilePath = "~/c3-admin/ucTextContent.ascx" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { Caption = "       Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "       Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { Caption = "       Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "       Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "      Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "      Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "     Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "     Paged Comments &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "   Meta List - Site &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = "   Meta List - Post &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = " Comment Form &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { Caption = " IFRAME content wrapper &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.IFrameWidgetWrapper, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Most Recent Updated &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MostRecentUpdated, Carrotware.CMS.UI.Controls" });
 
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Comments &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });
+
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Site &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Post &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
+
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Comment Form &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "IFRAME content wrapper &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.IFrameWidgetWrapper, Carrotware.CMS.UI.Controls" });
 
 					List<CMSPlugin> _p2 = (from d in ds.Tables[0].AsEnumerable()
 										   select new CMSPlugin {
+											   SortOrder = 100,
 											   FilePath = d.Field<string>("filepath"),
 											   Caption = d.Field<string>("crtldesc")
 										   }).ToList();
@@ -553,7 +562,7 @@ namespace Carrotware.CMS.Core {
 					HttpContext.Current.Cache.Insert(keyAdminToolboxModules, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 
-				return _plugins.OrderBy(p => p.Caption).ToList();
+				return _plugins.OrderBy(p => p.Caption).OrderBy(p => p.SortOrder).ToList();
 			}
 		}
 
@@ -561,7 +570,9 @@ namespace Carrotware.CMS.Core {
 		private List<CMSTemplate> GetTemplatesByDirectory() {
 			var _plugins = new List<CMSTemplate>();
 
-			string sPlugCfg = HttpContext.Current.Server.MapPath("~/cmsTemplates/");
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+
+			string sPlugCfg = HttpContext.Current.Server.MapPath(config.ConfigFileLocation.TemplatePath);
 
 			if (Directory.Exists(sPlugCfg)) {
 

@@ -25,6 +25,21 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:IFrameWidgetWrapper runat=server></{0}:IFrameWidgetWrapper>")]
 	public class IFrameWidgetWrapper : BaseServerControl {
 
+		[DefaultValue(false)]
+		[Themeable(false)]
+		public override bool EnableViewState {
+			get {
+				String s = (String)ViewState["EnableViewState"];
+				bool b = ((s == null) ? false : Convert.ToBoolean(s));
+				base.EnableViewState = b;
+				return b;
+			}
+
+			set {
+				ViewState["EnableViewState"] = value.ToString();
+				base.EnableViewState = value;
+			}
+		}
 
 		[Bindable(true)]
 		[Category("Appearance")]

@@ -57,6 +57,7 @@
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="TagText" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="TagSlug" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="carrot_ContentTag_carrot_TagContentMapping" Member="carrot_TagContentMappings" ThisKey="ContentTagID" OtherKey="ContentTagID" Type="carrot_TagContentMapping" />
       <Association Name="carrot_Site_carrot_ContentTag" Member="carrot_Site" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_Site" IsForeignKey="true" />
     </Type>
@@ -67,6 +68,7 @@
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CategoryText" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="CategorySlug" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="carrot_ContentCategory_carrot_CategoryContentMapping" Member="carrot_CategoryContentMappings" ThisKey="ContentCategoryID" OtherKey="ContentCategoryID" Type="carrot_CategoryContentMapping" />
       <Association Name="carrot_Site_carrot_ContentCategory" Member="carrot_Site" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_Site" IsForeignKey="true" />
     </Type>
@@ -94,6 +96,7 @@
       <Column Name="ContentTagID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="TagText" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="TagSlug" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="UseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
@@ -103,6 +106,7 @@
       <Column Name="ContentCategoryID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CategoryText" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="CategorySlug" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="UseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
@@ -112,6 +116,7 @@
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="ContentTagID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="TagText" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="UseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="TagUrl" Type="System.String" DbType="NVarChar(776)" CanBeNull="true" />
     </Type>
@@ -121,6 +126,7 @@
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="ContentCategoryID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CategoryText" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="UseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CategoryUrl" Type="System.String" DbType="NVarChar(776)" CanBeNull="true" />
     </Type>

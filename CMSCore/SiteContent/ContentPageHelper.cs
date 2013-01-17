@@ -346,6 +346,22 @@ namespace Carrotware.CMS.Core {
 			return iCount;
 		}
 
+		public List<ContentPage> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
+			List<ContentPage> lstContent = (from ct in CannedQueries.GetLatestContentList(db, siteID, bActiveOnly)
+											orderby ct.GoLiveDate descending
+											select new ContentPage(ct)).Take(iUpdates).ToList();
+
+			return lstContent;
+		}
+
+		public List<ContentPage> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly) {
+			List<ContentPage> lstContent = (from ct in CannedQueries.GetLatestBlogList(db, siteID, bActiveOnly)
+											orderby ct.GoLiveDate descending
+											select new ContentPage(ct)).Take(iUpdates).ToList();
+
+			return lstContent;
+		}
+
 		public List<ContentPage> GetLatestBlogPagedList(Guid siteID, bool bActiveOnly, int pageNumber, string sortField, string sortDir) {
 			return GetLatestContentPagedList(siteID, ContentPageType.PageType.BlogEntry, bActiveOnly, pageNumber, sortField, sortDir);
 		}

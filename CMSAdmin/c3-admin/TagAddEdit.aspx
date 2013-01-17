@@ -55,9 +55,9 @@
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtSlug" runat="server" Columns="45" MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSlug" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
+					Display="Dynamic" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Not Valid/Unique"
-					Display="Dynamic"></asp:RequiredFieldValidator>
+					Display="Dynamic" />
 				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
 			</td>
 		</tr>
@@ -68,7 +68,15 @@
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtLabel" runat="server" Columns="45" MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtLabel" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
+					Display="Dynamic" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				public:
+			</td>
+			<td valign="top">
+				<asp:CheckBox ID="chkPublic" runat="server" />
 			</td>
 		</tr>
 	</table>

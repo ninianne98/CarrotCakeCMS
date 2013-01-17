@@ -1,5 +1,5 @@
 /*!
- * jQuery UI CSS Framework 1.8.21
+ * jQuery UI CSS Framework 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -39,7 +39,7 @@
 
 
 /*!
- * jQuery UI CSS Framework 1.8.21
+ * jQuery UI CSS Framework 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -47,7 +47,7 @@
  *
  * http://docs.jquery.com/UI/Theming/API
  *
- * To view and modify this theme, visit http://jqueryui.com/themeroller/?ctl=themeroller&ffDefault=Lucida%20Grande,%20Lucida%20Sans,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=5px&bgColorHeader=b7d7c4&bgTextureHeader=02_glass.png&bgImgOpacityHeader=100&borderColorHeader=8e908e&fcHeader=222222&iconColorHeader=468b5e&bgColorContent=f2f5f7&bgTextureContent=04_highlight_hard.png&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=362b36&iconColorContent=468b5e&bgColorDefault=b7d7c4&bgTextureDefault=02_glass.png&bgImgOpacityDefault=80&borderColorDefault=8e908e&fcDefault=676f6a&iconColorDefault=468b5e&bgColorHover=dff6e8&bgTextureHover=02_glass.png&bgImgOpacityHover=100&borderColorHover=8e908e&fcHover=676f6a&iconColorHover=468b5e&bgColorActive=468b5e&bgTextureActive=02_glass.png&bgImgOpacityActive=50&borderColorActive=468b5e&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=f3ebba&bgTextureHighlight=03_highlight_soft.png&bgImgOpacityHighlight=25&borderColorHighlight=f9dd34&fcHighlight=363636&iconColorHighlight=c7820f&bgColorError=e58b8b&bgTextureError=01_flat.png&bgImgOpacityError=15&borderColorError=b62b2b&fcError=222222&iconColorError=753433&bgColorOverlay=eeeeee&bgTextureOverlay=18_hexagon.png&bgImgOpacityOverlay=90&opacityOverlay=80&bgColorShadow=000000&bgTextureShadow=04_highlight_hard.png&bgImgOpacityShadow=70&opacityShadow=30&thicknessShadow=7px&offsetTopShadow=-7px&offsetLeftShadow=-7px&cornerRadiusShadow=8px
+ * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande,%20Lucida%20Sans,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=5px&bgColorHeader=b7d7c4&bgTextureHeader=02_glass.png&bgImgOpacityHeader=100&borderColorHeader=8e908e&fcHeader=222222&iconColorHeader=468b5e&bgColorContent=f2f5f7&bgTextureContent=04_highlight_hard.png&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=362b36&iconColorContent=468b5e&bgColorDefault=b7d7c4&bgTextureDefault=02_glass.png&bgImgOpacityDefault=80&borderColorDefault=8e908e&fcDefault=676f6a&iconColorDefault=468b5e&bgColorHover=dff6e8&bgTextureHover=02_glass.png&bgImgOpacityHover=100&borderColorHover=8e908e&fcHover=676f6a&iconColorHover=468b5e&bgColorActive=468b5e&bgTextureActive=02_glass.png&bgImgOpacityActive=50&borderColorActive=468b5e&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=fbf9ee&bgTextureHighlight=03_highlight_soft.png&bgImgOpacityHighlight=25&borderColorHighlight=f5d514&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=f9cecd&bgTextureError=01_flat.png&bgImgOpacityError=15&borderColorError=cd0a0a&fcError=363636&iconColorError=cd0a0a&bgColorOverlay=eeeeee&bgTextureOverlay=18_hexagon.png&bgImgOpacityOverlay=90&opacityOverlay=80&bgColorShadow=000000&bgTextureShadow=04_highlight_hard.png&bgImgOpacityShadow=70&opacityShadow=30&thicknessShadow=7px&offsetTopShadow=-7px&offsetLeftShadow=-7px&cornerRadiusShadow=8px
  */
 
 
@@ -73,11 +73,11 @@
 
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 1px solid #f9dd34; background: #f3ebba url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_highlight-soft_25_f3ebba_1x100.png")%>') 50% top repeat-x; color: #363636; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 1px solid #f5d514; background: #fbf9ee url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_highlight-soft_25_fbf9ee_1x100.png")%>') 50% top repeat-x; color: #363636; }
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: #363636; }
-.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {border: 1px solid #b62b2b; background: #e58b8b url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_flat_15_e58b8b_40x100.png")%>') 50% 50% repeat-x; color: #222222; }
-.ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a { color: #222222; }
-.ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text { color: #222222; }
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {border: 1px solid #cd0a0a; background: #f9cecd url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_flat_15_f9cecd_40x100.png")%>') 50% 50% repeat-x; color: #363636; }
+.ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a { color: #363636; }
+.ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text { color: #363636; }
 .ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary { font-weight: bold; }
 .ui-priority-secondary, .ui-widget-content .ui-priority-secondary,  .ui-widget-header .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
@@ -93,7 +93,7 @@
 .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_468b5e_256x240.png")%>'); }
 .ui-state-active .ui-icon {background-image: url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_ffffff_256x240.png")%>'); }
 .ui-state-highlight .ui-icon {background-image: url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_2e83ff_256x240.png")%>'); }
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_753433_256x240.png")%>'); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_cd0a0a_256x240.png")%>'); }
 
 /* positioning */
 .ui-icon-carat-1-n { background-position: 0 0; }
@@ -285,7 +285,7 @@
 /* Overlays */
 .ui-widget-overlay { background: #eeeeee url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_hexagon_90_eeeeee_12x10.png")%>') 50% 50% repeat; opacity: .80;filter:Alpha(Opacity=80); }
 .ui-widget-shadow { margin: -7px 0 0 -7px; padding: 7px; background: #000000 url('/<%=WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_highlight-hard_70_000000_1x100.png")%>') 50% top repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/*!
- * jQuery UI Resizable 1.8.21
+ * jQuery UI Resizable 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -304,7 +304,7 @@
 .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
 .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
 .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/*!
- * jQuery UI Selectable 1.8.21
+ * jQuery UI Selectable 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -314,7 +314,7 @@
  */
 .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
 /*!
- * jQuery UI Accordion 1.8.21
+ * jQuery UI Accordion 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -333,7 +333,7 @@
 .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
 .ui-accordion .ui-accordion-content-active { display: block; }
 /*!
- * jQuery UI Autocomplete 1.8.21
+ * jQuery UI Autocomplete 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -347,7 +347,7 @@
 * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
 
 /*
- * jQuery UI Menu 1.8.21
+ * jQuery UI Menu 1.8.24
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -386,7 +386,7 @@
 	margin: -1px;
 }
 /*!
- * jQuery UI Button 1.8.21
+ * jQuery UI Button 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -424,7 +424,7 @@ input.ui-button { padding: .4em 1em; }
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
 /*!
- * jQuery UI Dialog 1.8.21
+ * jQuery UI Dialog 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -445,7 +445,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 /*!
- * jQuery UI Slider 1.8.21
+ * jQuery UI Slider 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -468,7 +468,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 .ui-slider-vertical .ui-slider-range-max { top: 0; }/*!
- * jQuery UI Tabs 1.8.21
+ * jQuery UI Tabs 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -486,7 +486,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
 /*!
- * jQuery UI Datepicker 1.8.21
+ * jQuery UI Datepicker 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -543,8 +543,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 /* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
 .ui-datepicker-cover {
-    display: none; /*sorry for IE5*/
-    display/**/: block; /*sorry for IE5*/
     position: absolute; /*must have*/
     z-index: -1; /*must have*/
     filter: mask(); /*must have*/
@@ -553,7 +551,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
     width: 200px; /*must have*/
     height: 200px; /*must have*/
 }/*!
- * jQuery UI Progressbar 1.8.21
+ * jQuery UI Progressbar 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.

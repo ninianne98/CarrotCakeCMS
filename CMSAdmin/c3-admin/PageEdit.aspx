@@ -43,7 +43,7 @@
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
+					Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>
@@ -53,7 +53,7 @@
 			<td valign="top">
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
-					Display="Dynamic"></asp:RequiredFieldValidator>
+					Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>

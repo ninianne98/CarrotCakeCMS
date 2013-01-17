@@ -43,6 +43,21 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[DefaultValue(false)]
+		[Themeable(false)]
+		public override bool EnableViewState {
+			get {
+				String s = (String)ViewState["EnableViewState"];
+				bool b = ((s == null) ? false : Convert.ToBoolean(s));
+				base.EnableViewState = b;
+				return b;
+			}
+
+			set {
+				ViewState["EnableViewState"] = value.ToString();
+				base.EnableViewState = value;
+			}
+		}
 
 		[Bindable(true)]
 		[Category("Appearance")]

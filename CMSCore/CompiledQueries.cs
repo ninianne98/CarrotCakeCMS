@@ -112,7 +112,7 @@ namespace Carrotware.CMS.Core {
 					 orderby ct.NavOrder, ct.NavMenuText
 					 where ct.SiteID == sp.SiteID
 						&& ct.IsLatestVersion == true
-						&& (ct.CreateDate >= sp.DateBegin && ct.CreateDate <= sp.DateEnd)
+						&& (ct.GoLiveDate >= sp.DateBegin && ct.GoLiveDate <= sp.DateEnd)
 						&& ct.ContentTypeID == sp.ContentTypeID
 						&& (ct.PageActive == true || sp.ActiveOnly == false)
 						&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
@@ -149,7 +149,7 @@ namespace Carrotware.CMS.Core {
 					  (from ct in ctx.vw_carrot_Contents
 					   where ct.SiteID == siteID
 							&& ct.PageSlug.ToLower() == sPageSlug.ToLower()
-							&& (ct.CreateDate.Date == datePublished.Date)
+							&& (ct.GoLiveDate.Date == datePublished.Date)
 							&& ct.IsLatestVersion == true
 					   select ct).FirstOrDefault());
 
@@ -477,7 +477,7 @@ namespace Carrotware.CMS.Core {
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid entryType, string sPage) =>
 					  (from r in ctx.carrot_RootContents
-					   orderby r.CreateDate descending
+					   orderby r.GoLiveDate descending
 					   where r.SiteID == siteID
 							&& r.ContentTypeID == entryType
 							&& r.FileName.ToLower() == sPage.ToLower()

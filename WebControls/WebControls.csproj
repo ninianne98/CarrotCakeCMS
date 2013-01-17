@@ -98,6 +98,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="calendar.txt" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_b7d7c4_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_dff6e8_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_50_468b5e_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_80_b7d7c4_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_hexagon_90_eeeeee_12x10.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_468b5e_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
     <EmbeddedResource Include="jsHelperLibrary.js" />
   </ItemGroup>
   <ItemGroup>
@@ -230,19 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="jquerybasic\jquery-ui-lightgreen.css" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_e58b8b_40x100.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_b7d7c4_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_dff6e8_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_50_468b5e_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_80_b7d7c4_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_hexagon_90_eeeeee_12x10.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-hard_70_000000_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-soft_25_f3ebba_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_468b5e_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_753433_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_c7820f_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CarrotGridView\accept.png" />
@@ -255,9 +252,10 @@
     <EmbeddedResource Include="jqueryui-1-9-2.js" />
     <EmbeddedResource Include="jqueryui-1-7-3.js" />
     <EmbeddedResource Include="jqueryui-1-8-24.js" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_fbe3da_40x100.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_2e83ff_256x240.png" />
     <EmbeddedResource Include="jquery182.js" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_f9cecd_40x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-soft_25_fbf9ee_1x100.png" />
+    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
