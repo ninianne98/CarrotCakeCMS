@@ -57,7 +57,7 @@ a .imgNoBorder {
 	font-family: Verdana, Helvetica, Sans-Serif;
 	background: transparent url( ../images/carrot_sm.png ) no-repeat scroll right bottom;
 	background-color: #ffffff;
-	margin: 25px 40px 0px 30px;
-	padding: 10px;
+	margin: 22px 40px 0px 30px;
+	padding: 5px;
 	height: 225px;
 }

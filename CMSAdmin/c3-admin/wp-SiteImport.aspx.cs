@@ -30,11 +30,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
-
-			if (!IsPostBack) {
-				SetDDLDefaultTemplates();
-			}
-
+			
 			litTrust.Visible = false;
 			if (SiteData.CurrentTrustLevel != AspNetHostingPermissionLevel.Unrestricted) {
 				chkFileGrab.Checked = false;
@@ -80,6 +76,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lblPages.Text = gvPages.Rows.Count.ToString();
 					lblPosts.Text = gvPosts.Rows.Count.ToString();
 
+					SetDDLDefaultTemplates();
 				}
 			}
 		}

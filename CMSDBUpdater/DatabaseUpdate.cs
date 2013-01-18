@@ -125,12 +125,9 @@ namespace Carrotware.CMS.DBUpdater {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
 			if (!FailedSQL) {
-				string query = "select * from [information_schema].[columns] " +
-						" where table_name in ('tblSites', 'carrot_Sites') ";
+				bool bTestResult = SQLUpdateNugget.EvalNuggetKey("DoCMSTablesExist");
 
-				DataTable table1 = GetData(query);
-
-				if (table1.Rows.Count < 1) {
+				if (!bTestResult) {
 					res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", false);
 					res.Response = "Created Database";
 					return res;
@@ -146,12 +143,10 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public bool DoCMSTablesExist() {
 			if (!FailedSQL) {
+				bool bTestResult = SQLUpdateNugget.EvalNuggetKey("DoCMSTablesExist");
 
-				string query = "select distinct table_name from [information_schema].[columns] where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent') ";
-				DataTable table1 = GetData(query);
-
-				if (table1.Rows.Count >= 4) {
-					return true;
+				if (bTestResult) {
+					return bTestResult;
 				}
 			}
 
@@ -214,57 +209,32 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
-		public bool IsPostStep04() {
-			if (!FailedSQL) {
-				string query = "";
-				DataTable table1 = null;
-
-				query = "select distinct table_name from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count >= 4) {
-					return true;
+		public bool IsPostStep04 {
+			get {
+				if (!FailedSQL) {
+					return SQLUpdateNugget.EvalNuggetKey("IsPostStep04");
 				}
+				return false;
 			}
-
-			return false;
 		}
 
 
 		public static bool AreCMSTablesIncomplete() {
 			if (!FailedSQL) {
+				bool bTestResult = false;
 
-				string query = "";
-				DataTable table1 = null;
-
-				//query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
-				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
+				bTestResult = SQLUpdateNugget.EvalNuggetKey("AreCMSTablesIncomplete");
+				if (bTestResult) {
 					return true;
 				}
 
-				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_ContentChild') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
+				bTestResult = SQLUpdateNugget.EvalNuggetKey("PreCarrotPrefix");
+				if (bTestResult) {
 					return true;
 				}
 
-				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 34) {
-					return true;
-				}
-
-				query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 2) {
-					return true;
-				}
-
-				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
-						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 60) {
+				bTestResult = SQLUpdateNugget.EvalManditoryChecks();
+				if (bTestResult) {
 					return true;
 				}
 			}
@@ -274,88 +244,21 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public bool DatabaseNeedsUpdate() {
 			if (!FailedSQL) {
+				bool bTestResult = false;
 
-				string query = "";
-				DataTable table1 = null;
-
-				//query = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
-				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
+				bTestResult = SQLUpdateNugget.EvalNuggetKey("DatabaseNeedsUpdate");
+				if (bTestResult) {
 					return true;
 				}
 
-				query = "SELECT * FROM sys.views WHERE name in ('vw_carrot_ContentChild') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 1) {
+				bTestResult = SQLUpdateNugget.EvalNuggetKey("PreCarrotPrefix");
+				if (bTestResult) {
 					return true;
 				}
 
-				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 34) {
+				bTestResult = SQLUpdateNugget.EvalManditoryChecks();
+				if (bTestResult) {
 					return true;
-				}
-
-				query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count < 2) {
-					return true;
-				}
-
-				//query = "select distinct table_name from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget') ";
-				query = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] \r\n " +
-						"where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData') ";
-				DataTable table2 = GetData(query);
-				if (table2.Rows.Count < 60) {
-					return true;
-				}
-
-				query = "select distinct table_name from [information_schema].[columns] where table_name in ('tblSites', 'tblRootContent', 'tblContent', 'tblWidget') ";
-				table1 = GetData(query);
-				if (table1.Rows.Count >= 4) {
-					return true;
-				}
-
-				if (table2.Rows.Count < 1) {
-					query = "select * from [information_schema].[columns] where table_name in ('tblSites', 'carrot_Sites') ";
-					table1 = GetData(query);
-					if (table1.Rows.Count < 1) {
-						return true;
-					}
-					// update 01
-					query = "select * from [information_schema].[columns] where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
-					table1 = GetData(query);
-					if (table1.Rows.Count < 1) {
-						return true;
-					}
-
-					// update 01 A
-					query = "select column_name, table_name from [information_schema].[columns] where column_name='SerialCacheID' and table_name in ('tblSerialCache', 'carrot_SerialCache') ";
-					table1 = GetData(query);
-					if (table1.Rows.Count < 1) {
-						return true;
-					}
-
-					// update 02
-					query = "select * from [information_schema].[columns] where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
-					table1 = GetData(query);
-					if (table1.Rows.Count < 1) {
-						return true;
-					}
-					// update 03
-					query = "select * from [information_schema].[columns] where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
-					table1 = GetData(query);
-					if (table1.Rows.Count < 1) {
-						return true;
-					}
-					// update 04
-					query = "select * from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent')";
-					table1 = GetData(query);
-					if (table1.Rows.Count < 1) {
-						return true;
-					}
-
 				}
 			}
 
@@ -378,11 +281,9 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep01() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from [information_schema].[columns] where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'";
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep01");
 
-			DataTable table1 = GetData(query);
-
-			if (table1.Rows.Count < 1) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01.sql", false);
 				res.Response = "Created Content MetaKeyword and MetaDescription";
 				return res;
@@ -395,11 +296,9 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep00() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select column_name, table_name from [information_schema].[columns] where column_name='SerialCacheID' and table_name in ('tblSerialCache', 'carrot_SerialCache') ";
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep00");
 
-			DataTable table1 = GetData(query);
-
-			if (table1.Rows.Count < 1) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01a.sql", false);
 				res.Response = "Created Table SerialCache";
 				return res;
@@ -412,11 +311,9 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep02() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from [information_schema].[columns] where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'";
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep02");
 
-			DataTable table1 = GetData(query);
-
-			if (table1.Rows.Count < 1) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER02.sql", false);
 				res.Response = "Widget Schema Updated";
 				return res;
@@ -429,13 +326,12 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep03() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from [information_schema].[columns] where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'";
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep03");
 
-			DataTable table1 = GetData(query);
-
-			if (table1.Rows.Count < 1) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER03.sql", false);
-				res.Response = "RootContent CreateDate Updated";
+				res.Response = "RootContent CreateDate Created";
+				return res;
 			}
 
 			res.Response = "RootContent CreateDate Already Exists";
@@ -445,11 +341,9 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep04() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query = "select * from [information_schema].[columns] where table_name in ('carrot_Sites', 'carrot_RootContent')";
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep04");
 
-			DataTable table1 = GetData(query);
-
-			if (table1.Rows.Count < 1) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER04.sql", false);
 				res.Response = "CMS Table Names Changed";
 				return res;
@@ -462,18 +356,15 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep05() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			//string query = "SELECT * FROM sys.views WHERE name in ( 'vw_carrot_Content', 'vw_carrot_Widget') ";
-			string query = "select distinct [view_name], [table_name], [column_name] from [information_schema].[view_column_usage] where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget')  and column_name in ('Root_WidgetID', 'Root_ContentID') ";
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep05");
 
-			DataTable table1 = GetData(query);
-
-			if (table1.Rows.Count < 6) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER05.sql", false);
-				res.Response = "CMS DB added vw_carrot_Content and vw_carrot_Widget";
+				res.Response = "CMS DB created vw_carrot_Content and vw_carrot_Widget";
 				return res;
 			}
 
-			res.Response = "CMS DB vw_carrot_Content and vw_carrot_Widget already added";
+			res.Response = "CMS DB vw_carrot_Content and vw_carrot_Widget already exist";
 			return res;
 		}
 
@@ -481,46 +372,30 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep06() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites', 'carrot_RootContent') and column_name in('TimeZone', 'PageThumbnail') ";
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep06");
 
-			string query1 = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
-			DataTable table1 = GetData(query1);
-
-			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID') ";
-			DataTable table2 = GetData(query2);
-
-			if (table1.Rows.Count < 5 || table1.Rows.Count < 3) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER06.sql", false);
 				res.Response = "CMS DB created carrot_ContentType, carrot_ContentTag, carrot_ContentCategory";
 				return res;
 			}
 
-			res.Response = "CMS DB carrot_ContentType, carrot_ContentTag, carrot_ContentCategory already created";
+			res.Response = "CMS DB carrot_ContentType, carrot_ContentTag, carrot_ContentCategory already exist";
 			return res;
 		}
 
 		public DatabaseUpdateResponse AlterStep07() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
-			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites') and column_name in('TimeZone') ";
-			//string query = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_Sites', 'carrot_RootContent') and column_name in('TimeZone', 'PageThumbnail') ";
-			string query1 = "select [specific_name], [ordinal_position], [parameter_name] from [information_schema].[parameters] where [specific_name] like 'carrot%' ";
-			DataTable table1 = GetData(query1);
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep07");
 
-			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate') ";
-			DataTable table2 = GetData(query2);
-
-			string query3 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
-			DataTable table3 = GetData(query3);
-
-			if (table1.Rows.Count < 5 || table2.Rows.Count < 2 || table3.Rows.Count < 2) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER07.sql", false);
 				res.Response = "CMS DB created cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent";
 				return res;
 			}
 
-			res.Response = "CMS DB cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent already created";
+			res.Response = "CMS DB cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent already exist";
 			return res;
 		}
 
@@ -528,19 +403,15 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep08() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query1 = "SELECT * FROM sys.views WHERE name in ('vw_carrot_Comment') ";
-			DataTable table1 = GetData(query1);
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep08");
 
-			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
-			DataTable table2 = GetData(query2);
-
-			if (table1.Rows.Count < 1 || table1.Rows.Count < 2) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER08.sql", false);
-				res.Response = "CMS DB added vw_carrot_Comment";
+				res.Response = "CMS DB created vw_carrot_Comment";
 				return res;
 			}
 
-			res.Response = "CMS DB vw_carrot_Comment already added";
+			res.Response = "CMS DB vw_carrot_Comment already created";
 			return res;
 		}
 
@@ -549,15 +420,11 @@ namespace Carrotware.CMS.DBUpdater {
 		public DatabaseUpdateResponse AlterStep09() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
-			string query1 = "select [table_schema], [table_name], [column_name], [ordinal_position] from [information_schema].[columns] where [table_name] in ('vw_carrot_Content') ";
-			DataTable table1 = GetData(query1);
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep09");
 
-			string query2 = "select distinct table_name, column_name from information_schema.columns where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic') ";
-			DataTable table2 = GetData(query2);
-
-			if (table1.Rows.Count < 34 || table2.Rows.Count < 2) {
+			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER09.sql", false);
-				res.Response = "CMS DB added vw_carrot_ContentChild created ShowInSiteNav ";
+				res.Response = "CMS DB created vw_carrot_ContentChild created ShowInSiteNav ";
 				return res;
 			}
 

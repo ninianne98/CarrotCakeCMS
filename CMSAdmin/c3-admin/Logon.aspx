@@ -10,7 +10,7 @@
 					<table width="320px">
 						<tr>
 							<td class="tableback">
-								<div style="height: 40px; width: 50px; border: 1px solid #ffffff;">
+								<div style="height: 30px; width: 50px; border: 1px solid #ffffff;">
 									&nbsp;
 								</div>
 							</td>
@@ -22,7 +22,7 @@
 								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate"></asp:TextBox>
 							</td>
 							<td class="tableback" rowspan="2" valign="top" align="right">
-								<div style="height: 40px; width: 50px; text-align: right; border: 1px solid #ffffff;">
+								<div style="height: 30px; width: 50px; text-align: right; border: 1px solid #ffffff;">
 									<a href="/">
 										<img class="imgNoBorder" src="/c3-admin/images/house_go.png" alt="Homepage" title="Homepage" /></a>
 								</div>
@@ -43,13 +43,13 @@
 						</tr>
 						<tr>
 							<td class="tableback">
-								&nbsp;
+								<div style="height: 40px; width: 25px; border: 1px solid #ffffff;">
+								</div>
 							</td>
 							<td class="tableback">
 								&nbsp;
 							</td>
 							<td class="tableback" align="right">
-								<br />
 								<asp:Button ID="cmdLogon" runat="server" Text="Logon" CommandName="Login" OnClick="cmdLogon_Click" ValidationGroup="loginTemplate"></asp:Button>
 							</td>
 							<td class="tableback" align="right">

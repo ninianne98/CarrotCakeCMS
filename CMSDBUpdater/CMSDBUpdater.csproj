@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="DatabaseUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLUpdateNugget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataScripts\ALTER01.sql" />
@@ -87,6 +88,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataScripts\ALTER09.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DatabaseChecks.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

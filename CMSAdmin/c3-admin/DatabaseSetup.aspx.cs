@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
@@ -52,7 +47,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				int iUpdate = 1;
 
 				if (bUpdate) {
-					if (!du.IsPostStep04()) {
+					if (!du.IsPostStep04) {
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep00());
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep01());
 						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep02());
@@ -84,6 +79,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			HandleResponse("  ");
+
+			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+				cmsHelper.ResetConfigs();
+			}
 		}
 
 		protected void HandleResponse(string sMsg) {

@@ -14,3 +14,26 @@ GO
 update [dbo].[tblContent]  
 set [MetaKeyword] = ISNULL([MetaKeyword], ''),
 	[MetaDescription] = ISNULL([MetaDescription], '')
+
+
+GO
+
+
+IF not exists(select * from dbo.[aspnet_Roles] where RoleName = 'CarrotCMS Administrators' ) BEGIN	
+
+	update dbo.[aspnet_Roles]
+	set RoleName = 'CarrotCMS Administrators'
+	where RoleName = 'Administrators'
+
+	update dbo.[aspnet_Roles]
+	set RoleName = 'CarrotCMS Editors'
+	where RoleName = 'Editors'
+
+	update dbo.[aspnet_Roles]
+	set RoleName = 'CarrotCMS Users'
+	where RoleName = 'Users'
+
+	update dbo.[aspnet_Roles]
+	set LoweredRoleName = LOWER(RoleName)
+
+END	
