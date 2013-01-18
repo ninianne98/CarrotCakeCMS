@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tbl>
+	<querynugget>
+		<priority>12</priority>
+		<mode>LT</mode>
+		<rowcount>34</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep09|</testcontext>
+		<sql>
+			select [table_schema], [table_name], [column_name], [ordinal_position]
+			from [information_schema].[columns]
+			where [table_name] in ('vw_carrot_Content')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>12</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep09|AlterStep08|AlterStep07|</testcontext>
+		<sql>
+			select distinct table_name, column_name
+			from [information_schema].[columns]
+			where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>12</priority>
+		<mode>LT</mode>
+		<rowcount>10</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep08|</testcontext>
+		<sql>
+			select distinct [view_name], [table_name], [column_name]
+			from [information_schema].[view_column_usage]
+			where [view_name] in ('vw_carrot_Comment')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>10</priority>
+		<mode>DNEQ</mode>
+		<rowcount>6</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep07|AlterStep06|</testcontext>
+		<sql>
+			select [specific_name], [ordinal_position], [parameter_name]
+			from [information_schema].[parameters]
+			where [specific_name] like 'carrot%'
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>11</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep07|</testcontext>
+		<sql>
+			select distinct table_name, column_name
+			from [information_schema].[columns]
+			where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>10</priority>
+		<mode>LT</mode>
+		<rowcount>3</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep06|</testcontext>
+		<sql>
+			select distinct table_name, column_name
+			from [information_schema].[columns]
+			where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>1</priority>
+		<mode>EQ</mode>
+		<rowcount>4</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|IsPostStep04|</testcontext>
+		<sql>
+			select distinct table_name
+			from [information_schema].[columns]
+			where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>1</priority>
+		<mode>GTE</mode>
+		<rowcount>4</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|DoCMSTablesExist|</testcontext>
+		<sql>
+			select distinct table_name
+			from [information_schema].[columns]
+			where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>1</priority>
+		<mode>LT</mode>
+		<rowcount>68</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|DatabaseNeedsUpdate|AreCMSTablesIncomplete|</testcontext>
+		<sql>
+			select [table_schema], [table_name], [column_name], [ordinal_position]
+			from [information_schema].[columns]
+			where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>2</priority>
+		<mode>GTE</mode>
+		<rowcount>4</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|DatabaseNeedsUpdate|AreCMSTablesIncomplete|</testcontext>
+		<sql>
+			select distinct table_name
+			from [information_schema].[columns]
+			where table_name in ('tblSites', 'tblRootContent', 'tblContent', 'tblWidget')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>1</priority>
+		<mode>EQ</mode>
+		<rowcount>7</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|HasCarrotPrefix|</testcontext>
+		<sql>
+			select distinct [table_schema], [table_name]
+			from [information_schema].[columns]
+			where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>3</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|PreCarrotPrefix|</testcontext>
+		<sql>
+			select distinct table_name
+			from [information_schema].[columns]
+			where table_name in ('tblSites', 'carrot_Sites')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>3</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep00|PreCarrotPrefix|</testcontext>
+		<sql>
+			select column_name, table_name
+			from [information_schema].[columns]
+			where column_name='SerialCacheID' and table_name in ('tblSerialCache', 'carrot_SerialCache')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>3</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep01|PreCarrotPrefix|</testcontext>
+		<sql>
+			select column_name, table_name
+			from [information_schema].[columns]
+			where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>3</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep02|PreCarrotPrefix|</testcontext>
+		<sql>
+			select column_name, table_name
+			from [information_schema].[columns]
+			where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>3</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep03|PreCarrotPrefix|</testcontext>
+		<sql>
+			select column_name, table_name
+			from [information_schema].[columns]
+			where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>3</priority>
+		<mode>LT</mode>
+		<rowcount>6</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep04|PreCarrotPrefix|</testcontext>
+		<sql>
+			select column_name, table_name
+			from [information_schema].[columns]
+			where table_name in  ('carrot_Sites', 'carrot_RootContent')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>3</priority>
+		<mode>LT</mode>
+		<rowcount>6</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep05|</testcontext>
+		<sql>
+			select distinct [view_name], [table_name], [column_name]
+			from [information_schema].[view_column_usage]
+			where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') and column_name in ('Root_WidgetID', 'Root_ContentID')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>2</priority>
+		<mode>LT</mode>
+		<rowcount>5</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep05|</testcontext>
+		<sql>
+			select distinct [view_name], [table_name], [column_name]
+			from [information_schema].[view_column_usage]
+			where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>100</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|StepXX|</testcontext>
+		<sql>XXXXXXXXXXXXXXXX</sql>
+	</querynugget>
+	<querynugget>
+		<priority>100</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|StepXX|</testcontext>
+		<sql>XXXXXXXXXXXXXXXX</sql>
+	</querynugget>
+	<querynugget>
+		<priority>100</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|StepXX|</testcontext>
+		<sql>XXXXXXXXXXXXXXXX</sql>
+	</querynugget>
+	<querynugget>
+		<priority>100</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|StepXX|</testcontext>
+		<sql>XXXXXXXXXXXXXXXX</sql>
+	</querynugget>
+	<querynugget>
+		<priority>100</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|StepXX|</testcontext>
+		<sql>XXXXXXXXXXXXXXXX</sql>
+	</querynugget>
+	<querynugget>
+		<priority>100</priority>
+		<mode>LT</mode>
+		<rowcount>2</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|StepXX|</testcontext>
+		<sql>XXXXXXXXXXXXXXXX</sql>
+	</querynugget>
+</tbl>
