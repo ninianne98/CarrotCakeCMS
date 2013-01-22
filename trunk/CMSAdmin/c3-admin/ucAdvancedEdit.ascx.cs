@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Caching;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
@@ -19,6 +14,8 @@ using Carrotware.Web.UI.Controls;
 *
 * Date: October 2011
 */
+
+
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ucAdvancedEdit : BaseUserControl {
 
@@ -29,7 +26,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		public string EditedPageFileName = "";
 
-		protected void Page_Load(object sender, EventArgs e) {
+		//protected void Page_Load(object sender, EventArgs e) {
+		protected void Page_Init(object sender, EventArgs e) {
 
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				guidContentID = new Guid(Request.QueryString["id"].ToString());
@@ -89,11 +87,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!bLocked) {
 
-				jqueryui link1 = new jqueryui();
-				Page.Header.Controls.AddAt(0, link1);
+				//jquerybasic jquerybasic2 = new jquerybasic();
+				//jquerybasic2.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;
+				//Page.Header.Controls.AddAt(0, jquerybasic2);
 
-				jquery link2 = new jquery();
-				Page.Header.Controls.AddAt(0, link2);
+				BasicControlUtils.InsertjQuery(this.Page);
 
 				guidContentID = pageContents.Root_ContentID;
 
@@ -105,6 +103,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				cmsDivEditing.Visible = false;
+
+				BasicControlUtils.MakeXUACompatibleFirst(this.Page);
 
 			} else {
 				pnlCMSEditZone.Visible = false;

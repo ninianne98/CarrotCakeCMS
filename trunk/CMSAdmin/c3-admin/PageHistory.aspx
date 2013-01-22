@@ -66,7 +66,7 @@
 		<script type="text/javascript">
 
 			$(document).ready(function () {
-				setTimeout("$('#jqtabs').tabs('select', 'pagecontent-tabs-1');", 500);
+				setTimeout("$('#jqtabs').tabs('option', 'active', 1);", 500);
 			});
 		</script>
 	</asp:Panel>

@@ -71,22 +71,15 @@ function cmsToggleMenu() {
 
 var cmsToolbarMargin = 'L';
 function cmsShiftPosition(p) {
+	var toolbox = 'cmsToolBoxWrap';
 
-	floatingArray[0].targetTop = 30;
-	floatingArray[0].targetBottom = undefined;
 	if (p == 'L') {
 		cmsToolbarMargin = 'L';
-		floatingArray[0].targetLeft = 30;
-		floatingArray[0].targetRight = undefined;
+		$("#" + toolbox).removeClass("cmsToolbarAlignmentR").addClass("cmsToolbarAlignmentL");
 	} else {
 		cmsToolbarMargin = 'R';
-		floatingArray[0].targetLeft = undefined;
-		floatingArray[0].targetRight = 30;
+		$("#" + toolbox).removeClass("cmsToolbarAlignmentL").addClass("cmsToolbarAlignmentR");
 	}
-
-	floatingArray[0].centerX = undefined;
-	floatingArray[0].centerY = undefined;
-
 }
 
 $(document).ready(function () {
@@ -137,7 +130,7 @@ function cmsMenuFixImages() {
 		cmsFixGeneralImage(this, 'History', 'History', 'layout.png');
 	});
 	//$(".cmsWidgetBarIconShrink").each(function (i) {
-	//	cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
+	//cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
 	//});
 }
 
@@ -246,7 +239,7 @@ function cmsEditHB() {
 function cmsSaveToolbarPosition() {
 
 	var scrollTop = $(document).scrollTop();
-	var tabID = $('#cmsJQTabedToolbox').tabs("option", "selected");
+	var tabID = $('#cmsJQTabedToolbox').tabs("option", "active");
 
 	var webMthd = webSvc + "/RecordEditorPosition";
 
@@ -315,7 +308,7 @@ function cmsPreviewTemplate() {
 	var editFrame = $('#cmsModalFrame');
 	var editIFrame = $('#cmsFrameEditor');
 
-	$(editIFrame).attr('width', '890');
+	$(editIFrame).attr('width', '100%');
 	$(editIFrame).attr('height', '450');
 
 	var btnApply = ' <input type="button" id="btnApplyTemplate" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
@@ -323,6 +316,10 @@ function cmsPreviewTemplate() {
 
 	$(editFrame).append('<div id="cmsGlossySeaGreenID" class="cmsRight5px"> ' + btnClose + btnApply + ' </div>');
 	window.setTimeout("cmsLateBtnStyle();", 500);
+
+	$('#cmsFrameEditor').attr('id', 'cmsFrameEditorPreview');
+	$('#cmsAjaxMainDiv2').attr('id', 'cmsAjaxMainDiv3');
+	
 }
 
 function cmsLateBtnStyle() {
@@ -451,11 +448,11 @@ function cmsSaveContentCallback(data, status) {
 }
 
 function cmsAjaxGeneralCallback(data, status) {
-	//	if (data.d == "OK") {
-	//		CMSBusyShort();
-	//	} else {
-	//		cmsAlertModal(data.d);
-	//	}
+	//if (data.d == "OK") {
+	//	CMSBusyShort();
+	//} else {
+	//	cmsAlertModal(data.d);
+	//}
 
 	if (data.d != "OK") {
 		cmsAlertModal(data.d);
@@ -500,7 +497,10 @@ function cmsCountdownWindow() {
 
 
 function cmsNotifySaved() {
-	$("#CMSsavedconfirm").dialog("destroy");
+	//var isOpen = $("#CMSsavedconfirm").dialog("isOpen");
+	//if (isOpen) {
+	//	$("#CMSsavedconfirm").dialog("destroy");
+	//}
 
 	$("#CMSsavedconfirm").dialog({
 		open: function () {
@@ -542,7 +542,10 @@ function cmsRecordCancellation() {
 
 
 function cmsCancelEdit() {
-	$("#CMScancelconfirm").dialog("destroy");
+	//var isOpen = $("#CMScancelconfirm").dialog("isOpen");
+	//if (isOpen) {
+	//	$("#CMScancelconfirm").dialog("destroy");
+	//}
 
 	$("#CMScancelconfirm").dialog({
 		open: function () {
@@ -596,7 +599,7 @@ function cmsSendTrackbackPageBatch() {
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: "{'ThisPage': '" + thePageID + "'}",
+		data: "{'ThisPage': '" + thisPageID + "'}",
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: cmsAjaxGeneralCallback,
@@ -627,7 +630,10 @@ function cmsAjaxFailed(request) {
 }
 
 function cmsAlertModal(request) {
-	$("#CMSmodalalert").dialog("destroy");
+	//var isOpen = $("#CMSmodalalert").dialog("isOpen");
+	//if (isOpen) {
+	//	$("#CMSmodalalert").dialog("destroy");
+	//}
 
 	$("#CMSmodalalert").dialog({
 		//autoOpen: false,
@@ -733,22 +739,25 @@ function cmsBuildOrderAndUpdateWidgets() {
 	if (ret) {
 		cmsUpdateWidgets();
 	}
+
+	return true;
 }
 
 function cmsBuildOrder() {
 	CMSBusyShort();
 
 	$("#cmsFullOrder").val('');
-	$(".cmsTargetArea").find('#cmsCtrlOrder').each(function (i) {
-		var txt = $(this);
+
+	$(".cmsTargetArea").find('#cmsControl.cmsWidgetControlItem').each(function (i) {
+		var txt = $(this).find('#cmsCtrlOrder');
 		$(txt).val('');
-		var p = txt.parent().parent().parent().attr('id');
-		var key = txt.parent().find('#cmsCtrlID').val();
+
+		var p = $(this).parent().parent().attr('id');
+		var key = $(this).find('#cmsCtrlID').val();
 		txt.val(i + '\t' + p + '\t' + key);
-		//alert($('#'+p).find('#cmsCtrlID').val());
+		//alert(txt.val());
 
 		$("#cmsFullOrder").val($("#cmsFullOrder").val() + '\r\n ' + txt.val());
-
 	});
 
 	return true;
@@ -759,7 +768,10 @@ $(document).ready(function () {
 });
 
 function cmsRemoveWidgetLink(v) {
-	$("#CMSremoveconfirm").dialog("destroy");
+	//var isOpen = $("#CMSremoveconfirm").dialog("isOpen");
+	//if (isOpen) {
+	//	$("#CMSremoveconfirm").dialog("destroy");
+	//}
 
 	$("#CMSremoveconfirm").dialog({
 		open: function () {
@@ -807,12 +819,6 @@ function cmsSetOrder(fld) {
 
 $(document).ready(function () {
 
-	$('#cmsAdminToolbox').addFloating({
-		targetLeft: 25,
-		targetTop: 25,
-		snap: true
-	});
-
 	// make sure sort only fires once
 	var cmsSortWidgets = false;
 
@@ -820,7 +826,7 @@ $(document).ready(function () {
 
 		$('#cmsJQTabedToolbox').tabs();
 
-		$('#cmsJQTabedToolbox').tabs('select', cmsToolTabIdx);
+		$('#cmsJQTabedToolbox').tabs("option", "active", cmsToolTabIdx);
 
 		$("#cmsToolBox div.cmsToolItem").draggable({
 			connectToSortable: ".cmsTargetArea",
@@ -917,13 +923,16 @@ function cmsFixDialog(dialogname) {
 
 	cmsOverrideCSSScope(dilg, "");
 
-	var over = $(dilg).next(".ui-widget-overlay");
+	var over = $(dilg).siblings(".ui-widget-overlay");
 	$(over).wrap("<div class=\"cmsGlossySeaGreen\" />");
 	$(over).css('zIndex', 9950001);
 
 	var d = $(dilg);
 	$(d).wrap("<div class=\"cmsGlossySeaGreen\" />");
 	$(d).css('zIndex', 9950005);
+
+	$(dilg).find('.ui-dialog-titlebar').addClass("cmsGlossySeaGreen");
+	$(dilg).find('ui-dialog-title').addClass("cmsGlossySeaGreen");
 }
 
 function cmsOverrideCSSScope(elm, xtra) {
@@ -931,6 +940,7 @@ function cmsOverrideCSSScope(elm, xtra) {
 	if (c.indexOf("cmsGlossySeaGreen") < 0 || c.indexOf(xtra) < 0) {
 		$(elm).attr('class', "cmsGlossySeaGreen " + xtra + " " + c);
 	}
+	$(elm).addClass("cmsGlossySeaGreen");
 }
 
 function cmsGenericEdit(PageId, WidgetId) {
@@ -963,10 +973,10 @@ function cmsLoadWindow() {
 
 function cmsSetiFrameSource(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="890" height="490" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="890" height="500" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
-		css: { width: '870px', height: '500px' },
+		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }

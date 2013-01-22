@@ -70,7 +70,7 @@
 	</p>
 	<div id="SortableGrid">
 		<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="25">
-			<TheGrid ID="TheGrid1" runat="server" DefaultSort="CreateDate desc" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
+			<TheGrid ID="TheGrid1" runat="server" DefaultSort="GoLiveDate desc" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
 				RowStyle-CssClass="rowregular" CssClass="datatable">
 				<Columns>
 					<asp:TemplateField>

@@ -703,7 +703,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 
-				var cacheWidget = cmsAdminWidget;
+				List<Widget> cacheWidget = cmsAdminWidget;
 
 				List<Widget> inputWid = new List<Widget>();
 				Dictionary<Guid, int> dictOrder = new Dictionary<Guid, int>();
@@ -734,7 +734,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							rWidg.WidgetDataID = Guid.NewGuid();
 							rWidg.PlaceholderName = w[1].Substring(4);
 							rWidg.WidgetOrder = int.Parse(w[0]);
-							rWidg.Root_ContentID = cmsAdminContent.Root_ContentID;
+							rWidg.Root_ContentID = CurrentPageGuid;
 							rWidg.IsWidgetActive = true;
 							rWidg.IsLatestVersion = true;
 							rWidg.EditDate = SiteData.CurrentSite.Now;

@@ -17,7 +17,7 @@ function cmsSetTextMessage(d) {
 
 
 $(function () {
-	var hideDelay = 500;
+	var hideDelay = 2000;
 	var hideTimer = null;
 
 	// One instance that's reused to show info for the current data
@@ -25,12 +25,12 @@ $(function () {
                     + '<table width="" border="0" cellspacing="0" cellpadding="0" align="center" class="dataPopupPopup">'
                     + '<tr>'
                     + '   <td class="corner topLeft"></td>'
-                    + '   <td class="top"></td>'
+                    + '   <td class="top"> </td>'
                     + '   <td class="corner topRight"></td>'
                     + '</tr>'
                     + '<tr>'
                     + '   <td class="left">&nbsp;</td>'
-                    + '   <td><div id="dataPopupContent"></div></td>'
+                    + '   <td class="center"><div id="dataPopupContent"></div></td>'
                     + '   <td class="right">&nbsp;</td>'
                     + '</tr>'
                     + '<tr>'

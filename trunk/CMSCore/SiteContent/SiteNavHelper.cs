@@ -390,6 +390,7 @@ namespace Carrotware.CMS.Core {
 			navNew.NavMenuText = "Template PV - NAV"; ;
 			navNew.PageHead = "Template Preview - HEAD";
 			navNew.PageActive = true;
+			navNew.ShowInSiteNav = true;
 
 			navNew.EditDate = DateTime.Now.AddDays(-1);
 			navNew.CreateDate = DateTime.Now.AddDays(-14);

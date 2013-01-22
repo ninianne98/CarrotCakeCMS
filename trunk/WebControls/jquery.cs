@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 
 namespace Carrotware.Web.UI.Controls {
@@ -22,7 +25,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string JQVersion {
 			get {
 				String s = (String)ViewState["JQVersion"];
-				return ((s == null) ? "1.7" : s);
+				return ((s == null) ? "1.8" : s);
 			}
 			set {
 				ViewState["JQVersion"] = value;
@@ -34,34 +37,31 @@ namespace Carrotware.Web.UI.Controls {
 			string sJQFile = "";
 			string jqVer = JQVersion;
 
-			if (!string.IsNullOrEmpty(jqVer) && jqVer.Length > 3) {
-				jqVer = jqVer.Substring(0, 3);
+			if (!string.IsNullOrEmpty(jqVer) && jqVer.Length > 2) {
+				if (jqVer.LastIndexOf(".") != jqVer.IndexOf(".")) {
+					jqVer = jqVer.Substring(0, jqVer.LastIndexOf("."));
+				}
 			}
 
 			switch (jqVer) {
-				case "1.8":
-					jqVer = "1.8.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery182.js");
+				case "1.9":
+					jqVer = "1.9.0";
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery190.js");
 					break;
+				case "1.7":
+					jqVer = "1.7.2";
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
+					break;
+				case "1.3":
+				case "1.4":
+				case "1.5":
 				case "1.6":
 					jqVer = "1.6.4";
 					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery164.js");
 					break;
-				case "1.5":
-					jqVer = "1.5.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery152.js");
-					break;
-				case "1.4":
-					jqVer = "1.4.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery142.js");
-					break;
-				case "1.3":
-					jqVer = "1.3.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery132.js");
-					break;
 				default:
-					jqVer = "1.7.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
+					jqVer = "1.8.3";
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery183.js");
 					break;
 			}
 

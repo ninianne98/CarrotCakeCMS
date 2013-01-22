@@ -698,7 +698,6 @@
     <Content Include="c3-admin\glossyseagreen\css\jquery-ui-glossyseagreen-scoped2.css" />
     <Content Include="c3-admin\glossyseagreen\css\jquery-ui-glossyseagreen.css" />
     <Content Include="c3-admin\Includes\advanced-editor.css" />
-    <Content Include="c3-admin\Includes\floating-menu.js" />
     <Content Include="c3-admin\Includes\tooltiphelper.css" />
     <Content Include="c3-admin\Includes\tooltiphelper.js" />
     <Content Include="c3-admin\PageChildSort.aspx" />

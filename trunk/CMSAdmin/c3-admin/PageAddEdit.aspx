@@ -141,7 +141,10 @@
 			if (theURL.length > 3) {
 				$("#divCMSCancelWinMsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
 
-				$("#divCMSCancelWin").dialog("destroy");
+//				var isOpen = $("#divCMSCancelWin").dialog("isOpen");
+//				if (isOpen) {
+//					$("#divCMSCancelWin").dialog("destroy");
+//				}
 
 				$("#divCMSCancelWin").dialog({
 					open: function () {
@@ -199,7 +202,10 @@
 
 			$("#divCMSCancelWinMsg").text('Are you sure you want to leave the editor? All changes will be lost!');
 
-			$("#divCMSCancelWin").dialog("destroy");
+//			var isOpen = $("#divCMSCancelWin").dialog("isOpen");
+//			if (isOpen) {
+//				$("#divCMSCancelWin").dialog("destroy");
+//			}
 
 			$("#divCMSCancelWin").dialog({
 				open: function () {
@@ -224,7 +230,7 @@
 			});
 		}
 
-		setTimeout("cmsSendTrackbackPageBatch();", 1500);
+		setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 1500);
 
 		function cmsRecordCancellation() {
 
@@ -579,7 +585,10 @@
 		function cmsPageVersionNav() {
 			var qs = $('#<%= ddlVersions.ClientID %>').val();
 
-			$("#confirmRevert").dialog("destroy");
+//			var isOpen = $("#confirmRevert").dialog("isOpen");
+//			if (isOpen) {
+//				$("#confirmRevert").dialog("destroy");
+//			}
 
 			if (qs != '00000') {
 
@@ -649,17 +658,15 @@
 
 		function ClickSaveBtn() {
 			$('#<%=btnSave.ClientID %>').click();
-			//setTimeout("cmsMakeNotOKToLeave();", 2500);
 		}
 		function ClickSaveVisitBtn() {
 			$('#<%=btnSaveVisit.ClientID %>').click();
-			//setTimeout("cmsMakeNotOKToLeave();", 2500);
 		}
 	</script>
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			setTimeout("$('#jqtabs').tabs('select', 'pagecontent-tabs-1');", 500);
+			setTimeout("$('#jqtabs').tabs('option', 'active', 1);", 500);
 		});
 	</script>
 </asp:Content>

@@ -1,8 +1,9 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainPopup.master.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup" %>
 
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>MainPopup</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
@@ -35,8 +36,6 @@
 		});
 
 	</script>
-	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
-	</asp:ContentPlaceHolder>
 	<!-- TinyMCE -->
 	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js"></script>
@@ -61,6 +60,8 @@
 
 	</script>
 	<!-- /TinyMCE -->
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+	</asp:ContentPlaceHolder>
 </head>
 <body>
 	<form id="form1" runat="server">
