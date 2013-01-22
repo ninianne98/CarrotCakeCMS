@@ -6,7 +6,10 @@ http://www.ajaxprojects.com/ajax/tutorialdetails.php?itemid=718
 http://rndnext.blogspot.com/2009/02/jquery-ajax-tooltip.html
 
 */
-
+#dataPopupContainer table, #dataPopupContainer tr, #dataPopupContainer td {
+	margin: 0;
+	padding: 0;
+}
 #dataPopupContainer {
 	position: absolute;
 	left: 0;
@@ -50,7 +53,11 @@ http://rndnext.blogspot.com/2009/02/jquery-ajax-tooltip.html
 	background: url(/c3-admin/Images/balloons/balloon_bottomRight.png) no-repeat;
 }
 .dataPopupPopup .top {
+	background-color: #FFFFFF;
 	background: url(/c3-admin/Images/balloons/balloon_top.png) repeat-x;
+}
+.dataPopupPopup .center {
+	background-color: #FFFFFF;
 }
 .dataPopupPopup .bottom {
 	background: url(/c3-admin/Images/balloons/balloon_bottom.png) repeat-x;

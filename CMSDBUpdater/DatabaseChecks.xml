@@ -28,7 +28,7 @@
 		<priority>12</priority>
 		<mode>LT</mode>
 		<rowcount>10</rowcount>
-		<alwayscheck>True</alwayscheck>
+		<alwayscheck>False</alwayscheck>
 		<testcontext>|AlterStep08|</testcontext>
 		<sql>
 			select distinct [view_name], [table_name], [column_name]
@@ -52,7 +52,7 @@
 		<priority>11</priority>
 		<mode>LT</mode>
 		<rowcount>2</rowcount>
-		<alwayscheck>True</alwayscheck>
+		<alwayscheck>False</alwayscheck>
 		<testcontext>|AlterStep07|</testcontext>
 		<sql>
 			select distinct table_name, column_name

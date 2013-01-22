@@ -118,7 +118,9 @@ Morbi diam orci, volutpat sed cursus vel, ultrices eu dolor. Nullam et magna non
 
 <p>
 	<input type="reset" value="Clear Unstyled" /> 
-	<input type="submit" value="Submit Unstyled" /> <br />
+	<input type="submit" value="Submit Unstyled" /> 
+	<input type="button" value="Button Unstyled" /> <br />
 	<input class="button" type="reset" value="Clear Styled" /> 
 	<input class="button" type="submit" value="Submit Styled" />
+	<input class="button" type="button" value="Button Styled" />
 </p>

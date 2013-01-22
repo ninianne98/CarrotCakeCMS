@@ -144,3 +144,11 @@ fieldset legend label.inline {
 table tr td {
 	padding-top: 5px;
 }
+
+.ui-widget textarea, textarea {
+	line-height: normal;
+	text-align: left;
+	font-size: small;
+	font-family: Lucida Grande, Lucida Sans Arial, sans-serif;	
+	color: #000000;
+}

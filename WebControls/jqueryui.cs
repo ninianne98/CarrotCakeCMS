@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 
 namespace Carrotware.Web.UI.Controls {
@@ -21,7 +24,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string JQUIVersion {
 			get {
 				String s = (String)ViewState["JQUIVersion"];
-				return ((s == null) ? "1.8" : s);
+				return ((s == null) ? "1.10" : s);
 			}
 			set {
 				ViewState["JQUIVersion"] = value;
@@ -33,8 +36,10 @@ namespace Carrotware.Web.UI.Controls {
 			string sJQFile = "";
 			string jqVer = JQUIVersion;
 
-			if (!string.IsNullOrEmpty(jqVer) && jqVer.Length > 3) {
-				jqVer = jqVer.Substring(0, 3);
+			if (!string.IsNullOrEmpty(jqVer) && jqVer.Length > 2) {
+				if (jqVer.LastIndexOf(".") != jqVer.IndexOf(".")) {
+					jqVer = jqVer.Substring(0, jqVer.LastIndexOf("."));
+				}
 			}
 
 			switch (jqVer) {
@@ -42,13 +47,17 @@ namespace Carrotware.Web.UI.Controls {
 					jqVer = "1.9.2";
 					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-9-2.js");
 					break;
+				case "1.8":
+					jqVer = "1.8.24";
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-8-24.js");
+					break;
 				case "1.7":
 					jqVer = "1.7.3";
 					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-7-3.js");
 					break;
 				default:
-					jqVer = "1.8.24";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-8-24.js");
+					jqVer = "1.10.0";
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-10-0.js");
 					break;
 			}
 

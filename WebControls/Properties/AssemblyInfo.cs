@@ -49,17 +49,16 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jsHelperLibrary.js", "text/javascript")]
 [assembly: TagPrefix("jsHelperLib", "carrot")]
 
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery132.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery142.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery152.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery164.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery172.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery182.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery183.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery190.js", "text/javascript")]
 [assembly: TagPrefix("jquery", "carrot")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-7-3.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-8-24.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-9-2.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-10-0.js", "text/javascript")]
 [assembly: TagPrefix("jqueryui", "carrot")]
 
 [assembly: TagPrefix("jquerybasic", "carrot")]

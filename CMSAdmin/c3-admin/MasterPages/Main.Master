@@ -7,6 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Main</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
+	<%--<link href="/c3-admin/glossyseagreen/css/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />--%>
 	<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/main.css" rel="stylesheet" type="text/css" />

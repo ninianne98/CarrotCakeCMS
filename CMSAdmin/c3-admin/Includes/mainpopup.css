@@ -66,3 +66,15 @@ H3 {
 	width: 650px;
 	z-index: 5100;
 }
+#cms-basic-modal-content, #cmsModalFrame, #cmsAjaxMainDiv2 {
+	margin: 0;
+	padding: 0;	
+	height: 100%;
+	width: 100%;
+}
+#cmsFrameEditor {
+	margin: 0;
+	padding: 0;	
+	height: 98%;
+	width: 100%;
+}

@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 
 namespace Carrotware.Web.UI.Controls {
@@ -45,18 +48,70 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public bool StylesheetOnly {
+			get {
+				String s = (String)ViewState["StylesheetOnly"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+			set {
+				ViewState["StylesheetOnly"] = value.ToString();
+			}
+		}
+
+		//[Bindable(true)]
+		//[Category("Appearance")]
+		//[DefaultValue("")]
+		//[Localizable(true)]
+		//public string JQVersion {
+		//    get {
+		//        String s = (String)ViewState["JQVersion"];
+		//        return ((s == null) ? "1.8" : s);
+		//    }
+		//    set {
+		//        ViewState["JQVersion"] = value;
+		//    }
+		//}
+
+		//[Bindable(true)]
+		//[Category("Appearance")]
+		//[DefaultValue("")]
+		//[Localizable(true)]
+		//public string JQUIVersion {
+		//    get {
+		//        String s = (String)ViewState["JQUIVersion"];
+		//        return ((s == null) ? "1.10" : s);
+		//    }
+		//    set {
+		//        ViewState["JQUIVersion"] = value;
+		//    }
+		//}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
 
-			(new jquery()).RenderControl(output);
+			if (!this.StylesheetOnly) {
+				jquery j1 = new jquery();
+				//j1.JQVersion = this.JQVersion;
+				this.Controls.Add(j1);
 
-			(new jqueryui()).RenderControl(output);
+				jqueryui j2 = new jqueryui();
+				//j2.JQUIVersion = this.JQUIVersion;
+				this.Controls.Add(j2);
+
+				j1.RenderControl(output);
+				j2.RenderControl(output);
+			}
 
 			sJQFile = "";
 
-			switch (SelectedSkin) {
-				case jQueryTheme.Silver:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-silver.css");
+			switch (this.SelectedSkin) {
+				case jQueryTheme.GlossyBlack:
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css");
 					break;
 				case jQueryTheme.Purple:
 					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-purple.css");
@@ -70,14 +125,14 @@ namespace Carrotware.Web.UI.Controls {
 				case jQueryTheme.LightGreen:
 					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css");
 					break;
-				case jQueryTheme.GlossyBlack:
+				case jQueryTheme.Silver:
 				default:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css");
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-silver.css");
 					break;
 			}
 
-			if (SelectedSkin != jQueryTheme.NotUsed) {
-				output.Write("<!-- JQuery UI CSS  " + SelectedSkin.ToString() + " --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
+			if (this.SelectedSkin != jQueryTheme.NotUsed) {
+				output.Write("<!-- JQuery UI CSS " + SelectedSkin.ToString() + " --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 			}
 
 		}

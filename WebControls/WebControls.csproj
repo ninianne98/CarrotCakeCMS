@@ -134,15 +134,6 @@
     <EmbeddedResource Include="jquerybasic\jquery-ui-black.css" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jquery132.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="jquery142.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="jquery152.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="jquery164.js" />
   </ItemGroup>
   <ItemGroup>
@@ -252,10 +243,12 @@
     <EmbeddedResource Include="jqueryui-1-9-2.js" />
     <EmbeddedResource Include="jqueryui-1-7-3.js" />
     <EmbeddedResource Include="jqueryui-1-8-24.js" />
-    <EmbeddedResource Include="jquery182.js" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_f9cecd_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-soft_25_fbf9ee_1x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_cd0a0a_256x240.png" />
+    <EmbeddedResource Include="jquery190.js" />
+    <EmbeddedResource Include="jqueryui-1-10-0.js" />
+    <EmbeddedResource Include="jquery183.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

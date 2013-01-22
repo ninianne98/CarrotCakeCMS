@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -666,6 +667,8 @@ namespace Carrotware.CMS.UI.Controls {
 			if (string.IsNullOrEmpty(OverrideCSS) && !AutoStylingDisabled) {
 
 				ParseCSS();
+
+				//BasicControlUtils.MakeXUACompatibleFirst(this.Page);
 
 			} else {
 				if (!string.IsNullOrEmpty(OverrideCSS)) {

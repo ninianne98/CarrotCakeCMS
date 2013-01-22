@@ -112,9 +112,10 @@
 		Thanks to Amir-Hossein Sobhi for some excellent contributions!<br />
 	</p>
 	<p>
-		<b>SimpleModal 1.4.1 - jQuery Plugin</b><br />
+		<b>SimpleModal 1.4.3 - jQuery Plugin</b><br />
 		<a target="_blank" href="http://www.ericmmartin.com/projects/simplemodal/">http://www.ericmmartin.com/projects/simplemodal/</a><br />
-		Copyright (c) 2010 Eric Martin (http://twitter.com/ericmmartin)<br />
+		Copyright (c) 2010 Eric Martin
+		<br />
 		Dual licensed under the MIT and GPL licenses<br />
 	</p>
 	<p>
@@ -123,15 +124,6 @@
 		This is a jQuery UI time picker plugin build to match with other official jQuery UI widgets.<br />
 		Licensed under the same license as jQuery : MIT and GPL licenses<br />
 		http://fgelinas.com/code/timepicker/<br />
-	</p>
-	<p>
-		<b>Absolute Floating Menu</b><br />
-		Script by: www.jtricks.com<br />
-		Latest version: <a target="_blank" href="http://www.jtricks.com/javascript/navigation/floating.html">http://www.jtricks.com/javascript/navigation/floating.html</a><br />
-		http://www.jtricks.com/licensing.html<br />
-		<br />
-		License: GNU/GPL v2 or later http://www.gnu.org/licenses/gpl-2.0.html
-		<br />
 	</p>
 	<p>
 		<b>TinyMCE</b>

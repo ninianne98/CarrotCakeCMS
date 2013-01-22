@@ -33,7 +33,7 @@ namespace Carrotware.Web.UI.Controls {
 			int ident = output.Indent;
 
 			string sJSFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jsHelperLibrary.js");
-			string sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
+			string sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery183.js");
 
 			output.Indent = ident + 3;
 			output.WriteLine();
@@ -41,7 +41,7 @@ namespace Carrotware.Web.UI.Controls {
 			output.WriteLine("<script src=\"" + sJSFile + "\" type=\"text/javascript\"></script> ");
 
 			if (LoadJQueryAsServerControl) {
-				this.Page.Header.Controls.AddAt(0, new jquery { JQVersion = "1.7" });
+				this.Page.Header.Controls.AddAt(0, new jquery { JQVersion = "1.8" });
 			} else {
 				output.WriteLine("<script type=\"text/javascript\">__carrotware_SetJQueryURL('" + sJQFile + "');</script> ");
 			}

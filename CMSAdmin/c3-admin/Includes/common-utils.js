@@ -10,8 +10,8 @@
 		alwaysOpen: false
 	});
 
-	$(function () {
-		$("input:button, input:submit").button();
+	$(document).ready(function () {
+		$("input:button, input:submit, input:reset").button();
 	});
 
 	$(".dateRegion").each(function (i) {
@@ -113,7 +113,10 @@ function cmsAjaxGeneralCallback(data, status) {
 function cmsAlertModal(request) {
 	$("#divCMSModalMsg").html('');
 
-	$("#divCMSModal").dialog("destroy");
+	//	var isOpen = $("#divCMSModal").dialog("isOpen");
+	//	if (isOpen) {
+	//		$("#divCMSModal").dialog("destroy");
+	//	}
 
 	$("#divCMSModalMsg").html(request);
 
@@ -185,7 +188,9 @@ function cmsSendTrackbackBatch() {
 //setTimeout("cmsSendTrackbackBatch();", 5000);
 
 
-function cmsSendTrackbackPageBatch() {
+function cmsSendTrackbackPageBatch(thePageID) {
+
+	//alert(thePageID);
 
 	var webMthd = webSvc + "/SendTrackbackPageBatch";
 
@@ -201,7 +206,7 @@ function cmsSendTrackbackPageBatch() {
 
 	//alert(webMthd);
 
-	setTimeout("cmsSendTrackbackPageBatch();", 3000);
+	setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 9000);
 }
 
 
@@ -253,7 +258,7 @@ function LaunchWindow(theURL) {
 	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="890" height="490" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
-		css: { width: '860px', height: '500px' },
+		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
@@ -279,7 +284,7 @@ function LaunchWindowPop(theURL) {
 	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="640" height="390" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
-		css: { width: '630', height: '380' },
+		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
