@@ -32,6 +32,10 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		public static string GetWebResourceUrl(string resource) {
+			return BaseWebControl.GetWebResourceUrl(typeof(jquery), resource);
+		}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 
 			string sJQFile = "";
@@ -44,6 +48,8 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			switch (jqVer) {
+				case "2":
+				case "2.0":
 				case "1.9":
 					jqVer = "1.9.0";
 					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery190.js");
@@ -67,6 +73,10 @@ namespace Carrotware.Web.UI.Controls {
 
 			output.WriteLine("<!-- JQuery v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 
+			if (jqVer == "1.9.0") {
+				sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery-mig.js");
+				output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
+			}
 		}
 
 

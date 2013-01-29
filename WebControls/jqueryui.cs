@@ -31,6 +31,10 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		public static string GetWebResourceUrl(string resource) {
+			return BaseWebControl.GetWebResourceUrl(typeof(jqueryui), resource);
+		}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 
 			string sJQFile = "";

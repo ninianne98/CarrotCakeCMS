@@ -95,8 +95,8 @@ namespace Carrotware.Web.UI.Controls {
 						bFoundEdge = true;
 						break;
 					}
-					iOrder++;
 				}
+				iOrder++;
 			}
 
 			if (!bFoundEdge) {
@@ -148,7 +148,27 @@ namespace Carrotware.Web.UI.Controls {
 
 			if (!bFoundjQuery) {
 				thePage.Header.Controls.AddAt(0, jquerybasic2);
+			} else {
+				if (jquerybasic2.StylesheetOnly) {
+					jquerybasic jb1 = new jquerybasic();
+					jb1.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;
+					thePage.Header.Controls.AddAt(0, jb1);
+				}
 			}
+		}
+
+		public static jquerybasic FindjQuery(Page thePage) {
+			jquerybasic jquerybasic2 = new jquerybasic();
+			jquerybasic2.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;
+
+			foreach (var c in thePage.Header.Controls) {
+				if (c is jquerybasic) {
+					jquerybasic2 = (jquerybasic)c;
+					break;
+				}
+			}
+
+			return jquerybasic2;
 		}
 
 	}
