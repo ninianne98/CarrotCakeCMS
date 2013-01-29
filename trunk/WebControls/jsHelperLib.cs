@@ -41,7 +41,7 @@ namespace Carrotware.Web.UI.Controls {
 			output.WriteLine("<script src=\"" + sJSFile + "\" type=\"text/javascript\"></script> ");
 
 			if (LoadJQueryAsServerControl) {
-				this.Page.Header.Controls.AddAt(0, new jquery { JQVersion = "1.8" });
+				this.Page.Header.Controls.AddAt(0, new jquery());
 			} else {
 				output.WriteLine("<script type=\"text/javascript\">__carrotware_SetJQueryURL('" + sJQFile + "');</script> ");
 			}

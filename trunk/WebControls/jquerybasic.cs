@@ -63,19 +63,19 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		//[Bindable(true)]
-		//[Category("Appearance")]
-		//[DefaultValue("")]
-		//[Localizable(true)]
-		//public string JQVersion {
-		//    get {
-		//        String s = (String)ViewState["JQVersion"];
-		//        return ((s == null) ? "1.8" : s);
-		//    }
-		//    set {
-		//        ViewState["JQVersion"] = value;
-		//    }
-		//}
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string JQVersion {
+			get {
+				String s = (String)ViewState["JQVersion"];
+				return ((s == null) ? "1.8" : s);
+			}
+			set {
+				ViewState["JQVersion"] = value;
+			}
+		}
 
 		//[Bindable(true)]
 		//[Category("Appearance")]
@@ -91,12 +91,16 @@ namespace Carrotware.Web.UI.Controls {
 		//    }
 		//}
 
+		public static string GetWebResourceUrl(string resource) {
+			return BaseWebControl.GetWebResourceUrl(typeof(jquerybasic), resource);
+		}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
 
 			if (!this.StylesheetOnly) {
 				jquery j1 = new jquery();
-				//j1.JQVersion = this.JQVersion;
+				j1.JQVersion = this.JQVersion;
 				this.Controls.Add(j1);
 
 				jqueryui j2 = new jqueryui();

@@ -249,6 +249,7 @@
     <EmbeddedResource Include="jquery190.js" />
     <EmbeddedResource Include="jqueryui-1-10-0.js" />
     <EmbeddedResource Include="jquery183.js" />
+    <EmbeddedResource Include="jquery-mig.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

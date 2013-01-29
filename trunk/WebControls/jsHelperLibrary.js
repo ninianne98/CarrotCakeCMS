@@ -39,8 +39,8 @@ function __carrotware_RedirectWithQuerystringParm(url, parm, query) {
 
 
 var jqAttemptCount = 0;
-var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js';
-
+//var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js';
+var jqURL = '/<%=WebResource("Carrotware.Web.UI.Controls.jquery183.js")%>';
 
 function __carrotware_SetJQueryURL(jqPath) {
 	jqURL = jqPath;
