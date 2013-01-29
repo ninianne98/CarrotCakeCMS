@@ -134,7 +134,7 @@ namespace Carrotware.CMS.UI.Controls {
 									+ "<div id=\"cms_" + this.ClientID + "\">"
 									+ "<div id=\"cmsWidgetHead\" class=\"cmsWidgetTitleBar\">"
 									+ "<div id=\"cmsControlPath\" title=\"" + this.ControlPath + "\" tooltip=\"" + this.ControlPath + "\">" + this.ControlTitle + "</div> " + sMenu + " </div>"
-									+ "</div>\r\n<div style=\"clear: both;\"></div>\r\n"
+									+ "</div>\r\n"
 									+ "<div class=\"cmsWidgetControl cmsWidgetControlItem\" id=\"cmsControl\" >\r\n"
 									+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + this.DatabaseKey + "\"  />\r\n"
 									+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + this.Order + "\"  />\r\n";

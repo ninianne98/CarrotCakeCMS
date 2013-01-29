@@ -127,10 +127,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public bool IncludeParent { get; set; }
 
-		private int _TakeTop = 5;
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(5)]
+		[Localizable(true)]
 		public int TakeTop {
-			get { return _TakeTop; }
-			set { _TakeTop = value; }
+			get {
+				String s = (String)ViewState["TakeTop"];
+				return ((s == null) ? 5 : int.Parse(s));
+			}
+			set {
+				ViewState["TakeTop"] = value.ToString();
+			}
 		}
 
 		private List<GuidItem> guidList = null;

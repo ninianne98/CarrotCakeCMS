@@ -26,6 +26,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		public string EditedPageFileName = "";
 
+		protected void Page_Load(object sender, EventArgs e) {
+
+			//jquerybasic jb = BasicControlUtils.FindjQuery(this.Page);
+			//jquerybasic1.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;   //jb.SelectedSkin;
+			//jquerybasic1.JQVersion = jb.JQVersion;
+		}
+
+		public string GetWebControlUrl(string resource) {
+			string sPath = "";
+			try { sPath = jquerybasic.GetWebResourceUrl(resource); } catch { }
+			return sPath;
+		}
+
 		//protected void Page_Load(object sender, EventArgs e) {
 		protected void Page_Init(object sender, EventArgs e) {
 
@@ -86,6 +99,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			try { ddlTemplate.SelectedValue = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
 
 			if (!bLocked) {
+				foreach (Control c in plcIncludes.Controls) {
+					this.Page.Header.Controls.Add(c);
+				}
 
 				//jquerybasic jquerybasic2 = new jquerybasic();
 				//jquerybasic2.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;

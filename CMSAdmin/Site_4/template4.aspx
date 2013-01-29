@@ -23,18 +23,18 @@
 			//			mnuEnhanced(this);
 			//		});
 
-			$(".art-vmenublockcontent-body .art-vmenu").each(function (i) {
+			$("#art-main .art-vmenublockcontent-body .art-vmenu").each(function (i) {
 				mnuEnhanced(this);
 			});
 
 		});
 
 		function mnuEnhanced(elm) {
-			$("li a").each(function (i) {
+			$("#art-main li a").each(function (i) {
 				$(this).html("<span class='l'></span><span class='r'></span><span class='t'>" + $(this).text() + "</span>");
 			});
 
-			$("li.active a").each(function (i) {
+			$("#art-main li.active a").each(function (i) {
 				$(this).attr('class', 'active');
 			});
 		}

@@ -13,13 +13,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
     public partial class ucAdvancedEdit {
         
         /// <summary>
-        /// jquerybasic1 control.
+        /// plcIncludes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.jquerybasic jquerybasic1;
+        protected global::System.Web.UI.WebControls.PlaceHolder plcIncludes;
         
         /// <summary>
         /// cmsDivEditing control.
