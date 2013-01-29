@@ -104,10 +104,18 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private int _TakeTop = 10;
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(10)]
+		[Localizable(true)]
 		public int TakeTop {
-			get { return _TakeTop; }
-			set { _TakeTop = value; }
+			get {
+				String s = (String)ViewState["TakeTop"];
+				return ((s == null) ? 10 : int.Parse(s));
+			}
+			set {
+				ViewState["TakeTop"] = value.ToString();
+			}
 		}
 
 		public enum MetaDataType {
@@ -151,16 +159,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected List<IContentMetaInfo> GetMetaInfo() {
 			List<IContentMetaInfo> lst = null;
-
+			int iTakeTop = TakeTop;
+			if (TakeTop < 0) {
+				iTakeTop = 100000;
+			}
 			switch (ContentType) {
 				case MetaDataType.Tag:
-					lst = navHelper.GetTagList(SiteData.CurrentSiteID, TakeTop);
+					lst = navHelper.GetTagList(SiteData.CurrentSiteID, iTakeTop);
 					break;
 				case MetaDataType.Category:
-					lst = navHelper.GetCategoryList(SiteData.CurrentSiteID, TakeTop);
+					lst = navHelper.GetCategoryList(SiteData.CurrentSiteID, iTakeTop);
 					break;
 				case MetaDataType.DateMonth:
-					lst = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+					lst = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, iTakeTop, !SecurityData.IsAuthEditor);
 					break;
 				default:
 					break;

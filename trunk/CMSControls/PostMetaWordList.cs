@@ -87,10 +87,18 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-		private int _TakeTop = 20;
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(20)]
+		[Localizable(true)]
 		public int TakeTop {
-			get { return _TakeTop; }
-			set { _TakeTop = value; }
+			get {
+				String s = (String)ViewState["TakeTop"];
+				return ((s == null) ? 20 : int.Parse(s));
+			}
+			set {
+				ViewState["TakeTop"] = value.ToString();
+			}
 		}
 
 		public enum MetaDataType {
@@ -177,17 +185,21 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected List<IContentMetaInfo> GetMetaInfo() {
+			int iTakeTop = TakeTop;
+			if (TakeTop < 0) {
+				iTakeTop = 100000;
+			}
 			if (AssignedRootContentID == Guid.Empty) {
 				if (ContentType == MetaDataType.Tag) {
-					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, TakeTop, SiteData.CurrentScriptName);
+					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, iTakeTop, SiteData.CurrentScriptName);
 				} else {
-					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, TakeTop, SiteData.CurrentScriptName);
+					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, iTakeTop, SiteData.CurrentScriptName);
 				}
 			} else {
 				if (ContentType == MetaDataType.Tag) {
-					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, TakeTop, AssignedRootContentID);
+					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, iTakeTop, AssignedRootContentID);
 				} else {
-					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, TakeTop, AssignedRootContentID);
+					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, iTakeTop, AssignedRootContentID);
 				}
 			}
 		}
