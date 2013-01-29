@@ -63,10 +63,13 @@ a .imgNoBorder {
 	line-height: normal;
 	text-align: left;
 	font-size: small;
+	color: #000000;
 	font-family: Lucida Grande, Lucida Sans Arial, sans-serif;
-	color: #676F6A;
 }
 
+#menupath *, .menupath, .ui-widget div, .ui-widget span, .ui-widget input, .ui-widget button, .ui-widget a {
+	color: #676F6A;
+}
 .ui-autocomplete-loading {
 	background: white url('/c3-admin/images/mini-spinner3-6F997D.gif') right center no-repeat;
 }
@@ -78,7 +81,9 @@ a .imgNoBorder {
 	padding-right: 20px;
 }
 
-
+.ui-front {
+    z-index: 100000;
+}
 
 .picker-area {
 	padding: 4px;

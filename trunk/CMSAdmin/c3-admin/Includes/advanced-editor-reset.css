@@ -1,0 +1,52 @@
+﻿
+.cmsGlossySeaGreen *, #cmsGlossySeaGreenID * {
+	font-size: 11px;
+	font-size: small;
+	line-height: normal;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	text-decoration: none;
+	text-shadow: 0 0 0 #FFFFFF;
+	margin: 1px;
+	padding: 1px;
+	text-align: left;
+	background: transparent;
+	background-color: transparent;
+	border: 0px solid transparent;
+}
+
+.cmsGlossySeaGreen select, .cmsGlossySeaGreen textarea, .cmsGlossySeaGreen input[type="text"], 
+#cmsGlossySeaGreenID select, #cmsGlossySeaGreenID textarea, #cmsGlossySeaGreenID input[type="text"] {
+	font-size: small;
+	color: #000000;
+	background-color: #ffffff;
+	border: 1px solid #c0c0c0;
+	padding: 1px;
+	margin: 1px;
+	width: auto;
+}
+
+.cmsGlossySeaGreen input[type="button"], .cmsGlossySeaGreen input[type="submit"], .cmsGlossySeaGreen button, 
+#cmsGlossySeaGreenID input[type="button"], #cmsGlossySeaGreenID input[type="submit"], #cmsGlossySeaGreenID button {
+	margin: 4px;
+	padding: 6px;
+}
+.cmsGlossySeaGreen .ui-dialog .ui-dialog-buttonset button, #cmsGlossySeaGreenID .ui-dialog .ui-dialog-buttonset button {
+	margin: 4px;
+	padding: 6px;
+}
+
+.cmsGlossySeaGreen .ui-dialog button.ui-button .ui-button-text, #cmsGlossySeaGreenID .ui-dialog button.ui-button .ui-button-text {
+	margin: 0px;
+	padding: 2px;
+}
+.cmsGlossySeaGreen .ui-dialog-titlebar button.ui-button, #cmsGlossySeaGreenID .ui-dialog-titlebar button.ui-button {
+	margin: -10px 0px 0px -10px;
+	padding: 2px;
+}
+.cmsGlossySeaGreen .ui-dialog-titlebar button.ui-button span, #cmsGlossySeaGreenID .ui-dialog-titlebar button.ui-button span {
+	margin: -10px 0px 0px -10px;
+	padding: 0;
+}

@@ -1,63 +1,123 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucAdvancedEdit" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
-<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="NotUsed" />
-<link href="/c3-admin/glossyseagreen/css/jquery-ui-glossyseagreen-scoped2.css" rel="stylesheet" type="text/css" />
-<link href="/c3-admin/glossyseagreen/css/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
-<script src="/c3-admin/includes/base64.js" type="text/javascript"></script>
+<!-- CarrotCake CMS Editor Control BEGIN -->
+<%--<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="NotUsed"   />--%>
+<asp:PlaceHolder ID="plcIncludes" runat="server">
+	<link href="/c3-admin/includes/advanced-editor-reset.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen-scoped2.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
+</asp:PlaceHolder>
 <script src="/c3-admin/includes/jquery.simplemodal.js" type="text/javascript"></script>
-<%--<script src="/c3-admin/Includes/floating-menu.js" type="text/javascript"></script>--%>
 <script src="/c3-admin/includes/jquery.blockUI.js" type="text/javascript"></script>
+<script src="/c3-admin/includes/base64.js" type="text/javascript"></script>
 <script src="/c3-admin/includes/advanced-editor.js" type="text/javascript"></script>
-<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
-<link href="/c3-admin/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
+	var jqLoadCount = 1;
+	function cmsLoadJQDyn() {
+		if (jqLoadCount <= 20) {
+			setTimeout("cmsLoadJQDyn();", 2000);
 
-	$(document).ready(function() {
-		<% if (!bLocked) { %>
-		setTimeout('cmsEditHB();', 500);
-		<%} else { %>
-		cmsAlertModal('<%=litUser.Text %>');
-		<%} %>
-	});
+			var jq2URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jquery183.js")%>';
+			var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-0.js")%>';
 
+			cmsSetJQueryURL(jq2URL, jq1URL);
+
+			jqLoadCount++;
+		}
+	}
+
+	cmsLoadJQDyn();
+</script>
+<script type="text/javascript">
+	var cmsPageInit2 = false;
+
+	if (typeof jQuery == 'undefined') {
+		setTimeout("cmsToolbarPageInit2();", 1000);
+		setTimeout("cmsToolbarPageInit2();", 1500);
+		setTimeout("cmsToolbarPageInit2();", 2500);
+	}
+	
 	$(document).ready(function () {
-		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit").button();
-		$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit").button();
+		cmsToolbarPageInit2();
 	});
+
+	function cmsToolbarPageInit2() {
+		if (!cmsPageInit2) {
+			<% if (!bLocked) { %>
+				setTimeout('cmsEditHB();', 500);
+			<%} else { %>
+				cmsAlertModal('<%=litUser.Text %>');
+			<%} %>
+			cmsPageInit2 = true;
+		}
+
+		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit, .cmsGlossySeaGreen input:reset").button();
+		$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit, #cmsGlossySeaGreenID input:reset").button();
+	}
 
 </script>
 <script type="text/javascript">
 
-	var cmsWebSvc = "/c3-admin/CMS.asmx";
-	var cmsThisPage = "<%=SiteData.AlternateCurrentScriptName %>";
-	var cmsThisPageID = "<%=guidContentID.ToString() %>";
+	var cmsPageInit1 = false;
 
-	var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";
-
-	if ('<%=bLocked.ToString().ToLower() %>' != 'true') {
-		cmsSetPageStatus(false);
-	} else {
-		cmsSetPageStatus(true);
+	if (typeof jQuery == 'undefined') {
+		setTimeout("cmsToolbarPageInit1();", 1000);
+		setTimeout("cmsToolbarPageInit1();", 1500);
+		setTimeout("cmsToolbarPageInit1();", 2500);
 	}
 
-	var cmsTabIdx = parseInt('<%=EditorPrefs.EditorSelectedTabIdx %>');
-	var cmsMargin = '<%=EditorPrefs.EditorMargin %>';
-	var cmsScrollPos = parseInt('<%= EditorPrefs.EditorScrollPosition %>');
+	$(document).ready(function () {
+		cmsToolbarPageInit1();
+	});
 
-	var cmsOpenStat = true;
-	if ('<%= EditorPrefs.EditorOpen %>' == 'false') {
-		cmsOpenStat = false;
+	function cmsToolbarPageInit1() {
+
+		var cmsWebSvc = "/c3-admin/CMS.asmx";
+		var cmsThisPage = "<%=SiteData.AlternateCurrentScriptName %>";
+		var cmsThisPageID = "<%=guidContentID.ToString() %>";
+
+		var cmsTabIdx = parseInt('<%=EditorPrefs.EditorSelectedTabIdx %>');
+		var cmsMargin = '<%=EditorPrefs.EditorMargin %>';
+		var cmsScrollPos = parseInt('<%= EditorPrefs.EditorScrollPosition %>');
+
+		var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";
+		var cmsOpenStat = true;
+
+		if ('<%=bLocked.ToString().ToLower() %>' != 'true') {
+			cmsSetPageStatus(false);
+		} else {
+			cmsSetPageStatus(true);
+		}
+
+		if ('<%= EditorPrefs.EditorOpen %>' == 'false') {
+			cmsOpenStat = false;
+		}
+
+		cmsSetPrefs(cmsTabIdx, cmsMargin, cmsScrollPos, cmsOpenStat);
+
+		cmsSetServiceParms(cmsWebSvc, cmsThisPage, cmsThisPageID, cmsTimeTick);
+
+		cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
+
+		cmsSetPreviewFileName('<%=SiteData.PreviewTemplateFilePage %>');
+
+		cmsOverridePageName('<%=EditedPageFileName %>');
+
+		if (!cmsPageInit1) {
+
+			cmsInitWidgets();
+
+			cmsPageLockCheck();
+
+			cmsResetToolbarScroll();
+
+			setTimeout("cmsBuildOrder();", 250);
+
+			cmsPageInit1 = true;
+		}
 	}
-
-	cmsSetPrefs(cmsTabIdx, cmsMargin, cmsScrollPos, cmsOpenStat);
-
-	cmsSetServiceParms(cmsWebSvc, cmsThisPage, cmsThisPageID, cmsTimeTick);
-
-	cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
-
-	cmsSetPreviewFileName('<%=SiteData.PreviewTemplateFilePage %>');
-
-	cmsOverridePageName('<%=EditedPageFileName %>');
 
 </script>
 <div style="display: none;">
@@ -67,14 +127,13 @@
 	<img src="/c3-admin/images/application_view_tile.png" alt="" />
 	<img src="/c3-admin/images/layout.png" alt="" />
 	<img src="/c3-admin/images/arrow_in.png" alt="" />
+	<img src="/c3-admin/images/dragbg.png" alt="" />
+	<img src="/c3-admin/images/x.png" alt="x" />
 </div>
-<div style="display: none">
-	<div id="cms-basic-modal-content">
+<div style="display: none" id="cmsGlossySeaGreenID">
+	<div id="cms-basic-modal-content" class="cmsGlossySeaGreen">
 		<div id="cmsModalFrame">
 		</div>
-	</div>
-	<div style="display: none">
-		<img src="/c3-admin/images/x.png" alt="x" />
 	</div>
 </div>
 <div id="cmsToolBoxWrap" class="<%=String.Format("cmsToolbarAlignment{0}", EditorPrefs.EditorMargin) %>">
@@ -126,11 +185,13 @@
 									</HeaderTemplate>
 									<ItemTemplate>
 										<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper">
-											<div class="cmsWidgetControlItem" id="cmsControl" style="min-height: 75px; min-width: 125px; padding: 2px; margin: 2px;">
+											<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath" id="cmsControl">
 												<p class="cmsToolItem ui-widget-header">
 													<%# Eval("Caption")%>
 												</p>
-												<%# String.Format("{0}", Eval("FilePath")).Replace(".", ". ").Replace("/", "/ ")%><br />
+												<p class="cmsWidgetToolboxPath">
+													<%# String.Format("{0}", Eval("FilePath")).Replace(".", ". ").Replace("/", "/ ")%><br />
+												</p>
 												<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
 												<input type="hidden" id="cmsCtrlOrder" value="0" />
 											</div>
@@ -191,20 +252,20 @@
 		</div>
 	</div>
 </div>
-<div style="display: none">
-	<div id="CMSmodalalert" title="CMS Alert">
+<div style="display: none" id="cmsGlossySeaGreenID">
+	<div id="CMSmodalalert" title="CMS Alert" class="cmsGlossySeaGreen">
 		<p id="CMSmodalalertmessage">
 			&nbsp;</p>
 	</div>
-	<div id="CMSremoveconfirm" title="Remove Widget?">
+	<div id="CMSremoveconfirm" title="Remove Widget?" class="cmsGlossySeaGreen">
 		<p id="CMSremoveconfirmmsg">
 			Are you sure you want to remove this widget?</p>
 	</div>
-	<div id="CMSsavedconfirm" title="Page Saved!">
+	<div id="CMSsavedconfirm" title="Page Saved!" class="cmsGlossySeaGreen">
 		<p id="CMSsavedconfirmmsg">
 			The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...</p>
 	</div>
-	<div id="CMScancelconfirm" title="Quit Editor?">
+	<div id="CMScancelconfirm" title="Quit Editor?" class="cmsGlossySeaGreen">
 		<p id="CMScancelconfirmmsg">
 			Are you sure you want to leave the editor? All changes will be lost!</p>
 	</div>
@@ -215,3 +276,4 @@
 </div>
 <div style="clear: both;">
 	&nbsp;</div>
+<!-- CarrotCake CMS Editor Control END -->

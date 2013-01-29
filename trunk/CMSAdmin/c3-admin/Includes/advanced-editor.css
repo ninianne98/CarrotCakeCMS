@@ -22,40 +22,71 @@
 	width: 100%;
 }
 
+#cmsToolBoxWrap {
+	margin: 0;
+	padding: 0;
+	line-height: normal;
+	text-align: left;
+	font-size: small;
+	font-family: Arial, sans-serif;
+}
+
+.cmsGlossySeaGreen .ui-widget P {
+	line-height: normal;
+	font-weight: normal;
+	font-family: Arial, sans-serif;
+}
+
+.cmsGlossySeaGreen .ui-dialog-titlebar, .cmsGlossySeaGreen .ui-dialog-titlebar a,
+#cmsGlossySeaGreenID .ui-dialog-titlebar, #cmsGlossySeaGreenID .ui-dialog-titlebar a,
+.cmsGlossySeaGreen .ui-widget-header, #cmsGlossySeaGreenID .ui-widget-header {
+	color: #676F6A;
+}
+
+.cmsGlossySeaGreen .ui-front, #cmsGlossySeaGreenID .ui-front {
+    z-index: 10000000;
+}
+
+
+#cmsWidgetHead p, #cmsWidgetHead ul, #cmsWidgetHead ol, #cmsWidgetHead h1, #cmsWidgetHead h2, #cmsWidgetHead h3, #cmsWidgetHead div, #cmsWidgetHead span, #cmsWidgetHead input, #cmsWidgetHead select, #cmsWidgetHead button, #cmsWidgetHead textarea {
+	text-shadow: 0 0 0 transparent;
+	line-height: normal;
+	margin: 0px;
+	padding: 1px;
+	text-align: left;
+	font-size: small;
+	font-family: Arial, sans-serif;
+}
+
+#cmsJQTabedToolbox ul.ui-tabs-nav {
+	margin: 2px 2px 0 2px;
+	padding: 3px 3px 0 3px;
+}
+
+#cmsJQTabedToolbox ul.ui-tabs-nav li {
+	margin: 2px 2px -1px 2px;
+	padding: 4px 4px 4px 4px;
+	border-bottom-width: 0px;
+}
+
+#cmsJQTabedToolbox .ui-tabs-panel {
+	border: solid 0px #ffffff !important;
+}
+
+#cmsMainToolbox, #cmsToolboxSpacer {
+	font-size: 12px !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	text-align: left !important;
+	min-height: 50px !important;
+}
+
 .cmsHighlightPH {
 	height: 30px !important;
 	margin: 5px !important;
 	padding: 5px !important;
 	background: #FFFFAA !important;
 	border: 2px dashed #676F6A !important;
-}
-
-#cmsMainToolbox, #cmsToolboxSpacer {
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-	text-align: left !important;
-	min-height: 50px !important;
-}
-
-.cmsToolItemWrapper {
-	margin: 0;
-	padding: 0;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-	font-size: 12px !important;
-	line-height: 16px !important;
-	text-align: left !important;
-	min-height: 60px !important;
-	color: #000000 !important;
-	background: #FFFFFF !important;
-	border: 1px dashed #c0c0c0 !important;
-	margin-bottom: 5px !important;
-}
-
-#cmsMainToolbox input:focus, #cmsMainToolbox textarea:focus, #cmsMainToolbox input, #cmsMainToolbox textarea {
-	color: #000000;
-	background: #FFFFFF;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-	font-size: 12px !important;
-	line-height: 16px !important;
+	background-image: url('/c3-admin/images/dragbg.png') !important;
 }
 
 .cmsToolbox2 {
@@ -69,8 +100,8 @@
 	min-height: 50px !important;
 	z-index: 10000 !important;
 	font-size: 12px !important;
-	line-height: 16px !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	line-height: normal !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
 	color: #000000 !important;
 	background: #FFFFFF !important;
 }
@@ -80,17 +111,17 @@
 	float: right !important;
 }
 .cmsInsideArea {
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-family: Arial, sans-serif !important;
 	z-index: 5000 !important;
 	border: 0px solid #dddddd !important;
 	font-size: 12px !important;
-	line-height: 16px !important;
+	line-height: normal !important;
 }
 .cmsCenter5px, .cmsLeft5px, .cmsRight5px, .cmsPlain5px {
 	margin: 5px !important;
 	padding: 5px !important;
 	font-size: 12px !important;
-	line-height: 16px !important;
+	line-height: normal !important;
 }
 .cmsCenter5px {
 	text-align: center !important;
@@ -101,156 +132,112 @@
 .cmsRight5px {
 	text-align: right !important;
 }
-
-#cmsGlossySeaGreenID img, .cmsGlossySeaGreen img, #cmsImageSpinnerImage, .cmsImageSpinner, img.cmsImageSpinner, #cmsSpinnerZone img, #cmsSpinnerZone .cmsImageSpinner, .cmsImageSpinnerTbl, .blockMsg table, .blockMsg tr, .blockMsg td {
-	margin: 0px !important;
-	padding: 0px !important;
-	border: 0px solid #dddddd !important;
-	background: transparent !important;
-}
-#cmsGlossySeaGreenID .ui-tabs-panel, .cmsGlossySeaGreen .ui-tabs-panel {
-	border: 0px solid #dddddd;
+.cmsPreviewButtons {
+	float: right;
+	margin: 5px 0px 0px 0px !important;
+	padding: 0 !important;
+	font-size: 12px !important;
+	line-height: normal !important;
 }
 
-#cmsGlossySeaGreenID p, .cmsGlossySeaGreen p, #cmsMainToolbox p {
-	margin: 1px;
+p.cmsToolItem {
+	min-width: 220px;
+	margin: 0;
 	padding: 2px;
+	cursor: move;
+	clear: both;
+	padding: 2px;
+	margin: 2px;
+	color: #000000;
+	background: #DFF6E8;
+	font-size: 12x;
+	line-height: normal;
+	font-weight: bold;
+	border: 1px dashed #c0c0c0;
 }
 
-#cmsMainToolbox select:focus, #cmsMainToolbox select:hover, #cmsMainToolbox select, #cmsGlossySeaGreenID select, #cmsGlossySeaGreenID select:focus, #cmsGlossySeaGreenID select:hover {
+#cmsMainToolbox select, #cmsMainToolbox select:focus, #cmsMainToolbox select:hover, #cmsMainToolbox select option {
+	font-family: Arial, sans-serif !important;
 	margin: 1px !important;
 	padding: 1px !important;
-	font-size: 11px !important;
 	color: #000000 !important;
 	background: #FFFFFF !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-	line-height: 16px !important;
+	line-height: normal !important;
+	font-size: 11px !important;
+	font-weight: normal !important;
 }
 
-.blockMsg table, .blockMsg tr, .blockMsg td {
-	margin: 1px !important;
-	padding: 1px !important;
+#cmsToolBoxWrap {
+	width: 350px !important;
+	min-height: 125px !important;
+	position: fixed !important;
+	top: 10px !important;
+	display: block !important;
+	clear: both !important;
 }
-
-/*  Widget Styles   */
-
-.cmsContentContainerTitle, .cmsWidgetControlTitle, .cmsWidgetTitleBar {
+.cmsToolbarAlignmentL {
+	left: 5px !important;
+}
+.cmsToolbarAlignmentR {
+	right: 5px !important;
+}
+#cmsToolBox {
+	font-weight: normal;
+	line-height: normal;
+	font-size: 11px;
+}
+.cmsWidgetCtrlPath, .cmsWidgetToolboxItem, .cmsWidgetToolboxPath {
 	margin: 0;
 	padding: 0;
+	font-weight: normal;
+	line-height: normal;
+	font-size: 11px;
+	font-family: Arial, sans-serif;
+}
+.cmsWidgetToolboxPath {
 	font-size: 12px !important;
-	line-height: 16px !important;
-	font-weight: bold !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-	color: #C0C0C0 !important;
-	background: #008080 !important;
-	min-height: 20px !important;
-	margin: 0px !important;
-	padding: 1px !important;
-	border: 1px solid #c0c0c0 !important;
+	font-family: Arial, sans-serif !important;
 }
 
-
-.cmsContentContainerTitle, .cmsContentContainerTitle a {
-	color: #FFFFFF !important;
-	background: #478C5F !important;
-	text-decoration: none !important;
-}
-.cmsWidgetControlTitle, .cmsWidgetControlTitle a {
-	color: #FFFFFF !important;
-	background: #8DC0A3 !important;
-	text-decoration: none !important;
-}
-.cmsWidgetTitleBar, .cmsWidgetTitleBar a {
-	color: #676F6A !important;
-	background: #DFF6E8 !important;
-	text-decoration: none !important;
+.cmsWidgetToolboxItem {
+	min-height: 75px;
+	min-width: 150px;
+	padding: 2px;
+	margin: 2px;
 }
 
-.cmsContentContainerInnerTitle {
-	float: right !important;
-	color: #676F6A !important;
-	margin: 0px !important;
-	padding: 0px !important;
-	padding-right: 10px !important;
-	border: 0px solid #FFFFFF !important;
-	font-size: 12x !important;
-	line-height: 16px !important;
-	font-weight: bold !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-}
-
-.cmsContentContainer {
-	border: 1px solid #000000 !important;
-	margin: 0px !important;
-	padding: 1px !important;
-	margin-top: 5px !important;
-}
-
-.cmsWidgetBarLink {
-	color: #676F6A !important;
-	font-weight: bold !important;
-	margin: 0px !important;
-	padding: 0px !important;
-	border: 0px solid #ffffff !important;
-}
-.cmsWidgetContainerWrapper {
-	border: 1px solid #000000 !important;
-	margin: 0px !important;
-	padding: 1px !important;
-	margin-top: 5px !important;
-}
-
-.cmsWidgetBarImgReset {
-	margin: 0px !important;
-	padding: 0px !important;
-	padding-right: 5px !important;
-	padding-left: 5px !important;
-	border: 0px solid #FFFFFF !important;
-	overflow-x: hidden !important;
-	overflow-y: hidden !important;
-}
-.cmsWidgetBarLink img {
-	float: right !important;
-}
-
-.cmsAjaxModalSpinner {
-	margin: 0px !important;
-	padding: 0px !important;
-	padding-top: 100px !important;
-	padding-left: 200px !important;
-	border: 0px solid #dddddd !important;
-}
-.cmsWidgetControl {
-	min-height: 10px !important;
+.cmsToolItemWrapper {
+	margin: 0;
+	padding: 0;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	font-weight: normal !important;
+	font-size: 12px !important;
+	line-height: normal !important;
+	text-align: left !important;
+	min-height: 55px !important;
+	margin-bottom: 5px !important;
+	color: #000000 !important;
+	background: #FFFFFF !important;
 	border: 1px dashed #c0c0c0 !important;
 }
-.cmsWidgetTargetOuterControl {
-	border: 1px solid #000000 !important;
-	margin: 0px !important;
-	padding: 1px !important;
-	margin-top: 5px !important;
-}
 
-.cmsWidgetCogIcon {
-	color: #676F6A !important;
-	height: 22px !important;
-	width: 22px !important;
-	margin: 0px !important;
-	padding: 0px !important;
+.cmsTargetMove {
+	min-height: 25px !important;
 }
 
 #cmsWidgetHead p, #cmsWidgetHead ul, #cmsWidgetHead ol, #cmsWidgetHead h1, #cmsWidgetHead h2, #cmsWidgetHead h3, #cmsWidgetHead div, #cmsWidgetHead span, #cmsWidgetHead input, #cmsWidgetHead select, #cmsWidgetHead button, #cmsWidgetHead textarea {
+	text-shadow: 0 0 0 transparent;
 	line-height: normal;
 	margin: 0px;
 	padding: 1px;
 	text-align: left;
 	font-size: small;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
-}
-.cmsTargetMove {
-	min-height: 25px !important;
+	font-family: Arial, sans-serif;
 }
 
+#cmsControlPath, #cmsWidgetHead {
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+}
 
 #cmsWidgetHead, #cmsControlPath, #cmsWidgetContainerName {
 	color: #676F6A !important;
@@ -259,19 +246,21 @@
 	float: left !important;
 	min-height: 30px !important;
 }
-#cmsControl {
-	min-height: 50px !important;
-}
 #cmsWidgetHead {
 	cursor: move !important;
 }
 #cmsWidgetContainerName {
 	color: #FFFFFF !important;
 }
-
+#cmsControl {
+	margin: 0px 0px 2px 0px;
+	padding: 0px 0px 2px 0px;
+}
 /* edit menu for widgets */
 
 #cmsEditMenuList-inner p, #cmsEditMenuList-inner ul, #cmsEditMenuList-inner ol, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
+	font-weight: 300;
+	text-shadow: 0 0 0 transparent;
 	line-height: normal;
 	margin: 0px;
 	padding: 1px;
@@ -281,7 +270,6 @@
 	background-color: transparent;
 	border: 0px solid transparent;
 }
-
 
 #cmsEditMenuList {
 	float: right !important;
@@ -294,6 +282,7 @@
 }
 
 #cmsEditMenuList a {
+	text-shadow: 0 0 0 transparent !important;
 	background: #DFF6E8 !important;
 	color: #676F6A !important;
 	text-decoration: none !important;
@@ -408,49 +397,118 @@
 	background: transparent !important;
 }
 
+#cmsImageSpinnerImage, .cmsImageSpinner, img.cmsImageSpinner, #cmsSpinnerZone *, .cmsImageSpinnerTbl, .blockMsg *, .cmsMnuParent *, .cmsMnuChildren * {
+	margin: 0px !important;
+	padding: 0px !important;
+	border: 0px solid #dddddd !important;
+	background: transparent !important;
+}
+
+.cmsWidgetBarLink {
+	color: #676F6A !important;
+	font-weight: bold !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	border: 0px solid #ffffff !important;
+}
+.cmsWidgetBarImgReset {
+	margin: 0px !important;
+	padding: 0px !important;
+	padding-right: 5px !important;
+	padding-left: 5px !important;
+	border: 0px solid #FFFFFF !important;
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
+}
+.cmsWidgetBarLink img {
+	float: right !important;
+}
 .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren {
 	background: #8DC0A3 !important;
 }
-
 .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner ul, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a:hover {
 	color: #ffffff !important;
 }
 
-p.cmsToolItem {
+/*  Widget Styles   */
+
+.cmsContentContainerTitle, .cmsWidgetControlTitle, .cmsWidgetTitleBar {
+	text-shadow: 0 0 0 transparent !important;
 	margin: 0;
-	padding: 2px;
-	cursor: move;
-	clear: both;
-	padding: 2px;
-	margin: 2px;
-	color: #000000;
-	background: #DFF6E8;
-	font-size: 12x;
-	line-height: 16px;
-	font-weight: bold;
-	border: 1px dashed #c0c0c0;
+	padding: 0;
+	font-size: 12px !important;
+	line-height: normal !important;
+	font-weight: bold !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	color: #C0C0C0 !important;
+	background: #008080 !important;
+	min-height: 20px !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	border: 1px solid #c0c0c0 !important;
 }
 
-#cmsAdminToolbox .cmsGlossySeaGreen .ui-tabs .ui-tabs-panel, #cmsAdminToolbox #cmsGlossySeaGreenID .ui-tabs .ui-tabs-panel {
-	padding: 2px !important;
+.cmsContentContainerTitle, .cmsContentContainerTitle a {
+	text-shadow: 0 0 0 transparent !important;
+	text-align: right !important;
+	color: #FFFFFF !important;
+	background: #478C5F !important;
+	text-decoration: none !important;
 }
-
-#cmsToolBoxWrap {
-	width: 350px !important;
-	min-height: 300px !important;
-	position: fixed !important;
-	top: 10px !important;
-	display: block !important;
-	clear: both !important;
+.cmsWidgetControlTitle, .cmsWidgetControlTitle a {
+	text-shadow: 0 0 0 transparent !important;
+	text-align: left !important;
+	color: #FFFFFF !important;
+	background: #8DC0A3 !important;
+	text-decoration: none !important;
 }
-.cmsToolbarAlignmentL {
-	left: 5px !important;
+.cmsWidgetTitleBar, .cmsWidgetTitleBar a {
+	text-shadow: 0 0 0 transparent !important;
+	text-align: left !important;
+	color: #676F6A !important;
+	background: #DFF6E8 !important;
+	text-decoration: none !important;
 }
-.cmsToolbarAlignmentR {
-	right: 5px !important;
+.cmsWidgetTargetOuterControl {
+	border: 1px solid #000000 !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	margin-top: 5px !important;
+}
+.cmsWidgetContainerWrapper {
+	border: 1px solid #000000 !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	margin-top: 3px !important;
+}
+.cmsWidgetControl {
+	width: 100%;
+	min-height: 20px !important;
+	border: 1px dashed #c0c0c0 !important;
+}
+.cmsContentContainerInnerTitle {
+	float: right !important;
+	color: #676F6A !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	padding-right: 10px !important;
+	border: 0px solid #FFFFFF !important;
+	font-size: 12x !important;
+	line-height: normal !important;
+	font-weight: bold !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+}
+.cmsContentContainer {
+	border: 1px solid #000000 !important;
+	margin: 0px !important;
+	padding: 1px !important;
+	margin-top: 5px !important;
 }
 
 #cmsAdminToolbox {
+	font-family: Arial, sans-serif;
+	font-weight: normal;
+	text-shadow: 0 0 0 transparent;
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 	border-bottom-left-radius: 6px;
