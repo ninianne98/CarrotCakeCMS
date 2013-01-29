@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<carrot:jquery runat="server" ID="jquery1" />
-	<carrot:jqueryui runat="server" ID="jqueryui1" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="Silver" />
 	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<title>Citrus Island</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -126,11 +125,15 @@
 							<p>
 								<b>
 									<carrot:ListItemCommentText runat="server" ID="ListItemCommentText1" DataField="CommenterName" />
+									on
+									<carrot:ListItemCommentText runat="server" ID="ListItemCommentText2" DataField="CreateDate" FieldFormat="{0:d}" />
 								</b>
-								<carrot:ListItemCommentText runat="server" ID="ListItemCommentText2" DataField="CreateDate" FieldFormat="{0:d}" />
-								<br />
-								<carrot:ListItemCommentText runat="server" ID="ListItemCommentText3" DataField="PostCommentEscaped" />
 							</p>
+							<div class="comment-border top">
+								<p>
+									<carrot:ListItemCommentText runat="server" ID="ListItemCommentText3" DataField="PostCommentEscaped" />
+								</p>
+							</div>
 						</div>
 					</CommentTemplate>
 					<CommentFooterTemplate>
