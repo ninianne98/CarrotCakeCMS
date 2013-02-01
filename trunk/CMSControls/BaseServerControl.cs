@@ -29,9 +29,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected bool IsPostBack {
 			get {
-				string sReq = "GET";
-				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
-				return sReq != "GET" ? true : false;
+				//string sReq = "GET";
+				//try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
+				//return sReq != "GET" ? true : false;
+				return this.Page.IsPostBack;
 			}
 		}
 

@@ -58,12 +58,12 @@
 			<div style="clear: both;">
 			</div>
 			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected">
-				<SummaryHeaderTemplate>
+				<ContentHeaderTemplate>
 					<h1>
 						Contents</h1>
 					<div>
-				</SummaryHeaderTemplate>
-				<SummaryTemplate>
+				</ContentHeaderTemplate>
+				<ContentTemplate>
 					<div>
 						<p>
 							<b class="green" style="font-size: 110%;">
@@ -89,10 +89,10 @@
 							</span>
 						</p>
 					</div>
-				</SummaryTemplate>
-				<SummaryFooterTemplate>
+				</ContentTemplate>
+				<ContentFooterTemplate>
 					</div>
-				</SummaryFooterTemplate>
+				</ContentFooterTemplate>
 				<PagerHeaderTemplate>
 					<div class="pagerfooterlinks">
 				</PagerHeaderTemplate>
