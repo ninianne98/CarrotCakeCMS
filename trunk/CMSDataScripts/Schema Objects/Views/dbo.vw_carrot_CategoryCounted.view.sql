@@ -1,8 +1,7 @@
 ﻿CREATE VIEW [dbo].[vw_carrot_CategoryCounted]
 AS 
 
-
-SELECT cc.ContentCategoryID, cc.SiteID, cc.CategoryText, cc.CategorySlug, ISNULL(cc2.TheCount, 0) AS UseCount
+SELECT cc.ContentCategoryID, cc.SiteID, cc.CategoryText, cc.CategorySlug, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount
 FROM dbo.carrot_ContentCategory AS cc 
 LEFT JOIN
       (SELECT ContentCategoryID, COUNT(Root_ContentID) AS TheCount

@@ -294,6 +294,21 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
+		public Color BGColor {
+			get {
+				string s = (string)ViewState["BGColor"];
+				return ((s == null) ? Color.Transparent : ColorTranslator.FromHtml(s));
+			}
+			set {
+				ViewState["BGColor"] = ColorTranslator.ToHtml(value);
+			}
+		}
+
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
 		public override Color BackColor {
 			get {
 				string s = (string)ViewState["BackColor"];
@@ -561,6 +576,7 @@ namespace Carrotware.CMS.UI.Controls {
 				lst.Add("TopBackgroundStyle");
 				lst.Add("ForeColor");
 				lst.Add("BackColor");
+				lst.Add("BGColor");
 				lst.Add("HoverFGColor");
 				lst.Add("HoverBGColor");
 				lst.Add("UnSelFGColor");
@@ -622,7 +638,10 @@ namespace Carrotware.CMS.UI.Controls {
 						if (!string.IsNullOrEmpty(sTmp)) {
 							BackColor = ColorTranslator.FromHtml(sTmp);
 						}
-
+						sTmp = GetParmValue("BGColor", "");
+						if (!string.IsNullOrEmpty(sTmp)) {
+							BGColor = ColorTranslator.FromHtml(sTmp);
+						}
 						sTmp = GetParmValue("HoverFGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
 							HoverFGColor = ColorTranslator.FromHtml(sTmp);
@@ -703,7 +722,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 				if (sCSSText != null) {
 					sCSSText = sCSSText.Replace("{FORE_HEX}", ColorTranslator.ToHtml(ForeColor));
-					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(BackColor));
+					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(BGColor));
 
 					sCSSText = sCSSText.Replace("{HOVER_FORE_HEX}", ColorTranslator.ToHtml(HoverFGColor));
 					sCSSText = sCSSText.Replace("{HOVER_BG_HEX}", ColorTranslator.ToHtml(HoverBGColor));

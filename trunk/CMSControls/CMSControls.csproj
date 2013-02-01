@@ -68,6 +68,7 @@
     <Compile Include="ControlUtilities.cs" />
     <Compile Include="GeneralControlDesigner.cs" />
     <Compile Include="ICommonComponent.cs" />
+    <Compile Include="OpenGraph.cs" />
     <Compile Include="TrackBack.cs" />
     <Compile Include="PostCalendar.cs" />
     <Compile Include="SearchBox.cs" />

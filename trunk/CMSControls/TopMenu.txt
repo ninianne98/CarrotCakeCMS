@@ -11,9 +11,10 @@
 			font-size: {FONT_SIZE};
 			margin: 0;
 			padding: 0 1em;
-			background: transparent;
+			background: {BG_HEX};
 			height: 3em;
 			list-style: none;
+			z-index: 990;
 			{TOP_BACKGROUND_STYLE}
 		}
 

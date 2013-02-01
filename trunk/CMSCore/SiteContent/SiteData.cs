@@ -388,7 +388,10 @@ namespace Carrotware.CMS.Core {
 
 			return TimeZoneInfo.ConvertTimeToUtc(dateSite, SiteTimeZoneInfo);
 		}
-
+		public string ConvertSiteTimeToISO8601(DateTime dateSite) {
+			//return ConvertSiteTimeToUTC(dateSite).ToString("o");
+			return ConvertSiteTimeToUTC(dateSite).ToString("s") + "Z";
+		}
 
 		public DateTime ConvertSiteTimeToLocalServer(DateTime dateSite) {
 			DateTime dateSiteSrc = DateTime.SpecifyKind(dateSite, DateTimeKind.Unspecified);

@@ -148,12 +148,12 @@ p.cmsToolItem {
 	clear: both;
 	padding: 2px;
 	margin: 2px;
-	color: #000000;
-	background: #DFF6E8;
 	font-size: 12x;
 	line-height: normal;
 	font-weight: bold;
 	border: 1px dashed #c0c0c0;
+	color: #676F6A;
+	background: #DFF6E8;	
 }
 
 #cmsMainToolbox select, #cmsMainToolbox select:focus, #cmsMainToolbox select:hover, #cmsMainToolbox select option {
@@ -432,7 +432,7 @@ p.cmsToolItem {
 
 /*  Widget Styles   */
 
-.cmsContentContainerTitle, .cmsWidgetControlTitle, .cmsWidgetTitleBar {
+.cmsContentContainerTitle, .cmsWidgetControlTitle, .cmsWidgetTitleBar, .cmsWidgetTargetOuterControl #cmsControl.cmsWidgetToolboxItem p.cmsToolItem {
 	text-shadow: 0 0 0 transparent !important;
 	margin: 0;
 	padding: 0;
@@ -462,7 +462,7 @@ p.cmsToolItem {
 	background: #8DC0A3 !important;
 	text-decoration: none !important;
 }
-.cmsWidgetTitleBar, .cmsWidgetTitleBar a {
+.cmsWidgetTitleBar, .cmsWidgetTitleBar a, .cmsWidgetTargetOuterControl #cmsControl.cmsWidgetToolboxItem p.cmsToolItem {
 	text-shadow: 0 0 0 transparent !important;
 	text-align: left !important;
 	color: #676F6A !important;

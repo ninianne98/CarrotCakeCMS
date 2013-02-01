@@ -351,6 +351,7 @@ function cmsUpdateTemplate() {
 
 function cmsUpdateWidgets() {
 	cmsSaveToolbarPosition();
+	cmsSpinnerLong();
 
 	var webMthd = webSvc + "/CacheWidgetUpdate";
 
@@ -371,6 +372,7 @@ function cmsUpdateWidgets() {
 
 function cmsRemoveWidget(key) {
 	cmsSaveToolbarPosition();
+	cmsSpinnerLong();
 
 	var webMthd = webSvc + "/RemoveWidget";
 
@@ -387,6 +389,7 @@ function cmsRemoveWidget(key) {
 
 function cmsMoveWidgetZone(zone, val) {
 	cmsSaveToolbarPosition();
+	cmsSpinnerLong();
 
 	var webMthd = webSvc + "/MoveWidgetToNewZone";
 
@@ -429,13 +432,13 @@ function cmsUpdateHeartbeat(data, status) {
 	var hb = $('#cmsHeartBeat');
 	hb.empty().append('HB:  ');
 	hb.append(data.d);
-	//CMSBusyShort();
+	//cmsSpinnerShort();
 }
 
 function cmsSaveContentCallback(data, status) {
 
 	if (data.d == "OK") {
-		CMSBusyShort();
+		cmsSpinnerShort();
 		cmsDirtyPageRefresh();
 	} else {
 		cmsAlertModal(data.d);
@@ -444,7 +447,7 @@ function cmsSaveContentCallback(data, status) {
 
 function cmsAjaxGeneralCallback(data, status) {
 	//if (data.d == "OK") {
-	//	CMSBusyShort();
+	//	cmsSpinnerShort();
 	//} else {
 	//	cmsAlertModal(data.d);
 	//}
@@ -458,7 +461,7 @@ function cmsAjaxGeneralCallback(data, status) {
 function cmsSaveWidgetsCallback(data, status) {
 
 	if (data.d == "OK") {
-		CMSBusyShort();
+		cmsSpinnerShort();
 		cmsDirtyPageRefresh();
 	} else {
 		cmsAlertModal(data.d);
@@ -467,7 +470,7 @@ function cmsSaveWidgetsCallback(data, status) {
 
 function cmsSavePageCallback(data, status) {
 	if (data.d == "OK") {
-		CMSBusyShort();
+		cmsSpinnerShort();
 		cmsMakeOKToLeave();
 		cmsNotifySaved();
 		//window.setTimeout("location.href = \'" + thisPageNav + "\'", 10000);
@@ -693,23 +696,23 @@ function cmsFixSpinner() {
 
 var cmsHtmlSpinner = '<table width="100%" class="cmsImageSpinnerTbl" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/c3-admin/images/ani-smallbar.gif"/></td></tr></table>';
 
-function CMSBusyShort() {
+function cmsSpinnerShort() {
 
 	$("#cmsDivActive").block({ message: cmsHtmlSpinner,
 		css: { border: 'none', backgroundColor: 'transparent' },
-		fadeOut: 750,
-		timeout: 1000,
+		fadeOut: 500,
+		timeout: 750,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
 	cmsFixSpinner();
 }
 
-function CMSBusyLong() {
+function cmsSpinnerLong() {
 
 	$("#cmsDivActive").block({ message: cmsHtmlSpinner,
 		css: { border: 'none', backgroundColor: 'transparent' },
-		fadeOut: 4000,
-		timeout: 6000,
+		fadeOut: 10000,
+		timeout: 12000,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
 	cmsFixSpinner();
@@ -726,7 +729,7 @@ function cmsBuildOrderAndUpdateWidgets() {
 }
 
 function cmsBuildOrder() {
-	CMSBusyShort();
+	cmsSpinnerShort();
 
 	$("#cmsFullOrder").val('');
 
