@@ -91,7 +91,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
-		private string OrderBy {
+		public string OrderBy {
 			get {
 				String s = (String)ViewState["OrderBy"];
 				return ((s == null) ? "GoLiveDate  desc" : s);
@@ -321,8 +321,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter writer) {
 
-			this.OrderBy = "GoLiveDate  desc";
-
 			HttpContext context = HttpContext.Current;
 
 			rpDetails.EnableViewState = this.EnableViewState;
@@ -383,21 +381,11 @@ namespace Carrotware.CMS.UI.Controls {
 				PageNumber = int.Parse(hdnPageNbr.Value);
 			}
 
-			if (string.IsNullOrEmpty(OrderBy)) {
-				OrderBy = "GoLiveDate  desc";
+			if (string.IsNullOrEmpty(this.OrderBy)) {
+				this.OrderBy = "GoLiveDate  desc";
 			}
 
 			List<SiteNav> lstContents = new List<SiteNav>();
-			OrderBy = OrderBy.Replace("|", "  ");
-
-			string sSortFld = string.Empty;
-			string sSortDir = string.Empty;
-
-			if (!string.IsNullOrEmpty(OrderBy)) {
-				int pos = OrderBy.LastIndexOf(" ");
-				sSortFld = OrderBy.Substring(0, pos).Trim();
-				sSortDir = OrderBy.Substring(pos).Trim();
-			}
 
 			int TotalPages = 0;
 			int TotalRecords = 0;
@@ -408,15 +396,33 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (context != null) {
 				if (SiteData.CurrentScriptName.ToLower() == SiteData.CurrentSite.SiteSearchPath.ToLower()) {
-					ContentType = SummaryContentType.SiteSearch;
+					this.ContentType = SummaryContentType.SiteSearch;
 					if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
 						sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
 					}
 				}
 			}
 
+
+			string sSortFld = string.Empty;
+			string sSortDir = string.Empty;
+
+			switch (this.ContentType) {
+				case SummaryContentType.Blog:
+				case SummaryContentType.ContentPage:
+				case SummaryContentType.SiteSearch:
+					this.OrderBy = "GoLiveDate  desc";
+					break;
+			}
+
+			if (!string.IsNullOrEmpty(this.OrderBy)) {
+				int pos = this.OrderBy.LastIndexOf(" ");
+				sSortFld = this.OrderBy.Substring(0, pos).Trim();
+				sSortDir = this.OrderBy.Substring(pos).Trim();
+			}
+
 			if (context != null) {
-				switch (ContentType) {
+				switch (this.ContentType) {
 					case SummaryContentType.Blog:
 						viewContentType = ContentPageType.PageType.BlogEntry;
 						TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
@@ -549,7 +555,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					//DelimetedSelectedCategoriesString = GetParmValue("DelimetedCategoryString", "");
 
-					ContentType = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), GetParmValue("ContentType", "Blog"), true);
+					this.ContentType = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), GetParmValue("ContentType", "Blog"), true);
 
 					SelectedCategories = new List<Guid>();
 
@@ -561,7 +567,7 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 				if (SelectedCategories.Count > 0) {
-					ContentType = SummaryContentType.SpecifiedCategories;
+					this.ContentType = SummaryContentType.SpecifiedCategories;
 				}
 			} catch (Exception ex) {
 			}
