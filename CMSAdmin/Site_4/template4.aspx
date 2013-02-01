@@ -43,6 +43,7 @@
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" runat="server" id="cssLink1" />
 	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
+	<carrot:OpenGraph runat="server" ID="OpenGraph1" />
 </head>
 <body>
 	<form id="form1" runat="server">

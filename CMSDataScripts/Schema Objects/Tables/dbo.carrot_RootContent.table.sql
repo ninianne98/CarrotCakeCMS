@@ -11,6 +11,10 @@
     [PageThumbnail]    NVARCHAR (128)   NULL,
     [GoLiveDate]       DATETIME         NOT NULL,
     [RetireDate]       DATETIME         NOT NULL,
-    [GoLiveDateLocal]  DATETIME         NOT NULL
+    [GoLiveDateLocal]  DATETIME         NOT NULL,
+    [ShowInSiteNav]    BIT              NOT NULL,
+    [CreateUserId]     UNIQUEIDENTIFIER NOT NULL
 );
+
+
 

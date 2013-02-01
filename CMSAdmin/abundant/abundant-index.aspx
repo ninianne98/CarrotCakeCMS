@@ -19,6 +19,7 @@ Released   : 20090703
 	<title>Abundant by Free CSS Templates</title>
 	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
+	<carrot:OpenGraph runat="server" ID="OpenGraph1" />
 	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<script type="text/javascript">
 		$(document).ready(function () {

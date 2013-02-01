@@ -1,8 +1,7 @@
 ﻿CREATE VIEW [dbo].[vw_carrot_CategoryURL]
 AS 
 
-
-SELECT  s.SiteID, cc.ContentCategoryID, cc.CategoryText, ISNULL(cc2.TheCount, 0) AS UseCount, 
+SELECT  s.SiteID, cc.ContentCategoryID, cc.CategoryText, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount, 
 		'/'+s.Blog_FolderPath +'/'+ s.Blog_CategoryPath +'/'+ cc.CategorySlug + '.aspx' as CategoryUrl
 FROM [dbo].carrot_Sites AS s 
 INNER JOIN [dbo].carrot_ContentCategory AS cc ON s.SiteID = cc.SiteID

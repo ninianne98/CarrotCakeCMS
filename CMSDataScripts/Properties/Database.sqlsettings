@@ -3,11 +3,11 @@
   <Version>1.0</Version>
   <Properties>
     <AllowSnapshotIsolation>False</AllowSnapshotIsolation>
-    <AnsiNullDefault>True</AnsiNullDefault>
-    <AnsiNulls>True</AnsiNulls>
-    <AnsiPadding>True</AnsiPadding>
-    <AnsiWarnings>True</AnsiWarnings>
-    <ArithAbort>True</ArithAbort>
+    <AnsiNullDefault>False</AnsiNullDefault>
+    <AnsiNulls>False</AnsiNulls>
+    <AnsiPadding>False</AnsiPadding>
+    <AnsiWarnings>False</AnsiWarnings>
+    <ArithAbort>False</ArithAbort>
     <AutoClose>False</AutoClose>
     <AutoCreateStatistics>True</AutoCreateStatistics>
     <AutoShrink>False</AutoShrink>
@@ -16,13 +16,14 @@
     <ChangeTrackingRetentionPeriod>2</ChangeTrackingRetentionPeriod>
     <ChangeTrackingRetentionUnit>Days</ChangeTrackingRetentionUnit>
     <CloseCursorOnCommitEnabled>False</CloseCursorOnCommitEnabled>
-    <ConcatNullYieldsNull>True</ConcatNullYieldsNull>
+    <CompatibilityMode>100</CompatibilityMode>
+    <ConcatNullYieldsNull>False</ConcatNullYieldsNull>
     <DatabaseAccess>MULTI_USER</DatabaseAccess>
     <DatabaseChaining>False</DatabaseChaining>
     <DatabaseState>ONLINE</DatabaseState>
     <DateCorrelationOptimizationOn>False</DateCorrelationOptimizationOn>
     <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
-    <DefaultCursor>LOCAL</DefaultCursor>
+    <DefaultCursor>GLOBAL</DefaultCursor>
     <DefaultFilegroup>PRIMARY</DefaultFilegroup>
     <EnableFullTextSearch>True</EnableFullTextSearch>
     <IsBrokerPriorityHonored>False</IsBrokerPriorityHonored>
@@ -30,11 +31,11 @@
     <IsChangeTrackingOn>False</IsChangeTrackingOn>
     <IsEncryptionOn>False</IsEncryptionOn>
     <NumericRoundAbort>False</NumericRoundAbort>
-    <PageVerify>NONE</PageVerify>
+    <PageVerify>CHECKSUM</PageVerify>
     <Parameterization>SIMPLE</Parameterization>
-    <QuotedIdentifier>True</QuotedIdentifier>
+    <QuotedIdentifier>False</QuotedIdentifier>
     <ReadCommittedSnapshot>False</ReadCommittedSnapshot>
-    <Recovery>FULL</Recovery>
+    <Recovery>SIMPLE</Recovery>
     <RecursiveTriggersEnabled>False</RecursiveTriggersEnabled>
     <ServiceBrokerOption>DisableBroker</ServiceBrokerOption>
     <SupplementalLoggingOn>False</SupplementalLoggingOn>

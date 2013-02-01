@@ -1,8 +1,7 @@
 ﻿CREATE VIEW [dbo].[vw_carrot_TagCounted]
 AS 
 
-
-SELECT cc.ContentTagID, cc.SiteID, cc.TagText, cc.TagSlug, ISNULL(cc2.TheCount, 0) AS UseCount
+SELECT cc.ContentTagID, cc.SiteID, cc.TagText, cc.TagSlug, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount
 FROM dbo.carrot_ContentTag AS cc 
 LEFT JOIN
       (SELECT ContentTagID, COUNT(Root_ContentID) AS TheCount

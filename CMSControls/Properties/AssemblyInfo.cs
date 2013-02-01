@@ -82,6 +82,7 @@ using System.Web.UI;
 [assembly: TagPrefix("IFrameWidgetWrapper", "carrot")]
 [assembly: TagPrefix("SearchBox", "carrot")]
 [assembly: TagPrefix("RSSFeed", "carrot")]
+[assembly: TagPrefix("OpenGraph", "carrot")]
 [assembly: TagPrefix("SiteCanonicalURL", "carrot")]
 [assembly: TagPrefix("TrackBack", "carrot")]
 [assembly: TagPrefix("PostCalendar", "carrot")]

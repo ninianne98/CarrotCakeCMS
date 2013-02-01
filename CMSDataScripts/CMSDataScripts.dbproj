@@ -521,10 +521,12 @@
     <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.carrot_BlogMonthlyTallies.proc.sql">
       <SubType>Code</SubType>
       <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
     </Build>
     <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.carrot_BlogDateFilenameUpdate.proc.sql">
       <SubType>Code</SubType>
       <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
     </Build>
     <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Roles_CreateRole.proc.sql">
       <SubType>Code</SubType>
@@ -533,6 +535,7 @@
     <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.carrot_UpdateGoLiveLocal.proc.sql">
       <SubType>Code</SubType>
       <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
     </Build>
     <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Membership_BasicAccess.role.sql">
       <SubType>Code</SubType>
@@ -582,18 +585,28 @@
     </Build>
     <Build Include="Schema Objects\Views\dbo.vw_carrot_TagURL.view.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Views\dbo.vw_carrot_TagCounted.view.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Views\dbo.vw_carrot_Content.view.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Views\dbo.vw_carrot_CategoryURL.view.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Views\dbo.vw_carrot_CategoryCounted.view.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Views\dbo.vw_aspnet_UsersInRoles.view.sql">
       <SubType>Code</SubType>
@@ -625,15 +638,23 @@
     </Build>
     <Build Include="Schema Objects\Tables\dbo.carrot_RootContent.table.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Tables\dbo.carrot_ContentCategory.table.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Tables\dbo.carrot_ContentTag.table.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Tables\dbo.carrot_ContentComment.table.sql">
       <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="Schema Objects\Tables\dbo.carrot_Content.table.sql">
       <SubType>Code</SubType>
@@ -688,6 +709,14 @@
     </Build>
     <Build Include="Schema Objects\Security\Schemas\aspnet_Roles_ReportingAccess.schema.sql">
       <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_RootContent.carrot_RootContent_CreateUserId_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_ContentChild.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
   </ItemGroup>
   <ItemGroup>

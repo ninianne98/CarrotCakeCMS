@@ -63,17 +63,21 @@ namespace Carrotware.CMS.UI.Base {
 			pageContents = null;
 			pageWidgets = new List<Widget>();
 
+			this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
+
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
 			metaGenerator.Content = SiteData.CarrotCakeCMSVersion;
-			Page.Header.Controls.Add(metaGenerator);
+			this.Page.Header.Controls.Add(metaGenerator);
+			this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
 
 			if (theSite != null) {
 				if (theSite.BlockIndex) {
 					HtmlMeta metaNoCrawl = new HtmlMeta();
 					metaNoCrawl.Name = "robots";
 					metaNoCrawl.Content = "noindex,nofollow,noarchive";
-					Page.Header.Controls.Add(metaNoCrawl);
+					this.Page.Header.Controls.Add(metaNoCrawl);
+					this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
 				}
 			}
 
@@ -126,27 +130,14 @@ namespace Carrotware.CMS.UI.Base {
 				metaKey.Content = string.IsNullOrEmpty(pageContents.MetaKeyword) ? theSite.MetaKeyword : pageContents.MetaKeyword;
 
 				if (!string.IsNullOrEmpty(metaDesc.Content)) {
-					Page.Header.Controls.Add(metaDesc);
-
-					HtmlMeta metaSub = new HtmlMeta();
-					metaSub.Attributes["property"] = "og:description";
-					metaSub.Content = metaDesc.Content;
-					Page.Header.Controls.Add(metaSub);
+					this.Page.Header.Controls.Add(metaDesc);
+					this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
 				}
 
 				if (!string.IsNullOrEmpty(metaKey.Content)) {
-					Page.Header.Controls.Add(metaKey);
+					this.Page.Header.Controls.Add(metaKey);
+					this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
 				}
-
-				HtmlMeta metaType = new HtmlMeta();
-				metaType.Attributes["property"] = "og:type";
-				if (pageContents.ContentType == ContentPageType.PageType.BlogEntry) {
-					metaType.Content = "blog";
-				} else {
-					metaType.Content = "website";
-				}
-
-				Page.Header.Controls.Add(metaType);
 			}
 
 			if (SecurityData.AdvancedEditMode) {
@@ -175,21 +166,18 @@ namespace Carrotware.CMS.UI.Base {
 
 			if (pageContents != null) {
 
-				Page.Title = SetPageTitle(pageContents);
-
-				if (!string.IsNullOrEmpty(Page.Title)) {
-					HtmlMeta metaTitle = new HtmlMeta();
-					metaTitle.Attributes["property"] = "og:title";
-					metaTitle.Content = pageContents.TitleBar;
-					Page.Header.Controls.Add(metaTitle);
+				//do stuff to page title
+				string sTitleAddendum = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+				if (!string.IsNullOrEmpty(sTitleAddendum)) {
+					if (!string.IsNullOrEmpty(pageContents.PageHead)) {
+						pageContents.PageHead = pageContents.PageHead.Trim() + ": " + sTitleAddendum;
+					} else {
+						pageContents.PageHead = sTitleAddendum;
+					}
+					pageContents.TitleBar = pageContents.TitleBar.Trim() + ": " + sTitleAddendum;
 				}
 
-				if (!string.IsNullOrEmpty(theSite.SiteName)) {
-					HtmlMeta metaSite = new HtmlMeta();
-					metaSite.Attributes["property"] = "og:site_name";
-					metaSite.Content = theSite.SiteName;
-					Page.Header.Controls.Add(metaSite);
-				}
+				this.Page.Title = SetPageTitle(pageContents);
 
 				DateTime dtModified = theSite.ConvertSiteTimeToLocalServer(pageContents.EditDate);
 				string strModifed = dtModified.ToString("r");
@@ -209,17 +197,7 @@ namespace Carrotware.CMS.UI.Base {
 
 				pageContents = CMSConfigHelper.IdentifyLinkAsInactive(pageContents);
 
-				//do stuff to page title
-				string sTitleAddendum = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
-				if (!string.IsNullOrEmpty(sTitleAddendum)) {
-					if (!string.IsNullOrEmpty(pageContents.PageHead)) {
-						pageContents.PageHead = pageContents.PageHead.Trim() + ":  " + sTitleAddendum;
-					} else {
-						pageContents.PageHead = sTitleAddendum;
-					}
-				}
-
-				if (Page.User.Identity.IsAuthenticated) {
+				if (this.Page.User.Identity.IsAuthenticated) {
 
 					Response.Cache.SetNoServerCaching();
 					Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -230,8 +208,8 @@ namespace Carrotware.CMS.UI.Base {
 
 						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 							if (!SiteData.IsPageSampler && !IsPageTemplate) {
-								Control editor = Page.LoadControl(SiteFilename.EditNotifierControlPath);
-								Page.Form.Controls.Add(editor);
+								Control editor = this.Page.LoadControl(SiteFilename.EditNotifierControlPath);
+								this.Page.Form.Controls.Add(editor);
 							}
 						}
 
@@ -249,7 +227,7 @@ namespace Carrotware.CMS.UI.Base {
 						contLeft.Text = pageContents.LeftPageText;
 						contRight.Text = pageContents.RightPageText;
 
-						Control editor = Page.LoadControl(SiteFilename.AdvancedEditControlPath);
+						Control editor = this.Page.LoadControl(SiteFilename.AdvancedEditControlPath);
 						Page.Form.Controls.Add(editor);
 
 						MarkWidgets(page, true);
@@ -287,7 +265,7 @@ namespace Carrotware.CMS.UI.Base {
 							if (theWidget.ControlPath.EndsWith(".ascx")) {
 								if (File.Exists(Server.MapPath(theWidget.ControlPath))) {
 									try {
-										widget = Page.LoadControl(theWidget.ControlPath);
+										widget = this.Page.LoadControl(theWidget.ControlPath);
 									} catch (Exception ex) {
 										Literal lit = new Literal();
 										lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
