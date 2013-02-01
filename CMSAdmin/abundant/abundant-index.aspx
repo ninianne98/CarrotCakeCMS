@@ -72,10 +72,10 @@ Released   : 20090703
 						<div style="clear: both;">
 						</div>
 						<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="8" CSSSelectedPage="selected">
-							<SummaryHeaderTemplate>
+							<ContentHeaderTemplate>
 								<div>
-							</SummaryHeaderTemplate>
-							<SummaryTemplate>
+							</ContentHeaderTemplate>
+							<ContentTemplate>
 								<div class="post">
 									<h2 class="title">
 										<carrot:ListItemNavText runat="server" ID="ListItemNavText5" DataField="NavMenuText" />
@@ -97,10 +97,10 @@ Released   : 20090703
 										</p>
 									</div>
 								</div>
-							</SummaryTemplate>
-							<SummaryFooterTemplate>
+							</ContentTemplate>
+							<ContentFooterTemplate>
 								</div>
-							</SummaryFooterTemplate>
+							</ContentFooterTemplate>
 							<PagerHeaderTemplate>
 								<div class="pagerfooterlinks">
 							</PagerHeaderTemplate>

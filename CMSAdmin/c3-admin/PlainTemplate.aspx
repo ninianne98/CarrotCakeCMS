@@ -309,10 +309,10 @@
 							</div>
 						</div>
 						<carrot:PagedDataSummary ID="PagedDataSummary2" runat="server" ContentType="Blog" PageSize="8" Visible="false">
-							<SummaryHeaderTemplate>
+							<ContentHeaderTemplate>
 								<div>
-							</SummaryHeaderTemplate>
-							<SummaryTemplate>
+							</ContentHeaderTemplate>
+							<ContentTemplate>
 								<div class="entry">
 									<h2>
 										<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" UseDefaultText="true" />
@@ -324,10 +324,10 @@
 										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
 									</p>
 								</div>
-							</SummaryTemplate>
-							<SummaryFooterTemplate>
+							</ContentTemplate>
+							<ContentFooterTemplate>
 								</div>
-							</SummaryFooterTemplate>
+							</ContentFooterTemplate>
 							<PagerHeaderTemplate>
 								<div class="pagerfooterlinks">
 							</PagerHeaderTemplate>

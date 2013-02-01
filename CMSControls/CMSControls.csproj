@@ -57,6 +57,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasePagedDataTemplate.cs" />
     <Compile Include="BaseServerControl.cs" />
     <Compile Include="CarrotGridPaged.cs" />
     <Compile Include="ChildNavigation.cs" />

@@ -118,10 +118,10 @@
 				<div style="clear: both;">
 				</div>
 				<carrot:PagedComments ID="PagedComments1" runat="server" PageSize="5" CSSSelectedPage="selected">
-					<CommentHeaderTemplate>
+					<ContentHeaderTemplate>
 						<div>
-					</CommentHeaderTemplate>
-					<CommentTemplate>
+					</ContentHeaderTemplate>
+					<ContentTemplate>
 						<div>
 							<p>
 								<b>
@@ -136,10 +136,10 @@
 								</p>
 							</div>
 						</div>
-					</CommentTemplate>
-					<CommentFooterTemplate>
+					</ContentTemplate>
+					<ContentFooterTemplate>
 						</div>
-					</CommentFooterTemplate>
+					</ContentFooterTemplate>
 					<PagerHeaderTemplate>
 						<div class="pagerfooterlinks">
 					</PagerHeaderTemplate>
