@@ -3,4 +3,3 @@
     [CompatibleSchemaVersion] NVARCHAR (128) NOT NULL,
     [IsCurrentVersion]        BIT            NOT NULL
 );
-

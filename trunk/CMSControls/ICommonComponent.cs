@@ -29,7 +29,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		int ItemCount { get; set; }
 
-
 	}
 
 	//========================================
@@ -39,8 +38,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		Guid DatabaseKey { get; set; }
 	}
-
-
 
 	//========================================
 	public interface IActivateNavItem {

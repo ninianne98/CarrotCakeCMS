@@ -17,11 +17,9 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SecondLevelNavigation runat=server></{0}:SecondLevelNavigation>")]
-	public class SecondLevelNavigation : BaseServerControl, IHeadedList {
+	public class SecondLevelNavigation : BaseNavSelHeaded {
 
 		public bool IncludeParent { get; set; }
-
-		public int ItemCount { get; set; }
 
 		[Obsolete("This property is obsolete, do not use.")]
 		public string SectionTitle {
@@ -34,106 +32,30 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string MetaDataTitle {
-			get {
-				string s = (string)ViewState["MetaDataTitle"];
-				return ((s == null) ? "" : s);
-			}
-			set {
-				ViewState["MetaDataTitle"] = value;
-			}
-		}
+		protected override void LoadData() {
+			base.LoadData();
 
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
-		public TagType HeadWrapTag {
-			get {
-				String s = (String)ViewState["HeadWrapTag"];
-				TagType c = TagType.H2;
-				if (!string.IsNullOrEmpty(s)) {
-					c = (TagType)Enum.Parse(typeof(TagType), s, true);
+			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
+
+			if (IncludeParent) {
+				if (lstNav != null && lstNav.Count > 0) {
+					SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
+					if (p != null) {
+						p.NavOrder = -100;
+						lstNav.Add(p);
+					}
 				}
-				return c;
 			}
 
-			set {
-				ViewState["HeadWrapTag"] = value.ToString();
-			}
+			this.NavigationData = lstNav.OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 		}
 
-
-		[DefaultValue(false)]
-		[Themeable(false)]
-		public override bool EnableViewState {
-			get {
-				String s = (String)ViewState["EnableViewState"];
-				bool b = ((s == null) ? false : Convert.ToBoolean(s));
-				base.EnableViewState = b;
-				return b;
-			}
-
-			set {
-				ViewState["EnableViewState"] = value.ToString();
-				base.EnableViewState = value;
-			}
-		}
-
-		protected List<SiteNav> GetSubNav() {
-			return navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
-		}
-
-		protected SiteNav GetParent(Guid? Root_ContentID) {
+		protected SiteNav GetParent(Guid? rootContentID) {
 			SiteNav pageNav = null;
-			if (Root_ContentID != null) {
-				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, Root_ContentID.Value);
+			if (rootContentID.HasValue) {
+				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, rootContentID.Value);
 			}
 			return pageNav;
-		}
-
-
-		protected override void RenderContents(HtmlTextWriter output) {
-			List<SiteNav> lstNav = GetSubNav();
-			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
-			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
-
-			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
-			}
-
-			if (lstNav != null) {
-				this.ItemCount = lstNav.Count;
-			}
-
-			if (lstNav != null && lstNav.Count > 0) {
-
-				output.Write("<ul id=\"" + this.ClientID + "\">");
-
-				if (IncludeParent) {
-					if (lstNav != null && lstNav.Count > 0) {
-						var p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
-						if (p != null) {
-							output.Write("<li class=\"parent-nav\"><a href=\"" + p.FileName + "\">" + p.NavMenuText + "</a></li>\r\n");
-						}
-					}
-				}
-
-				foreach (var c in lstNav) {
-					if (SiteData.IsFilenameCurrentPage(c.FileName)) {
-						output.Write("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
-					} else {
-						output.Write("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li>\r\n");
-					}
-				}
-				output.Write("</ul>");
-			} else {
-				output.WriteLine("<span style=\"display: none;\" id=\"" + this.ClientID + "\"></span>");
-			}
 		}
 
 	}

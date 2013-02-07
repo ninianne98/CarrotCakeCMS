@@ -49,6 +49,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.TextBox txtEnd;
         
         /// <summary>
+        /// rdoScope control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdoScope;
+        
+        /// <summary>
+        /// ParentPagePicker control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Admin.c3_admin.ucSitePageDrillDown ParentPagePicker;
+        
+        /// <summary>
         /// chkBlog control.
         /// </summary>
         /// <remarks>
@@ -65,6 +83,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkPage;
+        
+        /// <summary>
+        /// chkComment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkComment;
         
         /// <summary>
         /// btnExport control.

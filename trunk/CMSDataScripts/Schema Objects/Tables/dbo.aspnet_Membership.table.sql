@@ -21,4 +21,3 @@
     [FailedPasswordAnswerAttemptWindowStart] DATETIME         NOT NULL,
     [Comment]                                NTEXT            NULL
 );
-

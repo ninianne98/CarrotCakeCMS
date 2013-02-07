@@ -12,8 +12,6 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:RSSFeed runat=server></{0}:RSSFeed>")]
 	public class RSSFeed : BaseServerControl {
@@ -25,10 +23,8 @@ namespace Carrotware.CMS.UI.Controls {
 			TextLink
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("HeaderLink")]
 		public RSSRenderAs RenderRSSMode {
 			get {
 				String s = (String)ViewState["RenderRSSMode"];
@@ -44,7 +40,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -59,10 +54,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("BlogAndPages")]
 		public SiteData.RSSFeedInclude RSSFeedType {
 			get {
 				String s = (String)ViewState["RSSFeedType"];
@@ -77,10 +70,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("/rss.ashx")]
 		public string RSSFeedURI {
 			get {
 				string s = (string)ViewState["RSSFeedURI"];
@@ -91,11 +82,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string ImageURI {
 			get {
 				string s = (string)ViewState["ImageURI"];
@@ -110,11 +98,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string LinkText {
 			get {
 				string s = (string)ViewState["LinkText"];
@@ -176,9 +161,7 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 			}
 
-
 		}
-
 
 	}
 

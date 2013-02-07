@@ -23,9 +23,7 @@ using Carrotware.Web.UI.Controls;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:MostRecentUpdated runat=server></{0}:MostRecentUpdated>")]
-	public class MostRecentUpdated : BaseServerControl, IHeadedList, IWidgetLimitedProperties {
-
-		public int ItemCount { get; set; }
+	public class MostRecentUpdated : BaseNavHeaded, IWidgetLimitedProperties {
 
 		[Obsolete("This property is obsolete, do not use.")]
 		public string UpdateTitle {
@@ -35,55 +33,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				ViewState["UpdateTitle"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string MetaDataTitle {
-			get {
-				string s = (string)ViewState["MetaDataTitle"];
-				return ((s == null) ? "" : s);
-			}
-			set {
-				ViewState["MetaDataTitle"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
-		public TagType HeadWrapTag {
-			get {
-				String s = (String)ViewState["HeadWrapTag"];
-				TagType c = TagType.H2;
-				if (!string.IsNullOrEmpty(s)) {
-					c = (TagType)Enum.Parse(typeof(TagType), s, true);
-				}
-				return c;
-			}
-
-			set {
-				ViewState["HeadWrapTag"] = value.ToString();
-			}
-		}
-
-		[DefaultValue(false)]
-		[Themeable(false)]
-		public override bool EnableViewState {
-			get {
-				String s = (String)ViewState["EnableViewState"];
-				bool b = ((s == null) ? false : Convert.ToBoolean(s));
-				base.EnableViewState = b;
-				return b;
-			}
-
-			set {
-				ViewState["EnableViewState"] = value.ToString();
-				base.EnableViewState = value;
 			}
 		}
 
@@ -105,10 +54,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("ContentPage")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
 		public ListContentType ContentType {
 			get {
@@ -125,12 +72,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public bool IncludeParent { get; set; }
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(5)]
-		[Localizable(true)]
 		public int TakeTop {
 			get {
 				String s = (String)ViewState["TakeTop"];
@@ -162,7 +105,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		private List<Guid> _guids = null;
 
 		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstCategories")]
@@ -182,7 +124,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
 			get {
@@ -194,6 +135,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 				return _dict;
 			}
+		}
+
+		protected override void LoadData() {
+			base.LoadData();
+
+			this.NavigationData = GetUpdates();
 		}
 
 		protected List<SiteNav> GetUpdates() {
@@ -214,47 +161,6 @@ namespace Carrotware.CMS.UI.Controls {
 			return new List<SiteNav>();
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int indent = output.Indent;
-
-			List<SiteNav> lstNav = GetUpdates();
-			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
-			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
-
-			if (lstNav != null) {
-				this.ItemCount = lstNav.Count;
-			}
-
-			output.Indent = indent + 3;
-			output.WriteLine();
-
-			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
-			}
-
-			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
-				sCSS = " class=\"" + CssClass + "\" ";
-			}
-
-			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
-			output.Indent++;
-
-			foreach (SiteNav c in lstNav) {
-				if (SiteData.IsFilenameCurrentPage(c.FileName)) {
-					output.WriteLine("<li class=\"selected\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
-				} else {
-					output.WriteLine("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
-				}
-			}
-
-			output.Indent--;
-			output.WriteLine("</ul> ");
-
-			output.Indent = indent;
-		}
-
-
 		public List<string> LimitedPropertyList {
 			get {
 				List<string> lst = new List<string>();
@@ -268,20 +174,15 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void OnPreRender(EventArgs e) {
+
+			base.OnPreRender(e);
 
 			try {
 
 				if (PublicParmValues.Count > 0) {
 
 					TakeTop = int.Parse(GetParmValue("TakeTop", "5"));
-
-					MetaDataTitle = GetParmValue("MetaDataTitle", "");
-
-					CssClass = GetParmValue("CssClass", "");
-
-					EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
 
 					ContentType = (ListContentType)Enum.Parse(typeof(ListContentType), GetParmValue("ContentType", "Blog"), true);
 
@@ -299,9 +200,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			} catch (Exception ex) {
 			}
-
-
-			base.OnPreRender(e);
 		}
 	}
 }

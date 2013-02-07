@@ -21,10 +21,8 @@ namespace Carrotware.CMS.Core {
 
 	public class ContentPageHelper : IDisposable {
 
-
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
-
 
 		public ContentPageHelper() { }
 
@@ -86,6 +84,31 @@ namespace Carrotware.CMS.Core {
 			db.SubmitChanges();
 		}
 
+		public List<Guid> GetPageHierarchy(Guid siteID, Guid rootContentID) {
+			List<Guid> lstSub = new List<Guid>();
+			int iDepth = 10000;
+
+			List<Guid> lstFoundIDs = new List<Guid>();
+			lstFoundIDs.Add(rootContentID);
+
+			while (iDepth > 1) {
+
+				lstSub = (from ct in CannedQueries.GetLatestContentList(db, siteID, false)
+						  where ct.SiteID == siteID
+								&& (!lstFoundIDs.Contains(ct.Root_ContentID) && lstFoundIDs.Contains(ct.Parent_ContentID.Value))
+						  select ct.Root_ContentID).Distinct().ToList();
+
+				lstFoundIDs = lstFoundIDs.Union(lstSub).ToList();
+
+				if (lstSub.Count < 1) {
+					break;
+				}
+				iDepth--;
+			}
+
+			return lstFoundIDs;
+		}
+
 		public static string CreateBlogDatePrefix(Guid siteID, DateTime goLiveDate) {
 			string FileName = "";
 
@@ -128,20 +151,20 @@ namespace Carrotware.CMS.Core {
 
 			foreach (string fileName in queryFindDups) {
 				int iDupCtr = 1;
-				IQueryable<carrot_RootContent> queryContentShareFilename = CompiledQueries.cqGeRootContentListByURLTbl(db, siteID, contentTypeID, fileName);
+				IQueryable<carrot_RootContent> queryContentShareFilename = CompiledQueries.cqGetRootContentListByURLTbl(db, siteID, contentTypeID, fileName);
 
 				foreach (carrot_RootContent item in queryContentShareFilename) {
 					int c = -1;
 					string sNewFilename = ScrubFilename(item.Root_ContentID, "/" + item.GoLiveDate.ToString(SiteDatePattern) + "/" + item.PageSlug);
 					string sSlug = item.PageSlug;
 
-					c = CompiledQueries.cqGeRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
+					c = CompiledQueries.cqGetRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
 
 					if (c > 0) {
 						sNewFilename = sNewFilename.Substring(0, sNewFilename.Length - 5) + "-" + item.CreateDate.ToString("yyyy-MM-dd") + ".aspx";
 						sSlug = sSlug.Substring(0, sSlug.Length - 5) + "-" + item.CreateDate.ToString("yyyy-MM-dd") + ".aspx";
 
-						c = CompiledQueries.cqGeRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
+						c = CompiledQueries.cqGetRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
 
 						if (c > 0) {
 							sNewFilename = sNewFilename.Substring(0, sNewFilename.Length - 5) + "-" + iDupCtr.ToString() + ".aspx";

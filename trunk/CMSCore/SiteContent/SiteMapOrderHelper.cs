@@ -83,6 +83,34 @@ namespace Carrotware.CMS.Core {
 			return m;
 		}
 
+		public List<SiteMapOrder> GetSiteFileList(Guid siteID) {
+			List<SiteMapOrder> lstContent = CannedQueries.GetAllContentList(db, siteID).Select(ct => new SiteMapOrder(ct)).ToList();
+
+			return lstContent;
+		}
+
+
+		public void FixOrphanPages(Guid siteID) {
+			List<SiteMapOrder> lstContent = CannedQueries.GetAllContentList(db, siteID).Select(ct => new SiteMapOrder(ct)).ToList();
+			List<Guid> lstIDs = lstContent.Select(x => x.Root_ContentID).ToList();
+
+			lstContent.RemoveAll(x => x.Parent_ContentID == null);
+			lstContent.RemoveAll(x => lstIDs.Contains(x.Parent_ContentID.Value));
+
+			lstIDs = lstContent.Select(x => x.Root_ContentID).ToList();
+
+			IQueryable<carrot_Content> querySite = (from ct in db.carrot_Contents
+													where ct.IsLatestVersion == true
+														&& ct.Parent_ContentID != null
+														&& lstIDs.Contains(ct.Root_ContentID)
+													select ct);
+
+			db.carrot_Contents.UpdateBatch(querySite, p => new carrot_Content { Parent_ContentID = null });
+
+			db.SubmitChanges();
+		}
+
+
 		public void UpdateSiteMap(Guid siteID, List<SiteMapOrder> oMap) {
 
 			foreach (SiteMapOrder m in oMap) {
@@ -117,6 +145,8 @@ namespace Carrotware.CMS.Core {
 										  NavLevel = -1,
 										  NavMenuText = (ct.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
 										  NavOrder = ct.NavOrder,
+										  SiteID = ct.SiteID,
+										  FileName = ct.FileName,
 										  PageActive = Convert.ToBoolean(ct.PageActive),
 										  Parent_ContentID = ct.Parent_ContentID,
 										  Root_ContentID = ct.Root_ContentID
@@ -132,6 +162,8 @@ namespace Carrotware.CMS.Core {
 									 NavLevel = iLevel,
 									 NavMenuText = (ct.PageActive ? "" : "{*U*} ") + ct.NavMenuText,
 									 NavOrder = ct.NavOrder,
+									 SiteID = ct.SiteID,
+									 FileName = ct.FileName,
 									 PageActive = Convert.ToBoolean(ct.PageActive),
 									 Parent_ContentID = ct.Parent_ContentID,
 									 Root_ContentID = ct.Root_ContentID
@@ -148,6 +180,8 @@ namespace Carrotware.CMS.Core {
 											  NavLevel = -1,
 											  NavMenuText = ct.NavMenuText,
 											  NavOrder = ct.NavOrder,
+											  SiteID = ct.SiteID,
+											  FileName = ct.FileName,
 											  PageActive = ct.PageActive,
 											  Parent_ContentID = ct.Parent_ContentID,
 											  Root_ContentID = ct.Root_ContentID
@@ -168,6 +202,8 @@ namespace Carrotware.CMS.Core {
 							  NavLevel = iLevel,
 							  NavMenuText = c.NavMenuText,
 							  NavOrder = (iLvlCounter++) * iPageCt,
+							  SiteID = c.SiteID,
+							  FileName = c.FileName,
 							  PageActive = c.PageActive,
 							  Parent_ContentID = c.Parent_ContentID,
 							  Root_ContentID = c.Root_ContentID
@@ -197,6 +233,8 @@ namespace Carrotware.CMS.Core {
 														  where s.Parent_ContentID == s2.Parent_ContentID
 																 && s.Root_ContentID != s2.Root_ContentID
 														  select s.Root_ContentID).ToList().Count,
+												   SiteID = s.SiteID,
+												   FileName = s.FileName,
 												   PageActive = s.PageActive,
 												   Parent_ContentID = s.Parent_ContentID,
 												   Root_ContentID = s.Root_ContentID

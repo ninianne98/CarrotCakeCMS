@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Xml.Serialization;
-using Carrotware.CMS.Data;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,6 +15,12 @@ using Carrotware.CMS.Data;
 namespace Carrotware.CMS.Core {
 
 	public class SiteExport {
+
+		public enum ExportType {
+			BlogData,
+			ContentData,
+			AllData,
+		}
 
 		public SiteExport() {
 			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
@@ -38,7 +39,29 @@ namespace Carrotware.CMS.Core {
 
 			s = SiteData.GetSiteByID(siteID);
 
-			pages = ContentImportExportUtils.ExportSitePages(siteID);
+			pages = ContentImportExportUtils.ExportAllSiteContent(siteID);
+
+			SetVals(s, pages);
+		}
+
+		public SiteExport(Guid siteID, ExportType exportWhat) {
+			SiteData s = null;
+			List<ContentPageExport> pages = new List<ContentPageExport>();
+
+			s = SiteData.GetSiteByID(siteID);
+
+			if (exportWhat == ExportType.AllData) {
+				pages = ContentImportExportUtils.ExportAllSiteContent(siteID);
+			} else {
+				if (exportWhat == ExportType.ContentData) {
+					List<ContentPageExport> lst = ContentImportExportUtils.ExportPages(siteID);
+					pages = pages.Union(lst).ToList();
+				}
+				if (exportWhat == ExportType.BlogData) {
+					List<ContentPageExport> lst = ContentImportExportUtils.ExportPosts(siteID);
+					pages = pages.Union(lst).ToList();
+				}
+			}
 
 			SetVals(s, pages);
 		}
@@ -75,6 +98,15 @@ namespace Carrotware.CMS.Core {
 			TheTags = s.GetTagList();
 		}
 
+		public void LoadComments() {
+			if (ThePages != null) {
+				TheComments = new List<CommentExport>();
+				foreach (ContentPageExport cpe in ThePages) {
+					TheComments = TheComments.Union(CommentExport.GetPageCommentExport(cpe.OriginalRootContentID)).ToList();
+				}
+			}
+		}
+
 		public string CarrotCakeVersion { get; set; }
 
 		public DateTime ExportDate { get; set; }
@@ -86,6 +118,8 @@ namespace Carrotware.CMS.Core {
 		public SiteData TheSite { get; set; }
 
 		public List<ContentPageExport> ThePages { get; set; }
+
+		public List<CommentExport> TheComments { get; set; }
 
 		public List<ContentCategory> TheCategories { get; set; }
 

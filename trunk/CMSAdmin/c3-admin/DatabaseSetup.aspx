@@ -15,7 +15,4 @@
 		<asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" />
 		<asp:Button ID="btnCreate" runat="server" Text="Create User" OnClick="btnCreate_Click" />
 	</p>
-	<p>
-		<asp:Literal ID="litCMSBuildInfo" runat="server"></asp:Literal>
-	</p>
 </asp:Content>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 /*
 * CarrotCake CMS
@@ -17,10 +18,8 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:WidgetWrapper runat=server></{0}:WidgetWrapper>")]
 	public class WidgetWrapper : PlaceHolder, ICMSCoreControl {
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsAdminMode {
 			get {
 				bool s = false;
@@ -32,10 +31,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid DatabaseKey {
 			get {
 				Guid s = Guid.Empty;
@@ -47,12 +44,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(0)]
 		public int Order {
 			get {
 				int s = 0;
@@ -64,10 +57,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string ControlPath {
 			get {
 				String s = (String)ViewState["ControlPath"];
@@ -79,10 +70,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string ControlTitle {
 			get {
 				String s = (String)ViewState["ControlTitle"];
@@ -94,10 +83,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string JSEditFunction {
 			get {
 				String s = (String)ViewState["JSEditFunction"];
@@ -108,53 +95,62 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private ControlUtilities cu = new ControlUtilities();
 
-		protected override void Render(HtmlTextWriter w) {
-			if (this.IsAdminMode) {
-				string sEdit = "";
-				if (!string.IsNullOrEmpty(this.JSEditFunction)) {
-					sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconPencil\" id=\"cmsContentEditLink\" href=\"javascript:" + this.JSEditFunction + "\">\r\n"
-							+ " Edit </a></li> \r\n";
-					sEdit += " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget2\" id=\"cmsContentEditLink\" href=\"javascript:cmsManageWidgetHistory('" + this.DatabaseKey + "')\">\r\n"
-								+ " History </a></li> \r\n";
-				}
+		private Control GetCtrl(Control X) {
+			cu = new ControlUtilities(this);
 
-				//string sShrink = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconShrink\" id=\"cmsContentLink\" href=\"javascript:cmsShrinkWidgetHeight('" + DatabaseKey + "');\">\r\n"
-				//                + " Shrink </a></li> \r\n";
+			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminWidget.ascx");
 
-				string sRemove = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconCross\" id=\"cmsContentLink\" href=\"javascript:cmsRemoveWidgetLink('" + this.DatabaseKey + "');\">\r\n"
-								+ " Remove </a></li> \r\n";
-
-				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
-
-				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
-							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit + sRemove + " </ul> </li> </ul> </div> </div>";
-
-				string sPrefix = "<div id=\"" + this.DatabaseKey + "\" class=\"cmsWidgetContainerWrapper\" >"
-									+ "<div id=\"cms_" + this.ClientID + "\">"
-									+ "<div id=\"cmsWidgetHead\" class=\"cmsWidgetTitleBar\">"
-									+ "<div id=\"cmsControlPath\" title=\"" + this.ControlPath + "\" tooltip=\"" + this.ControlPath + "\">" + this.ControlTitle + "</div> " + sMenu + " </div>"
-									+ "</div>\r\n"
-									+ "<div class=\"cmsWidgetControl cmsWidgetControlItem\" id=\"cmsControl\" >\r\n"
-									+ "<input type=\"hidden\" id=\"cmsCtrlID\" value=\"" + this.DatabaseKey + "\"  />\r\n"
-									+ "<input type=\"hidden\" id=\"cmsCtrlOrder\" value=\"" + this.Order + "\"  />\r\n";
-
-				w.Write(sPrefix);
-
-			} else {
-				w.WriteLine("<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>");
+			sCtrl = sCtrl.Replace("{WIDGET_ID}", this.ClientID);
+			sCtrl = sCtrl.Replace("{WIDGET_KEY}", this.DatabaseKey.ToString());
+			sCtrl = sCtrl.Replace("{WIDGET_ORDER}", this.Order.ToString());
+			sCtrl = sCtrl.Replace("{WIDGET_PATH}", this.ControlPath);
+			sCtrl = sCtrl.Replace("{WIDGET_TITLE}", this.ControlTitle);
+			if (!string.IsNullOrEmpty(this.JSEditFunction)) {
+				sCtrl = sCtrl.Replace("{WIDGET_JS}", this.JSEditFunction);
 			}
 
-			base.Render(w);
+			Control userControl = cu.CreateControlFromString(sCtrl);
 
-			if (IsAdminMode) {
-				w.Write("\r\n<div style=\"clear: both;\"></div> </div></div>\r\n");
-			} else {
-				w.WriteLine("<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>");
-			}
-
+			return userControl;
 		}
 
+
+		protected override void Render(HtmlTextWriter w) {
+
+			Control ctrl = new Control();
+			PlaceHolder ph = new PlaceHolder();
+
+			if (this.IsAdminMode) {
+
+				ctrl = GetCtrl(this);
+				ph = (PlaceHolder)cu.FindControl("phWidgetZone", ctrl);
+
+				if (string.IsNullOrEmpty(this.JSEditFunction)) {
+
+					HtmlGenericControl edit = (HtmlGenericControl)cu.FindControl("liEdit", ctrl);
+					HtmlGenericControl hist = (HtmlGenericControl)cu.FindControl("liHistory", ctrl);
+
+					edit.Visible = false;
+					hist.Visible = false;
+				}
+
+			} else {
+				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" });
+				ctrl.Controls.Add(ph);
+				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
+			}
+
+			int iChild = this.Controls.Count;
+
+			for (int i = 0; i < iChild; i++) {
+				ph.Controls.Add(this.Controls[0]);
+			}
+
+			ctrl.RenderControl(w);
+
+		}
 
 	}
 }

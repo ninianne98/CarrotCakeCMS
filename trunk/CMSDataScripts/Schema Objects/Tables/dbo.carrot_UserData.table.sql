@@ -4,4 +4,3 @@
     [FirstName]    NVARCHAR (64)    NULL,
     [LastName]     NVARCHAR (64)    NULL
 );
-

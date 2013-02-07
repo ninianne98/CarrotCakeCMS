@@ -545,6 +545,14 @@
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped2.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen.css" />
+    <Content Include="c3-admin\Images\logonbox-bottomcenter.png" />
+    <Content Include="c3-admin\Images\logonbox-bottomleft.png" />
+    <Content Include="c3-admin\Images\logonbox-bottomright.png" />
+    <Content Include="c3-admin\Images\logonbox-left.png" />
+    <Content Include="c3-admin\Images\logonbox-right.png" />
+    <Content Include="c3-admin\Images\logonbox-topcenter.png" />
+    <Content Include="c3-admin\Images\logonbox-topleft.png" />
+    <Content Include="c3-admin\Images\logonbox-topright.png" />
     <Content Include="c3-admin\Includes\advanced-editor-reset.css" />
     <Content Include="c3-admin\Images\calendar.png" />
     <Content Include="c3-admin\Images\dragbg.png" />

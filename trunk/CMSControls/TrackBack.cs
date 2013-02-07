@@ -13,18 +13,14 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[Designer(typeof(GeneralControlDesigner))]
 	[ToolboxData("<{0}:TrackBack runat=server></{0}:TrackBack>")]
 	public class TrackBack : BaseServerControl {
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("/trackback.ashx")]
 		public string TrackBackURI {
 			get {
 				string s = (string)ViewState["TrackBackURI"];
@@ -35,10 +31,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool EnableDirectTrackback {
 			get {
 				bool s = false;
@@ -52,8 +46,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -68,7 +62,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
@@ -88,7 +82,6 @@ namespace Carrotware.CMS.UI.Controls {
 				tbh.ProcessTrackback(HttpContext.Current, false);
 			}
 		}
-
 
 	}
 

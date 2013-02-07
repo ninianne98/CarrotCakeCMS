@@ -27,7 +27,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		public bool bLocked = false;
 		string sPageMode = String.Empty;
-		SiteMapOrder orderHelper = new SiteMapOrder();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogContentAdd);

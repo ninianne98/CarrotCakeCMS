@@ -39,8 +39,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (Page.User.Identity.IsAuthenticated) {
 				Response.Redirect("./default.aspx");
 			}
-
-			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 		}
 
 		protected void cmdLogon_Click(object sender, EventArgs e) {

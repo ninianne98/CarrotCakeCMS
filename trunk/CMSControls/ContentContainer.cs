@@ -14,8 +14,6 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
@@ -23,8 +21,8 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:ContentContainer runat=server></{0}:ContentContainer>")]
 	public class ContentContainer : Literal, ICMSCoreControl {
 
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -39,10 +37,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsAdminMode {
 			get {
 				bool s = false;
@@ -56,11 +52,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid DatabaseKey {
 			get {
 				Guid s = Guid.Empty;
@@ -72,10 +65,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string ZoneChar {
 			get {
 				String s = (String)ViewState["ZoneChar"];
@@ -94,11 +85,8 @@ namespace Carrotware.CMS.UI.Controls {
 			TextRight,
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("NavMenuText")]
-		[Localizable(true)]
+		[DefaultValue("Unknown")]
 		public TextFieldZone TextZone {
 			get {
 				string s = (string)ViewState["TextZone"];
@@ -113,11 +101,25 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private ControlUtilities cu = new ControlUtilities();
+
+		private Control GetCtrl(Control X) {
+			cu = new ControlUtilities(this);
+
+			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx");
+
+			sCtrl = sCtrl.Replace("{ZONE_ID}", this.ClientID);
+			sCtrl = sCtrl.Replace("{ZONE_CHAR}", this.ZoneChar);
+
+			Control userControl = cu.CreateControlFromString(sCtrl);
+
+			return userControl;
+		}
+
 		protected override void Render(HtmlTextWriter w) {
 
 			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
 
-				ControlUtilities cu = new ControlUtilities();
 				ContentPage pageContents = cu.GetContainerContentPage(this);
 
 				if (pageContents != null) {
@@ -143,30 +145,23 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			if (IsAdminMode) {
-
-				string sPrefix = "<div style=\"clear: both;\"></div>\r\n<div id=\"cms_" + this.ClientID + "\" class=\"cmsContentContainer\">\r\n" +
-							" <div class=\"cmsContentContainerTitle\">\r\n" +
-							"<a title=\"Edit " + this.ID + "\" id=\"cmsContentAreaLink_" + this.ClientID + "\" class=\"cmsContentContainerInnerTitle\" " +
-							" href=\"javascript:cmsShowEditContentForm('" + this.ZoneChar + "','html'); \"> " +
-							" Edit " + this.ID + " <span class=\"cmsWidgetBarIconPencil2\" /></span> </a></div> \r\n" +
-							"<div class=\"cmsWidgetControl\" id=\"cmsAdmin_" + this.ClientID + "\" ><div>\r\n";
-
-				w.Write(sPrefix);
-
-			} else {
-				w.WriteLine("<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>");
-			}
-
-			base.Render(w);
+			Control ctrl = new Control();
 
 			if (IsAdminMode) {
-				w.Write("\r\n</div>\r\n<div style=\"clear: both; \"></div>\r\n</div></div>\r\n");
+
+				ctrl = GetCtrl(this);
+				Literal lit = (Literal)cu.FindControl("litContent", ctrl);
+				lit.Text = this.Text;
+
 			} else {
-				w.WriteLine("<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>");
+				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" });
+				ctrl.Controls.Add(new Literal { Text = this.Text });
+				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
 			}
+
+			ctrl.RenderControl(w);
+
 		}
-
 
 	}
 
@@ -197,7 +192,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return sTextOut + sPageOutText;
 		}
-
 
 	}
 

@@ -87,6 +87,18 @@
 	<fieldset style="width: 90%;">
 		<legend>
 			<label>
+				Comments
+				<asp:CheckBox ID="chkComments" runat="server" />
+			</label>
+		</legend>
+		<p>
+			<asp:Label ID="lblComments" runat="server" Text="Label" />
+			records
+		</p>
+	</fieldset>
+	<fieldset style="width: 90%;">
+		<legend>
+			<label>
 				Pages
 				<asp:CheckBox ID="chkPages" runat="server" />
 			</label>
@@ -105,7 +117,7 @@
 			</tr>
 		</table>
 		<p>
-			<asp:Label ID="lblPages" runat="server" Text="Label"></asp:Label>
+			<asp:Label ID="lblPages" runat="server" Text="Label" />
 			records
 		</p>
 		<div id="SortableGrid">
@@ -143,7 +155,7 @@
 			</tr>
 		</table>
 		<p>
-			<asp:Label ID="lblPosts" runat="server" Text="Label"></asp:Label>
+			<asp:Label ID="lblPosts" runat="server" Text="Label" />
 			records
 		</p>
 		<div id="SortableGrid">

@@ -16,15 +16,11 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 	public class CarrotGridPaged : WebControl {
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(10)]
 		public int PageSize {
 			get {
 				String s = (String)ViewState["PageSize"];
@@ -35,10 +31,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(1)]
 		public int PageNumber {
 			get {
 				String s = (String)ViewState["PageNumber"];
@@ -50,10 +44,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(1)]
 		public int TotalRecords {
 			get {
 				String s = (String)ViewState["TotalRecords"];
@@ -63,7 +55,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["TotalRecords"] = value.ToString();
 			}
 		}
-
 
 		public bool IsPostBack {
 			get {
@@ -77,7 +68,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private bool bHeadClicked = true;
 		private string sBtnName = "lnkPagerBtn";
 
-
 		public string SortingBy { get; set; }
 
 		[
@@ -90,7 +80,6 @@ namespace Carrotware.CMS.UI.Controls {
 		PersistenceMode(PersistenceMode.InnerProperty)
 		]
 		public CarrotGridView TheGrid { get; set; }
-
 
 		[
 		Category("Behavior"),
@@ -125,11 +114,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		private Repeater GetCtrl() {
 			cu = new ControlUtilities(this);
-			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucFancyPager.ascx");
+			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx");
 			Repeater r = (Repeater)cu.FindControl("rpPager", userControl);
 
 			return r;
@@ -176,8 +165,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-
 		private void SetSort() {
 
 			string sSort = TheGrid.CurrentSort;
@@ -187,7 +174,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.SortingBy = sSort;
 		}
-
 
 		public object DataSource { get; set; }
 

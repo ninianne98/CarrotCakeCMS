@@ -46,11 +46,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Author_FullName_LastFirst,
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("{0}")]
-		[Localizable(true)]
 		public string FieldFormat {
 			get {
 				String s = ViewState["FieldFormat"] as String;
@@ -61,10 +58,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("NavMenuText")]
-		[Localizable(true)]
 		public ContentPageFieldName DataField {
 			get {
 				string s = (string)ViewState["DataField"];
@@ -87,7 +82,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
@@ -145,11 +140,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Next,
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("NavMenuText")]
-		[Localizable(true)]
 		public CaptionSource CaptionDataField {
 			get {
 				string s = (string)ViewState["CaptionDataField"];
@@ -166,11 +158,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("Unknown")]
-		[Localizable(true)]
 		public NavDirection NavigationDirection {
 			get {
 				string s = (string)ViewState["NavigationDirection"];
@@ -187,10 +176,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("UseDefaultText")]
 		public bool UseDefaultText {
 			get {
 				bool s = true;
@@ -204,7 +191,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void Render(HtmlTextWriter output) {
 
 			base.Render(output);
@@ -212,7 +198,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private ControlUtilities cu = new ControlUtilities();
-
 
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
@@ -255,15 +240,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
-
 	//========================================
 	[ToolboxData("<{0}:ListItemImageThumb runat=server></{0}:ListItemImageThumb>")]
 	public class ContentPageImageThumb : Image {
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(100)]
 		public int ThumbSize {
 			get {
 				int s = 100;
@@ -275,10 +257,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(false)]
-		[Localizable(true)]
+		[DefaultValue(true)]
 		public bool ScaleImage {
 			get {
 				bool s = true;
@@ -292,10 +272,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool PerformURLResize {
 			get {
 				bool s = false;
@@ -309,8 +287,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		protected override void Render(HtmlTextWriter w) {
 
@@ -390,11 +367,8 @@ namespace Carrotware.CMS.UI.Controls {
 			TimeZone,
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("{0}")]
-		[Localizable(true)]
 		public string FieldFormat {
 			get {
 				String s = ViewState["FieldFormat"] as String;
@@ -405,10 +379,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("NavMenuText")]
-		[Localizable(true)]
+		[DefaultValue("SiteName")]
 		public SiteDataFieldName DataField {
 			get {
 				string s = (string)ViewState["DataField"];
@@ -424,7 +396,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["DataField"] = value.ToString();
 			}
 		}
-
 
 		protected override void Render(HtmlTextWriter output) {
 
@@ -454,7 +425,6 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 }
-
 
 /*
 	<carrot:ContentPageImageThumb runat="server" ID="ContentPageImageThumb1" PerformURLResize="true" ScaleImage="true" ThumbSize="180" />

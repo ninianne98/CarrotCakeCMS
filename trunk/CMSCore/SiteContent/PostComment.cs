@@ -40,9 +40,8 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsApproved { get; set; }
 		public bool IsSpam { get; set; }
-		public string NavMenuText { get; internal set; }
-		public string FileName { get; internal set; }
-
+		public string NavMenuText { get; set; }
+		public string FileName { get; set; }
 
 		internal PostComment(vw_carrot_Comment c) {
 
@@ -101,6 +100,15 @@ namespace Carrotware.CMS.Core {
 			this.CreateDate = c.CreateDate;
 		}
 
+
+		public static List<PostComment> GetCommentsByContentPage(Guid rootContentID, bool bActiveOnly) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				IQueryable<vw_carrot_Comment> lstComments = (from c in CannedQueries.GetContentPageComments(_db, rootContentID, bActiveOnly)
+															 select c);
+
+				return lstComments.Select(x => new PostComment(x)).ToList();
+			}
+		}
 
 		public static List<PostComment> GetCommentsBySitePageNumber(Guid siteID, int iPageNbr, int iPageSize, string SortBy, ContentPageType.PageType pageType) {
 			int startRec = iPageNbr * iPageSize;

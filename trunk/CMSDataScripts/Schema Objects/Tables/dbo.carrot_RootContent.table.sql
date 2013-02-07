@@ -15,6 +15,3 @@
     [ShowInSiteNav]    BIT              NOT NULL,
     [CreateUserId]     UNIQUEIDENTIFIER NOT NULL
 );
-
-
-

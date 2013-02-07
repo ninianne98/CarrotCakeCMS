@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Security.Permissions;
-using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
@@ -16,20 +14,15 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SiteMetaWordList runat=server></{0}:SiteMetaWordList>")]
-	[AspNetHostingPermissionAttribute(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
-	[AspNetHostingPermissionAttribute(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
 	public class SiteMetaWordList : BaseServerControl, IHeadedList {
 
 		public int ItemCount { get; set; }
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string MetaDataTitle {
 			get {
 				string s = (string)ViewState["MetaDataTitle"];
@@ -40,10 +33,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("H2")]
 		public TagType HeadWrapTag {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
@@ -59,10 +50,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSItem {
 			get {
 				string s = (string)ViewState["CSSItem"];
@@ -73,10 +62,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(false)]
 		public bool ShowUseCount {
 			get {
 				String s = (String)ViewState["ShowUseCount"];
@@ -87,9 +74,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -104,10 +90,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(10)]
-		[Localizable(true)]
 		public int TakeTop {
 			get {
 				String s = (String)ViewState["TakeTop"];
@@ -124,11 +108,8 @@ namespace Carrotware.CMS.UI.Controls {
 			DateMonth,
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("Category")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
 		public MetaDataType ContentType {
 			get {
@@ -248,10 +229,8 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-
 			base.OnPreRender(e);
 		}
-
 
 	}
 }

@@ -16,4 +16,3 @@
     [MetaKeyword]      NVARCHAR (1024)  NULL,
     [MetaDescription]  NVARCHAR (1024)  NULL
 );
-

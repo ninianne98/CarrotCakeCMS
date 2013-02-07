@@ -83,7 +83,9 @@
     <Compile Include="ConfigHelper\VirtualFeed.cs" />
     <Compile Include="ConfigHelper\VirtualFileSystem.cs" />
     <Compile Include="CompiledQueries.cs" />
+    <Compile Include="ImportExport\CommentExport.cs" />
     <Compile Include="ImportExport\ContentImportExportUtils.cs" />
+    <Compile Include="ImportExport\BasicContentData.cs" />
     <Compile Include="ImportExport\SiteExport.cs" />
     <Compile Include="ImportExport\InfoKVP.cs" />
     <Compile Include="ImportExport\WordPressComment.cs" />

@@ -39,7 +39,6 @@ END
 GO
 
 
-
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_tblGallery_GalleryID]') AND type = 'D') BEGIN
 	ALTER TABLE [dbo].[tblGallery] ADD  CONSTRAINT [DF_tblGallery_GalleryID]  DEFAULT (newid()) FOR [GalleryID]
 END
@@ -61,7 +60,6 @@ IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_tblGaller
 END
 
 GO
-
 
 
 /****** Object:  Table [dbo].[tblGalleryImageMeta]    Script Date: 08/16/2012 22:13:01 ******/

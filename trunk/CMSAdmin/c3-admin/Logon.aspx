@@ -67,7 +67,4 @@
 			</LayoutTemplate>
 		</asp:Login>
 	</asp:Panel>
-	<p>
-		<asp:Literal ID="litCMSBuildInfo" runat="server"></asp:Literal>
-	</p>
 </asp:Content>

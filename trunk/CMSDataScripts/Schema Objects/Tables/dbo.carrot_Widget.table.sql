@@ -6,4 +6,3 @@
     [ControlPath]     NVARCHAR (512)   NOT NULL,
     [WidgetActive]    BIT              NOT NULL
 );
-

@@ -18,17 +18,13 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PostCalendar runat=server></{0}:PostCalendar>")]
 	public class PostCalendar : BaseServerControl {
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CalendarHead {
 			get {
 				string s = (string)ViewState["CalendarHead"];
@@ -39,10 +35,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSClassCaption {
 			get {
 				string s = (string)ViewState["CSSClassCaption"];
@@ -53,10 +47,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSClassTable {
 			get {
 				string s = (string)ViewState["CSSClassTable"];
@@ -67,10 +59,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSClassDayHead {
 			get {
 				string s = (string)ViewState["CSSClassDayHead"];
@@ -81,10 +71,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSClassTableBody {
 			get {
 				string s = (string)ViewState["CSSClassTableBody"];
@@ -95,10 +83,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSClassDateLink {
 			get {
 				string s = (string)ViewState["CSSClassDateLink"];
@@ -109,10 +95,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSClassTableFoot {
 			get {
 				string s = (string)ViewState["CSSClassTableFoot"];
@@ -123,9 +107,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -139,7 +122,6 @@ namespace Carrotware.CMS.UI.Controls {
 				base.EnableViewState = value;
 			}
 		}
-
 
 		DateTime _date = DateTime.MinValue;
 		private DateTime ThisMonth {
@@ -231,7 +213,6 @@ namespace Carrotware.CMS.UI.Controls {
 			int DayOfMonth = 1;
 			DayOfMonth -= iFirstDay;
 			int WeekNumber = 1;
-
 
 			output.WriteLine("	<table " + sCSSClassTable + "> ");
 			output.WriteLine("		<caption id=\"" + this.ClientID + "-caption\"  " + sCSSClassCaption + "> " + ThisMonth.Date.ToString("MMMM yyyy") + " </caption>");
@@ -330,10 +311,8 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-
 			base.OnPreRender(e);
 		}
-
 
 	}
 }

@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Design;
-using System.IO;
 using System.Linq;
-using System.Security.Permissions;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,17 +15,12 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
 
-	[AspNetHostingPermissionAttribute(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
-	[AspNetHostingPermissionAttribute(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
 	public abstract class BasePagedDataTemplate : BaseServerControl, INamingContainer {
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(10)]
 		public int PageSize {
 			get {
 				String s = (String)ViewState["PageSize"];
@@ -43,10 +31,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(-1)]
 		public int TotalRecords {
 			get {
 				String s = (String)ViewState["TotalRecords"];
@@ -57,10 +43,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(true)]
 		public bool PagerBelowContent {
 			get {
 				String s = (String)ViewState["PagerBelowContent"];
@@ -71,10 +55,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(true)]
 		public bool ShowPager {
 			get {
 				String s = (String)ViewState["ShowPager"];
@@ -85,11 +67,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(1)]
 		public int PageNumber {
 			get {
 				String s = (String)ViewState["PageNumber"];
@@ -106,10 +85,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("GoLiveDate  desc")]
 		public virtual string OrderBy {
 			get {
 				String s = (String)ViewState["OrderBy"];
@@ -120,12 +97,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("SelectedCurrentPager")]
 		public string CSSSelectedPage {
 			get {
 				string s = (string)ViewState["CSSSelectedPage"];
@@ -136,10 +109,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSPageFooter {
 			get {
 				string s = (string)ViewState["CSSPageFooter"];
@@ -150,10 +121,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSPageListing {
 			get {
 				string s = (string)ViewState["CSSPageListing"];
@@ -164,8 +133,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -180,44 +149,41 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate ContentHeaderTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate ContentTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate ContentFooterTemplate { get; set; }
 
-
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate PagerHeaderTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate PagerTemplate { get; set; }
 
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate PagerFooterTemplate { get; set; }
-
 
 		private Repeater rpPagedContents = new Repeater();
 		private Repeater rpPager = new Repeater();
@@ -245,13 +211,13 @@ namespace Carrotware.CMS.UI.Controls {
 			rpPager.FooterTemplate = PagerFooterTemplate;
 		}
 
+		public virtual object DataSource { get; set; }
 
-		public virtual object SourceData { get; set; }
-
+		//important to override so as to do any assignment of your data in your implementing class
 		public virtual void FetchData() {
 			this.PageNumber = 1;
 			this.PageSize = 10;
-			this.SourceData = new List<object>();
+			this.DataSource = new List<object>();
 		}
 
 		protected string sBtnName = "lnkPagerBtn";
@@ -334,8 +300,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public virtual void WriteOutData(HtmlTextWriter writer) {
 
-			HttpContext context = HttpContext.Current;
-
 			rpPagedContents.EnableViewState = this.EnableViewState;
 			rpPager.EnableViewState = true;
 
@@ -346,10 +310,10 @@ namespace Carrotware.CMS.UI.Controls {
 			this.Controls.Add(rpPagedContents);
 			this.Controls.Add(rpPager);
 
-			rpPagedContents.DataSource = this.SourceData;
+			rpPagedContents.DataSource = this.DataSource;
 			rpPagedContents.DataBind();
 
-			iTotalPages = TotalRecords / this.PageSize;
+			iTotalPages = this.TotalRecords / this.PageSize;
 
 			if ((TotalRecords % this.PageSize) > 0) {
 				iTotalPages++;
@@ -372,11 +336,11 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Write("\r\n<span id=\"" + this.ClientID + "\">\r\n");
 
 			if (PagerBelowContent) {
-				RenderWrappedControl(writer, rpPagedContents, CSSPageListing);
-				RenderWrappedControl(writer, rpPager, CSSPageFooter);
+				RenderWrappedControl(writer, rpPagedContents, this.CSSPageListing);
+				RenderWrappedControl(writer, rpPager, this.CSSPageFooter);
 			} else {
-				RenderWrappedControl(writer, rpPager, CSSPageFooter);
-				RenderWrappedControl(writer, rpPagedContents, CSSPageListing);
+				RenderWrappedControl(writer, rpPager, this.CSSPageFooter);
+				RenderWrappedControl(writer, rpPagedContents, this.CSSPageListing);
 			}
 
 			hdnPageNbr.RenderControl(writer);
@@ -402,7 +366,6 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.WriteLine();
 		}
 
-
 		protected override void OnPreRender(EventArgs e) {
 
 			base.OnPreRender(e);
@@ -411,21 +374,21 @@ namespace Carrotware.CMS.UI.Controls {
 
 				if (PublicParmValues.Count > 0) {
 
-					PageSize = int.Parse(GetParmValue("PageSize", "10"));
+					this.PageSize = int.Parse(GetParmValue("PageSize", "10"));
 
-					PagerBelowContent = Convert.ToBoolean(GetParmValue("PagerBelowContent", "true"));
+					this.PagerBelowContent = Convert.ToBoolean(GetParmValue("PagerBelowContent", "true"));
 
-					ShowPager = Convert.ToBoolean(GetParmValue("ShowPager", "true"));
+					this.ShowPager = Convert.ToBoolean(GetParmValue("ShowPager", "true"));
 
-					EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
+					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
 
-					OrderBy = GetParmValue("OrderBy", "GoLiveDate  desc");
+					this.OrderBy = GetParmValue("OrderBy", "GoLiveDate  desc");
 
-					CSSSelectedPage = GetParmValue("CSSSelectedPage", "SelectedCurrentPager");
+					this.CSSSelectedPage = GetParmValue("CSSSelectedPage", "SelectedCurrentPager");
 
-					CSSPageListing = GetParmValue("CSSPageListing", "");
+					this.CSSPageListing = GetParmValue("CSSPageListing", "");
 
-					CSSPageFooter = GetParmValue("CSSPageFooter", "");
+					this.CSSPageFooter = GetParmValue("CSSPageFooter", "");
 
 				}
 			} catch (Exception ex) {

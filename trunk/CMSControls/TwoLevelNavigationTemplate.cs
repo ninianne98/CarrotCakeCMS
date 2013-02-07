@@ -21,11 +21,8 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:TwoLevelNavigationTemplate runat=server></{0}:TwoLevelNavigationTemplate>")]
 	public class TwoLevelNavigationTemplate : BaseServerControl {
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(true)]
-		[Localizable(true)]
 		public bool ShowSecondLevel {
 			get {
 				String s = (String)ViewState["ShowSecondLevel"];
@@ -37,8 +34,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -53,11 +50,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string OverrideCSS {
 			get {
 				string s = (string)ViewState["OverrideCSS"];
@@ -68,11 +62,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSSelected {
 			get {
 				string s = (string)ViewState["CSSSelected"];
@@ -83,11 +74,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("div")]
 		public string HtmlTagName {
 			get {
 				string s = (string)ViewState["HtmlTagName"];
@@ -98,8 +86,18 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		public bool WrapList {
+			get {
+				String s = (String)ViewState["WrapList"];
+				return ((s == null) ? true : Convert.ToBoolean(s));
+			}
 
-
+			set {
+				ViewState["WrapList"] = value.ToString();
+			}
+		}
 
 		[DefaultValue(null)]
 		[Browsable(false)]
@@ -119,8 +117,6 @@ namespace Carrotware.CMS.UI.Controls {
 		[TemplateContainer(typeof(RepeaterItem))]
 		public ITemplate TopNavFooterTemplate { get; set; }
 
-
-
 		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
@@ -139,11 +135,9 @@ namespace Carrotware.CMS.UI.Controls {
 		[TemplateContainer(typeof(RepeaterItem))]
 		public ITemplate SubNavFooterTemplate { get; set; }
 
-
 		private SiteNav ParentPageNav { get; set; }
 
 		private List<SiteNav> lstTwoLevelNav = new List<SiteNav>();
-
 
 		protected List<SiteNav> GetTopNav() {
 			return lstTwoLevelNav.Where(ct => ct.Parent_ContentID == null).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
@@ -156,7 +150,6 @@ namespace Carrotware.CMS.UI.Controls {
 		protected SiteNav GetPageInfo(string sPath) {
 			return lstTwoLevelNav.Where(ct => ct.FileName.ToLower() == sPath.ToLower()).FirstOrDefault();
 		}
-
 
 		Control fndCtrl = null;
 
@@ -178,7 +171,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 		}
-
 
 		protected void SetSubNav(RepeaterItem container, Guid rootContentID) {
 			Control ctrl = FindSubControl(container);
@@ -215,9 +207,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-
 		private ListItemRepeater rTopNav = new ListItemRepeater();
-
 
 		protected override void RenderContents(HtmlTextWriter writer) {
 			writer.Indent++;
@@ -235,7 +225,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			int indent = writer.Indent;
 
-			writer.WriteLine(HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\"" + HtmlTextWriter.TagRightChar);
+			if (this.WrapList) {
+				writer.WriteLine(HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + " id=\"" + this.ClientID + "\"" + HtmlTextWriter.TagRightChar);
+			}
+
 			writer.WriteLine();
 			writer.Write("\t");
 			rTopNav.RenderControl(writer);
@@ -243,8 +236,11 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent = indent;
 
 			writer.WriteLine();
-			writer.WriteLine(HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
-			writer.WriteLine();
+
+			if (this.WrapList) {
+				writer.WriteLine(HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar);
+				writer.WriteLine();
+			}
 
 			writer.Indent--;
 			writer.Indent--;
@@ -263,7 +259,6 @@ namespace Carrotware.CMS.UI.Controls {
 			lstTwoLevelNav.RemoveAll(x => x.ShowInSiteNav == false);
 			lstTwoLevelNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 		}
-
 
 		protected override void OnInit(EventArgs e) {
 			this.Controls.Clear();
@@ -302,7 +297,6 @@ namespace Carrotware.CMS.UI.Controls {
 			rTopNav.DataSource = lstTop;
 			rTopNav.DataBind();
 
-
 			if (ShowSecondLevel) {
 				int iMax = lstTop.Count;
 				for (int iIdx = 0; iIdx < iMax; iIdx++) {
@@ -311,7 +305,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 		}
-
 
 		private void ModWrap(IActivateNavItem lnk) {
 
@@ -333,8 +326,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-
 		private void UpdateHyperLink(Control X) {
 
 			foreach (Control c in X.Controls) {
@@ -347,7 +338,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 		}
-
 
 		protected override void OnPreRender(EventArgs e) {
 
@@ -363,7 +353,6 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-
 			if (!string.IsNullOrEmpty(OverrideCSS)) {
 				HtmlLink link = new HtmlLink();
 				link.Href = OverrideCSS;
@@ -372,15 +361,12 @@ namespace Carrotware.CMS.UI.Controls {
 				this.Page.Header.Controls.Add(link);
 			}
 
-
 			base.OnPreRender(e);
 		}
 
 	}
 
-
 }
-
 
 /*
 <div>

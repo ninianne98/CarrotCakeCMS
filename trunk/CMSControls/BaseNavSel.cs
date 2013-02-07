@@ -1,0 +1,315 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
+
+namespace Carrotware.CMS.UI.Controls {
+
+	public abstract class BaseNavSel : BaseServerControl {
+
+		[Category("Appearance")]
+		[DefaultValue("selected")]
+		public string CSSSelected {
+			get {
+				string s = (string)ViewState["CSSSelected"];
+				return ((s == null) ? "selected" : s);
+			}
+			set {
+				ViewState["CSSSelected"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("")]
+		public string CSSItem {
+			get {
+				string s = (string)ViewState["CSSItem"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["CSSItem"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("parent")]
+		public string CSSULClassTop {
+			get {
+				string s = (string)ViewState["ULClassTop"];
+				return ((s == null) ? "parent" : s);
+			}
+			set {
+				ViewState["ULClassTop"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("children")]
+		public string CSSULClassLower {
+			get {
+				string s = (string)ViewState["ULClassLower"];
+				return ((s == null) ? "children" : s);
+			}
+			set {
+				ViewState["ULClassLower"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("sub")]
+		public string CSSHasChildren {
+			get {
+				string s = (string)ViewState["CSSHasChildren"];
+				return ((s == null) ? "sub" : s);
+			}
+			set {
+				ViewState["CSSHasChildren"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		public override bool EnableViewState {
+			get {
+				String s = (String)ViewState["EnableViewState"];
+				bool b = ((s == null) ? false : Convert.ToBoolean(s));
+				base.EnableViewState = b;
+				return b;
+			}
+
+			set {
+				ViewState["EnableViewState"] = value.ToString();
+				base.EnableViewState = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		public virtual bool MultiLevel {
+			get {
+				return false;
+			}
+		}
+
+		public List<SiteNav> NavigationData { get; set; }
+
+		public virtual List<SiteNav> GetTopNav() {
+			if (MultiLevel) {
+				return this.NavigationData.Where(ct => ct.Parent_ContentID == null).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
+			} else {
+				return this.NavigationData.OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
+			}
+		}
+
+		public virtual List<SiteNav> GetChildren(Guid rootContentID) {
+			return this.NavigationData.Where(ct => ct.Parent_ContentID == rootContentID).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
+		}
+
+		//important to override so as to do any assignment of your data in your implementing class
+		protected virtual void LoadData() {
+			this.NavigationData = new List<SiteNav>();
+		}
+
+		protected virtual void TweakData() {
+			this.NavigationData.RemoveAll(x => x.ShowInSiteNav == false);
+			this.NavigationData.ToList().ForEach(q => IdentifyLinkAsInactive(q));
+		}
+
+		protected override void OnInit(EventArgs e) {
+			this.Controls.Clear();
+
+			base.OnInit(e);
+
+			LoadData();
+
+			TweakData();
+		}
+
+		protected virtual void WriteListPrefix(HtmlTextWriter output) {
+			output.WriteLine("<ul id=\"" + this.ClientID + "\" class=\"" + (this.CSSULClassTop + " " + this.CssClass).Trim() + "\">");
+		}
+
+		protected virtual void WriteListSuffix(HtmlTextWriter output) {
+			output.WriteLine("</ul>");
+		}
+
+		protected string ParentFileName { get; set; }
+
+		protected virtual void WriteTopLevel(HtmlTextWriter output) {
+			int indent = output.Indent;
+			output.Indent = indent + 2;
+
+			List<SiteNav> lstNav = GetTopNav();
+			SiteNav pageNav = GetParentPage();
+			this.ParentFileName = pageNav.FileName.ToLower();
+
+			if (lstNav != null && lstNav.Count > 0) {
+
+				output.WriteLine();
+				WriteListPrefix(output);
+
+				int indent2 = output.Indent + 1;
+
+				string sItemCSS = "";
+				if (!string.IsNullOrEmpty(CSSItem)) {
+					sItemCSS = string.Format(" {0} ", this.CSSItem);
+				}
+
+				string sThis1CSS = sItemCSS;
+
+				foreach (SiteNav c1 in lstNav) {
+					output.Indent = indent2;
+					List<SiteNav> cc = GetChildren(c1.Root_ContentID);
+
+					string sChild = " ";
+					if (this.MultiLevel) {
+						if (cc != null && cc.Count > 0) {
+							sChild = " level1-haschildren " + this.CSSHasChildren + " ";
+						}
+						sThis1CSS = " level1 " + sItemCSS + sChild;
+					} else {
+						sThis1CSS = sItemCSS;
+					}
+					if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, ParentFileName)) {
+						sThis1CSS = sThis1CSS + " " + this.CSSSelected;
+					}
+					if (lstNav.Where(x => x.NavOrder < 0).Count() > 0) {
+						if (c1.NavOrder < 0) {
+							sThis1CSS = sThis1CSS + " parent-nav";
+						} else {
+							sThis1CSS = sThis1CSS + " child-nav";
+						}
+					}
+
+					output.WriteLine("<li class=\"" + sThis1CSS.Replace("   ", " ").Replace("  ", " ").Trim() + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+
+					int indent3 = output.Indent;
+					if (this.MultiLevel && cc != null && cc.Count > 0) {
+						LoadChildren(output, c1.Root_ContentID, sItemCSS, 2);
+					}
+					output.Indent = indent3;
+					output.WriteLine("</li>");
+					output.WriteLine();
+				}
+				WriteListSuffix(output);
+			} else {
+				output.WriteLine("<span style=\"display: none;\" id=\"" + this.ClientID + "\"></span>");
+			}
+
+			output.Indent = indent;
+		}
+
+		protected virtual void LoadChildren(HtmlTextWriter output, Guid rootContentID, string sItemCSS, int iLevel) {
+			List<SiteNav> lstNav = GetChildren(rootContentID);
+			int indent = output.Indent;
+			output.Indent = indent + 1;
+
+			string sThis2CSS = sItemCSS;
+
+			if (lstNav != null && lstNav.Count > 0) {
+				output.WriteLine();
+				output.WriteLine("<ul class=\"childlist childlevel" + iLevel + " " + this.CSSULClassLower + "\">");
+				int indent2 = output.Indent + 1;
+				foreach (SiteNav c2 in lstNav) {
+					output.Indent = indent2;
+					List<SiteNav> cc = GetChildren(c2.Root_ContentID);
+
+					if (this.MultiLevel) {
+						string sChild = " ";
+						if (cc != null && cc.Count > 0) {
+							sChild = " level" + iLevel + "-haschildren " + this.CSSHasChildren + " ";
+						}
+						sThis2CSS = " level" + iLevel + " " + sItemCSS + sChild;
+					} else {
+						sThis2CSS = sItemCSS;
+					}
+
+					if (SiteData.IsFilenameCurrentPage(c2.FileName) || AreFilenamesSame(c2.FileName, ParentFileName)) {
+						sThis2CSS = sThis2CSS + " " + this.CSSSelected;
+					}
+					sThis2CSS = sThis2CSS + " child-nav";
+
+					output.WriteLine("<li class=\"" + sThis2CSS.Replace("   ", " ").Replace("  ", " ").Trim() + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a>");
+					int indent3 = output.Indent;
+					if (cc != null && cc.Count > 0) {
+						LoadChildren(output, c2.Root_ContentID, sItemCSS, iLevel + 1);
+					}
+					output.Indent = indent3;
+					output.Write("</li>");
+
+					output.WriteLine();
+				}
+				output.Indent--;
+				output.WriteLine("</ul> ");
+			}
+
+			output.Indent = indent;
+		}
+
+
+		protected override void RenderContents(HtmlTextWriter output) {
+			WriteTopLevel(output);
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+			try {
+
+				if (PublicParmValues.Count > 0) {
+
+					string sTmp = "";
+
+					sTmp = GetParmValue("CssClass", "");
+					if (!string.IsNullOrEmpty(sTmp)) {
+						this.CssClass = sTmp;
+					}
+
+					sTmp = GetParmValue("CSSSelected", "");
+					if (!string.IsNullOrEmpty(sTmp)) {
+						this.CSSSelected = sTmp;
+					}
+
+					sTmp = GetParmValue("CSSHasChildren", "");
+					if (!string.IsNullOrEmpty(sTmp)) {
+						this.CSSHasChildren = sTmp;
+					}
+
+					sTmp = GetParmValue("CSSULClassTop", "");
+					if (!string.IsNullOrEmpty(sTmp)) {
+						this.CSSULClassTop = sTmp;
+					}
+
+					sTmp = GetParmValue("CSSULClassLower", "");
+					if (!string.IsNullOrEmpty(sTmp)) {
+						this.CSSULClassLower = sTmp;
+					}
+
+					sTmp = GetParmValue("CSSHasChildren", "");
+					if (!string.IsNullOrEmpty(sTmp)) {
+						this.CSSHasChildren = sTmp;
+					}
+				}
+			} catch (Exception ex) {
+			}
+
+			base.OnPreRender(e);
+		}
+
+	}
+}

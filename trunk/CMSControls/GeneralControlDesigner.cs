@@ -21,8 +21,6 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 	public class GeneralControlDesigner : ControlDesigner {
 
@@ -68,7 +66,6 @@ namespace Carrotware.CMS.UI.Controls {
 			return sTextOut;
 		}
 
-
 		private string RenderCtrl(Control ctrl) {
 			StringWriter sw = new StringWriter();
 			HtmlTextWriter tw = new HtmlTextWriter(sw);
@@ -77,7 +74,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return sw.ToString();
 		}
-
 
 	}
 }

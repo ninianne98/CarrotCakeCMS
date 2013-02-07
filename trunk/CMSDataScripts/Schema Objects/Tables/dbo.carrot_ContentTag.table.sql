@@ -5,6 +5,3 @@
     [TagSlug]      NVARCHAR (256)   NOT NULL,
     [IsPublic]     BIT              NOT NULL
 );
-
-
-

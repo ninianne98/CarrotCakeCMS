@@ -5,4 +5,3 @@
     [EditDate]          DATETIME         NOT NULL,
     [ControlProperties] NVARCHAR (MAX)   NULL
 );
-

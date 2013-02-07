@@ -10,6 +10,3 @@
     [IsApproved]       BIT              NOT NULL,
     [IsSpam]           BIT              NOT NULL
 );
-
-
-

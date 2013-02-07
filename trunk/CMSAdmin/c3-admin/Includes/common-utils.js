@@ -2,6 +2,7 @@
 	$(function () {
 		$('#jqtabs').tabs();
 	});
+
 	$("#jqaccordion").accordion({
 		//collapsible: true
 		active: false,
@@ -9,6 +10,8 @@
 		collapsible: true,
 		alwaysOpen: false
 	});
+
+	$("#jqradioset").buttonset();
 
 	$(document).ready(function () {
 		$("input:button, input:submit, input:reset").button();
@@ -112,11 +115,6 @@ function cmsAjaxGeneralCallback(data, status) {
 
 function cmsAlertModal(request) {
 	$("#divCMSModalMsg").html('');
-
-	//	var isOpen = $("#divCMSModal").dialog("isOpen");
-	//	if (isOpen) {
-	//		$("#divCMSModal").dialog("destroy");
-	//	}
 
 	$("#divCMSModalMsg").html(request);
 

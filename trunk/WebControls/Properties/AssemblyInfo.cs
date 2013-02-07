@@ -52,8 +52,8 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery164.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery172.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery183.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery190.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery-mig.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery191.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery-110mig.js", "text/javascript")]
 [assembly: TagPrefix("jquery", "carrot")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-7-3.js", "text/javascript")]

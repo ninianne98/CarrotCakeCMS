@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -19,17 +15,13 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PostMetaWordList runat=server></{0}:PostMetaWordList>")]
-	[AspNetHostingPermissionAttribute(SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
-	[AspNetHostingPermissionAttribute(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.Minimal)]
 	public class PostMetaWordList : BaseServerControl {
 
-
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -44,10 +36,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string MetaDataTitle {
 			get {
 				string s = (string)ViewState["MetaDataTitle"];
@@ -58,10 +48,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("ul")]
 		public string HtmlTagNameOuter {
 			get {
 				string s = (string)ViewState["HtmlTagNameOuter"];
@@ -72,10 +60,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("li")]
 		public string HtmlTagNameInner {
 			get {
 				string s = (string)ViewState["HtmlTagNameInner"];
@@ -86,11 +72,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(20)]
-		[Localizable(true)]
 		public int TakeTop {
 			get {
 				String s = (String)ViewState["TakeTop"];
@@ -106,10 +89,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Category,
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid AssignedRootContentID {
 			get {
 				Guid s = Guid.Empty;
@@ -123,11 +104,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsSimpleDisplayMode {
 			get {
 				bool s = false;
@@ -141,11 +119,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("Category")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
 		public MetaDataType ContentType {
 			get {
@@ -264,10 +239,8 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-
 			base.OnPreRender(e);
 		}
-
 
 	}
 }

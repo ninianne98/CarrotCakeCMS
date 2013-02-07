@@ -35,7 +35,6 @@ set @DefUsername = LOWER(@DefUsername)
 set @DefEmail = LOWER(@DefEmail)
 
 
-
 IF ((select count([RoleId]) from [dbo].[aspnet_Roles] where [RoleName] = N'CarrotCMS Administrators') < 1) BEGIN
 
 	INSERT [dbo].[aspnet_Applications] ([ApplicationName], [LoweredApplicationName], [ApplicationId], [Description]) 

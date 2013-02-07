@@ -12,17 +12,13 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:WidgetContainer runat=server></{0}:WidgetContainer>")]
 	public class WidgetContainer : PlaceHolder, ICMSCoreControl {
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsAdminMode {
 			get {
 				bool s = false;
@@ -38,38 +34,45 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public Guid DatabaseKey { get; set; }
 
-		protected override void Render(HtmlTextWriter w) {
-			if (this.IsAdminMode) {
+		private ControlUtilities cu = new ControlUtilities();
 
-				string sEdit = " <li><a class=\"cmsWidgetBarLink cmsWidgetBarIconWidget\" id=\"cmsContentEditLink\" href=\"javascript:cmsManageWidgetList('" + this.ID + "')\">\r\n"
-							+ " Widgets </a></li> \r\n";
+		private Control GetCtrl(Control X) {
+			cu = new ControlUtilities(this);
 
-				string sCog = "<a class=\"cmsWidgetBarLink cmsWidgetBarIconCog\" id=\"cmsWidgetBarIcon\" href=\"javascript:void(0);\">Modify</a>";
+			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer.ascx");
 
-				string sMenu = "<div id=\"cmsEditMenuList\"><div id=\"cmsEditMenuList-inner\"> <ul class=\"cmsMnuParent\"> <li class=\"cmsWidgetCogIcon\"> "
-							+ sCog + "\r\n <ul class=\"cmsMnuChildren\">" + sEdit + " </ul> </li> </ul> </div> </div>";
+			sCtrl = sCtrl.Replace("{WIDGETCONTAINER_ID}", this.ID);
 
-				string sPrefix = "<div style=\"clear: both;\"></div>\r\n<div id=\"cms_" + this.ID + "\" class=\"cmsWidgetTargetOuterControl\">\r\n" +
-						"<div class=\"cmsWidgetControlTitle\"><div class=\"cmsWidgetControlIDZone\">\r\n" +
-						"<div id=\"cmsWidgetContainerName\">" + this.ID + "</div> " + sMenu + "</div></div>\r\n" +
-						"<div class=\"cmsTargetArea cmsTargetMove cmsWidgetControl\" id=\"cms_" + this.ID + "\" > \r\n";
+			Control userControl = cu.CreateControlFromString(sCtrl);
 
-				w.Write(sPrefix);
-
-			} else {
-				w.WriteLine("<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>");
-			}
-
-			base.Render(w);
-
-			if (this.IsAdminMode) {
-				w.Write("\r\n&nbsp;\r\n<div style=\"clear: both;\"></div>\r\n</div></div>\r\n");
-			} else {
-				w.WriteLine("<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>");
-			}
-
+			return userControl;
 		}
 
+		protected override void Render(HtmlTextWriter w) {
+
+			Control ctrl = new Control();
+			PlaceHolder ph = new PlaceHolder();
+
+			if (this.IsAdminMode) {
+
+				ctrl = GetCtrl(this);
+				ph = (PlaceHolder)cu.FindControl("phWidgetZone", ctrl);
+
+			} else {
+				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" });
+				ctrl.Controls.Add(ph);
+				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
+			}
+
+			int iChild = this.Controls.Count;
+
+			for (int i = 0; i < iChild; i++) {
+				ph.Controls.Add(this.Controls[0]);
+			}
+
+			ctrl.RenderControl(w);
+
+		}
 
 	}
 }

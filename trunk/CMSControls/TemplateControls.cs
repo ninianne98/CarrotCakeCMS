@@ -18,7 +18,6 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:NavLinkForTemplate runat=server></{0}:NavLinkForTemplate>")]
-
 	public class NavLinkForTemplate : Control, IActivateNavItem {
 
 		public string NavigateUrl {
@@ -61,11 +60,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CssClassNormal {
 			get {
 				string s = (string)ViewState["CssClassNormal"];
@@ -77,10 +73,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSSelected {
 			get {
 				string s = (string)ViewState["CSSSelected"];
@@ -92,10 +86,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CssClassHasChild {
 			get {
 				string s = (string)ViewState["HasChildCssClass"];
@@ -107,11 +99,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsSelected {
 			get {
 				bool s = false;
@@ -126,10 +115,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(true)]
-		[Localizable(true)]
 		public bool UseDefaultText {
 			get {
 				bool s = true;
@@ -144,11 +131,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid ContentID {
 			get {
 				Guid s = Guid.Empty;
@@ -161,7 +145,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["ContentID"] = value;
 			}
 		}
-
 
 		private void SetCSS() {
 
@@ -178,7 +161,6 @@ namespace Carrotware.CMS.UI.Controls {
 				lnk.CssClass = sCSS.Trim();
 			}
 		}
-
 
 		private string _linkNavURL = string.Empty;
 		private string _linkTextDefault = string.Empty;
@@ -203,13 +185,11 @@ namespace Carrotware.CMS.UI.Controls {
 			AssignVals();
 		}
 
-
 		protected override void OnPreRender(EventArgs e) {
 
 			base.OnPreRender(e);
 
 		}
-
 
 		private void AssignVals() {
 
@@ -226,7 +206,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		private void LoadCtrsl() {
 
 			int iMax = this.Controls.Count;
@@ -242,17 +221,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
-
 	//========================================
 
 	[ToolboxData("<{0}:ListItemWrapper runat=server></{0}:ListItemWrapper>")]
-
 	public class ListItemWrapper : Control, IActivateNavItem {
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CssClassNormal {
 			get {
 				string s = (string)ViewState["CssClassNormal"];
@@ -264,11 +239,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSSelected {
 			get {
 				string s = (string)ViewState["CSSSelected"];
@@ -280,11 +252,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsSelected {
 			get {
 				bool s = false;
@@ -299,11 +268,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CssClassHasChild {
 			get {
 				string s = (string)ViewState["HasChildCssClass"];
@@ -315,11 +281,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string NavigateUrl {
 			get {
 				string s = (string)ViewState["NavigateUrl"];
@@ -331,11 +294,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid ContentID {
 			get {
 				Guid s = Guid.Empty;
@@ -347,11 +307,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("li")]
 		public string HtmlTagName {
 			get {
 				string s = (string)ViewState["HtmlTagName"];
@@ -363,11 +320,9 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		private Literal litOpen = new Literal();
 		private Literal litClose = new Literal();
 		private Control ctrlAll = new Control();
-
 
 		private void LoadCtrsl() {
 			int iMax = this.Controls.Count;
@@ -392,7 +347,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-
 		private void SetTag() {
 
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
@@ -414,7 +368,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void OnDataBinding(EventArgs e) {
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
@@ -434,7 +387,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
-
 	//========================================
 	/*
 	 
@@ -444,10 +396,8 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:ListItemImageThumb runat=server></{0}:ListItemImageThumb>")]
 	public class ListItemImageThumb : Image {
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid ContentID {
 			get {
 				Guid s = Guid.Empty;
@@ -459,10 +409,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(100)]
 		public int ThumbSize {
 			get {
 				int s = 100;
@@ -474,10 +422,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(false)]
-		[Localizable(true)]
+		[DefaultValue(true)]
 		public bool ScaleImage {
 			get {
 				bool s = true;
@@ -491,10 +437,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool PerformURLResize {
 			get {
 				bool s = false;
@@ -516,11 +460,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 
-
 			base.OnPreRender(e);
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		private void SetFileInfo(string sImageName, string sTemplateFolderPath) {
 			string sFieldValue = sImageName;
@@ -549,7 +492,6 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 			}
-
 
 			if (PerformURLResize && !string.IsNullOrEmpty(sFieldValue)) {
 				sFieldValue = string.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
@@ -611,10 +553,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Author_FullName_LastFirst,
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid ContentID {
 			get {
 				Guid s = Guid.Empty;
@@ -626,11 +566,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string NavigateUrl {
 			get {
 				string s = (string)ViewState["NavigateUrl"];
@@ -641,11 +578,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string Text {
 			get {
 				string s = (string)ViewState["Text"];
@@ -656,10 +590,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("{0}")]
-		[Localizable(true)]
 		public string FieldFormat {
 			get {
 				String s = ViewState["FieldFormat"] as String;
@@ -670,10 +602,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("NavMenuText")]
-		[Localizable(true)]
 		public NavTextFieldName DataField {
 			get {
 				string s = (string)ViewState["DataField"];
@@ -690,13 +620,11 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void Render(HtmlTextWriter output) {
 
 			output.Write(this.Text);
 
 		}
-
 
 		protected override void OnDataBinding(EventArgs e) {
 
@@ -745,18 +673,15 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnDataBinding(e);
 		}
 
-
 	}
 
 	//========================================
 	public class ListItemRepeater : Repeater {
 
-
 	}
 
 	//========================================
 	public class ListItemPlaceHolder : PlaceHolder {
-
 
 		protected override void RenderChildren(HtmlTextWriter writer) {
 			int indent1 = writer.Indent;
@@ -779,7 +704,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 	public class DefaultListOpenNavTemplate : ITemplate {
-
 
 		public DefaultListOpenNavTemplate() {
 
@@ -838,7 +762,6 @@ namespace Carrotware.CMS.UI.Controls {
 			container.Controls.Add(phAll);
 		}
 
-
 		private void lnkContent_DataBinding(object sender, EventArgs e) {
 			NavLinkForTemplate lnk = (NavLinkForTemplate)sender;
 			RepeaterItem container = (RepeaterItem)lnk.NamingContainer;
@@ -872,19 +795,16 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class DefaultContentCommentEntryForm : ITemplate {
 
-
 		private Control GetCtrl(Control X) {
 			ControlUtilities cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucContactForm.ascx");
+			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx");
 
 			return userControl;
 		}
 
-
 		public DefaultContentCommentEntryForm() {
 
 		}
-
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
@@ -983,7 +903,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
 
-
 			jsHelperLib js = new jsHelperLib();
 			container.Controls.Add(js);
 			container.Controls.Add(ph);
@@ -991,7 +910,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 	*/
-
 
 	//========================================
 	public class DefaultSearchBoxForm : ITemplate {
@@ -1002,7 +920,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private Control GetCtrl(Control X) {
 			ControlUtilities cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucSearchForm.ascx");
+			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSearchForm.ascx");
 
 			return userControl;
 		}
@@ -1030,7 +948,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			//ph.Controls.Add(new Literal { Text = " </div>\r\n" });
 
-
 		}
 
 	}
@@ -1044,12 +961,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private Control GetCtrl(Control X) {
 			cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucSimplePager1.ascx");
+			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSimplePager1.ascx");
 
 			return userControl;
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		public void InstantiateIn(Control container) {
 
@@ -1063,7 +980,6 @@ namespace Carrotware.CMS.UI.Controls {
 			lnkBtn.DataBinding += new EventHandler(lnkBtn_DataBinding);
 
 			ph.Controls.Add(c);
-
 
 			//Literal litL = new Literal();
 			//litL.Text = " [ ";
@@ -1101,12 +1017,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private Control GetCtrl(Control X) {
 			cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
+			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
 
 			return userControl;
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
@@ -1131,7 +1047,6 @@ namespace Carrotware.CMS.UI.Controls {
 			pmContent.AssignedRootContentID = guidSender;
 		}
 
-
 	}
 
 	public class DefaultCommentTemplate : ITemplate {
@@ -1142,12 +1057,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private Control GetCtrl(Control X) {
 			cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource(this.GetType(), "Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
+			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
 
 			return userControl;
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		public void InstantiateIn(Control container) {
 
@@ -1161,7 +1076,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
-
 
 	//========================================
 	[DefaultProperty("Text")]
@@ -1181,10 +1095,8 @@ namespace Carrotware.CMS.UI.Controls {
 			IsSpam
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Guid ContentCommentID {
 			get {
 				Guid s = Guid.Empty;
@@ -1196,11 +1108,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string Text {
 			get {
 				string s = (string)ViewState["Text"];
@@ -1211,10 +1120,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("{0}")]
-		[Localizable(true)]
 		public string FieldFormat {
 			get {
 				String s = ViewState["FieldFormat"] as String;
@@ -1225,10 +1132,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("NavMenuText")]
-		[Localizable(true)]
+		[DefaultValue("CommenterName")]
 		public CommentTextFieldName DataField {
 			get {
 				string s = (string)ViewState["DataField"];
@@ -1245,13 +1150,11 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void Render(HtmlTextWriter output) {
 
 			output.Write(this.Text);
 
 		}
-
 
 		protected override void OnDataBinding(EventArgs e) {
 
@@ -1271,18 +1174,14 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnDataBinding(e);
 		}
 
-
 	}
 
 	//================================================
 	[ToolboxData("<{0}:NavPageNumberDisplay runat=server></{0}:NavPageNumberDisplay>")]
-
 	public class NavPageNumberDisplay : Control {
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(0)]
 		public int PageNumber {
 			get {
 				int s = 0;
@@ -1319,11 +1218,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
-
 	//========================================
 
 	[ToolboxData("<{0}:NavLinkForPagerTemplate runat=server></{0}:NavLinkForPagerTemplate>")]
-
 	public class NavLinkForPagerTemplate : Control, IActivatePageNavItem {
 
 		private string _linkTextDefault = string.Empty;
@@ -1353,11 +1250,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CssClassNormal {
 			get {
 				string s = (string)ViewState["CssClassNormal"];
@@ -1369,10 +1263,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSSelected {
 			get {
 				string s = (string)ViewState["CSSSelected"];
@@ -1384,11 +1276,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsSelected {
 			get {
 				bool s = false;
@@ -1403,10 +1292,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(true)]
-		[Localizable(true)]
 		public bool UseDefaultText {
 			get {
 				bool s = true;
@@ -1421,11 +1308,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue(false)]
 		public bool RenderAsHyperlink {
 			get {
 				bool s = false;
@@ -1439,11 +1323,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(0)]
 		public int PageNumber {
 			get {
 				int s = 0;
@@ -1538,7 +1419,6 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 		}
 
-
 		private void LoadCtrsl() {
 
 			int iMax = this.Controls.Count;
@@ -1563,13 +1443,10 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 
 	[ToolboxData("<{0}:ListItemWrapperForPager runat=server></{0}:ListItemWrapperForPager>")]
-
 	public class ListItemWrapperForPager : Control, IActivatePageNavItem {
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CssClassNormal {
 			get {
 				string s = (string)ViewState["CssClassNormal"];
@@ -1581,11 +1458,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSSelected {
 			get {
 				string s = (string)ViewState["CSSSelected"];
@@ -1597,11 +1471,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool IsSelected {
 			get {
 				bool s = false;
@@ -1616,11 +1487,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(0)]
 		public int PageNumber {
 			get {
 				int s = 0;
@@ -1632,11 +1500,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("div")]
 		public string HtmlTagName {
 			get {
 				string s = (string)ViewState["HtmlTagName"];
@@ -1675,7 +1540,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-
 		private void SetTag() {
 
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
@@ -1697,7 +1561,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void OnDataBinding(EventArgs e) {
 
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
@@ -1715,9 +1578,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	}
 
-
 }
-
 
 /*
 <div>

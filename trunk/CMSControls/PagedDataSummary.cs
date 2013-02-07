@@ -22,12 +22,10 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PagedDataSummary runat=server></{0}:PagedDataSummary>")]
 	public class PagedDataSummary : BasePagedDataTemplate, IWidgetLimitedProperties {
-
 
 		private List<GuidItem> guidList = null;
 		[
@@ -50,10 +48,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("Blog")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
 		public SummaryContentType ContentType {
 			get {
@@ -91,7 +87,6 @@ namespace Carrotware.CMS.UI.Controls {
 			SiteSearch
 		}
 
-
 		private List<Guid> _guids = null;
 
 		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstCategories")]
@@ -110,7 +105,6 @@ namespace Carrotware.CMS.UI.Controls {
 				_guids = value;
 			}
 		}
-
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
@@ -196,9 +190,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 			lstContents.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
-			this.SourceData = lstContents;
+			this.DataSource = lstContents;
 		}
-
 
 		public List<string> LimitedPropertyList {
 			get {
@@ -251,7 +244,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 		}
-
 
 	}
 }

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[carrot_BlogMonthlyTallies]
+﻿CREATE PROCEDURE [dbo].[carrot_BlogMonthlyTallies]
     @SiteID uniqueidentifier,
     @ActiveOnly bit,    
     @TakeTop int = 10

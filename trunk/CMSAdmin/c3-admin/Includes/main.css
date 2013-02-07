@@ -36,12 +36,12 @@ H3 {
 	font-weight: bold;
 }
 
-
 /* Header */
 #headercontainer {
 	height: 115px;
 	background: #7DAD8E url(/c3-admin/images/heading-gradient.png) repeat-x;
 }
+
 #header {
 	width: 950px;
 	height: 110px;
@@ -67,7 +67,6 @@ H3 {
 	padding: 40px 20px 0 0;
 	font-size: 28px;
 }
-
 
 /* Menu */
 
@@ -100,6 +99,7 @@ H3 {
 	text-decoration: none;
 	line-height: 3;
 }
+
 #nav-menu > li.current > a {
 	font-weight: bolder;
 }
@@ -153,20 +153,35 @@ H3 {
 	top: 3em;
 }
 
-
 #nav-menu > li:hover {
 	margin-left: 0px;
 	padding-left: 0px;
 }
+
 #nav-menu > li:hover a {
 	margin-left: 0.5em;
 	padding-left: 0.5em;
 }
+
+#nav-menu li.sub:hover > a, #nav-menu li.sub > a {
+	margin-right: 0.6em;
+	padding-right: 0.6em;
+}
+
 #nav-menu > li.sub ul li a {
 	padding: 0.4em;
 	margin: 0 auto 0.2em auto;
 }
 
+#nav-menu li.sub > a:after {
+	text-decoration: none;
+	content: ' \25BE ';
+	position: absolute;
+	margin-top: -3px;
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+	top: 10%;
+}
 
 /* Content */
 
@@ -184,7 +199,6 @@ H3 {
 #content H2 {
 	font-size: 18px;
 }
-
 
 .pageNodeDrillDown1 {
 	padding: 0px;
@@ -236,27 +250,27 @@ H3 {
 	border-top: 5px solid #000000;
 }
 
-
 #footer p {
 	text-align: center;
 	color: #FFFFFF;
 }
-
 
 #cms-simplemodal-container, .cms-simplemodal-container {
 	height: 525px;
 	width: 905px;
 	z-index: 5000;
 }
+
 #cms-basic-modal-content, #cmsModalFrame, #cmsAjaxMainDiv2 {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 	height: 100%;
 	width: 100%;
 }
+
 #cmsFrameEditor {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 	height: 98%;
 	width: 100%;
 }
@@ -273,6 +287,7 @@ div.scroll {
 	position: absolute;
 	z-index: 999;
 }
+
 div.scrollcontainer {
 	height: 110px;
 	width: 350px;
@@ -280,18 +295,22 @@ div.scrollcontainer {
 	position: absolute;
 	z-index: 999;
 }
+
 div.scrollcontainerhide {
 	display: none;
 }
+
 div.scrollcontainerheight {
 	height: 5px;
 	width: 75px;
 }
+
 div.menuitems {
 	margin-top: 2px;
 	margin-left: 2px;
 	padding: 6px;
 }
+
 div.menuitems {
 	padding: 4px;
 }

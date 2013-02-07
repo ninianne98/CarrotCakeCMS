@@ -21,8 +21,10 @@
 				show content:
 			</td>
 			<td valign="top" colspan="3">
-				<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
-				<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+				<div id="jqradioset">
+					<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+					<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+				</div>
 			</td>
 		</tr>
 		<tr runat="server" id="trFilter">
