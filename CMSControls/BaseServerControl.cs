@@ -50,7 +50,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-
 		protected void BaseRender(HtmlTextWriter writer) {
 			base.Render(writer);
 		}
@@ -114,7 +113,6 @@ namespace Carrotware.CMS.UI.Controls {
 			return pageNav;
 		}
 
-
 		public static string GetCtrlText(Control ctrl) {
 			StringBuilder sb = new StringBuilder();
 			StringWriter tw = new StringWriter(sb);
@@ -124,7 +122,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return sb.ToString();
 		}
-
 
 		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
 			return CMSConfigHelper.IdentifyLinkAsInactive(nav);

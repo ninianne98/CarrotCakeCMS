@@ -6,7 +6,7 @@
 
 		base.OnLoad(e);
 
-		if (theSite.Blog_Root_ContentID.HasValue && pageContents.Root_ContentID == theSite.Blog_Root_ContentID.Value) {
+		if (TheSite.Blog_Root_ContentID.HasValue && ThePage.Root_ContentID == TheSite.Blog_Root_ContentID.Value) {
 			PagedDataSummary2.Visible = true;
 		} else {
 			PagedDataSummary2.Visible = false;
@@ -353,13 +353,14 @@
 	</div>
 	<div style="clear: both;">
 	</div>
-	<div id="footer">
-		<p>
-			<asp:PlaceHolder ID="myFooter" runat="server">
-				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
-				All rights reserved. </asp:PlaceHolder>
-		</p>
-	</div>
+	<asp:PlaceHolder ID="myFooter" runat="server">
+		<div id="footer">
+			<p>
+				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
+				All rights reserved.
+			</p>
+		</div>
+	</asp:PlaceHolder>
 	<!-- end #footer -->
 	<asp:Panel ID="pnlHiddenControls" Visible="false" runat="server">
 	</asp:Panel>

@@ -70,7 +70,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string JQVersion {
 			get {
 				String s = (String)ViewState["JQVersion"];
-				return ((s == null) ? "1.8" : s);
+				return ((s == null) ? jquery.DefaultJQVersion : s);
 			}
 			set {
 				ViewState["JQVersion"] = value;
@@ -97,6 +97,8 @@ namespace Carrotware.Web.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
+
+			output.WriteLine();
 
 			if (!this.StylesheetOnly) {
 				jquery j1 = new jquery();

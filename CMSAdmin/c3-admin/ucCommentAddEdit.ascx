@@ -32,14 +32,22 @@
 	</legend>
 	<table width="700">
 		<tr>
-			<tr>
-				<td width="125" valign="top" class="tablecaption">
-					IP address:
-				</td>
-				<td valign="top">
-					<asp:Label ID="lblIP" runat="server" />
-				</td>
-			</tr>
+			<td width="150" valign="top" class="tablecaption">
+				IP address:
+			</td>
+			<td valign="top">
+				<asp:Label ID="lblIP" runat="server" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
+				date:
+			</td>
+			<td valign="top">
+				<asp:Label ID="lblDate" runat="server" />
+			</td>
+		</tr>
+		<tr>
 			<td valign="top" class="tablecaption">
 				email:
 			</td>

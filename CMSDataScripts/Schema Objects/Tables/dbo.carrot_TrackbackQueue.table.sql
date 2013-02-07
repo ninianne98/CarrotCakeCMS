@@ -7,4 +7,3 @@
     [CreateDate]        DATETIME         NOT NULL,
     [TrackedBack]       BIT              NOT NULL
 );
-

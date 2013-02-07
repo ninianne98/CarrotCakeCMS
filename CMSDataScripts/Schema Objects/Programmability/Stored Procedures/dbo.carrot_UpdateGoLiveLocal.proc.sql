@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[carrot_UpdateGoLiveLocal]
+﻿CREATE PROCEDURE [dbo].[carrot_UpdateGoLiveLocal]
     @SiteID uniqueidentifier,
     @UTCOffsetInMinutes int = 0
 

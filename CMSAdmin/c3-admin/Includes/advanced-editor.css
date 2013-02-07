@@ -4,18 +4,21 @@
 	width: 905px;
 	z-index: 9950008;
 }
+
 #cms-basic-modal-content, #cmsModalFrame, #cmsAjaxMainDiv2 {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 	width: 100%;
 }
+
 #cmsFrameEditor {
 	margin: 0;
 	padding: 0;
 	height: 98%;
 	width: 100%;
 }
+
 #cmsFrameEditorPreview, #cmsAjaxMainDiv3 {
 	margin: 0;
 	padding: 0;
@@ -85,7 +88,7 @@
 	margin: 5px !important;
 	padding: 5px !important;
 	background: #FFFFAA !important;
-	border: 2px dashed #676F6A !important;
+	border: 2px dotted #676F6A !important;
 	background-image: url('/c3-admin/images/dragbg.png') !important;
 }
 
@@ -110,6 +113,7 @@
 	margin: 2px !important;
 	float: right !important;
 }
+
 .cmsInsideArea {
 	font-family: Arial, sans-serif !important;
 	z-index: 5000 !important;
@@ -117,21 +121,26 @@
 	font-size: 12px !important;
 	line-height: normal !important;
 }
+
 .cmsCenter5px, .cmsLeft5px, .cmsRight5px, .cmsPlain5px {
 	margin: 5px !important;
 	padding: 5px !important;
 	font-size: 12px !important;
 	line-height: normal !important;
 }
+
 .cmsCenter5px {
 	text-align: center !important;
 }
+
 .cmsLeft5px {
 	text-align: left !important;
 }
+
 .cmsRight5px {
 	text-align: right !important;
 }
+
 .cmsPreviewButtons {
 	float: right;
 	margin: 5px 0px 0px 0px !important;
@@ -175,17 +184,21 @@ p.cmsToolItem {
 	display: block !important;
 	clear: both !important;
 }
+
 .cmsToolbarAlignmentL {
 	left: 5px !important;
 }
+
 .cmsToolbarAlignmentR {
 	right: 5px !important;
 }
+
 #cmsToolBox {
 	font-weight: normal;
 	line-height: normal;
 	font-size: 11px;
 }
+
 .cmsWidgetCtrlPath, .cmsWidgetToolboxItem, .cmsWidgetToolboxPath {
 	margin: 0;
 	padding: 0;
@@ -194,6 +207,7 @@ p.cmsToolItem {
 	font-size: 11px;
 	font-family: Arial, sans-serif;
 }
+
 .cmsWidgetToolboxPath {
 	font-size: 12px !important;
 	font-family: Arial, sans-serif !important;
@@ -242,20 +256,25 @@ p.cmsToolItem {
 #cmsWidgetHead, #cmsControlPath, #cmsWidgetContainerName {
 	color: #676F6A !important;
 }
+
 #cmsControlPath, #cmsWidgetContainerName {
 	float: left !important;
 	min-height: 30px !important;
 }
+
 #cmsWidgetHead {
 	cursor: move !important;
 }
+
 #cmsWidgetContainerName {
 	color: #FFFFFF !important;
 }
+
 #cmsControl {
 	margin: 0px 0px 2px 0px;
 	padding: 0px 0px 2px 0px;
 }
+
 /* edit menu for widgets */
 
 #cmsEditMenuList-inner p, #cmsEditMenuList-inner ul, #cmsEditMenuList-inner ol, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
@@ -388,6 +407,7 @@ p.cmsToolItem {
 	clear: both !important;
 	background-image: none !important;
 }
+
 #cmsEditMenuList-inner li {
 	list-style-type: none !important;
 	background-image: none !important;
@@ -411,6 +431,7 @@ p.cmsToolItem {
 	padding: 0px !important;
 	border: 0px solid #ffffff !important;
 }
+
 .cmsWidgetBarImgReset {
 	margin: 0px !important;
 	padding: 0px !important;
@@ -420,12 +441,15 @@ p.cmsToolItem {
 	overflow-x: hidden !important;
 	overflow-y: hidden !important;
 }
+
 .cmsWidgetBarLink img {
 	float: right !important;
 }
+
 .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren {
 	background: #8DC0A3 !important;
 }
+
 .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner ul, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a:hover {
 	color: #ffffff !important;
 }
@@ -455,6 +479,7 @@ p.cmsToolItem {
 	background: #478C5F !important;
 	text-decoration: none !important;
 }
+
 .cmsWidgetControlTitle, .cmsWidgetControlTitle a {
 	text-shadow: 0 0 0 transparent !important;
 	text-align: left !important;
@@ -462,6 +487,7 @@ p.cmsToolItem {
 	background: #8DC0A3 !important;
 	text-decoration: none !important;
 }
+
 .cmsWidgetTitleBar, .cmsWidgetTitleBar a, .cmsWidgetTargetOuterControl #cmsControl.cmsWidgetToolboxItem p.cmsToolItem {
 	text-shadow: 0 0 0 transparent !important;
 	text-align: left !important;
@@ -469,23 +495,27 @@ p.cmsToolItem {
 	background: #DFF6E8 !important;
 	text-decoration: none !important;
 }
+
 .cmsWidgetTargetOuterControl {
 	border: 1px solid #000000 !important;
 	margin: 0px !important;
 	padding: 1px !important;
 	margin-top: 5px !important;
 }
+
 .cmsWidgetContainerWrapper {
 	border: 1px solid #000000 !important;
 	margin: 0px !important;
 	padding: 1px !important;
 	margin-top: 3px !important;
 }
+
 .cmsWidgetControl {
 	width: 100%;
 	min-height: 20px !important;
 	border: 1px dashed #c0c0c0 !important;
 }
+
 .cmsContentContainerInnerTitle {
 	float: right !important;
 	color: #676F6A !important;
@@ -498,6 +528,7 @@ p.cmsToolItem {
 	font-weight: bold !important;
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
 }
+
 .cmsContentContainer {
 	border: 1px solid #000000 !important;
 	margin: 0px !important;
@@ -524,3 +555,4 @@ p.cmsToolItem {
 	-moz-border-radius-bottomright: 6px;
 	-moz-border-radius-bottomleft: 6px;
 }
+

@@ -7,4 +7,3 @@
     [IsAnonymous]      BIT              NOT NULL,
     [LastActivityDate] DATETIME         NOT NULL
 );
-

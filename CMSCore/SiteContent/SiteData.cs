@@ -294,6 +294,17 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public List<BasicContentData> GetFullSiteFileList() {
+			List<BasicContentData> map = new List<BasicContentData>();
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				IQueryable<vw_carrot_Content> queryAllFiles = CompiledQueries.cqGetAllContent(_db, this.SiteID);
+				map = queryAllFiles.Select(x => new BasicContentData(x)).ToList();
+			}
+
+			return map;
+		}
+
 		public static Guid CurrentSiteID {
 			get {
 				Guid _site = Guid.Empty;
@@ -482,7 +493,6 @@ namespace Carrotware.CMS.Core {
 				return String.Empty;
 			}
 		}
-
 
 		public static void ManuallyWriteDefaultFile(HttpContext context) {
 			Assembly _assembly = Assembly.GetExecutingAssembly();

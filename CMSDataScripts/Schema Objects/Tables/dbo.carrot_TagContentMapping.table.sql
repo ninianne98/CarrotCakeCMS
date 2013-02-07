@@ -3,4 +3,3 @@
     [ContentTagID]        UNIQUEIDENTIFIER NOT NULL,
     [Root_ContentID]      UNIQUEIDENTIFIER NOT NULL
 );
-

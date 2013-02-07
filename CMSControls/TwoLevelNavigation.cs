@@ -23,12 +23,18 @@ using Carrotware.Web.UI.Controls;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:TwoLevelNavigation runat=server></{0}:TwoLevelNavigation>")]
-	public class TwoLevelNavigation : BaseServerControl, IWidgetLimitedProperties {
+	public class TwoLevelNavigation : BaseNavSel, IWidgetLimitedProperties {
 
-		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		public override bool MultiLevel {
+			get {
+				return true;
+			}
+		}
+
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string OverrideCSS {
 			get {
 				string s = (string)ViewState["OverrideCSS"];
@@ -39,10 +45,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string ExtraCSS {
 			get {
 				string s = (string)ViewState["ExtraCSS"];
@@ -53,99 +57,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string CSSSelected {
-			get {
-				string s = (string)ViewState["CSSSelected"];
-				return ((s == null) ? "selected" : s);
-			}
-			set {
-				ViewState["CSSSelected"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string CSSItem {
-			get {
-				string s = (string)ViewState["CSSItem"];
-				return ((s == null) ? "" : s);
-			}
-			set {
-				ViewState["CSSItem"] = value;
-			}
-		}
-
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string CSSULClassTop {
-			get {
-				string s = (string)ViewState["ULClassTop"];
-				return ((s == null) ? "parent" : s);
-			}
-			set {
-				ViewState["ULClassTop"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string CSSULClassLower {
-			get {
-				string s = (string)ViewState["ULClassLower"];
-				return ((s == null) ? "children" : s);
-			}
-			set {
-				ViewState["ULClassLower"] = value;
-			}
-		}
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
-		public string CSSHasChildren {
-			get {
-				string s = (string)ViewState["CSSHasChildren"];
-				return ((s == null) ? "sub" : s);
-			}
-			set {
-				ViewState["CSSHasChildren"] = value;
-			}
-		}
-
-		[DefaultValue(false)]
-		[Themeable(false)]
-		public override bool EnableViewState {
-			get {
-				String s = (String)ViewState["EnableViewState"];
-				bool b = ((s == null) ? false : Convert.ToBoolean(s));
-				base.EnableViewState = b;
-				return b;
-			}
-
-			set {
-				ViewState["EnableViewState"] = value.ToString();
-				base.EnableViewState = value;
-			}
-		}
-
-
-		[Bindable(true)]
-		[Category("Appearance")]
-		[DefaultValue(false)]
-		[Localizable(true)]
+		[DefaultValue(true)]
 		public bool WrapList {
 			get {
 				String s = (String)ViewState["WrapList"];
@@ -157,10 +70,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool AutoStylingDisabled {
 			get {
 				String s = (String)ViewState["AutoStylingDisabled"];
@@ -172,10 +83,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		[Obsolete("This property is obsolete, do not use.")]
 		public Unit MenuWidth {
 			get {
@@ -190,11 +99,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Unit FontSize {
 			get {
 				Unit s = new Unit("14px");
@@ -208,10 +114,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		[Obsolete("This property is obsolete, do not use.")]
 		public Unit MenuHeight {
 			get {
@@ -226,10 +130,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		[Obsolete("This property is obsolete, do not use.")]
 		public Unit SubMenuWidth {
 			get {
@@ -244,11 +146,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string TopBackgroundStyle {
 			get {
 				String s = (String)ViewState["TopBackgroundStyle"];
@@ -259,11 +158,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		[Obsolete("This property is obsolete, do not use.")]
 		public string ItemBackgroundStyle {
 			get {
@@ -275,11 +171,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public override Color ForeColor {
 			get {
 				string s = (string)ViewState["ForeColor"];
@@ -290,10 +183,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Color BGColor {
 			get {
 				string s = (string)ViewState["BGColor"];
@@ -304,11 +195,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public override Color BackColor {
 			get {
 				string s = (string)ViewState["BackColor"];
@@ -319,11 +207,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public Color HoverBGColor {
 			get {
 				string s = (string)ViewState["HoverBGColor"];
@@ -334,11 +219,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public Color HoverFGColor {
 			get {
 				string s = (string)ViewState["HoverFGColor"];
@@ -349,10 +231,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(null)]
 		public Color UnSelBGColor {
 			get {
 				string s = (string)ViewState["UnSelBGColor"];
@@ -363,11 +243,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public Color UnSelFGColor {
 			get {
 				string s = (string)ViewState["UnSelFGColor"];
@@ -378,11 +255,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public Color SelBGColor {
 			get {
 				string s = (string)ViewState["SelBGColor"];
@@ -393,11 +267,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public Color SelFGColor {
 			get {
 				string s = (string)ViewState["SelFGColor"];
@@ -408,11 +279,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public Color SubBGColor {
 			get {
 				string s = (string)ViewState["SubBGColor"];
@@ -423,11 +291,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public Color SubFGColor {
 			get {
 				string s = (string)ViewState["SubFGColor"];
@@ -438,66 +303,31 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		protected override void LoadData() {
+			base.LoadData();
 
-		private List<SiteNav> lstTwoLevelNav = new List<SiteNav>();
-
-		protected List<SiteNav> GetTopNav() {
-			return lstTwoLevelNav.Where(ct => ct.Parent_ContentID == null).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
-		}
-
-		protected List<SiteNav> GetChildren(Guid rootContentID) {
-			return lstTwoLevelNav.Where(ct => ct.Parent_ContentID == rootContentID).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
-		}
-
-		protected void LoadData() {
-
-			lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
-
-			lstTwoLevelNav.RemoveAll(x => x.ShowInSiteNav == false);
-			lstTwoLevelNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
+			this.NavigationData = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 		}
 
 		private Literal cssText = new Literal();
 
 		protected override void OnInit(EventArgs e) {
-			this.Controls.Clear();
-
 			base.OnInit(e);
-
-			LoadData();
 
 			this.Page.Header.Controls.Add(cssText);
 		}
 
-
-		protected override void RenderContents(HtmlTextWriter output) {
-
-			ParseCSS();
+		protected override void WriteListPrefix(HtmlTextWriter output) {
 
 			if (HttpContext.Current == null) {
 				cssText.RenderControl(output);
 				output.Write(GetCtrlText(cssText));
 			}
 
-			int indent = output.Indent;
-			output.Indent = indent + 2;
-
-			List<SiteNav> lstNav = GetTopNav();
-			SiteNav pageNav = GetParentPage();
-
-			string sParent = pageNav.FileName.ToLower();
-
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = string.Format(" class=\"{0}\"", CssClass);
 			}
-
-			string sItemCSS = "";
-			if (!string.IsNullOrEmpty(CSSItem)) {
-				sItemCSS = string.Format(" {0} ", CSSItem);
-			}
-
-			output.WriteLine();
 
 			if (WrapList) {
 				output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\">");
@@ -511,44 +341,10 @@ namespace Carrotware.CMS.UI.Controls {
 			} else {
 				output.WriteLine("<ul class=\"" + CSSULClassTop + "\">");
 			}
-			output.Indent++;
 
-			int indent2 = output.Indent;
+		}
 
-			foreach (SiteNav c1 in lstNav) {
-				output.Indent = indent2;
-				List<SiteNav> cc = GetChildren(c1.Root_ContentID);
-				string sChild = " ";
-				if (cc != null && cc.Count > 0) {
-					sChild = " level1-haschildren " + CSSHasChildren + " ";
-				}
-
-				if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, sParent)) {
-					output.WriteLine("<li class=\"level1 " + sItemCSS + CSSSelected + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
-				} else {
-					output.WriteLine("<li class=\"level1 " + sItemCSS + sChild + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
-				}
-
-				output.Indent++;
-				if (cc != null && cc.Count > 0) {
-					int indent3 = output.Indent;
-					output.WriteLine("<ul class=\"" + CSSULClassLower + "\">");
-					output.Indent++;
-					foreach (SiteNav c2 in cc) {
-						if (SiteData.IsFilenameCurrentPage(c2.FileName)) {
-							output.WriteLine("<li class=\"level2 " + sItemCSS + CSSSelected + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
-						} else {
-							output.WriteLine("<li class=\"level2 " + sItemCSS + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a></li>");
-						}
-					}
-					output.Indent = indent3;
-					output.WriteLine("</ul>");
-				}
-				output.Indent--;
-				output.WriteLine("</li>");
-			}
-
-			output.Indent--;
+		protected override void WriteListSuffix(HtmlTextWriter output) {
 			output.WriteLine("</ul>");
 
 			if (WrapList) {
@@ -557,16 +353,13 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Indent--;
 				output.WriteLine("</div>");
 			}
-
-			output.WriteLine();
-
-			output.Indent = indent;
 		}
 
 		public List<string> LimitedPropertyList {
 			get {
 				List<string> lst = new List<string>();
 				lst.Add("OverrideCSS");
+				lst.Add("CssClass");
 				lst.Add("ExtraCSS");
 				lst.Add("AutoStylingDisabled");
 				lst.Add("CSSSelected");
@@ -590,6 +383,9 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
+
+			base.OnPreRender(e);
+
 			try {
 
 				if (PublicParmValues.Count > 0) {
@@ -602,16 +398,6 @@ namespace Carrotware.CMS.UI.Controls {
 					sTmp = GetParmValue("AutoStylingDisabled", "false");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						AutoStylingDisabled = Convert.ToBoolean(sTmp);
-					}
-
-					sTmp = GetParmValue("CSSSelected", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
-						CSSSelected = sTmp;
-					}
-
-					sTmp = GetParmValue("CSSHasChildren", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
-						CSSHasChildren = sTmp;
 					}
 
 					sTmp = GetParmValue("WrapList", "false");
@@ -682,12 +468,9 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-
 			if (string.IsNullOrEmpty(OverrideCSS) && !AutoStylingDisabled) {
 
 				ParseCSS();
-
-				//BasicControlUtils.MakeXUACompatibleFirst(this.Page);
 
 			} else {
 				if (!string.IsNullOrEmpty(OverrideCSS)) {
@@ -698,7 +481,6 @@ namespace Carrotware.CMS.UI.Controls {
 					this.Page.Header.Controls.Add(link);
 				}
 			}
-
 
 			if (!string.IsNullOrEmpty(ExtraCSS)) {
 				HtmlLink link = new HtmlLink();
@@ -712,34 +494,32 @@ namespace Carrotware.CMS.UI.Controls {
 				WrapList = false;
 			}
 
-			base.OnPreRender(e);
 		}
 
-
 		private void ParseCSS() {
-			if (string.IsNullOrEmpty(OverrideCSS) && !AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
+			if (string.IsNullOrEmpty(OverrideCSS) && !this.AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
 				string sCSSText = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt");
 
 				if (sCSSText != null) {
-					sCSSText = sCSSText.Replace("{FORE_HEX}", ColorTranslator.ToHtml(ForeColor));
-					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(BGColor));
+					sCSSText = sCSSText.Replace("{FORE_HEX}", ColorTranslator.ToHtml(this.ForeColor));
+					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(this.BGColor));
 
-					sCSSText = sCSSText.Replace("{HOVER_FORE_HEX}", ColorTranslator.ToHtml(HoverFGColor));
-					sCSSText = sCSSText.Replace("{HOVER_BG_HEX}", ColorTranslator.ToHtml(HoverBGColor));
+					sCSSText = sCSSText.Replace("{HOVER_FORE_HEX}", ColorTranslator.ToHtml(this.HoverFGColor));
+					sCSSText = sCSSText.Replace("{HOVER_BG_HEX}", ColorTranslator.ToHtml(this.HoverBGColor));
 
-					sCSSText = sCSSText.Replace("{SEL_FORE_HEX}", ColorTranslator.ToHtml(SelFGColor));
-					sCSSText = sCSSText.Replace("{SEL_BG_HEX}", ColorTranslator.ToHtml(SelBGColor));
+					sCSSText = sCSSText.Replace("{SEL_FORE_HEX}", ColorTranslator.ToHtml(this.SelFGColor));
+					sCSSText = sCSSText.Replace("{SEL_BG_HEX}", ColorTranslator.ToHtml(this.SelBGColor));
 
-					sCSSText = sCSSText.Replace("{UNSEL_FORE_HEX}", ColorTranslator.ToHtml(UnSelFGColor));
-					sCSSText = sCSSText.Replace("{UNSEL_BG_HEX}", ColorTranslator.ToHtml(UnSelBGColor));
+					sCSSText = sCSSText.Replace("{UNSEL_FORE_HEX}", ColorTranslator.ToHtml(this.UnSelFGColor));
+					sCSSText = sCSSText.Replace("{UNSEL_BG_HEX}", ColorTranslator.ToHtml(this.UnSelBGColor));
 
-					sCSSText = sCSSText.Replace("{SUB_FORE_HEX}", ColorTranslator.ToHtml(SubFGColor));
-					sCSSText = sCSSText.Replace("{SUB_BG_HEX}", ColorTranslator.ToHtml(SubBGColor));
+					sCSSText = sCSSText.Replace("{SUB_FORE_HEX}", ColorTranslator.ToHtml(this.SubFGColor));
+					sCSSText = sCSSText.Replace("{SUB_BG_HEX}", ColorTranslator.ToHtml(this.SubBGColor));
 
-					sCSSText = sCSSText.Replace("{FONT_SIZE}", FontSize.Value.ToString() + "px");
+					sCSSText = sCSSText.Replace("{FONT_SIZE}", this.FontSize.Value.ToString() + "px");
 
-					sCSSText = sCSSText.Replace("{MENU_SELECT_CLASS}", CSSSelected);
-					sCSSText = sCSSText.Replace("{MENU_HASCHILD_CLASS}", CSSHasChildren);
+					sCSSText = sCSSText.Replace("{MENU_SELECT_CLASS}", this.CSSSelected);
+					sCSSText = sCSSText.Replace("{MENU_HASCHILD_CLASS}", this.CSSHasChildren);
 
 					if (!string.IsNullOrEmpty(TopBackgroundStyle)) {
 						TopBackgroundStyle = TopBackgroundStyle.Replace(";", "");
@@ -756,7 +536,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 		}
-
 
 	}
 }

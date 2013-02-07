@@ -34,24 +34,33 @@
 </table>
 <asp:Panel ID="pnlSetter" runat="server" Visible="false">
 	<script type="text/javascript">
-		
-			function moduleUpdateAjaxJQuery() {
-				if (typeof (Sys) != 'undefined') {
-					var prm = Sys.WebForms.PageRequestManager.getInstance();
-						prm.add_endRequest(function() {
-						modulePageLoad();
-					});
-				}
-			}
 
-			$(document).ready(function() {
-				moduleUpdateAjaxJQuery();
-				modulePageLoad();
+		function moduleUpdateAjaxJQuery() {
+			if (typeof (Sys) != 'undefined') {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				prm.add_endRequest(function () {
+					modulePageLoad();
+				});
+			}
+		}
+
+		$(document).ready(function () {
+			moduleLoader();
+		});
+
+		setTimeout("moduleLoader();", 250);
+
+		function moduleLoader() {
+			moduleUpdateAjaxJQuery();
+			modulePageLoad();
+		}
+
+		function modulePageLoad() {
+			$("#jqaccordion").accordion({
+				heightStyle: "content",
+				active: parseInt('<%=SelMenu %>')
 			});
-
-			function modulePageLoad() {
-				$("#jqaccordion").accordion("option", "active", <%=SelMenu %>);
-			}
+		}
 			
 	</script>
 </asp:Panel>

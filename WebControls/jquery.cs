@@ -18,6 +18,12 @@ namespace Carrotware.Web.UI.Controls {
 	public class jquery : BaseWebControl {
 
 
+		public static string DefaultJQVersion {
+			get {
+				return "1.8";
+			}
+		}
+
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -25,7 +31,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string JQVersion {
 			get {
 				String s = (String)ViewState["JQVersion"];
-				return ((s == null) ? "1.8" : s);
+				return ((s == null) ? DefaultJQVersion : s);
 			}
 			set {
 				ViewState["JQVersion"] = value;
@@ -51,8 +57,8 @@ namespace Carrotware.Web.UI.Controls {
 				case "2":
 				case "2.0":
 				case "1.9":
-					jqVer = "1.9.0";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery190.js");
+					jqVer = "1.9.1";
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery191.js");
 					break;
 				case "1.7":
 					jqVer = "1.7.2";
@@ -73,8 +79,8 @@ namespace Carrotware.Web.UI.Controls {
 
 			output.WriteLine("<!-- JQuery v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 
-			if (jqVer == "1.9.0") {
-				sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery-mig.js");
+			if (jqVer.StartsWith("1.9")) {
+				sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery-110mig.js");
 				output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 			}
 		}

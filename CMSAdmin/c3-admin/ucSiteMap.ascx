@@ -203,6 +203,8 @@
 </div>
 <p>
 	<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
+	&nbsp;&nbsp;&nbsp;
+	<asp:Button ID="btnFixOrphan" runat="server" Text="Fix Orphaned Pages " OnClick="btnFixOrphan_Click" />
 </p>
 <div id="cmsSiteMap">
 	<asp:Repeater ID="rpTop" runat="server" OnItemDataBound="rpMap_ItemDataBound">

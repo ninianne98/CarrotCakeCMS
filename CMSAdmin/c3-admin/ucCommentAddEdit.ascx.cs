@@ -43,6 +43,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtName.Text = item.CommenterName;
 					txtComment.Text = item.PostCommentText;
 					txtURL.Text = item.CommenterURL;
+					lblDate.Text = item.CreateDate.ToString();
 					chkApproved.Checked = item.IsApproved;
 					chkSpam.Checked = item.IsSpam;
 					guidRootContentID = item.Root_ContentID;

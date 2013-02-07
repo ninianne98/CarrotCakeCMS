@@ -440,7 +440,7 @@ namespace Carrotware.CMS.Core {
 					  (from ct in ctx.carrot_RootContents
 					   join c in ctx.carrot_Contents on ct.Root_ContentID equals c.Root_ContentID
 					   where ct.SiteID == siteID
-					   where c.IsLatestVersion == true
+							&& c.IsLatestVersion == true
 							&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					   select c));
 
@@ -451,7 +451,7 @@ namespace Carrotware.CMS.Core {
 					  (from ct in ctx.carrot_RootContents
 					   join c in ctx.carrot_Contents on ct.Root_ContentID equals c.Root_ContentID
 					   where ct.SiteID == siteID
-					   where c.IsLatestVersion == true
+							&& c.IsLatestVersion == true
 							&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
 					   select c));
 
@@ -473,7 +473,7 @@ namespace Carrotware.CMS.Core {
 						   .Where(g => g.Count() > 1)
 						   .Select(g => g.Key)));
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<carrot_RootContent>> cqGeRootContentListByURLTbl =
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<carrot_RootContent>> cqGetRootContentListByURLTbl =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid entryType, string sPage) =>
 					  (from r in ctx.carrot_RootContents
@@ -483,8 +483,16 @@ namespace Carrotware.CMS.Core {
 							&& r.FileName.ToLower() == sPage.ToLower()
 					   select r));
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_Content>> cqGetAllContent =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID) =>
+					  (from r in ctx.vw_carrot_Contents
+					   where r.SiteID == siteID
+							&& r.IsLatestVersion == true
+					   select r));
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<vw_carrot_Content>> cqGeRootContentListNoMatchByURL =
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<vw_carrot_Content>> cqGetRootContentListNoMatchByURL =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, string sPage) =>
 					  (from ct in ctx.vw_carrot_Contents

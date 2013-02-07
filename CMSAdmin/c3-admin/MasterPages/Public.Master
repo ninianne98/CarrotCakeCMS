@@ -12,7 +12,7 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			$("input:button, input:submit").button();
+			$("input:button, input:submit, input:reset").button();
 		});
 	</script>
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
@@ -20,16 +20,42 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-	<center>
-		<div class="greenborder2-small">
-			<div class="greenborder-small" runat="server" id="divGreen">
-				<div style="text-align: left;">
-					<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
-					</asp:ContentPlaceHolder>
+	<div class="wrappedcontent">
+		<div class="box-top-center">
+			<div class="box-top-left">
+			</div>
+			<div class="box-top-right">
+			</div>
+		</div>
+		<div class="box-inner">
+			<div class="box-right">
+				<div class="box-left">
+					<div class="wrappedcontent-inner">
+						<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+						</asp:ContentPlaceHolder>
+					</div>
+					<div class="box-buildversion">
+						<p>
+							&nbsp;
+						</p>
+						<p>
+							<asp:Literal ID="litCMSBuildInfo" runat="server"></asp:Literal>
+						</p>
+					</div>
+					<div class="box-carrot">
+					</div>
 				</div>
 			</div>
 		</div>
-	</center>
+		<div style="clear: both;">
+		</div>
+		<div class="box-bottom-center">
+			<div class="box-bottom-left">
+			</div>
+			<div class="box-bottom-right">
+			</div>
+		</div>
+	</div>
 	<div style="display: none">
 		<asp:Button ID="cmdDummy" runat="server"></asp:Button>
 	</div>

@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[vw_carrot_Comment]
+﻿CREATE VIEW [dbo].[vw_carrot_Comment]
 AS 
 
 SELECT cc.ContentCommentID, cc.CreateDate, cc.CommenterIP, cc.CommenterName, cc.CommenterEmail, cc.CommenterURL, cc.PostComment, cc.IsApproved, cc.IsSpam, 

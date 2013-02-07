@@ -20,7 +20,6 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[Designer(typeof(ContentCommentFormDesigner))]
@@ -36,7 +35,6 @@ namespace Carrotware.CMS.UI.Controls {
 		[TemplateContainer(typeof(ContentCommentForm))]
 		public ITemplate CommentEntryTemplate { get; set; }
 
-
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateInstance(TemplateInstance.Single)]
 		[DefaultValue(null)]
@@ -44,7 +42,6 @@ namespace Carrotware.CMS.UI.Controls {
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[TemplateContainer(typeof(ContentCommentForm))]
 		public ITemplate CommentThanksTemplate { get; set; }
-
 
 		protected PlaceHolder phEntry = new PlaceHolder();
 		protected List<Control> EntryFormControls = new List<Control>();
@@ -71,7 +68,6 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter writer) {
 			base.BaseRenderContents(writer);
 		}
-
 
 		protected override void CreateChildControls() {
 
@@ -117,7 +113,6 @@ namespace Carrotware.CMS.UI.Controls {
 			base.CreateChildControls();
 		}
 
-
 		private void FindEntryFormCtrls(Control X) {
 
 			foreach (Control c in X.Controls) {
@@ -145,7 +140,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		private void FindThanksFormCtrls(Control X) {
 
 			foreach (Control c in X.Controls) {
@@ -153,7 +147,6 @@ namespace Carrotware.CMS.UI.Controls {
 				FindThanksFormCtrls(c);
 			}
 		}
-
 
 		protected Control GetEntryFormControl(string ControlName) {
 
@@ -222,8 +215,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
-
-
 
 	//======================================
 

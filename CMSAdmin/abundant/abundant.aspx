@@ -23,7 +23,7 @@ Released   : 20090703
 	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("input:button, input:submit").button();
+			$("input:button, input:submit, input:reset").button();
 		});
 
 	</script>
@@ -108,7 +108,7 @@ Released   : 20090703
 	<div id="footer">
 		<asp:PlaceHolder ID="myFooter" runat="server">
 			<p>
-				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
+				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
 				All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
 				<br />
 				Design by <a target="_blank" href="http://www.freecsstemplates.org/">Free CSS Templates</a>.

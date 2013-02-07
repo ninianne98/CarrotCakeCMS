@@ -16,4 +16,3 @@
     [SendTrackbacks]      BIT              NOT NULL,
     [AcceptTrackbacks]    BIT              NOT NULL
 );
-

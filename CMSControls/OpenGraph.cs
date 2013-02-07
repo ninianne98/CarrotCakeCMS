@@ -14,8 +14,6 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:OpenGraph runat=server></{0}:OpenGraph>")]
 	public class OpenGraph : BaseServerControl {
@@ -31,9 +29,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Profile
 		}
 
-
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -48,8 +45,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public bool ShowExpirationDate {
 			get {
 				String s = (String)ViewState["ShowExpirationDate"];
@@ -62,10 +59,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue(true)]
-		[Localizable(true)]
+		[DefaultValue("Default")]
 		public OpenGraphTypeDef OpenGraphType {
 			get {
 				String s = (String)ViewState["OpenGraphType"];
@@ -87,7 +82,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities cu = new ControlUtilities();
 
 		protected override void OnPreRender(EventArgs e) {
 			this.Controls.Clear();

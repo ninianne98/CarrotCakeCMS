@@ -12,16 +12,14 @@ using Carrotware.CMS.Core;
 *
 * Date: October 2011
 */
-//  http://msdn.microsoft.com/en-us/library/yhzc935f.aspx
 
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:BreadCrumbNavigation runat=server></{0}:BreadCrumbNavigation>")]
 	public class BreadCrumbNavigation : BaseServerControl {
 
-
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -36,10 +34,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Localizable(true)]
 		public bool DisplayAsList {
 			get {
 				bool s = false;
@@ -53,11 +49,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("&gt;")]
 		public string TextDivider {
 			get {
 				String s = (String)ViewState["TextDivider"];
@@ -69,10 +62,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("selected")]
 		public string CSSSelected {
 			get {
 				string s = (string)ViewState["CSSSelected"];
@@ -83,10 +74,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string CSSWrapper {
 			get {
 				string s = (string)ViewState["CSSWrapper"];
@@ -152,7 +141,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			}
 		}
-
 
 	}
 }

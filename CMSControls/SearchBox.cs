@@ -20,7 +20,6 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[Designer(typeof(SearchBoxDesigner))]
@@ -36,10 +35,8 @@ namespace Carrotware.CMS.UI.Controls {
 		[TemplateContainer(typeof(SearchBox))]
 		public ITemplate SearchTemplate { get; set; }
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string OverrideTextboxName {
 			get {
 				String s = (String)ViewState["OverrideTextboxName"];
@@ -50,8 +47,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -99,7 +96,6 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter writer) {
 			base.BaseRenderContents(writer);
 		}
-
 
 		protected override void CreateChildControls() {
 
@@ -152,7 +148,6 @@ namespace Carrotware.CMS.UI.Controls {
 			base.CreateChildControls();
 		}
 
-
 		protected Control GetEntryFormControl(string ControlName) {
 
 			return (from x in EntryFormControls
@@ -199,7 +194,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
-
 
 	//======================================
 

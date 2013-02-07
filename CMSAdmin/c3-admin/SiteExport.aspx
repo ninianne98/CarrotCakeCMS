@@ -2,9 +2,9 @@
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
-
 
 		function ExportContent() {
 			var dateBegin = $('#<%= txtBegin.ClientID %>').val();
@@ -12,9 +12,13 @@
 
 			var exportAll = $('#<%= rdoAll.ClientID %>').prop('checked');
 			var exportRange = $('#<%= rdoRange.ClientID %>').prop('checked');
+			var exportScope = $('#<%= rdoScope.ClientID %>').prop('checked');
 
 			var exportBlog = $('#<%= chkBlog.ClientID %>').prop('checked');
 			var exportPage = $('#<%= chkPage.ClientID %>').prop('checked');
+			var exportComment = $('#<%= chkComment.ClientID %>').prop('checked');
+
+			var selectedNode = getSelectedNodeValue();
 
 			//alert("dateBegin : " + dateBegin + " exportBlog : " + exportBlog + " exportPage : " + exportPage + " exportAll : " + exportAll);
 
@@ -22,6 +26,14 @@
 
 			if (exportRange) {
 				exportQS = exportQS + "&datebegin=" + encodeURIComponent(dateBegin) + "&dateend=" + encodeURIComponent(dateEnd);
+			}
+
+			if (exportScope) {
+				exportQS = exportQS + "&node=" + selectedNode;
+			}
+
+			if (exportComment) {
+				exportQS = exportQS + "&comment=include";
 			}
 
 			if (exportBlog && exportPage) {
@@ -58,16 +70,37 @@
 			</label>
 		</legend>
 		<p>
-			<asp:RadioButton ID="rdoAll" runat="server" GroupName="rdoDateRange" Checked="true" value='all' />
-			All date ranges
+			Will not restrct selection by any critera other than page/post content type.<br />
 			<br />
-			<asp:RadioButton ID="rdoRange" runat="server" GroupName="rdoDateRange" value='range' />
-			Selected date range&nbsp;&nbsp;&nbsp; From :
+			<asp:RadioButton ID="rdoAll" runat="server" GroupName="rdoExportGroup" Checked="true" value='all' />
+			<b>All date ranges</b>
+			<br />
+		</p>
+		<p>
+			<br />
+			Restrict pages/posts to those with a go live data that falls in the selectedrange
+			<br />
+			<br />
+			<asp:RadioButton ID="rdoRange" runat="server" GroupName="rdoExportGroup" value='range' />
+			<b>Selected date range</b>&nbsp;&nbsp;&nbsp; From :
 			<asp:TextBox ID="txtBegin" runat="server" CssClass="dateRegion" Columns="12" />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Through :
 			<asp:TextBox ID="txtEnd" runat="server" CssClass="dateRegion" Columns="12" />
 			<br />
 		</p>
+		<p>
+			<br />
+			Only export pages that fall under the hierarchy of the selected page. Does not affect blog post selection.
+		</p>
+		<div style="clear: both">
+			<div style="float: left; margin-top: 8px;">
+				<asp:RadioButton ID="rdoScope" runat="server" GroupName="rdoExportGroup" value='scope' />
+			</div>
+			<div style="float: left;">
+				<!-- parent page plugin-->
+				<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
+			</div>
+		</div>
 	</fieldset>
 	<fieldset style="width: 650px;">
 		<legend>
@@ -81,6 +114,9 @@
 			<br />
 			<asp:CheckBox ID="chkPage" runat="server" Checked="true" />
 			Content Pages
+			<br />
+			<asp:CheckBox ID="chkComment" runat="server" />
+			Comments for Selected Pages / Posts
 			<br />
 		</p>
 	</fieldset>

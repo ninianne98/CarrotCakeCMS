@@ -49,15 +49,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// divGreen control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGreen;
-        
-        /// <summary>
         /// BodyContentPlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -65,6 +56,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder BodyContentPlaceHolder;
+        
+        /// <summary>
+        /// litCMSBuildInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litCMSBuildInfo;
         
         /// <summary>
         /// cmdDummy control.

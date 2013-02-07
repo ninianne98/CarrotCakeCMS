@@ -103,5 +103,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
+
+		protected void btnFixOrphan_Click(object sender, EventArgs e) {
+			using (SiteMapOrderHelper orderHelper = new SiteMapOrderHelper()) {
+				orderHelper.FixOrphanPages(SiteID);
+			}
+
+			Response.Redirect(SiteData.CurrentScriptName);
+		}
 	}
 }

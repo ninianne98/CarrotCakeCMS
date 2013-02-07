@@ -232,7 +232,7 @@
 						<div class="art-footer-text">
 							<asp:PlaceHolder ID="myFooter" runat="server">
 								<p>
-									<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, theSite.SiteName) %>
+									<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
 									All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
 								</p>
 							</asp:PlaceHolder>

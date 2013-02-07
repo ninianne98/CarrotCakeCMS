@@ -18,16 +18,13 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PagedComments runat=server></{0}:PagedComments>")]
 	public class PagedComments : BasePagedDataTemplate, IWidgetLimitedProperties {
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("CreateDate  desc")]
 		public override string OrderBy {
 			get {
 				String s = (String)ViewState["OrderBy"];
@@ -46,7 +43,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnInit(e);
 		}
-
 
 		public override void FetchData() {
 
@@ -72,9 +68,8 @@ namespace Carrotware.CMS.UI.Controls {
 				lstContents = new List<PostComment>();
 			}
 
-			this.SourceData = lstContents;
+			this.DataSource = lstContents;
 		}
-
 
 		public List<string> LimitedPropertyList {
 			get {

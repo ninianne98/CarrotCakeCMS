@@ -7,4 +7,3 @@
     [SerializedData] NVARCHAR (MAX)   NULL,
     [EditDate]       DATETIME         NOT NULL
 );
-

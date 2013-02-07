@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 /*
@@ -127,16 +126,37 @@ namespace Carrotware.CMS.Core {
 			return site;
 		}
 
-		public static List<ContentPageExport> ExportSitePages(Guid siteID) {
+		public static SiteExport GetExportSite(Guid siteID, SiteExport.ExportType exportWhat) {
+			SiteExport site = new SiteExport(siteID, exportWhat);
+
+			return site;
+		}
+
+		public static List<ContentPageExport> ExportAllSiteContent(Guid siteID) {
+			List<ContentPageExport> lst = new List<ContentPageExport>();
+
+			List<ContentPageExport> lst1 = ExportPages(siteID);
+			List<ContentPageExport> lst2 = ExportPosts(siteID);
+			lst = lst1.Union(lst2).ToList();
+
+			return lst;
+		}
+
+		public static List<ContentPageExport> ExportPages(Guid siteID) {
 			List<ContentPageExport> lst = null;
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				var lst1 = (from c in pageHelper.GetAllLatestContentList(siteID)
-							select new ContentPageExport(c, c.GetWidgetList())).ToList();
+				lst = (from c in pageHelper.GetAllLatestContentList(siteID)
+					   select new ContentPageExport(c, c.GetWidgetList())).ToList();
+			}
 
-				var lst2 = (from c in pageHelper.GetAllLatestBlogList(siteID)
-							select new ContentPageExport(c, c.GetWidgetList())).ToList();
+			return lst;
+		}
 
-				lst = lst1.Union(lst2).ToList();
+		public static List<ContentPageExport> ExportPosts(Guid siteID) {
+			List<ContentPageExport> lst = null;
+			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+				lst = (from c in pageHelper.GetAllLatestBlogList(siteID)
+					   select new ContentPageExport(c, c.GetWidgetList())).ToList();
 			}
 
 			return lst;

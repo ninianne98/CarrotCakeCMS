@@ -11,7 +11,6 @@
 
 		var thePage = '';
 
-
 		function exportPage() {
 			window.open("<%=SiteFilename.DataExportURL %>?id=" + thePageID);
 		}
@@ -169,11 +168,6 @@
 			if (theURL.length > 3) {
 				$("#divCMSCancelWinMsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
 
-//				var isOpen = $("#divCMSCancelWin").dialog("isOpen");
-//				if (isOpen) {
-//					$("#divCMSCancelWin").dialog("destroy");
-//				}
-
 				$("#divCMSCancelWin").dialog({
 					open: function () {
 						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
@@ -230,10 +224,10 @@
 
 			$("#divCMSCancelWinMsg").text('Are you sure you want to leave the editor? All changes will be lost!');
 
-//			var isOpen = $("#divCMSCancelWin").dialog("isOpen");
-//			if (isOpen) {
-//				$("#divCMSCancelWin").dialog("destroy");
-//			}
+			//			var isOpen = $("#divCMSCancelWin").dialog("isOpen");
+			//			if (isOpen) {
+			//				$("#divCMSCancelWin").dialog("destroy");
+			//			}
 
 			$("#divCMSCancelWin").dialog({
 				open: function () {
@@ -653,10 +647,10 @@
 		function cmsPageVersionNav() {
 			var qs = $('#<%= ddlVersions.ClientID %>').val();
 
-//			var isOpen = $("#confirmRevert").dialog("isOpen");
-//			if (isOpen) {
-//				$("#confirmRevert").dialog("destroy");
-//			}
+			//			var isOpen = $("#confirmRevert").dialog("isOpen");
+			//			if (isOpen) {
+			//				$("#confirmRevert").dialog("destroy");
+			//			}
 
 			if (qs != '00000') {
 

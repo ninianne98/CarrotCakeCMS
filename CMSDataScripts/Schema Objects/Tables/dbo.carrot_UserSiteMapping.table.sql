@@ -3,4 +3,3 @@
     [UserId]            UNIQUEIDENTIFIER NOT NULL,
     [SiteID]            UNIQUEIDENTIFIER NOT NULL
 );
-

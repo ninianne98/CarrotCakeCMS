@@ -72,11 +72,23 @@ namespace Carrotware.CMS.UI.Controls {
 			return sPath;
 		}
 
-		public Control CreateControlFromResource(Type type, string resourceName) {
+		public Control CreateControlFromResource(string resourceName) {
+			string s = GetResourceText(resourceName);
+
+			return CreateControlFromString(s);
+		}
+
+		public string GetResourceText(string resourceName) {
 			string s = GetManifestResourceStream(resourceName);
 
-			return _page.ParseControl(s);
+			return s;
 		}
+
+		public Control CreateControlFromString(string sControlText) {
+
+			return _page.ParseControl(sControlText);
+		}
+
 
 		private static Page CachedPage {
 			get {
@@ -121,7 +133,6 @@ namespace Carrotware.CMS.UI.Controls {
 			return sReturn;
 		}
 
-
 		public void ResetFind() {
 			bFoundPage = false;
 			page = null;
@@ -140,9 +151,9 @@ namespace Carrotware.CMS.UI.Controls {
 			Page foundPage = null;
 
 			foundPage = FindPage(X);
-			
+
 			try {
-				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "pageContents");
+				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "ThePage");
 
 				if (foundPage != null && obj is ContentPage) {
 					cp = obj as ContentPage;
@@ -159,7 +170,7 @@ namespace Carrotware.CMS.UI.Controls {
 			Page foundPage = FindPage(X);
 
 			try {
-				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "theSite");
+				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "TheSite");
 
 				if (foundPage != null && obj is SiteData) {
 					sd = obj as SiteData;
@@ -199,7 +210,6 @@ namespace Carrotware.CMS.UI.Controls {
 			return page;
 		}
 
-
 		private bool bFoundPlaceHolder = false;
 		private PlaceHolder plcholder = null;
 		public PlaceHolder FindPlaceHolder(string ControlName, Control X) {
@@ -223,7 +233,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return plcholder;
 		}
-
 
 		private bool bFoundControl = false;
 		private Control ctrl = null;

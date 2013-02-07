@@ -3,9 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div style="height: 25px; width: 200px; border: 1px solid #ffffff; clear: both;">
-		&nbsp;
-	</div>
 	<table width="380px">
 		<tr>
 			<td class="tableback">

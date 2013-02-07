@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[carrot_BlogDateFilenameUpdate]
+﻿CREATE PROCEDURE [dbo].[carrot_BlogDateFilenameUpdate]
     @SiteID uniqueidentifier
     
 /*

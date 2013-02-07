@@ -18,15 +18,13 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
-
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:IFrameWidgetWrapper runat=server></{0}:IFrameWidgetWrapper>")]
 	public class IFrameWidgetWrapper : BaseServerControl {
 
+		[Category("Appearance")]
 		[DefaultValue(false)]
-		[Themeable(false)]
 		public override bool EnableViewState {
 			get {
 				String s = (String)ViewState["EnableViewState"];
@@ -41,10 +39,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Localizable(true)]
 		public string Hyperlink {
 			get {
 				string s = (string)ViewState["Hyperlink"];
@@ -55,10 +51,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue("width: 300px; height: 100px;")]
 		public string CSSStyle {
 			get {
 				string s = (string)ViewState["CSSStyle"];
@@ -69,11 +63,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
-		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Localizable(true)]
+		[DefaultValue(true)]
 		public bool ScrollingFrame {
 			get {
 				String s = (String)ViewState["ScrollingFrame"];
@@ -83,7 +74,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["ScrollingFrame"] = value.ToString();
 			}
 		}
-
 
 		protected override void RenderContents(HtmlTextWriter output) {
 			int indent = output.Indent;
@@ -136,10 +126,8 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-
 			base.OnPreRender(e);
 		}
-
 
 	}
 }

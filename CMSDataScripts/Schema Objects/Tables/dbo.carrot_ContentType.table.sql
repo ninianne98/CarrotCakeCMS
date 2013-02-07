@@ -2,4 +2,3 @@
     [ContentTypeID]    UNIQUEIDENTIFIER NOT NULL,
     [ContentTypeValue] NVARCHAR (256)   NOT NULL
 );
-

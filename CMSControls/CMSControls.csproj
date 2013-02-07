@@ -57,8 +57,12 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseNav.cs" />
+    <Compile Include="BaseNavHeaded.cs" />
+    <Compile Include="BaseNavSelHeaded.cs" />
     <Compile Include="BasePagedDataTemplate.cs" />
     <Compile Include="BaseServerControl.cs" />
+    <Compile Include="BaseNavSel.cs" />
     <Compile Include="CarrotGridPaged.cs" />
     <Compile Include="ChildNavigation.cs" />
     <Compile Include="ContentCommentForm.cs" />
@@ -129,6 +133,9 @@
     <EmbeddedResource Include="Trackback.txt" />
     <EmbeddedResource Include="SearchBoxJS.txt" />
     <EmbeddedResource Include="ucFancyPager.ascx" />
+    <EmbeddedResource Include="ucAdminContentContainer.ascx" />
+    <EmbeddedResource Include="ucAdminWidget.ascx" />
+    <EmbeddedResource Include="ucAdminWidgetContainer.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

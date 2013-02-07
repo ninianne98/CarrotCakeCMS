@@ -28,9 +28,13 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentContainer contRight { get; set; }
 		protected ContentContainer contLeft { get; set; }
 
-		public SiteData theSite { get; set; }
-		public ContentPage pageContents { get; set; }
-		public List<Widget> pageWidgets { get; set; }
+		public ContentPage ThePage { get { return pageContents; } }
+		public SiteData TheSite { get { return theSite; } }
+		public List<Widget> ThePageWidgets { get { return pageWidgets; } }
+
+		protected ContentPage pageContents = null;
+		protected SiteData theSite = null;
+		protected List<Widget> pageWidgets = null;
 
 		public Guid guidContentID = Guid.Empty;
 

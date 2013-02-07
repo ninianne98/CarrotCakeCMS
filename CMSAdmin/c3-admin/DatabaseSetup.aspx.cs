@@ -21,8 +21,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			DatabaseUpdate du = new DatabaseUpdate();
 			litMsg.Text = "";
 
-			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
-
 			//FormsAuthentication.SignOut();
 
 			btnLogin.Visible = false;
