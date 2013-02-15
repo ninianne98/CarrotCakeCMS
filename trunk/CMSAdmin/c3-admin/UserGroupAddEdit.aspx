@@ -69,7 +69,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
-		<asp:TextBox ValidationGroup="editGroupName" ID="txtRoleName" onkeypress="return ProcessKeyPress(event)" Width="300px" MaxLength="100" runat="server"></asp:TextBox>
+		<asp:TextBox ValidationGroup="editGroupName" ID="txtRoleName" onkeypress="return ProcessKeyPress(event)" Width="300px" MaxLength="100" runat="server" />
 		<asp:RequiredFieldValidator ValidationGroup="editGroupName" ControlToValidate="txtRoleName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 			Display="Dynamic" />
 	</p>

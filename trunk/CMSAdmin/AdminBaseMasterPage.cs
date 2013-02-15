@@ -27,6 +27,7 @@ namespace Carrotware.CMS.UI.Admin {
 			SiteTemplate,
 			ContentAdd,
 			PageComment,
+			StatusChange,
 			ContentTemplate,
 			ContentSkinEdit,
 			ContentSiteMap,

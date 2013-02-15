@@ -131,7 +131,7 @@
 						Display="Dynamic" />
 				</td>
 			</tr>
-			<tr>
+			<tr id="trSiteIndex" runat="server">
 				<td valign="top" class="tablecaption">
 					Index Page
 					<br />

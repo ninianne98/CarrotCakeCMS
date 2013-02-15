@@ -22,7 +22,7 @@ using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	public abstract class BaseNavSel : BaseServerControl {
+	public abstract class BaseNavSel : BaseNavCommon {
 
 		[Category("Appearance")]
 		[DefaultValue("selected")]
@@ -86,29 +86,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue(false)]
-		public override bool EnableViewState {
-			get {
-				String s = (String)ViewState["EnableViewState"];
-				bool b = ((s == null) ? false : Convert.ToBoolean(s));
-				base.EnableViewState = b;
-				return b;
-			}
-
-			set {
-				ViewState["EnableViewState"] = value.ToString();
-				base.EnableViewState = value;
-			}
-		}
-
-		[Category("Appearance")]
-		[DefaultValue(false)]
 		public virtual bool MultiLevel {
 			get {
 				return false;
 			}
 		}
-
-		public List<SiteNav> NavigationData { get; set; }
 
 		public virtual List<SiteNav> GetTopNav() {
 			if (MultiLevel) {
@@ -122,31 +104,12 @@ namespace Carrotware.CMS.UI.Controls {
 			return this.NavigationData.Where(ct => ct.Parent_ContentID == rootContentID).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 		}
 
-		//important to override so as to do any assignment of your data in your implementing class
-		protected virtual void LoadData() {
-			this.NavigationData = new List<SiteNav>();
-		}
 
-		protected virtual void TweakData() {
-			this.NavigationData.RemoveAll(x => x.ShowInSiteNav == false);
-			this.NavigationData.ToList().ForEach(q => IdentifyLinkAsInactive(q));
-		}
-
-		protected override void OnInit(EventArgs e) {
-			this.Controls.Clear();
-
-			base.OnInit(e);
-
-			LoadData();
-
-			TweakData();
-		}
-
-		protected virtual void WriteListPrefix(HtmlTextWriter output) {
+		protected override void WriteListPrefix(HtmlTextWriter output) {
 			output.WriteLine("<ul id=\"" + this.ClientID + "\" class=\"" + (this.CSSULClassTop + " " + this.CssClass).Trim() + "\">");
 		}
 
-		protected virtual void WriteListSuffix(HtmlTextWriter output) {
+		protected override void WriteListSuffix(HtmlTextWriter output) {
 			output.WriteLine("</ul>");
 		}
 
@@ -263,7 +226,6 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent;
 		}
 
-
 		protected override void RenderContents(HtmlTextWriter output) {
 			WriteTopLevel(output);
 		}
@@ -271,14 +233,11 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnPreRender(EventArgs e) {
 			try {
 
+				base.OnPreRender(e);
+
 				if (PublicParmValues.Count > 0) {
 
 					string sTmp = "";
-
-					sTmp = GetParmValue("CssClass", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
-						this.CssClass = sTmp;
-					}
 
 					sTmp = GetParmValue("CSSSelected", "");
 					if (!string.IsNullOrEmpty(sTmp)) {
@@ -308,7 +267,6 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-			base.OnPreRender(e);
 		}
 
 	}

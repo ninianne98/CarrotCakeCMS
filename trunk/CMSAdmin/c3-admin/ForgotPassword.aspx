@@ -12,7 +12,7 @@
 			</td>
 			<td class="tableback">
 				<b class="caption">email address</b>&nbsp;<br />
-				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate"></asp:TextBox>
+				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate" />
 			</td>
 			<td class="tableback">
 				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">

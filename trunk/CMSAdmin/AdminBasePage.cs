@@ -42,6 +42,20 @@ namespace Carrotware.CMS.UI.Admin {
 
 		}
 
+
+		public bool? GetDDLValueNullableBool(DropDownList ddl) {
+			bool? bVal = null;
+
+			if (ddl.SelectedValue == "0") {
+				bVal = false;
+			}
+			if (ddl.SelectedValue == "1") {
+				bVal = true;
+			}
+
+			return bVal;
+		}
+
 		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {
 
 			dateIn = dateIn.AddMinutes(-2);

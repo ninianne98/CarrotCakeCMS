@@ -58,6 +58,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lblUpdated.Text = pageContents.EditDate.ToString();
 
 					chkActive.Checked = pageContents.PageActive;
+					chkHide.Checked = pageContents.BlockIndex;
 
 					PreselectCheckboxRepeater(rpCat, pageContents.ContentCategories.Cast<IContentMetaInfo>().ToList());
 
@@ -82,7 +83,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
 				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
+
 				pageContents.PageActive = chkActive.Checked;
+				pageContents.ShowInSiteNav = true;
+				pageContents.ShowInSiteMap = true;
+				pageContents.BlockIndex = chkHide.Checked;
 
 				List<ContentCategory> lstCat = new List<ContentCategory>();
 				List<ContentTag> lstTag = new List<ContentTag>();

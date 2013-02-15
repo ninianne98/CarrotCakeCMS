@@ -37,10 +37,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				sQueryMode = "0";
 				pnlTiny.Visible = false;
 				pnlTiny2.Visible = false;
-				litFileMgr.Visible = true;
+				pnlFileMgr.Visible = true;
 			} else {
 				sQueryMode = "1";
-				litFileMgr.Visible = false;
+				pnlFileMgr.Visible = false;
 			}
 
 			if (sReturnMode == "1") {

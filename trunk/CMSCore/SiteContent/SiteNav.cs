@@ -30,6 +30,8 @@ namespace Carrotware.CMS.Core {
 				this.SiteID = c.SiteID;
 				this.FileName = c.FileName;
 				this.Thumbnail = c.PageThumbnail;
+				this.ShowInSiteMap = c.ShowInSiteMap;
+				this.BlockIndex = c.BlockIndex;
 				this.PageActive = c.PageActive;
 				this.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
 				this.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);
@@ -131,6 +133,8 @@ namespace Carrotware.CMS.Core {
 
 		public string FileName { get; set; }
 		public string Thumbnail { get; set; }
+		public bool ShowInSiteMap { get; set; }
+		public bool BlockIndex { get; set; }
 		public bool PageActive { get; set; }
 		public bool ShowInSiteNav { get; set; }
 		public Guid SiteID { get; set; }

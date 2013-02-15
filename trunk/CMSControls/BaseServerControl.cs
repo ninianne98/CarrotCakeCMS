@@ -27,12 +27,11 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch { }
 		}
 
-		protected bool IsPostBack {
+		public bool IsPostBack {
 			get {
-				//string sReq = "GET";
-				//try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
-				//return sReq != "GET" ? true : false;
-				return this.Page.IsPostBack;
+				string sReq = "GET";
+				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
+				return sReq != "GET" ? true : false;
 			}
 		}
 

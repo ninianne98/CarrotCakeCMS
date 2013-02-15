@@ -991,7 +991,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (cmsAdminContent != null) {
 					ContentPage oldContent = pageHelper.FindContentByID(SiteData.CurrentSiteID, CurrentPageGuid);
 
-					ContentPage newContent = pageHelper.CopyContentPageToNew(cmsAdminContent);
+					ContentPage newContent = cmsAdminContent;
 					newContent.ContentID = Guid.NewGuid();
 					newContent.NavOrder = oldContent.NavOrder;
 					newContent.Parent_ContentID = oldContent.Parent_ContentID;

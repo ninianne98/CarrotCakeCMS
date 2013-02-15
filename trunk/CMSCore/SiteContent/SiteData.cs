@@ -86,6 +86,7 @@ namespace Carrotware.CMS.Core {
 
 				if (s != null) {
 #if DEBUG
+					Debug.WriteLine(" ================ " + DateTime.UtcNow.ToString() + " ================");
 					Debug.WriteLine("Grabbed site : GetSiteByID(Guid siteID) " + siteID.ToString());
 #endif
 					return new SiteData(s);
@@ -134,6 +135,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private static string SiteKeyPrefix = "cms_SiteData_";
+
+		public static void RemoveSiteFromCache(Guid siteID) {
+			string ContentKey = SiteKeyPrefix + siteID.ToString();
+			try {
+				HttpContext.Current.Cache.Remove(ContentKey);
+			} catch { }
+		}
 
 		public static SiteData GetSiteFromCache(Guid siteID) {
 
@@ -277,6 +285,13 @@ namespace Carrotware.CMS.Core {
 				_db.SubmitChanges();
 			}
 
+		}
+
+		public int GetSitePageCount(ContentPageType.PageType entryType) {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				int iCount = CannedQueries.GetAllByTypeList(_db, this.SiteID, false, entryType).Count();
+				return iCount;
+			}
 		}
 
 

@@ -53,12 +53,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					chkActive.Checked = pageContents.PageActive;
 					chkNavigation.Checked = pageContents.ShowInSiteNav;
+					chkSiteMap.Checked = pageContents.ShowInSiteMap;
+					chkHide.Checked = pageContents.BlockIndex;
 
 				}
 			}
-
 		}
-
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
@@ -75,8 +75,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
 				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
+
 				pageContents.PageActive = chkActive.Checked;
 				pageContents.ShowInSiteNav = chkNavigation.Checked;
+				pageContents.ShowInSiteMap = chkSiteMap.Checked;
+				pageContents.BlockIndex = chkHide.Checked;
 
 				cmsHelper.cmsAdminContent = pageContents;
 

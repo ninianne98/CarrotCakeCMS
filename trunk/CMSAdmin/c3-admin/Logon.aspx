@@ -19,7 +19,7 @@
 							</td>
 							<td class="tableback">
 								&nbsp;<b class="caption">username</b>&nbsp;<br />
-								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate"></asp:TextBox>
+								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" />
 							</td>
 							<td class="tableback" rowspan="2" valign="top" align="right">
 								<div style="height: 30px; width: 50px; text-align: right; border: 1px solid #ffffff;">
@@ -38,7 +38,7 @@
 							<td class="tableback">
 								<br />
 								&nbsp;<b class="caption">password</b>&nbsp;<br />
-								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="180px" MaxLength="60" ValidationGroup="loginTemplate"></asp:TextBox>
+								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" />
 							</td>
 						</tr>
 						<tr>

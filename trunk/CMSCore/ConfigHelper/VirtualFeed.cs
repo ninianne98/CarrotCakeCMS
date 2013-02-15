@@ -46,14 +46,8 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
-			//if (sFileRequested.ToLower().EndsWith("/xmlrpc.ashx")) {
-			//    context.Response.Write("Not Yet Supported\r\n");
-			//    context.Response.Write(sFileRequested);
-			//}
-
 			context.Response.End();
 		}
-
 
 	}
 }

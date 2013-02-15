@@ -31,7 +31,7 @@ namespace Carrotware.CMS.Core {
 				//lstNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, true);
 				lstNav = navHelper.GetLevelDepthNavigation(SiteData.CurrentSiteID, 4, true);
 			}
-			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
+			lstNav.RemoveAll(x => x.ShowInSiteMap == false);
 
 			DateTime dtMax = lstNav.Min(x => x.EditDate);
 			string DateFormat = "yyyy-MM-dd";
