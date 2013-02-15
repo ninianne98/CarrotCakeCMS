@@ -10,159 +10,171 @@
 namespace Carrotware.CMS.UI.Admin.c3_admin {
     
     
-    public partial class FileBrowser {
+    public partial class SiteContentStatusChange {
         
         /// <summary>
-        /// Head1 control.
+        /// ddlActive control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlActive;
         
         /// <summary>
-        /// jquerybasic1 control.
+        /// ddlNavigation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.jquerybasic jquerybasic1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlNavigation;
         
         /// <summary>
-        /// pnlTiny control.
+        /// ddlSiteMap control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal pnlTiny;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSiteMap;
         
         /// <summary>
-        /// form1 control.
+        /// ddlHide control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlHide;
         
         /// <summary>
-        /// lblPath control.
+        /// rdoAll control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPath;
+        protected global::System.Web.UI.WebControls.RadioButton rdoAll;
         
         /// <summary>
-        /// lnkUp control.
+        /// rdoPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkUp;
+        protected global::System.Web.UI.WebControls.RadioButton rdoPage;
         
         /// <summary>
-        /// rpFolders control.
+        /// rdoPost control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpFolders;
+        protected global::System.Web.UI.WebControls.RadioButton rdoPost;
         
         /// <summary>
-        /// upFile control.
+        /// rdoFilterResults1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload upFile;
+        protected global::System.Web.UI.WebControls.RadioButton rdoFilterResults1;
         
         /// <summary>
-        /// btnUpload control.
+        /// rdoFilterResults2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
+        protected global::System.Web.UI.WebControls.RadioButton rdoFilterResults2;
         
         /// <summary>
-        /// lblWarning control.
+        /// trFilter control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWarning;
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trFilter;
         
         /// <summary>
-        /// rpFiles control.
+        /// txtDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpFiles;
+        protected global::System.Web.UI.WebControls.TextBox txtDate;
         
         /// <summary>
-        /// btnRemove control.
+        /// ddlDateRange control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRemove;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDateRange;
         
         /// <summary>
-        /// txtSelectedFile control.
+        /// btnFilter control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSelectedFile;
+        protected global::System.Web.UI.WebControls.Button btnFilter;
         
         /// <summary>
-        /// btnSelectedFile control.
+        /// ddlAction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSelectedFile;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAction;
         
         /// <summary>
-        /// btnReturnFile control.
+        /// btnSaveMapping control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReturnFile;
+        protected global::System.Web.UI.WebControls.Button btnSaveMapping;
         
         /// <summary>
-        /// pnlTiny2 control.
+        /// lblPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal pnlTiny2;
+        protected global::System.Web.UI.WebControls.Label lblPages;
         
         /// <summary>
-        /// pnlFileMgr control.
+        /// gvPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFileMgr;
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Main Master {
+            get {
+                return ((Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Main)(base.Master));
+            }
+        }
     }
 }

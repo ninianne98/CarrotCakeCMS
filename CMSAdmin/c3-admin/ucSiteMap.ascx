@@ -199,7 +199,7 @@
 		
 </script>
 <div style="display: none;">
-	<asp:TextBox runat="server" ID="txtMap" TextMode="MultiLine" Columns="90" Rows="5"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtMap" TextMode="MultiLine" Columns="90" Rows="5" />
 </div>
 <p>
 	<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />

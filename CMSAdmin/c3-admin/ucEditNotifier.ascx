@@ -121,14 +121,14 @@
 		</asp:DropDownList>
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
-		<asp:Literal runat="server" ID="litVersion"></asp:Literal>
+		<asp:Literal runat="server" ID="litVersion" />
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
-		<asp:Literal runat="server" ID="litTemplate"></asp:Literal>
+		<asp:Literal runat="server" ID="litTemplate" />
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
-		Release Date: <asp:Literal runat="server" ID="litRelease"></asp:Literal> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-		Retire Date: <asp:Literal runat="server" ID="litRetire"></asp:Literal>
+		Release Date: <asp:Literal runat="server" ID="litRelease" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		Retire Date: <asp:Literal runat="server" ID="litRetire" />
 	</p>
 </div>
 <script language="javascript" type="text/javascript">

@@ -17,66 +17,7 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	public abstract class BaseNav : BaseServerControl {
-
-		[Category("Appearance")]
-		[DefaultValue(false)]
-		public override bool EnableViewState {
-			get {
-				String s = (String)ViewState["EnableViewState"];
-				bool b = ((s == null) ? false : Convert.ToBoolean(s));
-				base.EnableViewState = b;
-				return b;
-			}
-
-			set {
-				ViewState["EnableViewState"] = value.ToString();
-				base.EnableViewState = value;
-			}
-		}
-
-		public List<SiteNav> NavigationData { get; set; }
-
-		//important to override so as to do any assignment of your data in your implementing class
-		protected virtual void LoadData() {
-			this.NavigationData = new List<SiteNav>();
-		}
-
-		protected virtual void TweakData() {
-			if (this.NavigationData != null) {
-				this.NavigationData.RemoveAll(x => x.ShowInSiteNav == false);
-				this.NavigationData.ToList().ForEach(q => IdentifyLinkAsInactive(q));
-			}
-		}
-
-		protected virtual void WriteListPrefix(HtmlTextWriter output) {
-
-			if (this.NavigationData != null && this.NavigationData.Count > 0) {
-
-				string sCSS = "";
-
-				if (!string.IsNullOrEmpty(this.CssClass)) {
-					sCSS = " class=\"" + this.CssClass + "\" ";
-				}
-				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
-			}
-		}
-
-		protected virtual void WriteListSuffix(HtmlTextWriter output) {
-			if (this.NavigationData != null && this.NavigationData.Count > 0) {
-				output.WriteLine("</ul>");
-			}
-		}
-
-		protected override void OnInit(EventArgs e) {
-			this.Controls.Clear();
-
-			base.OnInit(e);
-
-			LoadData();
-
-			TweakData();
-		}
+	public abstract class BaseNav : BaseNavCommon {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 			int indent = output.Indent;
@@ -109,22 +50,6 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent;
 		}
 
-		protected override void OnPreRender(EventArgs e) {
-
-			base.OnPreRender(e);
-
-			try {
-
-				if (PublicParmValues.Count > 0) {
-
-					this.CssClass = GetParmValue("CssClass", "");
-
-					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
-
-				}
-			} catch (Exception ex) {
-			}
-		}
 
 	}
 }

@@ -48,6 +48,13 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
+		private int iCtrlW = 0;
+
+		public string WrapCtrlId {
+			get {
+				return "WidgetWrapCtrlId" + (iCtrlW++);
+			}
+		}
 
 		protected void AssignContentZones(ContentContainer pageArea, ContentContainer pageSource) {
 
@@ -74,16 +81,6 @@ namespace Carrotware.CMS.UI.Base {
 			metaGenerator.Content = SiteData.CarrotCakeCMSVersion;
 			this.Page.Header.Controls.Add(metaGenerator);
 			this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
-
-			if (theSite != null) {
-				if (theSite.BlockIndex) {
-					HtmlMeta metaNoCrawl = new HtmlMeta();
-					metaNoCrawl.Name = "robots";
-					metaNoCrawl.Content = "noindex,nofollow,noarchive";
-					this.Page.Header.Controls.Add(metaNoCrawl);
-					this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
-				}
-			}
 
 			string sCurrentPage = SiteData.CurrentScriptName;
 			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
@@ -120,6 +117,16 @@ namespace Carrotware.CMS.UI.Base {
 
 			if (pageContents != null) {
 				guidContentID = pageContents.Root_ContentID;
+			}
+
+			if (theSite != null && pageContents != null) {
+				if (theSite.BlockIndex || pageContents.BlockIndex) {
+					HtmlMeta metaNoCrawl = new HtmlMeta();
+					metaNoCrawl.Name = "robots";
+					metaNoCrawl.Content = "noindex,nofollow,noarchive";
+					this.Page.Header.Controls.Add(metaNoCrawl);
+					this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
+				}
 			}
 
 			pageWidgets = widgetHelper.GetWidgets(guidContentID, !SecurityData.AdvancedEditMode);
@@ -331,7 +338,7 @@ namespace Carrotware.CMS.UI.Base {
 
 							if (SecurityData.AdvancedEditMode) {
 								WidgetWrapper plcWrapper = new WidgetWrapper();
-								plcWrapper.ID = "Wrap" + CtrlId;
+								plcWrapper.ID = WrapCtrlId;
 								plcWrapper.IsAdminMode = true;
 								plcWrapper.ControlPath = theWidget.ControlPath;
 								plcWrapper.ControlTitle = theWidget.ControlPath;

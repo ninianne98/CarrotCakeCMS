@@ -86,10 +86,20 @@
 		</tr>
 		<tr>
 			<td valign="top" class="tablecaption">
+				&nbsp;
+			</td>
+			<td valign="top">
+				<asp:CheckBox ID="chkSiteMap" runat="server" Text="Include In Sitemap" Checked="true" />
+				&nbsp;&nbsp;&nbsp;
+				<asp:CheckBox ID="chkHide" runat="server" Text="Hide from Search Engines" />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="tablecaption">
 				meta keywords:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 			</td>
 		</tr>
 		<tr>
@@ -97,7 +107,7 @@
 				meta description:
 			</td>
 			<td valign="top">
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 			</td>
 		</tr>
 	</table>

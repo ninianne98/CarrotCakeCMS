@@ -30,7 +30,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			litID.Text = SiteData.CurrentSiteID.ToString();
 
 			if (!IsPostBack) {
-				//btnExport.Visible = false;
 
 				if (DatabaseUpdate.AreCMSTablesIncomplete()) {
 					Response.Redirect("./DatabaseSetup.aspx");
@@ -53,8 +52,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				ddlTimeZone.SelectedValue = TimeZoneInfo.Local.Id;
 
+				trSiteIndex.Visible = false;
+
 				if (site != null) {
-					//btnExport.Visible = true;
+
+					if (site.GetSitePageCount(ContentPageType.PageType.ContentEntry) > 0) {
+						trSiteIndex.Visible = true;
+					}
 
 					txtSiteName.Text = site.SiteName;
 					txtTagline.Text = site.SiteTagline;

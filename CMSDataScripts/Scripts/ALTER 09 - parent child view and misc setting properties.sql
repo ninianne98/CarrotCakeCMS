@@ -74,9 +74,22 @@ ALTER TABLE [dbo].[carrot_RootContent]
 
 GO
 
+declare @BlogEntry uniqueidentifier
+declare @ContentEntry uniqueidentifier
+
+set @BlogEntry = (select top 1 [ContentTypeID] from [dbo].[carrot_ContentType] where [ContentTypeValue] = 'BlogEntry')
+set @ContentEntry = (select top 1 [ContentTypeID] from [dbo].[carrot_ContentType] where [ContentTypeValue] = 'ContentEntry')
+
+
 UPDATE [dbo].[carrot_RootContent] 
 SET [ShowInSiteNav] = 1
 WHERE ISNULL([ShowInSiteNav], 1) = 1
+	AND [ContentTypeID] = @ContentEntry
+
+UPDATE [dbo].[carrot_RootContent] 
+SET [ShowInSiteNav] = 0
+WHERE ISNULL([ShowInSiteNav], 1) = 1
+	AND [ContentTypeID] = @BlogEntry
 
 
 UPDATE RC
@@ -239,4 +252,84 @@ LEFT JOIN
 
 GO
 
+--=====================================
+
+
+IF NOT EXISTS( select * from information_schema.columns 
+		where table_name = 'carrot_RootContent' and column_name = 'ShowInSiteMap') BEGIN
+
+	ALTER TABLE [dbo].[carrot_RootContent] ADD [ShowInSiteMap] [bit] NULL
+
+	ALTER TABLE [dbo].[carrot_RootContent] ADD [BlockIndex] [bit] NULL
+
+END
+
+
+GO
+
+ALTER TABLE [dbo].[carrot_RootContent] 
+	ALTER COLUMN  [ShowInSiteMap] [bit] NULL
+
+
+ALTER TABLE [dbo].[carrot_RootContent] 
+	ALTER COLUMN  [BlockIndex] [bit] NULL
+
+GO
+
+
+declare @BlogEntry uniqueidentifier
+declare @ContentEntry uniqueidentifier
+
+set @BlogEntry = (select top 1 [ContentTypeID] from [dbo].[carrot_ContentType] where [ContentTypeValue] = 'BlogEntry')
+set @ContentEntry = (select top 1 [ContentTypeID] from [dbo].[carrot_ContentType] where [ContentTypeValue] = 'ContentEntry')
+
+
+UPDATE [dbo].[carrot_RootContent] 
+SET [ShowInSiteMap] = 1
+WHERE ISNULL([ShowInSiteMap], 1) = 1
+	AND [ContentTypeID] = @ContentEntry
+
+UPDATE [dbo].[carrot_RootContent]
+SET [ShowInSiteMap] = 0
+WHERE ISNULL([ShowInSiteMap], 1) = 1
+	AND [ContentTypeID] = @BlogEntry
+
+
+UPDATE [dbo].[carrot_RootContent] 
+SET [BlockIndex] = 0
+WHERE ISNULL([BlockIndex], 0) = 0
+
+
+GO
+
+ALTER TABLE [dbo].[carrot_RootContent] 
+	ALTER COLUMN  [ShowInSiteMap] [bit] NOT NULL
+
+
+ALTER TABLE [dbo].[carrot_RootContent] 
+	ALTER COLUMN  [BlockIndex] [bit] NOT NULL
+
+GO
+
+--==============
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_Content]
+AS 
+
+select rc.Root_ContentID, rc.SiteID, rc.Heartbeat_UserId, rc.EditHeartbeat, rc.[FileName], rc.PageActive, rc.ShowInSiteNav, rc.ShowInSiteMap, rc.BlockIndex,
+		rc.CreateUserId, rc.CreateDate, c.ContentID, c.Parent_ContentID, c.IsLatestVersion, c.TitleBar, c.NavMenuText, c.PageHead, 
+		c.PageText, c.LeftPageText, c.RightPageText, c.NavOrder, c.EditUserId, c.EditDate, c.TemplateFile, c.MetaKeyword, c.MetaDescription,
+		ct.ContentTypeID, ct.ContentTypeValue, rc.PageSlug, rc.PageThumbnail, s.TimeZone,
+		rc.RetireDate, rc.GoLiveDate, rc.GoLiveDateLocal,
+		cast(case when rc.RetireDate < GetUTCDate() then 1 else 0 end as bit) as IsRetired,
+		cast(case when rc.GoLiveDate > GetUTCDate() then 1 else 0 end as bit) as IsUnReleased
+from [dbo].carrot_RootContent AS rc 
+INNER JOIN [dbo].carrot_Sites AS s ON rc.SiteID = s.SiteID 
+INNER JOIN [dbo].carrot_Content AS c ON rc.Root_ContentID = c.Root_ContentID 
+INNER JOIN [dbo].carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
+
+
+GO
 

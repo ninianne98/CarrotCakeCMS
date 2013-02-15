@@ -13,13 +13,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
     public partial class DatabaseSetup {
         
         /// <summary>
-        /// litMsg control.
+        /// rpMessages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litMsg;
+        protected global::System.Web.UI.WebControls.Repeater rpMessages;
         
         /// <summary>
         /// btnLogin control.

@@ -32,14 +32,18 @@ namespace Carrotware.CMS.Core {
 				this.Heartbeat_UserId = c.Heartbeat_UserId;
 				this.EditHeartbeat = c.EditHeartbeat;
 				this.FileName = c.FileName;
+
+				this.CreateUserId = c.CreateUserId;
 				this.CreateDate = site.ConvertUTCToSiteTime(c.CreateDate);
+
 				this.GoLiveDate = site.ConvertUTCToSiteTime(c.GoLiveDate);
 				this.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
 				this.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
 
+				this.ShowInSiteMap = c.ShowInSiteMap;
+				this.BlockIndex = c.BlockIndex;
 				this.PageActive = c.PageActive;
 				this.ShowInSiteNav = c.ShowInSiteNav;
-				this.CreateUserId = c.CreateUserId;
 
 				this.PageSlug = c.PageSlug;
 				this.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
@@ -191,6 +195,9 @@ namespace Carrotware.CMS.Core {
 
 			rc.Root_ContentID = this.Root_ContentID;
 			rc.PageActive = true;
+			rc.BlockIndex = false;
+			rc.ShowInSiteMap = true;
+
 			rc.SiteID = this.SiteID;
 			rc.ContentTypeID = ContentPageType.GetIDByType(this.ContentType);
 
@@ -235,6 +242,8 @@ namespace Carrotware.CMS.Core {
 			rc.FileName = this.FileName;
 			rc.PageActive = this.PageActive;
 			rc.ShowInSiteNav = this.ShowInSiteNav;
+			rc.BlockIndex = this.BlockIndex;
+			rc.ShowInSiteMap = this.ShowInSiteMap;
 
 			rc.FileName = ContentPageHelper.ScrubFilename(this.Root_ContentID, rc.FileName);
 
@@ -423,6 +432,8 @@ namespace Carrotware.CMS.Core {
 		public Guid? EditUserId { get; set; }
 		public Guid CreateUserId { get; set; }
 		public bool IsLatestVersion { get; set; }
+		public bool ShowInSiteMap { get; set; }
+		public bool BlockIndex { get; set; }
 		public string TemplateFile { get; set; }
 		public string Thumbnail { get; set; }
 		public string FileName { get; set; }

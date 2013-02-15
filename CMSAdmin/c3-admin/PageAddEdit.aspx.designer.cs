@@ -211,6 +211,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.CheckBox chkNavigation;
         
         /// <summary>
+        /// chkSiteMap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSiteMap;
+        
+        /// <summary>
+        /// chkHide control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkHide;
+        
+        /// <summary>
         /// txtKey control.
         /// </summary>
         /// <remarks>

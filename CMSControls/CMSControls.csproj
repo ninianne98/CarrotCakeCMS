@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseNav.cs" />
+    <Compile Include="BaseNavCommon.cs" />
     <Compile Include="BaseNavHeaded.cs" />
     <Compile Include="BaseNavSelHeaded.cs" />
     <Compile Include="BasePagedDataTemplate.cs" />

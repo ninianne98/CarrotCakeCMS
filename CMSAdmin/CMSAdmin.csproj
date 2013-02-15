@@ -166,6 +166,13 @@
     <Compile Include="c3-admin\BlogPostEdit.aspx.designer.cs">
       <DependentUpon>BlogPostEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\SiteContentStatusChange.aspx.cs">
+      <DependentUpon>SiteContentStatusChange.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteContentStatusChange.aspx.designer.cs">
+      <DependentUpon>SiteContentStatusChange.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\SiteExport.aspx.cs">
       <DependentUpon>SiteExport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -529,6 +536,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
+    <Content Include="c3-admin\Images\blogger.png" />
+    <Content Include="c3-admin\SiteContentStatusChange.aspx" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_15_f9cecd_40x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_b7d7c4_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_dff6e8_1x400.png" />

@@ -167,7 +167,7 @@
 				</td>
 				<td valign="top">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
-						TextMode="MultiLine" runat="server"></asp:TextBox>
+						TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
@@ -175,7 +175,7 @@
 					meta description:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 		</table>

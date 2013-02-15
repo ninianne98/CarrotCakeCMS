@@ -305,7 +305,7 @@
 		<p>
 			<br />
 			Selected File:
-			<asp:TextBox ID="txtSelectedFile" Columns="50" runat="server"></asp:TextBox>
+			<asp:TextBox ID="txtSelectedFile" Columns="50" runat="server" />
 			<asp:Button Visible="false" ID="btnSelectedFile" runat="server" Text="Return Selection" OnClientClick="FileBrowserDialogue.mySubmit();" />
 			<asp:Button Visible="false" ID="btnReturnFile" runat="server" Text="Select File" OnClientClick="return cmsSetFileNameReturn();" />
 		</p>
@@ -317,11 +317,11 @@
 	</div>
 	</asp:Literal>
 	<div style="display: none">
-		<asp:Literal runat="server" ID="litFileMgr">
-		<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName();return false;" />
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
-		</asp:Literal>
+		<asp:Panel runat="server" ID="pnlFileMgr">
+			<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName();return false;" />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
+		</asp:Panel>
 	</div>
 	</form>
 </body>

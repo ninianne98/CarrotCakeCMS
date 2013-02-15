@@ -15,13 +15,13 @@
 	<querynugget>
 		<priority>12</priority>
 		<mode>LT</mode>
-		<rowcount>2</rowcount>
+		<rowcount>1</rowcount>
 		<alwayscheck>True</alwayscheck>
 		<testcontext>|AlterStep09|AlterStep08|AlterStep07|</testcontext>
 		<sql>
 			select distinct table_name, column_name
 			from [information_schema].[columns]
-			where table_name in('carrot_ContentCategory', 'carrot_ContentTag') and column_name in('IsPublic')
+			where table_name in('carrot_RootContent') and column_name in('ShowInSiteMap')
 		</sql>
 	</querynugget>
 	<querynugget>

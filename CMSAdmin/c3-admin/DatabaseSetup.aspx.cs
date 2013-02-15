@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Security;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
@@ -17,54 +20,46 @@ using Carrotware.CMS.UI.Base;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class DatabaseSetup : BasePage {
 
+		bool bOK = false;
+
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
-			litMsg.Text = "";
 
-			//FormsAuthentication.SignOut();
+			if (!string.IsNullOrEmpty(Request.QueryString["signout"])) {
+				FormsAuthentication.SignOut();
+			}
+
+			List<DatabaseUpdateMessage> lst = new List<DatabaseUpdateMessage>();
 
 			btnLogin.Visible = false;
 			btnCreate.Visible = false;
 
 			if (DatabaseUpdate.LastSQLError != null) {
-				HandleResponse(DatabaseUpdate.LastSQLError.Message);
+				du.HandleResponse(lst, DatabaseUpdate.LastSQLError.Message);
 				DatabaseUpdate.LastSQLError = null;
 			} else {
 
 				bool bUpdate = true;
 
 				if (!du.DoCMSTablesExist()) {
-					HandleResponse("Create Database ", du.CreateCMSDatabase());
 					bUpdate = false;
-				} else {
-					HandleResponse("Database already exists ");
 				}
 
 				bUpdate = du.DatabaseNeedsUpdate();
 
-				int iUpdate = 1;
-
 				if (bUpdate) {
-					if (!du.IsPostStep04) {
-						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep00());
-						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep01());
-						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep02());
-						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep03());
-						HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep04());
-					}
-					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep05());
-					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep06());
-					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep07());
-					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep08());
-					HandleResponse("Update  " + (iUpdate++).ToString() + " ", du.AlterStep09());
+
+					DatabaseUpdateStatus status = du.PerformUpdates();
+					lst = du.MergeMessages(lst, status.Messages);
+
 				} else {
-					HandleResponse("Database up-to-date ");
+					du.HandleResponse(lst, "Database up-to-date ");
 				}
 
 				bUpdate = du.DatabaseNeedsUpdate();
 
 				if (!bUpdate && DatabaseUpdate.LastSQLError == null) {
-					if (du.UsersExist()) {
+					if (du.UsersExist) {
 						btnLogin.Visible = true;
 					} else {
 						btnCreate.Visible = true;
@@ -73,38 +68,31 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (DatabaseUpdate.LastSQLError != null) {
-				HandleResponse(DatabaseUpdate.LastSQLError.Message);
+				du.HandleResponse(lst, DatabaseUpdate.LastSQLError.Message);
 			}
 
-			HandleResponse("  ");
+			if (lst.Where(x => !string.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {
+				bOK = false;
+			} else {
+				bOK = true;
+			}
+
+			rpMessages.DataSource = lst.OrderBy(x => x.Order);
+			rpMessages.DataBind();
 
 			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
 				cmsHelper.ResetConfigs();
 			}
 		}
 
-		protected void HandleResponse(string sMsg) {
-			HandleResponse(sMsg, null);
-		}
-
-		protected void HandleResponse(string sMsg, DatabaseUpdateResponse execMessage) {
-			string sResponse = "";
-
-			if (!string.IsNullOrEmpty(sMsg)) {
-
-				sResponse += "<hr /> <b>" + sMsg + " </b><br /> ";
-
-				if (execMessage != null) {
-					sResponse += execMessage.Response + " <br />";
-					if (execMessage.LastException != null && !string.IsNullOrEmpty(execMessage.LastException.Message)) {
-						sResponse += "<i>" + execMessage.LastException.Message + "</i> <br />";
-					}
-				}
+		protected string CSSMsg() {
+			string sCSS = "okMsg";
+			if (!bOK) {
+				sCSS = "errMsg";
 			}
 
-			litMsg.Text += sResponse;
+			return sCSS;
 		}
-
 
 		protected void btnLogin_Click(object sender, EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {

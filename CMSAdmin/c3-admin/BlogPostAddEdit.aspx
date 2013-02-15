@@ -224,11 +224,6 @@
 
 			$("#divCMSCancelWinMsg").text('Are you sure you want to leave the editor? All changes will be lost!');
 
-			//			var isOpen = $("#divCMSCancelWin").dialog("isOpen");
-			//			if (isOpen) {
-			//				$("#divCMSCancelWin").dialog("destroy");
-			//			}
-
 			$("#divCMSCancelWin").dialog({
 				open: function () {
 					$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
@@ -447,8 +442,8 @@
 				</td>
 				<td valign="top">
 					<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
-					<%--&nbsp;&nbsp;&nbsp;
-					<asp:CheckBox ID="chkNavigation" runat="server" Text="Include in site navigation" Checked="true" />--%>
+					&nbsp;&nbsp;&nbsp;
+					<asp:CheckBox ID="chkHide" runat="server" Text="Hide from Search Engines" />
 				</td>
 			</tr>
 			<tr>
@@ -456,7 +451,7 @@
 					meta keywords:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
@@ -464,7 +459,7 @@
 					meta description:
 				</td>
 				<td valign="top">
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server"></asp:TextBox>
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr style="display: none">
@@ -647,11 +642,6 @@
 		function cmsPageVersionNav() {
 			var qs = $('#<%= ddlVersions.ClientID %>').val();
 
-			//			var isOpen = $("#confirmRevert").dialog("isOpen");
-			//			if (isOpen) {
-			//				$("#confirmRevert").dialog("destroy");
-			//			}
-
 			if (qs != '00000') {
 
 				$("#confirmRevert").dialog({
@@ -680,7 +670,7 @@
 	</script>
 	<br />
 	<div style="display: none">
-		<asp:TextBox ID="txtOldFile" runat="server"></asp:TextBox>
+		<asp:TextBox ID="txtOldFile" runat="server" />
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save 1" />
 		<asp:Button ValidationGroup="inputForm" ID="btnSaveVisit" runat="server" OnClick="btnSaveVisit_Click" Text="Save 2" />
 		<div id="divCMSCancelWin" title="Quit Editor?">

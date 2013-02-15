@@ -21,12 +21,14 @@
 				show content:
 			</td>
 			<td valign="top" colspan="3">
-				<div id="jqradioset">
+				<div class="jqradioset">
 					<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 					<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 				</div>
 			</td>
 		</tr>
+	</table>
+	<table>
 		<tr runat="server" id="trFilter">
 			<td valign="top" class="tablecaption">
 				go live date post filter:
@@ -36,7 +38,7 @@
 				&nbsp;&nbsp;
 			</td>
 			<td valign="top">
-				<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server"></asp:TextBox>
+				<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server" />
 				<asp:DropDownList ID="ddlDateRange" runat="server">
 					<asp:ListItem Text="30 Days +/-" Value="30" />
 					<asp:ListItem Text="60 Days +/-" Value="60" />
@@ -121,6 +123,8 @@
 						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
 						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
+						AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/flag_blue.png" ImagePathFalse="/c3-admin/images/application_lightning.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Public" AlternateTextFalse="Inactive"
 						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>

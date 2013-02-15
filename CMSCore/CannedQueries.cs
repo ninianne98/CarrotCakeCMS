@@ -77,6 +77,25 @@ namespace Carrotware.CMS.Core {
 					select r);
 		}
 
+
+		internal static IQueryable<vw_carrot_Content> GetContentByStatusAndDateRange(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType pageType,
+			DateTime dateBegin, DateTime dateEnd, bool? bActive, bool? bSiteMap, bool? bSiteNav, bool? bBlock) {
+
+			Guid gContent = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry);
+			Guid gBlog = ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry);
+			Guid contentTypeID = ContentPageType.GetIDByType(pageType);
+
+			return (from ct in ctx.vw_carrot_Contents
+					where ct.SiteID == siteID
+						&& ct.IsLatestVersion == true
+						&& (ct.ContentTypeID == contentTypeID || pageType == ContentPageType.PageType.Unknown)
+						&& (ct.PageActive == Convert.ToBoolean(bActive) || bActive == null)
+						&& (ct.BlockIndex == Convert.ToBoolean(bBlock) || bBlock == null)
+						&& ((ct.ShowInSiteMap == Convert.ToBoolean(bSiteMap) && ct.ContentID == gContent) || bSiteMap == null)
+						&& ((ct.ShowInSiteNav == Convert.ToBoolean(bSiteNav) && ct.ContentID == gContent) || bSiteNav == null)
+					select ct);
+		}
+
 		internal static IQueryable<vw_carrot_Content> GetLatestBlogListDateRange(CarrotCMSDataContext ctx, Guid siteID, DateTime dateBegin, DateTime dateEnd, bool bActiveOnly) {
 			return (from ct in ctx.vw_carrot_Contents
 					where ct.SiteID == siteID

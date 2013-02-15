@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Data;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
 /*
@@ -25,7 +20,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class CreateFirstAdmin : BasePage {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
-			if (du.UsersExist()) {
+			if (du.UsersExist) {
 				createWizard.Visible = false;
 				lblLogon.Visible = true;
 			} else {

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
 /*
@@ -31,7 +27,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			DatabaseUpdate du = new DatabaseUpdate();
 			((HtmlImage)loginTemplate.FindControl("imgError")).Visible = false;
 
-			if (DatabaseUpdate.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist()) {
+			if (DatabaseUpdate.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist) {
 				FormsAuthentication.SignOut();
 				Response.Redirect("./DatabaseSetup.aspx");
 			}

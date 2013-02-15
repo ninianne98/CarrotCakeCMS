@@ -1,9 +1,9 @@
 ﻿function AjaxBtnLoad() {
 	$(function () {
-		$('#jqtabs').tabs();
+		$('#jqtabs, .jqtabs').tabs();
 	});
 
-	$("#jqaccordion").accordion({
+	$("#jqaccordion, .jqaccordion").accordion({
 		//collapsible: true
 		active: false,
 		autoheight: false,
@@ -11,7 +11,9 @@
 		alwaysOpen: false
 	});
 
-	$("#jqradioset").buttonset();
+	$(function () {
+		$("#jqradioset, .jqradioset").buttonset();
+	});
 
 	$(document).ready(function () {
 		$("input:button, input:submit, input:reset").button();

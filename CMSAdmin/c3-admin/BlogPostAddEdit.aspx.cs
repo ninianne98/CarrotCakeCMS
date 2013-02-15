@@ -162,7 +162,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					reRightBody.Text = pageContents.RightPageText;
 
 					chkActive.Checked = pageContents.PageActive;
-					//chkNavigation.Checked = pageContents.ShowInSiteNav;
+					chkHide.Checked = pageContents.BlockIndex;
 
 					gvTracks.DataSource = pageContents.GetTrackbacks();
 					gvTracks.DataBind();
@@ -259,6 +259,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			pageContents.PageActive = chkActive.Checked;
 			pageContents.ShowInSiteNav = true;
+			pageContents.ShowInSiteMap = true;
+			pageContents.BlockIndex = chkHide.Checked;
 
 			pageContents.ContentType = ContentPageType.PageType.BlogEntry;
 

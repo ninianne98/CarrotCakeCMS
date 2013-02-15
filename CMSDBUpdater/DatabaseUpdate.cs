@@ -153,6 +153,107 @@ namespace Carrotware.CMS.DBUpdater {
 			return false;
 		}
 
+		public List<DatabaseUpdateMessage> MergeMessages(List<DatabaseUpdateMessage> lstMsgs1, List<DatabaseUpdateMessage> lstMsgs2) {
+			if (lstMsgs1 == null) {
+				lstMsgs1 = new List<DatabaseUpdateMessage>();
+			}
+
+			if (lstMsgs2 == null) {
+				lstMsgs2 = new List<DatabaseUpdateMessage>();
+			}
+
+			if (lstMsgs2.Count > 0) {
+				int iPad = lstMsgs1.Count;
+				lstMsgs2.ToList().ForEach(x => x.Order = (x.Order + iPad));
+
+				lstMsgs1 = lstMsgs1.Union(lstMsgs2).ToList();
+			}
+
+			return lstMsgs1;
+		}
+
+		public List<DatabaseUpdateMessage> HandleResponse(List<DatabaseUpdateMessage> lstMsgs, string sMsg) {
+			if (lstMsgs == null) {
+				lstMsgs = new List<DatabaseUpdateMessage>();
+			}
+
+			HandleResponse(lstMsgs, sMsg, null);
+
+			return lstMsgs;
+		}
+
+		public List<DatabaseUpdateMessage> HandleResponse(List<DatabaseUpdateMessage> lstMsgs, string sMsg, DatabaseUpdateResponse execMessage) {
+
+			if (lstMsgs == null) {
+				lstMsgs = new List<DatabaseUpdateMessage>();
+			}
+
+			DatabaseUpdateMessage item = new DatabaseUpdateMessage();
+
+			if (!string.IsNullOrEmpty(sMsg)) {
+
+				item.Message = sMsg;
+
+				if (execMessage != null) {
+					item.Response = execMessage.Response;
+					if (execMessage.LastException != null && !string.IsNullOrEmpty(execMessage.LastException.Message)) {
+						item.ExceptionText = execMessage.LastException.Message;
+						if (execMessage.LastException.InnerException != null && !string.IsNullOrEmpty(execMessage.LastException.InnerException.Message)) {
+							item.InnerExceptionText = execMessage.LastException.InnerException.Message;
+						}
+					}
+				}
+			}
+
+			item.Order = lstMsgs.Count + 1;
+
+			lstMsgs.Add(item);
+
+			return lstMsgs;
+		}
+
+		public DatabaseUpdateStatus PerformUpdates() {
+			DatabaseUpdateStatus status = new DatabaseUpdateStatus();
+
+			bool bUpdate = true;
+			List<DatabaseUpdateMessage> lst = new List<DatabaseUpdateMessage>();
+
+			if (!DoCMSTablesExist()) {
+				HandleResponse(lst, "Create Database ", CreateCMSDatabase());
+				bUpdate = false;
+			} else {
+				HandleResponse(lst, "Database already exists ");
+			}
+
+			bUpdate = DatabaseNeedsUpdate();
+
+			int iUpdate = 1;
+
+			if (bUpdate) {
+				if (!IsPostStep04) {
+					HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep00());
+					HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep01());
+					HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep02());
+					HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep03());
+					HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep04());
+				}
+				HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep05());
+				HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep06());
+				HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep07());
+				HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep08());
+				HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep09());
+			} else {
+				HandleResponse(lst, "Database up-to-date ");
+			}
+
+			bUpdate = DatabaseNeedsUpdate();
+
+			status.NeedsUpdate = bUpdate;
+			status.Messages = lst;
+
+			return status;
+		}
+
 
 		public bool TableExists(string testTableName) {
 			string testQuery = "select * from [information_schema].[columns] where table_name = '" + testTableName.Replace("'", "''") + "' ";
@@ -265,17 +366,19 @@ namespace Carrotware.CMS.DBUpdater {
 			return false;
 		}
 
-		public bool UsersExist() {
-			if (!FailedSQL) {
-				string query = "select top 5 * from [aspnet_Membership]";
-				DataTable table1 = GetData(query);
+		public bool UsersExist {
+			get {
+				if (!FailedSQL) {
+					string query = "select top 5 * from [aspnet_Membership]";
+					DataTable table1 = GetData(query);
 
-				if (table1.Rows.Count > 0) {
-					return true;
+					if (table1.Rows.Count > 0) {
+						return true;
+					}
 				}
-			}
 
-			return false;
+				return false;
+			}
 		}
 
 		public DatabaseUpdateResponse AlterStep01() {
@@ -525,7 +628,38 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 	}
 
+	//======================
+	public class DatabaseUpdateStatus {
+		public bool NeedsUpdate { get; set; }
 
+		public List<DatabaseUpdateMessage> Messages { get; set; }
+
+
+		public DatabaseUpdateStatus() {
+			this.Messages = new List<DatabaseUpdateMessage>();
+			NeedsUpdate = true;
+		}
+	}
+
+	//======================
+	public class DatabaseUpdateMessage {
+
+		public string Message { get; set; }
+		public string ExceptionText { get; set; }
+		public string InnerExceptionText { get; set; }
+		public string Response { get; set; }
+		public int Order { get; set; }
+
+		public DatabaseUpdateMessage() {
+			this.ExceptionText = null;
+			this.InnerExceptionText = null;
+			this.Message = "";
+			this.Response = "";
+			this.Order = -1;
+		}
+	}
+
+	//======================
 	public class DatabaseUpdateResponse {
 
 		public Exception LastException { get; set; }

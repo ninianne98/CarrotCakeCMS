@@ -102,7 +102,7 @@
 	</div>
 	<br style="clear: both;" />
 	<div style="display: none;">
-		<asp:TextBox ID="txtSort" runat="server" TextMode="MultiLine" Rows="5" Columns="80"></asp:TextBox>
+		<asp:TextBox ID="txtSort" runat="server" TextMode="MultiLine" Rows="5" Columns="80" />
 	</div>
 	<p>
 		<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />

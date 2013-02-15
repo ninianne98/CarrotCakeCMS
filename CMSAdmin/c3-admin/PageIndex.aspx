@@ -22,13 +22,14 @@
 				show content:
 			</td>
 			<td valign="top" colspan="3">
-				<div id="jqradioset">
+				<div class="jqradioset">
 					<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 					<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 				</div>
 			</td>
 		</tr>
-		<br />
+	</table>
+	<table>
 		<tr runat="server" id="trFilter">
 			<td valign="top" class="tablecaption">
 				page filter:
@@ -125,6 +126,10 @@
 						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="ShowInSiteNav" HeaderText="Navigation" ShowBooleanImage="true"
 						AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/application_lightning.png" ImagePathFalse="/c3-admin/images/flag_blue.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="ShowInSiteMap" HeaderText="In SiteMap" ShowBooleanImage="true"
+						AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/application_lightning.png" ImagePathFalse="/c3-admin/images/flag_blue.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
+						AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/flag_blue.png" ImagePathFalse="/c3-admin/images/application_lightning.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Public" AlternateTextFalse="Inactive"
 						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>

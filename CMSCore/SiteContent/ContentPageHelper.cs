@@ -180,6 +180,50 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public enum UpdateField {
+			MarkActive,
+			MarkIncludeInSiteMap,
+			MarkIncludeInSiteNav,
+			MarkAsIndexable
+		}
+
+		public void MarkSelectedPublished(Guid siteID, List<Guid> lstUpd, UpdateField selField) {
+			IQueryable<carrot_RootContent> queryCont = null;
+
+			Guid gContent = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry);
+
+			if (selField == UpdateField.MarkActive || selField == UpdateField.MarkAsIndexable) {
+				queryCont = (from r in db.carrot_RootContents
+							 where r.SiteID == siteID
+								&& lstUpd.Contains(r.Root_ContentID)
+							 select r);
+			} else {
+				queryCont = (from r in db.carrot_RootContents
+							 where r.SiteID == siteID
+								&& r.ContentTypeID == gContent
+								&& lstUpd.Contains(r.Root_ContentID)
+							 select r);
+			}
+
+			switch (selField) {
+				case UpdateField.MarkActive:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { PageActive = true });
+					break;
+				case UpdateField.MarkAsIndexable:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { BlockIndex = false });
+					break;
+				case UpdateField.MarkIncludeInSiteMap:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { ShowInSiteMap = true });
+					break;
+				case UpdateField.MarkIncludeInSiteNav:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { ShowInSiteNav = true });
+					break;
+			}
+
+			db.SubmitChanges();
+		}
+
+
 		public static string ScrubFilename(Guid rootContentID, string FileName) {
 			string newFileName = FileName;
 
@@ -623,51 +667,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
-		public ContentPage CopyContentPageToNew(ContentPage pageSource) {
-
-			SiteData site = SiteData.GetSiteFromCache(pageSource.SiteID);
-
-			ContentPage pageNew = new ContentPage();
-			pageNew.ContentID = Guid.NewGuid();
-			pageNew.SiteID = pageSource.SiteID;
-			pageNew.Parent_ContentID = pageSource.Parent_ContentID;
-			pageNew.Root_ContentID = pageSource.Root_ContentID;
-
-			pageNew.PageText = pageSource.PageText;
-			pageNew.LeftPageText = pageSource.LeftPageText;
-			pageNew.RightPageText = pageSource.RightPageText;
-
-			pageNew.IsLatestVersion = true;
-			pageNew.FileName = pageSource.FileName;
-			pageNew.Thumbnail = pageSource.Thumbnail;
-			pageNew.TitleBar = pageSource.TitleBar;
-			pageNew.NavMenuText = pageSource.NavMenuText;
-			pageNew.NavOrder = pageSource.NavOrder;
-			pageNew.PageHead = pageSource.PageHead;
-			pageNew.PageActive = pageSource.PageActive;
-			pageNew.EditUserId = SecurityData.CurrentUserGuid;
-			pageNew.EditDate = site.Now;
-			pageNew.CreateDate = pageSource.CreateDate;
-			pageNew.GoLiveDate = pageSource.GoLiveDate;
-			pageNew.RetireDate = pageSource.RetireDate;
-
-			pageNew.TemplateFile = pageSource.TemplateFile;
-			pageNew.MetaDescription = pageSource.MetaDescription;
-			pageNew.MetaKeyword = pageSource.MetaKeyword;
-
-			pageNew.ContentType = pageSource.ContentType;
-			pageNew.PageSlug = pageSource.PageSlug;
-			pageNew.ShowInSiteNav = pageSource.ShowInSiteNav;
-			pageNew.CreateUserId = pageSource.CreateUserId;
-
-			pageNew.ContentCategories = pageSource.ContentCategories;
-			pageNew.ContentTags = pageSource.ContentTags;
-
-			return pageNew;
-		}
-
-
 		public static ContentPage GetSamplerView() {
 
 			string sFile1 = "";
@@ -928,6 +927,20 @@ namespace Carrotware.CMS.Core {
 			DateTime dateEnd = dateMidpoint.AddDays(iDayRange);
 
 			List<ContentPage> lstContent = CompiledQueries.PostsByDateRange(db, siteID, dateBegin, dateEnd, bActiveOnly).Select(ct => new ContentPage(ct)).ToList();
+
+			return lstContent;
+		}
+
+		public List<ContentPage> GetContentByDateRange(Guid siteID, DateTime dateMidpoint, int iDayRange, ContentPageType.PageType pageType, bool? bActive, bool? bSiteMap, bool? bSiteNav, bool? bBlock) {
+			DateTime dateBegin = DateTime.MinValue;
+			DateTime dateEnd = DateTime.MaxValue;
+
+			if (iDayRange > 0) {
+				dateBegin = dateMidpoint.AddDays(0 - iDayRange);
+				dateEnd = dateMidpoint.AddDays(iDayRange);
+			}
+
+			List<ContentPage> lstContent = CannedQueries.GetContentByStatusAndDateRange(db, siteID, pageType, dateBegin, dateEnd, bActive, bSiteMap, bSiteNav, bBlock).Select(ct => new ContentPage(ct)).ToList();
 
 			return lstContent;
 		}
