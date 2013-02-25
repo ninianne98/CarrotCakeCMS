@@ -64,10 +64,10 @@ namespace Carrotware.CMS.UI.Controls {
 		protected virtual void TweakData() {
 			if (this.NavigationData != null) {
 				if (this.StripNotInSiteNav) {
-					this.NavigationData.RemoveAll(x => x.ShowInSiteNav == false);
+					this.NavigationData.RemoveAll(x => x.ShowInSiteNav == false && x.ContentType == ContentPageType.PageType.ContentEntry);
 				}
 				if (this.StripNotInSiteMap) {
-					this.NavigationData.RemoveAll(x => x.ShowInSiteMap == false);
+					this.NavigationData.RemoveAll(x => x.ShowInSiteMap == false && x.ContentType == ContentPageType.PageType.ContentEntry);
 				}
 				this.NavigationData.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 			}
@@ -94,15 +94,14 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnInit(EventArgs e) {
 			this.Controls.Clear();
-
+			this.NavigationData = new List<SiteNav>();
 			base.OnInit(e);
-
-			LoadData();
-
-			TweakData();
 		}
 
-
+		protected virtual void LoadAndTweakData() {
+			LoadData();
+			TweakData();
+		}
 
 		protected override void OnPreRender(EventArgs e) {
 

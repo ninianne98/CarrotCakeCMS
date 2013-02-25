@@ -1,40 +1,48 @@
-﻿		/* BEGIN MENU {MENU_ID} */
+﻿	/* BEGIN MENU {MENU_ID} Desktop > {DESK_WIDTH} ================= */
+	@media only screen and (min-width: {DESK_WIDTH}) { 
+
+{DESKTOP_CSS}
+
+	}
+	/* END MENU {MENU_ID} Desktop > {DESK_WIDTH} ================= */
+
+
+	/* BEGIN MENU {MENU_ID} Mobile < {MOBILE_WIDTH} ================= */
+	@media only screen and (max-width: {MOBILE_WIDTH}) {
 
 		{MENU_ID} ul, {MENU_ID} ol, {MENU_ID} li, {MENU_ID} a {
-			text-align: left;
 			padding: 0;
 			margin: 0;
 			list-style: none;
 			text-decoration: none;
+			text-align: left;
+			display: block;
+			clear: both;
 			font-size: {FONT_SIZE};
 		}
 
 		{MENU_ID} {
-			font-size: {FONT_SIZE};
+			width: 100%;
 			margin: 0;
-			padding: 0 1em;
+			padding: 0;
+			font-size: {FONT_SIZE};
 			background: {BG_HEX};
-			height: 3em;
 			list-style: none;
-			text-decoration: none;
-			z-index: 990;
-			{TOP_BACKGROUND_STYLE}
+			position: relative;
+			z-index: 999;
+			display: block;
+			clear: both;
 		}
 
-		{MENU_ID} > li {
-			float: left;
-			height: 100%;
-			margin-right: 0.5em;
-			padding: 0 1em;
-			z-index: 995;
-		}
-
-		{MENU_ID} > li > a {
-			float: left;
-			height: 100%;
+		{MENU_ID} a {
+			margin: 0;
+			padding: 0;
 			color: {FORE_HEX};
 			text-decoration: none;
-			line-height: 3em;
+		}
+		
+		{MENU_ID} li {
+			margin: 0 auto 0.2em auto;
 		}
 
 		{MENU_ID} > li, {MENU_ID} > li a {
@@ -42,12 +50,12 @@
 			background: {UNSEL_BG_HEX};
 		}
 
-		{MENU_ID} > li > a:hover {
+		{MENU_ID} > a:hover {
 			color: {HOVER_FORE_HEX};
 			text-decoration: underline;
 		}
 
-		{MENU_ID} > li:hover, {MENU_ID} > li:hover a {
+		{MENU_ID} li:hover, {MENU_ID} li:hover a {
 			background: {HOVER_BG_HEX};
 			color: {HOVER_FORE_HEX};
 			text-decoration: underline;
@@ -73,29 +81,13 @@
 			text-decoration: underline;
 		}
 
-		{MENU_ID} > li.{MENU_HASCHILD_CLASS} {
-			position: relative;
-		}
-
 		{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul {
-			width: 14em;
-			margin: 0;
-			padding: 0.5em 0;
 			background: {SUB_BG_HEX};
-			position: absolute;
-			top: -1000em;
-			z-index: 998;
 		}
 
-		{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li {
-			width: 90%;
-			margin: 0 auto 0.2em auto;
-		}
-
+		{MENU_ID} > li:hover ul li, {MENU_ID} > li:hover ul li a,
+		{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li,
 		{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li a {
-			height: 100%;
-			display: block;
-			padding: 0.4em;
 			color: {SUB_FORE_HEX};
 			text-decoration: none;
 		}
@@ -106,23 +98,15 @@
 			text-decoration: underline;
 		}
 
-		{MENU_ID} > li.{MENU_HASCHILD_CLASS}:hover ul {
-			top: 3em;
-		}
-
-		{MENU_ID} > li:hover {
+		{MENU_ID} > li:hover, {MENU_ID} > li {
 			margin-left: 0px;
 			padding-left: 0px;
 		}
 
-		{MENU_ID} > li:hover a {
+		{MENU_ID} > li:hover a, {MENU_ID} > li a {
 			margin-left: 0.5em;
 			padding-left: 0.5em;
 		}
 
-		{MENU_ID} > li.{MENU_HASCHILD_CLASS} ul li a {
-			padding: 0.4em;
-			margin: 0 auto 0.2em auto;
-		}
-
-		/* END MENU {MENU_ID} */
+	}
+	/* END MENU {MENU_ID} Mobile < {MOBILE_WIDTH} ================= */

@@ -20,6 +20,8 @@ namespace Carrotware.CMS.UI.Controls {
 	public abstract class BaseNav : BaseNavCommon {
 
 		protected override void RenderContents(HtmlTextWriter output) {
+			LoadAndTweakData();
+
 			int indent = output.Indent;
 
 			List<SiteNav> lstNav = this.NavigationData;

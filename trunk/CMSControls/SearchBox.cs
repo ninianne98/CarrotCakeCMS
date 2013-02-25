@@ -78,6 +78,11 @@ namespace Carrotware.CMS.UI.Controls {
 				return "CarrotCakeSiteSearchEnter_" + this.ClientID;
 			}
 		}
+		protected string JS_EnterSearch2 {
+			get {
+				return "CarrotCakeSiteSearchEnter2_" + this.ClientID;
+			}
+		}
 
 		protected override void OnInit(EventArgs e) {
 
@@ -133,6 +138,7 @@ namespace Carrotware.CMS.UI.Controls {
 				sScript = sScript.Replace("{SEARCH_PARAM}", SiteData.SearchQueryParameter);
 				sScript = sScript.Replace("{SEARCH_FUNC}", JS_SearchName);
 				sScript = sScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
+				sScript = sScript.Replace("{SEARCH_ENTERFUNC2}", JS_EnterSearch2);
 
 				if (string.IsNullOrEmpty(OverrideTextboxName)) {
 					sScript = sScript.Replace("{SEARCH_TEXT}", this.ClientID + "_" + txtSearchText.ID);

@@ -227,6 +227,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
+			LoadAndTweakData();
+
 			WriteTopLevel(output);
 		}
 
