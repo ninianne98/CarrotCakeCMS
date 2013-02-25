@@ -84,6 +84,34 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		[Category("Appearance")]
+		[DefaultValue(false)]
+		private bool AttemptResponsiveCSS {
+			get {
+				String s = (String)ViewState["AttemptResponsiveCSS"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["AttemptResponsiveCSS"] = value.ToString();
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("")]
+		private Unit MobileWidth {
+			get {
+				Unit s = new Unit("575px");
+				if (ViewState["MobileWidth"] != null) {
+					try { s = new Unit(ViewState["MobileWidth"].ToString()); } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["MobileWidth"] = value;
+			}
+		}
+
+		[Category("Appearance")]
 		[DefaultValue("")]
 		[Obsolete("This property is obsolete, do not use.")]
 		public Unit MenuWidth {
@@ -362,6 +390,8 @@ namespace Carrotware.CMS.UI.Controls {
 				lst.Add("CssClass");
 				lst.Add("ExtraCSS");
 				lst.Add("AutoStylingDisabled");
+				//lst.Add("AttemptResponsiveCSS");
+				//lst.Add("MobileWidth");
 				lst.Add("CSSSelected");
 				lst.Add("CSSHasChildren");
 				lst.Add("WrapList");
@@ -398,6 +428,11 @@ namespace Carrotware.CMS.UI.Controls {
 					sTmp = GetParmValue("AutoStylingDisabled", "false");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						AutoStylingDisabled = Convert.ToBoolean(sTmp);
+					}
+
+					sTmp = GetParmValue("AttemptResponsiveCSS", "true");
+					if (!string.IsNullOrEmpty(sTmp)) {
+						AttemptResponsiveCSS = Convert.ToBoolean(sTmp);
 					}
 
 					sTmp = GetParmValue("WrapList", "false");
@@ -500,23 +535,31 @@ namespace Carrotware.CMS.UI.Controls {
 			if (string.IsNullOrEmpty(OverrideCSS) && !this.AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
 				string sCSSText = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt");
 
+				if (AttemptResponsiveCSS) {
+					string sCSS1 = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenuRes.txt");
+					sCSSText = sCSS1.Replace("{DESKTOP_CSS}", sCSSText);
+				}
+
 				if (sCSSText != null) {
-					sCSSText = sCSSText.Replace("{FORE_HEX}", ColorTranslator.ToHtml(this.ForeColor));
-					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(this.BGColor));
+					sCSSText = sCSSText.Replace("{FORE_HEX}", ColorTranslator.ToHtml(this.ForeColor).ToLower());
+					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(this.BGColor).ToLower());
 
-					sCSSText = sCSSText.Replace("{HOVER_FORE_HEX}", ColorTranslator.ToHtml(this.HoverFGColor));
-					sCSSText = sCSSText.Replace("{HOVER_BG_HEX}", ColorTranslator.ToHtml(this.HoverBGColor));
+					sCSSText = sCSSText.Replace("{HOVER_FORE_HEX}", ColorTranslator.ToHtml(this.HoverFGColor).ToLower());
+					sCSSText = sCSSText.Replace("{HOVER_BG_HEX}", ColorTranslator.ToHtml(this.HoverBGColor).ToLower());
 
-					sCSSText = sCSSText.Replace("{SEL_FORE_HEX}", ColorTranslator.ToHtml(this.SelFGColor));
-					sCSSText = sCSSText.Replace("{SEL_BG_HEX}", ColorTranslator.ToHtml(this.SelBGColor));
+					sCSSText = sCSSText.Replace("{SEL_FORE_HEX}", ColorTranslator.ToHtml(this.SelFGColor).ToLower());
+					sCSSText = sCSSText.Replace("{SEL_BG_HEX}", ColorTranslator.ToHtml(this.SelBGColor).ToLower());
 
-					sCSSText = sCSSText.Replace("{UNSEL_FORE_HEX}", ColorTranslator.ToHtml(this.UnSelFGColor));
-					sCSSText = sCSSText.Replace("{UNSEL_BG_HEX}", ColorTranslator.ToHtml(this.UnSelBGColor));
+					sCSSText = sCSSText.Replace("{UNSEL_FORE_HEX}", ColorTranslator.ToHtml(this.UnSelFGColor).ToLower());
+					sCSSText = sCSSText.Replace("{UNSEL_BG_HEX}", ColorTranslator.ToHtml(this.UnSelBGColor).ToLower());
 
-					sCSSText = sCSSText.Replace("{SUB_FORE_HEX}", ColorTranslator.ToHtml(this.SubFGColor));
-					sCSSText = sCSSText.Replace("{SUB_BG_HEX}", ColorTranslator.ToHtml(this.SubBGColor));
+					sCSSText = sCSSText.Replace("{SUB_FORE_HEX}", ColorTranslator.ToHtml(this.SubFGColor).ToLower());
+					sCSSText = sCSSText.Replace("{SUB_BG_HEX}", ColorTranslator.ToHtml(this.SubBGColor).ToLower());
 
 					sCSSText = sCSSText.Replace("{FONT_SIZE}", this.FontSize.Value.ToString() + "px");
+
+					sCSSText = sCSSText.Replace("{MOBILE_WIDTH}", this.MobileWidth.Value.ToString() + "px");
+					sCSSText = sCSSText.Replace("{DESK_WIDTH}", (this.MobileWidth.Value + 1).ToString() + "px");
 
 					sCSSText = sCSSText.Replace("{MENU_SELECT_CLASS}", this.CSSSelected);
 					sCSSText = sCSSText.Replace("{MENU_HASCHILD_CLASS}", this.CSSHasChildren);

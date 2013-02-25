@@ -273,6 +273,7 @@ p.cmsToolItem {
 #cmsControl {
 	margin: 0px 0px 2px 0px;
 	padding: 0px 0px 2px 0px;
+	clear: both;
 }
 
 /* edit menu for widgets */

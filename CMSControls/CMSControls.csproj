@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TopMenu.txt" />
+    <EmbeddedResource Include="TopMenuRes.txt" />
     <EmbeddedResource Include="ucContactForm.ascx" />
   </ItemGroup>
   <ItemGroup>

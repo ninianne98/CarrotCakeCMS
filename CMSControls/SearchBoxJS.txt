@@ -1,5 +1,5 @@
-﻿<script type="text/javascript"> 
-	function {SEARCH_FUNC}() { 
+﻿<script type="text/javascript">
+	function {SEARCH_FUNC}() {
 		var theSearchTerm = $('#{SEARCH_TEXT}').val(); 
 		__carrotware_RedirectWithQuerystringParm('{SEARCH_URL}', '{SEARCH_PARAM}', theSearchTerm); 
 		return false; 
@@ -18,5 +18,28 @@
 
 		return true;
 	}
+
+	function {SEARCH_ENTERFUNC2}() {
+		$('#{SEARCH_TEXT}').bind('keydown', function (e) {
+			var key = e.keyCode;
+
+			if ((key == 13) || (key == 10)) {
+				setTimeout("var ret = {SEARCH_FUNC}();", 250);
+				e.preventDefault();
+				return false;
+			} else {
+				return true;
+			}
+		});
+	}
+
+	$(document).ready(function() {
+		{SEARCH_ENTERFUNC2}();
+	});
+
+	setTimeout("{SEARCH_ENTERFUNC2}();", 1000);
+	setTimeout("{SEARCH_ENTERFUNC2}();", 2000);
+	setTimeout("{SEARCH_ENTERFUNC2}();", 3000);
+
 </script>
  
