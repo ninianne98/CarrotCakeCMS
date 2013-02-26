@@ -30,7 +30,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
-			
+
 			litTrust.Visible = false;
 			if (SiteData.CurrentTrustLevel != AspNetHostingPermissionLevel.Unrestricted) {
 				chkFileGrab.Checked = false;
@@ -134,7 +134,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				subdirs = null;
 			}
 
-
 			if (subdirs != null) {
 				foreach (string theDir in subdirs) {
 					string w = FileDataHelper.MakeWebFolderPath(theDir);
@@ -149,6 +148,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			ddlFolders.DataSource = lstFolders.OrderBy(f => f.FileName);
 			ddlFolders.DataBind();
+
+			ddlFolders.Items.Insert(0, new ListItem("-Folders-", "-[none]-"));
 		}
 
 
@@ -188,6 +189,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				List<ContentTag> lstTag = (from l in wpSite.Tags.Distinct()
 										   select new ContentTag {
 											   ContentTagID = Guid.NewGuid(),
+											   IsPublic = true,
 											   SiteID = site.SiteID,
 											   TagSlug = l.InfoKey,
 											   TagText = l.InfoLabel
@@ -196,6 +198,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				List<ContentCategory> lstCat = (from l in wpSite.Categories.Distinct()
 												select new ContentCategory {
 													ContentCategoryID = Guid.NewGuid(),
+													IsPublic = true,
 													SiteID = site.SiteID,
 													CategorySlug = l.InfoKey,
 													CategoryText = l.InfoLabel
@@ -225,7 +228,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (chkPages.Checked) {
 
 					litMessage.Text += "<p>Imported Pages</p>";
-
 
 					int iOrder = 0;
 					SiteNav navHome = navHelper.FindHome(site.SiteID, false);

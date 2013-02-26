@@ -27,6 +27,35 @@
 			UpdateAjaxShowAlertImport();
 		});
 	</script>
+	<script type="text/javascript">
+
+		function chkFileGrabClick(obj) {
+			cmsIsPageValid();
+		}
+
+		function validateFolderSelection(oSrc, args) {
+
+			var fldr = '#<%=ddlFolders.ClientID %>';
+			var chk = '#<%=chkFileGrab.ClientID %>';
+
+			var ddlFolders = $(fldr).get(0).selectedIndex;
+			var chkFileGrab = $(chk).prop('checked');
+
+			if (chkFileGrab) {
+				if (ddlFolders < 1) {
+					args.IsValid = false;
+					return;
+				} else {
+					args.IsValid = true;
+					return;
+				}
+			} else {
+				args.IsValid = true;
+				return;
+			}
+		}
+
+	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Wordpress Import
@@ -38,7 +67,7 @@
 	<table width="700">
 		<tr>
 			<td valign="top">
-				<asp:CheckBox ID="chkFileGrab" runat="server" />
+				<asp:CheckBox ID="chkFileGrab" runat="server" onclick="chkFileGrabClick(this);" />
 				Attempt to download page/post attachments and place them in the selected folder.
 				<asp:Literal ID="litTrust" runat="server"><b>Downloading images requires a full trust website, and this installation has not been detected as such, leaving the download option disabled. </b></asp:Literal>
 			</td>
@@ -46,6 +75,8 @@
 				&nbsp;&nbsp;&nbsp;
 			</td>
 			<td valign="top">
+				<asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Required" Display="Dynamic" ControlToValidate="ddlFolders" ClientValidationFunction="validateFolderSelection"
+					ValidationGroup="inputForm" />
 				<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath">
 				</asp:DropDownList>
 			</td>
