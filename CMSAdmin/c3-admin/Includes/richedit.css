@@ -13,8 +13,7 @@ pre {
 	word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
-.mceItemMedia, .mceItemIframe, .mceItemVideo, .mceItemRealMedia, .mceItemWindowsMedia, 
-	.mceItemQuickTime, .mceItemFlash, .mceItemShockWave {
+.mceItemMedia, .mceItemIframe, .mceItemVideo, .mceItemRealMedia, .mceItemWindowsMedia, .mceItemQuickTime, .mceItemFlash, .mceItemShockWave {
 	background-color: #FFFFCC;
 	border: thin dashed #cc0000;
 }
@@ -42,11 +41,31 @@ A:visited {
 }
 
 blockquote {
-	background-color: #EBEBEB;
+	background-color: #EEEEEE;
 	border-left: 5px solid #999999;
 	color: #000000;
 	margin: 10px 20px;
 	overflow: auto;
 	padding: 5px 20px 5px 20px;
 	border-left-color: #666666;
+}
+
+tt, pre, code, kbd, samp {
+	font-family: 'Lucida Console' , 'Courier New' , Courier, Monaco, monospace, sans-serif;
+}
+
+/* other */
+
+.aligncenter, div.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
 }

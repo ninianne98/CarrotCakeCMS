@@ -106,7 +106,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
-			output.WriteLine("<ul id=\"" + this.ClientID + "\" class=\"" + (this.CSSULClassTop + " " + this.CssClass).Trim() + "\">");
+			string sCSS = (this.CSSULClassTop + " " + this.CssClass).Trim();
+			if (!string.IsNullOrEmpty(sCSS)) {
+				output.WriteLine("<ul id=\"" + this.ClientID + "\" class=\"" + sCSS + "\">");
+			} else {
+				output.WriteLine("<ul id=\"" + this.ClientID + "\" >");
+			}
 		}
 
 		protected override void WriteListSuffix(HtmlTextWriter output) {
@@ -114,6 +119,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected string ParentFileName { get; set; }
+
+		private int iItemNumber = 0;
 
 		protected virtual void WriteTopLevel(HtmlTextWriter output) {
 			int indent = output.Indent;
@@ -160,12 +167,14 @@ namespace Carrotware.CMS.UI.Controls {
 							sThis1CSS = sThis1CSS + " child-nav";
 						}
 					}
+					sThis1CSS = sThis1CSS.Replace("   ", " ").Replace("  ", " ").Trim();
 
-					output.WriteLine("<li class=\"" + sThis1CSS.Replace("   ", " ").Replace("  ", " ").Trim() + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+					iItemNumber++;
+					output.WriteLine("<li id=\"listitem" + iItemNumber.ToString() + "\" class=\"" + sThis1CSS + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 
 					int indent3 = output.Indent;
 					if (this.MultiLevel && cc != null && cc.Count > 0) {
-						LoadChildren(output, c1.Root_ContentID, sItemCSS, 2);
+						LoadChildren(output, c1.Root_ContentID, sItemCSS, iItemNumber, 2);
 					}
 					output.Indent = indent3;
 					output.WriteLine("</li>");
@@ -179,7 +188,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent;
 		}
 
-		protected virtual void LoadChildren(HtmlTextWriter output, Guid rootContentID, string sItemCSS, int iLevel) {
+		protected virtual void LoadChildren(HtmlTextWriter output, Guid rootContentID, string sItemCSS, int iParent, int iLevel) {
 			List<SiteNav> lstNav = GetChildren(rootContentID);
 			int indent = output.Indent;
 			output.Indent = indent + 1;
@@ -188,7 +197,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (lstNav != null && lstNav.Count > 0) {
 				output.WriteLine();
-				output.WriteLine("<ul class=\"childlist childlevel" + iLevel + " " + this.CSSULClassLower + "\">");
+				output.WriteLine("<ul id=\"listitem" + iParent.ToString() + "-childlist\" class=\"childlist childlevel" + iLevel + " " + this.CSSULClassLower + "\">");
 				int indent2 = output.Indent + 1;
 				foreach (SiteNav c2 in lstNav) {
 					output.Indent = indent2;
@@ -207,12 +216,13 @@ namespace Carrotware.CMS.UI.Controls {
 					if (SiteData.IsFilenameCurrentPage(c2.FileName) || AreFilenamesSame(c2.FileName, ParentFileName)) {
 						sThis2CSS = sThis2CSS + " " + this.CSSSelected;
 					}
-					sThis2CSS = sThis2CSS + " child-nav";
+					sThis2CSS = (sThis2CSS + " child-nav").Replace("   ", " ").Replace("  ", " ").Trim();
 
-					output.WriteLine("<li class=\"" + sThis2CSS.Replace("   ", " ").Replace("  ", " ").Trim() + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a>");
+					iItemNumber++;
+					output.WriteLine("<li id=\"listitem" + iItemNumber.ToString() + "\" class=\"" + sThis2CSS + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a>");
 					int indent3 = output.Indent;
 					if (cc != null && cc.Count > 0) {
-						LoadChildren(output, c2.Root_ContentID, sItemCSS, iLevel + 1);
+						LoadChildren(output, c2.Root_ContentID, sItemCSS, iItemNumber, iLevel + 1);
 					}
 					output.Indent = indent3;
 					output.Write("</li>");

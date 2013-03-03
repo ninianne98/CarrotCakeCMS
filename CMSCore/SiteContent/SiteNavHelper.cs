@@ -312,6 +312,8 @@ namespace Carrotware.CMS.Core {
 				nav.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
 				nav.RetireDate = DateTime.Now.Date.AddDays(90);
 				nav.CommentCount = (n * 2) + 1;
+				nav.ShowInSiteNav = true;
+				nav.ShowInSiteMap = true;
 
 				if (n > 0 || rootParentID != null) {
 					nav.Root_ContentID = Guid.NewGuid();
@@ -391,6 +393,7 @@ namespace Carrotware.CMS.Core {
 			navNew.PageHead = "Template Preview - HEAD";
 			navNew.PageActive = true;
 			navNew.ShowInSiteNav = true;
+			navNew.ShowInSiteMap = true;
 
 			navNew.EditDate = DateTime.Now.AddDays(-1);
 			navNew.CreateDate = DateTime.Now.AddDays(-14);

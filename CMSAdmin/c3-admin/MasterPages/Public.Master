@@ -5,10 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
 	<title>Public</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
-	<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/logon.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 
 		$(document).ready(function () {
