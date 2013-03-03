@@ -145,26 +145,19 @@
 			</tr>
 			<tr>
 				<td valign="top" class="tablecaption">
-					Hide from Search Engines
 				</td>
-				<td valign="top">
-					<asp:CheckBox ID="chkHide" runat="server" />
-				</td>
-			</tr>
-			<tr>
 				<td valign="top" class="tablecaption">
-					Allow sending trackbacks
-				</td>
-				<td valign="top">
-					<asp:CheckBox ID="chkSendTrackback" runat="server" />
-				</td>
-			</tr>
-			<tr>
-				<td valign="top" class="tablecaption">
-					Accept incoming trackbacks
-				</td>
-				<td valign="top">
-					<asp:CheckBox ID="chkAcceptTrackbacks" runat="server" />
+					<p>
+						Hide from Search Engines
+						<asp:CheckBox ID="chkHide" runat="server" />
+					</p>
+					<p>
+						Allow sending trackbacks
+						<asp:CheckBox ID="chkSendTrackback" runat="server" />
+					<p>
+						Accept incoming trackbacks
+						<asp:CheckBox ID="chkAcceptTrackbacks" runat="server" />
+					</p>
 				</td>
 			</tr>
 		</table>

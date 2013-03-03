@@ -536,8 +536,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
-    <Content Include="c3-admin\Images\blogger.png" />
-    <Content Include="c3-admin\SiteContentStatusChange.aspx" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_15_f9cecd_40x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_b7d7c4_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_dff6e8_1x400.png" />
@@ -547,10 +545,24 @@
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-hard_70_000000_1x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-soft_25_fbf9ee_1x100.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_2e83ff_0.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_468b5e_0.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_468b5e_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_525252_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_676f6a_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_b7d7c4_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_cd0a0a_0.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_dff6e8_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_ffffff_0.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-metro-scoped.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-metro-scoped2.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-metro.css" />
+    <Content Include="c3-admin\Images\blogger.png" />
+    <Content Include="c3-admin\Includes\normalize.css" />
+    <Content Include="c3-admin\SiteContentStatusChange.aspx" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped2.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen.css" />

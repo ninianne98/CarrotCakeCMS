@@ -59,8 +59,7 @@ a .imgNoBorder {
 
 /* correction for jquery ui */
 
-.ui-widget-header a, .ui-widget-header, .ui-widget p, .ui-widget ul, .ui-widget li, .ui-widget ol, .ui-widget h1, 
-.ui-widget h2, .ui-widget h3, .ui-widget div, .ui-widget span, .ui-widget input, .ui-widget select, .ui-widget button, .ui-widget textarea, .ui-widget a {
+.ui-widget-header a, .ui-widget-header, .ui-widget p, .ui-widget ul, .ui-widget li, .ui-widget ol, .ui-widget h1, .ui-widget h2, .ui-widget h3, .ui-widget div, .ui-widget span, .ui-widget input, .ui-widget select, .ui-widget button, .ui-widget textarea, .ui-widget a {
 	line-height: normal;
 	text-align: left;
 	font-size: small;
@@ -72,11 +71,11 @@ a .imgNoBorder {
 	color: #676F6A;
 }
 
-.ui-state-default div, .ui-state-default span {	
+.ui-state-default div, .ui-state-default span {
 	color: #676F6A;
 }
 
-.ui-state-active div, .ui-state-active span {	
+.ui-state-active div, .ui-state-active span {
 	color: #FFFFFF;
 }
 
@@ -92,7 +91,7 @@ a .imgNoBorder {
 }
 
 .ui-front {
-    z-index: 100000;
+	z-index: 100000;
 }
 
 .picker-area {
@@ -142,9 +141,12 @@ a .imgNoBorder {
 /* fieldset */
 
 fieldset {
-	margin: 1em 0px;
-	padding: 1em;
+	margin: 1.2em 0px;
+	padding: 1.2em;
 	border: 1px solid #ccc;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 }
 
 fieldset legend label {
@@ -169,7 +171,21 @@ table tr td {
 	line-height: normal;
 	text-align: left;
 	font-size: small;
-	font-family: Lucida Grande, Lucida Sans Arial, sans-serif;	
+	font-family: Lucida Grande, Lucida Sans Arial, sans-serif;
 	color: #000000;
 }
 
+select, textarea, input[type="text"], input[type="password"], input[type="checkbox"], input[type="radio"] {
+	padding: 3px;
+	margin: 3px;
+	margin-top: 5px;
+	margin-right: 5px;
+	background-color: #ffffff;
+	color: #000000;
+	border: 1px solid #c0c0c0;
+	font-family: Lucida Grande, Lucida Sans Arial, Arial, sans-serif;
+}
+
+button, input[type="button"], input[type="submit"], input[type="reset"], input[type="clear"] {
+	margin: 4px;
+}

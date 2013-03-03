@@ -1,4 +1,5 @@
-﻿
+﻿/* table stylings */
+
 .datatable {
 	border-collapse: collapse;
 	border: 1px solid #000000;
@@ -55,11 +56,15 @@ table .tablehead a, #SortableGrid table a, .SortableGrid table a {
 }
 
 
-input.inputFld, .dateRegion {
+.SortableGrid input.inputFld, .SortableGrid td .dateRegion {
 	background: #ffffff;
 }
 
-input.inputBlocked {
+.SortableGrid td input.inputBlocked {
 	background: #808080;
 	cursor: crosshair;
+}
+
+.rowregular td img, .rowalt td img {
+	padding: 2px;
 }

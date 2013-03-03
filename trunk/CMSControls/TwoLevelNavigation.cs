@@ -352,24 +352,31 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Write(GetCtrlText(cssText));
 			}
 
-			string sCSS = "";
+			string sCSSWrap = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
-				sCSS = string.Format(" class=\"{0}\"", CssClass);
+				sCSSWrap = string.Format(" class=\"{0}\"", CssClass);
 			}
 
 			if (WrapList) {
-				output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\">");
+				output.WriteLine("<div" + sCSSWrap + " id=\"" + this.ClientID + "\">");
 				output.Indent++;
 				output.WriteLine("<div id=\"" + this.ClientID + "-inner\">");
 				output.Indent++;
 			}
 
+			string sCSSList = this.CSSULClassTop.Trim();
+			string sLstID = this.ClientID + "-list";
+
 			if (!WrapList) {
-				output.WriteLine("<ul id=\"" + this.ClientID + "\" class=\"" + CSSULClassTop + " " + CssClass + "\">");
-			} else {
-				output.WriteLine("<ul class=\"" + CSSULClassTop + "\">");
+				sCSSList = (this.CSSULClassTop + " " + this.CssClass).Trim();
+				sLstID = this.ClientID;
 			}
 
+			if (!string.IsNullOrEmpty(sCSSList)) {
+				output.WriteLine("<ul id=\"" + sLstID + "\" class=\"" + sCSSList + "\">");
+			} else {
+				output.WriteLine("<ul id=\"" + sLstID + "\" >");
+			}
 		}
 
 		protected override void WriteListSuffix(HtmlTextWriter output) {
