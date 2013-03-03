@@ -94,6 +94,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnPreview;
         
         /// <summary>
+        /// btnToolboxSave2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave2;
+        
+        /// <summary>
         /// btnEditCoreInfo control.
         /// </summary>
         /// <remarks>
@@ -148,12 +157,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnAllWidgets;
         
         /// <summary>
-        /// btnToolboxSave2 control.
+        /// btnToolboxSave3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnToolboxSave3;
     }
 }

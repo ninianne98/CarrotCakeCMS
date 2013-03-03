@@ -1,7 +1,9 @@
 ﻿/* General Editor Styles */
 #cms-simplemodal-container, .cms-simplemodal-container {
-	height: 525px;
-	width: 905px;
+	min-height: 525px;
+	height: 75%;
+	min-width: 700px;
+	width: 85%;
 	z-index: 9950008;
 }
 
@@ -40,14 +42,12 @@
 	font-family: Arial, sans-serif;
 }
 
-.cmsGlossySeaGreen .ui-dialog-titlebar, .cmsGlossySeaGreen .ui-dialog-titlebar a,
-#cmsGlossySeaGreenID .ui-dialog-titlebar, #cmsGlossySeaGreenID .ui-dialog-titlebar a,
-.cmsGlossySeaGreen .ui-widget-header, #cmsGlossySeaGreenID .ui-widget-header {
+.cmsGlossySeaGreen .ui-dialog-titlebar, .cmsGlossySeaGreen .ui-dialog-titlebar a, #cmsGlossySeaGreenID .ui-dialog-titlebar, #cmsGlossySeaGreenID .ui-dialog-titlebar a, .cmsGlossySeaGreen .ui-widget-header, #cmsGlossySeaGreenID .ui-widget-header {
 	color: #676F6A;
 }
 
 .cmsGlossySeaGreen .ui-front, #cmsGlossySeaGreenID .ui-front {
-    z-index: 10000000;
+	z-index: 10000000;
 }
 
 
@@ -59,6 +59,10 @@
 	text-align: left;
 	font-size: small;
 	font-family: Arial, sans-serif;
+}
+
+.cmsTemplateddl {
+	max-width: 275px;
 }
 
 #cmsJQTabedToolbox ul.ui-tabs-nav {
@@ -94,8 +98,8 @@
 
 .cmsToolbox2 {
 	position: absolute;
-	top: 20px;
-	left: 20px;
+	top: 10px;
+	left: 10px;
 	padding: 5px !important;
 	margin: 5px !important;
 	border: solid 2px #000000 !important;
@@ -107,6 +111,13 @@
 	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
 	color: #000000 !important;
 	background: #FFFFFF !important;
+}
+
+.cmsToolbox3 {
+	padding: 2px;
+	margin: 0px;
+	min-height: 300px;
+	width: 290px;
 }
 
 .cmsFloatRight {
@@ -162,7 +173,7 @@ p.cmsToolItem {
 	font-weight: bold;
 	border: 1px dashed #c0c0c0;
 	color: #676F6A;
-	background: #DFF6E8;	
+	background: #DFF6E8;
 }
 
 #cmsMainToolbox select, #cmsMainToolbox select:focus, #cmsMainToolbox select:hover, #cmsMainToolbox select option {
@@ -537,8 +548,29 @@ p.cmsToolItem {
 	margin-top: 5px !important;
 }
 
+#cmsAdminToolbox .ui-widget-header {
+	font-weight: bold;
+}
+
+#cmsAdminToolbox, #cmsAdminToolbox p, .cmsToolboxHead {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 5px 0px 5px 5px;
+	margin: 0px;
+	text-align: left;
+}
+
+.cmsToolboxHead {
+	font-size: small;
+	padding: 8px !important;
+	margin: 1px !important;
+	text-align: left !important;
+}
+
 #cmsAdminToolbox {
 	font-family: Arial, sans-serif;
+	font-size: 12px;
 	font-weight: normal;
 	text-shadow: 0 0 0 transparent;
 	border-top-left-radius: 6px;
