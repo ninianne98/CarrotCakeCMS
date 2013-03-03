@@ -6,8 +6,8 @@
 	<link href="/c3-admin/includes/advanced-editor-reset.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen-scoped2.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen-scoped.css" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
 </asp:PlaceHolder>
 <script src="/c3-admin/includes/jquery.simplemodal.js" type="text/javascript"></script>
 <script src="/c3-admin/includes/jquery.blockUI.js" type="text/javascript"></script>
@@ -138,7 +138,7 @@
 		</div>
 	</div>
 	<div id="cmsToolBoxWrap" class="<%=String.Format("cmsToolbarAlignment{0}", EditorPrefs.EditorMargin) %>">
-		<div id="cmsAdminToolbox" class="cmsGlossySeaGreen cmsToolbox2" style="padding: 2px; margin: 0px; min-height: 300px; width: 290px;">
+		<div id="cmsAdminToolbox" class="cmsGlossySeaGreen cmsToolbox2 cmsToolbox3">
 			<div class="cmsInsideArea">
 				<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick cmsFloatRight' title="toggle">
 					T
@@ -149,7 +149,7 @@
 				<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w cmsFloatRight' title="L">
 					L
 				</div>
-				<p class="ui-widget-header ui-corner-all" style="padding: 5px; margin: 0px; text-align: left;">
+				<p class="ui-widget-header ui-corner-all cmsToolboxHead">
 					Toolbox
 				</p>
 				<div id="cmsDivActive">
@@ -165,7 +165,8 @@
 							<div id="cmsJQTabedToolbox" style="min-height: 50px; width: 275px;">
 								<ul>
 									<li><a href="#cmsTabIdx-tabs-1">Widgets</a></li>
-									<li><a href="#cmsTabIdx-tabs-2">Page Info</a></li>
+									<li><a href="#cmsTabIdx-tabs-2">Templates</a></li>
+									<li><a href="#cmsTabIdx-tabs-3">Page Info</a></li>
 								</ul>
 								<div id="cmsTabIdx-tabs-1">
 									<div style="display: none;">
@@ -201,13 +202,14 @@
 										<FooterTemplate>
 											</div></FooterTemplate>
 									</asp:Repeater>
-									<br style="clear: both;" />
+									<div style="clear: both;">
+									</div>
 								</div>
 								<div id="cmsTabIdx-tabs-2">
 									<div class="cmsLeft5px">
 										<p>
 											Templates / Skins<br />
-											<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
+											<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server" CssClass="cmsTemplateddl">
 											</asp:DropDownList>
 										</p>
 										<p class="cmsCenter5px">
@@ -216,6 +218,19 @@
 											<input runat="server" id="btnPreview" type="button" value="Preview" onclick="cmsPreviewTemplate();" />
 											<br />
 										</p>
+										<p class="cmsCenter5px">
+										</p>
+										<div class="cmsCenter5px">
+											<input type="button" runat="server" id="btnToolboxSave2" value="Save" onclick="cmsApplyChanges();" />
+											&nbsp;&nbsp;&nbsp;
+											<input type="button" id="btnToolboxCancel2" value="Cancel" onclick="cmsCancelEdit();" />
+										</div>
+									</div>
+									<div style="clear: both;">
+									</div>
+								</div>
+								<div id="cmsTabIdx-tabs-3">
+									<div class="cmsLeft5px">
 										<p>
 											<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" />
 										</p>
@@ -236,11 +251,12 @@
 										</p>
 									</div>
 									<div class="cmsCenter5px">
-										<input type="button" runat="server" id="btnToolboxSave2" value="Save" onclick="cmsApplyChanges();" />
+										<input type="button" runat="server" id="btnToolboxSave3" value="Save" onclick="cmsApplyChanges();" />
 										&nbsp;&nbsp;&nbsp;
-										<input type="button" id="btnToolboxCancel2" value="Cancel" onclick="cmsCancelEdit();" />
+										<input type="button" id="btnToolboxCancel3" value="Cancel" onclick="cmsCancelEdit();" />
 									</div>
-									<br style="clear: both;" />
+									<div style="clear: both;">
+									</div>
 								</div>
 							</div>
 						</asp:Panel>
@@ -253,24 +269,25 @@
 			</div>
 		</div>
 	</div>
-	<div style="display: none">
-		<div id="CMSmodalalert" title="CMS Alert" class="cmsGlossySeaGreen">
-			<p id="CMSmodalalertmessage">
-				&nbsp;</p>
-		</div>
-		<div id="CMSremoveconfirm" title="Remove Widget?" class="cmsGlossySeaGreen">
-			<p id="CMSremoveconfirmmsg">
-				Are you sure you want to remove this widget?</p>
-		</div>
-		<div id="CMSsavedconfirm" title="Page Saved!" class="cmsGlossySeaGreen">
-			<p id="CMSsavedconfirmmsg">
-				The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...</p>
-		</div>
-		<div id="CMScancelconfirm" title="Quit Editor?" class="cmsGlossySeaGreen">
-			<p id="CMScancelconfirmmsg">
-				Are you sure you want to leave the editor? All changes will be lost!</p>
-		</div>
+</div>
+<div style="display: none">
+	<div id="CMSmodalalert" title="CMS Alert" class="cmsGlossySeaGreen">
+		<p id="CMSmodalalertmessage">
+			&nbsp;</p>
 	</div>
+	<div id="CMSremoveconfirm" title="Remove Widget?" class="cmsGlossySeaGreen">
+		<p id="CMSremoveconfirmmsg">
+			Are you sure you want to remove this widget?</p>
+	</div>
+	<div id="CMSsavedconfirm" title="Page Saved!" class="cmsGlossySeaGreen">
+		<p id="CMSsavedconfirmmsg">
+			The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...</p>
+	</div>
+	<div id="CMScancelconfirm" title="Quit Editor?" class="cmsGlossySeaGreen">
+		<p id="CMScancelconfirmmsg">
+			Are you sure you want to leave the editor? All changes will be lost!</p>
+	</div>
+</div>
 </div>
 <div style="width: 1024px; height: 2px; clear: both; left: 0; border: 0px dotted #c0c0c0; z-index: 5000;">
 </div>

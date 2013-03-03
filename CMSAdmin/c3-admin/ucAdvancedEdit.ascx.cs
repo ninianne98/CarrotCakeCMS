@@ -127,6 +127,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				rpTools.Visible = false;
 				btnToolboxSave1.Visible = false;
 				btnToolboxSave2.Visible = false;
+				btnToolboxSave3.Visible = false;
 				btnTemplate.Visible = false;
 				btnEditCoreInfo.Visible = false;
 				cmsDivEditing.Visible = true;

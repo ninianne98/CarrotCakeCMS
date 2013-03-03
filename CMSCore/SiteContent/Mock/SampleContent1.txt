@@ -60,7 +60,8 @@
 </tbody>
 </table>
 
-<br />
+<div style="clear: both;">
+</div>
 
 <!--
 <p><img title="" src="Carrotware.CMS.Core.SiteContent.Mock.sample3.png" alt="" align="right" /> Aliquam rhoncus, massa eget congue accumsan, turpis ante vestibulum ligula, sed auctor ligula quam at quam. Integer fringilla, diam vitae egestas elementum, erat tellus lacinia neque, posuere eleifend turpis quam quis mi. Cras bibendum varius lacus, a varius quam lacinia non. Duis ac purus id dolor aliquam interdum. Sed nec luctus nunc. In id felis vitae massa adipiscing lacinia. Aenean placerat massa sit amet tortor porttitor adipiscing. Donec iaculis nisi fringilla mi pretium at sodales tellus suscipit. Maecenas ac sollicitudin urna. Suspendisse sed purus a libero fermentum rhoncus. </p>
@@ -75,9 +76,13 @@ Morbi diam orci, volutpat sed cursus vel, ultrices eu dolor. Nullam et magna non
 
 <p><label for="text_field">Text Field:</label><br />
 <input type="text" id="text_field" /></p>
+<div style="clear: both;">
+</div>
 
 <p><label for="text_area">Text Area:</label><br />
 <textarea id="text_area"></textarea></p>
+<div style="clear: both;">
+</div>
 
 <p>
 <label for="select_element">Select Element:</label>
@@ -94,27 +99,38 @@ Morbi diam orci, volutpat sed cursus vel, ultrices eu dolor. Nullam et magna non
 		</optgroup>
 </select>
 </p>
+<div style="clear: both;">
+</div>
 
 <p><label for="radio_buttons">Radio Buttons:</label><br />
 <input type="radio" class="radio" name="radio_button" value="radio_1" /> Radio 1  &nbsp;&nbsp;&nbsp;
 <input type="radio" class="radio" name="radio_button" value="radio_2" /> Radio 2  &nbsp;&nbsp;&nbsp;
 <input type="radio" class="radio" name="radio_button" value="radio_3" /> Radio 3  
 </p>
+<div style="clear: both;">
+</div>
 
 <p><label for="checkboxes">Checkboxes:</label><br />
 <input type="checkbox" class="checkbox" name="checkboxes" value="check_1" /> Radio 1  &nbsp;&nbsp;&nbsp;
 <input type="checkbox" class="checkbox" name="checkboxes" value="check_2" /> Radio 2  &nbsp;&nbsp;&nbsp;
 <input type="checkbox" class="checkbox" name="checkboxes" value="check_3" /> Radio 3  
 </p>
+<div style="clear: both;">
+</div>
 
 <p>
 <label for="password">Password:</label><br />
 <input type="password" class="password" name="password" />
 </p>
+<div style="clear: both;">
+</div>
+
 <p>
 <label for="file">File Input:</label><br />
 <input type="file" class="file" name="file" />
 </p>
+<div style="clear: both;">
+</div>
 
 <p>
 	<input type="reset" value="Clear Unstyled" /> 
@@ -124,3 +140,5 @@ Morbi diam orci, volutpat sed cursus vel, ultrices eu dolor. Nullam et magna non
 	<input class="button" type="submit" value="Submit Styled" />
 	<input class="button" type="button" value="Button Styled" />
 </p>
+<div style="clear: both;">
+</div>

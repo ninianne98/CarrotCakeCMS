@@ -293,24 +293,55 @@ function cmsSetPreviewFileName(tmplName) {
 	cmsTemplatePreview = tmplName;
 }
 
-function cmsPreviewTemplate() {
-	var tmpl = $(cmsTemplateDDL).val();
-
+function cmsPreviewTemplate2() {
+	var tmpl = $(cmsTemplateListPreviewer).val();
 	tmpl = cmsMakeStringSafe(tmpl);
+
+	var srcURL = cmsTemplatePreview + "?carrot_templatepreview=" + tmpl;
+
+	var editIFrame = $('#cmsFrameEditorPreview');
+	$(editIFrame).attr('src', srcURL);
+	window.frames["cmsFrameEditorPreview"].location.reload();
+
+}
+
+
+var cmsTemplateListPreviewer = "#cmsTemplateList"
+
+
+function cmsPreviewTemplate() {
+	var tmplReal = $(cmsTemplateDDL).val();
+	tmpl = cmsMakeStringSafe(tmplReal);
 
 	cmsLaunchWindowOnly(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
 
 	var editFrame = $('#cmsModalFrame');
 	var editIFrame = $('#cmsFrameEditor');
 
+	var frmHgt = 450;
+	var hgt = ($(window).height() * 0.75) - 90;
+
+	if (hgt > frmHgt) {
+		frmHgt = hgt;
+	}
+
 	$(editIFrame).attr('width', '100%');
-	$(editIFrame).attr('height', '450');
+	$(editIFrame).attr('height', frmHgt);
 
-	var btnApply = ' <input type="button" id="btnApplyTemplate" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
-	var btnClose = ' <input type="button" id="btnCloseTemplate" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
+	var ddlPreview = ' <select id="cmsTemplateList"></select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ';
 
-	$(editFrame).append('<div id="cmsGlossySeaGreenID" class="cmsPreviewButtons"> ' + btnClose + btnApply + ' </div>');
+	var btnClose = ' <input type="button" id="btnCloseTemplateCMS" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
+	var btnApply = ' <input type="button" id="btnApplyTemplateCMS" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
+
+	$(editFrame).append('<div id="cmsGlossySeaGreenID"><div id="cmsPreviewControls" class="cmsGlossySeaGreen cmsPreviewButtons"> ' + ddlPreview + btnClose + btnApply + ' </div></div>');
 	window.setTimeout("cmsLateBtnStyle();", 500);
+
+	var list = $(cmsTemplateListPreviewer);
+	$(cmsTemplateDDL + " > option").each(function () {
+		list.append(new Option(this.text, this.value));
+	});
+
+	$(cmsTemplateListPreviewer).val(tmplReal);
 
 	$('#cmsFrameEditor').attr('id', 'cmsFrameEditorPreview');
 	$('#cmsAjaxMainDiv2').attr('id', 'cmsAjaxMainDiv3');
@@ -331,11 +362,17 @@ function cmsSetTemplateDDL(ddlName) {
 function cmsUpdateTemplate() {
 	cmsSaveToolbarPosition();
 
-	var tmpl = $(cmsTemplateDDL).val();
+	var tmpl = '';
 
-	var webMthd = webSvc + "/UpdatePageTemplate";
+	if ($(cmsTemplateListPreviewer).length) {
+		tmpl = $(cmsTemplateListPreviewer).val();
+	} else {
+		tmpl = $(cmsTemplateDDL).val();
+	}
 
 	tmpl = cmsMakeStringSafe(tmpl);
+
+	var webMthd = webSvc + "/UpdatePageTemplate";
 
 	$.ajax({
 		type: "POST",
@@ -872,7 +909,7 @@ function cmsShrinkWidgetHeight(key) {
 	var st = $(zone).attr('style');
 
 	if (st == undefined || st.length < 10) {
-		$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 100px; max-width: 800px; overflow: auto;');
+		$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 100px; max-width: 650px; overflow: auto;');
 	} else {
 		$(zone).attr('style', '');
 	}
@@ -885,7 +922,7 @@ function cmsMoveWidgetResizer(key, state) {
 	var zone = $(item).find('#cmsControl');
 
 	if (state != 0) {
-		$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 75px; max-width: 800px; overflow: auto;');
+		$(zone).attr('style', 'border: solid 0px #000000; padding: 1px; height: 75px; max-width: 650px; overflow: auto;');
 	} else {
 		$(zone).attr('style', '');
 	}
@@ -948,7 +985,7 @@ function cmsLoadWindow() {
 
 function cmsSetiFrameSource(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="890" height="500" src="' + TheURL + '" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" src="' + TheURL + '" /> </div>');
 
 	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 		css: { width: '98%', height: '98%' },
