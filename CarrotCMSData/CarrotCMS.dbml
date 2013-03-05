@@ -327,6 +327,7 @@
       <Column Name="Blog_FolderPath" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
       <Column Name="Blog_CategoryPath" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
       <Column Name="Blog_TagPath" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
+      <Column Name="Blog_DatePath" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
       <Column Name="Blog_DatePattern" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
       <Column Name="TimeZone" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
       <Column Name="SendTrackbacks" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />

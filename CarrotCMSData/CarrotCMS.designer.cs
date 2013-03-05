@@ -6043,6 +6043,8 @@ namespace Carrotware.CMS.Data
 		
 		private string _Blog_TagPath;
 		
+		private string _Blog_DatePath;
+		
 		private string _Blog_DatePattern;
 		
 		private string _TimeZone;
@@ -6087,6 +6089,8 @@ namespace Carrotware.CMS.Data
     partial void OnBlog_CategoryPathChanged();
     partial void OnBlog_TagPathChanging(string value);
     partial void OnBlog_TagPathChanged();
+    partial void OnBlog_DatePathChanging(string value);
+    partial void OnBlog_DatePathChanged();
     partial void OnBlog_DatePatternChanging(string value);
     partial void OnBlog_DatePatternChanged();
     partial void OnTimeZoneChanging(string value);
@@ -6342,6 +6346,26 @@ namespace Carrotware.CMS.Data
 					this._Blog_TagPath = value;
 					this.SendPropertyChanged("Blog_TagPath");
 					this.OnBlog_TagPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Blog_DatePath", DbType="NVarChar(64)")]
+		public string Blog_DatePath
+		{
+			get
+			{
+				return this._Blog_DatePath;
+			}
+			set
+			{
+				if ((this._Blog_DatePath != value))
+				{
+					this.OnBlog_DatePathChanging(value);
+					this.SendPropertyChanging();
+					this._Blog_DatePath = value;
+					this.SendPropertyChanged("Blog_DatePath");
+					this.OnBlog_DatePathChanged();
 				}
 			}
 		}

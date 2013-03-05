@@ -189,3 +189,33 @@ select, textarea, input[type="text"], input[type="password"], input[type="checkb
 button, input[type="button"], input[type="submit"], input[type="reset"], input[type="clear"] {
 	margin: 4px;
 }
+
+
+/* cellpadding */
+th, td {
+	padding: 5px;
+}
+
+/* cellspacing */
+table {
+	border-collapse: separate;
+	border-spacing: 5px;
+}
+/*  cellspacing="5" */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*  cellspacing="0" */
+
+/* valign */
+th, td {
+	vertical-align: top;
+}
+
+/* align (center) */
+table.centered {
+	margin: 0 auto;
+}
+

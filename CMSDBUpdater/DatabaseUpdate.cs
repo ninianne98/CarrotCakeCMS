@@ -502,7 +502,6 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
-
 		public DatabaseUpdateResponse AlterStep08() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
@@ -517,8 +516,6 @@ namespace Carrotware.CMS.DBUpdater {
 			res.Response = "CMS DB vw_carrot_Comment already created";
 			return res;
 		}
-
-
 
 		public DatabaseUpdateResponse AlterStep09() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();

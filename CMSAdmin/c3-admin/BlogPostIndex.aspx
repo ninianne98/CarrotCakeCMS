@@ -17,10 +17,10 @@
 	<uc1:ucBlogMenuItems ID="ucBlogMenuItems1" runat="server" />
 	<table>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				show content:
 			</td>
-			<td valign="top" colspan="3">
+			<td colspan="3">
 				<div class="jqradioset">
 					<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 					<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
@@ -30,14 +30,14 @@
 	</table>
 	<table>
 		<tr runat="server" id="trFilter">
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				go live date post filter:
 				<br />
 			</td>
-			<td valign="top">
+			<td>
 				&nbsp;&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server" />
 				<asp:DropDownList ID="ddlDateRange" runat="server">
 					<asp:ListItem Text="30 Days +/-" Value="30" />
@@ -48,10 +48,10 @@
 				<div style="clear: both; height: 2px;">
 				</div>
 			</td>
-			<td valign="top">
+			<td>
 				&nbsp;&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<asp:Button ID="btnFilter" runat="server" Text="Apply" OnClick="btnFilter_Click" />
 			</td>
 		</tr>

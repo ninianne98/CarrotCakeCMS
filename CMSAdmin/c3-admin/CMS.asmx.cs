@@ -374,23 +374,26 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public string ValidateBlogFolders(string FolderPath, string CategoryPath, string TagPath) {
+		public string ValidateBlogFolders(string FolderPath, string DatePath, string CategoryPath, string TagPath) {
 			try {
 				string sFolderPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(FolderPath));
 				string sCategoryPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(CategoryPath));
 				string sTagPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(TagPath));
+				string sDatePath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(DatePath));
 
-				if (string.IsNullOrEmpty(sFolderPath) || string.IsNullOrEmpty(sCategoryPath) || string.IsNullOrEmpty(sTagPath)) {
+				if (string.IsNullOrEmpty(sFolderPath) || string.IsNullOrEmpty(sCategoryPath)
+					|| string.IsNullOrEmpty(sTagPath) || string.IsNullOrEmpty(sDatePath)) {
 					return "FAIL";
 				}
-				if (sFolderPath.Length < 1 || sCategoryPath.Length < 1 || sTagPath.Length < 1) {
+				if (sFolderPath.Length < 1 || sCategoryPath.Length < 1 || sTagPath.Length < 1 || sDatePath.Length < 1) {
 					return "FAIL";
 				}
-
 
 				if (SiteData.CurrentSite != null
 					&& !string.IsNullOrEmpty(sFolderPath)
-					&& sCategoryPath.ToLower() != sTagPath.ToLower()) {
+					&& sCategoryPath.ToLower() != sTagPath.ToLower()
+					&& sCategoryPath.ToLower() != sDatePath.ToLower()
+					&& sTagPath.ToLower() != sDatePath.ToLower()) {
 
 					var i1 = pageHelper.FindCountPagesBeginingWith(SiteData.CurrentSite.SiteID, sFolderPath);
 
@@ -550,6 +553,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				if (TheFileName.StartsWith(SiteData.CurrentSite.BlogFolderPath.ToLower())
+					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())
 					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogCategoryPath.ToLower())
 					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogTagPath.ToLower())) {
 

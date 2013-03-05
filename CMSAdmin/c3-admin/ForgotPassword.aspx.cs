@@ -11,8 +11,11 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ForgotPassword : BasePage {
+
 		protected void Page_Load(object sender, EventArgs e) {
 			divLogonLink.Visible = false;
+			divMsg.Visible = false;
+			FailureText.Text = "";
 		}
 
 
@@ -21,6 +24,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			bool bReset = false;
 			lblErr.Text = "";
 			FailureText.Text = "";
+			divMsg.Visible = false;
 
 			try { bReset = p.ResetPassword(txtEmail.Text, this); } catch (Exception ex) { lblErr.Text = ex.ToString(); }
 			//bReset = p.ResetPassword(txtEmail.Text, this); 
@@ -37,6 +41,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			divLogonLink.Visible = bReset;
 
+			if (!string.IsNullOrEmpty(FailureText.Text)) {
+				divMsg.Visible = true;
+			}
+
 			txtEmail.Text = "";
 		}
 
@@ -44,7 +52,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Response.Redirect("./default.aspx?");
 		}
 
-
-
 	}
+
 }

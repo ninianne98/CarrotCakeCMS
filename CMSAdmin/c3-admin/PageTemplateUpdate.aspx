@@ -28,10 +28,10 @@
 	<uc1:ucPageMenuItems ID="ucPageMenuItems1" runat="server" />
 	<table>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				show content:
 			</td>
-			<td valign="top" colspan="3">
+			<td colspan="3">
 				<div class="jqradioset">
 					<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Show Filtered" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
 					<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="Show All" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
@@ -41,19 +41,19 @@
 	</table>
 	<table>
 		<tr runat="server" id="trFilter">
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				page filter:
 				<br />
 			</td>
-			<td valign="top">
+			<td>
 				<div style="clear: both; height: 2px;">
 				</div>
 				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
 			</td>
-			<td valign="top">
+			<td>
 				&nbsp;&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<!-- parent page plugin-->
 				<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
 				<div style="clear: both; height: 2px;">
@@ -64,10 +64,10 @@
 	<br />
 	<table>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				template to apply to selected pages:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 				</asp:DropDownList>
 			</td>
