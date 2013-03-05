@@ -311,7 +311,30 @@ ALTER TABLE [dbo].[carrot_RootContent]
 
 GO
 
---==============
+--===============================
+
+GO
+
+IF NOT EXISTS( select * from information_schema.columns 
+		where table_name = 'carrot_Sites' and column_name = 'Blog_DatePath') BEGIN
+
+	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_DatePath] [nvarchar](64) NULL
+
+END
+
+GO
+
+update [dbo].[carrot_Sites]
+set [Blog_DatePath] = 'date'
+where isnull([Blog_DatePath], '') = ''
+
+update [dbo].[carrot_Sites]
+set [Blog_DatePath] = REPLACE([Blog_DatePath], '/', '')
+
+
+GO
+
+--================================================
 
 GO
 
@@ -333,3 +356,4 @@ INNER JOIN [dbo].carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
 
 GO
 
+--==============

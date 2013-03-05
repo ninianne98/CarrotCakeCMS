@@ -9,7 +9,6 @@
 
 		var thePage = '';
 
-
 		function CheckFileName() {
 			thePage = $('#<%= txtSlug.ClientID %>').val();
 
@@ -49,10 +48,10 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<table width="700">
 		<tr>
-			<td width="125" valign="top" class="tablecaption">
+			<td width="125" class="tablecaption">
 				url slug:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtSlug" runat="server" Columns="45" MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSlug" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 					Display="Dynamic" />
@@ -62,20 +61,20 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				caption:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtLabel" runat="server" Columns="45" MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtLabel" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
 					Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				public:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:CheckBox ID="chkPublic" runat="server" />
 			</td>
 		</tr>

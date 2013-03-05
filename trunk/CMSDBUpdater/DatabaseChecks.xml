@@ -13,6 +13,18 @@
 		</sql>
 	</querynugget>
 	<querynugget>
+		<priority>13</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep09|</testcontext>
+		<sql>
+			select distinct table_name, column_name
+			from [information_schema].[columns]
+			where table_name in('carrot_Sites') and column_name in('Blog_DatePath')
+		</sql>
+	</querynugget>
+	<querynugget>
 		<priority>12</priority>
 		<mode>LT</mode>
 		<rowcount>1</rowcount>

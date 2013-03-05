@@ -19,13 +19,16 @@ using Carrotware.CMS.UI.Base;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class Logon : BasePage {
 
-		// http://msdn.microsoft.com/en-us/library/system.web.ui.webcontrols.login.aspx
-
+		protected HtmlGenericControl divMsg {
+			get {
+				return ((HtmlGenericControl)loginTemplate.FindControl("divMsg"));
+			}
+		}
 
 		protected void Page_Load(object sender, EventArgs e) {
 
 			DatabaseUpdate du = new DatabaseUpdate();
-			((HtmlImage)loginTemplate.FindControl("imgError")).Visible = false;
+			divMsg.Visible = false;
 
 			if (DatabaseUpdate.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist) {
 				FormsAuthentication.SignOut();
@@ -51,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (FormsAuthentication.Authenticate(loginTemplate.UserName, loginTemplate.Password)) {
 				FormsAuthentication.RedirectFromLoginPage(loginTemplate.UserName, false);
 			} else {
-				((HtmlImage)loginTemplate.FindControl("imgError")).Visible = true;
+				divMsg.Visible = true;
 			}
 		}
 

@@ -7,18 +7,18 @@
 	</legend>
 	<table width="700">
 		<tr>
-			<td width="125" valign="top" class="tablecaption">
+			<td width="125" class="tablecaption">
 				title:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:Label ID="lblTitle" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				filename:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:Label ID="lblFile" runat="server" />
 			</td>
 		</tr>
@@ -32,26 +32,26 @@
 	</legend>
 	<table width="700">
 		<tr>
-			<td width="150" valign="top" class="tablecaption">
+			<td width="150" class="tablecaption">
 				IP address:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:Label ID="lblIP" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				date:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:Label ID="lblDate" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				email:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtEmail" runat="server" Columns="60"
 					MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtEmail" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
@@ -60,28 +60,28 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				name:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtName" runat="server" Columns="60" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtName" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
 					Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				url:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" runat="server" Columns="60" MaxLength="200" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<div class="table-subblock">
 					<b class="caption">approved:</b>&nbsp;&nbsp;
 					<asp:CheckBox ID="chkApproved" runat="server" />
@@ -93,10 +93,10 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				comment:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox Style="height: 250px; width: 600px;" ID="txtComment" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 			</td>
 		</tr>

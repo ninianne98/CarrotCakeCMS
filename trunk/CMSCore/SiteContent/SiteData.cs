@@ -49,6 +49,7 @@ namespace Carrotware.CMS.Core {
 			this.Blog_FolderPath = string.IsNullOrEmpty(s.Blog_FolderPath) ? "" : s.Blog_FolderPath;
 			this.Blog_CategoryPath = string.IsNullOrEmpty(s.Blog_CategoryPath) ? "" : s.Blog_CategoryPath;
 			this.Blog_TagPath = string.IsNullOrEmpty(s.Blog_TagPath) ? "" : s.Blog_TagPath;
+			this.Blog_DatePath = string.IsNullOrEmpty(s.Blog_DatePath) ? "" : s.Blog_DatePath;
 			this.Blog_DatePattern = string.IsNullOrEmpty(s.Blog_DatePattern) ? "yyyy/MM/dd" : s.Blog_DatePattern;
 
 			if (string.IsNullOrEmpty(this.SiteTitlebarPattern)) {
@@ -166,6 +167,7 @@ namespace Carrotware.CMS.Core {
 				currentSite.Blog_CategoryPath = "cat";
 				currentSite.Blog_TagPath = "tag";
 				currentSite.Blog_FolderPath = "archive";
+				currentSite.Blog_DatePath = "date";
 				currentSite.TimeZoneIdentifier = "UTC";
 			}
 			return currentSite;
@@ -229,6 +231,7 @@ namespace Carrotware.CMS.Core {
 				s.Blog_FolderPath = ContentPageHelper.ScrubSlug(this.Blog_FolderPath);
 				s.Blog_CategoryPath = ContentPageHelper.ScrubSlug(this.Blog_CategoryPath);
 				s.Blog_TagPath = ContentPageHelper.ScrubSlug(this.Blog_TagPath);
+				s.Blog_DatePath = ContentPageHelper.ScrubSlug(this.Blog_DatePath);
 
 				s.Blog_Root_ContentID = this.Blog_Root_ContentID;
 				s.Blog_DatePattern = string.IsNullOrEmpty(this.Blog_DatePattern) ? "yyyy/MM/dd" : this.Blog_DatePattern;
@@ -448,25 +451,25 @@ namespace Carrotware.CMS.Core {
 		public string Blog_CategoryPath { get; set; }
 		public string Blog_TagPath { get; set; }
 		public string Blog_DatePattern { get; set; }
+		public string Blog_DatePath { get; set; }
 
 		public string BlogFolderPath {
 			get { return RemoveDupeSlashes("/" + this.Blog_FolderPath + "/"); }
 		}
 		public string BlogCategoryPath {
-			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/" + this.Blog_CategoryPath + "/"); }
+			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_CategoryPath + "/"); }
 		}
 		public string BlogTagPath {
-			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/" + this.Blog_TagPath + "/"); }
+			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_TagPath + "/"); }
 		}
 		public string BlogDateFolderPath {
-			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/date/"); }
+			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_DatePath + "/"); }
 		}
-
 		public string SiteSearchPath {
-			get { return RemoveDupeSlashes("/" + this.BlogFolderPath + "/" + SiteSearchPageName); }
+			get { return RemoveDupeSlashes(BlogFolderPath + SiteSearchPageName); }
 		}
 
-		public static string SiteSearchPageName {
+		protected static string SiteSearchPageName {
 			get { return "/search.aspx".ToLower(); }
 		}
 
