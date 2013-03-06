@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" %>
 <div id="ID-{WIDGET_KEY}" class="cmsWidgetContainerWrapper">
-	<div id="cms_{WIDGET_ID}">
+	<div id="cms_{WIDGET_ID}" class="cmsGlossySeaGreen">
 		<div id="cmsWidgetHead" class="cmsWidgetTitleBar">
 			<div id="cmsControlPath" title="{WIDGET_PATH}" tooltip="{WIDGET_PATH}">
 				{WIDGET_TITLE}</div>

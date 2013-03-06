@@ -120,7 +120,7 @@
 	}
 
 </script>
-<div id="cmsGlossySeaGreenID">
+<div id="cmsGlossySeaGreenID" class="cmsGlossySeaGreen">
 	<div style="display: none;">
 		<img src="/c3-admin/images/cog.png" alt="" />
 		<img src="/c3-admin/images/cross.png" alt="" />
@@ -270,7 +270,7 @@
 		</div>
 	</div>
 </div>
-<div style="display: none">
+<div style="display: none" class="cmsGlossySeaGreen">
 	<div id="CMSmodalalert" title="CMS Alert" class="cmsGlossySeaGreen">
 		<p id="CMSmodalalertmessage">
 			&nbsp;</p>
