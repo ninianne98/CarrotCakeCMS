@@ -2,7 +2,7 @@
 <div style="clear: both;">
 </div>
 <div id="cms-outer_{WIDGETCONTAINER_ID}" class="cmsWidgetTargetOuterControl">
-	<div class="cmsWidgetControlTitle">
+	<div class="cmsWidgetControlTitle  cmsGlossySeaGreen">
 		<div class="cmsWidgetControlIDZone">
 			<div id="cmsWidgetContainerName">
 				{WIDGETCONTAINER_ID}</div>

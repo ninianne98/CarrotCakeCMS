@@ -33,13 +33,13 @@
 	line-height: normal;
 	text-align: left;
 	font-size: small;
-	font-family: Arial, sans-serif;
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsGlossySeaGreen .ui-widget P {
 	line-height: normal;
 	font-weight: normal;
-	font-family: Arial, sans-serif;
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsGlossySeaGreen .ui-dialog-titlebar, .cmsGlossySeaGreen .ui-dialog-titlebar a, #cmsGlossySeaGreenID .ui-dialog-titlebar, #cmsGlossySeaGreenID .ui-dialog-titlebar a, .cmsGlossySeaGreen .ui-widget-header, #cmsGlossySeaGreenID .ui-widget-header {
@@ -58,7 +58,7 @@
 	padding: 1px;
 	text-align: left;
 	font-size: small;
-	font-family: Arial, sans-serif;
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsTemplateddl {
@@ -216,7 +216,7 @@ p.cmsToolItem {
 	font-weight: normal;
 	line-height: normal;
 	font-size: 11px;
-	font-family: Arial, sans-serif;
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsWidgetToolboxPath {
@@ -257,7 +257,7 @@ p.cmsToolItem {
 	padding: 1px;
 	text-align: left;
 	font-size: small;
-	font-family: Arial, sans-serif;
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 #cmsControlPath, #cmsWidgetHead {
@@ -429,6 +429,16 @@ p.cmsToolItem {
 	background: transparent !important;
 }
 
+
+#cmsEditMenuList ul > li:before, .cmsWidgetCogIcon ul > li:before, .cmsWidgetCogIcon {
+	bottom: auto;
+	top: auto;
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+
 #cmsImageSpinnerImage, .cmsImageSpinner, img.cmsImageSpinner, #cmsSpinnerZone *, .cmsImageSpinnerTbl, .blockMsg *, .cmsMnuParent *, .cmsMnuChildren * {
 	margin: 0px !important;
 	padding: 0px !important;
@@ -456,6 +466,10 @@ p.cmsToolItem {
 
 .cmsWidgetBarLink img {
 	float: right !important;
+}
+
+.cmsWidgetControlTitle, .cmsContentContainerTitle {
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren {
@@ -520,6 +534,7 @@ p.cmsToolItem {
 	margin: 0px !important;
 	padding: 1px !important;
 	margin-top: 3px !important;
+	clear: both;
 }
 
 .cmsWidgetControl {
@@ -553,7 +568,7 @@ p.cmsToolItem {
 }
 
 #cmsAdminToolbox, #cmsAdminToolbox p, .cmsToolboxHead {
-	font-family: Arial, sans-serif;
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	padding: 5px 0px 5px 5px;
@@ -562,14 +577,14 @@ p.cmsToolItem {
 }
 
 .cmsToolboxHead {
-	font-size: small;
+	font-size: 1.1em !important;
 	padding: 8px !important;
 	margin: 1px !important;
 	text-align: left !important;
 }
 
 #cmsAdminToolbox {
-	font-family: Arial, sans-serif;
+	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	text-shadow: 0 0 0 transparent;
