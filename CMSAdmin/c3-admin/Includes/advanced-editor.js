@@ -85,11 +85,14 @@ setTimeout("cmsResetToolbarScroll()", 500);
 
 var cmsToolTabIdx = 0;
 var cmsScrollPos = 0;
+var cmsScrollWPos = 0;
 
-function cmsSetPrefs(tab, margin, scrollPos, opStat) {
+
+function cmsSetPrefs(tab, margin, scrollPos, scrollWPos, opStat) {
 	cmsToolTabIdx = tab;
 	cmsToolbarMargin = margin;
 	cmsScrollPos = scrollPos;
+	cmsScrollWPos = scrollWPos;
 	cmsMnuVis = opStat;
 }
 
@@ -102,6 +105,7 @@ function cmsResetToolbarScroll() {
 	}
 
 	$(document).scrollTop(cmsScrollPos);
+	$('#cmsToolBox').scrollTop(cmsScrollWPos);
 }
 
 
@@ -233,7 +237,8 @@ function cmsEditHB() {
 
 function cmsSaveToolbarPosition() {
 
-	var scrollTop = $(document).scrollTop();
+	var scrollTopPos = $(document).scrollTop();
+	var scrollWTopPos = $('#cmsToolBox').scrollTop();
 	var tabID = $('#cmsJQTabedToolbox').tabs("option", "active");
 
 	var webMthd = webSvc + "/RecordEditorPosition";
@@ -241,7 +246,7 @@ function cmsSaveToolbarPosition() {
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: "{'ToolbarState': '" + cmsMnuVis + "', 'ToolbarMargin': '" + cmsToolbarMargin + "', 'ToolbarScroll': '" + scrollTop + "', 'SelTabID': '" + tabID + "'}",
+		data: "{'ToolbarState': '" + cmsMnuVis + "', 'ToolbarMargin': '" + cmsToolbarMargin + "', 'ToolbarScroll': '" + scrollTopPos + "', 'WidgetScroll': '" + scrollWTopPos + "', 'SelTabID': '" + tabID + "'}",
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: cmsAjaxGeneralCallback,
@@ -1047,7 +1052,8 @@ function cmsSetJQueryURL(jqPath, jqUIPath) {
 }
 
 function cmsLoadJQuery() {
-	setTimeout('cmsAttemptAttachJQ1()', 125);
+	setTimeout('cmsAttemptAttachJQ1()', 200);
+	setTimeout('cmsAttemptAttachJQ2()', 800);
 }
 
 function cmsAttachJQScript1() {

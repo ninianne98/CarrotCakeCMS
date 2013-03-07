@@ -39,7 +39,6 @@
 .cmsGlossySeaGreen .ui-widget P {
 	line-height: normal;
 	font-weight: normal;
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsGlossySeaGreen .ui-dialog-titlebar, .cmsGlossySeaGreen .ui-dialog-titlebar a, #cmsGlossySeaGreenID .ui-dialog-titlebar, #cmsGlossySeaGreenID .ui-dialog-titlebar a, .cmsGlossySeaGreen .ui-widget-header, #cmsGlossySeaGreenID .ui-widget-header {
@@ -61,8 +60,16 @@
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
-.cmsTemplateddl {
+.cmsAdvEditTemplatePicker {
 	max-width: 275px;
+}
+
+#cmsJQTabedToolbox {
+	min-height: 100px;
+	width: 275px;
+	margin: 0;
+	padding: 0;
+	margin: 0 auto;
 }
 
 #cmsJQTabedToolbox ul.ui-tabs-nav {
@@ -77,14 +84,16 @@
 }
 
 #cmsJQTabedToolbox .ui-tabs-panel {
+	margin: 0;
 	border: solid 0px #ffffff !important;
 }
 
-#cmsMainToolbox, #cmsToolboxSpacer {
+#cmsMainToolbox {
+	padding: 2px;
 	font-size: 12px !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	text-align: left !important;
-	min-height: 50px !important;
+	min-height: 100px !important;
 }
 
 .cmsHighlightPH {
@@ -108,7 +117,7 @@
 	z-index: 10000 !important;
 	font-size: 12px !important;
 	line-height: normal !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	color: #000000 !important;
 	background: #FFFFFF !important;
 }
@@ -124,9 +133,13 @@
 	margin: 2px !important;
 	float: right !important;
 }
+.cmsFloatLeft {
+	margin: 2px !important;
+	float: left !important;
+}
 
 .cmsInsideArea {
-	font-family: Arial, sans-serif !important;
+	font-family: Arial, Helvetica, sans-serif !important;
 	z-index: 5000 !important;
 	border: 0px solid #dddddd !important;
 	font-size: 12px !important;
@@ -177,9 +190,9 @@ p.cmsToolItem {
 }
 
 #cmsMainToolbox select, #cmsMainToolbox select:focus, #cmsMainToolbox select:hover, #cmsMainToolbox select option {
-	font-family: Arial, sans-serif !important;
-	margin: 1px !important;
-	padding: 1px !important;
+	font-family: Arial, Helvetica, sans-serif !important;
+	margin: 0 !important;
+	padding: 2px !important;
 	color: #000000 !important;
 	background: #FFFFFF !important;
 	line-height: normal !important;
@@ -221,7 +234,7 @@ p.cmsToolItem {
 
 .cmsWidgetToolboxPath {
 	font-size: 12px !important;
-	font-family: Arial, sans-serif !important;
+	font-family: Arial, Helvetica, sans-serif !important;
 }
 
 .cmsWidgetToolboxItem {
@@ -234,7 +247,7 @@ p.cmsToolItem {
 .cmsToolItemWrapper {
 	margin: 0;
 	padding: 0;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	font-weight: normal !important;
 	font-size: 12px !important;
 	line-height: normal !important;
@@ -261,7 +274,7 @@ p.cmsToolItem {
 }
 
 #cmsControlPath, #cmsWidgetHead {
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 }
 
 #cmsWidgetHead, #cmsControlPath, #cmsWidgetContainerName {
@@ -297,7 +310,7 @@ p.cmsToolItem {
 	padding: 1px;
 	text-align: left;
 	font-size: small;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	background-color: transparent;
 	border: 0px solid transparent;
 }
@@ -309,7 +322,7 @@ p.cmsToolItem {
 	margin: 0 !important;
 	padding: 0 !important;
 	padding-right: 10px !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 }
 
 #cmsEditMenuList a {
@@ -325,7 +338,7 @@ p.cmsToolItem {
 	height: 24px !important;
 	float: left !important;
 	z-index: 5000 !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 }
 
 #cmsEditMenuList-inner ul, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
@@ -366,7 +379,7 @@ p.cmsToolItem {
 	font-weight: bold !important;
 	cursor: pointer !important;
 	background-image: none !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 }
 
 #cmsEditMenuList-inner ul.cmsMnuParent li a:hover, #cmsEditMenuList-inner ul.cmsMnuParent li.selected a {
@@ -489,7 +502,7 @@ p.cmsToolItem {
 	font-size: 12px !important;
 	line-height: normal !important;
 	font-weight: bold !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 	color: #C0C0C0 !important;
 	background: #008080 !important;
 	min-height: 20px !important;
@@ -553,7 +566,7 @@ p.cmsToolItem {
 	font-size: 12x !important;
 	line-height: normal !important;
 	font-weight: bold !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif !important;
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 }
 
 .cmsContentContainer {
@@ -577,10 +590,26 @@ p.cmsToolItem {
 }
 
 .cmsToolboxHead {
-	font-size: 1.1em !important;
-	padding: 8px !important;
-	margin: 1px !important;
+	padding: 1px !important;
+	margin: 0 !important;
 	text-align: left !important;
+}
+
+.cmsToolboxHeadCaption {
+	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
+	padding: 2px !important;
+	margin: 0 !important;
+	font-size: 12px !important;
+	font-weight: bold !important;
+}
+.cmsVersion {
+	font-size: 8px !important;
+	clear: both;
+	width: 140px;
+	font-weight: normal;
+	text-align: center;
+	line-height: normal;
+	margin: 0 auto !important;
 }
 
 #cmsAdminToolbox {

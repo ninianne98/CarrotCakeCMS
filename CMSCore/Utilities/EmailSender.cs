@@ -22,7 +22,7 @@ namespace Carrotware.CMS.Core {
 		public Dictionary<string, string> ContentPlaceholders { get; set; }
 
 		private string CurrentDLLVersion {
-			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+			get { return SiteData.CurrentDLLVersion; }
 		}
 
 		public string Recepient { get; set; }

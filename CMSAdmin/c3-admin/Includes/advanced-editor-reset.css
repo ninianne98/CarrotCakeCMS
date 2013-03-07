@@ -12,6 +12,9 @@
 	vertical-align: baseline;
 	font-size: 12px;
 	font-size: small;
+	background: transparent;
+	background-color: transparent;
+	border: 0px solid transparent;	
 }
 /* HTML5 display-role reset for older browsers */
 .cmsGlossySeaGreen article, .cmsGlossySeaGreen aside, .cmsGlossySeaGreen details, .cmsGlossySeaGreen figcaption, .cmsGlossySeaGreen figure, .cmsGlossySeaGreen footer, .cmsGlossySeaGreen header, .cmsGlossySeaGreen hgroup, .cmsGlossySeaGreen menu, .cmsGlossySeaGreen nav, .cmsGlossySeaGreen section {

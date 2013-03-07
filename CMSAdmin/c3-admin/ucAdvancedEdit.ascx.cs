@@ -49,10 +49,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			EditorPrefs = UserEditState.cmsUserEditState;
 			if (EditorPrefs == null) {
 				EditorPrefs = new UserEditState();
-				EditorPrefs.EditorMargin = "L";
-				EditorPrefs.EditorOpen = "true";
-				EditorPrefs.EditorScrollPosition = "0";
-				EditorPrefs.EditorSelectedTabIdx = "0";
+				EditorPrefs.Init();
 			}
 
 			string sCurrentPage = SiteData.CurrentScriptName;
