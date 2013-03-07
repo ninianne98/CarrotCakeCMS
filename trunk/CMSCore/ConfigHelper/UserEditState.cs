@@ -22,11 +22,21 @@ namespace Carrotware.CMS.Core {
 
 		public UserEditState() { }
 
+		public void Init() {
+			this.EditorMargin = "L";
+			this.EditorOpen = "true";
+			this.EditorScrollPosition = "0";
+			this.EditorWidgetScrollPosition = "0";
+			this.EditorSelectedTabIdx = "0";
+		}
+
 		public string EditorMargin { get; set; }
 
 		public string EditorOpen { get; set; }
 
 		public string EditorScrollPosition { get; set; }
+
+		public string EditorWidgetScrollPosition { get; set; }
 
 		public string EditorSelectedTabIdx { get; set; }
 

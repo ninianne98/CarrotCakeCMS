@@ -28,7 +28,7 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		protected string CurrentDLLVersion {
-			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+			get { return SiteData.CurrentDLLVersion; }
 		}
 
 

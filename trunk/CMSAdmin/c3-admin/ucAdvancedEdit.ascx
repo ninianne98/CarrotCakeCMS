@@ -81,6 +81,7 @@
 		var cmsTabIdx = parseInt('<%=EditorPrefs.EditorSelectedTabIdx %>');
 		var cmsMargin = '<%=EditorPrefs.EditorMargin %>';
 		var cmsScrollPos = parseInt('<%= EditorPrefs.EditorScrollPosition %>');
+		var cmsScrollWPos = parseInt('<%= EditorPrefs.EditorWidgetScrollPosition %>');
 
 		var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";
 		var cmsOpenStat = true;
@@ -95,7 +96,7 @@
 			cmsOpenStat = false;
 		}
 
-		cmsSetPrefs(cmsTabIdx, cmsMargin, cmsScrollPos, cmsOpenStat);
+		cmsSetPrefs(cmsTabIdx, cmsMargin, cmsScrollPos, cmsScrollWPos, cmsOpenStat);
 
 		cmsSetServiceParms(cmsWebSvc, cmsThisPage, cmsThisPageID, cmsTimeTick);
 
@@ -140,19 +141,27 @@
 	<div id="cmsToolBoxWrap" class="<%=String.Format("cmsToolbarAlignment{0}", EditorPrefs.EditorMargin) %>">
 		<div id="cmsAdminToolbox" class="cmsGlossySeaGreen cmsToolbox2 cmsToolbox3">
 			<div class="cmsInsideArea">
-				<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class='ui-icon ui-icon-minusthick cmsFloatRight' title="toggle">
-					T
+				<div class="ui-widget-header ui-corner-all cmsToolboxHead">
+					<div class="cmsFloatLeft">
+						<p class="cmsToolboxHeadCaption">
+							CarrotCake CMS
+						</p>
+					</div>
+					<div class='cmsFloatRight'>
+						<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class="ui-icon ui-icon-circle-triangle-w cmsFloatLeft" title="L">
+							L
+						</div>
+						<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class="ui-icon ui-icon-circle-triangle-e cmsFloatLeft" title="R">
+							R
+						</div>
+						<div onclick="cmsToggleMenu();" id="cmsMnuToggle" class="ui-icon ui-icon-minusthick cmsFloatLeft" title="toggle">
+							T
+						</div>
+					</div>
+					<div style="clear: both;">
+					</div>
 				</div>
-				<div onclick="cmsShiftPosition('R')" id="cmsMnuRight" class='ui-icon ui-icon-circle-triangle-e cmsFloatRight' title="R">
-					R
-				</div>
-				<div onclick="cmsShiftPosition('L')" id="cmsMnuLeft" class='ui-icon ui-icon-circle-triangle-w cmsFloatRight' title="L">
-					L
-				</div>
-				<p class="ui-widget-header ui-corner-all cmsToolboxHead">
-					Toolbox
-				</p>
-				<div id="cmsDivActive">
+				<div id="cmsDivActive" class="cmsGlossySeaGreen">
 					<div class="ui-widget" runat="server" id="cmsDivEditing">
 						<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
 							<p>
@@ -160,9 +169,9 @@
 								<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal></p>
 						</div>
 					</div>
-					<div id="cmsMainToolbox">
+					<div id="cmsMainToolbox" class="cmsGlossySeaGreen">
 						<asp:Panel ID="pnlCMSEditZone" runat="server">
-							<div id="cmsJQTabedToolbox" style="min-height: 50px; width: 275px;">
+							<div id="cmsJQTabedToolbox">
 								<ul>
 									<li><a href="#cmsTabIdx-tabs-1">Widgets</a></li>
 									<li><a href="#cmsTabIdx-tabs-2">Templates</a></li>
@@ -209,7 +218,7 @@
 									<div class="cmsLeft5px">
 										<p>
 											Templates / Skins<br />
-											<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server" CssClass="cmsTemplateddl">
+											<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server" CssClass="cmsAdvEditTemplatePicker">
 											</asp:DropDownList>
 										</p>
 										<p class="cmsCenter5px">
@@ -262,7 +271,10 @@
 						</asp:Panel>
 					</div>
 				</div>
-				<div id="cmsToolboxSpacer" style="display: none;">
+				<div style="height: 2px; width: 100px; clear: both;">
+				</div>
+				<div class="cmsVersion">
+					<%=  SiteData.CarrotCakeCMSVersion%>
 				</div>
 				<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; height: 20px;">
 				</div>

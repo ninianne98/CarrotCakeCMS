@@ -33,7 +33,7 @@ namespace Carrotware.CMS.UI.Base {
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 		protected string CurrentDLLVersion {
-			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+			get { return SiteData.CurrentDLLVersion; }
 		}
 
 		protected Guid SiteID {
