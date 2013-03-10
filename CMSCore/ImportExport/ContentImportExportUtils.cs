@@ -88,6 +88,11 @@ namespace Carrotware.CMS.Core {
 					cont.ContentType = ContentPageType.PageType.ContentEntry;
 				}
 
+				cont.ShowInSiteMap = true;
+				cont.ShowInSiteNav = true;
+
+				cont.IsLatestVersion = true;
+
 				cont.IsLatestVersion = true;
 				cont.TitleBar = c.PostTitle;
 				cont.NavMenuText = c.PostTitle;

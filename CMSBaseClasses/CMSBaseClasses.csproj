@@ -46,6 +46,7 @@
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -56,10 +57,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GenericPage.aspx" />
+    <Content Include="GenericPageFromMaster.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseContentMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="BaseContentPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BaseContentPageOld.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BaseMasterPage.cs">
@@ -71,6 +79,13 @@
     <Compile Include="BaseUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="GenericMasterPage.Master.cs">
+      <DependentUpon>GenericMasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GenericMasterPage.Master.designer.cs">
+      <DependentUpon>GenericMasterPage.Master</DependentUpon>
+    </Compile>
     <Compile Include="GenericPage.aspx.cs">
       <DependentUpon>GenericPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -78,6 +93,14 @@
     <Compile Include="GenericPage.aspx.designer.cs">
       <DependentUpon>GenericPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GenericPageFromMaster.aspx.cs">
+      <DependentUpon>GenericPageFromMaster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GenericPageFromMaster.aspx.designer.cs">
+      <DependentUpon>GenericPageFromMaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageProcessingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GenericMasterPage.Master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

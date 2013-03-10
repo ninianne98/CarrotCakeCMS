@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GenericPage.aspx.cs" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="GenericMasterPage.master.cs" Inherits="Carrotware.CMS.UI.Base.GenericMasterPage" %>
 
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -7,7 +7,7 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
-<head id="Head1" runat="server">
+<head runat="server">
 	<title></title>
 </head>
 <body>

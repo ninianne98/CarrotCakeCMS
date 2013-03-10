@@ -24,8 +24,4 @@
 	<div class="cmsWidgetControl cmsWidgetControlItem" id="cmsControl">
 		<input type="hidden" id="cmsCtrlID" value="{WIDGET_KEY}" />
 		<input type="hidden" id="cmsCtrlOrder" value="{WIDGET_ORDER}" />
-		<asp:PlaceHolder ID="phWidgetZone" runat="server" />
-		<div style="clear: both;">
-		</div>
-	</div>
-</div>
+

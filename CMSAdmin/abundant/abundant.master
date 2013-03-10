@@ -1,0 +1,86 @@
+<%@ Master Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : Abundant
+Description: A two-column, fixed-width design for 1024x768 screen resolutions.
+Version    : 1.0
+Released   : 20090703
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Abundant by Free CSS Templates</title>
+	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
+	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
+	<carrot:OpenGraph runat="server" ID="OpenGraph1" />
+	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("input:button, input:submit, input:reset").button();
+		});
+
+	</script>
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+	</asp:ContentPlaceHolder>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<div id="wrapper">
+		<div id="header">
+			<div id="menu-wrapper">
+				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="14px" ForeColor="#FFFFFF" SelBGColor="#9D0708" HoverBGColor="#D4260B" SubBGColor="#8E1318" />
+			</div>
+			<!-- end #menu -->
+		</div>
+		<!-- end #header -->
+		<div id="logo">
+			<carrot:SearchBox ID="search1" runat="server">
+				<SearchTemplate>
+					<div id="searcharea">
+						<p>
+							<asp:TextBox ID="SearchText" runat="server" CssClass="textbox" MaxLength="40" />
+							<asp:Button ID="btnSiteSearch" runat="server" CssClass="button" Text="Search" />
+						</p>
+					</div>
+				</SearchTemplate>
+			</carrot:SearchBox>
+			<h1>
+				<a href="/">
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
+			</h1>
+			<p>
+				<em>
+					<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" /></em></p>
+		</div>
+		<hr />
+		<!-- end #logo -->
+		<!-- end #header-wrapper -->
+		<div id="page">
+			<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+			</asp:ContentPlaceHolder>
+			<div style="clear: both;">
+				&nbsp;</div>
+		</div>
+		<!-- end #page -->
+	</div>
+	<asp:PlaceHolder ID="myFooter" runat="server">
+		<div id="footer">
+			<p>
+				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
+				All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
+				<br />
+				Design by <a target="_blank" href="http://www.freecsstemplates.org/">Free CSS Templates</a>.
+			</p>
+		</div>
+	</asp:PlaceHolder>
+	<!-- end #footer -->
+	</form>
+</body>
+</html>

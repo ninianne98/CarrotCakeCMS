@@ -36,10 +36,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private ControlUtilities cu = new ControlUtilities();
 
-		private Control GetCtrl(Control X) {
+		private Control GetCtrl(string CtrlFile, Control X) {
 			cu = new ControlUtilities(this);
 
-			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer.ascx");
+			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx");
 
 			sCtrl = sCtrl.Replace("{WIDGETCONTAINER_ID}", this.ID);
 
@@ -48,31 +48,34 @@ namespace Carrotware.CMS.UI.Controls {
 			return userControl;
 		}
 
-		protected override void Render(HtmlTextWriter w) {
 
-			Control ctrl = new Control();
-			PlaceHolder ph = new PlaceHolder();
+		protected Control ctrl1 = new Control();
+		protected Control ctrl2 = new Control();
+
+		protected override void OnPreRender(EventArgs e) {
+			base.OnPreRender(e);
 
 			if (this.IsAdminMode) {
-
-				ctrl = GetCtrl(this);
-				ph = (PlaceHolder)cu.FindControl("phWidgetZone", ctrl);
-
+				ctrl1 = GetCtrl("ucAdminWidgetContainer1", this);
+				ctrl2 = GetCtrl("ucAdminWidgetContainer2", this);
 			} else {
-				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" });
-				ctrl.Controls.Add(ph);
-				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
+				ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
+				ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
 			}
-
-			int iChild = this.Controls.Count;
-
-			for (int i = 0; i < iChild; i++) {
-				ph.Controls.Add(this.Controls[0]);
-			}
-
-			ctrl.RenderControl(w);
-
 		}
+
+
+		protected override void Render(HtmlTextWriter writer) {
+
+			ctrl1.RenderControl(writer);
+
+			foreach (Control c in this.Controls) {
+				c.RenderControl(writer);
+			}
+
+			ctrl2.RenderControl(writer);
+		}
+
 
 	}
 }

@@ -47,6 +47,29 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool RenderHTMLWithID {
+			get {
+				String s = (String)ViewState["RenderHTMLWithID"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["RenderHTMLWithID"] = value.ToString();
+			}
+		}
+
+		public string HtmlClientID {
+			get {
+				if (RenderHTMLWithID) {
+					return this.ID;
+				} else {
+					return this.ClientID;
+				}
+			}
+		}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 			int indent = output.Indent;
 
@@ -65,7 +88,7 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
-			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+			output.WriteLine("<ul" + sCSS + " id=\"" + this.HtmlClientID + "\">");
 			output.Indent++;
 
 			foreach (SiteNav c in lstNav) {

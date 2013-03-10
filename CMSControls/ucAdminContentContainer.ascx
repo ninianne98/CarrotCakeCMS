@@ -2,7 +2,7 @@
 <div id="cms_{ZONE_ID}" class="cmsContentContainer">
 	<div class="cmsContentContainerTitle cmsGlossySeaGreen">
 		<a title="Edit {ZONE_ID}" id="cmsContentAreaLink_{ZONE_ID}" class="cmsContentContainerInnerTitle" href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','html'); ">
-			Edit {ZONE_ID} <span class="cmsWidgetBarIconPencil2"></span></a>
+			Edit {ZONE_TYPE} ({ZONE_ID})<span class="cmsWidgetBarIconPencil2"></span></a>
 	</div>
 	<div class="cmsWidgetControl" id="cmsAdmin_{ZONE_ID}">
 		<div>

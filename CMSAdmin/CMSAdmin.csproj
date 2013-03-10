@@ -561,6 +561,7 @@
     <Content Include="c3-admin\glossyseagreen\jquery-ui-metro-scoped2.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-metro.css" />
     <Content Include="c3-admin\Images\blogger.png" />
+    <Content Include="c3-admin\Includes\edit-notifier.css" />
     <Content Include="c3-admin\Includes\normalize.css" />
     <Content Include="c3-admin\SiteContentStatusChange.aspx" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped.css" />
@@ -1088,6 +1089,7 @@
     <Content Include="c3-admin\tiny_mce\tiny_mce.zip" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="abundant\abundant.master" />
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>

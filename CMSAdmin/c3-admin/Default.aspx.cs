@@ -42,6 +42,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				txtFolderPath.Text = "archive";
 				txtCategoryPath.Text = "category";
 				txtTagPath.Text = "tag";
+				txtDatePath.Text = "date";
+
 				ddlDatePattern.SelectedValue = "yyyy/MM/dd";
 				txtTitleBar.Text = SiteData.DefaultPageTitlePattern;
 
