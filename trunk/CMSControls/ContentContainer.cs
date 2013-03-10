@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Controls {
 	[DefaultProperty("Text")]
 	[Designer(typeof(ContentContainerDesigner))]
 	[ToolboxData("<{0}:ContentContainer runat=server></{0}:ContentContainer>")]
-	public class ContentContainer : Literal, ICMSCoreControl {
+	public class ContentContainer : Literal, ICMSCoreControl, INamingContainer {
 
 		[Category("Appearance")]
 		[DefaultValue(false)]
@@ -110,6 +110,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			sCtrl = sCtrl.Replace("{ZONE_ID}", this.ClientID);
 			sCtrl = sCtrl.Replace("{ZONE_CHAR}", this.ZoneChar);
+			sCtrl = sCtrl.Replace("{ZONE_TYPE}", this.TextZone.ToString());
 
 			Control userControl = cu.CreateControlFromString(sCtrl);
 

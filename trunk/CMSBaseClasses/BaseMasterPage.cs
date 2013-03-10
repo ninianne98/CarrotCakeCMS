@@ -7,7 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Caching;
 using System.Web.SessionState;
+using System.Web.UI;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -29,6 +31,29 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected string CurrentDLLVersion {
 			get { return SiteData.CurrentDLLVersion; }
+		}
+
+		bool bFound = false;
+		WidgetContainer x = new WidgetContainer();
+		protected WidgetContainer FindTheControl(string ControlName, Control X) {
+
+			if (X is Page) {
+				bFound = false;
+				x = new WidgetContainer();
+			}
+
+			foreach (Control c in X.Controls) {
+				if (c.ID == ControlName && c is WidgetContainer) {
+					bFound = true;
+					x = (WidgetContainer)c;
+					return x;
+				} else {
+					if (!bFound) {
+						FindTheControl(ControlName, c);
+					}
+				}
+			}
+			return x;
 		}
 
 

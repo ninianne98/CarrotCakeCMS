@@ -138,6 +138,10 @@
     <EmbeddedResource Include="ucAdminContentContainer.ascx" />
     <EmbeddedResource Include="ucAdminWidget.ascx" />
     <EmbeddedResource Include="ucAdminWidgetContainer.ascx" />
+    <EmbeddedResource Include="ucAdminWidgetContainer2.ascx" />
+    <EmbeddedResource Include="ucAdminWidgetContainer1.ascx" />
+    <EmbeddedResource Include="ucAdminWidget2.ascx" />
+    <EmbeddedResource Include="ucAdminWidget1.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

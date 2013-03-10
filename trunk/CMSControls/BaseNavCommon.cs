@@ -35,6 +35,30 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool RenderHTMLWithID {
+			get {
+				String s = (String)ViewState["RenderHTMLWithID"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["RenderHTMLWithID"] = value.ToString();
+			}
+		}
+
+		public virtual string HtmlClientID {
+			get {
+				if (RenderHTMLWithID) {
+					return this.ID;
+				} else {
+					return this.ClientID;
+				}
+			}
+		}
+
+
 		public List<SiteNav> NavigationData { get; set; }
 
 		private bool _stripNotInSiteNav = true;
@@ -82,7 +106,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (!string.IsNullOrEmpty(this.CssClass)) {
 					sCSS = " class=\"" + this.CssClass + "\" ";
 				}
-				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+				output.WriteLine("<ul" + sCSS + " id=\"" + this.HtmlClientID + "\">");
 			}
 		}
 

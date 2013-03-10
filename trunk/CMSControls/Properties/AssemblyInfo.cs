@@ -88,5 +88,11 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx", "text/plain")]
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx", "text/plain")]
+
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget1.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget2.ascx", "text/plain")]
+
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer1.ascx", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer2.ascx", "text/plain")]

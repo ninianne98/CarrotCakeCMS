@@ -312,6 +312,105 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+
+		public ContentPage GetCurrentPage() {
+
+			ContentPage pageContents = null;
+
+			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+				if (SecurityData.AdvancedEditMode) {
+					if (cmsHelper.cmsAdminContent == null) {
+						pageContents = GetCurrentLivePage();
+						pageContents.LoadAttributes();
+						cmsHelper.cmsAdminContent = pageContents;
+					} else {
+						pageContents = cmsHelper.cmsAdminContent;
+					}
+				} else {
+					pageContents = GetCurrentLivePage();
+					if (SecurityData.CurrentUserGuid != Guid.Empty) {
+						cmsHelper.cmsAdminContent = null;
+					}
+				}
+			}
+
+			return pageContents;
+		}
+
+		public List<Widget> GetCurrentPageWidgets(Guid guidContentID) {
+
+			List<Widget> pageWidgets = new List<Widget>();
+
+			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+				if (SecurityData.AdvancedEditMode) {
+					if (cmsHelper.cmsAdminWidget == null) {
+						pageWidgets = GetCurrentPageLiveWidgets(guidContentID);
+						cmsHelper.cmsAdminWidget = (from w in pageWidgets
+													orderby w.WidgetOrder
+													select w).ToList();
+					} else {
+						pageWidgets = (from w in cmsHelper.cmsAdminWidget
+									   orderby w.WidgetOrder
+									   select w).ToList();
+					}
+				} else {
+					pageWidgets = GetCurrentPageLiveWidgets(guidContentID);
+					if (SecurityData.CurrentUserGuid != Guid.Empty) {
+						cmsHelper.cmsAdminWidget = null;
+					}
+				}
+			}
+
+			return pageWidgets;
+		}
+
+		public ContentPage GetCurrentLivePage() {
+
+			ContentPage pageContents = null;
+
+			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+
+				bool IsPageTemplate = false;
+				string sCurrentPage = SiteData.CurrentScriptName;
+				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
+
+				if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+					sCurrentPage = sScrubbedURL;
+				}
+
+				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
+					pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
+				} else {
+					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, true, sCurrentPage);
+				}
+
+				if (pageContents == null && SiteData.IsPageReal) {
+					IsPageTemplate = true;
+				}
+
+				if ((SiteData.IsPageSampler || IsPageTemplate || HttpContext.Current == null) && pageContents == null) {
+					pageContents = ContentPageHelper.GetSamplerView();
+				}
+
+				if (IsPageTemplate) {
+					pageContents.TemplateFile = sCurrentPage;
+				}
+			}
+
+			return pageContents;
+		}
+
+		public List<Widget> GetCurrentPageLiveWidgets(Guid guidContentID) {
+			List<Widget> pageWidgets = new List<Widget>();
+			using (WidgetHelper widgetHelper = new WidgetHelper()) {
+				pageWidgets = widgetHelper.GetWidgets(guidContentID, !SecurityData.AdvancedEditMode);
+			}
+
+			return pageWidgets;
+		}
+
+
+
 		public List<BasicContentData> GetFullSiteFileList() {
 			List<BasicContentData> map = new List<BasicContentData>();
 

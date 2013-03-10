@@ -358,18 +358,18 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (WrapList) {
-				output.WriteLine("<div" + sCSSWrap + " id=\"" + this.ClientID + "\">");
+				output.WriteLine("<div" + sCSSWrap + " id=\"" + this.HtmlClientID + "\">");
 				output.Indent++;
-				output.WriteLine("<div id=\"" + this.ClientID + "-inner\">");
+				output.WriteLine("<div id=\"" + this.HtmlClientID + "-inner\">");
 				output.Indent++;
 			}
 
 			string sCSSList = this.CSSULClassTop.Trim();
-			string sLstID = this.ClientID + "-list";
+			string sLstID = this.HtmlClientID + "-list";
 
 			if (!WrapList) {
 				sCSSList = (this.CSSULClassTop + " " + this.CssClass).Trim();
-				sLstID = this.ClientID;
+				sLstID = this.HtmlClientID;
 			}
 
 			if (!string.IsNullOrEmpty(sCSSList)) {
@@ -578,8 +578,8 @@ namespace Carrotware.CMS.UI.Controls {
 						sCSSText = sCSSText.Replace("{TOP_BACKGROUND_STYLE}", "");
 					}
 
-					sCSSText = sCSSText.Replace("{MENU_ID}", "#" + this.ClientID + "");
-					sCSSText = sCSSText.Replace("{MENU_WRAPPER_ID}", "#" + this.ClientID + "-wrapper");
+					sCSSText = sCSSText.Replace("{MENU_ID}", "#" + this.HtmlClientID + "");
+					sCSSText = sCSSText.Replace("{MENU_WRAPPER_ID}", "#" + this.HtmlClientID + "-wrapper");
 					sCSSText = "\r\n\t<style type=\"text/css\">\r\n" + sCSSText + "\r\n\t</style>\r\n";
 					//sCSSText = "\r\n\t<div type=\"text/css\">\r\n" + sCSSText + "\r\n\t</div>\r\n";
 					cssText.Text = sCSSText;

@@ -108,9 +108,9 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void WriteListPrefix(HtmlTextWriter output) {
 			string sCSS = (this.CSSULClassTop + " " + this.CssClass).Trim();
 			if (!string.IsNullOrEmpty(sCSS)) {
-				output.WriteLine("<ul id=\"" + this.ClientID + "\" class=\"" + sCSS + "\">");
+				output.WriteLine("<ul id=\"" + this.HtmlClientID + "\" class=\"" + sCSS + "\">");
 			} else {
-				output.WriteLine("<ul id=\"" + this.ClientID + "\" >");
+				output.WriteLine("<ul id=\"" + this.HtmlClientID + "\" >");
 			}
 		}
 
