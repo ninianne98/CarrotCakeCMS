@@ -1135,14 +1135,21 @@ namespace Carrotware.CMS.Core {
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
 				if (feedData == RSSFeedInclude.PageOnly || feedData == RSSFeedInclude.BlogAndPages) {
-					List<SiteNav> lst1 = navHelper.GetLatest(this.SiteID, 10, true);
+					List<SiteNav> lst1 = navHelper.GetLatest(this.SiteID, 8, true);
 					lst = lst.Union(lst1).ToList();
+					List<SiteNav> lst2 = navHelper.GetLatestUpdates(this.SiteID, 8, true);
+					lst = lst.Union(lst2).ToList();
 				}
 				if (feedData == RSSFeedInclude.BlogOnly || feedData == RSSFeedInclude.BlogAndPages) {
-					List<SiteNav> lst1 = navHelper.GetLatestPosts(this.SiteID, 15, true);
+					List<SiteNav> lst1 = navHelper.GetLatestPosts(this.SiteID, 8, true);
 					lst = lst.Union(lst1).ToList();
+					List<SiteNav> lst2 = navHelper.GetLatestPostUpdates(this.SiteID, 8, true);
+					lst = lst.Union(lst2).ToList();
 				}
 			}
+
+			lst.RemoveAll(x => x.ShowInSiteMap == false && x.ContentType == ContentPageType.PageType.ContentEntry);
+			lst.RemoveAll(x => x.BlockIndex == true);
 
 			foreach (SiteNav sn in lst) {
 				SyndicationItem si = new SyndicationItem();

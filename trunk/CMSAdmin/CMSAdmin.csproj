@@ -560,6 +560,7 @@
     <Content Include="c3-admin\glossyseagreen\jquery-ui-metro-scoped.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-metro-scoped2.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-metro.css" />
+    <Content Include="c3-admin\Images\arrowdown.png" />
     <Content Include="c3-admin\Images\blogger.png" />
     <Content Include="c3-admin\Includes\edit-notifier.css" />
     <Content Include="c3-admin\Includes\normalize.css" />
@@ -694,7 +695,6 @@
     <Content Include="c3-admin\Images\shield.png" />
     <Content Include="c3-admin\Images\Snake-64px-72A584.gif" />
     <Content Include="c3-admin\Images\Snake-64px-A7B2A0.gif" />
-    <Content Include="c3-admin\Images\spacer.gif" />
     <Content Include="c3-admin\Images\spreadsheet.png" />
     <Content Include="c3-admin\Images\table.png" />
     <Content Include="c3-admin\Images\table_go.png" />
@@ -1004,8 +1004,6 @@
     <Content Include="abundant\images\img04.jpg" />
     <Content Include="abundant\images\img05.jpg" />
     <Content Include="abundant\images\img06.gif" />
-    <Content Include="abundant\index.html" />
-    <Content Include="abundant\license.txt" />
     <Content Include="abundant\style.css" />
     <Content Include="citrus-island\citrus1.aspx" />
     <Content Include="citrus-island\images\arrow.gif" />
@@ -1020,7 +1018,6 @@
     <Content Include="citrus-island\images\menubg.gif" />
     <Content Include="citrus-island\images\page.gif" />
     <Content Include="citrus-island\images\quote.gif" />
-    <Content Include="citrus-island\index.html" />
     <Content Include="citrus-island\style.css" />
     <Content Include="Default.aspx" />
     <Content Include="GPL-LICENSE.txt" />
@@ -1058,9 +1055,6 @@
     <Content Include="Site_4\images\vmenublock_s.png" />
     <Content Include="Site_4\images\vmenublock_v.png" />
     <Content Include="Site_4\images\vmenuitem.png" />
-    <Content Include="Site_4\index.html" />
-    <Content Include="Site_4\new-page-2.html" />
-    <Content Include="Site_4\new-page.html" />
     <Content Include="Site_4\script.js" />
     <Content Include="Site_4\style.css" />
     <Content Include="Site_4\style.ie6.css" />
@@ -1090,9 +1084,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant.master" />
+    <Content Include="abundant\abundant-orig.zip" />
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Site_4\Site_4-orig.zip" />
+    <Content Include="citrus-island\citrus-island-orig.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -305,6 +305,23 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
+
+		public List<SiteNav> GetLatestUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
+			List<SiteNav> lstContent = (from ct in CannedQueries.GetLatestContentList(db, siteID, bActiveOnly)
+										orderby ct.EditDate descending
+										select new SiteNav(ct)).Take(iUpdates).ToList();
+
+			return lstContent;
+		}
+
+		public List<SiteNav> GetLatestPostUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
+			List<SiteNav> lstContent = (from ct in CannedQueries.GetLatestBlogList(db, siteID, bActiveOnly)
+										orderby ct.EditDate descending
+										select new SiteNav(ct)).Take(iUpdates).ToList();
+
+			return lstContent;
+		}
+
 		public List<IContentMetaInfo> GetTagList(Guid siteID, int iUpdates) {
 			List<IContentMetaInfo> lstContent = (from ct in CannedQueries.GetTagURLs(db, siteID)
 												 where ct.IsPublic == true

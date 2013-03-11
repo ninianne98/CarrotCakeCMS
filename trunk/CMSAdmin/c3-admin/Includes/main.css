@@ -39,7 +39,7 @@ H3 {
 /* Header */
 #headercontainer {
 	height: 115px; /*background: #468B5E;  */
-	background: #7DAD8E url(/c3-admin/images/heading-gradient.png) repeat-x;
+	background: #7DAD8E url(../images/heading-gradient.png) repeat-x;
 }
 
 #header {
@@ -71,8 +71,8 @@ H3 {
 /* Menu */
 
 #nav-menu-container {
-	font: normal 14px "Trebuchet MS" , Arial, Helvetica, sans-serif; /* background: #3F3F3F;  */
-	background: #3F3F3F url(/c3-admin/images/menu-gradient.png) repeat-x;
+	font: normal 14px 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif; /* background: #3F3F3F;  */
+	background: #3F3F3F url(../images/menu-gradient.png) repeat-x;
 	padding-left: 50px;
 	font-weight: normal;
 }
@@ -83,6 +83,7 @@ H3 {
 	height: 3em;
 	list-style: none;
 	z-index: 990;
+	width: 1050px;
 }
 
 #nav-menu > li {
@@ -97,7 +98,7 @@ H3 {
 	height: 100%;
 	color: #ffffff;
 	text-decoration: none;
-	line-height: 3;
+	line-height: 3em;
 }
 
 #nav-menu > li.current > a {
@@ -163,9 +164,9 @@ H3 {
 	padding-left: 0.5em;
 }
 
-#nav-menu li.sub:hover > a, #nav-menu li.sub > a {
-	margin-right: 0.6em;
-	padding-right: 0.6em;
+#nav-menu > li.sub > a {
+	padding-right: 20px;
+	background: url(../images/arrowdown.png) no-repeat 96% 50%;
 }
 
 #nav-menu > li.sub ul li a {
@@ -173,16 +174,6 @@ H3 {
 	margin: 0 auto 0.2em auto;
 }
 
-#nav-menu li.sub > a:after {
-	font-family: "Arial Unicode MS" , Arial, Helvetica, sans-serif;
-	text-decoration: none;
-	content: ' \25BE ';
-	position: absolute;
-	margin-top: -3px;
-	margin-left: 0.3em;
-	margin-right: 0.3em;
-	top: 10%;
-}
 
 /* Content */
 
