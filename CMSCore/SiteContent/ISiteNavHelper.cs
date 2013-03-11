@@ -36,6 +36,9 @@ namespace Carrotware.CMS.Core {
 		List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly);
 		List<SiteNav> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly);
 
+		List<SiteNav> GetLatestUpdates(Guid siteID, int iUpdates, bool bActiveOnly);
+		List<SiteNav> GetLatestPostUpdates(Guid siteID, int iUpdates, bool bActiveOnly);
+
 		List<IContentMetaInfo> GetTagList(Guid siteID, int iUpdates);
 		List<IContentMetaInfo> GetCategoryList(Guid siteID, int iUpdates);
 		List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates, bool bActiveOnly);

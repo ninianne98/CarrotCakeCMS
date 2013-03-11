@@ -80,6 +80,13 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetLatestPosts(siteID, iUpdates, bActiveOnly);
 		}
+		public List<SiteNav> GetLatestUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
+			return _navHelper.GetLatestUpdates(siteID, iUpdates, bActiveOnly);
+		}
+		public List<SiteNav> GetLatestPostUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
+			return _navHelper.GetLatestPostUpdates(siteID, iUpdates, bActiveOnly);
+		}
+
 		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetMonthBlogUpdateList(siteID, iUpdates, bActiveOnly);
 		}

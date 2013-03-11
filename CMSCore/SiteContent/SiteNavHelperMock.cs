@@ -216,8 +216,16 @@ namespace Carrotware.CMS.Core {
 
 			return SiteNavHelper.GetSamplerFakeNav(iUpdates);
 		}
-
 		public List<SiteNav> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly) {
+
+			return SiteNavHelper.GetSamplerFakeNav(iUpdates);
+		}
+
+		public List<SiteNav> GetLatestUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
+
+			return SiteNavHelper.GetSamplerFakeNav(iUpdates);
+		}
+		public List<SiteNav> GetLatestPostUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
 
 			return SiteNavHelper.GetSamplerFakeNav(iUpdates);
 		}
