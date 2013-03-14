@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -34,10 +36,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public Guid DatabaseKey { get; set; }
 
-		private ControlUtilities cu = new ControlUtilities();
-
 		private Control GetCtrl(string CtrlFile, Control X) {
-			cu = new ControlUtilities(this);
+			ControlUtilities cu = new ControlUtilities(this);
 
 			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx");
 
@@ -55,12 +55,14 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender(e);
 
-			if (this.IsAdminMode) {
-				ctrl1 = GetCtrl("ucAdminWidgetContainer1", this);
-				ctrl2 = GetCtrl("ucAdminWidgetContainer2", this);
-			} else {
-				ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
-				ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
+			if (SiteData.IsWebView) {
+				if (this.IsAdminMode) {
+					ctrl1 = GetCtrl("ucAdminWidgetContainer1", this);
+					ctrl2 = GetCtrl("ucAdminWidgetContainer2", this);
+				} else {
+					ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
+					ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
+				}
 			}
 		}
 

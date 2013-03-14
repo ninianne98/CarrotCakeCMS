@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {
-				Response.Redirect("./Default.aspx");
+				Response.Redirect(SiteFilename.DashboardURL);
 			}
 
 			if (!IsPostBack) {
@@ -34,8 +34,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtDate.Text = cp.GoLiveDate.ToShortDateString();
 				}
 
-				ddlTemplate.DataSource = cmsHelper.Templates;
-				ddlTemplate.DataBind();
+				GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
 
 				LoadGrid();
 			}

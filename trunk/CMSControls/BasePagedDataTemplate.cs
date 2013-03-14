@@ -165,6 +165,12 @@ namespace Carrotware.CMS.UI.Controls {
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
+		public virtual ITemplate ContentTemplateAlt { get; set; }
+
+		[DefaultValue(null)]
+		[Browsable(false)]
+		[PersistenceMode(PersistenceMode.InnerProperty)]
+		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate ContentFooterTemplate { get; set; }
 
 		[DefaultValue(null)]
@@ -178,6 +184,12 @@ namespace Carrotware.CMS.UI.Controls {
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate PagerTemplate { get; set; }
+
+		[DefaultValue(null)]
+		[Browsable(false)]
+		[PersistenceMode(PersistenceMode.InnerProperty)]
+		[TemplateContainer(typeof(RepeaterItem))]
+		public virtual ITemplate PagerTemplateAlt { get; set; }
 
 		[DefaultValue(null)]
 		[Browsable(false)]
@@ -201,14 +213,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			rpPagedContents.ID = "rpPagedContents";
-			rpPagedContents.ItemTemplate = ContentTemplate;
-			rpPagedContents.HeaderTemplate = ContentHeaderTemplate;
-			rpPagedContents.FooterTemplate = ContentFooterTemplate;
+			rpPagedContents.ItemTemplate = this.ContentTemplate;
+			rpPagedContents.HeaderTemplate = this.ContentHeaderTemplate;
+			rpPagedContents.FooterTemplate = this.ContentFooterTemplate;
+			if (this.ContentTemplateAlt != null) {
+				rpPagedContents.AlternatingItemTemplate = this.ContentTemplateAlt;
+			}
 
 			rpPager.ID = "rpPager";
-			rpPager.ItemTemplate = PagerTemplate;
-			rpPager.HeaderTemplate = PagerHeaderTemplate;
-			rpPager.FooterTemplate = PagerFooterTemplate;
+			rpPager.ItemTemplate = this.PagerTemplate;
+			rpPager.HeaderTemplate = this.PagerHeaderTemplate;
+			rpPager.FooterTemplate = this.PagerFooterTemplate;
+			if (this.PagerTemplateAlt != null) {
+				rpPager.AlternatingItemTemplate = this.PagerTemplateAlt;
+			}
 		}
 
 		public virtual object DataSource { get; set; }

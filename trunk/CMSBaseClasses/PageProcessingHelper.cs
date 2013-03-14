@@ -44,7 +44,6 @@ namespace Carrotware.CMS.UI.Base {
 		public List<Widget> ThePageWidgets { get { return pageWidgets; } }
 
 		protected ControlUtilities cu = new ControlUtilities();
-		protected ContentPageHelper pageHelper = new ContentPageHelper();
 
 		protected ContentPage pageContents = null;
 		protected SiteData theSite = null;
@@ -88,11 +87,11 @@ namespace Carrotware.CMS.UI.Base {
 			pageContents = null;
 			pageWidgets = new List<Widget>();
 
-			pageContents = SiteData.CurrentSite.GetCurrentPage();
+			pageContents = SiteData.GetCurrentPage();
 
 			if (pageContents != null) {
 				guidContentID = pageContents.Root_ContentID;
-				pageWidgets = SiteData.CurrentSite.GetCurrentPageWidgets(guidContentID);
+				pageWidgets = SiteData.GetCurrentPageWidgets(guidContentID);
 			}
 		}
 
@@ -146,15 +145,38 @@ namespace Carrotware.CMS.UI.Base {
 
 			if (pageContents != null) {
 
-				//do stuff to page title
-				string sTitleAddendum = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
-				if (!string.IsNullOrEmpty(sTitleAddendum)) {
-					if (!string.IsNullOrEmpty(pageContents.PageHead)) {
-						pageContents.PageHead = pageContents.PageHead.Trim() + ": " + sTitleAddendum;
-					} else {
-						pageContents.PageHead = sTitleAddendum;
+				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+
+					PageViewType pvt = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+					string sTitleAddendum = pvt.ExtraTitle;
+
+					if (!string.IsNullOrEmpty(sTitleAddendum)) {
+						if (!string.IsNullOrEmpty(pageContents.PageHead)) {
+							pageContents.PageHead = pageContents.PageHead.Trim() + ": " + sTitleAddendum;
+						} else {
+							pageContents.PageHead = sTitleAddendum;
+						}
+						pageContents.TitleBar = pageContents.TitleBar.Trim() + ": " + sTitleAddendum;
 					}
-					pageContents.TitleBar = pageContents.TitleBar.Trim() + ": " + sTitleAddendum;
+
+					PagedDataSummary pd = (PagedDataSummary)cu.FindControl(typeof(PagedDataSummary), CurrentWebPage);
+					if (pd != null) {
+						PagedDataSummaryTitleOption titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == pvt.CurrentViewType).FirstOrDefault();
+
+						if (titleOpts == null
+							&& (pvt.CurrentViewType == PageViewType.ViewType.DateDayIndex
+							|| pvt.CurrentViewType == PageViewType.ViewType.DateMonthIndex
+							|| pvt.CurrentViewType == PageViewType.ViewType.DateYearIndex)) {
+
+							titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == PageViewType.ViewType.DateIndex).FirstOrDefault();
+						}
+
+						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.LabelText)) {
+							pageContents.PageHead = titleOpts.LabelText + " " + sTitleAddendum;
+							pageContents.NavMenuText = pageContents.PageHead;
+							pageContents.TitleBar = SiteData.CurrentSite.SiteName + " - " + pageContents.PageHead;
+						}
+					}
 				}
 
 				CurrentWebPage.Title = SetPageTitle(pageContents);
@@ -417,7 +439,7 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 		}
-		
+
 		bool bFound = false;
 		WidgetContainer x = new WidgetContainer();
 		protected WidgetContainer FindTheControl(string ControlName, Control X) {

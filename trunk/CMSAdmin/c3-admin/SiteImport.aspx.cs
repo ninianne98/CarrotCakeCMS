@@ -53,11 +53,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					gvPosts.DataBind();
 
 
-					ddlTemplatePage.DataSource = cmsHelper.Templates;
-					ddlTemplatePage.DataBind();
-
-					ddlTemplatePost.DataSource = cmsHelper.Templates;
-					ddlTemplatePost.DataBind();
+					GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
+					GeneralUtilities.BindList(ddlTemplatePost, cmsHelper.Templates);
 
 					lblPages.Text = gvPages.Rows.Count.ToString();
 					lblPosts.Text = gvPosts.Rows.Count.ToString();
@@ -77,8 +74,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			iAccessCounter++;
 
 			BasicContentData pageData = (from m in sitePageList
-											 where m.FileName.ToLower() == sFilename.ToLower()
-											 select m).FirstOrDefault();
+										 where m.FileName.ToLower() == sFilename.ToLower()
+										 select m).FirstOrDefault();
 
 			if (pageData == null) {
 				using (SiteNavHelper navHelper = new SiteNavHelper()) {

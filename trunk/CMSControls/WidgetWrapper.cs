@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -95,10 +97,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
-
 		private Control GetCtrl(string CtrlFile, Control X) {
-			cu = new ControlUtilities(this);
+			ControlUtilities cu = new ControlUtilities(this);
 
 			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx");
 
@@ -123,22 +123,25 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender(e);
 
-			if (this.IsAdminMode) {
-				ctrl1 = GetCtrl("ucAdminWidget1", this);
-				ctrl2 = GetCtrl("ucAdminWidget2", this);
+			if (SiteData.IsWebView) {
+				if (this.IsAdminMode) {
+					ctrl1 = GetCtrl("ucAdminWidget1", this);
+					ctrl2 = GetCtrl("ucAdminWidget2", this);
 
-				if (string.IsNullOrEmpty(this.JSEditFunction)) {
+					if (string.IsNullOrEmpty(this.JSEditFunction)) {
 
-					HtmlGenericControl edit = (HtmlGenericControl)cu.FindControl("liEdit", ctrl1);
-					HtmlGenericControl hist = (HtmlGenericControl)cu.FindControl("liHistory", ctrl1);
+						ControlUtilities cu = new ControlUtilities();
+						HtmlGenericControl edit = (HtmlGenericControl)cu.FindControl("liEdit", ctrl1);
+						HtmlGenericControl hist = (HtmlGenericControl)cu.FindControl("liHistory", ctrl1);
 
-					edit.Visible = false;
-					hist.Visible = false;
+						edit.Visible = false;
+						hist.Visible = false;
+					}
+
+				} else {
+					ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
+					ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
 				}
-
-			} else {
-				ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
-				ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
 			}
 		}
 

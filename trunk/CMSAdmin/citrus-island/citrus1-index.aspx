@@ -58,6 +58,12 @@
 			<div style="clear: both;">
 			</div>
 			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected">
+				<TypeLabelPrefixes>
+					<carrot:PagedDataSummaryTitleOption KeyValue="DateIndex" LabelText="Date:" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="CategoryIndex" LabelText="Category:" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="TagIndex" LabelText="Tag:" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="SearchResults" LabelText="Search results for:" />
+				</TypeLabelPrefixes>
 				<ContentHeaderTemplate>
 					<h1>
 						Contents</h1>

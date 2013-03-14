@@ -67,6 +67,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         protected global::System.Web.UI.WebControls.Literal litVersion;
         
         /// <summary>
+        /// litSiteIdent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSiteIdent;
+        
+        /// <summary>
+        /// litTag control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTag;
+        
+        /// <summary>
         /// cmdDummy control.
         /// </summary>
         /// <remarks>

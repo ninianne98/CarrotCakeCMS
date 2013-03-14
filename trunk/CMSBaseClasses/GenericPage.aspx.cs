@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
-using System.Collections.Generic;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -23,12 +24,14 @@ namespace Carrotware.CMS.UI.Base {
 			pph = new PageProcessingHelper(this.Page);
 
 			pph.LoadData();
-			pph.LoadPageControls();
-
 			if (pph.ThePage != null) {
 				theSite = pph.TheSite;
 				pageContents = pph.ThePage;
 				pageWidgets = pph.ThePageWidgets;
+			}
+
+			if (SiteData.IsWebView) {
+				pph.LoadPageControls();
 			}
 		}
 

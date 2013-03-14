@@ -315,44 +315,55 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
+		public PageViewType GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
 			Guid siteID = currentSite.SiteID;
+			PageViewType pvt = new PageViewType { ExtraTitle = "", CurrentViewType = PageViewType.ViewType.SinglePage };
 
 			string sTitle = String.Empty;
 
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+				pvt.CurrentViewType = PageViewType.ViewType.CategoryIndex;
 				vw_carrot_CategoryURL query = CompiledQueries.cqGetCategoryByURL(db, siteID, sFilterPath);
 				sTitle = query.CategoryText;
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+				pvt.CurrentViewType = PageViewType.ViewType.TagIndex;
 				vw_carrot_TagURL query = CompiledQueries.cqGetTagByURL(db, siteID, sFilterPath);
 				sTitle = query.TagText;
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+				pvt.CurrentViewType = PageViewType.ViewType.DateIndex;
+
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
 				TimeSpan ts = p.dateEnd - p.dateBegin;
 
 				int daysDelta = ts.Days;
-				if (daysDelta < 370 && daysDelta > 90) {
-					sTitle = "Year " + p.dateBegin.ToString("yyyy");
+				if (daysDelta < 400 && daysDelta > 90) {
+					sTitle = p.dateBegin.ToString("yyyy");
+					pvt.CurrentViewType = PageViewType.ViewType.DateYearIndex;
 				}
 				if (daysDelta < 36 && daysDelta > 3) {
 					sTitle = p.dateBegin.ToString("MMMM yyyy");
+					pvt.CurrentViewType = PageViewType.ViewType.DateMonthIndex;
 				}
 				if (daysDelta < 5) {
 					sTitle = p.dateBegin.ToString("MMMM d, yyyy");
+					pvt.CurrentViewType = PageViewType.ViewType.DateDayIndex;
 				}
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
+				pvt.CurrentViewType = PageViewType.ViewType.SearchResults;
 				string sSearchTerm = "";
 				if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
 					sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
 				}
 
-				sTitle = "Search results for '" + sSearchTerm + "' ";
+				sTitle = " '" + sSearchTerm + "' ";
 			}
 
-			return sTitle;
+			pvt.ExtraTitle = sTitle;
+
+			return pvt;
 		}
 
 
@@ -711,9 +722,13 @@ namespace Carrotware.CMS.Core {
 			pageNew.NavMenuText = "Template PV - NAV"; ;
 			pageNew.PageHead = "Template Preview - HEAD";
 			pageNew.PageActive = true;
+			pageNew.ShowInSiteNav = true;
+			pageNew.ShowInSiteMap = true;
+
 			pageNew.EditUserId = SecurityData.CurrentUserGuid;
-			pageNew.EditDate = DateTime.Now.AddDays(-1);
-			pageNew.CreateDate = DateTime.Now.AddDays(-14);
+
+			pageNew.EditDate = DateTime.Now.Date.AddHours(-8);
+			pageNew.CreateDate = DateTime.Now.Date.AddHours(-38);
 			pageNew.GoLiveDate = pageNew.EditDate.AddHours(-5);
 			pageNew.RetireDate = pageNew.CreateDate.AddYears(5);
 

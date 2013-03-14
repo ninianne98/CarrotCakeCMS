@@ -36,48 +36,26 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					litHomepage.Text = pageHome.NavMenuText + "  [" + pageHome.FileName + "]";
 
-					ddlHome.DataSource = cmsHelper.Templates;
-					ddlHome.DataBind();
-					ddlHome.Items.Insert(0, new ListItem("-Select Template-", "0"));
+					GeneralUtilities.BindListDefaultText(ddlHome, cmsHelper.Templates, pageHome.TemplateFile, "Select Template", "0");
 
-					try { ddlHome.SelectedValue = pageHome.TemplateFile; } catch { }
-
-
-					ddlBlog.DataSource = cmsHelper.Templates;
-					ddlBlog.DataBind();
-					ddlBlog.Items.Insert(0, new ListItem("-Select Template-", "0"));
+					GeneralUtilities.BindListDefaultText(ddlBlog, cmsHelper.Templates, null, "Select Template", "0");
 
 					if (pageIndex != null) {
 						litBlogIndex.Text = pageIndex.NavMenuText + "  [" + pageIndex.FileName + "]";
-						try { ddlBlog.SelectedValue = pageIndex.TemplateFile; } catch { }
+						GeneralUtilities.SelectListValue(ddlBlog, pageIndex.TemplateFile);
 					} else {
 						litBlogIndex.Text = "No Index ***";
 						ddlBlog.Enabled = false;
 					}
 
+					GeneralUtilities.BindListDefaultText(ddlAll, cmsHelper.Templates, null, "Select Template", "0");
+					GeneralUtilities.BindListDefaultText(ddlTop, cmsHelper.Templates, null, "Select Template", "0");
+					GeneralUtilities.BindListDefaultText(ddlSub, cmsHelper.Templates, null, "Select Template", "0");
+					GeneralUtilities.BindListDefaultText(ddlPages, cmsHelper.Templates, null, "Select Template", "0");
+					GeneralUtilities.BindListDefaultText(ddlPosts, cmsHelper.Templates, null, "Select Template", "0");
 
-					ddlAll.DataSource = cmsHelper.Templates;
-					ddlAll.DataBind();
-					ddlAll.Items.Insert(0, new ListItem("-Select Template-", "0"));
-
-					ddlTop.DataSource = cmsHelper.Templates;
-					ddlTop.DataBind();
-					ddlTop.Items.Insert(0, new ListItem("-Select Template-", "0"));
-
-					ddlSub.DataSource = cmsHelper.Templates;
-					ddlSub.DataBind();
-					ddlSub.Items.Insert(0, new ListItem("-Select Template-", "0"));
-
-					ddlPages.DataSource = cmsHelper.Templates;
-					ddlPages.DataBind();
-					ddlPages.Items.Insert(0, new ListItem("-Select Template-", "0"));
-
-					ddlPosts.DataSource = cmsHelper.Templates;
-					ddlPosts.DataBind();
-					ddlPosts.Items.Insert(0, new ListItem("-Select Template-", "0"));
 				}
 			}
-
 
 		}
 

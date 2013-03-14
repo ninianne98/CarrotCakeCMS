@@ -24,13 +24,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {
-				Response.Redirect("./Default.aspx");
+				Response.Redirect(SiteFilename.DashboardURL);
 			}
 
 			if (!IsPostBack) {
 
-				ddlTemplate.DataSource = cmsHelper.Templates;
-				ddlTemplate.DataBind();
+				GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
 
 				SetGrid(false, null);
 			}

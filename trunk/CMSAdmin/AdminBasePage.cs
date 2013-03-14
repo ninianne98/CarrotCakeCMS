@@ -30,7 +30,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 				if (!bHasAccess) {
 					FormsAuthentication.SignOut();
-					Response.Redirect("./Logon.aspx");
+					Response.Redirect(SiteFilename.LogonURL);
 				}
 			}
 
@@ -40,20 +40,6 @@ namespace Carrotware.CMS.UI.Admin {
 
 			base.OnInit(e);
 
-		}
-
-
-		public bool? GetDDLValueNullableBool(DropDownList ddl) {
-			bool? bVal = null;
-
-			if (ddl.SelectedValue == "0") {
-				bVal = false;
-			}
-			if (ddl.SelectedValue == "1") {
-				bVal = true;
-			}
-
-			return bVal;
 		}
 
 		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {

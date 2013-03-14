@@ -12,6 +12,7 @@ using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 	public partial class Main : AdminBaseMasterPage {
+
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!SecurityData.IsAdmin) {
 				tabUserSecurity.Visible = false;
@@ -21,6 +22,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 			if (SiteData.CurrentSite != null) {
 				litServerTime.Text = SiteData.CurrentSite.Now.ToString() + " " + SiteData.CurrentSite.TimeZoneIdentifier;
+				litSiteIdent.Text = SiteData.CurrentSite.SiteName;
+				litTag.Text = SiteData.CurrentSite.SiteTagline;
+
+				if (!string.IsNullOrEmpty(SiteData.CurrentSite.SiteName) && !string.IsNullOrEmpty(SiteData.CurrentSite.SiteTagline)) {
+					litSiteIdent.Text = SiteData.CurrentSite.SiteName.Trim() + ":   ";
+				}
 			} else {
 				litServerTime.Text = DateTime.UtcNow.ToString() + " UTC";
 			}
@@ -36,7 +43,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			if (!File.Exists(sPlugCfg)) {
 				tabModules.Visible = false;
 			}
-
 		}
 
 		public void HideWhenNoSiteProfileExists() {
@@ -62,7 +68,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 		protected void lnkLogout_Click(object sender, EventArgs e) {
 			FormsAuthentication.SignOut();
-			Response.Redirect("./Logon.aspx");
+			Response.Redirect(SiteFilename.LogonURL);
 		}
 
 

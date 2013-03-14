@@ -28,6 +28,18 @@ namespace Carrotware.CMS.Core {
 		public static string BlogPostIndexURL {
 			get { return SiteData.AdminFolderPath + "BlogPostIndex.aspx"; }
 		}
+		public static string CreateFirstAdminURL {
+			get { return SiteData.AdminFolderPath + "CreateFirstAdmin.aspx"; }
+		}
+		public static string DatabaseSetupURL {
+			get { return SiteData.AdminFolderPath + "DatabaseSetup.aspx"; }
+		}
+		public static string LogonURL {
+			get { return SiteData.AdminFolderPath + "Logon.aspx"; }
+		}
+		public static string DashboardURL {
+			get { return SiteData.AdminFolderPath + "default.aspx"; }
+		}
 
 		public static string DataExportURL {
 			get { return SiteData.AdminFolderPath + "PageExport.aspx"; }

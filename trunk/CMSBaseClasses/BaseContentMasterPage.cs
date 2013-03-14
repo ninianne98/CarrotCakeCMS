@@ -20,6 +20,7 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
+
 namespace Carrotware.CMS.UI.Base {
 	internal class BaseContentMasterPage : BaseMasterPage {
 
@@ -79,11 +80,11 @@ namespace Carrotware.CMS.UI.Base {
 			pageContents = null;
 			pageWidgets = new List<Widget>();
 
-			pageContents = SiteData.CurrentSite.GetCurrentPage();
+			pageContents = SiteData.GetCurrentPage();
 
 			if (pageContents != null) {
 				guidContentID = pageContents.Root_ContentID;
-				pageWidgets = SiteData.CurrentSite.GetCurrentPageWidgets(guidContentID);
+				pageWidgets = SiteData.GetCurrentPageWidgets(guidContentID);
 			}
 		}
 
@@ -138,7 +139,8 @@ namespace Carrotware.CMS.UI.Base {
 			if (pageContents != null) {
 
 				//do stuff to page title
-				string sTitleAddendum = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+				PageViewType pvt = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+				string sTitleAddendum = pvt.ExtraTitle;
 				if (!string.IsNullOrEmpty(sTitleAddendum)) {
 					if (!string.IsNullOrEmpty(pageContents.PageHead)) {
 						pageContents.PageHead = pageContents.PageHead.Trim() + ": " + sTitleAddendum;

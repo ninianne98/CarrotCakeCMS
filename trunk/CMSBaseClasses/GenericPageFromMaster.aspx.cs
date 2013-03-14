@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
-using System.Collections.Generic;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -30,18 +31,25 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		protected void LoadMasterPageInfo() {
-			if (Master.ThePage != null) {
-				theSite = Master.TheSite;
-				pageContents = Master.ThePage;
-				pageWidgets = Master.ThePageWidgets;
-			} else {
-				if (pageContents == null) {
-					theSite = SiteData.CurrentSite;
-					pageContents = theSite.GetCurrentPage();
-					if (pageContents != null) {
-						pageWidgets = theSite.GetCurrentPageWidgets(pageContents.Root_ContentID);
+
+			if (SiteData.IsWebView) {
+				if (Master.ThePage != null) {
+					theSite = Master.TheSite;
+					pageContents = Master.ThePage;
+					pageWidgets = Master.ThePageWidgets;
+				} else {
+					if (pageContents == null) {
+						theSite = SiteData.CurrentSite;
+						pageContents = SiteData.GetCurrentPage();
+						if (pageContents != null) {
+							pageWidgets = SiteData.GetCurrentPageWidgets(pageContents.Root_ContentID);
+						}
 					}
 				}
+			} else {
+				theSite = SiteData.CurrentSite;
+				pageContents = SiteData.GetCurrentPage();
+				pageWidgets = new List<Widget>();
 			}
 		}
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using Carrotware.CMS.Data;
-using System.Text.RegularExpressions;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -144,7 +144,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsRetired {
 			get {
-				if (HttpContext.Current != null) {
+				if (SiteData.IsWebView) {
 					if (this.RetireDate < SiteData.CurrentSite.Now) {
 						return true;
 					} else {
@@ -158,7 +158,7 @@ namespace Carrotware.CMS.Core {
 
 		public bool IsUnReleased {
 			get {
-				if (HttpContext.Current != null) {
+				if (SiteData.IsWebView) {
 					if (this.GoLiveDate > SiteData.CurrentSite.Now) {
 						return true;
 					} else {

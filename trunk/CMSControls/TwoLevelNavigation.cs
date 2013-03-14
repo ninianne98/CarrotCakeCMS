@@ -347,7 +347,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
 
-			if (HttpContext.Current == null) {
+			if (!SiteData.IsWebView) {
 				cssText.RenderControl(output);
 				output.Write(GetCtrlText(cssText));
 			}

@@ -35,13 +35,13 @@
 }
 #cms-simplemodal-container a.modalCloseImg, a.modalCloseImg {
 	background: url(/c3-admin/images/x.png) no-repeat;
-	width: 25px;
-	height: 29px;
+	width: 30px;
+	height: 30px;
 	display: inline;
 	z-index: 3200;
 	position: absolute;
 	top: -15px;
-	right: -16px;
+	right: -15px;
 	cursor: pointer;
 }
 #cms-basic-modal-content {

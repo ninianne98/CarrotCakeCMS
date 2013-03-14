@@ -39,8 +39,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
 				if (!HideList && cmsHelper.AdminModules.Count > 0) {
-					rpModuleList.DataSource = cmsHelper.AdminModules;
-					rpModuleList.DataBind();
+					GeneralUtilities.BindRepeater(rpModuleList, cmsHelper.AdminModules);
 				} else {
 					rpModuleList.Visible = false;
 				}
@@ -134,9 +133,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (rpModuleContents != null) {
 				var d = (CMSAdminModule)e.Item.DataItem;
 
-				rpModuleContents.DataSource = d.PluginMenus.Where(z => z.IsVisible == true).OrderBy(x => x.SortOrder).ToList();
-				rpModuleContents.DataBind();
-
+				GeneralUtilities.BindRepeater(rpModuleContents, d.PluginMenus.Where(z => z.IsVisible == true).OrderBy(x => x.SortOrder).ToList());
 			}
 		}
 

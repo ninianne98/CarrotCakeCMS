@@ -49,7 +49,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void cmdCancel_Click(object sender, EventArgs e) {
-			Response.Redirect("./default.aspx?");
+			Response.Redirect(SiteFilename.DashboardURL);
 		}
 
 	}

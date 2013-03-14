@@ -75,11 +75,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			var fldr = helpFile.GetFolders(sQueryPath);
 			var fls = helpFile.GetFiles(sQueryPath);
 
-			rpFolders.DataSource = fldr;
-			rpFolders.DataBind();
-
-			rpFiles.DataSource = fls;
-			rpFiles.DataBind();
+			GeneralUtilities.BindRepeater(rpFolders, fldr);
+			GeneralUtilities.BindRepeater(rpFiles, fls);
 		}
 
 		public string CreateFileLink(string sPath) {
