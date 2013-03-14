@@ -107,11 +107,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lstNav = lstNavTop.Union(lstNav).ToList();
 				}
 
-
-				ddlCMSLinks.DataSource = lstNav;
-				ddlCMSLinks.DataBind();
-
-				ddlCMSLinks.Items.Insert(0, new ListItem("-Navigate-", "00000"));
+				GeneralUtilities.BindListDefaultText(ddlCMSLinks, lstNav, null, "Navigate", "00000");
 
 				if (lstNav.Count < 1) {
 					ddlCMSLinks.Visible = false;

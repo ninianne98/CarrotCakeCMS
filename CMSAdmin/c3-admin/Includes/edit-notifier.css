@@ -8,7 +8,7 @@
 }
 #cmsAdminToolbox2 {
 	right: 0 !important;
-	bottom: 150px !important;
+	bottom: 100px !important;
 	line-height: 15px !important;
 	text-shadow: 0 0 0 #FFFFFF !important;
 }
@@ -86,8 +86,8 @@ span.cmsFooterLinks, p.cmsFooterLinks {
 	padding: 5px !important;
 	margin: 5px !important;
 	border: 2px dashed #676F6A !important;
-	margin-left: 40px !important;
-	margin-right: 40px !important;
+	margin-left: 60px !important;
+	margin-right: 60px !important;
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 }
 

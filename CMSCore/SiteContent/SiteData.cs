@@ -135,6 +135,10 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static bool IsWebView {
+			get { return (HttpContext.Current != null); }
+		}
+
 		private static string SiteKeyPrefix = "cms_SiteData_";
 
 		public static void RemoveSiteFromCache(Guid siteID) {
@@ -148,7 +152,7 @@ namespace Carrotware.CMS.Core {
 
 			string ContentKey = SiteKeyPrefix + siteID.ToString();
 			SiteData currentSite = null;
-			if (HttpContext.Current != null) {
+			if (IsWebView) {
 				try { currentSite = (SiteData)HttpContext.Current.Cache[ContentKey]; } catch { }
 				if (currentSite == null) {
 					currentSite = GetSiteByID(siteID);
@@ -313,50 +317,56 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		public ContentPage GetCurrentPage() {
+		public static ContentPage GetCurrentPage() {
 
 			ContentPage pageContents = null;
 
-			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
-				if (SecurityData.AdvancedEditMode) {
-					if (cmsHelper.cmsAdminContent == null) {
-						pageContents = GetCurrentLivePage();
-						pageContents.LoadAttributes();
-						cmsHelper.cmsAdminContent = pageContents;
+			if (IsWebView) {
+				using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+					if (SecurityData.AdvancedEditMode) {
+						if (cmsHelper.cmsAdminContent == null) {
+							pageContents = GetCurrentLivePage();
+							pageContents.LoadAttributes();
+							cmsHelper.cmsAdminContent = pageContents;
+						} else {
+							pageContents = cmsHelper.cmsAdminContent;
+						}
 					} else {
-						pageContents = cmsHelper.cmsAdminContent;
-					}
-				} else {
-					pageContents = GetCurrentLivePage();
-					if (SecurityData.CurrentUserGuid != Guid.Empty) {
-						cmsHelper.cmsAdminContent = null;
+						pageContents = GetCurrentLivePage();
+						if (SecurityData.CurrentUserGuid != Guid.Empty) {
+							cmsHelper.cmsAdminContent = null;
+						}
 					}
 				}
+			} else {
+				pageContents = ContentPageHelper.GetSamplerView();
 			}
 
 			return pageContents;
 		}
 
-		public List<Widget> GetCurrentPageWidgets(Guid guidContentID) {
+		public static List<Widget> GetCurrentPageWidgets(Guid guidContentID) {
 
 			List<Widget> pageWidgets = new List<Widget>();
 
-			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
-				if (SecurityData.AdvancedEditMode) {
-					if (cmsHelper.cmsAdminWidget == null) {
-						pageWidgets = GetCurrentPageLiveWidgets(guidContentID);
-						cmsHelper.cmsAdminWidget = (from w in pageWidgets
-													orderby w.WidgetOrder
-													select w).ToList();
+			if (IsWebView) {
+				using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+					if (SecurityData.AdvancedEditMode) {
+						if (cmsHelper.cmsAdminWidget == null) {
+							pageWidgets = GetCurrentPageLiveWidgets(guidContentID);
+							cmsHelper.cmsAdminWidget = (from w in pageWidgets
+														orderby w.WidgetOrder
+														select w).ToList();
+						} else {
+							pageWidgets = (from w in cmsHelper.cmsAdminWidget
+										   orderby w.WidgetOrder
+										   select w).ToList();
+						}
 					} else {
-						pageWidgets = (from w in cmsHelper.cmsAdminWidget
-									   orderby w.WidgetOrder
-									   select w).ToList();
-					}
-				} else {
-					pageWidgets = GetCurrentPageLiveWidgets(guidContentID);
-					if (SecurityData.CurrentUserGuid != Guid.Empty) {
-						cmsHelper.cmsAdminWidget = null;
+						pageWidgets = GetCurrentPageLiveWidgets(guidContentID);
+						if (SecurityData.CurrentUserGuid != Guid.Empty) {
+							cmsHelper.cmsAdminWidget = null;
+						}
 					}
 				}
 			}
@@ -364,7 +374,7 @@ namespace Carrotware.CMS.Core {
 			return pageWidgets;
 		}
 
-		public ContentPage GetCurrentLivePage() {
+		public static ContentPage GetCurrentLivePage() {
 
 			ContentPage pageContents = null;
 
@@ -388,7 +398,7 @@ namespace Carrotware.CMS.Core {
 					IsPageTemplate = true;
 				}
 
-				if ((SiteData.IsPageSampler || IsPageTemplate || HttpContext.Current == null) && pageContents == null) {
+				if ((SiteData.IsPageSampler || IsPageTemplate || !IsWebView) && pageContents == null) {
 					pageContents = ContentPageHelper.GetSamplerView();
 				}
 
@@ -400,8 +410,9 @@ namespace Carrotware.CMS.Core {
 			return pageContents;
 		}
 
-		public List<Widget> GetCurrentPageLiveWidgets(Guid guidContentID) {
+		public static List<Widget> GetCurrentPageLiveWidgets(Guid guidContentID) {
 			List<Widget> pageWidgets = new List<Widget>();
+
 			using (WidgetHelper widgetHelper = new WidgetHelper()) {
 				pageWidgets = widgetHelper.GetWidgets(guidContentID, !SecurityData.AdvancedEditMode);
 			}
@@ -425,7 +436,7 @@ namespace Carrotware.CMS.Core {
 		public static Guid CurrentSiteID {
 			get {
 				Guid _site = Guid.Empty;
-				if (HttpContext.Current != null) {
+				if (IsWebView) {
 					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 					if (config.MainConfig != null
 						&& config.MainConfig.SiteID != null) {
@@ -488,7 +499,7 @@ namespace Carrotware.CMS.Core {
 
 		public DateTime Now {
 			get {
-				if (HttpContext.Current != null) {
+				if (IsWebView) {
 					return SiteData.CurrentSite.ConvertUTCToSiteTime(DateTime.UtcNow);
 				} else {
 					return DateTime.Now;
@@ -499,7 +510,7 @@ namespace Carrotware.CMS.Core {
 		public TimeZoneInfo SiteTimeZoneInfo {
 			get {
 				TimeZoneInfo oTZ = TimeZoneInfo.Local;
-				if (HttpContext.Current != null) {
+				if (IsWebView) {
 					if (!string.IsNullOrEmpty(this.TimeZoneIdentifier)) {
 						try { oTZ = TimeZoneInfo.FindSystemTimeZoneById(this.TimeZoneIdentifier); } catch { }
 					}
@@ -868,7 +879,7 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsPageReal {
 			get {
-				if (HttpContext.Current != null
+				if (IsWebView
 					&& CurrentScriptName.ToLower() != DefaultDirectoryFilename.ToLower()
 					&& File.Exists(HttpContext.Current.Server.MapPath(CurrentScriptName))) {
 					return true;
@@ -910,7 +921,7 @@ namespace Carrotware.CMS.Core {
 			get {
 				string _preview = DefaultTemplateFilename;
 
-				if (HttpContext.Current != null) {
+				if (IsWebView) {
 					if (HttpContext.Current.Request.QueryString["carrot_templatepreview"] != null) {
 						_preview = HttpContext.Current.Request.QueryString["carrot_templatepreview"].ToString();
 						_preview = CMSConfigHelper.DecodeBase64(_preview);
@@ -1002,7 +1013,7 @@ namespace Carrotware.CMS.Core {
 			get {
 				string sCurrentPage = CurrentScriptName;
 
-				if (HttpContext.Current != null) {
+				if (IsWebView) {
 					if (!CurrentScriptName.ToLower().StartsWith(AdminFolderPath)) {
 
 						string sScrubbedURL = CheckForSpecialURL(CurrentSite);
@@ -1029,8 +1040,8 @@ namespace Carrotware.CMS.Core {
 		public static string CheckForSpecialURL(SiteData site) {
 			string sRequestedURL = "/";
 
-			if (HttpContext.Current != null) {
-				sRequestedURL = HttpContext.Current.Request.Path;
+			if (IsWebView) {
+				sRequestedURL = CurrentScriptName;
 				string sFileRequested = sRequestedURL;
 
 				if (!sRequestedURL.ToLower().StartsWith(AdminFolderPath) && site != null) {
@@ -1137,13 +1148,13 @@ namespace Carrotware.CMS.Core {
 				if (feedData == RSSFeedInclude.PageOnly || feedData == RSSFeedInclude.BlogAndPages) {
 					List<SiteNav> lst1 = navHelper.GetLatest(this.SiteID, 8, true);
 					lst = lst.Union(lst1).ToList();
-					List<SiteNav> lst2 = navHelper.GetLatestUpdates(this.SiteID, 8, true);
+					List<SiteNav> lst2 = navHelper.GetLatestUpdates(this.SiteID, 10, true);
 					lst = lst.Union(lst2).ToList();
 				}
 				if (feedData == RSSFeedInclude.BlogOnly || feedData == RSSFeedInclude.BlogAndPages) {
 					List<SiteNav> lst1 = navHelper.GetLatestPosts(this.SiteID, 8, true);
 					lst = lst.Union(lst1).ToList();
-					List<SiteNav> lst2 = navHelper.GetLatestPostUpdates(this.SiteID, 8, true);
+					List<SiteNav> lst2 = navHelper.GetLatestPostUpdates(this.SiteID, 10, true);
 					lst = lst.Union(lst2).ToList();
 				}
 			}

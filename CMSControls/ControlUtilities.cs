@@ -109,13 +109,13 @@ namespace Carrotware.CMS.UI.Controls {
 			return sPath;
 		}
 
-		public static Control ParseControlByName(Type type, string resourceName) {
+		public static Control ParseControlByName(string resourceName) {
 			string s = GetManifestResourceStream(resourceName);
 
 			return CachedPage.ParseControl(s);
 		}
 
-		public static Control ParseControl(Type type, string resource) {
+		public static Control ParseControl(string resource) {
 
 			return CachedPage.ParseControl(resource);
 		}
@@ -123,12 +123,10 @@ namespace Carrotware.CMS.UI.Controls {
 		public static string GetManifestResourceStream(string sResouceName) {
 			string sReturn = null;
 
-			//try {
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
 				sReturn = oTextStream.ReadToEnd();
 			}
-			//} catch { }
 
 			return sReturn;
 		}
@@ -258,5 +256,21 @@ namespace Carrotware.CMS.UI.Controls {
 			return ctrl;
 		}
 
+		public Control FindControl(Type type, Control X) {
+
+			foreach (Control c in X.Controls) {
+				if (c.GetType() == type) {
+					bFoundControl = true;
+					ctrl = (Control)c;
+					return ctrl;
+				} else {
+					if (!bFoundControl) {
+						FindControl(type, c);
+					}
+				}
+			}
+
+			return ctrl;
+		}
 	}
 }

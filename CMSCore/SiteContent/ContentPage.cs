@@ -74,7 +74,7 @@ namespace Carrotware.CMS.Core {
 
 		public SiteNav GetSiteNav() {
 			SiteNav sd = null;
-			if (SiteData.IsPageSampler || HttpContext.Current == null) {
+			if (SiteData.IsPageSampler || !SiteData.IsWebView) {
 				sd = SiteNavHelper.GetSamplerView();
 			} else {
 				using (SiteNavHelper sdh = new SiteNavHelper()) {

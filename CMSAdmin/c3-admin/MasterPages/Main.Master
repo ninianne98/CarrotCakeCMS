@@ -78,6 +78,12 @@
 			<div id="header">
 				<h2>
 					<asp:Literal ID="litVersion" runat="server" /></h2>
+				<div style="clear: both">
+				</div>
+				<h3>
+					<asp:Literal ID="litSiteIdent" runat="server" />
+					<asp:Literal ID="litTag" runat="server" />
+				</h3>
 			</div>
 			<div style="display: none">
 				<asp:Button ID="cmdDummy" runat="server"></asp:Button>
@@ -129,7 +135,7 @@
 				<li><a href="javascript:void(0)">&nbsp;</a></li>
 			</ul>
 		</div>
-		<div style="height: 2px; width: 1100px; clear: both; border: 1px dashed #ffffff !important;">
+		<div class="widthshim">
 		</div>
 		<div id="content">
 			<div class="pad-content">
@@ -163,19 +169,23 @@
 			</div>
 		</div>
 		<div id="footer">
-			<p>
-				<asp:PlaceHolder ID="myFooter" runat="server">&copy; carrotware.com
-					<%= DateTime.Now.Year %>
-				</asp:PlaceHolder>
-				<br />
-				<asp:Literal ID="litCMSBuildInfo" runat="server" />
-				<br />
-				Site Time:
-				<asp:Literal ID="litServerTime" runat="server" />
-				<br />
-			</p>
+			<div id="footer-inner">
+				<p>
+					<asp:PlaceHolder ID="myFooter" runat="server">&copy; <a target="_blank" href="http://www.carrotware.com">carrotware.com</a>
+						<%=String.Format("2001 - {0}", DateTime.Now.Year) %>
+					</asp:PlaceHolder>
+					<br />
+					<asp:Literal ID="litCMSBuildInfo" runat="server" />
+					<br />
+					Site Time:
+					<asp:Literal ID="litServerTime" runat="server" />
+					<br />
+				</p>
+			</div>
+			<div class="widthshim">
+			</div>
+			<asp:PlaceHolder ID="plcFooter" runat="server" />
 		</div>
-		<asp:PlaceHolder ID="plcFooter" runat="server" />
 	</div>
 	</form>
 </body>

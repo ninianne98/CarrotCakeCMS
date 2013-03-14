@@ -5,9 +5,11 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #ffffff;
-	font-family: Georgia, Times New Roman, Serif;
 	color: #000000;
+	font-family: Georgia, Times New Roman, Serif;
 	font-size: 12px;
+	min-width: 1024px;
+	width: 100%;
 }
 
 h1, h2, h3 {
@@ -38,19 +40,24 @@ H3 {
 
 /* Header */
 #headercontainer {
+	margin: 0;
+	padding: 0;
 	height: 115px; /*background: #468B5E;  */
 	background: #7DAD8E url(../images/heading-gradient.png) repeat-x;
+	min-width: 1024px;
+	width: 100%;
 }
 
 #header {
-	width: 950px;
-	height: 110px;
-	margin-left: 50px;
-	margin-right: 50px;
 	font-family: Georgia, Times New Roman, Serif;
+	margin: 0;
+	padding: 0;
+	height: 110px;
+	width: 1024px;
+	margin-left: 50px;
 }
 
-#header h1, #header h2 {
+#header h1, #header h2, #header h3 {
 	font-weight: bold;
 	color: #FFFFFF;
 	font-family: Georgia, Times New Roman, Serif;
@@ -58,32 +65,42 @@ H3 {
 
 #header h1 {
 	float: left;
-	padding: 30px 0 0 20px;
+	padding: 20px 0 0 20px;
 	font-size: 36px;
 }
 
 #header h2 {
 	float: left;
-	padding: 40px 20px 0 0;
+	padding: 20px 0 0 0;
 	font-size: 28px;
+}
+
+#header h3 {
+	float: left;
+	padding: 10px 0 0 0;
+	font-size: 20px;
+	color: #3F3F3F;	
 }
 
 /* Menu */
 
 #nav-menu-container {
+	margin: 0;
+	padding: 0;
 	font: normal 14px 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif; /* background: #3F3F3F;  */
 	background: #3F3F3F url(../images/menu-gradient.png) repeat-x;
-	padding-left: 50px;
 	font-weight: normal;
+	min-width: 1024px;
+	width: 100%;
 }
 
 #nav-menu {
 	margin: 0;
-	padding: 0 1em;
+	padding: 0;
 	height: 3em;
 	list-style: none;
 	z-index: 990;
-	width: 1050px;
+	margin-left: 50px;
 }
 
 #nav-menu > li {
@@ -164,9 +181,10 @@ H3 {
 	padding-left: 0.5em;
 }
 
-#nav-menu > li.sub > a {
+#nav-menu > li.sub {
 	padding-right: 20px;
-	background: url(../images/arrowdown.png) no-repeat 96% 50%;
+	margin-right: 10px;
+	background: url(../images/arrowdown.png) no-repeat 98% 50%;
 }
 
 #nav-menu > li.sub ul li a {
@@ -174,6 +192,14 @@ H3 {
 	margin: 0 auto 0.2em auto;
 }
 
+.widthshim {
+	height: 1px;
+	width: 1024px !important;
+	clear: both;
+	border: 1px dashed transparent !important;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
 
 /* Content */
 
@@ -236,21 +262,43 @@ H3 {
 /* Footer */
 
 #footer {
-	height: 50px;
-	padding: 20px;
+	margin: 0;
+	padding: 0;
+	height: 150px;
 	background: #333333;
 	border-top: 5px solid #000000;
+	min-width: 1024px;
+	width: 100%;
+}
+
+#footer-inner {
+	margin: 0;
+	padding: 0;
+	width: 600px;
+	padding-top: 20px;
+	margin: 0 auto;
 }
 
 #footer p {
+	line-height: 120%;
 	text-align: center;
 	color: #FFFFFF;
 }
 
+#footer a {
+	color: #FFFFFF;
+}
+
+/*
+jqmodal styles
+*/
+
 #cms-simplemodal-container, .cms-simplemodal-container {
-	height: 525px;
-	width: 905px;
-	z-index: 5000;
+	min-height: 525px;
+	height: 75%;
+	min-width: 780px;
+	width: 85%;
+	z-index: 9950008;
 }
 
 #cms-basic-modal-content, #cmsModalFrame, #cmsAjaxMainDiv2 {

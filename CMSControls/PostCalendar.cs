@@ -127,7 +127,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private DateTime ThisMonth {
 			get {
 				if (_date.Year < 1900) {
-					if (HttpContext.Current != null) {
+					if (SiteData.IsWebView) {
 						_date = SiteData.CurrentSite.Now.Date;
 						string sFilterPath = SiteData.CurrentScriptName;
 						if (sFilterPath.ToLower().StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())) {
@@ -146,7 +146,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected List<ContentDateLinks> GetMetaInfo() {
-			if (HttpContext.Current != null) {
+			if (SiteData.IsWebView) {
 				return navHelper.GetSingleMonthBlogUpdateList(SiteData.CurrentSite, ThisMonth, !SecurityData.IsAuthEditor);
 			} else {
 				return new List<ContentDateLinks>();

@@ -84,11 +84,11 @@ namespace Carrotware.CMS.UI.Base {
 			this.Page.Header.Controls.Add(metaGenerator);
 			this.Page.Header.Controls.Add(new Literal { Text = "\r\n" });
 
-			pageContents = SiteData.CurrentSite.GetCurrentPage();
+			pageContents = SiteData.GetCurrentPage();
 
 			if (pageContents != null) {
 				guidContentID = pageContents.Root_ContentID;
-				pageWidgets = SiteData.CurrentSite.GetCurrentPageWidgets(guidContentID);
+				pageWidgets = SiteData.GetCurrentPageWidgets(guidContentID);
 			}
 
 			if (guidContentID == SiteData.CurrentSiteID && SiteData.IsPageReal) {
@@ -132,7 +132,8 @@ namespace Carrotware.CMS.UI.Base {
 			if (pageContents != null) {
 
 				//do stuff to page title
-				string sTitleAddendum = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+				PageViewType pvt = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+				string sTitleAddendum = pvt.ExtraTitle;
 				if (!string.IsNullOrEmpty(sTitleAddendum)) {
 					if (!string.IsNullOrEmpty(pageContents.PageHead)) {
 						pageContents.PageHead = pageContents.PageHead.Trim() + ": " + sTitleAddendum;

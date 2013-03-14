@@ -32,7 +32,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (!IsPostBack) {
 
 				if (DatabaseUpdate.AreCMSTablesIncomplete()) {
-					Response.Redirect("./DatabaseSetup.aspx");
+					Response.Redirect(SiteFilename.DatabaseSetupURL);
 				}
 
 				SiteData site = siteHelper.GetCurrentSite();
@@ -49,10 +49,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
 
-				ddlTimeZone.DataSource = timeZones;
-				ddlTimeZone.DataBind();
-
-				ddlTimeZone.SelectedValue = TimeZoneInfo.Local.Id;
+				GeneralUtilities.BindList(ddlTimeZone, timeZones, TimeZoneInfo.Local.Id);
 
 				trSiteIndex.Visible = false;
 
@@ -78,11 +75,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtTagPath.Text = site.Blog_TagPath;
 					txtDatePath.Text = site.Blog_DatePath;
 
-					try { ddlTimeZone.SelectedValue = site.TimeZoneIdentifier; } catch { }
+					GeneralUtilities.SelectListValue(ddlTimeZone, site.TimeZoneIdentifier);
 
-					if (!string.IsNullOrEmpty(site.Blog_DatePattern)) {
-						try { ddlDatePattern.SelectedValue = site.Blog_DatePattern; } catch { }
-					}
+					GeneralUtilities.SelectListValue(ddlDatePattern, site.Blog_DatePattern);
 
 					ParentPagePicker.SelectedPage = site.Blog_Root_ContentID;
 				}

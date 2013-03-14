@@ -112,7 +112,7 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 			} catch {
-				if (HttpContext.Current == null) {
+				if (!SiteData.IsWebView) {
 					sFieldValue = sField;
 				}
 			}

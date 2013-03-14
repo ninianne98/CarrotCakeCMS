@@ -48,6 +48,34 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+
+		private List<PagedDataSummaryTitleOption> typeLabels = null;
+
+		[
+		Category("Behavior"),
+		Description("The TypeLabels collection"),
+		DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
+		Editor(typeof(PagedDataSummaryTitleOptionEditor), typeof(UITypeEditor)),
+		NotifyParentProperty(true),
+		Browsable(true),
+		TemplateContainer(typeof(PagedDataSummaryTitleOption)),
+		PersistenceMode(PersistenceMode.InnerProperty)
+		]
+		public List<PagedDataSummaryTitleOption> TypeLabelPrefixes {
+			get {
+				if (typeLabels == null) {
+					typeLabels = new List<PagedDataSummaryTitleOption>();
+					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.SinglePage, LabelText = "" });
+					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.DateIndex, LabelText = "Date" });
+					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.CategoryIndex, LabelText = "Category" });
+					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.TagIndex, LabelText = "Tag" });
+					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.SearchResults, LabelText = "Search results for" });
+				}
+				return typeLabels;
+			}
+		}
+
+
 		[Category("Appearance")]
 		[DefaultValue("Blog")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]

@@ -3,6 +3,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
 /*
@@ -32,11 +33,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (DatabaseUpdate.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist) {
 				FormsAuthentication.SignOut();
-				Response.Redirect("./DatabaseSetup.aspx");
+				Response.Redirect(SiteFilename.DatabaseSetupURL);
 			}
 
 			if (Page.User.Identity.IsAuthenticated) {
-				Response.Redirect("./default.aspx");
+				Response.Redirect(SiteFilename.DashboardURL);
 			}
 		}
 
@@ -46,7 +47,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void loginTemplate_LoggedIn(object sender, EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
-				Response.Redirect("./default.aspx");
+				Response.Redirect(SiteFilename.DashboardURL);
 			}
 		}
 

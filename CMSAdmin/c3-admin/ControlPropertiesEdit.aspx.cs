@@ -222,14 +222,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							ddlValue.DataTextField = "Value";
 							ddlValue.DataValueField = "Key";
 
-							ddlValue.DataSource = ListSourceProperty.DefValue;
-							ddlValue.DataBind();
-
-							ddlValue.Items.Insert(0, new ListItem("-Select Value-", ""));
+							GeneralUtilities.BindListDefaultText(ddlValue, ListSourceProperty.DefValue, null, "Select Value", "");
 
 							if (!string.IsNullOrEmpty(txtValue.Text)) {
 								try {
-									ddlValue.SelectedValue = txtValue.Text;
+									GeneralUtilities.SelectListValue(ddlValue, txtValue.Text);
 								} catch { }
 							}
 						}
@@ -241,8 +238,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							chkValues.DataTextField = "Value";
 							chkValues.DataValueField = "Key";
 
-							chkValues.DataSource = ListSourceProperty.DefValue;
-							chkValues.DataBind();
+							GeneralUtilities.BindList(ddlValue, ListSourceProperty.DefValue);
 
 							// since this is a multi selected capable field, look for anything that starts with the 
 							// field name and has the delimeter trailing

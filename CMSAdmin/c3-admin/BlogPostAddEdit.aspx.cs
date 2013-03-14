@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {
-				Response.Redirect("./Default.aspx");
+				Response.Redirect(SiteFilename.DashboardURL);
 			}
 
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
@@ -69,11 +69,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				txtRetireDate.Text = dtSite.AddYears(200).ToShortDateString();
 				txtRetireTime.Text = dtSite.AddYears(200).ToShortTimeString();
 
-				rpCat.DataSource = SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText);
-				rpCat.DataBind();
+				GeneralUtilities.BindRepeater(rpCat, SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText));
 
-				rpTag.DataSource = SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText);
-				rpTag.DataBind();
+				GeneralUtilities.BindRepeater(rpTag, SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText));
 
 				ContentPage pageContents = null;
 				if (guidVersionContentID != Guid.Empty) {
@@ -94,15 +92,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				List<ContentPage> lstContent = pageHelper.GetAllLatestContentList(SiteID);
 
-				ddlTemplate.DataSource = cmsHelper.Templates;
-				ddlTemplate.DataBind();
+				GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
 
 				chkDraft.Visible = false;
 				divEditing.Visible = false;
 
 				Dictionary<string, float> dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
 				if (dictTemplates.Count > 0) {
-					try { ddlTemplate.SelectedValue = dictTemplates.First().Key; } catch { }
+					try {
+						GeneralUtilities.SelectListValue(ddlTemplate, dictTemplates.First().Key);
+					} catch { }
 				}
 
 				if (pageContents != null) {
@@ -120,15 +119,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					List<ContentPage> lstVer = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
 
-					ddlVersions.DataSource = (from v in lstVer
-											  orderby v.EditDate descending
-											  select new {
-												  EditDate = v.EditDate.ToString() + (v.IsLatestVersion ? " [**]" : " "),
-												  ContentID = v.ContentID
-											  }).ToList();
+					var dataVersions = (from v in lstVer
+										orderby v.EditDate descending
+										select new {
+											EditDate = v.EditDate.ToString() + (v.IsLatestVersion ? " [**]" : " "),
+											ContentID = v.ContentID
+										}).ToList();
 
-					ddlVersions.DataBind();
-					ddlVersions.Items.Insert(0, new ListItem("-Page Versions-", "00000"));
+					GeneralUtilities.BindListDefaultText(ddlVersions, dataVersions, null, "Page Versions", "00000");
 
 					bLocked = pageHelper.IsPageLocked(pageContents);
 
@@ -174,9 +172,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					pageContents.Parent_ContentID = null;
 
-					if (pageContents.TemplateFile != null) {
-						try { ddlTemplate.SelectedValue = pageContents.TemplateFile.ToLower(); } catch { }
-					}
+					GeneralUtilities.SelectListValue(ddlTemplate, pageContents.TemplateFile.ToLower());
 
 					PreselectCheckboxRepeater(rpCat, pageContents.ContentCategories.Cast<IContentMetaInfo>().ToList());
 

@@ -22,7 +22,7 @@ namespace Carrotware.CMS.Core {
 		private ISiteNavHelper _navHelper = null;
 
 		public SiteNavHelper() {
-			if (HttpContext.Current != null) {
+			if (SiteData.IsWebView) {
 				if ((SiteData.IsPageSampler || SiteData.IsPageReal) && !SiteData.IsCurrentPageSpecial) {
 					_navHelper = new SiteNavHelperMock();
 				} else {
@@ -402,14 +402,14 @@ namespace Carrotware.CMS.Core {
 			navNew.ShowInSiteNav = true;
 			navNew.ShowInSiteMap = true;
 
-			navNew.EditDate = DateTime.Now.AddDays(-1);
-			navNew.CreateDate = DateTime.Now.AddDays(-14);
+			navNew.EditDate = DateTime.Now.Date.AddHours(-8);
+			navNew.CreateDate = DateTime.Now.Date.AddHours(-38);
 			navNew.GoLiveDate = navNew.EditDate.AddHours(-5);
 			navNew.RetireDate = navNew.CreateDate.AddYears(5);
 			navNew.PageText = "<h2>Content CENTER</h2>\r\n";
 
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
-			if (HttpContext.Current != null) {
+			if (SiteData.IsWebView) {
 				navNew.FileName = SiteData.PreviewTemplateFilePage + "?" + HttpContext.Current.Request.QueryString.ToString();
 			} else {
 				navNew.FileName = SiteData.PreviewTemplateFilePage + "?sampler=true";

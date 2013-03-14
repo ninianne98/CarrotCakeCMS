@@ -126,7 +126,7 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsAuthEditor {
 			get {
-				if (HttpContext.Current != null) {
+				if (SiteData.IsWebView) {
 					return AdvancedEditMode || IsAdmin || IsEditor;
 				} else {
 					return false;
@@ -137,7 +137,7 @@ namespace Carrotware.CMS.Core {
 		public static Guid CurrentUserGuid {
 			get {
 				Guid _currentUserGuid = Guid.Empty;
-				if (HttpContext.Current != null) {
+				if (SiteData.IsWebView) {
 					if (HttpContext.Current.User.Identity.IsAuthenticated) {
 						if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) && CurrentUser != null) {
 							_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
@@ -152,7 +152,7 @@ namespace Carrotware.CMS.Core {
 
 			get {
 				MembershipUser _currentUser = null;
-				if (HttpContext.Current != null) {
+				if (SiteData.IsWebView) {
 					if (HttpContext.Current.User.Identity.IsAuthenticated) {
 						if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
 							_currentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
@@ -174,7 +174,7 @@ namespace Carrotware.CMS.Core {
 		public static bool AdvancedEditMode {
 			get {
 				bool _Advanced = false;
-				if (HttpContext.Current != null) {
+				if (SiteData.IsWebView) {
 					if (HttpContext.Current.User.Identity.IsAuthenticated) {
 						if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (SecurityData.IsAdmin || SecurityData.IsEditor)) {
 							_Advanced = true;

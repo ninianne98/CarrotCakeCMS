@@ -82,18 +82,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (cmsHelper.ToolboxPlugins.Count > 0) {
-				rpTools.DataSource = cmsHelper.ToolboxPlugins;
-				rpTools.DataBind();
+				GeneralUtilities.BindRepeater(rpTools, cmsHelper.ToolboxPlugins);
 			} else {
 				rpTools.Visible = false;
 			}
 
 			bLocked = pageHelper.IsPageLocked(pageContents);
 
-			ddlTemplate.DataSource = cmsHelper.Templates;
-			ddlTemplate.DataBind();
-
-			try { ddlTemplate.SelectedValue = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
+			GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
+			try { GeneralUtilities.SelectListValue(ddlTemplate, cmsHelper.cmsAdminContent.TemplateFile.ToLower()); } catch { }
 
 			if (!bLocked) {
 				foreach (Control c in plcIncludes.Controls) {

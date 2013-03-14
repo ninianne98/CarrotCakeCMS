@@ -36,11 +36,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				if (!IsPostBack) {
 
-					rpCat.DataSource = SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText);
-					rpCat.DataBind();
+					GeneralUtilities.BindRepeater(rpCat, SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText));
 
-					rpTag.DataSource = SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText);
-					rpTag.DataBind();
+					GeneralUtilities.BindRepeater(rpTag, SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText));
 
 					txtTitle.Text = pageContents.TitleBar;
 					txtNav.Text = pageContents.NavMenuText;

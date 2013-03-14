@@ -21,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			SiteData site = siteHelper.GetCurrentSite();
 			if (site == null) {
-				Response.Redirect("./Default.aspx");
+				Response.Redirect(SiteFilename.DashboardURL);
 			}
 
 			if (!IsPostBack) {
@@ -51,8 +51,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			lstContent = pageHelper.GetContentByDateRange(SiteID, dateRange, dateRangeDays, pageType,
-				GetDDLValueNullableBool(ddlActive), GetDDLValueNullableBool(ddlSiteMap),
-				GetDDLValueNullableBool(ddlNavigation), GetDDLValueNullableBool(ddlHide));
+				GeneralUtilities.GetNullableBoolValue(ddlActive), GeneralUtilities.GetNullableBoolValue(ddlSiteMap),
+				GeneralUtilities.GetNullableBoolValue(ddlNavigation), GeneralUtilities.GetNullableBoolValue(ddlHide));
 
 			lblPages.Text = string.Format(" {0} ", lstContent.Count);
 

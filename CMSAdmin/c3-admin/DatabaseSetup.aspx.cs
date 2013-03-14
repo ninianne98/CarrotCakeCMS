@@ -77,8 +77,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				bOK = true;
 			}
 
-			rpMessages.DataSource = lst.OrderBy(x => x.Order);
-			rpMessages.DataBind();
+			GeneralUtilities.BindRepeater(rpMessages, lst.OrderBy(x => x.Order));
 
 			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
 				cmsHelper.ResetConfigs();
@@ -96,16 +95,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnLogin_Click(object sender, EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
-				Response.Redirect("./default.aspx");
+				Response.Redirect(SiteFilename.DashboardURL);
 			}
 
-			Response.Redirect("./Logon.aspx");
+			Response.Redirect(SiteFilename.LogonURL);
 		}
 
 		protected void btnCreate_Click(object sender, EventArgs e) {
-			Response.Redirect("./CreateFirstAdmin.aspx");
+			Response.Redirect(SiteFilename.CreateFirstAdminURL);
 		}
-
 
 	}
 }
