@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -30,13 +31,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidWidget = new Guid(Request.QueryString["id"].ToString());
-			}
+			guidWidget = GetGuidIDFromQuery();
 
-			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
-				guidPage = new Guid(Request.QueryString["pageid"].ToString());
-			}
+			guidPage = GetGuidPageIDFromQuery();
 
 			cmsHelper.OverrideKey(guidPage);
 
@@ -127,14 +124,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										   select p.ToLower()).ToList();
 				}
 
-				rpProps.DataSource = (from p in lstDefProps
-									  join l in limitedPropertyList on p.Name.ToLower() equals l.ToLower()
-									  where p.CanRead == true
-									  && p.CanWrite == true
-									  && !props.Contains(p)
-									  select p).ToList();
+				var defprops = (from p in lstDefProps
+								join l in limitedPropertyList on p.Name.ToLower() equals l.ToLower()
+								where p.CanRead == true
+								&& p.CanWrite == true
+								&& !props.Contains(p)
+								select p).ToList();
 
-				rpProps.DataBind();
+				GeneralUtilities.BindRepeater(rpProps, defprops);
 			}
 		}
 

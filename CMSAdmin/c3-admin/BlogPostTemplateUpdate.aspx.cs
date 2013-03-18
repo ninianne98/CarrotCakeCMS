@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,10 +23,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogTemplate);
 
-			SiteData site = siteHelper.GetCurrentSite();
-			if (site == null) {
-				Response.Redirect(SiteFilename.DashboardURL);
-			}
+			RedirectIfNoSite();
 
 			if (!IsPostBack) {
 				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
@@ -50,8 +48,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				// use date range
 				lstContent = pageHelper.GetPostsByDateRange(SiteID, dateRange, dateRangeDays, false);
 			}
-			gvPages.DataSource = lstContent;
-			gvPages.DataBind();
+
+			GeneralUtilities.BindDataBoundControl(gvPages, lstContent);
 		}
 
 

@@ -9,21 +9,19 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Data;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class User : AdminBasePage {
 
 		public Guid userID = Guid.Empty;
+		protected CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserAdmin);
 
-			if (Request.QueryString["id"] != null) {
-				userID = new Guid(Request.QueryString["id"]);
-			}
-
-
+			userID = GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
 				if (userID != Guid.Empty) {

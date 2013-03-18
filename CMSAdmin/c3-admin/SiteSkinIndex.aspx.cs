@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,8 +23,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSkinEdit);
 
 			//get the detected templates in use and mask off the template that is baked in as a the default template.
-			gvPages.DataSource = cmsHelper.Templates.Where(x => x.TemplatePath.ToLower() != SiteData.DefaultTemplateFilename.ToLower()).ToList();
-			gvPages.DataBind();
+			GeneralUtilities.BindDataBoundControl(gvPages, cmsHelper.Templates.Where(x => x.TemplatePath.ToLower() != SiteData.DefaultTemplateFilename.ToLower()).ToList());
 
 		}
 	}

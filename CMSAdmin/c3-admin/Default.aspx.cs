@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/

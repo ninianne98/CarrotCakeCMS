@@ -8,8 +8,10 @@ namespace Carrotware.CMS.Core {
 
 		public SearchParameterObject() {
 			this.DateCompare = DateTime.UtcNow;
-			this.DateBegin = DateTime.MinValue;
-			this.DateEnd = DateTime.MaxValue;
+
+			this.DateBegin = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+			this.DateEnd = (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue;
+
 			this.SiteID = Guid.Empty;
 			this.ParentContentID = Guid.Empty;
 			this.RootContentID = Guid.Empty;

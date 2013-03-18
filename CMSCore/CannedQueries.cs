@@ -94,8 +94,8 @@ namespace Carrotware.CMS.Core {
 						&& (ct.ContentTypeID == contentTypeID || pageType == ContentPageType.PageType.Unknown)
 						&& (ct.PageActive == Convert.ToBoolean(bActive) || bActive == null)
 						&& (ct.BlockIndex == Convert.ToBoolean(bBlock) || bBlock == null)
-						&& ((ct.ShowInSiteMap == Convert.ToBoolean(bSiteMap) && ct.ContentID == gContent) || bSiteMap == null)
-						&& ((ct.ShowInSiteNav == Convert.ToBoolean(bSiteNav) && ct.ContentID == gContent) || bSiteNav == null)
+						&& ((ct.ShowInSiteMap == Convert.ToBoolean(bSiteMap) && ct.ContentTypeID == gContent) || bSiteMap == null)
+						&& ((ct.ShowInSiteNav == Convert.ToBoolean(bSiteNav) && ct.ContentTypeID == gContent) || bSiteNav == null)
 					select ct);
 		}
 

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -32,25 +33,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentAdd);
+
+			RedirectIfNoSite();
+
 			lblUpdated.Text = SiteData.CurrentSite.Now.ToString();
 			lblCreateDate.Text = SiteData.CurrentSite.Now.ToString();
 
-			SiteData site = siteHelper.GetCurrentSite();
-			if (site == null) {
-				Response.Redirect(SiteFilename.DashboardURL);
-			}
-
 			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
 
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidContentID = new Guid(Request.QueryString["id"].ToString());
-			}
-			if (!string.IsNullOrEmpty(Request.QueryString["versionid"])) {
-				guidVersionContentID = new Guid(Request.QueryString["versionid"].ToString());
-			}
-			if (!string.IsNullOrEmpty(Request.QueryString["importid"])) {
-				guidImportContentID = new Guid(Request.QueryString["importid"].ToString());
-			}
+			guidContentID = GetGuidIDFromQuery();
+			guidVersionContentID = GetGuidParameterFromQuery("versionid");
+			guidImportContentID = GetGuidParameterFromQuery("importid");
 
 			if (iPageCount < 1) {
 				txtSort.Text = "0";
@@ -176,8 +169,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					chkSiteMap.Checked = pageContents.ShowInSiteMap;
 					chkHide.Checked = pageContents.BlockIndex;
 
-					gvTracks.DataSource = pageContents.GetTrackbacks();
-					gvTracks.DataBind();
+					GeneralUtilities.BindDataBoundControl(gvTracks, pageContents.GetTrackbacks());
 
 					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
 					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();

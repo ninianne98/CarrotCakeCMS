@@ -39,17 +39,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 			HideWhenNoSiteProfileExists();
 
-			string sPlugCfg = Server.MapPath("~/AdminModules.config");
-			if (!File.Exists(sPlugCfg)) {
-				tabModules.Visible = false;
-			}
+			tabModules.Visible = CMSConfigHelper.HasAdminModules();
 		}
 
 		public void HideWhenNoSiteProfileExists() {
 
-			SiteData site = siteHelper.GetCurrentSite();
-
-			if (site == null) {
+			if (SiteData.CurrentSite == null) {
 				tabContentTop.Visible = false;
 			} else {
 				tabContentTop.Visible = true;

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,7 +19,7 @@ using Carrotware.CMS.UI.Base;
 
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucSiteMap : BaseUserControl {
+	public partial class ucSiteMap : AdminBaseUserControl {
 		List<ContentPage> lstSite = new List<ContentPage>();
 
 
@@ -32,15 +33,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						   orderby c.TemplateFile
 						   select c).ToList();
 
-				rpTop.DataSource = (from l in lstSite
-									orderby l.NavOrder, l.NavMenuText
-									where l.Parent_ContentID == null
-									select l).ToList();
+				var topPages = (from l in lstSite
+								orderby l.NavOrder, l.NavMenuText
+								where l.Parent_ContentID == null
+								select l).ToList();
 
-				rpTop.DataBind();
-
+				GeneralUtilities.BindRepeater(rpTop, topPages);
 			}
-
 		}
 
 		public string MakeStar(bool bFlag) {
@@ -88,8 +87,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					rp.ItemDataBound += new System.Web.UI.WebControls.RepeaterItemEventHandler(this.rpMap_ItemDataBound);
 
-					rp.DataSource = lst;
-					rp.DataBind();
+					GeneralUtilities.BindRepeater(rp, lst);
 				}
 			}
 

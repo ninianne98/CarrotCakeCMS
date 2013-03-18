@@ -25,9 +25,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
-				guidContentID = new Guid(Request.QueryString["pageid"].ToString());
-			}
+			guidContentID = GetGuidPageIDFromQuery();
+
 			cmsHelper.OverrideKey(guidContentID);
 
 			if (cmsHelper.cmsAdminContent != null) {

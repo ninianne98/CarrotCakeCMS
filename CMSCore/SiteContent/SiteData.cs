@@ -80,7 +80,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static List<SiteData> GetSiteList() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 

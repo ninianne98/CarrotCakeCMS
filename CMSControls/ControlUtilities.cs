@@ -41,6 +41,9 @@ namespace Carrotware.CMS.UI.Controls {
 			} else {
 				_page = GetContainerPage(X);
 			}
+			//if (_page != null && _page.AppRelativeVirtualPath == null) {
+			//    _page.AppRelativeVirtualPath = "~/";
+			//}
 		}
 
 		public ControlUtilities(Page X) {

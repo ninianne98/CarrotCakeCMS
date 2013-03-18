@@ -6,6 +6,7 @@ using System.Web.Security;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -24,9 +25,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.GroupAdmin);
 
-			if (Request.QueryString["id"] != null) {
-				groupID = new Guid(Request.QueryString["id"]);
-			}
+			groupID = GetGuidIDFromQuery();
 
 			if (groupID == Guid.Empty) {
 				btnApply.Text = "Add";

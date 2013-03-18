@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -53,18 +54,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					BuildFolderList();
 
-					gvPages.DataSource = (from c in wpSite.Content
-										  where c.PostType == WordPressPost.WPPostType.Page
-										  orderby c.PostOrder
-										  select c).ToList();
-					gvPages.DataBind();
+					GeneralUtilities.BindDataBoundControl(gvPages, wpSite.ContentPages);
 
-
-					gvPosts.DataSource = (from c in wpSite.Content
-										  where c.PostType == WordPressPost.WPPostType.BlogPost
-										  orderby c.PostDateUTC
-										  select c).ToList();
-					gvPosts.DataBind();
+					GeneralUtilities.BindDataBoundControl(gvPosts, wpSite.ContentPosts);
 
 					GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
 					GeneralUtilities.BindList(ddlTemplatePost, cmsHelper.Templates);

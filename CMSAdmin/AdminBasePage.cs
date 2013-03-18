@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Data;
 using Carrotware.CMS.UI.Base;
 /*
 * CarrotCake CMS
@@ -19,9 +17,6 @@ using Carrotware.CMS.UI.Base;
 
 namespace Carrotware.CMS.UI.Admin {
 	public class AdminBasePage : BasePage {
-
-		protected CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
-		//protected CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
@@ -40,6 +35,28 @@ namespace Carrotware.CMS.UI.Admin {
 
 			base.OnInit(e);
 
+		}
+
+		protected Guid GetGuidPageIDFromQuery() {
+			return GetGuidParameterFromQuery("pageid");
+		}
+
+		protected Guid GetGuidIDFromQuery() {
+			return GetGuidParameterFromQuery("id");
+		}
+
+		protected Guid GetGuidParameterFromQuery(string ParmName) {
+			Guid id = Guid.Empty;
+			if (Request.QueryString[ParmName] != null) {
+				id = new Guid(Request.QueryString[ParmName]);
+			}
+			return id;
+		}
+
+		protected void RedirectIfNoSite() {
+			if (SiteData.CurrentSite == null) {
+				Response.Redirect(SiteFilename.DashboardURL);
+			}
 		}
 
 		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {

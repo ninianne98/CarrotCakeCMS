@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -149,8 +150,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("text") && (x.FolderPath.ToLower().StartsWith(SiteData.AdminFolderPath) == false)).ToList();
 
-				rpFiles.DataSource = flsWorking.OrderBy(x => x.FileName).OrderBy(x => x.FolderPath).ToList();
-				rpFiles.DataBind();
+				GeneralUtilities.BindRepeater(rpFiles, flsWorking.OrderBy(x => x.FileName).OrderBy(x => x.FolderPath).ToList());
 			}
 		}
 

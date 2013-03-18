@@ -36,6 +36,24 @@ namespace Carrotware.CMS.Core {
 		public List<WordPressComment> Comments { get; set; }
 
 
+		public List<WordPressPost> ContentPages {
+			get {
+				return (from c in this.Content
+						where c.PostType == WordPressPost.WPPostType.Page
+						orderby c.PostOrder ascending
+						select c).ToList();
+			}
+		}
+
+		public List<WordPressPost> ContentPosts {
+			get {
+				return (from c in this.Content
+						where c.PostType == WordPressPost.WPPostType.BlogPost
+						orderby c.PostDateUTC descending
+						select c).ToList();
+			}
+		}
+
 		public override string ToString() {
 			return SiteTitle + " : " + SiteDescription;
 		}

@@ -18,7 +18,7 @@ using Carrotware.CMS.UI.Base;
 
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucCommentAddEdit : BaseUserControl {
+	public partial class ucCommentAddEdit : AdminBaseUserControl {
 
 		public string ReturnPageQueryString { get; set; }
 
@@ -32,9 +32,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidItemID = new Guid(Request.QueryString["id"].ToString());
-			}
+			guidItemID = GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
 				PostComment item = PostComment.GetContentCommentByID(guidItemID);

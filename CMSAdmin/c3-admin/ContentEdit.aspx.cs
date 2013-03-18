@@ -20,12 +20,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
-				guidContentID = new Guid(Request.QueryString["pageid"].ToString());
-			}
-			if (!string.IsNullOrEmpty(Request.QueryString["widgetid"])) {
-				guidWidgetID = new Guid(Request.QueryString["widgetid"].ToString());
-			}
+			guidContentID = GetGuidPageIDFromQuery();
+			guidWidgetID = GetGuidParameterFromQuery("widgetid");
+
 			if (!string.IsNullOrEmpty(Request.QueryString["field"])) {
 				sFieldName = Request.QueryString["field"].ToString().ToLower();
 			}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,12 +20,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.StatusChange);
 
-			SiteData site = siteHelper.GetCurrentSite();
-			if (site == null) {
-				Response.Redirect(SiteFilename.DashboardURL);
-			}
+			RedirectIfNoSite();
 
 			if (!IsPostBack) {
+
+				BindDDLs();
+
 				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
 				ContentPage cp = pageHelper.GetLatestPosts(SiteData.CurrentSiteID, 2, false).FirstOrDefault();
 				if (cp != null) {
@@ -33,6 +34,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				LoadGrid();
 			}
+		}
+
+		protected void BindDDLs() {
+
+			GeneralUtilities.BindOptionalYesNoList(ddlActive);
+			GeneralUtilities.BindOptionalYesNoList(ddlNavigation);
+			GeneralUtilities.BindOptionalYesNoList(ddlSiteMap);
+			GeneralUtilities.BindOptionalYesNoList(ddlHide);
+
 		}
 
 
@@ -56,8 +66,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			lblPages.Text = string.Format(" {0} ", lstContent.Count);
 
-			gvPages.DataSource = lstContent;
-			gvPages.DataBind();
+			GeneralUtilities.BindDataBoundControl(gvPages, lstContent);
 		}
 
 
@@ -118,13 +127,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void LoadGrid() {
-			trFilter.Attributes["style"] = "display:none;";
 
 			if (rdoFilterResults2.Checked) {
-				trFilter.Attributes["style"] = "display:none;";
 				SetGrid(true, SiteData.CurrentSite.Now, 0);
 			} else {
-				trFilter.Attributes["style"] = "";
 				SetGrid(false, Convert.ToDateTime(txtDate.Text), int.Parse(ddlDateRange.SelectedValue));
 			}
 		}

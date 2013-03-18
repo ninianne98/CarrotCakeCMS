@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,7 +19,7 @@ using Carrotware.CMS.Interface;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucAdminModule : BaseUserControl {
+	public partial class ucAdminModule : AdminBaseUserControl {
 
 		public Guid ModuleID { get; set; }
 

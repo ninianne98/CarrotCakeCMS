@@ -61,13 +61,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseContentMasterPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="BaseContentPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BaseContentPageOld.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BaseMasterPage.cs">
