@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -24,13 +25,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(Request.QueryString["widgetid"])) {
-				guidWidgetID = new Guid(Request.QueryString["widgetid"].ToString());
-			}
 
-			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
-				guidContentID = new Guid(Request.QueryString["pageid"].ToString());
-			}
+			guidWidgetID = GetGuidParameterFromQuery("widgetid");
+			guidContentID = GetGuidPageIDFromQuery();
 
 			cmsHelper.OverrideKey(guidContentID);
 
@@ -65,8 +62,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			var lstW = widgetHelper.GetWidgetVersionHistory(guidWidgetID);
 			var current = lstW.Where(x => x.IsLatestVersion == true).FirstOrDefault();
 
-			gvPages.DataSource = lstW;
-			gvPages.DataBind();
+			GeneralUtilities.BindDataBoundControl(gvPages, lstW);
 
 			foreach (GridViewRow dgItem in gvPages.Rows) {
 				CheckBox chkContent = (CheckBox)dgItem.FindControl("chkContent");

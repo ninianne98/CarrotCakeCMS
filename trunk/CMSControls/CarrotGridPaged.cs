@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.Design;
+using System.Web.UI.Design.WebControls;
 using System.Web.UI.WebControls;
 using Carrotware.Web.UI.Controls;
 /*
@@ -17,7 +22,12 @@ using Carrotware.Web.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Controls {
-	public class CarrotGridPaged : WebControl {
+
+	[Designer(typeof(CarrotGridPagedDesigner))]
+	[ParseChildren(true, "TheGrid"), PersistChildren(true)]
+	[ToolboxData("<{0}:CarrotGridPaged runat=server></{0}:CarrotGridPaged>")]
+
+	public class CarrotGridPaged : DataBoundControl, INamingContainer {
 
 		[Category("Appearance")]
 		[DefaultValue(10)]
@@ -114,12 +124,14 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
-
 		private Repeater GetCtrl() {
-			cu = new ControlUtilities(this);
-			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx");
-			Repeater r = (Repeater)cu.FindControl("rpPager", userControl);
+			Repeater r = new Repeater();
+
+			try {
+				ControlUtilities cu = new ControlUtilities(this);
+				Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx");
+				r = (Repeater)cu.FindControl("rpPager", userControl);
+			} catch { }
 
 			return r;
 		}
@@ -175,9 +187,10 @@ namespace Carrotware.CMS.UI.Controls {
 			this.SortingBy = sSort;
 		}
 
-		public object DataSource { get; set; }
+		//public object DataSource { get; set; }
 
 		public override void DataBind() {
+			base.DataBind();
 
 			int TotalPages = 0;
 
@@ -232,4 +245,47 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 	}
+
+	//======================================
+
+	public class CarrotGridPagedDesigner : DataBoundControlDesigner {
+
+		public override string GetDesignTimeHtml() {
+			CarrotGridPaged myctrl = (CarrotGridPaged)base.ViewControl;
+			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "CMS, ");
+			string sID = myctrl.ID;
+			string sTextOut = "<span>[" + sType + " - " + sID + "]</span>\r\n";
+
+			StringBuilder sb = new StringBuilder();
+			sb.Append(sTextOut);
+
+			try {
+
+				IEnumerable designTimeDataSource = GetDesignTimeDataSource();
+
+				myctrl.DataSource = designTimeDataSource;
+				myctrl.DataBind();
+
+				sb.Append(base.GetDesignTimeHtml());
+			} finally {
+				myctrl.DataSource = null;
+			}
+
+			sb.Append(RenderCtrl(myctrl));
+
+			return sb.ToString();
+		}
+
+		private string RenderCtrl(Control ctrl) {
+			StringWriter sw = new StringWriter();
+			using (HtmlTextWriter tw = new HtmlTextWriter(sw)) {
+
+				ctrl.RenderControl(tw);
+
+				return sw.ToString();
+			}
+		}
+
+	}
+
 }

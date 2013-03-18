@@ -18,12 +18,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public bool bExportComments = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidContentID = new Guid(Request.QueryString["id"].ToString());
-			}
-			if (!string.IsNullOrEmpty(Request.QueryString["node"])) {
-				guidNodeID = new Guid(Request.QueryString["node"].ToString());
-			}
+			guidContentID = GetGuidIDFromQuery();
+
+			guidNodeID = GetGuidParameterFromQuery("node");
+
 			if (!string.IsNullOrEmpty(Request.QueryString["comment"])) {
 				bExportComments = true;
 			}

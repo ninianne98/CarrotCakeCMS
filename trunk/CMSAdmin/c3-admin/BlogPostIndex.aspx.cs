@@ -22,10 +22,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogIndex);
 
-			SiteData site = siteHelper.GetCurrentSite();
-			if (site == null) {
-				Response.Redirect(SiteFilename.DashboardURL);
-			}
+			RedirectIfNoSite();
 
 			CMSConfigHelper.CleanUpSerialData();
 

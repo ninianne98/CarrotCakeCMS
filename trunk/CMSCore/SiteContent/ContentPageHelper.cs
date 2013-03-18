@@ -966,9 +966,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ContentPage> GetContentByDateRange(Guid siteID, DateTime dateMidpoint, int iDayRange, ContentPageType.PageType pageType, bool? bActive, bool? bSiteMap, bool? bSiteNav, bool? bBlock) {
-			//assiging specific dates because SQL wants 1753-9999
-			DateTime dateBegin = new DateTime(1760, 1, 1); //DateTime.MinValue;
-			DateTime dateEnd = new DateTime(5000, 1, 1);  //DateTime.MaxValue;
+			//assiging SQL min dates because of 1753 vs 0001 year issues
+			DateTime dateBegin = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue; //DateTime.MinValue;
+			DateTime dateEnd = (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue; //DateTime.MaxValue;
 
 			if (iDayRange > 0) {
 				dateBegin = dateMidpoint.AddDays(0 - iDayRange);

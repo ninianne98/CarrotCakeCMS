@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -25,9 +26,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
-				guidContentID = new Guid(Request.QueryString["pageid"].ToString());
-			}
+			guidContentID = GetGuidPageIDFromQuery();
+
 			cmsHelper.OverrideKey(guidContentID);
 
 			if (cmsHelper.cmsAdminContent != null) {

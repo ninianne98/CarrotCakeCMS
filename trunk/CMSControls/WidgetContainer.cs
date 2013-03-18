@@ -66,6 +66,30 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		public WidgetWrapper AddWidget(Control widget, Widget widgetData) {
+			WidgetWrapper wrapper = new WidgetWrapper();
+
+			wrapper.IsAdminMode = true;
+			wrapper.ControlPath = widgetData.ControlPath;
+			wrapper.ControlTitle = widgetData.ControlPath;
+
+			wrapper.Order = widgetData.WidgetOrder;
+			wrapper.DatabaseKey = widgetData.Root_WidgetID;
+
+			wrapper.Controls.Add(widget);
+			this.Controls.Add(wrapper);
+
+			return wrapper;
+		}
+
+		public void AddWidget(Control widget, WidgetWrapper wrapper) {
+			wrapper.Controls.Add(widget);
+			this.Controls.Add(wrapper);
+		}
+
+		public void AddWidget(Control widget) {
+			this.Controls.Add(widget);
+		}
 
 		protected override void Render(HtmlTextWriter writer) {
 

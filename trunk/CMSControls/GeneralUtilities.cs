@@ -14,21 +14,8 @@ using System.Web.UI.WebControls;
 */
 
 
-namespace Carrotware.CMS.Core {
+namespace Carrotware.CMS.UI.Controls {
 	public class GeneralUtilities {
-
-		public static bool? GetNullableBoolValue(ListControl ddl) {
-			bool? bVal = null;
-
-			if (ddl.SelectedValue == "0") {
-				bVal = false;
-			}
-			if (ddl.SelectedValue == "1") {
-				bVal = true;
-			}
-
-			return bVal;
-		}
 
 		public static string GetSelectedValue(ListControl ddl) {
 			string sVal = null;
@@ -94,6 +81,58 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
+
+
+		public static bool? GetNullableBoolValue(ListControl ddl) {
+			bool? bVal = null;
+
+			if (ddl.SelectedValue == "0") {
+				bVal = false;
+			}
+			if (ddl.SelectedValue == "1") {
+				bVal = true;
+			}
+
+			return bVal;
+		}
+
+
+		public static void BindOptionalBooleanList(ListControl ctrl, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue, string TrueChoiceText, string FalseChoiceText) {
+
+			EmptyChoiceValue = string.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
+
+			List<ListItem> lst = new List<ListItem>();
+			lst.Add(new ListItem(String.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
+			lst.Add(new ListItem(String.Format("{0}", TrueChoiceText), "1"));
+			lst.Add(new ListItem(String.Format("{0}", FalseChoiceText), "0"));
+
+			ctrl.DataTextField = "Text";
+			ctrl.DataValueField = "Value";
+
+			BindList(ctrl, lst);
+
+			SelectListValue(ctrl, SelectedValue);
+		}
+
+		public static void BindOptionalYesNoList(ListControl ctrl) {
+			BindOptionalYesNoList(ctrl, null);
+		}
+		public static void BindOptionalYesNoList(ListControl ctrl, string SelectedValue) {
+
+			BindOptionalBooleanList(ctrl, SelectedValue, "Choose One", "-1", "Yes", "No");
+
+		}
+
+		public static void BindOptionalTrueFalseList(ListControl ctrl) {
+			BindOptionalTrueFalseList(ctrl, null);
+		}
+		public static void BindOptionalTrueFalseList(ListControl ctrl, string SelectedValue) {
+
+			BindOptionalBooleanList(ctrl, SelectedValue, "Choose One", "-1", "True", "False");
+
+		}
+
 
 	}
 }

@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,10 +23,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogCategory);
-			SiteData site = siteHelper.GetCurrentSite();
+			RedirectIfNoSite();
 
-			gvPages.DataSource = site.GetCategoryList();
-			gvPages.DataBind();
+			GeneralUtilities.BindDataBoundControl(gvPages, SiteData.CurrentSite.GetCategoryList());
 		}
 
 	}

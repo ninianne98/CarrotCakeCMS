@@ -50,18 +50,18 @@
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
-			width: 650px;
+			width: 700px;
 		}
 		#sortable li {
-			margin: 5px 5px 5px 5px;
+			margin: 5px;
 			padding: 5px;
-			height: 1.5em;
+			height: 2.5em;
 		}
 		html > body #sortable li {
-			line-height: 1.2em;
+			line-height: 1.1em;
 		}
 		.ui-state-highlight {
-			line-height: 1.2em;
+			line-height: 1.1em;
 		}
 	</style>
 </asp:Content>
@@ -88,14 +88,11 @@
 				<ul id="sortable">
 			</HeaderTemplate>
 			<ItemTemplate>
-				<li class="ui-state-default" id='<%# Eval("Root_ContentID")%>'>
-					<%--Head:
-					<%# Eval("PageHead")%>
-					&nbsp;&nbsp;&nbsp;--%>
-					Nav:
+				<li class="ui-state-default" id='<%# Eval("Root_ContentID")%>'>Nav:
 					<%# Eval("NavMenuText")%>
 					&nbsp;&nbsp;&nbsp; File:
-					<%# Eval("FileName")%></li></ItemTemplate>
+					<%# Eval("FileName")%></li>
+			</ItemTemplate>
 			<FooterTemplate>
 				</ul></FooterTemplate>
 		</asp:Repeater>

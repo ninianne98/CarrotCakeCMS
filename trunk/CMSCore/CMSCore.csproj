@@ -115,7 +115,6 @@
     <Compile Include="SiteContent\TrackBackEntry.cs" />
     <Compile Include="SiteFilename.cs" />
     <Compile Include="Utilities\EmailSender.cs" />
-    <Compile Include="Utilities\GeneralUtilities.cs" />
     <Compile Include="Utilities\GridSorting.cs" />
     <Compile Include="SiteContent\ISiteContent.cs" />
     <Compile Include="SiteContent\WidgetHelper.cs" />

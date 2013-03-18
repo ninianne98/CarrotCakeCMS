@@ -7,9 +7,10 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
 using System.IO;
+using Carrotware.CMS.UI.Controls;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucEditNotifier : BaseUserControl {
+	public partial class ucEditNotifier : AdminBaseUserControl {
 
 		public string EditPageURL = "";
 		public string PageIndexURL = "";

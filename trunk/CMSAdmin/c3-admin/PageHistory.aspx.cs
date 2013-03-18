@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Controls;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class PageHistory : AdminBasePage {
@@ -16,12 +17,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidRootID = new Guid(Request.QueryString["id"].ToString());
-			}
-			if (!string.IsNullOrEmpty(Request.QueryString["version"])) {
-				guidContentID = new Guid(Request.QueryString["version"].ToString());
-			}
+			guidRootID = GetGuidIDFromQuery();
+
+			guidContentID = GetGuidParameterFromQuery("versionid");
 
 			ContentPage p = null;
 
@@ -69,8 +67,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			var lstCont = pageHelper.GetVersionHistory(SiteID, guidRootID);
 
-			gvPages.DataSource = lstCont;
-			gvPages.DataBind();
+			GeneralUtilities.BindDataBoundControl(gvPages, lstCont);
 
 		}
 

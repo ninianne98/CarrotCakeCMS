@@ -19,7 +19,7 @@ using Carrotware.CMS.UI.Controls;
 
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucCommentIndex : BaseUserControl {
+	public partial class ucCommentIndex : AdminBaseUserControl {
 		private int PageNumber = 1;
 
 		private ContentPageType.PageType pageType = ContentPageType.PageType.BlogEntry;
@@ -32,9 +32,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (!string.IsNullOrEmpty(Request.QueryString["type"])) {
 				pageType = ContentPageType.GetTypeByName(Request.QueryString["type"].ToString());
 			}
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidRootContentID = new Guid(Request.QueryString["id"].ToString());
-			}
+
+			guidRootContentID = GetGuidIDFromQuery();
 
 			BindData();
 		}

@@ -73,6 +73,10 @@
     <Compile Include="BreadCrumbNavigation.cs" />
     <Compile Include="ControlUtilities.cs" />
     <Compile Include="GeneralControlDesigner.cs" />
+    <Compile Include="GeneralUtilities.cs">
+      <SubType>
+      </SubType>
+    </Compile>
     <Compile Include="ICommonComponent.cs" />
     <Compile Include="OpenGraph.cs" />
     <Compile Include="PagedDataSummaryTitleOptions.cs" />

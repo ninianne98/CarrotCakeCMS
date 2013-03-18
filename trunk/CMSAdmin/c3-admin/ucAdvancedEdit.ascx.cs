@@ -4,6 +4,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 using Carrotware.Web.UI.Controls;
 /*
 * CarrotCake CMS
@@ -17,7 +18,7 @@ using Carrotware.Web.UI.Controls;
 
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucAdvancedEdit : BaseUserControl {
+	public partial class ucAdvancedEdit : AdminBaseUserControl {
 
 		public Guid guidContentID = Guid.Empty;
 		public bool bLocked = false;
@@ -42,9 +43,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		//protected void Page_Load(object sender, EventArgs e) {
 		protected void Page_Init(object sender, EventArgs e) {
 
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidContentID = new Guid(Request.QueryString["id"].ToString());
-			}
+			guidContentID = GetGuidIDFromQuery();
 
 			EditorPrefs = UserEditState.cmsUserEditState;
 			if (EditorPrefs == null) {

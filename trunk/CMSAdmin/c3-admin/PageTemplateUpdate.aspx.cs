@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,10 +23,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentTemplate);
 
-			SiteData site = siteHelper.GetCurrentSite();
-			if (site == null) {
-				Response.Redirect(SiteFilename.DashboardURL);
-			}
+			RedirectIfNoSite();
 
 			if (!IsPostBack) {
 
@@ -47,8 +45,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lstContent = pageHelper.GetParentWithChildNavigation(SiteID, guidParentID, false);
 				}
 			}
-			gvPages.DataSource = lstContent;
-			gvPages.DataBind();
+
+			GeneralUtilities.BindDataBoundControl(gvPages, lstContent);
 		}
 
 

@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -28,9 +29,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				sZone = Request.QueryString["zone"].ToString().ToLower();
 			}
 
-			if (!string.IsNullOrEmpty(Request.QueryString["pageid"])) {
-				guidContentID = new Guid(Request.QueryString["pageid"].ToString());
-			}
+			guidContentID = GetGuidPageIDFromQuery();
 
 			cmsHelper.OverrideKey(guidContentID);
 
@@ -63,8 +62,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						orderby aw.PlaceholderName ascending, aw.IsWidgetPendingDelete ascending, aw.IsWidgetActive descending, aw.WidgetOrder
 						select aw).ToList();
 
-			gvPages.DataSource = lstW;
-			gvPages.DataBind();
+			GeneralUtilities.BindDataBoundControl(gvPages, lstW);
 
 			foreach (GridViewRow dgItem in gvPages.Rows) {
 				Button btnRestore = (Button)dgItem.FindControl("btnRestore");

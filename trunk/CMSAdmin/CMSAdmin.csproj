@@ -71,6 +71,9 @@
     <Compile Include="AdminBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="AdminBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="c3-admin\about.aspx.cs">
       <DependentUpon>about.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1012,7 +1015,6 @@
     <Content Include="c3-admin\UserMembership.aspx" />
     <Content Include="c3-admin\UserPassword.aspx" />
     <Content Include="c3-admin\web.config" />
-    <Content Include="AdminModules.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant.aspx" />
@@ -1103,6 +1105,7 @@
   <ItemGroup>
     <Content Include="abundant\abundant.master" />
     <Content Include="abundant\abundant-orig.zip" />
+    <Content Include="AdminModules.config" />
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>

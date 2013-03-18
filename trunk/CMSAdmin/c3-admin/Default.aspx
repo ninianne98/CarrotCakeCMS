@@ -197,7 +197,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 150px;">
+				<td class="tablecaption" style="width: 180px;">
 					&nbsp;
 				</td>
 				<td>
@@ -211,7 +211,7 @@
 					Blog Feature Base Folder
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="60" Style="width: 350px;"
 						runat="server" onblur="CheckFolderPrefixes()" />
 				</td>
 			</tr>
@@ -220,7 +220,7 @@
 					Blog Category Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="60" Style="width: 350px;"
 						runat="server" onblur="CheckFolderPrefixes()" />
 				</td>
 			</tr>
@@ -229,7 +229,7 @@
 					Blog Tag Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="80" Style="width: 425px;" runat="server"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="60" Style="width: 350px;" runat="server"
 						onblur="CheckFolderPrefixes()" />
 				</td>
 			</tr>
@@ -238,7 +238,7 @@
 					Blog Date Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtDatePath" MaxLength="48" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtDatePath" MaxLength="48" Columns="60" Style="width: 350px;"
 						runat="server" onblur="CheckFolderPrefixes()" />
 				</td>
 			</tr>

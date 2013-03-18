@@ -121,6 +121,18 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static bool HasAdminModules() {
+			string sRealPath = HttpContext.Current.Server.MapPath("~/");
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+			string sPlugCfg = sRealPath + config.ConfigFileLocation.AdminModules;
+
+			if (File.Exists(sPlugCfg)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 		private static DataSet ReadDataSetConfig(CMSConfigFileType cfg, string sPath) {
 			string sPlugCfg = "default.config";
 			string sRealPath = HttpContext.Current.Server.MapPath(sPath);

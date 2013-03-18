@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -39,19 +40,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litDate.Text = exSite.ExportDate.ToString();
 
 				if (!IsPostBack) {
-					gvPages.DataSource = (from c in exSite.ThePages
-										  where c.ThePage.ContentType == ContentPageType.PageType.ContentEntry
-										  orderby c.ThePage.NavOrder
-										  select c.ThePage).ToList();
-					gvPages.DataBind();
-
-
-					gvPosts.DataSource = (from c in exSite.ThePages
-										  where c.ThePage.ContentType == ContentPageType.PageType.BlogEntry
-										  orderby c.ThePage.CreateDate
-										  select c.ThePage).ToList();
-					gvPosts.DataBind();
-
+					GeneralUtilities.BindDataBoundControl(gvPages, exSite.TheContentPages.Select(s => s.ThePage).OrderBy(s => s.NavOrder));
+					GeneralUtilities.BindDataBoundControl(gvPosts, exSite.TheBlogPages.Select(s => s.ThePage).OrderByDescending(s => s.CreateDate));
 
 					GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
 					GeneralUtilities.BindList(ddlTemplatePost, cmsHelper.Templates);

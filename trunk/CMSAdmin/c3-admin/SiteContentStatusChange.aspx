@@ -15,6 +15,47 @@
 				$(this).prop('checked', false);
 			});
 		}
+
+
+		function doDateClick(obj) {
+			doDateTable();
+		}
+
+		function doDateTable() {
+			var rdo1 = $('#<%=rdoFilterResults1.ClientID %>');
+
+			if (rdo1.prop('checked')) {
+				doDateShowHide('<%=rdoFilterResults1.ClientID %>');
+			} else {
+				doDateShowHide('<%=rdoFilterResults2.ClientID %>');
+			}
+		}
+
+		function doDateShowHide(rdoID) {
+			var tbl = $('#dateFilterTable');
+			var rdo = $('#' + rdoID);
+
+			if (rdo.val() != '1') {
+				tbl.css('display', 'none');
+			} else {
+				tbl.css('display', 'block');
+			}
+		}
+
+		function UpdateDateTable() {
+			if (typeof (Sys) != 'undefined') {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				prm.add_endRequest(function () {
+					doDateTable();
+				});
+			}
+		}
+
+		$(document).ready(function () {
+			UpdateDateTable();
+			doDateTable();
+		});
+
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -37,9 +78,6 @@
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlActive" runat="server">
-							<asp:ListItem Text="-Choose One-" Value="-1" />
-							<asp:ListItem Text="Yes" Value="1" />
-							<asp:ListItem Text="No" Value="0" />
 						</asp:DropDownList>
 					</td>
 				</tr>
@@ -49,9 +87,6 @@
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlNavigation" runat="server">
-							<asp:ListItem Text="-Choose One-" Value="-1" />
-							<asp:ListItem Text="Yes" Value="1" />
-							<asp:ListItem Text="No" Value="0" />
 						</asp:DropDownList>
 					</td>
 				</tr>
@@ -61,9 +96,6 @@
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlSiteMap" runat="server">
-							<asp:ListItem Text="-Choose One-" Value="-1" />
-							<asp:ListItem Text="Yes" Value="1" />
-							<asp:ListItem Text="No" Value="0" />
 						</asp:DropDownList>
 					</td>
 				</tr>
@@ -73,9 +105,6 @@
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlHide" runat="server">
-							<asp:ListItem Text="-Choose One-" Value="-1" />
-							<asp:ListItem Text="Yes" Value="1" />
-							<asp:ListItem Text="No" Value="0" />
 						</asp:DropDownList>
 					</td>
 				</tr>
@@ -87,9 +116,10 @@
 					</td>
 					<td colspan="3">
 						<div class="jqradioset">
-							<asp:RadioButton ID="rdoAll" GroupName="rdoFilterType" runat="server" Text="All" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
-							<asp:RadioButton ID="rdoPage" GroupName="rdoFilterType" runat="server" Text="Pages" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
-							<asp:RadioButton ID="rdoPost" GroupName="rdoFilterType" runat="server" Text="Posts" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+							<asp:RadioButton ID="rdoAll" GroupName="rdoFilterType" runat="server" Text="All" Checked="true" />
+							<asp:RadioButton ID="rdoPage" GroupName="rdoFilterType" runat="server" Text="Pages" />
+							<asp:RadioButton ID="rdoPost" GroupName="rdoFilterType" runat="server" Text="Posts" />
+							<%--  AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged"  --%>
 						</div>
 					</td>
 				</tr>
@@ -101,14 +131,15 @@
 					</td>
 					<td colspan="3">
 						<div class="jqradioset">
-							<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Yes" Checked="true" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
-							<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="No" AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged" />
+							<asp:RadioButton ID="rdoFilterResults1" GroupName="rdoFilterResults" runat="server" Text="Yes" value="1" Checked="true" onclick="doDateClick(this)" />
+							<asp:RadioButton ID="rdoFilterResults2" GroupName="rdoFilterResults" runat="server" Text="No" value="0" onclick="doDateClick(this)" />
+							<%--  AutoPostBack="True" OnCheckedChanged="rdoFilterResults_CheckedChanged"  --%>
 						</div>
 					</td>
 				</tr>
 			</table>
-			<table>
-				<tr runat="server" id="trFilter">
+			<table id="dateFilterTable">
+				<tr>
 					<td class="tablecaption">
 						go live date filter:
 						<br />

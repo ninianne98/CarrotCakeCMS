@@ -84,7 +84,7 @@
 				<Columns>
 					<asp:TemplateField>
 						<ItemTemplate>
-							<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./PageHistory.aspx?version={0}", Eval("ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/layout_content.png" alt="Inspect Version" title="Inspect Version" /></asp:HyperLink>
+							<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%#  String.Format("./PageHistory.aspx?versionid={0}", Eval("ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/layout_content.png" alt="Inspect Version" title="Inspect Version" /></asp:HyperLink>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField>

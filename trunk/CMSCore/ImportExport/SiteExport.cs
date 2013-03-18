@@ -119,6 +119,25 @@ namespace Carrotware.CMS.Core {
 
 		public List<ContentPageExport> ThePages { get; set; }
 
+
+		public List<ContentPageExport> TheContentPages {
+			get {
+				return (from c in this.ThePages
+						where c.ThePage.ContentType == ContentPageType.PageType.ContentEntry
+						orderby c.ThePage.NavOrder ascending
+						select c).ToList();
+			}
+		}
+		public List<ContentPageExport> TheBlogPages {
+			get {
+				return (from c in this.ThePages
+						where c.ThePage.ContentType == ContentPageType.PageType.BlogEntry
+						orderby c.ThePage.CreateDate descending
+						select c).ToList();
+			}
+		}
+
+
 		public List<CommentExport> TheComments { get; set; }
 
 		public List<ContentCategory> TheCategories { get; set; }

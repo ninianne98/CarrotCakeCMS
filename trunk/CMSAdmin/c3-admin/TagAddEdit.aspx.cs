@@ -24,9 +24,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogTag);
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				guidItemID = new Guid(Request.QueryString["id"].ToString());
-			}
+
+			guidItemID = GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
 				ContentTag item = ContentTag.Get(guidItemID);

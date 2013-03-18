@@ -17,7 +17,7 @@ using Carrotware.CMS.UI.Base;
 
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucSitePageDrillDown : BaseUserControl {
+	public partial class ucSitePageDrillDown : AdminBaseUserControl {
 
 		public Guid RootContentID { get; set; }
 

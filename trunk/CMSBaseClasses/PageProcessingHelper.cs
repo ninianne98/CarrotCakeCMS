@@ -333,11 +333,8 @@ namespace Carrotware.CMS.UI.Base {
 							}
 
 							if (SecurityData.AdvancedEditMode) {
-								WidgetWrapper plcWrapper = new WidgetWrapper();
 
-								plcWrapper.IsAdminMode = true;
-								plcWrapper.ControlPath = theWidget.ControlPath;
-								plcWrapper.ControlTitle = theWidget.ControlPath;
+								WidgetWrapper plcWrapper = plcHolder.AddWidget(widget, theWidget);
 
 								CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
 												  where p.FilePath.ToLower() == plcWrapper.ControlPath.ToLower()
@@ -346,12 +343,6 @@ namespace Carrotware.CMS.UI.Base {
 								if (plug != null) {
 									plcWrapper.ControlTitle = plug.Caption;
 								}
-
-								plcWrapper.Order = theWidget.WidgetOrder;
-								plcWrapper.DatabaseKey = theWidget.Root_WidgetID;
-
-								plcWrapper.Controls.Add(widget);
-								plcHolder.Controls.Add(plcWrapper);
 
 								plcWrapper.ID = WrapCtrlId;
 
@@ -366,7 +357,7 @@ namespace Carrotware.CMS.UI.Base {
 									}
 								}
 							} else {
-								plcHolder.Controls.Add(widget);
+								plcHolder.AddWidget(widget);
 							}
 
 							widget.ID = CtrlId;
