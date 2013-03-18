@@ -71,18 +71,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
-			List<Guid> lstUpd = new List<Guid>();
 
-			foreach (GridViewRow row in gvPages.Rows) {
-				var chkSelect = (CheckBox)row.FindControl("chkSelect");
-
-				if (chkSelect.Checked) {
-					var hdnContentID = (HiddenField)row.FindControl("hdnContentID");
-					Guid gRoot = new Guid(hdnContentID.Value);
-
-					lstUpd.Add(gRoot);
-				}
-			}
+			List<Guid> lstUpd = GeneralUtilities.GetCheckedItemGuids(gvPages, true, "chkSelect", "hdnContentID");
 
 			string sAct = ddlAction.SelectedValue;
 

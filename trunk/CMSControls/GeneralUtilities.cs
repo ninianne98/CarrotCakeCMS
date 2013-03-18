@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI.WebControls;
+using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,6 +18,8 @@ using System.Web.UI.WebControls;
 
 namespace Carrotware.CMS.UI.Controls {
 	public class GeneralUtilities {
+
+		#region binding utilitites
 
 		public static string GetSelectedValue(ListControl ddl) {
 			string sVal = null;
@@ -82,7 +86,55 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		#endregion
 
+		#region table checkbox parsers
+
+		public static List<Guid> GetCheckedItemGuidsByValue(GridView grid, bool CollectState, string CheckBoxName) {
+			List<Guid> lstUpd = new List<Guid>();
+
+			foreach (GridViewRow row in grid.Rows) {
+				CheckBox chk = (CheckBox)row.FindControl(CheckBoxName);
+				if (chk != null && chk.Checked == CollectState) {
+					Guid gRoot = new Guid(chk.Attributes["value"].ToString());
+					lstUpd.Add(gRoot);
+				}
+			}
+			return lstUpd;
+		}
+
+		public static List<Guid> GetCheckedItemGuids(GridView grid, bool CollectState, string CheckBoxName, string HiddenName) {
+			List<Guid> lstUpd = new List<Guid>();
+
+			foreach (GridViewRow row in grid.Rows) {
+				CheckBox chk = (CheckBox)row.FindControl(CheckBoxName);
+				if (chk != null && chk.Checked == CollectState) {
+					HiddenField hdn = (HiddenField)row.FindControl(HiddenName);
+					Guid gRoot = new Guid(hdn.Value);
+					lstUpd.Add(gRoot);
+				}
+			}
+			return lstUpd;
+		}
+
+
+		public static List<string> GetCheckedItemString(GridView grid, bool CollectState, string CheckBoxName, string HiddenName) {
+			List<string> lstUpd = new List<string>();
+
+			foreach (GridViewRow row in grid.Rows) {
+				CheckBox chk = (CheckBox)row.FindControl(CheckBoxName);
+				if (chk != null && chk.Checked == CollectState) {
+					HiddenField hdn = (HiddenField)row.FindControl(HiddenName);
+					lstUpd.Add(hdn.Value);
+				}
+			}
+			return lstUpd;
+		}
+
+		#endregion
+
+
+		#region boolean list stuff
 
 		public static bool? GetNullableBoolValue(ListControl ddl) {
 			bool? bVal = null;
@@ -133,6 +185,31 @@ namespace Carrotware.CMS.UI.Controls {
 
 		}
 
+		#endregion
+
+
+		#region QueryString Parsers
+
+		public static Guid GetGuidPageIDFromQuery() {
+			return GetGuidParameterFromQuery("pageid");
+		}
+
+		public static Guid GetGuidIDFromQuery() {
+			return GetGuidParameterFromQuery("id");
+		}
+
+		public static Guid GetGuidParameterFromQuery(string ParmName) {
+			Guid id = Guid.Empty;
+			if (SiteData.IsWebView) {
+				if (HttpContext.Current.Request.QueryString[ParmName] != null
+					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
+					id = new Guid(HttpContext.Current.Request.QueryString[ParmName].ToString());
+				}
+			}
+			return id;
+		}
+
+		#endregion
 
 	}
 }

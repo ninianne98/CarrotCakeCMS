@@ -123,6 +123,11 @@
 		<div id="SortableGrid">
 			<carrot:CarrotGridView CssClass="datatable" DefaultSort="NavOrder ASC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+				<EmptyDataTemplate>
+					<p>
+						<b>No records found.</b>
+					</p>
+				</EmptyDataTemplate>
 				<Columns>
 					<asp:BoundField DataField="NavOrder" HeaderText="Order" />
 					<asp:BoundField DataField="FileName" HeaderText="File Name" />
@@ -161,6 +166,11 @@
 		<div id="SortableGrid">
 			<carrot:CarrotGridView CssClass="datatable" DefaultSort="CreateDate DESC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+				<EmptyDataTemplate>
+					<p>
+						<b>No records found.</b>
+					</p>
+				</EmptyDataTemplate>
 				<Columns>
 					<asp:BoundField DataField="FileName" HeaderText="File Name" />
 					<asp:BoundField DataField="NavMenuText" HeaderText="Post Title" />

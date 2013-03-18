@@ -332,6 +332,12 @@ namespace Carrotware.CMS.UI.Base {
 								wes.IsBeingEdited = SecurityData.AdvancedEditMode;
 							}
 
+							Dictionary<string, string> lstMenus = new Dictionary<string, string>();
+							if (widget is IWidgetMultiMenu) {
+								IWidgetMultiMenu wmm = widget as IWidgetMultiMenu;
+								lstMenus = wmm.JSEditFunctions;
+							}
+
 							if (SecurityData.AdvancedEditMode) {
 
 								WidgetWrapper plcWrapper = plcHolder.AddWidget(widget, theWidget);
@@ -348,12 +354,16 @@ namespace Carrotware.CMS.UI.Base {
 
 								if (w != null) {
 									if (w.EnableEdit) {
-										string sScript = w.JSEditFunction;
-										if (string.IsNullOrEmpty(sScript)) {
-											sScript = "cmsGenericEdit('" + pageContents.Root_ContentID + "','" + plcWrapper.DatabaseKey + "')";
-										}
+										if (lstMenus.Count < 1) {
+											string sScript = w.JSEditFunction;
+											if (string.IsNullOrEmpty(sScript)) {
+												sScript = "cmsGenericEdit('" + pageContents.Root_ContentID + "','" + plcWrapper.DatabaseKey + "')";
+											}
 
-										plcWrapper.JSEditFunction = sScript;
+											plcWrapper.JSEditFunction = sScript;
+										} else {
+											plcWrapper.JSEditFunctions = lstMenus;
+										}
 									}
 								}
 							} else {

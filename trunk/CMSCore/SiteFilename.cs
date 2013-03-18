@@ -37,6 +37,9 @@ namespace Carrotware.CMS.Core {
 		public static string LogonURL {
 			get { return SiteData.AdminFolderPath + "Logon.aspx"; }
 		}
+		public static string ForgotPasswordURL {
+			get { return SiteData.AdminFolderPath + "ForgotPassword.aspx"; }
+		}
 		public static string DashboardURL {
 			get { return SiteData.AdminFolderPath + "default.aspx"; }
 		}

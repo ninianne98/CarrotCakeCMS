@@ -73,10 +73,7 @@
     <Compile Include="BreadCrumbNavigation.cs" />
     <Compile Include="ControlUtilities.cs" />
     <Compile Include="GeneralControlDesigner.cs" />
-    <Compile Include="GeneralUtilities.cs">
-      <SubType>
-      </SubType>
-    </Compile>
+    <Compile Include="GeneralUtilities.cs" />
     <Compile Include="ICommonComponent.cs" />
     <Compile Include="OpenGraph.cs" />
     <Compile Include="PagedDataSummaryTitleOptions.cs" />
@@ -147,6 +144,7 @@
     <EmbeddedResource Include="ucAdminWidgetContainer1.ascx" />
     <EmbeddedResource Include="ucAdminWidget2.ascx" />
     <EmbeddedResource Include="ucAdminWidget1.ascx" />
+    <EmbeddedResource Include="ucAdminWidgetMenuItem.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

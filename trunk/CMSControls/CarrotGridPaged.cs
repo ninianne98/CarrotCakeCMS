@@ -110,14 +110,14 @@ namespace Carrotware.CMS.UI.Controls {
 			hdnPageNbr.ID = "hdnPageNbr";
 			this.Controls.Add(hdnPageNbr);
 
-			TheGrid.ID = "gridData";
+			this.TheGrid.ID = "gridData";
 			this.Controls.Add(TheGrid);
 
-			if (ThePager == null) {
-				ThePager = new Repeater();
+			if (this.ThePager == null) {
+				this.ThePager = new Repeater();
 			}
 
-			ThePager.ID = "repeaterPager";
+			this.ThePager.ID = "repeaterPager";
 			this.Controls.Add(ThePager);
 
 			base.OnInit(e);
@@ -142,7 +142,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (context != null) {
 				HttpRequest request = context.Request;
 
-				this.SortingBy = TheGrid.DefaultSort;
+				this.SortingBy = this.TheGrid.DefaultSort;
 
 				if (!IsPostBack) {
 					bHeadClicked = false;
@@ -153,11 +153,11 @@ namespace Carrotware.CMS.UI.Controls {
 						string arg = request.Form["__EVENTARGUMENT"].ToString();
 						string tgt = request.Form["__EVENTTARGET"].ToString();
 
-						if (tgt.Contains("$lnkHead") && tgt.Contains("$" + TheGrid.ID + "$")) {
+						if (tgt.Contains("$lnkHead") && tgt.Contains("$" + this.TheGrid.ID + "$")) {
 							bHeadClicked = true;
 						}
 
-						if (tgt.Contains("$" + sBtnName) && tgt.Contains("$" + ThePager.ID + "$")) {
+						if (tgt.Contains("$" + sBtnName) && tgt.Contains("$" + this.ThePager.ID + "$")) {
 							string[] parms = tgt.Split('$');
 							int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
 							PageNumber = pg;
@@ -179,54 +179,57 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private void SetSort() {
 
-			string sSort = TheGrid.CurrentSort;
+			string sSort = this.TheGrid.CurrentSort;
 			if (bHeadClicked) {
-				sSort = TheGrid.PredictNewSort;
+				sSort = this.TheGrid.PredictNewSort;
 			}
 
 			this.SortingBy = sSort;
 		}
 
-		//public object DataSource { get; set; }
+
+
+		public override object DataSource {
+			get { return this.TheGrid.DataSource; }
+			set { this.TheGrid.DataSource = value; }
+		}
 
 		public override void DataBind() {
-			base.DataBind();
+			//base.DataBind();
+			this.TheGrid.DataBind();
 
-			int TotalPages = 0;
+			int iTotalPages = 0;
 
 			int iPageNbr = PageNumber - 1;
 
-			TotalPages = TotalRecords / PageSize;
+			iTotalPages = this.TotalRecords / this.PageSize;
 
-			if ((TotalRecords % PageSize) > 0) {
-				TotalPages++;
+			if ((this.TotalRecords % this.PageSize) > 0) {
+				iTotalPages++;
 			}
 
-			ThePager.Visible = true;
+			this.ThePager.Visible = true;
 
-			TheGrid.DataSource = this.DataSource;
-			TheGrid.DataBind();
-
-			if (ThePager.ItemTemplate == null) {
+			if (this.ThePager.ItemTemplate == null) {
 				Repeater rp = GetCtrl();
-				ThePager.HeaderTemplate = rp.HeaderTemplate;
-				ThePager.ItemTemplate = rp.ItemTemplate;
-				ThePager.FooterTemplate = rp.FooterTemplate;
+				this.ThePager.HeaderTemplate = rp.HeaderTemplate;
+				this.ThePager.ItemTemplate = rp.ItemTemplate;
+				this.ThePager.FooterTemplate = rp.FooterTemplate;
 			}
 
-			if (TotalPages > 1) {
+			if (iTotalPages > 1) {
 				List<int> pagelist = new List<int>();
-				pagelist = Enumerable.Range(1, TotalPages).ToList();
+				pagelist = Enumerable.Range(1, iTotalPages).ToList();
 
-				ThePager.DataSource = pagelist;
-				ThePager.DataBind();
+				this.ThePager.DataSource = pagelist;
+				this.ThePager.DataBind();
 			}
 
-			if (TotalPages <= 1) {
-				ThePager.Visible = false;
+			if (iTotalPages <= 1) {
+				this.ThePager.Visible = false;
 			}
 
-			WalkCtrlsForAssignment(ThePager);
+			WalkCtrlsForAssignment(this.ThePager);
 
 		}
 
@@ -260,7 +263,6 @@ namespace Carrotware.CMS.UI.Controls {
 			sb.Append(sTextOut);
 
 			try {
-
 				IEnumerable designTimeDataSource = GetDesignTimeDataSource();
 
 				myctrl.DataSource = designTimeDataSource;

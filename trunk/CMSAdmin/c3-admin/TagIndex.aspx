@@ -18,6 +18,11 @@
 	<div id="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="TagText asc" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+			<EmptyDataTemplate>
+				<p>
+					<b>No tags found.</b>
+				</p>
+			</EmptyDataTemplate>
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>

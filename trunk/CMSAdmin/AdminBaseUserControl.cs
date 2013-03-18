@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,19 +19,15 @@ namespace Carrotware.CMS.UI.Admin {
 	public class AdminBaseUserControl : BaseUserControl {
 
 		protected Guid GetGuidPageIDFromQuery() {
-			return GetGuidParameterFromQuery("pageid");
+			return GeneralUtilities.GetGuidPageIDFromQuery();
 		}
 
 		protected Guid GetGuidIDFromQuery() {
-			return GetGuidParameterFromQuery("id");
+			return GeneralUtilities.GetGuidIDFromQuery();
 		}
 
 		protected Guid GetGuidParameterFromQuery(string ParmName) {
-			Guid id = Guid.Empty;
-			if (Request.QueryString[ParmName] != null) {
-				id = new Guid(Request.QueryString[ParmName]);
-			}
-			return id;
+			return GeneralUtilities.GetGuidParameterFromQuery(ParmName);
 		}
 
 		protected void RedirectIfNoSite() {

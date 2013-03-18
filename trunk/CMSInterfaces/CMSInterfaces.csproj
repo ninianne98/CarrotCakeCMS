@@ -74,6 +74,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="IWidgetLimitedProperties.cs" />
+    <Compile Include="IWidgetMultiMenu.cs" />
     <Compile Include="WidgetParmDataWebControl.cs" />
     <Compile Include="IWidgetEditStatus.cs" />
     <Compile Include="IWidgetParmData.cs" />

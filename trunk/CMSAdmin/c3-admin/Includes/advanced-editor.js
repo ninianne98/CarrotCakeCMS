@@ -111,22 +111,22 @@ function cmsResetToolbarScroll() {
 
 function cmsMenuFixImages() {
 	$(".cmsWidgetBarIconCog").each(function (i) {
-		cmsFixGeneralImage(this, ' ', 'Manage', 'cog.png');
+		cmsFixGeneralImage(this, 'cog.png');
 	});
 	$(".cmsWidgetBarIconCross").each(function (i) {
-		cmsFixGeneralImage(this, 'Remove', 'Remove', 'cross.png');
+		cmsFixGeneralImage(this, 'cross.png');
 	});
 	$(".cmsWidgetBarIconPencil").each(function (i) {
-		cmsFixGeneralImage(this, 'Edit', 'Edit', 'pencil.png');
+		cmsFixGeneralImage(this, 'pencil.png');
 	});
 	$(".cmsWidgetBarIconPencil2").each(function (i) {
-		cmsFixGeneralImage(this, ' ', 'Edit', 'pencil.png');
+		cmsFixGeneralImage(this, 'pencil.png');
 	});
 	$(".cmsWidgetBarIconWidget").each(function (i) {
-		cmsFixGeneralImage(this, 'Widgets', 'Widgets', 'application_view_tile.png');
+		cmsFixGeneralImage(this, 'application_view_tile.png');
 	});
 	$(".cmsWidgetBarIconWidget2").each(function (i) {
-		cmsFixGeneralImage(this, 'History', 'History', 'layout.png');
+		cmsFixGeneralImage(this, 'layout.png');
 	});
 	//$(".cmsWidgetBarIconShrink").each(function (i) {
 	//cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
@@ -143,9 +143,12 @@ function cmsBlockContentEdits(elm) {
 	$(elm).parent().text(txt);
 }
 
-function cmsFixGeneralImage(elm, txt1, txt2, img) {
+function cmsFixGeneralImage(elm, img) {
 	var id = $(elm).attr('id');
-	$(elm).html(txt1 + " <img class='cmsWidgetBarImgReset' border='0' src='/c3-admin/images/" + img + "' alt='" + txt2 + "' title='" + txt2 + "' />");
+	var title = $(elm).attr('title');
+	var alt = $(elm).attr('alt');
+
+	$(elm).html(title + " <img class='cmsWidgetBarImgReset' border='0' src='/c3-admin/images/" + img + "' alt='" + alt + "' title='" + alt + "' />");
 }
 
 

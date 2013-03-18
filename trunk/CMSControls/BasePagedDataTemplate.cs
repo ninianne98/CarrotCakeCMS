@@ -79,6 +79,18 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue(-1)]
+		public int MaxPage {
+			get {
+				String s = (String)ViewState["MaxPage"];
+				return ((s == null) ? -1 : int.Parse(s));
+			}
+			set {
+				ViewState["MaxPage"] = value.ToString();
+			}
+		}
+
 		protected int PageNumberZeroIndex {
 			get {
 				return this.PageNumber - 1;
@@ -339,7 +351,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (this.ShowPager && iTotalPages > 1) {
 				List<int> pagelist = new List<int>();
-				pagelist = Enumerable.Range(1, iTotalPages).ToList();
+
+				if (this.MaxPage > iTotalPages) {
+					pagelist = Enumerable.Range(1, this.MaxPage).ToList();
+				} else {
+					pagelist = Enumerable.Range(1, iTotalPages).ToList();
+				}
 
 				rpPager.DataSource = pagelist;
 				rpPager.DataBind();

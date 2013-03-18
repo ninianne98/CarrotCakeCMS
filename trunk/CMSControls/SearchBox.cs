@@ -95,6 +95,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
+
 			base.BaseRender(writer);
 		}
 
