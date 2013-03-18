@@ -63,18 +63,20 @@
 	</p>
 	<p>
 		<b>jQuery UI Nested Sortable - jQuery Plugin</b><br />
-		v 1.3.4 / 28 apr 2011<br />
 		<a target="_blank" href="http://mjsarfatti.com/sandbox/nestedSortable">http://mjsarfatti.com/sandbox/nestedSortable</a><br />
-		<br />
-		Depends:<br />
-		jquery.ui.sortable.js 1.8+<br />
 		<br />
 		License CC BY-SA 3.0<br />
 		Copyright 2010-2011, Manuele J Sarfatti<br />
 		This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.<br />
 	</p>
 	<p>
-		<b>Silk icon set 1.3</b><br />
+		<b>LinqToSqlExtensions / ExpressionExtensions</b><br />
+		<a target="_blank" href="http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx">http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx</a><br />
+		<br />
+		Copyright 2008 Terry Aney<br />
+	</p>
+	<p>
+		<b>Silk Icon Set</b><br />
 		Mark James, <a target="_blank" href="http://www.famfamfam.com/lab/icons/silk/">http://www.famfamfam.com/lab/icons/silk/</a><br />
 		This work is licensed under a Creative Commons Attribution 2.5 License.<br />
 		http://creativecommons.org/licenses/by/2.5/
@@ -99,10 +101,6 @@
 	</p>
 	<p>
 		<b>jQuery blockUI - jQuery Plugin</b><br />
-		Version 2.38 (29-MAR-2011)<br />
-		<br />
-		@requires jQuery v1.2.3 or later<br />
-		<br />
 		Examples at: http://malsup.com/jquery/block/<br />
 		Copyright (c) 2007-2010 M. Alsup<br />
 		Dual licensed under the MIT and GPL licenses:<br />
@@ -112,7 +110,7 @@
 		Thanks to Amir-Hossein Sobhi for some excellent contributions!<br />
 	</p>
 	<p>
-		<b>SimpleModal 1.4.3 - jQuery Plugin</b><br />
+		<b>SimpleModal - jQuery Plugin</b><br />
 		<a target="_blank" href="http://www.ericmmartin.com/projects/simplemodal/">http://www.ericmmartin.com/projects/simplemodal/</a><br />
 		Copyright (c) 2010 Eric Martin
 		<br />

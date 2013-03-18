@@ -140,7 +140,7 @@
 						<td>
 							&nbsp;&nbsp;
 						</td>
-						<td width="150">
+						<td style="width: 150px;">
 							<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
 						</td>
 					</tr>
@@ -159,7 +159,7 @@
 		<div class="scroll" id="fileZone">
 			<asp:Repeater ID="rpFiles" runat="server">
 				<HeaderTemplate>
-					<table cellpadding="2" cellspacing="0" width="98%">
+					<table cellpadding="2" cellspacing="0" style="width: 98%;">
 						<tr class="headerRow">
 							<th width="20">
 							</th>

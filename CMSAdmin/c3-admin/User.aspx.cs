@@ -27,30 +27,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!IsPostBack) {
 				if (userID != Guid.Empty) {
-					var dsRoles = new List<aspnet_Role>();
-
-					if (!SecurityData.IsAdmin) {
-						dsRoles = (from l in db.aspnet_Roles
-								   where l.RoleName != SecurityData.CMSGroup_Users && l.RoleName != SecurityData.CMSGroup_Admins
-								   orderby l.RoleName
-								   select l).ToList();
-					} else {
-						dsRoles = (from l in db.aspnet_Roles
-								   where l.RoleName != SecurityData.CMSGroup_Users
-								   orderby l.RoleName
-								   select l).ToList();
-					}
+					var dsRoles = SecurityData.GetRoleListRestricted();
 
 					CheckBox chkSelected = null;
 
 					gvSites.Visible = false;
 					if (SecurityData.IsAdmin) {
 						gvSites.Visible = true;
-						gvSites.DataSource = (from l in db.carrot_Sites
-											  orderby l.SiteName
-											  select l).ToList();
-						gvSites.DataBind();
 
+						GeneralUtilities.BindDataBoundControl(gvSites, SiteData.GetSiteList());
 
 						var dsLocs = (from l in db.carrot_UserSiteMappings
 									  where l.UserId == userID
@@ -91,11 +76,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtFirstName.Text = ud.FirstName;
 					txtLastName.Text = ud.LastName;
 
-					gvRoles.DataSource = dsRoles;
-					gvRoles.DataBind();
+					GeneralUtilities.BindDataBoundControl(gvRoles, dsRoles);
 
 					chkSelected = null;
-
 
 					HiddenField hdnRoleId = null;
 					foreach (GridViewRow dgItem in gvRoles.Rows) {

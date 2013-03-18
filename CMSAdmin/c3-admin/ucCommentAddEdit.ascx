@@ -5,9 +5,9 @@
 			Page Info
 		</label>
 	</legend>
-	<table width="700">
+	<table style="width: 700px;">
 		<tr>
-			<td width="125" class="tablecaption">
+			<td style="width: 125px;" class="tablecaption">
 				title:
 			</td>
 			<td>
@@ -30,9 +30,9 @@
 			Comment
 		</label>
 	</legend>
-	<table width="700">
+	<table style="width: 700px;">
 		<tr>
-			<td width="150" class="tablecaption">
+			<td style="width: 150px;" class="tablecaption">
 				IP address:
 			</td>
 			<td>

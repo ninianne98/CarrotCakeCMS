@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Profile;
 using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Data;
 using Carrotware.CMS.UI.Base;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class UserGroupAddEdit : AdminBasePage {
@@ -30,7 +36,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!IsPostBack) {
 				if (groupID != Guid.Empty) {
-					aspnet_Role role = getCurrentGroup();
+					MembershipRole role = getCurrentGroup();
 
 					txtRoleName.Text = role.RoleName;
 
@@ -46,18 +52,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void GetUserList(string roleName) {
 
 			List<MembershipUser> usrs = SecurityData.GetUsersInRole(roleName);
-			gvUsers.DataSource = usrs;
-			gvUsers.DataBind();
+			GeneralUtilities.BindDataBoundControl(gvUsers, usrs);
 
 			if (usrs.Count < 1) {
 				btnRemove.Visible = false;
 			}
 		}
 
-		protected aspnet_Role getCurrentGroup() {
-			aspnet_Role role = (from l in db.aspnet_Roles
-								where l.RoleId == groupID
-								select l).FirstOrDefault();
+		protected MembershipRole getCurrentGroup() {
+			MembershipRole role = SecurityData.FindMembershipRole(groupID);
 
 			return role;
 		}
@@ -65,7 +68,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnAddUsers_Click(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(hdnUserID.Value)) {
-				aspnet_Role role = getCurrentGroup();
+				MembershipRole role = getCurrentGroup();
 				if (!Roles.IsUserInRole(hdnUserID.Value, role.RoleName)) {
 					Roles.AddUserToRole(hdnUserID.Value, role.RoleName);
 				}
@@ -80,7 +83,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			HiddenField hdnUserName = null;
 			CheckBox chkSelected = null;
 
-			aspnet_Role role = getCurrentGroup();
+			MembershipRole role = getCurrentGroup();
 
 			string currentRoleName = role.RoleName;
 
@@ -100,7 +103,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnApply_Click(object sender, EventArgs e) {
-			aspnet_Role role = null;
+			MembershipRole role = new MembershipRole(txtRoleName.Text, groupID);
 
 			if (!Roles.RoleExists(txtRoleName.Text) && groupID == Guid.Empty) {
 				Roles.CreateRole(txtRoleName.Text);
@@ -108,16 +111,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (Roles.RoleExists(txtRoleName.Text) || groupID != Guid.Empty) {
 				if (groupID == Guid.Empty) {
-					role = (from l in db.aspnet_Roles
-							where l.LoweredRoleName.ToLower() == txtRoleName.Text.ToLower()
-							select l).FirstOrDefault();
+					role = SecurityData.FindMembershipRole(txtRoleName.Text);
 
 					groupID = role.RoleId;
-
 				} else {
-					role = (from l in db.aspnet_Roles
-							where l.RoleId == groupID
-							select l).FirstOrDefault();
+					role = SecurityData.FindMembershipRole(groupID);
 				}
 
 				if (role != null && groupID != Guid.Empty) {
@@ -125,9 +123,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							&& CheckValidEditing(txtRoleName.Text)) {
 
 						role.RoleName = txtRoleName.Text;
-						role.LoweredRoleName = txtRoleName.Text.ToLower();
-
-						db.SubmitChanges();
+						role.Save();
 					}
 
 					if (CheckValidEditing(role.LoweredRoleName)

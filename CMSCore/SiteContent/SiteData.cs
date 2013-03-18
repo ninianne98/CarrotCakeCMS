@@ -81,6 +81,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public static List<SiteData> GetSiteList() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+
+				return (from l in _db.carrot_Sites orderby l.SiteName select new SiteData(l)).ToList();
+			}
+		}
+
 		public static SiteData GetSiteByID(Guid siteID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_Site s = CompiledQueries.cqGetSiteByID(_db, siteID);

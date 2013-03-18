@@ -159,7 +159,7 @@
 			records
 		</p>
 		<div id="SortableGrid">
-			<carrot:CarrotGridView CssClass="datatable" DefaultSort="CreateDate ASC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+			<carrot:CarrotGridView CssClass="datatable" DefaultSort="CreateDate DESC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 				<Columns>
 					<asp:BoundField DataField="FileName" HeaderText="File Name" />

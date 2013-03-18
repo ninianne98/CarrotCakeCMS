@@ -47,6 +47,8 @@
 		padding: 5px;
 		border: 2px dashed #000000;
 		background-color: #FFFFCC !important;
+		width: 400px !important;
+		display: block !important;
 	}
 </style>
 <script type="text/javascript">
@@ -215,9 +217,9 @@
 			<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand" id="filename-<%#Eval("Root_ContentID") %>">
 				&nbsp; </span>
 				<img src="/c3-admin/images/webpage.png" class="imgNoBorder image-handle" title="webpage" alt="webpage" id="img-<%#Eval("Root_ContentID") %>" />
-				<span class="page-status">
+				<span class="page-status"><a href="<%#Eval("FileName")%>" target="_blank">
 					<%#Eval("FileName")%>
-					&nbsp;&nbsp;&nbsp; [<b><%#Eval("NavMenuText")%></b>] &nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp; [<b><%#Eval("NavMenuText")%></b>] </a>&nbsp;&nbsp;&nbsp;&nbsp;
 					<img alt="status" title="status <%#Eval("PageActive").ToString().ToLower() %>" class="image-status-icon img-status-<%#Eval("PageActive").ToString().ToLower() %>"
 						src='<%#ReturnImage(Convert.ToBoolean(Eval("PageActive")))%>' />
 					<img alt="navstatus" title="navstatus <%#Eval("ShowInSiteNav").ToString().ToLower() %>" class="image-navstatus-icon img-navstatus-<%#Eval("ShowInSiteNav").ToString().ToLower() %>"
@@ -231,23 +233,14 @@
 	</asp:Repeater>
 	<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/c3-admin/images/cancel.png" />
 	<asp:HiddenField runat="server" ID="hdnActive" Visible="false" Value="/c3-admin/images/accept.png" />
-	<asp:HiddenField runat="server" ID="hdnNavShow" Visible="false" Value="/c3-admin/images/application_lightning.png" />
-	<asp:HiddenField runat="server" ID="hdnNavHide" Visible="false" Value="/c3-admin/images/flag_blue.png" />
+	<asp:HiddenField runat="server" ID="hdnNavShow" Visible="false" Value="/c3-admin/images/lightbulb.png" />
+	<asp:HiddenField runat="server" ID="hdnNavHide" Visible="false" Value="/c3-admin/images/lightbulb_off.png" />
 </div>
 <asp:Repeater ID="rpSub" runat="server" OnItemDataBound="rpMap_ItemDataBound">
 	<HeaderTemplate>
 		<ol>
 	</HeaderTemplate>
-	<%--use item template from top level--%>
-	<%--<ItemTemplate>
-			<li id="<%#Eval("Root_ContentID") %>"><span class="handle" id="handle-<%#Eval("Root_ContentID") %>">
-				<%#Eval("FileName")%>
-				<span class="page-status-<%#Eval("PageActive").ToString().ToLower() %>">- [<%#Eval("NavMenuText")%>]
-					<img alt="status" src='<%#ReturnImage(Convert.ToBoolean(Eval("PageActive")))%>' />
-				</span></span>
-				<asp:PlaceHolder ID="ph" runat="server"></asp:PlaceHolder>
-			</li>
-		</ItemTemplate>--%>
+	<%--use ItemTemplate from top level--%>
 	<FooterTemplate>
 		</ol></FooterTemplate>
 </asp:Repeater>

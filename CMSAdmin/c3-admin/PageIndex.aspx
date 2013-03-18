@@ -121,15 +121,15 @@
 					<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField SortExpression="GoLiveDate" HeaderText="Go Live" DataField="GoLiveDate" DataFieldFormat="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
-						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
+						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
-						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/flag_yellow.png" ImagePathFalse="/c3-admin/images/page_world.png" />
+						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="ShowInSiteNav" HeaderText="Navigation" ShowBooleanImage="true"
-						AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/application_lightning.png" ImagePathFalse="/c3-admin/images/flag_blue.png" />
+						AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="ShowInSiteMap" HeaderText="In SiteMap" ShowBooleanImage="true"
-						AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/application_lightning.png" ImagePathFalse="/c3-admin/images/flag_blue.png" />
+						AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
-						AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/flag_blue.png" ImagePathFalse="/c3-admin/images/application_lightning.png" />
+						AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Public" AlternateTextFalse="Inactive"
 						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>

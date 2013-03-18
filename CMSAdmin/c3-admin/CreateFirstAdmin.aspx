@@ -23,7 +23,7 @@
 						<div>
 							<asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False"></asp:Literal>
 						</div>
-						<table cellpadding="2px" cellspacing="2px" border="0" width="380px">
+						<table cellpadding="2px" cellspacing="2px" border="0" style="width: 380px;">
 							<tr>
 								<td class="tableback">
 									<b class="caption">

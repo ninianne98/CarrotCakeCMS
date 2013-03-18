@@ -13,7 +13,7 @@
 				Update Profile
 			</label>
 		</legend>
-		<table id="Table2" width="390px">
+		<table style="width: 380px;">
 			<tr>
 				<td colspan="2">
 					<p>
@@ -77,7 +77,7 @@
 						<p style="color: #FF0000;">
 							<asp:Label ID="FailureText" runat="server" EnableViewState="False"></asp:Label>
 						</p>
-						<table id="Table2" width="350px">
+						<table style="width: 350px;">
 							<tr>
 								<td class="tablecontents">
 									<b class="caption">Current Password </b>

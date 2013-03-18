@@ -20,6 +20,61 @@ namespace Carrotware.CMS.Core {
 
 		public SecurityData() { }
 
+		public static MembershipRole FindMembershipRole(string RoleName) {
+			MembershipRole role = null;
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				role = (from l in _db.aspnet_Roles
+						where l.LoweredRoleName.ToLower() == RoleName.ToLower()
+						select new MembershipRole(l)).FirstOrDefault();
+			}
+
+			return role;
+		}
+
+		public static MembershipRole FindMembershipRole(Guid roleID) {
+			MembershipRole role = null;
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				role = (from l in _db.aspnet_Roles
+						where l.RoleId == roleID
+						select new MembershipRole(l)).FirstOrDefault();
+			}
+
+			return role;
+		}
+
+		public static List<MembershipRole> GetRoleList() {
+			List<MembershipRole> roles = new List<MembershipRole>();
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				roles = (from l in _db.aspnet_Roles
+						 orderby l.RoleName
+						 select new MembershipRole(l)).ToList();
+			}
+
+			return roles;
+		}
+
+		public static List<MembershipRole> GetRoleListRestricted() {
+			List<MembershipRole> roles = new List<MembershipRole>();
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				if (!SecurityData.IsAdmin) {
+					roles = (from l in _db.aspnet_Roles
+							 where l.RoleName != SecurityData.CMSGroup_Users && l.RoleName != SecurityData.CMSGroup_Admins
+							 orderby l.RoleName
+							 select new MembershipRole(l)).ToList();
+				} else {
+					roles = (from l in _db.aspnet_Roles
+							 where l.RoleName != SecurityData.CMSGroup_Users
+							 orderby l.RoleName
+							 select new MembershipRole(l)).ToList();
+				}
+			}
+
+			return roles;
+		}
 
 		public static List<MembershipUser> GetUserSearch(string searchTerm) {
 			List<MembershipUser> usrs = null;
@@ -186,6 +241,66 @@ namespace Carrotware.CMS.Core {
 				return _Advanced;
 			}
 		}
+
+	}
+
+
+	//============
+	public class MembershipRole {
+
+		public MembershipRole() {
+			this.RoleId = Guid.Empty;
+		}
+
+		public MembershipRole(string roleName) {
+			this.RoleName = roleName;
+			this.RoleId = Guid.Empty;
+		}
+		public MembershipRole(string roleName, Guid roleID) {
+			this.RoleName = roleName;
+			this.RoleId = roleID;
+		}
+
+		internal MembershipRole(aspnet_Role role) {
+			if (role != null) {
+				this.ApplicationId = role.ApplicationId;
+				this.RoleId = role.RoleId;
+				this.RoleName = role.RoleName;
+				this.Description = role.Description;
+			}
+		}
+
+		public Guid ApplicationId { get; set; }
+
+		public Guid RoleId { get; set; }
+
+		public string RoleName { get; set; }
+
+		public string LoweredRoleName { get { return this.RoleName.ToLower(); } }
+
+		public string Description { get; set; }
+
+		public void Save() {
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+
+				aspnet_Role role = (from l in _db.aspnet_Roles
+									where l.LoweredRoleName.ToLower() == this.RoleName.ToLower()
+										|| l.RoleId == this.RoleId
+									select l).FirstOrDefault();
+
+				if (role == null) {
+					if (!Roles.RoleExists(this.RoleName) && this.RoleId == Guid.Empty) {
+						Roles.CreateRole(this.RoleName);
+					}
+				} else {
+					role.RoleName = this.RoleName;
+					role.LoweredRoleName = role.RoleName.ToLower();
+					_db.SubmitChanges();
+				}
+			}
+		}
+
 
 	}
 }

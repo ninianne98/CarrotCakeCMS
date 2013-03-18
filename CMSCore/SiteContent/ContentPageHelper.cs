@@ -182,9 +182,13 @@ namespace Carrotware.CMS.Core {
 
 		public enum UpdateField {
 			MarkActive,
+			MarkInactive,
 			MarkIncludeInSiteMap,
+			MarkIncludeInSiteMapNo,
 			MarkIncludeInSiteNav,
-			MarkAsIndexable
+			MarkIncludeInSiteNavNo,
+			MarkAsIndexable,
+			MarkAsIndexableNo,
 		}
 
 		public void MarkSelectedPublished(Guid siteID, List<Guid> lstUpd, UpdateField selField) {
@@ -192,7 +196,10 @@ namespace Carrotware.CMS.Core {
 
 			Guid gContent = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry);
 
-			if (selField == UpdateField.MarkActive || selField == UpdateField.MarkAsIndexable) {
+			if (selField == UpdateField.MarkActive
+				|| selField == UpdateField.MarkAsIndexable
+				|| selField == UpdateField.MarkInactive
+				|| selField == UpdateField.MarkAsIndexableNo) {
 				queryCont = (from r in db.carrot_RootContents
 							 where r.SiteID == siteID
 								&& lstUpd.Contains(r.Root_ContentID)
@@ -209,14 +216,26 @@ namespace Carrotware.CMS.Core {
 				case UpdateField.MarkActive:
 					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { PageActive = true });
 					break;
+				case UpdateField.MarkInactive:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { PageActive = false });
+					break;
 				case UpdateField.MarkAsIndexable:
 					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { BlockIndex = false });
+					break;
+				case UpdateField.MarkAsIndexableNo:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { BlockIndex = true });
 					break;
 				case UpdateField.MarkIncludeInSiteMap:
 					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { ShowInSiteMap = true });
 					break;
+				case UpdateField.MarkIncludeInSiteMapNo:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { ShowInSiteMap = false });
+					break;
 				case UpdateField.MarkIncludeInSiteNav:
 					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { ShowInSiteNav = true });
+					break;
+				case UpdateField.MarkIncludeInSiteNavNo:
+					db.carrot_RootContents.UpdateBatch(queryCont, p => new carrot_RootContent { ShowInSiteNav = false });
 					break;
 			}
 
@@ -947,8 +966,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ContentPage> GetContentByDateRange(Guid siteID, DateTime dateMidpoint, int iDayRange, ContentPageType.PageType pageType, bool? bActive, bool? bSiteMap, bool? bSiteNav, bool? bBlock) {
-			DateTime dateBegin = DateTime.MinValue;
-			DateTime dateEnd = DateTime.MaxValue;
+			//assiging specific dates because SQL wants 1753-9999
+			DateTime dateBegin = new DateTime(1760, 1, 1); //DateTime.MinValue;
+			DateTime dateEnd = new DateTime(5000, 1, 1);  //DateTime.MaxValue;
 
 			if (iDayRange > 0) {
 				dateBegin = dateMidpoint.AddDays(0 - iDayRange);

@@ -80,6 +80,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (sAct != "none") {
 				ContentPageHelper.UpdateField fieldDev = ContentPageHelper.UpdateField.MarkActive;
 
+				if (sAct == "inactive") {
+					fieldDev = ContentPageHelper.UpdateField.MarkInactive;
+				}
+
 				if (sAct == "searchengine") {
 					fieldDev = ContentPageHelper.UpdateField.MarkAsIndexable;
 				}
@@ -88,6 +92,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 				if (sAct == "navigation") {
 					fieldDev = ContentPageHelper.UpdateField.MarkIncludeInSiteNav;
+				}
+
+				if (sAct == "searchengine-no") {
+					fieldDev = ContentPageHelper.UpdateField.MarkAsIndexableNo;
+				}
+				if (sAct == "sitemap-no") {
+					fieldDev = ContentPageHelper.UpdateField.MarkIncludeInSiteMapNo;
+				}
+				if (sAct == "navigation-no") {
+					fieldDev = ContentPageHelper.UpdateField.MarkIncludeInSiteNavNo;
 				}
 
 				pageHelper.MarkSelectedPublished(SiteData.CurrentSiteID, lstUpd, fieldDev);

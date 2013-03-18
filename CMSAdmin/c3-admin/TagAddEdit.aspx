@@ -46,9 +46,9 @@
 	Tag Add/Edit
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<table width="700">
+	<table style="width: 700px;">
 		<tr>
-			<td width="125" class="tablecaption">
+			<td style="width: 125px;" class="tablecaption">
 				url slug:
 			</td>
 			<td>
