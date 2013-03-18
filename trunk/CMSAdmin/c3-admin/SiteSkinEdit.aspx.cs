@@ -98,6 +98,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			lstFileExtensions.Add(".css");
 			lstFileExtensions.Add(".js");
 			lstFileExtensions.Add(".ascx");
+			lstFileExtensions.Add(".master");
 
 			if (Directory.Exists(sDir)) {
 

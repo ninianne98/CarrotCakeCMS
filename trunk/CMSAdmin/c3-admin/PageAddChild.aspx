@@ -115,7 +115,7 @@
 			This creates a blank and unpublished page (no content) with the specified filename and title etc. This new page will use the plain/default template. You
 			will have the opportunity to update the appearance when you visit the new page.
 		</p>
-		<table width="700">
+		<table style="width: 700px;">
 			<tr>
 				<td valign="top" class="tablecaption">
 					title bar:

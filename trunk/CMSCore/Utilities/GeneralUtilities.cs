@@ -30,7 +30,34 @@ namespace Carrotware.CMS.Core {
 			return bVal;
 		}
 
+		public static string GetSelectedValue(ListControl ddl) {
+			string sVal = null;
+			if (ddl.SelectedItem != null) {
+				sVal = ddl.SelectedValue;
+			}
+			return sVal;
+		}
+		public static int? GetSelectedInt(ListControl ddl) {
+			int? iVal = null;
+			if (ddl.SelectedItem != null) {
+				iVal = int.Parse(ddl.SelectedValue);
+			}
+			return iVal;
+		}
+		public static Guid? GetSelectedGuid(ListControl ddl) {
+			Guid? gVal = null;
+			if (ddl.SelectedItem != null) {
+				gVal = new Guid(ddl.SelectedValue);
+			}
+			return gVal;
+		}
+
 		public static void BindRepeater(Repeater ctrl, object DataSource) {
+			ctrl.DataSource = DataSource;
+			ctrl.DataBind();
+		}
+
+		public static void BindDataBoundControl(DataBoundControl ctrl, object DataSource) {
 			ctrl.DataSource = DataSource;
 			ctrl.DataBind();
 		}

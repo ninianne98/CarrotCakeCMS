@@ -17,9 +17,9 @@
 		<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageContents" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Skin File Contents Required"
 			Display="Dynamic" />&nbsp;
 	</p>
-	<table width="100%">
+	<table style="width: 100%;">
 		<tr>
-			<td valign="top" width="250px">
+			<td style="width: 250px;">
 				<p>
 					<b>Supporting Styles/Scripts</b>
 				</p>
@@ -38,11 +38,11 @@
 					</ul>
 				</div>
 			</td>
-			<td valign="top" width="20px">
+			<td width="20px">
 				<p>
 					&nbsp;&nbsp;&nbsp;</p>
 			</td>
-			<td valign="top">
+			<td>
 				<p>
 					<b>Viewing file:
 						<asp:Literal ID="litEditFileName" runat="server"></asp:Literal>

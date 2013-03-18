@@ -12,7 +12,6 @@
 
 		var thePage = '';
 
-
 		function exportPage() {
 			window.open("<%=SiteFilename.DataExportURL %>?id=" + thePageID);
 		}
@@ -306,47 +305,47 @@
 		</div>
 	</div>
 	<div id="PageContents">
-		<table width="700">
+		<table style="width: 700px;">
 			<tr>
-				<td width="125" class="tablecaption" valign="top">
+				<td style="width: 125px;" class="tablecaption">
 					last updated:
 				</td>
-				<td width="575" valign="top">
+				<td style="width: 575px;">
 					<asp:Label ID="lblUpdated" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					create date:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Label ID="lblCreateDate" runat="server" /><br />
 					<br />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					release date:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					retire date:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					title bar:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
@@ -356,10 +355,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					filename:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
 						MaxLength="200" />&nbsp; <a href="javascript:void(0)" onclick="openPage();">
 							<img class="imgNoBorder" src="/c3-admin/images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
@@ -371,85 +370,85 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					navigation:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
 						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					page head:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					thumbnail:
 					<br />
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="45" MaxLength="200" />
 					<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>');return false;" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					&nbsp;
 				</td>
-				<td valign="top">
+				<td>
 					<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
 					&nbsp;&nbsp;&nbsp;
 					<asp:CheckBox ID="chkNavigation" runat="server" Text="Include in site navigation" Checked="true" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					&nbsp;
 				</td>
-				<td valign="top">
+				<td>
 					<asp:CheckBox ID="chkSiteMap" runat="server" Text="Include In Sitemap" Checked="true" />
 					&nbsp;&nbsp;&nbsp;
 					<asp:CheckBox ID="chkHide" runat="server" Text="Hide from Search Engines" />
 				</td>
 			</tr>
 			<tr>
-				<td width="125" class="tablecaption" valign="top">
+				<td style="width: 125px;" class="tablecaption">
 					meta keywords:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					meta description:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr style="display: none">
-				<td class="tablecaption" valign="top">
+				<td class="tablecaption">
 					sort:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="1" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required"
 						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					parent page:
 					<br />
 				</td>
-				<td valign="top">
+				<td>
 					<!-- parent page plugin-->
 					<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
 					<div style="clear: both; height: 2px;">
@@ -459,10 +458,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					template:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
 					</asp:DropDownList>
 					&nbsp;&nbsp;&nbsp;&nbsp;
@@ -470,9 +469,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 				</td>
-				<td valign="top" align="right">
+				<td align="right">
 					<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
 				</td>
 			</tr>
@@ -535,45 +534,45 @@
 				</div>
 			</div>
 		</div>
-		<table width="800">
+		<table style="width: 800px;">
 			<tr>
-				<td valign="top" align="left">
+				<td align="left">
 					<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; min-height: 22px;">
 						&nbsp;</div>
 				</td>
 				<td>
 					&nbsp;&nbsp;
 				</td>
-				<td valign="top" align="right">
+				<td align="right">
 					<%--<a target="_blank" id="lnkExport" runat="server" href="javascript:void(0);" onclick="exportPage();">Export latest version of this page</a>--%>
 				</td>
 			</tr>
 		</table>
 		<asp:Panel ID="pnlButtons" runat="server">
-			<table width="900">
+			<table style="width: 900px;">
 				<tr>
-					<td valign="top">
+					<td>
 						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />
 						&nbsp;&nbsp;
 						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="SubmitPageVisit()" Text="Save and Visit" />
 						&nbsp;&nbsp;
 						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 					</td>
-					<td valign="top">
+					<td>
 						<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
 					</td>
-					<td valign="top">
+					<td>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</td>
 					<asp:Panel runat="server" ID="pnlReview">
-						<td valign="top" align="right">
+						<td align="right">
 							<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
 							</asp:DropDownList>
 						</td>
-						<td valign="top">
+						<td>
 							&nbsp;&nbsp;
 						</td>
-						<td valign="top" align="left">
+						<td align="left">
 							<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
 						</td>
 					</asp:Panel>

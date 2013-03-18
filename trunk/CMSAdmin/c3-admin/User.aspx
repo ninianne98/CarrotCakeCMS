@@ -98,6 +98,7 @@
 								</ItemTemplate>
 							</asp:TemplateField>
 							<asp:BoundField DataField="SiteName" HeaderText="Site Name" />
+							<asp:BoundField DataField="MainURL" HeaderText="Main URL" />
 						</Columns>
 					</carrot:CarrotGridView>
 				</div>

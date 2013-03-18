@@ -9,104 +9,104 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h2>
 		<asp:Literal ID="litPageName" runat="server"></asp:Literal></h2>
-	<table width="700">
+	<table style="width: 700px;">
 		<tr>
-			<td width="125" class="tablecaption" valign="top">
+			<td style="width: 125px;" class="tablecaption">
 				last updated:
 			</td>
-			<td width="575" valign="top">
-				<asp:Label ID="lblUpdated" runat="server"></asp:Label>
+			<td style="width: 575px;">
+				<asp:Label ID="lblUpdated" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				release date:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				retire date:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				title bar:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 					Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				navigation:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
 					Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				page head:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				thumbnail:
 				<br />
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="45" MaxLength="200" />
 				<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturnPop('<%=txtThumb.ClientID %>');return false;" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
 				&nbsp;&nbsp;&nbsp;
 				<asp:CheckBox ID="chkNavigation" runat="server" Text="Include in site navigation" Checked="true" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<asp:CheckBox ID="chkSiteMap" runat="server" Text="Include In Sitemap" Checked="true" />
 				&nbsp;&nbsp;&nbsp;
 				<asp:CheckBox ID="chkHide" runat="server" Text="Hide from Search Engines" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				meta keywords:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="tablecaption">
+			<td class="tablecaption">
 				meta description:
 			</td>
-			<td valign="top">
+			<td>
 				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 			</td>
 		</tr>

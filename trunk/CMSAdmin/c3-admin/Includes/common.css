@@ -35,6 +35,10 @@ a .imgNoBorder {
 	outline: none;
 }
 
+tt, pre, code, kbd, samp {
+	font-family: 'Lucida Console' , 'Courier New' , Courier, Monaco, monospace, sans-serif;
+}
+
 .dateRegion, .ui-datepicker-trigger {
 	margin-right: 5px;
 }

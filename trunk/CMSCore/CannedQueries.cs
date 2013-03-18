@@ -86,8 +86,11 @@ namespace Carrotware.CMS.Core {
 			Guid contentTypeID = ContentPageType.GetIDByType(pageType);
 
 			return (from ct in ctx.vw_carrot_Contents
+					orderby ct.ContentTypeValue, ct.NavMenuText
 					where ct.SiteID == siteID
 						&& ct.IsLatestVersion == true
+						&& ct.GoLiveDate.Date >= dateBegin.Date
+						&& ct.GoLiveDate.Date <= dateEnd.Date
 						&& (ct.ContentTypeID == contentTypeID || pageType == ContentPageType.PageType.Unknown)
 						&& (ct.PageActive == Convert.ToBoolean(bActive) || bActive == null)
 						&& (ct.BlockIndex == Convert.ToBoolean(bBlock) || bBlock == null)

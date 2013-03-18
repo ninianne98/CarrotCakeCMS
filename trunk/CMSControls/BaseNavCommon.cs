@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Controls {
 				_stripNotInSiteNav = value;
 			}
 		}
-		private bool _stripNotInSiteMap = true;
+		private bool _stripNotInSiteMap = false;
 		protected virtual bool StripNotInSiteMap {
 			get {
 				return _stripNotInSiteMap;

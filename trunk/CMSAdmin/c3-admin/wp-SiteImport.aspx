@@ -64,17 +64,17 @@
 	<p>
 		The below information (if checked) will be imported to the current site. You can always update the information after importing.
 	</p>
-	<table width="700">
+	<table style="width: 700px;">
 		<tr>
-			<td valign="top">
+			<td>
 				<asp:CheckBox ID="chkFileGrab" runat="server" onclick="chkFileGrabClick(this);" />
 				Attempt to download page/post attachments and place them in the selected folder.
 				<asp:Literal ID="litTrust" runat="server"><b>Downloading images requires a full trust website, and this installation has not been detected as such, leaving the download option disabled. </b></asp:Literal>
 			</td>
-			<td valign="top">
+			<td>
 				&nbsp;&nbsp;&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Required" Display="Dynamic" ControlToValidate="ddlFolders" ClientValidationFunction="validateFolderSelection"
 					ValidationGroup="inputForm" />
 				<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath">
@@ -82,14 +82,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top">
+			<td>
 				<asp:CheckBox ID="chkFixBodies" runat="server" Checked="true" />
 				Uncheck this box if you want the content bodies to remain in their original format, otherwise paragraph and line break tags will be added.
 			</td>
-			<td valign="top">
+			<td>
 				&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				&nbsp;
 			</td>
 		</tr>
@@ -106,20 +106,20 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td valign="top" class="tablecaption" style="width: 175px;">
+				<td class="tablecaption" style="width: 175px;">
 					Exported from WP Version
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litImportSource" runat="server" /><br />
 					wxr:
 					<asp:Literal ID="litWXR" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					Export Date
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litDate" runat="server" />
 				</td>
 			</tr>
@@ -129,18 +129,18 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					Site Name
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litName" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					Site Description
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litDescription" runat="server" />
 				</td>
 			</tr>
@@ -155,14 +155,14 @@
 		</legend>
 		<table>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					template:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePage" runat="server">
 					</asp:DropDownList>
 				</td>
-				<td valign="top">
+				<td>
 				</td>
 			</tr>
 		</table>
@@ -170,14 +170,13 @@
 			<asp:Label ID="lblPages" runat="server" Text="Label"></asp:Label>
 			records
 		</p>
-		<div id="SortableGrid">
+		<div class="SortableGrid">
 			<carrot:CarrotGridView CssClass="datatable" DefaultSort="PostOrder ASC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 				<Columns>
 					<asp:BoundField DataField="PostOrder" HeaderText="Order" />
 					<asp:BoundField DataField="ImportFileName" HeaderText="File Name" />
 					<asp:BoundField DataField="PostTitle" HeaderText="Post Title" />
-					<%--<asp:BoundField DataField="PostType" HeaderText="Post Type" />--%>
 					<asp:BoundField DataField="PostDateUTC" HeaderText="Created On" DataFormatString="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsPublished" HeaderText="Published" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
 						ShowBooleanImage="true" />
@@ -194,14 +193,14 @@
 		</legend>
 		<table>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					template:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePost" runat="server">
 					</asp:DropDownList>
 				</td>
-				<td valign="top">
+				<td>
 				</td>
 			</tr>
 		</table>
@@ -209,13 +208,12 @@
 			<asp:Label ID="lblPosts" runat="server" Text="Label"></asp:Label>
 			records
 		</p>
-		<div id="SortableGrid">
-			<carrot:CarrotGridView CssClass="datatable" DefaultSort="PostDateUTC ASC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+		<div class="SortableGrid">
+			<carrot:CarrotGridView CssClass="datatable" DefaultSort="PostDateUTC DESC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 				<Columns>
 					<asp:BoundField DataField="ImportFileName" HeaderText="File Name" />
 					<asp:BoundField DataField="PostTitle" HeaderText="Post Title" />
-					<%--<asp:BoundField DataField="PostType" HeaderText="Post Type" />--%>
 					<asp:BoundField DataField="PostDateUTC" HeaderText="Created On" DataFormatString="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsPublished" HeaderText="Published" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
 						ShowBooleanImage="true" />

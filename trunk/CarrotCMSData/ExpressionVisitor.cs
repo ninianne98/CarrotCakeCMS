@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 
 /*
  * Terry Aney
- http://www.aneyfamily.com/terryandann/post/2008/12/Ive-Left-Query-Analyzer-Hell-For-LINQPad-Heaven.aspx
  http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx
 */
 
