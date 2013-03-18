@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -69,8 +70,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				lstContent = pageHelper.GetPagedSortedContent(SiteID, ContentPageType.PageType.BlogEntry, false, iPageSize, iPgNbr, sSort);
 			}
 
-			pagedDataGrid.DataSource = lstContent;
-			pagedDataGrid.DataBind();
+			GeneralUtilities.BindDataBoundControl(pagedDataGrid, lstContent);
 
 		}
 

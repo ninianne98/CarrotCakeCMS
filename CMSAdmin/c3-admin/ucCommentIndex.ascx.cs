@@ -55,16 +55,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			int iPgNbr = pagedDataGrid.PageNumber - 1;
 			int iPageSize = pagedDataGrid.PageSize;
 
-			List<PostComment> comments = new List<PostComment>();
+			List<PostComment> lstComments = new List<PostComment>();
 
 			if (guidRootContentID == Guid.Empty) {
-				comments = PostComment.GetCommentsBySitePageNumber(SiteData.CurrentSiteID, iPgNbr, iPageSize, sSort, pageType);
+				lstComments = PostComment.GetCommentsBySitePageNumber(SiteData.CurrentSiteID, iPgNbr, iPageSize, sSort, pageType);
 			} else {
-				comments = PostComment.GetCommentsByContentPageNumber(guidRootContentID, iPgNbr, iPageSize, sSort, false);
+				lstComments = PostComment.GetCommentsByContentPageNumber(guidRootContentID, iPgNbr, iPageSize, sSort, false);
 			}
 
-			pagedDataGrid.DataSource = comments;
-			pagedDataGrid.DataBind();
+			GeneralUtilities.BindDataBoundControl(pagedDataGrid, lstComments);
 
 		}
 

@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Logon" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="Logon.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.Logon" %>
 
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
@@ -9,18 +10,19 @@
 				<div style="text-align: left;">
 					<table style="width: 300px;">
 						<tr>
-							<td class="tableback">
+							<td>
 								<div style="height: 25px; width: 50px; border: 1px solid #ffffff;">
 								</div>
 							</td>
-							<td class="tableback">
+							<td>
 								&nbsp;
 							</td>
-							<td class="tableback">
-								&nbsp;<b class="caption">username</b>&nbsp;<br />
-								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" />
+							<td>
+								&nbsp;<b class="caption">username</b>
+								<br />
+								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" TabIndex="1" />
 							</td>
-							<td class="tableback" rowspan="2">
+							<td rowspan="2">
 								<div style="height: 50px; width: 75px; text-align: right; border: 1px solid #ffffff;">
 									<a href="/">
 										<img class="imgNoBorder" src="/c3-admin/images/house_go.png" alt="Homepage" title="Homepage" /></a>
@@ -28,31 +30,34 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="tableback">
-								<div style="height: 25px; width: 25px; border: 1px solid #ffffff;">
+							<td>
+								<div style="height: 25px; width: 10px; border: 1px solid #ffffff;">
 								</div>
 							</td>
-							<td class="tableback">
+							<td>
 								&nbsp;
 							</td>
-							<td class="tableback">
+							<td>
 								<br />
-								&nbsp;<b class="caption">password</b>&nbsp;<br />
-								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" />
+								&nbsp;<b class="caption">password</b>
+								<br />
+								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" TabIndex="2" />
 							</td>
 						</tr>
 						<tr>
-							<td class="tableback">
-								<div style="height: 25px; width: 25px; border: 1px solid #ffffff;">
+							<td>
+								<div style="height: 25px; width: 10px; border: 1px solid #ffffff;">
 								</div>
 							</td>
-							<td class="tableback">
+							<td>
 								&nbsp;
 							</td>
-							<td class="tableback">
-								<asp:Button ID="cmdLogon" runat="server" Text="Logon" CommandName="Login" OnClick="cmdLogon_Click" ValidationGroup="loginTemplate" />
+							<td>
+								<div style="float: right; clear: both; margin-right: 10px;">
+									<asp:Button ID="cmdLogon" runat="server" Text="Logon" CommandName="Login" OnClick="cmdLogon_Click" ValidationGroup="loginTemplate" TabIndex="3" />
+								</div>
 							</td>
-							<td class="tableback">
+							<td>
 								&nbsp;
 							</td>
 						</tr>
@@ -68,7 +73,7 @@
 						</div>
 						<div>
 							<p>
-								<a href="ForgotPassword.aspx">Forgot Password?</a>
+								<a runat="server" id="lnkForgot" href="#">Forgot Password?</a>
 							</p>
 						</div>
 					</div>

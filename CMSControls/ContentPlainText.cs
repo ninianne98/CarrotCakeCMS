@@ -57,6 +57,8 @@ namespace Carrotware.CMS.UI.Controls {
 		#endregion
 
 		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
+
 			RenderContents(writer);
 		}
 

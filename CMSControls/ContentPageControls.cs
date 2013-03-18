@@ -76,9 +76,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void Render(HtmlTextWriter output) {
+		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
-			base.Render(output);
+			base.Render(writer);
 
 		}
 
@@ -192,6 +193,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void Render(HtmlTextWriter output) {
+			this.EnsureChildControls();
 
 			base.Render(output);
 
@@ -289,7 +291,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private ControlUtilities cu = new ControlUtilities();
 
-		protected override void Render(HtmlTextWriter w) {
+		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
 			ContentPage cp = cu.GetContainerContentPage(this);
 
@@ -297,7 +300,6 @@ namespace Carrotware.CMS.UI.Controls {
 				SetFileInfo(cp);
 			}
 
-			base.Render(w);
 		}
 
 		private void SetFileInfo(ContentPage cp) {
@@ -397,9 +399,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void Render(HtmlTextWriter output) {
+		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
-			base.Render(output);
+			base.Render(writer);
 
 		}
 

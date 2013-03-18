@@ -1,8 +1,23 @@
 ﻿<%@ Control Language="C#" %>
 <div id="cms_{ZONE_ID}" class="cmsContentContainer">
-	<div class="cmsContentContainerTitle">
-		<a title="Edit {ZONE_ID}" id="cmsContentAreaLink_{ZONE_ID}" class="cmsContentContainerInnerTitle" href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','html'); ">
-			Edit {ZONE_TYPE} ({ZONE_ID})<span class="cmsWidgetBarIconPencil2"></span></a>
+	<div class="cmsContentContainerTitle" id="cmsContentContainerHead">
+		<div id="cmsEditMenuList">
+			<div id="cmsEditMenuList-inner">
+				<ul class="cmsMnuParent">
+					<li class="cmsWidgetCogIcon"><a title="" alt="Modify" class="cmsWidgetBarLink cmsWidgetBarIconCog" id="cmsWidgetBarIcon" href="javascript:void(0);">M</a>
+						<ul class="cmsMnuChildren">
+							<li runat="server" id="cmsContentAreaLink1_{ZONE_ID}"><a title="Edit HTML" alt="Edit HTML" class="cmsWidgetBarLink cmsWidgetBarIconPencil2" id="cmsContentEditLink1"
+								href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','html'); ">Edit HTML</a></li>
+							<li runat="server" id="cmsContentAreaLink2_{ZONE_ID}"><a title="Edit Text" alt="Edit Text" class="cmsWidgetBarLink cmsWidgetBarIconPencil2" id="cmsContentEditLink2"
+								href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','plain'); ">Edit Text </a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="cmsContentEditTitle" class="cmsContentContainerTitleText">
+			{ZONE_TYPE} ({ZONE_ID})
+		</div>
 	</div>
 	<div class="cmsWidgetControl" id="cmsAdmin_{ZONE_ID}">
 		<div>

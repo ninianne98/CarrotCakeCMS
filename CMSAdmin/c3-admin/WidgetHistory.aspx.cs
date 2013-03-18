@@ -78,15 +78,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnRemove_Click(object sender, EventArgs e) {
-			List<Guid> lstDel = new List<Guid>();
-			foreach (GridViewRow dgItem in gvPages.Rows) {
-				CheckBox chkContent = (CheckBox)dgItem.FindControl("chkContent");
-				if (chkContent != null) {
-					if (chkContent.Checked) {
-						lstDel.Add(new Guid(chkContent.Attributes["value"].ToString()));
-					}
-				}
-			}
+			List<Guid> lstDel = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, true, "chkContent");
 
 			widgetHelper.RemoveVersions(lstDel);
 

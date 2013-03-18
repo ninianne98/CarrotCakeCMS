@@ -118,7 +118,8 @@ namespace Carrotware.CMS.UI.Controls {
 			return userControl;
 		}
 
-		protected override void Render(HtmlTextWriter w) {
+		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
 			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
 
@@ -161,7 +162,7 @@ namespace Carrotware.CMS.UI.Controls {
 				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
 			}
 
-			ctrl.RenderControl(w);
+			ctrl.RenderControl(writer);
 
 		}
 

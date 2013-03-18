@@ -11,14 +11,41 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
     
     
     public partial class ucCommentIndex {
-
-		/// <summary>
-		/// pagedDataGrid control.
-		/// </summary>
-		/// <remarks>
-		/// Auto-generated field.
-		/// To modify move field declaration from designer file to code-behind file.
-		/// </remarks>
-		protected global::Carrotware.CMS.UI.Controls.CarrotGridPaged pagedDataGrid;
+        
+        /// <summary>
+        /// pagedDataGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Controls.CarrotGridPaged pagedDataGrid;
+        
+        /// <summary>
+        /// TheGrid1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TheGrid1;
+        
+        /// <summary>
+        /// lnkEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkEdit;
+        
+        /// <summary>
+        /// lnkEdit4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkEdit4;
     }
 }

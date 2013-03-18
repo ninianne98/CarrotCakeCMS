@@ -452,9 +452,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void Render(HtmlTextWriter output) {
+		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
-			base.Render(output);
+			base.Render(writer);
 
 		}
 
@@ -620,10 +621,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void Render(HtmlTextWriter output) {
+		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
-			output.Write(this.Text);
-
+			writer.Write(this.Text);
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
@@ -1150,10 +1151,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void Render(HtmlTextWriter output) {
+		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
-			output.Write(this.Text);
-
+			writer.Write(this.Text);
 		}
 
 		protected override void OnDataBinding(EventArgs e) {

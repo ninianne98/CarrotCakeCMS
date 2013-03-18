@@ -4,9 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class PageHistory : AdminBasePage {
@@ -97,15 +106,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnRemove_Click(object sender, EventArgs e) {
-			List<Guid> lstDel = new List<Guid>();
-			foreach (GridViewRow dgItem in gvPages.Rows) {
-				CheckBox chkContent = (CheckBox)dgItem.FindControl("chkContent");
-				if (chkContent != null) {
-					if (chkContent.Checked) {
-						lstDel.Add(new Guid(chkContent.Attributes["value"].ToString()));
-					}
-				}
-			}
+
+			List<Guid> lstDel = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, true, "chkContent");
 
 			pageHelper.RemoveVersions(SiteID, lstDel);
 

@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ContentRichText runat=server></{0}:ContentRichText>")]
-	public class ContentRichText : WebControl, IWidget, IWidgetRawData, ITextControl {
+	public class ContentRichText : WebControl, IWidget, IWidgetMultiMenu, IWidgetRawData, ITextControl {
 
 		public string Text {
 			get {
@@ -44,12 +44,26 @@ namespace Carrotware.CMS.UI.Controls {
 		public Guid SiteID { get; set; }
 
 		public string JSEditFunction {
-			get { return "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'html');"; }
+			get { return null; }
 		}
 
 		public bool EnableEdit { get { return true; } }
 
 		#endregion
+
+		#region IWidgetMultiMenu Members
+
+		public Dictionary<string, string> JSEditFunctions {
+			get {
+				Dictionary<string, string> lst = new Dictionary<string, string>();
+				lst.Add("Edit HTML", "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'html');");
+				lst.Add("Edit Text", "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'plain');");
+				return lst;
+			}
+		}
+
+		#endregion
+
 		#region IWidgetRawData Members
 
 		public string RawWidgetData { get; set; }
@@ -57,6 +71,8 @@ namespace Carrotware.CMS.UI.Controls {
 		#endregion
 
 		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
+
 			RenderContents(writer);
 		}
 

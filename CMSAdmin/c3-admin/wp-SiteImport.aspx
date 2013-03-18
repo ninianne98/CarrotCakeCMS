@@ -173,6 +173,11 @@
 		<div class="SortableGrid">
 			<carrot:CarrotGridView CssClass="datatable" DefaultSort="PostOrder ASC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+				<EmptyDataTemplate>
+					<p>
+						<b>No records found.</b>
+					</p>
+				</EmptyDataTemplate>
 				<Columns>
 					<asp:BoundField DataField="PostOrder" HeaderText="Order" />
 					<asp:BoundField DataField="ImportFileName" HeaderText="File Name" />
@@ -211,6 +216,11 @@
 		<div class="SortableGrid">
 			<carrot:CarrotGridView CssClass="datatable" DefaultSort="PostDateUTC DESC" ID="gvPosts" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+				<EmptyDataTemplate>
+					<p>
+						<b>No records found.</b>
+					</p>
+				</EmptyDataTemplate>
 				<Columns>
 					<asp:BoundField DataField="ImportFileName" HeaderText="File Name" />
 					<asp:BoundField DataField="PostTitle" HeaderText="Post Title" />

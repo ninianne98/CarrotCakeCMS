@@ -380,6 +380,9 @@ p.cmsToolItem {
 	cursor: pointer !important;
 	background-image: none !important;
 	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
+	line-height: 150% !important;
+	margin-top: 1px !important;
+	margin-bottom: 1px !important;
 }
 
 #cmsEditMenuList-inner ul.cmsMnuParent li a:hover, #cmsEditMenuList-inner ul.cmsMnuParent li.selected a {
@@ -391,10 +394,11 @@ p.cmsToolItem {
 }
 
 #cmsEditMenuList-inner li .cmsMnuChildren {
-	padding-left: 10px !important;
-	margin-top: 10px !important;
+	margin: 0;
+	padding: 0;
+	margin-top: 5px !important;
 	margin-bottom: 10px !important;
-	width: 100px !important;
+	width: 125px !important;
 	list-style-type: none !important;
 	display: none !important;
 	clear: both !important;
@@ -405,27 +409,31 @@ p.cmsToolItem {
 	background-image: none !important;
 	border-color: #000000 !important;
 	padding: 5px !important;
+	margin-left: -10px !important;
 }
 
 #cmsEditMenuList-inner li:hover .cmsMnuChildren {
+	margin: 0;
+	padding: 0;
 	background: #DFF6E8 !important;
 	color: #676F6A !important;
-	width: 100px !important;
+	width: 125px !important;
 	list-style-type: none !important;
 	padding-left: 10px !important;
-	margin-top: 10px !important;
+	margin-top: 5px !important;
 	margin-bottom: 10px !important;
 	display: block !important;
 	position: absolute !important;
 	text-align: left !important;
 	float: left !important;
-	z-index: 6000 !important;
+	z-index: 8000 !important;
 	font-weight: bold !important;
 	border-color: #000000 !important;
+	margin-left: -25px !important;
 }
 
 #cmsEditMenuList-inner li:hover .cmsMnuChildren li a {
-	width: 100px !important;
+	width: 125px !important;
 	float: left !important;
 	text-decoration: none !important;
 	text-align: left !important;
@@ -438,12 +446,12 @@ p.cmsToolItem {
 	background-image: none !important;
 }
 
-#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsWidgetControlTitle img, .cmsContentContainerTitle img, .cmsWidgetTitleBar img {
+#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsWidgetControlTitle img, .cmsContentContainerTitle img, .cmsWidgetTitleBar img, #cmsContentContainerHead img {
 	background: transparent !important;
 }
 
 
-#cmsEditMenuList ul > li:before, .cmsWidgetCogIcon ul > li:before, .cmsWidgetCogIcon {
+#cmsEditMenuList ul > li:before, .cmsWidgetCogIcon ul > li:before, .cmsWidgetCogIcon, #cmsContentContainerHead ul > li:before {
 	bottom: auto;
 	top: auto;
 	margin: 0;
@@ -481,24 +489,57 @@ p.cmsToolItem {
 	float: right !important;
 }
 
-.cmsWidgetControlTitle, .cmsContentContainerTitle {
+.cmsWidgetControlTitle, .cmsContentContainerTitle, .cmsContentContainerTitleText {
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
-.cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren {
+#cmsWidgetTargetZone #cmsEditMenuList-inner li:hover .cmsMnuChildren {
 	background: #8DC0A3 !important;
 }
 
-.cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner ul, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner li, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a, .cmsWidgetTargetOuterControl .cmsWidgetControlTitle #cmsEditMenuList-inner a:hover {
+#cmsWidgetTargetZone #cmsEditMenuList-inner ul, #cmsWidgetTargetZone #cmsEditMenuList-inner li, #cmsWidgetTargetZone #cmsEditMenuList-inner a, #cmsWidgetTargetZone #cmsEditMenuList-inner a:hover {
 	color: #ffffff !important;
 }
+
+
+#cmsContentContainerHead {
+	margin: 0;
+	padding: 0;
+	padding-right: 5px;
+	clear: none;
+}
+
+#cmsContentEditTitle {
+	margin: 0;
+	padding: 0;
+	clear: none;
+	float: right !important;
+	padding-right: 5px !important;
+	color: #ffffff !important;
+	background: #478C5F !important;
+}
+#cmsContentContainerHead #cmsEditMenuList {
+	margin: 0;
+	padding: 0;
+	clear: none;
+	float: right !important;
+}
+
+#cmsContentContainerHead #cmsEditMenuList-inner li:hover .cmsMnuChildren {
+	background: #478C5F !important;
+}
+
+#cmsContentContainerHead #cmsEditMenuList-inner ul, #cmsContentContainerHead #cmsEditMenuList-inner li, #cmsContentContainerHead #cmsEditMenuList-inner a, #cmsContentContainerHead #cmsEditMenuList-inner a:hover {
+	color: #ffffff !important;
+}
+
 
 /*  Widget Styles   */
 
 .cmsContentContainerTitle, .cmsWidgetControlTitle, .cmsWidgetTitleBar, .cmsWidgetTargetOuterControl #cmsControl.cmsWidgetToolboxItem p.cmsToolItem {
-	text-shadow: 0 0 0 transparent !important;
 	margin: 0;
 	padding: 0;
+	text-shadow: 0 0 0 transparent !important;
 	font-size: 12px !important;
 	line-height: normal !important;
 	font-weight: bold !important;
@@ -511,7 +552,7 @@ p.cmsToolItem {
 	border: 1px solid #c0c0c0 !important;
 }
 
-.cmsContentContainerTitle, .cmsContentContainerTitle a {
+.cmsContentContainerTitle, .cmsContentContainerTitle a, .cmsContentContainerTitleText {
 	text-shadow: 0 0 0 transparent !important;
 	text-align: right !important;
 	color: #FFFFFF !important;

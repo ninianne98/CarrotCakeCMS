@@ -6,6 +6,11 @@
 	<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="20">
 		<TheGrid ID="TheGrid1" runat="server" CssClass="datatable" DefaultSort="CreateDate desc" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
 			RowStyle-CssClass="rowregular">
+			<EmptyDataTemplate>
+				<p>
+					<b>No comments found.</b>
+				</p>
+			</EmptyDataTemplate>
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>

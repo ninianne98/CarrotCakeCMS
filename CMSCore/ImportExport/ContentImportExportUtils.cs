@@ -107,18 +107,16 @@ namespace Carrotware.CMS.Core {
 				cont.ContentCategories = new List<ContentCategory>();
 				cont.ContentTags = new List<ContentTag>();
 
-				foreach (string t in c.Categories) {
-					ContentCategory e = site.GetCategoryList().Where(x => x.CategorySlug.ToLower() == t.ToLower()).FirstOrDefault();
-					if (e != null) {
-						cont.ContentCategories.Add(e);
-					}
-				}
-				foreach (string t in c.Tags) {
-					ContentTag e = site.GetTagList().Where(x => x.TagSlug.ToLower() == t.ToLower()).FirstOrDefault();
-					if (e != null) {
-						cont.ContentTags.Add(e);
-					}
-				}
+				List<ContentTag> lstTags = site.GetTagList();
+				List<ContentCategory> lstCategories = site.GetCategoryList();
+
+				cont.ContentCategories = (from l in lstCategories
+										  join o in c.Categories on l.CategorySlug.ToLower() equals o.ToLower()
+										  select l).Distinct().ToList();
+
+				cont.ContentTags = (from l in lstTags
+									join o in c.Tags on l.TagSlug.ToLower() equals o.ToLower()
+									select l).Distinct().ToList();
 			}
 
 			return cont;

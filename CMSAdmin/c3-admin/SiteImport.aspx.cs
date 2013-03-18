@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -25,9 +26,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		List<BasicContentData> sitePageList = new List<BasicContentData>();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(Request.QueryString["importid"])) {
-				guidImportID = new Guid(Request.QueryString["importid"].ToString());
-			}
+			guidImportID = GetGuidParameterFromQuery("importid");
 
 			litMessage.Text = "";
 
@@ -87,6 +86,26 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
+			try {
+				ImportStuff();
+			} catch (Exception ex) {
+				litMessage.Text += ex.ToString();
+			}
+		}
+
+
+		private Guid FindUser(Guid userId) {
+			MembershipUser usr = SecurityData.GetUserByGuid(userId);
+
+			if (usr == null) {
+				return SecurityData.CurrentUserGuid;
+			} else {
+				return userId;
+			}
+		}
+
+		private void ImportStuff() {
+
 			SiteData.CurrentSite = null;
 
 			SiteData site = SiteData.CurrentSite;
@@ -107,6 +126,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										   select new ContentTag {
 											   ContentTagID = Guid.NewGuid(),
 											   SiteID = site.SiteID,
+											   IsPublic = l.IsPublic,
 											   TagSlug = l.TagSlug,
 											   TagText = l.TagText
 										   }).ToList();
@@ -115,6 +135,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 												select new ContentCategory {
 													ContentCategoryID = Guid.NewGuid(),
 													SiteID = site.SiteID,
+													IsPublic = l.IsPublic,
 													CategorySlug = l.CategorySlug,
 													CategoryText = l.CategoryText
 												}).ToList();
@@ -159,6 +180,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.ContentType = ContentPageType.PageType.ContentEntry;
 					cp.EditDate = SiteData.CurrentSite.Now;
 					cp.EditUserId = SecurityData.CurrentUserGuid;
+					cp.CreateUserId = FindUser(impCP.ThePage.CreateUserId);
 					cp.NavOrder = iOrder;
 					cp.TemplateFile = ddlTemplatePage.SelectedValue;
 
@@ -209,6 +231,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litMessage.Text += "<p>Imported Posts</p>";
 				sitePageList = site.GetFullSiteFileList();
 
+				List<ContentTag> lstTags = site.GetTagList();
+				List<ContentCategory> lstCategories = site.GetCategoryList();
+
 				foreach (var impCP in (from c in exSite.ThePages
 									   where c.ThePage.ContentType == ContentPageType.PageType.BlogEntry
 									   orderby c.ThePage.CreateDate
@@ -222,8 +247,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.ContentType = ContentPageType.PageType.BlogEntry;
 					cp.EditDate = SiteData.CurrentSite.Now;
 					cp.EditUserId = SecurityData.CurrentUserGuid;
+					cp.CreateUserId = FindUser(impCP.ThePage.CreateUserId);
 					cp.NavOrder = 10;
 					cp.TemplateFile = ddlTemplatePost.SelectedValue;
+
+					cp.ContentCategories = (from l in lstCategories
+											join o in impCP.ThePage.ContentCategories on l.CategorySlug equals o.CategorySlug
+											select l).Distinct().ToList();
+
+					cp.ContentTags = (from l in lstTags
+									  join o in impCP.ThePage.ContentTags on l.TagSlug equals o.TagSlug
+									  select l).Distinct().ToList();
 
 					BasicContentData navData = GetFileInfoFromList(site, cp.FileName);
 

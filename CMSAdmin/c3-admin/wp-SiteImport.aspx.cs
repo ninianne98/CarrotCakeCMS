@@ -26,9 +26,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private int iPageCount = 0;
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(Request.QueryString["importid"])) {
-				guidImportID = new Guid(Request.QueryString["importid"].ToString());
-			}
+			guidImportID = GetGuidParameterFromQuery("importid");
 
 			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
 

@@ -25,11 +25,18 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return ((HtmlGenericControl)loginTemplate.FindControl("divMsg"));
 			}
 		}
+		protected HtmlAnchor lnkForgot {
+			get {
+				return ((HtmlAnchor)loginTemplate.FindControl("lnkForgot"));
+			}
+		}
 
 		protected void Page_Load(object sender, EventArgs e) {
 
 			DatabaseUpdate du = new DatabaseUpdate();
 			divMsg.Visible = false;
+
+			lnkForgot.HRef = SiteFilename.ForgotPasswordURL;
 
 			if (DatabaseUpdate.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist) {
 				FormsAuthentication.SignOut();

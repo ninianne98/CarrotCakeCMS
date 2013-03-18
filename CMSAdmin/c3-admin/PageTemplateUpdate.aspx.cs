@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
@@ -51,18 +51,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
-			List<Guid> lstUpd = new List<Guid>();
 
-			foreach (GridViewRow row in gvPages.Rows) {
-				var chkReMap = (CheckBox)row.FindControl("chkReMap");
-
-				if (chkReMap.Checked) {
-					var hdnContentID = (HiddenField)row.FindControl("hdnContentID");
-					Guid gRoot = new Guid(hdnContentID.Value);
-
-					lstUpd.Add(gRoot);
-				}
-			}
+			List<Guid> lstUpd = GeneralUtilities.GetCheckedItemGuids(gvPages, true, "chkReMap", "hdnContentID");
 
 			pageHelper.BulkUpdateTemplate(SiteData.CurrentSiteID, lstUpd, ddlTemplate.SelectedValue);
 

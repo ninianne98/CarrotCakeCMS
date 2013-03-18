@@ -89,7 +89,7 @@
 					</asp:TemplateField>
 					<asp:TemplateField>
 						<ItemTemplate>
-							<asp:CheckBox runat="server" ID="chkContent" value='<%#  String.Format("{0}", Eval("ContentID")) %>' />
+							<asp:CheckBox runat="server" ID="chkContent" value='<%# Eval("ContentID") %>' />
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField>

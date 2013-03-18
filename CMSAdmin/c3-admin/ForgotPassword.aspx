@@ -12,7 +12,7 @@
 			</td>
 			<td class="tableback">
 				<b class="caption">email address</b>&nbsp;<br />
-				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate" />
+				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate" TabIndex="1" />
 			</td>
 			<td class="tableback">
 				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">
@@ -26,9 +26,9 @@
 			</td>
 			<td class="tableback" align="right">
 				<br />
-				<asp:Button ID="cmdCancel" runat="server" OnClick="cmdCancel_Click" Text="Cancel" />
+				<asp:Button ID="cmdCancel" runat="server" OnClick="cmdCancel_Click" Text="Cancel" TabIndex="2" />
 				&nbsp;
-				<asp:Button ID="cmdReset" runat="server" Text="Reset" CommandName="Login" OnClick="cmdReset_Click" ValidationGroup="loginTemplate" />
+				<asp:Button ID="cmdReset" runat="server" Text="Reset" CommandName="Login" OnClick="cmdReset_Click" ValidationGroup="loginTemplate" TabIndex="3" />
 			</td>
 			<td class="tableback" align="right">
 				&nbsp;

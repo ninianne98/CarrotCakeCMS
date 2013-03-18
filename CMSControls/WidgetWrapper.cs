@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
@@ -97,25 +98,52 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private Control GetCtrl(string CtrlFile, Control X) {
-			ControlUtilities cu = new ControlUtilities(this);
+		[Category("Appearance")]
+		[DefaultValue("")]
+		public Dictionary<string, string> JSEditFunctions { get; set; }
 
-			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx");
+		private string ScrubCtrl(string sCtrl) {
 
 			sCtrl = sCtrl.Replace("{WIDGET_ID}", this.ClientID);
 			sCtrl = sCtrl.Replace("{WIDGET_KEY}", this.DatabaseKey.ToString());
 			sCtrl = sCtrl.Replace("{WIDGET_ORDER}", this.Order.ToString());
 			sCtrl = sCtrl.Replace("{WIDGET_PATH}", this.ControlPath);
 			sCtrl = sCtrl.Replace("{WIDGET_TITLE}", this.ControlTitle);
+
 			if (!string.IsNullOrEmpty(this.JSEditFunction)) {
 				sCtrl = sCtrl.Replace("{WIDGET_JS}", this.JSEditFunction);
 			}
+
+			return sCtrl;
+		}
+
+
+		private Control GetCtrl(string CtrlFile, Control X) {
+			ControlUtilities cu = new ControlUtilities(this);
+
+			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx");
+
+			sCtrl = ScrubCtrl(sCtrl);
 
 			Control userControl = cu.CreateControlFromString(sCtrl);
 
 			return userControl;
 		}
 
+		private Control GetCtrl(Control X, string MenuText, string MenuFunc) {
+			ControlUtilities cu = new ControlUtilities(this);
+
+			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminWidgetMenuItem.ascx");
+
+			sCtrl = ScrubCtrl(sCtrl);
+
+			sCtrl = sCtrl.Replace("{WIDGET_MENU_TEXT}", MenuText);
+			sCtrl = sCtrl.Replace("{WIDGET_MENU_JS}", MenuFunc);
+
+			Control userControl = cu.CreateControlFromString(sCtrl);
+
+			return userControl;
+		}
 
 		protected Control ctrl1 = new Control();
 		protected Control ctrl2 = new Control();
@@ -127,6 +155,17 @@ namespace Carrotware.CMS.UI.Controls {
 				if (this.IsAdminMode) {
 					ctrl1 = GetCtrl("ucAdminWidget1", this);
 					ctrl2 = GetCtrl("ucAdminWidget2", this);
+
+					if (this.JSEditFunctions != null && this.JSEditFunctions.Count > 0) {
+						ControlUtilities cu = new ControlUtilities();
+
+						PlaceHolder phMenuItems = (PlaceHolder)cu.FindControl("phMenuItems", ctrl1);
+						foreach (KeyValuePair<string, string> f in this.JSEditFunctions) {
+							Control itm = GetCtrl(this, f.Key, f.Value);
+							phMenuItems.Controls.Add(itm);
+						}
+						this.JSEditFunction = null;
+					}
 
 					if (string.IsNullOrEmpty(this.JSEditFunction)) {
 
@@ -147,6 +186,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		protected override void Render(HtmlTextWriter writer) {
+			this.EnsureChildControls();
 
 			ctrl1.RenderControl(writer);
 
