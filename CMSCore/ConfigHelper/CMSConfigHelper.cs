@@ -99,15 +99,30 @@ namespace Carrotware.CMS.Core {
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
-			return CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+			string sPath = "";
+
+			try {
+				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+			} catch { }
+
+			return sPath;
 		}
 
 		public static string GetWebResourceUrl(Control X, Type type, string resource) {
+			string sPath = "";
+
 			if (X != null && X.Page != null) {
-				return X.Page.ClientScript.GetWebResourceUrl(type, resource);
+				sPath = X.Page.ClientScript.GetWebResourceUrl(type, resource);
 			} else {
-				return GetWebResourceUrl(type, resource);
+				sPath = GetWebResourceUrl(type, resource);
 			}
+
+			try {
+				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+			} catch { }
+
+			return sPath;
 		}
 
 		public static string DomainName {

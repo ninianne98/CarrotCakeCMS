@@ -46,18 +46,18 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td valign="top" class="tablecaption" style="width: 200px;">
+				<td class="tablecaption" style="width: 200px;">
 					Exported from CMS Version
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litImportSource" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					Export Date
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litDate" runat="server" />
 				</td>
 			</tr>
@@ -67,18 +67,18 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					Site Name
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litName" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					Site Description
 				</td>
-				<td valign="top">
+				<td>
 					<asp:Literal ID="litDescription" runat="server" />
 				</td>
 			</tr>
@@ -105,14 +105,14 @@
 		</legend>
 		<table>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					template:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePage" runat="server">
 					</asp:DropDownList>
 				</td>
-				<td valign="top">
+				<td>
 				</td>
 			</tr>
 		</table>
@@ -148,14 +148,14 @@
 		</legend>
 		<table>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					template:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePost" runat="server">
 					</asp:DropDownList>
 				</td>
-				<td valign="top">
+				<td>
 				</td>
 			</tr>
 		</table>

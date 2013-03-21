@@ -117,10 +117,10 @@
 		</p>
 		<table style="width: 700px;">
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					title bar:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
@@ -130,10 +130,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					filename:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
 						MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
@@ -144,37 +144,37 @@
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					navigation:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
 						Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					page head:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					meta keywords:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
 						TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td valign="top" class="tablecaption">
+				<td class="tablecaption">
 					meta description:
 				</td>
-				<td valign="top">
+				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>

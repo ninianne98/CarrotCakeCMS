@@ -80,9 +80,9 @@
 		<br />
 	</p>
 	<asp:Panel ID="pnlUsers" runat="server" Visible="false">
-		<table cellspacing="2">
+		<table>
 			<tr>
-				<td valign="top">
+				<td>
 					<br />
 					<div id="SortableGrid" style="width: 350px;">
 						<carrot:CarrotGridView CssClass="datatable" DefaultSort="Email ASC" ID="gvUsers" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
@@ -105,10 +105,10 @@
 						<asp:Button ValidationGroup="removeUsers" ID="btnRemove" runat="server" Text="Remove Selected" OnClick="btnRemove_Click" />
 					</p>
 				</td>
-				<td valign="top">
+				<td>
 					&nbsp;&nbsp;&nbsp;
 				</td>
-				<td valign="top">
+				<td>
 					<div style="width: 375px;">
 						<p>
 							Search for users to add to this group. Search by either username or email address.

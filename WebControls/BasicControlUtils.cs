@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -40,7 +41,10 @@ namespace Carrotware.Web.UI.Controls {
 		public string GetWebResourceUrl(Type type, string resource) {
 			string sPath = "";
 
-			try { sPath = _page.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+			try {
+				sPath = _page.ClientScript.GetWebResourceUrl(type, resource);
+				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+			} catch { }
 
 			return sPath;
 		}
@@ -48,7 +52,10 @@ namespace Carrotware.Web.UI.Controls {
 		public string GetWebResourceUrl(Page page, Type type, string resource) {
 			string sPath = "";
 
-			try { sPath = page.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+			try {
+				sPath = page.ClientScript.GetWebResourceUrl(type, resource);
+				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+			} catch { }
 
 			return sPath;
 		}

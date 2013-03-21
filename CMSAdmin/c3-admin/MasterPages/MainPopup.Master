@@ -9,8 +9,8 @@
 <html lang="en">
 <!--<![endif]-->
 <head id="Head1" runat="server">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
 	<title>MainPopup</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />

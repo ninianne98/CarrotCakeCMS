@@ -2,7 +2,7 @@
 <table width="95%">
 	<tr>
 		<asp:Panel ID="pnlNav" runat="server">
-			<td valign="top" style="width: 275px;">
+			<td style="width: 275px;">
 				<div style="width: 250px; padding-right: 25px;">
 					<div id="jqaccordion">
 						<asp:Repeater ID="rpModuleList" runat="server" OnItemDataBound="rpModuleList_ItemDataBound">
@@ -27,7 +27,7 @@
 				</div>
 			</td>
 		</asp:Panel>
-		<td valign="top">
+		<td>
 			<asp:PlaceHolder ID="phAdminModule" runat="server"></asp:PlaceHolder>
 		</td>
 	</tr>

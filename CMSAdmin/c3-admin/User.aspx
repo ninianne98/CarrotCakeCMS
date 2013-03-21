@@ -7,7 +7,7 @@
 	User Edit
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<table cellspacing="2">
+	<table>
 		<tr>
 			<td>
 				<b class="caption">
@@ -65,9 +65,9 @@
 		</tr>
 	</table>
 	<br />
-	<table cellspacing="2">
+	<table>
 		<tr>
-			<td valign="top">
+			<td>
 				<div id="SortableGrid" style="width: 300px;">
 					<carrot:CarrotGridView CssClass="datatable" DefaultSort="RoleName ASC" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
@@ -83,10 +83,10 @@
 					</carrot:CarrotGridView>
 				</div>
 			</td>
-			<td valign="top">
+			<td>
 				&nbsp;&nbsp;&nbsp;
 			</td>
-			<td valign="top">
+			<td>
 				<div id="SortableGrid" style="width: 400px;">
 					<carrot:CarrotGridView CssClass="datatable" DefaultSort="SiteName ASC" ID="gvSites" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">

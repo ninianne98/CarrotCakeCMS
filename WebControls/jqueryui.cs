@@ -60,8 +60,8 @@ namespace Carrotware.Web.UI.Controls {
 					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-7-3.js");
 					break;
 				default:
-					jqVer = "1.10.0";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-10-0.js");
+					jqVer = "1.10.2";
+					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-10-2.js");
 					break;
 			}
 

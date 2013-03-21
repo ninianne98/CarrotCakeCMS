@@ -26,8 +26,8 @@
 <html lang="en">
 <!--<![endif]-->
 <head id="Head1" runat="server">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
 	<script type="text/javascript">
 		$(document).ready(function () {
