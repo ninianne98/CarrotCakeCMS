@@ -505,7 +505,6 @@ p.cmsToolItem {
 #cmsContentContainerHead {
 	margin: 0;
 	padding: 0;
-	padding-right: 5px;
 	clear: none;
 }
 
@@ -514,7 +513,7 @@ p.cmsToolItem {
 	padding: 0;
 	clear: none;
 	float: right !important;
-	padding-right: 5px !important;
+	padding-right: 1px !important;
 	color: #ffffff !important;
 	background: #478C5F !important;
 }

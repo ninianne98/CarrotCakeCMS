@@ -441,6 +441,7 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".mpa", "audio/mpeg");
 					_dict.Add(".mpeg", "video/mpeg");
 					_dict.Add(".mpg", "video/mpeg");
+					_dict.Add(".mp4", "video/mp4");
 					_dict.Add(".mpga", "audio/mpeg");
 					_dict.Add(".mpp", "application/vnd.ms-project");
 					_dict.Add(".mpt", "application/x-project");
@@ -451,6 +452,9 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".mv", "video/x-sgi-movie");
 					_dict.Add(".my", "audio/make");
 					_dict.Add(".o", "application/octet-stream");
+					_dict.Add(".oga", "audio/ogg");
+					_dict.Add(".ogg", "video/ogg");
+					_dict.Add(".ogv", "video/ogg");
 					_dict.Add(".p", "text/x-pascal");
 					_dict.Add(".pas", "text/pascal");
 					_dict.Add(".pbm", "image/x-portable-bitmap");

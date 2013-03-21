@@ -20,7 +20,7 @@
 			setTimeout("cmsLoadJQDyn();", 2000);
 
 			var jq2URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jquery183.js")%>';
-			var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-0.js")%>';
+			var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js")%>';
 
 			cmsSetJQueryURL(jq2URL, jq1URL);
 

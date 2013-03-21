@@ -1,12 +1,13 @@
 ﻿body {
 	background-color: #FFFFFF;
 	text-align: left;
-	font-size: 11px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-family: Lucida Grande, Lucida Sans Arial, Arial, sans-serif;
 }
 
 .headerRow {
-	background-color: #F74902;
+	background-color: #97AC88;
+	color: #FFFFFF;
 }
 
 .headerRowText {
@@ -91,3 +92,33 @@ th {
 	text-align: left;
 }
 
+/* table resets */
+
+
+/* cellpadding */
+th, td {
+	padding: 2px;
+}
+
+/* cellspacing */
+table {
+	border-collapse: separate;
+	border-spacing: 2px;
+}
+/*  cellspacing="5" */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*  cellspacing="0" */
+
+/* valign */
+th, td {
+	vertical-align: top;
+}
+
+/* align (center) */
+table.centered {
+	margin: 0 auto;
+}

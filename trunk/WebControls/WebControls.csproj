@@ -246,10 +246,10 @@
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_f9cecd_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-soft_25_fbf9ee_1x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="jqueryui-1-10-0.js" />
     <EmbeddedResource Include="jquery183.js" />
     <EmbeddedResource Include="jquery-110mig.js" />
     <EmbeddedResource Include="jquery191.js" />
+    <EmbeddedResource Include="jqueryui-1-10-2.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

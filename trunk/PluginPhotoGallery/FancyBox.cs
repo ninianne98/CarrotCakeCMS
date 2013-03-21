@@ -19,27 +19,21 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 
-			string sJQFile = "";
+			if (HttpContext.Current != null) {
+				string sJQFile = "";
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.fancybox.css");
-			output.Write("<link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
+				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.fancybox.css");
+				output.Write("<link href=\"" + HttpContext.Current.Server.HtmlEncode(sJQFile) + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.fancybox-p.js");
-			output.Write("<script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
+				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.fancybox-p.js");
+				output.Write("<script src=\"" + HttpContext.Current.Server.HtmlEncode(sJQFile) + "\" type=\"text/javascript\"></script> \r\n");
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.mousewheel-p.js");
-			output.Write("<script src=\"" + sJQFile + "&load=effects,builder\" type=\"text/javascript\"></script> \r\n");
+				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.mousewheel-p.js");
+				output.Write("<script src=\"" + HttpContext.Current.Server.HtmlEncode(sJQFile) + "&load=effects,builder\" type=\"text/javascript\"></script> \r\n");
 
-			sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.easing-p.js");
-			output.Write("<script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
-
-			//sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.scripts.builder.js");
-			//output.Write("<script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
-
-			//sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.scripts.effects.js");
-			//output.Write("<script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> \r\n");
-
-
+				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.fancybox.easing-p.js");
+				output.Write("<script src=\"" + HttpContext.Current.Server.HtmlEncode(sJQFile) + "\" type=\"text/javascript\"></script> \r\n");
+			}
 		}
 
 

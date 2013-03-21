@@ -28,7 +28,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				siteHelper.MapUserToSite(SiteID, userID);
 
-				Response.Redirect("./User.aspx?id=" + userID.ToString());
+				Response.Redirect(string.Format("{0}?id={1}", SiteFilename.UserURL, userID));
 			} catch (Exception ex) {
 			}
 		}

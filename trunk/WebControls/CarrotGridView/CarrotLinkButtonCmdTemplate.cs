@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 /*
@@ -188,7 +189,11 @@ namespace Carrotware.Web.UI.Controls {
 		private void imgBool_DataBinding(object sender, EventArgs e) {
 			Image imgBool = (Image)sender;
 			GridViewRow container = (GridViewRow)imgBool.NamingContainer;
+
 			imgBool.ImageUrl = imgBool.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
+			if (HttpContext.Current != null) {
+				imgBool.ImageUrl = HttpContext.Current.Server.HtmlEncode(imgBool.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png"));
+			}
 
 			try {
 				bool bValue = Convert.ToBoolean(DataBinder.Eval(container, "DataItem." + _field).ToString());

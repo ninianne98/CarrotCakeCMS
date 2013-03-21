@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 /*
@@ -88,9 +89,11 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["ImageURI"];
 				if (string.IsNullOrEmpty(s)) {
-					//s = ControlUtilities.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
 					s = this.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
 				}
+				try {
+					s = HttpContext.Current.Server.HtmlEncode(s);
+				} catch { }
 				return s;
 			}
 			set {

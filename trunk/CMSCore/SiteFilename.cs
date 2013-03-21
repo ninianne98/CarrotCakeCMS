@@ -44,6 +44,19 @@ namespace Carrotware.CMS.Core {
 			get { return SiteData.AdminFolderPath + "default.aspx"; }
 		}
 
+		public static string UserURL {
+			get { return SiteData.AdminFolderPath + "User.aspx"; }
+		}
+		public static string UserMembershipURL {
+			get { return SiteData.AdminFolderPath + "UserMembership.aspx"; }
+		}
+		public static string UserGroupAddEditURL {
+			get { return SiteData.AdminFolderPath + "UserGroupAddEdit.aspx"; }
+		}
+		public static string UserGroupsURL {
+			get { return SiteData.AdminFolderPath + "UserGroups.aspx"; }
+		}
+
 		public static string DataExportURL {
 			get { return SiteData.AdminFolderPath + "PageExport.aspx"; }
 		}

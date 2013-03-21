@@ -1,7 +1,12 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FileBrowser.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.FileBrowser" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
 <head id="Head1" runat="server">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
@@ -126,7 +131,7 @@
 		<div class="scroll" id="folderZone">
 			<asp:Repeater ID="rpFolders" runat="server">
 				<HeaderTemplate>
-					<table cellpadding="2" cellspacing="0" width="98%">
+					<table width="98%">
 				</HeaderTemplate>
 				<ItemTemplate>
 					<tr>
@@ -159,21 +164,21 @@
 		<div class="scroll" id="fileZone">
 			<asp:Repeater ID="rpFiles" runat="server">
 				<HeaderTemplate>
-					<table cellpadding="2" cellspacing="0" style="width: 98%;">
+					<table style="width: 98%;">
 						<tr class="headerRow">
-							<th width="20">
+							<th style="width: 20px;">
 							</th>
-							<th width="20">
+							<th style="width: 20px;">
 							</th>
 							<th class="headerRowText">
 								Filename
 							</th>
-							<th width="150" class="headerRowText">
+							<th style="width: 150px;" class="headerRowText">
 								Date
 							</th>
 							<th>
 							</th>
-							<th width="80" class="headerRowText">
+							<th style="width: 80px;" class="headerRowText">
 								Size
 							</th>
 						</tr>

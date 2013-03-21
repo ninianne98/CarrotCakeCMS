@@ -88,6 +88,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.EditDate = SiteData.CurrentSite.Now;
 			pageContents.NavOrder = iOrder;
 			pageContents.PageActive = false;
+			pageContents.ShowInSiteMap = true;
+			pageContents.ShowInSiteNav = true;
 			pageContents.ContentType = ContentPageType.PageType.ContentEntry;
 
 			pageContents.RetireDate = dtSite.AddYears(200);

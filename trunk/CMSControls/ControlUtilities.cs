@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -72,6 +73,10 @@ namespace Carrotware.CMS.UI.Controls {
 				try { sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
 			}
 
+			try {
+				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+			} catch { }
+
 			return sPath;
 		}
 
@@ -107,7 +112,10 @@ namespace Carrotware.CMS.UI.Controls {
 		public static string GetWebResourceUrl(Type type, string resource) {
 			string sPath = "";
 
-			try { sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+			try {
+				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+			} catch { }
 
 			return sPath;
 		}
