@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Blog Bulk Apply Templates/Skins - Posts" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostTemplateUpdate.aspx.cs"
+﻿<%@ Page Title="Bulk Apply Templates/Skins - Posts" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostTemplateUpdate.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostTemplateUpdate" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -19,7 +19,7 @@
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
-	Bulk Apply Templates/Skins
+	Bulk Apply Templates/Skins - Posts
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>
@@ -95,8 +95,7 @@
 						&nbsp;
 					</HeaderTemplate>
 					<ItemTemplate>
-						<asp:CheckBox ID="chkReMap" runat="server" />
-						<asp:HiddenField ID="hdnContentID" runat="server" Value='<%# Eval("Root_ContentID") %>' />
+						<asp:CheckBox ID="chkSelect" runat="server" value='<%# Eval("Root_ContentID") %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:BoundField HeaderText="Template File" DataField="TemplateFile" />

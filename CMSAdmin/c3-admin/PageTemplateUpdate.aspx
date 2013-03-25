@@ -20,7 +20,7 @@
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
-	Bulk Apply Templates/Skins
+	Bulk Apply Templates/Skins - Pages
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>
@@ -90,8 +90,7 @@
 						&nbsp;
 					</HeaderTemplate>
 					<ItemTemplate>
-						<asp:CheckBox ID="chkReMap" runat="server" />
-						<asp:HiddenField ID="hdnContentID" runat="server" Value='<%# Eval("Root_ContentID") %>' />
+						<asp:CheckBox ID="chkSelect" runat="server" value='<%# Eval("Root_ContentID") %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:BoundField HeaderText="Template File" DataField="TemplateFile" />
@@ -101,7 +100,7 @@
 				<asp:BoundField HeaderText="Created On" DataField="CreateDate" DataFormatString="{0:d}" />
 				<asp:BoundField HeaderText="Go Live" DataField="GoLiveDate" DataFormatString="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteNav" HeaderText="Navigation" ShowBooleanImage="true" AlternateTextTrue="Yes"
-					AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/application_lightning.png" ImagePathFalse="/c3-admin/images/flag_blue.png" />
+					AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" ShowBooleanImage="true" AlternateTextFalse="Inactive"
 					AlternateTextTrue="Active" />
 			</Columns>

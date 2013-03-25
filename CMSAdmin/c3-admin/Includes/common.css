@@ -145,6 +145,7 @@ tt, pre, code, kbd, samp {
 /* fieldset */
 
 fieldset {
+	clear: both;	
 	margin: 1.2em 0px;
 	padding: 1.2em;
 	border: 1px solid #ccc;

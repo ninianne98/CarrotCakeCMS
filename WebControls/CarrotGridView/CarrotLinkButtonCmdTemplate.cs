@@ -226,7 +226,12 @@ namespace Carrotware.Web.UI.Controls {
 		public CarrotImageItemTemplate(string fieldParm, string cssStyle, List<CarrotImageColumnData> lstImage) {
 			_field = fieldParm;
 			_css = cssStyle;
-			_images = lstImage;
+
+			if (lstImage != null) {
+				_images = lstImage;
+			} else {
+				_images = new List<CarrotImageColumnData>();
+			}
 		}
 
 		public void InstantiateIn(Control container) {

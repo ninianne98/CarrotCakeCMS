@@ -52,7 +52,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
 
-			List<Guid> lstUpd = GeneralUtilities.GetCheckedItemGuids(gvPages, true, "chkReMap", "hdnContentID");
+			List<Guid> lstUpd = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, true, "chkSelect");
 
 			pageHelper.BulkUpdateTemplate(SiteData.CurrentSiteID, lstUpd, ddlTemplate.SelectedValue);
 
