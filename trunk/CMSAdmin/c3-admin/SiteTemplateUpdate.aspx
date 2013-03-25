@@ -18,29 +18,25 @@
 			<b>Home Page</b>&nbsp;&nbsp;&nbsp;&nbsp;
 			<asp:Literal ID="litHomepage" runat="server" />
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlHome" runat="server">
-			</asp:DropDownList>
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlHome" runat="server" />
 			<br />
 		</p>
 		<p>
 			<b>All Content Pages (only)</b>
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlPages" runat="server">
-			</asp:DropDownList>
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlPages" runat="server" />
 			<br />
 		</p>
 		<p>
 			<b>All Top Level Pages (only)</b>
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTop" runat="server">
-			</asp:DropDownList>
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTop" runat="server" />
 			<br />
 		</p>
 		<p>
 			<b>All Sub Level Pages (only)</b>
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlSub" runat="server">
-			</asp:DropDownList>
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlSub" runat="server" />
 			<br />
 		</p>
 	</fieldset>
@@ -51,18 +47,16 @@
 			</label>
 		</legend>
 		<p>
-			<b>Blog Index Page</b>&nbsp;&nbsp;&nbsp;&nbsp;
+			<b>Index Page</b>&nbsp;&nbsp;&nbsp;&nbsp;
 			<asp:Literal ID="litBlogIndex" runat="server" />
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlBlog" runat="server">
-			</asp:DropDownList>
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlBlog" runat="server" />
 			<br />
 		</p>
 		<p>
 			<b>All Blog Posts (only)</b>
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlPosts" runat="server">
-			</asp:DropDownList>
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlPosts" runat="server" />
 			<br />
 		</p>
 	</fieldset>
@@ -75,8 +69,7 @@
 		<p>
 			<b>All Content (Content Pages and Blog Posts)</b>
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlAll" runat="server">
-			</asp:DropDownList>
+			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlAll" runat="server" />
 			<br />
 		</p>
 	</fieldset>
