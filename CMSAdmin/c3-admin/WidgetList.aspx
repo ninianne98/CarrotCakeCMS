@@ -45,6 +45,11 @@
 	<div id="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
 			RowStyle-CssClass="rowregular">
+			<EmptyDataTemplate>
+				<p>
+					<b>No widgets found.</b>
+				</p>
+			</EmptyDataTemplate>
 			<Columns>
 				<asp:TemplateField>
 					<HeaderTemplate>
@@ -52,7 +57,6 @@
 					</HeaderTemplate>
 					<ItemTemplate>
 						<%# Eval("ControlPath")%><br />
-						<%-- onmouseover="javascript:cmsGetWidgetText('<%# Eval("Root_WidgetID").ToString() %>')" --%>
 						<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
 							<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
 						<%# GetCtrlName(Eval("ControlPath").ToString() )%>
@@ -67,8 +71,7 @@
 					<ItemTemplate>
 						<asp:Button CommandName='<%#String.Format("restore_{0}", Eval("Root_WidgetID")) %>' ID="btnRestore" runat="server" Text="Show" OnCommand="ClickAction"
 							Visible="false" />
-						<asp:Button CommandName='<%#String.Format("remove_{0}", Eval("Root_WidgetID")) %>' ID="btnRemove" runat="server" Text="Hide" OnCommand="ClickAction"
-							Visible="false" />
+						<asp:Button CommandName='<%#String.Format("remove_{0}", Eval("Root_WidgetID")) %>' ID="btnRemove" runat="server" Text="Hide" OnCommand="ClickAction" Visible="false" />
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
@@ -82,22 +85,8 @@
 							Visible="false" />
 					</ItemTemplate>
 				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Edit Date
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("EditDate")%>
-					</ItemTemplate>
-				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						PlaceholderName
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("PlaceholderName")%>
-					</ItemTemplate>
-				</asp:TemplateField>
+				<asp:BoundField HeaderText="Edit Date" DataField="EditDate" />
+				<asp:BoundField HeaderText="PlaceholderName" DataField="PlaceholderName" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>

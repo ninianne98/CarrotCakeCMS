@@ -212,6 +212,11 @@
 	<div id="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="ContentType desc" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+			<EmptyDataTemplate>
+				<p>
+					<b>No content found.</b>
+				</p>
+			</EmptyDataTemplate>
 			<Columns>
 				<asp:TemplateField ItemStyle-HorizontalAlign="Center">
 					<HeaderTemplate>

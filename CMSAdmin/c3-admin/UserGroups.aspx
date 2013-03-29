@@ -15,6 +15,11 @@
 	<div id="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="RoleName ASC" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+			<EmptyDataTemplate>
+				<p>
+					<b>No roles found.</b>
+				</p>
+			</EmptyDataTemplate>
 			<Columns>
 				<asp:TemplateField>
 					<ItemTemplate>

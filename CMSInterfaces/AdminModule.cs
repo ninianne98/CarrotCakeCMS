@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -95,4 +96,37 @@ namespace Carrotware.CMS.Interface {
 		#endregion
 
 	}
+
+	//===========================
+
+	public class AdminModuleQueryStringRoutines {
+
+		#region Common Querystring Parsing Routines
+
+		public static Guid GetModuleID() {
+			Guid moduleID = Guid.Empty;
+			if (HttpContext.Current.Request.QueryString["pi"] != null) {
+				try { moduleID = new Guid(HttpContext.Current.Request.QueryString["pi"].ToString()); } catch { }
+			}
+			return moduleID;
+		}
+		public static string GetPluginFile() {
+			string plug = "";
+			if (HttpContext.Current.Request.QueryString["pf"] != null) {
+				plug = HttpContext.Current.Request.QueryString["pf"].ToString();
+			}
+			return plug;
+		}
+
+		public static string GenerateQueryStringFragment(string plug, Guid moduleID) {
+			return "pf=" + plug + "&pi=" + moduleID.ToString();
+		}
+
+		public static string GenerateQueryStringPattern(Guid moduleID) {
+			return "pf={0}&pi=" + moduleID.ToString();
+		}
+
+		#endregion
+	}
+
 }

@@ -77,8 +77,7 @@
 			<td>
 				<asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Required" Display="Dynamic" ControlToValidate="ddlFolders" ClientValidationFunction="validateFolderSelection"
 					ValidationGroup="inputForm" />
-				<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath">
-				</asp:DropDownList>
+				<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath" />
 			</td>
 		</tr>
 		<tr>
@@ -159,15 +158,12 @@
 					template:
 				</td>
 				<td>
-					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePage" runat="server">
-					</asp:DropDownList>
-				</td>
-				<td>
+					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePage" runat="server" />
 				</td>
 			</tr>
 		</table>
 		<p>
-			<asp:Label ID="lblPages" runat="server" Text="Label"></asp:Label>
+			<asp:Literal ID="lblPages" runat="server" Text="Label" />
 			records
 		</p>
 		<div class="SortableGrid">
@@ -202,15 +198,12 @@
 					template:
 				</td>
 				<td>
-					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePost" runat="server">
-					</asp:DropDownList>
-				</td>
-				<td>
+					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePost" runat="server" />
 				</td>
 			</tr>
 		</table>
 		<p>
-			<asp:Label ID="lblPosts" runat="server" Text="Label"></asp:Label>
+			<asp:Literal ID="lblPosts" runat="server" Text="Label" />
 			records
 		</p>
 		<div class="SortableGrid">
