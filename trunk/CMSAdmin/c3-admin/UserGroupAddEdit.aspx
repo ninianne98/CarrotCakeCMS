@@ -87,6 +87,11 @@
 					<div id="SortableGrid" style="width: 350px;">
 						<carrot:CarrotGridView CssClass="datatable" DefaultSort="Email ASC" ID="gvUsers" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 							AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+							<EmptyDataTemplate>
+								<p>
+									<b>No users found.</b>
+								</p>
+							</EmptyDataTemplate>
 							<Columns>
 								<asp:TemplateField>
 									<ItemTemplate>

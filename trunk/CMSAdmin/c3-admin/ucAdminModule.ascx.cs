@@ -71,15 +71,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		public void LoadModule() {
-			ModuleID = Guid.Empty;
-			pf = String.Empty;
 
-			if (Request.QueryString["pi"] != null) {
-				try { ModuleID = new Guid(Request.QueryString["pi"].ToString()); } catch { }
-			}
+			ModuleID = AdminModuleQueryStringRoutines.GetModuleID();
+			pf = AdminModuleQueryStringRoutines.GetPluginFile();
 
-			if (Request.QueryString["pf"] != null) {
-				pf = Request.QueryString["pf"].ToString();
+			if (!string.IsNullOrEmpty(pf)) {
+
 
 				ModuleFamily = (from m in cmsHelper.AdminModules
 								where m.PluginID == ModuleID
@@ -99,8 +96,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					w.SiteID = SiteData.CurrentSiteID;
 					w.ModuleID = ModuleID;
 					w.ModuleName = pf;
-					w.QueryStringFragment = "pf=" + pf + "&pi=" + ModuleID.ToString();
-					w.QueryStringPattern = "pf={0}&pi=" + ModuleID.ToString();
+					w.QueryStringFragment = AdminModuleQueryStringRoutines.GenerateQueryStringFragment(pf, ModuleID);
+					w.QueryStringPattern = AdminModuleQueryStringRoutines.GenerateQueryStringPattern(ModuleID);
 				}
 			}
 

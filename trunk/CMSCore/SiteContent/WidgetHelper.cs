@@ -82,6 +82,17 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public void SetStatusList(Guid rootContentID, List<Guid> lstWidgetIDs, bool widgetStatus) {
+			IQueryable<carrot_Widget> queryWidgets = (from w in CannedQueries.GetWidgetsByRootContent(db, rootContentID)
+													  where lstWidgetIDs.Contains(w.Root_WidgetID)
+															&& w.WidgetActive != widgetStatus
+													  select w);
+
+			db.carrot_Widgets.UpdateBatch(queryWidgets, p => new carrot_Widget { WidgetActive = widgetStatus });
+
+			db.SubmitChanges();
+		}
+
 		public void DeleteAll(Guid rootWidgetID) {
 			IQueryable<carrot_WidgetData> w1 = CannedQueries.GetWidgetDataByRootAll(db, rootWidgetID);
 

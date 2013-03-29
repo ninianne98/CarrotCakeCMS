@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFilename;
+        protected global::System.Web.UI.WebControls.Literal lblFilename;
         
         /// <summary>
         /// imgStatus control.
@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCreated;
+        protected global::System.Web.UI.WebControls.Literal lblCreated;
         
         /// <summary>
         /// pnlDetail control.
@@ -64,7 +64,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEditDate;
+        protected global::System.Web.UI.WebControls.Literal lblEditDate;
         
         /// <summary>
         /// litLeft control.

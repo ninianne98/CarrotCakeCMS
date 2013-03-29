@@ -71,6 +71,11 @@
 				<div id="SortableGrid" style="width: 300px;">
 					<carrot:CarrotGridView CssClass="datatable" DefaultSort="RoleName ASC" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+						<EmptyDataTemplate>
+							<p>
+								<b>No users found.</b>
+							</p>
+						</EmptyDataTemplate>
 						<Columns>
 							<asp:TemplateField>
 								<ItemTemplate>
@@ -90,6 +95,11 @@
 				<div id="SortableGrid" style="width: 400px;">
 					<carrot:CarrotGridView CssClass="datatable" DefaultSort="SiteName ASC" ID="gvSites" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+						<EmptyDataTemplate>
+							<p>
+								<b>No sites found.</b>
+							</p>
+						</EmptyDataTemplate>
 						<Columns>
 							<asp:TemplateField>
 								<ItemTemplate>

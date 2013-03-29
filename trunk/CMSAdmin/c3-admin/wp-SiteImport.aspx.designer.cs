@@ -145,7 +145,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPages;
+        protected global::System.Web.UI.WebControls.Literal lblPages;
         
         /// <summary>
         /// gvPages control.
@@ -181,7 +181,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPosts;
+        protected global::System.Web.UI.WebControls.Literal lblPosts;
         
         /// <summary>
         /// gvPosts control.

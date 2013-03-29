@@ -77,6 +77,12 @@ namespace Carrotware.CMS.Core {
 					select r);
 		}
 
+		internal static IQueryable<carrot_Widget> GetWidgetsByRootContent(CarrotCMSDataContext ctx, Guid rootContentID) {
+			return (from r in ctx.carrot_Widgets
+					where r.Root_ContentID == rootContentID
+					select r);
+		}
+
 
 		internal static IQueryable<vw_carrot_Content> GetContentByStatusAndDateRange(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType pageType,
 			DateTime dateBegin, DateTime dateEnd, bool? bActive, bool? bSiteMap, bool? bSiteNav, bool? bBlock) {

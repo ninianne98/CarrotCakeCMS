@@ -169,6 +169,13 @@
     <Compile Include="c3-admin\BlogPostEdit.aspx.designer.cs">
       <DependentUpon>BlogPostEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\PageWidgets.aspx.cs">
+      <DependentUpon>PageWidgets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageWidgets.aspx.designer.cs">
+      <DependentUpon>PageWidgets.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\SiteContentStatusChange.aspx.cs">
       <DependentUpon>SiteContentStatusChange.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -572,11 +579,15 @@
     <Content Include="c3-admin\Images\clock_play.png" />
     <Content Include="c3-admin\Images\clock_red.png" />
     <Content Include="c3-admin\Images\clock_stop.png" />
+    <Content Include="c3-admin\Images\hourglass.png" />
+    <Content Include="c3-admin\Images\layers.png" />
     <Content Include="c3-admin\Images\lightbulb.png" />
     <Content Include="c3-admin\Images\lightbulb_off.png" />
     <Content Include="c3-admin\Images\magifier_zoom_out.png" />
     <Content Include="c3-admin\Images\magnifier.png" />
     <Content Include="c3-admin\Images\page_code.png" />
+    <Content Include="c3-admin\Images\shape_move_back.png" />
+    <Content Include="c3-admin\Images\shape_ungroup.png" />
     <Content Include="c3-admin\Images\time.png" />
     <Content Include="c3-admin\Images\time_add.png" />
     <Content Include="c3-admin\Images\time_delete.png" />
@@ -585,6 +596,7 @@
     <Content Include="c3-admin\Images\zoom_out.png" />
     <Content Include="c3-admin\Includes\edit-notifier.css" />
     <Content Include="c3-admin\Includes\normalize.css" />
+    <Content Include="c3-admin\PageWidgets.aspx" />
     <Content Include="c3-admin\SiteContentStatusChange.aspx" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped.css" />
     <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped2.css" />

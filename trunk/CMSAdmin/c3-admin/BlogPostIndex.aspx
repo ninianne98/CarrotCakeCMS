@@ -116,7 +116,13 @@
 					<asp:TemplateField>
 						<ItemTemplate>
 							<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/c3-admin/PageHistory.aspx?id=<%#Eval("Root_ContentID") %>');">
-								<img class="imgNoBorder" src="/c3-admin/images/layout_content.png" alt="View Page History" title="View Page History" /></a>
+								<img class="imgNoBorder" src="/c3-admin/images/hourglass.png" alt="View Page History" title="View Page History" /></a>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField>
+						<ItemTemplate>
+							<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('/c3-admin/PageWidgets.aspx?id=<%#Eval("Root_ContentID") %>');">
+								<img class="imgNoBorder" src="/c3-admin/images/shape_ungroup.png" alt="Page Widgets" title="Page Widgets" /></a>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<carrot:CarrotHeaderSortTemplateField SortExpression="NavMenuText" HeaderText="Nav Menu Text" DataField="NavMenuText" />

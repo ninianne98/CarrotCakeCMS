@@ -21,10 +21,10 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h3>
-		<asp:Label ID="lblFilename" runat="server" Text="lblFilename"></asp:Label>
+		<asp:Literal ID="lblFilename" runat="server" Text="lblFilename" />
 		<asp:Image ID="imgStatus" runat="server" ImageUrl="/c3-admin/images/accept.png" AlternateText="Active" />
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Create Date:
-		<asp:Label ID="lblCreated" runat="server" Text="1/1/1900"></asp:Label>
+		<asp:Literal ID="lblCreated" runat="server" Text="1/1/1900" />
 	</h3>
 	<asp:Panel runat="server" ID="pnlDetail">
 		<p>
@@ -33,7 +33,7 @@
 		</p>
 		<p>
 			Edited On:
-			<asp:Label ID="lblEditDate" runat="server" Text="1/1/1900"></asp:Label>
+			<asp:Literal ID="lblEditDate" runat="server" Text="1/1/1900" />
 		</p>
 		<div id="jqtabs" style="height: 350px; width: 625px;">
 			<ul>
@@ -81,6 +81,11 @@
 		<div id="SortableGrid">
 			<carrot:CarrotGridView CssClass="datatable" DefaultSort="EditDate DESC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular" OnDataBound="gvPages_DataBound">
+				<EmptyDataTemplate>
+					<p>
+						<b>No content history found.</b>
+					</p>
+				</EmptyDataTemplate>
 				<Columns>
 					<asp:TemplateField>
 						<ItemTemplate>
@@ -92,38 +97,10 @@
 							<asp:CheckBox runat="server" ID="chkContent" value='<%# Eval("ContentID") %>' />
 						</ItemTemplate>
 					</asp:TemplateField>
-					<asp:TemplateField>
-						<HeaderTemplate>
-							Titlebar
-						</HeaderTemplate>
-						<ItemTemplate>
-							<%# Eval("TitleBar")%>
-						</ItemTemplate>
-					</asp:TemplateField>
-					<asp:TemplateField>
-						<HeaderTemplate>
-							Page Header
-						</HeaderTemplate>
-						<ItemTemplate>
-							<%# Eval("PageHead")%>
-						</ItemTemplate>
-					</asp:TemplateField>
-					<asp:TemplateField>
-						<HeaderTemplate>
-							Nav Menu Text
-						</HeaderTemplate>
-						<ItemTemplate>
-							<%# Eval("NavMenuText")%>
-						</ItemTemplate>
-					</asp:TemplateField>
-					<asp:TemplateField>
-						<HeaderTemplate>
-							Last Edited
-						</HeaderTemplate>
-						<ItemTemplate>
-							<%# Eval("EditDate")%>
-						</ItemTemplate>
-					</asp:TemplateField>
+					<asp:BoundField HeaderText="TitleBar" DataField="TitleBar" />
+					<asp:BoundField HeaderText="Page Header" DataField="PageHead" />
+					<asp:BoundField HeaderText="Nav Menu Text" DataField="NavMenuText" />
+					<asp:BoundField HeaderText="Last Edited" DataField="EditDate" />
 				</Columns>
 			</carrot:CarrotGridView>
 		</div>
