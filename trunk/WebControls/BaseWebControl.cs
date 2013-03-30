@@ -33,8 +33,22 @@ namespace Carrotware.Web.UI.Controls {
 
 			try {
 				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+				sPath = HttpUtility.HtmlEncode(sPath);
 			} catch { }
+
+			return sPath;
+		}
+
+		public static string GetWebResourceUrl(Page page, Type type, string resource) {
+			string sPath = "";
+			if (page != null) {
+				try {
+					sPath = page.ClientScript.GetWebResourceUrl(type, resource);
+					sPath = HttpUtility.HtmlEncode(sPath);
+				} catch { }
+			} else {
+				sPath = GetWebResourceUrl(type, resource);
+			}
 
 			return sPath;
 		}

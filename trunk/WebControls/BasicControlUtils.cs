@@ -43,7 +43,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			try {
 				sPath = _page.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+				sPath = HttpUtility.HtmlEncode(sPath);
 			} catch { }
 
 			return sPath;
@@ -54,7 +54,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			try {
 				sPath = page.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+				sPath = HttpUtility.HtmlEncode(sPath);
 			} catch { }
 
 			return sPath;

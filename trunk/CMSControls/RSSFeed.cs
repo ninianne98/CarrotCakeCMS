@@ -92,7 +92,7 @@ namespace Carrotware.CMS.UI.Controls {
 					s = this.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
 				}
 				try {
-					s = HttpContext.Current.Server.HtmlEncode(s);
+					s = HttpUtility.HtmlEncode(s);
 				} catch { }
 				return s;
 			}
@@ -153,7 +153,7 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							output.Write("<!-- RSS Feed Image Link--> <a " + sCSS + " title=\"" + RSSFeedType.ToString() + " RSS Feed\" href=\"" + RSSFeedURI + "?type=" + RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
+							output.Write("<!-- RSS Feed Text Link--> <a " + sCSS + " title=\"" + RSSFeedType.ToString() + " RSS Feed\" href=\"" + RSSFeedURI + "?type=" + RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
 							break;
 						default:
 							break;

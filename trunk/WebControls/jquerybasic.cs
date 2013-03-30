@@ -117,23 +117,23 @@ namespace Carrotware.Web.UI.Controls {
 
 			switch (this.SelectedSkin) {
 				case jQueryTheme.GlossyBlack:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css");
 					break;
 				case jQueryTheme.Purple:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-purple.css");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-purple.css");
 					break;
 				case jQueryTheme.Green:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-green.css");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-green.css");
 					break;
 				case jQueryTheme.Blue:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-blue.css");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-blue.css");
 					break;
 				case jQueryTheme.LightGreen:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css");
 					break;
 				case jQueryTheme.Silver:
 				default:
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-silver.css");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-silver.css");
 					break;
 			}
 

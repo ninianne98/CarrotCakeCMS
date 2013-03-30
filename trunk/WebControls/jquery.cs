@@ -58,29 +58,29 @@ namespace Carrotware.Web.UI.Controls {
 				case "2.0":
 				case "1.9":
 					jqVer = "1.9.1";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery191.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery191.js");
 					break;
 				case "1.7":
 					jqVer = "1.7.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery172.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery172.js");
 					break;
 				case "1.3":
 				case "1.4":
 				case "1.5":
 				case "1.6":
 					jqVer = "1.6.4";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery164.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery164.js");
 					break;
 				default:
 					jqVer = "1.8.3";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery183.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery183.js");
 					break;
 			}
 
 			output.WriteLine("<!-- JQuery v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 
 			if (jqVer.StartsWith("1.9")) {
-				sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery-110mig.js");
+				sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-110mig.js");
 				output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 			}
 		}
