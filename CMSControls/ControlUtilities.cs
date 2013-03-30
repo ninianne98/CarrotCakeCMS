@@ -42,7 +42,8 @@ namespace Carrotware.CMS.UI.Controls {
 			} else {
 				_page = GetContainerPage(X);
 			}
-			//if (_page != null && _page.AppRelativeVirtualPath == null) {
+
+			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
 			//    _page.AppRelativeVirtualPath = "~/";
 			//}
 		}
@@ -50,6 +51,10 @@ namespace Carrotware.CMS.UI.Controls {
 		public ControlUtilities(Page X) {
 			ResetFind();
 			_page = X;
+
+			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
+			//    _page.AppRelativeVirtualPath = "~/";
+			//}
 		}
 
 		public Page GetContainerPage(object X) {
@@ -74,7 +79,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			try {
-				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+				sPath = HttpUtility.HtmlEncode(sPath);
 			} catch { }
 
 			return sPath;
@@ -114,7 +119,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			try {
 				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpContext.Current.Server.HtmlEncode(sPath);
+				sPath = HttpUtility.HtmlEncode(sPath);
 			} catch { }
 
 			return sPath;

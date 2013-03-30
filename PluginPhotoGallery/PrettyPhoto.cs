@@ -22,10 +22,10 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				string sJQFile = "";
 
 				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.prettyphoto.prettyPhoto.css");
-				output.Write("<link href=\"" + HttpContext.Current.Server.HtmlEncode(sJQFile) + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
+				output.Write("<link href=\"" + HttpUtility.HtmlEncode(sJQFile) + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 
 				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.prettyphoto.prettyPhoto.js");
-				output.Write("<script src=\"" + HttpContext.Current.Server.HtmlEncode(sJQFile) + "\" type=\"text/javascript\"></script> \r\n");
+				output.Write("<script src=\"" + HttpUtility.HtmlEncode(sJQFile) + "\" type=\"text/javascript\"></script> \r\n");
 
 			}
 		}

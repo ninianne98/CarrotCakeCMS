@@ -254,7 +254,8 @@ namespace Carrotware.CMS.UI.Controls {
 	public class CarrotGridPagedDesigner : DataBoundControlDesigner {
 
 		public override string GetDesignTimeHtml() {
-			CarrotGridPaged myctrl = (CarrotGridPaged)base.ViewControl;
+			Control ctrl = (Control)base.ViewControl;
+			CarrotGridPaged myctrl = (CarrotGridPaged)ctrl;
 
 			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "CMS, ");
 			string sID = myctrl.ID;
@@ -263,44 +264,45 @@ namespace Carrotware.CMS.UI.Controls {
 			StringBuilder sb = new StringBuilder();
 			sb.Append(sTextOut);
 
-			sb.Append(DoGrid(myctrl));
-			sb.Append(DoRptr(myctrl));
+			sb.Append(DoGrid(ctrl));
+			sb.Append(DoRptr(ctrl));
 
 			return sb.ToString();
 		}
 
-		protected string DoGrid(CarrotGridPaged myctrl) {
-			Control ctrl = (Control)base.ViewControl;
+		protected string DoGrid(Control ctrl) {
+			CarrotGridPaged myctrl = (CarrotGridPaged)ctrl;
 			CarrotGridView theGrid = myctrl.TheGrid;
 
 			Table table = new Table();
 			table.CssClass = theGrid.CssClass;
+			myctrl.Page.Controls.Add(table);
 
 			TableHeaderRow trh = new TableHeaderRow();
 			trh.CssClass = theGrid.HeaderStyle.CssClass;
-
-			foreach (DataControlField col in theGrid.Columns) {
-
-				TableHeaderCell thc = new TableHeaderCell();
-				thc.Text = col.HeaderText;
-				trh.Controls.Add(thc);
-			}
 			table.Rows.Add(trh);
 
-			for (int r = 0; r < 8; r++) {
+			foreach (DataControlField col in theGrid.Columns) {
+				TableHeaderCell thc = new TableHeaderCell();
+				trh.Controls.Add(thc);
+				thc.Text = col.HeaderText;
+			}
+
+			for (int r = 0; r < 5; r++) {
 
 				TableRow tr = new TableRow();
-
 				if (r % 2 == 0) {
 					tr.CssClass = theGrid.RowStyle.CssClass;
 				} else {
 					tr.CssClass = theGrid.AlternatingRowStyle.CssClass;
 				}
+				table.Rows.Add(tr);
 
 				foreach (DataControlField col in theGrid.Columns) {
 
 					TableCell tc = new TableCell();
 					tc.Text = " &nbsp; ";
+					tr.Controls.Add(tc);
 
 					if (col is BoundField) {
 						var bf = (BoundField)col;
@@ -321,30 +323,26 @@ namespace Carrotware.CMS.UI.Controls {
 						tc.Text = ctf.DataField;
 						try {
 							if (ctf.ShowBooleanImage || ctf.ShowEnumImage) {
-								CarrotBooleanImageItemTemplate imgTemplate = new CarrotBooleanImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass);
 								PlaceHolder ph = new PlaceHolder();
 								tc.Controls.Add(ph);
+								CarrotBooleanImageItemTemplate imgTemplate = new CarrotBooleanImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass);
 								ctf.ItemTemplate = imgTemplate;
 								ctf.ItemTemplate.InstantiateIn(ph);
 							}
 						} catch { }
 					}
-
-					tr.Controls.Add(tc);
 				}
-
-				table.Rows.Add(tr);
 			}
 
 			return RenderCtrl(table);
 		}
 
-		protected string DoRptr(CarrotGridPaged myctrl) {
-			Control ctrl = (Control)base.ViewControl;
+		protected string DoRptr(Control ctrl) {
+			CarrotGridPaged myctrl = (CarrotGridPaged)ctrl;
 			Repeater thePager = myctrl.ThePager;
 
 			if (thePager.ItemTemplate == null) {
-				Repeater rp = GetCtrl(thePager);
+				Repeater rp = GetCtrl(ctrl);
 				thePager.HeaderTemplate = rp.HeaderTemplate;
 				thePager.ItemTemplate = rp.ItemTemplate;
 				thePager.FooterTemplate = rp.FooterTemplate;

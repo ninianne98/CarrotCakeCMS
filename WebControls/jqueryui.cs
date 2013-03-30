@@ -49,19 +49,19 @@ namespace Carrotware.Web.UI.Controls {
 			switch (jqVer) {
 				case "1.9":
 					jqVer = "1.9.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-9-2.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-9-2.js");
 					break;
 				case "1.8":
 					jqVer = "1.8.24";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-8-24.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-8-24.js");
 					break;
 				case "1.7":
 					jqVer = "1.7.3";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-7-3.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-7-3.js");
 					break;
 				default:
 					jqVer = "1.10.2";
-					sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jqueryui-1-10-2.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js");
 					break;
 			}
 

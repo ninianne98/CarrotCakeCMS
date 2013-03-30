@@ -17,6 +17,18 @@ using System.Web;
 namespace Carrotware.CMS.Interface {
 	public abstract class AdminModule : BaseShellUserControl, IAdminModule {
 
+		protected override void OnInit(EventArgs e) {
+			base.OnInit(e);
+
+			if (this.ModuleID == Guid.Empty || string.IsNullOrEmpty(this.ModuleName)) {
+				this.ModuleID = AdminModuleQueryStringRoutines.GetModuleID();
+				this.ModuleName = AdminModuleQueryStringRoutines.GetPluginFile();
+
+				this.QueryStringFragment = AdminModuleQueryStringRoutines.GenerateQueryStringFragment(this.ModuleName, this.ModuleID);
+				this.QueryStringPattern = AdminModuleQueryStringRoutines.GenerateQueryStringPattern(this.ModuleID);
+			}
+		}
+
 		public string CreateLink(string sModuleName, string sIDParm) {
 
 			return CreateLink(false, sModuleName, sIDParm);
@@ -48,11 +60,13 @@ namespace Carrotware.CMS.Interface {
 			return CreateLink(true, sModuleName);
 		}
 
+		private string sPopupFileName = "./ModulePopup.aspx?";
+
 		private string CreateLink(bool bPop, string sModuleName, string sIDParm) {
 			string sQueryStringFile = "";
-			string sSuffix = string.Format(QueryStringPattern, sModuleName) + "&" + sIDParm;
+			string sSuffix = string.Format(this.QueryStringPattern, sModuleName) + "&" + sIDParm;
 			if (bPop) {
-				sQueryStringFile = String.Format("javascript:ShowWindowNoRefresh('{0}');", "./ModulePopup.aspx?" + sSuffix);
+				sQueryStringFile = String.Format("javascript:ShowWindowNoRefresh('{0}');", sPopupFileName + sSuffix);
 			} else {
 				sQueryStringFile = CurrentScriptName + "?" + sSuffix;
 			}
@@ -61,7 +75,7 @@ namespace Carrotware.CMS.Interface {
 
 		private string CreateLink(bool bPop, string sScriptName, string sModuleName, string sIDParm) {
 			string sQueryStringFile = "";
-			string sSuffix = string.Format(QueryStringPattern, sModuleName) + "&" + sIDParm;
+			string sSuffix = string.Format(this.QueryStringPattern, sModuleName) + "&" + sIDParm;
 			if (bPop) {
 				sQueryStringFile = String.Format("javascript:ShowWindowNoRefresh('{0}');", sScriptName + "?" + sSuffix);
 			} else {
@@ -72,9 +86,9 @@ namespace Carrotware.CMS.Interface {
 
 		private string CreateLink(bool bPop, string sModuleName) {
 			string sQueryStringFile = "";
-			string sSuffix = string.Format(QueryStringPattern, sModuleName);
+			string sSuffix = string.Format(this.QueryStringPattern, sModuleName);
 			if (bPop) {
-				sQueryStringFile = String.Format("javascript:ShowWindowNoRefresh('{0}');", "./ModulePopup.aspx?" + sSuffix);
+				sQueryStringFile = String.Format("javascript:ShowWindowNoRefresh('{0}');", sPopupFileName + sSuffix);
 			} else {
 				sQueryStringFile = CurrentScriptName + "?" + sSuffix;
 			}

@@ -109,5 +109,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
+
+		protected void btnFixBlog_Click(object sender, EventArgs e) {
+			pageHelper.FixBlogNavOrder(SiteID);
+
+			Response.Redirect(SiteData.CurrentScriptName);
+		}
+
+
 	}
 }

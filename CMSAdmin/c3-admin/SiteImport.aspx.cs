@@ -277,6 +277,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				using (ContentPageHelper cph = new ContentPageHelper()) {
 					cph.BulkBlogFileNameUpdateFromDate(site.SiteID);
+					cph.FixBlogNavOrder(site.SiteID);
 				}
 			}
 

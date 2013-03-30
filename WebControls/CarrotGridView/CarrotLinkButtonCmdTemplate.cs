@@ -123,6 +123,10 @@ namespace Carrotware.Web.UI.Controls {
 		private string _field { get; set; }
 		private string _css { get; set; }
 
+		public static string IconResourcePaperclip = "Carrotware.Web.UI.Controls.CarrotGridView.attach.png";
+		public static string IconResourceAffirm = "Carrotware.Web.UI.Controls.CarrotGridView.accept.png";
+		public static string IconResourceNegative = "Carrotware.Web.UI.Controls.CarrotGridView.cancel.png";
+
 		public CarrotBooleanImageItemTemplate(string fieldParm, string cssStyle) {
 
 			SetImage();
@@ -134,8 +138,10 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void SetImage() {
-			_imageTrue = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.accept.png");
-			_imageFalse = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.cancel.png");
+
+			_imageTrue = HttpUtility.HtmlEncode(BaseWebControl.GetWebResourceUrl(this.GetType(), CarrotBooleanImageItemTemplate.IconResourceAffirm));
+			_imageFalse = HttpUtility.HtmlEncode(BaseWebControl.GetWebResourceUrl(this.GetType(), CarrotBooleanImageItemTemplate.IconResourceNegative));
+
 		}
 
 		public void SetVerbiage(string imageTextTrue, string imageTextFalse) {
@@ -190,10 +196,7 @@ namespace Carrotware.Web.UI.Controls {
 			Image imgBool = (Image)sender;
 			GridViewRow container = (GridViewRow)imgBool.NamingContainer;
 
-			imgBool.ImageUrl = imgBool.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
-			if (HttpContext.Current != null) {
-				imgBool.ImageUrl = HttpContext.Current.Server.HtmlEncode(imgBool.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png"));
-			}
+			imgBool.ImageUrl = HttpUtility.HtmlEncode(BaseWebControl.GetWebResourceUrl(imgBool.Page, this.GetType(), CarrotBooleanImageItemTemplate.IconResourcePaperclip));
 
 			try {
 				bool bValue = Convert.ToBoolean(DataBinder.Eval(container, "DataItem." + _field).ToString());
@@ -250,7 +253,8 @@ namespace Carrotware.Web.UI.Controls {
 		private void imgEnum_DataBinding(object sender, EventArgs e) {
 			Image imgEnum = (Image)sender;
 			GridViewRow container = (GridViewRow)imgEnum.NamingContainer;
-			imgEnum.ImageUrl = imgEnum.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.CarrotGridView.attach.png");
+
+			imgEnum.ImageUrl = HttpUtility.HtmlEncode(BaseWebControl.GetWebResourceUrl(imgEnum.Page, this.GetType(), CarrotBooleanImageItemTemplate.IconResourcePaperclip));
 
 			try {
 				string sValue = DataBinder.Eval(container, "DataItem." + _field).ToString();

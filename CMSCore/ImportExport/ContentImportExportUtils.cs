@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 * Date: October 2011
 */
 
+
 namespace Carrotware.CMS.Core {
 	public class ContentImportExportUtils {
 
@@ -88,8 +89,13 @@ namespace Carrotware.CMS.Core {
 					cont.ContentType = ContentPageType.PageType.ContentEntry;
 				}
 
-				cont.ShowInSiteMap = true;
-				cont.ShowInSiteNav = true;
+				if (cont.ContentType == ContentPageType.PageType.ContentEntry) {
+					cont.ShowInSiteMap = true;
+					cont.ShowInSiteNav = true;
+				} else {
+					cont.ShowInSiteMap = false;
+					cont.ShowInSiteNav = false;
+				}
 
 				cont.IsLatestVersion = true;
 
