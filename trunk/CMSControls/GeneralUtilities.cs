@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using System.Web.UI;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -133,7 +134,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		#endregion
 
-
 		#region boolean list stuff
 
 		public static bool? GetNullableBoolValue(ListControl ddl) {
@@ -187,7 +187,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		#endregion
 
-
 		#region QueryString Parsers
 
 		public static Guid GetGuidPageIDFromQuery() {
@@ -210,6 +209,23 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		#endregion
+
+
+		public static string ResolvePath(Control srcControl, string sPath) {
+			string sPathOut = "";
+			if (sPath != null) {
+				sPathOut = sPath;
+			}
+			sPathOut = sPathOut.Replace(@"\", "/");
+			if ((!sPathOut.StartsWith("~") && !sPathOut.StartsWith("/"))) {
+				sPathOut = srcControl.AppRelativeTemplateSourceDirectory + sPathOut;
+			}
+			if (sPathOut.StartsWith("~")) {
+				sPathOut = VirtualPathUtility.ToAbsolute(sPathOut);
+			}
+
+			return sPathOut;
+		}
 
 	}
 }

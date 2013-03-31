@@ -1,11 +1,13 @@
-﻿var tinyBrowseHeight = 500;
-var tinyBrowseWidth = 700;
+﻿var tinyBrowseHeight = 300;
+var tinyBrowseWidth = 500;
+var tinyBrowseResize = false;
 
 
-function TinyMCEParamInit(winWidth, winHeight) {
+function TinyMCEParamInit(winWidth, winHeight, allowResize) {
 
 	tinyBrowseHeight = parseInt(winHeight);
 	tinyBrowseWidth = parseInt(winWidth);
+	tinyBrowseResize = allowResize;
 
 	tinyMCE.init({
 
@@ -18,8 +20,6 @@ function TinyMCEParamInit(winWidth, winHeight) {
 		mode: "textareas",
 		theme: "advanced",
 		editor_selector: "mceEditor",
-		theme_advanced_source_editor_width: winWidth,
-		theme_advanced_source_editor_height: winHeight,
 		skin: "o2k7",
 		skin_variant: "silver",
 		plugins: "advimage,advlink,advlist,media,inlinepopups,searchreplace,visualblocks,paste,table,preview",
@@ -30,6 +30,10 @@ function TinyMCEParamInit(winWidth, winHeight) {
 		theme_advanced_toolbar_location: "top",
 		theme_advanced_toolbar_align: "left",
 		theme_advanced_statusbar_location: "bottom",
+		//theme_advanced_resize_horizontal: true,
+		theme_advanced_resizing: tinyBrowseResize,
+		theme_advanced_source_editor_width: tinyBrowseWidth,
+		theme_advanced_source_editor_height: tinyBrowseHeight,
 		relative_urls: false,
 		remove_script_host: true,
 		content_css: "/c3-admin/Includes/richedit.css",

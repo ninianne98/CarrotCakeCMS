@@ -7,16 +7,17 @@
 	Edit Content
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div style="height: 320px; margin-bottom: 10px;">
+	<div style="margin-bottom: 25px;">
 		<div runat="server" id="divCenter">
 			<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
 		<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 800px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="20"
 			Columns="100" />
 		<br />
 	</div>
-	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<%-- <input type="button" id="btnCancel" value="Cancel" onclick="location.href='./PageIndex.aspx';" />--%>
-	<br />
+	<div style="margin-top: 25px;">
+		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<br />
+	</div>
 	<div style="display: none;">
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Apply" />
 	</div>

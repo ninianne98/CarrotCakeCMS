@@ -542,51 +542,53 @@
 				<li><a href="#pagecontent-tabs-3">Right</a></li>
 				<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
 			</ul>
-			<div id="pagecontent-tabs-0">
-				<div style="height: 325px; margin-bottom: 10px;">
-					<div runat="server" id="divLeft">
-						body (left)<br />
-						<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
-					<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-					<br />
-				</div>
-			</div>
-			<div id="pagecontent-tabs-1">
-				<div style="height: 310px; margin-bottom: 10px;">
-					<div runat="server" id="divCenter">
-						body (main/center)<br />
-						<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-					<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-					<br />
-				</div>
-			</div>
-			<div id="pagecontent-tabs-3">
-				<div style="height: 310px; margin-bottom: 10px;">
-					<div runat="server" id="divRight">
-						body (right)<br />
-						<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
-					<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-					<br />
-				</div>
-			</div>
-			<div id="pagecontent-tabs-4">
-				<div style="height: 310px; margin-bottom: 10px;">
-					<div runat="server" id="divTrackback">
-						new trackbacks, one per line<br />
+			<div style="margin-bottom: 25px; height: 400px; width: 700px;">
+				<div id="pagecontent-tabs-0">
+					<div style="margin-bottom: 25px;">
+						<div runat="server" id="divLeft">
+							body (left)<br />
+							<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
+						<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<br />
 					</div>
-					<asp:TextBox Style="height: 125px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
-					<div class="scroll-container" style="height: 175px; width: 780px;">
-						<div class="scroll-area" style="height: 170px; width: 775px;">
-							<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-								AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
-								<Columns>
-									<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
-									<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
-									<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
-									<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked" AlternateTextTrue="Tracked"
-										ShowBooleanImage="true" />
-								</Columns>
-							</carrot:CarrotGridView>
+				</div>
+				<div id="pagecontent-tabs-1">
+					<div style="margin-bottom: 25px;">
+						<div runat="server" id="divCenter">
+							body (main/center)<br />
+							<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
+						<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<br />
+					</div>
+				</div>
+				<div id="pagecontent-tabs-3">
+					<div style="margin-bottom: 25px;">
+						<div runat="server" id="divRight">
+							body (right)<br />
+							<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
+						<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<br />
+					</div>
+				</div>
+				<div id="pagecontent-tabs-4">
+					<div style="margin-bottom: 25px;">
+						<div runat="server" id="divTrackback">
+							new trackbacks, one per line<br />
+						</div>
+						<asp:TextBox Style="height: 125px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
+						<div class="scroll-container" style="height: 175px; width: 780px;">
+							<div class="scroll-area" style="height: 170px; width: 775px;">
+								<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+									AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+									<Columns>
+										<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
+										<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
+										<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
+										<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked" AlternateTextTrue="Tracked"
+											ShowBooleanImage="true" />
+									</Columns>
+								</carrot:CarrotGridView>
+							</div>
 						</div>
 					</div>
 				</div>
