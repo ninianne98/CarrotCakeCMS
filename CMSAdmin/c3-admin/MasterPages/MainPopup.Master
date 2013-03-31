@@ -48,7 +48,7 @@
 	<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js"></script>
 	<script type="text/javascript">
 		function AjaxTinyLoad() {
-			TinyMCEParamInit("650", "400");
+			TinyMCEParamInit("650", "400", true);
 		}
 
 		function UpdateAjaxTiny() {

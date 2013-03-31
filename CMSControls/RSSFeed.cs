@@ -116,18 +116,18 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
-				sCSS = " class=\"" + CssClass + "\" ";
+			if (!string.IsNullOrEmpty(this.CssClass)) {
+				sCSS = " class=\"" + this.CssClass + "\" ";
 			}
 
 			switch (RenderRSSMode) {
 				case RSSRenderAs.HeaderLink:
 
-					switch (RSSFeedType) {
+					switch (this.RSSFeedType) {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							output.Write("<!-- RSS Header Feed --> <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"" + RSSFeedURI + "?type=" + RSSFeedType.ToString() + "\" /> \r\n");
+							output.Write("<!-- RSS Header Feed --> <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" /> \r\n");
 							break;
 						default:
 							break;
@@ -136,11 +136,12 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 				case RSSRenderAs.ImageLink:
 
-					switch (RSSFeedType) {
+					switch (this.RSSFeedType) {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							output.Write("<!-- RSS Feed Image Link--> <a " + sCSS + " title=\"" + RSSFeedType.ToString() + " RSS Feed\" href=\"" + RSSFeedURI + "?type=" + RSSFeedType.ToString() + "\" ><img alt=\"" + RSSFeedType.ToString() + "\" src=\"" + ImageURI + "\" /></a>\r\n");
+							string sImg = GeneralUtilities.ResolvePath(this, this.ImageURI);
+							output.Write("<!-- RSS Feed Image Link--> <a " + sCSS + " title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" ><img alt=\"" + this.RSSFeedType.ToString() + "\" src=\"" + sImg + "\" /></a>\r\n");
 							break;
 						default:
 							break;
@@ -149,11 +150,11 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 				case RSSRenderAs.TextLink:
 
-					switch (RSSFeedType) {
+					switch (this.RSSFeedType) {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							output.Write("<!-- RSS Feed Text Link--> <a " + sCSS + " title=\"" + RSSFeedType.ToString() + " RSS Feed\" href=\"" + RSSFeedURI + "?type=" + RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
+							output.Write("<!-- RSS Feed Text Link--> <a " + sCSS + " title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
 							break;
 						default:
 							break;
