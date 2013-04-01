@@ -174,7 +174,7 @@ namespace Carrotware.CMS.UI.Base {
 						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.LabelText)) {
 							pageContents.PageHead = titleOpts.LabelText + " " + sTitleAddendum;
 							pageContents.NavMenuText = pageContents.PageHead;
-							pageContents.TitleBar = SiteData.CurrentSite.SiteName + " - " + pageContents.PageHead;
+							pageContents.TitleBar = pageContents.PageHead;
 						}
 					}
 				}
