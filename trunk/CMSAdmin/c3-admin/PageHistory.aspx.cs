@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+using System.Web.Security;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -66,11 +67,18 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 
-			lnkReturn.NavigateUrl = "./PageHistory.aspx?id=" + guidRootID.ToString();
+			lnkReturn.NavigateUrl = SiteFilename.PageHistoryURL + "?id=" + guidRootID.ToString();
 
 		}
 
-
+		protected string GetUserName(Guid userId) {
+			MembershipUser usr = SecurityData.GetUserByGuid(userId);
+			if (usr != null) {
+				return usr.UserName;
+			} else {
+				return " ";
+			}
+		}
 
 		protected void LoadGrid() {
 

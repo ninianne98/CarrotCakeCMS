@@ -47,7 +47,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			pageContents = new ContentPage();
+			pageContents = new ContentPage(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry);
+
 			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 
 			Guid? parentContentID = null;

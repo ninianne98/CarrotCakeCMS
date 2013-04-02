@@ -84,6 +84,25 @@ namespace Carrotware.CMS.Core {
 				w.Root_WidgetID = Guid.NewGuid();
 				w.WidgetDataID = Guid.NewGuid();
 			}
+
+			Guid userID = Guid.Empty;
+
+			if (!cp.EditUserId.HasValue) {
+				userID = cp.CreateUserId;
+			} else {
+				userID = cp.EditUserId.Value;
+			}
+
+			using (ExtendedUserData u = new ExtendedUserData(userID)) {
+				this.TheUser = new SiteExportUser {
+					ExportUserID = u.UserId,
+					Email = u.EmailAddress,
+					Login = u.UserName,
+					FirstName = u.FirstName,
+					LastName = u.LastName,
+					UserNickname = u.UserNickName
+				};
+			}
 		}
 
 		public string CarrotCakeVersion { get; set; }
@@ -103,6 +122,8 @@ namespace Carrotware.CMS.Core {
 		public ContentPage ThePage { get; set; }
 
 		public List<Widget> ThePageWidgets { get; set; }
+
+		public SiteExportUser TheUser { get; set; }
 
 	}
 }

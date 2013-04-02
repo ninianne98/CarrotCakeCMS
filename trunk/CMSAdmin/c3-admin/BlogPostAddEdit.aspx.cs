@@ -41,8 +41,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidVersionContentID = GetGuidParameterFromQuery("versionid");
 			guidImportContentID = GetGuidParameterFromQuery("importid");
 
-			txtSort.Text = "10";
-
 			if (!string.IsNullOrEmpty(Request.QueryString["mode"])) {
 				sPageMode = Request.QueryString["mode"].ToString();
 				if (sPageMode.ToLower() == "raw") {
@@ -143,8 +141,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtDescription.Text = pageContents.MetaDescription;
 					txtKey.Text = pageContents.MetaKeyword;
 
-					txtSort.Text = pageContents.NavOrder.ToString();
-
 					lblUpdated.Text = pageContents.EditDate.ToString();
 					lblCreateDate.Text = pageContents.CreateDate.ToString();
 
@@ -214,11 +210,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (pageContents == null) {
-				pageContents = new ContentPage();
-				pageContents.Root_ContentID = Guid.NewGuid();
-				pageContents.ContentID = pageContents.ContentID;
-				pageContents.SiteID = SiteID;
-				pageContents.CreateDate = SiteData.CurrentSite.Now;
+				pageContents = new ContentPage(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
 			}
 
 			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
@@ -246,8 +238,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.RightPageText = reRightBody.Text;
 
 			pageContents.PageActive = chkActive.Checked;
-			pageContents.ShowInSiteNav = true;
-			pageContents.ShowInSiteMap = true;
+			pageContents.ShowInSiteNav = false;
+			pageContents.ShowInSiteMap = false;
 			pageContents.BlockIndex = chkHide.Checked;
 
 			pageContents.ContentType = ContentPageType.PageType.BlogEntry;

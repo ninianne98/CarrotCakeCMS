@@ -63,6 +63,15 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
+			this.TheUsers = (from u in ExtendedUserData.GetUserList()
+							 select new SiteExportUser {
+								 Email = u.EmailAddress,
+								 Login = u.UserName,
+								 FirstName = u.FirstName,
+								 LastName = u.LastName,
+								 UserNickname = u.UserNickName
+							 }).ToList();
+
 			SetVals(s, pages);
 		}
 
@@ -137,11 +146,27 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public Guid FindImportUser(SiteExportUser u) {
+			SiteExportUser usr = (from t in this.TheUsers
+								  where t.Login.ToString() == u.Login.ToString()
+										  || t.Email.ToString() == u.Email.ToString()
+								  select t).FirstOrDefault();
+
+			if (usr == null || (usr != null && usr.ImportUserID != Guid.Empty)) {
+				return SecurityData.CurrentUserGuid;
+			} else {
+				return usr.ImportUserID;
+			}
+		}
+
 
 		public List<CommentExport> TheComments { get; set; }
 
 		public List<ContentCategory> TheCategories { get; set; }
 
 		public List<ContentTag> TheTags { get; set; }
+
+		public List<SiteExportUser> TheUsers { get; set; }
+
 	}
 }

@@ -43,6 +43,9 @@ namespace Carrotware.CMS.Core {
 		public static string DashboardURL {
 			get { return SiteData.AdminFolderPath + "default.aspx"; }
 		}
+		public static string PageHistoryURL {
+			get { return SiteData.AdminFolderPath + "PageHistory.aspx"; }
+		}
 
 		public static string UserURL {
 			get { return SiteData.AdminFolderPath + "User.aspx"; }

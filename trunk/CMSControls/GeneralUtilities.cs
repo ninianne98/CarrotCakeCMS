@@ -44,34 +44,34 @@ namespace Carrotware.CMS.UI.Controls {
 			return gVal;
 		}
 
-		public static void BindRepeater(Repeater ctrl, object DataSource) {
-			ctrl.DataSource = DataSource;
+		public static void BindRepeater(Repeater ctrl, object dataSource) {
+			ctrl.DataSource = dataSource;
 			ctrl.DataBind();
 		}
 
-		public static void BindDataBoundControl(DataBoundControl ctrl, object DataSource) {
-			ctrl.DataSource = DataSource;
+		public static void BindDataBoundControl(DataBoundControl ctrl, object dataSource) {
+			ctrl.DataSource = dataSource;
 			ctrl.DataBind();
 		}
 
-		public static void BindList(ListControl ctrl, object DataSource) {
-			ctrl.DataSource = DataSource;
+		public static void BindList(ListControl ctrl, object dataSource) {
+			ctrl.DataSource = dataSource;
 			ctrl.DataBind();
 		}
-		public static void BindList(ListControl ctrl, object DataSource, string SelectedValue) {
-			BindList(ctrl, DataSource);
+		public static void BindList(ListControl ctrl, object dataSource, string SelectedValue) {
+			BindList(ctrl, dataSource);
 			SelectListValue(ctrl, SelectedValue);
 		}
 
-		public static void BindListChooseOne(ListControl ctrl, object DataSource) {
-			BindListChooseOne(ctrl, DataSource, null);
+		public static void BindListChooseOne(ListControl ctrl, object dataSource) {
+			BindListChooseOne(ctrl, dataSource, null);
 		}
-		public static void BindListChooseOne(ListControl ctrl, object DataSource, string SelectedValue) {
-			BindListDefaultText(ctrl, DataSource, SelectedValue, "Choose One", "");
+		public static void BindListChooseOne(ListControl ctrl, object dataSource, string SelectedValue) {
+			BindListDefaultText(ctrl, dataSource, SelectedValue, "Choose One", "");
 		}
 
-		public static void BindListDefaultText(ListControl ctrl, object DataSource, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue) {
-			BindList(ctrl, DataSource);
+		public static void BindListDefaultText(ListControl ctrl, object dataSource, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue) {
+			BindList(ctrl, dataSource);
 
 			EmptyChoiceValue = string.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
 			ctrl.Items.Insert(0, new ListItem(String.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
@@ -212,16 +212,20 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		public static string ResolvePath(Control srcControl, string sPath) {
-			string sPathOut = "";
-			if (sPath != null) {
-				sPathOut = sPath;
+			string sPathOut = null;
+			if (!string.IsNullOrEmpty(sPath)) {
+				sPathOut = sPath.Replace(@"\", "/");
+			} else {
+				sPathOut = "";
 			}
-			sPathOut = sPathOut.Replace(@"\", "/");
-			if ((!sPathOut.StartsWith("~") && !sPathOut.StartsWith("/"))) {
-				sPathOut = srcControl.AppRelativeTemplateSourceDirectory + sPathOut;
-			}
-			if (sPathOut.StartsWith("~")) {
-				sPathOut = VirtualPathUtility.ToAbsolute(sPathOut);
+
+			if (!sPathOut.Contains("//")) {
+				if ((!sPathOut.StartsWith("~") && !sPathOut.StartsWith("/"))) {
+					sPathOut = srcControl.AppRelativeTemplateSourceDirectory + sPathOut;
+				}
+				if (sPathOut.StartsWith("~")) {
+					sPathOut = VirtualPathUtility.ToAbsolute(sPathOut);
+				}
 			}
 
 			return sPathOut;

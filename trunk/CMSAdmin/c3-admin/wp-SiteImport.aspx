@@ -69,7 +69,7 @@
 			<td>
 				<asp:CheckBox ID="chkFileGrab" runat="server" onclick="chkFileGrabClick(this);" />
 				Attempt to download page/post attachments and place them in the selected folder.
-				<asp:Literal ID="litTrust" runat="server"><b>Downloading images requires a full trust website, and this installation has not been detected as such, leaving the download option disabled. </b></asp:Literal>
+				<asp:Literal ID="litTrust" runat="server"><b>Downloading images requires a full trust website, and this installation has not been detected as such, leaving the download option disabled. </b> </asp:Literal>
 			</td>
 			<td>
 				&nbsp;&nbsp;&nbsp;
@@ -92,9 +92,36 @@
 				&nbsp;
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<asp:CheckBox ID="chkAuthors" runat="server" Checked="true" />
+				Uncheck this box if you do not want user accounts to be created. Accounts will only be created if the username and email address have not already been
+				used in this system. Password will be set according to normal reset values, and the user will have to request a new password by email to login. If this
+				is unchecked and a matching account exists, the discovered user will be recorded as the content editor. If the user account does not exist, the current
+				user will be recorded as the content editor.
+			</td>
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<asp:CheckBox ID="chkMapAuthor" runat="server" Checked="true" />
+				Uncheck this box if you want all imported content to be recorded under the curent user. This option trumps the account creation checkbox.
+			</td>
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				&nbsp;
+			</td>
+		</tr>
 	</table>
 	<div style="display: none" id="importMessage">
-		<asp:Literal ID="litMessage" runat="server"></asp:Literal>
+		<asp:Literal ID="litMessage" runat="server" />
 	</div>
 	<fieldset style="width: 90%;">
 		<legend>
