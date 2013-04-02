@@ -67,6 +67,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.Literal litDescription;
         
         /// <summary>
+        /// chkAuthors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAuthors;
+        
+        /// <summary>
+        /// chkMapAuthor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkMapAuthor;
+        
+        /// <summary>
         /// chkComments control.
         /// </summary>
         /// <remarks>
@@ -82,7 +100,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblComments;
+        protected global::System.Web.UI.WebControls.Literal lblComments;
         
         /// <summary>
         /// chkPages control.
@@ -109,7 +127,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPages;
+        protected global::System.Web.UI.WebControls.Literal lblPages;
         
         /// <summary>
         /// gvPages control.
@@ -145,7 +163,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPosts;
+        protected global::System.Web.UI.WebControls.Literal lblPosts;
         
         /// <summary>
         /// gvPosts control.

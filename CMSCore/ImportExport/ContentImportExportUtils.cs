@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Web.Security;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -57,17 +58,37 @@ namespace Carrotware.CMS.Core {
 
 		}
 
-		public static ContentPage CreateWPContentPage(SiteData site, WordPressPost c) {
+		public static ContentPage CreateWPContentPage(WordPressSite wps, WordPressPost c, SiteData site) {
 			ContentPage cont = null;
 
+			ContentPageType.PageType contType = ContentPageType.PageType.Unknown;
+			switch (c.PostType) {
+				case WordPressPost.WPPostType.BlogPost:
+					contType = ContentPageType.PageType.BlogEntry;
+					break;
+				case WordPressPost.WPPostType.Page:
+					contType = ContentPageType.PageType.ContentEntry;
+					break;
+			}
+
 			if (c != null) {
-				cont = new ContentPage();
-				cont.SiteID = site.SiteID;
+				cont = new ContentPage(site.SiteID, contType);
 				cont.ContentID = Guid.NewGuid();
 
+				cont.CreateUserId = SecurityData.CurrentUserGuid;
 				cont.EditUserId = SecurityData.CurrentUserGuid;
-				cont.EditDate = DateTime.UtcNow;
-				cont.TemplateFile = SiteData.DefaultTemplateFilename;
+
+				if (!string.IsNullOrEmpty(c.PostAuthor)) {
+					WordPressUser wpu = wps.Authors.Where(x => x.Login.ToLower() == c.PostAuthor.ToLower()).FirstOrDefault();
+
+					if (wpu != null && wpu.ImportUserID != Guid.Empty) {
+						MembershipUser usr = SecurityData.GetUserByGuid(wpu.ImportUserID);
+						if (usr != null) {
+							cont.CreateUserId = wpu.ImportUserID;
+							cont.EditUserId = wpu.ImportUserID;
+						}
+					}
+				}
 
 				cont.Root_ContentID = c.ImportRootID;
 				cont.FileName = c.ImportFileName.Replace("//", "/");
@@ -285,5 +306,7 @@ namespace Carrotware.CMS.Core {
 			return obj;
 		}
 
+
+		public static object switch_on { get; set; }
 	}
 }

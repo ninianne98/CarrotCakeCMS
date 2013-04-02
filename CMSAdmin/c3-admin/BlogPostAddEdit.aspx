@@ -377,7 +377,7 @@
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
-						<img class="imgNoBorder" src="/c3-admin/images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
+						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
 						Display="Dynamic" />
 				</td>
@@ -400,7 +400,7 @@
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug" runat="server" Columns="45"
 						MaxLength="200" />
 					&nbsp; <a href="javascript:void(0)" onclick="openPage();">
-						<img class="imgNoBorder" src="/c3-admin/images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
+						<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageSlug" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
 						Display="Dynamic" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
@@ -460,16 +460,6 @@
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
-				</td>
-			</tr>
-			<tr style="display: none">
-				<td class="tablecaption">
-					sort:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="1" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSort" ID="RequiredFieldValidator5" runat="server" ErrorMessage="Required"
-						Display="Dynamic" />
 				</td>
 			</tr>
 		</table>
@@ -535,14 +525,14 @@
 			</tr>
 		</table>
 		<br />
-		<div id="jqtabs" style="height: 400px; width: 825px;">
+		<div id="jqtabs" style="height: 400px; width: 825px; margin-bottom: 10px;">
 			<ul>
 				<li><a href="#pagecontent-tabs-0">Left</a></li>
 				<li><a href="#pagecontent-tabs-1">Center</a></li>
 				<li><a href="#pagecontent-tabs-3">Right</a></li>
 				<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
 			</ul>
-			<div style="margin-bottom: 25px; height: 400px; width: 700px;">
+			<div style="margin-bottom: 25px; height: 380px; width: 800px;">
 				<div id="pagecontent-tabs-0">
 					<div style="margin-bottom: 25px;">
 						<div runat="server" id="divLeft">

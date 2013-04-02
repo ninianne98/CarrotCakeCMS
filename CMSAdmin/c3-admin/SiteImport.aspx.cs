@@ -156,6 +156,46 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				site.Save();
 			}
 
+
+			if (!chkMapAuthor.Checked) {
+				exSite.TheUsers = new List<SiteExportUser>();
+			}
+
+			//itterate author collection and find if in the system
+			foreach (SiteExportUser seu in exSite.TheUsers) {
+				seu.ImportUserID = Guid.Empty;
+
+				MembershipUser usr = null;
+				//attempt to find the user in the userbase
+				usr = SecurityData.GetUserListByEmail(seu.Email).FirstOrDefault();
+				if (usr != null) {
+					seu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+				} else {
+					usr = SecurityData.GetUserListByName(seu.Login).FirstOrDefault();
+					if (usr != null) {
+						seu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+					}
+				}
+
+				if (chkAuthors.Checked) {
+					if (seu.ImportUserID == Guid.Empty) {
+						usr = Membership.CreateUser(seu.Login, ProfileManager.GenerateSimplePassword(), seu.Email);
+						Roles.AddUserToRole(seu.Login, SecurityData.CMSGroup_Users);
+						seu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+					}
+
+					if (seu.ImportUserID != Guid.Empty) {
+						ExtendedUserData ud = new ExtendedUserData(seu.ImportUserID);
+						if (!string.IsNullOrEmpty(seu.FirstName) || !string.IsNullOrEmpty(seu.LastName)) {
+							ud.FirstName = seu.FirstName;
+							ud.LastName = seu.LastName;
+							ud.Save();
+						}
+					}
+				}
+			}
+
+
 			if (chkPages.Checked) {
 				litMessage.Text += "<p>Imported Pages</p>";
 				sitePageList = site.GetFullSiteFileList();
@@ -179,8 +219,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.SiteID = site.SiteID;
 					cp.ContentType = ContentPageType.PageType.ContentEntry;
 					cp.EditDate = SiteData.CurrentSite.Now;
-					cp.EditUserId = SecurityData.CurrentUserGuid;
-					cp.CreateUserId = FindUser(impCP.ThePage.CreateUserId);
+					cp.EditUserId = exSite.FindImportUser(impCP.TheUser);
+					cp.CreateUserId = exSite.FindImportUser(impCP.TheUser);
 					cp.NavOrder = iOrder;
 					cp.TemplateFile = ddlTemplatePage.SelectedValue;
 
@@ -246,8 +286,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.Parent_ContentID = null;
 					cp.ContentType = ContentPageType.PageType.BlogEntry;
 					cp.EditDate = SiteData.CurrentSite.Now;
-					cp.EditUserId = SecurityData.CurrentUserGuid;
-					cp.CreateUserId = FindUser(impCP.ThePage.CreateUserId);
+					cp.EditUserId = exSite.FindImportUser(impCP.TheUser);
+					cp.CreateUserId = exSite.FindImportUser(impCP.TheUser);
 					cp.NavOrder = 10;
 					cp.TemplateFile = ddlTemplatePost.SelectedValue;
 

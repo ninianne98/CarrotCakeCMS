@@ -34,7 +34,7 @@ namespace Carrotware.CMS.Core {
 
 		public List<WordPressPost> Content { get; set; }
 		public List<WordPressComment> Comments { get; set; }
-
+		public List<WordPressUser> Authors { get; set; }
 
 		public List<WordPressPost> ContentPages {
 			get {

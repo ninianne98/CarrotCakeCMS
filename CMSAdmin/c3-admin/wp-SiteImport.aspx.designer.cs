@@ -58,6 +58,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.CheckBox chkFixBodies;
         
         /// <summary>
+        /// chkAuthors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAuthors;
+        
+        /// <summary>
+        /// chkMapAuthor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkMapAuthor;
+        
+        /// <summary>
         /// litMessage control.
         /// </summary>
         /// <remarks>

@@ -223,18 +223,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID).ThePage;
 				if (pageContents != null) {
 					pageContents.SiteID = SiteID;
-					//pageContents.CreateDate = SiteData.CurrentSite.SiteTime;
 					pageContents.EditDate = SiteData.CurrentSite.Now;
 				}
 			}
 
 			if (pageContents == null) {
-				pageContents = new ContentPage();
-				pageContents.Root_ContentID = Guid.NewGuid();
-				pageContents.ContentID = pageContents.ContentID;
-				pageContents.SiteID = SiteID;
-				pageContents.CreateDate = SiteData.CurrentSite.Now;
+				pageContents = new ContentPage(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry);
 			}
+
 			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 			pageContents.GoLiveDate = dtSite.AddMinutes(-5);
 			pageContents.RetireDate = dtSite.AddYears(200);

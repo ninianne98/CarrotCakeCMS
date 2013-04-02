@@ -40,6 +40,8 @@ namespace Carrotware.CMS.Core {
 		public List<string> Categories { get; set; }
 		public List<string> Tags { get; set; }
 
+		public string PostAuthor { get; set; }
+
 		public Guid ImportRootID { get; set; }
 		public string ImportFileSlug { get; set; }
 		public string ImportFileName { get; set; }
@@ -82,6 +84,32 @@ namespace Carrotware.CMS.Core {
 			this.PostContent = "<p>" + this.PostContent.Replace("\n\n", "</p><p>") + "</p>";
 			this.PostContent = this.PostContent.Replace("\n", "<br />\n");
 			this.PostContent = this.PostContent.Replace("</p><p>", "</p>\n<p>");
+		}
+
+
+		public void GrabAttachments(string folderName, WordPressSite wpSite) {
+
+			int iPost = this.PostID;
+
+			List<WordPressPost> lstA = (from a in wpSite.Content
+										where a.PostType == WordPressPost.WPPostType.Attachment
+										&& a.ParentPostID == iPost
+										select a).Distinct().ToList();
+
+			lstA.ToList().ForEach(q => q.ImportFileSlug = folderName + "/" + q.ImportFileSlug);
+			lstA.ToList().ForEach(q => q.ImportFileSlug = q.ImportFileSlug.Replace("//", "/").Replace("//", "/"));
+
+			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+				foreach (var img in lstA) {
+					img.ImportFileSlug = img.ImportFileSlug.Replace("//", "/").Replace("//", "/");
+
+					cmsHelper.GetFile(img.AttachmentURL, img.ImportFileSlug);
+					string sURL1 = img.AttachmentURL.Substring(img.AttachmentURL.IndexOf("://") + 3);
+					string sURLLess = sURL1.Substring(sURL1.IndexOf("/"));
+
+					this.PostContent = this.PostContent.Replace(img.AttachmentURL, img.ImportFileSlug);
+				}
+			}
 		}
 
 	}

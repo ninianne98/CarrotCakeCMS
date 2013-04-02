@@ -83,8 +83,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
 
 				pageContents.PageActive = chkActive.Checked;
-				pageContents.ShowInSiteNav = true;
-				pageContents.ShowInSiteMap = true;
+				pageContents.ShowInSiteNav = false;
+				pageContents.ShowInSiteMap = false;
 				pageContents.BlockIndex = chkHide.Checked;
 
 				List<ContentCategory> lstCat = new List<ContentCategory>();

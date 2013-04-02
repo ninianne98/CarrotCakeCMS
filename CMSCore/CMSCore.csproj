@@ -88,9 +88,11 @@
     <Compile Include="ImportExport\BasicContentData.cs" />
     <Compile Include="ImportExport\SiteExport.cs" />
     <Compile Include="ImportExport\InfoKVP.cs" />
+    <Compile Include="ImportExport\SiteExportUser.cs" />
     <Compile Include="ImportExport\WordPressComment.cs" />
     <Compile Include="ImportExport\WordPressPost.cs" />
     <Compile Include="ImportExport\WordPressSite.cs" />
+    <Compile Include="ImportExport\WordPressUser.cs" />
     <Compile Include="ImportExport\WPBlogReader.cs" />
     <Compile Include="SearchParameterObject.cs" />
     <Compile Include="Security\ExtendedUserData.cs" />

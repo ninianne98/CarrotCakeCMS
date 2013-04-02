@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -53,7 +54,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					BuildFolderList();
 
 					GeneralUtilities.BindDataBoundControl(gvPages, wpSite.ContentPages);
-
 					GeneralUtilities.BindDataBoundControl(gvPosts, wpSite.ContentPosts);
 
 					GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
@@ -82,31 +82,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+
 		protected void GrabAttachments(WordPressPost wpPage) {
 			if (chkFileGrab.Checked) {
-
-				int iPost = wpPage.PostID;
-
-				List<WordPressPost> lstA = (from a in wpSite.Content
-											where a.PostType == WordPressPost.WPPostType.Attachment
-											&& a.ParentPostID == iPost
-											select a).Distinct().ToList();
-
-				lstA.ToList().ForEach(q => q.ImportFileSlug = ddlFolders.SelectedValue + "/" + q.ImportFileSlug);
-				lstA.ToList().ForEach(q => q.ImportFileSlug = q.ImportFileSlug.Replace("//", "/").Replace("//", "/"));
-
-				foreach (var img in lstA) {
-					img.ImportFileSlug = img.ImportFileSlug.Replace("//", "/").Replace("//", "/");
-
-					cmsHelper.GetFile(img.AttachmentURL, img.ImportFileSlug);
-					string sURL1 = img.AttachmentURL.Substring(img.AttachmentURL.IndexOf("://") + 3);
-					string sURLLess = sURL1.Substring(sURL1.IndexOf("/"));
-
-					wpPage.PostContent = wpPage.PostContent.Replace(img.AttachmentURL, img.ImportFileSlug);
-				}
-
+				wpPage.GrabAttachments(ddlFolders.SelectedValue, wpSite);
 			}
 		}
+
 
 		protected void BuildFolderList() {
 			List<FileData> lstFolders = new List<FileData>();
@@ -204,6 +186,45 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				site.Save();
 			}
 
+			if (!chkMapAuthor.Checked) {
+				wpSite.Authors = new List<WordPressUser>();
+			}
+
+			//itterate author collection and find if in the system
+			foreach (WordPressUser wpu in wpSite.Authors) {
+				wpu.ImportUserID = Guid.Empty;
+
+				MembershipUser usr = null;
+				//attempt to find the user in the userbase
+				usr = SecurityData.GetUserListByEmail(wpu.Email).FirstOrDefault();
+				if (usr != null) {
+					wpu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+				} else {
+					usr = SecurityData.GetUserListByName(wpu.Login).FirstOrDefault();
+					if (usr != null) {
+						wpu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+					}
+				}
+
+				if (chkAuthors.Checked) {
+					if (wpu.ImportUserID == Guid.Empty) {
+						usr = Membership.CreateUser(wpu.Login, ProfileManager.GenerateSimplePassword(), wpu.Email);
+						Roles.AddUserToRole(wpu.Login, SecurityData.CMSGroup_Users);
+						wpu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+					}
+
+					if (wpu.ImportUserID != Guid.Empty) {
+						ExtendedUserData ud = new ExtendedUserData(wpu.ImportUserID);
+						if (!string.IsNullOrEmpty(wpu.FirstName) || !string.IsNullOrEmpty(wpu.LastName)) {
+							ud.FirstName = wpu.FirstName;
+							ud.LastName = wpu.LastName;
+							ud.Save();
+						}
+					}
+				}
+			}
+
+
 			wpSite.Comments.ForEach(r => r.ImportRootID = Guid.Empty);
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
@@ -226,11 +247,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						GrabAttachments(wpp);
 						RepairBody(wpp);
 
-						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(site, wpp);
+						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(wpSite, wpp, site);
 						cp.SiteID = site.SiteID;
 						cp.ContentType = ContentPageType.PageType.ContentEntry;
 						cp.EditDate = SiteData.CurrentSite.Now;
-						cp.EditUserId = SecurityData.CurrentUserGuid;
 						cp.NavOrder = iOrder;
 						cp.TemplateFile = ddlTemplatePage.SelectedValue;
 
@@ -295,12 +315,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						GrabAttachments(wpp);
 						RepairBody(wpp);
 
-						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(site, wpp);
+						ContentPage cp = ContentImportExportUtils.CreateWPContentPage(wpSite, wpp, site);
 						cp.SiteID = site.SiteID;
 						cp.Parent_ContentID = null;
 						cp.ContentType = ContentPageType.PageType.BlogEntry;
 						cp.EditDate = SiteData.CurrentSite.Now;
-						cp.EditUserId = SecurityData.CurrentUserGuid;
 						cp.NavOrder = 10;
 						cp.TemplateFile = ddlTemplatePost.SelectedValue;
 

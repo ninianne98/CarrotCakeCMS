@@ -108,10 +108,10 @@ namespace Carrotware.CMS.Core {
 		static string special = "@#$";
 		static string nonalphanum = "&%=:";
 		//create another string which is a concatenation of all above
-		string allChars = alphaCaps + alphaLow + numerics + special;
-		string specialChars = special + nonalphanum;
+		static string allChars = alphaCaps + alphaLow + numerics + special;
+		static string specialChars = special + nonalphanum;
 
-		public string GenerateSimplePassword() {
+		public static string GenerateSimplePassword() {
 			int length = 8;
 			Random r = new Random();
 			String generatedPassword = "";

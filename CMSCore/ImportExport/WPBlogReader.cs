@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Security;
 using System.Xml;
 /*
 * CarrotCake CMS
@@ -36,6 +37,7 @@ namespace Carrotware.CMS.Core {
 
 			List<WordPressPost> lstWPP = new List<WordPressPost>();
 			List<WordPressComment> lstWPC = new List<WordPressComment>();
+			List<WordPressUser> lstAuth = new List<WordPressUser>();
 
 			XmlNode rssNode = doc.SelectSingleNode("//rss");
 
@@ -89,6 +91,21 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
+
+			XmlNodeList rssAuthors = doc.SelectNodes("//rss/channel/wp:author", rssNamespace);
+			foreach (XmlNode node in rssAuthors) {
+				WordPressUser wpu = new WordPressUser();
+				wpu.AuthorId = int.Parse(node.SelectSingleNode("wp:author_id", rssNamespace).InnerText);
+				wpu.Login = node.SelectSingleNode("wp:author_login", rssNamespace).InnerText;
+				wpu.Email = node.SelectSingleNode("wp:author_email", rssNamespace).InnerText;
+				try { wpu.FirstName = node.SelectSingleNode("wp:author_first_name", rssNamespace).InnerText; } catch { }
+				try { wpu.LastName = node.SelectSingleNode("wp:author_last_name", rssNamespace).InnerText; } catch { }
+				wpu.ImportUserID = Guid.Empty;
+
+				lstAuth.Add(wpu);
+			}
+
+
 			XmlNodeList nodes = doc.SelectNodes("//rss/channel/item");
 
 			foreach (XmlNode node in nodes) {
@@ -112,6 +129,8 @@ namespace Carrotware.CMS.Core {
 				}
 
 				wpp.PostName = ContentPageHelper.ScrubSlug(wpp.PostName);
+
+				wpp.PostAuthor = node.SelectSingleNode("dc:creator", rssNamespace).InnerText;
 
 				string postType = node.SelectSingleNode("wp:post_type", rssNamespace).InnerText;
 
@@ -231,6 +250,7 @@ namespace Carrotware.CMS.Core {
 
 			site.Content = lstWPP;
 			site.Comments = lstWPC;
+			site.Authors = lstAuth;
 
 			return site;
 		}
