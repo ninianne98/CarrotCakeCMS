@@ -40,7 +40,7 @@
 					error: cmsAjaxFailed
 				});
 			} else {
-				cmsAlertModal("Cannot create a filename with there is no title value assigned.");
+				cmsAlertModalSmall("Cannot create a filename with there is no title value assigned.");
 			}
 		}
 
@@ -118,15 +118,15 @@
 		<table style="width: 700px;">
 			<tr>
 				<td class="tablecaption">
-					title bar:
+					titlebar:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-						Display="Dynamic" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Titlebar is required"
+						ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -136,10 +136,10 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
 						MaxLength="200" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
-						Display="Dynamic" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Not Valid/Unique"
-						Display="Dynamic" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Filename is required"
+						ToolTip="Filename is required" Display="Dynamic" Text="**" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Filename is not valid/unique"
+						ToolTip="Filename is not valid/unique" Display="Dynamic" Text="##" />
 					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
 				</td>
 			</tr>
@@ -149,8 +149,8 @@
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Required"
-						Display="Dynamic" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Navigation text is required"
+						ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -179,20 +179,27 @@
 				</td>
 			</tr>
 		</table>
-		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Create" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<%-- <input type="button" id="btnCancel" value="Cancel" onclick="location.href='./PageIndex.aspx';" />--%>
+		<div style="display: none;">
+			<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
+		</div>
+		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />
 		<br />
 		<div style="display: none;">
-			<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
+			<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Apply" />
 		</div>
 		<script type="text/javascript">
-
 			function SubmitPage() {
 				CheckFileName();
-				setTimeout("ClickBtn();", 1200);
+				cmsIsPageValid();
+				setTimeout("ClickSaveBtn();", 800);
 			}
-			function ClickBtn() {
-				$('#<%=btnSave.ClientID %>').click();
+
+			function ClickSaveBtn() {
+				if (cmsIsPageValid()) {
+					$('#<%=btnSave.ClientID %>').click();
+				}
+				cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+				return true;
 			}
 		</script>
 	</asp:Panel>

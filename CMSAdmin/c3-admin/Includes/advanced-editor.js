@@ -662,12 +662,14 @@ function cmsAjaxFailed(request) {
 	}
 }
 
-function cmsAlertModal(request) {
+function cmsAlertModalHeightWidth(request, h, w) {
+
+	$("#CMSmodalalertmessage").html('');
+	$("#CMSmodalalertmessage").html(request);
 
 	$("#CMSmodalalert").dialog({
-		//autoOpen: false,
-		height: 400,
-		width: 550,
+		height: h,
+		width: w,
 		modal: true,
 		buttons: {
 			"OK": function () {
@@ -676,10 +678,19 @@ function cmsAlertModal(request) {
 		}
 	});
 
-	$("#CMSmodalalertmessage").html(request);
-
 	cmsFixDialog('CMSmodalalertmessage');
 }
+
+function cmsAlertModal(request) {
+	cmsAlertModalHeightWidth(request, 400, 550);
+}
+function cmsAlertModalSmall(request) {
+	cmsAlertModalHeightWidth(request, 250, 400);
+}
+function cmsAlertModalLarge(request) {
+	cmsAlertModalHeightWidth(request, 550, 700);
+}
+
 
 //===========================
 // do a lot of iFrame magic

@@ -93,6 +93,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
+				//if (pageContents == null) {
+				//    pageContents = new ContentPage(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry);
+				//}
+
 				List<ContentPage> lstContent = pageHelper.GetAllLatestContentList(SiteID);
 
 				GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
@@ -187,15 +191,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			ParentPagePicker.RootContentID = guidRootContentID;
 
-			if (string.IsNullOrEmpty(reBody.Text)) {
-				reBody.Text = "<p>&nbsp;</p>";
-			}
-			if (string.IsNullOrEmpty(reLeftBody.Text)) {
-				reLeftBody.Text = "<p>&nbsp;</p>";
-			}
-			if (string.IsNullOrEmpty(reRightBody.Text)) {
-				reRightBody.Text = "<p>&nbsp;</p>";
-			}
+			SetBlankText(reBody);
+			SetBlankText(reLeftBody);
+			SetBlankText(reRightBody);
 
 			if (ddlVersions.Items.Count < 1) {
 				pnlReview.Visible = false;
