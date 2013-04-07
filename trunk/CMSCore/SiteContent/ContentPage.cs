@@ -42,6 +42,10 @@ namespace Carrotware.CMS.Core {
 			this.ShowInSiteMap = true;
 			this.ShowInSiteNav = true;
 
+			this.LeftPageText = PageContentEmpty;
+			this.RightPageText = PageContentEmpty;
+			this.PageText = PageContentEmpty;
+
 			if (pageType != ContentPageType.PageType.ContentEntry) {
 				this.Parent_ContentID = null;
 				this.NavOrder = 10;
@@ -103,6 +107,9 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static string PageContentEmpty {
+			get { return "<p>&nbsp;</p>"; }
+		}
 
 		public SiteNav GetSiteNav() {
 			SiteNav sd = null;

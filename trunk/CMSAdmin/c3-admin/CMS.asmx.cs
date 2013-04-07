@@ -605,10 +605,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public string ValidateUniqueBlogFilename(string ThePageSlug, string GoLiveDate, string PageID) {
 			try {
 				CurrentPageGuid = new Guid(PageID);
-				DateTime goLiveDate = Convert.ToDateTime(GoLiveDate);
+				DateTime dateGoLive = Convert.ToDateTime(GoLiveDate);
+				DateTime dateOrigGoLive = DateTime.MinValue;
+
 				ThePageSlug = CMSConfigHelper.DecodeBase64(ThePageSlug);
 				ThePageSlug = ContentPageHelper.ScrubFilename(CurrentPageGuid, ThePageSlug);
-
 				ThePageSlug = ThePageSlug.ToLower();
 
 				string TheFileName = ThePageSlug;
@@ -616,16 +617,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, CurrentPageGuid);
 
 				if (cp != null) {
-					goLiveDate = cp.GoLiveDate;
+					dateOrigGoLive = cp.GoLiveDate;
 				}
 				if (cp == null && CurrentPageGuid != Guid.Empty) {
 					ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(CurrentPageGuid);
 					if (cpe != null) {
-						goLiveDate = cpe.ThePage.GoLiveDate;
+						dateOrigGoLive = cpe.ThePage.GoLiveDate;
 					}
 				}
 
-				TheFileName = ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, goLiveDate, ThePageSlug);
+				TheFileName = ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, dateGoLive, ThePageSlug);
 
 				if (SiteData.IsPageSpecial(TheFileName) || TheFileName.Length < 6) {
 					return "FAIL";

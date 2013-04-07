@@ -122,21 +122,47 @@ namespace Carrotware.CMS.UI.Base {
 			if (pageContents != null) {
 				HtmlMeta metaDesc = new HtmlMeta();
 				HtmlMeta metaKey = new HtmlMeta();
+				bool bDescExist = false;
+				bool bKeyExist = false;
+
+				List<HtmlMeta> lstMD = GetHtmlMeta(this.CurrentWebPage.Header);
+				if (lstMD.Where(x => x.Name == "description").Count() > 0) {
+					metaDesc = lstMD.Where(x => x.Name == "description").FirstOrDefault();
+					bDescExist = true;
+				}
+				if (lstMD.Where(x => x.Name == "keywords").Count() > 0) {
+					metaKey = lstMD.Where(x => x.Name == "keywords").FirstOrDefault();
+					bKeyExist = true;
+				}
 
 				metaDesc.Name = "description";
 				metaKey.Name = "keywords";
 				metaDesc.Content = string.IsNullOrEmpty(pageContents.MetaDescription) ? theSite.MetaDescription : pageContents.MetaDescription;
 				metaKey.Content = string.IsNullOrEmpty(pageContents.MetaKeyword) ? theSite.MetaKeyword : pageContents.MetaKeyword;
 
-				if (!string.IsNullOrEmpty(metaDesc.Content)) {
-					CurrentWebPage.Header.Controls.Add(metaDesc);
-					CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+				int indexPos = 6;
+				if (this.CurrentWebPage.Header.Controls.Count > indexPos) {
+					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
+						CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
+						CurrentWebPage.Header.Controls.AddAt(indexPos, metaDesc);
+					}
+					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
+						CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
+						CurrentWebPage.Header.Controls.AddAt(indexPos, metaKey);
+					}
+				} else {
+					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
+						CurrentWebPage.Header.Controls.Add(metaDesc);
+						CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+					}
+					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
+						CurrentWebPage.Header.Controls.Add(metaKey);
+						CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+					}
 				}
 
-				if (!string.IsNullOrEmpty(metaKey.Content)) {
-					CurrentWebPage.Header.Controls.Add(metaKey);
-					CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
-				}
+				metaDesc.Visible = !string.IsNullOrEmpty(metaDesc.Content);
+				metaKey.Visible = !string.IsNullOrEmpty(metaKey.Content);
 			}
 
 			contCenter = new ContentContainer();
@@ -199,7 +225,7 @@ namespace Carrotware.CMS.UI.Base {
 
 				pageContents = CMSConfigHelper.IdentifyLinkAsInactive(pageContents);
 
-				if (CurrentWebPage.User.Identity.IsAuthenticated) {
+				if (this.CurrentWebPage.User.Identity.IsAuthenticated) {
 
 					HttpContext.Current.Response.Cache.SetNoServerCaching();
 					HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -236,7 +262,7 @@ namespace Carrotware.CMS.UI.Base {
 						Control editor = CurrentWebPage.LoadControl(SiteFilename.AdvancedEditControlPath);
 						CurrentWebPage.Form.Controls.Add(editor);
 
-						MarkWidgets(CurrentWebPage, true);
+						MarkWidgets(this.CurrentWebPage, true);
 					}
 				}
 
@@ -270,7 +296,7 @@ namespace Carrotware.CMS.UI.Base {
 							Control widget = new Control();
 
 							if (theWidget.ControlPath.EndsWith(".ascx")) {
-								if (File.Exists(CurrentWebPage.Server.MapPath(theWidget.ControlPath))) {
+								if (File.Exists(this.CurrentWebPage.Server.MapPath(theWidget.ControlPath))) {
 									try {
 										widget = CurrentWebPage.LoadControl(theWidget.ControlPath);
 									} catch (Exception ex) {
@@ -442,26 +468,46 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		bool bFound = false;
-		WidgetContainer x = new WidgetContainer();
+		WidgetContainer widgetCtrl = new WidgetContainer();
 		protected WidgetContainer FindTheControl(string ControlName, Control X) {
 
 			if (X is Page) {
 				bFound = false;
-				x = new WidgetContainer();
+				widgetCtrl = new WidgetContainer();
 			}
 
 			foreach (Control c in X.Controls) {
 				if (c.ID == ControlName && c is WidgetContainer) {
 					bFound = true;
-					x = (WidgetContainer)c;
-					return x;
+					widgetCtrl = (WidgetContainer)c;
+					return widgetCtrl;
 				} else {
 					if (!bFound) {
 						FindTheControl(ControlName, c);
 					}
 				}
 			}
-			return x;
+			return widgetCtrl;
+		}
+
+
+		List<HtmlMeta> lstHtmlMeta = new List<HtmlMeta>();
+		protected List<HtmlMeta> GetHtmlMeta(Control X) {
+			lstHtmlMeta = new List<HtmlMeta>();
+
+			FindHtmlMeta(X);
+
+			return lstHtmlMeta;
+		}
+		protected void FindHtmlMeta(Control X) {
+
+			foreach (Control c in X.Controls) {
+				if (c is HtmlMeta) {
+					lstHtmlMeta.Add((HtmlMeta)c);
+				} else {
+					FindHtmlMeta(c);
+				}
+			}
 		}
 
 	}

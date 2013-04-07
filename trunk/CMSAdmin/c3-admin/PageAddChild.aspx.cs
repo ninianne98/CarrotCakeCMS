@@ -74,10 +74,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.PageHead = txtHead.Text;
 			pageContents.FileName = txtFileName.Text;
 
-			pageContents.RightPageText = "<p>&nbsp;</p>";
-			pageContents.LeftPageText = "<p>&nbsp;</p>";
-			pageContents.PageText = "<p>&nbsp;</p>";
-
 			pageContents.MetaDescription = txtDescription.Text;
 			pageContents.MetaKeyword = txtKey.Text;
 
