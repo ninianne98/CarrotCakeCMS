@@ -1,0 +1,72 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Public.master.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Public" %>
+
+<%@ Import Namespace="Carrotware.CMS.Core" %>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head id="Head1" runat="server">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
+	<title>Public</title>
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
+	<link href="/c3-admin/includes/logon.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$("input:button, input:submit, input:reset").button();
+		});
+	</script>
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+	</asp:ContentPlaceHolder>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<div class="wrappedcontent">
+		<div class="box-top-center">
+			<div class="box-top-left">
+			</div>
+			<div class="box-top-right">
+			</div>
+		</div>
+		<div class="box-inner">
+			<div class="box-right">
+				<div class="box-left">
+					<div class="wrappedcontent-inner">
+						<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+						</asp:ContentPlaceHolder>
+					</div>
+					<div class="box-buildversion">
+						<p>
+							&nbsp;
+						</p>
+						<p>
+							<asp:Literal ID="litCMSBuildInfo" runat="server"></asp:Literal>
+						</p>
+					</div>
+					<div class="box-carrot">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="clear: both;">
+		</div>
+		<div class="box-bottom-center">
+			<div class="box-bottom-left">
+			</div>
+			<div class="box-bottom-right">
+			</div>
+		</div>
+	</div>
+	<div style="display: none">
+		<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+	</div>
+	<asp:PlaceHolder ID="plcFooter" runat="server" />
+	</form>
+</body>
+</html>

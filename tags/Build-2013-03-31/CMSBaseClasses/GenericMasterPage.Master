@@ -1,0 +1,19 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="GenericMasterPage.master.cs" Inherits="Carrotware.CMS.UI.Base.GenericMasterPage" %>
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head runat="server">
+	<title></title>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<div>
+	</div>
+	</form>
+</body>
+</html>

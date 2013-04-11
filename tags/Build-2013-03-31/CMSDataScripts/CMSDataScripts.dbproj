@@ -1,0 +1,857 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>CMSDataScripts</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.0</ProjectVersion>
+    <ProjectGuid>{67cbc824-a49e-4e9b-a947-360f3dfe65c3}</ProjectGuid>
+    <DSP>Microsoft.Data.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ShowWizard>True</ShowWizard>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaType</DefaultFileStructure>
+    <DeployToDatabaseAddToServerExplorer>True</DeployToDatabaseAddToServerExplorer>
+    <DeployToScript>True</DeployToScript>
+    <CatalogPropertiesFile>Properties\Database.sqlsettings</CatalogPropertiesFile>
+    <ServerPropertiesFile>
+    </ServerPropertiesFile>
+    <LoadSqlClrTypes>True</LoadSqlClrTypes>
+    <RootNamespace>CMSDataScripts</RootNamespace>
+    <DefaultSchema>dbo</DefaultSchema>
+    <PreviousProjectVersion>4.0</PreviousProjectVersion>
+    <AllowServerObjects>False</AllowServerObjects>
+    <AllowDatabaseObjects>True</AllowDatabaseObjects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>.\sql\release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TargetConnectionString>
+    </TargetConnectionString>
+    <TargetDatabase>
+    </TargetDatabase>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <SuppressWarnings>
+    </SuppressWarnings>
+    <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
+    <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
+    <DeployToDatabase>False</DeployToDatabase>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>.\sql\debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TargetConnectionString>
+    </TargetConnectionString>
+    <TargetDatabase>
+    </TargetDatabase>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <SuppressWarnings>
+    </SuppressWarnings>
+    <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
+    <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
+    <DeployToDatabase>False</DeployToDatabase>
+  </PropertyGroup>
+  <!--Import the settings-->
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\TeamData\Microsoft.Data.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Pre-Deployment" />
+    <Folder Include="Scripts\Post-Deployment" />
+    <Folder Include="Data Generation Plans" />
+    <Folder Include="Schema Comparisons" />
+    <Folder Include="Properties\" />
+    <Folder Include="Schema Objects\" />
+    <Folder Include="Schema Objects\Programmability\" />
+    <Folder Include="Schema Objects\Programmability\Database Triggers\" />
+    <Folder Include="Schema Objects\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Programmability\Types\" />
+    <Folder Include="Schema Objects\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Assemblies\" />
+    <Folder Include="Schema Objects\Security\" />
+    <Folder Include="Schema Objects\Security\Schemas\" />
+    <Folder Include="Schema Objects\Security\Users\" />
+    <Folder Include="Schema Objects\Security\Certificates\" />
+    <Folder Include="Schema Objects\Security\Asymmetric Keys\" />
+    <Folder Include="Schema Objects\Security\Master Keys\" />
+    <Folder Include="Schema Objects\Security\Signatures\" />
+    <Folder Include="Schema Objects\Security\Symmetric Keys\" />
+    <Folder Include="Schema Objects\Security\Database Encryption Keys\" />
+    <Folder Include="Schema Objects\Security\Database Audit Specification\" />
+    <Folder Include="Schema Objects\Security\Roles\" />
+    <Folder Include="Schema Objects\Security\Roles\Application Roles\" />
+    <Folder Include="Schema Objects\Security\Roles\Database Roles\" />
+    <Folder Include="Schema Objects\Service Broker\" />
+    <Folder Include="Schema Objects\Service Broker\Broker Priorities\" />
+    <Folder Include="Schema Objects\Service Broker\Contracts\" />
+    <Folder Include="Schema Objects\Service Broker\Event Notifications\" />
+    <Folder Include="Schema Objects\Service Broker\Message Types\" />
+    <Folder Include="Schema Objects\Service Broker\Queues\" />
+    <Folder Include="Schema Objects\Service Broker\Remote Service Binding\" />
+    <Folder Include="Schema Objects\Service Broker\Routes\" />
+    <Folder Include="Schema Objects\Service Broker\Services\" />
+    <Folder Include="Schema Objects\Storage\" />
+    <Folder Include="Schema Objects\Storage\Full Text Stoplists\" />
+    <Folder Include="Schema Objects\Storage\Filegroups\" />
+    <Folder Include="Schema Objects\Storage\Files\" />
+    <Folder Include="Schema Objects\Storage\Full Text Catalogs\" />
+    <Folder Include="Schema Objects\Storage\Partition Functions\" />
+    <Folder Include="Schema Objects\Storage\Partition Schemes\" />
+    <Folder Include="Schema Objects\Synonyms\" />
+    <Folder Include="Schema Objects\Tables\" />
+    <Folder Include="Schema Objects\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Tables\Keys\" />
+    <Folder Include="Schema Objects\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Views\" />
+    <Folder Include="Schema Objects\Views\Indexes\" />
+    <Folder Include="Schema Objects\Views\Triggers\" />
+    <Folder Include="Schema Objects\Views\Statistics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PropertiesFile Include="Properties\Database.sqlsettings">
+    </PropertiesFile>
+    <PropertiesFile Include="Properties\Database.sqldeployment">
+    </PropertiesFile>
+    <PropertiesFile Include="Properties\Database.sqlcmdvars">
+    </PropertiesFile>
+    <Build Include="Properties\Database.sqlpermissions">
+      <ModelBuilderType>Permissions</ModelBuilderType>
+    </Build>
+    <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql">
+      <SubType>Code</SubType>
+    </PreDeploy>
+    <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql">
+      <SubType>Code</SubType>
+    </PostDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <BuildContributorArgument Include="OutDir=$(OutDir)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_SerialCache.DF_carrot_SerialCache_SerialCacheID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_SerialCache.DF_carrot_SerialCache_EditDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.aspnet_Applications.DF_aspnet_Applications_ApplicationId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_TrackbackQueue.DF_carrot_TrackbackQueue_TrackbackQueueID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_TrackbackQueue.DF_carrot_TrackbackQueue_CreateDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.aspnet_Users.DF_aspnet_Users_UserId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.aspnet_Users.DF_aspnet_Users_MobileAlias.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.aspnet_Users.DF_aspnet_Users_IsAnonymous.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.aspnet_Roles.DF_aspnet_Roles_RoleId.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_RootContent.DF_carrot_RootContent_Root_ContentID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_RootContent.DF_carrot_RootContent_CreateDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_RootContent.DF_carrot_RootContent_GoLiveDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_RootContent.DF_carrot_RootContent_RetireDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_RootContent.DF_carrot_RootContent_GoLiveDateLocal.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_ContentCategory.DF_carrot_ContentCategory_ContentCategoryID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_ContentTag.DF_carrot_ContentTag_ContentTagID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_ContentComment.DF_carrot_ContentComment_ContentCommentID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_ContentComment.DF_carrot_ContentComment_CreateDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_Content.DF_carrot_Content_ContentID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_Content.DF_carrot_Content_EditDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_CategoryContentMapping.DF_carrot_CategoryContentMapping_CategoryContentMappingID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_Widget.DF_carrot_Widget_Root_WidgetID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_UserSiteMapping.DF_carrot_UserSiteMapping_UserSiteMappingID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_TagContentMapping.DF_carrot_TagContentMapping_TagContentMappingID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.aspnet_Membership.DF_aspnet_Membership_PasswordFormat.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_WidgetData.DF_carrot_WidgetData_WidgetDataID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_WidgetData.DF_carrot_WidgetData_EditDate.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_ContentType.DF_carrot_ContentType_ContentTypeID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_Sites.DF_carrot_Sites_SiteID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Storage\Files\Carrot1_log.sqlfile.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Storage\Files\PRIMARY.Carrot1.sqlfile.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_TrackbackQueue.FK_carrot_TrackbackQueue_Root_ContentID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Users.FK_aspnet_Users_ApplicationId.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Roles.FK_aspnet_Roles_ApplicationId.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_RootContent.carrot_ContentType_carrot_RootContent_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_RootContent.carrot_Sites_carrot_RootContent_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentCategory.FK_carrot_ContentCategory_SiteID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentTag.FK_carrot_ContentTag_SiteID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentComment.FK_carrot_ContentComment_Root_ContentID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_Content.carrot_Content_EditUserId_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_Content.carrot_RootContent_carrot_Content_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_CategoryContentMapping.FK_carrot_CategoryContentMapping_ContentCategoryID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_CategoryContentMapping.FK_carrot_CategoryContentMapping_Root_ContentID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_Widget.carrot_RootContent_carrot_Widget_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_UserSiteMapping.aspnet_Users_carrot_UserSiteMapping_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_UserSiteMapping.carrot_Sites_carrot_UserSiteMapping_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_UserData.FK_carrot_UserData_UserId.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_TagContentMapping.FK_carrot_TagContentMapping_ContentTagID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_TagContentMapping.FK_carrot_TagContentMapping_Root_ContentID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Membership.FK_aspnet_Membership_ApplicationId.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Membership.FK_aspnet_Membership_UserId.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_UsersInRoles.FK_aspnet_UsersInRoles_RoleId.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_UsersInRoles.FK_aspnet_UsersInRoles_UserId.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_WidgetData.carrot_WidgetData_Root_WidgetID_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.aspnet_Applications.aspnet_Applications_Index.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.aspnet_Users.aspnet_Users_Index.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.aspnet_Users.aspnet_Users_Index2.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.aspnet_Roles.aspnet_Roles_index1.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.aspnet_Membership.aspnet_Membership_index.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.aspnet_UsersInRoles.aspnet_UsersInRoles_index.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_SerialCache.carrot_SerialCache_PK.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Applications.PK_aspnet_Applications.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_TrackbackQueue.PK_carrot_TrackbackQueue.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_SchemaVersions.PK_aspnet_SchemaVersions.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Users.PK_aspnet_Users.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Roles.PK_aspnet_Roles.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_RootContent.carrot_RootContent_PK.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentCategory.PK_carrot_ContentCategory.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentTag.PK_carrot_ContentTag.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentComment.PK_carrot_ContentComment.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_Content.PK_carrot_Content.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_CategoryContentMapping.PK_carrot_CategoryContentMapping.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_Widget.PK_carrot_Widget.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_UserSiteMapping.carrot_UserSiteMapping_PK.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_UserData.PK_carrot_UserData.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_TagContentMapping.PK_carrot_TagContentMapping.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Membership.PK_aspnet_Membership.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_UsersInRoles.PK_aspnet_UsersInRoles.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_WidgetData.PK_carrot_WidgetData.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentType.carrot_ContentType_PK.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_Sites.carrot_Sites_PK.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Users_CreateUser.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Roles_RoleExists.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Roles_GetAllRoles.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_UsersInRoles_RemoveUsersFromRoles.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_UsersInRoles_IsUserInRole.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_UsersInRoles_GetUsersInRoles.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_UsersInRoles_GetRolesForUser.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_UsersInRoles_FindUsersInRole.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_UsersInRoles_AddUsersToRoles.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Users_DeleteUser.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Roles_DeleteRole.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_UpdateUserInfo.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_UpdateUser.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_UnlockUser.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_SetPassword.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_ResetPassword.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_GetUserByUserId.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_GetUserByName.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_GetUserByEmail.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_GetPasswordWithFormat.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_GetPassword.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_GetNumberOfUsersOnline.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_GetAllUsers.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_FindUsersByName.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_FindUsersByEmail.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_CreateUser.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Membership_ChangePasswordQuestionAndAnswer.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_AnyDataInTables.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Setup_RestorePermissions.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Setup_RemoveAllRoleMembers.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_UnRegisterSchemaVersion.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_CheckSchemaVersion.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Applications_CreateApplication.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_RegisterSchemaVersion.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.carrot_BlogMonthlyTallies.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.carrot_BlogDateFilenameUpdate.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.aspnet_Roles_CreateRole.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.carrot_UpdateGoLiveLocal.proc.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Membership_BasicAccess.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Membership_FullAccess.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Membership_ReportingAccess.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Roles_BasicAccess.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Roles_FullAccess.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Roles_ReportingAccess.role.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Applications.UQ_aspnet_Applications_LoweredApplicationName.ukey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.aspnet_Applications.UQ_aspnet_Applications_ApplicationName.ukey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_Comment.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_TrackbackQueue.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_aspnet_Applications.view.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_aspnet_Users.view.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_aspnet_Roles.view.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_aspnet_MembershipUsers.view.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_TagURL.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_TagCounted.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_Content.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_CategoryURL.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_CategoryCounted.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_aspnet_UsersInRoles.view.sql">
+      <SubType>Code</SubType>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+      <AnsiNulls>On</AnsiNulls>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_Widget.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_UserData.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_SerialCache.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.aspnet_Applications.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_TrackbackQueue.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.aspnet_SchemaVersions.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.aspnet_Users.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.aspnet_Roles.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_RootContent.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_ContentCategory.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_ContentTag.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_ContentComment.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_Content.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_CategoryContentMapping.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_Widget.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_UserSiteMapping.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_UserData.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_TagContentMapping.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.aspnet_Membership.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.aspnet_UsersInRoles.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_WidgetData.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_ContentType.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_Sites.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Service Broker\Routes\AutoCreatedLocal.route.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Schemas\aspnet_Membership_BasicAccess.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Schemas\aspnet_Membership_FullAccess.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Schemas\aspnet_Membership_ReportingAccess.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Schemas\aspnet_Roles_BasicAccess.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Schemas\aspnet_Roles_FullAccess.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Security\Schemas\aspnet_Roles_ReportingAccess.schema.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_RootContent.carrot_RootContent_CreateUserId_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_ContentChild.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+  </ItemGroup>
+  <ItemGroup>
+    <NotInBuild Include="Scripts\__README.txt">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\CREATE 02 - default user.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 01 - add meta fields to content.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 02 - new widget structure.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 03 - add create date to root content.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 04 - move data to carrot prefix tables.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 05 - create combined content view.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 06 - create blog tables and views.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 07 - create date based publishing.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 08 - create trackback queue and comment view.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\CREATE 01 - whole database.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\create tblCalendar.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\create tblFAQ.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\create tblGallery.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\Post-Deployment\create_groups_and_roles.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\Post-Deployment\insert_content_types.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 09 - parent child view and misc setting properties.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+  </ItemGroup>
+</Project>

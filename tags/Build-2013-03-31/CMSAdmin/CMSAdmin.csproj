@@ -1,0 +1,1218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3137431F-6BE3-4996-9CF8-4D50414B403A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Carrotware.CMS.UI.Admin</RootNamespace>
+    <AssemblyName>Carrotware.CMS.UI.Admin</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminBaseMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\about.aspx.cs">
+      <DependentUpon>about.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\about.aspx.designer.cs">
+      <DependentUpon>about.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostAddEdit.aspx.cs">
+      <DependentUpon>BlogPostAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostAddEdit.aspx.designer.cs">
+      <DependentUpon>BlogPostAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostIndex.aspx.cs">
+      <DependentUpon>BlogPostIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostIndex.aspx.designer.cs">
+      <DependentUpon>BlogPostIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostTemplateUpdate.aspx.cs">
+      <DependentUpon>BlogPostTemplateUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostTemplateUpdate.aspx.designer.cs">
+      <DependentUpon>BlogPostTemplateUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CategoryAddEdit.aspx.cs">
+      <DependentUpon>CategoryAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\CategoryAddEdit.aspx.designer.cs">
+      <DependentUpon>CategoryAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CategoryIndex.aspx.cs">
+      <DependentUpon>CategoryIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\CategoryIndex.aspx.designer.cs">
+      <DependentUpon>CategoryIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CMS.asmx.cs">
+      <DependentUpon>CMS.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ControlPropertiesEdit.aspx.cs">
+      <DependentUpon>ControlPropertiesEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ControlPropertiesEdit.aspx.designer.cs">
+      <DependentUpon>ControlPropertiesEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ContentEdit.aspx.cs">
+      <DependentUpon>ContentEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ContentEdit.aspx.designer.cs">
+      <DependentUpon>ContentEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CommentAddEdit.aspx.cs">
+      <DependentUpon>CommentAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\CommentAddEdit.aspx.designer.cs">
+      <DependentUpon>CommentAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CommentIndex.aspx.cs">
+      <DependentUpon>CommentIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\CommentIndex.aspx.designer.cs">
+      <DependentUpon>CommentIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CommentAddEditPop.aspx.cs">
+      <DependentUpon>CommentAddEditPop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\CommentAddEditPop.aspx.designer.cs">
+      <DependentUpon>CommentAddEditPop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CommentIndexPop.aspx.cs">
+      <DependentUpon>CommentIndexPop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\CommentIndexPop.aspx.designer.cs">
+      <DependentUpon>CommentIndexPop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostEdit.aspx.cs">
+      <DependentUpon>BlogPostEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\BlogPostEdit.aspx.designer.cs">
+      <DependentUpon>BlogPostEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageWidgets.aspx.cs">
+      <DependentUpon>PageWidgets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageWidgets.aspx.designer.cs">
+      <DependentUpon>PageWidgets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteContentStatusChange.aspx.cs">
+      <DependentUpon>SiteContentStatusChange.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteContentStatusChange.aspx.designer.cs">
+      <DependentUpon>SiteContentStatusChange.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteExport.aspx.cs">
+      <DependentUpon>SiteExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteExport.aspx.designer.cs">
+      <DependentUpon>SiteExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteImport.aspx.cs">
+      <DependentUpon>SiteImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteImport.aspx.designer.cs">
+      <DependentUpon>SiteImport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteMapPop.aspx.cs">
+      <DependentUpon>SiteMapPop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteMapPop.aspx.designer.cs">
+      <DependentUpon>SiteMapPop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteTemplateUpdate.aspx.cs">
+      <DependentUpon>SiteTemplateUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteTemplateUpdate.aspx.designer.cs">
+      <DependentUpon>SiteTemplateUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\TagAddEdit.aspx.cs">
+      <DependentUpon>TagAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\TagAddEdit.aspx.designer.cs">
+      <DependentUpon>TagAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\TagIndex.aspx.cs">
+      <DependentUpon>TagIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\TagIndex.aspx.designer.cs">
+      <DependentUpon>TagIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucBlogMenuItems.ascx.cs">
+      <DependentUpon>ucBlogMenuItems.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucBlogMenuItems.ascx.designer.cs">
+      <DependentUpon>ucBlogMenuItems.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\CreateFirstAdmin.aspx.cs">
+      <DependentUpon>CreateFirstAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\CreateFirstAdmin.aspx.designer.cs">
+      <DependentUpon>CreateFirstAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\DatabaseSetup.aspx.cs">
+      <DependentUpon>DatabaseSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\DatabaseSetup.aspx.designer.cs">
+      <DependentUpon>DatabaseSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ModulePopup.aspx.cs">
+      <DependentUpon>ModulePopup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ModulePopup.aspx.designer.cs">
+      <DependentUpon>ModulePopup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageExport.aspx.cs">
+      <DependentUpon>PageExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageExport.aspx.designer.cs">
+      <DependentUpon>PageExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageImport.aspx.cs">
+      <DependentUpon>PageImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageImport.aspx.designer.cs">
+      <DependentUpon>PageImport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageTemplateUpdate.aspx.cs">
+      <DependentUpon>PageTemplateUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageTemplateUpdate.aspx.designer.cs">
+      <DependentUpon>PageTemplateUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageAddChild.aspx.cs">
+      <DependentUpon>PageAddChild.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageAddChild.aspx.designer.cs">
+      <DependentUpon>PageAddChild.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageChildSort.aspx.cs">
+      <DependentUpon>PageChildSort.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageChildSort.aspx.designer.cs">
+      <DependentUpon>PageChildSort.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageEdit.aspx.cs">
+      <DependentUpon>PageEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageEdit.aspx.designer.cs">
+      <DependentUpon>PageEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteSkinEdit.aspx.cs">
+      <DependentUpon>SiteSkinEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteSkinEdit.aspx.designer.cs">
+      <DependentUpon>SiteSkinEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteSkinIndex.aspx.cs">
+      <DependentUpon>SiteSkinIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteSkinIndex.aspx.designer.cs">
+      <DependentUpon>SiteSkinIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucCommentAddEdit.ascx.cs">
+      <DependentUpon>ucCommentAddEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucCommentAddEdit.ascx.designer.cs">
+      <DependentUpon>ucCommentAddEdit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucCommentIndex.ascx.cs">
+      <DependentUpon>ucCommentIndex.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucCommentIndex.ascx.designer.cs">
+      <DependentUpon>ucCommentIndex.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucEditNotifier.ascx.cs">
+      <DependentUpon>ucEditNotifier.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucEditNotifier.ascx.designer.cs">
+      <DependentUpon>ucEditNotifier.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucPageMenuItems.ascx.cs">
+      <DependentUpon>ucPageMenuItems.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucPageMenuItems.ascx.designer.cs">
+      <DependentUpon>ucPageMenuItems.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucSiteMap.ascx.cs">
+      <DependentUpon>ucSiteMap.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucSiteMap.ascx.designer.cs">
+      <DependentUpon>ucSiteMap.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucSitePageDrillDown.ascx.cs">
+      <DependentUpon>ucSitePageDrillDown.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucSitePageDrillDown.ascx.designer.cs">
+      <DependentUpon>ucSitePageDrillDown.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\FileBrowser.aspx.cs">
+      <DependentUpon>FileBrowser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\FileBrowser.aspx.designer.cs">
+      <DependentUpon>FileBrowser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ForgotPassword.aspx.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ForgotPassword.aspx.designer.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\Logon.aspx.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\Logon.aspx.designer.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\MasterPages\Main.Master.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\MasterPages\Main.Master.designer.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\MasterPages\MainPopup.Master.cs">
+      <DependentUpon>MainPopup.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\MasterPages\MainPopup.Master.designer.cs">
+      <DependentUpon>MainPopup.Master</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\MasterPages\Public.Master.cs">
+      <DependentUpon>Public.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\MasterPages\Public.Master.designer.cs">
+      <DependentUpon>Public.Master</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ModuleIndex.aspx.cs">
+      <DependentUpon>ModuleIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ModuleIndex.aspx.designer.cs">
+      <DependentUpon>ModuleIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageAddEdit.aspx.cs">
+      <DependentUpon>PageAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageAddEdit.aspx.designer.cs">
+      <DependentUpon>PageAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageHistory.aspx.cs">
+      <DependentUpon>PageHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageHistory.aspx.designer.cs">
+      <DependentUpon>PageHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\PageIndex.aspx.cs">
+      <DependentUpon>PageIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\PageIndex.aspx.designer.cs">
+      <DependentUpon>PageIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteMap.aspx.cs">
+      <DependentUpon>SiteMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteMap.aspx.designer.cs">
+      <DependentUpon>SiteMap.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucAdminModule.ascx.cs">
+      <DependentUpon>ucAdminModule.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucAdminModule.ascx.designer.cs">
+      <DependentUpon>ucAdminModule.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ucAdvancedEdit.ascx.cs">
+      <DependentUpon>ucAdvancedEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucAdvancedEdit.ascx.designer.cs">
+      <DependentUpon>ucAdvancedEdit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\User.aspx.cs">
+      <DependentUpon>User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\User.aspx.designer.cs">
+      <DependentUpon>User.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\UserAdd.aspx.cs">
+      <DependentUpon>UserAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\UserAdd.aspx.designer.cs">
+      <DependentUpon>UserAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\UserGroupAddEdit.aspx.cs">
+      <DependentUpon>UserGroupAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\UserGroupAddEdit.aspx.designer.cs">
+      <DependentUpon>UserGroupAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\UserGroups.aspx.cs">
+      <DependentUpon>UserGroups.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\UserGroups.aspx.designer.cs">
+      <DependentUpon>UserGroups.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\UserMembership.aspx.cs">
+      <DependentUpon>UserMembership.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\UserMembership.aspx.designer.cs">
+      <DependentUpon>UserMembership.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\UserPassword.aspx.cs">
+      <DependentUpon>UserPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\UserPassword.aspx.designer.cs">
+      <DependentUpon>UserPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\WidgetHistory.aspx.cs">
+      <DependentUpon>WidgetHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\WidgetHistory.aspx.designer.cs">
+      <DependentUpon>WidgetHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\WidgetList.aspx.cs">
+      <DependentUpon>WidgetList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\WidgetList.aspx.designer.cs">
+      <DependentUpon>WidgetList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\wp-SiteImport.aspx.cs">
+      <DependentUpon>wp-SiteImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\wp-SiteImport.aspx.designer.cs">
+      <DependentUpon>wp-SiteImport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CarrotCMSData\CMSData.csproj">
+      <Project>{88CC5073-9F28-42EB-A502-133DB06865A7}</Project>
+      <Name>CMSData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSControls\CMSControls.csproj">
+      <Project>{2DEB6A0C-B032-4B78-96BD-CC9271473CA1}</Project>
+      <Name>CMSControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSCore\CMSCore.csproj">
+      <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
+      <Name>CMSCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSBaseClasses\CMSBaseClasses.csproj">
+      <Project>{B2F5F85A-ECF8-4E1D-B2B4-15EB7F6A0ED5}</Project>
+      <Name>CMSBaseClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSDBUpdater\CMSDBUpdater.csproj">
+      <Project>{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}</Project>
+      <Name>CMSDBUpdater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
+      <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
+      <Name>CMSInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebControls\WebControls.csproj">
+      <Project>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</Project>
+      <Name>WebControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="abundant\abundant-index.aspx" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_15_f9cecd_40x100.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_b7d7c4_1x400.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_dff6e8_1x400.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_50_468b5e_1x400.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_80_b7d7c4_1x400.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_hexagon_90_eeeeee_12x10.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-soft_25_fbf9ee_1x100.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_2e83ff_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_468b5e_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_468b5e_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_525252_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_676f6a_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_b7d7c4_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_cd0a0a_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_dff6e8_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_ffffff_0.png" />
+    <Content Include="c3-admin\glossyseagreen\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-metro-scoped.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-metro-scoped2.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-metro.css" />
+    <Content Include="c3-admin\Images\arrowdown.png" />
+    <Content Include="c3-admin\Images\blogger.png" />
+    <Content Include="c3-admin\Images\clock.png" />
+    <Content Include="c3-admin\Images\clock_add.png" />
+    <Content Include="c3-admin\Images\clock_delete.png" />
+    <Content Include="c3-admin\Images\clock_edit.png" />
+    <Content Include="c3-admin\Images\clock_play.png" />
+    <Content Include="c3-admin\Images\clock_red.png" />
+    <Content Include="c3-admin\Images\clock_stop.png" />
+    <Content Include="c3-admin\Images\hourglass.png" />
+    <Content Include="c3-admin\Images\layers.png" />
+    <Content Include="c3-admin\Images\lightbulb.png" />
+    <Content Include="c3-admin\Images\lightbulb_off.png" />
+    <Content Include="c3-admin\Images\magifier_zoom_out.png" />
+    <Content Include="c3-admin\Images\magnifier.png" />
+    <Content Include="c3-admin\Images\page_code.png" />
+    <Content Include="c3-admin\Images\shape_move_back.png" />
+    <Content Include="c3-admin\Images\shape_ungroup.png" />
+    <Content Include="c3-admin\Images\time.png" />
+    <Content Include="c3-admin\Images\time_add.png" />
+    <Content Include="c3-admin\Images\time_delete.png" />
+    <Content Include="c3-admin\Images\zoom.png" />
+    <Content Include="c3-admin\Images\zoom_in.png" />
+    <Content Include="c3-admin\Images\zoom_out.png" />
+    <Content Include="c3-admin\Includes\edit-notifier.css" />
+    <Content Include="c3-admin\Includes\normalize.css" />
+    <Content Include="c3-admin\PageWidgets.aspx" />
+    <Content Include="c3-admin\SiteContentStatusChange.aspx" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped2.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen.css" />
+    <Content Include="c3-admin\Images\logonbox-bottomcenter.png" />
+    <Content Include="c3-admin\Images\logonbox-bottomleft.png" />
+    <Content Include="c3-admin\Images\logonbox-bottomright.png" />
+    <Content Include="c3-admin\Images\logonbox-left.png" />
+    <Content Include="c3-admin\Images\logonbox-right.png" />
+    <Content Include="c3-admin\Images\logonbox-topcenter.png" />
+    <Content Include="c3-admin\Images\logonbox-topleft.png" />
+    <Content Include="c3-admin\Images\logonbox-topright.png" />
+    <Content Include="c3-admin\Includes\advanced-editor-reset.css" />
+    <Content Include="c3-admin\Images\calendar.png" />
+    <Content Include="c3-admin\Images\dragbg.png" />
+    <Content Include="c3-admin\Includes\filebrowser.css" />
+    <Content Include="c3-admin\SiteExport.aspx" />
+    <Content Include="c3-admin\SiteMapPop.aspx" />
+    <Content Include="c3-admin\tiny_mce\classes\adapter\prototype\adapter.js" />
+    <Content Include="c3-admin\tiny_mce\classes\AddOnManager.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ControlManager.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\DOMUtils.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\Element.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\EventUtils.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\Range.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\RangeUtils.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\ScriptLoader.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\Selection.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\Serializer.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\Sizzle.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\TreeWalker.js" />
+    <Content Include="c3-admin\tiny_mce\classes\dom\TridentSelection.js" />
+    <Content Include="c3-admin\tiny_mce\classes\Editor.Events.js" />
+    <Content Include="c3-admin\tiny_mce\classes\Editor.js" />
+    <Content Include="c3-admin\tiny_mce\classes\EditorCommands.js" />
+    <Content Include="c3-admin\tiny_mce\classes\EditorManager.js" />
+    <Content Include="c3-admin\tiny_mce\classes\EnterKey.js" />
+    <Content Include="c3-admin\tiny_mce\classes\firebug\firebug-lite.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ForceBlocks.js" />
+    <Content Include="c3-admin\tiny_mce\classes\Formatter.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\DomParser.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\Entities.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\Node.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\SaxParser.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\Schema.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\Serializer.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\Styles.js" />
+    <Content Include="c3-admin\tiny_mce\classes\html\Writer.js" />
+    <Content Include="c3-admin\tiny_mce\classes\LegacyInput.js" />
+    <Content Include="c3-admin\tiny_mce\classes\Popup.js" />
+    <Content Include="c3-admin\tiny_mce\classes\tinymce.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\Button.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\ColorSplitButton.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\Container.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\Control.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\DropMenu.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\KeyboardNavigation.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\ListBox.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\Menu.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\MenuButton.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\MenuItem.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\NativeListBox.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\Separator.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\SplitButton.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\Toolbar.js" />
+    <Content Include="c3-admin\tiny_mce\classes\ui\ToolbarGroup.js" />
+    <Content Include="c3-admin\tiny_mce\classes\UndoManager.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\Cookie.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\Dispatcher.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\JSON.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\JSONP.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\JSONRequest.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\Quirks.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\URI.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\VK.js" />
+    <Content Include="c3-admin\tiny_mce\classes\util\XHR.js" />
+    <Content Include="c3-admin\tiny_mce\classes\WindowManager.js" />
+    <Content Include="c3-admin\tiny_mce\langs\en.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advhr\css\advhr.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\advhr\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advhr\js\rule.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advhr\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advhr\rule.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\advimage\css\advimage.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\advimage\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advimage\image.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\advimage\img\sample.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\advimage\js\image.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advimage\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advlink\css\advlink.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\advlink\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advlink\js\advlink.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advlink\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\advlink\link.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\advlist\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\autolink\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\autoresize\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\autosave\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\bbcode\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\contextmenu\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\directionality\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\emotions.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-cool.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-cry.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-embarassed.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-foot-in-mouth.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-frown.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-innocent.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-kiss.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-laughing.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-money-mouth.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-sealed.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-smile.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-surprised.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-tongue-out.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-undecided.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-wink.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\img\smiley-yell.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\js\emotions.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\emotions\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\example\dialog.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\example\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\example\img\example.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\example\js\dialog.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\example\langs\en.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\example\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\example_dependency\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\fullpage\css\fullpage.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\fullpage\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\fullpage\fullpage.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\fullpage\js\fullpage.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\fullpage\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\fullscreen\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\fullscreen\fullscreen.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\iespell\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\img\alert.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\img\button.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\img\buttons.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\img\confirm.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\img\corners.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\img\horizontal.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\img\vertical.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\window.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\template.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\insertdatetime\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\layer\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\legacyoutput\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\lists\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\media\css\media.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\media\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\media\js\embed.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\media\js\media.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\media\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\media\media.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\media\moxieplayer.swf" />
+    <Content Include="c3-admin\tiny_mce\plugins\nonbreaking\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\noneditable\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\pagebreak\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\paste\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\paste\js\pastetext.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\paste\js\pasteword.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\paste\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\paste\pastetext.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\paste\pasteword.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\preview\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\preview\example.html" />
+    <Content Include="c3-admin\tiny_mce\plugins\preview\jscripts\embed.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\preview\preview.html" />
+    <Content Include="c3-admin\tiny_mce\plugins\print\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\save\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\searchreplace\css\searchreplace.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\searchreplace\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\searchreplace\js\searchreplace.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\searchreplace\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\searchreplace\searchreplace.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\spellchecker\css\content.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\spellchecker\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\spellchecker\img\wline.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\style\css\props.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\style\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\style\js\props.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\style\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\style\props.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\style\readme.txt" />
+    <Content Include="c3-admin\tiny_mce\plugins\tabfocus\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\cell.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\css\cell.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\css\row.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\css\table.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\js\cell.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\js\merge_cells.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\js\row.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\js\table.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\merge_cells.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\row.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\table\table.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\template\blank.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\template\css\template.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\template\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\template\js\template.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\template\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\template\template.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\visualblocks\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\visualchars\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\wordcount\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\abbr.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\acronym.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\attributes.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\cite.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\css\attributes.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\css\popup.css" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\del.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\ins.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\js\abbr.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\js\acronym.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\js\attributes.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\js\cite.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\js\del.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\js\element_common.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\js\ins.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\xhtmlxtras\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\about.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\anchor.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\charmap.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\color_picker.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\editor_template.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\image.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\colorpicker.jpg" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\flash.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\icons.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\iframe.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\pagebreak.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\quicktime.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\realmedia.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\shockwave.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\trans.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\video.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\img\windowsmedia.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\js\about.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\js\anchor.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\js\charmap.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\js\color_picker.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\js\image.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\js\link.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\js\source_editor.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\langs\en.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\langs\en_dlg.js" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\link.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\shortcuts.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\content.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\dialog.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\img\buttons.png" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\img\items.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\img\menu_arrow.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\img\menu_check.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\img\progress.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\img\tabs.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\default\ui.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\highcontrast\content.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\highcontrast\dialog.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\highcontrast\ui.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\content.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\dialog.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\img\button_bg.png" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\img\button_bg_black.png" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\img\button_bg_silver.png" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\ui.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\ui_black.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\skins\o2k7\ui_silver.css" />
+    <Content Include="c3-admin\tiny_mce\themes\advanced\source_editor.htm" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\editor_template.js" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\img\icons.gif" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\langs\en.js" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\skins\default\content.css" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\skins\default\ui.css" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\content.css" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\img\button_bg.png" />
+    <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\ui.css" />
+    <Content Include="c3-admin\tiny_mce\tiny_mce_prototype.js" />
+    <Content Include="c3-admin\tiny_mce\utils\editable_selects.js" />
+    <Content Include="c3-admin\tiny_mce\utils\form_utils.js" />
+    <Content Include="c3-admin\tiny_mce\utils\mctabs.js" />
+    <Content Include="c3-admin\tiny_mce\utils\validate.js" />
+    <Content Include="c3-admin\ucSiteMap.ascx" />
+    <Content Include="citrus-island\citrus2.aspx" />
+    <Content Include="citrus-island\citrus1-index.aspx" />
+    <Content Include="citrus-island\citrus1-post.aspx" />
+    <Content Include="global.asax" />
+    <Content Include="c3-admin\BlogPostAddEdit.aspx" />
+    <Content Include="c3-admin\BlogPostIndex.aspx" />
+    <Content Include="c3-admin\BlogPostTemplateUpdate.aspx" />
+    <Content Include="c3-admin\CategoryAddEdit.aspx" />
+    <Content Include="c3-admin\CategoryIndex.aspx" />
+    <Content Include="c3-admin\CommentAddEdit.aspx" />
+    <Content Include="c3-admin\CommentIndex.aspx" />
+    <Content Include="c3-admin\CommentAddEditPop.aspx" />
+    <Content Include="c3-admin\CommentIndexPop.aspx" />
+    <Content Include="c3-admin\BlogPostEdit.aspx" />
+    <Content Include="c3-admin\Images\accept.png" />
+    <Content Include="c3-admin\Images\add.png" />
+    <Content Include="c3-admin\Images\ani-drip.gif" />
+    <Content Include="c3-admin\Images\ani-flower.gif" />
+    <Content Include="c3-admin\Images\ani-smallbar.gif" />
+    <Content Include="c3-admin\Images\application.png" />
+    <Content Include="c3-admin\Images\application_edit.png" />
+    <Content Include="c3-admin\Images\application_lightning.png" />
+    <Content Include="c3-admin\Images\application_side_expand.png" />
+    <Content Include="c3-admin\Images\application_view_icons.png" />
+    <Content Include="c3-admin\Images\application_view_tile.png" />
+    <Content Include="c3-admin\Images\arrow_in.png" />
+    <Content Include="c3-admin\Images\audio.png" />
+    <Content Include="c3-admin\Images\back.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_bottom.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_bottomLeft.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_bottomRight.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_left.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_right.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_tail.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_top.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_topLeft.png" />
+    <Content Include="c3-admin\Images\balloons\balloon_topRight.png" />
+    <Content Include="c3-admin\Images\book_next.png" />
+    <Content Include="c3-admin\Images\book_previous.png" />
+    <Content Include="c3-admin\Images\brick.png" />
+    <Content Include="c3-admin\Images\bullet_toggle_minus.png" />
+    <Content Include="c3-admin\Images\bullet_toggle_plus.png" />
+    <Content Include="c3-admin\Images\cancel.png" />
+    <Content Include="c3-admin\Images\carrotcake.png" />
+    <Content Include="c3-admin\Images\carrotpower.png" />
+    <Content Include="c3-admin\Images\carrot_med.png" />
+    <Content Include="c3-admin\Images\carrot_sm.png" />
+    <Content Include="c3-admin\Images\chart_organisation.png" />
+    <Content Include="c3-admin\Images\cog.png" />
+    <Content Include="c3-admin\Images\cog_edit.png" />
+    <Content Include="c3-admin\Images\cog_go.png" />
+    <Content Include="c3-admin\Images\comment.png" />
+    <Content Include="c3-admin\Images\comments.png" />
+    <Content Include="c3-admin\Images\compress.png" />
+    <Content Include="c3-admin\Images\cross.png" />
+    <Content Include="c3-admin\Images\doc.png" />
+    <Content Include="c3-admin\Images\document.png" />
+    <Content Include="c3-admin\Images\error.png" />
+    <Content Include="c3-admin\Images\exclamation.png" />
+    <Content Include="c3-admin\Images\file_doc.png" />
+    <Content Include="c3-admin\Images\film.png" />
+    <Content Include="c3-admin\Images\flag_blue.png" />
+    <Content Include="c3-admin\Images\flag_green.png" />
+    <Content Include="c3-admin\Images\flag_orange.png" />
+    <Content Include="c3-admin\Images\flag_pink.png" />
+    <Content Include="c3-admin\Images\flag_purple.png" />
+    <Content Include="c3-admin\Images\flag_red.png" />
+    <Content Include="c3-admin\Images\flag_yellow.png" />
+    <Content Include="c3-admin\Images\folder.png" />
+    <Content Include="c3-admin\Images\folder_up.png" />
+    <Content Include="c3-admin\Images\group.png" />
+    <Content Include="c3-admin\Images\heading-gradient.png" />
+    <Content Include="c3-admin\Images\house.png" />
+    <Content Include="c3-admin\Images\house_go.png" />
+    <Content Include="c3-admin\Images\html.png" />
+    <Content Include="c3-admin\Images\html2.png" />
+    <Content Include="c3-admin\Images\html_go.png" />
+    <Content Include="c3-admin\Images\image.png" />
+    <Content Include="c3-admin\Images\layout.png" />
+    <Content Include="c3-admin\Images\layout_content.png" />
+    <Content Include="c3-admin\Images\layout_edit.png" />
+    <Content Include="c3-admin\Images\lock.png" />
+    <Content Include="c3-admin\Images\logonbox.gif" />
+    <Content Include="c3-admin\Images\menu-gradient.png" />
+    <Content Include="c3-admin\Images\mini-spinner1-6F997D.gif" />
+    <Content Include="c3-admin\Images\mini-spinner2-6F997D.gif" />
+    <Content Include="c3-admin\Images\mini-spinner3-6F997D.gif" />
+    <Content Include="c3-admin\Images\overlays.png" />
+    <Content Include="c3-admin\Images\package.png" />
+    <Content Include="c3-admin\Images\page.png" />
+    <Content Include="c3-admin\Images\page_add.png" />
+    <Content Include="c3-admin\Images\page_edit.png" />
+    <Content Include="c3-admin\Images\page_gear.png" />
+    <Content Include="c3-admin\Images\page_paintbrush.png" />
+    <Content Include="c3-admin\Images\page_white.png" />
+    <Content Include="c3-admin\Images\page_white_text.png" />
+    <Content Include="c3-admin\Images\page_white_wrench.png" />
+    <Content Include="c3-admin\Images\page_world.png" />
+    <Content Include="c3-admin\Images\pdf.png" />
+    <Content Include="c3-admin\Images\pencil.png" />
+    <Content Include="c3-admin\Images\plain.png" />
+    <Content Include="c3-admin\Images\plugin.png" />
+    <Content Include="c3-admin\Images\Ring-64px-72A584.gif" />
+    <Content Include="c3-admin\Images\Ring-64px-A7B2A0.gif" />
+    <Content Include="c3-admin\Images\script.png" />
+    <Content Include="c3-admin\Images\script_add.png" />
+    <Content Include="c3-admin\Images\script_code.png" />
+    <Content Include="c3-admin\Images\script_code_red.png" />
+    <Content Include="c3-admin\Images\script_edit.png" />
+    <Content Include="c3-admin\Images\shield.png" />
+    <Content Include="c3-admin\Images\Snake-64px-72A584.gif" />
+    <Content Include="c3-admin\Images\Snake-64px-A7B2A0.gif" />
+    <Content Include="c3-admin\Images\spreadsheet.png" />
+    <Content Include="c3-admin\Images\table.png" />
+    <Content Include="c3-admin\Images\table_go.png" />
+    <Content Include="c3-admin\Images\thumb_down.png" />
+    <Content Include="c3-admin\Images\thumb_up.png" />
+    <Content Include="c3-admin\Images\tick.png" />
+    <Content Include="c3-admin\Images\ui-anim_basic_16x16.gif" />
+    <Content Include="c3-admin\Images\user.png" />
+    <Content Include="c3-admin\Images\user_gray.png" />
+    <Content Include="c3-admin\Images\user_green.png" />
+    <Content Include="c3-admin\Images\user_orange.png" />
+    <Content Include="c3-admin\Images\user_red.png" />
+    <Content Include="c3-admin\Images\video.png" />
+    <Content Include="c3-admin\Images\webpage.png" />
+    <Content Include="c3-admin\Images\wordprocessing.png" />
+    <Content Include="c3-admin\Images\x.png" />
+    <Content Include="c3-admin\Includes\common.css" />
+    <Content Include="c3-admin\Includes\jquery.ui.timepicker.css" />
+    <Content Include="c3-admin\Includes\jquery.ui.timepicker.js" />
+    <Content Include="c3-admin\SiteImport.aspx" />
+    <Content Include="c3-admin\SiteTemplateUpdate.aspx" />
+    <Content Include="c3-admin\TagAddEdit.aspx" />
+    <Content Include="c3-admin\TagIndex.aspx" />
+    <Content Include="c3-admin\ucBlogMenuItems.ascx" />
+    <Content Include="c3-admin\CreateFirstAdmin.aspx" />
+    <Content Include="c3-admin\DatabaseSetup.aspx" />
+    <Content Include="c3-admin\ModulePopup.aspx" />
+    <Content Include="c3-admin\Includes\advanced-editor.js" />
+    <Content Include="c3-admin\Includes\common-utils.js" />
+    <Content Include="c3-admin\Includes\tinymce-config.js" />
+    <Content Include="c3-admin\PageExport.aspx" />
+    <Content Include="c3-admin\PageImport.aspx" />
+    <Content Include="c3-admin\PageTemplateUpdate.aspx" />
+    <Content Include="c3-admin\PageAddChild.aspx" />
+    <Content Include="c3-admin\Includes\advanced-editor.css" />
+    <Content Include="c3-admin\Includes\tooltiphelper.css" />
+    <Content Include="c3-admin\Includes\tooltiphelper.js" />
+    <Content Include="c3-admin\PageChildSort.aspx" />
+    <Content Include="c3-admin\SiteSkinEdit.aspx" />
+    <Content Include="c3-admin\SiteSkinIndex.aspx" />
+    <Content Include="c3-admin\tiny_mce\File.gif" />
+    <Content Include="c3-admin\tiny_mce\fileUp.gif" />
+    <Content Include="c3-admin\tiny_mce\Folder.gif" />
+    <Content Include="c3-admin\tiny_mce\FolderOpened.gif" />
+    <Content Include="c3-admin\tiny_mce\FolderUp.gif" />
+    <Content Include="c3-admin\tiny_mce\insertfile.gif" />
+    <Content Include="c3-admin\tiny_mce\jquery.tinymce.js" />
+    <Content Include="c3-admin\tiny_mce\license.txt" />
+    <Content Include="c3-admin\tiny_mce\tiny_mce.js" />
+    <Content Include="c3-admin\tiny_mce\tiny_mce_popup.js" />
+    <Content Include="c3-admin\ucCommentAddEdit.ascx" />
+    <Content Include="c3-admin\ucCommentIndex.ascx" />
+    <Content Include="c3-admin\ucPageMenuItems.ascx" />
+    <Content Include="c3-admin\ucSitePageDrillDown.ascx" />
+    <Content Include="c3-admin\UserGroupAddEdit.aspx" />
+    <Content Include="c3-admin\UserGroups.aspx" />
+    <Content Include="c3-admin\WidgetHistory.aspx" />
+    <Content Include="c3-admin\WidgetList.aspx" />
+    <Content Include="c3-admin\wp-SiteImport.aspx" />
+    <Content Include="SiteSkins.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="c3-admin\CMS.asmx" />
+    <Content Include="c3-admin\Default.aspx" />
+    <Content Include="c3-admin\FileBrowser.aspx" />
+    <Content Include="c3-admin\ForgotPassword.aspx" />
+    <Content Include="c3-admin\Includes\jquery.blockUI.js" />
+    <Content Include="c3-admin\Includes\jquery.simplemodal.js" />
+    <Content Include="c3-admin\Includes\logon.css" />
+    <Content Include="c3-admin\Includes\main.css" />
+    <Content Include="c3-admin\Includes\mainpopup.css" />
+    <Content Include="c3-admin\Includes\modal.css" />
+    <Content Include="c3-admin\Includes\richedit.css" />
+    <Content Include="c3-admin\Includes\TableStyles.css" />
+    <Content Include="c3-admin\Logon.aspx" />
+    <Content Include="c3-admin\MasterPages\Main.Master" />
+    <Content Include="c3-admin\MasterPages\MainPopup.Master" />
+    <Content Include="c3-admin\MasterPages\Public.Master" />
+    <Content Include="c3-admin\ModuleIndex.aspx" />
+    <Content Include="c3-admin\PageAddEdit.aspx" />
+    <Content Include="c3-admin\PageIndex.aspx" />
+    <Content Include="c3-admin\ucAdvancedEdit.ascx" />
+    <Content Include="c3-admin\User.aspx" />
+    <Content Include="c3-admin\UserAdd.aspx" />
+    <Content Include="c3-admin\UserMembership.aspx" />
+    <Content Include="c3-admin\UserPassword.aspx" />
+    <Content Include="c3-admin\web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="abundant\abundant.aspx" />
+    <Content Include="abundant\images\img01.jpg" />
+    <Content Include="abundant\images\img02.jpg" />
+    <Content Include="abundant\images\img03.jpg" />
+    <Content Include="abundant\images\img04.jpg" />
+    <Content Include="abundant\images\img05.jpg" />
+    <Content Include="abundant\images\img06.gif" />
+    <Content Include="abundant\style.css" />
+    <Content Include="citrus-island\citrus1.aspx" />
+    <Content Include="citrus-island\images\arrow.gif" />
+    <Content Include="citrus-island\images\bg.gif" />
+    <Content Include="citrus-island\images\CitrusIsland.css" />
+    <Content Include="citrus-island\images\clock.gif" />
+    <Content Include="citrus-island\images\comment.gif" />
+    <Content Include="citrus-island\images\firefox-gray.jpg" />
+    <Content Include="citrus-island\images\footerbg.gif" />
+    <Content Include="citrus-island\images\menu-current-bg.gif" />
+    <Content Include="citrus-island\images\menu-hover-bg.gif" />
+    <Content Include="citrus-island\images\menubg.gif" />
+    <Content Include="citrus-island\images\page.gif" />
+    <Content Include="citrus-island\images\quote.gif" />
+    <Content Include="citrus-island\style.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="GPL-LICENSE.txt" />
+    <Content Include="c3-admin\about.aspx" />
+    <Content Include="c3-admin\ContentEdit.aspx" />
+    <Content Include="c3-admin\PageEdit.aspx" />
+    <Content Include="c3-admin\ucEditNotifier.ascx" />
+    <Content Include="MIT-LICENSE.txt" />
+    <Content Include="Site_4\images\block_h.png" />
+    <Content Include="Site_4\images\block_s.png" />
+    <Content Include="Site_4\images\block_v.png" />
+    <Content Include="Site_4\images\Bottom_texture.jpg" />
+    <Content Include="Site_4\images\button.png" />
+    <Content Include="Site_4\images\footer_t.png" />
+    <Content Include="Site_4\images\header.jpg" />
+    <Content Include="Site_4\images\menuitem.png" />
+    <Content Include="Site_4\images\menuseparator.png" />
+    <Content Include="Site_4\images\nav.png" />
+    <Content Include="Site_4\images\postauthoricon.png" />
+    <Content Include="Site_4\images\postbullets.png" />
+    <Content Include="Site_4\images\postcategoryicon.png" />
+    <Content Include="Site_4\images\postcommentsicon.png" />
+    <Content Include="Site_4\images\postdateicon.png" />
+    <Content Include="Site_4\images\postediticon.png" />
+    <Content Include="Site_4\images\postquote.png" />
+    <Content Include="Site_4\images\posttagicon.png" />
+    <Content Include="Site_4\images\preview.jpg" />
+    <Content Include="Site_4\images\rssicon.png" />
+    <Content Include="Site_4\images\sheet_h.png" />
+    <Content Include="Site_4\images\sheet_s.png" />
+    <Content Include="Site_4\images\sheet_v.png" />
+    <Content Include="Site_4\images\spacer.gif" />
+    <Content Include="Site_4\images\subitem.png" />
+    <Content Include="Site_4\images\vmenublock_h.png" />
+    <Content Include="Site_4\images\vmenublock_s.png" />
+    <Content Include="Site_4\images\vmenublock_v.png" />
+    <Content Include="Site_4\images\vmenuitem.png" />
+    <Content Include="Site_4\script.js" />
+    <Content Include="Site_4\style.css" />
+    <Content Include="Site_4\style.ie6.css" />
+    <Content Include="Site_4\style.ie7.css" />
+    <Content Include="Site_4\template4.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PublicControls.config" />
+    <Content Include="c3-admin\ControlPropertiesEdit.aspx" />
+    <Content Include="c3-admin\Includes\base64.js" />
+    <Content Include="c3-admin\Includes\jquery.ui.nestedSortable.js" />
+    <Content Include="c3-admin\PageHistory.aspx" />
+    <Content Include="c3-admin\PlainTemplate.aspx" />
+    <Content Include="c3-admin\SiteMap.aspx" />
+    <Content Include="c3-admin\ucAdminModule.ascx" />
+    <Content Include="SiteMapping.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="c3-admin\tiny_mce\plugins\autosave\langs\" />
+    <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\classes\utils\" />
+    <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\includes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="c3-admin\tiny_mce\tiny_mce.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="abundant\abundant.master" />
+    <Content Include="abundant\abundant-orig.zip" />
+    <Content Include="AdminModules.config" />
+    <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Site_4\Site_4-orig.zip" />
+    <Content Include="citrus-island\citrus-island-orig.zip" />
+    <None Include="c3-admin\tiny_mce\classes\firebug\FIREBUG.LICENSE" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>60836</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
