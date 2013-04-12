@@ -175,6 +175,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabContent;
         
         /// <summary>
+        /// tabAddContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabAddContent;
+        
+        /// <summary>
         /// tabContentTemplate control.
         /// </summary>
         /// <remarks>
@@ -218,6 +227,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabBlogContent;
+        
+        /// <summary>
+        /// tabAddBlogContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabAddBlogContent;
         
         /// <summary>
         /// tabBlogTemplate control.

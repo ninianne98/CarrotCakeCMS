@@ -191,8 +191,8 @@
 							<asp:ListItem Text="allow search engine indexing" Value="searchengine" />
 							<asp:ListItem Text="BLOCK search engine indexing **" Value="searchengine-no" />
 						</asp:DropDownList>
-						<asp:CompareValidator ID="CompareValidator1" runat="server" ValidationGroup="updateStatus" Text="Invalid" Operator="NotEqual" ControlToValidate="ddlAction"
-							ValueToCompare="none" />
+						<asp:CompareValidator ID="CompareValidator1" runat="server" ValidationGroup="updateStatus" Text="Invalid" Operator="NotEqual" CssClass="validationError"
+							ForeColor="" ControlToValidate="ddlAction" ValueToCompare="none" />
 					</td>
 				</tr>
 			</table>

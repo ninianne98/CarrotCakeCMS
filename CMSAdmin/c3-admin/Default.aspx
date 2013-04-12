@@ -5,11 +5,11 @@
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
-		var webSvc = "/c3-admin/CMS.asmx";
-
+		var webSvc = cmsGetServiceAddress();
 
 		$(document).ready(function () {
-			CheckFolderPrefixes();
+			setTimeout("CheckFolderPrefixes();", 250);
+			cmsIsPageValid();
 		});
 
 		function CheckFolderPrefixes() {
@@ -43,12 +43,16 @@
 				cmsAlertModal(data.d);
 			}
 
+			var fldrValid = '#<%= txtFoldersValid.ClientID %>';
+
 			if (data.d == "OK") {
-				$('#<%= txtFoldersValid.ClientID %>').val('VALID');
+				$(fldrValid).val('VALID');
 			} else {
-				$('#<%= txtFoldersValid.ClientID %>').val('');
+				$(fldrValid).val('NOT VALID');
 			}
-			Page_ClientValidate();
+
+			//var ret = cmsIsPageValid();
+			cmsForceInputValidation('<%= txtFoldersValid.ClientID %>');
 		}
 
 		function ExportContent() {
@@ -68,7 +72,7 @@
 		<input type="button" runat="server" id="btnExport" value="Export Site" onclick="ExportContent();" /> --%>
 		<br />
 	</p>
-	<fieldset style="width: 650px;">
+	<fieldset style="width: 675px;">
 		<legend>
 			<label>
 				Site Information
@@ -76,7 +80,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 175px;">
+				<td class="tablecaption" style="width: 160px;">
 					Site ID
 				</td>
 				<td>
@@ -92,8 +96,8 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="100" Columns="80" Style="width: 425px;"
 						runat="server" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-						Display="Dynamic" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1"
+						runat="server" ErrorMessage="Site Name is required" ToolTip="Site Name is required" Text="**" Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -119,8 +123,7 @@
 					Site Time Zone
 				</td>
 				<td>
-					<asp:DropDownList ID="ddlTimeZone" runat="server" DataTextField="DisplayName" DataValueField="Id">
-					</asp:DropDownList>
+					<asp:DropDownList ID="ddlTimeZone" runat="server" DataTextField="DisplayName" DataValueField="Id" />
 				</td>
 			</tr>
 			<tr>
@@ -129,8 +132,8 @@
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;" runat="server" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtURL" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Required"
-						Display="Dynamic" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtURL" ID="RequiredFieldValidator2"
+						runat="server" ErrorMessage="Site URL is required" ToolTip="Site URL is required" Text="**" Display="Dynamic" />
 				</td>
 			</tr>
 			<tr id="trSiteIndex" runat="server">
@@ -164,7 +167,7 @@
 			</tr>
 		</table>
 	</fieldset>
-	<fieldset style="width: 650px;">
+	<fieldset style="width: 675px;">
 		<legend>
 			<label>
 				Meta Data
@@ -189,7 +192,7 @@
 			</tr>
 		</table>
 	</fieldset>
-	<fieldset style="width: 650px;">
+	<fieldset style="width: 675px;">
 		<legend>
 			<label>
 				Blog Settings
@@ -201,9 +204,10 @@
 					&nbsp;
 				</td>
 				<td>
-					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFoldersValid" MaxLength="25" Columns="25" Style="display: none;" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFoldersValid" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Blog folder parameters are not unique or not provided"
-						Display="Dynamic" />
+					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFoldersValid" ID="CompareValidator1" runat="server"
+						ErrorMessage="Blog folder parameters are not unique or not provided" ToolTip="Blog folder parameters are not unique or not provided" Text="Blog Configuration Errors"
+						Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+					&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -213,6 +217,8 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="60" Style="width: 350px;"
 						runat="server" onblur="CheckFolderPrefixes()" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFolderPath" ID="RequiredFieldValidator4"
+						runat="server" ErrorMessage="Blog Feature Base Folder is required" ToolTip="Blog Feature Base Folder is required" Text="**" Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -222,6 +228,8 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="60" Style="width: 350px;"
 						runat="server" onblur="CheckFolderPrefixes()" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtCategoryPath" ID="RequiredFieldValidator5"
+						runat="server" ErrorMessage="Blog Category Path is required" ToolTip="Blog Category Path is required" Text="**" Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -231,6 +239,8 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="60" Style="width: 350px;" runat="server"
 						onblur="CheckFolderPrefixes()" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTagPath" ID="RequiredFieldValidator6"
+						runat="server" ErrorMessage="Blog Tag Path is required" ToolTip="Blog Tag Path is required" Text="**" Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -240,6 +250,8 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtDatePath" MaxLength="48" Columns="60" Style="width: 350px;"
 						runat="server" onblur="CheckFolderPrefixes()" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtDatePath" ID="RequiredFieldValidator7"
+						runat="server" ErrorMessage="Blog Date Path is required" ToolTip="Blog Date Path is required" Text="**" Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>
@@ -258,8 +270,26 @@
 				</td>
 			</tr>
 		</table>
+		<div style="display: none;">
+			<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFoldersValid" MaxLength="25" Columns="25" />
+		</div>
 	</fieldset>
+	<div style="display: none;">
+		<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
+	</div>
 	<br />
-	<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" Text="Apply Changes" OnClick="btnSave_Click" />
+	<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" Text="Apply Changes" OnClick="btnSave_Click" OnClientClick="return ClickApplyBtn()" />
 	<br />
+	<script type="text/javascript">
+		function ClickApplyBtn() {
+			CheckFolderPrefixes();
+
+			if (cmsIsPageValid()) {
+				return true;
+			} else {
+				cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+				return false;
+			}
+		}
+	</script>
 </asp:Content>

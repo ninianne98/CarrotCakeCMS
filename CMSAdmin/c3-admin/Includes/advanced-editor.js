@@ -210,6 +210,9 @@ function cmsRequireConfirmToLeave(confirmLeave) {
 	cmsConfirmLeavingPage = confirmLeave;
 }
 
+function cmsGetOKToLeaveStatus() {
+	return cmsConfirmLeavingPage;
+}
 
 //=============================================
 
@@ -611,16 +614,21 @@ function cmsSendTrackbackBatch() {
 
 	var webMthd = webSvc + "/SendTrackbackBatch";
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsAjaxGeneralCallback,
-		error: cmsAjaxFailedSwallow
-	});
+	if (!cmsGetOKToLeaveStatus()) {
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsAjaxGeneralCallback,
+			error: cmsAjaxFailedSwallow
+		});
+
+	}
 
 	setTimeout("cmsSendTrackbackBatch();", 15000);
+
 }
 
 setTimeout("cmsSendTrackbackBatch();", 5000);
@@ -629,15 +637,19 @@ function cmsSendTrackbackPageBatch() {
 
 	var webMthd = webSvc + "/SendTrackbackPageBatch";
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		data: "{'ThisPage': '" + thisPageID + "'}",
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsAjaxGeneralCallback,
-		error: cmsAjaxFailedSwallow
-	});
+	if (!cmsGetOKToLeaveStatus()) {
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsAjaxGeneralCallback,
+			error: cmsAjaxFailedSwallow
+		});
+
+	}
 
 	setTimeout("cmsSendTrackbackPageBatch();", 3000);
 }

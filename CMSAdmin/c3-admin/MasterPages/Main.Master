@@ -104,6 +104,7 @@
 				<li runat="server" id="tabContentTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Pages </a>
 					<ul class="children">
 						<li runat="server" id="tabContent"><a href="/c3-admin/PageIndex.aspx">Page Index</a> </li>
+						<li runat="server" id="tabAddContent"><a href="/c3-admin/PageAddEdit.aspx">Add Page</a> </li>
 						<li runat="server" id="tabContentTemplate"><a href="/c3-admin/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabContentSiteMap"><a href="/c3-admin/SiteMap.aspx">Edit Site Map</a> </li>
 						<li runat="server" id="tabContentCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
@@ -112,6 +113,7 @@
 				<li runat="server" id="tabBlogTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
 					<ul class="children">
 						<li runat="server" id="tabBlogContent"><a href="/c3-admin/BlogPostIndex.aspx">Blog Post Index</a> </li>
+						<li runat="server" id="tabAddBlogContent"><a href="/c3-admin/BlogPostAddEdit.aspx">Add Blog Post</a> </li>
 						<li runat="server" id="tabBlogTemplate"><a href="/c3-admin/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabBlogCategoryIndex"><a href="/c3-admin/CategoryIndex.aspx">Blog Category Index</a> </li>
 						<li runat="server" id="tabBlogTagIndex"><a href="/c3-admin/TagIndex.aspx">Blog Tag Index</a> </li>

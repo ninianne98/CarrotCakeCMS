@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
-		var webSvc = "/c3-admin/CMS.asmx";
+		var webSvc = cmsGetServiceAddress();
 		var thisPageID = '<%=guidContentID.ToString() %>';
 
 		function cmsGetWidgetText(val) {

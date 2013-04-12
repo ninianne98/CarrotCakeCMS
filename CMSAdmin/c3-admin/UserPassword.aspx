@@ -16,19 +16,24 @@
 		<table style="width: 380px;">
 			<tr>
 				<td colspan="2">
-					<p>
-						<asp:Label ID="lblEmail" runat="server"></asp:Label>
-						&nbsp;</p>
+					<div class="ui-widget" id="divInfoMsg" runat="server">
+						<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+								<asp:Literal ID="InfoMessage" runat="server" EnableViewState="False" />&nbsp;
+							</p>
+						</div>
+					</div>
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecontents">
+				<td class="tablecontents" style="width: 100px;">
 					<b class="caption">Email</b>
 				</td>
 				<td class="tablecontents">
 					<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtEmail" runat="server" ValidationGroup="changeEmail" />
-					<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtEmail" ErrorMessage="!" ToolTip="Email is required." ValidationGroup="changeEmail"
-						Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+					<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail" ErrorMessage="!"
+						ToolTip="Email is required." ValidationGroup="changeEmail" Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -75,18 +80,18 @@
 				<ChangePasswordTemplate>
 					<div style="width: 380px">
 						<p style="color: #FF0000;">
-							<asp:Label ID="FailureText" runat="server" EnableViewState="False"></asp:Label>
+							<asp:Label ID="FailureText" runat="server" EnableViewState="False" />
 						</p>
 						<table style="width: 350px;">
 							<tr>
-								<td class="tablecontents">
+								<td class="tablecontents" style="width: 140px;">
 									<b class="caption">Current Password </b>
 								</td>
 								<td class="tablecontents">
 									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" MaxLength="100" ID="CurrentPassword" TextMode="Password"
 										runat="server" />
-									<asp:RequiredFieldValidator ID="CurrentPasswordRequired" runat="server" ControlToValidate="CurrentPassword" ErrorMessage="!" ToolTip="CurrentPassword is required."
-										ValidationGroup="changePassword" Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+									<asp:RequiredFieldValidator ID="CurrentPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="CurrentPassword" ErrorMessage="!"
+										ToolTip="Current password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 							<tr>
@@ -95,8 +100,8 @@
 								</td>
 								<td class="tablecontents">
 									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" ID="NewPassword" runat="server" TextMode="Password" />
-									<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="NewPassword" ErrorMessage="!" ToolTip="Password is required." ValidationGroup="changePassword"
-										Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+									<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="NewPassword" ErrorMessage="!"
+										ToolTip="Password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 							<tr>
@@ -105,22 +110,26 @@
 								</td>
 								<td class="tablecontents">
 									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" ID="ConfirmNewPassword" runat="server" TextMode="Password" />
-									<asp:RequiredFieldValidator ID="ConfirmNewPasswordRequired" runat="server" ControlToValidate="ConfirmNewPassword" ErrorMessage="!" ToolTip="Confirm Password is required."
-										ValidationGroup="changePassword" Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
-									<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="NewPassword" ControlToValidate="ConfirmNewPassword" Display="Dynamic" ErrorMessage="!!"
-										ToolTip="Both new passwords must match." ValidationGroup="createWizard" />
+									<asp:RequiredFieldValidator ID="ConfirmNewPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmNewPassword"
+										ErrorMessage="!" ToolTip="Confirm Password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
+									<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="NewPassword" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmNewPassword"
+										Display="Dynamic" ErrorMessage="!!" ToolTip="Both new passwords must match." ValidationGroup="changePassword" />
 								</td>
 							</tr>
 						</table>
 						<p style="text-align: right; padding-right: 40px;">
-							<asp:Button ID="btnChange" ValidationGroup="createWizard" runat="server" CommandName="ChangePassword" Text="Submit" />
+							<asp:Button ID="btnChange" ValidationGroup="changePassword" runat="server" CommandName="changePassword" Text="Submit" />
 						</p>
 					</div>
 				</ChangePasswordTemplate>
 				<SuccessTemplate>
-					<p>
-						Your Password has been changed.
-					</p>
+					<div class="ui-widget">
+						<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+							<p>
+								<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Your Password has been changed. &nbsp;
+							</p>
+						</div>
+					</div>
 				</SuccessTemplate>
 			</asp:ChangePassword>
 		</asp:Panel>

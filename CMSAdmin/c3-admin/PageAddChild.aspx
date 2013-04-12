@@ -3,12 +3,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
-		var webSvc = "/c3-admin/CMS.asmx";
+		var webSvc = cmsGetServiceAddress();
 
 		var thePageID = '<%=Guid.Empty %>';
 
 		var thePage = '';
-
 
 		function AutoGeneratePageFilename() {
 			var theTitle = $('#<%= txtTitle.ClientID %>').val();
@@ -45,7 +44,7 @@
 		}
 
 		function ajaxGeneratePageFilename(data, status) {
-			debugger;
+			//debugger;
 			if (data.d == "FAIL") {
 				cmsAlertModal(data.d);
 			} else {
@@ -67,10 +66,12 @@
 			CheckFileName();
 		}
 
+		var fldrValid = '#<%= txtFileValid.ClientID %>';
+
 		function CheckFileName() {
 			thePage = $('#<%= txtFileName.ClientID %>').val();
 
-			$('#<%= txtFileValid.ClientID %>').val('');
+			$(fldrValid).val('');
 
 			var webMthd = webSvc + "/ValidateUniqueFilename";
 			var myPage = MakeStringSafe(thePage);
@@ -86,18 +87,28 @@
 			});
 		}
 
+
 		$(document).ready(function () {
-			CheckFileName();
+			setTimeout("CheckFileName();", 250);
+			cmsIsPageValid();
 		});
 
+
 		function editFilenameCallback(data, status) {
-			if (data.d == "OK") {
-				$('#<%= txtFileValid.ClientID %>').val('VALID');
-			} else {
-				$('#<%= txtFileValid.ClientID %>').val('');
+			if (data.d != "FAIL" && data.d != "OK") {
+				cmsAlertModal(data.d);
 			}
-			Page_ClientValidate();
+
+			if (data.d == "OK") {
+				$(fldrValid).val('VALID');
+			} else {
+				$(fldrValid).val('NOT VALID');
+			}
+
+			//var ret = cmsIsPageValid();
+			setTimeout("cmsForceInputValidation('<%= txtFileValid.ClientID %>');", 500);
 		}
+
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -117,7 +128,7 @@
 		</p>
 		<table style="width: 700px;">
 			<tr>
-				<td class="tablecaption">
+				<td style="width: 125px;" class="tablecaption">
 					titlebar:
 				</td>
 				<td>
@@ -125,8 +136,8 @@
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Titlebar is required"
-						ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
+						runat="server" ErrorMessage="Titlebar is required" ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -136,11 +147,15 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
 						MaxLength="200" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileName" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Filename is required"
-						ToolTip="Filename is required" Display="Dynamic" Text="**" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Filename is not valid/unique"
-						ToolTip="Filename is not valid/unique" Display="Dynamic" Text="##" />
-					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileName" ID="RequiredFieldValidator2"
+						runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic" Text="**" />
+					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
+						ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+					<div style="display: none;">
+						<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
+						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator3"
+							runat="server" ErrorMessage="Filename validation is required" ToolTip="Filename validation is required" Display="Dynamic" Text="**" />
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -149,8 +164,8 @@
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Navigation text is required"
-						ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav" ID="RequiredFieldValidator4"
+						runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -182,16 +197,16 @@
 		<div style="display: none;">
 			<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
 		</div>
-		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />
+		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Apply" />
 		<br />
 		<div style="display: none;">
 			<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Apply" />
 		</div>
 		<script type="text/javascript">
 			function SubmitPage() {
-				CheckFileName();
-				cmsIsPageValid();
+				var ret = cmsIsPageValid();
 				setTimeout("ClickSaveBtn();", 800);
+				return ret;
 			}
 
 			function ClickSaveBtn() {

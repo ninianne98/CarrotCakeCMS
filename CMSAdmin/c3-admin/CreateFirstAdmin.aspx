@@ -26,51 +26,53 @@
 						</div>
 						<table>
 							<tr>
-								<td style="width: 165px;">
+								<td style="width: 125px;">
 									<b class="caption">
 										<asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName" Text="User Name" />
-										<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="!" ToolTip="Username is required." ValidationGroup="createWizard"
-											Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" /></b>
+									</b>
 								</td>
 								<td style="width: 210px;">
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="UserName" runat="server" TabIndex="1" />
+									<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName" ErrorMessage="!"
+										ToolTip="Username is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<b class="caption">
 										<asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password" Text="Password " />
-										<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="!" ToolTip="Password is required." ValidationGroup="createWizard"
-											Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" /></b>
+									</b>
 								</td>
 								<td>
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="Password" runat="server" TextMode="Password" TabIndex="2" />
+									<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Password" ErrorMessage="!"
+										ToolTip="Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<b class="caption">
 										<asp:Label ID="ConfirmPasswordLabel" runat="server" AssociatedControlID="ConfirmPassword" Text="Password (confirm) " />
-										<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" ControlToValidate="ConfirmPassword" ErrorMessage="!" ToolTip="Confirm Password is required."
-											ValidationGroup="createWizard" Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
-										<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword" Display="Dynamic" ErrorMessage="!"
-											ToolTip="Confirm Password does not match Password." ValidationGroup="createWizard" />
 									</b>
 								</td>
 								<td>
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="ConfirmPassword" runat="server" TextMode="Password" TabIndex="3" />
+									<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword" ErrorMessage="!"
+										ToolTip="Confirm Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
+									<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword"
+										Display="Dynamic" ErrorMessage="!!" ToolTip="Confirm Password does not match Password." ValidationGroup="createWizard" />
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<b class="caption">
 										<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />
-										<asp:RequiredFieldValidator ID="EmailRequired" runat="server" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required." ValidationGroup="createWizard"
-											Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
 									</b>
 								</td>
 								<td>
-									<asp:TextBox Style="width: 200px;" ValidationGroup="createWizard" ID="Email" runat="server" TabIndex="4" />
+									<asp:TextBox Style="width: 175px;" ValidationGroup="createWizard" ID="Email" runat="server" TabIndex="4" />
+									<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required."
+										ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 						</table>

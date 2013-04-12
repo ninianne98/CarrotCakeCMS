@@ -11,7 +11,10 @@
 				</div>
 			</td>
 			<td class="tableback">
-				<b class="caption">email address</b>&nbsp;<br />
+				<b class="caption">email address</b>&nbsp;
+				<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail" ErrorMessage="!"
+					ToolTip="email is required." ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
+				<br />
 				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate" TabIndex="1" />
 			</td>
 			<td class="tableback">
@@ -39,11 +42,19 @@
 				&nbsp;
 			</td>
 			<td class="tableback" align="right">
-				<div class="ui-widget" id="divMsg" runat="server">
+				<div class="ui-widget" id="divErrMsg" runat="server">
 					<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
 						<p>
 							<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-							<asp:Label ID="FailureText" runat="server" EnableViewState="False" />
+							<asp:Literal ID="FailureText" runat="server" EnableViewState="False" />&nbsp;
+						</p>
+					</div>
+				</div>
+				<div class="ui-widget" id="divInfoMsg" runat="server">
+					<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+						<p>
+							<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+							<asp:Literal ID="InfoMessage" runat="server" EnableViewState="False" />&nbsp;
 						</p>
 					</div>
 				</div>

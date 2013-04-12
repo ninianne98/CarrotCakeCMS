@@ -54,8 +54,8 @@
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtEmail" runat="server" Columns="60"
 					MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtEmail" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-					Display="Dynamic" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail" ID="RequiredFieldValidator1"
+					runat="server" ErrorMessage="Required" Display="Dynamic" />
 				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
 			</td>
 		</tr>
@@ -65,8 +65,8 @@
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtName" runat="server" Columns="60" MaxLength="200" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtName" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-					Display="Dynamic" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtName" ID="RequiredFieldValidator3"
+					runat="server" ErrorMessage="Required" Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>

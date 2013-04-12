@@ -7,28 +7,33 @@
 	User Edit
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<table>
+	<br />
+	<table style="width: 500px;">
 		<tr>
-			<td>
+			<td style="width: 180px;">
 				<b class="caption">
-					<asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name</asp:Label>&nbsp;&nbsp;</b>
+					<asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name</asp:Label>
+				</b>
 			</td>
-			<td>
-				<asp:Label ID="lblUserName" runat="server" Columns="60" MaxLength="100"></asp:Label>
-				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="140px" ID="UserName" runat="server" MaxLength="50" />
-				<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="!" ToolTip="Username is required." ValidationGroup="createWizard"
-					Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+			<td style="width: 300px;">
+				<div style="height: 30px;">
+					<asp:Label ID="lblUserName" runat="server" Columns="60" MaxLength="100" />
+					<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="140px" ID="UserName" runat="server" MaxLength="50" ValidationGroup="createWizard" />
+					<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName" ErrorMessage="Username is required."
+						ToolTip="Username is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
+				</div>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<b class="caption">
-					<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />&nbsp;&nbsp;</b>
+					<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />
+				</b>
 			</td>
 			<td>
-				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="200px" ID="Email" runat="server" MaxLength="100" />
-				<asp:RequiredFieldValidator ID="EmailRequired" runat="server" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required." ValidationGroup="createWizard"
-					Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
+				<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="200px" ID="Email" runat="server" MaxLength="100" ValidationGroup="createWizard" />
+				<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="E-mail is required."
+					ToolTip="E-mail is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 			</td>
 		</tr>
 		<tr>
@@ -57,7 +62,7 @@
 		</tr>
 		<tr>
 			<td>
-				<b class="caption">Locked&nbsp;&nbsp;</b>
+				<b class="caption">Locked </b>
 			</td>
 			<td>
 				<asp:CheckBox ID="chkLocked" runat="server" />
@@ -68,7 +73,7 @@
 	<table>
 		<tr>
 			<td>
-				<div id="SortableGrid" style="width: 300px;">
+				<div class="SortableGrid" style="width: 300px;">
 					<carrot:CarrotGridView CssClass="datatable" DefaultSort="RoleName ASC" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 						<EmptyDataTemplate>
@@ -89,10 +94,10 @@
 				</div>
 			</td>
 			<td>
-				&nbsp;&nbsp;&nbsp;
+				&nbsp;
 			</td>
 			<td>
-				<div id="SortableGrid" style="width: 400px;">
+				<div class="SortableGrid" style="width: 400px;">
 					<carrot:CarrotGridView CssClass="datatable" DefaultSort="SiteName ASC" ID="gvSites" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 						AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 						<EmptyDataTemplate>
@@ -115,8 +120,21 @@
 			</td>
 		</tr>
 	</table>
+	<div style="display: none;">
+		<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
+	</div>
 	<br />
-	<asp:Button ID="btnApply" runat="server" Text="Save" OnClick="btnApply_Click" />
+	<asp:Button ID="btnApply" runat="server" Text="Save" OnClick="btnApply_Click" ValidationGroup="createWizard" OnClientClick="return ClickApplyBtn()" />
 	<input type="button" id="btnCancel" runat="server" value="Cancel" onclick="javascript:window.location='./UserMembership.aspx';" />
 	<br />
+	<script type="text/javascript">
+		function ClickApplyBtn() {
+			if (cmsIsPageValid()) {
+				return true;
+			} else {
+				cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+				return false;
+			}
+		}
+	</script>
 </asp:Content>

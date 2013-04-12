@@ -40,6 +40,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.CompleteWizardStep CreateUserWizardStep2;
         
         /// <summary>
+        /// formValidationSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary formValidationSummary;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

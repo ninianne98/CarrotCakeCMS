@@ -16,17 +16,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserFn);
 
+			divInfoMsg.Visible = false;
+			InfoMessage.Text = "";
+
 			if (!IsPostBack) {
 				txtEmail.Text = SecurityData.CurrentUser.Email;
 				ExtendedUserData ud = new ExtendedUserData(SecurityData.CurrentUser.UserName);
 				txtNickName.Text = ud.UserNickName;
 				txtFirstName.Text = ud.FirstName;
 				txtLastName.Text = ud.LastName;
-
-			} else {
-				lblEmail.Text = "";
 			}
-
 		}
 
 		protected void btnSaveEmail_Click(object sender, EventArgs e) {
@@ -40,7 +39,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			ud.LastName = txtLastName.Text;
 			ud.Save();
 
-			lblEmail.Text = "Profile Updated";
+			divInfoMsg.Visible = true;
+			InfoMessage.Text = "Profile Updated";
 		}
 
 

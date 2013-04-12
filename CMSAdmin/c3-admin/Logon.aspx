@@ -11,7 +11,7 @@
 					<table style="width: 300px;">
 						<tr>
 							<td>
-								<div style="height: 25px; width: 50px; border: 1px solid #ffffff;">
+								<div style="height: 35px; width: 50px; border: 1px solid #ffffff;">
 								</div>
 							</td>
 							<td>
@@ -19,6 +19,8 @@
 							</td>
 							<td>
 								&nbsp;<b class="caption">username</b>
+								<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName" ErrorMessage="!"
+									ToolTip="Username is required" ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
 								<br />
 								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" TabIndex="1" />
 							</td>
@@ -31,7 +33,7 @@
 						</tr>
 						<tr>
 							<td>
-								<div style="height: 25px; width: 10px; border: 1px solid #ffffff;">
+								<div style="height: 35px; width: 10px; border: 1px solid #ffffff;">
 								</div>
 							</td>
 							<td>
@@ -40,6 +42,8 @@
 							<td>
 								<br />
 								&nbsp;<b class="caption">password</b>
+								<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Password" ErrorMessage="!"
+									ToolTip="Password is required" ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
 								<br />
 								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" TabIndex="2" />
 							</td>
