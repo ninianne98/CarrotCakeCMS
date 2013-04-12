@@ -75,8 +75,8 @@
 				&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Required" Display="Dynamic" ControlToValidate="ddlFolders" ClientValidationFunction="validateFolderSelection"
-					ValidationGroup="inputForm" />
+				<asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Required" Display="Dynamic" CssClass="validationError" ForeColor="" ControlToValidate="ddlFolders"
+					ClientValidationFunction="validateFolderSelection" ValidationGroup="inputForm" />
 				<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath" />
 			</td>
 		</tr>

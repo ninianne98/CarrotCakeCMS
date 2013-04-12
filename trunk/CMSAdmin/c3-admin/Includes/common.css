@@ -43,6 +43,54 @@ tt, pre, code, kbd, samp {
 	margin-right: 5px;
 }
 
+.validationError, .validationExclaim, .validationDelete, .validationCross {
+	font-weight: bolder;
+	color: #CC0000;
+	font-size: large;
+	padding: 1px;
+	margin: 2px;	
+}
+
+.validationExclaim {
+	color: #CC9900;
+}
+.validationError {
+	color: #CC0000;
+}
+.validationDelete {
+	color: #660066;
+}
+.validationCross {
+	color: #000066;
+}
+
+/*
+.validationError, .validationExclaim, .validationDelete, .validationCross {
+	font-weight: bolder;
+	color: #CC0000;
+	font-size: large;
+	text-indent: -9999px;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	padding: 1px;
+	margin: 2px;
+}
+
+.validationExclaim {
+	background: transparent url("../images/exclamation.png") 0 0 no-repeat;
+}
+.validationError {
+	background: transparent url("../images/error.png") 0 0 no-repeat;
+}
+.validationDelete {
+	background: transparent url("../images/delete.png") 0 0 no-repeat;
+}
+.validationCross {
+	background: transparent url("../images/cross.png") 0 0 no-repeat;
+}
+*/
+
 
 /*  OTHER */
 
@@ -145,7 +193,7 @@ tt, pre, code, kbd, samp {
 /* fieldset */
 
 fieldset {
-	clear: both;	
+	clear: both;
 	margin: 1.2em 0px;
 	padding: 1.2em;
 	border: 1px solid #ccc;

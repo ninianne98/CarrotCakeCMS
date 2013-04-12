@@ -90,7 +90,11 @@ namespace Carrotware.CMS.Core {
 				mailer.ContentPlaceholders.Add("{%%UserName%%}", user.UserName);
 				mailer.ContentPlaceholders.Add("{%%Password%%}", newPassword);
 				mailer.ContentPlaceholders.Add("{%%SiteURL%%}", strHTTPHost);
-				mailer.ContentPlaceholders.Add("{%%Time%%}", SiteData.CurrentSite.Now.ToString());
+				if (SiteData.CurrentSite != null) {
+					mailer.ContentPlaceholders.Add("{%%Time%%}", SiteData.CurrentSite.Now.ToString());
+				} else {
+					mailer.ContentPlaceholders.Add("{%%Time%%}", DateTime.Now.ToString());
+				}
 
 				mailer.SendMail();
 

@@ -10,73 +10,80 @@
 	<div id="CreateUserForm">
 		<asp:CreateUserWizard ID="createWizard" runat="server" OnCreatingUser="createWizard_CreatingUser" OnCreatedUser="createWizard_CreatedUser" CreateUserButtonType="Button"
 			CancelButtonText="Cancel" CancelButtonType="Button" CancelDestinationPageUrl="./UserMembership.aspx" DisplayCancelButton="true" LoginCreatedUser="false"
-			RequireEmail="true">
+			RequireEmail="true" OnCreateUserError="createWizard_CreateUserError">
 			<WizardSteps>
 				<asp:CreateUserWizardStep ID="CreateUserWizardStep1" runat="server">
 					<ContentTemplate>
-						<div>
-							<asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False" />
+						<div class="ui-widget" id="divMsg" runat="server">
+							<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+								<p>
+									<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+									<asp:Literal ID="FailureText" runat="server" EnableViewState="False" />
+								</p>
+							</div>
 						</div>
-						<table>
+						<table style="width: 450px;">
 							<tr>
-								<td style="width: 165px;">
+								<td style="width: 180px;">
 									<b class="caption">
 										<asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName" Text="User Name" />
-										<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="!" ToolTip="Username is required." ValidationGroup="createWizard"
-											Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" /></b>
+									</b>
 								</td>
-								<td style="width: 210px;">
+								<td style="width: 300px;">
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="UserName" runat="server" TabIndex="1" />
+									<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName" ErrorMessage="Username is required."
+										ToolTip="Username is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<b class="caption">
 										<asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password" Text="Password " />
-										<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="!" ToolTip="Password is required." ValidationGroup="createWizard"
-											Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" /></b>
+									</b>
 								</td>
 								<td>
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="Password" runat="server" TextMode="Password" TabIndex="2" />
+									<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Password" ErrorMessage="Password is required."
+										ToolTip="Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<b class="caption">
 										<asp:Label ID="ConfirmPasswordLabel" runat="server" AssociatedControlID="ConfirmPassword" Text="Password (confirm) " />
-										<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" ControlToValidate="ConfirmPassword" ErrorMessage="!" ToolTip="Confirm Password is required."
-											ValidationGroup="createWizard" Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
-										<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword" Display="Dynamic" ErrorMessage="!"
-											ToolTip="Confirm Password does not match Password." ValidationGroup="createWizard" />
 									</b>
 								</td>
 								<td>
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="ConfirmPassword" runat="server" TextMode="Password" TabIndex="3" />
+									<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword" ErrorMessage="Confirm Password is required."
+										ToolTip="Confirm Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
+									<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword"
+										Display="Dynamic" ErrorMessage="Confirm Password does not match Password." ToolTip="Confirm Password does not match Password." ValidationGroup="createWizard" />
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<b class="caption">
 										<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />
-										<asp:RequiredFieldValidator ID="EmailRequired" runat="server" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required." ValidationGroup="createWizard"
-											Display="Dynamic" Text="*&nbsp;&nbsp;&nbsp;" />
 									</b>
 								</td>
 								<td>
 									<asp:TextBox Style="width: 200px;" ValidationGroup="createWizard" ID="Email" runat="server" TabIndex="4" />
+									<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="E-mail is required."
+										ToolTip="E-mail is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 						</table>
 					</ContentTemplate>
 					<CustomNavigationTemplate>
-						<table>
+						<table style="width: 300px;">
 							<tr>
 								<td>
 									<div style="height: 10px; width: 125px; border: 1px solid #ffffff;">
 									</div>
 								</td>
 								<td>
-									<asp:Button ID="StepNextButton" runat="server" Text="Create User" CommandName="MoveNext" ValidationGroup="createWizard" TabIndex="5" />
+									<asp:Button ID="StepNextButton" runat="server" Text="Create User" CommandName="MoveNext" ValidationGroup="createWizard" TabIndex="5" OnClientClick="return ClickApplyBtn()" />
 								</td>
 								<td>
 									&nbsp;
@@ -100,4 +107,17 @@
 			</WizardSteps>
 		</asp:CreateUserWizard>
 	</div>
+	<div style="display: none;">
+		<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
+	</div>
+	<script type="text/javascript">
+		function ClickApplyBtn() {
+			if (cmsIsPageValid()) {
+				return true;
+			} else {
+				cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+				return false;
+			}
+		}
+	</script>
 </asp:Content>

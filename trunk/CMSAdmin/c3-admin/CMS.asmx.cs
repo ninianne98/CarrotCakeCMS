@@ -546,6 +546,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			try {
 				CurrentPageGuid = new Guid(PageID);
 				TheFileName = CMSConfigHelper.DecodeBase64(TheFileName);
+
+				if (TheFileName.Length < 6) {
+					return "FAIL";
+				}
+
 				TheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, TheFileName);
 
 				TheFileName = TheFileName.ToLower();
@@ -609,6 +614,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				DateTime dateOrigGoLive = DateTime.MinValue;
 
 				ThePageSlug = CMSConfigHelper.DecodeBase64(ThePageSlug);
+
+				if (ThePageSlug.Length < 6) {
+					return "FAIL";
+				}
+
 				ThePageSlug = ContentPageHelper.ScrubFilename(CurrentPageGuid, ThePageSlug);
 				ThePageSlug = ThePageSlug.ToLower();
 

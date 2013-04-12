@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 
-		var webSvc = "/c3-admin/CMS.asmx";
+		var webSvc = cmsGetServiceAddress();
 
 		$(document).ready(function () {
 			var webMthd = webSvc + "/FindUsers";
@@ -69,9 +69,12 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
+		<label>
+			role name:
+		</label>
 		<asp:TextBox ValidationGroup="editGroupName" ID="txtRoleName" onkeypress="return ProcessKeyPress(event)" Width="300px" MaxLength="100" runat="server" />
-		<asp:RequiredFieldValidator ValidationGroup="editGroupName" ControlToValidate="txtRoleName" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-			Display="Dynamic" />
+		<asp:RequiredFieldValidator ValidationGroup="editGroupName" CssClass="validationError" ForeColor="" ControlToValidate="txtRoleName" ID="RequiredFieldValidator1"
+			runat="server" ErrorMessage="Role Name is required" ToolTip="Role Name is required" Display="Dynamic" Text="**" />
 	</p>
 	<p>
 		<br />
@@ -121,8 +124,8 @@
 						<p>
 							<b>Search: </b><span id="spanResults"></span>
 							<asp:TextBox ValidationGroup="addUsers" ID="txtSearch" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100" runat="server" />
-							<asp:RequiredFieldValidator ValidationGroup="addUsers" ControlToValidate="txtSearch" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-								Display="Dynamic" />
+							<asp:RequiredFieldValidator ValidationGroup="addUsers" CssClass="validationError" ForeColor="" ControlToValidate="txtSearch" ID="RequiredFieldValidator3"
+								runat="server" ErrorMessage="Required" Display="Dynamic" />
 							<asp:HiddenField ID="hdnUserID" runat="server" />
 						</p>
 						<p style="text-align: right;">

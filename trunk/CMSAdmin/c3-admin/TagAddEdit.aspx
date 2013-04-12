@@ -3,16 +3,18 @@
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
-		var webSvc = "/c3-admin/CMS.asmx";
+		var webSvc = cmsGetServiceAddress();
 
 		var thePageID = '<%=guidItemID %>';
 
 		var thePage = '';
 
+		var fldrValid = '#<%= txtFileValid.ClientID %>';
+
 		function CheckFileName() {
 			thePage = $('#<%= txtSlug.ClientID %>').val();
 
-			$('#<%= txtFileValid.ClientID %>').val('');
+			$(fldrValid).val('');
 
 			var webMthd = webSvc + "/ValidateUniqueTag";
 			var myPage = MakeStringSafe(thePage);
@@ -29,16 +31,23 @@
 		}
 
 		$(document).ready(function () {
-			CheckFileName();
+			setTimeout("CheckFileName();", 250);
+			cmsIsPageValid();
 		});
 
 		function editFilenameCallback(data, status) {
-			if (data.d == "OK") {
-				$('#<%= txtFileValid.ClientID %>').val('VALID');
-			} else {
-				$('#<%= txtFileValid.ClientID %>').val('');
+			if (data.d != "FAIL" && data.d != "OK") {
+				cmsAlertModal(data.d);
 			}
-			Page_ClientValidate();
+
+			if (data.d == "OK") {
+				$(fldrValid).val('VALID');
+			} else {
+				$(fldrValid).val('NOT VALID');
+			}
+
+			//var ret = cmsIsPageValid();
+			cmsForceInputValidation('<%= txtFileValid.ClientID %>');
 		}
 	</script>
 </asp:Content>
@@ -48,16 +57,20 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<table style="width: 700px;">
 		<tr>
-			<td style="width: 125px;" class="tablecaption">
+			<td style="width: 90px;" class="tablecaption">
 				url slug:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtSlug" runat="server" Columns="45" MaxLength="100" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtSlug" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Required"
-					Display="Dynamic" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Not Valid/Unique"
-					Display="Dynamic" />
-				<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSlug" ID="RequiredFieldValidator1"
+					runat="server" Text="**" ToolTip="Required" ErrorMessage="Required" Display="Dynamic" />
+				<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
+					ErrorMessage="not valid/not unique" ToolTip="not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+				<div style="display: none;">
+					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator2"
+						runat="server" ErrorMessage="Slug validation is required" ToolTip="Slug validation is required" Display="Dynamic" Text="**" />
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -65,9 +78,10 @@
 				caption:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtLabel" runat="server" Columns="45" MaxLength="100" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtLabel" ID="RequiredFieldValidator3" runat="server" ErrorMessage="Required"
-					Display="Dynamic" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtLabel" runat="server" Columns="45"
+					MaxLength="100" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtLabel" ID="RequiredFieldValidator3"
+					runat="server" Text="**" ToolTip="Required" ErrorMessage="Required" Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>
@@ -79,7 +93,7 @@
 			</td>
 		</tr>
 	</table>
-	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 	<br />
 	<div style="display: none;">
@@ -88,11 +102,15 @@
 	<script type="text/javascript">
 
 		function SubmitPage() {
-			CheckFileName();
-			setTimeout("ClickBtn();", 250);
+			var ret = cmsIsPageValid();
+			setTimeout("ClickSaveBtn();", 800);
+			return ret;
 		}
-		function ClickBtn() {
-			$('#<%=btnSave.ClientID %>').click();
+
+		function ClickSaveBtn() {
+			if (cmsIsPageValid()) {
+				$('#<%=btnSave.ClientID %>').click();
+			}
 		}
 
 		function cancelEditing() {

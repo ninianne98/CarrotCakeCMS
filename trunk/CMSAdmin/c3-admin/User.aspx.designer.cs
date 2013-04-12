@@ -130,6 +130,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::Carrotware.Web.UI.Controls.CarrotGridView gvSites;
         
         /// <summary>
+        /// formValidationSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary formValidationSummary;
+        
+        /// <summary>
         /// btnApply control.
         /// </summary>
         /// <remarks>

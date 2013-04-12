@@ -14,8 +14,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			divLogonLink.Visible = false;
-			divMsg.Visible = false;
+
 			FailureText.Text = "";
+			InfoMessage.Text = "";
+
+			SetMsgVisible();
 		}
 
 
@@ -24,13 +27,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			bool bReset = false;
 			lblErr.Text = "";
 			FailureText.Text = "";
-			divMsg.Visible = false;
+			divErrMsg.Visible = false;
 
 			try { bReset = p.ResetPassword(txtEmail.Text, this); } catch (Exception ex) { lblErr.Text = ex.ToString(); }
 			//bReset = p.ResetPassword(txtEmail.Text, this); 
 
 			if (bReset) {
-				FailureText.Text = "Email sent with new password.";
+				InfoMessage.Text = "Email sent with new password.";
 			} else {
 				if (lblErr.Text.ToLower().Contains("system.net.mail.smtpclient")
 						|| lblErr.Text.ToLower().Contains("system.security.securityexception")) {
@@ -41,11 +44,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			divLogonLink.Visible = bReset;
 
-			if (!string.IsNullOrEmpty(FailureText.Text)) {
-				divMsg.Visible = true;
-			}
+			SetMsgVisible();
 
 			txtEmail.Text = "";
+		}
+
+		private void SetMsgVisible() {
+			divErrMsg.Visible = !string.IsNullOrEmpty(FailureText.Text);
+			divInfoMsg.Visible = !string.IsNullOrEmpty(InfoMessage.Text);
 		}
 
 		protected void cmdCancel_Click(object sender, EventArgs e) {

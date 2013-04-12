@@ -38,11 +38,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					MembershipRole role = getCurrentGroup();
 
 					txtRoleName.Text = role.RoleName;
+					txtRoleName.Enabled = CheckValidEditing(role.RoleName);
 
 					btnApply.Visible = CheckValidEditing(role.RoleName);
 
 					GetUserList(role.RoleName);
-
 				}
 			}
 

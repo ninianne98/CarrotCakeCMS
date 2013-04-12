@@ -14,8 +14,8 @@
 		[<a href="<%= String.Format("{0}?path={1}", SiteData.CurrentScriptName, sTemplateFileQS) %>">Edit</a>]
 	</h2>
 	<p>
-		<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageContents" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Skin File Contents Required"
-			Display="Dynamic" />&nbsp;
+		<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtPageContents" ID="RequiredFieldValidator1"
+			runat="server" ErrorMessage="Skin File Contents Required" Display="Dynamic" />&nbsp;
 	</p>
 	<table style="width: 100%;">
 		<tr>

@@ -5,7 +5,7 @@
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
-		var webSvc = "/c3-admin/CMS.asmx";
+		var webSvc = cmsGetServiceAddress();
 
 		var thePageID = '<%=guidRootContentID.ToString() %>';
 
@@ -45,12 +45,15 @@
 			}
 		}
 
+		var fldrValid = '#<%= txtFileValid.ClientID %>';
+
 		function CheckFileName() {
 			GenerateBlogFilePrefix();
 
 			thePage = $('#<%= txtPageSlug.ClientID %>').val();
 
-			$('#<%= txtFileValid.ClientID %>').val('');
+			$(fldrValid).val('');
+
 			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
 
 			var webMthd = webSvc + "/ValidateUniqueBlogFilename";
@@ -67,8 +70,10 @@
 			});
 		}
 
+
 		$(document).ready(function () {
-			CheckFileName();
+			setTimeout("CheckFileName();", 250);
+			cmsIsPageValid();
 		});
 
 
@@ -78,11 +83,13 @@
 			}
 
 			if (data.d == "OK") {
-				$('#<%= txtFileValid.ClientID %>').val('VALID');
+				$(fldrValid).val('VALID');
 			} else {
-				$('#<%= txtFileValid.ClientID %>').val('');
+				$(fldrValid).val('NOT VALID');
 			}
-			Page_ClientValidate();
+
+			//var ret = cmsIsPageValid();
+			setTimeout("cmsForceInputValidation('<%= txtFileValid.ClientID %>');", 500);
 		}
 
 		function AutoGeneratePageFilename() {
@@ -166,34 +173,7 @@
 
 		function openPage() {
 			var theURL = $('#<%= txtOldFile.ClientID %>').val();
-
-			if (theURL.length > 3) {
-				$("#divCMSCancelWinMsg").text('Are you sure you want to open the webpage leave this editor? All unsaved changes will be lost!');
-
-				$("#divCMSCancelWin").dialog({
-					open: function () {
-						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
-					},
-
-					resizable: false,
-					height: 350,
-					width: 450,
-					modal: true,
-					buttons: {
-						"No": function () {
-							$(this).dialog("close");
-						},
-						"Yes": function () {
-							cmsMakeOKToLeave();
-							cmsRecordCancellation();
-							window.setTimeout("location.href = '" + theURL + "';", 800);
-							$(this).dialog("close");
-						}
-					}
-				});
-			} else {
-				cmsAlertModalSmall("No saved post to show.");
-			}
+			cmsOpenPage(theURL);
 		}
 
 		function EditHB() {
@@ -380,8 +360,8 @@
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtTitle" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Titlebar is required"
-						ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
+						runat="server" ErrorMessage="Titlebar is required" ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -401,13 +381,17 @@
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug" runat="server" Columns="45"
 						MaxLength="200" />
-					&nbsp; <a href="javascript:void(0)" onclick="openPage();">
+					<a href="javascript:void(0)" onclick="openPage();">
 						<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtPageSlug" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Filename is required"
-						ToolTip="Filename is required" Display="Dynamic" Text="**" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtFileValid" ID="RequiredFieldValidator6" runat="server" ErrorMessage="Filename is not valid/unique"
-						ToolTip="Filename is not valid/unique" Display="Dynamic" Text="##" />
-					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" Style="display: none;" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtPageSlug" ID="RequiredFieldValidator2"
+						runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic" Text="**" />
+					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
+						ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+					<div style="display: none;">
+						<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
+						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator3"
+							runat="server" ErrorMessage="Filename validation is required" ToolTip="Filename validation is required" Display="Dynamic" Text="**" />
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -416,8 +400,8 @@
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" ControlToValidate="txtNav" ID="RequiredFieldValidator4" runat="server" ErrorMessage="Navigation text is required"
-						ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav" ID="RequiredFieldValidator4"
+						runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -512,8 +496,7 @@
 					template:
 				</td>
 				<td>
-					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server">
-					</asp:DropDownList>
+					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server" />
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="button" onclick="cmsPreviewTemplate()" value="Preview" />
 				</td>
@@ -607,9 +590,9 @@
 			<table style="width: 900px;">
 				<tr>
 					<td>
-						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />
+						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Save" />
 						&nbsp;&nbsp;
-						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="SubmitPageVisit()" Text="Save and Visit" />
+						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="return SubmitPageVisit()" Text="Save and Visit" />
 						&nbsp;&nbsp;
 						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 					</td>
@@ -693,13 +676,17 @@
 	<script type="text/javascript">
 
 		function SubmitPage() {
-			var ret = SaveCommon();
+			var sc = SaveCommon();
+			var ret = cmsIsPageValid();
 			setTimeout("ClickSaveBtn();", 800);
+			return ret;
 		}
 
 		function SubmitPageVisit() {
-			var ret = SaveCommon();
+			var sc = SaveCommon();
+			var ret = cmsIsPageValid();
 			setTimeout("ClickSaveVisitBtn();", 800);
+			return ret;
 		}
 
 		function ClickSaveBtn() {
@@ -716,7 +703,6 @@
 
 		function SaveCommon() {
 			cmsSaveMakeOKAndCancelLeave();
-			CheckFileName();
 			var ret = tinyMCE.triggerSave();
 			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
 			return true;

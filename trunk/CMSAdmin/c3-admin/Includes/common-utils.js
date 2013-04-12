@@ -81,6 +81,10 @@ $(document).ready(function () {
 
 var webSvc = "/c3-admin/CMS.asmx";
 
+function cmsGetServiceAddress() {
+	return webSvc;
+}
+
 function MakeStringSafe(val) {
 	val = Base64.encode(val);
 	return val;
@@ -142,6 +146,40 @@ function cmsAlertModalLarge(request) {
 	cmsAlertModalHeightWidth(request, 550, 700);
 }
 
+
+function cmsOpenPage(theURL) {
+	$("#divCMSCancelWinMsg").html('');
+
+	if (theURL.length > 3) {
+		$("#divCMSCancelWinMsg").html('Are you sure you want to open the webpage and leave this editor? <br /> All unsaved changes will be lost!');
+
+		$("#divCMSCancelWin").dialog({
+			open: function () {
+				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+			},
+
+			resizable: false,
+			height: 250,
+			width: 400,
+			modal: true,
+			buttons: {
+				"No": function () {
+					$(this).dialog("close");
+				},
+				"Yes": function () {
+					cmsMakeOKToLeave();
+					cmsRecordCancellation();
+					window.setTimeout("location.href = '" + theURL + "';", 800);
+					$(this).dialog("close");
+				}
+			}
+		});
+	} else {
+		cmsAlertModalSmall("No saved content to show.");
+	}
+}
+
+
 function cmsLoadPrettyValidationPopup(validSummaryFld) {
 	if (!Page_IsValid) {
 		var txt = $('#' + validSummaryFld).html();
@@ -197,14 +235,18 @@ function cmsSendTrackbackBatch() {
 
 	var webMthd = webSvc + "/SendTrackbackBatch";
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsAjaxGeneralCallback,
-		error: cmsAjaxFailedSwallow
-	});
+	if (!cmsGetOKToLeaveStatus()) {
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsAjaxGeneralCallback,
+			error: cmsAjaxFailedSwallow
+		});
+
+	}
 
 	setTimeout("cmsSendTrackbackBatch();", 10000);
 }
@@ -218,15 +260,19 @@ function cmsSendTrackbackPageBatch(thePageID) {
 
 	var webMthd = webSvc + "/SendTrackbackPageBatch";
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		data: "{'ThisPage': '" + thePageID + "'}",
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsAjaxGeneralCallback,
-		error: cmsAjaxFailedSwallow
-	});
+	if (!cmsGetOKToLeaveStatus()) {
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'ThisPage': '" + thePageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsAjaxGeneralCallback,
+			error: cmsAjaxFailedSwallow
+		});
+
+	}
 
 	//alert(webMthd);
 
@@ -258,6 +304,18 @@ function cmsIsPageValid() {
 	}
 }
 
+
+function cmsForceInputValidation(inputId) {
+	var targetedControl = document.getElementById(inputId);
+
+	if (typeof (targetedControl.Validators) != "undefined") {
+		var i;
+		for (i = 0; i < targetedControl.Validators.length; i++)
+			ValidatorValidate(targetedControl.Validators[i]);
+	}
+
+	ValidatorUpdateIsValid();
+}
 
 //====================================
 
@@ -437,6 +495,10 @@ function cmsMakeOKToLeave() {
 
 function cmsMakeNotOKToLeave() {
 	cmsConfirmLeavingPage = true;
+}
+
+function cmsGetOKToLeaveStatus() {
+	return cmsConfirmLeavingPage;
 }
 
 function cmsRequireConfirmToLeave(confirmLeave) {

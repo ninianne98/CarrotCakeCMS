@@ -212,8 +212,7 @@ namespace Carrotware.CMS.UI.Base {
 				HttpContext.Current.Response.AppendHeader("Last-Modified", strModifed);
 				HttpContext.Current.Response.Cache.SetLastModified(dtModified);
 
-				DateTime dtExpire = DateTime.Now.AddMinutes(1);
-				HttpContext.Current.Response.Cache.SetExpires(dtExpire);
+				DateTime dtExpire = DateTime.Now.AddSeconds(15);
 
 				contCenter.Text = pageContents.PageText;
 				contLeft.Text = pageContents.LeftPageText;
@@ -264,6 +263,8 @@ namespace Carrotware.CMS.UI.Base {
 
 						MarkWidgets(this.CurrentWebPage, true);
 					}
+				} else {
+					HttpContext.Current.Response.Cache.SetExpires(dtExpire);
 				}
 
 
