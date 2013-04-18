@@ -8,14 +8,15 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
 		The currently running version of this CMS is
-		<asp:Literal ID="litVersion" runat="server"></asp:Literal>.
+		<asp:Literal ID="litVersion" runat="server" />.
 	</p>
 	<p>
-		CarrotCake CMS by Carrotware is dual licensed under the MIT or GPL Version 2 licenses.
+		<a href="http://www.carrotware.com/" target="_blank">CarrotCake CMS by CarrotWare</a> is dual licensed under the MIT or GPL Version 2 licenses.
 		<br />
-		<img src="images/carrot_med.png" height="125" alt="carrot" title="carrot" />
-		<img src="images/carrotpower.png" alt="carrot" title="carrot" />
-		<img src="images/carrotcake.png" height="125" alt="carrot" title="carrot" />
+		<a href="http://www.carrotware.com/" target="_blank">
+			<img src="images/carrot_med.png" height="125" alt="carrot" title="carrot" />
+			<img src="images/carrotpower.png" alt="carrot" title="carrot" />
+			<img src="images/carrotcake.png" height="125" alt="carrot" title="carrot" /></a>
 	</p>
 	<p>
 		The Carrotware carrot is &copy; 1997, 2002 Samantha Copeland</p>

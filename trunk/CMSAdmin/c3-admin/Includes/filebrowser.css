@@ -92,6 +92,13 @@ th {
 	text-align: left;
 }
 
+#imgThmbnailPreview {
+	min-height: 2px;
+	min-width: 2px;
+	max-height: 200px;
+	width: auto;
+}
+
 /* table resets */
 
 

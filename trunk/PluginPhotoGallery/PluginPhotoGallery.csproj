@@ -146,6 +146,7 @@
     <EmbeddedResource Include="prettyphoto\images\light_square\sprite.png" />
     <EmbeddedResource Include="prettyphoto\prettyPhoto.js" />
     <EmbeddedResource Include="prettyphoto\prettyPhoto.css" />
+    <Content Include="PhotoIcon.png" />
     <Content Include="PluginPhotoGallery.sln" />
     <Content Include="prettyphoto\README.txt" />
     <EmbeddedResource Include="scripts\CreateGallery.sql" />
@@ -325,6 +326,8 @@
     <PostBuildEvent>xcopy "$(ProjectDir)\bin\$(TargetName).*" "$(SolutionDir)\CMSAdmin\bin\" /F /R /Y /I
 xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I
 xcopy  "$(ProjectDir)\Admin.config" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I
-xcopy  "$(ProjectDir)\Public.config" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I</PostBuildEvent>
+xcopy  "$(ProjectDir)\Public.config" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I
+xcopy  "$(ProjectDir)\PhotoIcon.png" "$(SolutionDir)\CMSAdmin\cmsPlugins\PhotoGallery\" /F /R /Y /I
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
