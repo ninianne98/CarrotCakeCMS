@@ -154,7 +154,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal pnlTiny2;
+        protected global::System.Web.UI.WebControls.Panel pnlTiny2;
         
         /// <summary>
         /// pnlFileMgr control.

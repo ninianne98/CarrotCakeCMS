@@ -116,13 +116,13 @@
 <body>
 	<form id="form1" runat="server">
 	<div class="panel_wrapper">
-		<table cellpadding="2" cellspacing="0">
+		<table>
 			<tr>
 				<td>
 					<h2 class="head2">
 						Files On Server</h2>
 					Contents of:
-					<asp:Label ID="lblPath" runat="server"></asp:Label><br />
+					<asp:Label ID="lblPath" runat="server" /><br />
 					<asp:HyperLink runat="server" ID="lnkUp"><img src="/c3-admin/images/back.png" border="0" alt="back" /><img src="/c3-admin/images/folder.png" border="0" alt="folder" /> </asp:HyperLink>
 					<br />
 				</td>
@@ -131,11 +131,11 @@
 		<div class="scroll" id="folderZone">
 			<asp:Repeater ID="rpFolders" runat="server">
 				<HeaderTemplate>
-					<table width="98%">
+					<table style="width: 98%">
 				</HeaderTemplate>
 				<ItemTemplate>
 					<tr>
-						<td width="32">
+						<td style="width: 32px">
 							<img src="/c3-admin/images/folder.png" alt="folder" />
 						</td>
 						<td>
@@ -219,87 +219,84 @@
 		</div>
 		<div id="imgWrapperMain" style="display: none;">
 			<div style="padding: 5px; min-height: 10px; min-width: 10px;">
-				<div id="imgDimension">
+				<div id="imgPreviewCaption">
+					0x0
 				</div>
-				<img alt="" id="imgThmbnail" src="/c3-admin/images/document.png" />
+				<img alt="document" id="imgThmbnailPreview" src="/c3-admin/images/document.png" />
 			</div>
+		</div>
+		<div style="display: block; margin-left: -9999px; float: left; max-height: 9000px; max-width: 9000px;">
+			<img alt="document" id="imgRealPreview" src="/c3-admin/images/document.png" />
 		</div>
 		<script type="text/javascript">
 
-			var imgSrcLayer = 'imgWrapper';
-			var imgPreview = 'imgWrapperMain';
+			var imgSrc = '/c3-admin/images/document.png';
+
+			var imgPreviewId = 'imgWrapperMain';
+			var imgRealId = 'imgRealPreview';
+			var imgThumbId = 'imgThmbnailPreview';
+			var imgSizeId = 'imgPreviewCaption';
+
+			var divImgLayer = $('#' + imgPreviewId);
+			var imgDim = $('#' + imgSizeId);
+			var imgThumb = $('#' + imgThumbId);
+			var imgReal = $('#' + imgRealId);
 
 			function hideImg(obj) {
 				var theNode = $(obj).parent();
 				var grp = $(theNode).attr('id');
 
-				hideImg2(grp);
-			}
+				$(divImgLayer).attr('style', 'display:none;');
+				$(divImgLayer).attr('class', '');
 
-			function hideImg2(grp) {
-				var theImgLayer = $('#' + imgPreview);
+				$(imgThumb).attr('src', imgSrc);
+				$(imgThumb).attr('width', 64);
+				$(imgThumb).attr('height', 64);
+				$(imgThumb).removeAttr("width").attr("width");
+				$(imgThumb).removeAttr("height").attr("height");
 
-				$(theImgLayer).attr('style', 'display:none;');
-				$(theImgLayer).attr('class', '');
+				$(imgReal).attr('src', imgSrc);
+
+				$(imgDim).html('<br />');
 			}
 
 			function showImg(obj) {
 				var theNode = $(obj).parent();
 
 				var imgSrc = $(theNode).find('img');
-
-				var imgtype = imgSrc.attr('filetype');
-
-				//alert(imgtype);
+				var imgtype = $(imgSrc).attr('filetype');
 
 				if (imgtype.indexOf('image') >= 0) {
 
-					var val = imgSrc.attr('src');
+					var val = $(imgSrc).attr('src');
 					var grp = $('#fileZone').attr('id');
 					var pos = $('#fileZone').offset();
-					var theImgLayer = $('#' + imgPreview);
 
-					var imgDim = $(theImgLayer).find('#imgDimension');
+					$(divImgLayer).attr('style', '');
+					$(divImgLayer).css({ "left": (pos.left + 200) + "px", "top": (pos.top - 25) + "px" }).show();
+					$(divImgLayer).attr('class', 'thumbpreview ui-corner-all');
 
-					$(theImgLayer).attr('style', '');
-					$(theImgLayer).css({ "left": (pos.left + 200) + "px", "top": (pos.top - 25) + "px" }).show();
-					$(theImgLayer).attr('class', 'thumbpreview ui-corner-all');
+					$(imgThumb).attr('alt', val);
+					$(imgThumb).attr('title', val);
+					$(imgThumb).attr('src', val);
 
-					var img = $(theImgLayer).find('img');
+					$(imgReal).attr('src', val);
 
-					img.attr('width', 200);
-					img.attr('height', 200);
-					img.removeAttr("width").attr("width");
-					img.removeAttr("height").attr("height");
-					img.attr('src', '/c3-admin/images/document.png');
+					resizeImg();
 
-					img.attr('alt', val);
-					img.attr('title', val);
-					img.attr('src', val);
-
-					imgDim.html('<br />');
-					//imgDim.html(val +'<br /> '+ img.width() + 'x' + img.height());
-					imgDim.html(img.width() + ' x ' + img.height());
-
-					if (img.height() > 175) {
-						img.attr('height', 180);
-					}
-
-					setTimeout("resizeImg('" + grp + "');", 1000);
-					setTimeout("resizeImg('" + grp + "');", 2500);
+					setTimeout("resizeImg();", 500);
+					setTimeout("resizeImg();", 1500);
+					setTimeout("resizeImg();", 5000);
 				}
 			}
 
-			function resizeImg(grp) {
-				var theImgLayer = $('#' + imgSrcLayer);
-				var img = $(theImgLayer).find('img');
+			function resizeImg() {
 
-				img.removeAttr("width").attr("width");
-				img.removeAttr("height").attr("height");
+				$(imgDim).html($(imgReal).width() + ' x ' + $(imgReal).height());
 
-				if (img.height() > 175) {
-					img.attr('height', 165);
-					setTimeout("resizeImg('" + grp + "');", 1000);
+				if ($(imgThumb).height() > 175) {
+					$(imgThumb).attr('height', 165);
+					setTimeout("resizeImg();", 1500);
 				}
 			}
 		</script>
@@ -315,12 +312,12 @@
 			<asp:Button Visible="false" ID="btnReturnFile" runat="server" Text="Select File" OnClientClick="return cmsSetFileNameReturn();" />
 		</p>
 	</div>
-	<asp:Literal runat="server" ID="pnlTiny2">
-	<div class="mceActionPanel">
-		<input type="submit" id="insert" name="insert" value="Select" onclick="FileBrowserDialogue.mySubmit();return false;" />
-		<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
-	</div>
-	</asp:Literal>
+	<asp:Panel runat="server" ID="pnlTiny2">
+		<div class="mceActionPanel">
+			<input type="submit" id="insert" name="insert" value="Select" onclick="FileBrowserDialogue.mySubmit();return false;" />
+			<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
+		</div>
+	</asp:Panel>
 	<div style="display: none">
 		<asp:Panel runat="server" ID="pnlFileMgr">
 			<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName();return false;" />

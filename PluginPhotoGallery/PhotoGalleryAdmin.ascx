@@ -1,7 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PhotoGalleryAdmin.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.PhotoGallery.PhotoGalleryAdmin" %>
 <h2>
 	Photo Gallery :
-	<asp:Literal ID="litGalleryName" runat="server"></asp:Literal></h2>
+	<asp:Literal ID="litGalleryName" runat="server" /></h2>
+<div id="imgWrapperMain" style="display: none;">
+	<div style="padding: 5px; min-height: 20px; min-width: 20px;">
+		<img alt="" id="imgThmbnail" src="/c3-admin/images/document.png" />
+	</div>
+</div>
+<div style="clear: both">
+</div>
 <br />
 <style type="text/css">
 	#galleryTarget, #gallerySource {
@@ -73,10 +80,40 @@
 		display: none;
 	}
 	
-	
-	
 	.inputFields {
 		display: none;
+	}
+	
+	
+	#imgWrapperMain {
+		display: block;
+		min-height: 2px;
+		min-width: 2px;
+		width: 850px;
+		padding: 8px;
+		margin: 0px;
+		position: absolute;
+		z-index: 2000;
+		text-align: center;
+		margin: 10px auto;
+	}
+	
+	#imgWrapperMain #imgThmbnail {
+		min-height: 2px;
+		min-width: 2px;
+		max-height: 105px;
+		width: auto;
+	}
+	
+	.thumbpreview {
+		display: block;
+		min-height: 2px;
+		min-width: 2px;
+		padding: 8px;
+		color: #000000;
+		background-color: #B7D7C4;
+		margin: 10px auto;
+		text-align: center;
 	}
 </style>
 <script type="text/javascript">
@@ -95,6 +132,35 @@
 		updateGallery();
 	});
 
+	var imgPreview = 'imgWrapperMain';
+
+	function hideImg(obj) {
+		var theNode = $(obj).parent();
+
+		var theImgLayer = $('#' + imgPreview);
+		$(theImgLayer).attr('style', 'display:none;');
+		$(theImgLayer).attr('class', '');
+
+		var img = $(theImgLayer).find('img');
+		img.attr('src', '/c3-admin/images/document.png');
+	}
+
+	function showImg(obj) {
+		var theNode = $(obj).parent();
+
+		var key = $(theNode).find('#imgName').text();
+
+		var newImgSrc = '/carrotwarethumb.axd?square=100&scale=true&thumb=' + encodeURIComponent(key);
+
+		var theImgLayer = $('#' + imgPreview);
+		$(theImgLayer).attr('style', '');
+		$(theImgLayer).attr('class', 'thumbpreview ui-corner-all');
+
+		var img = $(theImgLayer).find('img');
+		img.attr('src', '/c3-admin/images/document.png');
+		img.attr('src', newImgSrc);
+	}
+
 
 	function galleryOrder() {
 		var OrderField = "<%=txtGalleryOrder.ClientID %>";
@@ -105,6 +171,12 @@
 			var liImg = $(this);
 			var id = liImg.attr('id');
 			var key = liImg.find('#imgName').text();
+			var img = liImg.find('#imgThumb').first();
+
+			var newImgSrc = '/carrotwarethumb.axd?square=55&thumb=' + encodeURIComponent(key);
+			$(img).attr('src', newImgSrc);
+
+			//alert($(img).attr('src'));
 
 			var keys = (i + '\t' + key);
 
@@ -203,7 +275,7 @@
 			<asp:Repeater ID="rpFiles" runat="server">
 				<ItemTemplate>
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
-						<img height="50" width="50" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
+						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="<%# ResolveResourceFilePath( "PhotoIcon.png" ) %>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
 						<div style="float: left; max-width: 240px" class="fileInfo">
 							<%# String.Format("<span id=\"imgName\">{0}{1}</span>", Eval("FolderPath"), Eval("FileName"))%>
@@ -224,7 +296,7 @@
 			<asp:Repeater ID="rpGallery" runat="server">
 				<ItemTemplate>
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
-						<img height="50" width="50" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
+						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
 						<div style="float: left; max-width: 240px" class="fileInfo">
 							<%# String.Format("<span id=\"imgName\">{0}{1}</span>", Eval("FolderPath"), Eval("FileName"))%>

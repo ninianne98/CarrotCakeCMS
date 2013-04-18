@@ -109,6 +109,26 @@ namespace Carrotware.CMS.Interface {
 
 		#endregion
 
+		public string ResolveResourceFilePath(string sPath) {
+			string sPathOut = null;
+			if (!string.IsNullOrEmpty(sPath)) {
+				sPathOut = sPath.Replace(@"\", "/");
+			} else {
+				sPathOut = "";
+			}
+
+			if (!sPathOut.Contains("//")) {
+				if ((!sPathOut.StartsWith("~") && !sPathOut.StartsWith("/"))) {
+					sPathOut = this.AppRelativeTemplateSourceDirectory + sPathOut;
+				}
+				if (sPathOut.StartsWith("~")) {
+					sPathOut = VirtualPathUtility.ToAbsolute(sPathOut);
+				}
+			}
+
+			return sPathOut;
+		}
+
 	}
 
 	//===========================

@@ -32,6 +32,14 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		private Bitmap ResizeBitmap(Bitmap bmpIn, int w, int h) {
+
+			if (w < 1) {
+				w = 1;
+			}
+			if (h < 1) {
+				h = 1;
+			}
+
 			Bitmap bmpNew = new Bitmap(w, h);
 			using (Graphics g = Graphics.FromImage(bmpNew)) {
 				g.DrawImage(bmpIn, 0, 0, w, h);
@@ -123,6 +131,7 @@ namespace Carrotware.Web.UI.Controls {
 							iWidth = w;
 						}
 					}
+
 					bmpThumb = ResizeBitmap(bmpIn, iWidth, iHeight);
 				} else {
 					using (Graphics graphics = Graphics.FromImage(bmpThumb)) {
