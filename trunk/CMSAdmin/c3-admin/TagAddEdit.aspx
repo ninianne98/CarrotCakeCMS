@@ -5,16 +5,17 @@
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 
-		var thePageID = '<%=guidItemID %>';
+		var thePageID = '<%= guidItemID %>';
+
+		var tValid = '#<%= txtFileValid.ClientID %>';
+		var tValidSlug = '#<%= txtSlug.ClientID %>';
 
 		var thePage = '';
 
-		var fldrValid = '#<%= txtFileValid.ClientID %>';
-
 		function CheckFileName() {
-			thePage = $('#<%= txtSlug.ClientID %>').val();
+			thePage = $(tValidSlug).val();
 
-			$(fldrValid).val('');
+			$(tValid).val('');
 
 			var webMthd = webSvc + "/ValidateUniqueTag";
 			var myPage = MakeStringSafe(thePage);
@@ -41,12 +42,14 @@
 			}
 
 			if (data.d == "OK") {
-				$(fldrValid).val('VALID');
+				$(tValid).val('VALID');
+				$(tValidSlug).removeClass('validationExclaimBox');
 			} else {
-				$(fldrValid).val('NOT VALID');
+				$(tValid).val('NOT VALID');
+				$(tValidSlug).addClass('validationExclaimBox');
 			}
 
-			//var ret = cmsIsPageValid();
+			var ret = cmsIsPageValid();
 			cmsForceInputValidation('<%= txtFileValid.ClientID %>');
 		}
 	</script>

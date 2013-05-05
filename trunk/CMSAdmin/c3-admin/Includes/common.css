@@ -43,55 +43,6 @@ tt, pre, code, kbd, samp {
 	margin-right: 5px;
 }
 
-.validationError, .validationExclaim, .validationDelete, .validationCross {
-	font-weight: bolder;
-	color: #CC0000;
-	font-size: large;
-	padding: 1px;
-	margin: 2px;	
-}
-
-.validationExclaim {
-	color: #CC9900;
-}
-.validationError {
-	color: #CC0000;
-}
-.validationDelete {
-	color: #660066;
-}
-.validationCross {
-	color: #000066;
-}
-
-/*
-.validationError, .validationExclaim, .validationDelete, .validationCross {
-	font-weight: bolder;
-	color: #CC0000;
-	font-size: large;
-	text-indent: -9999px;
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	padding: 1px;
-	margin: 2px;
-}
-
-.validationExclaim {
-	background: transparent url("../images/exclamation.png") 0 0 no-repeat;
-}
-.validationError {
-	background: transparent url("../images/error.png") 0 0 no-repeat;
-}
-.validationDelete {
-	background: transparent url("../images/delete.png") 0 0 no-repeat;
-}
-.validationCross {
-	background: transparent url("../images/cross.png") 0 0 no-repeat;
-}
-*/
-
-
 /*  OTHER */
 
 .tableback {
@@ -272,3 +223,70 @@ table.centered {
 	margin: 0 auto;
 }
 
+/* validations */
+
+
+.validationError, .validationExclaim, .validationDelete, .validationCross {
+	font-weight: bolder;
+	color: #CC0000;
+	font-size: large;
+	padding: 1px;
+	margin: 2px;	
+}
+
+.validationExclaim {
+	color: #CC9900;
+}
+.validationError {
+	color: #CC0000;
+}
+.validationDelete {
+	color: #660066;
+}
+.validationCross {
+	color: #000066;
+}
+
+.validationExclaimBox {
+	border: thin solid #CC9900 !important;
+	background-color: #FFFAE6 !important;
+}
+.validationErrorBox {
+	border: thin solid #CC0000 !important;
+	background-color: #FFF2F2 !important;
+}
+.validationDeleteBox {
+	border: thin solid #660066 !important;
+	background-color: #FFD2FF !important;
+}
+.validationCrossBox {
+	border: thin solid #000066 !important;
+	background-color: #CCCCFF !important;
+}
+
+/*
+.validationError, .validationExclaim, .validationDelete, .validationCross {
+	font-weight: bolder;
+	color: #CC0000;
+	font-size: large;
+	text-indent: -9999px;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	padding: 1px;
+	margin: 2px;
+}
+
+.validationExclaim {
+	background: transparent url("../images/exclamation.png") 0 0 no-repeat;
+}
+.validationError {
+	background: transparent url("../images/error.png") 0 0 no-repeat;
+}
+.validationDelete {
+	background: transparent url("../images/delete.png") 0 0 no-repeat;
+}
+.validationCross {
+	background: transparent url("../images/cross.png") 0 0 no-repeat;
+}
+*/

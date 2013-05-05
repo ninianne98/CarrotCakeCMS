@@ -7,7 +7,11 @@
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 
-		var thePageID = '<%=guidRootContentID.ToString() %>';
+		var thePageID = '<%= guidRootContentID.ToString() %>';
+
+		var tTitle = '#<%= txtTitle.ClientID %>';
+		var tNav = '#<%= txtNav.ClientID %>';
+		var tHead = '#<%= txtHead.ClientID %>';
 
 		var thePage = '';
 
@@ -17,7 +21,7 @@
 
 		function GenerateBlogFilePrefix() {
 			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
-			var pageTitle = $('#<%= txtPageSlug.ClientID %>').val();
+			var pageTitle = $(tValidSlug).val();
 			var myPage = MakeStringSafe(pageTitle);
 
 			var webMthd = webSvc + "/GenerateBlogFilePrefix";
@@ -38,21 +42,21 @@
 
 		function editPrefixCallback(data, status) {
 			if (data.d != "FAIL") {
-
 				$('#<%= lblPrefix.ClientID %>').html(data.d);
 			} else {
 				$('#<%= lblPrefix.ClientID %>').html('/0000/00/00/file.aspx');
 			}
 		}
 
-		var fldrValid = '#<%= txtFileValid.ClientID %>';
+		var tValid = '#<%= txtFileValid.ClientID %>';
+		var tValidSlug = '#<%= txtPageSlug.ClientID %>';
 
 		function CheckFileName() {
 			GenerateBlogFilePrefix();
 
-			thePage = $('#<%= txtPageSlug.ClientID %>').val();
+			thePage = $(tValidSlug).val();
 
-			$(fldrValid).val('');
+			$(tValid).val('');
 
 			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
 
@@ -83,19 +87,21 @@
 			}
 
 			if (data.d == "OK") {
-				$(fldrValid).val('VALID');
+				$(tValid).val('VALID');
+				$(tValidSlug).removeClass('validationExclaimBox');
 			} else {
-				$(fldrValid).val('NOT VALID');
+				$(tValid).val('NOT VALID');
+				$(tValidSlug).addClass('validationExclaimBox');
 			}
 
-			//var ret = cmsIsPageValid();
-			setTimeout("cmsForceInputValidation('<%= txtFileValid.ClientID %>');", 500);
+			var ret = cmsIsPageValid();
+			setTimeout("cmsForceInputValidation('<%= txtFileValid.ClientID %>');", 800);
 		}
 
 		function AutoGeneratePageFilename() {
-			var theTitle = $('#<%= txtTitle.ClientID %>').val();
-			var theFile = $('#<%= txtPageSlug.ClientID %>').val();
-			var theNav = $('#<%= txtNav.ClientID %>').val();
+			var theTitle = $(tTitle).val();
+			var theFile = $(tValidSlug).val();
+			var theNav = $(tNav).val();
 
 			if (theTitle.length > 0 && theFile.length < 1 && theNav.length < 1) {
 				GeneratePageFilename();
@@ -103,8 +109,8 @@
 		}
 
 		function GeneratePageFilename() {
-			var theTitle = $('#<%= txtTitle.ClientID %>').val();
-			var theFile = $('#<%= txtPageSlug.ClientID %>').val();
+			var theTitle = $(tTitle).val();
+			var theFile = $(tValidSlug).val();
 			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
 
 			if (theTitle.length > 0) {
@@ -130,19 +136,19 @@
 			if (data.d == "FAIL") {
 				cmsAlertModal(data.d);
 			} else {
-				var theTitle = $('#<%= txtTitle.ClientID %>').val();
-				var theFile = $('#<%= txtPageSlug.ClientID %>').val();
-				var theNav = $('#<%= txtNav.ClientID %>').val();
-				var theHead = $('#<%= txtHead.ClientID %>').val();
+				var theTitle = $(tTitle).val();
+				var theFile = $(tValidSlug).val();
+				var theNav = $(tNav).val();
+				var theHead = $(tHead).val();
 
 				if (theFile.length < 3) {
-					$('#<%= txtPageSlug.ClientID %>').val(data.d);
+					$(tValidSlug).val(data.d);
 				}
 				if (theNav.length < 1) {
-					$('#<%= txtNav.ClientID %>').val(theTitle);
+					$(tNav).val(theTitle);
 				}
 				if (theHead.length < 1) {
-					$('#<%= txtHead.ClientID %>').val(theTitle);
+					$(tHead).val(theTitle);
 				}
 			}
 			CheckFileName();
