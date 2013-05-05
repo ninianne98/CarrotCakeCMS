@@ -8,7 +8,11 @@
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 
-		var thePageID = '<%=guidRootContentID.ToString() %>';
+		var thePageID = '<%= guidRootContentID.ToString() %>';
+
+		var tTitle = '#<%= txtTitle.ClientID %>';
+		var tNav = '#<%= txtNav.ClientID %>';
+		var tHead = '#<%= txtHead.ClientID %>';
 
 		var thePage = '';
 
@@ -17,9 +21,9 @@
 		}
 
 		function AutoGeneratePageFilename() {
-			var theTitle = $('#<%= txtTitle.ClientID %>').val();
-			var theFile = $('#<%= txtFileName.ClientID %>').val();
-			var theNav = $('#<%= txtNav.ClientID %>').val();
+			var theTitle = $(tTitle).val();
+			var theFile = $(tValidFile).val();
+			var theNav = $(tNav).val();
 
 			if (theTitle.length > 0 && theFile.length < 1 && theNav.length < 1) {
 				GeneratePageFilename();
@@ -27,8 +31,8 @@
 		}
 
 		function GeneratePageFilename() {
-			var theTitle = $('#<%= txtTitle.ClientID %>').val();
-			var theFile = $('#<%= txtFileName.ClientID %>').val();
+			var theTitle = $(tTitle).val();
+			var theFile = $(tValidFile).val();
 			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
 
 			if (theTitle.length > 0) {
@@ -55,30 +59,31 @@
 			if (data.d == "FAIL") {
 				cmsAlertModal(data.d);
 			} else {
-				var theTitle = $('#<%= txtTitle.ClientID %>').val();
-				var theFile = $('#<%= txtFileName.ClientID %>').val();
-				var theNav = $('#<%= txtNav.ClientID %>').val();
-				var theHead = $('#<%= txtHead.ClientID %>').val();
+				var theTitle = $(tTitle).val();
+				var theFile = $(tValidFile).val();
+				var theNav = $(tNav).val();
+				var theHead = $(tHead).val();
 
 				if (theFile.length < 3) {
-					$('#<%= txtFileName.ClientID %>').val(data.d);
+					$(tValidFile).val(data.d);
 				}
 				if (theNav.length < 1) {
-					$('#<%= txtNav.ClientID %>').val(theTitle);
+					$(tNav).val(theTitle);
 				}
 				if (theHead.length < 1) {
-					$('#<%= txtHead.ClientID %>').val(theTitle);
+					$(tHead).val(theTitle);
 				}
 			}
 			CheckFileName();
 		}
 
-		var fldrValid = '#<%= txtFileValid.ClientID %>';
+		var tValid = '#<%= txtFileValid.ClientID %>';
+		var tValidFile = '#<%= txtFileName.ClientID %>';
 
 		function CheckFileName() {
-			thePage = $('#<%= txtFileName.ClientID %>').val();
+			thePage = $(tValidFile).val();
 
-			$(fldrValid).val('');
+			$(tValid).val('');
 
 			var webMthd = webSvc + "/ValidateUniqueFilename";
 			var myPage = MakeStringSafe(thePage);
@@ -94,7 +99,6 @@
 			});
 		}
 
-
 		$(document).ready(function () {
 			setTimeout("CheckFileName();", 250);
 			cmsIsPageValid();
@@ -107,13 +111,15 @@
 			}
 
 			if (data.d == "OK") {
-				$(fldrValid).val('VALID');
+				$(tValid).val('VALID');
+				$(tValidFile).removeClass('validationExclaimBox');
 			} else {
-				$(fldrValid).val('NOT VALID');
+				$(tValid).val('NOT VALID');
+				$(tValidFile).addClass('validationExclaimBox');
 			}
 
-			//var ret = cmsIsPageValid();
-			setTimeout("cmsForceInputValidation('<%= txtFileValid.ClientID %>');", 500);
+			var ret = cmsIsPageValid();
+			setTimeout("cmsForceInputValidation('<%= txtFileValid.ClientID %>');", 800);
 		}
 
 		/*  <asp:PlaceHolder  ID="pnlHBEmpty" runat="server"> begin empty cancel functions */

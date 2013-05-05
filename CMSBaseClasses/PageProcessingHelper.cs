@@ -99,6 +99,8 @@ namespace Carrotware.CMS.UI.Base {
 
 			CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 
+			List<HtmlMeta> lstMD = GetHtmlMeta(this.CurrentWebPage.Header);
+
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
 			metaGenerator.Content = SiteData.CarrotCakeCMSVersion;
@@ -111,11 +113,21 @@ namespace Carrotware.CMS.UI.Base {
 
 			if (theSite != null && pageContents != null) {
 				if (theSite.BlockIndex || pageContents.BlockIndex) {
+					bool bCrawlExist = false;
 					HtmlMeta metaNoCrawl = new HtmlMeta();
 					metaNoCrawl.Name = "robots";
+
+					if (lstMD.Where(x => x.Name == "robots").Count() > 0) {
+						metaNoCrawl = lstMD.Where(x => x.Name == "robots").FirstOrDefault();
+						bCrawlExist = true;
+					}
+
 					metaNoCrawl.Content = "noindex,nofollow,noarchive";
-					CurrentWebPage.Header.Controls.Add(metaNoCrawl);
-					CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+
+					if (!bCrawlExist) {
+						CurrentWebPage.Header.Controls.Add(metaNoCrawl);
+						CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+					}
 				}
 			}
 
@@ -125,7 +137,6 @@ namespace Carrotware.CMS.UI.Base {
 				bool bDescExist = false;
 				bool bKeyExist = false;
 
-				List<HtmlMeta> lstMD = GetHtmlMeta(this.CurrentWebPage.Header);
 				if (lstMD.Where(x => x.Name == "description").Count() > 0) {
 					metaDesc = lstMD.Where(x => x.Name == "description").FirstOrDefault();
 					bDescExist = true;
@@ -143,21 +154,21 @@ namespace Carrotware.CMS.UI.Base {
 				int indexPos = 6;
 				if (this.CurrentWebPage.Header.Controls.Count > indexPos) {
 					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
-						CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
-						CurrentWebPage.Header.Controls.AddAt(indexPos, metaDesc);
+						this.CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
+						this.CurrentWebPage.Header.Controls.AddAt(indexPos, metaDesc);
 					}
 					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
-						CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
-						CurrentWebPage.Header.Controls.AddAt(indexPos, metaKey);
+						this.CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
+						this.CurrentWebPage.Header.Controls.AddAt(indexPos, metaKey);
 					}
 				} else {
 					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
-						CurrentWebPage.Header.Controls.Add(metaDesc);
-						CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+						this.CurrentWebPage.Header.Controls.Add(metaDesc);
+						this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 					}
 					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
-						CurrentWebPage.Header.Controls.Add(metaKey);
-						CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+						this.CurrentWebPage.Header.Controls.Add(metaKey);
+						this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 					}
 				}
 

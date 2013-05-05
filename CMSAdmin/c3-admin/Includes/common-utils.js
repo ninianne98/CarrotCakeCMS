@@ -180,6 +180,89 @@ function cmsOpenPage(theURL) {
 }
 
 
+// begin fancy validator stylings 
+
+$(document).ready(function () {
+	loadValidationStyles();
+	ajaxLoadValidationStyles();
+});
+
+function ajaxLoadValidationStyles() {
+	if (typeof (Sys) != 'undefined') {
+		var prm = Sys.WebForms.PageRequestManager.getInstance();
+		prm.add_endRequest(function () {
+			loadValidationStyles();
+		});
+	}
+}
+
+function loadValidationStyles() {
+	if (typeof (Page_ClientValidate) == 'function') {
+		cmsLoadOverrideValidation();
+	}
+}
+
+var invalidCSSClass = "validationErrorBox";
+
+function cmsLoadOverrideValidation() {
+	for (i = 0; i < Page_Validators.length; i++) {
+		cmsOverrideValidation(Page_Validators[i]);
+	}
+}
+
+function cmsOverrideValidation(validator) {
+	var origValidator = validator.evaluationfunction;
+
+	validator.evaluationfunction = function (val) {
+		var id = val.controltovalidate;
+
+		var valid1 = origValidator(val);
+		var valid2 = cmsChkCtrlValid(val);
+
+		if (valid2) {
+			$('#' + id).removeClass(invalidCSSClass);
+		}
+
+		if (!valid1) {
+			$('#' + id).addClass(invalidCSSClass);
+		}
+
+		return valid1;
+	};
+}
+
+function cmsChkCtrlValid(val) {
+
+	if (typeof val.controltocompare != 'undefined') {
+		var id2 = val.controltocompare;
+		var ctrl2 = document.getElementById(id2);
+		var v2 = true;
+
+		for (var i = 0; i < ctrl2.Validators.length; i++) {
+			if (!ctrl2.Validators[i].isvalid) {
+				v2 = false;
+				break;
+			}
+		}
+
+		if (v2) {
+			$('#' + id2).removeClass(invalidCSSClass);
+		}
+	}
+
+	var id = val.controltovalidate;
+	var ctrl = document.getElementById(id);
+
+	for (var i = 0; i < ctrl.Validators.length; i++) {
+		if (!ctrl.Validators[i].isvalid) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
 function cmsLoadPrettyValidationPopup(validSummaryFld) {
 	if (!Page_IsValid) {
 		var txt = $('#' + validSummaryFld).html();
@@ -194,6 +277,8 @@ function cmsLoadPrettyValidation(validSummary) {
 		});
 	});
 }
+
+// end fancy validator stylings 
 
 function ProcessKeyPress(e) {
 	var obj = window.event ? event : e;
