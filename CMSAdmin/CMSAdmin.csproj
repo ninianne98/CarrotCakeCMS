@@ -746,6 +746,12 @@
     <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\skins\clearlooks2\window.css" />
     <Content Include="c3-admin\tiny_mce\plugins\inlinepopups\template.htm" />
     <Content Include="c3-admin\tiny_mce\plugins\insertdatetime\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\insertpreformattedtext\dialog.htm" />
+    <Content Include="c3-admin\tiny_mce\plugins\insertpreformattedtext\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\insertpreformattedtext\img\insertpreformattedtext.gif" />
+    <Content Include="c3-admin\tiny_mce\plugins\insertpreformattedtext\js\dialog.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\insertpreformattedtext\langs\en.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\insertpreformattedtext\langs\en_dlg.js" />
     <Content Include="c3-admin\tiny_mce\plugins\layer\editor_plugin.js" />
     <Content Include="c3-admin\tiny_mce\plugins\legacyoutput\editor_plugin.js" />
     <Content Include="c3-admin\tiny_mce\plugins\lists\editor_plugin.js" />
