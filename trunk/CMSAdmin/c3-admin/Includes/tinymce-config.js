@@ -22,10 +22,10 @@ function TinyMCEParamInit(winWidth, winHeight, allowResize) {
 		editor_selector: "mceEditor",
 		skin: "o2k7",
 		skin_variant: "silver",
-		plugins: "advimage,advlink,advlist,media,inlinepopups,searchreplace,visualblocks,paste,table,preview",
+		plugins: "advimage,advlink,advlist,media,inlinepopups,searchreplace,visualblocks,paste,table,preview,insertpreformattedtext",
 		file_browser_callback: "cmsFileBrowserCallback",
 		theme_advanced_buttons1: "bold,italic,underline,strikethrough,sub,sup,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,forecolor,backcolor,|,outdent,indent,blockquote,|,bullist,numlist,|,fileupbtn,cleanup,removeformat,help",
-		theme_advanced_buttons2: "search,replace,|,undo,redo,|,tablecontrols,|,pastetext,pasteword,|,link,unlink,anchor,image,media,|,code,preview,visualblocks",
+		theme_advanced_buttons2: "search,replace,|,undo,redo,|,tablecontrols,|,pastetext,pasteword,|,link,unlink,anchor,image,media,|,insertpreformattedtext,code,preview,visualblocks",
 		theme_advanced_buttons3: "",
 		theme_advanced_toolbar_location: "top",
 		theme_advanced_toolbar_align: "left",
@@ -41,7 +41,7 @@ function TinyMCEParamInit(winWidth, winHeight, allowResize) {
 		// Add a custom button
 		setup: function (ed) {
 			ed.addButton('fileupbtn', {
-				title: 'FileUpload',
+				title: 'File Upload',
 				image: '/c3-admin/tiny_mce/insertfile.gif',
 				onclick: function () {
 					ed.focus();

@@ -29,7 +29,7 @@ th {
 }
 
 A {
-	color: #006600;
+	color: #000099;
 }
 
 A:active {
@@ -37,7 +37,7 @@ A:active {
 }
 
 A:visited {
-	color: #996633;
+	color: #660066;
 }
 
 blockquote {
@@ -51,6 +51,7 @@ blockquote {
 }
 
 tt, pre, code, kbd, samp {
+	font-size: 11px;
 	font-family: 'Lucida Console' , 'Courier New' , Courier, Monaco, monospace, sans-serif;
 }
 
