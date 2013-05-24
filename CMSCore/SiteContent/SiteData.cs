@@ -198,6 +198,12 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static bool CurretSiteExists {
+			get {
+				return CurrentSite != null ? true : false;
+			}
+		}
+
 
 		public SiteData GetCurrentSite() {
 			//return Get(CurrentSiteID);
@@ -526,18 +532,15 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public DateTime ConvertUTCToSiteTime(DateTime dateUTC) {
-
 			return TimeZoneInfo.ConvertTimeFromUtc(dateUTC, SiteTimeZoneInfo);
 		}
 		public DateTime ConvertSiteTimeToUTC(DateTime dateSite) {
-
-			return TimeZoneInfo.ConvertTimeToUtc(dateSite, SiteTimeZoneInfo);
+			DateTime dateSiteSrc = DateTime.SpecifyKind(dateSite, DateTimeKind.Unspecified);
+			return TimeZoneInfo.ConvertTimeToUtc(dateSiteSrc, SiteTimeZoneInfo);
 		}
 		public string ConvertSiteTimeToISO8601(DateTime dateSite) {
-			//return ConvertSiteTimeToUTC(dateSite).ToString("o");
 			return ConvertSiteTimeToUTC(dateSite).ToString("s") + "Z";
 		}
-
 		public DateTime ConvertSiteTimeToLocalServer(DateTime dateSite) {
 			DateTime dateSiteSrc = DateTime.SpecifyKind(dateSite, DateTimeKind.Unspecified);
 			DateTime utc = TimeZoneInfo.ConvertTimeToUtc(dateSiteSrc, SiteTimeZoneInfo);
@@ -1200,13 +1203,34 @@ namespace Carrotware.CMS.Core {
 		string _FileName = String.Empty;
 		SiteData _site = new SiteData();
 
-		public DateTime dateBegin = DateTime.MinValue;
-		public DateTime dateEnd = DateTime.MaxValue;
+		private DateTime _dateBegin = DateTime.MinValue;
+		private DateTime _dateEnd = DateTime.MaxValue;
 
 		public int? Month { get; set; }
 		public int? Day { get; set; }
 		public int? Year { get; set; }
 
+		public DateTime DateBegin { get { return _dateBegin; } }
+		public DateTime DateEnd { get { return _dateEnd; } }
+
+		public DateTime DateBeginUTC {
+			get {
+				if (_site != null) {
+					return _site.ConvertSiteTimeToUTC(_dateBegin);
+				} else {
+					return _dateBegin;
+				}
+			}
+		}
+		public DateTime DateEndUTC {
+			get {
+				if (_site != null) {
+					return _site.ConvertSiteTimeToUTC(_dateEnd);
+				} else {
+					return _dateEnd;
+				}
+			}
+		}
 
 		public BlogDatePathParser() {
 			_FileName = SiteData.CurrentScriptName;
@@ -1256,18 +1280,17 @@ namespace Carrotware.CMS.Core {
 			}
 
 			if (Month == null && Day == null) {
-				dateBegin = new DateTime(Convert.ToInt32(this.Year), 1, 1);
-				dateEnd = dateBegin.AddYears(1).AddMilliseconds(-1);
+				_dateBegin = new DateTime(Convert.ToInt32(this.Year), 1, 1);
+				_dateEnd = _dateBegin.AddYears(1).AddMilliseconds(-1);
 			}
 			if (Month != null && Day == null) {
-				dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), 1);
-				dateEnd = dateBegin.AddMonths(1).AddMilliseconds(-1);
+				_dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), 1);
+				_dateEnd = _dateBegin.AddMonths(1).AddMilliseconds(-1);
 			}
 			if (Month != null && Day != null) {
-				dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), Convert.ToInt32(this.Day));
-				dateEnd = dateBegin.AddDays(1).AddMilliseconds(-1);
+				_dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), Convert.ToInt32(this.Day));
+				_dateEnd = _dateBegin.AddDays(1).AddMilliseconds(-1);
 			}
-
 		}
 
 

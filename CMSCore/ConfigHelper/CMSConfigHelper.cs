@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -57,6 +58,8 @@ namespace Carrotware.CMS.Core {
 
 		private static string keyDynamicSite = "cms_DynamicSite";
 
+		private static string keyTemplateFiles = "cms_TemplateFiles";
+
 		private static string keyTemplates = "cms_Templates";
 
 		private static string keyDynSite = "cms_DynSite_";
@@ -75,6 +78,8 @@ namespace Carrotware.CMS.Core {
 			HttpContext.Current.Cache.Remove(keyDynamicSite);
 
 			HttpContext.Current.Cache.Remove(keyTemplates);
+
+			HttpContext.Current.Cache.Remove(keyTemplateFiles);
 
 			string ModuleKey = keyDynSite + DomainName;
 			HttpContext.Current.Cache.Remove(ModuleKey);
@@ -744,6 +749,106 @@ namespace Carrotware.CMS.Core {
 				return _site;
 			}
 		}
+
+		//public static List<CMSTemplateFile> TemplateFileList {
+		//    get {
+
+		//        var _sites = new List<CMSTemplateFile>();
+
+		//        bool bCached = false;
+
+		//        try {
+		//            _sites = (List<CMSTemplateFile>)HttpContext.Current.Cache[keyTemplateFiles];
+		//            if (_sites != null) {
+		//                bCached = true;
+		//            }
+		//        } catch {
+		//            bCached = false;
+		//        }
+
+		//        if (!bCached) {
+
+		//            var _sites1 = new List<CMSTemplateFile>();
+		//            var _sites2 = new List<CMSTemplateFile>();
+
+		//            using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+		//                _sites1 = (from d in _db.vw_carrot_Contents
+		//                           where d.IsLatestVersion == true
+		//                           select new CMSTemplateFile(d.TemplateFile)).Distinct().ToList();
+		//            }
+
+		//            using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+		//                _sites2 = (from d in cmsHelper.Templates
+		//                           select new CMSTemplateFile(d.TemplatePath)).Distinct().ToList();
+		//            }
+
+		//            _sites = _sites1.Union(_sites2).Distinct().ToList();
+
+		//            HttpContext.Current.Cache.Insert(keyTemplateFiles, _sites, null, DateTime.Now.AddMinutes(1), Cache.NoSlidingExpiration);
+		//        }
+		//        return _sites;
+		//    }
+		//}
+
+		public static bool CheckRequestedFileExistence(string templateFileName, Guid siteID) {
+			var _tmplts = GetTmplateStatus();
+
+			CMSFilePath tmp = _tmplts.Where(x => x.TemplateFile.ToLower() == templateFileName.ToLower() && x.SiteID == siteID).FirstOrDefault();
+
+			if (tmp == null) {
+				tmp = new CMSFilePath(templateFileName, siteID);
+				_tmplts.Add(tmp);
+#if DEBUG
+				Debug.WriteLine(" ================ " + DateTime.UtcNow.ToString() + " ================");
+				Debug.WriteLine("Grabbed file : CheckRequestedFileExistence(string templateFileName, Guid siteID) " + templateFileName);
+#endif
+			}
+
+			SaveTmplateStatus(_tmplts);
+
+			return tmp.FileExists;
+		}
+
+		public static bool CheckFileExistence(string templateFileName) {
+			var _tmplts = GetTmplateStatus();
+
+			CMSFilePath tmp = _tmplts.Where(x => x.TemplateFile.ToLower() == templateFileName.ToLower() && x.SiteID == Guid.Empty).FirstOrDefault();
+
+			if (tmp == null) {
+				tmp = new CMSFilePath(templateFileName);
+				_tmplts.Add(tmp);
+#if DEBUG
+				Debug.WriteLine(" ================ " + DateTime.UtcNow.ToString() + " ================");
+				Debug.WriteLine("Grabbed file : CheckFileExistence(string templateFileName) " + templateFileName);
+#endif
+			}
+
+			SaveTmplateStatus(_tmplts);
+
+			return tmp.FileExists;
+		}
+
+		private static void SaveTmplateStatus(List<CMSFilePath> fileState) {
+			HttpContext.Current.Cache.Insert(keyTemplateFiles, fileState, null, DateTime.Now.AddMinutes(10), Cache.NoSlidingExpiration);
+		}
+
+		private static List<CMSFilePath> GetTmplateStatus() {
+			var _tmplts = new List<CMSFilePath>();
+
+			try { _tmplts = (List<CMSFilePath>)HttpContext.Current.Cache[keyTemplateFiles]; } catch { }
+
+			if (_tmplts == null) {
+				_tmplts = new List<CMSFilePath>();
+			}
+
+			_tmplts.RemoveAll(x => x.DateChecked < DateTime.UtcNow.AddSeconds(-30));
+
+			_tmplts.RemoveAll(x => x.DateChecked < DateTime.UtcNow.AddSeconds(-10) && x.SiteID != Guid.Empty);
+
+			return _tmplts;
+		}
+
+		//=========================
 
 		public static TimeZoneInfo GetLocalTimeZoneInfo() {
 			TimeZoneInfo oTZ = TimeZoneInfo.Local;

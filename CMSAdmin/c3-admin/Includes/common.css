@@ -194,6 +194,14 @@ button, input[type="button"], input[type="submit"], input[type="reset"], input[t
 	margin: 4px;
 }
 
+.dashboardCell {
+	height: 110px;
+	width: 110px;
+	padding: 10px;
+	margin: 10px;
+	float: left;
+	text-align: center;
+}
 
 /* cellpadding */
 th, td {
@@ -231,7 +239,7 @@ table.centered {
 	color: #CC0000;
 	font-size: large;
 	padding: 1px;
-	margin: 2px;	
+	margin: 2px;
 }
 
 .validationExclaim {

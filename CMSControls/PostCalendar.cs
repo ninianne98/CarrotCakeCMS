@@ -132,12 +132,12 @@ namespace Carrotware.CMS.UI.Controls {
 						string sFilterPath = SiteData.CurrentScriptName;
 						if (sFilterPath.ToLower().StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())) {
 							BlogDatePathParser p = new BlogDatePathParser(SiteData.CurrentSite, sFilterPath);
-							if (p.dateBegin.Year > 1900) {
-								_date = p.dateBegin;
+							if (p.DateBegin.Year > 1900) {
+								_date = p.DateBegin;
 							}
 						}
 					} else {
-						_date = DateTime.UtcNow;
+						_date = DateTime.Now;
 					}
 				}
 				return _date;

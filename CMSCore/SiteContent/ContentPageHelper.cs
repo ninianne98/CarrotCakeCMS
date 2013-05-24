@@ -365,19 +365,19 @@ namespace Carrotware.CMS.Core {
 				pvt.CurrentViewType = PageViewType.ViewType.DateIndex;
 
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
-				TimeSpan ts = p.dateEnd - p.dateBegin;
+				TimeSpan ts = p.DateEndUTC - p.DateBeginUTC;
 
 				int daysDelta = ts.Days;
 				if (daysDelta < 400 && daysDelta > 90) {
-					sTitle = p.dateBegin.ToString("yyyy");
+					sTitle = p.DateBeginUTC.ToString("yyyy");
 					pvt.CurrentViewType = PageViewType.ViewType.DateYearIndex;
 				}
 				if (daysDelta < 36 && daysDelta > 3) {
-					sTitle = p.dateBegin.ToString("MMMM yyyy");
+					sTitle = p.DateBeginUTC.ToString("MMMM yyyy");
 					pvt.CurrentViewType = PageViewType.ViewType.DateMonthIndex;
 				}
 				if (daysDelta < 5) {
-					sTitle = p.dateBegin.ToString("MMMM d, yyyy");
+					sTitle = p.DateBeginUTC.ToString("MMMM d, yyyy");
 					pvt.CurrentViewType = PageViewType.ViewType.DateDayIndex;
 				}
 			}
@@ -529,7 +529,7 @@ namespace Carrotware.CMS.Core {
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
-				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.dateBegin, p.dateEnd, bActiveOnly);
+				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.DateBeginUTC, p.DateEndUTC, bActiveOnly);
 				bFound = true;
 			}
 			if (!bFound) {
@@ -557,7 +557,7 @@ namespace Carrotware.CMS.Core {
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
-				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.dateBegin, p.dateEnd, bActiveOnly);
+				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.DateBeginUTC, p.DateEndUTC, bActiveOnly);
 				bFound = true;
 			}
 			if (!bFound) {

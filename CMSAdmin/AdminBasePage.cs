@@ -52,8 +52,8 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void RedirectIfNoSite() {
-			if (SiteData.CurrentSite == null) {
-				Response.Redirect(SiteFilename.DashboardURL);
+			if (!SiteData.CurretSiteExists) {
+				Response.Redirect(SiteFilename.SiteInfoURL);
 			}
 		}
 

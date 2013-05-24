@@ -169,6 +169,13 @@
     <Compile Include="c3-admin\BlogPostEdit.aspx.designer.cs">
       <DependentUpon>BlogPostEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\PageWidgets.aspx.cs">
       <DependentUpon>PageWidgets.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -351,12 +358,12 @@
     <Compile Include="c3-admin\ucSitePageDrillDown.ascx.designer.cs">
       <DependentUpon>ucSitePageDrillDown.ascx</DependentUpon>
     </Compile>
-    <Compile Include="c3-admin\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="c3-admin\SiteInfo.aspx.cs">
+      <DependentUpon>SiteInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="c3-admin\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="c3-admin\SiteInfo.aspx.designer.cs">
+      <DependentUpon>SiteInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="c3-admin\FileBrowser.aspx.cs">
       <DependentUpon>FileBrowser.aspx</DependentUpon>
@@ -546,6 +553,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
+    <Content Include="c3-admin\Default.aspx" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_15_f9cecd_40x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_b7d7c4_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_dff6e8_1x400.png" />
@@ -572,6 +580,7 @@
     <Content Include="c3-admin\glossyseagreen\jquery-ui-metro.css" />
     <Content Include="c3-admin\Images\arrowdown.png" />
     <Content Include="c3-admin\Images\blogger.png" />
+    <Content Include="c3-admin\Images\BlogIndex.png" />
     <Content Include="c3-admin\Images\clock.png" />
     <Content Include="c3-admin\Images\clock_add.png" />
     <Content Include="c3-admin\Images\clock_delete.png" />
@@ -580,19 +589,33 @@
     <Content Include="c3-admin\Images\clock_red.png" />
     <Content Include="c3-admin\Images\clock_stop.png" />
     <Content Include="c3-admin\Images\delete.png" />
+    <Content Include="c3-admin\Images\GroupList.png" />
     <Content Include="c3-admin\Images\hourglass.png" />
+    <Content Include="c3-admin\Images\ImportData.png" />
+    <Content Include="c3-admin\Images\LargeDoc.png" />
     <Content Include="c3-admin\Images\layers.png" />
     <Content Include="c3-admin\Images\lightbulb.png" />
     <Content Include="c3-admin\Images\lightbulb_off.png" />
     <Content Include="c3-admin\Images\magifier_zoom_out.png" />
     <Content Include="c3-admin\Images\magnifier.png" />
+    <Content Include="c3-admin\Images\ModuleAdmin.png" />
+    <Content Include="c3-admin\Images\PageIndex.png" />
     <Content Include="c3-admin\Images\page_code.png" />
+    <Content Include="c3-admin\Images\PostCategories.png" />
+    <Content Include="c3-admin\Images\PostTags.png" />
     <Content Include="c3-admin\Images\shape_move_back.png" />
     <Content Include="c3-admin\Images\shape_ungroup.png" />
+    <Content Include="c3-admin\Images\SiteData.png" />
+    <Content Include="c3-admin\Images\SiteMap.png" />
+    <Content Include="c3-admin\Images\SiteSkins.png" />
+    <Content Include="c3-admin\Images\StatusChange.png" />
     <Content Include="c3-admin\Images\stop.png" />
+    <Content Include="c3-admin\Images\TableIndex.png" />
+    <Content Include="c3-admin\Images\TemplateUpdate.png" />
     <Content Include="c3-admin\Images\time.png" />
     <Content Include="c3-admin\Images\time_add.png" />
     <Content Include="c3-admin\Images\time_delete.png" />
+    <Content Include="c3-admin\Images\UserList.png" />
     <Content Include="c3-admin\Images\zoom.png" />
     <Content Include="c3-admin\Images\zoom_in.png" />
     <Content Include="c3-admin\Images\zoom_out.png" />
@@ -1070,7 +1093,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="c3-admin\CMS.asmx" />
-    <Content Include="c3-admin\Default.aspx" />
+    <Content Include="c3-admin\SiteInfo.aspx" />
     <Content Include="c3-admin\FileBrowser.aspx" />
     <Content Include="c3-admin\ForgotPassword.aspx" />
     <Content Include="c3-admin\Includes\jquery.blockUI.js" />
