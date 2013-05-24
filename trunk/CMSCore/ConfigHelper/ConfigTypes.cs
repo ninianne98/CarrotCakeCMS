@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -56,4 +58,50 @@ namespace Carrotware.CMS.Core {
 		public string DomainName { get; set; }
 
 	}
+
+	public class CMSFilePath {
+
+		public CMSFilePath() {
+			this.DateChecked = DateTime.UtcNow;
+			this.FileExists = false;
+			this.SiteID = Guid.Empty;
+			this.TemplateFile = null;
+		}
+
+		public CMSFilePath(string fileName) {
+			this.DateChecked = DateTime.UtcNow;
+			this.TemplateFile = fileName.ToLower();
+			this.SiteID = Guid.Empty;
+			this.FileExists = File.Exists(HttpContext.Current.Server.MapPath(this.TemplateFile));
+		}
+
+		public CMSFilePath(string fileName, Guid siteID) {
+			this.DateChecked = DateTime.UtcNow;
+			this.TemplateFile = fileName.ToLower();
+			this.SiteID = siteID;
+			this.FileExists = File.Exists(HttpContext.Current.Server.MapPath(this.TemplateFile));
+		}
+
+		public DateTime DateChecked { get; set; }
+		public string TemplateFile { get; set; }
+		public bool FileExists { get; set; }
+		public Guid SiteID { get; set; }
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj is CMSFilePath) {
+				CMSFilePath p = (CMSFilePath)obj;
+				return (this.TemplateFile.ToLower() == p.TemplateFile.ToLower())
+					&& (this.SiteID == p.SiteID);
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return TemplateFile.ToLower().GetHashCode() ^ SiteID.GetHashCode();
+		}
+	}
+
 }

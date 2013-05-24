@@ -30,7 +30,7 @@ using System.Web.UI;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("4.3.*")]
-[assembly: AssemblyFileVersion("4.3.0.0")]
+//  [assembly: AssemblyFileVersion("4.3.0.0")]
 [assembly: TagPrefix("SiblingNavigation", "carrot")]
 [assembly: TagPrefix("TopLevelNavigation", "carrot")]
 [assembly: TagPrefix("BreadCrumbNavigation", "carrot")]

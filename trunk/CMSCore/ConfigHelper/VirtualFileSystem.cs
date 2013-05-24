@@ -75,7 +75,10 @@ namespace Carrotware.CMS.Core {
 					if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
 						if (context.Request.UrlReferrer.AbsolutePath.ToLower().Contains(FormsAuthentication.LoginUrl.ToLower())
 							|| FormsAuthentication.LoginUrl.ToLower() == sFileRequested.ToLower()) {
-							sFileRequested = SiteData.AdminDefaultFile;
+							if (SiteFilename.DashboardURL.ToLower() != sFileRequested.ToLower()
+							&& SiteFilename.SiteInfoURL.ToLower() != sFileRequested.ToLower()) {
+								sFileRequested = SiteData.AdminDefaultFile;
+							}
 						}
 					}
 				} catch (Exception ex) { }
@@ -91,7 +94,7 @@ namespace Carrotware.CMS.Core {
 					queryString = String.Empty;
 				}
 
-				if (!File.Exists(context.Server.MapPath(sFileRequested)) || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
+				if (!CMSConfigHelper.CheckRequestedFileExistence(sFileRequested, SiteData.CurrentSiteID) || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
 
 					context.Items[REQ_PATH] = context.Request.PathInfo;
 					context.Items[REQ_QUERY] = context.Request.QueryString.ToString();
@@ -161,7 +164,7 @@ namespace Carrotware.CMS.Core {
 							}
 						}
 
-						if (!File.Exists(context.Server.MapPath(sSelectedTemplate))) {
+						if (!CMSConfigHelper.CheckFileExistence(sSelectedTemplate)) {
 							sSelectedTemplate = SiteData.DefaultTemplateFilename;
 						}
 

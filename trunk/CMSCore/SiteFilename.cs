@@ -43,6 +43,9 @@ namespace Carrotware.CMS.Core {
 		public static string DashboardURL {
 			get { return SiteData.AdminFolderPath + "default.aspx"; }
 		}
+		public static string SiteInfoURL {
+			get { return SiteData.AdminFolderPath + "SiteInfo.aspx"; }
+		}
 		public static string PageHistoryURL {
 			get { return SiteData.AdminFolderPath + "PageHistory.aspx"; }
 		}
@@ -71,13 +74,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string AdminModuleControlPath {
-			get { return SiteData.AdminFolderPath + "ucAdminModule.ascx"; }
+			get { return "~" + SiteData.AdminFolderPath + "ucAdminModule.ascx"; }
 		}
 		public static string EditNotifierControlPath {
-			get { return SiteData.AdminFolderPath + "ucEditNotifier.ascx"; }
+			get { return "~" + SiteData.AdminFolderPath + "ucEditNotifier.ascx"; }
 		}
 		public static string AdvancedEditControlPath {
-			get { return SiteData.AdminFolderPath + "ucAdvancedEdit.ascx"; }
+			get { return "~" + SiteData.AdminFolderPath + "ucAdvancedEdit.ascx"; }
 		}
 
 	}

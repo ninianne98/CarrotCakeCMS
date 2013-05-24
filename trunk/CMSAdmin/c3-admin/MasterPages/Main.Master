@@ -91,11 +91,14 @@
 		</div>
 		<div id="nav-menu-container">
 			<ul id="nav-menu">
-				<li runat="server" id="tabMainTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Home </a>
+				<li runat="server" id="tabHome"><a href="/c3-admin/">
+					<img alt="Home" src="/c3-admin/images/house.png" /></a></li>
+				<li runat="server" id="tabMainTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Site </a>
 					<ul class="children">
-						<li runat="server" id="tabMain"><a href="/c3-admin/">Site Info</a> </li>
+						<li runat="server" id="tabDashboard"><a href="/c3-admin/">Dashboard</a> </li>
+						<li runat="server" id="tabMain"><a href="/c3-admin/SiteInfo.aspx">Site Info</a> </li>
 						<li runat="server" id="tabExportSite"><a href="/c3-admin/SiteExport.aspx">Export Site</a> </li>
-						<li runat="server" id="tabContentSkin"><a href="/c3-admin/SiteSkinIndex.aspx">Edit Site Skins</a> </li>
+						<li runat="server" id="tabContentSkin"><a href="/c3-admin/SiteSkinIndex.aspx">Site Skin Index</a> </li>
 						<li runat="server" id="tabMainTemplate"><a href="/c3-admin/SiteTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabStatusChange"><a href="/c3-admin/SiteContentStatusChange.aspx">Bulk Change Status</a> </li>
 						<li runat="server" id="tabImportContent"><a href="/c3-admin/PageImport.aspx">Import Content</a> </li>

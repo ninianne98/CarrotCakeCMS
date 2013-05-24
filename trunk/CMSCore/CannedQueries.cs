@@ -95,8 +95,8 @@ namespace Carrotware.CMS.Core {
 					orderby ct.ContentTypeValue, ct.NavMenuText
 					where ct.SiteID == siteID
 						&& ct.IsLatestVersion == true
-						&& ct.GoLiveDate.Date >= dateBegin.Date
-						&& ct.GoLiveDate.Date <= dateEnd.Date
+						&& ct.GoLiveDate >= dateBegin
+						&& ct.GoLiveDate <= dateEnd
 						&& (ct.ContentTypeID == contentTypeID || pageType == ContentPageType.PageType.Unknown)
 						&& (ct.PageActive == Convert.ToBoolean(bActive) || bActive == null)
 						&& (ct.BlockIndex == Convert.ToBoolean(bBlock) || bBlock == null)
@@ -109,8 +109,8 @@ namespace Carrotware.CMS.Core {
 			return (from ct in ctx.vw_carrot_Contents
 					where ct.SiteID == siteID
 					 && ct.IsLatestVersion == true
-					 && ct.GoLiveDate.Date >= dateBegin.Date
-					 && ct.GoLiveDate.Date <= dateEnd.Date
+					 && ct.GoLiveDate >= dateBegin
+					 && ct.GoLiveDate <= dateEnd
 					 && ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					 && (ct.PageActive == true || bActiveOnly == false)
 					 && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)

@@ -23,6 +23,7 @@ namespace Carrotware.CMS.UI.Admin {
 		protected SiteData siteHelper = new SiteData();
 
 		public enum SectionID {
+			SiteDashboard,
 			SiteInfo,
 			SiteTemplate,
 			ContentAdd,

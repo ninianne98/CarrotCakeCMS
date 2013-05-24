@@ -37,27 +37,25 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 			litVersion.Text = SiteData.CarrotCakeCMSVersionMM;
 
-			HideWhenNoSiteProfileExists();
-
 			tabModules.Visible = CMSConfigHelper.HasAdminModules();
+
+			HideWhenNoSiteProfileExists();
 		}
 
 		public void HideWhenNoSiteProfileExists() {
 
-			if (SiteData.CurrentSite == null) {
-				tabContentTop.Visible = false;
-			} else {
-				tabContentTop.Visible = true;
-			}
+			bool bShowTop = SiteData.CurrentSite != null ? true : false;
 
-			tabExportSite.Visible = tabContentTop.Visible;
-			tabBlogTop.Visible = tabContentTop.Visible;
-			tabContent.Visible = tabContentTop.Visible;
-			tabModules.Visible = tabContentTop.Visible;
-			tabMainTemplate.Visible = tabContentTop.Visible;
-			tabContentSiteMap.Visible = tabContentTop.Visible;
-			tabImportContent.Visible = tabContentTop.Visible;
-			tabStatusChange.Visible = tabContentTop.Visible;
+			tabContentTop.Visible = bShowTop;
+			tabExportSite.Visible = bShowTop;
+			tabBlogTop.Visible = bShowTop;
+			tabContent.Visible = bShowTop;
+			tabModules.Visible = bShowTop;
+			tabMainTemplate.Visible = bShowTop;
+			tabContentSiteMap.Visible = bShowTop;
+			tabImportContent.Visible = bShowTop;
+			tabStatusChange.Visible = bShowTop;
+			tabDashboard.Visible = bShowTop;
 		}
 
 
@@ -72,6 +70,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			string sCSSSecondary = "current";
 
 			switch (sectionID) {
+
+				case SectionID.SiteDashboard:
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabDashboard.Attributes["class"] = sCSSSecondary;
+					break;
 				case SectionID.SiteInfo:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabMain.Attributes["class"] = sCSSSecondary;

@@ -404,7 +404,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
-				if (SiteData.CurrentSite == null) {
+				if (!SiteData.CurretSiteExists) {
 					return "OK";
 				}
 

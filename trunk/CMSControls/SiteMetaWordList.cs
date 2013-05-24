@@ -138,31 +138,50 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool ShowNonZeroCountOnly {
+			get {
+				bool s = true;
+				if (ViewState["ShowNonZeroCountOnly"] != null) {
+					try { s = (bool)ViewState["ShowNonZeroCountOnly"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["ShowNonZeroCountOnly"] = value;
+			}
+		}
+
 		protected List<IContentMetaInfo> GetMetaInfo() {
-			List<IContentMetaInfo> lst = null;
+			List<IContentMetaInfo> lstNav = new List<IContentMetaInfo>();
+
 			int iTakeTop = TakeTop;
 			if (TakeTop < 0) {
 				iTakeTop = 100000;
 			}
+
 			switch (ContentType) {
 				case MetaDataType.Tag:
-					lst = navHelper.GetTagList(SiteData.CurrentSiteID, iTakeTop);
+					lstNav = navHelper.GetTagList(SiteData.CurrentSiteID, iTakeTop);
 					break;
 				case MetaDataType.Category:
-					lst = navHelper.GetCategoryList(SiteData.CurrentSiteID, iTakeTop);
+					lstNav = navHelper.GetCategoryList(SiteData.CurrentSiteID, iTakeTop);
 					break;
 				case MetaDataType.DateMonth:
-					lst = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, iTakeTop, !SecurityData.IsAuthEditor);
+					lstNav = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, iTakeTop, !SecurityData.IsAuthEditor);
 					break;
 				default:
 					break;
 			}
 
-			if (lst != null) {
-				this.ItemCount = lst.Count;
+			if (lstNav != null) {
+				this.ItemCount = lstNav.Count;
+
+				lstNav.RemoveAll(x => x.MetaInfoCount < 1 && this.ShowNonZeroCountOnly);
 			}
 
-			return lst;
+			return lstNav;
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
