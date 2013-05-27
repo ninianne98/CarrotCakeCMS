@@ -21,5 +21,7 @@ namespace Carrotware.CMS.Core {
 
 		public string ExtraTitle { get; set; }
 
+		public object RawValue { get; set; }
+
 	}
 }

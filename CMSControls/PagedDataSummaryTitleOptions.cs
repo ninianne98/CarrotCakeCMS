@@ -18,19 +18,26 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-
 	[TypeConverter(typeof(ExpandableObjectConverter))]
 	public class PagedDataSummaryTitleOption {
-		private PageViewType.ViewType _key;
-		private string _label;
+		private PageViewType.ViewType _key = PageViewType.ViewType.SinglePage;
+		private string _label = "";
+		private string _format = "";
 
 		public PagedDataSummaryTitleOption()
-			: this(PageViewType.ViewType.SinglePage, String.Empty) {
+			: this(PageViewType.ViewType.SinglePage, String.Empty, String.Empty) {
 		}
 
 		public PagedDataSummaryTitleOption(PageViewType.ViewType key, string labelText) {
 			_key = key;
 			_label = labelText;
+			_format = "";
+		}
+
+		public PagedDataSummaryTitleOption(PageViewType.ViewType key, string labelText, string formatText) {
+			_key = key;
+			_label = labelText;
+			_format = formatText;
 		}
 
 
@@ -61,6 +68,21 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				_label = value;
+			}
+		}
+
+		[
+		Category("Behavior"),
+		DefaultValue(""),
+		Description("FormatText of PagedDataSummaryTitleOptions"),
+		NotifyParentProperty(true)
+		]
+		public String FormatText {
+			get {
+				return _format;
+			}
+			set {
+				_format = value;
 			}
 		}
 	}

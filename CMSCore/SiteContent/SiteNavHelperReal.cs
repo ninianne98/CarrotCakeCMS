@@ -536,13 +536,13 @@ namespace Carrotware.CMS.Core {
 
 				int daysDelta = ts.Days;
 				if (daysDelta > 90) {
-					sTitle = "Year " + p.DateBeginUTC.ToString("yyyy");
+					sTitle = "Year " + p.DateBegin.ToString("yyyy");
 				}
 				if (daysDelta < 36) {
-					sTitle = p.DateBeginUTC.ToString("MMMM yyyy");
+					sTitle = p.DateBegin.ToString("MMMM yyyy");
 				}
 				if (daysDelta < 5) {
-					sTitle = p.DateBeginUTC.ToString("MMMM d, yyyy");
+					sTitle = p.DateBegin.ToString("MMMM d, yyyy");
 				}
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {

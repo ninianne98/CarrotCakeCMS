@@ -34,6 +34,8 @@
 	text-align: left;
 	font-size: small;
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	position: absolute;
+	z-index: 99100;
 }
 
 .cmsGlossySeaGreen .ui-widget P {
@@ -109,12 +111,12 @@
 	position: absolute;
 	top: 10px;
 	left: 10px;
+	z-index: 990000 !important;
 	padding: 5px !important;
 	margin: 5px !important;
 	border: solid 2px #000000 !important;
 	min-width: 275px !important;
 	min-height: 50px !important;
-	z-index: 10000 !important;
 	font-size: 12px !important;
 	line-height: normal !important;
 	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
@@ -302,239 +304,161 @@ p.cmsToolItem {
 
 /* edit menu for widgets */
 
-#cmsEditMenuList-inner p, #cmsEditMenuList-inner ul, #cmsEditMenuList-inner ol, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
+#cmsEditMenuList ul, #cmsEditMenuList li, #cmsEditMenuList a, #cmsEditMenuList img {
+	margin: 0;
+	padding: 0;
 	font-weight: 300;
 	text-shadow: 0 0 0 transparent;
 	line-height: normal;
-	margin: 0px;
 	padding: 1px;
 	text-align: left;
 	font-size: small;
 	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	background-color: transparent;
 	border: 0px solid transparent;
+	background-image: none;
+	position: relative;
+	cursor: pointer;
 }
 
-#cmsEditMenuList {
-	float: right !important;
-	width: 24px !important;
-	height: 24px !important;
+#cmsEditMenuList img {
 	margin: 0 !important;
 	padding: 0 !important;
-	padding-right: 10px !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
+	background-color: transparent !important;
+	border: 0px solid transparent !important;
 }
 
-#cmsEditMenuList a {
-	text-shadow: 0 0 0 transparent !important;
-	background: #DFF6E8 !important;
-	color: #676F6A !important;
-	text-decoration: none !important;
-	border: 0px solid #FFFFFF !important;
-}
-
-#cmsEditMenuList-inner {
-	margin: 0;
-	padding: 0;
-	width: 24px !important;
-	height: 24px !important;
-	float: left !important;
-	z-index: 5000 !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
-	display: inline;	
-}
-
-#cmsEditMenuList-inner ul, #cmsEditMenuList-inner li, #cmsEditMenuList-inner a {
+#cmsEditMenuList ul, #cmsEditMenuList li {
 	margin: 0 !important;
 	padding: 0 !important;
-	background: transparent !important;
-	color: #676F6A !important;
-	text-decoration: none !important;
-	font-weight: bold !important;
-	border: 0px solid #FFFFFF !important;
-}
-
-#cmsEditMenuList-inner ul.cmsMnuParent li {
-	margin: 0 !important;
-	padding: 0 !important;
-	text-align: center !important;
-	float: left !important;
-	cursor: pointer !important;
-	overflow-x: hidden !important;
-	overflow-y: hidden !important;
-}
-
-#cmsEditMenuList-inner ul.cmsMnuParent {
-	clear: both !important;
-	width: 22px !important;
-	height: 22px !important;
+	background-color: transparent !important;
+	list-style-type: none !important;
 	list-style: none !important;
 	background-image: none !important;
-	overflow-x: hidden !important;
-	overflow-y: hidden !important;
-	background-image: none !important;
-}
-
-#cmsEditMenuList-inner ul.cmsMnuParent li a {
-	display: block !important;
-	float: left !important;
-	text-decoration: none !important;
-	font-weight: bold !important;
 	cursor: pointer !important;
-	background-image: none !important;
-	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
-	line-height: 150% !important;
-	margin-top: 1px !important;
-	margin-bottom: 1px !important;
 }
 
-#cmsEditMenuList-inner ul.cmsMnuParent li a:hover, #cmsEditMenuList-inner ul.cmsMnuParent li.selected a {
+#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsWidgetControlTitle img, .cmsContentContainerTitle img, .cmsWidgetTitleBar img, #cmsContentContainerHead img {
+	border: 0px solid transparent !important;
 	background: transparent !important;
-	color: #676F6A !important;
-	text-decoration: none !important;
-	background-image: none !important;
-	cursor: pointer !important;
 }
 
-#cmsEditMenuList-inner li .cmsMnuChildren {
+#cmsEditMenuList ul > li:before, .cmsWidgetCogIcon ul > li:before, .cmsWidgetCogIcon, #cmsContentContainerHead ul > li:before {
 	margin: 0;
 	padding: 0;
-	margin-top: -4px !important;
-	margin-bottom: 6px !important;
-	width: 125px !important;
-	list-style-type: none !important;
+	bottom: auto;
+	top: auto;
+	display: inline;
+}
+
+#cmsEditMenuList .cmsMnuParent li .cmsMnuChildren {
+	margin: 0;
+	padding: 0;
+	clear: both !important;
 	display: none !important;
+	margin-top: 10px !important;
+}
+
+#cmsEditMenuList .cmsMnuParent li:hover .cmsMnuChildren {
+	display: block !important;
+}
+
+#cmsEditMenuList, #cmsEditMenuList .cmsWidgetBarIconCog {
+	float: right !important;
+}
+
+#cmsEditMenuList .cmsMnuChildren, #cmsEditMenuList .cmsWidgetBarIconCog {
+	clear: both !important;
+}
+
+#cmsEditMenuList .cmsMnuParent li a {
+	margin: 0;
+	padding: 0;
+	padding-top: 1px !important;
+	padding-right: 5px !important;
+}
+
+#cmsEditMenuList li.cmsWidgetBarIconCog a, #cmsEditMenuList li.cmsWidgetBarIconCog a img {
+	position: relative !important;
+	z-index: 99000 !important;
+}
+
+#cmsEditMenuList ul.cmsMnuChildren {
+	margin: 0;
+	padding: 0;
+	margin: 1px 0 1px 0 !important;
+	padding: 2px 1px 2px 1px !important;
+	width: 125px !important;
 	clear: both !important;
 	font-weight: bold !important;
 	border-width: 1px !important;
 	border-style: solid !important;
-	background: #FFFFFF !important;
 	background-image: none !important;
+	background: transparent !important;
 	border-color: #000000 !important;
-	padding: 5px !important;
-	margin-left: -10px !important;
+	margin-top: -2px !important;
+	margin-left: -110px !important;
+	position: absolute !important;
+	z-index: 99010 !important;
 }
 
-#cmsEditMenuList-inner li:hover .cmsMnuChildren {
-	margin: 0;
-	padding: 0;
+#cmsEditMenuList ul.cmsWidgetMenu {
 	background: #DFF6E8 !important;
 	color: #676F6A !important;
-	width: 125px !important;
-	list-style-type: none !important;
-	padding-left: 10px !important;
-	margin-top: -4px !important;
-	margin-bottom: 6px !important;
-	display: block !important;
-	position: absolute !important;
-	text-align: left !important;
-	float: left !important;
-	z-index: 8000 !important;
-	font-weight: bold !important;
-	border-color: #000000 !important;
-	margin-left: -25px !important;
 }
-
-#cmsEditMenuList-inner li:hover .cmsMnuChildren li a {
-	width: 125px !important;
-	float: left !important;
-	text-decoration: none !important;
-	text-align: left !important;
-	clear: both !important;
-	background-image: none !important;
-}
-
-#cmsEditMenuList-inner li {
-	list-style-type: none !important;
-	background-image: none !important;
-}
-
-#cmsMnuParent img, .cmsWidgetCogIcon img, .cmsWidgetControlTitle img, .cmsContentContainerTitle img, .cmsWidgetTitleBar img, #cmsContentContainerHead img {
-	background: transparent !important;
-}
-
-
-#cmsEditMenuList ul > li:before, .cmsWidgetCogIcon ul > li:before, .cmsWidgetCogIcon, #cmsContentContainerHead ul > li:before {
-	bottom: auto;
-	top: auto;
-	margin: 0;
-	padding: 0;
-	display: inline;
-}
-
-
-#cmsImageSpinnerImage, .cmsImageSpinner, img.cmsImageSpinner, #cmsSpinnerZone *, .cmsImageSpinnerTbl, .blockMsg *, .cmsMnuParent *, .cmsMnuChildren * {
-	margin: 0px !important;
-	padding: 0px !important;
-	border: 0px solid #dddddd !important;
-	background: transparent !important;
-}
-
-.cmsWidgetBarLink {
-	margin: 0px !important;
-	padding: 0px !important;
-	color: #676F6A !important;
-	font-weight: bold !important;
-	border: 0px solid #ffffff !important;
-	clear: both !important;	
-}
-
-.cmsWidgetBarImgReset {
-	margin: 0px !important;
-	padding: 0px !important;
-	padding-right: 5px !important;
-	padding-left: 5px !important;
-	border: 0px solid #FFFFFF !important;
-	overflow-x: hidden !important;
-	overflow-y: hidden !important;
-}
-
-.cmsWidgetBarLink img {
-	float: right !important;
-}
-
-.cmsWidgetControlTitle, .cmsContentContainerTitle, .cmsContentContainerTitleText {
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
-}
-
-#cmsWidgetTargetZone #cmsEditMenuList-inner li:hover .cmsMnuChildren {
+#cmsEditMenuList ul.cmsWidgetContainerMenu {
 	background: #8DC0A3 !important;
+	color: #FFFFFF !important;
 }
-
-#cmsWidgetTargetZone #cmsEditMenuList-inner ul, #cmsWidgetTargetZone #cmsEditMenuList-inner li, #cmsWidgetTargetZone #cmsEditMenuList-inner a, #cmsWidgetTargetZone #cmsEditMenuList-inner a:hover {
-	color: #ffffff !important;
-}
-
-
-#cmsContentContainerHead {
-	margin: 0;
-	padding: 0;
-	clear: none;
-}
-
-#cmsContentEditTitle {
-	margin: 0;
-	padding: 0;
-	clear: none;
-	float: right !important;
-	padding-right: 1px !important;
-	color: #ffffff !important;
+#cmsEditMenuList ul.cmsContentContainerMenu {
 	background: #478C5F !important;
+	color: #FFFFFF !important;
 }
-#cmsContentContainerHead #cmsEditMenuList {
+
+#cmsEditMenuList > li {
+	float: none !important;
+	display: inline !important;
+	border: 0px solid transparent;
+}
+
+#cmsEditMenuList ul li, #cmsEditMenuList ul li ul li {
+	border: 0px solid transparent;
+}
+
+#cmsEditMenuList ul.cmsMnuChildren li {
 	margin: 0;
 	padding: 0;
-	clear: none;
-	float: right !important;
+	padding: 1px !important;
+	margin: 1px !important;
+	overflow: hidden !important;
 }
 
-#cmsContentContainerHead #cmsEditMenuList-inner li:hover .cmsMnuChildren {
-	background: #478C5F !important;
+#cmsEditMenuList > ul.cmsMnuChildren li a, #cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a {
+	margin: 0;
+	padding: 0;
+	text-decoration: none !important;
+	width: 100% !important;
+	display: inline !important;
+	padding: 1px !important;
+	margin: 1px !important;
+	margin-bottom: 2px !important;
+	float: none !important;
 }
 
-#cmsContentContainerHead #cmsEditMenuList-inner ul, #cmsContentContainerHead #cmsEditMenuList-inner li, #cmsContentContainerHead #cmsEditMenuList-inner a, #cmsContentContainerHead #cmsEditMenuList-inner a:hover {
-	color: #ffffff !important;
+#cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a {
+	display: block !important;
+	width: 99% !important;
 }
+
+#cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a img {
+	padding: 1px !important;
+	margin: 1px !important;
+	padding-right: 5px !important;
+	vertical-align: bottom !important;
+	float: none !important;
+}
+
+/* end menus */
 
 
 /*  Widget Styles   */
@@ -549,7 +473,7 @@ p.cmsToolItem {
 	font-family: Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 	color: #C0C0C0 !important;
 	background: #008080 !important;
-	min-height: 20px !important;
+	min-height: 24px !important;
 	margin: 0px !important;
 	padding: 1px !important;
 	border: 1px solid #c0c0c0 !important;
@@ -557,10 +481,14 @@ p.cmsToolItem {
 
 .cmsContentContainerTitle, .cmsContentContainerTitle a, .cmsContentContainerTitleText {
 	text-shadow: 0 0 0 transparent !important;
-	text-align: right !important;
+	text-align: left !important;
 	color: #FFFFFF !important;
 	background: #478C5F !important;
 	text-decoration: none !important;
+}
+
+.cmsContentContainerTitleText {
+	float: left !important;
 }
 
 .cmsWidgetControlTitle, .cmsWidgetControlTitle a {

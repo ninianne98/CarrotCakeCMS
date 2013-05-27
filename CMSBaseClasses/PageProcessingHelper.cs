@@ -25,15 +25,14 @@ namespace Carrotware.CMS.UI.Base {
 	public class PageProcessingHelper {
 
 		public PageProcessingHelper() {
-			CurrentWebPage = null;
+			this.CurrentWebPage = null;
 		}
 
 		public PageProcessingHelper(Page webPage) {
-			CurrentWebPage = webPage;
+			this.CurrentWebPage = webPage;
 		}
 
 		protected Page CurrentWebPage { get; set; }
-
 
 		protected ContentContainer contCenter { get; set; }
 		protected ContentContainer contRight { get; set; }
@@ -97,15 +96,15 @@ namespace Carrotware.CMS.UI.Base {
 
 		public void LoadPageControls() {
 
-			CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+			this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 
 			List<HtmlMeta> lstMD = GetHtmlMeta(this.CurrentWebPage.Header);
 
 			HtmlMeta metaGenerator = new HtmlMeta();
 			metaGenerator.Name = "generator";
 			metaGenerator.Content = SiteData.CarrotCakeCMSVersion;
-			CurrentWebPage.Header.Controls.Add(metaGenerator);
-			CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+			this.CurrentWebPage.Header.Controls.Add(metaGenerator);
+			this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 
 			if (guidContentID == SiteData.CurrentSiteID && SiteData.IsPageReal) {
 				IsPageTemplate = true;
@@ -125,8 +124,8 @@ namespace Carrotware.CMS.UI.Base {
 					metaNoCrawl.Content = "noindex,nofollow,noarchive";
 
 					if (!bCrawlExist) {
-						CurrentWebPage.Header.Controls.Add(metaNoCrawl);
-						CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
+						this.CurrentWebPage.Header.Controls.Add(metaNoCrawl);
+						this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 					}
 				}
 			}
@@ -196,7 +195,8 @@ namespace Carrotware.CMS.UI.Base {
 						pageContents.TitleBar = pageContents.TitleBar.Trim() + ": " + sTitleAddendum;
 					}
 
-					PagedDataSummary pd = (PagedDataSummary)cu.FindControl(typeof(PagedDataSummary), CurrentWebPage);
+					PagedDataSummary pd = (PagedDataSummary)cu.FindControl(typeof(PagedDataSummary), this.CurrentWebPage);
+
 					if (pd != null) {
 						PagedDataSummaryTitleOption titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == pvt.CurrentViewType).FirstOrDefault();
 
@@ -208,6 +208,11 @@ namespace Carrotware.CMS.UI.Base {
 							titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == PageViewType.ViewType.DateIndex).FirstOrDefault();
 						}
 
+						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.FormatText)) {
+							pvt.ExtraTitle = string.Format(titleOpts.FormatText, pvt.RawValue);
+							sTitleAddendum = pvt.ExtraTitle;
+						}
+
 						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.LabelText)) {
 							pageContents.PageHead = titleOpts.LabelText + " " + sTitleAddendum;
 							pageContents.NavMenuText = pageContents.PageHead;
@@ -216,7 +221,7 @@ namespace Carrotware.CMS.UI.Base {
 					}
 				}
 
-				CurrentWebPage.Title = SetPageTitle(pageContents);
+				this.CurrentWebPage.Title = SetPageTitle(pageContents);
 
 				DateTime dtModified = theSite.ConvertSiteTimeToLocalServer(pageContents.EditDate);
 				string strModifed = dtModified.ToString("r");
@@ -246,8 +251,8 @@ namespace Carrotware.CMS.UI.Base {
 
 						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 							if (!SiteData.IsPageSampler && !IsPageTemplate) {
-								Control editor = CurrentWebPage.LoadControl(SiteFilename.EditNotifierControlPath);
-								CurrentWebPage.Form.Controls.Add(editor);
+								Control editor = this.CurrentWebPage.LoadControl(SiteFilename.EditNotifierControlPath);
+								this.CurrentWebPage.Form.Controls.Add(editor);
 							}
 						}
 
@@ -269,8 +274,8 @@ namespace Carrotware.CMS.UI.Base {
 						contLeft.Text = pageContents.LeftPageText;
 						contRight.Text = pageContents.RightPageText;
 
-						Control editor = CurrentWebPage.LoadControl(SiteFilename.AdvancedEditControlPath);
-						CurrentWebPage.Form.Controls.Add(editor);
+						Control editor = this.CurrentWebPage.LoadControl(SiteFilename.AdvancedEditControlPath);
+						this.CurrentWebPage.Form.Controls.Add(editor);
 
 						MarkWidgets(this.CurrentWebPage, true);
 					}
@@ -287,7 +292,7 @@ namespace Carrotware.CMS.UI.Base {
 															where d.Root_ContentID == pageContents.Root_ContentID
 															select new LabeledControl {
 																ControlLabel = d.PlaceholderName,
-																KeyControl = FindTheControl(d.PlaceholderName, CurrentWebPage)
+																KeyControl = FindTheControl(d.PlaceholderName, this.CurrentWebPage)
 															}).Distinct().ToList();
 
 					List<Widget> lstWidget = (from d in pageWidgets
@@ -310,7 +315,7 @@ namespace Carrotware.CMS.UI.Base {
 							if (theWidget.ControlPath.EndsWith(".ascx")) {
 								if (File.Exists(this.CurrentWebPage.Server.MapPath(theWidget.ControlPath))) {
 									try {
-										widget = CurrentWebPage.LoadControl(theWidget.ControlPath);
+										widget = this.CurrentWebPage.LoadControl(theWidget.ControlPath);
 									} catch (Exception ex) {
 										Literal lit = new Literal();
 										lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
@@ -454,25 +459,25 @@ namespace Carrotware.CMS.UI.Base {
 			if (pageContents != null) {
 
 				cu.ResetFind();
-				Control ctrlHead = cu.FindControl("litPageHeading", CurrentWebPage);
+				Control ctrlHead = cu.FindControl("litPageHeading", this.CurrentWebPage);
 				if (ctrlHead != null && ctrlHead is ITextControl) {
 					((ITextControl)ctrlHead).Text = pageContents.PageHead;
 				}
 
 				cu.ResetFind();
-				Control ctrlCenter = cu.FindControl("BodyCenter", CurrentWebPage);
+				Control ctrlCenter = cu.FindControl("BodyCenter", this.CurrentWebPage);
 				if (ctrlCenter != null && ctrlCenter is ContentContainer) {
 					AssignContentZones((ContentContainer)ctrlCenter, contCenter);
 				}
 
 				cu.ResetFind();
-				Control ctrlLeft = cu.FindControl("BodyLeft", CurrentWebPage);
+				Control ctrlLeft = cu.FindControl("BodyLeft", this.CurrentWebPage);
 				if (ctrlLeft != null && ctrlLeft is ContentContainer) {
 					AssignContentZones((ContentContainer)ctrlLeft, contLeft);
 				}
 
 				cu.ResetFind();
-				Control ctrlRight = cu.FindControl("BodyRight", CurrentWebPage);
+				Control ctrlRight = cu.FindControl("BodyRight", this.CurrentWebPage);
 				if (ctrlRight != null && ctrlRight is ContentContainer) {
 					AssignContentZones((ContentContainer)ctrlRight, contRight);
 				}

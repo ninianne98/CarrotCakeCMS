@@ -589,6 +589,7 @@
     <Content Include="c3-admin\Images\clock_red.png" />
     <Content Include="c3-admin\Images\clock_stop.png" />
     <Content Include="c3-admin\Images\delete.png" />
+    <Content Include="c3-admin\Images\ExportData.png" />
     <Content Include="c3-admin\Images\GroupList.png" />
     <Content Include="c3-admin\Images\hourglass.png" />
     <Content Include="c3-admin\Images\ImportData.png" />

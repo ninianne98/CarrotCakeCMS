@@ -62,9 +62,12 @@
 			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected">
 				<TypeLabelPrefixes>
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateIndex" LabelText="Date:" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="DateDayIndex" LabelText="Day:" FormatText="{0:dddd, d MMMM yyyy}" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="DateMonthIndex" LabelText="Month:" FormatText="{0:MMM yyyy}" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="DateYearIndex" LabelText="Year:" FormatText="{0:yyyy}" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="CategoryIndex" LabelText="Category:" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="TagIndex" LabelText="Tag:" />
-					<carrot:PagedDataSummaryTitleOption KeyValue="SearchResults" LabelText="Search results for:" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="SearchResults" LabelText="Search results for:" FormatText=" [ {0} ] " />
 				</TypeLabelPrefixes>
 				<ContentHeaderTemplate>
 					<h1>

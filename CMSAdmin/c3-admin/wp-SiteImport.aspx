@@ -95,9 +95,9 @@
 		<tr>
 			<td>
 				<asp:CheckBox ID="chkAuthors" runat="server" Checked="true" />
-				Uncheck this box if you do not want user accounts to be created. Accounts will only be created if the username and email address have not already been
-				used in this system. Password will be set according to normal reset values, and the user will have to request a new password by email to login. If this
-				is unchecked and a matching account exists, the discovered user will be recorded as the content editor. If the user account does not exist, the current
+				Uncheck this box if you do not want new user accounts to be created. Accounts will only be created if the username and email address have not already
+				been used in this system. Password will be set according to normal reset values, and the user will have to request a new password by email to login. If
+				this is unchecked and a matching account exists, the discovered user will be recorded as the content editor. If the user account does not exist, the current
 				user will be recorded as the content editor.
 			</td>
 			<td>

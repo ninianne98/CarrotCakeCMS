@@ -25,7 +25,7 @@
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
 			<a href="/c3-admin/SiteExport.aspx">
-				<img alt="" src="Images/ImportData.png" class="imgNoBorder" />
+				<img alt="" src="Images/ExportData.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Export Content</a>
@@ -51,28 +51,50 @@
 				<br />
 				Pages
 				<asp:Literal ID="litPage" runat="server" /></a>
+			<p>
+				<a href="PageAddEdit.aspx?id=">
+					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
+					Add</a>
+			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
 			<a href="/c3-admin/BlogPostIndex.aspx">
 				<img alt="" src="Images/BlogIndex.png" class="imgNoBorder" />
 				<br />
 				<br />
-				Blog Posts
+				Posts
 				<asp:Literal ID="litPost" runat="server" /></a>
+			<p>
+				<a href="BlogPostAddEdit.aspx?id=">
+					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
+					Add </a>
+			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
 			<a href="/c3-admin/CategoryIndex.aspx">
 				<img alt="" src="Images/PostCategories.png" class="imgNoBorder" />
 				<br />
 				<br />
-				Blog Category Index</a>
+				Categories
+				<asp:Literal ID="litCat" runat="server" /></a>
+			<p>
+				<a href="CategoryAddEdit.aspx?id=">
+					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
+					Add </a>
+			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
 			<a href="/c3-admin/TagIndex.aspx">
 				<img alt="" src="Images/PostTags.png" class="imgNoBorder" />
 				<br />
 				<br />
-				Blog Tag Index</a>
+				Tags
+				<asp:Literal ID="litTag" runat="server" /></a>
+			<p>
+				<a href="TagAddEdit.aspx?id=">
+					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
+					Add </a>
+			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
 			<a href="/c3-admin/ModuleIndex.aspx">

@@ -35,6 +35,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			litPage.Text = String.Format(" ({0}) ", pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry));
 			litPost.Text = String.Format(" ({0}) ", pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.BlogEntry));
 
+
+			litCat.Text = String.Format(" ({0}) ", ContentCategory.GetSiteCount(SiteID));
+			litTag.Text = String.Format(" ({0}) ", ContentTag.GetSiteCount(SiteID));
 		}
 
 
