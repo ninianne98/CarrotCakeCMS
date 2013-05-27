@@ -767,6 +767,20 @@ namespace Carrotware.CMS.Core {
 				 select c).FirstOrDefault());
 
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, int> cqGetContentTagCountBySiteID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID) =>
+				(from c in ctx.carrot_ContentTags
+				 where c.SiteID == siteID
+				 select c).Count());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, int> cqGetContentCategoryCountBySiteID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID) =>
+				(from c in ctx.carrot_ContentCategories
+				 where c.SiteID == siteID
+				 select c).Count());
+
 		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_TagCounted>> cqGetContentTagBySiteID =
 		CompiledQuery.Compile(
 			(CarrotCMSDataContext ctx, Guid siteID) =>

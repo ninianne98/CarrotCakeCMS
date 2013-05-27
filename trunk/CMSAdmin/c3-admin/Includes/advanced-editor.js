@@ -126,7 +126,7 @@ function cmsMenuFixImages() {
 		cmsFixGeneralImage(this, 'application_view_tile.png');
 	});
 	$(".cmsWidgetBarIconWidget2").each(function (i) {
-		cmsFixGeneralImage(this, 'layout.png');
+		cmsFixGeneralImage(this, 'hourglass.png');
 	});
 	//$(".cmsWidgetBarIconShrink").each(function (i) {
 	//cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
@@ -148,7 +148,7 @@ function cmsFixGeneralImage(elm, img) {
 	var title = $(elm).attr('title');
 	var alt = $(elm).attr('alt');
 
-	$(elm).html(title + " <img class='cmsWidgetBarImgReset' border='0' src='/c3-admin/images/" + img + "' alt='" + alt + "' title='" + alt + "' />");
+	$(elm).html(" <img class='cmsWidgetBarImgReset' border='0' src='/c3-admin/images/" + img + "' alt='" + alt + "' title='" + alt + "' />" + title);
 }
 
 

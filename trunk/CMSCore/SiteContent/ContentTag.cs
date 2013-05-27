@@ -97,6 +97,16 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static int GetSiteCount(Guid siteID) {
+
+			int iCt = -1;
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				iCt = CompiledQueries.cqGetContentTagCountBySiteID(_db, siteID);
+			}
+
+			return iCt;
+		}
 
 		public static List<ContentTag> BuildTagList(Guid rootContentID) {
 

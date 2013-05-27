@@ -347,7 +347,7 @@ namespace Carrotware.CMS.Core {
 
 		public PageViewType GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
 			Guid siteID = currentSite.SiteID;
-			PageViewType pvt = new PageViewType { ExtraTitle = "", CurrentViewType = PageViewType.ViewType.SinglePage };
+			PageViewType pvt = new PageViewType { ExtraTitle = "", CurrentViewType = PageViewType.ViewType.SinglePage, RawValue = null };
 
 			string sTitle = String.Empty;
 
@@ -355,39 +355,47 @@ namespace Carrotware.CMS.Core {
 				pvt.CurrentViewType = PageViewType.ViewType.CategoryIndex;
 				vw_carrot_CategoryURL query = CompiledQueries.cqGetCategoryByURL(db, siteID, sFilterPath);
 				sTitle = query.CategoryText;
+				pvt.RawValue = query.CategoryText;
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
 				pvt.CurrentViewType = PageViewType.ViewType.TagIndex;
 				vw_carrot_TagURL query = CompiledQueries.cqGetTagByURL(db, siteID, sFilterPath);
 				sTitle = query.TagText;
+				pvt.RawValue = query.TagText;
 			}
+
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				pvt.CurrentViewType = PageViewType.ViewType.DateIndex;
 
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
 				TimeSpan ts = p.DateEndUTC - p.DateBeginUTC;
 
+				pvt.RawValue = p.DateBegin;
+
 				int daysDelta = ts.Days;
 				if (daysDelta < 400 && daysDelta > 90) {
-					sTitle = p.DateBeginUTC.ToString("yyyy");
+					sTitle = p.DateBegin.ToString("yyyy");
 					pvt.CurrentViewType = PageViewType.ViewType.DateYearIndex;
 				}
 				if (daysDelta < 36 && daysDelta > 3) {
-					sTitle = p.DateBeginUTC.ToString("MMMM yyyy");
+					sTitle = p.DateBegin.ToString("MMMM yyyy");
 					pvt.CurrentViewType = PageViewType.ViewType.DateMonthIndex;
 				}
 				if (daysDelta < 5) {
-					sTitle = p.DateBeginUTC.ToString("MMMM d, yyyy");
+					sTitle = p.DateBegin.ToString("MMMM d, yyyy");
 					pvt.CurrentViewType = PageViewType.ViewType.DateDayIndex;
 				}
 			}
+
 			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
 				pvt.CurrentViewType = PageViewType.ViewType.SearchResults;
 				string sSearchTerm = "";
+
 				if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
 					sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
 				}
 
+				pvt.RawValue = sSearchTerm;
 				sTitle = " '" + sSearchTerm + "' ";
 			}
 
