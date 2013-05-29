@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 /*
 * CarrotCake CMS
@@ -101,5 +103,137 @@ namespace Carrotware.CMS.UI.Controls {
 			return typeof(PagedDataSummaryTitleOption);
 		}
 	}
+
+
+
+	//==========================
+
+	public class PagedDataNextPrevLinkPair {
+
+		public PagedDataNextPrevLinkWrapper LinkWrapper { get; set; }
+
+		public PagedDataNextPrevLink PageLink { get; set; }
+
+	}
+
+
+	//==========================
+	[ToolboxData("<{0}:PagedDataNextPrevLinkWrapper runat=server></{0}:PagedDataNextPrevLinkWrapper>")]
+	public class PagedDataNextPrevLinkWrapper : PlaceHolder {
+
+		public enum PagedDataDirection {
+			Unknown,
+			Previous,
+			Next,
+		}
+
+	}
+
+
+	//==========================
+	[ToolboxData("<{0}:PagedDataNextPrevLink runat=server></{0}:PagedDataNextPrevLink>")]
+	public class PagedDataNextPrevLink : HyperLink {
+
+		[Category("Appearance")]
+		[DefaultValue(true)]
+		public bool UseDefaultText {
+			get {
+				bool s = true;
+				if (ViewState["UseDefaultText"] != null) {
+					try { s = (bool)ViewState["UseDefaultText"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["UseDefaultText"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("NavDirection")]
+		public PagedDataNextPrevLinkWrapper.PagedDataDirection NavDirection {
+			get {
+				string s = (string)ViewState["NavDirection"];
+				PagedDataNextPrevLinkWrapper.PagedDataDirection c = PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown;
+				if (!string.IsNullOrEmpty(s)) {
+					try {
+						c = (PagedDataNextPrevLinkWrapper.PagedDataDirection)Enum.Parse(typeof(PagedDataNextPrevLinkWrapper.PagedDataDirection), s, true);
+					} catch (Exception ex) { }
+				}
+				return c;
+			}
+			set {
+				ViewState["NavDirection"] = value.ToString();
+			}
+		}
+
+		public void SetText() {
+			if (this.UseDefaultText) {
+				this.Text = this.NavDirection.ToString();
+			}
+		}
+		public void SetText(string linkText) {
+			this.Text = linkText;
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+
+			this.SetText();
+
+			if (!this.UseDefaultText) {
+				ControlUtilities cu = new ControlUtilities(this.Page);
+				PagedDataNextPrevText txt = (PagedDataNextPrevText)cu.FindControl(typeof(PagedDataNextPrevText), this);
+				if (txt != null) {
+					txt.NavDirection = this.NavDirection;
+				}
+			}
+
+			base.OnPreRender(e);
+		}
+
+	}
+
+
+	//==========================
+	[ToolboxData("<{0}:PagedDataNextPrevText runat=server></{0}:PagedDataNextPrevText>")]
+	public class PagedDataNextPrevText : Literal {
+
+		[Category("Appearance")]
+		[DefaultValue("NavDirection")]
+		public PagedDataNextPrevLinkWrapper.PagedDataDirection NavDirection {
+			get {
+				string s = (string)ViewState["NavDirection"];
+				PagedDataNextPrevLinkWrapper.PagedDataDirection c = PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown;
+				if (!string.IsNullOrEmpty(s)) {
+					try {
+						c = (PagedDataNextPrevLinkWrapper.PagedDataDirection)Enum.Parse(typeof(PagedDataNextPrevLinkWrapper.PagedDataDirection), s, true);
+					} catch (Exception ex) { }
+				}
+				return c;
+			}
+			set {
+				ViewState["NavDirection"] = value.ToString();
+			}
+		}
+
+		public void SetText() {
+			if (string.IsNullOrEmpty(this.Text)) {
+				this.Text = this.NavDirection.ToString();
+			}
+		}
+		public void SetText(string linkText) {
+			this.Text = linkText;
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+
+			if (string.IsNullOrEmpty(this.Text) && this.NavDirection != PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown) {
+				this.SetText();
+			}
+
+			base.OnPreRender(e);
+		}
+	}
+
 
 }

@@ -77,6 +77,27 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		[Category("Appearance")]
+		public string LinkNext {
+			get {
+				string s = (string)ViewState["LinkNext"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["LinkNext"] = value;
+			}
+		}
+		[Category("Appearance")]
+		public string LinkPrev {
+			get {
+				string s = (string)ViewState["LinkPrev"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["LinkPrev"] = value;
+			}
+		}
+
+		[Category("Appearance")]
 		[DefaultValue("Blog")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
 		public SummaryContentType ContentType {
@@ -147,6 +168,16 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		public string GetSearchTerm() {
+			string sSearchTerm = String.Empty;
+
+			if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
+				sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
+			}
+
+			return sSearchTerm;
+		}
+
 		public override void FetchData() {
 			HttpContext context = HttpContext.Current;
 
@@ -163,9 +194,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (context != null) {
 				if (SiteData.CurrentScriptName.ToLower() == SiteData.CurrentSite.SiteSearchPath.ToLower()) {
 					this.ContentType = SummaryContentType.SiteSearch;
-					if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
-						sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
-					}
+					sSearchTerm = GetSearchTerm();
 				}
 			}
 
@@ -219,6 +248,8 @@ namespace Carrotware.CMS.UI.Controls {
 			lstContents.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
 			this.DataSource = lstContents;
+
+			PrevNext();
 		}
 
 		public List<string> LimitedPropertyList {
@@ -246,6 +277,80 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnInit(e);
 		}
 
+		protected void SetNextPrevLink(PagedDataNextPrevLinkWrapper.PagedDataDirection dir, PagedDataNextPrevLink lnkNP, int iPage) {
+			string sSearchTerm = GetSearchTerm();
+			string sPageParm = this.ID.ToString() + "Nbr";
+
+			if (lnkNP != null) {
+				HttpContext context = HttpContext.Current;
+
+				lnkNP.NavDirection = dir;
+				lnkNP.SetText();
+
+				lnkNP.NavigateUrl = string.Format("{0}?{1}={2}", SiteData.CurrentScriptName, sPageParm, iPage);
+
+				if (!string.IsNullOrEmpty(sSearchTerm)) {
+					lnkNP.NavigateUrl = string.Format("{0}&{1}={2}", lnkNP.NavigateUrl, SiteData.SearchQueryParameter, context.Server.UrlEncode(sSearchTerm));
+				}
+			}
+		}
+
+		protected void SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection dir, PagedDataNextPrevLinkPair lnkPair, int iPage, bool ShowLink) {
+
+			if (lnkPair.PageLink != null) {
+				SetNextPrevLink(dir, lnkPair.PageLink, iPage);
+				if (ShowLink) {
+					lnkPair.PageLink.Visible = false;
+				}
+			}
+
+			if (lnkPair.LinkWrapper != null && ShowLink) {
+				lnkPair.LinkWrapper.Visible = false;
+			}
+		}
+
+		protected PagedDataNextPrevLinkPair FindPrevNextCtrl(string sCtrlName) {
+			PagedDataNextPrevLinkPair pair = new PagedDataNextPrevLinkPair();
+
+			ControlUtilities cu = new ControlUtilities(this.Page);
+			pair.LinkWrapper = (PagedDataNextPrevLinkWrapper)cu.FindControl(sCtrlName, this.Page);
+
+			if (pair.LinkWrapper == null) {
+				pair.PageLink = (PagedDataNextPrevLink)cu.FindControl(sCtrlName, this.Page);
+			} else {
+				pair.PageLink = (PagedDataNextPrevLink)cu.FindControl(typeof(PagedDataNextPrevLink), pair.LinkWrapper);
+			}
+
+			return pair;
+		}
+
+		protected void PrevNext() {
+
+			if (!string.IsNullOrEmpty(this.LinkNext)) {
+				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkNext);
+
+				int iTotalPages = this.TotalRecords / this.PageSize;
+				if ((this.TotalRecords % this.PageSize) > 0) {
+					iTotalPages++;
+				}
+				int iPageNum = this.PageNumber + 1;
+
+				bool bShowLink = (iPageNum > this.MaxPage && this.MaxPage > 0) || iPageNum > iTotalPages;
+
+				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.Next, pair, iPageNum, bShowLink);
+			}
+
+			if (!string.IsNullOrEmpty(this.LinkPrev)) {
+				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkPrev);
+
+				int iPageNum = this.PageNumber - 1;
+				bool bShowLink = iPageNum < 1;
+
+				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.Previous, pair, iPageNum, bShowLink);
+			}
+		}
+
+
 		protected override void OnPreRender(EventArgs e) {
 
 			base.OnPreRender(e);
@@ -268,6 +373,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (SelectedCategories.Count > 0) {
 					this.ContentType = SummaryContentType.SpecifiedCategories;
 				}
+
 			} catch (Exception ex) {
 			}
 

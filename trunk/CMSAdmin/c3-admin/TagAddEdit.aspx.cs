@@ -33,8 +33,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtSlug.Text = item.TagSlug;
 					txtLabel.Text = item.TagText;
 					chkPublic.Checked = item.IsPublic;
+				} else {
+					btnDeleteButton.Visible = false;
 				}
 			}
+		}
+
+		protected void btnDelete_Click(object sender, EventArgs e) {
+			ContentTag item = ContentTag.Get(guidItemID);
+			item.Delete();
+
+			Response.Redirect(SiteFilename.TagIndexURL);
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {

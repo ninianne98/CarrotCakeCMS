@@ -640,12 +640,14 @@ namespace Carrotware.CMS.Core {
 				sBody = oTextStream.ReadToEnd();
 			}
 			try {
-				if (CurrentSite != null) {
+				if (CurretSiteExists) {
 					sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
 				}
 			} catch {
 				sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
 			}
+
+			sBody = sBody.Replace("{SITE_ROOT_PATH}", SiteData.AdminFolderPath);
 
 			context.Response.ContentType = "text/html";
 			context.Response.Clear();
@@ -699,7 +701,7 @@ namespace Carrotware.CMS.Core {
 				sBody = sBody.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
 			}
 
-			if (CurrentSite != null) {
+			if (CurretSiteExists) {
 				sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
 			} else {
 				sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());

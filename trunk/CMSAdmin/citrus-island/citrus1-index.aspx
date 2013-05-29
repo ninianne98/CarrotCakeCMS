@@ -59,7 +59,7 @@
 			</carrot:ContentContainer>
 			<div style="clear: both;">
 			</div>
-			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected">
+			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected" LinkNext="lnkNextWrap" LinkPrev="lnkPrevWrap">
 				<TypeLabelPrefixes>
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateIndex" LabelText="Date:" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateDayIndex" LabelText="Day:" FormatText="{0:dddd, d MMMM yyyy}" />
@@ -118,6 +118,18 @@
 			</carrot:PagedDataSummary>
 			<div style="clear: both;">
 			</div>
+			<div style="float: left;">
+				<carrot:PagedDataNextPrevLinkWrapper ID="lnkPrevWrap" runat="server">
+					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink1" runat="server" />
+				</carrot:PagedDataNextPrevLinkWrapper>
+			</div>
+			<div style="float: right;">
+				<carrot:PagedDataNextPrevLinkWrapper ID="lnkNextWrap" runat="server">
+					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink2" runat="server" />
+				</carrot:PagedDataNextPrevLinkWrapper>
+			</div>
+			<div style="clear: both;">
+			</div>
 			<carrot:WidgetContainer ID="phCenterBottom" runat="server">
 			</carrot:WidgetContainer>
 			<br />
@@ -134,12 +146,12 @@
 	<div id="footer">
 		<div id="footer-content">
 			<div id="footer-right">
-				<%--<a href="http://www.free-css.com/">Home</a> | <a href="http://www.free-css.com/">Site Map</a> | <a href="http://www.free-css.com/">
-					RSS Feed</a>--%>
+				<%--<a href="http://www.free-css.com/">Home</a> | <a href="http://www.free-css.com/">Site
+	Map</a> | <a href="http://www.free-css.com/"> RSS Feed</a>--%>
 			</div>
 			<div id="footer-left">
 				<asp:PlaceHolder ID="myFooter" runat="server">
-					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
+					<%=String.Format("&copy; {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
 					All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
 					<br />
 					Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> | Valid <a target="_blank" href="http://validator.w3.org/check/referer">XHTML</a>

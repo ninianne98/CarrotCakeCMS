@@ -224,7 +224,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string SendTrackbackBatch() {
 			try {
-				if (SiteData.CurrentSite != null) {
+				if (SiteData.CurretSiteExists) {
 					SiteData.CurrentSite.SendTrackbackQueue();
 				}
 				return "OK";
@@ -294,7 +294,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			List<SiteMapOrder> lstSiteMap = new List<SiteMapOrder>();
-			if (SiteData.CurrentSite != null) {
+			if (SiteData.CurretSiteExists) {
 				List<SiteMapOrder> lst = sitemapHelper.GetChildPages(SiteData.CurrentSite.SiteID, ParentID, ContPageID);
 
 				lstSiteMap = (from l in lst
@@ -331,7 +331,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			int iLenB = 0;
 			int iLenA = 1;
 
-			while (iLenB < iLenA && SiteData.CurrentSite != null) {
+			while (iLenB < iLenA && SiteData.CurretSiteExists) {
 				iLenB = lstSiteMap.Count;
 
 				SiteMapOrder cont = sitemapHelper.GetPageWithLevel(SiteData.CurrentSite.SiteID, ContentPageID, iLevel);
@@ -391,7 +391,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					return "FAIL";
 				}
 
-				if (SiteData.CurrentSite != null
+				if (SiteData.CurretSiteExists
 					&& !string.IsNullOrEmpty(sFolderPath)
 					&& sCategoryPath.ToLower() != sTagPath.ToLower()
 					&& sCategoryPath.ToLower() != sDatePath.ToLower()

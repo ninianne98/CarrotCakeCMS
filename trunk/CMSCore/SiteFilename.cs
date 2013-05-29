@@ -50,6 +50,16 @@ namespace Carrotware.CMS.Core {
 			get { return SiteData.AdminFolderPath + "PageHistory.aspx"; }
 		}
 
+		public static string TagIndexURL {
+			get { return SiteData.AdminFolderPath + "TagIndex.aspx"; }
+		}
+		public static string CategoryIndexURL {
+			get { return SiteData.AdminFolderPath + "CategoryIndex.aspx"; }
+		}
+		public static string CommentIndexURL {
+			get { return SiteData.AdminFolderPath + "CommentIndex.aspx"; }
+		}
+
 		public static string UserURL {
 			get { return SiteData.AdminFolderPath + "User.aspx"; }
 		}

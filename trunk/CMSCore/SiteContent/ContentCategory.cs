@@ -150,6 +150,22 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public void Delete() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_ContentCategory s = CompiledQueries.cqGetContentCategoryByID(_db, this.ContentCategoryID);
+
+				if (s != null) {
+					IQueryable<carrot_CategoryContentMapping> lst = (from m in _db.carrot_CategoryContentMappings
+																	 where m.ContentCategoryID == s.ContentCategoryID
+																	 select m);
+
+					_db.carrot_CategoryContentMappings.DeleteBatch(lst);
+					_db.carrot_ContentCategories.DeleteOnSubmit(s);
+					_db.SubmitChanges();
+				}
+			}
+		}
+
 
 		#region IContentMetaInfo Members
 
