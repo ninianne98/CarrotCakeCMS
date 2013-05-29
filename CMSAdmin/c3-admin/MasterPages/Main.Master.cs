@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			tabUserAdmin.Visible = tabUserSecurity.Visible;
 			tabGroupAdmin.Visible = tabUserSecurity.Visible;
 
-			if (SiteData.CurrentSite != null) {
+			if (SiteData.CurretSiteExists) {
 				litServerTime.Text = SiteData.CurrentSite.Now.ToString() + " " + SiteData.CurrentSite.TimeZoneIdentifier;
 				litSiteIdent.Text = SiteData.CurrentSite.SiteName;
 				litTag.Text = SiteData.CurrentSite.SiteTagline;
@@ -44,7 +44,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 		public void HideWhenNoSiteProfileExists() {
 
-			bool bShowTop = SiteData.CurrentSite != null ? true : false;
+			bool bShowTop = SiteData.CurretSiteExists;
 
 			tabContentTop.Visible = bShowTop;
 			tabExportSite.Visible = bShowTop;

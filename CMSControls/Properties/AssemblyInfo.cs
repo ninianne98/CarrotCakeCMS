@@ -71,6 +71,9 @@ using System.Web.UI;
 [assembly: TagPrefix("TrackBack", "carrot")]
 [assembly: TagPrefix("PostCalendar", "carrot")]
 
+[assembly: TagPrefix("PagedDataNextPrevLinkWrapper", "carrot")]
+[assembly: TagPrefix("PagedDataNextPrevLink", "carrot")]
+[assembly: TagPrefix("PagedDataNextPrevText", "carrot")]
 
 [assembly: WebResource("Carrotware.CMS.UI.Controls.SearchBoxJS.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]

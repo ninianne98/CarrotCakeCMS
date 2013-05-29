@@ -345,7 +345,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			iTotalPages = this.TotalRecords / this.PageSize;
 
-			if ((TotalRecords % this.PageSize) > 0) {
+			if ((this.TotalRecords % this.PageSize) > 0) {
 				iTotalPages++;
 			}
 

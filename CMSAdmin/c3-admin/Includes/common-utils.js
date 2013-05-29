@@ -119,6 +119,10 @@ function cmsAjaxGeneralCallback(data, status) {
 	}
 }
 
+function cmsAlertModalClose() {
+	$("#divCMSModal").dialog("close");
+}
+
 function cmsAlertModalHeightWidth(request, h, w) {
 	$("#divCMSModalMsg").html('');
 
@@ -130,7 +134,7 @@ function cmsAlertModalHeightWidth(request, h, w) {
 		modal: true,
 		buttons: {
 			"OK": function () {
-				$(this).dialog("close");
+				cmsAlertModalClose();
 			}
 		}
 	});
@@ -144,6 +148,33 @@ function cmsAlertModalSmall(request) {
 }
 function cmsAlertModalLarge(request) {
 	cmsAlertModalHeightWidth(request, 550, 700);
+}
+
+
+function cmsAlertModalHeightWidthBtns(request, h, w, buttonsOpts) {
+	$("#divCMSModalMsg").html('');
+
+	$("#divCMSModalMsg").html(request);
+
+	$("#divCMSModal").dialog({
+		open: function () {
+			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+		},
+		height: h,
+		width: w,
+		modal: true,
+		buttons: buttonsOpts
+	});
+}
+
+function cmsAlertModalBtns(request, buttonsOpts) {
+	cmsAlertModalHeightWidthBtns(request, 400, 550, buttonsOpts);
+}
+function cmsAlertModalSmallBtns(request, buttonsOpts) {
+	cmsAlertModalHeightWidthBtns(request, 250, 400, buttonsOpts);
+}
+function cmsAlertModalLargeBtns(request, buttonsOpts) {
+	cmsAlertModalHeightWidthBtns(request, 550, 700, buttonsOpts);
 }
 
 
