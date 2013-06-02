@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Carrotware.CMS.Data;
+using System.Text;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,9 +18,7 @@ using Carrotware.CMS.Data;
 
 
 namespace Carrotware.CMS.Core {
-	public class PostComment : IDisposable {
-
-		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+	public class PostComment {
 
 		public PostComment() { }
 
@@ -32,9 +31,30 @@ namespace Carrotware.CMS.Core {
 		public string CommenterURL { get; set; }
 		public string PostCommentText { get; set; }
 
+		private string _commentPlain = null;
 		public string PostCommentEscaped {
 			get {
-				return this.PostCommentText.Replace("\r\n", "\n").Replace("<", " &lt; ").Replace(">", " &gt; ").Replace("\r", "\n").Replace("\n", "<br />");
+				if (_commentPlain == null) {
+					StringBuilder sb = new StringBuilder();
+					sb.Append(this.PostCommentText);
+					sb.Replace("\r\n", "\n").Replace("<", " &lt; ").Replace(">", " &gt; ").Replace("\r", "\n").Replace("\n", "<br />");
+					_commentPlain = SiteData.CurrentSite.UpdateContentComment(sb.ToString());
+				}
+
+				return _commentPlain;
+			}
+		}
+
+		private string _commentPr = null;
+		public string PostCommentProcessed {
+			get {
+				if (_commentPr == null) {
+					StringBuilder sb = new StringBuilder();
+					sb.Append(this.PostCommentText);
+					_commentPr = SiteData.CurrentSite.UpdateContentComment(sb.ToString());
+				}
+
+				return _commentPr;
 			}
 		}
 
@@ -61,43 +81,56 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public void Delete() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_ContentComment c = CompiledQueries.cqGetContentCommentsTblByID(_db, this.ContentCommentID);
 
-		public void Save() {
-			bool bNew = false;
-			carrot_ContentComment c = CompiledQueries.cqGetContentCommentsTblByID(db, this.ContentCommentID);
-
-			if (c == null) {
-				c = new carrot_ContentComment();
-				c.CreateDate = DateTime.UtcNow;
-				bNew = true;
-
-				if (this.CreateDate.Year > 1950) {
-					c.CreateDate = SiteData.CurrentSite.ConvertSiteTimeToUTC(this.CreateDate);
+				if (c != null) {
+					_db.carrot_ContentComments.DeleteOnSubmit(c);
+					_db.SubmitChanges();
 				}
 			}
+		}
 
-			if (this.ContentCommentID == Guid.Empty) {
-				this.ContentCommentID = Guid.NewGuid();
+
+		public void Save() {
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				bool bNew = false;
+				carrot_ContentComment c = CompiledQueries.cqGetContentCommentsTblByID(_db, this.ContentCommentID);
+
+				if (c == null) {
+					c = new carrot_ContentComment();
+					c.CreateDate = DateTime.UtcNow;
+					bNew = true;
+
+					if (this.CreateDate.Year > 1950) {
+						c.CreateDate = SiteData.CurrentSite.ConvertSiteTimeToUTC(this.CreateDate);
+					}
+				}
+
+				if (this.ContentCommentID == Guid.Empty) {
+					this.ContentCommentID = Guid.NewGuid();
+				}
+
+				c.ContentCommentID = this.ContentCommentID;
+				c.Root_ContentID = this.Root_ContentID;
+				c.CommenterIP = this.CommenterIP;
+				c.CommenterName = this.CommenterName;
+				c.CommenterEmail = this.CommenterEmail;
+				c.CommenterURL = this.CommenterURL;
+				c.PostComment = this.PostCommentText;
+				c.IsApproved = this.IsApproved;
+				c.IsSpam = this.IsSpam;
+
+				if (bNew) {
+					_db.carrot_ContentComments.InsertOnSubmit(c);
+				}
+
+				_db.SubmitChanges();
+
+				this.ContentCommentID = c.ContentCommentID;
+				this.CreateDate = c.CreateDate;
 			}
-
-			c.ContentCommentID = this.ContentCommentID;
-			c.Root_ContentID = this.Root_ContentID;
-			c.CommenterIP = this.CommenterIP;
-			c.CommenterName = this.CommenterName;
-			c.CommenterEmail = this.CommenterEmail;
-			c.CommenterURL = this.CommenterURL;
-			c.PostComment = this.PostCommentText;
-			c.IsApproved = this.IsApproved;
-			c.IsSpam = this.IsSpam;
-
-			if (bNew) {
-				db.carrot_ContentComments.InsertOnSubmit(c);
-			}
-
-			db.SubmitChanges();
-
-			this.ContentCommentID = c.ContentCommentID;
-			this.CreateDate = c.CreateDate;
 		}
 
 
@@ -227,14 +260,5 @@ namespace Carrotware.CMS.Core {
 		}
 
 
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 	}
 }

@@ -27,6 +27,7 @@ namespace Carrotware.CMS.Core {
 			this.ContentID = Guid.NewGuid();
 			this.ContentType = pageType;
 			this.SiteID = siteID;
+			this.VersionCount = 0;
 
 			this.CreateDate = SiteData.GetSiteByID(siteID).Now;
 			this.EditDate = this.CreateDate;
@@ -104,6 +105,8 @@ namespace Carrotware.CMS.Core {
 
 				this.MetaDescription = c.MetaDescription;
 				this.MetaKeyword = c.MetaKeyword;
+
+				this.VersionCount = c.VersionCount;
 			}
 		}
 
@@ -493,6 +496,8 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaDescription { get; set; }
 		public string MetaKeyword { get; set; }
+
+		public int VersionCount { get; set; }
 
 		public string NewTrackBackURLs { get; set; }
 

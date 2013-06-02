@@ -125,6 +125,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Unknown,
 			Previous,
 			Next,
+			First,
+			Last,
 		}
 
 	}

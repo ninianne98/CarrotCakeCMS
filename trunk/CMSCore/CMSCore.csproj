@@ -114,6 +114,7 @@
     <Compile Include="SiteContent\SiteMapOrderHelper.cs" />
     <Compile Include="SiteContent\SiteNav.cs" />
     <Compile Include="SiteContent\SiteNavHelperReal.cs" />
+    <Compile Include="SiteContent\TextWidget.cs" />
     <Compile Include="SiteContent\TrackBackEntry.cs" />
     <Compile Include="SiteFilename.cs" />
     <Compile Include="Utilities\EmailSender.cs" />

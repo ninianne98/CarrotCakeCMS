@@ -26,6 +26,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteDashboard);
 
+			if (!IsPostBack) {
+				if (DatabaseUpdate.AreCMSTablesIncomplete()) {
+					Response.Redirect(SiteFilename.DatabaseSetupURL);
+				}
+			}
+
 			RedirectIfNoSite();
 
 			CMSConfigHelper.CleanUpSerialData();

@@ -20,9 +20,19 @@ using Carrotware.CMS.UI.Base;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class CommentAddEdit : AdminBasePage {
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogComment);
 
+			ucCommentAddEdit1.FetchItem();
+
+			if (ucCommentAddEdit1.pageType == ContentPageType.PageType.BlogEntry) {
+				Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogComment);
+			}
+
+			if (ucCommentAddEdit1.pageType == ContentPageType.PageType.ContentEntry) {
+				Master.ActivateTab(AdminBaseMasterPage.SectionID.PageComment);
+			}
 		}
+
+
 
 	}
 }

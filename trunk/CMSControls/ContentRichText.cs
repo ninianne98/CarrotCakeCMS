@@ -82,10 +82,10 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			this.Text = RawWidgetData;
+			this.Text = SiteData.CurrentSite.UpdateContentRichText(this.RawWidgetData);
 
 			output.WriteLine();
-			output.Write(RawWidgetData);
+			output.Write(this.Text);
 			output.WriteLine();
 
 			output.Indent = indent;

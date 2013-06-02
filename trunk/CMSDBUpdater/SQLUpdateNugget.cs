@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,7 +15,6 @@ using System.Text;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.DBUpdater {
 	public class SQLUpdateNugget {
@@ -87,18 +87,24 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		public static bool EvalNuggetKey(string KeyName) {
+			List<SQLUpdateNugget> nugs = GetNuggets(KeyName);
+
+			return RunEval(nugs);
+		}
+
+		public static List<SQLUpdateNugget> GetNuggets(string KeyName) {
 			List<SQLUpdateNugget> nugs = (from s in SQLNuggets
 										  where s.AssociatedWith.ToLower().Contains("|" + KeyName.ToLower() + "|")
 										  orderby s.Priority descending
 										  select s).ToList();
 
-			return RunEval(nugs);
+			return nugs;
 		}
 
 		private static bool RunEval(List<SQLUpdateNugget> nugs) {
 
 			foreach (var n in nugs) {
-				DataTable table1 = DatabaseUpdate.GetData(n.SQLQuery);
+				DataTable table1 = DatabaseUpdate.GetTestData(n.SQLQuery);
 				int iMatchCount = table1.Rows.Count;
 
 				switch (n.Mode) {

@@ -97,6 +97,7 @@
 					<ul class="children">
 						<li runat="server" id="tabDashboard"><a href="/c3-admin/">Dashboard</a> </li>
 						<li runat="server" id="tabMain"><a href="/c3-admin/SiteInfo.aspx">Site Info</a> </li>
+						<li runat="server" id="tabTxtWidgets"><a href="/c3-admin/TextWidgetIndex.aspx">Text Widgets</a> </li>
 						<li runat="server" id="tabExportSite"><a href="/c3-admin/SiteExport.aspx">Export Site</a> </li>
 						<li runat="server" id="tabContentSkin"><a href="/c3-admin/SiteSkinIndex.aspx">Site Skin Index</a> </li>
 						<li runat="server" id="tabMainTemplate"><a href="/c3-admin/SiteTemplateUpdate.aspx">Bulk Apply Templates</a> </li>

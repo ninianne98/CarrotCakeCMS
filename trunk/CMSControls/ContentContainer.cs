@@ -150,15 +150,17 @@ namespace Carrotware.CMS.UI.Controls {
 
 			Control ctrl = new Control();
 
+			string outputText = SiteData.CurrentSite.UpdateContent(this.Text);
+
 			if (IsAdminMode) {
 
 				ctrl = GetCtrl(this);
 				Literal lit = (Literal)cu.FindControl("litContent", ctrl);
-				lit.Text = this.Text;
+				lit.Text = outputText;
 
 			} else {
 				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" });
-				ctrl.Controls.Add(new Literal { Text = this.Text });
+				ctrl.Controls.Add(new Literal { Text = outputText });
 				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
 			}
 

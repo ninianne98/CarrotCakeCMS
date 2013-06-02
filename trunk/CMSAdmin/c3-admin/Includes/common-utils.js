@@ -534,20 +534,26 @@ function DirtyPageRefresh() {
 	}
 }
 
+function cmsSpinnerUnblock() {
+	$("#cmsAjaxMainDiv").unblock();
+}
 
 //===================
 
 function AjaxShowErrorMsg(sender, args) {
 	if (args.get_error() != undefined) {
+		//debugger;
 		var errorMessage;
-		if (args.get_response().get_statusCode() == '200') {
+		var errorCode = args.get_response().get_statusCode();
+		if (errorCode == '200' || errorCode == '500') {
 			errorMessage = args.get_error().message;
-		}
-		else {
+		} else {
 			// Error occurred somewhere other than the server page.
-			errorMessage = 'An error occurred. ';
+			errorMessage = 'An error occurred. ' + errorCode;
 		}
 		args.set_errorHandled(true);
+
+		cmsSpinnerUnblock();
 		cmsAlertModal(errorMessage);
 	}
 }

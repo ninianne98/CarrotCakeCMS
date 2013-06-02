@@ -11,7 +11,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 	public partial class MainPopup : AdminBaseMasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
-				pnlDirty.Visible = false; 
+				pnlDirty.Visible = false;
 			} else {
 				pnlDirty.Visible = true;
 			}
@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					sError += "\r\n<hr />\r\n" + objErr.InnerException;
 				}
 			} else {
-				sError = " An error occurred. ";
+				sError = " An error occurred. (Generic Popup) ";
 			}
 
 			ScriptManager1.AsyncPostBackErrorMessage = sError;

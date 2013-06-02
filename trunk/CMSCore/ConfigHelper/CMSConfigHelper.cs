@@ -38,6 +38,7 @@ namespace Carrotware.CMS.Core {
 			SkinDef,
 			PublicCtrl,
 			SiteSkins,
+			SiteTextWidgets,
 			SiteMapping
 		}
 
@@ -62,6 +63,8 @@ namespace Carrotware.CMS.Core {
 
 		private static string keyTemplates = "cms_Templates";
 
+		private static string keyTxtWidgets = "cms_TxtWidgets";
+
 		private static string keyDynSite = "cms_DynSite_";
 
 		public static string keyAdminContent = "cmsAdminContent";
@@ -79,12 +82,18 @@ namespace Carrotware.CMS.Core {
 
 			HttpContext.Current.Cache.Remove(keyTemplates);
 
+			HttpContext.Current.Cache.Remove(keyTxtWidgets);
+
 			HttpContext.Current.Cache.Remove(keyTemplateFiles);
 
 			string ModuleKey = keyDynSite + DomainName;
 			HttpContext.Current.Cache.Remove(ModuleKey);
 
 			VirtualDirectory.RegisterRoutes(true);
+
+			if (SiteData.CurretSiteExists) {
+				SiteData.CurrentSite.LoadTextWidgets();
+			}
 
 			if (SiteData.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted) {
 				System.Web.HttpRuntime.UnloadAppDomain();
@@ -171,6 +180,9 @@ namespace Carrotware.CMS.Core {
 				case CMSConfigFileType.SiteSkins:
 					sPlugCfg = sRealPath + config.ConfigFileLocation.SiteSkins;
 					break;
+				case CMSConfigFileType.SiteTextWidgets:
+					sPlugCfg = sRealPath + config.ConfigFileLocation.TextContentProcessors;
+					break;
 				case CMSConfigFileType.SiteMapping:
 					sPlugCfg = sRealPath + config.ConfigFileLocation.SiteMapping;
 					break;
@@ -239,6 +251,10 @@ namespace Carrotware.CMS.Core {
 					case CMSConfigFileType.SiteSkins:
 						reqCols0.Add("templatefile");
 						reqCols0.Add("filedesc");
+						break;
+					case CMSConfigFileType.SiteTextWidgets:
+						reqCols0.Add("pluginassembly");
+						reqCols0.Add("pluginname");
 						break;
 					case CMSConfigFileType.SiteMapping:
 						reqCols0.Add("domname");
@@ -539,6 +555,59 @@ namespace Carrotware.CMS.Core {
 		}
 
 
+		public List<CMSTextWidgetPicker> GetAllWidgetSettings(Guid siteID) {
+
+			List<TextWidget> lstPreferenced = TextWidget.GetSiteTextWidgets(siteID);
+
+			List<string> lstInUse = lstPreferenced.Select(x => x.TextWidgetAssembly).Distinct().ToList();
+
+			List<string> lstAvail = TextWidgets.Select(x => x.AssemblyString).Distinct().ToList();
+
+			List<CMSTextWidgetPicker> lstExisting = (from p in lstPreferenced
+													 join t in TextWidgets on p.TextWidgetAssembly equals t.AssemblyString
+													 select new CMSTextWidgetPicker {
+														 TextWidgetPickerID = p.TextWidgetID,
+														 AssemblyString = p.TextWidgetAssembly,
+														 DisplayName = t.DisplayName,
+														 ProcessBody = p.ProcessBody,
+														 ProcessPlainText = p.ProcessPlainText,
+														 ProcessHTMLText = p.ProcessHTMLText,
+														 ProcessComment = p.ProcessComment,
+													 }).ToList();
+
+			List<CMSTextWidgetPicker> lstConfigured1 = (from t in TextWidgets
+														where !lstInUse.Contains(t.AssemblyString)
+														select new CMSTextWidgetPicker {
+															TextWidgetPickerID = Guid.NewGuid(),
+															AssemblyString = t.AssemblyString,
+															DisplayName = t.DisplayName,
+															ProcessBody = false,
+															ProcessPlainText = false,
+															ProcessHTMLText = false,
+															ProcessComment = false,
+														}).ToList();
+
+			lstExisting = lstExisting.Union(lstConfigured1).ToList();
+
+			List<CMSTextWidgetPicker> lstConfigured2 = (from p in lstPreferenced
+														where !lstAvail.Contains(p.TextWidgetAssembly)
+														select new CMSTextWidgetPicker {
+															TextWidgetPickerID = p.TextWidgetID,
+															AssemblyString = p.TextWidgetAssembly,
+															DisplayName = "",
+															ProcessBody = p.ProcessBody,
+															ProcessPlainText = p.ProcessPlainText,
+															ProcessHTMLText = p.ProcessHTMLText,
+															ProcessComment = p.ProcessComment,
+														}).ToList();
+
+			lstExisting = lstExisting.Union(lstConfigured2).ToList();
+
+
+			return lstExisting;
+		}
+
+
 		public List<CMSPlugin> ToolboxPlugins {
 			get {
 
@@ -687,6 +756,41 @@ namespace Carrotware.CMS.Core {
 				}
 
 				return _plugins.OrderBy(t => t.Caption).ToList();
+			}
+		}
+
+		public List<CMSTextWidget> TextWidgets {
+			get {
+
+				List<CMSTextWidget> _plugins = null;
+				bool bCached = false;
+
+				try {
+					_plugins = (List<CMSTextWidget>)HttpContext.Current.Cache[keyTxtWidgets];
+					if (_plugins != null) {
+						bCached = true;
+					}
+				} catch {
+					bCached = false;
+				}
+
+				if (!bCached) {
+					_plugins = new List<CMSTextWidget>();
+				}
+
+				if (!bCached) {
+					DataSet ds = ReadDataSetConfig(CMSConfigFileType.SiteTextWidgets, "~/");
+
+					_plugins = (from d in ds.Tables[0].AsEnumerable()
+								select new CMSTextWidget {
+									AssemblyString = d.Field<string>("pluginassembly"),
+									DisplayName = d.Field<string>("pluginname")
+								}).ToList();
+
+					HttpContext.Current.Cache.Insert(keyTxtWidgets, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+				}
+
+				return _plugins.OrderBy(t => t.DisplayName).ToList();
 			}
 		}
 

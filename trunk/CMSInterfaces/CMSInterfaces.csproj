@@ -73,8 +73,10 @@
     <Compile Include="BaseShellUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="ITextBodyUpdate.cs" />
     <Compile Include="IWidgetLimitedProperties.cs" />
     <Compile Include="IWidgetMultiMenu.cs" />
+    <Compile Include="TextBodyUpdate.cs" />
     <Compile Include="WidgetParmDataWebControl.cs" />
     <Compile Include="IWidgetEditStatus.cs" />
     <Compile Include="IWidgetParmData.cs" />

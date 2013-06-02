@@ -336,6 +336,7 @@
       <Association Name="carrot_Site_carrot_ContentTag" Member="carrot_ContentTags" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_ContentTag" />
       <Association Name="carrot_Site_carrot_ContentCategory" Member="carrot_ContentCategories" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_ContentCategory" />
       <Association Name="carrot_Site_carrot_RootContent" Member="carrot_RootContents" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_RootContent" />
+      <Association Name="carrot_Site_carrot_TextWidget" Member="carrot_TextWidgets" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_TextWidget" />
     </Type>
   </Table>
   <Table Name="dbo.vw_carrot_ContentChild" Member="vw_carrot_ContentChilds">
@@ -423,6 +424,19 @@
       <Column Name="GoLiveDateLocal" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="IsRetired" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="IsUnReleased" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="VersionCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.carrot_TextWidget" Member="carrot_TextWidgets">
+    <Type Name="carrot_TextWidget">
+      <Column Name="TextWidgetID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TextWidgetAssembly" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ProcessBody" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ProcessPlainText" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ProcessHTMLText" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ProcessComment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="carrot_Site_carrot_TextWidget" Member="carrot_Site" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.carrot_BlogDateFilenameUpdate" Method="carrot_BlogDateFilenameUpdate">

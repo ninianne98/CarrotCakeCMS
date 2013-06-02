@@ -96,6 +96,27 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["LinkPrev"] = value;
 			}
 		}
+		[Category("Appearance")]
+		public string LinkFirst {
+			get {
+				string s = (string)ViewState["LinkFirst"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["LinkFirst"] = value;
+			}
+		}
+		[Category("Appearance")]
+		public string LinkLast {
+			get {
+				string s = (string)ViewState["LinkLast"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["LinkLast"] = value;
+			}
+		}
+
 
 		[Category("Appearance")]
 		[DefaultValue("Blog")]
@@ -299,43 +320,44 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (lnkPair.PageLink != null) {
 				SetNextPrevLink(dir, lnkPair.PageLink, iPage);
-				if (ShowLink) {
-					lnkPair.PageLink.Visible = false;
-				}
+				lnkPair.PageLink.Visible = ShowLink;
 			}
 
-			if (lnkPair.LinkWrapper != null && ShowLink) {
-				lnkPair.LinkWrapper.Visible = false;
+			if (lnkPair.LinkWrapper != null) {
+				lnkPair.LinkWrapper.Visible = ShowLink;
 			}
 		}
 
 		protected PagedDataNextPrevLinkPair FindPrevNextCtrl(string sCtrlName) {
 			PagedDataNextPrevLinkPair pair = new PagedDataNextPrevLinkPair();
 
-			ControlUtilities cu = new ControlUtilities(this.Page);
-			pair.LinkWrapper = (PagedDataNextPrevLinkWrapper)cu.FindControl(sCtrlName, this.Page);
+			try {
+				ControlUtilities cu = new ControlUtilities(this.Page);
+				pair.LinkWrapper = (PagedDataNextPrevLinkWrapper)cu.FindControl(sCtrlName, this.Page);
 
-			if (pair.LinkWrapper == null) {
-				pair.PageLink = (PagedDataNextPrevLink)cu.FindControl(sCtrlName, this.Page);
-			} else {
-				pair.PageLink = (PagedDataNextPrevLink)cu.FindControl(typeof(PagedDataNextPrevLink), pair.LinkWrapper);
-			}
+				if (pair.LinkWrapper == null) {
+					pair.PageLink = (PagedDataNextPrevLink)cu.FindControl(sCtrlName, this.Page);
+				} else {
+					pair.PageLink = (PagedDataNextPrevLink)cu.FindControl(typeof(PagedDataNextPrevLink), pair.LinkWrapper);
+				}
+			} catch (Exception ex) { }
 
 			return pair;
 		}
 
 		protected void PrevNext() {
 
+			int iTotalPages = this.TotalRecords / this.PageSize;
+			if ((this.TotalRecords % this.PageSize) > 0) {
+				iTotalPages++;
+			}
+
 			if (!string.IsNullOrEmpty(this.LinkNext)) {
 				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkNext);
 
-				int iTotalPages = this.TotalRecords / this.PageSize;
-				if ((this.TotalRecords % this.PageSize) > 0) {
-					iTotalPages++;
-				}
 				int iPageNum = this.PageNumber + 1;
 
-				bool bShowLink = (iPageNum > this.MaxPage && this.MaxPage > 0) || iPageNum > iTotalPages;
+				bool bShowLink = (iPageNum < this.MaxPage && this.MaxPage > 0) || this.PageNumber < iTotalPages;
 
 				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.Next, pair, iPageNum, bShowLink);
 			}
@@ -344,9 +366,32 @@ namespace Carrotware.CMS.UI.Controls {
 				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkPrev);
 
 				int iPageNum = this.PageNumber - 1;
-				bool bShowLink = iPageNum < 1;
+				bool bShowLink = this.PageNumber > 1;
 
 				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.Previous, pair, iPageNum, bShowLink);
+			}
+
+			if (!string.IsNullOrEmpty(this.LinkFirst)) {
+				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkFirst);
+
+				int iPageNum = 1;
+				bool bShowLink = (this.PageNumber > iPageNum);
+
+				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.First, pair, iPageNum, bShowLink);
+			}
+
+			if (!string.IsNullOrEmpty(this.LinkLast)) {
+				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkLast);
+
+				int iPageNum = iTotalPages;
+
+				if (this.MaxPage > 0) {
+					iPageNum = this.MaxPage;
+				}
+
+				bool bShowLink = (this.PageNumber < iPageNum);
+
+				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.Last, pair, iPageNum, bShowLink);
 			}
 		}
 
