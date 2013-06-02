@@ -1,10 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tbl>
 	<querynugget>
+		<priority>14</priority>
+		<mode>LT</mode>
+		<rowcount>3</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep10|AreCMSTablesIncomplete|</testcontext>
+		<sql>
+			select [table_schema], [table_name], [column_name], [ordinal_position]
+			from [information_schema].[columns]
+			where [table_name] in ('carrot_DataInfo')
+		</sql>
+	</querynugget>
+	<querynugget>
 		<priority>12</priority>
 		<mode>LT</mode>
 		<rowcount>34</rowcount>
-		<alwayscheck>True</alwayscheck>
+		<alwayscheck>False</alwayscheck>
 		<testcontext>|AlterStep09|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
@@ -28,7 +40,7 @@
 		<priority>12</priority>
 		<mode>LT</mode>
 		<rowcount>1</rowcount>
-		<alwayscheck>True</alwayscheck>
+		<alwayscheck>False</alwayscheck>
 		<testcontext>|AlterStep09|AlterStep08|AlterStep07|</testcontext>
 		<sql>
 			select distinct table_name, column_name
@@ -52,7 +64,7 @@
 		<priority>10</priority>
 		<mode>DNEQ</mode>
 		<rowcount>6</rowcount>
-		<alwayscheck>True</alwayscheck>
+		<alwayscheck>False</alwayscheck>
 		<testcontext>|AlterStep07|AlterStep06|</testcontext>
 		<sql>
 			select [specific_name], [ordinal_position], [parameter_name]
@@ -82,6 +94,18 @@
 			select distinct table_name, column_name
 			from [information_schema].[columns]
 			where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID')
+		</sql>
+	</querynugget>
+	<querynugget>
+		<priority>1</priority>
+		<mode>EQ</mode>
+		<rowcount>3</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|IsPostStep10|</testcontext>
+		<sql>
+			select [table_schema], [table_name], [column_name], [ordinal_position]
+			from [information_schema].[columns]
+			where [table_name] in ('carrot_DataInfo')
 		</sql>
 	</querynugget>
 	<querynugget>
@@ -240,6 +264,47 @@
 			where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget')
 		</sql>
 	</querynugget>
+	<querynugget>
+		<priority>-1</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|SchemaVersionCheck|</testcontext>
+		<sql>
+			if not exists(select [table_name]  from [information_schema].[columns] where [table_name] in ('carrot_DataInfo') ) begin
+			select @DataKey as [DataKey], '' [DataValue]
+			end else begin
+			select [DataKey], [DataValue] from dbo.[carrot_DataInfo] where [DataKey] = @DataKey
+			end
+		</sql>
+	</querynugget>
+
+	<querynugget>
+		<priority>-1</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|SchemaVersionUpdate|</testcontext>
+		<sql>
+			if exists(select [table_name]  from [information_schema].[columns] where [table_name] in ('carrot_DataInfo') ) begin
+
+			if not exists(select * from dbo.[carrot_DataInfo] where [DataKey] = @DataKey) begin
+
+			insert into dbo.[carrot_DataInfo]([DataKey], [DataValue])
+			values (@DataKey, @DataValue)
+
+			end else begin
+
+			update dbo.[carrot_DataInfo]
+			set [DataValue] = @DataValue
+			where [DataKey] = @DataKey
+
+			end
+
+			end
+		</sql>
+	</querynugget>	
+	
 	<querynugget>
 		<priority>100</priority>
 		<mode>LT</mode>

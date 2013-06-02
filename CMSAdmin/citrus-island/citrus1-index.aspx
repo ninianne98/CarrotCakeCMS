@@ -59,7 +59,8 @@
 			</carrot:ContentContainer>
 			<div style="clear: both;">
 			</div>
-			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected" LinkNext="lnkNextWrap" LinkPrev="lnkPrevWrap">
+			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected" LinkNext="lnkNextWrap" LinkPrev="lnkPrevWrap"
+				LinkFirst="lnkFirstWrap" LinkLast="lnkLastWrap">
 				<TypeLabelPrefixes>
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateIndex" LabelText="Date:" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateDayIndex" LabelText="Day:" FormatText="{0:dddd, d MMMM yyyy}" />
@@ -119,13 +120,21 @@
 			<div style="clear: both;">
 			</div>
 			<div style="float: left;">
-				<carrot:PagedDataNextPrevLinkWrapper ID="lnkPrevWrap" runat="server">
-					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink1" runat="server" />
+				<carrot:PagedDataNextPrevLinkWrapper ID="lnkFirstWrap" runat="server">
+					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink1" runat="server" UseDefaultText="false" Text="&lt; First" />&nbsp;&nbsp;
 				</carrot:PagedDataNextPrevLinkWrapper>
+				<carrot:PagedDataNextPrevLinkWrapper ID="lnkPrevWrap" runat="server">
+					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink2" runat="server" />
+				</carrot:PagedDataNextPrevLinkWrapper>
+				&nbsp;
 			</div>
 			<div style="float: right;">
+				&nbsp;
 				<carrot:PagedDataNextPrevLinkWrapper ID="lnkNextWrap" runat="server">
-					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink2" runat="server" />
+					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink3" runat="server" />&nbsp;&nbsp;
+				</carrot:PagedDataNextPrevLinkWrapper>
+				<carrot:PagedDataNextPrevLinkWrapper ID="lnkLastWrap" runat="server">
+					<carrot:PagedDataNextPrevLink ID="PagedDataNextPrevLink4" runat="server" UseDefaultText="false" Text="Last &gt;" />
 				</carrot:PagedDataNextPrevLinkWrapper>
 			</div>
 			<div style="clear: both;">

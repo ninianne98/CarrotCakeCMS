@@ -72,6 +72,7 @@
     <Compile Include="ContentRichText.cs" />
     <Compile Include="BreadCrumbNavigation.cs" />
     <Compile Include="ControlUtilities.cs" />
+    <Compile Include="EmailEscapeInBody.cs" />
     <Compile Include="GeneralControlDesigner.cs" />
     <Compile Include="GeneralUtilities.cs" />
     <Compile Include="ICommonComponent.cs" />

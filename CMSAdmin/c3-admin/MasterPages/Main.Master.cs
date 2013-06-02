@@ -9,6 +9,15 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
 using Carrotware.Web.UI.Controls;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 	public partial class Main : AdminBaseMasterPage {
@@ -48,6 +57,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 			tabContentTop.Visible = bShowTop;
 			tabExportSite.Visible = bShowTop;
+			tabTxtWidgets.Visible = bShowTop;
 			tabBlogTop.Visible = bShowTop;
 			tabContent.Visible = bShowTop;
 			tabModules.Visible = bShowTop;
@@ -78,6 +88,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				case SectionID.SiteInfo:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabMain.Attributes["class"] = sCSSSecondary;
+					break;
+				case SectionID.TextWidget:
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabTxtWidgets.Attributes["class"] = sCSSSecondary;
 					break;
 				case SectionID.SiteTemplate:
 					tabMainTop.Attributes["class"] = sCSSTop;
@@ -172,7 +186,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					sError += "\r\n<hr />\r\n" + objErr.InnerException;
 				}
 			} else {
-				sError = " An error occurred. ";
+				sError = " An error occurred. (Generic Main) ";
 			}
 
 			ScriptManager1.AsyncPostBackErrorMessage = sError;

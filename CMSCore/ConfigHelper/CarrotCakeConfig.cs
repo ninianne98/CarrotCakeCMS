@@ -165,6 +165,12 @@ namespace Carrotware.CMS.Core {
 			set { this["AdminModules"] = value; }
 		}
 
+		[ConfigurationProperty("TextContentProcessors", DefaultValue = "TextContentProcessors.config", IsRequired = false)]
+		public String TextContentProcessors {
+			get { return (String)this["TextContentProcessors"]; }
+			set { this["TextContentProcessors"] = value; }
+		}
+
 		[ConfigurationProperty("TemplatePath", DefaultValue = "~/cmsTemplates/", IsRequired = false)]
 		public String TemplatePath {
 			get { return (String)this["TemplatePath"]; }

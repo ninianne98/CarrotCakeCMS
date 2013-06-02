@@ -1093,6 +1093,22 @@ namespace Carrotware.CMS.Core {
 					 select ct));
 
 
+		//===============
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_TextWidget> cqTextWidgetByID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid textWidgetID) =>
+				(from w in ctx.carrot_TextWidgets
+				 where w.TextWidgetID == textWidgetID
+				 select w).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<carrot_TextWidget>> cqTextWidgetBySiteID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID) =>
+				(from w in ctx.carrot_TextWidgets
+				 where w.SiteID == siteID
+				 select w));
+
 	}
 
 }

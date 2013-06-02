@@ -79,6 +79,8 @@ namespace Carrotware.CMS.Core {
 					txt = txt.Substring(0, 4096);
 				}
 
+				txt = SiteData.CurrentSite.UpdateContent(txt);
+
 				if (txt.Length > 800) {
 					return txt.Substring(0, 768).Trim() + "[.....]";
 				} else {

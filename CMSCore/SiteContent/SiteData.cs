@@ -55,7 +55,54 @@ namespace Carrotware.CMS.Core {
 			if (string.IsNullOrEmpty(this.SiteTitlebarPattern)) {
 				this.SiteTitlebarPattern = DefaultPageTitlePattern;
 			}
+
+			this.LoadTextWidgets();
 		}
+
+		public void LoadTextWidgets() {
+			try {
+				this.SiteTextWidgets = TextWidget.GetSiteTextWidgets(this.SiteID);
+			} catch (Exception ex) {
+				this.SiteTextWidgets = new List<TextWidget>();
+			}
+		}
+
+		public virtual string UpdateContent(string TextContent) {
+			if (!string.IsNullOrEmpty(TextContent)) {
+				foreach (TextWidget o in this.SiteTextWidgets.Where(x => x.ProcessBody && x.TextProcessor != null)) {
+					TextContent = o.TextProcessor.UpdateContent(TextContent);
+				}
+			}
+			return TextContent;
+		}
+
+		public virtual string UpdateContentPlainText(string TextContent) {
+			if (!string.IsNullOrEmpty(TextContent)) {
+				foreach (TextWidget o in this.SiteTextWidgets.Where(x => x.ProcessPlainText && x.TextProcessor != null)) {
+					TextContent = o.TextProcessor.UpdateContentPlainText(TextContent);
+				}
+			}
+			return TextContent;
+		}
+
+		public virtual string UpdateContentRichText(string TextContent) {
+			if (!string.IsNullOrEmpty(TextContent)) {
+				foreach (TextWidget o in this.SiteTextWidgets.Where(x => x.ProcessHTMLText && x.TextProcessor != null)) {
+					TextContent = o.TextProcessor.UpdateContentRichText(TextContent);
+				}
+			}
+			return TextContent;
+		}
+
+		public virtual string UpdateContentComment(string TextContent) {
+			if (!string.IsNullOrEmpty(TextContent)) {
+				foreach (TextWidget o in this.SiteTextWidgets.Where(x => x.ProcessComment && x.TextProcessor != null)) {
+					TextContent = o.TextProcessor.UpdateContentComment(TextContent);
+				}
+			}
+			return TextContent;
+		}
+
 
 		public static string DefaultPageTitlePattern {
 			get {
@@ -63,17 +110,17 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static string CurrentTitlePattern {
 			get {
 				string pattern = "{0} - {1}";
 				SiteData s = CurrentSite;
 				if (!string.IsNullOrEmpty(s.SiteTitlebarPattern)) {
-					pattern = s.SiteTitlebarPattern;
-					pattern = pattern.Replace("[[CARROT_SITENAME]]", "{0}");
-					pattern = pattern.Replace("[[CARROT_PAGE_TITLEBAR]]", "{1}");
-					pattern = pattern.Replace("[[CARROT_PAGE_PAGEHEAD]]", "{2}");
-					pattern = pattern.Replace("[[CARROT_PAGE_NAVMENUTEXT]]", "{3}");
+					StringBuilder sb = new StringBuilder(s.SiteTitlebarPattern);
+					sb.Replace("[[CARROT_SITENAME]]", "{0}");
+					sb.Replace("[[CARROT_PAGE_TITLEBAR]]", "{1}");
+					sb.Replace("[[CARROT_PAGE_PAGEHEAD]]", "{2}");
+					sb.Replace("[[CARROT_PAGE_NAVMENUTEXT]]", "{3}");
+					pattern = sb.ToString();
 				}
 
 				return pattern;
@@ -565,6 +612,8 @@ namespace Carrotware.CMS.Core {
 		public string SiteTitlebarPattern { get; set; }
 		public string TimeZoneIdentifier { get; set; }
 
+		List<TextWidget> SiteTextWidgets { get; set; }
+
 		public Guid? Blog_Root_ContentID { get; set; }
 		public string Blog_FolderPath { get; set; }
 		public string Blog_CategoryPath { get; set; }
@@ -661,11 +710,12 @@ namespace Carrotware.CMS.Core {
 		private static string FormatToHTML(string inputString) {
 			string outputString = String.Empty;
 			if (!string.IsNullOrEmpty(inputString)) {
-				outputString = inputString;
-				outputString = outputString.Replace("\r\n", " <br \\> \r\n");
-				outputString = outputString.Replace("   ", "&nbsp;&nbsp;&nbsp;");
-				outputString = outputString.Replace("  ", "&nbsp;&nbsp;");
-				outputString = outputString.Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+				StringBuilder sb = new StringBuilder(inputString);
+				sb.Replace("\r\n", " <br \\> \r\n");
+				sb.Replace("   ", "&nbsp;&nbsp;&nbsp;");
+				sb.Replace("  ", "&nbsp;&nbsp;");
+				sb.Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+				outputString = sb.ToString();
 			}
 			return outputString;
 		}

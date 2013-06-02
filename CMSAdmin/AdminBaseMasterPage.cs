@@ -35,6 +35,7 @@ namespace Carrotware.CMS.UI.Admin {
 			SiteExport,
 			DataImport,
 			SiteImport,
+			TextWidget,
 			UserAdmin,
 			GroupAdmin,
 			UserFn,

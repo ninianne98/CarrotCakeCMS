@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "databas
 		CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql = CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql
 		CMSDataScripts\Scripts\ALTER 08 - create trackback queue and comment view.sql = CMSDataScripts\Scripts\ALTER 08 - create trackback queue and comment view.sql
 		CMSDataScripts\Scripts\ALTER 09 - parent child view and misc setting properties.sql = CMSDataScripts\Scripts\ALTER 09 - parent child view and misc setting properties.sql
+		CMSDataScripts\Scripts\ALTER 10 - create version count and text widget tables.sql = CMSDataScripts\Scripts\ALTER 10 - create version count and text widget tables.sql
 		CMSDataScripts\Scripts\CREATE 01 - whole database.sql = CMSDataScripts\Scripts\CREATE 01 - whole database.sql
 		CMSDataScripts\Scripts\CREATE 02 - default user.sql = CMSDataScripts\Scripts\CREATE 02 - default user.sql
 		CMSDataScripts\Scripts\create tblCalendar.sql = CMSDataScripts\Scripts\create tblCalendar.sql

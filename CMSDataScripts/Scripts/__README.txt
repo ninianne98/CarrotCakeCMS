@@ -36,5 +36,7 @@ If coming from an earlier version, run these scripts
 
 		** ALTER 09 - parent child view and misc setting properties.sql     (from before 2013-01-12)
 
+		** ALTER 10 - create version count and text widget tables.sql     (from before 2013-05-30)		
+
 
 

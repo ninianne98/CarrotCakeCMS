@@ -103,12 +103,29 @@
 	</table>
 </fieldset>
 <asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
+<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<asp:Button ValidationGroup="deleteForm" ID="btnDeleteButton" runat="server" OnClientClick="return DeleteItem()" Text="Delete" />
 <br />
 <div style="display: none;">
 	<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
+	<asp:Button ValidationGroup="deleteForm" ID="btnDelete" runat="server" OnClick="btnDelete_Click" Text="Delete" />
 </div>
 <script type="text/javascript">
+
+	function DeleteItem() {
+		var opts = {
+			"No": function () { cmsAlertModalClose(); },
+			"Yes": function () { ClickDeleteItem(); }
+		};
+
+		cmsAlertModalSmallBtns('Are you sure you want to delete this comment?', opts);
+
+		return false;
+	}
+
+	function ClickDeleteItem() {
+		$('#<%=btnDelete.ClientID %>').click();
+	}
 
 	function SubmitPage() {
 		setTimeout("ClickBtn();", 250);
@@ -118,7 +135,7 @@
 	}
 
 	function cancelEditing() {
-		window.setTimeout("location.href = './<%=ReturnPage %>?<%=ReturnPageQueryString %>';", 250);
+		window.setTimeout("location.href = './<%=ReturnPageURL %>';", 250);
 	}
 
 </script>

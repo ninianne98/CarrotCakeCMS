@@ -16,6 +16,7 @@ using System.Web;
 
 namespace Carrotware.CMS.Core {
 
+	[Serializable()]
 	public class CMSAdminModule {
 		public CMSAdminModule() {
 			PluginMenus = new List<CMSAdminModuleMenu>();
@@ -25,6 +26,7 @@ namespace Carrotware.CMS.Core {
 		public List<CMSAdminModuleMenu> PluginMenus { get; set; }
 	}
 
+	[Serializable()]
 	public class CMSAdminModuleMenu {
 		public Guid PluginID { get; set; }
 		public int SortOrder { get; set; }
@@ -37,6 +39,7 @@ namespace Carrotware.CMS.Core {
 
 	}
 
+	[Serializable()]
 	public class CMSPlugin {
 		public CMSPlugin() {
 			this.SortOrder = 1000;
@@ -47,18 +50,38 @@ namespace Carrotware.CMS.Core {
 		public string Caption { get; set; }
 	}
 
+	[Serializable()]
 	public class CMSTemplate {
 		public string TemplatePath { get; set; }
 		public string Caption { get; set; }
 		public string EncodedPath { get; set; }
 	}
 
+	[Serializable()]
+	public class CMSTextWidget {
+		public string AssemblyString { get; set; }
+		public string DisplayName { get; set; }
+	}
+
+	[Serializable()]
+	public class CMSTextWidgetPicker {
+		public Guid TextWidgetPickerID { get; set; }
+		public string AssemblyString { get; set; }
+		public string DisplayName { get; set; }
+		public bool ProcessBody { get; set; }
+		public bool ProcessPlainText { get; set; }
+		public bool ProcessHTMLText { get; set; }
+		public bool ProcessComment { get; set; }
+	}
+
+	[Serializable()]
 	public class DynamicSite {
 		public Guid SiteID { get; set; }
 		public string DomainName { get; set; }
 
 	}
 
+	[Serializable()]
 	public class CMSFilePath {
 
 		public CMSFilePath() {
