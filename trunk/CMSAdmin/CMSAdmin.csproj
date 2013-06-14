@@ -169,6 +169,48 @@
     <Compile Include="c3-admin\BlogPostEdit.aspx.designer.cs">
       <DependentUpon>BlogPostEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\ContentSnippetAddEdit.aspx.cs">
+      <DependentUpon>ContentSnippetAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ContentSnippetAddEdit.aspx.designer.cs">
+      <DependentUpon>ContentSnippetAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ContentSnippetIndex.aspx.cs">
+      <DependentUpon>ContentSnippetIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ContentSnippetIndex.aspx.designer.cs">
+      <DependentUpon>ContentSnippetIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\ContentSnippetHistory.aspx.cs">
+      <DependentUpon>ContentSnippetHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ContentSnippetHistory.aspx.designer.cs">
+      <DependentUpon>ContentSnippetHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteDetail.aspx.cs">
+      <DependentUpon>SiteDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteDetail.aspx.designer.cs">
+      <DependentUpon>SiteDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\SiteIndex.aspx.cs">
+      <DependentUpon>SiteIndex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\SiteIndex.aspx.designer.cs">
+      <DependentUpon>SiteIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c3-admin\UserProfile.aspx.cs">
+      <DependentUpon>UserProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\UserProfile.aspx.designer.cs">
+      <DependentUpon>UserProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -529,10 +571,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CarrotCMSData\CMSData.csproj">
-      <Project>{88CC5073-9F28-42EB-A502-133DB06865A7}</Project>
-      <Name>CMSData</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CMSControls\CMSControls.csproj">
       <Project>{2DEB6A0C-B032-4B78-96BD-CC9271473CA1}</Project>
       <Name>CMSControls</Name>
@@ -560,6 +598,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
+    <Content Include="c3-admin\ContentSnippetAddEdit.aspx" />
+    <Content Include="c3-admin\ContentSnippetIndex.aspx" />
+    <Content Include="c3-admin\ContentSnippetHistory.aspx" />
+    <Content Include="c3-admin\SiteDetail.aspx" />
+    <Content Include="c3-admin\SiteIndex.aspx" />
+    <Content Include="c3-admin\UserProfile.aspx" />
     <Content Include="c3-admin\Default.aspx" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_15_f9cecd_40x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_b7d7c4_1x400.png" />
@@ -627,6 +671,7 @@
     <Content Include="c3-admin\Images\zoom.png" />
     <Content Include="c3-admin\Images\zoom_in.png" />
     <Content Include="c3-admin\Images\zoom_out.png" />
+    <Content Include="c3-admin\Includes\Blank.htm" />
     <Content Include="c3-admin\Includes\edit-notifier.css" />
     <Content Include="c3-admin\Includes\normalize.css" />
     <Content Include="c3-admin\PageWidgets.aspx" />

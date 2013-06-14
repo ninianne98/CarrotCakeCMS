@@ -372,8 +372,6 @@ function cmsSendTrackbackBatch() {
 
 function cmsSendTrackbackPageBatch(thePageID) {
 
-	//alert(thePageID);
-
 	var webMthd = webSvc + "/SendTrackbackPageBatch";
 
 	if (!cmsGetOKToLeaveStatus()) {
@@ -390,18 +388,16 @@ function cmsSendTrackbackPageBatch(thePageID) {
 
 	}
 
-	//alert(webMthd);
-
-	setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 9000);
+	setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 12000);
 }
 
 
 function cmsSaveMakeOKAndCancelLeave() {
 	cmsMakeOKToLeave();
 	if (cmsIsPageValid()) {
-		setTimeout("cmsMakeNotOKToLeave();", 20000);
+		setTimeout("cmsMakeNotOKToLeave();", 30000);
 	} else {
-		setTimeout("cmsMakeNotOKToLeave();", 250);
+		setTimeout("cmsMakeNotOKToLeave();", 500);
 	}
 }
 
@@ -451,9 +447,17 @@ function ShowWindow(theURL) {
 	LaunchWindow(theURL);
 }
 
+function SetIframeRealSrc(theFrameID) {
+	var theSRC = $('#' + theFrameID).attr('realsrc');
+	$('#' + theFrameID).attr('src', theSRC);
+}
+
 function LaunchWindow(theURL) {
 	TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" src="' + TheURL + '" /> </div>');
+
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + TheURL + '" src="/c3-admin/includes/Blank.htm" /> </div>');
+
+	setTimeout("SetIframeRealSrc('cmsFrameEditor');", 1500);
 
 	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
 		css: { width: '98%', height: '98%' },
@@ -479,7 +483,10 @@ function ShowWindowPop(theURL) {
 
 function LaunchWindowPop(theURL) {
 	TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="640" height="390" src="' + TheURL + '" /> </div>');
+
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="640" height="390" realsrc="' + TheURL + '" src="/c3-admin/includes/Blank.htm" /> </div>');
+
+	setTimeout("SetIframeRealSrc('cmsFrameEditor');", 1500);
 
 	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
 		css: { width: '98%', height: '98%' },

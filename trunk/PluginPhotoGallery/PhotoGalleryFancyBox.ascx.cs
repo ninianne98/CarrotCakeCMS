@@ -118,9 +118,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 				var gal = gh.GalleryGroupGetByID(GalleryID);
 
-				litGalleryName.Text = gal.GalleryTitle;
-				pnlGalleryHead.Visible = ShowHeading;
-
 				if (gal != null) {
 
 					litGalleryName.Text = gal.GalleryTitle;

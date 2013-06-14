@@ -53,7 +53,7 @@ namespace Carrotware.CMS.Core {
 				SiteData site = SiteData.GetSiteFromCache(ww.SiteID);
 
 				this.IsWidgetPendingDelete = false;
-
+				this.IsPendingChange = false;
 				this.WidgetDataID = ww.WidgetDataID;
 				this.EditDate = site.ConvertUTCToSiteTime(ww.EditDate);
 				this.IsLatestVersion = ww.IsLatestVersion;
@@ -75,9 +75,10 @@ namespace Carrotware.CMS.Core {
 		public string PlaceholderName { get; set; }
 		public Guid Root_ContentID { get; set; }
 		public int WidgetOrder { get; set; }
-		public bool? IsLatestVersion { get; set; }
+		public bool IsLatestVersion { get; set; }
 		public bool IsWidgetActive { get; set; }
 		public bool IsWidgetPendingDelete { get; set; }
+		public bool IsPendingChange { get; set; }
 		public DateTime EditDate { get; set; }
 
 		public void Save() {

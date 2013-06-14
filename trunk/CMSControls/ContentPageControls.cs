@@ -38,6 +38,8 @@ namespace Carrotware.CMS.UI.Controls {
 			GoLiveDate,
 			RetireDate,
 			Author_UserName,
+			Author_EditorURL,
+			Author_UserBio,
 			Author_EmailAddress,
 			Author_UserNickName,
 			Author_FirstName,
@@ -97,14 +99,14 @@ namespace Carrotware.CMS.UI.Controls {
 					if (sField.StartsWith("Author_")) {
 						sField = DataField.ToString().Replace("Author_", "");
 
-						using (ExtendedUserData usr = cp.GetUserInfo()) {
-							if (usr != null) {
-								object objData = ReflectionUtilities.GetPropertyValue(usr, sField);
-								if (objData != null) {
-									sFieldValue = string.Format(FieldFormat, objData);
-								}
+						ExtendedUserData usr = cp.GetUserInfo();
+						if (usr != null) {
+							object objData = ReflectionUtilities.GetPropertyValue(usr, sField);
+							if (objData != null) {
+								sFieldValue = string.Format(FieldFormat, objData);
 							}
 						}
+
 					} else {
 						object objData = ReflectionUtilities.GetPropertyValue(cp, sField);
 						if (objData != null) {

@@ -42,11 +42,11 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
-		<asp:Literal ID="litControlPath" runat="server"></asp:Literal><br />
-		<asp:Literal ID="litControlPathName" runat="server"></asp:Literal><br />
+		<asp:Literal ID="litControlPath" runat="server" /><br />
+		<asp:Literal ID="litControlPathName" runat="server" /><br />
 	</p>
 	<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="EditDate DESC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>
@@ -68,14 +68,7 @@
 							<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<asp:TemplateField>
-					<HeaderTemplate>
-						Edit Date
-					</HeaderTemplate>
-					<ItemTemplate>
-						<%# Eval("EditDate")%>
-					</ItemTemplate>
-				</asp:TemplateField>
+				<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>

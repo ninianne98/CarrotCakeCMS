@@ -47,6 +47,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				txtCategoryPath.Text = "category";
 				txtTagPath.Text = "tag";
 				txtDatePath.Text = "date";
+				txtEditorPath.Text = "author";
 
 				ddlDatePattern.SelectedValue = "yyyy/MM/dd";
 				txtTitleBar.Text = SiteData.DefaultPageTitlePattern;
@@ -77,6 +78,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtFolderPath.Text = site.Blog_FolderPath;
 					txtCategoryPath.Text = site.Blog_CategoryPath;
 					txtTagPath.Text = site.Blog_TagPath;
+					txtEditorPath.Text = site.Blog_EditorPath;
 					txtDatePath.Text = site.Blog_DatePath;
 
 					GeneralUtilities.SelectListValue(ddlTimeZone, site.TimeZoneIdentifier);
@@ -125,6 +127,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				site.Blog_CategoryPath = txtCategoryPath.Text;
 				site.Blog_DatePath = txtDatePath.Text;
 				site.Blog_TagPath = txtTagPath.Text;
+				site.Blog_EditorPath = txtEditorPath.Text;
 				site.Blog_DatePattern = ddlDatePattern.SelectedValue;
 				site.Blog_Root_ContentID = ParentPagePicker.SelectedPage;
 

@@ -51,6 +51,10 @@ namespace Carrotware.CMS.UI.Admin {
 			return GeneralUtilities.GetGuidParameterFromQuery(ParmName);
 		}
 
+		protected string GetStringParameterFromQuery(string ParmName) {
+			return GeneralUtilities.GetStringParameterFromQuery(ParmName);
+		}
+
 		protected void RedirectIfNoSite() {
 			if (!SiteData.CurretSiteExists) {
 				Response.Redirect(SiteFilename.SiteInfoURL);

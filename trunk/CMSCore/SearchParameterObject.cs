@@ -38,6 +38,9 @@ namespace Carrotware.CMS.Core {
 		public DateTime DateEnd { get; set; }
 		public DateTime DateCompare { get; set; }
 
+		public Guid ItemSlugID { get; set; }
+		public string ItemSlug { get; set; }
+
 		public Guid GuidParm1 { get; set; }
 		public Guid GuidParm2 { get; set; }
 		public Guid GuidParm3 { get; set; }

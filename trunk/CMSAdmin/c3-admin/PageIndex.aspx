@@ -67,7 +67,7 @@
 			</asp:DropDownList>
 		</asp:Panel>
 	</p>
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="25">
 			<TheGrid ID="TheGrid1" runat="server" DefaultSort="NavMenuText desc" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
 				RowStyle-CssClass="rowregular" CssClass="datatable">

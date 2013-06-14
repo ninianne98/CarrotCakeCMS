@@ -184,8 +184,7 @@ namespace Carrotware.Web.UI.Controls {
 			base.DataBind();
 		}
 
-
-		private void SetData() {
+		private void SetTemplates() {
 			foreach (DataControlField c in this.Columns) {
 				if (c is CarrotHeaderSortTemplateField) {
 					CarrotHeaderSortTemplateField ctf = (CarrotHeaderSortTemplateField)c;
@@ -217,6 +216,11 @@ namespace Carrotware.Web.UI.Controls {
 					}
 				}
 			}
+		}
+
+		private void SetData() {
+
+			SetTemplates();
 
 			if (!string.IsNullOrEmpty(DefaultSort)) {
 				Type theType = DataSource.GetType();
@@ -306,6 +310,7 @@ namespace Carrotware.Web.UI.Controls {
 			return query;
 		}
 
+
 		private IList SortDataListType(IList lst, string sSort) {
 			ResetSortToColumn(sSort);
 			return SortDataListType(lst);
@@ -313,6 +318,8 @@ namespace Carrotware.Web.UI.Controls {
 
 
 		protected override void Render(HtmlTextWriter writer) {
+
+			this.EnsureChildControls();
 
 			if (this.Rows.Count > 0) {
 				WalkGridForHeadings(this.HeaderRow);

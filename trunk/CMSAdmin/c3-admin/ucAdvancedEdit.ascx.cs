@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -111,6 +112,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pageContents = cmsHelper.cmsAdminContent;
 				}
 
+				bool bRet = pageHelper.RecordPageLock(pageContents.Root_ContentID, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
+
 				cmsDivEditing.Visible = false;
 
 				BasicControlUtils.MakeXUACompatibleFirst(this.Page);
@@ -126,7 +129,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				cmsDivEditing.Visible = true;
 
 				if (bLocked && pageContents.Heartbeat_UserId != null) {
-					var usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
+					MembershipUser usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
 					litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
 						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 				}

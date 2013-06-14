@@ -51,6 +51,10 @@ namespace Carrotware.CMS.UI.Controls {
 			return UpdateContent(TextContent);
 		}
 
+		public string UpdateContentSnippet(string TextContent) {
+			return UpdateContent(TextContent);
+		}
+
 		protected string MungeEmail(string s) {
 			string retVal = "";
 

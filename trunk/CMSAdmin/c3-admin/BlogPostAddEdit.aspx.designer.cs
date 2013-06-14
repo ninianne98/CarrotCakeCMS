@@ -328,6 +328,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.TextBox reRightBody;
         
         /// <summary>
+        /// gvHtmControls control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvHtmControls;
+        
+        /// <summary>
+        /// gvTxtControls control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvTxtControls;
+        
+        /// <summary>
         /// divTrackback control.
         /// </summary>
         /// <remarks>
@@ -370,7 +388,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlButtons;
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlButtons;
         
         /// <summary>
         /// btnSaveButton control.
@@ -406,7 +424,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlReview;
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlReview;
         
         /// <summary>
         /// ddlVersions control.

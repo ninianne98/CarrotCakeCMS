@@ -8,7 +8,7 @@
 	Site Skin Index
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView DefaultSort="Caption ASC" CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>

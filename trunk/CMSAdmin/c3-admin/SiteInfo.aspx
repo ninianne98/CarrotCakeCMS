@@ -16,6 +16,7 @@
 			var theFldr = $('#<%= txtFolderPath.ClientID %>').val();
 			var theCat = $('#<%= txtCategoryPath.ClientID %>').val();
 			var theTag = $('#<%= txtTagPath.ClientID %>').val();
+			var theEd = $('#<%= txtEditorPath.ClientID %>').val();
 			var theDateFldr = $('#<%= txtDatePath.ClientID %>').val();
 
 			$('#<%= txtFoldersValid.ClientID %>').val('');
@@ -25,12 +26,17 @@
 			var myFldr = MakeStringSafe(theFldr);
 			var myCat = MakeStringSafe(theCat);
 			var myTag = MakeStringSafe(theTag);
+			var myEd = MakeStringSafe(theEd);
 			var myDateF = MakeStringSafe(theDateFldr);
 
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'FolderPath': '" + myFldr + "', 'DatePath': '" + myDateF + "', 'CategoryPath': '" + myCat + "', 'TagPath': '" + myTag + "'}",
+				data: "{'FolderPath': '" + myFldr + "', 'DatePath': '" + myDateF +
+							"', 'CategoryPath': '" + myCat +
+							"', 'TagPath': '" + myTag +
+							"', 'EditorPath': '" + myEd + "'}",
+
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,
@@ -159,10 +165,11 @@
 					<p>
 						Allow sending trackbacks
 						<asp:CheckBox ID="chkSendTrackback" runat="server" />
-						<p>
-							Accept incoming trackbacks
-							<asp:CheckBox ID="chkAcceptTrackbacks" runat="server" />
-						</p>
+					</p>
+					<p>
+						Accept incoming trackbacks
+						<asp:CheckBox ID="chkAcceptTrackbacks" runat="server" />
+					</p>
 				</td>
 			</tr>
 		</table>
@@ -252,6 +259,17 @@
 						runat="server" onblur="CheckFolderPrefixes()" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtDatePath" ID="RequiredFieldValidator7"
 						runat="server" ErrorMessage="Blog Date Path is required" ToolTip="Blog Date Path is required" Text="**" Display="Dynamic" />
+				</td>
+			</tr>
+			<tr>
+				<td class="tablecaption">
+					Blog Author Path
+				</td>
+				<td>
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEditorPath" MaxLength="48" Columns="60" Style="width: 350px;"
+						runat="server" onblur="CheckFolderPrefixes()" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtEditorPath" ID="RequiredFieldValidator3"
+						runat="server" ErrorMessage="Blog Author Path is required" ToolTip="Blog Author Path is required" Text="**" Display="Dynamic" />
 				</td>
 			</tr>
 			<tr>

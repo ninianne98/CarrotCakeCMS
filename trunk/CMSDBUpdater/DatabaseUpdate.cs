@@ -25,14 +25,10 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static SqlException LastSQLError { get; set; }
 
-		public static string CurrentDbVersion { get { return "20130531"; } }
-
-		private static string ConnectionString { get; set; }
+		public static string CurrentDbVersion { get { return "20130610"; } }
 
 		public DatabaseUpdate() {
-			ConnectionString = "";
 			LastSQLError = null;
-			SetConn();
 			TestDatabaseWithQuery();
 		}
 
@@ -41,6 +37,14 @@ namespace Carrotware.CMS.DBUpdater {
 			get {
 				if (!FailedSQL) {
 					return SQLUpdateNugget.EvalNuggetKey("IsPostStep04");
+				}
+				return false;
+			}
+		}
+		public bool IsPostStep09 {
+			get {
+				if (!FailedSQL) {
+					return SQLUpdateNugget.EvalNuggetKey("IsPostStep09");
 				}
 				return false;
 			}
@@ -64,14 +68,15 @@ namespace Carrotware.CMS.DBUpdater {
 			DataTable table1 = GetTestData(query);
 		}
 
-		private static void SetConn() {
-			if (string.IsNullOrEmpty(ConnectionString)) {
-				ConnectionString = "";
-				if (ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"] != null) {
-					ConnectionStringSettings conString = ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"];
-					ConnectionString = conString.ConnectionString;
-				}
+		private static string SetConn() {
+			string _connStr = String.Empty;
+
+			if (ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"] != null) {
+				ConnectionStringSettings conString = ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"];
+				_connStr = conString.ConnectionString;
 			}
+
+			return _connStr;
 		}
 
 		private static string ContentKey = "cms_SiteSetUpSQLState";
@@ -89,7 +94,6 @@ namespace Carrotware.CMS.DBUpdater {
 		public static bool SystemNeedsChecking(Exception ex) {
 			//assumption is database is probably empty / needs updating, so trigger the under construction view
 
-			//if ((ex is SqlException || ex is HttpUnhandledException) && ex != null) {
 			if (ex is SqlException && ex != null) {
 				string msg = ex.Message.ToLower();
 				if (ex.InnerException != null) {
@@ -120,7 +124,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 				if (!bTestResult) {
 					res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", false);
-					res.Response = "Created Database *";
+					res.Response = "Created Database";
+					res.RanUpdate = true;
 					return res;
 				}
 
@@ -163,6 +168,20 @@ namespace Carrotware.CMS.DBUpdater {
 			return lstMsgs1;
 		}
 
+		public List<DatabaseUpdateMessage> HandleResponse(List<DatabaseUpdateMessage> lstMsgs, Exception ex) {
+			if (lstMsgs == null) {
+				lstMsgs = new List<DatabaseUpdateMessage>();
+			}
+
+			DatabaseUpdateResponse execMessage = new DatabaseUpdateResponse();
+			execMessage.LastException = ex;
+			execMessage.Response = "An error occurred.";
+
+			HandleResponse(lstMsgs, "Error: ", execMessage);
+
+			return lstMsgs;
+		}
+
 		public List<DatabaseUpdateMessage> HandleResponse(List<DatabaseUpdateMessage> lstMsgs, string sMsg) {
 			if (lstMsgs == null) {
 				lstMsgs = new List<DatabaseUpdateMessage>();
@@ -186,8 +205,11 @@ namespace Carrotware.CMS.DBUpdater {
 				item.Message = sMsg;
 
 				if (execMessage != null) {
+					item.AlteredData = execMessage.RanUpdate;
 					item.Response = execMessage.Response;
+
 					if (execMessage.LastException != null && !string.IsNullOrEmpty(execMessage.LastException.Message)) {
+						item.HasExceoption = true;
 						item.ExceptionText = execMessage.LastException.Message;
 						if (execMessage.LastException.InnerException != null && !string.IsNullOrEmpty(execMessage.LastException.InnerException.Message)) {
 							item.InnerExceptionText = execMessage.LastException.InnerException.Message;
@@ -203,6 +225,10 @@ namespace Carrotware.CMS.DBUpdater {
 			return lstMsgs;
 		}
 
+		public string BuildUpdateString(int iCount) {
+			return "Update " + (iCount).ToString() + " ";
+		}
+
 		public DatabaseUpdateStatus PerformUpdates() {
 			DatabaseUpdateStatus status = new DatabaseUpdateStatus();
 
@@ -210,37 +236,43 @@ namespace Carrotware.CMS.DBUpdater {
 			List<DatabaseUpdateMessage> lst = new List<DatabaseUpdateMessage>();
 
 			if (!DoCMSTablesExist()) {
-				HandleResponse(lst, "Create Database *", CreateCMSDatabase());
-				bUpdate = false;
+				HandleResponse(lst, "Create Database", CreateCMSDatabase());
 			} else {
 				HandleResponse(lst, "Database already exists");
 			}
 
 			bUpdate = DatabaseNeedsUpdate();
 
+			DataInfo ver = GetDbSchemaVersion();
+
 			int iUpdate = 1;
 
-			if (bUpdate) {
-
-				DataInfo ver = GetDbSchemaVersion();
+			if (bUpdate || (ver.DataValue != DatabaseUpdate.CurrentDbVersion)) {
 
 				if (ver.DataValue != DatabaseUpdate.CurrentDbVersion) {
 
 					if (!IsPostStep04) {
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep00());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep01());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep02());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep03());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep04());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep00());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep01());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep02());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep03());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep04());
 					}
 
-					if (!IsPostStep10) {
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep05());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep06());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep07());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep08());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep09());
-						HandleResponse(lst, "Update  " + (iUpdate++).ToString() + " ", AlterStep10());
+					if (!IsPostStep09) {
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep05());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep06());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep07());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep08());
+						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep09());
+					}
+
+					ver = GetDbSchemaVersion();
+
+					if (ver.DataValue != DatabaseUpdate.CurrentDbVersion) {
+						if (ver.DataValue.Length < 2 || ver.DataValue.StartsWith("201305") || ver.DataValue.StartsWith("201306")) {
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep10());
+						}
 					}
 
 				} else {
@@ -248,7 +280,7 @@ namespace Carrotware.CMS.DBUpdater {
 				}
 
 			} else {
-				HandleResponse(lst, "Database up-to-date ");
+				HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 			}
 
 			bUpdate = DatabaseNeedsUpdate();
@@ -259,7 +291,6 @@ namespace Carrotware.CMS.DBUpdater {
 			return status;
 		}
 
-
 		public bool TableExists(string testTableName) {
 			string testQuery = "select * from [information_schema].[columns] where table_name = @TableName ";
 			List<SqlParameter> parms = new List<SqlParameter>();
@@ -267,7 +298,7 @@ namespace Carrotware.CMS.DBUpdater {
 			SqlParameter parmKey = new SqlParameter();
 			parmKey.ParameterName = "@TableName";
 			parmKey.SqlDbType = SqlDbType.VarChar;
-			parmKey.Size = 1000;
+			parmKey.Size = 2000;
 			parmKey.Direction = ParameterDirection.Input;
 			parmKey.Value = testTableName;
 
@@ -292,7 +323,7 @@ namespace Carrotware.CMS.DBUpdater {
 			SqlParameter parmKey = new SqlParameter();
 			parmKey.ParameterName = "@TableName";
 			parmKey.SqlDbType = SqlDbType.VarChar;
-			parmKey.Size = 1000;
+			parmKey.Size = 2000;
 			parmKey.Direction = ParameterDirection.Input;
 			parmKey.Value = testTableName;
 
@@ -308,13 +339,14 @@ namespace Carrotware.CMS.DBUpdater {
 			return lst;
 		}
 
-		public DatabaseUpdateResponse ApplyUpdateIfNotFound(string testQuery, string updateStatement, bool bIg) {
+		public DatabaseUpdateResponse ApplyUpdateIfNotFound(string testQuery, string updateStatement, bool bIgnore) {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 			DataTable table1 = GetTestData(testQuery);
 
 			if (table1.Rows.Count < 1) {
-				res.LastException = ExecScriptContents(updateStatement, bIg);
-				res.Response = "Applied update *";
+				res.LastException = ExecScriptContents(updateStatement, bIgnore);
+				res.Response = "Applied update";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -322,13 +354,14 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
-		public DatabaseUpdateResponse ApplyUpdateIfFound(string testQuery, string updateStatement, bool bIg) {
+		public DatabaseUpdateResponse ApplyUpdateIfFound(string testQuery, string updateStatement, bool bIgnore) {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 			DataTable table1 = GetTestData(testQuery);
 
 			if (table1.Rows.Count > 0) {
-				res.LastException = ExecScriptContents(updateStatement, bIg);
-				res.Response = "Applied update *";
+				res.LastException = ExecScriptContents(updateStatement, bIgnore);
+				res.Response = "Applied update";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -339,6 +372,12 @@ namespace Carrotware.CMS.DBUpdater {
 		public static bool AreCMSTablesIncomplete() {
 			if (!FailedSQL) {
 				bool bTestResult = false;
+
+				DataInfo ver = GetDbSchemaVersion();
+				bTestResult = ver.DataValue != DatabaseUpdate.CurrentDbVersion;
+				if (bTestResult) {
+					return true;
+				}
 
 				bTestResult = SQLUpdateNugget.EvalNuggetKey("AreCMSTablesIncomplete");
 				if (bTestResult) {
@@ -363,6 +402,12 @@ namespace Carrotware.CMS.DBUpdater {
 			if (!FailedSQL) {
 				bool bTestResult = false;
 
+				DataInfo ver = GetDbSchemaVersion();
+				bTestResult = ver.DataValue != DatabaseUpdate.CurrentDbVersion;
+				if (bTestResult) {
+					return true;
+				}
+
 				bTestResult = SQLUpdateNugget.EvalNuggetKey("DatabaseNeedsUpdate");
 				if (bTestResult) {
 					return true;
@@ -385,7 +430,7 @@ namespace Carrotware.CMS.DBUpdater {
 		public bool UsersExist {
 			get {
 				if (!FailedSQL) {
-					string query = "select top 5 * from [aspnet_Membership]";
+					string query = "select top 3 * from [dbo].[aspnet_Membership]";
 					DataTable table1 = GetTestData(query);
 
 					if (table1.Rows.Count > 0) {
@@ -397,6 +442,8 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 		}
 
+		#region Pre Blog alters
+
 		public DatabaseUpdateResponse AlterStep01() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
@@ -404,7 +451,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01.sql", false);
-				res.Response = "Created Content MetaKeyword and MetaDescription *";
+				res.Response = "Created Content MetaKeyword and MetaDescription";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -419,7 +467,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01a.sql", false);
-				res.Response = "Created Table SerialCache *";
+				res.Response = "Created Table SerialCache";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -434,7 +483,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER02.sql", false);
-				res.Response = "Widget Schema Updated *";
+				res.Response = "Widget Schema Updated";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -449,7 +499,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER03.sql", false);
-				res.Response = "RootContent CreateDate Created *";
+				res.Response = "RootContent CreateDate Created";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -464,7 +515,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER04.sql", false);
-				res.Response = "CMS Table Names Changed *";
+				res.Response = "CMS Table Names Changed";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -479,7 +531,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER05.sql", false);
-				res.Response = "CMS DB created vw_carrot_Content and vw_carrot_Widget *";
+				res.Response = "CMS DB created vw_carrot_Content and vw_carrot_Widget";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -487,6 +540,9 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
+		#endregion
+
+		#region Blog alters
 
 		public DatabaseUpdateResponse AlterStep06() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
@@ -495,7 +551,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER06.sql", false);
-				res.Response = "CMS DB created carrot_ContentType, carrot_ContentTag, carrot_ContentCategory *";
+				res.Response = "CMS DB created carrot_ContentType, carrot_ContentTag, carrot_ContentCategory";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -510,7 +567,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER07.sql", false);
-				res.Response = "CMS DB created cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent *";
+				res.Response = "CMS DB created cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -525,7 +583,8 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER08.sql", false);
-				res.Response = "CMS DB created vw_carrot_Comment *";
+				res.Response = "CMS DB created vw_carrot_Comment";
+				res.RanUpdate = true;
 				return res;
 			}
 
@@ -540,13 +599,16 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER09.sql", false);
-				res.Response = "CMS DB created vw_carrot_ContentChild and ShowInSiteNav *";
+				res.Response = "CMS DB created vw_carrot_ContentChild and ShowInSiteNav";
+				res.RanUpdate = true;
 				return res;
 			}
 
-			res.Response = "CMS DB vw_carrot_ContentChild and ShowInSiteNav already exist ";
+			res.Response = "CMS DB vw_carrot_ContentChild and ShowInSiteNav already exist";
 			return res;
 		}
+
+		#endregion
 
 		public DatabaseUpdateResponse AlterStep10() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
@@ -555,34 +617,16 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER10.sql", false);
-				res.Response = "CMS DB created TextWidget *";
-				SetDbSchemaVersion("20130531");
+				res.Response = "CMS DB created TextWidget and Content Snippet";
+				res.RanUpdate = true;
+				SetDbSchemaVersion("20130610");
 				return res;
 			}
 
-			res.Response = "CMS DB TextWidget already exist ";
+			res.Response = "CMS DB TextWidget and Content Snippet already exist";
 			return res;
 		}
 
-		public Exception ExecScriptContents(string sScriptContents, bool bIgnoreErr) {
-			SetConn();
-
-			Exception response = ExecNonQuery(ConnectionString, sScriptContents, bIgnoreErr);
-
-			return response;
-
-		}
-
-		private Exception ExecFileContents(string sResourceName, bool bIgnoreErr) {
-			SetConn();
-
-			string sScriptContents = ReadEmbededScript(sResourceName);
-
-			Exception response = ExecScriptContents(sScriptContents, bIgnoreErr);
-
-			return response;
-
-		}
 
 		private string ReadEmbededScript(string filePath) {
 
@@ -597,26 +641,58 @@ namespace Carrotware.CMS.DBUpdater {
 			return sFile;
 		}
 
-
 		private List<string> SplitScriptAtGo(string sSQLQuery) {
 			sSQLQuery += "\r\n\r\nGO\r\n\r\n";
-
 			sSQLQuery = sSQLQuery.Replace("\r\n", "\n");
+
 			string[] splitcommands = sSQLQuery.Split(new string[] { "GO\n" }, StringSplitOptions.RemoveEmptyEntries);
 			List<string> commandList = new List<string>(splitcommands);
 			return commandList;
 		}
 
+		#region Execute SQL statements
 
-		public DataInfo GetDbSchemaVersion() {
+		public Exception ExecScriptContents(string sScriptContents, bool bIgnoreErr) {
+			string _connStr = SetConn();
+
+			return ExecScriptContents(_connStr, sScriptContents, bIgnoreErr);
+		}
+
+		public Exception ExecScriptContents(string sConnectionString, string sScriptContents, bool bIgnoreErr) {
+
+			return ExecNonQuery(sConnectionString, sScriptContents, bIgnoreErr);
+		}
+
+		private Exception ExecFileContents(string sResourceName, bool bIgnoreErr) {
+			string _connStr = SetConn();
+
+			return ExecFileContents(_connStr, sResourceName, bIgnoreErr);
+		}
+
+		private Exception ExecFileContents(string sConnectionString, string sResourceName, bool bIgnoreErr) {
+
+			string sScriptContents = ReadEmbededScript(sResourceName);
+
+			Exception response = ExecScriptContents(sConnectionString, sScriptContents, bIgnoreErr);
+
+			return response;
+		}
+
+		#endregion
+
+		#region Work with data keys
+
+		public static DataInfo GetDbSchemaVersion() {
 			return GetDataKeyValue("DBSchema");
 		}
 
-		public void SetDbSchemaVersion(string dataKeyValue) {
+		public static void SetDbSchemaVersion(string dataKeyValue) {
 			SetDataKeyValue("DBSchema", dataKeyValue);
 		}
 
-		public DataInfo GetDataKeyValue(string dataKeyName) {
+		public static DataInfo GetDataKeyValue(string dataKeyName) {
+			string _connStr = SetConn();
+
 			DataInfo d = new DataInfo();
 
 			SQLUpdateNugget n = SQLUpdateNugget.GetNuggets("SchemaVersionCheck").FirstOrDefault();
@@ -632,7 +708,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 				parms.Add(parmKey);
 
-				DataTable dt = ExecuteDataTableCommands(ConnectionString, n.SQLQuery, parms);
+				DataTable dt = ExecuteDataTableCommands(_connStr, n.SQLQuery, parms);
 
 				if (dt.Rows.Count > 0) {
 					DataRow dr = dt.Rows[0];
@@ -642,10 +718,16 @@ namespace Carrotware.CMS.DBUpdater {
 				}
 			}
 
+			if (d != null && string.IsNullOrEmpty(d.DataValue)) {
+				d.DataValue = String.Empty;
+			}
+
 			return d;
 		}
 
-		public void SetDataKeyValue(string dataKeyName, string dataKeyValue) {
+		public static void SetDataKeyValue(string dataKeyName, string dataKeyValue) {
+			string _connStr = SetConn();
+
 			SQLUpdateNugget n = SQLUpdateNugget.GetNuggets("SchemaVersionUpdate").FirstOrDefault();
 
 			if (n != null) {
@@ -669,136 +751,19 @@ namespace Carrotware.CMS.DBUpdater {
 
 				parms.Add(parmKey);
 
-				ExecuteNonQueryCommands(ConnectionString, n.SQLQuery, parms);
+				ExecuteNonQueryCommands(_connStr, n.SQLQuery, parms);
 			}
 		}
 
-		private void ExecuteNonQueryCommands(string sConnectionString, string sSQLQuery, List<SqlParameter> SqlParms) {
-			DataTable dt = new DataTable();
+		#endregion
 
-			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
-				cn.Open();
-				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
-					cmd.CommandType = CommandType.Text;
-
-					foreach (var p in SqlParms) {
-						cmd.Parameters.Add(p);
-					}
-
-					int ret = cmd.ExecuteNonQuery();
-				}
-				cn.Close();
-			}
-		}
-
-		private DataTable ExecuteDataTableCommands(string sConnectionString, string sSQLQuery, List<SqlParameter> SqlParms) {
-			DataTable dt = new DataTable();
-
-			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
-				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
-					cn.Open();
-					cmd.CommandType = CommandType.Text;
-
-					if (SqlParms != null) {
-						foreach (var p in SqlParms) {
-							cmd.Parameters.Add(p);
-						}
-					}
-
-					using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
-						da.Fill(dt);
-					}
-				}
-				cn.Close();
-			}
-
-			return dt;
-		}
-
-		private DataTable GetDataTable(string sSQLQuery) {
-
-			return GetDataTable(ConnectionString, sSQLQuery);
-		}
-
-		private DataTable GetDataTable(string sConnectionString, string sSQLQuery) {
-			DataTable dt = new DataTable();
-
-			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
-				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
-					cn.Open();
-					cmd.CommandType = CommandType.Text;
-					using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
-						da.Fill(dt);
-					}
-					cn.Close();
-				}
-			}
-
-			return dt;
-		}
-
-		private DataSet GetDataSet(string sConnectionString, string sSQLQuery) {
-			DataSet ds = new DataSet();
-
-			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
-				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
-					cn.Open();
-					cmd.CommandType = CommandType.Text;
-					using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
-						da.Fill(ds);
-					}
-					cn.Close();
-				}
-			}
-
-			return ds;
-		}
-
-		public static DataTable GetTestData(string sQuery) {
-			return GetTestData(sQuery, null);
-		}
-
-		public static DataTable GetTestData(string sQuery, List<SqlParameter> SqlParms) {
-			DataTable dt = new DataTable();
-			try {
-				SetConn();
-
-				using (SqlConnection cn = new SqlConnection(ConnectionString)) {
-					cn.Open(); // throws if invalid
-
-					FailedSQL = false;
-
-					using (SqlCommand cmd = cn.CreateCommand()) {
-						cmd.CommandText = sQuery;
-
-						if (SqlParms != null) {
-							foreach (var p in SqlParms) {
-								cmd.Parameters.Add(p);
-							}
-						}
-
-						using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
-							da.Fill(dt);
-						}
-					}
-
-					cn.Close();
-				}
-				LastSQLError = null;
-			} catch (SqlException sqlEx) {
-				LastSQLError = sqlEx;
-				FailedSQL = true;
-			}
-
-			return dt;
-		}
+		#region General database routines
 
 		private Exception ExecNonQuery(string sConnectionString, string sSQLQuery, bool bIgnoreErr) {
-			string sConnString = sConnectionString;
 
 			Exception exc = new Exception("");
 
-			using (SqlConnection myConnection = new SqlConnection(sConnString)) {
+			using (SqlConnection myConnection = new SqlConnection(sConnectionString)) {
 				myConnection.Open();
 
 				List<string> cmdLst = SplitScriptAtGo(sSQLQuery);
@@ -839,6 +804,141 @@ namespace Carrotware.CMS.DBUpdater {
 
 			return exc;
 		}
+
+		private static void ExecuteNonQueryCommands(string sConnectionString, string sSQLQuery, List<SqlParameter> SqlParms) {
+			DataTable dt = new DataTable();
+
+			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
+				cn.Open();
+				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
+					cmd.CommandType = CommandType.Text;
+
+					foreach (var p in SqlParms) {
+						cmd.Parameters.Add(p);
+					}
+
+					int ret = cmd.ExecuteNonQuery();
+				}
+				cn.Close();
+			}
+		}
+
+		private static DataTable ExecuteDataTableCommands(string sConnectionString, string sSQLQuery, List<SqlParameter> SqlParms) {
+			DataTable dt = new DataTable();
+
+			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
+				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
+					cn.Open();
+					cmd.CommandType = CommandType.Text;
+
+					if (SqlParms != null) {
+						foreach (var p in SqlParms) {
+							cmd.Parameters.Add(p);
+						}
+					}
+
+					using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
+						da.Fill(dt);
+					}
+				}
+				cn.Close();
+			}
+
+			return dt;
+		}
+
+		public static DataTable GetDataTable(string sSQLQuery) {
+			string _connStr = SetConn();
+
+			return GetDataTable(_connStr, sSQLQuery);
+		}
+
+		private static DataTable GetDataTable(string sConnectionString, string sSQLQuery) {
+			DataTable dt = new DataTable();
+
+			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
+				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
+					cn.Open();
+					cmd.CommandType = CommandType.Text;
+					using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
+						da.Fill(dt);
+					}
+					cn.Close();
+				}
+			}
+
+			return dt;
+		}
+
+		public static DataTable GetTestData(string sSQLQuery) {
+			return GetTestData(sSQLQuery, null);
+		}
+
+		public static DataTable GetTestData(string sSQLQuery, List<SqlParameter> SqlParms) {
+			string _connStr = SetConn();
+
+			return GetTestData(_connStr, sSQLQuery, SqlParms);
+		}
+
+		public static DataTable GetTestData(string sConnectionString, string sSQLQuery, List<SqlParameter> SqlParms) {
+			DataTable dt = new DataTable();
+
+			try {
+
+				using (SqlConnection cn = new SqlConnection(sConnectionString)) {
+					cn.Open(); // throws if invalid
+
+					FailedSQL = false;
+
+					using (SqlCommand cmd = cn.CreateCommand()) {
+						cmd.CommandText = sSQLQuery;
+
+						if (SqlParms != null) {
+							foreach (var p in SqlParms) {
+								cmd.Parameters.Add(p);
+							}
+						}
+
+						using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
+							da.Fill(dt);
+						}
+					}
+
+					cn.Close();
+				}
+				LastSQLError = null;
+			} catch (SqlException sqlEx) {
+				LastSQLError = sqlEx;
+				FailedSQL = true;
+			}
+
+			return dt;
+		}
+
+		private static DataSet GetDataSet(string sSQLQuery) {
+			string _connStr = SetConn();
+
+			return GetDataSet(_connStr, sSQLQuery);
+		}
+
+		private static DataSet GetDataSet(string sConnectionString, string sSQLQuery) {
+			DataSet ds = new DataSet();
+
+			using (SqlConnection cn = new SqlConnection(sConnectionString)) {
+				using (SqlCommand cmd = new SqlCommand(sSQLQuery, cn)) {
+					cn.Open();
+					cmd.CommandType = CommandType.Text;
+					using (SqlDataAdapter da = new SqlDataAdapter(cmd)) {
+						da.Fill(ds);
+					}
+					cn.Close();
+				}
+			}
+
+			return ds;
+		}
+
+		#endregion
 	}
 
 	//======================
@@ -850,7 +950,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public DatabaseUpdateStatus() {
 			this.Messages = new List<DatabaseUpdateMessage>();
-			NeedsUpdate = true;
+			this.NeedsUpdate = true;
 		}
 	}
 
@@ -869,10 +969,14 @@ namespace Carrotware.CMS.DBUpdater {
 		public string InnerExceptionText { get; set; }
 		public string Response { get; set; }
 		public int Order { get; set; }
+		public bool AlteredData { get; set; }
+		public bool HasExceoption { get; set; }
 
 		public DatabaseUpdateMessage() {
 			this.ExceptionText = null;
 			this.InnerExceptionText = null;
+			this.AlteredData = false;
+			this.HasExceoption = false;
 			this.Message = "";
 			this.Response = "";
 			this.Order = -1;
@@ -884,10 +988,12 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public Exception LastException { get; set; }
 		public string Response { get; set; }
+		public bool RanUpdate { get; set; }
 
 		public DatabaseUpdateResponse() {
-			LastException = null;
-			Response = "";
+			this.LastException = null;
+			this.Response = "";
+			this.RanUpdate = false;
 		}
 	}
 }

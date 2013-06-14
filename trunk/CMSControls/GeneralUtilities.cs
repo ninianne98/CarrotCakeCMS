@@ -208,6 +208,17 @@ namespace Carrotware.CMS.UI.Controls {
 			return id;
 		}
 
+		public static string GetStringParameterFromQuery(string ParmName) {
+			string id = String.Empty;
+			if (SiteData.IsWebView) {
+				if (HttpContext.Current.Request.QueryString[ParmName] != null
+					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
+					id = HttpContext.Current.Request.QueryString[ParmName].ToString();
+				}
+			}
+			return id;
+		}
+
 		#endregion
 
 

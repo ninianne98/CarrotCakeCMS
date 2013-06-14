@@ -9,6 +9,7 @@ namespace Carrotware.CMS.Core {
 		public enum ViewType {
 			SinglePage,
 			SearchResults,
+			AuthorIndex,
 			DateIndex,
 			DateMonthIndex,
 			DateDayIndex,

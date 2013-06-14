@@ -36,7 +36,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			btnCreate.Visible = false;
 
 			if (DatabaseUpdate.LastSQLError != null) {
-				du.HandleResponse(lst, DatabaseUpdate.LastSQLError.Message);
+				du.HandleResponse(lst, DatabaseUpdate.LastSQLError);
 				DatabaseUpdate.LastSQLError = null;
 			} else {
 
@@ -54,7 +54,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lst = du.MergeMessages(lst, status.Messages);
 
 				} else {
-					du.HandleResponse(lst, "Database up-to-date ");
+
+					DataInfo ver = DatabaseUpdate.GetDbSchemaVersion();
+					du.HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 				}
 
 				bUpdate = du.DatabaseNeedsUpdate();
@@ -69,7 +71,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (DatabaseUpdate.LastSQLError != null) {
-				du.HandleResponse(lst, DatabaseUpdate.LastSQLError.Message);
+				du.HandleResponse(lst, DatabaseUpdate.LastSQLError);
 			}
 
 			if (lst.Where(x => !string.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {

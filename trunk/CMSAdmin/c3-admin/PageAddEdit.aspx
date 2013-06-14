@@ -151,7 +151,7 @@
 		}
 
 		function EditHB() {
-			setTimeout("EditHB();", 30 * 1000);
+			setTimeout("EditHB();", 25 * 1000);
 
 			var webMthd = webSvc + "/RecordHeartbeat";
 
@@ -173,7 +173,7 @@
 		}
 
 		$(document).ready(function () {
-			setTimeout("EditHB();", 500);
+			setTimeout("EditHB();", 2000);
 		});
 
 		function cancelEditing() {
@@ -247,7 +247,7 @@
 		$(document).ready(function () {
 			if (!cmsIsPageLocked) {
 				// these click events because of stoopid IE9 navigate away behavior
-				$('#menu a.lnkPopup').each(function (i) {
+				$('#nav-menu a.lnkPopup').each(function (i) {
 					$(this).click(function () {
 						cmsMakeOKToLeave();
 						setTimeout("cmsMakeNotOKToLeave();", 500);
@@ -275,6 +275,40 @@
 		}
 
 	</script>
+	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		var webSvc = cmsGetServiceAddress();
+		var thisPageID = '<%=guidContentID.ToString() %>';
+
+		function cmsGetWidgetText(val) {
+
+			var webMthd = webSvc + "/GetWidgetLatestText";
+
+			$.ajax({
+				type: "POST",
+				url: webMthd,
+				data: "{'DBKey': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: cmsReqContentCallback,
+				error: cmsAjaxFailed
+			});
+		}
+
+		function cmsDoToolTipDataRequest(val) {
+			cmsGetWidgetText(val);
+		}
+
+		function cmsReqContentCallback(data, status) {
+			if (data.d == "FAIL") {
+				cmsSetHTMLMessage('<i>An error occurred. Please try again.</i>');
+			} else {
+				cmsSetTextMessage(data.d);
+			}
+		}
+
+	</script>
+	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Page Add/Edit
@@ -470,6 +504,7 @@
 				<li><a href="#pagecontent-tabs-0">Left</a></li>
 				<li><a href="#pagecontent-tabs-1">Center</a></li>
 				<li><a href="#pagecontent-tabs-3">Right</a></li>
+				<li><a href="#pagecontent-tabs-5">Text Controls</a></li>
 				<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
 			</ul>
 			<div style="margin-bottom: 25px; height: 380px; width: 800px;">
@@ -498,6 +533,85 @@
 							<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
 						<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
+					</div>
+				</div>
+				<div id="pagecontent-tabs-5">
+					<div class="scroll-container" style="height: 325px; width: 780px;">
+						<div class="scroll-area" style="height: 310px; width: 775px;">
+							<div class="SortableGrid">
+								<div>
+									<h3>
+										HTML Rich Text Widgets</h3>
+									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvHtmControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+										<EmptyDataTemplate>
+											<p>
+												<b>No html text widgets found.</b>
+											</p>
+										</EmptyDataTemplate>
+										<Columns>
+											<asp:TemplateField>
+												<ItemTemplate>
+													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode=html&pageid={1}&widgetid={2}", "ContentEdit.aspx", guidContentID, Eval("Root_WidgetID")) %>');">
+														<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></a>
+												</ItemTemplate>
+											</asp:TemplateField>
+											<asp:TemplateField>
+												<ItemTemplate>
+													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode=plain&pageid={1}&widgetid={2}", "ContentEdit.aspx", guidContentID, Eval("Root_WidgetID")) %>');">
+														<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
+												</ItemTemplate>
+											</asp:TemplateField>
+											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
+											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
+											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+												AlternateTextTrue="Active" ShowBooleanImage="true" />
+											<asp:TemplateField>
+												<HeaderTemplate>
+												</HeaderTemplate>
+												<ItemTemplate>
+													<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
+														<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
+												</ItemTemplate>
+											</asp:TemplateField>
+										</Columns>
+									</carrot:CarrotGridView>
+								</div>
+								<br />
+								<div>
+									<h3>
+										Plain Text Widgets</h3>
+									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvTxtControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+										<EmptyDataTemplate>
+											<p>
+												<b>No plain text widgets found.</b>
+											</p>
+										</EmptyDataTemplate>
+										<Columns>
+											<asp:TemplateField>
+												<ItemTemplate>
+													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode=plain&pageid={1}&widgetid={2}", "ContentEdit.aspx", guidContentID, Eval("Root_WidgetID")) %>');">
+														<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
+												</ItemTemplate>
+											</asp:TemplateField>
+											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
+											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
+											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+												AlternateTextTrue="Active" ShowBooleanImage="true" />
+											<asp:TemplateField>
+												<HeaderTemplate>
+												</HeaderTemplate>
+												<ItemTemplate>
+													<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
+														<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
+												</ItemTemplate>
+											</asp:TemplateField>
+										</Columns>
+									</carrot:CarrotGridView>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div id="pagecontent-tabs-4">
@@ -533,16 +647,13 @@
 				<td>
 					&nbsp;&nbsp;
 				</td>
-				<td align="right">
-					<%--<a target="_blank" id="lnkExport" runat="server" href="javascript:void(0);" onclick="exportPage();">Export latest version of this page</a>--%>
-				</td>
 			</tr>
 		</table>
 		<div style="display: none;">
 			<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
 		</div>
-		<asp:Panel ID="pnlButtons" runat="server">
-			<table style="width: 900px;">
+		<asp:PlaceHolder ID="pnlButtons" runat="server">
+			<table style="width: 1000px;">
 				<tr>
 					<td>
 						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Save" />
@@ -555,12 +666,11 @@
 						<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
 					</td>
 					<td>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;
 					</td>
-					<asp:Panel runat="server" ID="pnlReview">
+					<asp:PlaceHolder runat="server" ID="pnlReview">
 						<td align="right">
-							<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="ContentID" DataTextField="EditDate">
-							</asp:DropDownList>
+							<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="Key" DataTextField="Value" />
 						</td>
 						<td>
 							&nbsp;&nbsp;
@@ -568,16 +678,12 @@
 						<td align="left">
 							<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
 						</td>
-					</asp:Panel>
+					</asp:PlaceHolder>
 				</tr>
 			</table>
-		</asp:Panel>
+		</asp:PlaceHolder>
 	</div>
 	<script type="text/javascript">
-
-		//		$(document).ready(function () {
-		//			cmsLoadPrettyValidation('<%= formValidationSummary.ClientID %>');
-		//		});
 
 		function cmsPageVersionNav() {
 			var qs = $('#<%= ddlVersions.ClientID %>').val();

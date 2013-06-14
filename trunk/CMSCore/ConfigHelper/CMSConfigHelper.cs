@@ -89,11 +89,13 @@ namespace Carrotware.CMS.Core {
 			string ModuleKey = keyDynSite + DomainName;
 			HttpContext.Current.Cache.Remove(ModuleKey);
 
-			VirtualDirectory.RegisterRoutes(true);
+			try {
+				VirtualDirectory.RegisterRoutes(true);
 
-			if (SiteData.CurretSiteExists) {
-				SiteData.CurrentSite.LoadTextWidgets();
-			}
+				if (SiteData.CurretSiteExists) {
+					SiteData.CurrentSite.LoadTextWidgets();
+				}
+			} catch (Exception ex) { }
 
 			if (SiteData.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted) {
 				System.Web.HttpRuntime.UnloadAppDomain();
@@ -573,6 +575,7 @@ namespace Carrotware.CMS.Core {
 														 ProcessPlainText = p.ProcessPlainText,
 														 ProcessHTMLText = p.ProcessHTMLText,
 														 ProcessComment = p.ProcessComment,
+														 ProcessSnippet = p.ProcessSnippet,
 													 }).ToList();
 
 			List<CMSTextWidgetPicker> lstConfigured1 = (from t in TextWidgets
@@ -585,6 +588,7 @@ namespace Carrotware.CMS.Core {
 															ProcessPlainText = false,
 															ProcessHTMLText = false,
 															ProcessComment = false,
+															ProcessSnippet = false,
 														}).ToList();
 
 			lstExisting = lstExisting.Union(lstConfigured1).ToList();
@@ -599,6 +603,7 @@ namespace Carrotware.CMS.Core {
 															ProcessPlainText = p.ProcessPlainText,
 															ProcessHTMLText = p.ProcessHTMLText,
 															ProcessComment = p.ProcessComment,
+															ProcessSnippet = p.ProcessSnippet,
 														}).ToList();
 
 			lstExisting = lstExisting.Union(lstConfigured2).ToList();
@@ -632,6 +637,7 @@ namespace Carrotware.CMS.Core {
 
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Content Snippet &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentSnippetText, Carrotware.CMS.UI.Controls" });
 
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });

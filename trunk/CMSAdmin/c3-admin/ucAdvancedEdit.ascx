@@ -46,7 +46,7 @@
 	function cmsToolbarPageInit2() {
 		if (!cmsPageInit2) {
 			<% if (!bLocked) { %>
-				setTimeout('cmsEditHB();', 500);
+				setTimeout('cmsEditHB();', 750);
 			<%} else { %>
 				cmsAlertModal('<%=litUser.Text %>');
 			<%} %>
@@ -283,7 +283,7 @@
 	</div>
 </div>
 <div style="display: none" class="cmsGlossySeaGreen">
-	<div id="CMSmodalalert" title="CMS Alert" class="cmsGlossySeaGreen">
+	<div id="CMSmodalalert" title="CarrotCake CMS" class="cmsGlossySeaGreen">
 		<p id="CMSmodalalertmessage">
 			&nbsp;</p>
 	</div>

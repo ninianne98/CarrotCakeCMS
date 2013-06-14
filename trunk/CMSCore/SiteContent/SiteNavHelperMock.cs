@@ -278,6 +278,9 @@ namespace Carrotware.CMS.Core {
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
 				sTitle = "Tag 1";
 			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+				sTitle = "Editor 1";
+			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				sTitle = DateTime.UtcNow.ToString("MMMM yyyy");
 			}

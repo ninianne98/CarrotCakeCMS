@@ -22,5 +22,8 @@ namespace Carrotware.CMS.Interface {
 			return TextContent;
 		}
 
+		public virtual string UpdateContentSnippet(string TextContent) {
+			return TextContent;
+		}
 	}
 }

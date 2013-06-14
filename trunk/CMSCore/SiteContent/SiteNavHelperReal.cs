@@ -530,6 +530,11 @@ namespace Carrotware.CMS.Core {
 				vw_carrot_TagURL query = CompiledQueries.cqGetTagByURL(db, siteID, sFilterPath);
 				sTitle = query.TagText;
 			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+				vw_carrot_EditorURL query = CompiledQueries.cqGetEditorByURL(db, siteID, sFilterPath);
+				ExtendedUserData usr = new ExtendedUserData(query.UserId);
+				sTitle = usr.ToString();
+			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
 				TimeSpan ts = p.DateEndUTC - p.DateBeginUTC;
@@ -582,6 +587,10 @@ namespace Carrotware.CMS.Core {
 				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+				query1 = CannedQueries.GetContentByUserURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
 				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.DateBeginUTC, p.DateEndUTC, bActiveOnly);
@@ -616,6 +625,10 @@ namespace Carrotware.CMS.Core {
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
 				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+				query1 = CannedQueries.GetContentByUserURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {

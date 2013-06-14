@@ -2,6 +2,7 @@
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteTemplateUpdate" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -47,10 +48,16 @@
 			</label>
 		</legend>
 		<p>
-			<b>Index Page</b>&nbsp;&nbsp;&nbsp;&nbsp;
-			<asp:Literal ID="litBlogIndex" runat="server" />
+			<b>Index Page</b>
 			<br />
-			<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlBlog" runat="server" />
+			<span style="clear: both; display: block; min-height: 4px;">
+				<!-- parent page plugin-->
+				<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
+			</span>
+			<br />
+			<span style="clear: both; display: block">
+				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlBlog" runat="server" />
+			</span>
 			<br />
 		</p>
 		<p>
