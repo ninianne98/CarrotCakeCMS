@@ -24,11 +24,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public Guid guidImportID = Guid.Empty;
 		SiteExport exSite = null;
 		List<BasicContentData> sitePageList = new List<BasicContentData>();
+		private int iPageCount = 0;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			guidImportID = GetGuidParameterFromQuery("importid");
 
 			litMessage.Text = "";
+
+			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
 
 			if (guidImportID != Guid.Empty) {
 				exSite = ContentImportExportUtils.GetSerializedSiteExport(guidImportID);
@@ -39,16 +42,38 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litDate.Text = exSite.ExportDate.ToString();
 
 				if (!IsPostBack) {
-					GeneralUtilities.BindDataBoundControl(gvPages, exSite.TheContentPages.Select(s => s.ThePage).OrderBy(s => s.NavOrder));
-					GeneralUtilities.BindDataBoundControl(gvPosts, exSite.TheBlogPages.Select(s => s.ThePage).OrderByDescending(s => s.CreateDate));
-
-					GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
-					GeneralUtilities.BindList(ddlTemplatePost, cmsHelper.Templates);
-
-					lblPages.Text = gvPages.Rows.Count.ToString();
-					lblPosts.Text = gvPosts.Rows.Count.ToString();
-					lblComments.Text = exSite.TheComments.Count.ToString();
+					BindData();
 				}
+			}
+		}
+
+		private void BindData() {
+			GeneralUtilities.BindDataBoundControl(gvPages, exSite.TheContentPages.Select(s => s.ThePage).OrderBy(s => s.NavOrder));
+			GeneralUtilities.BindDataBoundControl(gvPosts, exSite.TheBlogPages.Select(s => s.ThePage).OrderByDescending(s => s.CreateDate));
+			GeneralUtilities.BindDataBoundControl(gvSnippets, exSite.TheSnippets.OrderByDescending(s => s.ContentSnippetName));
+
+			GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
+			GeneralUtilities.BindList(ddlTemplatePost, cmsHelper.Templates);
+
+			lblPages.Text = gvPages.Rows.Count.ToString();
+			lblPosts.Text = gvPosts.Rows.Count.ToString();
+			lblSnippets.Text = gvSnippets.Rows.Count.ToString();
+			lblComments.Text = exSite.TheComments.Count.ToString();
+			SetDDLDefaultTemplates();
+		}
+
+		protected void SetDDLDefaultTemplates() {
+			float iThird = (float)(iPageCount - 1) / (float)3;
+			Dictionary<string, float> dictTemplates = null;
+
+			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.ContentEntry);
+			if (dictTemplates.Count > 0 && dictTemplates.First().Value >= iThird) {
+				try { ddlTemplatePage.SelectedValue = dictTemplates.First().Key; } catch { }
+			}
+
+			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
+			if (dictTemplates.Count > 0) {
+				try { ddlTemplatePost.SelectedValue = dictTemplates.First().Key; } catch { }
 			}
 		}
 
@@ -104,6 +129,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		private void SetMsg(string sMessage) {
+			if (!string.IsNullOrEmpty(sMessage)) {
+				litMessage.Text = sMessage;
+			}
+		}
+
 		private void ImportStuff() {
 
 			SiteData.CurrentSite = null;
@@ -111,6 +142,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			SiteData site = SiteData.CurrentSite;
 
 			litMessage.Text = "<p>No Items Selected For Import</p>";
+			string sMsg = "";
 
 			if (chkSite.Checked || chkPages.Checked || chkPosts.Checked) {
 
@@ -120,7 +152,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				exSite.TheTags.RemoveAll(x => tags.Contains(x.TagSlug.ToLower()));
 				exSite.TheCategories.RemoveAll(x => cats.Contains(x.CategorySlug.ToLower()));
 
-				litMessage.Text = "<p>Imported Tags and Categories</p>";
+				sMsg += "<p>Imported Tags and Categories</p>";
 
 				List<ContentTag> lstTag = (from l in exSite.TheTags.Distinct()
 										   select new ContentTag {
@@ -147,14 +179,48 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					v.Save();
 				}
 			}
+			SetMsg(sMsg);
+
+
+			if (chkSnippet.Checked) {
+
+				List<string> snippets = site.GetContentSnippetList().Select(x => x.ContentSnippetSlug.ToLower()).ToList();
+
+				exSite.TheSnippets.RemoveAll(x => snippets.Contains(x.ContentSnippetSlug.ToLower()));
+
+				sMsg += "<p>Imported Content Snippets</p>";
+
+				List<ContentSnippet> lstSnip = (from l in exSite.TheSnippets.Distinct()
+												select new ContentSnippet {
+													SiteID = site.SiteID,
+													Root_ContentSnippetID = Guid.NewGuid(),
+													ContentSnippetID = Guid.NewGuid(),
+													CreateUserId = SecurityData.CurrentUserGuid,
+													CreateDate = site.Now,
+													EditUserId = SecurityData.CurrentUserGuid,
+													EditDate = site.Now,
+													RetireDate = l.RetireDate,
+													GoLiveDate = l.GoLiveDate,
+													ContentSnippetActive = l.ContentSnippetActive,
+													ContentBody = l.ContentBody,
+													ContentSnippetSlug = l.ContentSnippetSlug,
+													ContentSnippetName = l.ContentSnippetName
+												}).ToList();
+
+				foreach (var v in lstSnip) {
+					v.Save();
+				}
+			}
+			SetMsg(sMsg);
 
 
 			if (chkSite.Checked) {
-				litMessage.Text += "<p>Updated Site Name</p>";
+				sMsg += "<p>Updated Site Name</p>";
 				site.SiteName = exSite.TheSite.SiteName;
 				site.SiteTagline = exSite.TheSite.SiteTagline;
 				site.Save();
 			}
+			SetMsg(sMsg);
 
 
 			if (!chkMapAuthor.Checked) {
@@ -197,7 +263,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 			if (chkPages.Checked) {
-				litMessage.Text += "<p>Imported Pages</p>";
+				sMsg += "<p>Imported Pages</p>";
 				sitePageList = site.GetFullSiteFileList();
 
 				int iOrder = 0;
@@ -265,10 +331,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					iOrder++;
 				}
 			}
+			SetMsg(sMsg);
 
 
 			if (chkPosts.Checked) {
-				litMessage.Text += "<p>Imported Posts</p>";
+				sMsg += "<p>Imported Posts</p>";
 				sitePageList = site.GetFullSiteFileList();
 
 				List<ContentTag> lstTags = site.GetTagList();
@@ -320,9 +387,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cph.FixBlogNavOrder(site.SiteID);
 				}
 			}
+			SetMsg(sMsg);
+
 
 			if (chkComments.Checked) {
-				litMessage.Text += "<p>Imported Comments</p>";
+				sMsg += "<p>Imported Comments</p>";
 				sitePageList = site.GetFullSiteFileList();
 
 				foreach (var impCP in (from c in exSite.TheComments
@@ -347,7 +416,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 			}
+			SetMsg(sMsg);
 
+			BindData();
 		}
 
 

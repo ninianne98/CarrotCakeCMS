@@ -225,7 +225,7 @@ function cmsMakeStringSafe(val) {
 function cmsEditHB() {
 
 	if (!cmsIsPageLocked) {
-		setTimeout("cmsEditHB();", 45 * 1000);
+		setTimeout("cmsEditHB();", 25 * 1000);
 
 		var webMthd = webSvc + "/RecordHeartbeat";
 
@@ -312,8 +312,11 @@ function cmsPreviewTemplate2() {
 
 	var editIFrame = $('#cmsFrameEditorPreview');
 	$(editIFrame).attr('src', srcURL);
-	window.frames["cmsFrameEditorPreview"].location.reload();
+	$(editIFrame).attr('realsrc', srcURL);
 
+	setTimeout("cmsSetIframeRealSrc('cmsFrameEditorPreview');", 500);
+
+	window.frames["cmsFrameEditorPreview"].location.reload();
 }
 
 
@@ -339,7 +342,13 @@ function cmsPreviewTemplate() {
 	$(editIFrame).attr('width', '100%');
 	$(editIFrame).attr('height', frmHgt);
 
-	var ddlPreview = ' <select id="cmsTemplateList"></select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ';
+	var templateList = '';
+
+	$(cmsTemplateDDL + " > option").each(function () {
+		templateList += "<option value='" + this.value + "'>" + this.text + "</option>";
+	});
+
+	var ddlPreview = ' <select id="cmsTemplateList">' + templateList + '</select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ';
 
 	var btnClose = ' <input type="button" id="btnCloseTemplateCMS" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
 	var btnApply = ' <input type="button" id="btnApplyTemplateCMS" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
@@ -347,16 +356,17 @@ function cmsPreviewTemplate() {
 	$(editFrame).append('<div id="cmsGlossySeaGreenID"><div id="cmsPreviewControls" class="cmsGlossySeaGreen cmsPreviewButtons"> ' + ddlPreview + btnClose + btnApply + ' </div></div>');
 	window.setTimeout("cmsLateBtnStyle();", 500);
 
-	var list = $(cmsTemplateListPreviewer);
-	$(cmsTemplateDDL + " > option").each(function () {
-		list.append(new Option(this.text, this.value));
-	});
+	//	var list = $(cmsTemplateListPreviewer);
+	//	$(cmsTemplateDDL + " > option").each(function () {
+	//		list.append(new Option(this.text, this.value));
+	//	});
 
 	$(cmsTemplateListPreviewer).val(tmplReal);
 
 	$('#cmsFrameEditor').attr('id', 'cmsFrameEditorPreview');
 	$('#cmsAjaxMainDiv2').attr('id', 'cmsAjaxMainDiv3');
 
+	setTimeout("cmsSetIframeRealSrc('cmsFrameEditorPreview');", 1500);
 }
 
 function cmsLateBtnStyle() {
@@ -1014,9 +1024,17 @@ function cmsLoadWindow() {
 	return false;
 }
 
+function cmsSetIframeRealSrc(theFrameID) {
+	var theSRC = $('#' + theFrameID).attr('realsrc');
+	$('#' + theFrameID).attr('src', theSRC);
+}
+
 function cmsSetiFrameSource(theURL) {
 	var TheURL = theURL;
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" src="' + TheURL + '" /> </div>');
+
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + TheURL + '" src="/c3-admin/includes/Blank.htm" /> </div>');
+
+	setTimeout("cmsSetIframeRealSrc('cmsFrameEditor');", 1500);
 
 	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 		css: { width: '98%', height: '98%' },

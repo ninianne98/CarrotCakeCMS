@@ -11,7 +11,7 @@
 	<p>
 		<asp:Button ID="btnUpdate" runat="server" OnClick="btnUpdate_Click" Text="Update" /><br />
 	</p>
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>

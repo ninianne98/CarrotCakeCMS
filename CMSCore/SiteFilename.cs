@@ -50,6 +50,13 @@ namespace Carrotware.CMS.Core {
 			get { return SiteData.AdminFolderPath + "PageHistory.aspx"; }
 		}
 
+		public static string ContentSnippetAddEditURL {
+			get { return SiteData.AdminFolderPath + "ContentSnippetAddEdit.aspx"; }
+		}
+		public static string ContentSnippetIndexURL {
+			get { return SiteData.AdminFolderPath + "ContentSnippetIndex.aspx"; }
+		}
+
 		public static string TagIndexURL {
 			get { return SiteData.AdminFolderPath + "TagIndex.aspx"; }
 		}

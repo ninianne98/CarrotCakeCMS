@@ -70,6 +70,10 @@ using System.Web.UI;
 [assembly: TagPrefix("SiteCanonicalURL", "carrot")]
 [assembly: TagPrefix("TrackBack", "carrot")]
 [assembly: TagPrefix("PostCalendar", "carrot")]
+[assembly: TagPrefix("ContentSnippetText", "carrot")]
+
+[assembly: TagPrefix("AuthorTextLabel", "carrot")]
+[assembly: TagPrefix("AuthorLink", "carrot")]
 
 [assembly: TagPrefix("PagedDataNextPrevLinkWrapper", "carrot")]
 [assembly: TagPrefix("PagedDataNextPrevLink", "carrot")]

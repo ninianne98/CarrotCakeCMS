@@ -14,5 +14,7 @@ namespace Carrotware.CMS.Interface {
 
 		string UpdateContentComment(string TextContent);
 
+		string UpdateContentSnippet(string TextContent);
+
 	}
 }

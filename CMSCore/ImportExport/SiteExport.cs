@@ -31,6 +31,7 @@ namespace Carrotware.CMS.Core {
 
 			TheCategories = new List<ContentCategory>();
 			TheTags = new List<ContentTag>();
+			TheSnippets = new List<ContentSnippet>();
 		}
 
 		public SiteExport(Guid siteID) {
@@ -105,6 +106,7 @@ namespace Carrotware.CMS.Core {
 
 			TheCategories = s.GetCategoryList();
 			TheTags = s.GetTagList();
+			TheSnippets = s.GetContentSnippetList();
 		}
 
 		public void LoadComments() {
@@ -165,6 +167,8 @@ namespace Carrotware.CMS.Core {
 		public List<ContentCategory> TheCategories { get; set; }
 
 		public List<ContentTag> TheTags { get; set; }
+
+		public List<ContentSnippet> TheSnippets { get; set; }
 
 		public List<SiteExportUser> TheUsers { get; set; }
 

@@ -27,6 +27,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			groupID = GetGuidIDFromQuery();
 
+			btnApply.Visible = SecurityData.IsAdmin;
+			btnAddUsers.Visible = SecurityData.IsAdmin;
+			btnRemove.Visible = SecurityData.IsAdmin;
+
 			if (groupID == Guid.Empty) {
 				btnApply.Text = "Add";
 			} else {
@@ -68,9 +72,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void btnAddUsers_Click(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(hdnUserID.Value)) {
 				MembershipRole role = getCurrentGroup();
-				if (!Roles.IsUserInRole(hdnUserID.Value, role.RoleName)) {
-					Roles.AddUserToRole(hdnUserID.Value, role.RoleName);
-				}
+
+				ExtendedUserData exUsr = new ExtendedUserData(hdnUserID.Value);
+				exUsr.AddToRole(role.RoleName);
 			}
 
 			Response.Redirect(SiteData.CurrentScriptName + "?id=" + groupID.ToString());

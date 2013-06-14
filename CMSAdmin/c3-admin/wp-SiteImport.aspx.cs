@@ -53,18 +53,22 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					BuildFolderList();
 
-					GeneralUtilities.BindDataBoundControl(gvPages, wpSite.ContentPages);
-					GeneralUtilities.BindDataBoundControl(gvPosts, wpSite.ContentPosts);
-
-					GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
-					GeneralUtilities.BindList(ddlTemplatePost, cmsHelper.Templates);
-
-					lblPages.Text = gvPages.Rows.Count.ToString();
-					lblPosts.Text = gvPosts.Rows.Count.ToString();
-
-					SetDDLDefaultTemplates();
+					BindData();
 				}
 			}
+		}
+
+		private void BindData() {
+			GeneralUtilities.BindDataBoundControl(gvPages, wpSite.ContentPages);
+			GeneralUtilities.BindDataBoundControl(gvPosts, wpSite.ContentPosts);
+
+			GeneralUtilities.BindList(ddlTemplatePage, cmsHelper.Templates);
+			GeneralUtilities.BindList(ddlTemplatePost, cmsHelper.Templates);
+
+			lblPages.Text = gvPages.Rows.Count.ToString();
+			lblPosts.Text = gvPosts.Rows.Count.ToString();
+
+			SetDDLDefaultTemplates();
 		}
 
 		protected void SetDDLDefaultTemplates() {
@@ -134,6 +138,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		private void SetMsg(string sMessage) {
+			if (!string.IsNullOrEmpty(sMessage)) {
+				litMessage.Text = sMessage;
+			}
+		}
 
 		private void ImportStuff() {
 			SiteData.CurrentSite = null;
@@ -141,6 +150,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			SiteData site = SiteData.CurrentSite;
 
 			litMessage.Text = "<p>No Items Selected For Import</p>";
+			string sMsg = "";
 
 			if (chkSite.Checked || chkPages.Checked || chkPosts.Checked) {
 				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLower()).ToList();
@@ -149,7 +159,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				wpSite.Tags.RemoveAll(x => tags.Contains(x.InfoKey.ToLower()));
 				wpSite.Categories.RemoveAll(x => cats.Contains(x.InfoKey.ToLower()));
 
-				litMessage.Text = "<p>Imported Tags and Categories</p>";
+				sMsg += "<p>Imported Tags and Categories</p>";
 
 				List<ContentTag> lstTag = (from l in wpSite.Tags.Distinct()
 										   select new ContentTag {
@@ -177,14 +187,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 			}
+			SetMsg(sMsg);
 
 
 			if (chkSite.Checked) {
-				litMessage.Text += "<p>Updated Site Name</p>";
+				sMsg += "<p>Updated Site Name</p>";
 				site.SiteName = wpSite.SiteTitle;
 				site.SiteTagline = wpSite.SiteDescription;
 				site.Save();
 			}
+			SetMsg(sMsg);
+
 
 			if (!chkMapAuthor.Checked) {
 				wpSite.Authors = new List<WordPressUser>();
@@ -231,7 +244,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				if (chkPages.Checked) {
 
-					litMessage.Text += "<p>Imported Pages</p>";
+					sMsg += "<p>Imported Pages</p>";
 
 					int iOrder = 0;
 					SiteNav navHome = navHelper.FindHome(site.SiteID, false);
@@ -305,7 +318,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				if (chkPosts.Checked) {
-					litMessage.Text += "<p>Imported Posts</p>";
+					sMsg += "<p>Imported Posts</p>";
 
 					foreach (var wpp in (from c in wpSite.Content
 										 where c.PostType == WordPressPost.WPPostType.BlogPost
@@ -347,12 +360,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				}
 			}
+			SetMsg(sMsg);
+
 
 
 			wpSite.Comments.RemoveAll(r => r.ImportRootID == Guid.Empty);
 
 			if (wpSite.Comments.Count > 0) {
-				litMessage.Text += "<p>Imported Comments</p>";
+				sMsg += "<p>Imported Comments</p>";
 			}
 
 			foreach (WordPressComment wpc in wpSite.Comments) {
@@ -390,7 +405,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pc.Save();
 				}
 			}
+			SetMsg(sMsg);
 
+			BindData();
 		}
 
 	}

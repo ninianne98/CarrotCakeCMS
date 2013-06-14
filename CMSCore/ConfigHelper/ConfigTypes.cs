@@ -72,6 +72,7 @@ namespace Carrotware.CMS.Core {
 		public bool ProcessPlainText { get; set; }
 		public bool ProcessHTMLText { get; set; }
 		public bool ProcessComment { get; set; }
+		public bool ProcessSnippet { get; set; }
 	}
 
 	[Serializable()]

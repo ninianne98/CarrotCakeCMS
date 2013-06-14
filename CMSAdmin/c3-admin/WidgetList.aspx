@@ -42,7 +42,7 @@
 	Widget List
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt"
 			RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>
@@ -64,6 +64,8 @@
 						<asp:HiddenField ID="hdnDelete" runat="server" Value='<%# Eval("IsWidgetPendingDelete")%>' Visible="false" />
 					</ItemTemplate>
 				</asp:TemplateField>
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+					AlternateTextTrue="Active" ShowBooleanImage="true" />
 				<asp:TemplateField>
 					<HeaderTemplate>
 						Active

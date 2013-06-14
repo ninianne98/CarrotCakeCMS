@@ -57,6 +57,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorData.cs" />
     <Compile Include="BaseNav.cs" />
     <Compile Include="BaseNavCommon.cs" />
     <Compile Include="BaseNavHeaded.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="ContentPlainText.cs" />
     <Compile Include="ContentRichText.cs" />
     <Compile Include="BreadCrumbNavigation.cs" />
+    <Compile Include="ContentSnippetText.cs" />
     <Compile Include="ControlUtilities.cs" />
     <Compile Include="EmailEscapeInBody.cs" />
     <Compile Include="GeneralControlDesigner.cs" />

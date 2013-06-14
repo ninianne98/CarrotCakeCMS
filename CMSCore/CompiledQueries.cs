@@ -170,6 +170,13 @@ namespace Carrotware.CMS.Core {
 							&& ct.TagUrl.ToLower() == sPage.ToLower()
 					   select ct).FirstOrDefault());
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, string, vw_carrot_EditorURL> cqGetEditorByURL =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, string sPage) =>
+					  (from ct in ctx.vw_carrot_EditorURLs
+					   where ct.SiteID == siteID
+							&& ct.UserUrl.ToLower() == sPage.ToLower()
+					   select ct).FirstOrDefault());
 
 		internal static vw_carrot_Content GetLatestContentByID(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, Guid rootContentID) {
 			SearchParameterObject sp = new SearchParameterObject {
@@ -905,17 +912,29 @@ namespace Carrotware.CMS.Core {
 
 		//=====================
 
-		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, Guid?, IQueryable<vw_carrot_Content>> cqGetOtherNotPage =
+		internal static IQueryable<vw_carrot_Content> GetOtherNotPage(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, Guid? parentContentID) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				RootContentID = rootContentID,
+				ParentContentID = parentContentID,
+				ContentTypeID = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry),
+				DateCompare = DateTime.UtcNow
+			};
+
+			return cqGetOtherNotPage(ctx, sp);
+		}
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, IQueryable<vw_carrot_Content>> cqGetOtherNotPage =
 		CompiledQuery.Compile(
-					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID, Guid? parentContentID) =>
+					(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
 					  (from ct in ctx.vw_carrot_Contents
 					   orderby ct.NavOrder, ct.NavMenuText
-					   where ct.SiteID == siteID
+					   where ct.SiteID == sp.SiteID
 							&& ct.IsLatestVersion == true
-							&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
-							&& ct.Root_ContentID != rootContentID
-							&& (ct.Parent_ContentID == parentContentID
-								 || (ct.Parent_ContentID == null && parentContentID == Guid.Empty))
+							&& ct.ContentTypeID == sp.ContentTypeID
+							&& ct.Root_ContentID != sp.RootContentID
+							&& (ct.Parent_ContentID == sp.ParentContentID
+								 || (ct.Parent_ContentID == null && sp.ParentContentID == Guid.Empty))
 					   select ct));
 
 
@@ -1109,6 +1128,121 @@ namespace Carrotware.CMS.Core {
 				 where w.SiteID == siteID
 				 select w));
 
+
+		//==============
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_RootContentSnippet> cqGetSnippetDataTbl =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, Guid rootSnippetID) =>
+			  (from r in ctx.carrot_RootContentSnippets
+			   where r.SiteID == siteID
+				   && r.Root_ContentSnippetID == rootSnippetID
+			   select r).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_ContentSnippet> cqGetLatestSnippetContentTbl =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid siteID, Guid rootSnippetID) =>
+					  (from ct in ctx.carrot_ContentSnippets
+					   join r in ctx.carrot_RootContentSnippets on ct.Root_ContentSnippetID equals r.Root_ContentSnippetID
+					   where r.SiteID == siteID
+						   && r.Root_ContentSnippetID == rootSnippetID
+						   && ct.IsLatestVersion == true
+					   select ct).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_ContentSnippet>> cqGetSnippetVersionHistory =
+		CompiledQuery.Compile(
+				(CarrotCMSDataContext ctx, Guid rootSnippetID) =>
+					(from ct in ctx.vw_carrot_ContentSnippets
+					 orderby ct.EditDate descending
+					 where ct.Root_ContentSnippetID == rootSnippetID
+					 select ct));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, IQueryable<vw_carrot_ContentSnippet>> cqGetSnippetsBySiteID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID) =>
+				(from ct in ctx.vw_carrot_ContentSnippets
+				 orderby ct.EditDate descending
+				 where ct.SiteID == siteID
+					&& ct.IsLatestVersion == true
+				 select ct));
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, vw_carrot_ContentSnippet> cqGetLatestSnippetVersion =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid rootSnippetID) =>
+				(from ct in ctx.vw_carrot_ContentSnippets
+				 orderby ct.EditDate descending
+				 where ct.Root_ContentSnippetID == rootSnippetID
+					&& ct.IsLatestVersion == true
+				 select ct).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, vw_carrot_ContentSnippet> cqGetSnippetVersionByID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid snippetDataID) =>
+				(from ct in ctx.vw_carrot_ContentSnippets
+				 where ct.ContentSnippetID == snippetDataID
+				 select ct).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, string, IQueryable<vw_carrot_ContentSnippet>> cqGetContentSnippetNoMatch =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, Guid rootSnippetID, string slug) =>
+				(from r in ctx.vw_carrot_ContentSnippets
+				 where r.SiteID == siteID
+					&& r.Root_ContentSnippetID != rootSnippetID
+					&& r.ContentSnippetSlug.ToLower() == slug.ToLower()
+				 select r));
+
+		internal static vw_carrot_ContentSnippet GetLatestContentSnippetBySlug(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sItemSlug) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly,
+				ItemSlug = sItemSlug
+			};
+			return cqGetLatestContentSnippetBySlug(ctx, sp);
+		}
+
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, vw_carrot_ContentSnippet> cqGetLatestContentSnippetBySlug =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					  (from ct in ctx.vw_carrot_ContentSnippets
+					   where ct.SiteID == sp.SiteID
+							&& ct.ContentSnippetSlug.ToLower() == sp.ItemSlug.ToLower()
+							&& ct.IsLatestVersion == true
+							&& (ct.ContentSnippetActive == true || sp.ActiveOnly == false)
+							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					   select ct).FirstOrDefault());
+
+
+		internal static vw_carrot_ContentSnippet GetLatestContentSnippetByID(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, Guid itemID) {
+			SearchParameterObject sp = new SearchParameterObject {
+				SiteID = siteID,
+				DateCompare = DateTime.UtcNow,
+				ActiveOnly = bActiveOnly,
+				ItemSlugID = itemID
+			};
+			return cqGetLatestContentSnippetByID(ctx, sp);
+		}
+
+
+		private static readonly Func<CarrotCMSDataContext, SearchParameterObject, vw_carrot_ContentSnippet> cqGetLatestContentSnippetByID =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, SearchParameterObject sp) =>
+					  (from ct in ctx.vw_carrot_ContentSnippets
+					   where ct.SiteID == sp.SiteID
+							&& ct.Root_ContentSnippetID == sp.ItemSlugID
+							&& ct.IsLatestVersion == true
+							&& (ct.ContentSnippetActive == true || sp.ActiveOnly == false)
+							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
+							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
+					   select ct).FirstOrDefault());
+
+
+
 	}
+
+
 
 }

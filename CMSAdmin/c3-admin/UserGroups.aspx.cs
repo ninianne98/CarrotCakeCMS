@@ -21,10 +21,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.GroupAdmin);
 
-			BindData();
-		}
-
-		protected void BindData() {
 			GeneralUtilities.BindDataBoundControl(gvRoles, SecurityData.GetRoleList());
 		}
 

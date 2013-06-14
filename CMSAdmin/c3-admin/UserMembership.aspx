@@ -12,7 +12,7 @@
 			<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
 			Add User</a>
 	</p>
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="username ASC" ID="dvMembers" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>

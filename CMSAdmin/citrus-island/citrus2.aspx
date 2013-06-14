@@ -37,6 +37,8 @@
 		<div id="menu">
 			<carrot:TopLevelNavigation CSSSelected="current" MenuWidth="600px" MenuHeight="44px" runat="server" ID="TopLevelNavigation1" />
 		</div>
+		<div style="clear: both;">
+		</div>
 		<div id="sidebar">
 			<carrot:ChildNavigation MetaDataTitle="Child Pages" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
 			<carrot:SiblingNavigation MetaDataTitle="In This Section" CssClass="sidemenu" CSSSelected="active" runat="server" ID="SiblingNavigation1" />

@@ -363,6 +363,13 @@ namespace Carrotware.CMS.Core {
 				sTitle = query.TagText;
 				pvt.RawValue = query.TagText;
 			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+				pvt.CurrentViewType = PageViewType.ViewType.AuthorIndex;
+				vw_carrot_EditorURL query = CompiledQueries.cqGetEditorByURL(db, siteID, sFilterPath);
+				ExtendedUserData usr = new ExtendedUserData(query.UserId);
+				sTitle = usr.ToString();
+				pvt.RawValue = usr;
+			}
 
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				pvt.CurrentViewType = PageViewType.ViewType.DateIndex;
@@ -535,6 +542,10 @@ namespace Carrotware.CMS.Core {
 				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+				query1 = CannedQueries.GetContentByUserURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
 				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.DateBeginUTC, p.DateEndUTC, bActiveOnly);
@@ -561,6 +572,10 @@ namespace Carrotware.CMS.Core {
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
 				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
+				bFound = true;
+			}
+			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+				query1 = CannedQueries.GetContentByUserURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
 			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
@@ -703,6 +718,22 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 			return bLock;
+		}
+
+		public bool RecordPageLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
+			bool bLock = IsPageLocked(rootContentID, siteID, currentUserID);
+			bool bRet = false;
+
+			if (!bLock) {
+				ExtendedUserData usr = new ExtendedUserData(currentUserID);
+
+				//only allow admin/editors to record a lock
+				if (usr.IsAdmin || usr.IsEditor) {
+					bRet = RecordHeartbeatLock(rootContentID, siteID, currentUserID);
+				}
+			}
+
+			return bRet;
 		}
 
 		public Guid GetCurrentEditUser(Guid rootContentID, Guid siteID) {

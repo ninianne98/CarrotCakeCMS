@@ -39,6 +39,8 @@
 		<div id="menu-wrapper">
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="10px" ForeColor="#FFFFFF" BackColor="#F4845A" />
 		</div>
+		<div style="clear: both;">
+		</div>
 		<div id="sidebar">
 			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" runat="server" ContentType="Category" MetaDataTitle="Categories" CssClass="sidemenu" />
 			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" runat="server" ContentType="Tag" MetaDataTitle="Tags" CssClass="sidemenu" />
@@ -47,13 +49,15 @@
 			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
 			<carrot:WidgetContainer ID="phLeftBottom" runat="server">
 			</carrot:WidgetContainer>
+			<div style="clear: both;">
+			</div>
 		</div>
 		<div id="main">
 			<h1>
 				<carrot:ContentPageProperty runat="server" ID="ContentPageProperty3" DataField="PageHead" /></h1>
 			<p>
 				By
-				<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="Author_FullName_FirstLast" />
+				<carrot:AuthorLink runat="server" ID="AuthorLink1" />
 				on
 				<carrot:ContentPageProperty runat="server" ID="ContentPageProperty2" DataField="GoLiveDate" FieldFormat="{0:MMMM d, yyyy}" />
 			</p>
@@ -182,6 +186,8 @@
 			<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server" />
 			<carrot:WidgetContainer ID="phRightBottom" runat="server">
 			</carrot:WidgetContainer>
+			<div style="clear: both;">
+			</div>
 		</div>
 	</div>
 	<div id="footer">

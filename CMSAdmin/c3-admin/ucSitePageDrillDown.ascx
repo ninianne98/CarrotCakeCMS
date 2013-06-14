@@ -4,7 +4,7 @@
 
 	var thisPageID = '<%=RootContentID.ToString() %>';
 
-	var webSvc = "/c3-admin/CMS.asmx";
+	var webSvc = cmsGetServiceAddress();
 
 	var thePage = '';
 
@@ -14,21 +14,23 @@
 	var menuValue = '<%=txtParent.ClientID %>';
 
 	var bMoused = false;
-
+	var bLoad = true;
 
 	function UpdateAjaxLoadDrillMenu() {
 		if (typeof (Sys) != 'undefined') {
 			var prm = Sys.WebForms.PageRequestManager.getInstance();
 			prm.add_endRequest(function () {
-				setTimeout("resetDrill();", 200);
-				setTimeout("AjaxLoadDrillMenu();", 600);
+				bLoad = true;
+				setTimeout("resetDrill();", 750);
+				setTimeout("AjaxLoadDrillMenu();", 1500);
 			});
 		}
 	}
 
 	$(document).ready(function () {
+		bLoad = true;
 		UpdateAjaxLoadDrillMenu();
-		setTimeout("AjaxLoadDrillMenu();", 500);
+		setTimeout("AjaxLoadDrillMenu();", 750);
 	});
 
 
@@ -121,12 +123,20 @@
 	}
 
 	function mouseNode() {
+
+		if (!bLoad) {
+			showMnu();
+		} else {
+			hideMnu();
+		}
+
 		var webMthd = webSvc + "/GetChildPages";
 		var myVal = $('#' + menuValue).val();
 
-		showMnu();
-
 		if (bMoused != true) {
+			hideMnu();
+
+			$('#' + menuInner).html("<div style='width: 32px; height: 32px; margin: 0 auto;'><img src='/c3-admin/images/mini-spinner3-6F997D.gif' alt='spinner' /></div>");
 
 			$.ajax({
 				type: "POST",
@@ -138,6 +148,8 @@
 				error: cmsAjaxFailed
 			});
 		}
+
+		bLoad = false;
 	}
 
 
@@ -149,16 +161,14 @@
 
 		var mnuName = '#' + menuInner;
 
-		$(mnuName).html('');
 		hideMnu();
-		setTimeout("hideMnu();", 250);
+		$(mnuName).html('');
 
 		$.each(lstData, function (i, v) {
 			//$('#returneditems').append(new Option(v.PageFile, v.Root_ContentID));
 			$(mnuName).append("<div><a href='javascript:void(0);' onclick='selectDrillItem(this);' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + "</a></div>");
 		});
 
-		//showMnu();
 		if ($(mnuName).text().length < 2) {
 			$(mnuName).append("<div><b>No Data</b></div>");
 		}
@@ -181,11 +191,12 @@
 
 	function resetDrill() {
 		bMoused = false;
+		bLoad = true;
 
 		mouseNode();
 		getCrumbs();
 
-		setTimeout("hideMnu();", 500);
+		setTimeout("hideMnu();", 250);
 	}
 
 

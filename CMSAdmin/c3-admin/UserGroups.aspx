@@ -12,7 +12,7 @@
 			<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
 			Add Group</a>
 	</p>
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="RoleName ASC" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>

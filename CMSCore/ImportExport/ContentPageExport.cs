@@ -93,16 +93,16 @@ namespace Carrotware.CMS.Core {
 				userID = cp.EditUserId.Value;
 			}
 
-			using (ExtendedUserData u = new ExtendedUserData(userID)) {
-				this.TheUser = new SiteExportUser {
-					ExportUserID = u.UserId,
-					Email = u.EmailAddress,
-					Login = u.UserName,
-					FirstName = u.FirstName,
-					LastName = u.LastName,
-					UserNickname = u.UserNickName
-				};
-			}
+			ExtendedUserData u = new ExtendedUserData(userID);
+			this.TheUser = new SiteExportUser {
+				ExportUserID = u.UserId,
+				Email = u.EmailAddress,
+				Login = u.UserName,
+				FirstName = u.FirstName,
+				LastName = u.LastName,
+				UserNickname = u.UserNickName
+			};
+
 		}
 
 		public string CarrotCakeVersion { get; set; }

@@ -42,6 +42,8 @@
 		<div>
 			<carrot:BreadCrumbNavigation runat="server" ID="BreadCrumbNavigation1" CSSSelected="green" />
 		</div>
+		<div style="clear: both;">
+		</div>
 		<div id="sidebar">
 			<carrot:ChildNavigation MetaDataTitle="Child Pages" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
 			<carrot:SiblingNavigation MetaDataTitle="In This Section" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="SiblingNavigation1" />
@@ -50,6 +52,8 @@
 			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
 			<carrot:WidgetContainer ID="phLeftBottom" runat="server">
 			</carrot:WidgetContainer>
+			<div style="clear: both;">
+			</div>
 		</div>
 		<div id="main">
 			<h1>
@@ -60,6 +64,8 @@
 			<carrot:WidgetContainer ID="phCenterBottom" runat="server">
 			</carrot:WidgetContainer>
 			<br />
+			<div style="clear: both;">
+			</div>
 		</div>
 		<div id="rightbar">
 			<div class="padding10">
@@ -75,6 +81,8 @@
 			<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server" />
 			<carrot:WidgetContainer ID="phRightBottom" runat="server">
 			</carrot:WidgetContainer>
+			<div style="clear: both;">
+			</div>
 		</div>
 	</div>
 	<div id="footer">

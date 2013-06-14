@@ -217,7 +217,7 @@ namespace Carrotware.CMS.Core {
 			} catch (Exception ex) {
 				//assumption is database is probably empty / needs updating, so trigger the under construction view
 				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
-					SiteData.ManuallyWriteDefaultFile(context);
+					SiteData.ManuallyWriteDefaultFile(context, ex);
 				} else {
 					//something bad has gone down, toss back the error
 					throw;

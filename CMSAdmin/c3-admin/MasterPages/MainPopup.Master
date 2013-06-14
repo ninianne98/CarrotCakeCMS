@@ -99,7 +99,7 @@
 			<img src="/c3-admin/images/x.png" alt="x" />
 		</div>
 		<div style="display: none">
-			<div id="divCMSModal" title="CMS Alert">
+			<div id="divCMSModal" title="CarrotCake CMS">
 				<div id="divCMSModalMsg">
 					&nbsp;</div>
 			</div>

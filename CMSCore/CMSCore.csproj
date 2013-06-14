@@ -102,6 +102,7 @@
     <Compile Include="ImportExport\ContentPageExport.cs" />
     <Compile Include="SiteContent\ContentPageHelper.cs" />
     <Compile Include="SiteContent\ContentPageType.cs" />
+    <Compile Include="SiteContent\ContentSnippet.cs" />
     <Compile Include="SiteContent\ContentTag.cs" />
     <Compile Include="SiteContent\IContentMetaInfo.cs" />
     <Compile Include="SiteContent\PageViewType.cs" />

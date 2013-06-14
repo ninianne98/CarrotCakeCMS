@@ -546,6 +546,8 @@ namespace Carrotware.CMS.UI.Controls {
 			GoLiveDate,
 			RetireDate,
 			Author_UserName,
+			Author_EditorURL,
+			Author_UserBio,
 			Author_EmailAddress,
 			Author_UserNickName,
 			Author_FirstName,
@@ -641,12 +643,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 					SiteNav sn = (SiteNav)DataBinder.GetDataItem(container);
 					if (sn != null) {
-						using (ExtendedUserData c = sn.GetUserInfo()) {
-							if (c != null) {
-								object obj = ReflectionUtilities.GetPropertyValue(c, sField);
-								if (obj != null) {
-									sValue = obj.ToString();
-								}
+						ExtendedUserData u = sn.GetUserInfo();
+						if (u != null) {
+							object obj = ReflectionUtilities.GetPropertyValue(u, sField);
+							if (obj != null) {
+								sValue = obj.ToString();
 							}
 						}
 					}

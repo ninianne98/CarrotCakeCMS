@@ -175,6 +175,33 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPosts;
         
         /// <summary>
+        /// chkSnippet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSnippet;
+        
+        /// <summary>
+        /// lblSnippets control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lblSnippets;
+        
+        /// <summary>
+        /// gvSnippets control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvSnippets;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

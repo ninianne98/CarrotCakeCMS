@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -49,16 +50,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				txtSort.Text = "0";
 			}
 
-			if (!string.IsNullOrEmpty(Request.QueryString["mode"])) {
-				sPageMode = Request.QueryString["mode"].ToString();
-				if (sPageMode.ToLower() == "raw") {
-					reBody.CssClass = "rawEditor";
-					reLeftBody.CssClass = "rawEditor";
-					reRightBody.CssClass = "rawEditor";
-					divCenter.Visible = false;
-					divRight.Visible = false;
-					divLeft.Visible = false;
-				}
+			sPageMode = GetStringParameterFromQuery("mode");
+			if (sPageMode.ToLower() == "raw") {
+				reBody.CssClass = "rawEditor";
+				reLeftBody.CssClass = "rawEditor";
+				reRightBody.CssClass = "rawEditor";
+				divCenter.Visible = false;
+				divRight.Visible = false;
+				divLeft.Visible = false;
 			}
 
 			if (!IsPostBack) {
@@ -114,9 +113,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				if (pageContents != null) {
+					bool bRet = pageHelper.RecordPageLock(pageContents.Root_ContentID, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
+
 					if (pageContents.ContentType != ContentPageType.PageType.ContentEntry) {
 						Response.Redirect(SiteFilename.BlogPostAddEditURL + "?id=" + Request.QueryString.ToString());
 					}
+
+					cmsHelper.OverrideKey(pageContents.Root_ContentID);
+					cmsHelper.cmsAdminContent = pageContents;
+					cmsHelper.cmsAdminWidget = pageContents.GetWidgetList();
+
+					BindTextDataGrid();
 
 					guidRootContentID = pageContents.Root_ContentID;
 
@@ -126,14 +133,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						txtOldFile.Text = "";
 					}
 
-					List<ContentPage> lstVer = pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID);
-
-					var dataVersions = (from v in lstVer
-										orderby v.EditDate descending
-										select new {
-											EditDate = v.EditDate.ToString() + (v.IsLatestVersion ? " [**]" : " "),
-											ContentID = v.ContentID
-										}).ToList();
+					Dictionary<string, string> dataVersions = (from v in pageHelper.GetVersionHistory(SiteID, pageContents.Root_ContentID)
+															   join u in ExtendedUserData.GetUserList() on v.EditUserId equals u.UserId
+															   orderby v.EditDate descending
+															   select new KeyValuePair<string, string>(v.ContentID.ToString(), string.Format("{0} ({1}) {2}", v.EditDate, u.UserName, (v.IsLatestVersion ? " [**] " : " ")))
+																).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
 					GeneralUtilities.BindListDefaultText(ddlVersions, dataVersions, null, "Page Versions", "00000");
 
@@ -146,7 +150,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pnlHBEmpty.Visible = bLocked;
 
 					if (bLocked && pageContents.Heartbeat_UserId != null) {
-						var usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
+						MembershipUser usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
 						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.";
 					}
 
@@ -200,6 +204,27 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		private void BindTextDataGrid() {
+			if (cmsHelper.cmsAdminWidget != null) {
+				var ww1 = (from w in cmsHelper.cmsAdminWidget
+						   where w.IsLatestVersion == true
+						   && w.ControlPath.StartsWith("CLASS:Carrotware.CMS.UI.Controls.ContentRichText,")
+						   select w);
+
+				gvHtmControls.DataSource = ww1;
+				gvHtmControls.DataBind();
+
+				var ww2 = (from w in cmsHelper.cmsAdminWidget
+						   where w.IsLatestVersion == true
+						   && w.ControlPath.StartsWith("CLASS:Carrotware.CMS.UI.Controls.ContentPlainText,")
+						   select w);
+
+				gvTxtControls.DataSource = ww2;
+				gvTxtControls.DataBind();
+			}
+		}
+
+
 		protected void btnSave_Click(object sender, EventArgs e) {
 			SavePage(false);
 		}
@@ -222,6 +247,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (pageContents != null) {
 					pageContents.SiteID = SiteID;
 					pageContents.EditDate = SiteData.CurrentSite.Now;
+					pageContents.CreateUserId = SecurityData.CurrentUserGuid;
+					pageContents.CreateDate = SiteData.CurrentSite.Now;
 				}
 			}
 
@@ -287,12 +314,30 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					wd.Root_ContentID = pageContents.Root_ContentID;
 					wd.Root_WidgetID = Guid.NewGuid();
 					wd.WidgetDataID = Guid.NewGuid();
+					wd.IsPendingChange = true;
 					wd.EditDate = SiteData.CurrentSite.Now;
 					wd.Save();
 				}
 
 				ContentImportExportUtils.RemoveSerializedExportData(guidImportContentID);
 			}
+
+			cmsHelper.OverrideKey(pageContents.Root_ContentID);
+			if (cmsHelper.cmsAdminWidget != null) {
+				var ww = (from w in cmsHelper.cmsAdminWidget
+						  where w.IsLatestVersion == true
+						  && w.IsPendingChange == true
+						  && (w.ControlPath.StartsWith("CLASS:Carrotware.CMS.UI.Controls.ContentRichText,")
+						  || w.ControlPath.StartsWith("CLASS:Carrotware.CMS.UI.Controls.ContentPlainText,"))
+						  select w);
+
+				foreach (Widget w in ww) {
+					w.Save();
+				}
+			}
+
+			cmsHelper.cmsAdminContent = null;
+			cmsHelper.cmsAdminWidget = null;
 
 			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
 				VirtualDirectory.RegisterRoutes(true);

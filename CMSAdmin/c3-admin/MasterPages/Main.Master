@@ -97,11 +97,10 @@
 					<ul class="children">
 						<li runat="server" id="tabDashboard"><a href="/c3-admin/">Dashboard</a> </li>
 						<li runat="server" id="tabMain"><a href="/c3-admin/SiteInfo.aspx">Site Info</a> </li>
-						<li runat="server" id="tabTxtWidgets"><a href="/c3-admin/TextWidgetIndex.aspx">Text Widgets</a> </li>
-						<li runat="server" id="tabExportSite"><a href="/c3-admin/SiteExport.aspx">Export Site</a> </li>
 						<li runat="server" id="tabContentSkin"><a href="/c3-admin/SiteSkinIndex.aspx">Site Skin Index</a> </li>
 						<li runat="server" id="tabMainTemplate"><a href="/c3-admin/SiteTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabStatusChange"><a href="/c3-admin/SiteContentStatusChange.aspx">Bulk Change Status</a> </li>
+						<li runat="server" id="tabExportSite"><a href="/c3-admin/SiteExport.aspx">Export Site</a> </li>
 						<li runat="server" id="tabImportContent"><a href="/c3-admin/PageImport.aspx">Import Content</a> </li>
 					</ul>
 				</li>
@@ -124,19 +123,30 @@
 						<li runat="server" id="tabBlogCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
 					</ul>
 				</li>
-				<li runat="server" id="tabModules"><a href="/c3-admin/ModuleIndex.aspx">Modules</a> </li>
+				<li runat="server" id="tabExtensions" class="sub"><a href="javascript:void(0)" class="lnkPopup">Extensions </a>
+					<ul class="children">
+						<li runat="server" id="tabModules"><a href="/c3-admin/ModuleIndex.aspx">Modules</a> </li>
+						<li runat="server" id="tabTxtWidgets"><a href="/c3-admin/TextWidgetIndex.aspx">Text Widgets</a> </li>
+						<li runat="server" id="tabSnippets"><a href="/c3-admin/ContentSnippetIndex.aspx">Content Snippets</a> </li>
+					</ul>
+				</li>
 				<li><a href="javascript:void(0)" class="lnkPopup" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
 				<li runat="server" id="tabUserSecurity" class="sub"><a href="javascript:void(0)" class="lnkPopup">Security </a>
 					<ul class="children">
 						<li runat="server" id="tabUserAdmin"><a href="/c3-admin/UserMembership.aspx">Users</a> </li>
 						<li runat="server" id="tabGroupAdmin"><a href="/c3-admin/UserGroups.aspx">Groups</a> </li>
+						<li runat="server" id="tabSites"><a href="/c3-admin/SiteIndex.aspx">Sites</a> </li>
 					</ul>
 				</li>
-				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">My Profile</a> </li>
 				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/About.aspx?');">About</a></li>
 				<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
-				<li>
-					<asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click">Logout - <%=SecurityData.CurrentUser.UserName%></asp:LinkButton>
+				<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
+					<%=String.Format("My Profile [{0}]", SecurityData.CurrentUser.UserName) %></a>
+					<ul class="children">
+						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
+						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>
+						<li><a href="javascript:void(0)" class="lnkPopup" onclick="LogoutLink();">Logout</a> </li>
+					</ul>
 				</li>
 				<li><a href="javascript:void(0)">&nbsp;</a></li>
 			</ul>
@@ -168,11 +178,32 @@
 				<img src="/c3-admin/images/x.png" alt="x" />
 			</div>
 			<div style="display: none">
-				<div id="divCMSModal" title="CMS Alert">
+				<div id="divCMSModal" title="CarrotCake CMS">
 					<div id="divCMSModalMsg">
 						&nbsp;</div>
 				</div>
 			</div>
+		</div>
+		<script type="text/javascript">
+
+			function LogoutLink() {
+				var opts = {
+					"No": function () { cmsAlertModalClose(); },
+					"Yes": function () { ClickLogout(); }
+				};
+
+				cmsAlertModalSmallBtns('Are you sure you want to logout?.', opts);
+
+				return false;
+			}
+
+			function ClickLogout() {
+				$('#<%=btnLogout.ClientID %>').click();
+			}
+		
+		</script>
+		<div style="display: none;">
+			<asp:Button ValidationGroup="logoutForm" ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />
 		</div>
 		<div id="footer">
 			<div id="footer-inner">

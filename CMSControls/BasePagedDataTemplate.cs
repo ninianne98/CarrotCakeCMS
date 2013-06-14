@@ -164,6 +164,11 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(null)]
 		[Browsable(false)]
 		[PersistenceMode(PersistenceMode.InnerProperty)]
+		public virtual ITemplate EmptyDataTemplate { get; set; }
+
+		[DefaultValue(null)]
+		[Browsable(false)]
+		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate ContentHeaderTemplate { get; set; }
 
@@ -368,7 +373,8 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent++;
 
 			writer.WriteLine();
-			writer.Write("\r\n<span id=\"" + this.ClientID + "\">\r\n");
+			writer.WriteLine("<span id=\"" + this.ClientID + "\">");
+			writer.WriteLine();
 
 			if (PagerBelowContent) {
 				RenderWrappedControl(writer, rpPagedContents, this.CSSPageListing);
@@ -378,11 +384,22 @@ namespace Carrotware.CMS.UI.Controls {
 				RenderWrappedControl(writer, rpPagedContents, this.CSSPageListing);
 			}
 
+			if (this.TotalRecords <= 0) {
+				PlaceHolder phEntry = new PlaceHolder();
+				if (this.EmptyDataTemplate != null) {
+					this.EmptyDataTemplate.InstantiateIn(phEntry);
+				}
+
+				this.Controls.Add(phEntry);
+				phEntry.RenderControl(writer);
+			}
+
 			hdnPageNbr.RenderControl(writer);
 
 			base.RenderContents(writer);
 
-			writer.Write("\r\n</span>\r\n");
+			writer.WriteLine();
+			writer.WriteLine("</span>");
 
 			writer.Indent--;
 			writer.Indent--;

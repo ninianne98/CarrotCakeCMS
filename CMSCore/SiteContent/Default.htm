@@ -13,6 +13,10 @@
 			text-align: center;
 			color: #606060;
 		}
+		.msg {
+			text-align: left;
+			color: #000000;
+		}
 	</style>
 </head>
 <body bgcolor="#C1CEB9">
@@ -36,6 +40,16 @@
 		<p>
 			{TIME_STAMP}
 		</p>
+		<div style="display: none;" class="msg">
+			<h3 class="msg">
+				{LONG_NAME}</h3>
+			<div id="content-detail" class="msg">
+				{CONTENT_DETAIL}
+			</div>
+			<div id="stack-trace" class="msg">
+				{STACK_TRACE}
+			</div>
+		</div>
 	</div>
 </body>
 </html>

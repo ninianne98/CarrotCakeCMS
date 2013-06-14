@@ -16,7 +16,7 @@
 	<p>
 		<br />
 	</p>
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="CategoryText asc" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>

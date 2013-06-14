@@ -192,6 +192,35 @@
 			</carrot:CarrotGridView>
 		</div>
 	</fieldset>
+	<fieldset style="width: 90%;">
+		<legend>
+			<label>
+				Content Snippets
+				<asp:CheckBox ID="chkSnippet" runat="server" />
+			</label>
+		</legend>
+		<p>
+			<asp:Literal ID="lblSnippets" runat="server" Text="Label" />
+			records
+		</p>
+		<div class="SortableGrid">
+			<carrot:CarrotGridView CssClass="datatable" DefaultSort="ContentSnippetName ASC" ID="gvSnippets" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+				AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+				<EmptyDataTemplate>
+					<p>
+						<b>No records found.</b>
+					</p>
+				</EmptyDataTemplate>
+				<Columns>
+					<asp:BoundField DataField="ContentSnippetSlug" HeaderText="Slug" />
+					<asp:BoundField DataField="ContentSnippetName" HeaderText="Snippet Name" />
+					<asp:BoundField DataField="CreateDate" HeaderText="Created On" DataFormatString="{0:d}" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ContentSnippetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+						AlternateTextTrue="Active" ShowBooleanImage="true" />
+				</Columns>
+			</carrot:CarrotGridView>
+		</div>
+	</fieldset>
 	<p>
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" Text="Apply Changes" OnClick="btnSave_Click" />
 	</p>

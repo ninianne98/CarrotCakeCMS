@@ -39,6 +39,8 @@
 		<div id="menu-wrapper">
 			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="10px" ForeColor="#FFFFFF" BackColor="#F4845A" />
 		</div>
+		<div style="clear: both;">
+		</div>
 		<div id="sidebar">
 			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="DateMonth" MetaDataTitle="Dates" TakeTop="14" />
 			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Category" MetaDataTitle="Categories" ShowUseCount="true" />
@@ -49,6 +51,8 @@
 			</carrot:ContentContainer>
 			<carrot:WidgetContainer ID="phLeftBottom" runat="server">
 			</carrot:WidgetContainer>
+			<div style="clear: both;">
+			</div>
 		</div>
 		<div id="main">
 			<h1>
@@ -68,8 +72,14 @@
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateYearIndex" LabelText="Year:" FormatText="{0:yyyy}" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="CategoryIndex" LabelText="Category:" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="TagIndex" LabelText="Tag:" />
+					<carrot:PagedDataSummaryTitleOption KeyValue="AuthorIndex" LabelText="Content by " />
 					<carrot:PagedDataSummaryTitleOption KeyValue="SearchResults" LabelText="Search results for:" FormatText=" [ {0} ] " />
 				</TypeLabelPrefixes>
+				<EmptyDataTemplate>
+					<p>
+						<b>No results found.</b>
+					</p>
+				</EmptyDataTemplate>
 				<ContentHeaderTemplate>
 					<h1>
 						Contents</h1>
@@ -83,6 +93,9 @@
 								&nbsp;|&nbsp;
 								<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="CreateDate" FieldFormat="{0:d}" />
 							</b>
+							<br />
+							by
+							<carrot:AuthorLink runat="server" ID="AuthorLink1" />
 							<br />
 							<carrot:ListItemNavText runat="server" ID="ListItemNavText2" DataField="PageTextPlainSummary" />
 						</p>
@@ -142,6 +155,8 @@
 			<carrot:WidgetContainer ID="phCenterBottom" runat="server">
 			</carrot:WidgetContainer>
 			<br />
+			<div style="clear: both;">
+			</div>
 		</div>
 		<div id="rightbar">
 			<carrot:WidgetContainer ID="phRightTop" runat="server">
@@ -150,6 +165,10 @@
 			</carrot:ContentContainer>
 			<carrot:WidgetContainer ID="phRightBottom" runat="server">
 			</carrot:WidgetContainer>
+			<div style="clear: both;">
+			</div>
+		</div>
+		<div style="clear: both;">
 		</div>
 	</div>
 	<div id="footer">

@@ -15,7 +15,7 @@
 	<div style="height: 50px; margin-top: 10px; margin-bottom: 10px;">
 		<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
 	</div>
-	<div id="SortableGrid">
+	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="DisplayName ASC" ID="gvContent" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>
@@ -56,6 +56,14 @@
 					</HeaderTemplate>
 					<ItemTemplate>
 						<asp:CheckBox ID="chkSelect4" runat="server" value='<%# Eval("TextWidgetPickerID") %>' Checked='<%# Eval("ProcessComment") %>' />
+					</ItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField ItemStyle-HorizontalAlign="Center">
+					<HeaderTemplate>
+						Snippet
+					</HeaderTemplate>
+					<ItemTemplate>
+						<asp:CheckBox ID="chkSelect5" runat="server" value='<%# Eval("TextWidgetPickerID") %>' Checked='<%# Eval("ProcessSnippet") %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
 			</Columns>

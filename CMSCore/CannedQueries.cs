@@ -142,12 +142,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal static IQueryable<vw_carrot_Content> GetContentByTagURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sTagURL) {
-			return (from r in ctx.vw_carrot_TagURLs
-					join m in ctx.carrot_TagContentMappings on r.ContentTagID equals m.ContentTagID
+			return (from t in ctx.vw_carrot_TagURLs
+					join m in ctx.carrot_TagContentMappings on t.ContentTagID equals m.ContentTagID
 					join ct in ctx.vw_carrot_Contents on m.Root_ContentID equals ct.Root_ContentID
-					where r.SiteID == siteID
+					where t.SiteID == siteID
 						&& ct.SiteID == siteID
-						&& r.TagUrl.ToLower() == sTagURL.ToLower()
+						&& t.TagUrl.ToLower() == sTagURL.ToLower()
+						&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 						&& (ct.PageActive == true || bActiveOnly == false)
 						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
 						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
@@ -156,12 +157,27 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal static IQueryable<vw_carrot_Content> GetContentByCategoryURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sCatURL) {
-			return (from r in ctx.vw_carrot_CategoryURLs
-					join m in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals m.ContentCategoryID
+			return (from c in ctx.vw_carrot_CategoryURLs
+					join m in ctx.carrot_CategoryContentMappings on c.ContentCategoryID equals m.ContentCategoryID
 					join ct in ctx.vw_carrot_Contents on m.Root_ContentID equals ct.Root_ContentID
-					where r.SiteID == siteID
+					where c.SiteID == siteID
 						&& ct.SiteID == siteID
-						&& r.CategoryUrl.ToLower() == sCatURL.ToLower()
+						&& c.CategoryUrl.ToLower() == sCatURL.ToLower()
+						&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
+						&& (ct.PageActive == true || bActiveOnly == false)
+						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
+						&& ct.IsLatestVersion == true
+					select ct);
+		}
+
+		internal static IQueryable<vw_carrot_Content> GetContentByUserURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sUserURL) {
+			return (from ed in ctx.vw_carrot_EditorURLs
+					join ct in ctx.vw_carrot_Contents on ed.UserId equals ct.EditUserId
+					where ed.SiteID == siteID
+						&& ct.SiteID == siteID
+						&& ed.UserUrl.ToLower() == sUserURL.ToLower()
+						&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 						&& (ct.PageActive == true || bActiveOnly == false)
 						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
 						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
@@ -176,6 +192,7 @@ namespace Carrotware.CMS.Core {
 					where r.SiteID == siteID
 						&& ct.SiteID == siteID
 						&& lstCategories.Contains(r.ContentCategoryID)
+						&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 						&& (ct.PageActive == true || bActiveOnly == false)
 						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
 						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)

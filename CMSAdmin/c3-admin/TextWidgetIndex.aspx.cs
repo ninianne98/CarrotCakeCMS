@@ -48,12 +48,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			List<Guid> lstUpd2 = GeneralUtilities.GetCheckedItemGuidsByValue(gvContent, true, "chkSelect2");
 			List<Guid> lstUpd3 = GeneralUtilities.GetCheckedItemGuidsByValue(gvContent, true, "chkSelect3");
 			List<Guid> lstUpd4 = GeneralUtilities.GetCheckedItemGuidsByValue(gvContent, true, "chkSelect4");
+			List<Guid> lstUpd5 = GeneralUtilities.GetCheckedItemGuidsByValue(gvContent, true, "chkSelect5");
 
 			lst.ForEach(x => {
 				x.ProcessBody = lstUpd1.Contains(x.TextWidgetPickerID);
 				x.ProcessPlainText = lstUpd2.Contains(x.TextWidgetPickerID);
 				x.ProcessHTMLText = lstUpd3.Contains(x.TextWidgetPickerID);
 				x.ProcessComment = lstUpd4.Contains(x.TextWidgetPickerID);
+				x.ProcessSnippet = lstUpd5.Contains(x.TextWidgetPickerID);
 			});
 
 			foreach (CMSTextWidgetPicker w in lst) {
@@ -66,8 +68,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ww.ProcessPlainText = w.ProcessPlainText;
 				ww.ProcessHTMLText = w.ProcessHTMLText;
 				ww.ProcessComment = w.ProcessComment;
+				ww.ProcessSnippet = w.ProcessSnippet;
 
-				if (ww.ProcessBody || ww.ProcessPlainText || ww.ProcessHTMLText || ww.ProcessComment) {
+				if (ww.ProcessBody || ww.ProcessPlainText || ww.ProcessHTMLText || ww.ProcessComment || ww.ProcessSnippet) {
 					ww.Save();
 				} else {
 					ww.Delete();

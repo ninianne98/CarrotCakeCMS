@@ -235,7 +235,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							chkValues.DataTextField = "Value";
 							chkValues.DataValueField = "Key";
 
-							GeneralUtilities.BindList(ddlValue, ListSourceProperty.DefValue);
+							GeneralUtilities.BindList(chkValues, ListSourceProperty.DefValue);
 
 							// since this is a multi selected capable field, look for anything that starts with the 
 							// field name and has the delimeter trailing

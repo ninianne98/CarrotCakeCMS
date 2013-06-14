@@ -25,6 +25,11 @@
 			<ItemTemplate>
 				<div>
 					<b>
+						<asp:Image ID="imgStat1" runat="server" Visible='<%# (bool)Eval("AlteredData") && !(bool)Eval("HasExceoption") %>' ImageUrl="/c3-admin/images/lightbulb.png"
+							ToolTip="Executed" />
+						<asp:Image ID="imgStat2" runat="server" Visible='<%# !(bool)Eval("AlteredData") && !(bool)Eval("HasExceoption") %>' ImageUrl="/c3-admin/images/lightbulb_off.png"
+							ToolTip="Skipped" />
+						<asp:Image ID="imgStat3" runat="server" Visible='<%# (bool)Eval("HasExceoption") %>' ImageUrl="/c3-admin/images/exclamation.png" ToolTip="Error" />
 						<%#Eval("Message")%></b>
 					<%#Eval("Response")%>
 				</div>

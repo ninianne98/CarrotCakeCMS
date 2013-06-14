@@ -38,11 +38,11 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		public bool ScaleImage { get; set; }
 
-		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstGalleryIDs")]
+		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstGalleryID")]
 		public List<Guid> GalleryIDs { get; set; }
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstGalleryIDs {
+		public Dictionary<string, string> lstGalleryID {
 			get {
 				if (SiteID == Guid.Empty) {
 					SiteID = SiteData.CurrentSiteID;

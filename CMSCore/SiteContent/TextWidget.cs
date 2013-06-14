@@ -23,10 +23,13 @@ namespace Carrotware.CMS.Core {
 		public Guid TextWidgetID { get; set; }
 		public Guid SiteID { get; set; }
 		public string TextWidgetAssembly { get; set; }
+
 		public bool ProcessBody { get; set; }
 		public bool ProcessPlainText { get; set; }
 		public bool ProcessHTMLText { get; set; }
+
 		public bool ProcessComment { get; set; }
+		public bool ProcessSnippet { get; set; }
 
 
 		private ITextBodyUpdate _txt = null;
@@ -70,6 +73,7 @@ namespace Carrotware.CMS.Core {
 				this.ProcessPlainText = c.ProcessPlainText;
 				this.ProcessHTMLText = c.ProcessHTMLText;
 				this.ProcessComment = c.ProcessComment;
+				this.ProcessSnippet = c.ProcessSnippet;
 			}
 		}
 
@@ -90,6 +94,7 @@ namespace Carrotware.CMS.Core {
 				s.ProcessPlainText = this.ProcessPlainText;
 				s.ProcessHTMLText = this.ProcessHTMLText;
 				s.ProcessComment = this.ProcessComment;
+				s.ProcessSnippet = this.ProcessSnippet;
 
 				if (bNew) {
 					_db.carrot_TextWidgets.InsertOnSubmit(s);

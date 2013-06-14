@@ -23,12 +23,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidContentID = GetGuidPageIDFromQuery();
 			guidWidgetID = GetGuidParameterFromQuery("widgetid");
 
-			if (!string.IsNullOrEmpty(Request.QueryString["field"])) {
-				sFieldName = Request.QueryString["field"].ToString().ToLower();
-			}
-			if (!string.IsNullOrEmpty(Request.QueryString["mode"])) {
-				sMode = Request.QueryString["mode"].ToString().ToLower();
-			}
+			sFieldName = GetStringParameterFromQuery("field").ToLower();
+			sMode = GetStringParameterFromQuery("mode").ToLower();
 
 			cmsHelper.OverrideKey(guidContentID);
 
@@ -46,8 +42,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (!IsPostBack) {
 					if (guidWidgetID != Guid.Empty) {
 						Widget pageWidget = (from w in cmsHelper.cmsAdminWidget
-												 where w.Root_WidgetID == guidWidgetID
-												 select w).FirstOrDefault();
+											 where w.Root_WidgetID == guidWidgetID
+											 select w).FirstOrDefault();
 
 						reBody.Text = pageWidget.ControlProperties;
 
@@ -78,12 +74,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					List<Widget> lstWidgets = cmsHelper.cmsAdminWidget;
 
 					Widget pageWidget = (from w in lstWidgets
-											 where w.Root_WidgetID == guidWidgetID
-											 select w).FirstOrDefault();
+										 where w.Root_WidgetID == guidWidgetID
+										 select w).FirstOrDefault();
 
 					pageWidget.ControlProperties = reBody.Text;
 					pageWidget.WidgetDataID = Guid.NewGuid();
-					
+					pageWidget.IsPendingChange = true;
+
 					lstWidgets.RemoveAll(x => x.Root_WidgetID == guidWidgetID);
 
 					lstWidgets.Add(pageWidget);
