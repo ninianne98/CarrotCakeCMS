@@ -33,6 +33,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				bAddTopLevelPage = Convert.ToBoolean(Request.QueryString["addtoplevel"].ToString());
 			}
 
+			if (!IsPostBack) {
+				lnkCreatePage.NavigateUrl = string.Format("{0}?addtoplevel={1}&pageid={2}", SiteData.CurrentScriptName, bAddTopLevelPage, guidContentID);
+			}
+
 			cmsHelper.OverrideKey(guidContentID);
 
 			if (cmsHelper.cmsAdminContent != null) {
@@ -61,13 +65,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-			pageContents.Root_ContentID = Guid.NewGuid();
-			pageContents.ContentID = pageContents.Root_ContentID;
 			pageContents.Parent_ContentID = parentContentID;
-
-			pageContents.SiteID = SiteData.CurrentSiteID;
-
-			pageContents.TemplateFile = SiteData.DefaultTemplateFilename;
 
 			pageContents.TitleBar = txtTitle.Text;
 			pageContents.NavMenuText = txtNav.Text;

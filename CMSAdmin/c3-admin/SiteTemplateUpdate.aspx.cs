@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 /*
 * CarrotCake CMS
@@ -30,8 +30,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			pageHome = pageHelper.FindHome(siteID, true);
 
-			if (pageHome != null && pageHome.Root_ContentID != Guid.Empty) {
-				if (!IsPostBack) {
+			if (!IsPostBack) {
+
+				List<CMSTemplate> lstTemplate = cmsHelper.Templates;
+
+				GeneralUtilities.BindListDefaultText(ddlBlogIndex, lstTemplate, null, sSelTemplate, "0");
+				GeneralUtilities.BindListDefaultText(ddlHome, lstTemplate, null, sSelTemplate, "0");
+
+				if (pageHome != null && pageHome.Root_ContentID != Guid.Empty) {
 
 					if (SiteData.CurrentSite.Blog_Root_ContentID.HasValue) {
 						pageIndex = pageHelper.FindContentByID(siteID, SiteData.CurrentSite.Blog_Root_ContentID.Value);
@@ -39,25 +45,23 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					litHomepage.Text = pageHome.NavMenuText + "  [" + pageHome.FileName + "]";
 
-					GeneralUtilities.BindListDefaultText(ddlHome, cmsHelper.Templates, pageHome.TemplateFile, sSelTemplate, "0");
-
-					GeneralUtilities.BindListDefaultText(ddlBlog, cmsHelper.Templates, null, sSelTemplate, "0");
+					GeneralUtilities.BindListDefaultText(ddlHome, lstTemplate, pageHome.TemplateFile, sSelTemplate, "0");
 
 					if (pageIndex != null) {
 						ParentPagePicker.SelectedPage = pageIndex.Root_ContentID;
-						GeneralUtilities.SelectListValue(ddlBlog, pageIndex.TemplateFile);
+						GeneralUtilities.SelectListValue(ddlBlogIndex, pageIndex.TemplateFile);
 					} else {
 						ParentPagePicker.SelectedPage = null;
-						ddlBlog.Enabled = false;
+						//ddlBlogIndex.Enabled = false;
 					}
-
-					GeneralUtilities.BindListDefaultText(ddlAll, cmsHelper.Templates, null, sSelTemplate, "0");
-					GeneralUtilities.BindListDefaultText(ddlTop, cmsHelper.Templates, null, sSelTemplate, "0");
-					GeneralUtilities.BindListDefaultText(ddlSub, cmsHelper.Templates, null, sSelTemplate, "0");
-					GeneralUtilities.BindListDefaultText(ddlPages, cmsHelper.Templates, null, sSelTemplate, "0");
-					GeneralUtilities.BindListDefaultText(ddlPosts, cmsHelper.Templates, null, sSelTemplate, "0");
-
 				}
+
+				GeneralUtilities.BindListDefaultText(ddlAll, lstTemplate, null, sSelTemplate, "0");
+				GeneralUtilities.BindListDefaultText(ddlTop, lstTemplate, null, sSelTemplate, "0");
+				GeneralUtilities.BindListDefaultText(ddlSub, lstTemplate, null, sSelTemplate, "0");
+				GeneralUtilities.BindListDefaultText(ddlPages, lstTemplate, null, sSelTemplate, "0");
+				GeneralUtilities.BindListDefaultText(ddlPosts, lstTemplate, null, sSelTemplate, "0");
+
 			}
 		}
 
@@ -72,35 +76,34 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			SiteData.CurrentSite.Save();
 
-			if (ddlPosts.SelectedValue.Length > 2) {
+			if (ddlPosts.SelectedValue.Length > 5) {
 				pageHelper.UpdateAllBlogTemplates(siteID, ddlPosts.SelectedValue);
 			}
-			if (ddlPages.SelectedValue.Length > 2) {
+			if (ddlPages.SelectedValue.Length > 5) {
 				pageHelper.UpdateAllPageTemplates(siteID, ddlPages.SelectedValue);
 			}
 
-			if (ddlTop.SelectedValue.Length > 2) {
+			if (ddlTop.SelectedValue.Length > 5) {
 				pageHelper.UpdateTopPageTemplates(siteID, ddlTop.SelectedValue);
 			}
-			if (ddlSub.SelectedValue.Length > 2) {
+			if (ddlSub.SelectedValue.Length > 5) {
 				pageHelper.UpdateSubPageTemplates(siteID, ddlSub.SelectedValue);
 			}
 
-			if (ddlHome.SelectedValue.Length > 2 && pageHome != null) {
+			if (pageHome != null && ddlHome.SelectedValue.Length > 5) {
 				pageHome.TemplateFile = ddlHome.SelectedValue;
 				pageHome.ApplyTemplate();
 			}
-			if (ddlBlog.SelectedValue.Length > 2 && pageIndex != null) {
-				pageIndex.TemplateFile = ddlBlog.SelectedValue;
+			if (pageIndex != null && ddlBlogIndex.SelectedValue.Length > 5) {
+				pageIndex.TemplateFile = ddlBlogIndex.SelectedValue;
 				pageIndex.ApplyTemplate();
 			}
 
-			if (ddlAll.SelectedValue.Length > 2) {
+			if (ddlAll.SelectedValue.Length > 5) {
 				pageHelper.UpdateAllContentTemplates(siteID, ddlAll.SelectedValue);
 			}
 
 			Response.Redirect(SiteData.CurrentScriptName);
-
 		}
 
 

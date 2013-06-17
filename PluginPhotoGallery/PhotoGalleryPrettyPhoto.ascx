@@ -14,8 +14,9 @@
 				<asp:Repeater ID="rpGallery" runat="server">
 					<ItemTemplate>
 						<a target="_blank" href="<%# String.Format("{0}", Eval("GalleryImage"))  %>" rel="prettyPhoto[<%=this.ClientID %>]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
-							<img src="/carrotwarethumb.axd?scale=<%# GetScale()%>&thumb=<%# HttpUtility.UrlEncode(String.Format("{0}", Eval("GalleryImage")))  %>&square=<%# GetThumbSize() %>"
-								alt="" /></a>
+							<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# Eval("GalleryImage")  %>' ThumbSize='<%# ThumbSize %>' ScaleImage='<%# ScaleImage %>'
+								ToolTip="" />
+						</a>
 					</ItemTemplate>
 				</asp:Repeater>
 			</div>

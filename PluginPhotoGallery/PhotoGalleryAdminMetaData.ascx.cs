@@ -26,19 +26,23 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 
 			litImgName.Text = sImageFile;
+			ImageSizer1.ImageUrl = sImageFile;
+			ImageSizer1.ToolTip = sImageFile;
 
 			if (!IsPostBack) {
-				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
-					var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
+				LoadForm();
+			}
+		}
 
-					if (meta != null) {
-						txtMetaInfo.Text = meta.ImageMetaData;
-						txtTitle.Text = meta.ImageTitle;
-					}
+		private void LoadForm() {
+			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+				var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
+
+				if (meta != null) {
+					txtMetaInfo.Text = meta.ImageMetaData;
+					txtTitle.Text = meta.ImageTitle;
 				}
 			}
-
-
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {

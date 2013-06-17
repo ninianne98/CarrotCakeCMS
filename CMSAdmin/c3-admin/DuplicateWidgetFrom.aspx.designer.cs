@@ -10,177 +10,144 @@
 namespace Carrotware.CMS.UI.Admin.c3_admin {
     
     
-    public partial class PageAddChild {
+    public partial class DuplicateWidgetFrom {
         
         /// <summary>
-        /// pnlSaved control.
+        /// hdnSelectedItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlSaved;
+        protected global::System.Web.UI.WebControls.HiddenField hdnSelectedItem;
         
         /// <summary>
-        /// litPageName control.
+        /// btnLoadWidgets control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litPageName;
+        protected global::System.Web.UI.WebControls.Button btnLoadWidgets;
         
         /// <summary>
-        /// lnkCreatePage control.
+        /// txtSearchTerm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkCreatePage;
+        protected global::System.Web.UI.WebControls.TextBox txtSearchTerm;
         
         /// <summary>
-        /// pnlAdd control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdd;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// txtTitle control.
+        /// chkActive control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTitle;
+        protected global::System.Web.UI.WebControls.CheckBox chkActive;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// phResults control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.PlaceHolder phResults;
         
         /// <summary>
-        /// txtFileName control.
+        /// litResults control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFileName;
+        protected global::System.Web.UI.WebControls.Literal litResults;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// gvPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
         
         /// <summary>
-        /// CompareValidator1 control.
+        /// phWidgets control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
+        protected global::System.Web.UI.WebControls.PlaceHolder phWidgets;
         
         /// <summary>
-        /// txtFileValid control.
+        /// litSrc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFileValid;
+        protected global::System.Web.UI.WebControls.Literal litSrc;
         
         /// <summary>
-        /// RequiredFieldValidator3 control.
+        /// btnDuplicate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        protected global::System.Web.UI.WebControls.Button btnDuplicate;
         
         /// <summary>
-        /// txtNav control.
+        /// gvWidgets control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNav;
+        protected global::Carrotware.Web.UI.Controls.CarrotGridView gvWidgets;
         
         /// <summary>
-        /// RequiredFieldValidator4 control.
+        /// phDone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
+        protected global::System.Web.UI.WebControls.PlaceHolder phDone;
         
         /// <summary>
-        /// txtHead control.
+        /// litCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtHead;
+        protected global::System.Web.UI.WebControls.Literal litCount;
         
         /// <summary>
-        /// txtKey control.
+        /// Master property.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated property.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtKey;
-        
-        /// <summary>
-        /// txtDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescription;
-        
-        /// <summary>
-        /// formValidationSummary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary formValidationSummary;
-        
-        /// <summary>
-        /// btnSaveButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSaveButton;
-        
-        /// <summary>
-        /// btnSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        public new Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Main Master {
+            get {
+                return ((Carrotware.CMS.UI.Admin.c3_admin.MasterPages.Main)(base.Master));
+            }
+        }
     }
 }

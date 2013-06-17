@@ -615,8 +615,8 @@
 											</asp:TemplateField>
 											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
 											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
-											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
-												AlternateTextTrue="Active" ShowBooleanImage="true" />
+											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
+												ShowBooleanImage="true" />
 											<asp:TemplateField>
 												<HeaderTemplate>
 												</HeaderTemplate>
@@ -648,8 +648,8 @@
 											</asp:TemplateField>
 											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
 											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
-											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
-												AlternateTextTrue="Active" ShowBooleanImage="true" />
+											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
+												ShowBooleanImage="true" />
 											<asp:TemplateField>
 												<HeaderTemplate>
 												</HeaderTemplate>

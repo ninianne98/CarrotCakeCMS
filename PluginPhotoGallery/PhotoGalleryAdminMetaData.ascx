@@ -3,7 +3,8 @@
 	Photo Gallery : Image Meta Data</h2>
 <p>
 	<asp:Literal ID="litImgName" runat="server" /><br />
-	<img src="/carrotwarethumb.axd?thumb=<%= HttpUtility.UrlEncode(sImageFile) %>&scale=true&square=100" alt="<%=sImageFile %>" title="<%=sImageFile %>" />
+	<%--<img src="/carrotwarethumb.axd?thumb=<%= HttpUtility.UrlEncode(sImageFile) %>&scale=true&square=100" alt="<%=sImageFile %>" title="<%=sImageFile %>" />--%>
+	<carrot:ImageSizer runat="server" ID="ImageSizer1" ThumbSize="100" />
 </p>
 <p>
 	<b>Title</b><br />
@@ -23,7 +24,7 @@
 <script type="text/javascript">
 	function SubmitPage() {
 		var ret = tinyMCE.triggerSave();
-		setTimeout("ClickBtn();", 500);
+		setTimeout("ClickBtn();", 800);
 	}
 	function ClickBtn() {
 		$('#<%=btnSave.ClientID %>').click();

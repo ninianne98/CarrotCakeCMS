@@ -171,7 +171,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (bCaptcha) {
 				HttpRequest request = HttpContext.Current.Request;
 
-				bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsEditor;
+				bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
 				SiteNav navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, SiteData.CurrentScriptName);
 

@@ -3,7 +3,6 @@
 <div style="clear: both;">
 </div>
 <div>
-	<%--<carrot:jquery runat="server" ID="jquery1" />--%>
 	<div runat="server" id="divGallery">
 		<asp:Panel ID="pnlGalleryHead" runat="server">
 			<h2>
@@ -15,8 +14,9 @@
 				<asp:Repeater ID="rpGallery" runat="server">
 					<ItemTemplate>
 						<a target="_blank" href="<%# String.Format("{0}", Eval("GalleryImage"))  %>" rel="<%=this.ClientID %>" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
-							<img src="/carrotwarethumb.axd?scale=<%# GetScale()%>&thumb=<%# HttpUtility.UrlEncode(String.Format("{0}", Eval("GalleryImage")))  %>&square=<%# GetThumbSize() %>"
-								alt="" /></a>
+							<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# Eval("GalleryImage")  %>' ThumbSize='<%# ThumbSize %>' ScaleImage='<%# ScaleImage %>'
+								ToolTip="" />
+						</a>
 					</ItemTemplate>
 				</asp:Repeater>
 			</div>

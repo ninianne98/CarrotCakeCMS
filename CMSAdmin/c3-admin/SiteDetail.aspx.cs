@@ -37,8 +37,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (theSite != null) {
 				litID.Text = theSite.SiteID.ToString();
-				litSiteName.Text = theSite.SiteName.ToString();
-				litTagline.Text = theSite.SiteTagline.ToString();
+				litSiteName.Text = theSite.SiteName;
+				litTagline.Text = theSite.SiteTagline;
+				litURL.Text = theSite.MainURL;
 			}
 
 			if (!IsPostBack) {

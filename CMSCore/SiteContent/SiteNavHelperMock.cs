@@ -272,19 +272,19 @@ namespace Carrotware.CMS.Core {
 		public string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath) {
 			string sTitle = String.Empty;
 
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+			if (currentSite.CheckIsBlogCategoryPath(sFilterPath)) {
 				sTitle = "Category 1";
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+			if (currentSite.CheckIsBlogTagPath(sFilterPath)) {
 				sTitle = "Tag 1";
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogEditorFolderPath(sFilterPath)) {
 				sTitle = "Editor 1";
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogDateFolderPath(sFilterPath)) {
 				sTitle = DateTime.UtcNow.ToString("MMMM yyyy");
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
+			if (currentSite.CheckIsSiteSearchPath(sFilterPath)) {
 				sTitle = "Search Results";
 			}
 

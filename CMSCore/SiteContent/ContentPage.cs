@@ -188,7 +188,7 @@ namespace Carrotware.CMS.Core {
 					widgets = this.GetWidgetList();
 				} else {
 					widgets = (from w in ch.cmsAdminWidget
-							   orderby w.WidgetOrder
+							   orderby w.WidgetOrder, w.EditDate
 							   select w).ToList();
 				}
 			}
@@ -269,9 +269,10 @@ namespace Carrotware.CMS.Core {
 				c.NavOrder = 10;
 			}
 
-			rc.GoLiveDateLocal = this.GoLiveDate;
 			rc.GoLiveDate = pageSite.ConvertSiteTimeToUTC(this.GoLiveDate);
 			rc.RetireDate = pageSite.ConvertSiteTimeToUTC(this.RetireDate);
+
+			rc.GoLiveDateLocal = pageSite.ConvertUTCToSiteTime(rc.GoLiveDate);
 
 			rc.PageSlug = this.PageSlug;
 			rc.PageThumbnail = this.Thumbnail;

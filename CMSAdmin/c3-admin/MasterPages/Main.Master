@@ -84,6 +84,8 @@
 					<asp:Literal ID="litSiteIdent" runat="server" />
 					<asp:Literal ID="litTag" runat="server" />
 				</h3>
+				<div class="widthshim">
+				</div>
 			</div>
 			<div style="display: none">
 				<asp:Button ID="cmdDummy" runat="server"></asp:Button>
@@ -141,7 +143,7 @@
 				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/About.aspx?');">About</a></li>
 				<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
 				<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
-					<%=String.Format("My Profile [{0}]", SecurityData.CurrentUser.UserName) %></a>
+					<%=String.Format("My Profile [{0}]", userName)%></a>
 					<ul class="children">
 						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
 						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>

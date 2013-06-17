@@ -22,10 +22,23 @@ using Carrotware.Web.UI.Controls;
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 	public partial class Main : AdminBaseMasterPage {
 
+		public string userName = String.Empty;
+
 		protected void Page_Load(object sender, EventArgs e) {
+
+			if (!Page.User.Identity.IsAuthenticated) {
+				FormsAuthentication.SignOut();
+				Response.Redirect(SiteFilename.LogonURL);
+			}
+
+			if (SecurityData.CurrentUser != null) {
+				userName = SecurityData.CurrentUser.UserName;
+			}
+
 			if (!SecurityData.IsAdmin) {
 				tabUserSecurity.Visible = false;
 			}
+
 			tabUserAdmin.Visible = tabUserSecurity.Visible;
 			tabGroupAdmin.Visible = tabUserSecurity.Visible;
 			tabSites.Visible = tabUserSecurity.Visible;

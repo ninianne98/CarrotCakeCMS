@@ -694,11 +694,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					return "FAIL";
 				}
 
-				if (TheFileName.StartsWith(SiteData.CurrentSite.BlogFolderPath.ToLower())
-					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogCategoryPath.ToLower())
-					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogTagPath.ToLower())
-					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogEditorFolderPath.ToLower())
-					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())) {
+				if (SiteData.CurrentSite.GetSpecialFilePathPrefixes().Where(x => TheFileName.StartsWith(x.ToLower())).Count() > 0
+					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogFolderPath.ToLower())) {
 
 					return "FAIL";
 				}
@@ -830,7 +827,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				List<Widget> ww2 = (from w1 in cacheWidget
 									where w1.PlaceholderName.ToLower() == WidgetTarget.ToLower()
 									&& w1.WidgetOrder >= 0
-									orderby w1.WidgetOrder
+									orderby w1.WidgetOrder, w1.EditDate
 									select w1).ToList();
 
 				int iW = 1;
@@ -967,9 +964,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				LoadGuids();
 				Guid guidWidget = new Guid(DBKey);
 
-				Widget ww = (from w in cmsAdminWidget
-							 where w.WidgetDataID == guidWidget
-							 select w).FirstOrDefault();
+				Widget ww = null;
+
+				try {
+					ww = (from w in cmsAdminWidget
+						  where w.WidgetDataID == guidWidget
+						  select w).FirstOrDefault();
+
+				} catch (Exception ex) { }
 
 				if (ww == null) {
 					ww = widgetHelper.GetWidgetVersion(guidWidget);
@@ -1003,10 +1005,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				CurrentPageGuid = new Guid(ThisPage);
 				LoadGuids();
 				Guid guidWidget = new Guid(DBKey);
+				Widget ww = null;
 
-				Widget ww = (from w in cmsAdminWidget
-							 where w.Root_WidgetID == guidWidget
-							 select w).FirstOrDefault();
+				try {
+					ww = (from w in cmsAdminWidget
+						  where w.Root_WidgetID == guidWidget
+						  select w).FirstOrDefault();
+
+				} catch (Exception ex) { }
 
 				if (ww == null) {
 					ww = widgetHelper.Get(guidWidget);
@@ -1051,6 +1057,55 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						w.IsWidgetPendingDelete = true;
 						w.IsWidgetActive = false;
 						w.EditDate = SiteData.CurrentSite.Now;
+					}
+				}
+
+				cmsAdminWidget = cacheWidget;
+
+				return "OK";
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
+				return ex.ToString();
+			}
+		}
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string CopyWidget(string DBKey, string ThisPage) {
+			try {
+				CurrentPageGuid = new Guid(ThisPage);
+				LoadGuids();
+
+				Guid guidWidget = new Guid(DBKey);
+
+				List<Widget> cacheWidget = cmsAdminWidget;
+
+				List<Widget> ww = (from w in cacheWidget
+								   where w.Root_WidgetID == guidWidget
+									&& w.IsLatestVersion == true
+								   select w).ToList();
+
+				if (ww != null) {
+					foreach (var w in ww) {
+						Guid newWidget = Guid.NewGuid();
+
+						Widget wCpy = new Widget {
+							Root_ContentID = w.Root_ContentID,
+							Root_WidgetID = newWidget,
+							WidgetDataID = Guid.NewGuid(),
+							PlaceholderName = w.PlaceholderName,
+							ControlPath = w.ControlPath,
+							ControlProperties = w.ControlProperties,
+							IsLatestVersion = true,
+							IsPendingChange = true,
+							IsWidgetActive = true,
+							IsWidgetPendingDelete = false,
+							WidgetOrder = w.WidgetOrder,
+							EditDate = SiteData.CurrentSite.Now
+						};
+
+						cacheWidget.Add(wCpy);
 					}
 				}
 

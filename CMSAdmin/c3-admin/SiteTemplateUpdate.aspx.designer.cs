@@ -67,13 +67,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::Carrotware.CMS.UI.Admin.c3_admin.ucSitePageDrillDown ParentPagePicker;
         
         /// <summary>
-        /// ddlBlog control.
+        /// ddlBlogIndex control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBlog;
+        protected global::System.Web.UI.WebControls.DropDownList ddlBlogIndex;
         
         /// <summary>
         /// ddlPosts control.

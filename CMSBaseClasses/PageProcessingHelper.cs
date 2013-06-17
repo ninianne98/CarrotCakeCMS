@@ -249,7 +249,7 @@ namespace Carrotware.CMS.UI.Base {
 
 					if (!SecurityData.AdvancedEditMode) {
 
-						if (SecurityData.IsAdmin || SecurityData.IsEditor) {
+						if (SecurityData.IsAdmin || SecurityData.IsSiteEditor) {
 							if (!SiteData.IsPageSampler && !IsPageTemplate) {
 								Control editor = this.CurrentWebPage.LoadControl(SiteFilename.EditNotifierControlPath);
 								this.CurrentWebPage.Form.Controls.Add(editor);
@@ -288,18 +288,19 @@ namespace Carrotware.CMS.UI.Base {
 					CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 					//find each placeholder in use ONCE!
-					List<LabeledControl> lstPlaceholders = (from d in pageWidgets
-															where d.Root_ContentID == pageContents.Root_ContentID
+					List<LabeledControl> lstPlaceholders = (from ph in pageWidgets
+															where ph.Root_ContentID == pageContents.Root_ContentID
 															select new LabeledControl {
-																ControlLabel = d.PlaceholderName,
-																KeyControl = FindTheControl(d.PlaceholderName, this.CurrentWebPage)
+																ControlLabel = ph.PlaceholderName,
+																KeyControl = FindTheControl(ph.PlaceholderName, this.CurrentWebPage)
 															}).Distinct().ToList();
 
-					List<Widget> lstWidget = (from d in pageWidgets
-											  where d.Root_ContentID == pageContents.Root_ContentID
-												&& d.IsWidgetActive == true
-												&& d.IsWidgetPendingDelete == false
-											  select d).ToList();
+					List<Widget> lstWidget = (from w in pageWidgets
+											  orderby w.WidgetOrder, w.EditDate
+											  where w.Root_ContentID == pageContents.Root_ContentID
+												&& w.IsWidgetActive == true
+												&& w.IsWidgetPendingDelete == false
+											  select w).ToList();
 
 					Assembly a = Assembly.GetExecutingAssembly();
 

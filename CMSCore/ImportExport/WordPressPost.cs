@@ -49,7 +49,7 @@ namespace Carrotware.CMS.Core {
 		public string AttachmentURL { get; set; }
 
 		public override string ToString() {
-			return PostTitle + " : " + PostType.ToString() + " , #" + PostID;
+			return this.PostTitle + " : " + this.PostType.ToString() + " , #" + this.PostID;
 		}
 
 		public override bool Equals(Object obj) {
@@ -58,6 +58,7 @@ namespace Carrotware.CMS.Core {
 			if (obj is WordPressPost) {
 				WordPressPost p = (WordPressPost)obj;
 				return (this.PostID == p.PostID)
+						&& (this.ImportFileName == p.ImportFileName)
 						&& (this.PostDateUTC == p.PostDateUTC);
 			} else {
 				return false;
@@ -65,7 +66,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public override int GetHashCode() {
-			return PostID.GetHashCode() ^ PostDateUTC.GetHashCode();
+			return this.PostID.GetHashCode() ^ this.ImportFileName.GetHashCode() ^ this.PostDateUTC.GetHashCode();
 		}
 
 		public void CleanBody() {

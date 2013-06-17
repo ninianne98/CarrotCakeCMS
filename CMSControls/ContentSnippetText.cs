@@ -118,7 +118,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ContentSnippet cs = null;
 
 			try {
-				bool bIsEditor = SecurityData.IsAdmin || SecurityData.IsEditor;
+				bool bIsEditor = SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
 				if (this.SnippetID != Guid.Empty) {
 					cs = ContentSnippet.GetSnippetByID(SiteData.CurrentSiteID, this.SnippetID, !bIsEditor);

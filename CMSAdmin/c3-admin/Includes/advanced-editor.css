@@ -436,7 +436,7 @@ p.cmsToolItem {
 #cmsEditMenuList ul.cmsMnuChildren li {
 	margin: 0;
 	padding: 0;
-	padding: 1px !important;
+	padding: 0px !important;
 	margin: 1px !important;
 	overflow: hidden !important;
 }
@@ -447,7 +447,7 @@ p.cmsToolItem {
 	text-decoration: none !important;
 	width: 100% !important;
 	display: inline !important;
-	padding: 1px !important;
+	padding: 0px !important;
 	margin: 1px !important;
 	margin-bottom: 2px !important;
 	float: none !important;
@@ -483,7 +483,7 @@ p.cmsToolItem {
 	padding: 1px !important;
 	color: #676F6A !important;
 	background: #FFFFFF !important;
-	display: inline-block !important;		
+	display: inline-block !important;
 }
 
 .cmsSnippetOuter {

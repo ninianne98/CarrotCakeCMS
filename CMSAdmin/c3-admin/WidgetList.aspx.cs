@@ -25,12 +25,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(Request.QueryString["zone"])) {
-				sZone = Request.QueryString["zone"].ToString().ToLower();
-			}
-
 			guidContentID = GetGuidPageIDFromQuery();
-
+			sZone = GetStringParameterFromQuery("zone");
 			cmsHelper.OverrideKey(guidContentID);
 
 			if (!IsPostBack) {
