@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Carrotware.CMS.Data;
+using System.Web.Caching;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -154,7 +155,7 @@ namespace Carrotware.CMS.Core {
 		public static bool IsAdmin {
 			get {
 				try {
-					return Roles.IsUserInRole(CMSGroup_Admins);
+					return Roles.IsUserInRole(SecurityData.CMSGroup_Admins);
 				} catch {
 					return false;
 				}
@@ -163,7 +164,7 @@ namespace Carrotware.CMS.Core {
 		public static bool IsEditor {
 			get {
 				try {
-					return Roles.IsUserInRole(CMSGroup_Editors);
+					return Roles.IsUserInRole(SecurityData.CMSGroup_Editors);
 				} catch {
 					return false;
 				}
@@ -172,32 +173,66 @@ namespace Carrotware.CMS.Core {
 		public static bool IsUsers {
 			get {
 				try {
-					return Roles.IsUserInRole(CMSGroup_Users);
+					return Roles.IsUserInRole(SecurityData.CMSGroup_Users);
 				} catch {
 					return false;
 				}
 			}
 		}
 
-		public static bool IsAuthEditor {
+		public static bool IsSiteEditor {
 			get {
-				if (SiteData.IsWebView) {
-					return AdvancedEditMode || IsAdmin || IsEditor;
+				if (SiteData.IsWebView && HttpContext.Current.User.Identity.IsAuthenticated) {
+					ExtendedUserData usrEx = SecurityData.CurrentExtendedUser;
+
+					return usrEx.IsEditor && usrEx.MemberSiteIDs.Contains(SiteData.CurrentSiteID);
 				} else {
 					return false;
 				}
 			}
 		}
 
+
+		public static bool IsAuthEditor {
+			get {
+				if (SiteData.IsWebView) {
+					return AdvancedEditMode || IsAdmin || IsSiteEditor;
+				} else {
+					return false;
+				}
+			}
+		}
+
+
+		public static ExtendedUserData CurrentExtendedUser {
+			get {
+				Guid userID = SecurityData.CurrentUserGuid;
+				string cacheKey = "cms_CurrentExUser" + userID.ToString();
+				ExtendedUserData currentUser = null;
+				if (SiteData.IsWebView && userID != Guid.Empty) {
+					try { currentUser = (ExtendedUserData)HttpContext.Current.Cache[cacheKey]; } catch { }
+					if (currentUser == null) {
+						currentUser = new ExtendedUserData(userID);
+						if (currentUser != null) {
+							HttpContext.Current.Cache.Insert(cacheKey, currentUser, null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+						} else {
+							HttpContext.Current.Cache.Remove(cacheKey);
+						}
+					}
+				} else {
+					currentUser = new ExtendedUserData();
+					currentUser.UserId = Guid.Empty;
+					currentUser.UserName = "anonymous-user-" + userID.ToString();
+				}
+				return currentUser;
+			}
+		}
+
 		public static Guid CurrentUserGuid {
 			get {
 				Guid _currentUserGuid = Guid.Empty;
-				if (SiteData.IsWebView) {
-					if (HttpContext.Current.User.Identity.IsAuthenticated) {
-						if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) && CurrentUser != null) {
-							_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
-						}
-					}
+				if (CurrentUser != null) {
+					_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
 				}
 				return _currentUserGuid;
 			}
@@ -207,11 +242,9 @@ namespace Carrotware.CMS.Core {
 
 			get {
 				MembershipUser _currentUser = null;
-				if (SiteData.IsWebView) {
-					if (HttpContext.Current.User.Identity.IsAuthenticated) {
-						if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
-							_currentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
-						}
+				if (SiteData.IsWebView && HttpContext.Current.User.Identity.IsAuthenticated) {
+					if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
+						_currentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
 					}
 				}
 				return _currentUser;
@@ -231,7 +264,7 @@ namespace Carrotware.CMS.Core {
 				bool _Advanced = false;
 				if (SiteData.IsWebView) {
 					if (HttpContext.Current.User.Identity.IsAuthenticated) {
-						if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (SecurityData.IsAdmin || SecurityData.IsEditor)) {
+						if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
 							_Advanced = true;
 						} else {
 							_Advanced = false;

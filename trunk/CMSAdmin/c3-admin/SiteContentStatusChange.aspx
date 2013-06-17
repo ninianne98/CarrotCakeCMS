@@ -77,8 +77,7 @@
 						show publicly:
 					</td>
 					<td>
-						<asp:DropDownList ID="ddlActive" runat="server">
-						</asp:DropDownList>
+						<asp:DropDownList ID="ddlActive" runat="server" />
 					</td>
 				</tr>
 				<tr>
@@ -86,8 +85,7 @@
 						include in site navigation:
 					</td>
 					<td>
-						<asp:DropDownList ID="ddlNavigation" runat="server">
-						</asp:DropDownList>
+						<asp:DropDownList ID="ddlNavigation" runat="server" />
 					</td>
 				</tr>
 				<tr>
@@ -95,8 +93,7 @@
 						include in sitemap:
 					</td>
 					<td>
-						<asp:DropDownList ID="ddlSiteMap" runat="server">
-						</asp:DropDownList>
+						<asp:DropDownList ID="ddlSiteMap" runat="server" />
 					</td>
 				</tr>
 				<tr>
@@ -104,8 +101,7 @@
 						hide from search engines:
 					</td>
 					<td>
-						<asp:DropDownList ID="ddlHide" runat="server">
-						</asp:DropDownList>
+						<asp:DropDownList ID="ddlHide" runat="server" />
 					</td>
 				</tr>
 			</table>
@@ -242,7 +238,7 @@
 					AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteMap" HeaderText="In SiteMap" ShowBooleanImage="true" AlternateTextTrue="Yes"
 					AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
 					AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Public" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
 					ShowBooleanImage="true" />

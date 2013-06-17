@@ -8,7 +8,7 @@ body {
 	color: #000000;
 	font-family: Georgia, Times New Roman, Serif;
 	font-size: 12px;
-	min-width: 1024px;
+	min-width: 1080px;
 	width: 100%;
 }
 
@@ -44,7 +44,7 @@ H3 {
 	padding: 0;
 	height: 115px; /*background: #468B5E;  */
 	background: #7DAD8E url(../images/heading-gradient.png) repeat-x;
-	min-width: 1024px;
+	min-width: 1080px;
 	width: 100%;
 }
 
@@ -53,7 +53,7 @@ H3 {
 	margin: 0;
 	padding: 0;
 	height: 110px;
-	width: 1024px;
+	width: 1080px;
 	margin-left: 50px;
 }
 
@@ -90,7 +90,7 @@ H3 {
 	font: normal 14px 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif; /* background: #3F3F3F;  */
 	background: #3F3F3F url(../images/menu-gradient.png) repeat-x;
 	font-weight: normal;
-	min-width: 1100px;
+	min-width: 1080px;
 	width: 100%;
 }
 
@@ -199,6 +199,7 @@ H3 {
 	border: 1px dashed transparent !important;
 	margin-bottom: 5px;
 	margin-top: 5px;
+	display: inline-block;
 }
 
 /* Content */
@@ -267,7 +268,7 @@ H3 {
 	height: 150px;
 	background: #333333;
 	border-top: 5px solid #000000;
-	min-width: 1024px;
+	min-width: 1080px;
 	width: 100%;
 }
 

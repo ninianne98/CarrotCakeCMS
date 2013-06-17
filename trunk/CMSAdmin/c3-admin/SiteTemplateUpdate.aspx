@@ -56,7 +56,7 @@
 			</span>
 			<br />
 			<span style="clear: both; display: block">
-				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlBlog" runat="server" />
+				<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlBlogIndex" runat="server" />
 			</span>
 			<br />
 		</p>

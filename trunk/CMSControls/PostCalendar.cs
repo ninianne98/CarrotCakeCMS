@@ -130,7 +130,7 @@ namespace Carrotware.CMS.UI.Controls {
 					if (SiteData.IsWebView) {
 						_date = SiteData.CurrentSite.Now.Date;
 						string sFilterPath = SiteData.CurrentScriptName;
-						if (sFilterPath.ToLower().StartsWith(SiteData.CurrentSite.BlogDateFolderPath.ToLower())) {
+						if (SiteData.CurrentSite.CheckIsBlogDateFolderPath(sFilterPath)) {
 							BlogDatePathParser p = new BlogDatePathParser(SiteData.CurrentSite, sFilterPath);
 							if (p.DateBegin.Year > 1900) {
 								_date = p.DateBegin;

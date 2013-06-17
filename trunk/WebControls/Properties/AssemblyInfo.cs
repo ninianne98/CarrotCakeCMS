@@ -37,7 +37,8 @@ using System.Web.UI;
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
 
 
-[assembly: TagPrefix("captcha", "carrot")]
+[assembly: TagPrefix("Captcha", "carrot")]
+[assembly: TagPrefix("ImageSizer", "carrot")]
 [assembly: TagPrefix("Calendar", "carrot")]
 [assembly: TagPrefix("CarrotGridView", "carrot")]
 

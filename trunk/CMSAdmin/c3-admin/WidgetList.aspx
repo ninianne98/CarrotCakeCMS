@@ -64,8 +64,8 @@
 						<asp:HiddenField ID="hdnDelete" runat="server" Value='<%# Eval("IsWidgetPendingDelete")%>' Visible="false" />
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
-					AlternateTextTrue="Active" ShowBooleanImage="true" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
+					ShowBooleanImage="true" />
 				<asp:TemplateField>
 					<HeaderTemplate>
 						Active

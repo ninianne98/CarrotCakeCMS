@@ -105,6 +105,20 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		private List<Guid> _siteIDs = null;
+		public List<Guid> MemberSiteIDs {
+			get {
+				if (_siteIDs == null) {
+					using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+						_siteIDs = (from m in _db.carrot_UserSiteMappings
+									where m.UserId == this.UserId
+									select m.SiteID).Distinct().ToList();
+					}
+				}
+				return _siteIDs;
+			}
+		}
+
 		public List<SiteData> GetSiteList() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				return (from m in _db.carrot_UserSiteMappings
@@ -141,6 +155,8 @@ namespace Carrotware.CMS.Core {
 											  select m).FirstOrDefault();
 
 				if (map == null) {
+					_siteIDs = null;
+
 					map = new carrot_UserSiteMapping();
 					map.UserSiteMappingID = Guid.NewGuid();
 					map.SiteID = siteID;
@@ -164,6 +180,8 @@ namespace Carrotware.CMS.Core {
 											  select m).FirstOrDefault();
 
 				if (map != null) {
+					_siteIDs = null;
+
 					_db.carrot_UserSiteMappings.DeleteOnSubmit(map);
 					_db.SubmitChanges();
 
@@ -236,9 +254,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
-
-
+		//================================================
 
 		public static List<ExtendedUserData> GetUserList() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {

@@ -190,6 +190,13 @@
     <Compile Include="c3-admin\ContentSnippetHistory.aspx.designer.cs">
       <DependentUpon>ContentSnippetHistory.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\DuplicateWidgetFrom.aspx.cs">
+      <DependentUpon>DuplicateWidgetFrom.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\DuplicateWidgetFrom.aspx.designer.cs">
+      <DependentUpon>DuplicateWidgetFrom.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\SiteDetail.aspx.cs">
       <DependentUpon>SiteDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -601,6 +608,7 @@
     <Content Include="c3-admin\ContentSnippetAddEdit.aspx" />
     <Content Include="c3-admin\ContentSnippetIndex.aspx" />
     <Content Include="c3-admin\ContentSnippetHistory.aspx" />
+    <Content Include="c3-admin\DuplicateWidgetFrom.aspx" />
     <Content Include="c3-admin\SiteDetail.aspx" />
     <Content Include="c3-admin\SiteIndex.aspx" />
     <Content Include="c3-admin\UserProfile.aspx" />

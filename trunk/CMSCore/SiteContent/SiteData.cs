@@ -342,7 +342,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			// if user is neither admin nor editor, they should not be in the backend of the site
-			if (!(SecurityData.IsEditor || SecurityData.IsAdmin)) {
+			if (!(SecurityData.IsSiteEditor || SecurityData.IsAdmin)) {
 				return false;
 			}
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -436,11 +436,11 @@ namespace Carrotware.CMS.Core {
 						if (cmsHelper.cmsAdminWidget == null) {
 							pageWidgets = GetCurrentPageLiveWidgets(guidContentID);
 							cmsHelper.cmsAdminWidget = (from w in pageWidgets
-														orderby w.WidgetOrder
+														orderby w.WidgetOrder, w.EditDate
 														select w).ToList();
 						} else {
 							pageWidgets = (from w in cmsHelper.cmsAdminWidget
-										   orderby w.WidgetOrder
+										   orderby w.WidgetOrder, w.EditDate
 										   select w).ToList();
 						}
 					} else {
@@ -469,7 +469,7 @@ namespace Carrotware.CMS.Core {
 					sCurrentPage = sScrubbedURL;
 				}
 
-				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
+				if (SecurityData.IsAdmin || SecurityData.IsSiteEditor) {
 					pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
 				} else {
 					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, true, sCurrentPage);
@@ -647,6 +647,7 @@ namespace Carrotware.CMS.Core {
 		public string BlogFolderPath {
 			get { return RemoveDupeSlashes("/" + this.Blog_FolderPath + "/"); }
 		}
+
 		public string BlogCategoryPath {
 			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_CategoryPath + "/"); }
 		}
@@ -661,6 +662,53 @@ namespace Carrotware.CMS.Core {
 		}
 		public string SiteSearchPath {
 			get { return RemoveDupeSlashes(BlogFolderPath + SiteSearchPageName); }
+		}
+
+		public bool IsBlogCategoryPath {
+			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogCategoryPath); }
+		}
+		public bool IsBlogTagPath {
+			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogTagPath); }
+		}
+		public bool IsBlogDateFolderPath {
+			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogDateFolderPath); }
+		}
+		public bool IsBlogEditorFolderPath {
+			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogEditorFolderPath); }
+		}
+		public bool IsSiteSearchPath {
+			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.SiteSearchPath); }
+		}
+
+
+		public bool CheckIsBlogCategoryPath(string sFilterPath) {
+			return sFilterPath.ToLower().StartsWith(this.BlogCategoryPath);
+		}
+		public bool CheckIsBlogTagPath(string sFilterPath) {
+			return sFilterPath.ToLower().StartsWith(this.BlogTagPath);
+		}
+		public bool CheckIsBlogDateFolderPath(string sFilterPath) {
+			return sFilterPath.ToLower().StartsWith(this.BlogDateFolderPath);
+		}
+		public bool CheckIsBlogEditorFolderPath(string sFilterPath) {
+			return sFilterPath.ToLower().StartsWith(this.BlogEditorFolderPath);
+		}
+		public bool CheckIsSiteSearchPath(string sFilterPath) {
+			return sFilterPath.ToLower().StartsWith(this.SiteSearchPath);
+		}
+
+
+		public List<string> GetSpecialFilePathPrefixes() {
+
+			List<string> lst = new List<string>();
+
+			lst.Add(this.BlogCategoryPath.ToLower());
+			lst.Add(this.BlogTagPath.ToLower());
+			lst.Add(this.BlogDateFolderPath.ToLower());
+			lst.Add(this.BlogEditorFolderPath.ToLower());
+			lst.Add(this.SiteSearchPath.ToLower());
+
+			return lst;
 		}
 
 		protected static string SiteSearchPageName {
@@ -1145,11 +1193,7 @@ namespace Carrotware.CMS.Core {
 
 				if (!sRequestedURL.ToLower().StartsWith(AdminFolderPath) && site != null) {
 					if (sFileRequested.ToLower().StartsWith(site.BlogFolderPath.ToLower())) {
-						if (sFileRequested.ToLower().StartsWith(site.BlogCategoryPath.ToLower())
-							|| sFileRequested.ToLower().StartsWith(site.BlogTagPath.ToLower())
-							|| sFileRequested.ToLower().StartsWith(site.BlogEditorFolderPath.ToLower())
-							|| sFileRequested.ToLower().StartsWith(site.BlogDateFolderPath.ToLower())
-							|| sFileRequested.ToLower().StartsWith(site.SiteSearchPath.ToLower())) {
+						if (site.GetSpecialFilePathPrefixes().Where(x => sFileRequested.ToLower().StartsWith(x)).Count() > 0) {
 							if (site.Blog_Root_ContentID.HasValue) {
 								using (SiteNavHelper navHelper = new SiteNavHelper()) {
 									SiteNav blogNavPage = navHelper.GetLatestVersion(site.SiteID, site.Blog_Root_ContentID.Value);

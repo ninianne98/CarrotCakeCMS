@@ -22,7 +22,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstGalleryID")]
 		public Guid GalleryID { get; set; }
 
-
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstGalleryID {
 			get {
@@ -254,9 +253,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
 
 				var gal = gh.GalleryGroupGetByID(GalleryID);
-
-				litGalleryName.Text = gal.GalleryTitle;
-				pnlGalleryHead.Visible = ShowHeading;
 
 				if (gal != null) {
 

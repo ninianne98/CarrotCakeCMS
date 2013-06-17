@@ -10,6 +10,8 @@
 						<ul class="cmsWidgetContainerMenu cmsMnuChildren">
 							<li><a title="Widgets" alt="Widgets" class="cmsWidgetBarLink cmsWidgetBarIconWidget" id="cmsContentEditLink" href="javascript:cmsManageWidgetList('{WIDGETCONTAINER_ID}')">
 								Widgets </a></li>
+							<li runat="server" id="liCopy"><a title="Copy From" alt="Copy From" class="cmsWidgetBarLink cmsWidgetBarIconCopy" id="A1" href="javascript:cmsCopyWidgetFrom('{WIDGETCONTAINER_ID}')">
+								Copy From </a></li>
 						</ul>
 					</li>
 				</ul>

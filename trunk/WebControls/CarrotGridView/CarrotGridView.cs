@@ -222,34 +222,34 @@ namespace Carrotware.Web.UI.Controls {
 
 			SetTemplates();
 
-			if (!string.IsNullOrEmpty(DefaultSort)) {
-				Type theType = DataSource.GetType();
+			if (!string.IsNullOrEmpty(DefaultSort) && this.DataSource != null) {
+				Type theType = this.DataSource.GetType();
 
 				if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
-					IList lst = (IList)DataSource;
+					IList lst = (IList)this.DataSource;
 					SortParm = DefaultSort;
 					var lstVals = SortDataListType(lst);
 
-					DataSource = lstVals;
+					this.DataSource = lstVals;
 				}
 
-				if (DataSource is DataSet || theType.Name.ToLower() == "dataset") {
-					DataSet ds = (DataSet)DataSource;
+				if (this.DataSource is DataSet || theType.Name.ToLower() == "dataset") {
+					DataSet ds = (DataSet)this.DataSource;
 					if (ds.Tables.Count > 0) {
 						SortParm = DefaultSort;
 						DataTable dt = ds.Tables[0];
 						var dsVals = SortDataTable(dt);
 
-						DataSource = dsVals;
+						this.DataSource = dsVals;
 					}
 				}
 
-				if (DataSource is DataTable || theType.Name.ToLower() == "datatable") {
-					DataTable dt = (DataTable)DataSource;
+				if (this.DataSource is DataTable || theType.Name.ToLower() == "datatable") {
+					DataTable dt = (DataTable)this.DataSource;
 					SortParm = DefaultSort;
 					var dsVals = SortDataTable(dt);
 
-					DataSource = dsVals;
+					this.DataSource = dsVals;
 				}
 			}
 		}
@@ -333,18 +333,20 @@ namespace Carrotware.Web.UI.Controls {
 
 			SetData();
 
-			Type theType = DataSource.GetType();
-			if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
-				data = (IList)DataSource;
-			}
-
-			if (DataSource is DataSet || theType.Name.ToLower() == "dataset") {
-				if (((DataSet)DataSource).Tables.Count > 0) {
-					data = ((DataSet)DataSource).Tables[0].AsDataView();
+			if (this.DataSource != null) {
+				Type theType = this.DataSource.GetType();
+				if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
+					data = (IList)this.DataSource;
 				}
-			}
-			if (DataSource is DataTable || theType.Name.ToLower() == "datatable") {
-				data = ((DataTable)DataSource).AsDataView();
+
+				if (this.DataSource is DataSet || theType.Name.ToLower() == "dataset") {
+					if (((DataSet)this.DataSource).Tables.Count > 0) {
+						data = ((DataSet)this.DataSource).Tables[0].AsDataView();
+					}
+				}
+				if (this.DataSource is DataTable || theType.Name.ToLower() == "datatable") {
+					data = ((DataTable)this.DataSource).AsDataView();
+				}
 			}
 
 			base.PerformDataBinding(data);

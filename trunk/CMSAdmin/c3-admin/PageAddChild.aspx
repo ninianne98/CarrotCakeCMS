@@ -126,6 +126,11 @@
 			The page
 			<asp:Literal ID="litPageName" runat="server"></asp:Literal>
 			has been created.</h2>
+		<h3>
+			<asp:HyperLink ID="lnkCreatePage" runat="server">
+				<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
+			Create Another Page</asp:HyperLink>
+		</h3>
 	</asp:Panel>
 	<asp:Panel runat="server" ID="pnlAdd">
 		<p>

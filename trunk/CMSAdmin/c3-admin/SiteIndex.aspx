@@ -24,9 +24,10 @@
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField SortExpression="SiteName" HeaderText="Site Name" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="MainURL" HeaderText="Main URL" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="SiteID" HeaderText="Site ID" />
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:Image ID="imgStatus" runat="server" ImageUrl="images/house.png" AlternateText="Active" ToolTip="Current Site" Visible='<%#  Eval("SiteID").ToString() == SiteData.CurrentSiteID.ToString() %>' />
+						<asp:Image ID="imgStatus" runat="server" ImageUrl="images/house.png" ToolTip="Current Site" Visible='<%#  Eval("SiteID").ToString() == SiteData.CurrentSiteID.ToString() %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"

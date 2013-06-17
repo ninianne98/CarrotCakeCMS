@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Edit Properties" Language="C#" MasterPageFile="/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ControlPropertiesEdit.aspx.cs"
+﻿<%@ Page Title="Edit Properties" ValidateRequest="false" Language="C#" MasterPageFile="/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ControlPropertiesEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ControlPropertiesEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -23,10 +23,9 @@
 				</div>
 				<div style="float: left;">
 					<asp:DropDownList ID="ddlValue" runat="server" Visible="false" />
-					<asp:CheckBoxList ID="chkValues" runat="server" Visible="false">
-					</asp:CheckBoxList>
+					<asp:CheckBoxList ID="chkValues" runat="server" Visible="false" />
 					<asp:CheckBox ID="chkValue" runat="server" Visible="false" />
-					<asp:TextBox ID="txtValue" Width="300px" runat="server" Text='<%# GetSavedValue( String.Format( "{0}", Eval("DefValue")), String.Format( "{0}", Eval("Name")) ) %>' />
+					<asp:TextBox ID="txtValue" Width="400px" runat="server" Text='<%# GetSavedValue( String.Format( "{0}", Eval("DefValue")), String.Format( "{0}", Eval("Name")) ) %>' />
 					<asp:HiddenField runat="server" ID="hdnName" Value='<%# String.Format( "{0}", Eval("Name") ) %>' />
 				</div>
 				<div style="clear: both;">
@@ -35,9 +34,22 @@
 		</ItemTemplate>
 	</asp:Repeater>
 	<br />
-	<p>
-		<asp:Button ID="btnSave" runat="server" Text="Apply" OnClick="btnSave_Click" />
-	</p>
+	<div style="margin-top: 25px;">
+		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<br />
+	</div>
+	<div style="display: none;">
+		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Apply" />
+	</div>
+	<script type="text/javascript">
+		function SubmitPage() {
+			var ret = tinyMCE.triggerSave();
+			setTimeout("ClickBtn();", 800);
+		}
+		function ClickBtn() {
+			$('#<%=btnSave.ClientID %>').click();
+		}
+	</script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

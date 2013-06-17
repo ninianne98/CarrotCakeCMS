@@ -41,6 +41,14 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnInit(e);
 		}
 
+		public override void Dispose() {
+			base.Dispose();
+
+			if (navHelper != null) {
+				navHelper.Dispose();
+			}
+		}
+
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 

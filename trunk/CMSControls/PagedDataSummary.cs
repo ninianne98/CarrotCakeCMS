@@ -213,7 +213,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ContentPageType.PageType viewContentType = ContentPageType.PageType.BlogEntry;
 
 			if (context != null) {
-				if (SiteData.CurrentScriptName.ToLower() == SiteData.CurrentSite.SiteSearchPath.ToLower()) {
+				if (SiteData.CurrentSite.IsSiteSearchPath) {
 					this.ContentType = SummaryContentType.SiteSearch;
 					sSearchTerm = GetSearchTerm();
 				}

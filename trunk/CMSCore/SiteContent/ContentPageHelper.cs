@@ -134,9 +134,19 @@ namespace Carrotware.CMS.Core {
 
 			SiteData site = SiteData.GetSiteFromCache(siteID);
 
-			db.carrot_UpdateGoLiveLocal(siteID, (int)site.SiteTimeZoneInfo.BaseUtcOffset.TotalMinutes);
+			//db.carrot_UpdateGoLiveLocal(siteID, (int)site.SiteTimeZoneInfo.BaseUtcOffset.TotalMinutes);
+			//db.carrot_BlogDateFilenameUpdate(siteID);
 
-			db.carrot_BlogDateFilenameUpdate(siteID);
+			// use C# libraries for timezones rather than pass in offset as some dates are +/- an hour off because of DST
+			// performance is not great to do a looped update
+
+			IQueryable<carrot_RootContent> queryAllContent = CannedQueries.GetAllRootTbl(db, siteID);
+			queryAllContent.ToList().ForEach(p => p.GoLiveDateLocal = site.ConvertUTCToSiteTime(p.GoLiveDate));
+
+			IQueryable<carrot_RootContent> queryBlog = CannedQueries.GetBlogAllRootTbl(db, siteID);
+			queryBlog.ToList().ForEach(p => p.FileName = CreateFileNameFromSlug(siteID, p.GoLiveDateLocal, p.PageSlug));
+
+			db.SubmitChanges();
 
 			ResolveDuplicateBlogURLs(siteID);
 		}
@@ -351,27 +361,26 @@ namespace Carrotware.CMS.Core {
 
 			string sTitle = String.Empty;
 
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+			if (currentSite.CheckIsBlogCategoryPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.CategoryIndex;
 				vw_carrot_CategoryURL query = CompiledQueries.cqGetCategoryByURL(db, siteID, sFilterPath);
 				sTitle = query.CategoryText;
 				pvt.RawValue = query.CategoryText;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+			if (currentSite.CheckIsBlogTagPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.TagIndex;
 				vw_carrot_TagURL query = CompiledQueries.cqGetTagByURL(db, siteID, sFilterPath);
 				sTitle = query.TagText;
 				pvt.RawValue = query.TagText;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogEditorFolderPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.AuthorIndex;
 				vw_carrot_EditorURL query = CompiledQueries.cqGetEditorByURL(db, siteID, sFilterPath);
 				ExtendedUserData usr = new ExtendedUserData(query.UserId);
 				sTitle = usr.ToString();
 				pvt.RawValue = usr;
 			}
-
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogDateFolderPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.DateIndex;
 
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
@@ -394,7 +403,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
-			if (sFilterPath.ToLower().StartsWith(currentSite.SiteSearchPath.ToLower())) {
+			if (currentSite.CheckIsSiteSearchPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.SearchResults;
 				string sSearchTerm = "";
 
@@ -534,19 +543,19 @@ namespace Carrotware.CMS.Core {
 			Guid siteID = currentSite.SiteID;
 			bool bFound = false;
 
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+			if (currentSite.CheckIsBlogCategoryPath(sFilterPath)) {
 				query1 = CannedQueries.GetContentByCategoryURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+			if (currentSite.CheckIsBlogTagPath(sFilterPath)) {
 				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogEditorFolderPath(sFilterPath)) {
 				query1 = CannedQueries.GetContentByUserURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogDateFolderPath(sFilterPath)) {
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
 				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.DateBeginUTC, p.DateEndUTC, bActiveOnly);
 				bFound = true;
@@ -566,23 +575,24 @@ namespace Carrotware.CMS.Core {
 			Guid siteID = currentSite.SiteID;
 			bool bFound = false;
 
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogCategoryPath.ToLower())) {
+			if (currentSite.CheckIsBlogCategoryPath(sFilterPath)) {
 				query1 = CannedQueries.GetContentByCategoryURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogTagPath.ToLower())) {
+			if (currentSite.CheckIsBlogTagPath(sFilterPath)) {
 				query1 = CannedQueries.GetContentByTagURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogEditorFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogEditorFolderPath(sFilterPath)) {
 				query1 = CannedQueries.GetContentByUserURL(db, siteID, bActiveOnly, sFilterPath);
 				bFound = true;
 			}
-			if (sFilterPath.ToLower().StartsWith(currentSite.BlogDateFolderPath.ToLower())) {
+			if (currentSite.CheckIsBlogDateFolderPath(sFilterPath)) {
 				BlogDatePathParser p = new BlogDatePathParser(currentSite, sFilterPath);
 				query1 = CannedQueries.GetLatestBlogListDateRange(db, siteID, p.DateBeginUTC, p.DateEndUTC, bActiveOnly);
 				bFound = true;
 			}
+
 			if (!bFound) {
 				query1 = CannedQueries.GetLatestBlogList(db, siteID, bActiveOnly);
 			}

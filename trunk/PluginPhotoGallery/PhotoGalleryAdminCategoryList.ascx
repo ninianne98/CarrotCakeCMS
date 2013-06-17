@@ -5,6 +5,11 @@
 <div id="SortableGrid">
 	<carrot:CarrotGridView DefaultSort="GalleryTitle ASC" CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 		AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+		<EmptyDataTemplate>
+			<p>
+				<b>No galleries found.</b>
+			</p>
+		</EmptyDataTemplate>
 		<Columns>
 			<asp:TemplateField>
 				<ItemTemplate>

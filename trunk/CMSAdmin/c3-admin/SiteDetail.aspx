@@ -87,6 +87,14 @@
 			</tr>
 			<tr>
 				<td class="tablecaption">
+					Site URL
+				</td>
+				<td>
+					<asp:Literal ID="litURL" runat="server" />
+				</td>
+			</tr>
+			<tr>
+				<td class="tablecaption">
 					Site Name
 				</td>
 				<td>

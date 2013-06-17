@@ -273,6 +273,17 @@ namespace Carrotware.CMS.Core {
 					where ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					select ct);
 		}
+		internal static IQueryable<carrot_RootContent> GetContentAllRootTbl(CarrotCMSDataContext ctx, Guid siteID) {
+			return (from ct in ctx.carrot_RootContents
+					where ct.SiteID == siteID
+					where ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
+					select ct);
+		}
+		internal static IQueryable<carrot_RootContent> GetAllRootTbl(CarrotCMSDataContext ctx, Guid siteID) {
+			return (from ct in ctx.carrot_RootContents
+					where ct.SiteID == siteID
+					select ct);
+		}
 
 		internal static IQueryable<carrot_Content> GetContentAllContentTbl(CarrotCMSDataContext ctx, Guid siteID) {
 			return (from ct in ctx.carrot_RootContents

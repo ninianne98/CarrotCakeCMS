@@ -15,8 +15,9 @@
 				<asp:Repeater ID="rpGallery" runat="server">
 					<ItemTemplate>
 						<a href="#<%# CtrlTopId %>" rel="prettyPhoto[<%=this.ClientID %>]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
-							<img src="/carrotwarethumb.axd?scale=<%# GetScale()%>&thumb=<%# HttpUtility.UrlEncode(String.Format("{0}", Eval("GalleryImage")))  %>&square=<%# GetThumbSize() %>"
-								alt="" /></a>
+							<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# Eval("GalleryImage")  %>' ThumbSize='<%# ThumbSize1 %>' ScaleImage='<%# ScaleImage %>'
+								ToolTip="" />
+						</a>
 					</ItemTemplate>
 				</asp:Repeater>
 				<asp:Repeater ID="rpGalleryDetail" runat="server">
@@ -29,8 +30,9 @@
 							<div style="border: solid 0px #000000; padding: 4px; width: <%# GetWindowWidth() %>px; height: 500px; overflow: auto;">
 								<div class="gallery" style="margin: 0 auto 20px; padding: 0; text-align: center; clear: both;">
 									<a target="_blank" href="<%# String.Format("{0}", Eval("GalleryImage"))  %>" rel="prettyPhoto[<%=this.ClientID %>_2]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
-										<img src="/carrotwarethumb.axd?scale=<%# GetScale()%>&thumb=<%# HttpUtility.UrlEncode(String.Format("{0}", Eval("GalleryImage")))  %>&square=<%# GetThumbSize2() %>"
-											alt="" style="margin: 0 auto 20px; padding: 0; text-align: center;" /></a>
+										<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# Eval("GalleryImage")  %>' ThumbSize='<%# ThumbSize2 %>' ScaleImage='<%# ScaleImage %>'
+											ToolTip="" Style="margin: 0 auto 20px; padding: 0; text-align: center;" />
+									</a>
 								</div>
 								<div style="clear: both;">
 									<%# GetImageBody(Eval("GalleryImage").ToString())%>

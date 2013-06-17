@@ -116,6 +116,12 @@ function cmsMenuFixImages() {
 	$(".cmsWidgetBarIconCross").each(function (i) {
 		cmsFixGeneralImage(this, 'cross.png');
 	});
+	$(".cmsWidgetBarIconDup").each(function (i) {
+		cmsFixGeneralImage(this, 'shape_ungroup.png');
+	});
+	$(".cmsWidgetBarIconCopy").each(function (i) {
+		cmsFixGeneralImage(this, 'table_go.png');
+	});
 	$(".cmsWidgetBarIconPencil").each(function (i) {
 		cmsFixGeneralImage(this, 'pencil.png');
 	});
@@ -826,6 +832,28 @@ function cmsBuildOrder() {
 	return true;
 }
 
+function cmsCopyWidgetFrom(zoneName) {
+	cmsLaunchWindow('/c3-admin/DuplicateWidgetFrom.aspx?pageid=' + thisPageID + "&zone=" + zoneName);
+}
+
+function cmsCopyWidget(key) {
+	cmsSaveToolbarPosition();
+	cmsSpinnerLong();
+
+	var webMthd = webSvc + "/CopyWidget";
+
+	$.ajax({
+		type: "POST",
+		url: webMthd,
+		data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: cmsSaveWidgetsCallback,
+		error: cmsAjaxFailed
+	});
+}
+
+
 function cmsRemoveWidgetLink(v) {
 
 	$("#CMSremoveconfirm").dialog({
@@ -849,23 +877,8 @@ function cmsRemoveWidgetLink(v) {
 	});
 
 	cmsFixDialog('CMSremoveconfirmmsg');
-
 }
 
-/*
-function cmsRemoveItem(a) {
-var tgt = $(a);
-//alert(tgt.val());
-if (tgt.is("a.ui-icon-trash")) {
-var p = $($(tgt).parent().parent().parent().parent());
-//alert(p.attr('id'));
-var txt = p.find('#cmsCtrlOrder');
-txt.val('-1');
-cmsDelItem(p);
-}
-return false;
-}
-*/
 
 function cmsSetOrder(fld) {
 	var id = $(fld).attr('id');

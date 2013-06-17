@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ControlPropertiesEdit : AdminBasePage {
 
 		public Guid guidWidget = Guid.Empty;
-		public Guid guidPage = Guid.Empty;
+		public Guid guidContentID = Guid.Empty;
 		public List<WidgetProps> lstProps = null;
 		public List<ObjectProperty> lstDefProps = null;
 
@@ -33,13 +33,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			guidWidget = GetGuidIDFromQuery();
 
-			guidPage = GetGuidPageIDFromQuery();
+			guidContentID = GetGuidPageIDFromQuery();
 
-			cmsHelper.OverrideKey(guidPage);
+			cmsHelper.OverrideKey(guidContentID);
 
 			Widget w = (from aw in cmsHelper.cmsAdminWidget
 						where aw.Root_WidgetID == guidWidget
-						orderby aw.WidgetOrder
+						orderby aw.WidgetOrder, aw.EditDate
 						select aw).FirstOrDefault();
 
 			if (!IsPostBack) {
@@ -254,6 +254,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
+				if (dp.FieldMode == WidgetAttribute.FieldMode.RichHTMLTextBox
+						|| dp.FieldMode == WidgetAttribute.FieldMode.MultiLineTextBox) {
+					txtValue.Visible = true;
+					txtValue.TextMode = TextBoxMode.MultiLine;
+					txtValue.Columns = 60;
+					txtValue.Rows = 5;
+					if (dp.FieldMode == WidgetAttribute.FieldMode.RichHTMLTextBox) {
+						txtValue.CssClass = "mceEditor";
+					}
+				}
+
 				string sType = dp.PropertyType.ToString().ToLower();
 				if (sType == "system.boolean" || dp.FieldMode == WidgetAttribute.FieldMode.CheckBox) {
 					txtValue.Visible = false;
@@ -270,7 +281,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Widget w = (from aw in cmsHelper.cmsAdminWidget
 						where aw.Root_WidgetID == guidWidget
-						orderby aw.WidgetOrder
+						orderby aw.WidgetOrder, aw.EditDate
 						select aw).FirstOrDefault();
 
 			var props = new List<WidgetProps>();
