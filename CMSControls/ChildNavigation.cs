@@ -22,17 +22,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public bool IncludeParent { get; set; }
 
-		[Obsolete("This property is obsolete, do not use.")]
-		public string SectionTitle {
-			get {
-				string s = (string)ViewState["SectionTitle"];
-				return ((s == null) ? "" : s);
-			}
-			set {
-				ViewState["SectionTitle"] = value;
-			}
-		}
-
 		protected override void LoadData() {
 			base.LoadData();
 

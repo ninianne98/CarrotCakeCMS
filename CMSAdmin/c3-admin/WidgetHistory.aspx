@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="Widget History" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetHistory.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetHistory" %>
 
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
@@ -45,6 +47,13 @@
 		<asp:Literal ID="litControlPath" runat="server" /><br />
 		<asp:Literal ID="litControlPathName" runat="server" /><br />
 	</p>
+	<asp:PlaceHolder ID="phNavIndex" runat="server">
+		<p>
+			<asp:HyperLink ID="lnkIndex" runat="server" NavigateUrl="./PageWidgets.aspx">
+		<img src="/c3-admin/images/back.png" alt="Return" title="Return" />
+		Return to widget list</asp:HyperLink>
+		</p>
+	</asp:PlaceHolder>
 	<asp:Button ID="btnRemove" runat="server" OnClick="btnRemove_Click" Text="Remove Selected" /><br />
 	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="EditDate DESC" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"

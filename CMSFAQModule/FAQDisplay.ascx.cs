@@ -8,23 +8,7 @@ using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.FAQModule {
-	public partial class FAQDisplay : BaseShellUserControl, IWidget {
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return false; }
-		}
-		#endregion
+	public partial class FAQDisplay : WidgetUserControl {
 
 		protected int iFaq = 0;
 
@@ -34,26 +18,24 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			//if (SiteID == Guid.Empty) {
-			//    SiteID = SiteData.CurrentSiteID;
-			//}
 
-			dbFAQDataContext db = new dbFAQDataContext();
+			using (dbFAQDataContext db = new dbFAQDataContext()) {
 
-			var lstFAQ = (from f in db.tblFAQs
-						 where f.SiteID == SiteID
-						 && f.IsActive == true
-						 orderby f.SortOrder
-						 select f).ToList();
+				var lstFAQ = (from f in db.tblFAQs
+							  where f.SiteID == SiteID
+							  && f.IsActive == true
+							  orderby f.SortOrder
+							  select f).ToList();
 
-			if (lstFAQ == null) {
-				dgFAQ.Visible = false;
-			} else {
-				dgFAQ.DataSource = lstFAQ;
-				dgFAQ.DataBind();
-				dgFAQ.Visible = true;
+				if (lstFAQ == null) {
+					dgFAQ.Visible = false;
+				} else {
+					dgFAQ.DataSource = lstFAQ;
+					dgFAQ.DataBind();
+					dgFAQ.Visible = true;
+				}
 			}
-
 		}
+
 	}
 }

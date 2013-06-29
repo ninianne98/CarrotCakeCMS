@@ -73,7 +73,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (pageContents.ContentType == ContentPageType.PageType.BlogEntry) {
 				btnEditCoreInfo.Attributes["onclick"] = "cmsShowEditPostInfo();";
-				btnAddChild.Visible = false;
 				btnSortChildPages.Visible = false;
 			}
 

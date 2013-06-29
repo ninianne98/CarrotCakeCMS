@@ -55,7 +55,11 @@ namespace Carrotware.CMS.Core {
 				this.IsWidgetPendingDelete = false;
 				this.IsPendingChange = false;
 				this.WidgetDataID = ww.WidgetDataID;
+
 				this.EditDate = site.ConvertUTCToSiteTime(ww.EditDate);
+				this.GoLiveDate = site.ConvertUTCToSiteTime(ww.GoLiveDate);
+				this.RetireDate = site.ConvertUTCToSiteTime(ww.RetireDate);
+
 				this.IsLatestVersion = ww.IsLatestVersion;
 				this.ControlProperties = ww.ControlProperties;
 
@@ -80,10 +84,35 @@ namespace Carrotware.CMS.Core {
 		public bool IsWidgetPendingDelete { get; set; }
 		public bool IsPendingChange { get; set; }
 		public DateTime EditDate { get; set; }
+		public DateTime GoLiveDate { get; set; }
+		public DateTime RetireDate { get; set; }
+
+		public bool IsRetired {
+			get {
+				if (this.RetireDate < SiteData.CurrentSite.Now) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		public bool IsUnReleased {
+			get {
+				if (this.GoLiveDate > SiteData.CurrentSite.Now) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
 
 		public void Save() {
 
 			if (!this.IsWidgetPendingDelete) {
+
+				SiteData site = new SiteData(CompiledQueries.cqGetSiteFromRootContentID(db, this.Root_ContentID));
+
 				carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
 
 				bool bAdd = false;
@@ -96,6 +125,13 @@ namespace Carrotware.CMS.Core {
 					this.Root_WidgetID = Guid.NewGuid();
 				}
 
+				if (this.GoLiveDate.Year < 1900) {
+					this.GoLiveDate = site.Now.AddMinutes(-5);
+				}
+				if (this.RetireDate.Year < 1900) {
+					this.RetireDate = site.Now.AddYears(200);
+				}
+
 				w.Root_WidgetID = this.Root_WidgetID;
 
 				w.WidgetOrder = this.WidgetOrder;
@@ -103,6 +139,8 @@ namespace Carrotware.CMS.Core {
 				w.PlaceholderName = this.PlaceholderName;
 				w.ControlPath = this.ControlPath.Replace("~~/", "~/");
 				w.WidgetActive = this.IsWidgetActive;
+				w.GoLiveDate = site.ConvertSiteTimeToUTC(this.GoLiveDate);
+				w.RetireDate = site.ConvertSiteTimeToUTC(this.RetireDate);
 
 				carrot_WidgetData wd = new carrot_WidgetData();
 				wd.Root_WidgetID = w.Root_WidgetID;

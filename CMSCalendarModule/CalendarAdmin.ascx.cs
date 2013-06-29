@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
 
@@ -14,9 +13,6 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		private dbCalendarDataContext db = new dbCalendarDataContext();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (SiteID == Guid.Empty) {
-				SiteID = SiteData.CurrentSiteID;
-			}
 
 			if (!IsPostBack) {
 				txtDate.Text = DateTime.Now.ToShortDateString();
@@ -50,7 +46,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 					   select c).ToList();
 
 			List<DateTime> dates = (from dd in lst
-									select Convert.ToDateTime(dd.EventDate)).ToList();
+									select Convert.ToDateTime(dd.EventDate).Date).Distinct().ToList();
 
 			Calendar1.HilightDateList = dates;
 
@@ -67,5 +63,4 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 
 	}
-
 }

@@ -298,7 +298,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						ContentImportExportUtils.AssignWPExportNewIDs(SiteData.CurrentSite, wps);
 						ContentImportExportUtils.SaveSerializedDataExport<WordPressSite>(wps.NewSiteID, wps);
 
-						Response.Redirect(CreateLink("WPGalleryImport", String.Format("id={0}", wps.NewSiteID.ToString())));
+						Response.Redirect(CreateLink("WPGalleryImport", String.Format("id={0}", wps.NewSiteID)));
 					}
 
 					lblWarning.Text = "File did not appear to match an expected format.";

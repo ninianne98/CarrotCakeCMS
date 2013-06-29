@@ -25,17 +25,6 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:MostRecentUpdated runat=server></{0}:MostRecentUpdated>")]
 	public class MostRecentUpdated : BaseNavHeaded, IWidgetLimitedProperties {
 
-		[Obsolete("This property is obsolete, do not use.")]
-		public string UpdateTitle {
-			get {
-				string s = (string)ViewState["UpdateTitle"];
-				return ((s == null) ? "" : s);
-			}
-			set {
-				ViewState["UpdateTitle"] = value;
-			}
-		}
-
 		public enum ListContentType {
 			Unknown,
 			Blog,

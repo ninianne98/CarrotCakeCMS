@@ -153,14 +153,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static bool HasAdminModules() {
-			string sRealPath = HttpContext.Current.Server.MapPath("~/");
-			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
-			string sPlugCfg = sRealPath + config.ConfigFileLocation.AdminModules;
-
-			if (File.Exists(sPlugCfg)) {
-				return true;
-			} else {
-				return false;
+			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+				return cmsHelper.AdminModules.Count > 0;
 			}
 		}
 
@@ -226,6 +220,8 @@ namespace Carrotware.CMS.Core {
 			if (iExpectedTblCount > 0) {
 				iTblCount = ds.Tables.Count;
 
+				string table1Name = "";
+
 				List<string> reqCols0 = new List<string>();
 				List<string> reqCols1 = new List<string>();
 
@@ -234,6 +230,7 @@ namespace Carrotware.CMS.Core {
 					case CMSConfigFileType.AdminModules:
 						reqCols0.Add("caption");
 						reqCols0.Add("pluginid");
+						table1Name = "pluginlist";
 
 						reqCols1.Add("pluginlabel");
 						reqCols1.Add("menuorder");
@@ -243,52 +240,66 @@ namespace Carrotware.CMS.Core {
 						reqCols1.Add("usepopup");
 						reqCols1.Add("visible");
 						reqCols1.Add("pluginid");
+
 						break;
 					case CMSConfigFileType.PublicCtrl:
 					case CMSConfigFileType.PublicControls:
 						reqCols0.Add("filepath");
 						reqCols0.Add("crtldesc");
+						table1Name = "ctrlfile";
+
 						break;
 					case CMSConfigFileType.SkinDef:
 					case CMSConfigFileType.SiteSkins:
 						reqCols0.Add("templatefile");
 						reqCols0.Add("filedesc");
+						table1Name = "pagenames";
+
 						break;
 					case CMSConfigFileType.SiteTextWidgets:
 						reqCols0.Add("pluginassembly");
 						reqCols0.Add("pluginname");
+						table1Name = "plugin";
+
 						break;
 					case CMSConfigFileType.SiteMapping:
 						reqCols0.Add("domname");
 						reqCols0.Add("siteid");
+						table1Name = "sitedetail";
+
 						break;
 					default:
 						reqCols0.Add("caption");
 						reqCols0.Add("pluginid");
+						table1Name = "none";
+
 						break;
 				}
 
-				//validate that the dataset has the right table configuration
-				DataTable dt0 = ds.Tables[0];
-				foreach (string c in reqCols0) {
-					if (!dt0.Columns.Contains(c)) {
-						DataColumn dc = new DataColumn(c);
-						dc.DataType = System.Type.GetType("System.String"); // add if not found
+				if (ds.Tables.Contains(table1Name)) {
 
-						dt0.Columns.Add(dc);
-						dt0.AcceptChanges();
-					}
-				}
-
-				for (int iTbl = 1; iTbl < iTblCount; iTbl++) {
-					DataTable dt = ds.Tables[iTbl];
-					foreach (string c in reqCols1) {
-						if (!dt.Columns.Contains(c)) {
+					//validate that the dataset has the right table configuration
+					DataTable dt0 = ds.Tables[table1Name];
+					foreach (string c in reqCols0) {
+						if (!dt0.Columns.Contains(c)) {
 							DataColumn dc = new DataColumn(c);
 							dc.DataType = System.Type.GetType("System.String"); // add if not found
 
-							dt.Columns.Add(dc);
-							dt.AcceptChanges();
+							dt0.Columns.Add(dc);
+							dt0.AcceptChanges();
+						}
+					}
+
+					for (int iTbl = 1; iTbl < iTblCount; iTbl++) {
+						DataTable dt = ds.Tables[iTbl];
+						foreach (string c in reqCols1) {
+							if (!dt.Columns.Contains(c)) {
+								DataColumn dc = new DataColumn(c);
+								dc.DataType = System.Type.GetType("System.String"); // add if not found
+
+								dt.Columns.Add(dc);
+								dt.AcceptChanges();
+							}
 						}
 					}
 				}
@@ -322,28 +333,31 @@ namespace Carrotware.CMS.Core {
 					DataSet ds = ReadDataSetConfig(CMSConfigFileType.AdminModules, "~/");
 
 					List<CMSAdminModuleMenu> _ctrls = new List<CMSAdminModuleMenu>();
+					_modules = new List<CMSAdminModule>();
 
-					_modules = (from d in ds.Tables[0].AsEnumerable()
-								select new CMSAdminModule {
-									PluginName = d.Field<string>("caption"),
-									PluginID = new Guid(d.Field<string>("pluginid"))
-								}).ToList();
+					if (ds.Tables.Count == 2) {
+						_modules = (from d in ds.Tables[0].AsEnumerable()
+									select new CMSAdminModule {
+										PluginName = d.Field<string>("caption"),
+										PluginID = new Guid(d.Field<string>("pluginid"))
+									}).ToList();
 
-					foreach (DataTable t in ds.Tables) {
-						if (t.TableName.StartsWith("ID_") || t.TableName.StartsWith("plugincontrols")) {
-							var _ctrl2 = (from d in t.AsEnumerable()
-										  select new CMSAdminModuleMenu {
-											  Caption = d.Field<string>("pluginlabel"),
-											  SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
-											  PluginParm = d.Field<string>("parm"),
-											  ControlFile = d.Field<string>("plugincontrol"),
-											  UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
-											  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
-											  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
-											  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
-										  }).ToList();
+						foreach (DataTable t in ds.Tables) {
+							if (t.TableName.StartsWith("ID_") || t.TableName.StartsWith("plugincontrols")) {
+								var _ctrl2 = (from d in t.AsEnumerable()
+											  select new CMSAdminModuleMenu {
+												  Caption = d.Field<string>("pluginlabel"),
+												  SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
+												  PluginParm = d.Field<string>("parm"),
+												  ControlFile = d.Field<string>("plugincontrol"),
+												  UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
+												  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
+												  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
+												  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
+											  }).ToList();
 
-							_ctrls = _ctrls.Union(_ctrl2).ToList();
+								_ctrls = _ctrls.Union(_ctrl2).ToList();
+							}
 						}
 					}
 
@@ -491,8 +505,20 @@ namespace Carrotware.CMS.Core {
 
 			if (!bExists) {
 				using (WebClient webClient = new WebClient()) {
-					webClient.DownloadFile(remoteFile, sServerPath);
-					//webClient.DownloadFileAsync(remoteFile, sServerPath);
+					try {
+						webClient.DownloadFile(remoteFile, sServerPath);
+						//webClient.DownloadFileAsync(remoteFile, sServerPath);
+					} catch (Exception ex) {
+						if (ex is WebException) {
+							WebException webException = (WebException)ex;
+							var resp = (HttpWebResponse)webException.Response;
+							if (!(resp.StatusCode == HttpStatusCode.NotFound)) {
+								throw;
+							}
+						} else {
+							throw;
+						}
+					}
 				}
 			}
 		}

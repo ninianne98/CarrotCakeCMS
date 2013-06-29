@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ContentRichText runat=server></{0}:ContentRichText>")]
-	public class ContentRichText : WebControl, IWidget, IWidgetMultiMenu, IWidgetRawData, ITextControl {
+	public class ContentRichText : WidgetWebControl, IWidgetMultiMenu, IWidgetRawData, ITextControl {
 
 		public string Text {
 			get {
@@ -37,17 +37,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		#region IWidget Members
 
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
+		public override string JSEditFunction {
 			get { return null; }
 		}
-
-		public bool EnableEdit { get { return true; } }
 
 		#endregion
 

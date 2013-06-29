@@ -49,6 +49,15 @@ namespace Carrotware.CMS.Core {
 		public static string PageHistoryURL {
 			get { return SiteData.AdminFolderPath + "PageHistory.aspx"; }
 		}
+		public static string PageWidgetsURL {
+			get { return SiteData.AdminFolderPath + "PageWidgets.aspx"; }
+		}
+		public static string WidgetTimeURL {
+			get { return SiteData.AdminFolderPath + "WidgetTime.aspx"; }
+		}
+		public static string WidgetHistoryURL {
+			get { return SiteData.AdminFolderPath + "WidgetHistory.aspx"; }
+		}
 
 		public static string ContentSnippetAddEditURL {
 			get { return SiteData.AdminFolderPath + "ContentSnippetAddEdit.aspx"; }

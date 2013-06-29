@@ -69,6 +69,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public WidgetWrapper AddWidget(Control widget, Widget widgetData) {
 			WidgetWrapper wrapper = new WidgetWrapper();
 
+			wrapper.WidgetData = widgetData;
+
 			wrapper.IsAdminMode = true;
 			wrapper.ControlPath = widgetData.ControlPath;
 			wrapper.ControlTitle = widgetData.ControlPath;

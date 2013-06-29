@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Carrotware.CMS.UI.Plugins.EventCalendarModule</RootNamespace>
+    <AssemblyName>Carrotware.CMS.UI.Plugins.EventCalendarModule</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="calendar1.css" />
+    <Content Include="calendar2.css" />
+    <Content Include="calendar3.css" />
+    <Content Include="CalendarAdminCategoryDetail.ascx" />
+    <Content Include="CalendarAdminCategoryList.ascx" />
+    <Content Include="CalendarAdminDatabase.ascx" />
+    <Content Include="CalendarAdminDetail.ascx" />
+    <Content Include="CalendarAdminDetailSingle.ascx" />
+    <Content Include="CalendarAdminList.ascx" />
+    <EmbeddedResource Include="carrot_CalendarEvent.sql" />
+    <Content Include="CalendarAdminProfileList.ascx" />
+    <Content Include="EventCalendarDisplay2.ascx" />
+    <Content Include="EventCalendarDisplayUpcoming.ascx" />
+    <Content Include="EventCalendarDisplay.ascx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Calendar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Calendar.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminCategoryDetail.ascx.cs">
+      <DependentUpon>CalendarAdminCategoryDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminCategoryDetail.ascx.designer.cs">
+      <DependentUpon>CalendarAdminCategoryDetail.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminCategoryList.ascx.cs">
+      <DependentUpon>CalendarAdminCategoryList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminCategoryList.ascx.designer.cs">
+      <DependentUpon>CalendarAdminCategoryList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminDatabase.ascx.cs">
+      <DependentUpon>CalendarAdminDatabase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminDatabase.ascx.designer.cs">
+      <DependentUpon>CalendarAdminDatabase.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminDetail.ascx.cs">
+      <DependentUpon>CalendarAdminDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminDetail.ascx.designer.cs">
+      <DependentUpon>CalendarAdminDetail.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminDetailSingle.ascx.cs">
+      <DependentUpon>CalendarAdminDetailSingle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminDetailSingle.ascx.designer.cs">
+      <DependentUpon>CalendarAdminDetailSingle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminList.ascx.cs">
+      <DependentUpon>CalendarAdminList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminList.ascx.designer.cs">
+      <DependentUpon>CalendarAdminList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminProfileList.ascx.cs">
+      <DependentUpon>CalendarAdminProfileList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminProfileList.ascx.designer.cs">
+      <DependentUpon>CalendarAdminProfileList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarEvent.cs" />
+    <Compile Include="CalendarFrequencyHelper.cs" />
+    <Compile Include="CalendarHelper.cs" />
+    <Compile Include="EventCalendarDisplay2.ascx.cs">
+      <DependentUpon>EventCalendarDisplay2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventCalendarDisplay2.ascx.designer.cs">
+      <DependentUpon>EventCalendarDisplay2.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EventCalendarDisplayUpcoming.ascx.cs">
+      <DependentUpon>EventCalendarDisplayUpcoming.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventCalendarDisplayUpcoming.ascx.designer.cs">
+      <DependentUpon>EventCalendarDisplayUpcoming.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EventCalendarDisplay.ascx.cs">
+      <DependentUpon>EventCalendarDisplay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventCalendarDisplay.ascx.designer.cs">
+      <DependentUpon>EventCalendarDisplay.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMSCore\CMSCore.csproj">
+      <Project>{83B39B26-EC55-4D23-AAE7-0EB3B76BB965}</Project>
+      <Name>CMSCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSDBUpdater\CMSDBUpdater.csproj">
+      <Project>{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}</Project>
+      <Name>CMSDBUpdater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">
+      <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
+      <Name>CMSInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebControls\WebControls.csproj">
+      <Project>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</Project>
+      <Name>WebControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin.config" />
+    <Content Include="Public.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Calendar.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Calendar.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Calendar.dbml.layout">
+      <DependentUpon>Calendar.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>12879</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)\bin\$(TargetName).*" "$(SolutionDir)\CMSAdmin\bin\" /F /R /Y /I
+xcopy  "$(ProjectDir)\*.ascx" "$(SolutionDir)\CMSAdmin\cmsPlugins\EventCalendar\" /F /R /Y /I
+xcopy  "$(ProjectDir)\*.css" "$(SolutionDir)\CMSAdmin\cmsPlugins\EventCalendar\" /F /R /Y /I
+xcopy  "$(ProjectDir)\Admin.config" "$(SolutionDir)\CMSAdmin\cmsPlugins\EventCalendar\" /F /R /Y /I
+xcopy  "$(ProjectDir)\Public.config" "$(SolutionDir)\CMSAdmin\cmsPlugins\EventCalendar\" /F /R /Y /I</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -219,46 +219,6 @@ H3 {
 	font-size: 18px;
 }
 
-.pageNodeDrillDown1 {
-	padding: 0px;
-	margin: 0px;
-	float: left;
-	min-height: 45px;
-}
-
-.pageNodeDrillDown2 {
-	padding: 0px;
-	margin: 2px;
-	float: left;
-}
-
-.pageNodeDrillDown3 {
-	padding: 4px;
-	margin: 2px;
-	float: left;
-	margin-right: 5px;
-}
-
-.pageNodeDrillDown4 {
-	padding: 0px;
-	margin: 2px;
-	position: relative;
-	width: 100px;
-}
-
-.pageNodeDrillDown5 {
-	padding: 0px;
-	margin: 2px;
-	float: left;
-	margin-top: 0px;
-	color: #676F6A;
-}
-
-.pageNodeDrillDown6 {
-	padding: 2px;
-	margin: 0px;
-	color: #676F6A;
-}
 
 /* Footer */
 
@@ -316,43 +276,4 @@ jqmodal styles
 	width: 100%;
 }
 
-/*
-drilldown stuff
-*/
-
-div.scroll {
-	height: 100px;
-	width: 340px;
-	overflow: auto;
-	padding: 2px;
-	position: absolute;
-	z-index: 999;
-}
-
-div.scrollcontainer {
-	height: 110px;
-	width: 350px;
-	padding: 4px;
-	position: absolute;
-	z-index: 999;
-}
-
-div.scrollcontainerhide {
-	display: none;
-}
-
-div.scrollcontainerheight {
-	height: 5px;
-	width: 75px;
-}
-
-div.menuitems {
-	margin-top: 2px;
-	margin-left: 2px;
-	padding: 6px;
-}
-
-div.menuitems {
-	padding: 4px;
-}
 

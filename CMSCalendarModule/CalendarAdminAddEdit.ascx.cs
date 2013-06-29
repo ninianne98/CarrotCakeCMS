@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
-using Carrotware.CMS.Core;
 
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
@@ -14,16 +13,17 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		protected dbCalendarDataContext db = new dbCalendarDataContext();
 		protected Guid ItemGuid = Guid.Empty;
 
-		protected void Page_Load(object sender, EventArgs e) {
-			if (SiteID == Guid.Empty) {
-				SiteID = SiteData.CurrentSiteID;
-			}
 
-			try {
-				ItemGuid = new Guid(Request.QueryString["id"].ToString());
+		protected void Page_Load(object sender, EventArgs e) {
+			ItemGuid = ParmParser.GetGuidIDFromQuery();
+
+
+			if (ItemGuid != Guid.Empty) {
+
 				cmdSave.Text = "Save";
 
-			} catch {
+			} else {
+
 				ItemGuid = Guid.NewGuid();
 				txtID.Text = ItemGuid.ToString();
 
@@ -35,6 +35,9 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 
 			if (!IsPostBack) {
+
+				txtDate.Text = DateTime.Now.Date.ToShortDateString();
+
 				var itm = (from c in db.tblCalendars
 						   where c.CalendarID == ItemGuid
 						   select c).FirstOrDefault();
@@ -72,9 +75,9 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			db.tblCalendars.DeleteOnSubmit(itm);
 			db.SubmitChanges();
 
-			var sQueryStringFile = CreateLink("CalendarAdmin");
+			string filePath = CreateLink("CalendarAdmin");
 
-			Response.Redirect(sQueryStringFile);
+			Response.Redirect(filePath);
 
 		}
 
@@ -85,7 +88,8 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 					   where c.CalendarID == ItemGuid
 					   select c).FirstOrDefault();
 
-			if (itm == null) {
+			if (itm == null || ItemGuid == Guid.Empty) {
+				ItemGuid = Guid.NewGuid();
 				bAdd = true;
 				itm = new tblCalendar();
 				itm.CalendarID = ItemGuid;
@@ -105,12 +109,10 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			}
 			db.SubmitChanges();
 
-			var sQueryStringFile = CreateLink(ModuleName, "id=" + ItemGuid);
+			string filePath = CreateLink(ModuleName, string.Format("id={0}", ItemGuid));
 
-			Response.Redirect(sQueryStringFile);
-
+			Response.Redirect(filePath);
 		}
-
 
 
 	}

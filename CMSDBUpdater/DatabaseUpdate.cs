@@ -25,7 +25,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static SqlException LastSQLError { get; set; }
 
-		public static string CurrentDbVersion { get { return "20130610"; } }
+		public static string CurrentDbVersion { get { return "20130612"; } }
 
 		public DatabaseUpdate() {
 			LastSQLError = null;
@@ -350,7 +350,7 @@ namespace Carrotware.CMS.DBUpdater {
 				return res;
 			}
 
-			res.Response = "Did not apply update";
+			res.Response = "Did not apply any updates";
 			return res;
 		}
 
@@ -365,7 +365,7 @@ namespace Carrotware.CMS.DBUpdater {
 				return res;
 			}
 
-			res.Response = "Did not apply update";
+			res.Response = "Did not apply any updates";
 			return res;
 		}
 
@@ -619,7 +619,7 @@ namespace Carrotware.CMS.DBUpdater {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER10.sql", false);
 				res.Response = "CMS DB created TextWidget and Content Snippet";
 				res.RanUpdate = true;
-				SetDbSchemaVersion("20130610");
+				SetDbSchemaVersion("20130612");
 				return res;
 			}
 

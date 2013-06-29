@@ -46,8 +46,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidVersionContentID = GetGuidParameterFromQuery("versionid");
 			guidImportContentID = GetGuidParameterFromQuery("importid");
 
-			if (iPageCount < 1) {
-				txtSort.Text = "0";
+			if (!IsPostBack) {
+				if (iPageCount < 1) {
+					txtSort.Text = "0";
+				} else {
+					int iOrder = pageHelper.GetMaxNavOrder(SiteID) + 1;
+					txtSort.Text = iOrder.ToString();
+				}
 			}
 
 			sPageMode = GetStringParameterFromQuery("mode");

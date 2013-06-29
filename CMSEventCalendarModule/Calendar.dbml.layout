@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.375, 8.5" name="Calendar">
+  <DataContextMoniker Name="/CalendarDataContext" />
+  <nestedChildShapes>
+    <classShape Id="35d734ac-7d30-4026-a052-7635da1454e3" absoluteBounds="3.625, 0.5, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/CalendarDataContext/carrot_CalendarEventCategory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5a721bd7-d81f-42f2-a8de-43b6425176e8" absoluteBounds="3.6399999999999997, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="aa0ea1a1-39e3-4dce-b361-975fd39bcc8c" absoluteBounds="3.625, 2.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CalendarDataContext/carrot_CalendarFrequency" />
+      <nestedChildShapes>
+        <elementListCompartment Id="28a1eeb8-6b11-4a33-abbf-a3801b676292" absoluteBounds="3.6399999999999997, 3.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="78a2a932-ae5d-46a8-aff3-1539931f5792" absoluteBounds="0.5, 4.875, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/CalendarDataContext/carrot_CalendarEvent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="09b66a5a-ce21-4b47-8bcb-fd6e6563dbae" absoluteBounds="0.515, 5.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c8e1b886-41f5-465f-b347-114110a1341c" absoluteBounds="0.5, 0.5, 2, 3.6939111328124996">
+      <DataClassMoniker Name="/CalendarDataContext/carrot_CalendarEventProfile" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5cbff3cc-8d90-4d79-8a66-705cd5069ac1" absoluteBounds="0.515, 0.96, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.5 : 4.1939111328125); (1.5 : 4.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CalendarDataContext/carrot_CalendarEventProfile/carrot_CalendarEventProfile_carrot_CalendarEvent" />
+      <nodes>
+        <classShapeMoniker Id="c8e1b886-41f5-465f-b347-114110a1341c" />
+        <classShapeMoniker Id="78a2a932-ae5d-46a8-aff3-1539931f5792" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.625 : 1.38544840494792); (2.5 : 1.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CalendarDataContext/carrot_CalendarEventCategory/carrot_CalendarEventCategory_carrot_CalendarEventProfile" />
+      <nodes>
+        <classShapeMoniker Id="35d734ac-7d30-4026-a052-7635da1454e3" />
+        <classShapeMoniker Id="c8e1b886-41f5-465f-b347-114110a1341c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.625 : 3.47195556640625); (2.5 : 3.47195556640625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CalendarDataContext/carrot_CalendarFrequency/carrot_CalendarFrequency_carrot_CalendarEventProfile" />
+      <nodes>
+        <classShapeMoniker Id="aa0ea1a1-39e3-4dce-b361-975fd39bcc8c" />
+        <classShapeMoniker Id="c8e1b886-41f5-465f-b347-114110a1341c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c63b0cf8-917b-4eff-b1e6-a8416c6fd222" absoluteBounds="6.375, 0.5, 2, 5.6169254557291657">
+      <DataClassMoniker Name="/CalendarDataContext/vw_carrot_CalendarEvent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="60dd3b67-6559-4e5a-ab5f-9177153dbbf6" absoluteBounds="6.39, 0.96, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9c12858c-4ff3-4496-88aa-dd9900434af3" absoluteBounds="9.125, 0.5, 2, 4.8477197265625">
+      <DataClassMoniker Name="/CalendarDataContext/vw_carrot_CalendarEventProfile" />
+      <nestedChildShapes>
+        <elementListCompartment Id="38eb7ee0-9109-4a9c-ada6-c34a4f6d5883" absoluteBounds="9.14, 0.96, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

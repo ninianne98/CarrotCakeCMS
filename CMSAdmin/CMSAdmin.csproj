@@ -120,6 +120,13 @@
       <DependentUpon>CMS.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="c3-admin\ContentEditHistory.aspx.cs">
+      <DependentUpon>ContentEditHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ContentEditHistory.aspx.designer.cs">
+      <DependentUpon>ContentEditHistory.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\ControlPropertiesEdit.aspx.cs">
       <DependentUpon>ControlPropertiesEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -568,6 +575,13 @@
     <Compile Include="c3-admin\WidgetList.aspx.designer.cs">
       <DependentUpon>WidgetList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\WidgetTime.aspx.cs">
+      <DependentUpon>WidgetTime.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\WidgetTime.aspx.designer.cs">
+      <DependentUpon>WidgetTime.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\wp-SiteImport.aspx.cs">
       <DependentUpon>wp-SiteImport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -605,6 +619,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant-index.aspx" />
+    <Content Include="c3-admin\ContentEditHistory.aspx" />
     <Content Include="c3-admin\ContentSnippetAddEdit.aspx" />
     <Content Include="c3-admin\ContentSnippetIndex.aspx" />
     <Content Include="c3-admin\ContentSnippetHistory.aspx" />
@@ -980,6 +995,7 @@
     <Content Include="c3-admin\tiny_mce\utils\mctabs.js" />
     <Content Include="c3-admin\tiny_mce\utils\validate.js" />
     <Content Include="c3-admin\ucSiteMap.ascx" />
+    <Content Include="c3-admin\WidgetTime.aspx" />
     <Content Include="citrus-island\citrus2.aspx" />
     <Content Include="citrus-island\citrus1-index.aspx" />
     <Content Include="citrus-island\citrus1-post.aspx" />

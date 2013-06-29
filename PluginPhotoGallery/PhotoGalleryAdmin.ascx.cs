@@ -18,10 +18,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		protected FileDataHelper fileHelper = new FileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
-
-			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
-				gTheID = new Guid(Request.QueryString["id"].ToString());
-			}
+			gTheID = ParmParser.GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
 				txtDate.Text = DateTime.Now.ToShortDateString();
@@ -214,7 +211,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						if (theImg == null) {
 							theImg = new GalleryImageEntry();
 							theImg.GalleryImage = img.Value;
-							theImg.GalleryImageID = Guid.Empty;
+							theImg.GalleryImageID = Guid.NewGuid();
 							theImg.GalleryID = gTheID;
 						}
 
@@ -233,10 +230,9 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			}
 
-			var QueryStringFile = CreateLink(ModuleName, "id=" + gTheID.ToString());
+			var stringFile = CreateLink(ModuleName, string.Format("id={0}", gTheID));
 
-
-			Response.Redirect(QueryStringFile);
+			Response.Redirect(stringFile);
 		}
 
 

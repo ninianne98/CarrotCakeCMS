@@ -15,7 +15,6 @@ namespace Carrotware.CMS.Interface {
 
 	public interface IWidgetParmData {
 
-
 		Dictionary<string, string> PublicParmValues { get; set; }
 
 	}

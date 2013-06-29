@@ -53,7 +53,9 @@ namespace Carrotware.Web.UI.Controls {
 			return sPath;
 		}
 
-		protected bool IsPostBack {
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public bool IsPostBack {
 			get {
 				string sReq = "GET";
 				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }

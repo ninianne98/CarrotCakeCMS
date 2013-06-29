@@ -9,24 +9,7 @@ using Carrotware.CMS.Core;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public partial class PhotoGalleryFancyBox2 : WidgetParmData, IWidget, IWidgetEditStatus {
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return true; }
-		}
-
-		#endregion
+	public partial class PhotoGalleryFancyBox2 : WidgetParmDataUserControl, IWidgetEditStatus {
 
 		#region IWidgetEditStatus Members
 
@@ -60,6 +43,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				return _dict;
 			}
 		}
+
 
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
 		public int ThumbSize { get; set; }

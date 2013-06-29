@@ -119,6 +119,9 @@ function cmsMenuFixImages() {
 	$(".cmsWidgetBarIconDup").each(function (i) {
 		cmsFixGeneralImage(this, 'shape_ungroup.png');
 	});
+	$(".cmsWidgetBarIconTime").each(function (i) {
+		cmsFixGeneralImage(this, 'clock_edit.png');
+	});
 	$(".cmsWidgetBarIconCopy").each(function (i) {
 		cmsFixGeneralImage(this, 'table_go.png');
 	});
@@ -734,6 +737,10 @@ function cmsManageWidgetHistory(widgetID) {
 	//alert(widgetID);
 	cmsLaunchWindow('/c3-admin/WidgetHistory.aspx?pageid=' + thisPageID + "&widgetid=" + widgetID);
 }
+function cmsManageWidgetTime(widgetID) {
+	//alert(widgetID);
+	cmsLaunchWindow('/c3-admin/WidgetTime.aspx?pageid=' + thisPageID + "&widgetid=" + widgetID);
+}
 
 function cmsShowEditPageInfo() {
 
@@ -744,7 +751,10 @@ function cmsShowEditPostInfo() {
 
 	cmsLaunchWindow('/c3-admin/BlogPostEdit.aspx?pageid=' + thisPageID);
 }
+function cmsShowAddPage() {
 
+	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?pageid=' + thisPageID);
+}
 function cmsShowAddChildPage() {
 
 	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?pageid=' + thisPageID);

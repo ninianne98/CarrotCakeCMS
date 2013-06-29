@@ -43,6 +43,15 @@ tt, pre, code, kbd, samp {
 	margin-right: 5px;
 }
 
+#jqaccordion .moduleLink {
+	margin: 0;
+	padding: 0;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding-bottom: 2px;
+	display: block;
+}
+
 /*  OTHER */
 
 .tableback {
@@ -95,6 +104,38 @@ tt, pre, code, kbd, samp {
 
 .ui-front {
 	z-index: 100000;
+}
+
+.ui-tabs-vertical {
+	width: 100%;
+}
+.ui-tabs-vertical .ui-tabs-nav {
+	padding: .2em .1em .2em .2em;
+	float: left;
+	width: 12em;
+}
+.ui-tabs-vertical .ui-tabs-nav li {
+	clear: left;
+	width: 100%;
+	border-bottom-width: 1px !important;
+	border-right-width: 0 !important;
+	margin: 0 -1px .2em 0;
+}
+.ui-tabs-vertical .ui-tabs-nav li a {
+	display: block;
+}
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+	padding-bottom: 0;
+	padding-right: .1em;
+	border-right-width: 1px;
+	border-right-width: 1px;
+}
+.ui-tabs-vertical .ui-tabs-panel {
+	padding: 0.5em;
+	float: right;
+	display: block;
+	min-width: 65%;
+	clear: right;
 }
 
 .picker-area {
@@ -298,3 +339,84 @@ table.centered {
 	background: transparent url("../images/cross.png") 0 0 no-repeat;
 }
 */
+
+/*
+drilldown stuff
+*/
+
+div.scroll {
+	height: 100px;
+	width: 340px;
+	overflow: auto;
+	padding: 2px;
+	position: absolute;
+	z-index: 999;
+}
+
+div.scrollcontainer {
+	height: 110px;
+	width: 350px;
+	padding: 4px;
+	position: absolute;
+	z-index: 999;
+}
+
+div.scrollcontainerhide {
+	display: none;
+}
+
+div.scrollcontainerheight {
+	height: 5px;
+	width: 75px;
+}
+
+div.menuitems {
+	margin-top: 2px;
+	margin-left: 2px;
+	padding: 6px;
+}
+
+div.menuitems {
+	padding: 4px;
+}
+
+.pageNodeDrillDown1 {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+	min-height: 45px;
+}
+
+.pageNodeDrillDown2 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+}
+
+.pageNodeDrillDown3 {
+	padding: 4px;
+	margin: 2px;
+	float: left;
+	margin-right: 5px;
+}
+
+.pageNodeDrillDown4 {
+	padding: 0px;
+	margin: 2px;
+	position: relative;
+	width: 100px;
+}
+
+.pageNodeDrillDown5 {
+	padding: 0px;
+	margin: 2px;
+	float: left;
+	margin-top: 0px;
+	color: #676F6A;
+}
+
+.pageNodeDrillDown6 {
+	padding: 2px;
+	margin: 0px;
+	color: #676F6A;
+}

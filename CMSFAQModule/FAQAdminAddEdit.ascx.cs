@@ -10,22 +10,19 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Plugins.FAQModule {
 	public partial class FAQAdminAddEdit : AdminModule {
 
-
-
 		protected dbFAQDataContext db = new dbFAQDataContext();
 		protected Guid ItemGuid = Guid.Empty;
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			//if (SiteID == Guid.Empty) {
-			//    SiteID = SiteData.CurrentSiteID;
-			//}
+			ItemGuid = ParmParser.GetGuidIDFromQuery();
 
-			try {
-				ItemGuid = new Guid(Request.QueryString["id"].ToString());
+
+			if (ItemGuid != Guid.Empty) {
+
 				cmdSave.Text = "Save";
 
-			} catch {
+			} else {
 				ItemGuid = Guid.NewGuid();
 				txtID.Text = ItemGuid.ToString();
 
@@ -73,9 +70,9 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 			db.tblFAQs.DeleteOnSubmit(itm);
 			db.SubmitChanges();
 
-			var sQueryStringFile = CreateLink("FAQAdmin");
+			string filePath = CreateLink("FAQAdmin");
 
-			Response.Redirect(sQueryStringFile);
+			Response.Redirect(filePath);
 
 		}
 
@@ -86,7 +83,8 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 					   where c.FaqID == ItemGuid
 					   select c).FirstOrDefault();
 
-			if (itm == null) {
+			if (itm == null || ItemGuid == Guid.Empty) {
+				ItemGuid = Guid.NewGuid();
 				bAdd = true;
 				itm = new tblFAQ();
 				itm.FaqID = ItemGuid;
@@ -106,13 +104,10 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 			}
 			db.SubmitChanges();
 
-			var sQueryStringFile = CreateLink(ModuleName, "id=" + ItemGuid);
+			string filePath = CreateLink(ModuleName, string.Format("id={0}", ItemGuid));
 
-			Response.Redirect(sQueryStringFile);
-
+			Response.Redirect(filePath);
 		}
-
-
 
 
 	}

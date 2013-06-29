@@ -13,6 +13,8 @@
 								Edit </a></li>
 							<li runat="server" id="liClone"><a title="Clone" alt="Clone" class="cmsWidgetBarLink cmsWidgetBarIconDup" id="cmsCopySettingsLink" href="javascript:cmsCopyWidget('{WIDGET_KEY}')">
 								Clone </a></li>
+							<li runat="server" id="liTime"><a title="Set Time" alt="Set Time" class="cmsWidgetBarLink cmsWidgetBarIconTime" id="A1" href="javascript:cmsManageWidgetTime('{WIDGET_KEY}')">
+								Set Time </a></li>
 							<li runat="server" id="liHistory"><a title="History" alt="History" class="cmsWidgetBarLink cmsWidgetBarIconWidget2" id="cmsContentHistoryLink" href="javascript:cmsManageWidgetHistory('{WIDGET_KEY}')">
 								History </a></li>
 							<li runat="server" id="liRemove"><a title="Remove" alt="Remove" class="cmsWidgetBarLink cmsWidgetBarIconCross" id="cmsContentRemoveLink" href="javascript:cmsRemoveWidgetLink('{WIDGET_KEY}');">

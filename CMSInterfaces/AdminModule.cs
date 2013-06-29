@@ -95,19 +95,21 @@ namespace Carrotware.CMS.Interface {
 			return sQueryStringFile;
 		}
 
+
 		#region IAdminModule Members
 
-		public Guid SiteID { get; set; }
+		public virtual Guid SiteID { get; set; }
 
-		public Guid ModuleID { get; set; }
+		public virtual Guid ModuleID { get; set; }
 
-		public string QueryStringFragment { get; set; }
+		public virtual string QueryStringFragment { get; set; }
 
-		public string QueryStringPattern { get; set; }
+		public virtual string QueryStringPattern { get; set; }
 
-		public string ModuleName { get; set; }
+		public virtual string ModuleName { get; set; }
 
 		#endregion
+
 
 		public string ResolveResourceFilePath(string sPath) {
 			string sPathOut = null;

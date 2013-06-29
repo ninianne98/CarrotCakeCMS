@@ -5,31 +5,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
-using Carrotware.CMS.Core;
 
 
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarUpcoming : WidgetParmData, IWidget {
-
-		protected dbCalendarDataContext db = new dbCalendarDataContext();
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return true; }
-		}
-
-		#endregion
+	public partial class CalendarUpcoming : WidgetParmDataUserControl {
 
 		private int _past = -3;
 		public int DaysInPast {
@@ -46,17 +26,13 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (SiteID == Guid.Empty) {
-				SiteID = SiteData.CurrentSiteID;
-			}
 
 			if (!IsPostBack) {
 				SetCalendar();
 			}
 		}
 
-
-		protected void SetCalendar() {
+		protected override void OnInit(EventArgs e) {
 
 			if (PublicParmValues.Count > 0) {
 				try {
@@ -76,20 +52,28 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				} catch (Exception ex) { }
 			}
 
+			base.OnInit(e);
+		}
+
+
+		protected void SetCalendar() {
+
 			DateTime dtStart = DateTime.Now.AddDays(DaysInPast);
 			DateTime dtEnd = DateTime.Now.AddDays(DaysInFuture);
 
-			var lst = (from c in db.tblCalendars
-					   where c.EventDate >= dtStart
-						&& c.EventDate < dtEnd
-						&& c.IsActive == true
-						&& c.SiteID == SiteID
-					   orderby c.EventDate
-					   select c).ToList();
+			using (dbCalendarDataContext db = new dbCalendarDataContext()) {
+				var lst = (from c in db.tblCalendars
+						   where c.EventDate >= dtStart
+							&& c.EventDate < dtEnd
+							&& c.IsActive == true
+							&& c.SiteID == SiteID
+						   orderby c.EventDate
+						   select c).ToList();
 
 
-			dgEvents.DataSource = lst;
-			dgEvents.DataBind();
+				dgEvents.DataSource = lst;
+				dgEvents.DataBind();
+			}
 
 		}
 

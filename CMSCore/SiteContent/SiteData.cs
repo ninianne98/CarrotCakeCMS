@@ -894,7 +894,7 @@ namespace Carrotware.CMS.Core {
 				bWriteError = config.ExtraOptions.WriteErrorLog;
 			}
 #if DEBUG
-			bWriteError = true; // always write erros when debug build
+			bWriteError = true; // always write errors when debug build
 #endif
 
 			if (bWriteError && objErr != null) {

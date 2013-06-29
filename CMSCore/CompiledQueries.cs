@@ -29,6 +29,14 @@ namespace Carrotware.CMS.Core {
 					   select r).FirstOrDefault());
 
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_Site> cqGetSiteFromRootContentID =
+		CompiledQuery.Compile(
+					(CarrotCMSDataContext ctx, Guid rootContentID) =>
+					  (from r in ctx.carrot_RootContents
+					   join s in ctx.carrot_Sites on r.SiteID equals s.SiteID
+					   where r.Root_ContentID == rootContentID
+					   select s).FirstOrDefault());
+
 		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, carrot_Content> cqGetLatestContentTbl =
 		CompiledQuery.Compile(
 					(CarrotCMSDataContext ctx, Guid siteID, Guid rootContentID) =>
@@ -758,6 +766,31 @@ namespace Carrotware.CMS.Core {
 
 		//==========================
 
+		internal static readonly Func<CarrotCMSDataContext, Guid, string, vw_carrot_TagURL> cqGetContentTagByURL =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, string slugURL) =>
+				(from c in ctx.vw_carrot_TagURLs
+				 where c.SiteID == siteID
+					 && c.TagUrl.ToLower() == slugURL.ToLower()
+				 select c).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, string, vw_carrot_CategoryURL> cqGetContentCategoryByURL =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, string slugURL) =>
+				(from c in ctx.vw_carrot_CategoryURLs
+				 where c.SiteID == siteID
+					 && c.CategoryUrl.ToLower() == slugURL.ToLower()
+				 select c).FirstOrDefault());
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, string, vw_carrot_EditorURL> cqGetContentEditorURL =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, string slugURL) =>
+				(from c in ctx.vw_carrot_EditorURLs
+				 where c.SiteID == siteID
+					 && c.UserUrl.ToLower() == slugURL.ToLower()
+				 select c).FirstOrDefault());
+
+
 		internal static readonly Func<CarrotCMSDataContext, Guid, carrot_ContentTag> cqGetContentTagByID =
 		CompiledQuery.Compile(
 			(CarrotCMSDataContext ctx, Guid contentTagID) =>
@@ -771,6 +804,15 @@ namespace Carrotware.CMS.Core {
 			(CarrotCMSDataContext ctx, Guid contentCategoryID) =>
 				(from c in ctx.carrot_ContentCategories
 				 where c.ContentCategoryID == contentCategoryID
+				 select c).FirstOrDefault());
+
+
+		internal static readonly Func<CarrotCMSDataContext, Guid, Guid, vw_carrot_EditorURL> cqGetContentEditorByID =
+		CompiledQuery.Compile(
+			(CarrotCMSDataContext ctx, Guid siteID, Guid userId) =>
+				(from c in ctx.vw_carrot_EditorURLs
+				 where c.SiteID == siteID
+					 && c.UserId == userId
 				 select c).FirstOrDefault());
 
 

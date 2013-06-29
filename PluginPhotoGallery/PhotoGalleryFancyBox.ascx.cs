@@ -9,15 +9,15 @@ using Carrotware.CMS.Core;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public partial class PhotoGalleryFancyBox : WidgetParmData, IWidget, IWidgetEditStatus {
+	public partial class PhotoGalleryFancyBox : WidgetParmDataUserControl, IWidgetEditStatus {
 
 		public bool ShowHeading { get; set; }
 
 		public bool ScaleImage { get; set; }
 
+
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstGalleryID")]
 		public Guid GalleryID { get; set; }
-
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstGalleryID {
@@ -38,7 +38,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				return _dict;
 			}
 		}
-
 
 
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
@@ -65,10 +64,17 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
+
+		#region IWidgetEditStatus Members
+
+		public bool IsBeingEdited { get; set; }
+
+		#endregion
+
+
 		public string GetScale() {
 			return ScaleImage.ToString().ToLower();
 		}
-
 
 		public string GetThumbSize() {
 			return ThumbSize.ToString().ToLower();
@@ -146,28 +152,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return true; }
-		}
-
-		#endregion
-
-		#region IWidgetEditStatus Members
-
-		public bool IsBeingEdited { get; set; }
-
-		#endregion
 	}
 }

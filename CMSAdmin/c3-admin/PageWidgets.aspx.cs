@@ -20,12 +20,12 @@ using Carrotware.CMS.UI.Controls;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class PageWidgets : AdminBasePage {
 
-		public Guid guidRootID = Guid.Empty;
+		public Guid guidContentID = Guid.Empty;
 
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			guidRootID = GetGuidIDFromQuery();
+			guidContentID = GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
 				LoadGrid();
@@ -36,7 +36,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void LoadGrid() {
 
-			var lstCont = widgetHelper.GetWidgets(guidRootID, false);
+			var lstCont = widgetHelper.GetWidgets(guidContentID, false);
 
 			GeneralUtilities.BindDataBoundControl(gvPages, lstCont);
 
@@ -47,10 +47,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void btnUpdate_Click(object sender, EventArgs e) {
 
 			List<Guid> lsActive = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, true, "chkContent");
-			widgetHelper.SetStatusList(guidRootID, lsActive, true);
+			widgetHelper.SetStatusList(guidContentID, lsActive, true);
 
 			List<Guid> lsInactive = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, false, "chkContent");
-			widgetHelper.SetStatusList(guidRootID, lsInactive, false);
+			widgetHelper.SetStatusList(guidContentID, lsInactive, false);
 
 			LoadGrid();
 		}

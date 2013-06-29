@@ -8,6 +8,8 @@ namespace Carrotware.CMS.Core {
 		int MetaInfoCount { get; }
 		bool MetaIsPublic { get; }
 
+		DateTime? MetaDataDate { get; }
+
 		void SetValue(Guid ContentMetaInfoID);
 
 	}

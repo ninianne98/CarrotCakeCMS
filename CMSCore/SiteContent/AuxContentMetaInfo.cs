@@ -36,6 +36,10 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public DateTime? MetaDataDate {
+			get { return this.GoLiveDate; }
+		}
+
 		public string MetaInfoURL {
 			get {
 				this.DateURL = (this.TheSite.BuildMonthSearchLink(this.GoLiveDate));
@@ -105,6 +109,10 @@ namespace Carrotware.CMS.Core {
 				setDate();
 				return this.DateURL;
 			}
+		}
+
+		public DateTime? MetaDataDate {
+			get { return this.PostDate; }
 		}
 
 		public int MetaInfoCount {

@@ -19,6 +19,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid dgMenu;
+        protected global::System.Web.UI.WebControls.GridView dgMenu;
     }
 }

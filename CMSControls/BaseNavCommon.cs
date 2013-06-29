@@ -58,7 +58,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
+		[Browsable(false)]
 		public List<SiteNav> NavigationData { get; set; }
 
 		private bool _stripNotInSiteNav = true;

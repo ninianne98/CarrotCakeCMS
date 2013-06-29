@@ -35,7 +35,7 @@
 	</asp:Repeater>
 	<br />
 	<div style="margin-top: 25px;">
-		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Apply" />
 		<br />
 	</div>
 	<div style="display: none;">

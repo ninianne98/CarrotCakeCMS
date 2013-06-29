@@ -844,6 +844,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {
+
+			dateIn = dateIn.AddMinutes(-2);
+			int iMin = 5 * (dateIn.Minute / 5);
+
+			DateTime dateOut = dateIn.AddMinutes(0 - dateIn.Minute).AddMinutes(iMin);
+
+			return dateOut;
+		}
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -861,16 +870,22 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				WidgetAddition = WidgetAddition.Replace("\r\n", "\n");
 				WidgetAddition = WidgetAddition.Replace("\r", "\n");
-				var arrWidgRows = WidgetAddition.Split('\n');
+				string[] arrWidgRows = WidgetAddition.Split('\n');
 
 				foreach (string arrWidgCell in arrWidgRows) {
 					if (!string.IsNullOrEmpty(arrWidgCell)) {
 						bool bGoodWidget = false;
-						var w = arrWidgCell.Split('\t');
-						var rWidg = new Widget();
+						string[] w = arrWidgCell.Split('\t');
+
+						Widget rWidg = new Widget();
 						if (w[2].ToLower().EndsWith(".ascx") || w[2].ToLower().StartsWith("class:")) {
 							rWidg.ControlPath = w[2];
 							rWidg.Root_WidgetID = Guid.NewGuid();
+
+							DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+							rWidg.GoLiveDate = dtSite;
+							rWidg.RetireDate = dtSite.AddYears(200);
+
 							bGoodWidget = true;
 						} else {
 							if (w[2].ToString().Length == Guid.Empty.ToString().Length) {
@@ -895,20 +910,22 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
-				foreach (var wd in inputWid) {
-					var z = (from d in cacheWidget where d.Root_WidgetID == wd.Root_WidgetID select d).FirstOrDefault();
-					if (z == null) {
-						cacheWidget.Add(wd);
-					} else {
-						z.EditDate = SiteData.CurrentSite.Now;
-						z.PlaceholderName = wd.PlaceholderName; // if moving zones
+				foreach (Widget wd1 in inputWid) {
+					Widget wd2 = (from d in cacheWidget where d.Root_WidgetID == wd1.Root_WidgetID select d).FirstOrDefault();
 
-						var i = cacheWidget.IndexOf(z);
-						cacheWidget[i].WidgetOrder = wd.WidgetOrder;
+					if (wd2 == null) {
+						cacheWidget.Add(wd1);
+					} else {
+						wd2.EditDate = SiteData.CurrentSite.Now;
+						wd2.PlaceholderName = wd1.PlaceholderName; // if moving zones
+
+						int i = cacheWidget.IndexOf(wd2);
+						cacheWidget[i].WidgetOrder = wd1.WidgetOrder;
 
 						int? mainSort = (from entry in dictOrder
-										 where entry.Key == wd.Root_WidgetID
+										 where entry.Key == wd1.Root_WidgetID
 										 select entry.Value).FirstOrDefault();
+
 						if (mainSort != null) {
 							cacheWidget[i].WidgetOrder = Convert.ToInt32(mainSort);
 						}
@@ -932,9 +949,18 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				LoadGuids();
 				Guid guidWidget = new Guid(DBKey);
 
-				var ww = (from w in cmsAdminWidget
+				Widget ww = null;
+
+				try {
+					ww = (from w in cmsAdminWidget
 						  where w.Root_WidgetID == guidWidget
 						  select w).FirstOrDefault();
+
+				} catch (Exception ex) { }
+
+				if (ww == null) {
+					ww = widgetHelper.Get(guidWidget);
+				}
 
 				if (ww != null) {
 					if (string.IsNullOrEmpty(ww.ControlProperties)) {
@@ -1241,8 +1267,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					newContent.ContentID = Guid.NewGuid();
 					newContent.NavOrder = oldContent.NavOrder;
 					newContent.Parent_ContentID = oldContent.Parent_ContentID;
+					newContent.EditUserId = SecurityData.CurrentUserGuid;
+					newContent.EditDate = SiteData.CurrentSite.Now;
 
 					foreach (var wd in cmsAdminWidget) {
+						wd.EditDate = SiteData.CurrentSite.Now;
 						wd.Save();
 					}
 
