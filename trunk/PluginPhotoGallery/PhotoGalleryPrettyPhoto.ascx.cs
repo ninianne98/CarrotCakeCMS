@@ -10,7 +10,7 @@ using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public partial class PhotoGalleryPrettyPhoto : WidgetParmData, IWidget, IWidgetEditStatus {
+	public partial class PhotoGalleryPrettyPhoto : WidgetParmDataUserControl, IWidgetEditStatus {
 
 		[Description("Display gallery heading")]
 		public bool ShowHeading { get; set; }
@@ -76,6 +76,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public string GetThumbSize() {
 			return ThumbSize.ToString().ToLower();
 		}
+
+
+		#region IWidgetEditStatus Members
+
+		public bool IsBeingEdited { get; set; }
+
+		#endregion
 
 		[Description("Gallery appearance (pretty photo skin)")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstPrettySkins")]
@@ -180,28 +187,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return true; }
-		}
-
-		#endregion
-
-		#region IWidgetEditStatus Members
-
-		public bool IsBeingEdited { get; set; }
-
-		#endregion
 	}
 }

@@ -80,8 +80,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			tabContentSiteMap.Visible = bShowTop;
 			tabImportContent.Visible = bShowTop;
 			tabStatusChange.Visible = bShowTop;
-			tabDashboard.Visible = bShowTop;
+			//tabDashboard.Visible = bShowTop;
 			tabExtensions.Visible = bShowTop;
+			tabHistory.Visible = bShowTop;
 		}
 
 
@@ -99,11 +100,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 				case SectionID.SiteDashboard:
 					tabMainTop.Attributes["class"] = sCSSTop;
-					tabDashboard.Attributes["class"] = sCSSSecondary;
+					//tabDashboard.Attributes["class"] = sCSSSecondary;
 					break;
 				case SectionID.SiteInfo:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabMain.Attributes["class"] = sCSSSecondary;
+					break;
+				case SectionID.ContentHistory:
+					tabMainTop.Attributes["class"] = sCSSTop;
+					tabHistory.Attributes["class"] = sCSSSecondary;
 					break;
 				case SectionID.SiteTemplate:
 					tabMainTop.Attributes["class"] = sCSSTop;
@@ -210,6 +215,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				if (objErr.InnerException != null) {
 					sError += "\r\n<hr />\r\n" + objErr.InnerException;
 				}
+
+				SiteData.WriteDebugException("main master - AsyncPostBackError", objErr);
 			} else {
 				sError = " An error occurred. (Generic Main) ";
 			}

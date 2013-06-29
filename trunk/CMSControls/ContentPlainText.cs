@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:ContentPlainText runat=server></{0}:ContentPlainText>")]
-	public class ContentPlainText : WebControl, IWidget, IWidgetRawData, ITextControl {
+	public class ContentPlainText : WidgetWebControl, IWidgetRawData, ITextControl {
 
 		public string Text {
 			get {
@@ -37,19 +37,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 		#region IWidget Members
 
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
+		public override string JSEditFunction {
 			get { return "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'plain');"; }
 		}
 
-		public bool EnableEdit { get { return true; } }
-
 		#endregion
+
 		#region IWidgetRawData Members
 
 		public string RawWidgetData { get; set; }

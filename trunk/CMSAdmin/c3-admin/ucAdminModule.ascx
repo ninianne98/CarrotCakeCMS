@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdminModule.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucAdminModule" %>
-<table width="95%">
+<table style="width: 96%">
 	<tr>
-		<asp:Panel ID="pnlNav" runat="server">
+		<asp:PlaceHolder ID="pnlNav" runat="server">
 			<td style="width: 275px;">
 				<div style="width: 250px; padding-right: 25px;">
 					<div id="jqaccordion">
@@ -14,10 +14,11 @@
 									<asp:HiddenField ID="hdnID" runat="server" Value='<%# Eval("PluginID")%>' />
 									<asp:Repeater ID="rpModuleContents" runat="server">
 										<ItemTemplate>
-											<a <%# MarkSelected(Eval("PluginID").ToString(), Eval("PluginParm").ToString()) %> href="<%# CreateLink( Eval("UsePopup").ToString(), Eval("PluginID").ToString(), Eval("PluginParm").ToString() ) %>">
-												<%# Eval("Caption")%>
-											</a>
-											<br />
+											<div class="moduleLink">
+												<a <%# MarkSelected(Eval("PluginID").ToString(), Eval("PluginParm").ToString()) %> href="<%# CreateLink( Eval("UsePopup").ToString(), Eval("PluginID").ToString(), Eval("PluginParm").ToString() ) %>">
+													<%# Eval("Caption")%>
+												</a>
+											</div>
 										</ItemTemplate>
 									</asp:Repeater>
 								</div>
@@ -26,13 +27,13 @@
 					</div>
 				</div>
 			</td>
-		</asp:Panel>
+		</asp:PlaceHolder>
 		<td>
 			<asp:PlaceHolder ID="phAdminModule" runat="server"></asp:PlaceHolder>
 		</td>
 	</tr>
 </table>
-<asp:Panel ID="pnlSetter" runat="server" Visible="false">
+<asp:PlaceHolder ID="pnlSetter" runat="server" Visible="false">
 	<script type="text/javascript">
 
 		function moduleUpdateAjaxJQuery() {
@@ -63,4 +64,4 @@
 		}
 			
 	</script>
-</asp:Panel>
+</asp:PlaceHolder>

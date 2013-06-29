@@ -19,62 +19,34 @@ namespace Carrotware.CMS.Interface {
 		#region IWidgetParmData Members
 
 		private Dictionary<string, string> _parms = new Dictionary<string, string>();
-		public Dictionary<string, string> PublicParmValues {
+		public virtual Dictionary<string, string> PublicParmValues {
 			get { return _parms; }
 			set { _parms = value; }
 		}
 
 		#endregion
 
+
+		#region Common Parser Routines
+
 		protected string GetParmValue(string sKey) {
-			string ret = null;
-
-			if (PublicParmValues.Count > 0) {
-				ret = (from c in PublicParmValues
-					   where c.Key.ToLower() == sKey.ToLower()
-					   select c.Value).FirstOrDefault();
-			}
-
-			return ret;
+			return ParmParser.GetParmValue(this.PublicParmValues, sKey);
 		}
 
 		protected string GetParmValue(string sKey, string sDefault) {
-			string ret = null;
-
-			if (PublicParmValues.Count > 0) {
-				ret = (from c in PublicParmValues
-					   where c.Key.ToLower() == sKey.ToLower()
-					   select c.Value).FirstOrDefault();
-			}
-
-			ret = ret == null ? sDefault : ret;
-
-			return ret;
+			return ParmParser.GetParmValue(this.PublicParmValues, sKey, sDefault);
 		}
 
 		protected string GetParmValueDefaultEmpty(string sKey, string sDefault) {
-			string ret = GetParmValue(sKey, sDefault);
-
-			ret = string.IsNullOrEmpty(ret) ? sDefault : ret;
-
-			return ret;
+			return ParmParser.GetParmValueDefaultEmpty(this.PublicParmValues, sKey, sDefault);
 		}
 
 		protected List<string> GetParmValueList(string sKey) {
-
-			sKey = sKey.EndsWith("|") ? sKey : sKey + "|";
-			sKey = sKey.ToLower();
-
-			List<string> ret = new List<string>();
-
-			if (PublicParmValues.Count > 0) {
-				ret = (from c in PublicParmValues
-					   where c.Key.ToLower().StartsWith(sKey)
-					   select c.Value).ToList();
-			}
-
-			return ret;
+			return ParmParser.GetParmValueList(this.PublicParmValues, sKey);
 		}
+
+		#endregion
+
 
 	}
 }

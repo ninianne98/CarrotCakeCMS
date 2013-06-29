@@ -102,6 +102,8 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("")]
 		public Dictionary<string, string> JSEditFunctions { get; set; }
 
+		public Widget WidgetData { get; set; }
+
 		private string ScrubCtrl(string sCtrl) {
 
 			sCtrl = sCtrl.Replace("{WIDGET_ID}", this.ClientID);
@@ -150,6 +152,22 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender(e);
+
+			//this.ControlPath = this.WidgetSettings.ControlPath;
+			//this.ControlTitle = this.WidgetSettings.ControlPath;
+			//this.Order = this.WidgetSettings.WidgetOrder;
+			this.DatabaseKey = this.WidgetData.Root_WidgetID;
+
+			if (!this.WidgetData.IsWidgetActive) {
+				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, this.ControlTitle);
+			}
+			if (this.WidgetData.IsRetired) {
+				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.RetiredPagePrefix, this.ControlTitle);
+			}
+			if (this.WidgetData.IsUnReleased) {
+				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.UnreleasedPagePrefix, this.ControlTitle);
+			}
+
 
 			if (SiteData.IsWebView) {
 				if (this.IsAdminMode) {

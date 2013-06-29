@@ -66,6 +66,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool IsPostBack {
 			get {
 				string sReq = "GET";
@@ -188,7 +190,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 
-
+		[Browsable(false)]
 		public override object DataSource {
 			get { return this.TheGrid.DataSource; }
 			set { this.TheGrid.DataSource = value; }

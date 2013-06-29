@@ -5,41 +5,17 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
-using Carrotware.CMS.Core;
-
 
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarDateInfo : BaseShellUserControl, IWidget {
+	public partial class CalendarDateInfo : WidgetParmDataUserControl {
 
-		protected dbCalendarDataContext db = new dbCalendarDataContext();
-
-		#region IWidget Members
-
-		public Guid PageWidgetID { get; set; }
-
-		public Guid RootContentID { get; set; }
-
-		public Guid SiteID { get; set; }
-
-		public string JSEditFunction {
-			get { return ""; }
-		}
-		public bool EnableEdit {
-			get { return false; }
-		}
-
-		#endregion
-
-		public DateTime theEventDate = DateTime.Now;
+		public DateTime theEventDate = DateTime.Now.Date;
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (SiteID == Guid.Empty) {
-				SiteID = SiteData.CurrentSiteID;
-			}
 
 			if (!string.IsNullOrEmpty(Request.QueryString["calendardate"])) {
-				theEventDate = Convert.ToDateTime(Request.QueryString["calendardate"].ToString());
+				theEventDate = Convert.ToDateTime(ParmParser.GetStringParameterFromQuery("calendardate"));
 			}
 
 			if (!IsPostBack) {
@@ -49,16 +25,18 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 
 		protected void SetCalendar() {
+			using (dbCalendarDataContext db = new dbCalendarDataContext()) {
 
-			var lst = (from c in db.tblCalendars
-					   where c.EventDate == theEventDate
-						&& c.IsActive == true
-						&& c.SiteID == SiteID
-					   orderby c.EventDate
-					   select c).ToList();
+				var lst = (from c in db.tblCalendars
+						   where c.EventDate == theEventDate
+							&& c.IsActive == true
+							&& c.SiteID == SiteID
+						   orderby c.EventDate
+						   select c).ToList();
 
-			rEvents.DataSource = lst;
-			rEvents.DataBind();
+				rEvents.DataSource = lst;
+				rEvents.DataBind();
+			}
 
 		}
 

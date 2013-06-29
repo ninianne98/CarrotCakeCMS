@@ -112,22 +112,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnEditCoreInfo;
         
         /// <summary>
-        /// btnAddTop control.
+        /// btnAddPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnAddTop;
-        
-        /// <summary>
-        /// btnAddChild control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnAddChild;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnAddPage;
         
         /// <summary>
         /// btnSortChildPages control.

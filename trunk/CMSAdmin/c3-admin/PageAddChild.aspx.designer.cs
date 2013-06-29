@@ -22,6 +22,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.Panel pnlSaved;
         
         /// <summary>
+        /// lnkNew control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkNew;
+        
+        /// <summary>
         /// litPageName control.
         /// </summary>
         /// <remarks>
@@ -155,6 +164,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDescription;
+        
+        /// <summary>
+        /// ParentPagePicker control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Admin.c3_admin.ucSitePageDrillDown ParentPagePicker;
         
         /// <summary>
         /// formValidationSummary control.

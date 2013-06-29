@@ -30,6 +30,7 @@ namespace Carrotware.CMS.UI.Admin {
 			ContentSnippet,
 			PageComment,
 			StatusChange,
+			ContentHistory,
 			ContentTemplate,
 			ContentSkinEdit,
 			ContentSiteMap,

@@ -112,22 +112,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		[Category("Appearance")]
-		[DefaultValue("")]
-		[Obsolete("This property is obsolete, do not use.")]
-		public Unit MenuWidth {
-			get {
-				Unit s = new Unit("940px");
-				if (ViewState["MenuWidth"] != null) {
-					try { s = new Unit(ViewState["MenuWidth"].ToString()); } catch { }
-				}
-				return s;
-			}
-			set {
-				ViewState["MenuWidth"] = value;
-			}
-		}
-
-		[Category("Appearance")]
 		[DefaultValue(null)]
 		public Unit FontSize {
 			get {
@@ -144,38 +128,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue("")]
-		[Obsolete("This property is obsolete, do not use.")]
-		public Unit MenuHeight {
-			get {
-				Unit s = new Unit("60px");
-				if (ViewState["MenuHeight"] != null) {
-					try { s = new Unit(ViewState["MenuHeight"].ToString()); } catch { }
-				}
-				return s;
-			}
-			set {
-				ViewState["MenuHeight"] = value;
-			}
-		}
-
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Obsolete("This property is obsolete, do not use.")]
-		public Unit SubMenuWidth {
-			get {
-				Unit s = new Unit("300px");
-				if (ViewState["SubMenuWidth"] != null) {
-					try { s = new Unit(ViewState["SubMenuWidth"].ToString()); } catch { }
-				}
-				return s;
-			}
-			set {
-				ViewState["SubMenuWidth"] = value;
-			}
-		}
-
-		[Category("Appearance")]
-		[DefaultValue("")]
 		public string TopBackgroundStyle {
 			get {
 				String s = (String)ViewState["TopBackgroundStyle"];
@@ -183,19 +135,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				ViewState["TopBackgroundStyle"] = value;
-			}
-		}
-
-		[Category("Appearance")]
-		[DefaultValue("")]
-		[Obsolete("This property is obsolete, do not use.")]
-		public string ItemBackgroundStyle {
-			get {
-				String s = (String)ViewState["ItemBackgroundStyle"];
-				return ((s == null) ? String.Empty : s);
-			}
-			set {
-				ViewState["ItemBackgroundStyle"] = value;
 			}
 		}
 
@@ -542,7 +481,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (string.IsNullOrEmpty(OverrideCSS) && !this.AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
 				string sCSSText = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt");
 
-				if (AttemptResponsiveCSS) {
+				if (this.AttemptResponsiveCSS) {
 					string sCSS1 = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenuRes.txt");
 					sCSSText = sCSS1.Replace("{DESKTOP_CSS}", sCSSText);
 				}
@@ -571,9 +510,9 @@ namespace Carrotware.CMS.UI.Controls {
 					sCSSText = sCSSText.Replace("{MENU_SELECT_CLASS}", this.CSSSelected);
 					sCSSText = sCSSText.Replace("{MENU_HASCHILD_CLASS}", this.CSSHasChildren);
 
-					if (!string.IsNullOrEmpty(TopBackgroundStyle)) {
-						TopBackgroundStyle = TopBackgroundStyle.Replace(";", "");
-						sCSSText = sCSSText.Replace("{TOP_BACKGROUND_STYLE}", "background: " + TopBackgroundStyle + ";");
+					if (!string.IsNullOrEmpty(this.TopBackgroundStyle)) {
+						this.TopBackgroundStyle = this.TopBackgroundStyle.Replace(";", "");
+						sCSSText = sCSSText.Replace("{TOP_BACKGROUND_STYLE}", "background: " + this.TopBackgroundStyle + ";");
 					} else {
 						sCSSText = sCSSText.Replace("{TOP_BACKGROUND_STYLE}", "");
 					}

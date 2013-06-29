@@ -97,8 +97,9 @@
 					<img alt="Home" src="/c3-admin/images/house.png" /></a></li>
 				<li runat="server" id="tabMainTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Site </a>
 					<ul class="children">
-						<li runat="server" id="tabDashboard"><a href="/c3-admin/">Dashboard</a> </li>
+						<%--<li runat="server" id="tabDashboard"><a href="/c3-admin/">Dashboard</a> </li>--%>
 						<li runat="server" id="tabMain"><a href="/c3-admin/SiteInfo.aspx">Site Info</a> </li>
+						<li runat="server" id="tabHistory"><a href="/c3-admin/ContentEditHistory.aspx">Content Edit History</a> </li>
 						<li runat="server" id="tabContentSkin"><a href="/c3-admin/SiteSkinIndex.aspx">Site Skin Index</a> </li>
 						<li runat="server" id="tabMainTemplate"><a href="/c3-admin/SiteTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabStatusChange"><a href="/c3-admin/SiteContentStatusChange.aspx">Bulk Change Status</a> </li>

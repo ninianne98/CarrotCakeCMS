@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Add Page Info" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageAddChild.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageAddChild" %>
 
+<%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
@@ -124,8 +125,12 @@
 	<asp:Panel runat="server" ID="pnlSaved">
 		<h2>
 			The page
-			<asp:Literal ID="litPageName" runat="server"></asp:Literal>
-			has been created.</h2>
+			<asp:HyperLink ID="lnkNew" runat="server" Target="_blank">
+				<asp:Literal ID="litPageName" runat="server" />
+				<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" />
+			</asp:HyperLink>
+			has been created.
+		</h2>
 		<h3>
 			<asp:HyperLink ID="lnkCreatePage" runat="server">
 				<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
@@ -204,14 +209,26 @@
 					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
+			<tr>
+				<td class="tablecaption">
+					parent page:
+					<br />
+				</td>
+				<td>
+					<!-- parent page plugin-->
+					<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
+					<div style="clear: both; height: 2px;">
+					</div>
+				</td>
+			</tr>
 		</table>
 		<div style="display: none;">
 			<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
 		</div>
-		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Apply" />
+		<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Create" />
 		<br />
 		<div style="display: none;">
-			<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Apply" />
+			<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Create" />
 		</div>
 		<script type="text/javascript">
 			function SubmitPage() {
@@ -229,6 +246,14 @@
 			}
 		</script>
 	</asp:Panel>
+	<p>
+		&nbsp;</p>
+	<p>
+		&nbsp;</p>
+	<p>
+		&nbsp;</p>
+	<p>
+		&nbsp;</p>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

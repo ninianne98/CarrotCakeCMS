@@ -23,35 +23,47 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidWidgetID = Guid.Empty;
 
+		List<Widget> lstPageWidgets = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
 
 			guidWidgetID = GetGuidParameterFromQuery("widgetid");
 			guidContentID = GetGuidPageIDFromQuery();
 
-			cmsHelper.OverrideKey(guidContentID);
+			if (guidContentID != Guid.Empty) {
+				cmsHelper.OverrideKey(guidContentID);
+				lstPageWidgets = cmsHelper.cmsAdminWidget;
+				phNavIndex.Visible = false;
+			}
 
 			if (!IsPostBack) {
+				Widget ww = null;
+
+				if (guidContentID != Guid.Empty) {
+					ww = (from w in lstPageWidgets
+						  where w.Root_WidgetID == guidWidgetID
+						  select w).FirstOrDefault();
+				} else {
+					ww = widgetHelper.Get(guidWidgetID);
+				}
+
 				BindDataGrid();
+				GetCtrlName(ww);
 			}
-			GetCtrlName();
 		}
 
-		protected void GetCtrlName() {
+		protected void GetCtrlName(Widget ww) {
 			string sName = "";
 
 			CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
-							  join w in cmsHelper.cmsAdminWidget on p.FilePath.ToLower() equals w.ControlPath.ToLower()
-							  where w.Root_WidgetID == guidWidgetID
+							  where p.FilePath.ToLower() == ww.ControlPath.ToLower()
 							  select p).FirstOrDefault();
 
 			if (plug != null) {
 				sName = plug.Caption;
 			}
 
-			var ww = (from w in cmsHelper.cmsAdminWidget
-					  where w.Root_WidgetID == guidWidgetID
-					  select w).FirstOrDefault();
+			lnkIndex.NavigateUrl = String.Format("{0}?id={1}", SiteFilename.PageWidgetsURL, ww.Root_ContentID);
 
 			litControlPath.Text = ww.ControlPath;
 			litControlPathName.Text = sName;

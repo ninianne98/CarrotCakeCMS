@@ -136,6 +136,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Browsable(false)]
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstContentType {
 			get {
@@ -159,6 +160,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private List<Guid> _guids = null;
 
+		[Browsable(false)]
 		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstCategories")]
 		public List<Guid> SelectedCategories {
 			get {
@@ -176,6 +178,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Browsable(false)]
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
 			get {
@@ -273,6 +276,7 @@ namespace Carrotware.CMS.UI.Controls {
 			PrevNext();
 		}
 
+		[Browsable(false)]
 		public List<string> LimitedPropertyList {
 			get {
 				List<string> lst = new List<string>();

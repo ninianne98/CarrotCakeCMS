@@ -69,7 +69,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						GalleryExportList galExp = GalleryExportList.DeserializeGalleryExport(sXML);
 						Guid gKey = GalleryExportList.SaveSerializedDataExport(galExp);
 
-						Response.Redirect(CreateLink("GalleryImport", String.Format("id={0}", gKey.ToString())));
+						Response.Redirect(CreateLink("GalleryImport", String.Format("id={0}", gKey)));
 					}
 
 					lblWarning.Text = "File did not appear to match an expected format.";

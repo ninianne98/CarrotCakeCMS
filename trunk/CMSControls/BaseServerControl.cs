@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Web;
@@ -27,6 +28,8 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch { }
 		}
 
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool IsPostBack {
 			get {
 				string sReq = "GET";

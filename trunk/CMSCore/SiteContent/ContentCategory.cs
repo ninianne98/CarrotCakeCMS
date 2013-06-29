@@ -26,7 +26,7 @@ namespace Carrotware.CMS.Core {
 		public string CategoryURL { get; set; }
 		public int? UseCount { get; set; }
 		public bool IsPublic { get; set; }
-
+		public DateTime? EditDate { get; set; }
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -57,12 +57,18 @@ namespace Carrotware.CMS.Core {
 
 		internal ContentCategory(vw_carrot_CategoryURL c) {
 			if (c != null) {
+				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
+
 				this.ContentCategoryID = c.ContentCategoryID;
 				this.SiteID = c.SiteID;
 				this.CategoryURL = c.CategoryUrl;
 				this.CategoryText = c.CategoryText;
 				this.UseCount = c.UseCount;
 				this.IsPublic = c.IsPublic;
+
+				if (c.EditDate.HasValue) {
+					this.EditDate = site.ConvertUTCToSiteTime(c.EditDate.Value);
+				}
 			}
 		}
 
@@ -89,6 +95,17 @@ namespace Carrotware.CMS.Core {
 			return _item;
 		}
 
+		public static ContentCategory GetByURL(Guid SiteID, string requestedURL) {
+			ContentCategory _item = null;
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+				vw_carrot_CategoryURL query = CompiledQueries.cqGetContentCategoryByURL(_db, SiteID, requestedURL);
+				if (query != null) {
+					_item = new ContentCategory(query);
+				}
+			}
+
+			return _item;
+		}
 
 		public static int GetSimilar(Guid SiteID, Guid CategoryID, string categorySlug) {
 
@@ -187,6 +204,10 @@ namespace Carrotware.CMS.Core {
 
 		public bool MetaIsPublic {
 			get { return this.IsPublic; }
+		}
+
+		public DateTime? MetaDataDate {
+			get { return this.EditDate; }
 		}
 
 		public int MetaInfoCount {

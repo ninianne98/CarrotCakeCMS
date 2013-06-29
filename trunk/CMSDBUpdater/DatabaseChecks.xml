@@ -3,17 +3,17 @@
 	<querynugget>
 		<priority>14</priority>
 		<mode>LT</mode>
-		<rowcount>18</rowcount>
+		<rowcount>5</rowcount>
 		<alwayscheck>True</alwayscheck>
 		<testcontext>|AlterStep10|AreCMSTablesIncomplete|</testcontext>
 		<sql>
 			-- select [table_schema], [table_name], [column_name], [ordinal_position]
 			-- from [information_schema].[columns]
 			-- where [table_name] in ('vw_carrot_ContentSnippet')
-			
+
 			select [table_schema], [table_name], [column_name], [ordinal_position]
 			from [information_schema].[columns]
-			where [table_name] in ('carrot_Sites')
+			where [table_name] in ('vw_carrot_EditHistory')
 		</sql>
 	</querynugget>
 	<querynugget>

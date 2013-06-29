@@ -31,6 +31,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.Literal litControlPathName;
         
         /// <summary>
+        /// phNavIndex control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phNavIndex;
+        
+        /// <summary>
+        /// lnkIndex control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkIndex;
+        
+        /// <summary>
         /// btnRemove control.
         /// </summary>
         /// <remarks>
@@ -47,5 +65,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Carrotware.Web.UI.Controls.CarrotGridView gvPages;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup Master {
+            get {
+                return ((Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup)(base.Master));
+            }
+        }
     }
 }

@@ -43,13 +43,17 @@ END
 
 GO
 
+declare @Date1800 as DateTime
+
+set @Date1800 = cast('1890-12-31' as datetime)
+
 UPDATE [dbo].[carrot_RootContent]
 SET [GoLiveDate] = DATEADD(mi, -5, CreateDate)
-WHERE [GoLiveDate] is null OR ([GoLiveDate] < GETUTCDATE()-7)
+WHERE isnull([GoLiveDate], @Date1800) = @Date1800
 
 UPDATE [dbo].[carrot_RootContent]
 SET [GoLiveDateLocal] = DATEADD(mi, -5, CreateDate)
-WHERE [GoLiveDateLocal] is null OR ([GoLiveDateLocal] < GETUTCDATE()-7)
+WHERE isnull([GoLiveDateLocal], @Date1800) = @Date1800
 
 GO
 
@@ -90,9 +94,13 @@ END
 GO
 
 
+declare @Date1800 as DateTime
+
+set @Date1800 = cast('1890-12-31' as datetime)
+
 UPDATE [dbo].[carrot_RootContent]
 SET RetireDate = DATEADD(year, 200, CreateDate)
-WHERE RetireDate is null
+WHERE isnull(RetireDate, @Date1800) = @Date1800
 
 
 GO

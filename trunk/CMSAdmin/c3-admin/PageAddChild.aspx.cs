@@ -21,29 +21,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class PageAddChild : AdminBasePage {
 
 		public Guid guidContentID = Guid.Empty;
-		ContentPage pageContents = null;
-		ContentPage parentPageContents = null;
-		public bool bAddTopLevelPage = false;
+		private ContentPage pageContents = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
 
 			guidContentID = GetGuidPageIDFromQuery();
-
-			if (!string.IsNullOrEmpty(Request.QueryString["addtoplevel"])) {
-				bAddTopLevelPage = Convert.ToBoolean(Request.QueryString["addtoplevel"].ToString());
-			}
-
-			if (!IsPostBack) {
-				lnkCreatePage.NavigateUrl = string.Format("{0}?addtoplevel={1}&pageid={2}", SiteData.CurrentScriptName, bAddTopLevelPage, guidContentID);
-			}
-
 			cmsHelper.OverrideKey(guidContentID);
 
-			if (cmsHelper.cmsAdminContent != null) {
-				parentPageContents = cmsHelper.cmsAdminContent;
-			}
-
 			if (!IsPostBack) {
+				ParentPagePicker.RootContentID = Guid.Empty;
+				lnkCreatePage.NavigateUrl = string.Format("{0}?pageid={1}", SiteData.CurrentScriptName, guidContentID);
+
 				pnlAdd.Visible = true;
 				pnlSaved.Visible = false;
 			}
@@ -51,19 +39,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			pageContents = new ContentPage(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry);
+			pageContents = new ContentPage(SiteID, ContentPageType.PageType.ContentEntry);
 
 			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 
-			Guid? parentContentID = null;
-			int iOrder = pageHelper.GetMaxNavOrder(SiteData.CurrentSite.SiteID) + 2;
-
-			if (!bAddTopLevelPage) {
-				if (parentPageContents != null) {
-					parentContentID = parentPageContents.Root_ContentID;
-					iOrder = parentPageContents.NavOrder + 2;
-				}
-			}
+			int iOrder = pageHelper.GetMaxNavOrder(SiteID) + 1;
+			Guid? parentContentID = ParentPagePicker.SelectedPage;
 
 			pageContents.Parent_ContentID = parentContentID;
 
@@ -96,6 +77,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pnlSaved.Visible = true;
 
 			litPageName.Text = pageContents.FileName;
+			lnkNew.NavigateUrl = pageContents.FileName;
 
 			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
 				VirtualDirectory.RegisterRoutes(true);

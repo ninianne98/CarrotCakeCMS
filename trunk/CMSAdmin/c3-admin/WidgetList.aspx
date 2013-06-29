@@ -89,6 +89,12 @@
 				</asp:TemplateField>
 				<asp:BoundField HeaderText="Edit Date" DataField="EditDate" />
 				<asp:BoundField HeaderText="PlaceholderName" DataField="PlaceholderName" />
+				<carrot:CarrotHeaderSortTemplateField HeaderText="Go Live" DataField="GoLiveDate" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField HeaderText="Retire On" DataField="RetireDate" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
+					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
+					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>

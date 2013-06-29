@@ -244,10 +244,7 @@
 											<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" />
 										</p>
 										<p>
-											<input runat="server" id="btnAddTop" type="button" value="Create Top Level Page" onclick="cmsShowAddTopPage();" />
-										</p>
-										<p>
-											<input runat="server" id="btnAddChild" type="button" value="Create Sub Page" onclick="cmsShowAddChildPage();" />
+											<input runat="server" id="btnAddPage" type="button" value="Add New Page" onclick="cmsShowAddPage();" />
 										</p>
 										<p>
 											<input runat="server" id="btnSortChildPages" type="button" value="Sort Child/Sub Pages" onclick="cmsSortChildren();" />

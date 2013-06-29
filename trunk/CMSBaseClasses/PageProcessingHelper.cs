@@ -295,12 +295,24 @@ namespace Carrotware.CMS.UI.Base {
 																KeyControl = FindTheControl(ph.PlaceholderName, this.CurrentWebPage)
 															}).Distinct().ToList();
 
-					List<Widget> lstWidget = (from w in pageWidgets
-											  orderby w.WidgetOrder, w.EditDate
-											  where w.Root_ContentID == pageContents.Root_ContentID
-												&& w.IsWidgetActive == true
-												&& w.IsWidgetPendingDelete == false
-											  select w).ToList();
+					List<Widget> lstWidget = null;
+
+					if (SecurityData.AdvancedEditMode) {
+						lstWidget = (from w in pageWidgets
+									 orderby w.WidgetOrder, w.EditDate
+									 where w.Root_ContentID == pageContents.Root_ContentID
+									   && w.IsWidgetActive == true
+									   && w.IsWidgetPendingDelete == false
+									 select w).ToList();
+					} else {
+						lstWidget = (from w in pageWidgets
+									 orderby w.WidgetOrder, w.EditDate
+									 where w.Root_ContentID == pageContents.Root_ContentID
+									   && w.IsWidgetActive == true
+									   && w.IsRetired == false && w.IsUnReleased == false
+									   && w.IsWidgetPendingDelete == false
+									 select w).ToList();
+					}
 
 					Assembly a = Assembly.GetExecutingAssembly();
 

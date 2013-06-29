@@ -264,6 +264,59 @@ FROM carrot_RootContentSnippet AS csr
 
 GO
 
+--==============================
+
+GO
+
+
+IF  NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[carrot_RootContent]') AND name = N'IDX_carrot_RootContent_SiteID') BEGIN
+
+	CREATE NONCLUSTERED INDEX [IDX_carrot_RootContent_SiteID] ON [dbo].[carrot_RootContent] 
+	(
+		[SiteID] ASC
+	)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+
+END
+
+IF  NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[carrot_RootContent]') AND name = N'IDX_carrot_RootContent_ContentTypeID') BEGIN
+
+	CREATE NONCLUSTERED INDEX [IDX_carrot_RootContent_ContentTypeID] ON [dbo].[carrot_RootContent] 
+	(
+		[ContentTypeID] ASC
+	)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+
+END
+
+IF  NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[carrot_Content]') AND name = N'IDX_carrot_Content_Root_ContentID') BEGIN
+
+	CREATE NONCLUSTERED INDEX [IDX_carrot_Content_Root_ContentID] ON [dbo].[carrot_Content] 
+	(
+		[Root_ContentID] ASC
+	)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+
+END
+
+IF  NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[carrot_RootContent]') AND name = N'IDX_carrot_RootContent_CreateUserId') BEGIN
+
+	CREATE NONCLUSTERED INDEX [IDX_carrot_RootContent_CreateUserId] ON [dbo].[carrot_RootContent] 
+	(
+		[CreateUserId] ASC
+	)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+
+END
+
+IF  NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[carrot_Content]') AND name = N'IDX_carrot_Content_EditUserId') BEGIN
+
+	CREATE NONCLUSTERED INDEX [IDX_carrot_Content_EditUserId] ON [dbo].[carrot_Content] 
+	(
+		[EditUserId] ASC
+	)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+
+END
+
+
+GO
+
 --===============================
 
 GO
@@ -339,4 +392,151 @@ LEFT JOIN [dbo].carrot_UserData AS ud ON m.UserId = ud.UserId
 
 
 GO
+
+
+IF NOT EXISTS( select * from information_schema.columns 
+		where table_name = 'carrot_Widget' and column_name = 'GoLiveDate') BEGIN
+
+	ALTER TABLE [dbo].[carrot_Widget] ADD [GoLiveDate] [datetime] NULL
+	ALTER TABLE [dbo].[carrot_Widget] ADD [RetireDate] [datetime] NULL	
+
+END
+
+GO
+
+declare @Date1800 as DateTime
+
+set @Date1800 = cast('1890-12-31' as datetime)
+
+
+UPDATE w
+SET [GoLiveDate] = DATEADD(mi, -5, wd.EditDate)
+from [dbo].[carrot_Widget] w
+inner join (select Root_WidgetID, MIN(EditDate) EditDate
+		from [dbo].[carrot_WidgetData] 
+		group by Root_WidgetID) wd on w.Root_WidgetID = wd.Root_WidgetID
+WHERE isnull([GoLiveDate], @Date1800) = @Date1800
+
+
+UPDATE w
+SET [RetireDate] = DATEADD(year, 200, wd.EditDate)
+from [dbo].[carrot_Widget] w
+inner join (select Root_WidgetID, MIN(EditDate) EditDate
+		from [dbo].[carrot_WidgetData] 
+		group by Root_WidgetID) wd on w.Root_WidgetID = wd.Root_WidgetID
+WHERE isnull([RetireDate], @Date1800) = @Date1800
+
+
+GO
+
+ALTER TABLE [dbo].[carrot_Widget] 
+	ALTER COLUMN  [GoLiveDate] [datetime] NOT NULL
+
+ALTER TABLE [dbo].[carrot_Widget] 
+	ALTER COLUMN  [RetireDate] [datetime] NOT NULL
+
+
+GO
+
+
+ALTER VIEW [dbo].[vw_carrot_Widget]
+AS 
+
+
+SELECT w.Root_WidgetID, w.Root_ContentID, w.WidgetOrder, w.PlaceholderName, w.ControlPath, w.GoLiveDate, w.RetireDate, 
+	cast(case when w.RetireDate < GetUTCDate() then 1 else 0 end as bit) as IsRetired,
+	cast(case when w.GoLiveDate > GetUTCDate() then 1 else 0 end as bit) as IsUnReleased,
+	w.WidgetActive, wd.WidgetDataID, wd.IsLatestVersion, wd.EditDate, wd.ControlProperties, cr.SiteID
+FROM [dbo].carrot_Widget AS w 
+INNER JOIN [dbo].carrot_WidgetData AS wd ON w.Root_WidgetID = wd.Root_WidgetID 
+INNER JOIN [dbo].carrot_RootContent AS cr ON w.Root_ContentID = cr.Root_ContentID
+
+
+GO
+
+--==========================
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_CategoryURL]
+AS 
+
+select  s.SiteID, cc.ContentCategoryID, cc.CategoryText, cc.IsPublic, cc2.EditDate, ISNULL(cc2.TheCount, 0) as UseCount, 
+		'/'+s.Blog_FolderPath +'/'+ s.Blog_CategoryPath +'/'+ cc.CategorySlug + '.aspx' as CategoryUrl
+from [dbo].carrot_Sites as s 
+inner join [dbo].carrot_ContentCategory as cc on s.SiteID = cc.SiteID
+left join (select m.ContentCategoryID, MAX(v_cc.EditDate) as EditDate, COUNT(m.Root_ContentID) as TheCount
+			 from [dbo].vw_carrot_Content v_cc
+			 join [dbo].carrot_CategoryContentMapping m on v_cc.Root_ContentID = m.Root_ContentID
+			 where v_cc.IsLatestVersion = 1
+			 group by m.ContentCategoryID) as cc2 on cc.ContentCategoryID = cc2.ContentCategoryID
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_TagURL]
+AS 
+
+select  s.SiteID, cc.ContentTagID, cc.TagText, cc.IsPublic, cc2.EditDate, ISNULL(cc2.TheCount, 0) as UseCount,
+		'/'+s.Blog_FolderPath +'/'+ s.Blog_TagPath +'/'+ cc.TagSlug + '.aspx' as TagUrl
+from [dbo].carrot_Sites as s 
+inner join [dbo].carrot_ContentTag as cc on s.SiteID = cc.SiteID
+left join (select m.ContentTagID, MAX(v_cc.EditDate) as EditDate, COUNT(m.Root_ContentID) as TheCount
+			 from [dbo].vw_carrot_Content v_cc
+			 join [dbo].carrot_TagContentMapping m on v_cc.Root_ContentID = m.Root_ContentID
+			 where v_cc.IsLatestVersion = 1
+			 group by m.ContentTagID) as cc2 on cc.ContentTagID = cc2.ContentTagID
+
+GO
+
+ALTER VIEW [dbo].[vw_carrot_EditorURL]
+AS 
+
+select  d.SiteID, d.UserId, d.UserName, d.LoweredEmail, cc2.EditDate, ISNULL(cc2.TheCount, 0) as UseCount,
+		'/'+d.Blog_FolderPath +'/'+ d.Blog_EditorPath +'/'+ d.UserName + '.aspx' as UserUrl
+from (
+	select s.SiteID, s.Blog_FolderPath, s.Blog_EditorPath, m.UserId, m.UserName, m.LoweredEmail
+		from [dbo].vw_aspnet_MembershipUsers m, [dbo].carrot_Sites s
+	) as d
+left join (
+		select v_cc.EditUserId, v_cc.SiteID, MAX(v_cc.EditDate) as EditDate, COUNT(ContentID) as TheCount
+		from dbo.vw_carrot_Content v_cc
+		where v_cc.IsLatestVersion = 1
+		group by v_cc.EditUserId, v_cc.SiteID
+		) as cc2 on d.UserId = cc2.EditUserId
+				and d.SiteID = cc2.SiteID
+
+GO
+
+--======================================
+
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[vw_carrot_EditHistory]'))
+DROP VIEW [dbo].[vw_carrot_EditHistory]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[vw_carrot_EditHistory]
+AS 
+
+
+SELECT  rc.SiteID, c.ContentID, c.Root_ContentID, c.IsLatestVersion, c.TitleBar, c.NavMenuText, c.PageHead, c.EditUserId, c.EditDate, 
+	rc.[FileName], ct.ContentTypeID, ct.ContentTypeValue, rc.PageActive, rc.GoLiveDate, rc.RetireDate, u.UserName as EditUserName, m.Email as EditEmail, 
+	m.IsLockedOut, m.CreateDate, m.LastLoginDate, m.LastPasswordChangedDate, m.LastLockoutDate, rc.CreateUserId, u2.UserName as CreateUserName, m2.Email as CreateEmail
+FROM [dbo].carrot_RootContent AS rc
+	INNER JOIN [dbo].carrot_Content AS c ON rc.Root_ContentID = c.Root_ContentID 
+	INNER JOIN [dbo].carrot_ContentType AS ct ON rc.ContentTypeID = ct.ContentTypeID
+	INNER JOIN [dbo].aspnet_Users AS u ON c.EditUserId = u.UserId 
+	INNER JOIN [dbo].aspnet_Membership AS m ON u.UserId = m.UserId
+	INNER JOIN [dbo].aspnet_Users AS u2 ON rc.CreateUserId = u2.UserId 
+	INNER JOIN [dbo].aspnet_Membership AS m2 ON u2.UserId = m2.UserId
+
+
+GO
+
+
 
