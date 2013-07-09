@@ -22,15 +22,19 @@
 </div>
 <script type="text/javascript">
 
-	function EditEventEntry(proID, evtID) {
-		var opts = {
-			"Cancel": function () { cmsAlertModalClose(); },
-			"Event": function () { clickEventLink(evtID); },
-			"Series": function () { clickProfileLink(proID); }
-		};
+	function EditEventEntry(proID, evtID, freq) {
 
-		cmsAlertModalSmallBtns('Edit individual event or entire series/profile?', opts);
+		if (freq != 'Once') {
+			var opts = {
+				"Cancel": function () { cmsAlertModalClose(); },
+				"Event": function () { clickEventLink(evtID); },
+				"Series": function () { clickProfileLink(proID); }
+			};
 
+			cmsAlertModalSmallBtns('Edit individual event or entire series/profile?', opts);
+		} else {
+			clickProfileLink(proID);
+		}
 		return false;
 	}
 
@@ -66,7 +70,7 @@
 			--%>
 			<asp:TemplateField>
 				<ItemTemplate>
-					<a href="javascript:void(0)" onclick="EditEventEntry('<%#Eval("CalendarEventProfileID") %>', '<%#Eval("CalendarEventID") %>');">
+					<a href="javascript:void(0)" onclick="EditEventEntry('<%#Eval("CalendarEventProfileID") %>', '<%#Eval("CalendarEventID") %>', '<%#Eval("FrequencyName") %>');">
 						<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit event" title="Edit event" /></a>
 				</ItemTemplate>
 			</asp:TemplateField>
@@ -75,12 +79,20 @@
 				<ItemStyle HorizontalAlign="Left" VerticalAlign="Top" />
 				<ItemTemplate>
 					<div>
+						<asp:Literal ID="litDay" runat="server" Text='<%# String.Format("{0:dddd}", Eval("EventDate") ) %>' />
+						<br />
 						<asp:Literal ID="litDate" runat="server" Text='<%# String.Format("{0:d}", Eval("EventDate") ) %>' />
 						<br />
 					</div>
 					<div>
-						<asp:Literal ID="litSTime" runat="server" Text='<%# String.Format(" {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTime")) ) %>' Visible='<%# !(bool)Eval("IsAllDayEvent") %>' />
-						<asp:Literal ID="litETime" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTime")) ) %>' Visible='<%# !(bool)Eval("IsAllDayEvent") && (Eval("EventEndTime") != null) %>' />
+						<asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible='<%# !(bool)Eval("IsAllDayEvent")%>'>
+							<asp:Literal ID="litSTime1" runat="server" Text='<%# String.Format(" {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTime")) ) %>' Visible='<%# (Eval("EventStartTimeOverride") == null) %>' />
+							<asp:Literal ID="litSTime2" runat="server" Text='<%# String.Format(" {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTimeOverride")) ) %>'
+								Visible='<%# (Eval("EventStartTimeOverride") != null) %>' />
+							<asp:Literal ID="litETime1" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTime")) ) %>' Visible='<%# (Eval("EventEndTime") != null) && (Eval("EventEndTimeOverride") == null) %>' />
+							<asp:Literal ID="litETime2" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTimeOverride")) ) %>'
+								Visible='<%# (Eval("EventEndTimeOverride") != null) %>' />
+						</asp:PlaceHolder>
 					</div>
 				</ItemTemplate>
 			</asp:TemplateField>

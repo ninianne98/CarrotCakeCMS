@@ -17,8 +17,8 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	[ToolboxData("<{0}:ChildNavigation runat=server></{0}:ChildNavigation>")]
-	public class ChildNavigation : BaseNavHeaded {
+	[ToolboxData("<{0}:ParentSiblingNavigation runat=server></{0}:ParentSiblingNavigation>")]
+	public class ParentSiblingNavigation : BaseNavSelHeaded {
 
 		public enum SortOrder {
 			SortAsc,
@@ -47,19 +47,15 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public bool IncludeParent { get; set; }
-
 		protected override void LoadData() {
 			base.LoadData();
+			List<SiteNav> lstNav = null;
+			SiteNav parentNav = GetParentPage();
 
-			List<SiteNav> lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
-
-			if (this.IncludeParent && lstNav != null && lstNav.Where(x => x.ShowInSiteNav == true).Count() > 0) {
-				SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
-				if (p != null) {
-					p.NavOrder = -100;
-					lstNav.Add(p);
-				}
+			if (parentNav.Root_ContentID != Guid.Empty && parentNav.Parent_ContentID != null) {
+				lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, parentNav.FileName, !SecurityData.IsAuthEditor);
+			} else {
+				lstNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			}
 
 			switch (this.SortNavBy) {
@@ -83,14 +79,6 @@ namespace Carrotware.CMS.UI.Controls {
 					this.NavigationData = lstNav.OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 					break;
 			}
-		}
-
-		protected SiteNav GetParent(Guid? rootContentID) {
-			SiteNav pageNav = null;
-			if (rootContentID.HasValue) {
-				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, rootContentID.Value);
-			}
-			return pageNav;
 		}
 
 	}

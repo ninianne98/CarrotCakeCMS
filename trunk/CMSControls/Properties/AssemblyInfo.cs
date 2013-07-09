@@ -57,6 +57,7 @@ using System.Web.UI;
 [assembly: TagPrefix("NavPageNumberDisplay", "carrot")]
 [assembly: TagPrefix("MultiLevelNavigation", "carrot")]
 [assembly: TagPrefix("ChildNavigation", "carrot")]
+[assembly: TagPrefix("ParentSiblingNavigation", "carrot")]
 [assembly: TagPrefix("MostRecentUpdated", "carrot")]
 [assembly: TagPrefix("WidgetContainer", "carrot")]
 [assembly: TagPrefix("WidgetWrapper", "carrot")]

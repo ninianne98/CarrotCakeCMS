@@ -22,19 +22,38 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 	public partial class CalendarAdminDatabase : AdminModule {
+
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
+			DatabaseUpdateResponse dbRes = new DatabaseUpdateResponse();
+			string sqlUpdate = "";
+			string sqlTest = "";
+			int iCt = 0;
+			litMsg.Text = "";
 
-			string sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent.sql");
-			string sqlTest = "select * from [information_schema].[columns] where table_name in('carrot_CalendarEvent')";
 
-			var dbRes = du.ApplyUpdateIfNotFound(sqlTest, sqlUpdate, false);
+			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent.sql");
+			sqlTest = "select * from [information_schema].[columns] where table_name in('carrot_CalendarEvent')";
+			dbRes = du.ApplyUpdateIfNotFound(sqlTest, sqlUpdate, false);
+			iCt++;
 
 			if (dbRes.LastException != null && !string.IsNullOrEmpty(dbRes.LastException.Message)) {
-				litMsg.Text = dbRes.LastException.Message;
+				litMsg.Text += iCt.ToString() + ")  " + dbRes.LastException.Message + "<br />";
 			} else {
-				litMsg.Text = dbRes.Response;
+				litMsg.Text += iCt.ToString() + ")  " + dbRes.Response + "<br />";
 			}
+
+			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent2.sql");
+			sqlTest = "select * from information_schema.columns where table_name = 'carrot_CalendarEventProfile' and column_name = 'RecursEvery'";
+			dbRes = du.ApplyUpdateIfNotFound(sqlTest, sqlUpdate, false);
+			iCt++;
+
+			if (dbRes.LastException != null && !string.IsNullOrEmpty(dbRes.LastException.Message)) {
+				litMsg.Text += iCt.ToString() + ")  " + dbRes.LastException.Message + "<br />";
+			} else {
+				litMsg.Text += iCt.ToString() + ")  " + dbRes.Response + "<br />";
+			}
+
 		}
 
 		private string ReadEmbededScript(string filePath) {

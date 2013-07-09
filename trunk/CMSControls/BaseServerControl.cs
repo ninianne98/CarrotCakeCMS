@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
@@ -83,6 +84,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			return (sParm1.ToLower() == sParm2.ToLower()) ? true : false;
+		}
+
+		protected List<SiteNav> GetPageNavTree() {
+			return navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 		}
 
 		protected SiteNav GetParentPage() {

@@ -67,6 +67,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 					txtEventStartDate.Text = itm.EventStartDate.ToShortDateString();
 					txtEventEndDate.Text = itm.EventEndDate.ToShortDateString();
 
+					txtRecursEvery.Text = itm.RecursEvery.ToString();
+
 					CalendarHelper.SetTextboxToTimeSpan(txtEventStartTime, itm.EventStartTime);
 					CalendarHelper.SetTextboxToTimeSpan(txtEventEndTime, itm.EventEndTime);
 
@@ -103,6 +105,9 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 					currItem = new carrot_CalendarEventProfile();
 					currItem.CalendarEventProfileID = ItemGuid;
 					currItem.SiteID = SiteID;
+					currItem.IsHoliday = false;
+					currItem.IsAnnualHoliday = false;
+					currItem.RecursEvery = 1;
 				}
 
 				currItem.CalendarFrequencyID = new Guid(ddlRecurr.SelectedValue);
@@ -124,6 +129,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 				currItem.EventTitle = txtEventTitle.Text;
 				currItem.EventDetail = reContent.Text;
+				currItem.RecursEvery = int.Parse(txtRecursEvery.Text);
 
 				currItem.IsPublic = chkIsPublic.Checked;
 				currItem.IsAllDayEvent = chkIsAllDayEvent.Checked;

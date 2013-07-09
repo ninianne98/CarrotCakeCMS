@@ -29,10 +29,14 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 				this.EventTitle = p.EventTitle;
 				this.EventDetail = p.EventDetail;
 				this.EventRepeatPattern = p.EventRepeatPattern;
+				this.RecursEvery = p.RecursEvery;
 				this.IsCancelled = p.IsCancelled;
 				this.IsCancelledPublic = p.IsCancelledPublic;
 				this.IsAllDayEvent = p.IsAllDayEvent;
 				this.IsPublic = p.IsPublic;
+				this.IsAnnualHoliday = p.IsAnnualHoliday;
+				this.IsHoliday = p.IsHoliday;
+
 				this.SiteID = p.SiteID;
 
 				this.Frequency = CalendarFrequencyHelper.GetFrequencyTypeByID(p.CalendarFrequencyID);
@@ -49,10 +53,13 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		public string EventTitle { get; set; }
 		public string EventDetail { get; set; }
 		public int? EventRepeatPattern { get; set; }
+		public int RecursEvery { get; set; }
 		public bool IsCancelled { get; set; }
 		public bool IsCancelledPublic { get; set; }
 		public bool IsAllDayEvent { get; set; }
 		public bool IsPublic { get; set; }
+		public bool IsAnnualHoliday { get; set; }
+		public bool IsHoliday { get; set; }
 		public Guid SiteID { get; set; }
 
 		public CalendarFrequencyHelper.FrequencyType Frequency { get; set; }

@@ -231,12 +231,13 @@ namespace Carrotware.CMS.Core {
 				currentSite.SiteName = "MOCK SITE";
 				currentSite.SiteTagline = "MOCK SITE TAGLINE";
 				currentSite.MainURL = "http://localhost";
-				currentSite.Blog_CategoryPath = "cat";
-				currentSite.Blog_TagPath = "tag";
 				currentSite.Blog_FolderPath = "archive";
-				currentSite.Blog_EditorPath = "author";
+				currentSite.Blog_CategoryPath = "category";
+				currentSite.Blog_TagPath = "tag";
 				currentSite.Blog_DatePath = "date";
+				currentSite.Blog_EditorPath = "author";
 				currentSite.TimeZoneIdentifier = "UTC";
+				currentSite.Blog_DatePattern = "yyyy/MM/dd";
 			}
 			return currentSite;
 
@@ -715,17 +716,21 @@ namespace Carrotware.CMS.Core {
 			get { return "/search.aspx".ToLower(); }
 		}
 
+		public string MainCanonicalURL {
+			get { return RemoveDupeSlashesURL(this.MainURL + "/"); }
+		}
+
 		public string DefaultCanonicalURL {
-			get { return RemoveDupeSlashesURL(this.MainURL + "/" + CurrentScriptName); }
+			get { return RemoveDupeSlashesURL(this.MainCanonicalURL + CurrentScriptName); }
 		}
 		public string ConstructedCanonicalURL(string sFileName) {
-			return RemoveDupeSlashesURL(this.MainURL + "/" + sFileName);
+			return RemoveDupeSlashesURL(this.MainCanonicalURL + sFileName);
 		}
 		public string ConstructedCanonicalURL(ContentPage cp) {
-			return RemoveDupeSlashesURL(this.MainURL + "/" + cp.FileName);
+			return RemoveDupeSlashesURL(this.MainCanonicalURL + cp.FileName);
 		}
 		public string ConstructedCanonicalURL(SiteNav nav) {
-			return RemoveDupeSlashesURL(this.MainURL + "/" + nav.FileName);
+			return RemoveDupeSlashesURL(this.MainCanonicalURL + nav.FileName);
 		}
 
 		public string BuildDateSearchLink(DateTime postDate) {

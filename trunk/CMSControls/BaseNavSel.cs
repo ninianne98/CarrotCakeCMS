@@ -93,7 +93,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public virtual List<SiteNav> GetTopNav() {
-			if (MultiLevel) {
+			if (this.MultiLevel) {
 				return this.NavigationData.Where(ct => ct.Parent_ContentID == null).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 			} else {
 				return this.NavigationData.OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
@@ -104,6 +104,9 @@ namespace Carrotware.CMS.UI.Controls {
 			return this.NavigationData.Where(ct => ct.Parent_ContentID == rootContentID).OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 		}
 
+		protected SiteNav IsContained(List<SiteNav> navCrumbs, Guid rootContentID) {
+			return navCrumbs.Where(ct => ct.Root_ContentID == rootContentID && ct.NavOrder > 0).FirstOrDefault();
+		}
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
 			string sCSS = (this.CSSULClassTop + " " + this.CssClass).Trim();
@@ -127,8 +130,10 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 2;
 
 			List<SiteNav> lstNav = GetTopNav();
-			SiteNav pageNav = GetParentPage();
-			this.ParentFileName = pageNav.FileName.ToLower();
+			SiteNav parentPageNav = GetParentPage();
+			List<SiteNav> lstNavTree = GetPageNavTree().OrderByDescending(x => x.NavOrder).ToList();
+
+			this.ParentFileName = parentPageNav.FileName.ToLower();
 
 			if (lstNav != null && lstNav.Count > 0) {
 
@@ -157,7 +162,7 @@ namespace Carrotware.CMS.UI.Controls {
 					} else {
 						sThis1CSS = sItemCSS;
 					}
-					if (SiteData.IsFilenameCurrentPage(c1.FileName) || AreFilenamesSame(c1.FileName, ParentFileName)) {
+					if (SiteData.IsFilenameCurrentPage(c1.FileName) || (IsContained(lstNavTree, c1.Root_ContentID) != null) || AreFilenamesSame(c1.FileName, this.ParentFileName)) {
 						sThis1CSS = sThis1CSS + " " + this.CSSSelected;
 					}
 					if (lstNav.Where(x => x.NavOrder < 0).Count() > 0) {
@@ -213,7 +218,7 @@ namespace Carrotware.CMS.UI.Controls {
 						sThis2CSS = sItemCSS;
 					}
 
-					if (SiteData.IsFilenameCurrentPage(c2.FileName) || AreFilenamesSame(c2.FileName, ParentFileName)) {
+					if (SiteData.IsFilenameCurrentPage(c2.FileName) || AreFilenamesSame(c2.FileName, this.ParentFileName)) {
 						sThis2CSS = sThis2CSS + " " + this.CSSSelected;
 					}
 					sThis2CSS = (sThis2CSS + " child-nav").Replace("   ", " ").Replace("  ", " ").Trim();

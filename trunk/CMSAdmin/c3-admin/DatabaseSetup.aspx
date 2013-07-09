@@ -46,7 +46,7 @@
 		</asp:Repeater>
 	</div>
 	<p>
-		<asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" />
+		<asp:Button ID="btnLogin" runat="server" Text="Continue" OnClick="btnLogin_Click" />
 		<asp:Button ID="btnCreate" runat="server" Text="Create User" OnClick="btnCreate_Click" />
 	</p>
 	<p>

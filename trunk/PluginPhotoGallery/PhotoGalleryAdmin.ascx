@@ -52,9 +52,12 @@
 		margin-bottom: 5px;
 		width: 420px;
 		float: left;
+	}
+	div.galleryScrollHead strong, div.galleryScrollHead b {
 		font-size: 16px;
 		font-weight: bold;
 	}
+	
 	.HighlightPH {
 		height: 25px !important;
 		margin: 5px;
@@ -163,6 +166,10 @@
 
 
 	function galleryOrder() {
+
+		$('#srcGalleryCount').text($("#gallerySource").find('li').length);
+		$('#tgtGalleryCount').text($("#galleryTarget").find('li').length);
+
 		var OrderField = "<%=txtGalleryOrder.ClientID %>";
 		$("#" + OrderField).val('');
 
@@ -181,7 +188,6 @@
 			var keys = (i + '\t' + key);
 
 			$("#" + OrderField).val($("#" + OrderField).val() + '\r\n ' + keys);
-
 		});
 	}
 
@@ -221,6 +227,25 @@
 		});
 	}
 
+
+	function clearFolderContents() {
+		$("#galleryTarget").find('li').each(function (i) {
+			$(this).remove();
+		});
+
+		galleryOrder();
+	}
+
+	function copyFolderContents() {
+		var ulTgt = $("#galleryTarget");
+
+		$("#gallerySource").find('li').each(function (i) {
+			$(this).clone().appendTo(ulTgt);
+		});
+
+		galleryOrder();
+	}
+
 	function galleryRemoveItem(a) {
 		var tgt = $(a);
 		if (tgt.is("a")) {
@@ -256,8 +281,7 @@
 			Restrict images to selected folder
 		</td>
 		<td colspan="2">
-			<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath">
-			</asp:DropDownList>
+			<asp:DropDownList ID="ddlFolders" runat="server" DataTextField="FileName" DataValueField="FolderPath" />
 		</td>
 	</tr>
 </table>
@@ -265,9 +289,13 @@
 </div>
 <div style="width: 960px">
 	<div class="galleryScrollHead">
-		Site Images</div>
+		<b>Site Images (<span id="srcGalleryCount">0</span> items)</b> &nbsp;&nbsp;&nbsp;
+		<input type="button" value="copy all" onclick="javascript:copyFolderContents()" />
+	</div>
 	<div class="galleryScrollHead">
-		Gallery Images</div>
+		<b>Gallery Images (<span id="tgtGalleryCount">0</span> items)</b> &nbsp;&nbsp;&nbsp;
+		<input type="button" value="clear all" onclick="javascript:clearFolderContents()" />
+	</div>
 	<div style="clear: both">
 	</div>
 	<div class="galleryScroll">

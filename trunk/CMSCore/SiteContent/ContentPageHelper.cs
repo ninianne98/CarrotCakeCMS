@@ -364,21 +364,27 @@ namespace Carrotware.CMS.Core {
 			if (currentSite.CheckIsBlogCategoryPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.CategoryIndex;
 				vw_carrot_CategoryURL query = CompiledQueries.cqGetCategoryByURL(db, siteID, sFilterPath);
-				sTitle = query.CategoryText;
-				pvt.RawValue = query.CategoryText;
+				if (query != null) {
+					sTitle = query.CategoryText;
+					pvt.RawValue = query.CategoryText;
+				}
 			}
 			if (currentSite.CheckIsBlogTagPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.TagIndex;
 				vw_carrot_TagURL query = CompiledQueries.cqGetTagByURL(db, siteID, sFilterPath);
-				sTitle = query.TagText;
-				pvt.RawValue = query.TagText;
+				if (query != null) {
+					sTitle = query.TagText;
+					pvt.RawValue = query.TagText;
+				}
 			}
 			if (currentSite.CheckIsBlogEditorFolderPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.AuthorIndex;
 				vw_carrot_EditorURL query = CompiledQueries.cqGetEditorByURL(db, siteID, sFilterPath);
-				ExtendedUserData usr = new ExtendedUserData(query.UserId);
-				sTitle = usr.ToString();
-				pvt.RawValue = usr;
+				if (query != null) {
+					ExtendedUserData usr = new ExtendedUserData(query.UserId);
+					sTitle = usr.ToString();
+					pvt.RawValue = usr;
+				}
 			}
 			if (currentSite.CheckIsBlogDateFolderPath(sFilterPath)) {
 				pvt.CurrentViewType = PageViewType.ViewType.DateIndex;
@@ -412,7 +418,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				pvt.RawValue = sSearchTerm;
-				sTitle = " '" + sSearchTerm + "' ";
+				sTitle = string.Format(" '{0}' ", sSearchTerm);
 			}
 
 			pvt.ExtraTitle = sTitle;

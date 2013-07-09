@@ -132,22 +132,58 @@ namespace Carrotware.CMS.UI.Controls {
 			this.NavigationData = GetUpdates();
 		}
 
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool ShowUpdateDate {
+			get {
+				bool s = false;
+				if (ViewState["ShowUpdateDate"] != null) {
+					try { s = (bool)ViewState["ShowUpdateDate"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["ShowUpdateDate"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("({0:d})")]
+		public string DateFormat {
+			get {
+				String s = ViewState["DateFormat"] as String;
+				return ((s == null) ? "({0:d})" : s);
+			}
+			set {
+				ViewState["DateFormat"] = value;
+			}
+		}
+
 		protected List<SiteNav> GetUpdates() {
+
+			List<SiteNav> lst = new List<SiteNav>();
 
 			switch (ContentType) {
 				case ListContentType.Blog:
-					return navHelper.GetLatestPosts(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+					lst = navHelper.GetLatestPosts(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+					break;
 				case ListContentType.ContentPage:
-					return navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+					lst = navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+					break;
 				case ListContentType.SpecifiedCategories:
 					if (TakeTop > 0) {
-						return navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, TakeTop, 0, "GoLiveDate", "DESC");
+						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, TakeTop, 0, "GoLiveDate", "DESC");
 					} else {
-						return navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, 100000, 0, "NavMenuText", "ASC");
+						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, 100000, 0, "NavMenuText", "ASC");
 					}
+					break;
 			}
 
-			return new List<SiteNav>();
+			if (this.ShowUpdateDate && !string.IsNullOrEmpty(this.DateFormat)) {
+				lst.ForEach(x => x.NavMenuText = string.Format("{0}  {1}", x.NavMenuText, string.Format(this.DateFormat, x.GoLiveDate)));
+			}
+
+			return lst;
 		}
 
 		public List<string> LimitedPropertyList {

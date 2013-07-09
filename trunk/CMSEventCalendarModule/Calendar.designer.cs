@@ -487,6 +487,10 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 		
 		private bool _IsCancelled;
 		
+		private System.Nullable<System.TimeSpan> _EventStartTime;
+		
+		private System.Nullable<System.TimeSpan> _EventEndTime;
+		
 		private EntityRef<carrot_CalendarEventProfile> _carrot_CalendarEventProfile;
 		
     #region Extensibility Method Definitions
@@ -503,6 +507,10 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
     partial void OnEventDetailChanged();
     partial void OnIsCancelledChanging(bool value);
     partial void OnIsCancelledChanged();
+    partial void OnEventStartTimeChanging(System.Nullable<System.TimeSpan> value);
+    partial void OnEventStartTimeChanged();
+    partial void OnEventEndTimeChanging(System.Nullable<System.TimeSpan> value);
+    partial void OnEventEndTimeChanged();
     #endregion
 		
 		public carrot_CalendarEvent()
@@ -615,6 +623,46 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventStartTime", DbType="Time")]
+		public System.Nullable<System.TimeSpan> EventStartTime
+		{
+			get
+			{
+				return this._EventStartTime;
+			}
+			set
+			{
+				if ((this._EventStartTime != value))
+				{
+					this.OnEventStartTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EventStartTime = value;
+					this.SendPropertyChanged("EventStartTime");
+					this.OnEventStartTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventEndTime", DbType="Time")]
+		public System.Nullable<System.TimeSpan> EventEndTime
+		{
+			get
+			{
+				return this._EventEndTime;
+			}
+			set
+			{
+				if ((this._EventEndTime != value))
+				{
+					this.OnEventEndTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EventEndTime = value;
+					this.SendPropertyChanged("EventEndTime");
+					this.OnEventEndTimeChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_CalendarEventProfile_carrot_CalendarEvent", Storage="_carrot_CalendarEventProfile", ThisKey="CalendarEventProfileID", OtherKey="CalendarEventProfileID", IsForeignKey=true)]
 		public carrot_CalendarEventProfile carrot_CalendarEventProfile
 		{
@@ -706,6 +754,12 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 		
 		private System.Guid _SiteID;
 		
+		private bool _IsHoliday;
+		
+		private bool _IsAnnualHoliday;
+		
+		private int _RecursEvery;
+		
 		private EntitySet<carrot_CalendarEvent> _carrot_CalendarEvents;
 		
 		private EntityRef<carrot_CalendarEventCategory> _carrot_CalendarEventCategory;
@@ -746,6 +800,12 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
     partial void OnIsCancelledPublicChanged();
     partial void OnSiteIDChanging(System.Guid value);
     partial void OnSiteIDChanged();
+    partial void OnIsHolidayChanging(bool value);
+    partial void OnIsHolidayChanged();
+    partial void OnIsAnnualHolidayChanging(bool value);
+    partial void OnIsAnnualHolidayChanged();
+    partial void OnRecursEveryChanging(int value);
+    partial void OnRecursEveryChanged();
     #endregion
 		
 		public carrot_CalendarEventProfile()
@@ -1064,6 +1124,66 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHoliday", DbType="Bit NOT NULL")]
+		public bool IsHoliday
+		{
+			get
+			{
+				return this._IsHoliday;
+			}
+			set
+			{
+				if ((this._IsHoliday != value))
+				{
+					this.OnIsHolidayChanging(value);
+					this.SendPropertyChanging();
+					this._IsHoliday = value;
+					this.SendPropertyChanged("IsHoliday");
+					this.OnIsHolidayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAnnualHoliday", DbType="Bit NOT NULL")]
+		public bool IsAnnualHoliday
+		{
+			get
+			{
+				return this._IsAnnualHoliday;
+			}
+			set
+			{
+				if ((this._IsAnnualHoliday != value))
+				{
+					this.OnIsAnnualHolidayChanging(value);
+					this.SendPropertyChanging();
+					this._IsAnnualHoliday = value;
+					this.SendPropertyChanged("IsAnnualHoliday");
+					this.OnIsAnnualHolidayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecursEvery", DbType="Int NOT NULL")]
+		public int RecursEvery
+		{
+			get
+			{
+				return this._RecursEvery;
+			}
+			set
+			{
+				if ((this._RecursEvery != value))
+				{
+					this.OnRecursEveryChanging(value);
+					this.SendPropertyChanging();
+					this._RecursEvery = value;
+					this.SendPropertyChanged("RecursEvery");
+					this.OnRecursEveryChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="carrot_CalendarEventProfile_carrot_CalendarEvent", Storage="_carrot_CalendarEvents", ThisKey="CalendarEventProfileID", OtherKey="CalendarEventProfileID")]
 		public EntitySet<carrot_CalendarEvent> carrot_CalendarEvents
 		{
@@ -1192,9 +1312,9 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 		
 		private System.DateTime _EventStartDate;
 		
-		private System.Nullable<System.TimeSpan> _EventStartTime;
-		
 		private System.DateTime _EventEndDate;
+		
+		private System.Nullable<System.TimeSpan> _EventStartTime;
 		
 		private System.Nullable<System.TimeSpan> _EventEndTime;
 		
@@ -1206,11 +1326,19 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 		
 		private bool _IsCancelledPublic;
 		
-		private bool _IsCancelledSeries;
-		
 		private bool _IsAllDayEvent;
 		
 		private bool _IsPublic;
+		
+		private bool _IsCancelledSeries;
+		
+		private bool _IsCancelledEvent;
+		
+		private bool _IsHoliday;
+		
+		private bool _IsAnnualHoliday;
+		
+		private int _RecursEvery;
 		
 		private System.Guid _CalendarEventID;
 		
@@ -1218,13 +1346,15 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 		
 		private string _EventDetail;
 		
-		private bool _IsCancelledEvent;
-		
 		private string _FrequencyValue;
 		
 		private string _FrequencyName;
 		
 		private int _FrequencySortOrder;
+		
+		private System.Nullable<System.TimeSpan> _EventStartTimeOverride;
+		
+		private System.Nullable<System.TimeSpan> _EventEndTimeOverride;
 		
 		private string _CategoryFGColor;
 		
@@ -1316,22 +1446,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventStartTime", DbType="Time")]
-		public System.Nullable<System.TimeSpan> EventStartTime
-		{
-			get
-			{
-				return this._EventStartTime;
-			}
-			set
-			{
-				if ((this._EventStartTime != value))
-				{
-					this._EventStartTime = value;
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventEndDate", DbType="DateTime NOT NULL")]
 		public System.DateTime EventEndDate
 		{
@@ -1344,6 +1458,22 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 				if ((this._EventEndDate != value))
 				{
 					this._EventEndDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventStartTime", DbType="Time")]
+		public System.Nullable<System.TimeSpan> EventStartTime
+		{
+			get
+			{
+				return this._EventStartTime;
+			}
+			set
+			{
+				if ((this._EventStartTime != value))
+				{
+					this._EventStartTime = value;
 				}
 			}
 		}
@@ -1428,22 +1558,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCancelledSeries", DbType="Bit NOT NULL")]
-		public bool IsCancelledSeries
-		{
-			get
-			{
-				return this._IsCancelledSeries;
-			}
-			set
-			{
-				if ((this._IsCancelledSeries != value))
-				{
-					this._IsCancelledSeries = value;
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAllDayEvent", DbType="Bit NOT NULL")]
 		public bool IsAllDayEvent
 		{
@@ -1472,6 +1586,86 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 				if ((this._IsPublic != value))
 				{
 					this._IsPublic = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCancelledSeries", DbType="Bit NOT NULL")]
+		public bool IsCancelledSeries
+		{
+			get
+			{
+				return this._IsCancelledSeries;
+			}
+			set
+			{
+				if ((this._IsCancelledSeries != value))
+				{
+					this._IsCancelledSeries = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCancelledEvent", DbType="Bit NOT NULL")]
+		public bool IsCancelledEvent
+		{
+			get
+			{
+				return this._IsCancelledEvent;
+			}
+			set
+			{
+				if ((this._IsCancelledEvent != value))
+				{
+					this._IsCancelledEvent = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHoliday", DbType="Bit NOT NULL")]
+		public bool IsHoliday
+		{
+			get
+			{
+				return this._IsHoliday;
+			}
+			set
+			{
+				if ((this._IsHoliday != value))
+				{
+					this._IsHoliday = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAnnualHoliday", DbType="Bit NOT NULL")]
+		public bool IsAnnualHoliday
+		{
+			get
+			{
+				return this._IsAnnualHoliday;
+			}
+			set
+			{
+				if ((this._IsAnnualHoliday != value))
+				{
+					this._IsAnnualHoliday = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecursEvery", DbType="Int NOT NULL")]
+		public int RecursEvery
+		{
+			get
+			{
+				return this._RecursEvery;
+			}
+			set
+			{
+				if ((this._RecursEvery != value))
+				{
+					this._RecursEvery = value;
 				}
 			}
 		}
@@ -1524,22 +1718,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCancelledEvent", DbType="Bit NOT NULL")]
-		public bool IsCancelledEvent
-		{
-			get
-			{
-				return this._IsCancelledEvent;
-			}
-			set
-			{
-				if ((this._IsCancelledEvent != value))
-				{
-					this._IsCancelledEvent = value;
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FrequencyValue", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
 		public string FrequencyValue
 		{
@@ -1584,6 +1762,38 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 				if ((this._FrequencySortOrder != value))
 				{
 					this._FrequencySortOrder = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventStartTimeOverride", DbType="Time")]
+		public System.Nullable<System.TimeSpan> EventStartTimeOverride
+		{
+			get
+			{
+				return this._EventStartTimeOverride;
+			}
+			set
+			{
+				if ((this._EventStartTimeOverride != value))
+				{
+					this._EventStartTimeOverride = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventEndTimeOverride", DbType="Time")]
+		public System.Nullable<System.TimeSpan> EventEndTimeOverride
+		{
+			get
+			{
+				return this._EventEndTimeOverride;
+			}
+			set
+			{
+				if ((this._EventEndTimeOverride != value))
+				{
+					this._EventEndTimeOverride = value;
 				}
 			}
 		}
@@ -1667,7 +1877,13 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 		
 		private bool _IsCancelledPublic;
 		
+		private bool _IsHoliday;
+		
+		private bool _IsAnnualHoliday;
+		
 		private bool _IsAllDayEvent;
+		
+		private int _RecursEvery;
 		
 		private bool _IsPublic;
 		
@@ -1895,6 +2111,38 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHoliday", DbType="Bit NOT NULL")]
+		public bool IsHoliday
+		{
+			get
+			{
+				return this._IsHoliday;
+			}
+			set
+			{
+				if ((this._IsHoliday != value))
+				{
+					this._IsHoliday = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAnnualHoliday", DbType="Bit NOT NULL")]
+		public bool IsAnnualHoliday
+		{
+			get
+			{
+				return this._IsAnnualHoliday;
+			}
+			set
+			{
+				if ((this._IsAnnualHoliday != value))
+				{
+					this._IsAnnualHoliday = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAllDayEvent", DbType="Bit NOT NULL")]
 		public bool IsAllDayEvent
 		{
@@ -1907,6 +2155,22 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule
 				if ((this._IsAllDayEvent != value))
 				{
 					this._IsAllDayEvent = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecursEvery", DbType="Int NOT NULL")]
+		public int RecursEvery
+		{
+			get
+			{
+				return this._RecursEvery;
+			}
+			set
+			{
+				if ((this._RecursEvery != value))
+				{
+					this._RecursEvery = value;
 				}
 			}
 		}

@@ -49,6 +49,24 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
         protected global::System.Web.UI.WebControls.CheckBox chkIsCancelled;
         
         /// <summary>
+        /// txtEventStartTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEventStartTime;
+        
+        /// <summary>
+        /// txtEventEndTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEventEndTime;
+        
+        /// <summary>
         /// reContent control.
         /// </summary>
         /// <remarks>

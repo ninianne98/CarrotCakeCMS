@@ -102,3 +102,7 @@ span.cmsFooterLinks, p.cmsFooterLinks {
 	padding: 1px !important;
 	width: auto !important;
 }
+
+.cmsNavFooterBox input, .cmsNavFooterBox select {
+	max-width: 450px;
+}
