@@ -35,6 +35,20 @@
 				<asp:CheckBox ID="chkIsCancelled" runat="server" Text="Cancelled" />
 			</td>
 		</tr>
+		<tr>
+			<td class="tablecaption">
+				time from (override):
+			</td>
+			<td>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartTime" runat="server" CssClass="timeRegion" Columns="10" />
+			</td>
+			<td class="tablecaption">
+				time to (override):
+			</td>
+			<td>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndTime" runat="server" CssClass="timeRegion" Columns="10" />
+			</td>
+		</tr>
 	</table>
 </fieldset>
 <fieldset style="width: 650px;">

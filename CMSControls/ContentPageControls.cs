@@ -180,7 +180,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		[Category("Appearance")]
-		[DefaultValue("UseDefaultText")]
+		[DefaultValue(true)]
 		public bool UseDefaultText {
 			get {
 				bool s = true;
@@ -339,6 +339,17 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (sd != null) {
 				sFieldValue = sd.DefaultCanonicalURL;
+
+				ControlUtilities cu = new ControlUtilities();
+				ContentPage cp = cu.GetContainerContentPage(this);
+
+				if (cp != null) {
+					if (cp.NavOrder == 0) {
+						sFieldValue = sd.MainCanonicalURL;
+					} else {
+						sFieldValue = sd.DefaultCanonicalURL;
+					}
+				}
 			} else {
 				sFieldValue = SiteData.DefaultDirectoryFilename;
 			}

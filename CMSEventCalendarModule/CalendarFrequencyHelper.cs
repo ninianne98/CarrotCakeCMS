@@ -78,8 +78,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 										&& c.EventDate.Date >= dateMax.Date
 								 select c.CalendarEventID).Count();
 
-				if (oldItem.Frequency != newItem.Frequency || iMin != 0 || iDays != 0
-					|| (iMaxRange != iFuture && iFuture > 0)
+				if (oldItem.Frequency != newItem.Frequency || oldItem.RecursEvery != newItem.RecursEvery
+					|| iMin != 0 || iDays != 0 || (iMaxRange != iFuture && iFuture > 0)
 					|| oldItem.EventEndDate.Date != newItem.EventEndDate.Date
 					|| oldItem.EventStartDate.Date != newItem.EventStartDate.Date) {
 
@@ -195,16 +195,27 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 							if (!createRecentOnly || (createRecentOnly && dateToAdd.Date >= backportDate)) {
 								eventDates.Add(dateToAdd.Date);
 							}
-							dateToAdd = dateToAdd.AddDays(7);
+							dateToAdd = dateToAdd.AddDays(7 * eventProfile.RecursEvery);
 						}
 					} else {
+
 						while (eventDates.Count < 5000 && dateToAdd.Date <= endDateRange && dateToAdd.Date <= eventProfile.EventEndDate) {
+
 							if (eventProfile.DaysValid.Contains(dateToAdd.DayOfWeek)) {
 								if (!createRecentOnly || (createRecentOnly && dateToAdd.Date >= backportDate)) {
 									eventDates.Add(dateToAdd.Date);
 								}
 							}
-							dateToAdd = dateToAdd.AddDays(1);
+
+							if (eventProfile.RecursEvery > 1) {
+								if (oldDate.DayOfWeek == dateToAdd.AddDays(1).DayOfWeek) {
+									dateToAdd = dateToAdd.AddDays((7 * (eventProfile.RecursEvery - 1)) + 1);
+								} else {
+									dateToAdd = dateToAdd.AddDays(1);
+								}
+							} else {
+								dateToAdd = dateToAdd.AddDays(1);
+							}
 						}
 					}
 
@@ -227,19 +238,19 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 							eventDates.Add(dateToAdd.Date);
 						}
 
-						dateToAdd = dateToAdd.AddYears(1);
+						dateToAdd = dateToAdd.AddYears(1 * eventProfile.RecursEvery);
 						dateToAdd = CorrectMonthlyYearlyDate(dateToAdd, iDayOfMonth);
 					}
 					break;
 
 				case FrequencyType.Monthly:
 
-					while (eventDates.Count < 250 && dateToAdd.Date <= endDateRange && dateToAdd.Date <= eventProfile.EventEndDate) {
+					while (eventDates.Count < 360 && dateToAdd.Date <= endDateRange && dateToAdd.Date <= eventProfile.EventEndDate) {
 						if (!createRecentOnly || (createRecentOnly && dateToAdd.Date >= backportDate)) {
 							eventDates.Add(dateToAdd.Date);
 						}
 
-						dateToAdd = dateToAdd.AddMonths(1);
+						dateToAdd = dateToAdd.AddMonths(1 * eventProfile.RecursEvery);
 						dateToAdd = CorrectMonthlyYearlyDate(dateToAdd, iDayOfMonth);
 					}
 					break;

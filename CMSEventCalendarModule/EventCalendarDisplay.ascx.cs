@@ -157,16 +157,15 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			List<DateTime> dates = (from dd in lst select dd.EventDate.Date).Distinct().ToList();
 
+			List<Guid> cats = (from dd in lst select dd.CalendarEventCategoryID).Distinct().ToList();
+
 			Calendar1.HilightDateList = dates;
 
 			CalendarHelper.BindDataBoundControl(dgEvents, lst);
 
 			SetDDLSelections();
 
-			if (!IsPostBack) {
-				CalendarHelper.BindRepeater(rpCat, CalendarHelper.GetCalendarCategories(SiteID));
-			}
-
+			CalendarHelper.BindRepeater(rpCat, CalendarHelper.GetCalendarCategories(SiteID).Where(x => cats.Contains(x.CalendarEventCategoryID)));
 		}
 
 		protected void ddlMonth_SelectedIndexChanged(object sender, EventArgs e) {

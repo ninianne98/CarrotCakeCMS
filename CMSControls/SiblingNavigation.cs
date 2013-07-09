@@ -26,13 +26,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 
-			if (IncludeParent) {
-				if (lstNav != null && lstNav.Count > 0) {
-					SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
-					if (p != null) {
-						p.NavOrder = -100;
-						lstNav.Add(p);
-					}
+			if (this.IncludeParent && lstNav != null && lstNav.Where(x => x.ShowInSiteNav == true).Count() > 0) {
+				SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
+				if (p != null) {
+					p.NavOrder = -100;
+					lstNav.Add(p);
 				}
 			}
 

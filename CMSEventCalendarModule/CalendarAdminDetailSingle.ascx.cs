@@ -35,10 +35,12 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 				litDate.Text = itm.EventDate.ToShortDateString();
 
+				CalendarHelper.SetTextboxToTimeSpan(txtEventStartTime, itm.EventStartTime);
+				CalendarHelper.SetTextboxToTimeSpan(txtEventEndTime, itm.EventEndTime);
+
 				chkIsCancelled.Checked = itm.IsCancelled;
 				reContent.Text = itm.EventDetail;
 			}
-
 		}
 
 
@@ -60,6 +62,9 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 				currItem.EventDetail = reContent.Text;
 				currItem.IsCancelled = chkIsCancelled.Checked;
+
+				currItem.EventStartTime = CalendarHelper.GetTimeSpanFromTextbox(txtEventStartTime);
+				currItem.EventEndTime = CalendarHelper.GetTimeSpanFromTextbox(txtEventEndTime);
 
 				if (bAdd) {
 					db.carrot_CalendarEvents.InsertOnSubmit(currItem);

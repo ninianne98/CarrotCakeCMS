@@ -14,6 +14,7 @@
     <AssemblyName>Carrotware.CMS.UI.Plugins.EventCalendarModule</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,6 +61,7 @@
     <Content Include="CalendarAdminList.ascx" />
     <EmbeddedResource Include="carrot_CalendarEvent.sql" />
     <Content Include="CalendarAdminProfileList.ascx" />
+    <EmbeddedResource Include="carrot_CalendarEvent2.sql" />
     <Content Include="EventCalendarDisplay2.ascx" />
     <Content Include="EventCalendarDisplayUpcoming.ascx" />
     <Content Include="EventCalendarDisplay.ascx" />
