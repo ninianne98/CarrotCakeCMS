@@ -15,7 +15,10 @@
     [TimeZone]            NVARCHAR (128)   NULL,
     [SendTrackbacks]      BIT              NOT NULL,
     [AcceptTrackbacks]    BIT              NOT NULL,
-    [Blog_DatePath]       NVARCHAR (64)    NULL
+    [Blog_DatePath]       NVARCHAR (64)    NULL,
+    [Blog_EditorPath]     NVARCHAR (64)    NULL
 );
+
+
 
 

@@ -9934,6 +9934,8 @@ namespace Carrotware.CMS.Data
 		
 		private System.DateTime _EditDate;
 		
+		private System.DateTime _CreateDate;
+		
 		private string _FileName;
 		
 		private System.Guid _ContentTypeID;
@@ -9952,7 +9954,7 @@ namespace Carrotware.CMS.Data
 		
 		private bool _IsLockedOut;
 		
-		private System.DateTime _CreateDate;
+		private System.DateTime _UserCreateDate;
 		
 		private System.DateTime _LastLoginDate;
 		
@@ -10114,6 +10116,22 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(256) NOT NULL", CanBeNull=false)]
 		public string FileName
 		{
@@ -10258,18 +10276,18 @@ namespace Carrotware.CMS.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
-		public System.DateTime CreateDate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserCreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime UserCreateDate
 		{
 			get
 			{
-				return this._CreateDate;
+				return this._UserCreateDate;
 			}
 			set
 			{
-				if ((this._CreateDate != value))
+				if ((this._UserCreateDate != value))
 				{
-					this._CreateDate = value;
+					this._UserCreateDate = value;
 				}
 			}
 		}

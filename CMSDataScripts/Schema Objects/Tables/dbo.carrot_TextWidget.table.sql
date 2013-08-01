@@ -5,8 +5,11 @@
     [ProcessBody]        BIT              NOT NULL,
     [ProcessPlainText]   BIT              NOT NULL,
     [ProcessHTMLText]    BIT              NOT NULL,
-    [ProcessComment]     BIT              NOT NULL
+    [ProcessComment]     BIT              NOT NULL,
+    [ProcessSnippet]     BIT              NOT NULL
 );
+
+
 
 
 

@@ -10,12 +10,14 @@
     [PageSlug]         NVARCHAR (256)   NULL,
     [PageThumbnail]    NVARCHAR (128)   NULL,
     [GoLiveDate]       DATETIME         NOT NULL,
-    [RetireDate]       DATETIME         NOT NULL,
     [GoLiveDateLocal]  DATETIME         NOT NULL,
+    [RetireDate]       DATETIME         NOT NULL,
     [ShowInSiteNav]    BIT              NOT NULL,
     [CreateUserId]     UNIQUEIDENTIFIER NOT NULL,
     [ShowInSiteMap]    BIT              NOT NULL,
     [BlockIndex]       BIT              NOT NULL
 );
+
+
 
 

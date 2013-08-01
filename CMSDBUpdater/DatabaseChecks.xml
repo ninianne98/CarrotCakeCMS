@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tbl>
 	<querynugget>
-		<priority>14</priority>
+		<priority>15</priority>
 		<mode>LT</mode>
-		<rowcount>5</rowcount>
+		<rowcount>26</rowcount>
 		<alwayscheck>True</alwayscheck>
 		<testcontext>|AlterStep10|AreCMSTablesIncomplete|</testcontext>
 		<sql>

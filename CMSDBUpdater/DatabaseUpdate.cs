@@ -25,7 +25,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static SqlException LastSQLError { get; set; }
 
-		public static string CurrentDbVersion { get { return "20130612"; } }
+		public static string CurrentDbVersion { get { return "20130615"; } }
 
 		public DatabaseUpdate() {
 			LastSQLError = null;
@@ -126,6 +126,7 @@ namespace Carrotware.CMS.DBUpdater {
 					res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", false);
 					res.Response = "Created Database";
 					res.RanUpdate = true;
+					SetDbSchemaVersion(DatabaseUpdate.CurrentDbVersion);
 					return res;
 				}
 
@@ -617,9 +618,9 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER10.sql", false);
-				res.Response = "CMS DB created TextWidget and Content Snippet";
+				res.Response = "CMS DB created TextWidget and Content Snippet, updated edit history";
 				res.RanUpdate = true;
-				SetDbSchemaVersion("20130612");
+				SetDbSchemaVersion("20130615");
 				return res;
 			}
 

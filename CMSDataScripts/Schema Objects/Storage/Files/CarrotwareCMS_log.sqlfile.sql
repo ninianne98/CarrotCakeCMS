@@ -1,0 +1,3 @@
+﻿ALTER DATABASE [$(DatabaseName)]
+    ADD LOG FILE (NAME = [CarrotwareCMS_log], FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL10.SQL2008EXPRESS\MSSQL\DATA\CarrotwareCMS_1.LDF', SIZE = 2560 KB, MAXSIZE = 2097152 MB, FILEGROWTH = 10 %);
+

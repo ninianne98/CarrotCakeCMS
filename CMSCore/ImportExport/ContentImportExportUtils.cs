@@ -103,7 +103,7 @@ namespace Carrotware.CMS.Core {
 				if (c.PostType == WordPressPost.WPPostType.BlogPost) {
 					cont.ContentType = ContentPageType.PageType.BlogEntry;
 					cont.PageSlug = c.ImportFileSlug.Replace("//", "/");
-					cont.NavOrder = 10;
+					cont.NavOrder = SiteData.BlogSortOrderNumber;
 					cont.Parent_ContentID = null;
 				}
 				if (c.PostType == WordPressPost.WPPostType.Page) {

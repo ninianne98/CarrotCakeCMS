@@ -40,8 +40,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				SiteData site = siteHelper.GetCurrentSite();
-				txtURL.Text = "http://" + Request.ServerVariables["SERVER_NAME"];
-				txtSiteName.Text = Request.ServerVariables["SERVER_NAME"];
+				txtURL.Text = "http://" + CMSConfigHelper.DomainName;
+				txtSiteName.Text = CMSConfigHelper.DomainName;
 
 				txtFolderPath.Text = "archive";
 				txtCategoryPath.Text = "category";
