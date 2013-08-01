@@ -255,7 +255,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.MetaKeyword = txtKey.Text;
 
 			pageContents.EditDate = SiteData.CurrentSite.Now;
-			pageContents.NavOrder = 10;
+			pageContents.NavOrder = SiteData.BlogSortOrderNumber;
 
 			pageContents.PageText = reBody.Text;
 			pageContents.LeftPageText = reLeftBody.Text;

@@ -49,7 +49,7 @@ namespace Carrotware.CMS.Core {
 
 			if (pageType != ContentPageType.PageType.ContentEntry) {
 				this.Parent_ContentID = null;
-				this.NavOrder = 10;
+				this.NavOrder = SiteData.BlogSortOrderNumber;
 				this.ShowInSiteMap = false;
 				this.ShowInSiteNav = false;
 			}
@@ -206,30 +206,32 @@ namespace Carrotware.CMS.Core {
 			IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(_db, this.Root_ContentID);
 			IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(_db, this.Root_ContentID);
 
-			List<carrot_TagContentMapping> newContentTags = (from x in ContentTags
-															 select new carrot_TagContentMapping {
-																 ContentTagID = x.ContentTagID,
-																 Root_ContentID = this.Root_ContentID,
-																 TagContentMappingID = Guid.NewGuid()
-															 }).ToList();
+			if (this.ContentType == ContentPageType.PageType.BlogEntry) {
 
-			List<carrot_CategoryContentMapping> newContentCategories = (from x in ContentCategories
-																		select new carrot_CategoryContentMapping {
-																			ContentCategoryID = x.ContentCategoryID,
-																			Root_ContentID = this.Root_ContentID,
-																			CategoryContentMappingID = Guid.NewGuid()
-																		}).ToList();
+				List<carrot_TagContentMapping> newContentTags = (from x in this.ContentTags
+																 select new carrot_TagContentMapping {
+																	 ContentTagID = x.ContentTagID,
+																	 Root_ContentID = this.Root_ContentID,
+																	 TagContentMappingID = Guid.NewGuid()
+																 }).ToList();
 
-			foreach (carrot_TagContentMapping s in newContentTags) {
-				_db.carrot_TagContentMappings.InsertOnSubmit(s);
-			}
-			foreach (carrot_CategoryContentMapping s in newContentCategories) {
-				_db.carrot_CategoryContentMappings.InsertOnSubmit(s);
+				List<carrot_CategoryContentMapping> newContentCategories = (from x in this.ContentCategories
+																			select new carrot_CategoryContentMapping {
+																				ContentCategoryID = x.ContentCategoryID,
+																				Root_ContentID = this.Root_ContentID,
+																				CategoryContentMappingID = Guid.NewGuid()
+																			}).ToList();
+
+				foreach (carrot_TagContentMapping s in newContentTags) {
+					_db.carrot_TagContentMappings.InsertOnSubmit(s);
+				}
+				foreach (carrot_CategoryContentMapping s in newContentCategories) {
+					_db.carrot_CategoryContentMappings.InsertOnSubmit(s);
+				}
 			}
 
 			_db.carrot_TagContentMappings.DeleteBatch(oldContentTags);
 			_db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
-
 		}
 
 
@@ -266,7 +268,7 @@ namespace Carrotware.CMS.Core {
 			if (this.ContentType == ContentPageType.PageType.BlogEntry) {
 				this.PageSlug = ContentPageHelper.ScrubFilename(this.Root_ContentID, this.PageSlug);
 				this.FileName = ContentPageHelper.CreateFileNameFromSlug(this.SiteID, this.GoLiveDate, this.PageSlug);
-				c.NavOrder = 10;
+				c.NavOrder = SiteData.BlogSortOrderNumber;
 			}
 
 			rc.GoLiveDate = pageSite.ConvertSiteTimeToUTC(this.GoLiveDate);
@@ -404,10 +406,8 @@ namespace Carrotware.CMS.Core {
 				}
 
 				carrot_Content c = new carrot_Content();
-				if (bNew) {
-					c.ContentID = this.Root_ContentID;
-				} else {
-					c.ContentID = Guid.NewGuid();
+				c.ContentID = Guid.NewGuid();
+				if (!bNew) {
 					oldC.IsLatestVersion = false;
 				}
 
@@ -441,11 +441,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				carrot_Content c = new carrot_Content();
-				if (bNew) {
-					c.ContentID = this.Root_ContentID;
-				} else {
-					c.ContentID = Guid.NewGuid();
-				}
+				c.ContentID = Guid.NewGuid();
 
 				PerformCommonSave(site, rc, c);
 
@@ -597,12 +593,14 @@ namespace Carrotware.CMS.Core {
 
 		public string PageTextPlainSummaryMedium {
 			get {
-				string txt = !string.IsNullOrEmpty(PageText) ? PageText : "";
-				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("&nbsp;", " ").Replace('\u00A0', ' ');
+				string txt = !string.IsNullOrEmpty(PageText) ? this.PageText : "";
+				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("&nbsp;", " ").Replace('\u00A0', ' '); //.Replace(".", "&#46;").Replace("@", " &#40;&#97;&#116;&#41; ");
 
 				txt = Regex.Replace(txt, @"<!--(\n|.)*-->", " ");
 				txt = Regex.Replace(txt, @"<(.|\n)*?>", " ");
 				txt = txt.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("    ", " ").Replace("   ", " ").Replace("  ", " ").Replace("  ", " ");
+
+				txt = SiteData.CurrentSite.UpdateContent(txt);
 
 				if (txt.Length > 4096) {
 					txt = txt.Substring(0, 4096);

@@ -355,15 +355,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.EditDate = SiteData.CurrentSite.Now;
 					cp.EditUserId = exSite.FindImportUser(impCP.TheUser);
 					cp.CreateUserId = exSite.FindImportUser(impCP.TheUser);
-					cp.NavOrder = 10;
+					cp.NavOrder = SiteData.BlogSortOrderNumber;
 					cp.TemplateFile = ddlTemplatePost.SelectedValue;
 
 					cp.ContentCategories = (from l in lstCategories
-											join o in impCP.ThePage.ContentCategories on l.CategorySlug equals o.CategorySlug
+											join o in impCP.ThePage.ContentCategories on l.CategorySlug.ToLower() equals o.CategorySlug.ToLower()
 											select l).Distinct().ToList();
 
 					cp.ContentTags = (from l in lstTags
-									  join o in impCP.ThePage.ContentTags on l.TagSlug equals o.TagSlug
+									  join o in impCP.ThePage.ContentTags on l.TagSlug.ToLower() equals o.TagSlug.ToLower()
 									  select l).Distinct().ToList();
 
 					BasicContentData navData = GetFileInfoFromList(site, cp.FileName);

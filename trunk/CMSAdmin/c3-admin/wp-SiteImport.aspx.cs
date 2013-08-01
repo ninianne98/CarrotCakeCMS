@@ -333,7 +333,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						cp.Parent_ContentID = null;
 						cp.ContentType = ContentPageType.PageType.BlogEntry;
 						cp.EditDate = SiteData.CurrentSite.Now;
-						cp.NavOrder = 10;
+						cp.NavOrder = SiteData.BlogSortOrderNumber;
 						cp.TemplateFile = ddlTemplatePost.SelectedValue;
 
 						SiteNav navData = navHelper.GetLatestVersion(site.SiteID, false, cp.FileName.ToLower());

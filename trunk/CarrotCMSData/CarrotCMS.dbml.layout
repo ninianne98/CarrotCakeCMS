@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.625, 26.25" name="CarrotCMS">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.5, 26.25" name="CarrotCMS">
   <DataContextMoniker Name="/CarrotCMSDataContext" />
   <nestedChildShapes>
     <classShape Id="cd974134-a453-4ace-8312-3387de04f46f" absoluteBounds="3.375, 0.5, 2, 2.1554996744791666">
@@ -360,10 +360,10 @@
         <elementListCompartment Id="d4db90f1-d292-424b-ab60-ad2ec40b0359" absoluteBounds="9.015, 21.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="2ba8a3ab-7946-4d26-99e9-698e91c8a173" absoluteBounds="14.75, 15.125, 2.625, 5.6169254557291657">
+    <classShape Id="5f57aefd-8d54-4044-99d9-427521c693b1" absoluteBounds="15, 14.375, 2, 5.8092268880208326">
       <DataClassMoniker Name="/CarrotCMSDataContext/vw_carrot_EditHistory" />
       <nestedChildShapes>
-        <elementListCompartment Id="16b57075-f5de-4c3c-96ce-53e2bbe3750e" absoluteBounds="14.765, 15.585, 2.5949999999999998, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="db5d27ab-58e3-434b-a06b-d1e42f826c6a" absoluteBounds="15.015, 14.835, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

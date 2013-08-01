@@ -332,6 +332,19 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:SiteCanonicalURL runat=server></{0}:SiteCanonicalURL>")]
 	public class SiteCanonicalURL : Literal {
 
+		[DefaultValue(false)]
+		public bool Enable301Redirect {
+			get {
+				String s = (String)ViewState["Enable301Redirect"];
+				bool b = ((s == null) ? false : Convert.ToBoolean(s));
+				return b;
+			}
+
+			set {
+				ViewState["Enable301Redirect"] = value.ToString();
+			}
+		}
+
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
 
@@ -355,6 +368,15 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			this.Text = string.Format("<link rel=\"canonical\" href=\"{0}\" />\r\n", sFieldValue);
+
+			if (this.Enable301Redirect) {
+				HttpContext ctx = HttpContext.Current;
+
+				if (!SiteData.CurrentSite.MainCanonicalURL.ToLower().Contains(@"://" + CMSConfigHelper.DomainName.ToLower())) {
+					ctx.Response.Status = "301 Moved Permanently";
+					ctx.Response.AddHeader("Location", sFieldValue);
+				}
+			}
 
 			base.OnPreRender(e);
 		}

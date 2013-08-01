@@ -44,6 +44,7 @@ namespace Carrotware.CMS.Core {
 				this.EditEmail = p.EditEmail;
 				this.IsLockedOut = p.IsLockedOut;
 				this.CreateDate = site.ConvertUTCToSiteTime(p.CreateDate);
+				this.UserCreateDate = p.UserCreateDate;
 				this.LastLoginDate = p.LastLoginDate;
 				this.LastPasswordChangedDate = p.LastPasswordChangedDate;
 				this.LastLockoutDate = p.LastLockoutDate;
@@ -71,6 +72,7 @@ namespace Carrotware.CMS.Core {
 		public string EditEmail { get; set; }
 		public bool IsLockedOut { get; set; }
 		public DateTime CreateDate { get; set; }
+		public DateTime UserCreateDate { get; set; }
 		public DateTime LastLoginDate { get; set; }
 		public DateTime LastPasswordChangedDate { get; set; }
 		public DateTime LastLockoutDate { get; set; }

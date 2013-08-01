@@ -4,5 +4,9 @@
     [WidgetOrder]     INT              NOT NULL,
     [PlaceholderName] NVARCHAR (256)   NOT NULL,
     [ControlPath]     NVARCHAR (512)   NOT NULL,
-    [WidgetActive]    BIT              NOT NULL
+    [WidgetActive]    BIT              NOT NULL,
+    [GoLiveDate]      DATETIME         NOT NULL,
+    [RetireDate]      DATETIME         NOT NULL
 );
+
+

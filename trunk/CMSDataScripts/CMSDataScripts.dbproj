@@ -226,12 +226,6 @@
     <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_Sites.DF_carrot_Sites_SiteID.defconst.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Storage\Files\Carrot1_log.sqlfile.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Storage\Files\PRIMARY.Carrot1.sqlfile.sql">
-      <SubType>Code</SubType>
-    </Build>
     <Build Include="Schema Objects\Tables\Keys\dbo.carrot_TrackbackQueue.FK_carrot_TrackbackQueue_Root_ContentID.fkey.sql">
       <SubType>Code</SubType>
     </Build>
@@ -821,6 +815,70 @@
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Tables\dbo.carrot_DataInfo.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_RootContentSnippet.DF_carrot_RootContentSnippet_Root_ContentSnippetID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Constraints\dbo.carrot_ContentSnippet.DF_carrot_ContentSnippet_ContentSnippetID.defconst.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Storage\Files\CarrotwareCMS_log.sqlfile.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Storage\Files\PRIMARY.CarrotwareCMS.sqlfile.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_RootContentSnippet.FK_carrot_RootContentSnippet_SiteID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentSnippet.FK_carrot_ContentSnippet_Root_ContentSnippetID.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.carrot_RootContent.IDX_carrot_RootContent_SiteID.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.carrot_RootContent.IDX_carrot_RootContent_CreateUserId.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.carrot_RootContent.IDX_carrot_RootContent_ContentTypeID.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.carrot_Content.IDX_carrot_Content_Root_ContentID.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Indexes\dbo.carrot_Content.IDX_carrot_Content_EditUserId.index.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_RootContentSnippet.PK_carrot_RootContentSnippet.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_ContentSnippet.PK_carrot_ContentSnippet.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_EditorURL.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_EditHistory.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Views\dbo.vw_carrot_ContentSnippet.view.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_RootContentSnippet.table.sql">
+      <SubType>Code</SubType>
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
+    <Build Include="Schema Objects\Tables\dbo.carrot_ContentSnippet.table.sql">
       <SubType>Code</SubType>
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>

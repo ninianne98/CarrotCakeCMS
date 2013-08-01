@@ -198,6 +198,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static int BlogSortOrderNumber { get { return 10; } }
+
 		public static bool IsWebView {
 			get { return (HttpContext.Current != null); }
 		}

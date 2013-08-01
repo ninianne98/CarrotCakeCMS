@@ -155,7 +155,7 @@ namespace Carrotware.CMS.Core {
 			IQueryable<carrot_Content> queryCont = CannedQueries.GetBlogAllContentTbl(db, siteID);
 			IQueryable<carrot_RootContent> queryContRoot = CannedQueries.GetBlogAllRootTbl(db, siteID);
 
-			db.carrot_Contents.UpdateBatch(queryCont, p => new carrot_Content { NavOrder = 10, Parent_ContentID = null });
+			db.carrot_Contents.UpdateBatch(queryCont, p => new carrot_Content { NavOrder = SiteData.BlogSortOrderNumber, Parent_ContentID = null });
 			db.carrot_RootContents.UpdateBatch(queryContRoot, p => new carrot_RootContent { ShowInSiteMap = false, ShowInSiteNav = false });
 
 			db.SubmitChanges();
