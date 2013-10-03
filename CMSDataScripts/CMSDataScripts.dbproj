@@ -939,5 +939,8 @@
     <NotInBuild Include="Scripts\ALTER 10 - create version count and text widget tables.sql">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 11 - update tally sproc.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>
