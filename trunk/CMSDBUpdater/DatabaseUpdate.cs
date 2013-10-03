@@ -25,7 +25,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static SqlException LastSQLError { get; set; }
 
-		public static string CurrentDbVersion { get { return "20130615"; } }
+		public static string CurrentDbVersion { get { return "20130926"; } }
 
 		public DatabaseUpdate() {
 			LastSQLError = null;
@@ -273,6 +273,10 @@ namespace Carrotware.CMS.DBUpdater {
 					if (ver.DataValue != DatabaseUpdate.CurrentDbVersion) {
 						if (ver.DataValue.Length < 2 || ver.DataValue.StartsWith("201305") || ver.DataValue.StartsWith("201306")) {
 							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep10());
+						}
+						ver = GetDbSchemaVersion();
+						if (ver.DataValue.Length < 2 || ver.DataValue.StartsWith("201306") || ver.DataValue.StartsWith("201309")) {
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep11());
 						}
 					}
 
@@ -628,6 +632,23 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
+		public DatabaseUpdateResponse AlterStep11() {
+
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep11");
+
+			if (bTestResult) {
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER11.sql", false);
+				res.Response = "CMS DB Updated archive tally";
+				res.RanUpdate = true;
+				SetDbSchemaVersion("20130926");
+				return res;
+			}
+
+			res.Response = "CMS DB archive tally already updated";
+			return res;
+		}
 
 		private string ReadEmbededScript(string filePath) {
 

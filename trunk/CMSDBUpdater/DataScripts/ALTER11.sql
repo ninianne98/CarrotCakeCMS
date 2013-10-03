@@ -1,4 +1,11 @@
-﻿CREATE PROCEDURE [dbo].[carrot_BlogMonthlyTallies]
+﻿GO
+SET ANSI_NULLS ON
+
+GO
+SET QUOTED_IDENTIFIER OFF
+
+GO
+ALTER PROCEDURE [dbo].[carrot_BlogMonthlyTallies]
     @SiteID uniqueidentifier,
     @ActiveOnly bit,    
     @TakeTop int = 10
@@ -52,4 +59,6 @@ SET NOCOUNT ON
     RETURN(0)
 
 END
+
+GO
 
