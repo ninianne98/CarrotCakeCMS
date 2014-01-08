@@ -94,6 +94,27 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private List<StringItem> stringList = null;
+		[
+		Category("Behavior"),
+		Description("The StringItem collection"),
+		Browsable(false),
+		DefaultValue(null),
+		DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
+		Editor(typeof(StringItemCollectionEditor), typeof(UITypeEditor)),
+		NotifyParentProperty(true),
+		TemplateContainer(typeof(StringItem)),
+		PersistenceMode(PersistenceMode.InnerProperty)
+		]
+		public List<StringItem> CategorySlugList {
+			get {
+				if (stringList == null) {
+					stringList = new List<StringItem>();
+				}
+				return stringList;
+			}
+		}
+
 		private List<Guid> _guids = null;
 
 		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstCategories")]
@@ -110,6 +131,23 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				_guids = value;
+			}
+		}
+
+		private List<string> _slugs = null;
+		public List<string> SelectedCategorySlugs {
+			get {
+				if (_slugs == null) {
+					if (CategorySlugList.Count > 0) {
+						_slugs = (from n in CategorySlugList select n.StringValue).ToList();
+					} else {
+						_slugs = new List<string>();
+					}
+				}
+				return _slugs;
+			}
+			set {
+				_slugs = value;
 			}
 		}
 
@@ -172,9 +210,9 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 				case ListContentType.SpecifiedCategories:
 					if (TakeTop > 0) {
-						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, TakeTop, 0, "GoLiveDate", "DESC");
+						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, TakeTop, 0, "GoLiveDate", "DESC");
 					} else {
-						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, 100000, 0, "NavMenuText", "ASC");
+						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, 100000, 0, "NavMenuText", "ASC");
 					}
 					break;
 			}

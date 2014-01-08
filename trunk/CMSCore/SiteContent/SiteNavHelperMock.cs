@@ -261,6 +261,9 @@ namespace Carrotware.CMS.Core {
 		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly) {
 			return 50;
 		}
+		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly) {
+			return 50;
+		}
 		public int GetSiteSearchCount(Guid siteID, string searchTerm, bool bActiveOnly) {
 			return 50;
 		}
@@ -295,6 +298,9 @@ namespace Carrotware.CMS.Core {
 			return SiteNavHelper.GetSamplerFakeNav(pageSize);
 		}
 		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			return SiteNavHelper.GetSamplerFakeNav(pageSize);
+		}
+		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return SiteNavHelper.GetSamplerFakeNav(pageSize);
 		}
 

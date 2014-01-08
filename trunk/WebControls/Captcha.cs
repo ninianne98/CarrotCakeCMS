@@ -7,6 +7,15 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.Web.UI.Controls {
 	[DefaultProperty("CaptchaText")]
@@ -15,17 +24,30 @@ namespace Carrotware.Web.UI.Controls {
 	[ValidationPropertyAttribute("CaptchaText")]
 	public class Captcha : BaseWebControl, ITextControl {
 
+		public Captcha() {
+
+			this.CaptchaImageBoxStyle = new SimpleStyle();
+			this.CaptchaTextStyle = new SimpleStyle();
+			this.CaptchaInstructionStyle = new SimpleStyle();
+			this.CaptchaImageStyle = new SimpleStyle();
+
+			this.CaptchaIsValidStyle = new SimpleStyle();
+			this.CaptchaIsNotValidStyle = new SimpleStyle();
+
+		}
+
+
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
 		public string Text {
 			get {
-				return this.CaptchaText;
+				String s = (String)ViewState["Text"];
+				return ((s == null) ? String.Empty : s);
 			}
-
 			set {
-				this.CaptchaText = value;
+				ViewState["Text"] = value;
 			}
 		}
 
@@ -35,12 +57,10 @@ namespace Carrotware.Web.UI.Controls {
 		[Localizable(true)]
 		public string CaptchaText {
 			get {
-				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
+				return this.Text;
 			}
-
 			set {
-				ViewState["Text"] = value;
+				this.Text = value;
 			}
 		}
 
@@ -74,6 +94,33 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string IsValidMessage {
+			get {
+				string s = (string)ViewState["ValidMessage"];
+				return ((s == null) ? "Code correct!" : s);
+			}
+			set {
+				ViewState["ValidMessage"] = value;
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue("")]
+		[Localizable(true)]
+		public string IsNotValidMessage {
+			get {
+				string s = (string)ViewState["IsNotValidMessage"];
+				return ((s == null) ? "Code incorrect, try again!" : s);
+			}
+			set {
+				ViewState["IsNotValidMessage"] = value;
+			}
+		}
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -119,16 +166,47 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 
-		public bool Validate() {
-			IsValid = CaptchaImage.Validate(CaptchaText);
+		[NotifyParentProperty(true)]
+		[Bindable(true)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public SimpleStyle CaptchaImageBoxStyle { get; set; }
 
-			if (!IsValid) {
-				ValidationMessage = "Code incorrect, try again!";
+		[NotifyParentProperty(true)]
+		[Bindable(true)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public SimpleStyle CaptchaTextStyle { get; set; }
+
+		[NotifyParentProperty(true)]
+		[Bindable(true)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public SimpleStyle CaptchaInstructionStyle { get; set; }
+
+		[NotifyParentProperty(true)]
+		[Bindable(true)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public SimpleStyle CaptchaImageStyle { get; set; }
+
+		[NotifyParentProperty(true)]
+		[Bindable(true)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public SimpleStyle CaptchaIsValidStyle { get; set; }
+
+		[NotifyParentProperty(true)]
+		[Bindable(true)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public SimpleStyle CaptchaIsNotValidStyle { get; set; }
+
+
+		public bool Validate() {
+			this.IsValid = CaptchaImage.Validate(this.CaptchaText);
+
+			if (!this.IsValid) {
+				this.ValidationMessage = this.IsNotValidMessage;
 			} else {
-				ValidationMessage = "Code correct!";
+				this.ValidationMessage = this.IsValidMessage;
 			}
 
-			return IsValid;
+			return this.IsValid;
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
@@ -137,28 +215,32 @@ namespace Carrotware.Web.UI.Controls {
 
 			output.Write("<div style=\"clear: both;\" id=\"" + this.ClientID + "_wrapper\">\r\n");
 
-			if (!string.IsNullOrEmpty(ValidationMessage)) {
-				if (IsValid) {
-					output.Write("<div style=\"clear: both; color:green;\" ");
+			if (!string.IsNullOrEmpty(this.ValidationMessage)) {
+				output.Write("<div");
+
+				if (this.IsValid) {
+					output.Write(this.CaptchaIsValidStyle.ToString());
 				} else {
-					output.Write("<div style=\"clear: both; color:red;\" ");
+					output.Write(this.CaptchaIsNotValidStyle.ToString());
 				}
+
 				output.Write(" id=\"" + this.ClientID + "_msg\">\r\n");
-				output.Write(ValidationMessage);
+				output.Write(this.ValidationMessage);
 				output.Write("\r\n</div>\r\n");
 			}
 
-			output.Write("<div style=\"clear: both;\"> <a href=\"javascript:Show" + this.ClientID + "();\"> ");
-			output.Write("<img title=\"" + key + "\" alt=\"" + key + "\" border=\"0\" id=\"" + this.ClientID + "_img\" src=\"/CarrotwareCaptcha.axd?t=" + DateTime.Now.Ticks);
-			output.Write("&fgcolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(ForeColor)) +
-					"&bgcolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(BackColor)) +
-					"&ncolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(NoiseColor)) + "\" /> </a> </div>\r\n");
-			output.Write("<div style=\"clear: both;\">" + Instructions + " </div>\r\n");
-			output.Write("<div style=\"clear: both;\"><input type=\"text\" id=\"" + this.ClientID + "\" name=\"" + this.UniqueID + "\" value=\"" + HttpUtility.HtmlEncode(CaptchaText) + "\"> </div>\r\n");
+			string sJSFuncName = "Show_" + this.ClientID;
+
+			output.Write("<div" + this.CaptchaImageBoxStyle.ToString() + "> ");
+			output.Write("<a href=\"javascript:" + sJSFuncName + "();\"> <img" + this.CaptchaImageStyle.ToString() + " title=\"" + key + "\" alt=\"" + key + "\" border=\"0\" id=\""
+				+ this.ClientID + "_img\" src=\"" + GetCaptchaImageURI() + "\" /> </a> \r\n");
+
 			output.Write("</div>\r\n");
+			output.Write("<div" + this.CaptchaInstructionStyle.ToString() + ">" + this.Instructions + " </div>\r\n");
+			output.Write("<div" + this.CaptchaTextStyle.ToString() + "><input type=\"text\" id=\"" + this.ClientID + "\" name=\"" + this.UniqueID + "\" value=\"" + HttpUtility.HtmlEncode(this.CaptchaText) + "\" /> </div>\r\n");
 
 			output.Write("\r\n<script  type=\"text/javascript\">\r\n");
-			output.Write("\r\nfunction Show" + this.ClientID + "(){\r\n");
+			output.Write("\r\nfunction " + sJSFuncName + "(){\r\n");
 			if (!string.IsNullOrEmpty(key)) {
 				output.Write("alert('" + key.Substring(0, 3) + "' + '" + key.Substring(3) + "');\r\n");
 			} else {
@@ -167,18 +249,35 @@ namespace Carrotware.Web.UI.Controls {
 			output.Write("}\r\n");
 			output.Write("</script>\r\n");
 
+			output.Write("\r\n</div>\r\n");
+		}
+
+		private string GetCaptchaImageURI() {
+
+			if (this.IsWebView) {
+				return "/CarrotwareCaptcha.axd?t=" + DateTime.Now.Ticks +
+						"&fgcolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(this.ForeColor)) +
+						"&bgcolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(this.BackColor)) +
+						"&ncolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(this.NoiseColor));
+			} else {
+				return "/CarrotwareCaptcha.axd?t=" + DateTime.Now.Ticks;
+			}
 		}
 
 		public override string ToString() {
-			return CaptchaText;
+			return this.CaptchaText;
 		}
 
-
 		protected override void OnInit(EventArgs e) {
-			if (HttpContext.Current.Request.Form.Count > 0) {
-				var s = HttpContext.Current.Request.Form[this.UniqueID];
-				CaptchaText = s;
+
+
+			if (this.IsWebView) {
+				if (HttpContext.Current.Request.Form.Count > 0) {
+					var s = HttpContext.Current.Request.Form[this.UniqueID];
+					this.CaptchaText = s;
+				}
 			}
+
 			base.OnInit(e);
 		}
 

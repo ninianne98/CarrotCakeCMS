@@ -63,6 +63,11 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		[Browsable(true)]
+		public bool IsWebView {
+			get { return (HttpContext.Current != null); }
+		}
+
 		protected string CurrentScriptName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}

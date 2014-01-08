@@ -186,12 +186,21 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal static IQueryable<vw_carrot_Content> GetContentByCategoryIDs(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, List<Guid> lstCategories) {
-			return (from r in ctx.vw_carrot_CategoryURLs
-					join m in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals m.ContentCategoryID
-					join ct in ctx.vw_carrot_Contents on m.Root_ContentID equals ct.Root_ContentID
-					where r.SiteID == siteID
-						&& ct.SiteID == siteID
-						&& lstCategories.Contains(r.ContentCategoryID)
+
+			return GetContentByCategoryIDs(ctx, siteID, bActiveOnly, lstCategories, new List<string>());
+		}
+
+		internal static IQueryable<vw_carrot_Content> GetContentByCategoryIDs(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs) {
+			return (from ct in ctx.vw_carrot_Contents
+					where ct.SiteID == siteID
+						&& ((from m in ctx.carrot_CategoryContentMappings
+							 join cc in ctx.carrot_ContentCategories on m.ContentCategoryID equals cc.ContentCategoryID
+							 where cc.SiteID == siteID
+									&& lstCategorySlugs.Contains(cc.CategorySlug)
+							 select m.Root_ContentID).Contains(ct.Root_ContentID)
+						|| (from m in ctx.carrot_CategoryContentMappings
+							where lstCategoryGUIDs.Contains(m.ContentCategoryID)
+							select m.Root_ContentID).Contains(ct.Root_ContentID))
 						&& ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 						&& (ct.PageActive == true || bActiveOnly == false)
 						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
@@ -199,6 +208,7 @@ namespace Carrotware.CMS.Core {
 						&& ct.IsLatestVersion == true
 					select ct);
 		}
+
 
 		internal static IQueryable<vw_carrot_Content> GetContentSiteSearch(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string searchTerm) {
 			return (from ct in ctx.vw_carrot_Contents
