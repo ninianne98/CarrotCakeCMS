@@ -81,6 +81,7 @@
       <DependentUpon>CAPTCHA.aspx.cs</DependentUpon>
     </Compile>
     <Compile Include="captcha\CaptchaImage.cs" />
+    <Compile Include="SimpleStyle.cs" />
     <Compile Include="CarrotGridView\CarrotGridView.cs" />
     <Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
     <Compile Include="CarrotGridView\CarrotImageColumnData.cs" />
@@ -90,6 +91,8 @@
     <Compile Include="CollectionHelpers\GuidItem.cs" />
     <Compile Include="CollectionHelpers\GuidItemCollectionEditor.cs" />
     <Compile Include="BasicControlUtils.cs" />
+    <Compile Include="CollectionHelpers\StringItem.cs" />
+    <Compile Include="CollectionHelpers\StringItemCollectionEditor.cs" />
     <Compile Include="ImageSizer.cs" />
     <Compile Include="jsHelperLib.cs" />
     <Compile Include="jquery.cs" />

@@ -612,6 +612,16 @@ namespace Carrotware.CMS.Core {
 			return query1.Count();
 		}
 
+		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly) {
+
+			Guid siteID = currentSite.SiteID;
+
+			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetContentByCategoryIDs(db, siteID, bActiveOnly, lstCategoryGUIDs, lstCategorySlugs);
+
+			return query1.Count();
+		}
+
+
 		public List<SiteNav> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly,
 			int pageSize, int pageNumber, string sortField, string sortDir) {
 
@@ -647,6 +657,13 @@ namespace Carrotware.CMS.Core {
 			Guid siteID = currentSite.SiteID;
 
 			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetContentByCategoryIDs(db, siteID, bActiveOnly, lstCategories);
+
+			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
+		}
+		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
+			Guid siteID = currentSite.SiteID;
+
+			IQueryable<vw_carrot_Content> query1 = CannedQueries.GetContentByCategoryIDs(db, siteID, bActiveOnly, lstCategoryGUIDs, lstCategorySlugs);
 
 			return PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, query1);
 		}

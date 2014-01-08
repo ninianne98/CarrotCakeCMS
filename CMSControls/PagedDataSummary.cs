@@ -48,6 +48,27 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private List<StringItem> stringList = null;
+		[
+		Category("Behavior"),
+		Description("The StringItem collection"),
+		Browsable(false),
+		DefaultValue(null),
+		DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
+		Editor(typeof(StringItemCollectionEditor), typeof(UITypeEditor)),
+		NotifyParentProperty(true),
+		TemplateContainer(typeof(StringItem)),
+		PersistenceMode(PersistenceMode.InnerProperty)
+		]
+		public List<StringItem> CategorySlugList {
+			get {
+				if (stringList == null) {
+					stringList = new List<StringItem>();
+				}
+				return stringList;
+			}
+		}
+
 
 		private List<PagedDataSummaryTitleOption> typeLabels = null;
 
@@ -178,6 +199,23 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		private List<string> _slugs = null;
+		public List<string> SelectedCategorySlugs {
+			get {
+				if (_slugs == null) {
+					if (CategorySlugList.Count > 0) {
+						_slugs = (from n in CategorySlugList select n.StringValue).ToList();
+					} else {
+						_slugs = new List<string>();
+					}
+				}
+				return _slugs;
+			}
+			set {
+				_slugs = value;
+			}
+		}
+
 		[Browsable(false)]
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
@@ -255,8 +293,8 @@ namespace Carrotware.CMS.UI.Controls {
 						break;
 					case SummaryContentType.SpecifiedCategories:
 						viewContentType = ContentPageType.PageType.BlogEntry;
-						TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 					case SummaryContentType.SiteSearch:
 						TotalRecords = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor);

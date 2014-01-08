@@ -41,8 +41,8 @@ namespace Carrotware.CMS.Core {
 		public void SendMail() {
 			HttpContext context = HttpContext.Current;
 
-			if (!string.IsNullOrEmpty(TemplateFile)) {
-				string sFullFilePath = context.Server.MapPath(TemplateFile);
+			if (!string.IsNullOrEmpty(this.TemplateFile)) {
+				string sFullFilePath = context.Server.MapPath(this.TemplateFile);
 				if (File.Exists(sFullFilePath)) {
 					using (StreamReader sr = new StreamReader(sFullFilePath)) {
 						Body = sr.ReadToEnd();
@@ -52,10 +52,10 @@ namespace Carrotware.CMS.Core {
 
 			EMailSettings mailSettings = new EMailSettings();
 			mailSettings.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-			mailSettings.MailDomainName = "";
-			mailSettings.MailUserName = "";
-			mailSettings.MailPassword = "";
-			mailSettings.ReturnAddress = "";
+			mailSettings.MailDomainName = String.Empty;
+			mailSettings.MailUserName = String.Empty;
+			mailSettings.MailPassword = String.Empty;
+			mailSettings.ReturnAddress = String.Empty;
 
 			//parse web.config as XML because of medium trust issues
 
@@ -92,7 +92,7 @@ namespace Carrotware.CMS.Core {
 			MailFrom = mailSettings.ReturnAddress;
 
 			MailDefinition mailDefinition = new MailDefinition {
-				BodyFileName = TemplateFile,
+				BodyFileName = this.TemplateFile,
 				From = MailFrom,
 				Subject = MailSubject,
 				IsBodyHtml = IsHTML

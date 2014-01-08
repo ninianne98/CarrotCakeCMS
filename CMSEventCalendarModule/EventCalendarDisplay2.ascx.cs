@@ -148,7 +148,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 						&& c.IsPublic == true
 						&& (!c.IsCancelledEvent || c.IsCancelledPublic)
 						&& (!c.IsCancelledSeries || c.IsCancelledPublic)
-					   orderby c.EventDate, c.EventStartTime
+					   orderby c.EventDate ascending, c.EventStartTime ascending, c.IsCancelledEvent ascending
 					   select c).ToList();
 
 			}

@@ -22,7 +22,7 @@
 	background: #CDE3D6 !important;
 	width: 30px !important;
 	height: 128px !important;
-	z-index: 1000 !important;
+	z-index: 2000 !important;
 	font-size: 14px !important;
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif !important;
 }

@@ -105,7 +105,8 @@
 								<div class="padding10">
 									<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="ContentCommentCaptcha"
 										ErrorMessage="**" />
-									<carrot:Captcha runat="server" ID="ContentCommentCaptcha" ValidationGroup="ContentCommentForm" />
+									<carrot:Captcha runat="server" ID="ContentCommentCaptcha" ValidationGroup="ContentCommentForm" CaptchaIsValidStyle-Style="clear: both; color: green;" CaptchaIsNotValidStyle-Style="clear: both; color: red;"
+										CaptchaImageBoxStyle-Style="clear: both;" CaptchaInstructionStyle-Style="clear: both;" CaptchaTextStyle-Style="clear: both;" IsNotValidMessage="Code is not correct!" />
 								</div>
 								<div class="padding10">
 									<asp:Button ID="SubmitCommentButton" CssClass="button padding10" runat="server" Text="Submit Comment" ValidationGroup="ContentCommentForm" />

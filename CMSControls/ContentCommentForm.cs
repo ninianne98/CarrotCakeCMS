@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -42,6 +43,22 @@ namespace Carrotware.CMS.UI.Controls {
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[TemplateContainer(typeof(ContentCommentForm))]
 		public ITemplate CommentThanksTemplate { get; set; }
+
+		[Browsable(true)]
+		[DefaultValue(false)]
+		public bool AutoApproveAdmin { get; set; }
+
+		[Browsable(true)]
+		[DefaultValue(null)]
+		public string AutoApproveGroupName { get; set; }
+
+		[Browsable(true)]
+		[DefaultValue(null)]
+		public string DirectEmail { get; set; }
+
+		[Browsable(true)]
+		[DefaultValue(null)]
+		public string DirectEmailKeyName { get; set; }
 
 		protected PlaceHolder phEntry = new PlaceHolder();
 		protected List<Control> EntryFormControls = new List<Control>();
@@ -204,7 +221,47 @@ namespace Carrotware.CMS.UI.Controls {
 					pc.CommenterURL = txtCommenterURL.Text;
 				}
 
+				if (SiteData.IsWebView && HttpContext.Current.User.Identity.IsAuthenticated) {
+					if ((this.AutoApproveAdmin)) {
+						pc.IsApproved = SecurityData.IsAdmin;
+					}
+					if (!string.IsNullOrEmpty(this.AutoApproveGroupName)) {
+						pc.IsApproved = SecurityData.IsUserInRole(this.AutoApproveGroupName);
+					}
+				}
+
 				pc.Save();
+
+				if (!string.IsNullOrEmpty(this.DirectEmail) || !string.IsNullOrEmpty(this.DirectEmailKeyName)) {
+					string sEmail = "";
+					EmailSender mailer = new EmailSender();
+
+					if (!string.IsNullOrEmpty(this.DirectEmail)) {
+						sEmail = this.DirectEmail.ToString();
+					}
+					if (!string.IsNullOrEmpty(this.DirectEmailKeyName)) {
+						sEmail = ConfigurationManager.AppSettings[this.DirectEmailKeyName].ToString();
+					}
+
+					mailer.MailSubject = "Comment Form " + request.ServerVariables["SERVER_NAME"];
+					mailer.Recepient = sEmail;
+					mailer.TemplateFile = null;
+					mailer.IsHTML = false;
+					mailer.WebControl = this;
+
+					string sBody = "Name:   " + pc.CommenterName
+						+ "\r\nEmail:   " + pc.CommenterEmail
+						+ "\r\nURL:   " + pc.CommenterURL
+						+ "\r\n-----------------\r\nComment:\r\n" + pc.PostCommentText
+						+ "\r\n=================\r\n\r\nIP:   " + pc.CommenterIP
+						+ "\r\nSite Page:   " + request.ServerVariables["script_name"].ToString()
+						+ "\r\nSite Time:   " + pc.CreateDate.ToString()
+						+ "\r\nUTC Time:   " + DateTime.UtcNow.ToString();
+
+					mailer.Body = sBody;
+
+					mailer.SendMail();
+				}
 
 				//if (lbl != null && txt1 != null && txt2 != null) {
 				//    lbl.Text = "Clicked the button: " + txt1.Text + " - " + txt2.Text;

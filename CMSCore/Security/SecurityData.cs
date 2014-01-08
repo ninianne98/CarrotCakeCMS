@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Security;
 using Carrotware.CMS.Data;
-using System.Web.Caching;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,7 +14,6 @@ using System.Web.Caching;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.Core {
 	public class SecurityData {
@@ -155,7 +154,7 @@ namespace Carrotware.CMS.Core {
 		public static bool IsAdmin {
 			get {
 				try {
-					return Roles.IsUserInRole(SecurityData.CMSGroup_Admins);
+					return IsUserInRole(SecurityData.CMSGroup_Admins);
 				} catch {
 					return false;
 				}
@@ -164,7 +163,7 @@ namespace Carrotware.CMS.Core {
 		public static bool IsEditor {
 			get {
 				try {
-					return Roles.IsUserInRole(SecurityData.CMSGroup_Editors);
+					return IsUserInRole(SecurityData.CMSGroup_Editors);
 				} catch {
 					return false;
 				}
@@ -173,12 +172,20 @@ namespace Carrotware.CMS.Core {
 		public static bool IsUsers {
 			get {
 				try {
-					return Roles.IsUserInRole(SecurityData.CMSGroup_Users);
+					return IsUserInRole(SecurityData.CMSGroup_Users);
 				} catch {
 					return false;
 				}
 			}
 		}
+
+		public static bool IsUserInRole(string groupName) {
+			return Roles.IsUserInRole(groupName);
+		}
+		public static bool IsUserInRole(string userName, string groupName) {
+			return Roles.IsUserInRole(userName, groupName);
+		}
+
 
 		public static bool IsSiteEditor {
 			get {

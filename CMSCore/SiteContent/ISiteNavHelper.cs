@@ -31,6 +31,9 @@ namespace Carrotware.CMS.Core {
 		int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly);
 		List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
 
+		int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly);
+		List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir);
+
 		string GetBlogHeadingFromURL(SiteData currentSite, string sFilterPath);
 
 		List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly);
