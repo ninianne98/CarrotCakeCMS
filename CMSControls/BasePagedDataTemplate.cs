@@ -68,6 +68,18 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool HideSpanWrapper {
+			get {
+				String s = (String)ViewState["HideSpanWrapper"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+			set {
+				ViewState["HideSpanWrapper"] = value.ToString();
+			}
+		}
+
+		[Category("Appearance")]
 		[DefaultValue(1)]
 		public int PageNumber {
 			get {
@@ -373,8 +385,11 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent++;
 
 			writer.WriteLine();
-			writer.WriteLine("<span id=\"" + this.ClientID + "\">");
-			writer.WriteLine();
+
+			if (!this.HideSpanWrapper) {
+				writer.WriteLine("<span id=\"" + this.ClientID + "\">");
+				writer.WriteLine();
+			}
 
 			if (PagerBelowContent) {
 				RenderWrappedControl(writer, rpPagedContents, this.CSSPageListing);
@@ -399,7 +414,10 @@ namespace Carrotware.CMS.UI.Controls {
 			base.RenderContents(writer);
 
 			writer.WriteLine();
-			writer.WriteLine("</span>");
+
+			if (!this.HideSpanWrapper) {
+				writer.WriteLine("</span>");
+			}
 
 			writer.Indent--;
 			writer.Indent--;

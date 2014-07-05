@@ -49,6 +49,10 @@ namespace Carrotware.CMS.UI.Controls {
 		public bool AutoApproveAdmin { get; set; }
 
 		[Browsable(true)]
+		[DefaultValue(false)]
+		public bool RequireAuthentication { get; set; }
+
+		[Browsable(true)]
 		[DefaultValue(null)]
 		public string AutoApproveGroupName { get; set; }
 
@@ -127,6 +131,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 			if (lbl != null) {
 				lbl.Text = "&nbsp;";
+			}
+
+			if (this.RequireAuthentication) {
+				phEntry.Visible = false;
 			}
 
 			base.CreateChildControls();

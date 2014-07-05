@@ -415,6 +415,7 @@ function cmsUpdateTemplate() {
 	});
 }
 
+var cmsWidgetUpdateInProgress = false;
 
 function cmsUpdateWidgets() {
 	cmsSaveToolbarPosition();
@@ -422,19 +423,23 @@ function cmsUpdateWidgets() {
 
 	var webMthd = webSvc + "/CacheWidgetUpdate";
 
-	var val = $("#cmsFullOrder").val();
+	if (!cmsWidgetUpdateInProgress) {
+		cmsWidgetUpdateInProgress = true;
 
-	val = cmsMakeStringSafe(val);
+		var val = $("#cmsFullOrder").val();
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		data: "{'WidgetAddition': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSaveWidgetsCallback,
-		error: cmsAjaxFailed
-	});
+		val = cmsMakeStringSafe(val);
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'WidgetAddition': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsSaveWidgetsCallback,
+			error: cmsAjaxFailed
+		});
+	}
 }
 
 function cmsRemoveWidget(key) {
@@ -443,15 +448,19 @@ function cmsRemoveWidget(key) {
 
 	var webMthd = webSvc + "/RemoveWidget";
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSaveWidgetsCallback,
-		error: cmsAjaxFailed
-	});
+	if (!cmsWidgetUpdateInProgress) {
+		cmsWidgetUpdateInProgress = true;
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsSaveWidgetsCallback,
+			error: cmsAjaxFailed
+		});
+	}
 }
 
 function cmsMoveWidgetZone(zone, val) {
@@ -460,15 +469,19 @@ function cmsMoveWidgetZone(zone, val) {
 
 	var webMthd = webSvc + "/MoveWidgetToNewZone";
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		data: "{'WidgetTarget': '" + zone + "', 'WidgetDropped': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSaveWidgetsCallback,
-		error: cmsAjaxFailed
-	});
+	if (!cmsWidgetUpdateInProgress) {
+		cmsWidgetUpdateInProgress = true;
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'WidgetTarget': '" + zone + "', 'WidgetDropped': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsSaveWidgetsCallback,
+			error: cmsAjaxFailed
+		});
+	}
 }
 
 var IsPublishing = false;
@@ -533,6 +546,8 @@ function cmsSaveWidgetsCallback(data, status) {
 	} else {
 		cmsAlertModal(data.d);
 	}
+
+	cmsWidgetUpdateInProgress = false;
 }
 
 function cmsSavePageCallback(data, status) {
@@ -813,6 +828,7 @@ function cmsSpinnerLong() {
 }
 
 function cmsBuildOrderAndUpdateWidgets() {
+
 	var ret = cmsBuildOrder();
 
 	if (ret) {
@@ -852,15 +868,19 @@ function cmsCopyWidget(key) {
 
 	var webMthd = webSvc + "/CopyWidget";
 
-	$.ajax({
-		type: "POST",
-		url: webMthd,
-		data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSaveWidgetsCallback,
-		error: cmsAjaxFailed
-	});
+	if (!cmsWidgetUpdateInProgress) {
+		cmsWidgetUpdateInProgress = true;
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: cmsSaveWidgetsCallback,
+			error: cmsAjaxFailed
+		});
+	}
 }
 
 
