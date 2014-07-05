@@ -140,6 +140,23 @@ namespace Carrotware.CMS.UI.Controls {
 
 
 		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool IgnoreSitePath {
+			get {
+				bool s = false;
+				if (ViewState["IgnoreSitePath"] != null) {
+					try { s = (bool)ViewState["IgnoreSitePath"]; } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["IgnoreSitePath"] = value;
+			}
+		}
+
+
+
+		[Category("Appearance")]
 		[DefaultValue("Blog")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
 		public SummaryContentType ContentType {
@@ -242,6 +259,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public override void FetchData() {
 			HttpContext context = HttpContext.Current;
+			string sPagePath = SiteData.CurrentScriptName;
 
 			if (string.IsNullOrEmpty(this.OrderBy)) {
 				this.OrderBy = "GoLiveDate  desc";
@@ -253,8 +271,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ContentPageType.PageType viewContentType = ContentPageType.PageType.BlogEntry;
 
+			if (this.IgnoreSitePath) {
+				sPagePath = string.Format("/siteid-{0}.aspx", SiteData.CurrentSiteID);
+			}
+
 			if (context != null) {
-				if (SiteData.CurrentSite.IsSiteSearchPath) {
+				if (SiteData.CurrentSite.IsSiteSearchPath && !this.IgnoreSitePath) {
 					this.ContentType = SummaryContentType.SiteSearch;
 					sSearchTerm = GetSearchTerm();
 				}
@@ -278,13 +300,13 @@ namespace Carrotware.CMS.UI.Controls {
 				switch (this.ContentType) {
 					case SummaryContentType.Blog:
 						viewContentType = ContentPageType.PageType.BlogEntry;
-						TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 					case SummaryContentType.ChildContentPage:
 						viewContentType = ContentPageType.PageType.ContentEntry;
-						TotalRecords = navHelper.GetChildNavigationCount(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetLatestChildContentPagedList(SiteData.CurrentSiteID, SiteData.CurrentScriptName, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = navHelper.GetChildNavigationCount(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor);
+						lstContents = navHelper.GetLatestChildContentPagedList(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 					case SummaryContentType.ContentPage:
 						viewContentType = ContentPageType.PageType.ContentEntry;
