@@ -55,18 +55,21 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery183.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery191.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-110mig.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1111.js", "text/javascript")]
 [assembly: TagPrefix("jquery", "carrot")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-7-3.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-8-24.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-9-2.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-11-0.js", "text/javascript")]
 [assembly: TagPrefix("jqueryui", "carrot")]
 
 [assembly: TagPrefix("jquerybasic", "carrot")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css", "text/css", PerformSubstitution = true)]
 
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.black.animated-overlay.gif", "image/gif")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.black.ui-bg_glass_40_111111_1x400.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.black.ui-bg_glass_55_1c1c1c_1x400.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.black.ui-bg_glass_65_dddddd_1x400.png", "image/png")]
@@ -87,6 +90,7 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-purple.css", "text/css", PerformSubstitution = true)]
 
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.purple.animated-overlay.gif", "image/gif")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.purple.ui-bg_flat_0_aaaaaa_40x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.purple.ui-bg_flat_0_eeeeee_40x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.purple.ui-bg_flat_55_994d53_40x100.png", "image/png")]
@@ -107,6 +111,7 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-silver.css", "text/css", PerformSubstitution = true)]
 
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.silver.animated-overlay.gif", "image/gif")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.silver.ui-bg_flat_0_aaaaaa_40x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.silver.ui-bg_flat_75_ffffff_40x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.silver.ui-bg_glass_55_fbf9ee_1x400.png", "image/png")]
@@ -125,6 +130,7 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-green.css", "text/css", PerformSubstitution = true)]
 
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.green.animated-overlay.gif", "image/gif")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.green.ui-bg_glass_55_fcf0ba_1x400.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.green.ui-bg_gloss-wave_100_ece8da_500x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.green.ui-bg_highlight-hard_100_f5f3e5_1x100.png", "image/png")]
@@ -145,6 +151,7 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-blue.css", "text/css", PerformSubstitution = true)]
 
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.blue.animated-overlay.gif", "image/gif")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.blue.ui-bg_diagonals-thick_90_eeeeee_40x40.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.blue.ui-bg_flat_15_cd0a0a_40x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.blue.ui-bg_glass_100_e4f1fb_1x400.png", "image/png")]
@@ -164,6 +171,7 @@ using System.Web.UI;
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css", "text/css", PerformSubstitution = true)]
 
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.animated-overlay.gif", "image/gif")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_flat_15_f9cecd_40x100.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_glass_100_b7d7c4_1x400.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-bg_glass_100_dff6e8_1x400.png", "image/png")]

@@ -20,7 +20,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string DefaultJQVersion {
 			get {
-				return "1.8";
+				return "1.11";
 			}
 		}
 
@@ -56,6 +56,11 @@ namespace Carrotware.Web.UI.Controls {
 			switch (jqVer) {
 				case "2":
 				case "2.0":
+				case "1.10":
+				case "1.11":
+					jqVer = "1.11.1";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1111.js");
+					break;
 				case "1.9":
 					jqVer = "1.9.1";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery191.js");

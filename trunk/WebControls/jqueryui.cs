@@ -17,6 +17,12 @@ namespace Carrotware.Web.UI.Controls {
 	[ToolboxData("<{0}:jqueryui runat=server></{0}:jqueryui>")]
 	public class jqueryui : BaseWebControl {
 
+		public static string DefaultJQUIVersion {
+			get {
+				return "1.11";
+			}
+		}
+
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -24,7 +30,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string JQUIVersion {
 			get {
 				String s = (String)ViewState["JQUIVersion"];
-				return ((s == null) ? "1.10" : s);
+				return ((s == null) ? DefaultJQUIVersion : s);
 			}
 			set {
 				ViewState["JQUIVersion"] = value;
@@ -47,6 +53,11 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			switch (jqVer) {
+				case "1.10":
+				case "1.11":
+					jqVer = "1.11.0";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-0.js");
+					break;
 				case "1.9":
 					jqVer = "1.9.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-9-2.js");

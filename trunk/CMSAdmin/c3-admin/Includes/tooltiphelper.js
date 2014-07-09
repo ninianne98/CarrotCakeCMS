@@ -43,7 +43,7 @@ $(function () {
 
 	$('body').append(container);
 
-	$('.dataPopupTrigger').live('mouseover', function () {
+	$(document).on('mouseover', '.dataPopupTrigger', function () {
 		var dataId = $(this).attr('rel');
 
 		if (hideTimer)
@@ -63,7 +63,7 @@ $(function () {
 
 	});
 
-	$('.dataPopupTrigger').live('mouseout', function () {
+	$(document).on('mouseout', '.dataPopupTrigger', function () {
 		if (hideTimer)
 			clearTimeout(hideTimer);
 		hideTimer = setTimeout(function () {
