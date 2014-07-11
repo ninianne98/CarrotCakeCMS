@@ -13,7 +13,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
 	<title>MainPopup</title>
-	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="LightGreen" />
 	<script src="/c3-admin/includes/jquery.ui.timepicker.js" type="text/javascript"></script>
 	<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />

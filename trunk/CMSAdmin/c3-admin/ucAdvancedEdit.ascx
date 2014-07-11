@@ -192,7 +192,7 @@
 										</div>
 										<asp:Repeater ID="rpTools" runat="server">
 											<HeaderTemplate>
-												<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 250px; padding: 5px; margin: 5px; float: left;
+												<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 240px; padding: 5px; margin: 5px; float: left;
 													border: solid 1px #000;">
 											</HeaderTemplate>
 											<ItemTemplate>

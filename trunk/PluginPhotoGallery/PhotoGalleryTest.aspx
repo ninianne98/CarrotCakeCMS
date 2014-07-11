@@ -13,7 +13,7 @@
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$(function () {
-				$("input:button, input:submit").button();
+				$("input:button, input:submit, input:reset").button();
 
 				$(".dateRegion").each(function (i) {
 					$(this).datepicker({

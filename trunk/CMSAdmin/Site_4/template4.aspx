@@ -9,13 +9,12 @@
     -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>New Page</title>
-	<carrot:jquery runat="server" ID="jquery1" />
-	<carrot:jqueryui runat="server" ID="jqueryui1" />
-	<!--[if IE 6]><link rel="stylesheet" href="style.ie6.css" type="text/css" media="screen"  runat="server" id="cssLink2" /> <![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" href="style.ie7.css" type="text/css" media="screen"  runat="server" id="cssLink3" /> <![endif]-->
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="GlossyBlack" />
 	<asp:PlaceHolder ID="myScripts" runat="server">
 		<script type="text/javascript" src="<%=pageContents.TemplateFolderPath %>script.js"></script>
 	</asp:PlaceHolder>
+	<!--[if IE 6]><link rel="stylesheet" href="style.ie6.css" type="text/css" media="screen"  runat="server" id="cssLink2" /> <![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="style.ie7.css" type="text/css" media="screen"  runat="server" id="cssLink3" /> <![endif]-->
 	<script type="text/javascript">
 
 		$(document).ready(function () {
