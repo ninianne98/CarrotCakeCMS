@@ -51,7 +51,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
-		[DefaultValue("")]
+		[DefaultValue(false)]
 		[Localizable(true)]
 		public bool StylesheetOnly {
 			get {
@@ -91,6 +91,20 @@ namespace Carrotware.Web.UI.Controls {
 		//    }
 		//}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool UseJqueryMigrate {
+			get {
+				String s = (String)ViewState["UseJqueryMigrate"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+			set {
+				ViewState["UseJqueryMigrate"] = value.ToString();
+			}
+		}
+
 		public static string GetWebResourceUrl(string resource) {
 			return BaseWebControl.GetWebResourceUrl(typeof(jquerybasic), resource);
 		}
@@ -103,6 +117,7 @@ namespace Carrotware.Web.UI.Controls {
 			if (!this.StylesheetOnly) {
 				jquery j1 = new jquery();
 				j1.JQVersion = this.JQVersion;
+				j1.UseJqueryMigrate = this.UseJqueryMigrate;
 				this.Controls.Add(j1);
 
 				jqueryui j2 = new jqueryui();

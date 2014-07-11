@@ -38,6 +38,21 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool UseJqueryMigrate {
+			get {
+				String s = (String)ViewState["UseJqueryMigrate"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+			set {
+				ViewState["UseJqueryMigrate"] = value.ToString();
+			}
+		}
+
+
 		public static string GetWebResourceUrl(string resource) {
 			return BaseWebControl.GetWebResourceUrl(typeof(jquery), resource);
 		}
@@ -56,10 +71,13 @@ namespace Carrotware.Web.UI.Controls {
 			switch (jqVer) {
 				case "2":
 				case "2.0":
-				case "1.10":
 				case "1.11":
 					jqVer = "1.11.1";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1111.js");
+					break;
+				case "1.10":
+					jqVer = "1.10.2";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1102.js");
 					break;
 				case "1.9":
 					jqVer = "1.9.1";
@@ -77,17 +95,21 @@ namespace Carrotware.Web.UI.Controls {
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery164.js");
 					break;
 				default:
-					jqVer = "1.8.3";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery183.js");
+					jqVer = "1.11.1";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1111.js");
 					break;
 			}
 
 			output.WriteLine("<!-- JQuery v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 
-			if (jqVer.StartsWith("1.9")) {
-				sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-110mig.js");
-				output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
+			if (this.UseJqueryMigrate) {
+				if (jqVer.StartsWith("1.9") || jqVer.StartsWith("1.10") || jqVer.StartsWith("1.11")) {
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-121mig.js");
+
+					output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
+				}
 			}
+
 		}
 
 
