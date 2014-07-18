@@ -22,17 +22,28 @@ using Carrotware.CMS.UI.Controls;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class FileBrowser : AdminBasePage {
-		public string sQueryPath = "";
+		public string sQueryPath = string.Empty;
 		public string sQueryMode = "1";
 		public string sReturnMode = "0";
+		public string sViewMode = string.Empty;
 
 		protected FileDataHelper helpFile = new FileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			sQueryPath = Request.QueryString["fldrpath"];
+			sViewMode = "file";
+
 			try { sQueryMode = Request.QueryString["useTiny"]; } catch { }
 			try { sReturnMode = Request.QueryString["returnvalue"]; } catch { }
+			try { sViewMode = Request.QueryString["viewmode"]; } catch { }
+
+			if (sViewMode.ToLower() != "file") {
+				lnkThumbView.Visible = false;
+				lnkFileView.Visible = true;
+			} else {
+				lnkThumbView.Visible = true;
+				lnkFileView.Visible = false;
+			}
 
 			if (sQueryMode != "1") {
 				sQueryMode = "0";
@@ -64,12 +75,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			sQueryPath.Replace("//", "/").Replace("//", "/");
 
 			if (lnkUp.Visible) {
-				lnkUp.NavigateUrl = SiteData.CurrentScriptName + "?useTiny=" + sQueryMode + "&returnvalue=" + sReturnMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
+				lnkUp.NavigateUrl = SiteData.CurrentScriptName + "?useTiny=" + sQueryMode + "&returnvalue=" + sReturnMode + "&viewmode=" + sViewMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
 			}
+
+			lnkThumbView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=thumb", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode, sViewMode);
+			lnkFileView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=file", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode, sViewMode);
+
+
 			if (!IsPostBack) {
 				LoadLists();
 			}
 			lblPath.Text = sQueryPath;
+
+
 		}
 
 		protected void LoadLists() {
@@ -77,7 +95,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			var fls = helpFile.GetFiles(sQueryPath);
 
 			GeneralUtilities.BindRepeater(rpFolders, fldr);
-			GeneralUtilities.BindRepeater(rpFiles, fls);
+
+			if (sViewMode.ToLower() != "file") {
+				GeneralUtilities.BindRepeater(rpThumbs, fls.Where(x => x.MimeType.StartsWith("image/")).ToList());
+				rpThumbs.Visible = true;
+				rpFiles.Visible = false;
+			} else {
+				GeneralUtilities.BindRepeater(rpFiles, fls);
+				rpFiles.Visible = true;
+				rpThumbs.Visible = false;
+			}
 		}
 
 		public string CreateFileLink(string sPath) {

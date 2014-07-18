@@ -103,6 +103,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.Label lblWarning;
         
         /// <summary>
+        /// rpThumbs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rpThumbs;
+        
+        /// <summary>
         /// rpFiles control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rpFiles;
+        
+        /// <summary>
+        /// lnkThumbView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkThumbView;
+        
+        /// <summary>
+        /// lnkFileView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkFileView;
         
         /// <summary>
         /// btnRemove control.

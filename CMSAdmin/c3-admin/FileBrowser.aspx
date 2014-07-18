@@ -139,7 +139,7 @@
 							<img src="/c3-admin/images/folder.png" alt="folder" />
 						</td>
 						<td>
-							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}", Eval("FolderPath"),  sQueryMode, sReturnMode ) %>'>
+							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}&viewmode={3}", Eval("FolderPath"),  sQueryMode, sReturnMode, sViewMode ) %>'>
 								<%# String.Format( "{0}", Eval("FileName") ).ToUpper() %></a>
 						</td>
 						<td>
@@ -162,6 +162,27 @@
 			<asp:Label ID="lblWarning" runat="server"></asp:Label>
 		</p>
 		<div class="scroll" id="fileZone">
+			<asp:Repeater ID="rpThumbs" runat="server">
+				<ItemTemplate>
+					<div class="ui-widget-header ui-corner-all thumbCell" runat="server" id="imgContainerGroup">
+						<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'thumb')">
+							<div id="imgWrapper" style="display: none;">
+								<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />
+							</div>
+							<div style="margin: 3px;" id="imgSubContainer">
+								<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
+									<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )  %>' ThumbSize="50" ScaleImage="true"
+										ToolTip="" />
+								</a>
+							</div>
+							<div style="margin: 3px; text-align: center;">
+								<%# String.Format( "{0}", Eval("FileName") ).ToLower() %><br />
+								<%# String.Format( "{0:d}", Eval("FileDate") ) %>
+							</div>
+						</div>
+					</div>
+				</ItemTemplate>
+			</asp:Repeater>
 			<asp:Repeater ID="rpFiles" runat="server">
 				<HeaderTemplate>
 					<table style="width: 98%;">
@@ -193,7 +214,7 @@
 						</td>
 						<td>
 							<div class="ImgGroup" runat="server" id="imgContainerGroup">
-								<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this)">
+								<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'file')">
 									<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
 										<%# String.Format( "{0}", Eval("FileName") ).ToLower() %></a>
 								</div>
@@ -217,12 +238,16 @@
 					</table></FooterTemplate>
 			</asp:Repeater>
 		</div>
+		<div>
+			<asp:HyperLink runat="server" ID="lnkThumbView" Text="View Image Thumbnails" />
+			<asp:HyperLink runat="server" ID="lnkFileView" Text="View All Files" />
+		</div>
 		<div id="imgWrapperMain" style="display: none;">
 			<div style="padding: 5px; min-height: 10px; min-width: 10px;">
 				<div id="imgPreviewCaption">
 					0x0
 				</div>
-				<img alt="document" id="imgThmbnailPreview" src="/c3-admin/images/document.png" />
+				<img alt="document" id="imgThmbnailPreview" src="/c3-admin/images/document.png" class="thumbPreview" />
 			</div>
 		</div>
 		<div style="display: block; margin-left: -9999px; float: left; max-height: 9000px; max-width: 9000px;">
@@ -260,9 +285,8 @@
 				$(imgDim).html('<br />');
 			}
 
-			function showImg(obj) {
+			function showImg(obj, mode) {
 				var theNode = $(obj).parent();
-
 				var imgSrc = $(theNode).find('img');
 				var imgtype = $(imgSrc).attr('filetype');
 
@@ -273,7 +297,13 @@
 					var pos = $('#fileZone').offset();
 
 					$(divImgLayer).attr('style', '');
-					$(divImgLayer).css({ "left": (pos.left + 200) + "px", "top": (pos.top - 25) + "px" }).show();
+
+					if (mode == 'file') {
+						$(divImgLayer).css({ "left": (pos.left + 150) + "px", "top": (pos.top - 25) + "px" }).show();
+					} else {
+						$(divImgLayer).css({ "left": (pos.left + 20) + "px", "top": (pos.top - 200) + "px" }).show();
+					}
+
 					$(divImgLayer).attr('class', 'thumbpreview ui-corner-all');
 
 					$(imgThumb).attr('alt', val);
