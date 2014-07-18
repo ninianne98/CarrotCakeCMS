@@ -129,3 +129,17 @@ th, td {
 table.centered {
 	margin: 0 auto;
 }
+
+.thumbCell {
+	padding: 5px;
+	margin: 5px;
+	float: left;
+	text-align: center;
+}
+
+.thumbPreview {
+	padding: 2px;
+	margin: 3px;
+	border: thin solid #000000;
+	background-color: #c0c0c0;
+}

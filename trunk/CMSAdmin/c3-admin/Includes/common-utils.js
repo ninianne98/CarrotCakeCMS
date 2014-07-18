@@ -585,7 +585,7 @@ function cmsFileBrowserOpenReturn(fldN) {
 	var fld = $(fldN);
 	fldNameRet = fld.attr('id');
 
-	ShowWindowNoRefresh('/c3-admin/FileBrowser.aspx?returnvalue=1&fldrpath=/');
+	ShowWindowNoRefresh('/c3-admin/FileBrowser.aspx?returnvalue=1&viewmode=file&fldrpath=/');
 
 	return false;
 }
@@ -595,7 +595,7 @@ function cmsFileBrowserOpenReturnPop(fldN) {
 	var fld = $(fldN);
 	fldNameRet = fld.attr('id');
 
-	ShowWindowNoRefreshPop('/c3-admin/FileBrowser.aspx?returnvalue=1&fldrpath=/');
+	ShowWindowNoRefreshPop('/c3-admin/FileBrowser.aspx?returnvalue=1&viewmode=file&fldrpath=/');
 
 	return false;
 }

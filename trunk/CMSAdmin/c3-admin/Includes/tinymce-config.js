@@ -56,7 +56,7 @@ function TinyMCEParamInit(winWidth, winHeight, allowResize) {
 
 // http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
 function cmsFileBrowserCallback(field_name, url, type, win) {
-	var sURL = "/c3-admin/FileBrowser.aspx?useTiny=1&fldrpath=/";
+	var sURL = "/c3-admin/FileBrowser.aspx?useTiny=1&viewmode=file&fldrpath=/";
 	setTimeout("tinyResetFileBrowserOpenStatus();", 500);
 
 	// block multiple file browser windows
@@ -108,9 +108,9 @@ function cmsFileBrowserOpen(fldN) {
 	if (winBrowse != null) {
 		winBrowse.close();
 	}
-	//winBrowse = window.open('/c3-admin/FileBrowser.aspx?useTiny=0&fldrpath=/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
+	//winBrowse = window.open('/c3-admin/FileBrowser.aspx?useTiny=0&viewmode=file&fldrpath=/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
 
-	ShowWindowNoRefresh('/c3-admin/FileBrowser.aspx?useTiny=0&fldrpath=/');
+	ShowWindowNoRefresh('/c3-admin/FileBrowser.aspx?useTiny=0&viewmode=file&fldrpath=/');
 
 	return false;
 }
