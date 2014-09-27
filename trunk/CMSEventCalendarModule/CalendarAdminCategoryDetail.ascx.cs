@@ -20,13 +20,19 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 	public partial class CalendarAdminCategoryDetail : AdminModule {
 		protected Guid ItemGuid = Guid.Empty;
 
+		public string CancelURL {
+			get {
+				return CreateLink(CalendarHelper.PluginKeys.EventAdminCategoryList.ToString());
+			}
+		}
+
 		protected void Page_Load(object sender, EventArgs e) {
 			ItemGuid = ParmParser.GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
 
-				CalendarHelper.BindDropDownList(ddlFGColor, CalendarHelper.ColorCodes, "#000000");
-				CalendarHelper.BindDropDownList(ddlBGColor, CalendarHelper.ColorCodes, "#FFFFFF");
+				CalendarHelper.BindDropDownList(ddlFGColor, CalendarHelper.ColorCodes, CalendarHelper.HEX_Black);
+				CalendarHelper.BindDropDownList(ddlBGColor, CalendarHelper.ColorCodes, CalendarHelper.HEX_White);
 
 				var itm = CalendarHelper.GetCalendarCategory(ItemGuid);
 

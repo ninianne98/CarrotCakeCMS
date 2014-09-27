@@ -429,15 +429,12 @@ namespace Carrotware.CMS.Core {
 
 				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
 
-				bool bNew = false;
-
 				if (rc == null) {
 					rc = new carrot_RootContent();
 
 					PerformCommonSaveRoot(site, rc);
 
 					_db.carrot_RootContents.InsertOnSubmit(rc);
-					bNew = true;
 				}
 
 				carrot_Content c = new carrot_Content();

@@ -81,4 +81,12 @@
 </script>
 <div>
 	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" Text="Save" OnClick="btnSaveButton_Click" />
+	&nbsp;&nbsp;&nbsp;
+	<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 </div>
+<script type="text/javascript">
+
+	function cancelEditing() {
+		window.setTimeout("location.href = '<%= CancelURL%>';", 250);
+	}
+</script>

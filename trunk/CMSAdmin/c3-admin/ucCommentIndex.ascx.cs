@@ -20,7 +20,6 @@ using Carrotware.CMS.UI.Controls;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ucCommentIndex : AdminBaseUserControl {
-		private int PageNumber = 1;
 
 		private ContentPageType.PageType pageType = ContentPageType.PageType.BlogEntry;
 		public Guid guidRootContentID = Guid.Empty;

@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdminList.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.EventCalendarModule.CalendarAdminList" %>
+<%@ Import Namespace="Carrotware.CMS.UI.Plugins.EventCalendarModule" %>
 <div style="width: 600px; padding: 25px;">
 	<div style="text-align: center;">
 		<div style="clear: both;">
@@ -39,10 +40,10 @@
 	}
 
 	function clickProfileLink(proID) {
-		location.href = '<%= CreateLink("EventAdminDetail") %>&id=' + proID;
+		location.href = '<%= CreateLink(CalendarHelper.PluginKeys.EventAdminDetail.ToString())  %>&id=' + proID;
 	}
 	function clickEventLink(evtID) {
-		location.href = '<%= CreateLink("EventAdminDetailSingle") %>&id=' + evtID;
+		location.href = '<%= CreateLink(CalendarHelper.PluginKeys.EventAdminDetailSingle.ToString()) %>&id=' + evtID;
 	}
 
 </script>
@@ -57,13 +58,13 @@
 			<%--
 			<asp:TemplateField>
 				<ItemTemplate>
-					<asp:HyperLink ToolTip="Edit event profile" runat="server" ID="lnkEdit1" NavigateUrl='<%# CreateLink("EventAdminDetail", String.Format("id={0}", Eval("CalendarEventProfileID") )) %>'>
+					<asp:HyperLink ToolTip="Edit event profile" runat="server" ID="lnkEdit1" NavigateUrl='<%# CreateLink(CalendarHelper.PluginKeys.EventAdminDetail.ToString(), String.Format("id={0}", Eval("CalendarEventProfileID") )) %>'>
 						<img class="imgNoBorder" src="/c3-admin/images/calendar.png" alt="Edit event profile" title="Edit event profile" /> Series</asp:HyperLink>
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:TemplateField>
 				<ItemTemplate>
-					<asp:HyperLink ToolTip="Edit event" runat="server" ID="lnkEdit2" NavigateUrl='<%# CreateLink("EventAdminDetailSingle", String.Format("id={0}", Eval("CalendarEventID") )) %>'>
+					<asp:HyperLink ToolTip="Edit event" runat="server" ID="lnkEdit2" NavigateUrl='<%# CreateLink(CalendarHelper.PluginKeys.EventAdminDetailSingle.ToString(), String.Format("id={0}", Eval("CalendarEventID") )) %>'>
 						<img class="imgNoBorder" src="/c3-admin/images/clock_edit.png" alt="Edit event" title="Edit event" /> Event</asp:HyperLink>
 				</ItemTemplate>
 			</asp:TemplateField>

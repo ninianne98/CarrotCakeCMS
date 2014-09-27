@@ -146,6 +146,8 @@
 	<asp:Button ValidationGroup="inputForm" ID="btnCopyButton" runat="server" OnClientClick="return SubmitPage('c')" Text="Save as Copy" />
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<asp:Button ValidationGroup="deleteForm" ID="btnDeleteButton" runat="server" OnClientClick="return DeleteItem()" Text="Delete" />
+	&nbsp;&nbsp;&nbsp;
+	<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 	<br />
 </div>
 <div style="display: none;">
@@ -193,6 +195,9 @@
 		$('#<%=btnDelete.ClientID %>').click();
 	}
 
+	function cancelEditing() {
+		window.setTimeout("location.href = '<%= CancelURL%>';", 250);
+	}
 
 	function setDayPickerVis(pat) {
 		if (pat == 2) {
@@ -253,51 +258,4 @@
 	});
 
 
-
-
 </script>
-<%--
-<tr>
-	<td colspan="4">
-		<div id="tabs">
-			<asp:Repeater ID="rpTabs" runat="server">
-				<HeaderTemplate>
-					<ul>
-				</HeaderTemplate>
-				<ItemTemplate>
-					<li><a href="#<%# String.Format("tabs-{0}", Eval("FrequencySortOrder")) %>">
-						<%# Eval("FrequencyName")%></a></li>
-				</ItemTemplate>
-				<FooterTemplate>
-					</ul></FooterTemplate>
-			</asp:Repeater>
-			<div id="tabs-1">
-				<h2>
-					Content heading 1</h2>
-			</div>
-			<div id="tabs-2">
-				<h2>
-					Content heading 2</h2>
-			</div>
-			<div id="tabs-3">
-				<h2>
-					Content heading 3</h2>
-			</div>
-			<div id="tabs-4">
-				<h2>
-					Content heading 4</h2>
-			</div>
-			<div id="tabs-5">
-				<h2>
-					Content heading 5</h2>
-			</div>
-		</div>
-	</td>
-</tr>
-		
-	$(document).ready(function () {
-		$("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
-		$("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
-	});	
-
---%>

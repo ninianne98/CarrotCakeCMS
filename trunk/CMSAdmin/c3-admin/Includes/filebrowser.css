@@ -143,3 +143,16 @@ table.centered {
 	border: thin solid #000000;
 	background-color: #c0c0c0;
 }
+
+.uploadSuccess {
+	color: #009900;
+}
+.uploadBlocked {
+	color: #990099;
+}
+.uploadNoFile {
+	color: #990000;
+}
+.uploadFail {
+	color: #990000;
+}

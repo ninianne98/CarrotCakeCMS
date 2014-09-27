@@ -64,6 +64,8 @@
 </fieldset>
 <div>
 	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />
+	&nbsp;&nbsp;&nbsp;
+	<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
 	<br />
 </div>
 <div style="display: none;">
@@ -83,6 +85,10 @@
 		}
 		cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
 		return true;
+	}
+
+	function cancelEditing() {
+		window.setTimeout("location.href = '<%= CancelURL%>';", 250);
 	}
 	
 </script>
