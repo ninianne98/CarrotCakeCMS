@@ -17,9 +17,39 @@ using System.Web.UI.WebControls;
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 	public class CalendarHelper {
 
+		public enum PluginKeys {
+			EventAdminDatabase,
+			AdminProfileList,
+			EventAdminList,
+			EventAdminDetail,
+			EventAdminDetailSingle,
+			EventAdminCategoryList,
+			EventAdminCategoryDetail,
+		}
+
+		public static string HEX_White = "#FFFFFF";
+		public static string HEX_Black = "#000000";
+
 		public static List<carrot_CalendarEventCategory> GetCalendarCategories(Guid siteID) {
 
 			using (CalendarDataContext db = new CalendarDataContext()) {
+
+				if (db.carrot_CalendarEventCategories.Count() < 1) {
+
+					carrot_CalendarEventCategory itm = new carrot_CalendarEventCategory();
+
+					itm = new carrot_CalendarEventCategory();
+					itm.CalendarEventCategoryID = Guid.NewGuid();
+					itm.SiteID = siteID;
+
+					itm.CategoryName = "Default";
+					itm.CategoryFGColor = HEX_Black;
+					itm.CategoryBGColor = HEX_White;
+
+					db.carrot_CalendarEventCategories.InsertOnSubmit(itm);
+
+					db.SubmitChanges();
+				}
 
 				return (from c in db.carrot_CalendarEventCategories
 						orderby c.CategoryName

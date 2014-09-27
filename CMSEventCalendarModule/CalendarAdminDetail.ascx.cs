@@ -19,8 +19,14 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 	public partial class CalendarAdminDetail : AdminModule {
-		protected Guid ItemGuid = Guid.Empty;
 
+		public string CancelURL {
+			get {
+				return CreateLink(CalendarHelper.PluginKeys.AdminProfileList.ToString());
+			}
+		}
+
+		protected Guid ItemGuid = Guid.Empty;
 		protected int? selectedDatePattern = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -158,7 +164,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			CalendarHelper.RemoveEvent(ItemGuid);
 
-			Response.Redirect(CreateLink("AdminProfileList"));
+			Response.Redirect(CreateLink(CalendarHelper.PluginKeys.AdminProfileList.ToString()));
 		}
 
 

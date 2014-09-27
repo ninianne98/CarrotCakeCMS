@@ -330,10 +330,12 @@
 				}
 			}
 		</script>
-		<p>
-			<br />
-			<asp:Button ID="btnRemove" runat="server" Text="Delete Checked" OnClick="btnRemove_Click" />
-		</p>
+		<asp:PlaceHolder ID="phRemove" runat="server">
+			<p>
+				<br />
+				<asp:Button ID="btnRemove" runat="server" Text="Delete Checked" OnClick="btnRemove_Click" />
+			</p>
+		</asp:PlaceHolder>
 		<p>
 			<br />
 			Selected File:

@@ -1,9 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdminCategoryList.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.EventCalendarModule.CalendarAdminCategoryList" %>
+<%@ Import Namespace="Carrotware.CMS.UI.Plugins.EventCalendarModule" %>
 <h2>
 	Category List
 </h2>
 <p>
-	<a href="<%= CreateLink("EventAdminCategoryDetail") %>">
+	<a href="<%= CreateLink(CalendarHelper.PluginKeys.EventAdminCategoryDetail.ToString()) %>">
 		<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
 		Add Category</a>
 </p>
@@ -18,7 +19,7 @@
 		<Columns>
 			<asp:TemplateField>
 				<ItemTemplate>
-					<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%# CreateLink("EventAdminCategoryDetail", String.Format("id={0}", Eval("CalendarEventCategoryID") )) %>'>
+					<asp:HyperLink runat="server" ID="lnkEdit" NavigateUrl='<%# CreateLink(CalendarHelper.PluginKeys.EventAdminCategoryDetail.ToString(), String.Format("id={0}", Eval("CalendarEventCategoryID") )) %>'>
 						<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" /></asp:HyperLink>
 				</ItemTemplate>
 			</asp:TemplateField>

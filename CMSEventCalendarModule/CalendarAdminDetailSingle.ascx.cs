@@ -19,6 +19,12 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 	public partial class CalendarAdminDetailSingle : AdminModule {
 
+		public string CancelURL {
+			get {
+				return CreateLink(CalendarHelper.PluginKeys.EventAdminList.ToString());
+			}
+		}
+
 		protected Guid ItemGuid = Guid.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
