@@ -79,19 +79,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			sQueryPath.Replace("//", "/").Replace("//", "/");
 
 			if (lnkUp.Visible) {
-				lnkUp.NavigateUrl = SiteData.CurrentScriptName + "?useTiny=" + sQueryMode + "&returnvalue=" + sReturnMode + "&viewmode=" + sViewMode + "&fldrpath=" + sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
+				string sUrlUp = sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
+				lnkUp.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode={4}", SiteData.CurrentScriptName, sUrlUp, sQueryMode, sReturnMode, sViewMode);
 			}
 
-			lnkThumbView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=thumb", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode, sViewMode);
-			lnkFileView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=file", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode, sViewMode);
+			lnkThumbView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=thumb", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
+			lnkFileView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=file", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
 
 
 			if (!IsPostBack) {
 				LoadLists();
 			}
-			lblPath.Text = sQueryPath;
 
-
+			litPath.Text = sQueryPath;
 		}
 
 		protected void LoadLists() {
@@ -179,16 +179,21 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			try {
 				if (upFile.HasFile) {
 					var sPath = SetSitePath(sQueryPath);
+					string uploadedFileName = upFile.FileName;
 
 					if ((from b in helpFile.BlockedTypes
-						 where upFile.FileName.ToLower().Contains("." + b.ToLower())
+						 where uploadedFileName.ToLower().Contains("." + b.ToLower())
 						 select b).Count() < 1) {
 
-						upFile.SaveAs(Path.Combine(sPath, upFile.FileName));
-						lblWarning.Text = string.Format("file [{0}] uploaded!", upFile.FileName);
+						if (chkSpaceEscape.Checked) {
+							uploadedFileName = uploadedFileName.Replace(" ", "-");
+						}
+
+						upFile.SaveAs(Path.Combine(sPath, uploadedFileName));
+						lblWarning.Text = string.Format("file [{0}] uploaded!", uploadedFileName);
 						lblWarning.CssClass = "uploadSuccess";
 					} else {
-						lblWarning.Text = string.Format("[{0}] is a blocked filetype.", upFile.FileName);
+						lblWarning.Text = string.Format("[{0}] is a blocked filetype.", uploadedFileName);
 						lblWarning.CssClass = "uploadBlocked";
 					}
 

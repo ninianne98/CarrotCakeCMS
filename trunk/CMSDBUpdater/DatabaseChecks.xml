@@ -1,11 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tbl>
+
+	<querynugget>
+		<priority>20</priority>
+		<mode>LT</mode>
+		<rowcount>1</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|AlterStep12|DatabaseNeedsUpdate|</testcontext>
+		<sql>
+			select p.object_id, p.[name]
+			from [sys].[all_parameters] as p
+			where p.[object_id] = OBJECT_ID('dbo.[carrot_UpdateGoLiveLocal]')
+			and p.[name] = '@xmlDocument'
+		</sql>
+	</querynugget>
+	
   <querynugget>
     <priority>18</priority>
     <mode>LT</mode>
     <rowcount>1</rowcount>
     <alwayscheck>True</alwayscheck>
-    <testcontext>|AlterStep11|DatabaseNeedsUpdate|</testcontext>
+    <testcontext>|AlterStep11|</testcontext>
     <sql>
       select o.name, o.type_desc
       from sys.objects  o

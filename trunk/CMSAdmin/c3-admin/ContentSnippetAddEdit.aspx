@@ -25,7 +25,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'TheSlug': '" + myPage + "', 'ItemID': '" + thePageID + "'}",
+				data: JSON.stringify({ TheSlug: myPage, ItemID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,
@@ -113,7 +113,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'ItemID': '" + thePageID + "'}",
+				data: JSON.stringify({ ItemID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: updateHeartbeat,
@@ -140,7 +140,7 @@
 				$.ajax({
 					type: "POST",
 					url: webMthd,
-					data: "{'ItemID': '" + thePageID + "'}",
+					data: JSON.stringify({ ItemID: thePageID }),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: cmsAjaxGeneralCallback,

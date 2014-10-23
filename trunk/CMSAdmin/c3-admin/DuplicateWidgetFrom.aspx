@@ -24,7 +24,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'DBKey': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+				data: JSON.stringify({ DBKey: val, ThisPage: thisPageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: cmsReqContentCallback,

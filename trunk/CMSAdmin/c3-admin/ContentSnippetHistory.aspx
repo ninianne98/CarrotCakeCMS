@@ -13,7 +13,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'DBKey': '" + val + "'}",
+				data: JSON.stringify({ DBKey: val }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: cmsReqContentCallback,

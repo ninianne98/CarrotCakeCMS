@@ -550,7 +550,7 @@
   </Function>
   <Function Name="dbo.carrot_UpdateGoLiveLocal" Method="carrot_UpdateGoLiveLocal">
     <Parameter Name="SiteID" Parameter="siteID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="UTCOffsetInMinutes" Parameter="uTCOffsetInMinutes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="xmlDocument" Type="System.Xml.Linq.XElement" DbType="Xml" />
     <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.carrot_BlogMonthlyTallies" Method="carrot_BlogMonthlyTallies">

@@ -44,6 +44,22 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		public override Unit BorderWidth {
+
+			get {
+				if (base.BorderWidth.IsEmpty) {
+					return Unit.Pixel(0);
+				} else {
+
+					return base.BorderWidth;
+				}
+			}
+
+			set {
+				base.BorderWidth = value;
+			}
+		}
+
 
 		protected override void OnPreRender(EventArgs e) {
 

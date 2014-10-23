@@ -563,7 +563,7 @@
     </Build>
     <Build Include="Schema Objects\Programmability\Stored Procedures\dbo.carrot_UpdateGoLiveLocal.proc.sql">
       <SubType>Code</SubType>
-      <QuotedIdentifier>Off</QuotedIdentifier>
+      <QuotedIdentifier>On</QuotedIdentifier>
       <AnsiNulls>On</AnsiNulls>
     </Build>
     <Build Include="Schema Objects\Security\Roles\Database Roles\aspnet_Membership_BasicAccess.role.sql">

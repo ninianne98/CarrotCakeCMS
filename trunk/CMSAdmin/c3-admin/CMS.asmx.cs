@@ -793,6 +793,21 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string GenerateCategoryTagSlug(string TheSlug, string Mode) {
+			try {
+				TheSlug = CMSConfigHelper.DecodeBase64(TheSlug).ToLower().Trim();
+
+				return ContentPageHelper.ScrubSlug(TheSlug);
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
+				return "FAIL";
+			}
+		}
+
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string MoveWidgetToNewZone(string WidgetTarget, string WidgetDropped, string ThisPage) {

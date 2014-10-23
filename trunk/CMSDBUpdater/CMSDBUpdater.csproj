@@ -100,6 +100,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataScripts\ALTER11.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataScripts\ALTER12.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)\DataScripts\CREATE01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\CREATE 01 - whole database.sql" /F /R /Y /I

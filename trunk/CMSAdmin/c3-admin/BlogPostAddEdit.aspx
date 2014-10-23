@@ -29,7 +29,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'ThePageSlug': '" + myPage + "', 'GoLiveDate': '" + sGoLiveDate + "'}",
+				data: JSON.stringify({ ThePageSlug: myPage, GoLiveDate: sGoLiveDate }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editPrefixCallback,
@@ -66,7 +66,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'ThePageSlug': '" + myPage + "', 'GoLiveDate': '" + sGoLiveDate + "', 'PageID': '" + thePageID + "'}",
+				data: JSON.stringify({ ThePageSlug: myPage, GoLiveDate: sGoLiveDate, PageID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,
@@ -121,7 +121,7 @@
 				$.ajax({
 					type: "POST",
 					url: webMthd,
-					data: "{'ThePageTitle': '" + myPageTitle + "', 'GoLiveDate': '" + sGoLiveDate + "', 'PageID': '" + thePageID + "', 'Mode': 'blog'}",
+					data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'blog' }),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: ajaxGeneratePageFilename,
@@ -190,7 +190,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'PageID': '" + thePageID + "'}",
+				data: JSON.stringify({ PageID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: updateHeartbeat,
@@ -244,7 +244,7 @@
 				$.ajax({
 					type: "POST",
 					url: webMthd,
-					data: "{'ThisPage': '" + thePageID + "'}",
+					data: JSON.stringify({ ThisPage: thePageID }),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: cmsAjaxGeneralCallback,
@@ -317,7 +317,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'DBKey': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+				data: JSON.stringify({ DBKey: val, ThisPage: thisPageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: cmsReqContentCallback,
