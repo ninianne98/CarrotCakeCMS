@@ -43,7 +43,7 @@
 				$.ajax({
 					type: "POST",
 					url: webMthd,
-					data: "{'ThePageTitle': '" + myPageTitle + "', 'GoLiveDate': '" + sGoLiveDate + "', 'PageID': '" + thePageID + "', 'Mode': 'page'}",
+					data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'page' }),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: ajaxGeneratePageFilename,
@@ -91,7 +91,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'TheFileName': '" + myPage + "', 'PageID': '" + thePageID + "'}",
+				data: JSON.stringify({ TheFileName: myPage, PageID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,
@@ -158,7 +158,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'PageID': '" + thePageID + "'}",
+				data: JSON.stringify({ PageID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: updateHeartbeat,
@@ -214,7 +214,7 @@
 				$.ajax({
 					type: "POST",
 					url: webMthd,
-					data: "{'ThisPage': '" + thePageID + "'}",
+					data: JSON.stringify({ ThisPage: thePageID }),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: cmsAjaxGeneralCallback,
@@ -287,7 +287,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'DBKey': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+				data: JSON.stringify({ DBKey: val, ThisPage: thisPageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: cmsReqContentCallback,

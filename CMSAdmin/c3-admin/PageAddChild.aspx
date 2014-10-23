@@ -37,7 +37,7 @@
 				$.ajax({
 					type: "POST",
 					url: webMthd,
-					data: "{'ThePageTitle': '" + myPageTitle + "', 'GoLiveDate': '" + sGoLiveDate + "', 'PageID': '" + thePageID + "', 'Mode': 'page'}",
+					data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'page' }),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: ajaxGeneratePageFilename,
@@ -85,7 +85,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'TheFileName': '" + myPage + "', 'PageID': '" + thePageID + "'}",
+				data: JSON.stringify({ TheFileName: myPage, PageID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,

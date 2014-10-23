@@ -83,10 +83,15 @@ namespace Carrotware.Web.UI.Controls {
 					jqVer = "1.9.1";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery191.js");
 					break;
+				case "1.8":
+					jqVer = "1.8.3";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery183.js");
+					break;
 				case "1.7":
 					jqVer = "1.7.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery172.js");
 					break;
+				case "1":
 				case "1.3":
 				case "1.4":
 				case "1.5":

@@ -32,7 +32,7 @@
 	</div>
 	<div class="calendarCenter2">
 		<div class="calendarCenter2">
-			<carrot:Calendar runat="server" ID="Calendar1"></carrot:Calendar>
+			<carrot:Calendar runat="server" ID="Calendar1" />
 		</div>
 		<asp:Button CssClass="calendarbutton" ID="btnLast" runat="server" Text="«««««" OnClick="btnLast_Click" />
 		&nbsp;&nbsp;&nbsp;

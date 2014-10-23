@@ -122,7 +122,7 @@
 					<h2 class="head2">
 						Files On Server</h2>
 					Contents of:
-					<asp:Label ID="lblPath" runat="server" /><br />
+					<asp:Literal ID="litPath" runat="server" /><br />
 					<asp:HyperLink runat="server" ID="lnkUp"><img src="/c3-admin/images/back.png" border="0" alt="back" /><img src="/c3-admin/images/folder.png" border="0" alt="folder" /> </asp:HyperLink>
 					<br />
 				</td>
@@ -146,7 +146,7 @@
 							&nbsp;&nbsp;
 						</td>
 						<td style="width: 150px;">
-							<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
+							<asp:Literal ID="litFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>' />
 						</td>
 					</tr>
 				</ItemTemplate>
@@ -159,7 +159,10 @@
 			Select a file to upload to the current folder:<br />
 			<asp:FileUpload ID="upFile" runat="server" Width="400" />
 			<asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" /><br />
-			<asp:Label ID="lblWarning" runat="server"></asp:Label>
+			<asp:CheckBox runat="server" ID="chkSpaceEscape" Checked="true" />
+			Change spaces to dashes
+			<br />
+			<asp:Label ID="lblWarning" runat="server" />
 		</p>
 		<div class="scroll" id="fileZone">
 			<asp:Repeater ID="rpThumbs" runat="server">
@@ -171,8 +174,8 @@
 							</div>
 							<div style="margin: 3px;" id="imgSubContainer">
 								<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
-									<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )  %>' ThumbSize="50" ScaleImage="true"
-										ToolTip="" />
+									<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )  %>' ThumbSize="50"
+										ScaleImage="true" ToolTip="" />
 								</a>
 							</div>
 							<div style="margin: 3px; text-align: center;">
@@ -224,13 +227,13 @@
 							</div>
 						</td>
 						<td>
-							<asp:Label ID="lblFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>'></asp:Label>
+							<asp:Literal ID="litFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>' />
 						</td>
 						<td>
 							&nbsp;
 						</td>
 						<td>
-							<asp:Label ID="lblFileSize" runat="server" Text='<%# String.Format( "{0}", Eval("FileSizeFriendly") ) %>'></asp:Label>
+							<asp:Literal ID="litFileSize" runat="server" Text='<%# String.Format( "{0}", Eval("FileSizeFriendly") ) %>' />
 						</td>
 					</tr>
 				</ItemTemplate>
