@@ -132,21 +132,9 @@ namespace Carrotware.CMS.Core {
 
 		public void BulkBlogFileNameUpdateFromDate(Guid siteID) {
 
-			SiteData site = SiteData.GetSiteFromCache(siteID);
+			TimeZoneContent zone = new TimeZoneContent(siteID);
 
-			//db.carrot_UpdateGoLiveLocal(siteID, (int)site.SiteTimeZoneInfo.BaseUtcOffset.TotalMinutes);
-			//db.carrot_BlogDateFilenameUpdate(siteID);
-
-			// use C# libraries for timezones rather than pass in offset as some dates are +/- an hour off because of DST
-			// performance is not great to do a looped update
-
-			IQueryable<carrot_RootContent> queryAllContent = CannedQueries.GetAllRootTbl(db, siteID);
-			queryAllContent.ToList().ForEach(p => p.GoLiveDateLocal = site.ConvertUTCToSiteTime(p.GoLiveDate));
-
-			IQueryable<carrot_RootContent> queryBlog = CannedQueries.GetBlogAllRootTbl(db, siteID);
-			queryBlog.ToList().ForEach(p => p.FileName = CreateFileNameFromSlug(siteID, p.GoLiveDateLocal, p.PageSlug));
-
-			db.SubmitChanges();
+			zone.Save();
 
 			ResolveDuplicateBlogURLs(siteID);
 		}

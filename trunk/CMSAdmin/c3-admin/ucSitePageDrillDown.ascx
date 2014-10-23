@@ -63,7 +63,7 @@
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'PageID': '" + myVal + "', 'CurrPageID': '" + thisPageID + "'}",
+			data: JSON.stringify({ PageID: myVal, CurrPageID: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: ajaxReturnCrumb,
@@ -141,7 +141,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'PageID': '" + myVal + "', 'CurrPageID': '" + thisPageID + "'}",
+				data: JSON.stringify({ PageID: myVal, CurrPageID: thisPageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: ajaxReturnNode,

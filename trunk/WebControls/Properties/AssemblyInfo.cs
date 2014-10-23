@@ -63,7 +63,7 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-8-24.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-9-2.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-11-0.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jqueryui-1-11-2.js", "text/javascript")]
 [assembly: TagPrefix("jqueryui", "carrot")]
 
 [assembly: TagPrefix("jquerybasic", "carrot")]

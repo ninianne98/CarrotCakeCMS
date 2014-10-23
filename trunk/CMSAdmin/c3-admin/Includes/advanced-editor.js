@@ -241,7 +241,7 @@ function cmsEditHB() {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'PageID': '" + thisPageID + "'}",
+			data: JSON.stringify({ PageID: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsUpdateHeartbeat,
@@ -261,7 +261,7 @@ function cmsSaveToolbarPosition() {
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: "{'ToolbarState': '" + cmsMnuVis + "', 'ToolbarMargin': '" + cmsToolbarMargin + "', 'ToolbarScroll': '" + scrollTopPos + "', 'WidgetScroll': '" + scrollWTopPos + "', 'SelTabID': '" + tabID + "'}",
+		data: JSON.stringify({ ToolbarState: cmsMnuVis, ToolbarMargin: cmsToolbarMargin, ToolbarScroll: scrollTopPos, WidgetScroll: scrollWTopPos, SelTabID: tabID }),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: cmsAjaxGeneralCallback,
@@ -280,7 +280,7 @@ function cmsSaveContent(val, zone) {
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: "{'ZoneText': '" + val + "', 'Zone': '" + zone + "', 'ThisPage': '" + thisPageID + "'}",
+		data: JSON.stringify({ ZoneText: val, Zone: zone, ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: cmsSaveContentCallback,
@@ -299,7 +299,7 @@ function cmsSaveGenericContent(val, key) {
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: "{'ZoneText': '" + val + "', 'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
+		data: JSON.stringify({ ZoneText: val, DBKey: key, ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: cmsSaveContentCallback,
@@ -407,7 +407,7 @@ function cmsUpdateTemplate() {
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: "{'TheTemplate': '" + tmpl + "', 'ThisPage': '" + thisPageID + "'}",
+		data: JSON.stringify({ TheTemplate: tmpl, ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: cmsSaveContentCallback,
@@ -433,7 +433,7 @@ function cmsUpdateWidgets() {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'WidgetAddition': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+			data: JSON.stringify({ WidgetAddition: val, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsSaveWidgetsCallback,
@@ -454,7 +454,7 @@ function cmsRemoveWidget(key) {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
+			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsSaveWidgetsCallback,
@@ -475,7 +475,7 @@ function cmsMoveWidgetZone(zone, val) {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'WidgetTarget': '" + zone + "', 'WidgetDropped': '" + val + "', 'ThisPage': '" + thisPageID + "'}",
+			data: JSON.stringify({ WidgetTarget: zone, WidgetDropped: val, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsSaveWidgetsCallback,
@@ -496,7 +496,7 @@ function cmsApplyChanges() {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'ThisPage': '" + thisPageID + "'}",
+			data: JSON.stringify({ ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsSavePageCallback,
@@ -608,7 +608,7 @@ function cmsRecordCancellation() {
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: "{'ThisPage': '" + thisPageID + "'}",
+		data: JSON.stringify({ ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: cmsAjaxGeneralCallback,
@@ -676,7 +676,7 @@ function cmsSendTrackbackPageBatch() {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'ThisPage': '" + thisPageID + "'}",
+			data: JSON.stringify({ ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsAjaxGeneralCallback,
@@ -874,7 +874,7 @@ function cmsCopyWidget(key) {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'DBKey': '" + key + "', 'ThisPage': '" + thisPageID + "'}",
+			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsSaveWidgetsCallback,
@@ -1125,9 +1125,11 @@ function cmsDirtyPageRefresh() {
 	window.setTimeout("location.href = \'" + thisPageNav + "?carrotedit=true&carrottick=" + timeTick + "\'", 800);
 }
 
+
 //===================
 
-var jqAttemptCount = 0;
+var jqAttemptCount1 = 0;
+var jqAttemptCount2 = 0;
 var jq1URL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
 var jq2URL = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js';
 
@@ -1135,76 +1137,80 @@ function cmsSetJQueryURL(jqPath, jqUIPath) {
 	jq1URL = jqPath;
 	jq2URL = jqUIPath;
 
+	jqAttemptCount1 = 0;
+	jqAttemptCount2 = 0;
+
 	cmsLoadJQuery();
 }
 
 function cmsLoadJQuery() {
-	setTimeout('cmsAttemptAttachJQ1()', 200);
-	setTimeout('cmsAttemptAttachJQ2()', 800);
+	setTimeout('cmsAttemptAttachJQ1()', 250);
+	setTimeout('cmsAttemptAttachJQ2()', 500);
 }
 
-function cmsAttachJQScript1() {
-	if (typeof jQuery == 'undefined') {
-		var first = document.getElementsByTagName('head')[0].children[0];
-		var script1 = document.createElement('script');
-		script1.src = jq1URL;
+function cmsAddScript(scriptURL) {
+	var newScript = document.createElement('script');
+	newScript.type = 'text/javascript';
+	newScript.src = scriptURL;
 
-		document.getElementsByTagName('head')[0].insertBefore(script1, first);
-		setTimeout('cmsAttemptAttachJQ1()', 125);
-	}
+	var pageHead = document.getElementsByTagName("head")[0];
+	pageHead.appendChild(newScript);
 }
 
 function cmsAttemptAttachJQ1() {
-	if (jqAttemptCount < 50) {
-		jqAttemptCount++;
+	if (jqAttemptCount1 < 25) {
+		jqAttemptCount1++;
+
 		if (typeof jQuery == 'undefined') {
 			cmsAttachJQScript1();
 		} else {
-			cmsAttemptAttachJQ2();
 			cmsAttemptExtra();
 		}
 	}
 }
 
-function cmsAttachJQScript2() {
-	if (typeof jQuery.ui == 'undefined') {
-		cmsAttachSecondScript(jq2URL);
+function cmsAttachJQScript1() {
+	if (typeof jQuery == 'undefined') {
+		cmsAddScript(jq1URL);
 
-		setTimeout('cmsAttemptAttachJQ2()', 125);
+		setTimeout('cmsAttemptAttachJQ1()', 500);
 	}
 }
 
 function cmsAttemptAttachJQ2() {
-	if (jqAttemptCount < 150) {
-		jqAttemptCount++;
+	if (jqAttemptCount2 < 200) {
+		jqAttemptCount2++;
+
 		if (typeof jQuery != 'undefined' && typeof jQuery.ui == 'undefined') {
 			cmsAttachJQScript2();
 		}
 	}
 }
 
-function cmsAttachSecondScript(scriptURL) {
-	var second = document.getElementsByTagName('head')[0].children[1];
-	var script2 = document.createElement('script');
-	script2.src = scriptURL;
+function cmsAttachJQScript2() {
+	if (typeof jQuery.ui == 'undefined') {
+		cmsAddScript(jq2URL);
 
-	document.getElementsByTagName('head')[0].insertBefore(script2, second);
+		setTimeout('cmsAttemptAttachJQ2()', 500);
+	}
 }
+
 
 var cmsExtraAttached = false;
 
 function cmsAttachExtraScripts() {
-	if (!cmsExtraAttached && (typeof jQuery != 'undefined')) {
-		cmsAttachSecondScript("/c3-admin/includes/jquery.simplemodal.js");
-		cmsAttachSecondScript("/c3-admin/includes/jquery.blockUI.js");
-		setTimeout('cmsAttemptExtra()', 125);
+	if (typeof jQuery != 'undefined' && !cmsExtraAttached) {
+		cmsAddScript("/c3-admin/includes/jquery.simplemodal.js");
+		cmsAddScript("/c3-admin/includes/jquery.blockUI.js");
+
 		cmsExtraAttached = true;
+		setTimeout('cmsAttemptExtra()', 5000);
 	}
 }
 
 function cmsAttemptExtra() {
-	if (jqAttemptCount < 250) {
-		jqAttemptCount++;
+	if (jqAttemptCount1 < 50) {
+		jqAttemptCount1++;
 		if (typeof jQuery != 'undefined') {
 			cmsAttachExtraScripts();
 		}

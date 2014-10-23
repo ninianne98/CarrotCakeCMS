@@ -16,18 +16,17 @@
 <script type="text/javascript">
 	var cmsJQLoadCtr = 1;
 	function cmsLoadJQDyn() {
-		if (cmsJQLoadCtr <= 20) {
-			setTimeout("cmsLoadJQDyn();", 2000);
+		var jq2URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jquery183.js")%>';
+		var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-0.js")%>';
 
-			var jq2URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jquery183.js")%>';
-			var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js")%>';
+		if (cmsJQLoadCtr <= 25) {
+			cmsJQLoadCtr++;
 
 			cmsSetJQueryURL(jq2URL, jq1URL);
 
-			cmsJQLoadCtr++;
+			setTimeout("cmsLoadJQDyn();", 1500);
 		}
 	}
-
 	cmsLoadJQDyn();
 </script>
 <script type="text/javascript">

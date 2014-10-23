@@ -9,6 +9,7 @@
 
 		var tValid = '#<%= txtFileValid.ClientID %>';
 		var tValidSlug = '#<%= txtSlug.ClientID %>';
+		var tCaption = '#<%= txtLabel.ClientID %>';
 
 		var thePage = '';
 
@@ -23,12 +24,36 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'TheSlug': '" + myPage + "', 'ItemID': '" + thePageID + "'}",
+				data: JSON.stringify({ TheSlug: myPage, ItemID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: editFilenameCallback,
 				error: cmsAjaxFailed
 			});
+		}
+
+		function GenerateCaption() {
+			var theSlug = $(tValidSlug).val();
+
+			var webMthd = webSvc + "/GenerateCategoryTagSlug";
+
+			if (theSlug.length < 1) {
+				var theText = $(tCaption).val();
+				var mySlug = MakeStringSafe(theText);
+
+				$.ajax({
+					type: "POST",
+					url: webMthd,
+					data: JSON.stringify({ TheSlug: mySlug, Mode: 'Tag' }),
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: editCaption,
+					error: cmsAjaxFailed
+				});
+
+			} else {
+				CheckFileName();
+			}
 		}
 
 		$(document).ready(function () {
@@ -52,15 +77,37 @@
 			var ret = cmsIsPageValid();
 			cmsForceInputValidation('<%= txtFileValid.ClientID %>');
 		}
+
+		function editCaption(data, status) {
+			if (data.d == "FAIL") {
+				cmsAlertModal(data.d);
+			} else {
+				$(tValidSlug).val(data.d);
+			}
+
+			CheckFileName();
+		}
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Tag Add/Edit
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+	<br />
 	<table style="width: 700px;">
 		<tr>
 			<td style="width: 90px;" class="tablecaption">
+				caption:
+			</td>
+			<td>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateCaption()" ID="txtLabel" runat="server" Columns="45"
+					MaxLength="100" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtLabel" ID="RequiredFieldValidator3"
+					runat="server" Text="**" ToolTip="Required" ErrorMessage="Required" Display="Dynamic" />
+			</td>
+		</tr>
+		<tr>
+			<td class="tablecaption">
 				url slug:
 			</td>
 			<td>
@@ -74,17 +121,6 @@
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator2"
 						runat="server" ErrorMessage="Slug validation is required" ToolTip="Slug validation is required" Display="Dynamic" Text="**" />
 				</div>
-			</td>
-		</tr>
-		<tr>
-			<td class="tablecaption">
-				caption:
-			</td>
-			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtLabel" runat="server" Columns="45"
-					MaxLength="100" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtLabel" ID="RequiredFieldValidator3"
-					runat="server" Text="**" ToolTip="Required" ErrorMessage="Required" Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>

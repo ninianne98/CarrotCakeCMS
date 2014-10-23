@@ -379,7 +379,7 @@ function cmsSendTrackbackPageBatch(thePageID) {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: "{'ThisPage': '" + thePageID + "'}",
+			data: JSON.stringify({ ThisPage: thePageID }),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: cmsAjaxGeneralCallback,

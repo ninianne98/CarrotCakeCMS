@@ -115,7 +115,7 @@ namespace Carrotware.CMS.Core {
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
-			string sPath = "";
+			string sPath = String.Empty;
 
 			try {
 				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
@@ -126,7 +126,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string GetWebResourceUrl(Control X, Type type, string resource) {
-			string sPath = "";
+			string sPath = String.Empty;
 
 			if (X != null && X.Page != null) {
 				sPath = X.Page.ClientScript.GetWebResourceUrl(type, resource);
@@ -220,7 +220,7 @@ namespace Carrotware.CMS.Core {
 			if (iExpectedTblCount > 0) {
 				iTblCount = ds.Tables.Count;
 
-				string table1Name = "";
+				string table1Name = String.Empty;
 
 				List<string> reqCols0 = new List<string>();
 				List<string> reqCols1 = new List<string>();
@@ -624,7 +624,7 @@ namespace Carrotware.CMS.Core {
 														select new CMSTextWidgetPicker {
 															TextWidgetPickerID = p.TextWidgetID,
 															AssemblyString = p.TextWidgetAssembly,
-															DisplayName = "",
+															DisplayName = String.Empty,
 															ProcessBody = p.ProcessBody,
 															ProcessPlainText = p.ProcessPlainText,
 															ProcessHTMLText = p.ProcessHTMLText,
@@ -847,7 +847,7 @@ namespace Carrotware.CMS.Core {
 
 					_sites = (from d in ds.Tables[0].AsEnumerable()
 							  select new DynamicSite {
-								  DomainName = string.IsNullOrEmpty(d.Field<string>("domname")) ? "" : d.Field<string>("domname").ToLower(),
+								  DomainName = string.IsNullOrEmpty(d.Field<string>("domname")) ? String.Empty : d.Field<string>("domname").ToLower(),
 								  SiteID = new Guid(d.Field<string>("siteid"))
 							  }).ToList();
 
@@ -1079,7 +1079,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public static string DecodeBase64(string ValIn) {
-			string val = "";
+			string val = String.Empty;
 			if (!string.IsNullOrEmpty(ValIn)) {
 				ASCIIEncoding encoding = new ASCIIEncoding();
 				val = encoding.GetString(Convert.FromBase64String(ValIn));
@@ -1088,7 +1088,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string EncodeBase64(string ValIn) {
-			string val = "";
+			string val = String.Empty;
 			if (!string.IsNullOrEmpty(ValIn)) {
 				ASCIIEncoding encoding = new ASCIIEncoding();
 				byte[] toEncodeAsBytes = ASCIIEncoding.ASCII.GetBytes(ValIn);
@@ -1155,7 +1155,7 @@ namespace Carrotware.CMS.Core {
 					ClearSerialized(keyAdminContent);
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					string sXML = "";
+					string sXML = String.Empty;
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
@@ -1184,7 +1184,7 @@ namespace Carrotware.CMS.Core {
 					ClearSerialized(keyAdminWidget);
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
-					string sXML = "";
+					string sXML = String.Empty;
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
@@ -1224,7 +1224,7 @@ namespace Carrotware.CMS.Core {
 
 
 		public static string GetSerialized(Guid itemID, string sKey) {
-			string sData = "";
+			string sData = String.Empty;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 
 				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(_db, itemID, sKey);
@@ -1263,7 +1263,7 @@ namespace Carrotware.CMS.Core {
 
 
 		private string GetSerialized(string sKey) {
-			string sData = "";
+			string sData = String.Empty;
 			LoadGuids();
 
 			if (filePage != null) {

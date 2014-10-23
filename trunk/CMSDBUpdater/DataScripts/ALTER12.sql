@@ -1,6 +1,17 @@
-﻿CREATE PROCEDURE [dbo].[carrot_UpdateGoLiveLocal]
+﻿GO
+
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+SET ARITHABORT ON
+SET CONCAT_NULL_YIELDS_NULL ON
+SET NUMERIC_ROUNDABORT OFF
+SET QUOTED_IDENTIFIER ON
+
+GO
+ALTER PROCEDURE [dbo].[carrot_UpdateGoLiveLocal]
     @SiteID uniqueidentifier,
-    @tmp xml = '<rows />'
+    @xmlDocument xml = '<rows />'
 
 
 AS BEGIN
@@ -37,14 +48,14 @@ SET NOCOUNT ON
 		SELECT
 			ref.value ('Root_ContentID[1]', 'uniqueidentifier') as Root_ContentID,
 			ref.value ('GoLiveDateLocal[1]', 'datetime') as GoLiveDateLocal
-		FROM @tmp.nodes ('//ContentLocalTime') T(ref);
+		FROM @xmlDocument.nodes ('//ContentLocalTime') T(ref);
 
 		INSERT INTO @tblBlogs(Root_ContentID, GoLiveDateLocal, [FileName])
 		SELECT
 			ref.value ('Root_ContentID[1]', 'uniqueidentifier') as Root_ContentID,
 			ref.value ('GoLiveDateLocal[1]', 'datetime') as GoLiveDateLocal,	
 			ref.value ('FileName[1]', 'nvarchar(256)') as [FileName]
-		FROM @tmp.nodes ('//BlogPostPageUrl') T(ref);
+		FROM @xmlDocument.nodes ('//BlogPostPageUrl') T(ref);
 
 		UPDATE rc
 			SET GoLiveDateLocal = c.GoLiveDateLocal
@@ -82,5 +93,5 @@ Cleanup:
 
 END
 
-
 GO
+

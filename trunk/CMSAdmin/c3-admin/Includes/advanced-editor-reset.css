@@ -80,11 +80,13 @@
 	padding: 1px;
 	margin: 1px;
 	width: auto;
+	text-transform: none;
 }
 
 .cmsGlossySeaGreen input[type="button"], .cmsGlossySeaGreen input[type="submit"], .cmsGlossySeaGreen button, #cmsGlossySeaGreenID input[type="button"], #cmsGlossySeaGreenID input[type="submit"], #cmsGlossySeaGreenID button {
 	margin: 4px;
 	padding: 6px;
+	text-transform: none;	
 }
 
 .cmsGlossySeaGreen .ui-dialog .ui-dialog-buttonset button, #cmsGlossySeaGreenID .ui-dialog .ui-dialog-buttonset button {
