@@ -32,10 +32,11 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: "{'FolderPath': '" + myFldr + "', 'DatePath': '" + myDateF +
-							"', 'CategoryPath': '" + myCat +
-							"', 'TagPath': '" + myTag +
-							"', 'EditorPath': '" + myEd + "'}",
+
+				data: JSON.stringify({ FolderPath: myFldr, DatePath: myDateF,
+					CategoryPath: myCat, TagPath: myTag,
+					EditorPath: myEd
+				}),
 
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",

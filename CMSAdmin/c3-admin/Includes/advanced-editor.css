@@ -59,6 +59,7 @@
 	padding: 1px;
 	text-align: left;
 	font-size: small;
+	text-transform: none;
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
@@ -280,6 +281,7 @@ p.cmsToolItem {
 	padding: 1px;
 	text-align: left;
 	font-size: small;
+	text-transform: none;	
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 

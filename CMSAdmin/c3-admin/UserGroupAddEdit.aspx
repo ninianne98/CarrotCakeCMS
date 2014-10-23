@@ -6,32 +6,37 @@
 	<script type="text/javascript">
 
 		var webSvc = cmsGetServiceAddress();
+		var resFld = "#spanResults";
+		var hdnFld = "#<%=hdnUserID.ClientID %>";
+
+		function resetSearch() {
+			$(hdnFld).val('');
+			$(resFld).text('');
+			$(resFld).html('&nbsp;');
+		}
 
 		$(document).ready(function () {
 			var webMthd = webSvc + "/FindUsers";
-			var resFld = "#spanResults";
-			var hdnFld = "#<%=hdnUserID.ClientID %>";
 
 			$("#<%=txtSearch.ClientID %>").autocomplete({
 				source: function (request, response) {
+					resetSearch();
+					var search = MakeStringSafe(request.term);
+
 					$.ajax({
 						url: webMthd,
 						type: 'POST',
 						dataType: 'json',
-						contentType: 'application/json; charset=utf-8',
-						data: "{ 'searchTerm': '" + MakeStringSafe(request.term) + "' }",
 						contentType: "application/json; charset=utf-8",
+						data: JSON.stringify({ searchTerm: search }),
 						dataFilter: function (data) { return data; },
 						success: function (data) {
-							$(hdnFld).val('');
-							$(resFld).text('');
-							//debugger;
 							response($.map(data.d, function (item) {
 								return {
 									value: item.UserName + " (" + item.Email + ")",
 									id: item.UserName
 								}
-							}))
+							}));
 							if (data.d.length < 1) {
 								$(resFld).attr('style', 'color: #990000;');
 								$(resFld).text('  No Results  ');
@@ -45,17 +50,18 @@
 							}
 						},
 
-						error: function (XMLHttpRequest, textStatus, errorThrown) {
-							cmsAjaxFailed(XMLHttpRequest);
+						error: function (xmlRequest, textStatus, errorThrown) {
+							cmsAjaxFailed(xmlRequest);
 						}
 					});
 				},
+
 				select: function (event, ui) {
-					$(hdnFld).val('');
+					resetSearch();
 					if (ui.item) {
 						$(hdnFld).val(ui.item.id);
 					}
-					$(resFld).text('');
+					$(resFld).html('&nbsp;');
 				},
 				minLength: 1,
 				delay: 1000

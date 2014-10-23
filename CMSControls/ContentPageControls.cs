@@ -276,6 +276,23 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		public override Unit BorderWidth {
+
+			get {
+				if (base.BorderWidth.IsEmpty) {
+					return Unit.Pixel(0);
+				} else {
+
+					return base.BorderWidth;
+				}
+			}
+
+			set {
+				base.BorderWidth = value;
+			}
+		}
+
+
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		public bool PerformURLResize {

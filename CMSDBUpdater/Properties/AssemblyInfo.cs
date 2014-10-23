@@ -49,6 +49,7 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER09.sql", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER10.sql", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER11.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER12.sql", "text/plain")]
 
 
 [assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", "text/plain")]
