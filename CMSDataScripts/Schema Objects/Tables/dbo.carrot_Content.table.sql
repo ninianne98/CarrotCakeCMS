@@ -14,5 +14,8 @@
     [EditDate]         DATETIME         NOT NULL,
     [TemplateFile]     NVARCHAR (256)   NULL,
     [MetaKeyword]      NVARCHAR (1024)  NULL,
-    [MetaDescription]  NVARCHAR (1024)  NULL
+    [MetaDescription]  NVARCHAR (1024)  NULL,
+    [CreditUserId]     UNIQUEIDENTIFIER NULL
 );
+
+

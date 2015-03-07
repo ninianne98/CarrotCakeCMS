@@ -25,12 +25,14 @@ namespace Carrotware.CMS.Core {
 		public string CategorySlug { get; set; }
 		public string CategoryURL { get; set; }
 		public int? UseCount { get; set; }
+		public int? PublicUseCount { get; set; }
 		public bool IsPublic { get; set; }
 		public DateTime? EditDate { get; set; }
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
 			if (obj == null || GetType() != obj.GetType()) return false;
+
 			if (obj is ContentCategory) {
 				ContentCategory p = (ContentCategory)obj;
 				return (this.SiteID == p.SiteID
@@ -64,6 +66,7 @@ namespace Carrotware.CMS.Core {
 				this.CategoryURL = c.CategoryUrl;
 				this.CategoryText = c.CategoryText;
 				this.UseCount = c.UseCount;
+				this.PublicUseCount = c.PublicUseCount;
 				this.IsPublic = c.IsPublic;
 
 				if (c.EditDate.HasValue) {
@@ -212,6 +215,10 @@ namespace Carrotware.CMS.Core {
 
 		public int MetaInfoCount {
 			get { return this.UseCount == null ? 0 : Convert.ToInt32(this.UseCount); }
+		}
+
+		public int MetaPublicInfoCount {
+			get { return this.PublicUseCount == null ? 0 : Convert.ToInt32(this.PublicUseCount); }
 		}
 		#endregion
 	}

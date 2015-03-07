@@ -3,65 +3,11 @@
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
+	<script src="Includes/FindUsers.js" type="text/javascript"></script>
 	<script type="text/javascript">
-
-		var webSvc = cmsGetServiceAddress();
-
 		$(document).ready(function () {
-			var webMthd = webSvc + "/FindUsers";
-			var resFld = "#spanResults";
-			var hdnFld = "#<%=hdnUserID.ClientID %>";
-
-			$("#<%=txtSearch.ClientID %>").autocomplete({
-				source: function (request, response) {
-					$.ajax({
-						url: webMthd,
-						type: 'POST',
-						dataType: 'json',
-						contentType: 'application/json; charset=utf-8',
-						data: "{ 'searchTerm': '" + MakeStringSafe(request.term) + "' }",
-						contentType: "application/json; charset=utf-8",
-						dataFilter: function (data) { return data; },
-						success: function (data) {
-							$(hdnFld).val('');
-							$(resFld).text('');
-							//debugger;
-							response($.map(data.d, function (item) {
-								return {
-									value: item.UserName + " (" + item.Email + ")",
-									id: item.UserName
-								}
-							}))
-							if (data.d.length < 1) {
-								$(resFld).attr('style', 'color: #990000;');
-								$(resFld).text('  No Results  ');
-							} else {
-								$(resFld).attr('style', 'color: #009900;');
-								if (data.d.length == 1) {
-									$(resFld).text('  ' + data.d.length + ' Result  ');
-								} else {
-									$(resFld).text('  ' + data.d.length + ' Results  ');
-								}
-							}
-						},
-
-						error: function (XMLHttpRequest, textStatus, errorThrown) {
-							cmsAjaxFailed(XMLHttpRequest);
-						}
-					});
-				},
-				select: function (event, ui) {
-					$(hdnFld).val('');
-					if (ui.item) {
-						$(hdnFld).val(ui.item.id);
-					}
-					$(resFld).text('');
-				},
-				minLength: 1,
-				delay: 1000
-			});
+			initFindUsers("<%=hdnUserID.ClientID %>", "<%=txtSearch.ClientID %>");
 		});
-
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">

@@ -58,6 +58,20 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool InsertCssEarly {
+			get {
+				String s = (String)ViewState["InsertCssEarly"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["InsertCssEarly"] = value.ToString();
+			}
+		}
+
+
+		[Category("Appearance")]
 		[DefaultValue(true)]
 		public bool WrapList {
 			get {
@@ -123,6 +137,21 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				ViewState["FontSize"] = value;
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue(null)]
+		public Unit MenuFontSize {
+			get {
+				Unit s = this.FontSize;
+				if (ViewState["MenuFontSize"] != null) {
+					try { s = new Unit(ViewState["MenuFontSize"].ToString()); } catch { }
+				}
+				return s;
+			}
+			set {
+				ViewState["MenuFontSize"] = value;
 			}
 		}
 
@@ -281,7 +310,17 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnInit(EventArgs e) {
 			base.OnInit(e);
 
-			this.Page.Header.Controls.Add(cssText);
+			if (cssText != null) {
+				if (!this.InsertCssEarly) {
+					this.Page.Header.Controls.Add(cssText);
+				} else {
+					int indexPos = 2;
+					if (this.Page.Header.Controls.Count > indexPos) {
+						this.Page.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
+						this.Page.Header.Controls.AddAt(indexPos, cssText);
+					}
+				}
+			}
 		}
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
@@ -368,25 +407,25 @@ namespace Carrotware.CMS.UI.Controls {
 
 					string sTmp = "";
 
-					OverrideCSS = GetParmValue("OverrideCSS", "");
-					ExtraCSS = GetParmValue("ExtraCSS", "");
+					this.OverrideCSS = GetParmValue("OverrideCSS", "");
+					this.ExtraCSS = GetParmValue("ExtraCSS", "");
 
 					sTmp = GetParmValue("AutoStylingDisabled", "false");
 					if (!string.IsNullOrEmpty(sTmp)) {
-						AutoStylingDisabled = Convert.ToBoolean(sTmp);
+						this.AutoStylingDisabled = Convert.ToBoolean(sTmp);
 					}
 
 					sTmp = GetParmValue("AttemptResponsiveCSS", "true");
 					if (!string.IsNullOrEmpty(sTmp)) {
-						AttemptResponsiveCSS = Convert.ToBoolean(sTmp);
+						this.AttemptResponsiveCSS = Convert.ToBoolean(sTmp);
 					}
 
 					sTmp = GetParmValue("WrapList", "false");
 					if (!string.IsNullOrEmpty(sTmp)) {
-						WrapList = Convert.ToBoolean(sTmp);
+						this.WrapList = Convert.ToBoolean(sTmp);
 					}
 
-					if (!AutoStylingDisabled) {
+					if (!this.AutoStylingDisabled) {
 						sTmp = GetParmValue("FontSize", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
 							FontSize = new Unit(sTmp);
@@ -394,67 +433,67 @@ namespace Carrotware.CMS.UI.Controls {
 
 						sTmp = GetParmValue("TopBackgroundStyle", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							TopBackgroundStyle = sTmp;
+							this.TopBackgroundStyle = sTmp;
 						}
 
 						sTmp = GetParmValue("ForeColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							ForeColor = ColorTranslator.FromHtml(sTmp);
+							this.ForeColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("BackColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							BackColor = ColorTranslator.FromHtml(sTmp);
+							this.BackColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("BGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							BGColor = ColorTranslator.FromHtml(sTmp);
+							this.BGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("HoverFGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							HoverFGColor = ColorTranslator.FromHtml(sTmp);
+							this.HoverFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("HoverBGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							HoverBGColor = ColorTranslator.FromHtml(sTmp);
+							this.HoverBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 
 						sTmp = GetParmValue("UnSelFGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							UnSelFGColor = ColorTranslator.FromHtml(sTmp);
+							this.UnSelFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("UnSelBGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							UnSelBGColor = ColorTranslator.FromHtml(sTmp);
+							this.UnSelBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 
 						sTmp = GetParmValue("SelFGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							SelFGColor = ColorTranslator.FromHtml(sTmp);
+							this.SelFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("SelBGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							SelBGColor = ColorTranslator.FromHtml(sTmp);
+							this.SelBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 
 						sTmp = GetParmValue("SubFGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							SubFGColor = ColorTranslator.FromHtml(sTmp);
+							this.SubFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("SubBGColor", "");
 						if (!string.IsNullOrEmpty(sTmp)) {
-							SubBGColor = ColorTranslator.FromHtml(sTmp);
+							this.SubBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 					}
 				}
 			} catch (Exception ex) {
 			}
 
-			if (string.IsNullOrEmpty(OverrideCSS) && !AutoStylingDisabled) {
+			if (string.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled) {
 
 				ParseCSS();
 
 			} else {
-				if (!string.IsNullOrEmpty(OverrideCSS)) {
+				if (!string.IsNullOrEmpty(this.OverrideCSS)) {
 					HtmlLink link = new HtmlLink();
 					link.Href = OverrideCSS;
 					link.Attributes.Add("rel", "stylesheet");
@@ -471,14 +510,14 @@ namespace Carrotware.CMS.UI.Controls {
 				this.Page.Header.Controls.Add(link);
 			}
 
-			if (!AutoStylingDisabled) {
-				WrapList = false;
+			if (!this.AutoStylingDisabled) {
+				this.WrapList = false;
 			}
 
 		}
 
 		private void ParseCSS() {
-			if (string.IsNullOrEmpty(OverrideCSS) && !this.AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
+			if (string.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
 				string sCSSText = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt");
 
 				if (this.AttemptResponsiveCSS) {
@@ -486,7 +525,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sCSSText = sCSS1.Replace("{DESKTOP_CSS}", sCSSText);
 				}
 
-				if (sCSSText != null) {
+				if (!string.IsNullOrEmpty(sCSSText)) {
 					sCSSText = sCSSText.Replace("{FORE_HEX}", ColorTranslator.ToHtml(this.ForeColor).ToLower());
 					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(this.BGColor).ToLower());
 
@@ -502,10 +541,29 @@ namespace Carrotware.CMS.UI.Controls {
 					sCSSText = sCSSText.Replace("{SUB_FORE_HEX}", ColorTranslator.ToHtml(this.SubFGColor).ToLower());
 					sCSSText = sCSSText.Replace("{SUB_BG_HEX}", ColorTranslator.ToHtml(this.SubBGColor).ToLower());
 
-					sCSSText = sCSSText.Replace("{FONT_SIZE}", this.FontSize.Value.ToString() + "px");
+					if (this.FontSize.Value > 0) {
+						sCSSText = sCSSText.Replace("{FONT_SIZE}", this.FontSize.ToString());
+					} else {
+						sCSSText = sCSSText.Replace("{FONT_SIZE}", "inherit");
+					}
 
-					sCSSText = sCSSText.Replace("{MOBILE_WIDTH}", this.MobileWidth.Value.ToString() + "px");
-					sCSSText = sCSSText.Replace("{DESK_WIDTH}", (this.MobileWidth.Value + 1).ToString() + "px");
+					if (this.MenuFontSize.Value > 0) {
+						sCSSText = sCSSText.Replace("{MAIN_FONT_SIZE}", this.MenuFontSize.ToString());
+					} else {
+						sCSSText = sCSSText.Replace("{MAIN_FONT_SIZE}", "inherit");
+					}
+
+					if (this.MobileWidth.Value > 50) {
+						sCSSText = sCSSText.Replace("{MOBILE_WIDTH}", this.MobileWidth.ToString());
+					} else {
+						sCSSText = sCSSText.Replace("{MOBILE_WIDTH}", "100%");
+					}
+
+					if (this.MobileWidth.Value > 50) {
+						sCSSText = sCSSText.Replace("{DESK_WIDTH}", (this.MobileWidth.Value + 1).ToString() + this.MobileWidth.Type);
+					} else {
+						sCSSText = sCSSText.Replace("{DESK_WIDTH}", "100%");
+					}
 
 					sCSSText = sCSSText.Replace("{MENU_SELECT_CLASS}", this.CSSSelected);
 					sCSSText = sCSSText.Replace("{MENU_HASCHILD_CLASS}", this.CSSHasChildren);

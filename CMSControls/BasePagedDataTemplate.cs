@@ -180,7 +180,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[DefaultValue(null)]
 		[Browsable(false)]
-		[PersistenceMode(PersistenceMode.InnerProperty)]
+		[PersistenceMode(PersistenceMode.InnerProperty), TemplateInstance(TemplateInstance.Single)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate ContentHeaderTemplate { get; set; }
 
@@ -198,13 +198,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[DefaultValue(null)]
 		[Browsable(false)]
-		[PersistenceMode(PersistenceMode.InnerProperty)]
+		[PersistenceMode(PersistenceMode.InnerProperty), TemplateInstance(TemplateInstance.Single)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate ContentFooterTemplate { get; set; }
 
 		[DefaultValue(null)]
 		[Browsable(false)]
-		[PersistenceMode(PersistenceMode.InnerProperty)]
+		[PersistenceMode(PersistenceMode.InnerProperty), TemplateInstance(TemplateInstance.Single)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate PagerHeaderTemplate { get; set; }
 
@@ -222,7 +222,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[DefaultValue(null)]
 		[Browsable(false)]
-		[PersistenceMode(PersistenceMode.InnerProperty)]
+		[PersistenceMode(PersistenceMode.InnerProperty), TemplateInstance(TemplateInstance.Single)]
 		[TemplateContainer(typeof(RepeaterItem))]
 		public virtual ITemplate PagerFooterTemplate { get; set; }
 
@@ -256,7 +256,26 @@ namespace Carrotware.CMS.UI.Controls {
 			if (this.PagerTemplateAlt != null) {
 				rpPager.AlternatingItemTemplate = this.PagerTemplateAlt;
 			}
+
+			rpPagedContents.ItemDataBound += new RepeaterItemEventHandler(this.Content_ItemDataBound);
+			rpPager.ItemDataBound += new RepeaterItemEventHandler(this.Pager_ItemDataBound);
+
+			rpPagedContents.ItemCreated += new RepeaterItemEventHandler(this.Content_ItemCreated);
+			rpPager.ItemCreated += new RepeaterItemEventHandler(this.Pager_ItemCreated);
+
+			rpPagedContents.ItemCommand += new RepeaterCommandEventHandler(this.Content_ItemCommand);
+			rpPager.ItemCommand += new RepeaterCommandEventHandler(this.Pager_ItemCommand);
 		}
+
+		public virtual void Content_ItemDataBound(object sender, RepeaterItemEventArgs e) { }
+		public virtual void Pager_ItemDataBound(object sender, RepeaterItemEventArgs e) { }
+
+		public virtual void Content_ItemCreated(object sender, RepeaterItemEventArgs e) { }
+		public virtual void Pager_ItemCreated(object sender, RepeaterItemEventArgs e) { }
+
+		public virtual void Content_ItemCommand(object sender, RepeaterCommandEventArgs e) { }
+		public virtual void Pager_ItemCommand(object sender, RepeaterCommandEventArgs e) { }
+
 
 		public virtual object DataSource { get; set; }
 

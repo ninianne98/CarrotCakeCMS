@@ -10,7 +10,7 @@
 		}
 
 		{MENU_ID} {
-			font-size: {FONT_SIZE};
+			font-size: {MAIN_FONT_SIZE};
 			margin: 0;
 			padding: 0 1em;
 			background: {BG_HEX};

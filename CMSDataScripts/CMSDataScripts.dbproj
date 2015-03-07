@@ -883,6 +883,9 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
+    <Build Include="Schema Objects\Tables\Keys\dbo.carrot_Content.carrot_Content_CreditUserId_FK.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
   <ItemGroup>
     <NotInBuild Include="Scripts\__README.txt">
@@ -940,6 +943,9 @@
       <SubType>NotInBuild</SubType>
     </NotInBuild>
     <NotInBuild Include="Scripts\ALTER 11 - update tally sproc.sql">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Scripts\ALTER 12 - update time zone and credits.sql">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
   </ItemGroup>

@@ -336,6 +336,14 @@ namespace Carrotware.CMS.UI.Controls {
 			PrevNext();
 		}
 
+		public override void Pager_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+			base.Pager_ItemDataBound(sender, e);
+
+			if (e.Item.ItemType == ListItemType.Footer || e.Item.ItemType == ListItemType.Header) {
+				PrevNext();
+			}
+		}
+
 		[Browsable(false)]
 		public List<string> LimitedPropertyList {
 			get {
@@ -397,8 +405,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 			try {
 				ControlUtilities cu = new ControlUtilities(this.Page);
-				pair.LinkWrapper = (PagedDataNextPrevLinkWrapper)cu.FindControl(sCtrlName, this.Page);
-
+				Control ctrl = cu.FindControl(sCtrlName, this.Page);
+				pair.LinkWrapper = (PagedDataNextPrevLinkWrapper)ctrl;
 				if (pair.LinkWrapper == null) {
 					pair.PageLink = (PagedDataNextPrevLink)cu.FindControl(sCtrlName, this.Page);
 				} else {
@@ -408,6 +416,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return pair;
 		}
+
 
 		protected void PrevNext() {
 

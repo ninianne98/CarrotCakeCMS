@@ -38,6 +38,7 @@ namespace Carrotware.CMS.Core {
 				this.RetireDate = site.ConvertUTCToSiteTime(c.RetireDate);
 				this.EditDate = site.ConvertUTCToSiteTime(c.EditDate);
 				this.EditUserId = c.EditUserId;
+				this.CreditUserId = c.CreditUserId;
 				this.ShowInSiteNav = c.ShowInSiteNav;
 				this.CreateUserId = c.CreateUserId;
 				this.ContentType = ContentPageType.GetTypeByID(c.ContentTypeID);
@@ -120,6 +121,7 @@ namespace Carrotware.CMS.Core {
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
 		public Guid? EditUserId { get; set; }
+		public Guid? CreditUserId { get; set; }
 		public Guid CreateUserId { get; set; }
 		public string TemplateFile { get; set; }
 		public DateTime CreateDate { get; set; }
@@ -218,6 +220,14 @@ namespace Carrotware.CMS.Core {
 				_user = new ExtendedUserData(this.EditUserId.Value);
 			}
 			return _user;
+		}
+
+		ExtendedUserData _creditUser = null;
+		public ExtendedUserData GetCreditUserInfo() {
+			if (_creditUser == null && this.CreditUserId.HasValue) {
+				_creditUser = new ExtendedUserData(this.CreditUserId.Value);
+			}
+			return _creditUser;
 		}
 
 

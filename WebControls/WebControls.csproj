@@ -254,7 +254,6 @@
     <EmbeddedResource Include="jquery191.js" />
     <EmbeddedResource Include="jqueryui-1-10-2.js" />
     <EmbeddedResource Include="jquery-1111.js" />
-    <EmbeddedResource Include="jqueryui-1-11-2.js" />
     <EmbeddedResource Include="jquerybasic\silver\animated-overlay.gif" />
     <EmbeddedResource Include="jquerybasic\purple\animated-overlay.gif" />
     <EmbeddedResource Include="jquerybasic\lightgreen\animated-overlay.gif" />
@@ -263,6 +262,7 @@
     <EmbeddedResource Include="jquerybasic\black\animated-overlay.gif" />
     <EmbeddedResource Include="jquery-121mig.js" />
     <EmbeddedResource Include="jquery-1102.js" />
+    <EmbeddedResource Include="jqueryui-1-11-3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

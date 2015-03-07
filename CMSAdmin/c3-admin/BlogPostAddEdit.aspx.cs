@@ -166,6 +166,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtRetireDate.Text = pageContents.RetireDate.ToShortDateString();
 					txtRetireTime.Text = pageContents.RetireDate.ToShortTimeString();
 
+					if (pageContents.CreditUserId.HasValue) {
+						var usr = new ExtendedUserData(pageContents.CreditUserId.Value);
+						hdnCreditUserID.Value = usr.UserName;
+						txtSearchUser.Text = string.Format("{0} ({1})", usr.UserName, usr.EmailAddress);
+					}
+
 					pageContents.Parent_ContentID = null;
 
 					GeneralUtilities.SelectListValue(ddlTemplate, pageContents.TemplateFile.ToLower());
@@ -269,6 +275,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.ContentType = ContentPageType.PageType.BlogEntry;
 
 			pageContents.Parent_ContentID = null;
+
+			if (string.IsNullOrEmpty(hdnCreditUserID.Value)) {
+				pageContents.CreditUserId = null;
+			} else {
+				var usr = new ExtendedUserData(hdnCreditUserID.Value);
+				pageContents.CreditUserId = usr.UserId;
+			}
 
 			pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
 			pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);

@@ -96,6 +96,30 @@ namespace Carrotware.CMS.Core {
 			return usrs;
 		}
 
+		public static List<MembershipUser> GetCreditUserSearch(string searchTerm) {
+			List<MembershipUser> usrs = null;
+
+			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+
+				List<Guid> admins = (from ur in _db.aspnet_UsersInRoles
+									 join r in _db.aspnet_Roles on ur.RoleId equals r.RoleId
+									 where r.RoleName == CMSGroup_Admins
+									 select ur.UserId).ToList();
+
+				List<Guid> editors = (from sm in _db.carrot_UserSiteMappings
+									  where sm.SiteID == SiteData.CurrentSiteID
+									  select sm.UserId).ToList();
+
+				usrs = (from u in _db.aspnet_Users
+						join m in _db.aspnet_Memberships on u.UserId equals m.UserId
+						where (u.UserName.ToLower().Contains(searchTerm)
+									|| m.Email.ToLower().Contains(searchTerm))
+							&& admins.Union(editors).Contains(u.UserId)
+						select Membership.GetUser(u.UserName)).Take(50).ToList();
+			}
+
+			return usrs;
+		}
 
 		public static List<MembershipUser> GetUserListByEmail(string email) {
 			List<MembershipUser> usrs = new List<MembershipUser>();

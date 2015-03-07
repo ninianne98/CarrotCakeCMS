@@ -85,23 +85,43 @@ namespace Carrotware.CMS.Core {
 				w.WidgetDataID = Guid.NewGuid();
 			}
 
-			Guid userID = Guid.Empty;
+			Guid userID1 = Guid.Empty;
 
 			if (!cp.EditUserId.HasValue) {
-				userID = cp.CreateUserId;
+				userID1 = cp.CreateUserId;
 			} else {
-				userID = cp.EditUserId.Value;
+				userID1 = cp.EditUserId.Value;
 			}
 
-			ExtendedUserData u = new ExtendedUserData(userID);
+			ExtendedUserData u1 = new ExtendedUserData(userID1);
 			this.TheUser = new SiteExportUser {
-				ExportUserID = u.UserId,
-				Email = u.EmailAddress,
-				Login = u.UserName,
-				FirstName = u.FirstName,
-				LastName = u.LastName,
-				UserNickname = u.UserNickName
+				ExportUserID = u1.UserId,
+				Email = u1.EmailAddress,
+				Login = u1.UserName,
+				FirstName = u1.FirstName,
+				LastName = u1.LastName,
+				UserNickname = u1.UserNickName
 			};
+
+			Guid userID2 = Guid.Empty;
+
+			if (!cp.CreditUserId.HasValue) {
+				userID2 = cp.CreditUserId.Value;
+			}
+
+			ExtendedUserData u2 = new ExtendedUserData(userID2);
+			if (u2 != null) {
+				this.CreditUser = new SiteExportUser {
+					ExportUserID = u2.UserId,
+					Email = u2.EmailAddress,
+					Login = u2.UserName,
+					FirstName = u2.FirstName,
+					LastName = u2.LastName,
+					UserNickname = u2.UserNickName
+				};
+			} else {
+				this.CreditUser = null;
+			}
 
 		}
 
@@ -124,6 +144,8 @@ namespace Carrotware.CMS.Core {
 		public List<Widget> ThePageWidgets { get; set; }
 
 		public SiteExportUser TheUser { get; set; }
+
+		public SiteExportUser CreditUser { get; set; }
 
 	}
 }

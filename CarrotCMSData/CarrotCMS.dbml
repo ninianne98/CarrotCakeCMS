@@ -11,9 +11,11 @@
       <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_Membership" ThisKey="UserId" OtherKey="UserId" Type="aspnet_Membership" Cardinality="One" />
       <Association Name="aspnet_User_carrot_UserSiteMapping" Member="carrot_UserSiteMappings" ThisKey="UserId" OtherKey="UserId" Type="carrot_UserSiteMapping" />
-      <Association Name="aspnet_User_carrot_Content" Member="carrot_Contents" ThisKey="UserId" OtherKey="EditUserId" Type="carrot_Content" />
       <Association Name="aspnet_User_carrot_RootContent" Member="carrot_RootContents" ThisKey="UserId" OtherKey="CreateUserId" Type="carrot_RootContent" />
       <Association Name="aspnet_User_carrot_UserData" Member="carrot_UserData" ThisKey="UserId" OtherKey="UserId" Type="carrot_UserData" Cardinality="One" />
+      <Association Name="aspnet_User_carrot_Content" Member="carrot_Contents" ThisKey="UserId" OtherKey="CreditUserId" Type="carrot_Content" />
+      <Association Name="aspnet_User_carrot_Content1" Member="carrot_Contents1" ThisKey="UserId" OtherKey="EditUserId" Type="carrot_Content" />
+      <Association Name="aspnet_User_aspnet_UsersInRole" Member="aspnet_UsersInRoles" ThisKey="UserId" OtherKey="UserId" Type="aspnet_UsersInRole" />
     </Type>
   </Table>
   <Table Name="dbo.aspnet_Membership" Member="aspnet_Memberships">
@@ -118,6 +120,7 @@
       <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="LoweredRoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Association Name="aspnet_Role_aspnet_UsersInRole" Member="aspnet_UsersInRoles" ThisKey="RoleId" OtherKey="RoleId" Type="aspnet_UsersInRole" />
     </Type>
   </Table>
   <Table Name="dbo.carrot_ContentType" Member="carrot_ContentTypes">
@@ -164,28 +167,6 @@
       <Column Name="IsSpam" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="CommenterURL" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
       <Association Name="carrot_RootContent_carrot_ContentComment" Member="carrot_RootContent" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_RootContent" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.carrot_Content" Member="carrot_Contents">
-    <Type Name="carrot_Content">
-      <Column Name="ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Parent_ContentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="IsLatestVersion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="TitleBar" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="NavMenuText" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="PageHead" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="PageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="LeftPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="RightPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="NavOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="MetaKeyword" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
-      <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
-      <Association Name="aspnet_User_carrot_Content" Member="aspnet_User" ThisKey="EditUserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
-      <Association Name="carrot_RootContent_carrot_Content" Member="carrot_RootContent" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_RootContent" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.carrot_SerialCache" Member="carrot_SerialCaches">
@@ -315,52 +296,11 @@
       <Association Name="carrot_RootContent_carrot_TagContentMapping" Member="carrot_TagContentMappings" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_TagContentMapping" />
       <Association Name="carrot_RootContent_carrot_Widget" Member="carrot_Widgets" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_Widget" />
       <Association Name="carrot_RootContent_carrot_ContentComment" Member="carrot_ContentComments" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_ContentComment" />
-      <Association Name="carrot_RootContent_carrot_Content" Member="carrot_Contents" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_Content" />
       <Association Name="carrot_RootContent_carrot_TrackbackQueue" Member="carrot_TrackbackQueues" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_TrackbackQueue" />
+      <Association Name="carrot_RootContent_carrot_Content" Member="carrot_Contents" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_Content" />
       <Association Name="carrot_ContentType_carrot_RootContent" Member="carrot_ContentType" ThisKey="ContentTypeID" OtherKey="ContentTypeID" Type="carrot_ContentType" IsForeignKey="true" />
       <Association Name="aspnet_User_carrot_RootContent" Member="aspnet_User" ThisKey="CreateUserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
       <Association Name="carrot_Site_carrot_RootContent" Member="carrot_Site" ThisKey="SiteID" OtherKey="SiteID" Type="carrot_Site" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vw_carrot_Content" Member="vw_carrot_Contents">
-    <Type Name="vw_carrot_Content">
-      <Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Heartbeat_UserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="EditHeartbeat" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="FileName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
-      <Column Name="PageActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="ShowInSiteNav" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="ShowInSiteMap" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="BlockIndex" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="CreateUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Parent_ContentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="IsLatestVersion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="TitleBar" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="NavMenuText" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="PageHead" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="PageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="LeftPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="RightPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="NavOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="MetaKeyword" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
-      <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
-      <Column Name="ContentTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="ContentTypeValue" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
-      <Column Name="PageSlug" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
-      <Column Name="PageThumbnail" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
-      <Column Name="TimeZone" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
-      <Column Name="RetireDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="GoLiveDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="GoLiveDateLocal" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="IsRetired" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="IsUnReleased" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="VersionCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.carrot_TextWidget" Member="carrot_TextWidgets">
@@ -489,6 +429,7 @@
       <Column Name="LoweredEmail" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="EditDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PublicUseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserUrl" Type="System.String" DbType="NVarChar(392)" CanBeNull="true" />
     </Type>
   </Table>
@@ -500,6 +441,7 @@
       <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="EditDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PublicUseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="TagUrl" Type="System.String" DbType="NVarChar(392)" CanBeNull="true" />
     </Type>
   </Table>
@@ -511,7 +453,32 @@
       <Column Name="IsPublic" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="EditDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PublicUseCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CategoryUrl" Type="System.String" DbType="NVarChar(392)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.carrot_Content" Member="carrot_Contents">
+    <Type Name="carrot_Content">
+      <Column Name="ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Parent_ContentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsLatestVersion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TitleBar" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="NavMenuText" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PageHead" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="LeftPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RightPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NavOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="MetaKeyword" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="CreditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="aspnet_User_carrot_Content" Member="aspnet_User" ThisKey="CreditUserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+      <Association Name="aspnet_User_carrot_Content1" Member="aspnet_User1" ThisKey="EditUserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+      <Association Name="carrot_RootContent_carrot_Content" Member="carrot_RootContent" ThisKey="Root_ContentID" OtherKey="Root_ContentID" Type="carrot_RootContent" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.vw_carrot_EditHistory" Member="vw_carrot_EditHistories">
@@ -524,6 +491,7 @@
       <Column Name="NavMenuText" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="PageHead" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
       <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="CreditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="FileName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
@@ -542,6 +510,56 @@
       <Column Name="CreateUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CreateUserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="CreateEmail" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vw_carrot_Content" Member="vw_carrot_Contents">
+    <Type Name="vw_carrot_Content">
+      <Column Name="Root_ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Heartbeat_UserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="EditHeartbeat" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="PageActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShowInSiteNav" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShowInSiteMap" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BlockIndex" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreateUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ContentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Parent_ContentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="IsLatestVersion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TitleBar" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="NavMenuText" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PageHead" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="LeftPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="RightPageText" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="NavOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="CreditUserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="EditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TemplateFile" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="MetaKeyword" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="VersionCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ContentTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ContentTypeValue" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="PageSlug" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PageThumbnail" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="TimeZone" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="RetireDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="GoLiveDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="GoLiveDateLocal" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsRetired" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsUnReleased" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_UsersInRoles" Member="aspnet_UsersInRoles">
+    <Type Name="aspnet_UsersInRole">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="aspnet_Role_aspnet_UsersInRole" Member="aspnet_Role" ThisKey="RoleId" OtherKey="RoleId" Type="aspnet_Role" IsForeignKey="true" />
+      <Association Name="aspnet_User_aspnet_UsersInRole" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.carrot_BlogDateFilenameUpdate" Method="carrot_BlogDateFilenameUpdate">
