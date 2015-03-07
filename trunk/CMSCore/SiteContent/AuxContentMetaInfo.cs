@@ -50,6 +50,10 @@ namespace Carrotware.CMS.Core {
 		public int MetaInfoCount {
 			get { return this.UseCount == null ? 0 : Convert.ToInt32(this.UseCount); }
 		}
+
+		public int MetaPublicInfoCount {
+			get { return this.MetaInfoCount; }
+		}
 		#endregion
 	}
 
@@ -117,6 +121,10 @@ namespace Carrotware.CMS.Core {
 
 		public int MetaInfoCount {
 			get { return this.UseCount == null ? 0 : Convert.ToInt32(this.UseCount); }
+		}
+
+		public int MetaPublicInfoCount {
+			get { return this.MetaInfoCount; }
 		}
 		#endregion
 	}

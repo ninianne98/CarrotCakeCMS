@@ -173,7 +173,7 @@ namespace Carrotware.CMS.Core {
 
 		internal static IQueryable<vw_carrot_Content> GetContentByUserURL(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string sUserURL) {
 			return (from ed in ctx.vw_carrot_EditorURLs
-					join ct in ctx.vw_carrot_Contents on ed.UserId equals ct.EditUserId
+					join ct in ctx.vw_carrot_Contents on ed.SiteID equals ct.SiteID
 					where ed.SiteID == siteID
 						&& ct.SiteID == siteID
 						&& ed.UserUrl.ToLower() == sUserURL.ToLower()
@@ -182,6 +182,8 @@ namespace Carrotware.CMS.Core {
 						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
 						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 						&& ct.IsLatestVersion == true
+						&& ((ed.UserId == ct.EditUserId && ct.CreditUserId == null)
+									|| (ed.UserId == ct.CreditUserId && ct.CreditUserId != null))
 					select ct);
 		}
 

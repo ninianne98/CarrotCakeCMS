@@ -117,6 +117,7 @@ xcopy "$(ProjectDir)\DataScripts\ALTER08.sql" "$(SolutionDir)\CMSDataScripts\Scr
 xcopy "$(ProjectDir)\DataScripts\ALTER09.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 09 - parent child view and misc setting properties.sql" /F /R /Y /I						
 xcopy "$(ProjectDir)\DataScripts\ALTER10.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 10 - create version count and text widget tables.sql" /F /R /Y /I
 xcopy "$(ProjectDir)\DataScripts\ALTER11.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 11 - update tally sproc.sql" /F /R /Y /I
+xcopy "$(ProjectDir)\DataScripts\ALTER12.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 12 - update time zone and credits.sql" /F /R /Y /I
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,11 +12,11 @@ ALTER PROCEDURE [dbo].[carrot_BlogMonthlyTallies]
 
 /*
 
-exec [carrot_BlogMonthlyTallies] '3BD253EA-AC65-4eb6-A4E7-BB097C2255A0', 10
+exec [carrot_BlogMonthlyTallies] '3BD253EA-AC65-4eb6-A4E7-BB097C2255A0', 0, 10
 
-exec [carrot_BlogMonthlyTallies] '3BD253EA-AC65-4eb6-A4E7-BB097C2255A0', 16
+exec [carrot_BlogMonthlyTallies] '3BD253EA-AC65-4eb6-A4E7-BB097C2255A0', 1, 16
 
-exec [carrot_BlogMonthlyTallies] '3BD253EA-AC65-4eb6-A4E7-BB097C2255A0', 5
+exec [carrot_BlogMonthlyTallies] '3BD253EA-AC65-4eb6-A4E7-BB097C2255A0', 1, 5
 
 */
 

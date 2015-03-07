@@ -55,8 +55,8 @@ namespace Carrotware.Web.UI.Controls {
 			switch (jqVer) {
 				case "1.10":
 				case "1.11":
-					jqVer = "1.11.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-2.js");
+					jqVer = "1.11.3";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-3.js");
 					break;
 				case "1.9":
 					jqVer = "1.9.2";

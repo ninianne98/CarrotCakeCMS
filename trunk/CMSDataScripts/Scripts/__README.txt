@@ -40,4 +40,6 @@ If coming from an earlier version, run these scripts
 
 		** ALTER 11 - update tally sproc.sql     (from before 2013-10-01)
 
+		** ALTER 12 - update time zone and credits.sql     (from before 2014-06-01)
+
 

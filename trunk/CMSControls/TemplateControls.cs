@@ -570,6 +570,15 @@ namespace Carrotware.CMS.UI.Controls {
 			Author_LastName,
 			Author_FullName_FirstLast,
 			Author_FullName_LastFirst,
+			Credit_UserName,
+			Credit_EditorURL,
+			Credit_UserBio,
+			Credit_EmailAddress,
+			Credit_UserNickName,
+			Credit_FirstName,
+			Credit_LastName,
+			Credit_FullName_FirstLast,
+			Credit_FullName_LastFirst,
 		}
 
 		[Category("Appearance")]
@@ -654,14 +663,23 @@ namespace Carrotware.CMS.UI.Controls {
 			string sField = DataField.ToString();
 
 			try {
-				if (sField.StartsWith("Author_")) {
-					sField = sField.Replace("Author_", "");
-
+				if (sField.StartsWith("Author_") || sField.StartsWith("Credit_")) {
 					SiteNav sn = (SiteNav)DataBinder.GetDataItem(container);
 					if (sn != null) {
-						ExtendedUserData u = sn.GetUserInfo();
-						if (u != null) {
-							object obj = ReflectionUtilities.GetPropertyValue(u, sField);
+
+						ExtendedUserData usr = null;
+						if (sField.StartsWith("Credit_")) {
+							sField = DataField.ToString().Replace("Credit_", String.Empty);
+							usr = sn.GetCreditUserInfo();
+						}
+
+						if (sField.StartsWith("Author_") || usr == null) {
+							sField = DataField.ToString().Replace("Credit_", String.Empty).Replace("Author_", String.Empty);
+							usr = sn.GetUserInfo();
+						}
+
+						if (usr != null) {
+							object obj = ReflectionUtilities.GetPropertyValue(usr, sField);
 							if (obj != null) {
 								sValue = obj.ToString();
 							}

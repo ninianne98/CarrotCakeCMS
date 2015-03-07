@@ -46,6 +46,15 @@ namespace Carrotware.CMS.UI.Controls {
 			Author_LastName,
 			Author_FullName_FirstLast,
 			Author_FullName_LastFirst,
+			Credit_UserName,
+			Credit_EditorURL,
+			Credit_UserBio,
+			Credit_EmailAddress,
+			Credit_UserNickName,
+			Credit_FirstName,
+			Credit_LastName,
+			Credit_FullName_FirstLast,
+			Credit_FullName_LastFirst,
 		}
 
 		[Category("Appearance")]
@@ -96,10 +105,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 				if (cp != null) {
 
-					if (sField.StartsWith("Author_")) {
-						sField = DataField.ToString().Replace("Author_", "");
+					if (sField.StartsWith("Author_") || sField.StartsWith("Credit_")) {
+						ExtendedUserData usr = null;
+						if (sField.StartsWith("Credit_")) {
+							sField = DataField.ToString().Replace("Credit_", String.Empty);
+							usr = cp.GetCreditUserInfo();
+						}
 
-						ExtendedUserData usr = cp.GetUserInfo();
+						if (sField.StartsWith("Author_") || usr == null) {
+							sField = DataField.ToString().Replace("Credit_", String.Empty).Replace("Author_", String.Empty);
+							usr = cp.GetUserInfo();
+						}
+
 						if (usr != null) {
 							object objData = ReflectionUtilities.GetPropertyValue(usr, sField);
 							if (objData != null) {

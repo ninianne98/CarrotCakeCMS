@@ -91,6 +91,11 @@ namespace Carrotware.CMS.UI.Controls {
 			FullName_LastFirst,
 		}
 
+		public enum AuthorSource {
+			Editor,
+			Credited
+		}
+
 
 		[Category("Appearance")]
 		[DefaultValue("{0}")]
@@ -122,18 +127,39 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue("Editor")]
+		public AuthorSource SourceField {
+			get {
+				string s = (string)ViewState["SourceField"];
+				AuthorSource c = AuthorSource.Editor;
+				if (!string.IsNullOrEmpty(s)) {
+					try {
+						c = (AuthorSource)Enum.Parse(typeof(AuthorSource), s, true);
+					} catch (Exception ex) { }
+				}
+				return c;
+			}
+			set {
+				ViewState["SourceField"] = value.ToString();
+			}
+		}
+
 		private ControlUtilities cu = new ControlUtilities();
-		private ExtendedUserData usr = null;
+		private ExtendedUserData _usr = null;
 
 		protected override void OnPreRender(EventArgs e) {
 
-
-			if (usr == null) {
-				usr = ExtendedUserData.GetEditorFromURL();
+			if (_usr == null) {
+				_usr = ExtendedUserData.GetEditorFromURL();
 			}
-			if (usr == null) {
+			if (_usr == null) {
 				ContentPage cp = cu.GetContainerContentPage(this);
-				usr = cp.GetUserInfo();
+				if (this.SourceField == AuthorSource.Editor) {
+					_usr = cp.GetUserInfo();
+				} else {
+					_usr = cp.GetCreditUserInfo();
+				}
 			}
 
 			AssignUser();
@@ -144,8 +170,8 @@ namespace Carrotware.CMS.UI.Controls {
 		private void AssignUser() {
 			string sFieldValue = string.Empty;
 
-			if (usr != null) {
-				object objData = ReflectionUtilities.GetPropertyValue(usr, DataField.ToString());
+			if (_usr != null) {
+				object objData = ReflectionUtilities.GetPropertyValue(_usr, DataField.ToString());
 				if (objData != null) {
 					sFieldValue = string.Format(FieldFormat, objData);
 				}
@@ -163,7 +189,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (contentData is ISiteContent) {
 				ISiteContent content = (ISiteContent)(contentData);
 
-				usr = content.GetUserInfo();
+				_usr = content.GetUserInfo();
 
 				AssignUser();
 			}

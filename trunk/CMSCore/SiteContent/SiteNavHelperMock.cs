@@ -71,7 +71,8 @@ namespace Carrotware.CMS.Core {
 													 SiteID = Guid.NewGuid(),
 													 CategoryURL = String.Format("#/archive/keyword/cat{0}.aspx", ct),
 													 CategoryText = String.Format("Meta Info Cat {0}", ct),
-													 UseCount = ct + 2
+													 UseCount = ct + 2,
+													 PublicUseCount = ct + 3
 												 }).Cast<IContentMetaInfo>().ToList();
 
 			return lstContent;
@@ -87,7 +88,8 @@ namespace Carrotware.CMS.Core {
 													 SiteID = Guid.NewGuid(),
 													 TagURL = String.Format("#/archive/keyword/tag{0}.aspx", ct),
 													 TagText = String.Format("Meta Info Tag {0}", ct),
-													 UseCount = ct + 2
+													 UseCount = ct + 2,
+													 PublicUseCount = ct + 3
 												 }).Cast<IContentMetaInfo>().ToList();
 
 			return lstContent;
@@ -138,7 +140,9 @@ namespace Carrotware.CMS.Core {
 				ContentCategory cc = new ContentCategory();
 				cc.SiteID = siteID;
 				cc.UseCount = n * 3;
+				cc.PublicUseCount = n * 2;
 				cc.ContentCategoryID = Guid.NewGuid();
+				cc.EditDate = dateNow;
 				cc.CategoryText = dateNow.ToString("MMMM yyyy");
 				cc.CategoryURL = "#" + SiteData.PreviewTemplateFilePage;
 

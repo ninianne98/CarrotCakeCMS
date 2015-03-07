@@ -25,12 +25,14 @@ namespace Carrotware.CMS.Core {
 		public string UserName { get; set; }
 		public string UserUrl { get; set; }
 		public int? UseCount { get; set; }
+		public int? PublicUseCount { get; set; }
 		public bool IsPublic { get; set; }
 		public DateTime? EditDate { get; set; }
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
 			if (obj == null || GetType() != obj.GetType()) return false;
+
 			if (obj is ContentEditor) {
 				ContentEditor p = (ContentEditor)obj;
 				return (this.SiteID == p.SiteID
@@ -53,6 +55,7 @@ namespace Carrotware.CMS.Core {
 				this.UserUrl = c.UserUrl;
 				this.LoweredEmail = c.LoweredEmail;
 				this.UseCount = c.UseCount;
+				this.PublicUseCount = c.PublicUseCount;
 				this.IsPublic = true;
 
 				if (c.EditDate.HasValue) {
@@ -114,6 +117,10 @@ namespace Carrotware.CMS.Core {
 
 		public int MetaInfoCount {
 			get { return this.UseCount == null ? 0 : Convert.ToInt32(this.UseCount); }
+		}
+
+		public int MetaPublicInfoCount {
+			get { return this.PublicUseCount == null ? 0 : Convert.ToInt32(this.PublicUseCount); }
 		}
 		#endregion
 	}

@@ -5,6 +5,7 @@ namespace Carrotware.CMS.Core {
 		Guid ContentMetaInfoID { get; }
 		string MetaInfoText { get; }
 		string MetaInfoURL { get; }
+		int MetaPublicInfoCount { get; }
 		int MetaInfoCount { get; }
 		bool MetaIsPublic { get; }
 

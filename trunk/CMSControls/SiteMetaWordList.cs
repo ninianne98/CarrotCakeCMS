@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
@@ -176,9 +177,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (lstNav != null) {
-				this.ItemCount = lstNav.Count;
 
-				lstNav.RemoveAll(x => x.MetaInfoCount < 1 && this.ShowNonZeroCountOnly);
+				if (SecurityData.IsAuthEditor) {
+					lstNav.RemoveAll(x => x.MetaInfoCount < 1 && this.ShowNonZeroCountOnly);
+					lstNav = lstNav.OrderByDescending(x => x.MetaInfoCount).ToList();
+				} else {
+					lstNav.RemoveAll(x => x.MetaPublicInfoCount < 1 && this.ShowNonZeroCountOnly);
+					lstNav = lstNav.OrderByDescending(x => x.MetaPublicInfoCount).ToList();
+				}
+
+				if (ContentType == MetaDataType.DateMonth) {
+					lstNav = lstNav.OrderByDescending(x => x.MetaDataDate).ToList();
+				}
+
+				this.ItemCount = lstNav.Count;
 			}
 
 			return lstNav;
@@ -211,14 +223,21 @@ namespace Carrotware.CMS.UI.Controls {
 
 			foreach (IContentMetaInfo c in lstNav) {
 				string sText = c.MetaInfoText;
+				string sCount = "0";
+
+				if (SecurityData.IsAuthEditor) {
+					sCount = c.MetaInfoCount.ToString();
+				} else {
+					sCount = c.MetaPublicInfoCount.ToString();
+				}
 				if (ShowUseCount) {
-					sText = c.MetaInfoText + "  (" + c.MetaInfoCount.ToString() + ") ";
+					sText = string.Format("{0}  ({1})", c.MetaInfoText, sCount);
 				}
 
 				if (SiteData.IsFilenameCurrentPage(c.MetaInfoURL)) {
-					output.WriteLine("<li class=\"meta-used-" + c.MetaInfoCount.ToString() + sItemCSS + " selected\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
+					output.WriteLine("<li class=\"meta-used-" + sCount + sItemCSS + " selected\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
 				} else {
-					output.WriteLine("<li class=\"meta-used-" + c.MetaInfoCount.ToString() + sItemCSS + "\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
+					output.WriteLine("<li class=\"meta-used-" + sCount + sItemCSS + "\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
 				}
 			}
 

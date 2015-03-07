@@ -25,7 +25,14 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static SqlException LastSQLError { get; set; }
 
-		public static string CurrentDbVersion { get { return "20140930"; } }
+		public static string CurrentDbVersion { get { return "20141025"; } }
+
+		public static string DbVersion10 { get { return "20130615"; } }
+
+		public static string DbVersion11 { get { return "20130926"; } }
+
+		public static string DbVersion12 { get { return "20141025"; } }
+
 
 		public DatabaseUpdate() {
 			LastSQLError = null;
@@ -126,7 +133,8 @@ namespace Carrotware.CMS.DBUpdater {
 					res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", false);
 					res.Response = "Created Database";
 					res.RanUpdate = true;
-					SetDbSchemaVersion(DatabaseUpdate.CurrentDbVersion);
+					// change version key when the DB creation is rescripted
+					SetDbSchemaVersion(DatabaseUpdate.DbVersion12);
 					return res;
 				}
 
@@ -275,11 +283,11 @@ namespace Carrotware.CMS.DBUpdater {
 							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep10());
 						}
 						ver = GetDbSchemaVersion();
-						if (ver.DataValue.Length < 2 || ver.DataValue.StartsWith("201306") || ver.DataValue.StartsWith("201309")) {
+						if (ver.DataValue == DatabaseUpdate.DbVersion10 || ver.DataValue.StartsWith("201306") || ver.DataValue.StartsWith("201309")) {
 							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep11());
 						}
 						ver = GetDbSchemaVersion();
-						if (ver.DataValue.StartsWith("201309") || ver.DataValue.StartsWith("201409")) {
+						if (ver.DataValue == DatabaseUpdate.DbVersion11 || ver.DataValue.StartsWith("201309") || ver.DataValue.StartsWith("201409") || ver.DataValue.StartsWith("201410")) {
 							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep12());
 						}
 					}
@@ -628,7 +636,7 @@ namespace Carrotware.CMS.DBUpdater {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER10.sql", false);
 				res.Response = "CMS DB created TextWidget and Content Snippet, updated edit history";
 				res.RanUpdate = true;
-				SetDbSchemaVersion("20130615");
+				SetDbSchemaVersion(DatabaseUpdate.DbVersion10);
 				return res;
 			}
 
@@ -646,7 +654,7 @@ namespace Carrotware.CMS.DBUpdater {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER11.sql", false);
 				res.Response = "CMS DB Updated archive tally";
 				res.RanUpdate = true;
-				SetDbSchemaVersion("20130926");
+				SetDbSchemaVersion(DatabaseUpdate.DbVersion11);
 				return res;
 			}
 
@@ -662,9 +670,9 @@ namespace Carrotware.CMS.DBUpdater {
 
 			if (bTestResult) {
 				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER12.sql", false);
-				res.Response = "CMS DB Updated time zone sproc";
+				res.Response = "CMS DB Updated time zone sproc and tallies";
 				res.RanUpdate = true;
-				SetDbSchemaVersion("20140930");
+				SetDbSchemaVersion(DatabaseUpdate.DbVersion12);
 				return res;
 			}
 

@@ -96,6 +96,7 @@ namespace Carrotware.CMS.Core {
 				this.RightPageText = c.RightPageText;
 				this.NavOrder = c.NavOrder;
 				this.EditUserId = c.EditUserId;
+				this.CreditUserId = c.CreditUserId;
 				this.TemplateFile = c.TemplateFile;
 				this.Thumbnail = c.PageThumbnail;
 
@@ -106,7 +107,7 @@ namespace Carrotware.CMS.Core {
 				this.MetaDescription = c.MetaDescription;
 				this.MetaKeyword = c.MetaKeyword;
 
-				this.VersionCount = c.VersionCount;
+				this.VersionCount = c.VersionCount.HasValue ? c.VersionCount.Value : 0;
 			}
 		}
 
@@ -302,6 +303,8 @@ namespace Carrotware.CMS.Core {
 			c.RightPageText = this.RightPageText;
 
 			c.EditUserId = this.EditUserId;
+			c.CreditUserId = this.CreditUserId;
+
 			c.EditDate = DateTime.UtcNow;
 			c.TemplateFile = this.TemplateFile;
 
@@ -466,6 +469,8 @@ namespace Carrotware.CMS.Core {
 		public DateTime GoLiveDate { get; set; }
 		public DateTime RetireDate { get; set; }
 		public Guid? EditUserId { get; set; }
+		public Guid? CreditUserId { get; set; }
+
 		public Guid CreateUserId { get; set; }
 		public bool IsLatestVersion { get; set; }
 		public bool ShowInSiteMap { get; set; }
@@ -561,6 +566,14 @@ namespace Carrotware.CMS.Core {
 				_user = new ExtendedUserData(this.EditUserId.Value);
 			}
 			return _user;
+		}
+
+		ExtendedUserData _creditUser = null;
+		public ExtendedUserData GetCreditUserInfo() {
+			if (_creditUser == null && this.CreditUserId.HasValue) {
+				_creditUser = new ExtendedUserData(this.CreditUserId.Value);
+			}
+			return _creditUser;
 		}
 
 

@@ -2,11 +2,24 @@
 <tbl>
 
 	<querynugget>
+		<priority>21</priority>
+		<mode>LTE</mode>
+		<rowcount>7</rowcount>
+		<alwayscheck>True</alwayscheck>
+		<testcontext>|AlterStep12|DatabaseNeedsUpdate|</testcontext>
+		<sql>
+      select [table_schema], [table_name], [column_name], [ordinal_position]
+      from [information_schema].[columns]
+      where [table_name] in ('vw_carrot_CategoryURL')
+    </sql>
+	</querynugget>
+	
+	<querynugget>
 		<priority>20</priority>
 		<mode>LT</mode>
 		<rowcount>1</rowcount>
 		<alwayscheck>False</alwayscheck>
-		<testcontext>|AlterStep12|DatabaseNeedsUpdate|</testcontext>
+		<testcontext>|AlterStep12|</testcontext>
 		<sql>
 			select p.object_id, p.[name]
 			from [sys].[all_parameters] as p
@@ -16,10 +29,23 @@
 	</querynugget>
 	
   <querynugget>
-    <priority>18</priority>
+    <priority>20</priority>
     <mode>LT</mode>
     <rowcount>1</rowcount>
     <alwayscheck>True</alwayscheck>
+    <testcontext>|AlterStep12|DatabaseNeedsUpdate|</testcontext>
+    <sql>
+      select distinct table_name, column_name
+      from [information_schema].[columns]
+      where table_name in('carrot_Content') and column_name in('CreditUserId')
+    </sql>
+  </querynugget>
+
+  <querynugget>
+    <priority>18</priority>
+    <mode>LT</mode>
+    <rowcount>1</rowcount>
+    <alwayscheck>False</alwayscheck>
     <testcontext>|AlterStep11|</testcontext>
     <sql>
       select o.name, o.type_desc

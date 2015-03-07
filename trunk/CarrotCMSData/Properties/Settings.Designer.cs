@@ -33,5 +33,16 @@ namespace Carrotware.CMS.Data.Properties {
                 return ((string)(this["CarrotwareCMSConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\sql2008express;Initial Catalog=CarrotwareCMS;Integrated Security=Tr" +
+            "ue")]
+        public string CarrotwareCMSConnectionString1 {
+            get {
+                return ((string)(this["CarrotwareCMSConnectionString1"]));
+            }
+        }
     }
 }

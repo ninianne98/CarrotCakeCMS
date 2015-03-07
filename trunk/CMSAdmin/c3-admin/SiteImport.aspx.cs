@@ -287,6 +287,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.EditDate = SiteData.CurrentSite.Now;
 					cp.EditUserId = exSite.FindImportUser(impCP.TheUser);
 					cp.CreateUserId = exSite.FindImportUser(impCP.TheUser);
+					if (impCP.CreditUser != null) {
+						cp.CreditUserId = exSite.FindImportUser(impCP.CreditUser);
+					}
 					cp.NavOrder = iOrder;
 					cp.TemplateFile = ddlTemplatePage.SelectedValue;
 
@@ -355,6 +358,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.EditDate = SiteData.CurrentSite.Now;
 					cp.EditUserId = exSite.FindImportUser(impCP.TheUser);
 					cp.CreateUserId = exSite.FindImportUser(impCP.TheUser);
+					if (impCP.CreditUser != null) {
+						cp.CreditUserId = exSite.FindImportUser(impCP.CreditUser);
+					}
 					cp.NavOrder = SiteData.BlogSortOrderNumber;
 					cp.TemplateFile = ddlTemplatePost.SelectedValue;
 

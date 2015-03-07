@@ -443,6 +443,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public List<MembershipUser> FindCreditUsers(string searchTerm) {
+
+			string search = CMSConfigHelper.DecodeBase64(searchTerm);
+
+			List<MembershipUser> lstUsers = SecurityData.GetCreditUserSearch(search);
+
+			return lstUsers.OrderBy(x => x.UserName).ToList();
+		}
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string ValidateUniqueCategory(string TheSlug, string ItemID) {
 			try {
 				Guid CurrentItemGuid = new Guid(ItemID);
