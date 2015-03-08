@@ -1,4 +1,4 @@
-﻿<%@ Page Title="TagAddEdit" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="TagAddEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.TagAddEdit" %>
+﻿<%@ Page Title="Tag Add/Edit" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="TagAddEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.TagAddEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

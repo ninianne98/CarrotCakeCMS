@@ -1,4 +1,4 @@
-﻿<%@ Page Title="CommentIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CommentIndex.aspx.cs"
+﻿<%@ Page Title="Comment Index" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CommentIndex.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.CommentIndex" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>

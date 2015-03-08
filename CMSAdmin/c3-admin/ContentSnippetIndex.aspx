@@ -1,4 +1,4 @@
-﻿<%@ Page Title="ContentSnippetIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="ContentSnippetIndex.aspx.cs"
+﻿<%@ Page Title="Content Snippet Index" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="ContentSnippetIndex.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ContentSnippetIndex" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
