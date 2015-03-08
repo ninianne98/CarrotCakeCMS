@@ -94,31 +94,17 @@ namespace Carrotware.CMS.Core {
 			}
 
 			ExtendedUserData u1 = new ExtendedUserData(userID1);
-			this.TheUser = new SiteExportUser {
-				ExportUserID = u1.UserId,
-				Email = u1.EmailAddress,
-				Login = u1.UserName,
-				FirstName = u1.FirstName,
-				LastName = u1.LastName,
-				UserNickname = u1.UserNickName
-			};
+			this.TheUser = new SiteExportUser(u1);
 
 			Guid userID2 = Guid.Empty;
 
-			if (!cp.CreditUserId.HasValue) {
+			if (cp.CreditUserId.HasValue) {
 				userID2 = cp.CreditUserId.Value;
 			}
 
 			ExtendedUserData u2 = new ExtendedUserData(userID2);
 			if (u2 != null) {
-				this.CreditUser = new SiteExportUser {
-					ExportUserID = u2.UserId,
-					Email = u2.EmailAddress,
-					Login = u2.UserName,
-					FirstName = u2.FirstName,
-					LastName = u2.LastName,
-					UserNickname = u2.UserNickName
-				};
+				this.CreditUser = new SiteExportUser(u2);
 			} else {
 				this.CreditUser = null;
 			}

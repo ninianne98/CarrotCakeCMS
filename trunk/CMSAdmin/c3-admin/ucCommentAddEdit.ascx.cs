@@ -53,6 +53,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					lblTitle.Text = item.NavMenuText;
 					lblFile.Text = item.FileName;
 					btnDeleteButton.Visible = true;
+					lnkPage.NavigateUrl = item.FileName;
 				} else {
 					btnDeleteButton.Visible = false;
 				}

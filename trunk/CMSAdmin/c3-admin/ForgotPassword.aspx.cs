@@ -36,6 +36,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				InfoMessage.Text = "Email sent with new password.";
 			} else {
 				if (lblErr.Text.ToLower().Contains("system.net.mail.smtpclient")
+						|| lblErr.Text.ToLower().Contains("system.net.mime.mailbnfhelper.readmailaddress")
+						|| lblErr.Text.ToLower().Contains("system.net.mail.mailaddresscollection")
 						|| lblErr.Text.ToLower().Contains("system.security.securityexception")) {
 					FailureText.Text = "Error sending reset message.";
 				} else {

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="CategoryIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CategoryIndex.aspx.cs"
+﻿<%@ Page Title="Category Index" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CategoryIndex.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.CategoryIndex" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>

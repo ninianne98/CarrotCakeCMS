@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitle;
+        protected global::System.Web.UI.WebControls.Literal lblTitle;
         
         /// <summary>
         /// lblFile control.
@@ -28,7 +28,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFile;
+        protected global::System.Web.UI.WebControls.Literal lblFile;
+        
+        /// <summary>
+        /// lnkPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkPage;
         
         /// <summary>
         /// lblIP control.
@@ -37,7 +46,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIP;
+        protected global::System.Web.UI.WebControls.Literal lblIP;
         
         /// <summary>
         /// lblDate control.
@@ -46,7 +55,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDate;
+        protected global::System.Web.UI.WebControls.Literal lblDate;
         
         /// <summary>
         /// txtEmail control.

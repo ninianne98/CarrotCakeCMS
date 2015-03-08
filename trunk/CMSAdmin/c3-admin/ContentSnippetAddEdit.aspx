@@ -1,4 +1,4 @@
-﻿<%@ Page Title="ContentSnippetAddEdit" Language="C#" ValidateRequest="false" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true"
+﻿<%@ Page Title="Content Snippet Add/Edit" Language="C#" ValidateRequest="false" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true"
 	CodeBehind="ContentSnippetAddEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ContentSnippetAddEdit" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>

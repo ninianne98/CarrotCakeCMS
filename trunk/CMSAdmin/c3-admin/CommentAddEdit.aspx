@@ -1,4 +1,4 @@
-﻿<%@ Page ValidateRequest="false" Title="CommentAddEdit" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CommentAddEdit.aspx.cs"
+﻿<%@ Page ValidateRequest="false" Title="Comment Add/Edit" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CommentAddEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.CommentAddEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>

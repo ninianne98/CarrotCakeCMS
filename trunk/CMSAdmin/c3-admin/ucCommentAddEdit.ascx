@@ -11,7 +11,7 @@
 				title:
 			</td>
 			<td>
-				<asp:Label ID="lblTitle" runat="server" />
+				<asp:Literal ID="lblTitle" runat="server" />
 			</td>
 		</tr>
 		<tr>
@@ -19,7 +19,9 @@
 				filename:
 			</td>
 			<td>
-				<asp:Label ID="lblFile" runat="server" />
+				<asp:Literal ID="lblFile" runat="server" />
+				&nbsp;&nbsp;<asp:HyperLink ID="lnkPage" runat="server" Target="_blank"><img class="imgNoBorder" src="images/html2.png" 
+				title="Visit page" alt="Visit page" /></asp:HyperLink>
 			</td>
 		</tr>
 	</table>
@@ -36,7 +38,7 @@
 				IP address:
 			</td>
 			<td>
-				<asp:Label ID="lblIP" runat="server" />
+				<asp:Literal ID="lblIP" runat="server" />
 			</td>
 		</tr>
 		<tr>
@@ -44,7 +46,7 @@
 				date:
 			</td>
 			<td>
-				<asp:Label ID="lblDate" runat="server" />
+				<asp:Literal ID="lblDate" runat="server" />
 			</td>
 		</tr>
 		<tr>

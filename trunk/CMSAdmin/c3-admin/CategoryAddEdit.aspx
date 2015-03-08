@@ -1,4 +1,4 @@
-﻿<%@ Page Title="CategoryAddEdit" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CategoryAddEdit.aspx.cs"
+﻿<%@ Page Title="Category Add Edit" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="CategoryAddEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.CategoryAddEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>

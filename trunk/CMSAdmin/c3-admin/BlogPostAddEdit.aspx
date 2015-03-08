@@ -1,4 +1,4 @@
-﻿<%@ Page ValidateRequest="false" Title="BlogPostAddEdit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostAddEdit.aspx.cs"
+﻿<%@ Page ValidateRequest="false" Title="Blog Post Add/Edit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostAddEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostAddEdit" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
