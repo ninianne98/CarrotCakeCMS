@@ -33,7 +33,7 @@ namespace Carrotware.Web.UI.Controls {
 			int ident = output.Indent;
 
 			string sJSFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jsHelperLibrary.js");
-			string sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery183.js");
+			string sJQFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery-1-8-3.js");
 
 			output.Indent = ident + 3;
 			output.WriteLine();

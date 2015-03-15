@@ -138,7 +138,7 @@
     <EmbeddedResource Include="jquerybasic\jquery-ui-black.css" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jquery164.js" />
+    <EmbeddedResource Include="jquery-1-6-4.js" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -174,7 +174,7 @@
     <EmbeddedResource Include="jquerybasic\blue\ui-icons_ffffff_256x240.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jquery172.js" />
+    <EmbeddedResource Include="jquery-1-7-2.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="jquerybasic\purple\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -250,19 +250,19 @@
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_f9cecd_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_highlight-soft_25_fbf9ee_1x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="jquery183.js" />
-    <EmbeddedResource Include="jquery191.js" />
+    <EmbeddedResource Include="jquery-1-8-3.js" />
+    <EmbeddedResource Include="jquery-1-9-1.js" />
     <EmbeddedResource Include="jqueryui-1-10-2.js" />
-    <EmbeddedResource Include="jquery-1111.js" />
     <EmbeddedResource Include="jquerybasic\silver\animated-overlay.gif" />
     <EmbeddedResource Include="jquerybasic\purple\animated-overlay.gif" />
     <EmbeddedResource Include="jquerybasic\lightgreen\animated-overlay.gif" />
     <EmbeddedResource Include="jquerybasic\green\animated-overlay.gif" />
     <EmbeddedResource Include="jquerybasic\blue\animated-overlay.gif" />
     <EmbeddedResource Include="jquerybasic\black\animated-overlay.gif" />
-    <EmbeddedResource Include="jquery-121mig.js" />
-    <EmbeddedResource Include="jquery-1102.js" />
-    <EmbeddedResource Include="jqueryui-1-11-3.js" />
+    <EmbeddedResource Include="jquery-1-2-1-mig.js" />
+    <EmbeddedResource Include="jquery-1-10-2.js" />
+    <EmbeddedResource Include="jquery-1-11-2.js" />
+    <EmbeddedResource Include="jqueryui-1-11-4.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
