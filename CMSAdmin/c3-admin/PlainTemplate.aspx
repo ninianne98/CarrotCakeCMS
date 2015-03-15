@@ -28,7 +28,7 @@
 <head id="Head1" runat="server">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" UseJqueryMigrate="true" />
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("input:button, input:submit, input:reset").button();
@@ -263,8 +263,8 @@
 			<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
 		</p>
 		<div id="menu">
-			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878" SubFGColor="#ffffff"
-				UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
+			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878"
+				SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
 		</div>
 		<div style="clear: both;">
 		</div>
@@ -276,11 +276,9 @@
 					<div id="sidebar">
 						<ul>
 							<li>
-								<carrot:WidgetContainer ID="phLeftTop" runat="server">
-								</carrot:WidgetContainer>
+								<carrot:WidgetContainer ID="phLeftTop" runat="server" />
 								<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
-								<carrot:WidgetContainer ID="phLeftBottom" runat="server">
-								</carrot:WidgetContainer>
+								<carrot:WidgetContainer ID="phLeftBottom" runat="server" />
 							</li>
 							<li>
 								<carrot:ChildNavigation MetaDataTitle="Child Pages" runat="server" ID="SecondLevelNavigation2" />
@@ -299,20 +297,16 @@
 							<h2>
 								<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="PageHead" /></h2>
 							<div class="entry">
-								<carrot:WidgetContainer ID="phCenterTop" runat="server">
-								</carrot:WidgetContainer>
+								<carrot:WidgetContainer ID="phCenterTop" runat="server" />
 								<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
-								<carrot:WidgetContainer ID="phCenterBottom" runat="server">
-								</carrot:WidgetContainer>
+								<carrot:WidgetContainer ID="phCenterBottom" runat="server" />
 							</div>
 							<div style="clear: both;">
 							</div>
 							<div class="entry">
-								<carrot:WidgetContainer ID="phRightTop" runat="server">
-								</carrot:WidgetContainer>
+								<carrot:WidgetContainer ID="phRightTop" runat="server" />
 								<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server" />
-								<carrot:WidgetContainer ID="phRightBottom" runat="server">
-								</carrot:WidgetContainer>
+								<carrot:WidgetContainer ID="phRightBottom" runat="server" />
 							</div>
 						</div>
 						<carrot:PagedDataSummary ID="PagedDataSummary2" runat="server" ContentType="Blog" PageSize="8" Visible="false">
