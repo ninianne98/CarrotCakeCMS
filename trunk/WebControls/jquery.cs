@@ -72,24 +72,24 @@ namespace Carrotware.Web.UI.Controls {
 				case "2":
 				case "2.0":
 				case "1.11":
-					jqVer = "1.11.1";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1111.js");
+					jqVer = "1.11.2";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-11-2.js");
 					break;
 				case "1.10":
 					jqVer = "1.10.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1102.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-10-2.js");
 					break;
 				case "1.9":
 					jqVer = "1.9.1";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery191.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-9-1.js");
 					break;
 				case "1.8":
 					jqVer = "1.8.3";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery183.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-8-3.js");
 					break;
 				case "1.7":
 					jqVer = "1.7.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery172.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-7-2.js");
 					break;
 				case "1":
 				case "1.3":
@@ -97,11 +97,11 @@ namespace Carrotware.Web.UI.Controls {
 				case "1.5":
 				case "1.6":
 					jqVer = "1.6.4";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery164.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-6-4.js");
 					break;
 				default:
-					jqVer = "1.11.1";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1111.js");
+					jqVer = "1.11.2";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-11-2.js");
 					break;
 			}
 
@@ -109,7 +109,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			if (this.UseJqueryMigrate) {
 				if (jqVer.StartsWith("1.9") || jqVer.StartsWith("1.10") || jqVer.StartsWith("1.11")) {
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-121mig.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-2-1-mig.js");
 
 					output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 				}
