@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			cmsHelper.OverrideKey(guidContentID);
 
 			if (!IsPostBack) {
-				ParentPagePicker.RootContentID = Guid.Empty;
+				ParentPagePicker.SelectedPage = guidContentID;
 				lnkCreatePage.NavigateUrl = string.Format("{0}?pageid={1}", SiteData.CurrentScriptName, guidContentID);
 
 				pnlAdd.Visible = true;

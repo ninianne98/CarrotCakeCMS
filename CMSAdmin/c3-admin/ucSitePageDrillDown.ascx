@@ -50,6 +50,14 @@
 		//alert("AjaxLoadDrillMenu");
 	}
 
+	function doesMenuExists() {
+		if ($('#' + menuValue).length > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function getSelectedNodeValue() {
 		var myVal = $('#' + menuValue).val();
 
@@ -57,19 +65,21 @@
 	}
 
 	function getCrumbs() {
-		var webMthd = webSvc + "/GetPageCrumbs";
-		var myVal = getSelectedNodeValue();
 
-		$.ajax({
-			type: "POST",
-			url: webMthd,
-			data: JSON.stringify({ PageID: myVal, CurrPageID: thisPageID }),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: ajaxReturnCrumb,
-			error: cmsAjaxFailed
-		});
+		if (doesMenuExists()) {
+			var webMthd = webSvc + "/GetPageCrumbs";
+			var myVal = getSelectedNodeValue();
 
+			$.ajax({
+				type: "POST",
+				url: webMthd,
+				data: JSON.stringify({ PageID: myVal, CurrPageID: thisPageID }),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: ajaxReturnCrumb,
+				error: cmsAjaxFailed
+			});
+		}
 	}
 
 	function ajaxReturnCrumb(data, status) {
@@ -130,23 +140,26 @@
 			hideMnu();
 		}
 
-		var webMthd = webSvc + "/GetChildPages";
-		var myVal = $('#' + menuValue).val();
+		if (doesMenuExists()) {
 
-		if (bMoused != true) {
-			hideMnu();
+			var webMthd = webSvc + "/GetChildPages";
+			var myVal = $('#' + menuValue).val();
 
-			$('#' + menuInner).html("<div style='width: 32px; height: 32px; margin: 0 auto;'><img src='/c3-admin/images/mini-spinner3-6F997D.gif' alt='spinner' /></div>");
+			if (bMoused != true) {
+				hideMnu();
 
-			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ PageID: myVal, CurrPageID: thisPageID }),
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: ajaxReturnNode,
-				error: cmsAjaxFailed
-			});
+				$('#' + menuInner).html("<div style='width: 32px; height: 32px; margin: 0 auto;'><img src='/c3-admin/images/mini-spinner3-6F997D.gif' alt='spinner' /></div>");
+
+				$.ajax({
+					type: "POST",
+					url: webMthd,
+					data: JSON.stringify({ PageID: myVal, CurrPageID: thisPageID }),
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: ajaxReturnNode,
+					error: cmsAjaxFailed
+				});
+			}
 		}
 
 		bLoad = false;
