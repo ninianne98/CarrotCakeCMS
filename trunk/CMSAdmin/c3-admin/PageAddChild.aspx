@@ -11,8 +11,18 @@
 		var tTitle = '#<%= txtTitle.ClientID %>';
 		var tNav = '#<%= txtNav.ClientID %>';
 		var tHead = '#<%= txtHead.ClientID %>';
+		var tValid = '#<%= txtFileValid.ClientID %>';
+		var tValidFile = '#<%= txtFileName.ClientID %>';
 
 		var thePage = '';
+
+		function doesFilenameExists() {
+			if ($(tValidFile).length > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 
 		function AutoGeneratePageFilename() {
 			var theTitle = $(tTitle).val();
@@ -25,24 +35,28 @@
 		}
 
 		function GeneratePageFilename() {
-			var theTitle = $(tTitle).val();
-			var theFile = $(tValidFile).val();
-			var sGoLiveDate = '<%=DateTime.Now.ToShortDateString() %>';
 
-			if (theTitle.length > 0) {
+			if (doesFilenameExists()) {
 
-				var webMthd = webSvc + "/GenerateNewFilename";
-				var myPageTitle = MakeStringSafe(theTitle);
+				var theTitle = $(tTitle).val();
+				var theFile = $(tValidFile).val();
+				var sGoLiveDate = '<%=DateTime.Now.ToShortDateString() %>';
 
-				$.ajax({
-					type: "POST",
-					url: webMthd,
-					data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'page' }),
-					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: ajaxGeneratePageFilename,
-					error: cmsAjaxFailed
-				});
+				if (theTitle.length > 0) {
+
+					var webMthd = webSvc + "/GenerateNewFilename";
+					var myPageTitle = MakeStringSafe(theTitle);
+
+					$.ajax({
+						type: "POST",
+						url: webMthd,
+						data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'page' }),
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: ajaxGeneratePageFilename,
+						error: cmsAjaxFailed
+					});
+				}
 			} else {
 				cmsAlertModalSmall("Cannot create a filename with there is no title value assigned.");
 			}
@@ -71,26 +85,27 @@
 			CheckFileName();
 		}
 
-		var tValid = '#<%= txtFileValid.ClientID %>';
-		var tValidFile = '#<%= txtFileName.ClientID %>';
 
 		function CheckFileName() {
-			thePage = $(tValidFile).val();
+			if (doesFilenameExists()) {
 
-			$(tValid).val('');
+				thePage = $(tValidFile).val();
 
-			var webMthd = webSvc + "/ValidateUniqueFilename";
-			var myPage = MakeStringSafe(thePage);
+				$(tValid).val('');
 
-			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ TheFileName: myPage, PageID: thePageID }),
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: editFilenameCallback,
-				error: cmsAjaxFailed
-			});
+				var webMthd = webSvc + "/ValidateUniqueFilename";
+				var myPage = MakeStringSafe(thePage);
+
+				$.ajax({
+					type: "POST",
+					url: webMthd,
+					data: JSON.stringify({ TheFileName: myPage, PageID: thePageID }),
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: editFilenameCallback,
+					error: cmsAjaxFailed
+				});
+			}
 		}
 
 		$(document).ready(function () {
