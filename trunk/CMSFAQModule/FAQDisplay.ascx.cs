@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
-			using (dbFAQDataContext db = new dbFAQDataContext()) {
+			using (dbFAQDataContext db = dbFAQDataContext.GetDataContext()) {
 
 				var lstFAQ = (from f in db.tblFAQs
 							  where f.SiteID == SiteID

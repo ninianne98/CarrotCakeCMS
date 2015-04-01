@@ -1,4 +1,4 @@
-﻿<%@ Page Title="About" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="about.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.about" %>
+﻿<%@ Page Title="About" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="about.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.about" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>

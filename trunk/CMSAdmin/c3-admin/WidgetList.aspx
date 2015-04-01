@@ -1,6 +1,6 @@
-﻿<%@ Page Title="Widget List" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetList.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetList" %>
+﻿<%@ Page Title="Widget List" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetList.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetList" %>
 
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">

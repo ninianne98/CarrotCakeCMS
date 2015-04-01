@@ -18,7 +18,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 		}
 
 		protected void LoadData() {
-			using (dbFAQDataContext db = new dbFAQDataContext()) {
+			using (dbFAQDataContext db = dbFAQDataContext.GetDataContext()) {
 				var lst = (from c in db.tblFAQs
 						   where c.SiteID == SiteID
 						   orderby c.SortOrder

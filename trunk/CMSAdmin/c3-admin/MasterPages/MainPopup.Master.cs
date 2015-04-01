@@ -19,6 +19,10 @@ using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 	public partial class MainPopup : AdminBaseMasterPage {
+
+		public bool ShowSaved { get; set; }
+		public bool UsesSaved { get; set; }
+
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
 				pnlDirty.Visible = false;
@@ -26,8 +30,42 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				pnlDirty.Visible = true;
 			}
 
+
+			if (!this.UsesSaved) {
+				HideSave();
+			} else {
+
+				if (this.ShowSaved || !string.IsNullOrEmpty(Request.QueryString["showsaved"])) {
+					this.ShowSaved = true;
+					ShowSave();
+				}
+			}
+
 			LoadFooterCtrl(plcFooter, ControlLocation.PopupFooter);
 		}
+
+		public string SavedSuffix {
+			get {
+
+				return "&showsaved=true";
+			}
+		}
+
+		public void SetSaveMessage(string saveMessage) {
+			litSaveMessage.Text = saveMessage;
+		}
+
+		public void ShowSave() {
+			this.ShowSaved = true;
+			hdnShow.Value = "SHOW";
+		}
+
+
+		public void HideSave() {
+			this.ShowSaved = false;
+			hdnShow.Value = String.Empty;
+		}
+
 
 		// so that it is easy to toggle master pages
 		public void ActivateTab(SectionID sectionID) {

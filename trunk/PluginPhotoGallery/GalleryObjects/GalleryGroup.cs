@@ -10,7 +10,7 @@ using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public class GalleryGroup : GalleryBase, IDisposable {
+	public class GalleryGroup : GalleryBase {
 
 		public GalleryGroup() { }
 
@@ -21,9 +21,9 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 				this.GalleryTitle = gal.GalleryTitle;
 
-				using (GalleryHelper gh = new GalleryHelper(this.SiteID)) {
-					this.GalleryImages = gh.GalleryImageEntryListGetByGalleryID(this.GalleryID);
-				}
+				GalleryHelper gh = new GalleryHelper(SiteID);
+
+				this.GalleryImages = gh.GalleryImageEntryListGetByGalleryID(this.GalleryID);
 
 			}
 		}
@@ -37,26 +37,27 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 
 		public void Save() {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				tblGallery gal = (from c in db.tblGalleries
+								  where c.GalleryID == this.GalleryID
+								  select c).FirstOrDefault();
 
-			tblGallery gal = (from c in db.tblGalleries
-							  where c.GalleryID == this.GalleryID
-							  select c).FirstOrDefault();
+				if (gal == null || this.GalleryID == Guid.Empty) {
+					gal = new tblGallery();
+					gal.SiteID = this.SiteID;
+					gal.GalleryID = Guid.NewGuid();
+				}
 
-			if (gal == null || this.GalleryID == Guid.Empty) {
-				gal = new tblGallery();
-				gal.SiteID = this.SiteID;
-				gal.GalleryID = Guid.NewGuid();
+				gal.GalleryTitle = this.GalleryTitle;
+
+				if (gal.GalleryID != this.GalleryID) {
+					db.tblGalleries.InsertOnSubmit(gal);
+				}
+
+				db.SubmitChanges();
+
+				this.GalleryID = gal.GalleryID;
 			}
-
-			gal.GalleryTitle = this.GalleryTitle;
-
-			if (gal.GalleryID != this.GalleryID) {
-				db.tblGalleries.InsertOnSubmit(gal);
-			}
-
-			db.SubmitChanges();
-
-			this.GalleryID = gal.GalleryID;
 		}
 
 		public override string ToString() {
@@ -79,17 +80,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public override int GetHashCode() {
 			return GalleryID.GetHashCode() ^ SiteID.GetHashCode() ^ GalleryTitle.GetHashCode();
 		}
-
-
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 
 	}
 }

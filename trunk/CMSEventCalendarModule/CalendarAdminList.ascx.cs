@@ -64,7 +64,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			dtStart = site.ConvertSiteTimeToUTC(dtStart);
 			dtEnd = site.ConvertSiteTimeToUTC(dtEnd);
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				List<vw_carrot_CalendarEvent> lst = (from c in db.vw_carrot_CalendarEvents
 													 where c.EventDate >= dtStart

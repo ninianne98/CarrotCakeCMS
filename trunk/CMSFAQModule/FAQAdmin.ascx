@@ -7,7 +7,7 @@
 	</EmptyDataTemplate>
 	<Columns>
 		<asp:TemplateField>
-			<ItemStyle HorizontalAlign="Left" VerticalAlign="Top"></ItemStyle>
+			<ItemStyle HorizontalAlign="Left" VerticalAlign="Top" />
 			<ItemTemplate>
 				<asp:HyperLink ID="lnkedit" runat="server" NavigateUrl='<%#CreateLink("FAQAdminAddEdit", String.Format("id={0}", Eval("FaqID") )) %>'>
                       <img border="0" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" style="margin-right: 20px;" />
@@ -15,11 +15,10 @@
 			</ItemTemplate>
 		</asp:TemplateField>
 		<asp:TemplateField HeaderText="tag">
-			<HeaderStyle HorizontalAlign="Center" VerticalAlign="Bottom"></HeaderStyle>
-			<ItemStyle VerticalAlign="Top"></ItemStyle>
+			<HeaderStyle HorizontalAlign="Center" VerticalAlign="Bottom" />
+			<ItemStyle VerticalAlign="Top" />
 			<ItemTemplate>
-				<asp:Label ID="lblQuestion" runat="server" Text='<%# String.Format( " {0}", Eval("Question") ) %>'>
-				</asp:Label>
+				<asp:Literal ID="lblQuestion" runat="server" Text='<%# String.Format( " {0}", Eval("Question") ) %>' />
 			</ItemTemplate>
 		</asp:TemplateField>
 	</Columns>

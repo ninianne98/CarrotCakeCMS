@@ -25,6 +25,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			LoadFooterCtrl(plcFooter, ControlLocation.PublicFooter);
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
+
+#if DEBUG
+			metaCrawl.Visible = false;
+#endif
+
 		}
+
 	}
 }

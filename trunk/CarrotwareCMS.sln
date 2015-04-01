@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSDBUpdater", "CMSDBUpdate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSEventCalendarModule", "CMSEventCalendarModule\CMSEventCalendarModule.csproj", "{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSFAQ2Module", "CMSFAQ2Module\CMSFAQ2Module.csproj", "{1B626E78-C8BF-4997-AC15-A6EA654681E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -193,6 +195,16 @@ Global
 		{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11}.Release|x86.ActiveCfg = Release|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -204,5 +216,6 @@ Global
 		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{AB1DE455-438E-4249-B282-52937F9D1386} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
+		{1B626E78-C8BF-4997-AC15-A6EA654681E6} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 	EndGlobalSection
 EndGlobal

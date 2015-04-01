@@ -10,7 +10,7 @@ using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public class GalleryHelper : GalleryBase, IDisposable {
+	public class GalleryHelper : GalleryBase {
 
 		public GalleryHelper() { }
 
@@ -24,124 +24,126 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 
 		public GalleryImageEntry GalleryImageEntryGetByID(Guid galleryImageID) {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				GalleryImageEntry ge = (from c in db.tblGalleryImages
+										where c.GalleryImageID == galleryImageID
+										select new GalleryImageEntry(c)).FirstOrDefault();
 
-			GalleryImageEntry ge = (from c in db.tblGalleryImages
-									where c.GalleryImageID == galleryImageID
-									select new GalleryImageEntry(c)).FirstOrDefault();
-
-			return ge;
+				return ge;
+			}
 		}
 
 
 		public List<GalleryImageEntry> GalleryImageEntryListGetByGalleryID(Guid galleryID) {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				List<GalleryImageEntry> ge = (from c in db.tblGalleryImages
+											  where c.GalleryID == galleryID
+											  select new GalleryImageEntry(c)).ToList();
 
-			List<GalleryImageEntry> ge = (from c in db.tblGalleryImages
-										  where c.GalleryID == galleryID
-										  select new GalleryImageEntry(c)).ToList();
-
-			return ge;
+				return ge;
+			}
 		}
 
 
 		public GalleryImageEntry GalleryImageEntryGetByFilename(Guid galleryID, string galleryImage) {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				GalleryImageEntry ge = (from c in db.tblGalleryImages
+										where c.GalleryID == galleryID
+										&& c.GalleryImage.ToLower() == galleryImage.ToLower()
+										orderby c.ImageOrder ascending
+										select new GalleryImageEntry(c)).FirstOrDefault();
 
-			GalleryImageEntry ge = (from c in db.tblGalleryImages
-									where c.GalleryID == galleryID
-									&& c.GalleryImage.ToLower() == galleryImage.ToLower()
-									orderby c.ImageOrder ascending
-									select new GalleryImageEntry(c)).FirstOrDefault();
-
-			return ge;
+				return ge;
+			}
 		}
 
 		public void GalleryImageCleanup(Guid galleryID, List<string> lst) {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				var lstDel = (from g in db.tblGalleryImages
+							  where g.GalleryID == galleryID
+							  && !lst.Contains(g.GalleryImage.ToLower())
+							  select g).ToList();
 
-			var lstDel = (from g in db.tblGalleryImages
-						  where g.GalleryID == galleryID
-						  && !lst.Contains(g.GalleryImage.ToLower())
-						  select g).ToList();
+				db.tblGalleryImages.DeleteAllOnSubmit(lstDel);
 
-			db.tblGalleryImages.DeleteAllOnSubmit(lstDel);
-
-			db.SubmitChanges();
+				db.SubmitChanges();
+			}
 		}
 
 		public List<GalleryMetaData> GetGalleryMetaDataListByGalleryID(Guid galleryID) {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				List<GalleryMetaData> imageData = (from g in db.tblGalleryImageMetas
+												   join gg in db.tblGalleryImages on g.GalleryImage.ToLower() equals gg.GalleryImage.ToLower()
+												   where g.SiteID == this.ThisSite.SiteID
+													   && gg.GalleryID == galleryID
+												   select new GalleryMetaData(g)).ToList();
 
-			List<GalleryMetaData> imageData = (from g in db.tblGalleryImageMetas
-											   join gg in db.tblGalleryImages on g.GalleryImage.ToLower() equals gg.GalleryImage.ToLower()
-											   where g.SiteID == this.ThisSite.SiteID
-												   && gg.GalleryID == galleryID
-											   select new GalleryMetaData(g)).ToList();
-
-			return imageData;
+				return imageData;
+			}
 		}
 
 		public GalleryGroup GalleryGroupGetByID(Guid galleryID) {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				GalleryGroup ge = (from c in db.tblGalleries
+								   where c.SiteID == this.ThisSite.SiteID
+								   && c.GalleryID == galleryID
+								   select new GalleryGroup(c)).FirstOrDefault();
 
-			GalleryGroup ge = (from c in db.tblGalleries
-							   where c.SiteID == this.ThisSite.SiteID
-							   && c.GalleryID == galleryID
-							   select new GalleryGroup(c)).FirstOrDefault();
-
-			return ge;
+				return ge;
+			}
 		}
 
 		public GalleryGroup GalleryGroupGetByName(string galleryTitle) {
 			GalleryGroup ge = null;
 
-			if (!string.IsNullOrEmpty(galleryTitle)) {
-				ge = (from c in db.tblGalleries
-					  where c.SiteID == this.ThisSite.SiteID
-					  && c.GalleryTitle.ToLower() == galleryTitle.ToLower()
-					  select new GalleryGroup(c)).FirstOrDefault();
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				if (!string.IsNullOrEmpty(galleryTitle)) {
+					ge = (from c in db.tblGalleries
+						  where c.SiteID == this.ThisSite.SiteID
+						  && c.GalleryTitle.ToLower() == galleryTitle.ToLower()
+						  select new GalleryGroup(c)).FirstOrDefault();
+				}
 			}
 
 			return ge;
 		}
 
 		public List<GalleryGroup> GalleryGroupListGetBySiteID() {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				List<GalleryGroup> ge = (from c in db.tblGalleries
+										 where c.SiteID == this.ThisSite.SiteID
+										 select new GalleryGroup(c)).ToList();
 
-			List<GalleryGroup> ge = (from c in db.tblGalleries
-									 where c.SiteID == this.ThisSite.SiteID
-									 select new GalleryGroup(c)).ToList();
-
-			return ge;
+				return ge;
+			}
 		}
 
 		public GalleryMetaData GalleryMetaDataGetByFilename(string galleryImage) {
 			GalleryMetaData ge = null;
 
-			if (!string.IsNullOrEmpty(galleryImage)) {
-				ge = (from c in db.tblGalleryImageMetas
-					  where c.SiteID == this.ThisSite.SiteID
-					  && c.GalleryImage.ToLower() == galleryImage.ToLower()
-					  select new GalleryMetaData(c)).FirstOrDefault();
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				if (!string.IsNullOrEmpty(galleryImage)) {
+					ge = (from c in db.tblGalleryImageMetas
+						  where c.SiteID == this.ThisSite.SiteID
+						  && c.GalleryImage.ToLower() == galleryImage.ToLower()
+						  select new GalleryMetaData(c)).FirstOrDefault();
+				}
 			}
 
 			return ge;
 		}
 
 		public GalleryMetaData GalleryMetaDataGetByID(Guid galleryImageMetaID) {
+			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				GalleryMetaData ge = (from c in db.tblGalleryImageMetas
+									  where c.SiteID == this.ThisSite.SiteID
+									  && c.GalleryImageMetaID == galleryImageMetaID
+									  select new GalleryMetaData(c)).FirstOrDefault();
 
-			GalleryMetaData ge = (from c in db.tblGalleryImageMetas
-								  where c.SiteID == this.ThisSite.SiteID
-								  && c.GalleryImageMetaID == galleryImageMetaID
-								  select new GalleryMetaData(c)).FirstOrDefault();
-
-			return ge;
-		}
-
-
-
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
+				return ge;
 			}
 		}
 
-		#endregion
+
 	}
 }

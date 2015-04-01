@@ -1,4 +1,4 @@
-﻿<%@ Page Title="DuplicateWidgetFrom" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="DuplicateWidgetFrom.aspx.cs"
+﻿<%@ Page Title="DuplicateWidgetFrom" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="DuplicateWidgetFrom.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.DuplicateWidgetFrom" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>

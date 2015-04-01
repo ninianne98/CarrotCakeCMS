@@ -24,6 +24,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private ContentPage pageContents = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
+			Master.UsesSaved = true;
+			Master.HideSave();
+			Master.SetSaveMessage("Page Created");
 
 			guidContentID = GetGuidPageIDFromQuery();
 			cmsHelper.OverrideKey(guidContentID);
@@ -82,6 +85,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
 				VirtualDirectory.RegisterRoutes(true);
 			}
+
+			Master.ShowSave();
 		}
 
 	}

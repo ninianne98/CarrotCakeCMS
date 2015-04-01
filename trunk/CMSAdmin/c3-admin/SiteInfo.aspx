@@ -296,6 +296,14 @@
 	<div style="display: none;">
 		<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
 	</div>
+	<asp:PlaceHolder ID="phCreatePage" runat="server">
+		<br />
+		<h2>
+			Create inital homepage on site creation?
+			<asp:CheckBox ID="chkHomepage" runat="server" />
+		</h2>
+		<br />
+	</asp:PlaceHolder>
 	<br />
 	<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" Text="Apply Changes" OnClick="btnSave_Click" OnClientClick="return ClickApplyBtn()" />
 	<br />

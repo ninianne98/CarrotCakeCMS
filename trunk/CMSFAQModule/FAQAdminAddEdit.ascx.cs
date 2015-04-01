@@ -10,7 +10,7 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Plugins.FAQModule {
 	public partial class FAQAdminAddEdit : AdminModule {
 
-		protected dbFAQDataContext db = new dbFAQDataContext();
+		protected dbFAQDataContext db = dbFAQDataContext.GetDataContext();
 		protected Guid ItemGuid = Guid.Empty;
 
 

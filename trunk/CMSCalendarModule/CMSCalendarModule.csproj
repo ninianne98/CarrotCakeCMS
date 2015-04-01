@@ -99,6 +99,9 @@
     <Compile Include="CalendarDateInfo.ascx.designer.cs">
       <DependentUpon>CalendarDateInfo.ascx</DependentUpon>
     </Compile>
+    <Compile Include="dbCalendar.cs">
+      <DependentUpon>dbCalendar.dbml</DependentUpon>
+    </Compile>
     <Compile Include="dbCalendar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="SiteMapPop.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteMapPop" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="SiteMapPop.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteMapPop" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Register Src="ucSiteMap.ascx" TagName="ucSiteMap" TagPrefix="uc1" %>

@@ -21,12 +21,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		private void LoadData() {
 
-			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
-				var lstCont = gh.GalleryGroupListGetBySiteID();
+			GalleryHelper gh = new GalleryHelper(SiteID);
 
-				gvPages.DataSource = lstCont;
-				gvPages.DataBind();
-			}
+			var lstCont = gh.GalleryGroupListGetBySiteID();
+
+			gvPages.DataSource = lstCont;
+			gvPages.DataBind();
+
 		}
 
 

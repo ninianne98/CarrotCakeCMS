@@ -13,7 +13,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 	public class GalleryBase {
 
-		protected PhotoGalleryDataContext db = new PhotoGalleryDataContext();
 		protected FileDataHelper fileHelper = new FileDataHelper();
 
 		private SiteData _site = null;
@@ -29,7 +28,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				_site = value;
 			}
 		}
-
 
 
 	}

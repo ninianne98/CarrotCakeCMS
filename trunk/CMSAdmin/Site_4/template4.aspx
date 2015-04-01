@@ -13,15 +13,11 @@
 	<asp:PlaceHolder ID="myScripts" runat="server">
 		<script type="text/javascript" src="<%=pageContents.TemplateFolderPath %>script.js"></script>
 	</asp:PlaceHolder>
-	<!--[if IE 6]><link rel="stylesheet" href="style.ie6.css" type="text/css" media="screen"  runat="server" id="cssLink2" /> <![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" href="style.ie7.css" type="text/css" media="screen"  runat="server" id="cssLink3" /> <![endif]-->
+	<!--[if IE 6]><link rel="stylesheet" href="style.ie6.css" type="text/css" media="screen" runat="server" id="cssLink2" /> <![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="style.ie7.css" type="text/css" media="screen" runat="server" id="cssLink3" /> <![endif]-->
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			//		$(".art-nav-inner .art-hmenu").each(function (i) {
-			//			mnuEnhanced(this);
-			//		});
-
 			$("#art-main .art-vmenublockcontent-body .art-vmenu").each(function (i) {
 				mnuEnhanced(this);
 			});
@@ -39,7 +35,7 @@
 		}
 
 	</script>
-	<link href="style.css" rel="stylesheet" type="text/css" media="screen" runat="server" id="cssLink1" />
+	<link href="style.css" rel="stylesheet" type="text/css" media="screen" runat="server" />
 	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 	<carrot:OpenGraph runat="server" ID="OpenGraph1" />
@@ -176,11 +172,9 @@
 								<div class="art-block-body">
 									<div class="art-blockcontent">
 										<div class="art-blockcontent-body">
-											<carrot:WidgetContainer ID="phLeftTop" runat="server">
-											</carrot:WidgetContainer>
-											<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server"></carrot:ContentContainer>
-											<carrot:WidgetContainer ID="phLeftBottom" runat="server">
-											</carrot:WidgetContainer>
+											<carrot:WidgetContainer ID="phLeftTop" runat="server" />
+											<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" TextZone="TextLeft" />
+											<carrot:WidgetContainer ID="phLeftBottom" runat="server" />
 											<div class="cleared">
 											</div>
 										</div>
@@ -197,16 +191,14 @@
 								<div class="art-post-body">
 									<div class="art-post-inner art-article">
 										<h2 class="art-postheader">
-											<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="PageHead" /></asp:Literal>
+											<carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="PageHead" />
 										</h2>
 										<div class="cleared">
 										</div>
 										<div class="art-postcontent">
-											<carrot:WidgetContainer ID="phCenterTop" runat="server">
-											</carrot:WidgetContainer>
-											<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server"></carrot:ContentContainer>
-											<carrot:WidgetContainer ID="phCenterBottom" runat="server">
-											</carrot:WidgetContainer>
+											<carrot:WidgetContainer ID="phCenterTop" runat="server" />
+											<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" TextZone="TextCenter" />
+											<carrot:WidgetContainer ID="phCenterBottom" runat="server" />
 										</div>
 										<div class="cleared">
 										</div>
@@ -249,13 +241,6 @@
 		<p class="art-page-footer">
 			<a href="http://www.artisteer.com/?p=website_templates">Website Template</a> created with Artisteer.</p>
 	</div>
-	<asp:Panel ID="pnlHiddenControls" Visible="false" runat="server">
-		<carrot:WidgetContainer ID="phRightTop" runat="server">
-		</carrot:WidgetContainer>
-		<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server"></carrot:ContentContainer>
-		<carrot:WidgetContainer ID="phRightBottom" runat="server">
-		</carrot:WidgetContainer>
-	</asp:Panel>
 	</form>
 </body>
 </html>

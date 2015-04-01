@@ -91,6 +91,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (site == null) {
 					btnSave.Text = "Click to Create Site";
 				}
+
+				phCreatePage.Visible = (site == null);
 			}
 
 			CMSConfigHelper.CleanUpSerialData();
@@ -144,6 +146,41 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (!bNewSite) {
 				Response.Redirect(SiteData.CurrentScriptName);
 			} else {
+
+				DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+
+				if (chkHomepage.Checked) {
+					ContentPage pageContents = new ContentPage {
+						SiteID = SiteID,
+						Root_ContentID = Guid.NewGuid(),
+						ContentID = Guid.NewGuid(),
+						EditDate = SiteData.CurrentSite.Now,
+						CreateUserId = SecurityData.CurrentUserGuid,
+						CreateDate = SiteData.CurrentSite.Now,
+						GoLiveDate = dtSite.AddMinutes(-5),
+						RetireDate = dtSite.AddYears(200),
+						TitleBar = "Home",
+						NavMenuText = "Home",
+						PageHead = "Home",
+						FileName = "/home.aspx",
+						PageText = SiteData.StarterHomePageSample,
+						LeftPageText = String.Empty,
+						RightPageText = String.Empty,
+						NavOrder = 0,
+						IsLatestVersion = true,
+						PageActive = true,
+						ShowInSiteNav = true,
+						ShowInSiteMap = true,
+						BlockIndex = false,
+						EditUserId = SecurityData.CurrentUserGuid,
+						ContentType = ContentPageType.PageType.ContentEntry,
+						TemplateFile = SiteData.DefaultTemplateFilename
+					};
+
+					pageContents.SavePageEdit();
+				}
+
+
 				Response.Redirect(SiteFilename.DashboardURL);
 			}
 		}

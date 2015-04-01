@@ -35,7 +35,7 @@
 		The below information (if checked) will be imported to the current site. You can always update the information after importing.
 	</p>
 	<div style="display: none" id="importMessage">
-		<asp:Literal ID="litMessage" runat="server"></asp:Literal>
+		<asp:Literal ID="litMessage" runat="server" />
 	</div>
 	<fieldset style="width: 90%;">
 		<legend>

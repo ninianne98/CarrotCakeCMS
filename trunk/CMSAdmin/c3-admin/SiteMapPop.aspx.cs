@@ -22,7 +22,21 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSiteMap);
 
+			Master.UsesSaved = true;
+
+			if (IsPostBack) {
+				Master.ShowSave();
+			} else {
+				if (!SiteData.RefererScriptName.ToLower().EndsWith(SiteData.CurrentScriptName.ToLower())) {
+					Master.HideSave();
+				} else {
+					Master.ShowSave();
+				}
+			}
 
 		}
+
+
+
 	}
 }

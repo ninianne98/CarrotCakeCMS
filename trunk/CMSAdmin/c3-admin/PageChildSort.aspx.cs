@@ -17,6 +17,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		bool bClickedSort = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
+				Master.UsesSaved = true;
+				Master.HideSave();
+
 			guidContentID = GetGuidPageIDFromQuery();
 
 			if (!IsPostBack) {
@@ -75,7 +78,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				orderHelper.UpdateSiteMap(SiteData.CurrentSiteID, lst);
 			}
 
-			Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
+			Master.ShowSave();
+
+			Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString() + Master.SavedSuffix);
 		}
 
 		protected void btnSort_Click(object sender, EventArgs e) {

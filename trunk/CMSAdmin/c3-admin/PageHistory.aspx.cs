@@ -26,6 +26,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		string sPageMode = String.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
+			Master.UsesSaved = true;
+			Master.HideSave();
 
 			guidRootID = GetGuidIDFromQuery();
 
@@ -120,6 +122,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageHelper.RemoveVersions(SiteID, lstDel);
 
 			LoadGrid();
+
+			Master.ShowSave();
 		}
 
 

@@ -89,7 +89,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			DateTime dtStart = Calendar1.CalendarDate.AddDays(1 - Calendar1.CalendarDate.Day);
 			DateTime dtEnd = dtStart.AddMonths(1);
 
-			using (dbCalendarDataContext db = new dbCalendarDataContext()) {
+			using (dbCalendarDataContext db = dbCalendarDataContext.GetDataContext()) {
 				var lst = (from c in db.tblCalendars
 						   where c.EventDate >= dtStart
 							&& c.EventDate < dtEnd

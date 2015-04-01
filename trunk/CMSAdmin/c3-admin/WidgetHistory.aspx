@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Widget History" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetHistory.aspx.cs"
+﻿<%@ Page Title="Widget History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetHistory.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetHistory" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>

@@ -35,33 +35,31 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		private void LoadForm() {
-			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
-				var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
+			GalleryHelper gh = new GalleryHelper(SiteID);
+			var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
 
-				if (meta != null) {
-					txtMetaInfo.Text = meta.ImageMetaData;
-					txtTitle.Text = meta.ImageTitle;
-				}
+			if (meta != null) {
+				txtMetaInfo.Text = meta.ImageMetaData;
+				txtTitle.Text = meta.ImageTitle;
 			}
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 
-			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
-				var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
+			GalleryHelper gh = new GalleryHelper(SiteID);
+			var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
 
-				if (meta == null) {
-					meta = new GalleryMetaData();
-					meta.GalleryImageMetaID = Guid.Empty;
-					meta.SiteID = SiteID;
-					meta.GalleryImage = sImageFile.ToLower();
-				}
-
-				meta.ImageMetaData = txtMetaInfo.Text;
-				meta.ImageTitle = txtTitle.Text;
-
-				meta.Save();
+			if (meta == null) {
+				meta = new GalleryMetaData();
+				meta.GalleryImageMetaID = Guid.Empty;
+				meta.SiteID = SiteID;
+				meta.GalleryImage = sImageFile.ToLower();
 			}
+
+			meta.ImageMetaData = txtMetaInfo.Text;
+			meta.ImageTitle = txtTitle.Text;
+
+			meta.Save();
 
 			Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
 		}

@@ -11,10 +11,11 @@
 
 		var tValid = '#<%= txtFileValid.ClientID %>';
 		var tValidSlug = '#<%= txtSlug.ClientID %>';
+		var tCaption = '#<%= txtLabel.ClientID %>';
 
 		var thePage = '';
 
-		function CheckFileName() {
+		function CheckSlug() {
 			thePage = $(tValidSlug).val();
 
 			$(tValid).val('');
@@ -28,17 +29,41 @@
 				data: JSON.stringify({ TheSlug: myPage, ItemID: thePageID }),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				success: editFilenameCallback,
+				success: editSlugCallback,
 				error: cmsAjaxFailed
 			});
 		}
 
+		function GenerateSlug() {
+			var theSlug = $(tValidSlug).val();
+
+			var webMthd = webSvc + "/GenerateSnippetSlug";
+
+			if (theSlug.length < 1) {
+				var theText = $(tCaption).val();
+				var mySlug = MakeStringSafe(theText);
+
+				$.ajax({
+					type: "POST",
+					url: webMthd,
+					data: JSON.stringify({ TheSlug: mySlug }),
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: editSlug,
+					error: cmsAjaxFailed
+				});
+
+			} else {
+				CheckSlug();
+			}
+		}
+
 		$(document).ready(function () {
-			setTimeout("CheckFileName();", 250);
+			setTimeout("CheckSlug();", 250);
 			cmsIsPageValid();
 		});
 
-		function editFilenameCallback(data, status) {
+		function editSlugCallback(data, status) {
 			if (data.d != "FAIL" && data.d != "OK") {
 				cmsAlertModal(data.d);
 			}
@@ -55,6 +80,15 @@
 			cmsForceInputValidation('<%= txtFileValid.ClientID %>');
 		}
 
+		function editSlug(data, status) {
+			if (data.d == "FAIL") {
+				cmsAlertModal(data.d);
+			} else {
+				$(tValidSlug).val(data.d);
+			}
+
+			CheckSlug();
+		}
 
 		$(document).ready(function () {
 			// these click events because of stoopid IE9 navigate away behavior
@@ -193,10 +227,20 @@
 	<table style="width: 820px;">
 		<tr>
 			<td style="width: 110px;" class="tablecaption">
+				name:
+			</td>
+			<td>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateSlug()" ID="txtLabel" runat="server" Columns="60" MaxLength="100" />
+				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtLabel" ID="RequiredFieldValidator3"
+					runat="server" Text="**" ToolTip="Name is required" ErrorMessage="Name is required" Display="Dynamic" />
+			</td>
+		</tr>
+		<tr>
+			<td class="tablecaption">
 				slug:
 			</td>
-			<td style="width: 700px;">
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtSlug" runat="server" Columns="60" MaxLength="100" />
+			<td>
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckSlug()" ID="txtSlug" runat="server" Columns="60" MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSlug" ID="RequiredFieldValidator1"
 					runat="server" Text="**" ToolTip="Slug is required" ErrorMessage="Slug is required" Display="Dynamic" />
 				<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
@@ -206,17 +250,6 @@
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator2"
 						runat="server" ErrorMessage="Slug validation is required" ToolTip="Slug validation is required" Display="Dynamic" Text="**" />
 				</div>
-			</td>
-		</tr>
-		<tr>
-			<td class="tablecaption">
-				name:
-			</td>
-			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtLabel" runat="server" Columns="60"
-					MaxLength="100" />
-				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtLabel" ID="RequiredFieldValidator3"
-					runat="server" Text="**" ToolTip="Name is required" ErrorMessage="Name is required" Display="Dynamic" />
 			</td>
 		</tr>
 		<tr>

@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		protected void btnSave_Click(object sender, EventArgs e) {
 			bool bAdd = false;
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				var currItem = (from c in db.carrot_CalendarEvents
 								where c.CalendarEventID == ItemGuid

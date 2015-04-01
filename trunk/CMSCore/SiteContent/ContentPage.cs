@@ -393,6 +393,13 @@ namespace Carrotware.CMS.Core {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
+				if (this.Root_ContentID == Guid.Empty) {
+					this.Root_ContentID = Guid.NewGuid();
+				}
+				if (this.ContentID == Guid.Empty) {
+					this.ContentID = Guid.NewGuid();
+				}
+
 				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
 
 				carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(_db, this.SiteID, this.Root_ContentID);
@@ -429,6 +436,13 @@ namespace Carrotware.CMS.Core {
 		public void SavePageAsDraft() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				SiteData site = SiteData.GetSiteFromCache(this.SiteID);
+
+				if (this.Root_ContentID == Guid.Empty) {
+					this.Root_ContentID = Guid.NewGuid();
+				}
+				if (this.ContentID == Guid.Empty) {
+					this.ContentID = Guid.NewGuid();
+				}
 
 				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
 

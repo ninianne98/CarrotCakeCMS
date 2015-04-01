@@ -38,6 +38,11 @@
 	z-index: 99100;
 }
 
+#cmsToolBoxWrap input[type="submit"], #cmsToolBoxWrap input[type="reset"], #cmsToolBoxWrap input[type="button"], #cmsToolBoxWrap .button {
+	min-width: 4em;
+	padding: 0.6em;
+}
+
 .cmsGlossySeaGreen .ui-widget P {
 	line-height: normal;
 	font-weight: normal;
@@ -192,6 +197,15 @@ p.cmsToolItem {
 	background: #DFF6E8;
 }
 
+.cmsTargetArea .ui-draggable, .cmsTargetArea .cmsToolItem {
+	width: 100% !important;
+}
+
+.cmsTargetArea .ui-draggable-dragging {
+	width: 100% !important;
+	width: 500px !important;
+}
+
 #cmsMainToolbox select, #cmsMainToolbox select:focus, #cmsMainToolbox select:hover, #cmsMainToolbox select option {
 	font-family: Arial, Helvetica, sans-serif !important;
 	margin: 0 !important;
@@ -281,7 +295,7 @@ p.cmsToolItem {
 	padding: 1px;
 	text-align: left;
 	font-size: small;
-	text-transform: none;	
+	text-transform: none;
 	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
@@ -300,6 +314,11 @@ p.cmsToolItem {
 
 #cmsWidgetHead {
 	cursor: move !important;
+	min-height: 24px !important;
+}
+
+#cmsWidgetControlTitle, #cmsWidgetContainerName {
+	min-height: 24px !important;
 }
 
 #cmsWidgetContainerName {
@@ -317,9 +336,10 @@ p.cmsToolItem {
 #cmsEditMenuList ul, #cmsEditMenuList li, #cmsEditMenuList a, #cmsEditMenuList img {
 	margin: 0;
 	padding: 0;
+	line-height: normal;
+	font-style: normal;
 	font-weight: 300;
 	text-shadow: 0 0 0 transparent;
-	line-height: normal;
 	padding: 1px;
 	text-align: left;
 	font-size: small;
@@ -336,6 +356,7 @@ p.cmsToolItem {
 	padding: 0 !important;
 	background-color: transparent !important;
 	border: 0px solid transparent !important;
+	float: left;
 }
 
 #cmsEditMenuList ul, #cmsEditMenuList li {

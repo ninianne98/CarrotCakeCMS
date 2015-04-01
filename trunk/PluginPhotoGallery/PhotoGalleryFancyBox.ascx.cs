@@ -27,13 +27,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				}
 				Dictionary<string, string> _dict = null;
 
-				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+				GalleryHelper gh = new GalleryHelper(SiteID);
 
-					_dict = (from c in gh.GalleryGroupListGetBySiteID()
-							 orderby c.GalleryTitle
-							 where c.SiteID == SiteID
-							 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
-				}
+				_dict = (from c in gh.GalleryGroupListGetBySiteID()
+						 orderby c.GalleryTitle
+						 where c.SiteID == SiteID
+						 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
+
 
 				return _dict;
 			}
@@ -120,22 +120,21 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 
 
-			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+			GalleryHelper gh = new GalleryHelper(SiteID);
 
-				var gal = gh.GalleryGroupGetByID(GalleryID);
+			var gal = gh.GalleryGroupGetByID(GalleryID);
 
-				if (gal != null) {
+			if (gal != null) {
 
-					litGalleryName.Text = gal.GalleryTitle;
-					pnlGalleryHead.Visible = ShowHeading;
+				litGalleryName.Text = gal.GalleryTitle;
+				pnlGalleryHead.Visible = ShowHeading;
 
-					rpGallery.DataSource = (from g in gal.GalleryImages
-											where g.GalleryID == GalleryID
-											orderby g.ImageOrder ascending
-											select g).ToList();
+				rpGallery.DataSource = (from g in gal.GalleryImages
+										where g.GalleryID == GalleryID
+										orderby g.ImageOrder ascending
+										select g).ToList();
 
-					rpGallery.DataBind();
-				}
+				rpGallery.DataBind();
 			}
 
 

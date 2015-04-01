@@ -10,7 +10,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h2>
-		<asp:Literal ID="litSkinFileName" runat="server"></asp:Literal>
+		<asp:Literal ID="litSkinFileName" runat="server" />
 		[<a href="<%= String.Format("{0}?path={1}", SiteData.CurrentScriptName, sTemplateFileQS) %>">Edit</a>]
 	</h2>
 	<p>
@@ -45,9 +45,9 @@
 			<td>
 				<p>
 					<b>Viewing file:
-						<asp:Literal ID="litEditFileName" runat="server"></asp:Literal>
+						<asp:Literal ID="litEditFileName" runat="server" />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<asp:Literal ID="litDateMod" runat="server"></asp:Literal></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<asp:Literal ID="litDateMod" runat="server" /></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
 				</p>
 				<asp:TextBox Style="height: 450px; width: 790px;" ID="txtPageContents" runat="server" TextMode="MultiLine" Rows="15" Columns="100" />

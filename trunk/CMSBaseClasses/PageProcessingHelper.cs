@@ -450,7 +450,7 @@ namespace Carrotware.CMS.UI.Base {
 			}
 			string sPattern = sPrefix + SiteData.CurrentTitlePattern;
 
-			string sPageTitle = string.Format(sPattern, theSite.SiteName, pageData.TitleBar, pageData.PageHead, pageData.NavMenuText);
+			string sPageTitle = string.Format(sPattern, theSite.SiteName, theSite.SiteTagline, pageData.TitleBar, pageData.PageHead, pageData.NavMenuText, pageData.GoLiveDate, pageData.EditDate);
 
 			return sPageTitle;
 		}

@@ -107,7 +107,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string DefaultPageTitlePattern {
 			get {
-				return "[[CARROT_SITENAME]] - [[CARROT_PAGE_TITLEBAR]]";
+				return "[[CARROT_SITE_NAME]] - [[CARROT_PAGE_TITLEBAR]]";
 			}
 		}
 
@@ -118,14 +118,61 @@ namespace Carrotware.CMS.Core {
 				if (!string.IsNullOrEmpty(s.SiteTitlebarPattern)) {
 					StringBuilder sb = new StringBuilder(s.SiteTitlebarPattern);
 					sb.Replace("[[CARROT_SITENAME]]", "{0}");
-					sb.Replace("[[CARROT_PAGE_TITLEBAR]]", "{1}");
-					sb.Replace("[[CARROT_PAGE_PAGEHEAD]]", "{2}");
-					sb.Replace("[[CARROT_PAGE_NAVMENUTEXT]]", "{3}");
+					sb.Replace("[[CARROT_SITE_NAME]]", "{0}");
+					sb.Replace("[[CARROT_SITE_SLOGAN]]", "{1}");
+					sb.Replace("[[CARROT_PAGE_TITLEBAR]]", "{2}");
+					sb.Replace("[[CARROT_PAGE_PAGEHEAD]]", "{3}");
+					sb.Replace("[[CARROT_PAGE_NAVMENUTEXT]]", "{4}");
+					sb.Replace("[[CARROT_PAGE_DATE_GOLIVE]]", "{5}");
+					sb.Replace("[[CARROT_PAGE_DATE_GOLIVE]]", "{6}");
+
+					// [[CARROT_SITE_NAME]]: [[CARROT_PAGE_TITLEBAR]] ([[CARROT_PAGE_DATE_GOLIVE:MMMM d, yyyy]])
+					var p5 = ParsePlaceholder(s.SiteTitlebarPattern, "[[CARROT_PAGE_DATE_GOLIVE:*]]", 5);
+					if (!string.IsNullOrEmpty(p5.Key)) {
+						sb.Replace(p5.Key, p5.Value);
+					}
+
+					var p6 = ParsePlaceholder(s.SiteTitlebarPattern, "[[CARROT_PAGE_DATE_GOLIVE:*]]", 6);
+					if (!string.IsNullOrEmpty(p6.Key)) {
+						sb.Replace(p6.Key, p6.Value);
+					}
+
 					pattern = sb.ToString();
 				}
 
 				return pattern;
 			}
+		}
+
+
+		private static KeyValuePair<string, string> ParsePlaceholder(string titleString, string placeHolder, int posNum) {
+			KeyValuePair<string, string> pair = new KeyValuePair<string, string>(String.Empty, String.Empty);
+
+			string[] frags = placeHolder.Split(':');
+			string frag0 = frags[0];
+			string frag1 = frags[1];
+
+			string formatPattern = String.Format("{{{0}}}", posNum);
+
+			if (titleString.Contains(frag0)) {
+
+				int idx1 = titleString.IndexOf(frag0);
+				int idx2 = titleString.IndexOf("]]", idx1 + 4);
+				int len = idx2 - idx1 - frag0.Length - 1;
+
+				if (idx1 > 0 && idx2 > 0) {
+					string format = "d";
+					if (len > 0) {
+						format = titleString.Substring(idx1 + frag0.Length + 1, len);
+					}
+					placeHolder = placeHolder.Replace("*", format);
+
+					formatPattern = String.Format("{{{0}:{1}}}", posNum, format);
+					pair = new KeyValuePair<string, string>(placeHolder, formatPattern);
+				}
+			}
+
+			return pair;
 		}
 
 		public static List<SiteData> GetSiteList() {
@@ -1008,6 +1055,20 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
+		public static string StarterHomePageSample {
+			get {
+				Assembly _assembly = Assembly.GetExecutingAssembly();
+
+				string sBody = String.Empty;
+				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.FirstPage.txt"))) {
+					sBody = oTextStream.ReadToEnd();
+				}
+
+				return sBody;
+			}
+		}
+
+
 		public static string SearchQueryParameter {
 			get { return "search".ToLower(); }
 		}
@@ -1123,6 +1184,14 @@ namespace Carrotware.CMS.Core {
 			get {
 				string sPath = "/";
 				try { sPath = HttpContext.Current.Request.ServerVariables["script_name"].ToString(); } catch { }
+				return sPath;
+			}
+		}
+
+		public static string RefererScriptName {
+			get {
+				string sPath = String.Empty;
+				try { sPath = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
 				return sPath;
 			}
 		}

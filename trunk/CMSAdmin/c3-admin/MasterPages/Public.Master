@@ -22,6 +22,7 @@
 			$("input:button, input:submit, input:reset").button();
 		});
 	</script>
+	<meta name="robots" content="noindex,nofollow,noarchive" runat="server" id="metaCrawl" />
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>
 </head>
@@ -46,7 +47,7 @@
 							&nbsp;
 						</p>
 						<p>
-							<asp:Literal ID="litCMSBuildInfo" runat="server"></asp:Literal>
+							<asp:Literal ID="litCMSBuildInfo" runat="server" />
 						</p>
 					</div>
 					<div class="box-carrot">

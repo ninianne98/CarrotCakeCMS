@@ -32,7 +32,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static List<carrot_CalendarEventCategory> GetCalendarCategories(Guid siteID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				if (db.carrot_CalendarEventCategories.Count() < 1) {
 
@@ -60,7 +60,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static carrot_CalendarEventCategory GetCalendarCategory(Guid calendarEventCategoryID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.carrot_CalendarEventCategories
 						where c.CalendarEventCategoryID == calendarEventCategoryID
@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static List<carrot_CalendarEventProfile> GetProfileList(Guid siteID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.carrot_CalendarEventProfiles
 						orderby c.EventStartDate
@@ -82,7 +82,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static List<vw_carrot_CalendarEventProfile> GetProfileView(Guid siteID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.vw_carrot_CalendarEventProfiles
 						orderby c.EventStartDate
@@ -93,7 +93,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static carrot_CalendarEventProfile GetProfile(Guid calendarEventProfileID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.carrot_CalendarEventProfiles
 						where c.CalendarEventProfileID == calendarEventProfileID
@@ -103,7 +103,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static void RemoveEvent(Guid calendarEventProfileID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				var profile = (from c in db.carrot_CalendarEventProfiles
 							   where c.CalendarEventProfileID == calendarEventProfileID
@@ -125,7 +125,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			var srcProfile = GetProfile(calendarEventProfileID);
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				var item = new carrot_CalendarEventProfile();
 				item.CalendarEventProfileID = Guid.NewGuid();
@@ -175,7 +175,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static List<carrot_CalendarEvent> GetEventList(Guid calendarEventProfileID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.carrot_CalendarEvents
 						orderby c.EventDate
@@ -186,7 +186,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static List<vw_carrot_CalendarEvent> GetEventView(Guid calendarEventProfileID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.vw_carrot_CalendarEvents
 						orderby c.EventDate
@@ -197,7 +197,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static carrot_CalendarEvent GetEvent(Guid calendarEventID) {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.carrot_CalendarEvents
 						where c.CalendarEventID == calendarEventID
