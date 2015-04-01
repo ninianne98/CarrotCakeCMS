@@ -1,6 +1,8 @@
-﻿<%@ Page ValidateRequest="false" Title="Content Edit" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ContentEdit.aspx.cs"
+﻿<%@ Page ValidateRequest="false" Title="Content Edit" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ContentEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ContentEdit" %>
 
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">

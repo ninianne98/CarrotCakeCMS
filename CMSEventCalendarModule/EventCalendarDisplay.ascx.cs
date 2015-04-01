@@ -139,7 +139,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			List<vw_carrot_CalendarEvent> lst = null;
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				lst = (from c in db.vw_carrot_CalendarEvents
 					   where c.EventDate >= dtStart

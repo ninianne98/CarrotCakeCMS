@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 
 		protected void SetCalendar() {
-			using (dbCalendarDataContext db = new dbCalendarDataContext()) {
+			using (dbCalendarDataContext db = dbCalendarDataContext.GetDataContext()) {
 
 				var lst = (from c in db.tblCalendars
 						   where c.EventDate == theEventDate

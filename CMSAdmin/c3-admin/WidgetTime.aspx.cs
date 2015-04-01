@@ -26,6 +26,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		List<Widget> lstPageWidgets = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
+			Master.UsesSaved = true;
+			Master.HideSave();
 
 			guidWidgetID = GetGuidParameterFromQuery("widgetid");
 			guidContentID = GetGuidPageIDFromQuery();
@@ -102,6 +104,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			} else {
 				ww.Save();
 			}
+
+			Master.ShowSave();
 		}
 
 

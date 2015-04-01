@@ -29,6 +29,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			sZone = GetStringParameterFromQuery("zone");
 			cmsHelper.OverrideKey(guidContentID);
 
+			Master.UsesSaved = true;
+			Master.HideSave();
+
 			if (!IsPostBack) {
 				BindDataGrid();
 			}
@@ -141,6 +144,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			cmsHelper.cmsAdminWidget = cacheWidget;
 
 			BindDataGrid();
+
+			Master.ShowSave();
 		}
 
 

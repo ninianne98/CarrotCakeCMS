@@ -1,6 +1,7 @@
-﻿<%@ Page Title="Edit Properties" ValidateRequest="false" Language="C#" MasterPageFile="/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ControlPropertiesEdit.aspx.cs"
+﻿<%@ Page Title="Edit Properties" ValidateRequest="false" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ControlPropertiesEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ControlPropertiesEdit" %>
 
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">

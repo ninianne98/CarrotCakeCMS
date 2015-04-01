@@ -28,20 +28,20 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			lstGE.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
 			lstGE.OriginalSite = SiteData.GetSiteFromCache(siteID);
 
-			using (GalleryHelper gh = new GalleryHelper(siteID)) {
+			GalleryHelper gh = new GalleryHelper(siteID);
+			
+			foreach (Guid galleryID in GalleryIDs) {
+				GalleryExport ge = new GalleryExport();
+				GalleryGroup gal = gh.GalleryGroupGetByID(galleryID);
 
-				foreach (Guid galleryID in GalleryIDs) {
-					GalleryExport ge = new GalleryExport();
-					GalleryGroup gal = gh.GalleryGroupGetByID(galleryID);
+				ge.TheGallery = gal;
+				ge.OriginalGalleryID = gal.GalleryID;
+				ge.ExportDate = SiteData.CurrentSite.Now;
+				ge.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
 
-					ge.TheGallery = gal;
-					ge.OriginalGalleryID = gal.GalleryID;
-					ge.ExportDate = SiteData.CurrentSite.Now;
-					ge.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-
-					lstGE.TheGalleries.Add(ge);
-				}
+				lstGE.TheGalleries.Add(ge);
 			}
+
 
 			return ContentImportExportUtils.GetExportXML<GalleryExportList>(lstGE);
 		}

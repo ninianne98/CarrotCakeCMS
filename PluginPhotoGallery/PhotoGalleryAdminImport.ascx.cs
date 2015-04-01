@@ -100,45 +100,45 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			pnlReview.Visible = true;
 			SiteData site = SiteData.CurrentSite;
 
-			using (GalleryHelper gh = new GalleryHelper(site.SiteID)) {
+			GalleryHelper gh = new GalleryHelper(SiteID);
 
-				foreach (GridViewRow row in gvPages.Rows) {
-					Guid gGallery = Guid.Empty;
+			foreach (GridViewRow row in gvPages.Rows) {
+				Guid gGallery = Guid.Empty;
 
-					CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
+				CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
 
-					if (chkSelect.Checked) {
-						HiddenField hdnGalleryID = (HiddenField)row.FindControl("hdnGalleryID");
+				if (chkSelect.Checked) {
+					HiddenField hdnGalleryID = (HiddenField)row.FindControl("hdnGalleryID");
 
-						gGallery = new Guid(hdnGalleryID.Value);
+					gGallery = new Guid(hdnGalleryID.Value);
 
-						GalleryGroup grpImp = (from g in lstGalleries.TheGalleries
-											   where g.TheGallery.GalleryID == gGallery
-											   select g.TheGallery).FirstOrDefault();
+					GalleryGroup grpImp = (from g in lstGalleries.TheGalleries
+										   where g.TheGallery.GalleryID == gGallery
+										   select g.TheGallery).FirstOrDefault();
 
-						GalleryGroup grpSite = gh.GalleryGroupGetByName(grpImp.GalleryTitle);
+					GalleryGroup grpSite = gh.GalleryGroupGetByName(grpImp.GalleryTitle);
 
-						if (grpSite == null) {
-							grpSite = grpImp;
-							grpSite.SiteID = site.SiteID;
+					if (grpSite == null) {
+						grpSite = grpImp;
+						grpSite.SiteID = site.SiteID;
+					}
+					grpSite.Save();
+
+					grpImp.GalleryImages.ForEach(q => q.GalleryImageID = Guid.NewGuid());
+					grpImp.GalleryImages.ForEach(q => q.GalleryID = grpSite.GalleryID);
+
+					foreach (GalleryImageEntry imgImp in grpImp.GalleryImages) {
+						GalleryImageEntry imgSite = gh.GalleryImageEntryGetByFilename(grpSite.GalleryID, imgImp.GalleryImage);
+
+						if (imgSite == null) {
+							imgSite = imgImp;
+							imgSite.GalleryID = grpSite.GalleryID;
 						}
-						grpSite.Save();
-
-						grpImp.GalleryImages.ForEach(q => q.GalleryImageID = Guid.NewGuid());
-						grpImp.GalleryImages.ForEach(q => q.GalleryID = grpSite.GalleryID);
-
-						foreach (GalleryImageEntry imgImp in grpImp.GalleryImages) {
-							GalleryImageEntry imgSite = gh.GalleryImageEntryGetByFilename(grpSite.GalleryID, imgImp.GalleryImage);
-
-							if (imgSite == null) {
-								imgSite = imgImp;
-								imgSite.GalleryID = grpSite.GalleryID;
-							}
-							imgSite.Save();
-						}
+						imgSite.Save();
 					}
 				}
 			}
 		}
+
 	}
 }

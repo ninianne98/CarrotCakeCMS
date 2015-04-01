@@ -1,5 +1,4 @@
-﻿<%@ Page Title="Widget Time" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetTime.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetTime" %>
+﻿<%@ Page Title="Widget Time" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetTime.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetTime" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>

@@ -24,6 +24,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		ContentPage pageContents = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
+			Master.UsesSaved = true;
+			Master.HideSave();
 
 			guidContentID = GetGuidPageIDFromQuery();
 
@@ -82,7 +84,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				cmsHelper.cmsAdminContent = pageContents;
 
-				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString());
+				Master.ShowSave();
+
+				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString() +Master.SavedSuffix);
+
 			}
 
 		}

@@ -1,5 +1,4 @@
-﻿<%@ Page Title="PageWidgets" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageWidgets.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageWidgets" %>
+﻿<%@ Page Title="PageWidgets" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageWidgets.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageWidgets" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
@@ -86,7 +85,7 @@
 				<carrot:CarrotHeaderSortTemplateField HeaderText="Retire On" DataField="RetireDate" DataFieldFormat="{0:d} {0:t}" />
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit1" NavigateUrl='<%# String.Format("{0}?widgetid={1}", SiteFilename.WidgetTimeURL, Eval("Root_WidgetID")) %>'><img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit Time" title="Edit Time" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("{0}?widgetid={1}", SiteFilename.WidgetTimeURL, Eval("Root_WidgetID")) %>'><img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit Time" title="Edit Time" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"

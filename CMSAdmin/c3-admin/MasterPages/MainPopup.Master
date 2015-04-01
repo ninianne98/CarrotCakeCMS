@@ -47,22 +47,66 @@
 	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js"></script>
 	<script type="text/javascript">
-		function AjaxTinyLoad() {
-			TinyMCEParamInit("650", "400", true);
+
+		var pnl = '#<%=divSaved.ClientID %>';
+		var fld = '#<%=hdnShow.ClientID %>';
+		var frm = "#aspnetForm";
+		var timer1 = '';
+
+		function DisplaySaveBox() {
+
+			var act = $(frm).attr("action");
+			var pos = act.indexOf("showsaved=true");
+
+			if (pos > -1) {
+				var act2 = act.substring(0, pos);
+				$(frm).attr("action", act2);
+			}
+
+			if (timer1 != '') {
+				clearTimeout(timer1);
+			}
+
+			hideAlert();
+
+			if ($(fld).length > 0 && $(pnl).length > 0) {
+				if ($(fld).val().length > 0) {
+					$(pnl).css('display', '');
+					//$(pnl).fadeOut(2000);
+					timer1 = setTimeout(function () { hideAlert(); }, 2000);
+				}
+
+				$(fld).val('');
+			}
 		}
 
-		function UpdateAjaxTiny() {
+		function hideAlert() {
+			if ($(pnl).length > 0) {
+				$(pnl).css('display', 'none');
+			}
+		}
+
+		function AjaxScriptLoad() {
+
+			TinyMCEParamInit("650", "400", true);
+
+			DisplaySaveBox();
+		}
+
+
+		function UpdateAjaxScript() {
 			if (typeof (Sys) != 'undefined') {
 				var prm = Sys.WebForms.PageRequestManager.getInstance();
 				prm.add_endRequest(function () {
-					AjaxTinyLoad();
+					AjaxScriptLoad();
 				});
 			}
 		}
 
+
 		$(document).ready(function () {
-			UpdateAjaxTiny();
-			AjaxTinyLoad();
+			UpdateAjaxScript();
+			AjaxScriptLoad();
 		});
 
 	</script>
@@ -72,6 +116,15 @@
 </head>
 <body>
 	<form id="form1" runat="server">
+	<div runat="server" id="divSaved" class="info-saved">
+		<h2>
+			<asp:Literal ID="litSaveMessage" runat="server" Text="Changes Applied" />
+		</h2>
+		<%--
+		<p>
+			<img alt="[animated]" src="/c3-admin/images/ani-smallbar.gif" />
+		</p>--%>
+	</div>
 	<div id="cmsAjaxMainDiv">
 		<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
 		<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
@@ -84,6 +137,7 @@
 				</asp:ContentPlaceHolder>
 				<asp:Panel ID="pnlDirty" runat="server">
 				</asp:Panel>
+				<asp:HiddenField ID="hdnShow" runat="server" />
 			</ContentTemplate>
 		</asp:UpdatePanel>
 		<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">

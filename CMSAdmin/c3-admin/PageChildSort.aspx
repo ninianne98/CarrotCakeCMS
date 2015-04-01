@@ -1,6 +1,7 @@
-﻿<%@ Page Title="Page Child Sort" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageChildSort.aspx.cs"
+﻿<%@ Page Title="Page Child Sort" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageChildSort.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageChildSort" %>
 
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 

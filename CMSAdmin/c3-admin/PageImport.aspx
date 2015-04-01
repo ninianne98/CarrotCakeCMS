@@ -11,7 +11,7 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 	<p>
-		<asp:Label ID="lblWarning" runat="server"></asp:Label>
+		<asp:Label ID="lblWarning" runat="server" />
 	</p>
 	<p>
 		Select a previously exported content to import:<br />

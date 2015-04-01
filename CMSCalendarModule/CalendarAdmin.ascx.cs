@@ -10,7 +10,7 @@ using Carrotware.Web.UI.Controls;
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 	public partial class CalendarAdmin : AdminModule {
 
-		private dbCalendarDataContext db = new dbCalendarDataContext();
+		private dbCalendarDataContext db = dbCalendarDataContext.GetDataContext();
 
 		protected void Page_Load(object sender, EventArgs e) {
 

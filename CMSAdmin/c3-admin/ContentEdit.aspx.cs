@@ -27,6 +27,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public string sMode = "";
 
 		protected void Page_Load(object sender, EventArgs e) {
+			Master.UsesSaved = true;
+			Master.HideSave();
 
 			guidContentID = GetGuidPageIDFromQuery();
 			guidWidgetID = GetGuidParameterFromQuery("widgetid");
@@ -110,7 +112,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cmsHelper.cmsAdminContent = pageContents;
 				}
 
-				Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
+				Master.ShowSave();
+
+				Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString() + Master.SavedSuffix);
 			}
 
 		}

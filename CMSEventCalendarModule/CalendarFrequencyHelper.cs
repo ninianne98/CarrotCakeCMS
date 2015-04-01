@@ -344,7 +344,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static List<carrot_CalendarFrequency> GetCalendarFrequencies() {
 
-			using (CalendarDataContext db = new CalendarDataContext()) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
 
 				return (from c in db.carrot_CalendarFrequencies
 						orderby c.FrequencySortOrder

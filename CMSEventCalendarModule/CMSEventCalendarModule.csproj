@@ -76,6 +76,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calendar.cs">
+      <DependentUpon>Calendar.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Calendar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

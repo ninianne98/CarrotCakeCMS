@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Edit Post Info" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="BlogPostEdit.aspx.cs"
+﻿<%@ Page Title="Edit Post Info" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="BlogPostEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostEdit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -8,7 +8,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h2>
-		<asp:Literal ID="litPageName" runat="server"></asp:Literal></h2>
+		<asp:Literal ID="litPageName" runat="server" /></h2>
 	<table style="width: 700px;">
 		<tr>
 			<td style="width: 125px;" class="tablecaption">

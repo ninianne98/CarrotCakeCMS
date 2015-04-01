@@ -11,7 +11,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryTest : System.Web.UI.Page {
 
 		Guid gTheID = Guid.Empty;
-		PhotoGalleryDataContext db = new PhotoGalleryDataContext();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
@@ -30,12 +29,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				GalleryFancyBox2.ThumbSize = 50;
 				GalleryFancyBox2.SiteID = SiteData.CurrentSiteID;
 
-				GalleryFancyBox2.GalleryIDs = (from c in db.tblGalleries
-											   where c.SiteID == SiteData.CurrentSiteID
-											   select c.GalleryID).ToList();
-
+				using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+					GalleryFancyBox2.GalleryIDs = (from c in db.tblGalleries
+												   where c.SiteID == SiteData.CurrentSiteID
+												   select c.GalleryID).ToList();
+				}
 			}
-
 		}
+
 	}
 }

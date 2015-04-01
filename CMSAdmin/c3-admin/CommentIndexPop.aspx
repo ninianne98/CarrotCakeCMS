@@ -1,5 +1,4 @@
-﻿<%@ Page Title="CommentIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="CommentIndexPop.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.CommentIndexPop" %>
+﻿<%@ Page Title="CommentIndex" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="CommentIndexPop.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.CommentIndexPop" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Register Src="ucCommentIndex.ascx" TagName="ucCommentIndex" TagPrefix="uc1" %>

@@ -32,13 +32,12 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				}
 				Dictionary<string, string> _dict = null;
 
-				using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+				GalleryHelper gh = new GalleryHelper(SiteID);
 
-					_dict = (from c in gh.GalleryGroupListGetBySiteID()
-							 orderby c.GalleryTitle
-							 where c.SiteID == SiteID
-							 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
-				}
+				_dict = (from c in gh.GalleryGroupListGetBySiteID()
+						 orderby c.GalleryTitle
+						 where c.SiteID == SiteID
+						 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
 
 				return _dict;
 			}
@@ -116,19 +115,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				GalleryIDs = new List<Guid>();
 			}
 
-			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
-				var lstCont = gh.GalleryGroupListGetBySiteID();
+			GalleryHelper gh = new GalleryHelper(SiteID);
+			var lstCont = gh.GalleryGroupListGetBySiteID();
 
-				var gal = (from g in GalleryIDs
-						   join gg in lstCont on g equals gg.GalleryID
-						   orderby gg.GalleryTitle
-						   select gg).ToList();
+			var gal = (from g in GalleryIDs
+					   join gg in lstCont on g equals gg.GalleryID
+					   orderby gg.GalleryTitle
+					   select gg).ToList();
 
-				if (gal != null) {
-					rpGalleries.DataSource = gal;
-					rpGalleries.DataBind();
-				}
+			if (gal != null) {
+				rpGalleries.DataSource = gal;
+				rpGalleries.DataBind();
 			}
+
 
 			if (rpGalleries.Items.Count > 0) {
 				pnlGallery.Visible = true;

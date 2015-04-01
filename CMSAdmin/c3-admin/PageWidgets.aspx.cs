@@ -24,6 +24,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 
 		protected void Page_Load(object sender, EventArgs e) {
+			Master.UsesSaved = true;
+			Master.HideSave();
 
 			guidContentID = GetGuidIDFromQuery();
 
@@ -53,6 +55,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			widgetHelper.SetStatusList(guidContentID, lsInactive, false);
 
 			LoadGrid();
+
+			Master.ShowSave();
 		}
 
 	}

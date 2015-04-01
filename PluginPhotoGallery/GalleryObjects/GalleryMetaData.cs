@@ -10,7 +10,7 @@ using Carrotware.CMS.Interface;
 
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public class GalleryMetaData : GalleryBase, IDisposable {
+	public class GalleryMetaData : GalleryBase {
 
 		public GalleryMetaData() { }
 
@@ -37,28 +37,29 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public void Save() {
 
 			if (!string.IsNullOrEmpty(this.GalleryImage)) {
+				using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+					tblGalleryImageMeta gal = (from c in db.tblGalleryImageMetas
+											   where c.GalleryImage.ToLower() == this.GalleryImage.ToLower()
+											   select c).FirstOrDefault();
 
-				tblGalleryImageMeta gal = (from c in db.tblGalleryImageMetas
-										   where c.GalleryImage.ToLower() == this.GalleryImage.ToLower()
-										   select c).FirstOrDefault();
+					if (gal == null || this.GalleryImageMetaID == Guid.Empty) {
+						gal = new tblGalleryImageMeta();
+						gal.SiteID = this.SiteID;
+						gal.GalleryImageMetaID = Guid.NewGuid();
+						gal.GalleryImage = this.GalleryImage;
+					}
 
-				if (gal == null || this.GalleryImageMetaID == Guid.Empty) {
-					gal = new tblGalleryImageMeta();
-					gal.SiteID = this.SiteID;
-					gal.GalleryImageMetaID = Guid.NewGuid();
-					gal.GalleryImage = this.GalleryImage;
+					gal.ImageTitle = this.ImageTitle;
+					gal.ImageMetaData = this.ImageMetaData;
+
+					if (gal.GalleryImageMetaID != this.GalleryImageMetaID) {
+						db.tblGalleryImageMetas.InsertOnSubmit(gal);
+					}
+
+					db.SubmitChanges();
+
+					this.GalleryImageMetaID = gal.GalleryImageMetaID;
 				}
-
-				gal.ImageTitle = this.ImageTitle;
-				gal.ImageMetaData = this.ImageMetaData;
-
-				if (gal.GalleryImageMetaID != this.GalleryImageMetaID) {
-					db.tblGalleryImageMetas.InsertOnSubmit(gal);
-				}
-
-				db.SubmitChanges();
-
-				this.GalleryImageMetaID = gal.GalleryImageMetaID;
 			}
 		}
 
@@ -85,14 +86,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 	}
 }

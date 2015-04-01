@@ -31,7 +31,7 @@
 		Retire Date: <asp:Literal runat="server" ID="litRetire" />
 	</p>
 </div>
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 	function cmsNavPage(y) {
 		var url = y.options[y.selectedIndex].value;
 
@@ -44,19 +44,19 @@
 	<div class="cmsNavBox2">
 		<div class="cmsNavBox1">
 			<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">
-				<img border="0" alt="EDIT" title="EDIT" src="/c3-admin/images/application_edit.png" /></a>
+				<img alt="EDIT" title="EDIT" src="/c3-admin/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
 			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">
-				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/c3-admin/images/overlays.png" /></a>
+				<img alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/c3-admin/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
 			<a title="CONTENT INDEX" class="cmsNavImageLink" target="_top" href="<%=PageIndexURL %>">
-				<img border="0" alt="CONTENT INDEX" title="CONTENT INDEX" src="/c3-admin/images/table.png" /></a>
+				<img alt="CONTENT INDEX" title="CONTENT INDEX" src="/c3-admin/images/table.png" /></a>
 		</div>
 		<div class="cmsNavBox2">
 			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/c3-admin/ModuleIndex.aspx">
-				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/c3-admin/images/brick.png" /></a>
+				<img alt="MODULE INDEX" title="MODULE INDEX" src="/c3-admin/images/brick.png" /></a>
 		</div>
 	</div>
 </div>
@@ -64,19 +64,19 @@
 	<div class="cmsNavBox2">
 		<div class="cmsNavBox1">
 			<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">
-				<img border="0" alt="EDIT" title="EDIT" src="/c3-admin/images/application_edit.png" /></a>
+				<img alt="EDIT" title="EDIT" src="/c3-admin/images/application_edit.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
 			<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">
-				<img border="0" alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/c3-admin/images/overlays.png" /></a>
+				<img alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/c3-admin/images/overlays.png" /></a>
 		</div>
 		<div class="cmsNavBox1">
 			<a title="CONTENT INDEX" class="cmsNavImageLink" target="_top" href="<%=PageIndexURL %>">
-				<img border="0" alt="CONTENT INDEX" title="CONTENT INDEX" src="/c3-admin/images/table.png" /></a>
+				<img alt="CONTENT INDEX" title="CONTENT INDEX" src="/c3-admin/images/table.png" /></a>
 		</div>
 		<div class="cmsNavBox2">
 			<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/c3-admin/ModuleIndex.aspx">
-				<img border="0" alt="MODULE INDEX" title="MODULE INDEX" src="/c3-admin/images/brick.png" /></a>
+				<img alt="MODULE INDEX" title="MODULE INDEX" src="/c3-admin/images/brick.png" /></a>
 		</div>
 	</div>
 </div>

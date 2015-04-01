@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Content Snippet History" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ContentSnippetHistory.aspx.cs"
+﻿<%@ Page Title="Content Snippet History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ContentSnippetHistory.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ContentSnippetHistory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

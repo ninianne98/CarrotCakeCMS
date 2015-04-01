@@ -130,140 +130,139 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			CMSPlugin plug = lstPlug.Where(x => x.FilePath.EndsWith("PhotoGalleryPrettyPhoto.ascx")).FirstOrDefault();
 
-			using (GalleryHelper gh = new GalleryHelper(site.SiteID)) {
+			GalleryHelper gh = new GalleryHelper(site.SiteID);
 
-				foreach (GridViewRow row in gvPages.Rows) {
-					Guid gRootPage = Guid.Empty;
-					Guid gGallery = Guid.Empty;
-					int iPost = 0;
+			foreach (GridViewRow row in gvPages.Rows) {
+				Guid gRootPage = Guid.Empty;
+				Guid gGallery = Guid.Empty;
+				int iPost = 0;
 
-					CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
+				CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
 
-					if (chkSelect.Checked) {
-						HiddenField hdnPostID = (HiddenField)row.FindControl("hdnPostID");
+				if (chkSelect.Checked) {
+					HiddenField hdnPostID = (HiddenField)row.FindControl("hdnPostID");
 
-						iPost = int.Parse(hdnPostID.Value);
+					iPost = int.Parse(hdnPostID.Value);
 
-						List<WordPressPost> lstA = (from a in wpSite.Content
-													where a.PostType == WordPressPost.WPPostType.Attachment
-													&& a.ParentPostID == iPost
-													orderby a.PostDateUTC
-													select a).Distinct().ToList();
-
-
-						lstA.ToList().ForEach(q => q.ImportFileSlug = ddlFolders.SelectedValue + "/" + q.ImportFileSlug);
-						lstA.ToList().ForEach(q => q.ImportFileSlug = q.ImportFileSlug.Replace("//", "/").Replace("//", "/"));
+					List<WordPressPost> lstA = (from a in wpSite.Content
+												where a.PostType == WordPressPost.WPPostType.Attachment
+												&& a.ParentPostID == iPost
+												orderby a.PostDateUTC
+												select a).Distinct().ToList();
 
 
-						WordPressPost post = (from p in wpSite.Content
-											  where p.PostID == iPost
-											  select p).FirstOrDefault();
+					lstA.ToList().ForEach(q => q.ImportFileSlug = ddlFolders.SelectedValue + "/" + q.ImportFileSlug);
+					lstA.ToList().ForEach(q => q.ImportFileSlug = q.ImportFileSlug.Replace("//", "/").Replace("//", "/"));
 
-						ContentPage cp = null;
 
-						List<ContentPage> lstCP = pageHelper.FindPageByTitleAndDate(site.SiteID, post.PostTitle, post.PostName, post.PostDateUTC);
+					WordPressPost post = (from p in wpSite.Content
+										  where p.PostID == iPost
+										  select p).FirstOrDefault();
 
-						if (lstCP != null && lstCP.Count > 0) {
-							cp = lstCP.FirstOrDefault();
+					ContentPage cp = null;
+
+					List<ContentPage> lstCP = pageHelper.FindPageByTitleAndDate(site.SiteID, post.PostTitle, post.PostName, post.PostDateUTC);
+
+					if (lstCP != null && lstCP.Count > 0) {
+						cp = lstCP.FirstOrDefault();
+					}
+
+					if (cp != null) {
+						gRootPage = cp.Root_ContentID;
+						if (cp.PageText.Contains("[gallery]")) {
+							cp.PageText = cp.PageText.Replace("[gallery]", "");
+							cp.SavePageEdit();
+						}
+					}
+
+					GalleryGroup gal = gh.GalleryGroupGetByName(post.PostTitle);
+
+					if (gal == null) {
+
+						gal = new GalleryGroup();
+						gal.SiteID = site.SiteID;
+						gal.GalleryID = Guid.Empty;
+						gal.GalleryTitle = post.PostTitle;
+
+						gal.Save();
+					}
+
+					gGallery = gal.GalleryID;
+
+					int iPos = 0;
+
+					foreach (var img in lstA) {
+
+						img.ImportFileSlug = img.ImportFileSlug.Replace("//", "/").Replace("//", "/");
+
+						if (!chkFileGrab.Checked) {
+							cmsHelper.GetFile(img.AttachmentURL, img.ImportFileSlug);
 						}
 
-						if (cp != null) {
-							gRootPage = cp.Root_ContentID;
-							if (cp.PageText.Contains("[gallery]")) {
-								cp.PageText = cp.PageText.Replace("[gallery]", "");
-								cp.SavePageEdit();
+						if (!string.IsNullOrEmpty(img.ImportFileSlug)) {
+
+							GalleryImageEntry theImg = gh.GalleryImageEntryGetByFilename(gGallery, img.ImportFileSlug);
+
+							if (theImg == null) {
+								theImg = new GalleryImageEntry();
+								theImg.GalleryImage = img.ImportFileSlug;
+								theImg.GalleryImageID = Guid.Empty;
+								theImg.GalleryID = gGallery;
+							}
+							theImg.ImageOrder = iPos;
+							theImg.Save();
+
+							GalleryMetaData theMeta = gh.GalleryMetaDataGetByFilename(img.ImportFileSlug);
+
+							if (theMeta == null) {
+								theMeta = new GalleryMetaData();
+								theMeta.GalleryImageMetaID = Guid.Empty;
+								theMeta.SiteID = site.SiteID;
+							}
+
+							if (!string.IsNullOrEmpty(img.PostTitle) || !string.IsNullOrEmpty(img.PostContent)) {
+								theMeta.ImageTitle = img.PostTitle;
+								theMeta.ImageMetaData = img.PostContent;
+
+								theMeta.Save();
 							}
 						}
+						iPos++;
+					}
 
-						GalleryGroup gal = gh.GalleryGroupGetByName(post.PostTitle);
+					if (gRootPage != Guid.Empty) {
 
-						if (gal == null) {
+						List<Widget> lstW = (from w in cp.GetWidgetList()
+											 where w.ControlPath.ToLower() == plug.FilePath.ToLower()
+												&& w.ControlProperties.ToLower().Contains(gGallery.ToString().ToLower())
+											 select w).ToList();
 
-							gal = new GalleryGroup();
-							gal.SiteID = site.SiteID;
-							gal.GalleryID = Guid.Empty;
-							gal.GalleryTitle = post.PostTitle;
+						if (lstW.Count < 1) {
 
-							gal.Save();
-						}
+							Widget newWidget = new Widget();
+							newWidget.ControlProperties = null;
+							newWidget.Root_ContentID = gRootPage;
+							newWidget.Root_WidgetID = Guid.NewGuid();
+							newWidget.WidgetDataID = newWidget.Root_WidgetID;
+							newWidget.ControlPath = plug.FilePath;
+							newWidget.EditDate = SiteData.CurrentSite.Now;
 
-						gGallery = gal.GalleryID;
+							newWidget.IsLatestVersion = true;
+							newWidget.IsWidgetActive = true;
+							newWidget.IsWidgetPendingDelete = false;
+							newWidget.WidgetOrder = -1;
+							newWidget.PlaceholderName = txtPlaceholderName.Text;
 
-						int iPos = 0;
+							List<WidgetProps> lstProps = new List<WidgetProps>();
+							lstProps.Add(new WidgetProps { KeyName = "ShowHeading", KeyValue = chkShowHeading.Checked.ToString() });
+							lstProps.Add(new WidgetProps { KeyName = "ScaleImage", KeyValue = chkScaleImage.Checked.ToString() });
+							lstProps.Add(new WidgetProps { KeyName = "ThumbSize", KeyValue = ddlSize.SelectedValue });
+							lstProps.Add(new WidgetProps { KeyName = "PrettyPhotoSkin", KeyValue = ddlSkin.SelectedValue });
+							lstProps.Add(new WidgetProps { KeyName = "GalleryID", KeyValue = gGallery.ToString() });
 
-						foreach (var img in lstA) {
+							newWidget.SaveDefaultControlProperties(lstProps);
 
-							img.ImportFileSlug = img.ImportFileSlug.Replace("//", "/").Replace("//", "/");
-
-							if (!chkFileGrab.Checked) {
-								cmsHelper.GetFile(img.AttachmentURL, img.ImportFileSlug);
-							}
-
-							if (!string.IsNullOrEmpty(img.ImportFileSlug)) {
-
-								GalleryImageEntry theImg = gh.GalleryImageEntryGetByFilename(gGallery, img.ImportFileSlug);
-
-								if (theImg == null) {
-									theImg = new GalleryImageEntry();
-									theImg.GalleryImage = img.ImportFileSlug;
-									theImg.GalleryImageID = Guid.Empty;
-									theImg.GalleryID = gGallery;
-								}
-								theImg.ImageOrder = iPos;
-								theImg.Save();
-
-								GalleryMetaData theMeta = gh.GalleryMetaDataGetByFilename(img.ImportFileSlug);
-
-								if (theMeta == null) {
-									theMeta = new GalleryMetaData();
-									theMeta.GalleryImageMetaID = Guid.Empty;
-									theMeta.SiteID = site.SiteID;
-								}
-
-								if (!string.IsNullOrEmpty(img.PostTitle) || !string.IsNullOrEmpty(img.PostContent)) {
-									theMeta.ImageTitle = img.PostTitle;
-									theMeta.ImageMetaData = img.PostContent;
-
-									theMeta.Save();
-								}
-							}
-							iPos++;
-						}
-
-						if (gRootPage != Guid.Empty) {
-
-							List<Widget> lstW = (from w in cp.GetWidgetList()
-												 where w.ControlPath.ToLower() == plug.FilePath.ToLower()
-													&& w.ControlProperties.ToLower().Contains(gGallery.ToString().ToLower())
-												 select w).ToList();
-
-							if (lstW.Count < 1) {
-
-								Widget newWidget = new Widget();
-								newWidget.ControlProperties = null;
-								newWidget.Root_ContentID = gRootPage;
-								newWidget.Root_WidgetID = Guid.NewGuid();
-								newWidget.WidgetDataID = newWidget.Root_WidgetID;
-								newWidget.ControlPath = plug.FilePath;
-								newWidget.EditDate = SiteData.CurrentSite.Now;
-
-								newWidget.IsLatestVersion = true;
-								newWidget.IsWidgetActive = true;
-								newWidget.IsWidgetPendingDelete = false;
-								newWidget.WidgetOrder = -1;
-								newWidget.PlaceholderName = txtPlaceholderName.Text;
-
-								List<WidgetProps> lstProps = new List<WidgetProps>();
-								lstProps.Add(new WidgetProps { KeyName = "ShowHeading", KeyValue = chkShowHeading.Checked.ToString() });
-								lstProps.Add(new WidgetProps { KeyName = "ScaleImage", KeyValue = chkScaleImage.Checked.ToString() });
-								lstProps.Add(new WidgetProps { KeyName = "ThumbSize", KeyValue = ddlSize.SelectedValue });
-								lstProps.Add(new WidgetProps { KeyName = "PrettyPhotoSkin", KeyValue = ddlSkin.SelectedValue });
-								lstProps.Add(new WidgetProps { KeyName = "GalleryID", KeyValue = gGallery.ToString() });
-
-								newWidget.SaveDefaultControlProperties(lstProps);
-
-								newWidget.Save();
-							}
+							newWidget.Save();
 						}
 					}
 				}

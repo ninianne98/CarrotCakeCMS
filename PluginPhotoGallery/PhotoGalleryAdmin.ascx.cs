@@ -76,19 +76,18 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void LoadLists() {
-			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+			GalleryHelper gh = new GalleryHelper(SiteID);
 
-				var gal = gh.GalleryGroupGetByID(gTheID);
+			var gal = gh.GalleryGroupGetByID(gTheID);
 
-				if (gal != null) {
-					litGalleryName.Text = gal.GalleryTitle;
+			if (gal != null) {
+				litGalleryName.Text = gal.GalleryTitle;
 
-					rpGallery.DataSource = (from g in gal.GalleryImages
-											orderby g.ImageOrder ascending
-											select fileHelper.GetFileInfo(g.GalleryImage, g.GalleryImage)).ToList();
+				rpGallery.DataSource = (from g in gal.GalleryImages
+										orderby g.ImageOrder ascending
+										select fileHelper.GetFileInfo(g.GalleryImage, g.GalleryImage)).ToList();
 
-					rpGallery.DataBind();
-				}
+				rpGallery.DataBind();
 			}
 
 			SetSourceFiles(null, "/");
@@ -197,31 +196,30 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			using (GalleryHelper gh = new GalleryHelper(SiteID)) {
+			GalleryHelper gh = new GalleryHelper(SiteID);
 
-				Dictionary<int, string> lstImages = ParseGalleryImages();
-				int iPos = 0;
+			Dictionary<int, string> lstImages = ParseGalleryImages();
+			int iPos = 0;
 
-				foreach (var img in lstImages) {
+			foreach (var img in lstImages) {
 
-					if (!string.IsNullOrEmpty(img.Value)) {
+				if (!string.IsNullOrEmpty(img.Value)) {
 
-						var theImg = gh.GalleryImageEntryGetByFilename(gTheID, img.Value);
+					var theImg = gh.GalleryImageEntryGetByFilename(gTheID, img.Value);
 
-						if (theImg == null) {
-							theImg = new GalleryImageEntry();
-							theImg.GalleryImage = img.Value;
-							theImg.GalleryImageID = Guid.NewGuid();
-							theImg.GalleryID = gTheID;
-						}
-
-						theImg.ImageOrder = iPos;
-
-						theImg.Save();
+					if (theImg == null) {
+						theImg = new GalleryImageEntry();
+						theImg.GalleryImage = img.Value;
+						theImg.GalleryImageID = Guid.NewGuid();
+						theImg.GalleryID = gTheID;
 					}
 
-					iPos++;
+					theImg.ImageOrder = iPos;
+
+					theImg.Save();
 				}
+
+				iPos++;
 
 				List<string> lst = (from l in lstImages
 									select l.Value.ToLower()).ToList();

@@ -1,6 +1,6 @@
-﻿<%@ Page Title="Add Page Info" Language="C#" MasterPageFile="~/c3-admin/MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageAddChild.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageAddChild" %>
+﻿<%@ Page Title="Add Page Info" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageAddChild.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageAddChild" %>
 
+<%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
