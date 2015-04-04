@@ -139,6 +139,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.CheckBox chkHide;
         
         /// <summary>
+        /// txtSearchUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearchUser;
+        
+        /// <summary>
+        /// hdnCreditUserID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCreditUserID;
+        
+        /// <summary>
         /// txtKey control.
         /// </summary>
         /// <remarks>
@@ -200,5 +218,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup Master {
+            get {
+                return ((Carrotware.CMS.UI.Admin.c3_admin.MasterPages.MainPopup)(base.Master));
+            }
+        }
     }
 }

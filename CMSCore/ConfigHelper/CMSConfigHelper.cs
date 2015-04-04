@@ -340,7 +340,7 @@ namespace Carrotware.CMS.Core {
 									select new CMSAdminModule {
 										PluginName = d.Field<string>("caption"),
 										PluginID = new Guid(d.Field<string>("pluginid"))
-									}).ToList();
+									}).OrderBy(x => x.PluginName).ToList();
 
 						foreach (DataTable t in ds.Tables) {
 							if (t.TableName.StartsWith("ID_") || t.TableName.StartsWith("plugincontrols")) {
@@ -354,7 +354,7 @@ namespace Carrotware.CMS.Core {
 												  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
 												  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
 												  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
-											  }).ToList();
+											  }).OrderBy(x => x.Caption).OrderBy(x => x.SortOrder).ToList();
 
 								_ctrls = _ctrls.Union(_ctrl2).ToList();
 							}
@@ -364,6 +364,7 @@ namespace Carrotware.CMS.Core {
 					foreach (var p in _modules) {
 						p.PluginMenus = (from c in _ctrls
 										 where c.PluginID == p.PluginID
+										 orderby c.Caption, c.SortOrder
 										 select c).ToList();
 					}
 
@@ -463,6 +464,7 @@ namespace Carrotware.CMS.Core {
 									  select m).FirstOrDefault();
 
 				cc = (from m in mod.PluginMenus
+					  orderby m.Caption, m.SortOrder
 					  where m.PluginParm == pf
 					  select m).FirstOrDefault();
 
@@ -490,6 +492,7 @@ namespace Carrotware.CMS.Core {
 									  select m).FirstOrDefault();
 
 				cc = (from m in mod.PluginMenus
+					  orderby m.Caption, m.SortOrder
 					  select m).ToList();
 
 			}
@@ -553,7 +556,7 @@ namespace Carrotware.CMS.Core {
 											select new CMSAdminModule {
 												PluginName = d.Field<string>("caption"),
 												PluginID = new Guid(d.Field<string>("pluginid"))
-											}).ToList();
+											}).OrderBy(x => x.PluginName).ToList();
 
 							var _ctrls = (from d in ds.Tables[1].AsEnumerable()
 										  select new CMSAdminModuleMenu {
@@ -565,11 +568,12 @@ namespace Carrotware.CMS.Core {
 											  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
 											  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
 											  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
-										  }).ToList();
+										  }).OrderBy(x => x.Caption).OrderBy(x => x.SortOrder).ToList();
 
 							foreach (var p in _modules) {
 								p.PluginMenus = (from c in _ctrls
 												 where c.PluginID == p.PluginID
+												 orderby c.Caption, c.SortOrder
 												 select c).ToList();
 							}
 

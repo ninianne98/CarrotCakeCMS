@@ -57,6 +57,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					chkSiteMap.Checked = pageContents.ShowInSiteMap;
 					chkHide.Checked = pageContents.BlockIndex;
 
+					if (pageContents.CreditUserId.HasValue) {
+						var usr = new ExtendedUserData(pageContents.CreditUserId.Value);
+						hdnCreditUserID.Value = usr.UserName;
+						txtSearchUser.Text = string.Format("{0} ({1})", usr.UserName, usr.EmailAddress);
+					}
+
 				}
 			}
 		}
@@ -82,11 +88,18 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.ShowInSiteMap = chkSiteMap.Checked;
 				pageContents.BlockIndex = chkHide.Checked;
 
+				if (string.IsNullOrEmpty(hdnCreditUserID.Value)) {
+					pageContents.CreditUserId = null;
+				} else {
+					var usr = new ExtendedUserData(hdnCreditUserID.Value);
+					pageContents.CreditUserId = usr.UserId;
+				}
+
 				cmsHelper.cmsAdminContent = pageContents;
 
 				Master.ShowSave();
 
-				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString() +Master.SavedSuffix);
+				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString() + Master.SavedSuffix);
 
 			}
 

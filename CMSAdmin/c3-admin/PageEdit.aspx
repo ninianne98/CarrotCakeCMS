@@ -2,6 +2,12 @@
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
+	<script src="Includes/FindUsers.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			initFindUsersMethod("<%=hdnCreditUserID.ClientID %>", "<%=txtSearchUser.ClientID %>", "FindCreditUsers");
+		});
+	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Edit Page Info
@@ -92,6 +98,17 @@
 				<asp:CheckBox ID="chkSiteMap" runat="server" Text="Include In Sitemap" Checked="true" />
 				&nbsp;&nbsp;&nbsp;
 				<asp:CheckBox ID="chkHide" runat="server" Text="Hide from Search Engines" />
+			</td>
+		</tr>
+		<tr>
+			<td class="tablecaption">
+				credit author:
+			</td>
+			<td>
+				<b>find:</b> <span id="spanResults"></span>
+				<br />
+				<asp:TextBox ValidationGroup="inputForm" ID="txtSearchUser" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100" runat="server" />
+				<asp:HiddenField ID="hdnCreditUserID" runat="server" />
 			</td>
 		</tr>
 		<tr>

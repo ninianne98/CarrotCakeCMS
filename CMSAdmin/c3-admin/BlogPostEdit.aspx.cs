@@ -25,6 +25,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		ContentPage pageContents = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
+			Master.UsesSaved = true;
+			Master.HideSave();
 
 			guidContentID = GetGuidPageIDFromQuery();
 
@@ -57,6 +59,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					chkActive.Checked = pageContents.PageActive;
 					chkHide.Checked = pageContents.BlockIndex;
+
+					if (pageContents.CreditUserId.HasValue) {
+						var usr = new ExtendedUserData(pageContents.CreditUserId.Value);
+						hdnCreditUserID.Value = usr.UserName;
+						txtSearchUser.Text = string.Format("{0} ({1})", usr.UserName, usr.EmailAddress);
+					}
 
 					PreselectCheckboxRepeater(rpCat, pageContents.ContentCategories.Cast<IContentMetaInfo>().ToList());
 
@@ -101,11 +109,20 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.ContentCategories = lstCat;
 				pageContents.ContentTags = lstTag;
 
+				if (string.IsNullOrEmpty(hdnCreditUserID.Value)) {
+					pageContents.CreditUserId = null;
+				} else {
+					var usr = new ExtendedUserData(hdnCreditUserID.Value);
+					pageContents.CreditUserId = usr.UserId;
+				}
+
 				pageContents.FileName = ContentPageHelper.CreateFileNameFromSlug(pageContents.SiteID, pageContents.GoLiveDate, pageContents.PageSlug);
 
 				cmsHelper.cmsAdminContent = pageContents;
 
-				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString());
+				Master.ShowSave();
+
+				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString() + Master.SavedSuffix);
 			}
 
 		}
