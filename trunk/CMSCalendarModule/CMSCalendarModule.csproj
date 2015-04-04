@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CalendarDateInfo.ascx" />
+    <Content Include="create tblCalendar.sql" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -921,15 +921,6 @@
     <NotInBuild Include="Scripts\CREATE 01 - whole database.sql">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
-    <NotInBuild Include="Scripts\create tblCalendar.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\create tblFAQ.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\create tblGallery.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
     <NotInBuild Include="Scripts\Post-Deployment\create_groups_and_roles.sql">
       <SubType>NotInBuild</SubType>
     </NotInBuild>

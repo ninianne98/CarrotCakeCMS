@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="create tblFAQ.sql" />
     <Content Include="FAQAdmin.ascx" />
     <Content Include="FAQAdminAddEdit.ascx" />
     <Content Include="FAQDisplay.ascx" />

@@ -13,6 +13,15 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
     public partial class PhotoGalleryAdminGalleryList {
         
         /// <summary>
+        /// lnkAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkAdd;
+        
+        /// <summary>
         /// gvPages control.
         /// </summary>
         /// <remarks>

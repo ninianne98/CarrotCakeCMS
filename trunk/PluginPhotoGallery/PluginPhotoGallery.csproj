@@ -149,7 +149,7 @@
     <Content Include="PhotoIcon.png" />
     <Content Include="PluginPhotoGallery.sln" />
     <Content Include="prettyphoto\README.txt" />
-    <EmbeddedResource Include="scripts\CreateGallery.sql" />
+    <EmbeddedResource Include="tblGallery.sql" />
     <Content Include="Web.config" />
     <Content Include="Public.config" />
   </ItemGroup>
