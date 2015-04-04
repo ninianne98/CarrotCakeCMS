@@ -25,7 +25,6 @@ using System.Web.UI;
 
 
 [assembly: WebResource("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent2.sql", "text/plain")]
 
 
 // Version information for an assembly consists of the following four values:

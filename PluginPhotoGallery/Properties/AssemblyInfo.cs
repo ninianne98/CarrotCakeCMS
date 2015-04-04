@@ -37,7 +37,7 @@ using System.Web.UI;
 //  [assembly: AssemblyFileVersion("1.0.0.0")]
 
 
-[assembly: WebResource("Carrotware.CMS.UI.Plugins.PhotoGallery.scripts.CreateGallery.sql", "text/plain")]
+[assembly: WebResource("Carrotware.CMS.UI.Plugins.PhotoGallery.tblGallery.sql", "text/plain")]
 
 
 [assembly: TagPrefix("FancyBox", "carrot")]

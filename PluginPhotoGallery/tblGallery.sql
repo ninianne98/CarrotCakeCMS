@@ -1,5 +1,5 @@
 
-/****** Object:  Table [dbo].[tblGallery]    Script Date: 11/11/2011 23:00:56 ******/
+
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tblGallery]') AND type in (N'U')) BEGIN
 
 	CREATE TABLE [dbo].[tblGallery](
@@ -14,10 +14,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tb
 
 END
 
-GO
 
-
-/****** Object:  Table [dbo].[tblGalleryImage]    Script Date: 11/11/2011 23:00:56 ******/
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tblGalleryImage]') AND type in (N'U')) BEGIN
 
 	CREATE TABLE [dbo].[tblGalleryImage](
@@ -33,36 +30,36 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tb
 
 END
 
-GO
 
+GO
 
 
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_tblGallery_GalleryID]') AND type = 'D') BEGIN
-	ALTER TABLE [dbo].[tblGallery] ADD  CONSTRAINT [DF_tblGallery_GalleryID]  DEFAULT (newid()) FOR [GalleryID]
-END
 
-GO
+	ALTER TABLE [dbo].[tblGallery] ADD  CONSTRAINT [DF_tblGallery_GalleryID]  DEFAULT (newid()) FOR [GalleryID]
+
+END
 
 
 IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[tblGallery_tblGalleryImage_FK]') AND parent_object_id = OBJECT_ID(N'[dbo].[tblGalleryImage]')) BEGIN
+
 	ALTER TABLE [dbo].[tblGalleryImage]  WITH CHECK ADD  CONSTRAINT [tblGallery_tblGalleryImage_FK] FOREIGN KEY([GalleryID])
 	REFERENCES [dbo].[tblGallery] ([GalleryID])
 	ALTER TABLE [dbo].[tblGalleryImage] CHECK CONSTRAINT [tblGallery_tblGalleryImage_FK]
+
 END
-
-GO
-
 
 
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_tblGalleryImage_GalleryImageID]') AND type = 'D') BEGIN
+
 	ALTER TABLE [dbo].[tblGalleryImage] ADD  CONSTRAINT [DF_tblGalleryImage_GalleryImageID]  DEFAULT (newid()) FOR [GalleryImageID]
+
 END
+
 
 GO
 
 
-
-/****** Object:  Table [dbo].[tblGalleryImageMeta]    Script Date: 08/16/2012 22:13:01 ******/
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tblGalleryImageMeta]') AND type in (N'U')) BEGIN
 
 	CREATE TABLE [dbo].[tblGalleryImageMeta](
@@ -79,11 +76,15 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tb
 
 END
 
+
 GO
 
 
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_tblGalleryImageMeta_GalleryImageMetaID]') AND type = 'D') BEGIN
+
 	ALTER TABLE [dbo].[tblGalleryImageMeta] ADD  CONSTRAINT [DF_tblGalleryImageMeta_GalleryImageMetaID]  DEFAULT (newid()) FOR [GalleryImageMetaID]
+
 END
+
 
 GO

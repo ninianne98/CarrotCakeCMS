@@ -59,9 +59,8 @@
     <Content Include="CalendarAdminDetail.ascx" />
     <Content Include="CalendarAdminDetailSingle.ascx" />
     <Content Include="CalendarAdminList.ascx" />
-    <EmbeddedResource Include="carrot_CalendarEvent.sql" />
     <Content Include="CalendarAdminProfileList.ascx" />
-    <EmbeddedResource Include="carrot_CalendarEvent2.sql" />
+    <EmbeddedResource Include="carrot_CalendarEvent.sql" />
     <Content Include="EventCalendarDisplay2.ascx" />
     <Content Include="EventCalendarDisplayUpcoming.ascx" />
     <Content Include="EventCalendarDisplay.ascx" />

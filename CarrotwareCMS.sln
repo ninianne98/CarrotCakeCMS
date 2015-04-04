@@ -18,9 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "databas
 		CMSDataScripts\Scripts\ALTER 12 - update time zone and credits.sql = CMSDataScripts\Scripts\ALTER 12 - update time zone and credits.sql
 		CMSDataScripts\Scripts\CREATE 01 - whole database.sql = CMSDataScripts\Scripts\CREATE 01 - whole database.sql
 		CMSDataScripts\Scripts\CREATE 02 - default user.sql = CMSDataScripts\Scripts\CREATE 02 - default user.sql
-		CMSDataScripts\Scripts\create tblCalendar.sql = CMSDataScripts\Scripts\create tblCalendar.sql
-		CMSDataScripts\Scripts\create tblFAQ.sql = CMSDataScripts\Scripts\create tblFAQ.sql
-		CMSDataScripts\Scripts\create tblGallery.sql = CMSDataScripts\Scripts\create tblGallery.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSAdmin", "CMSAdmin\CMSAdmin.csproj", "{3137431F-6BE3-4996-9CF8-4D50414B403A}"

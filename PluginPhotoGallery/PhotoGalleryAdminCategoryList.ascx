@@ -2,6 +2,12 @@
 <h2>
 	Photo Gallery : Category List</h2>
 <br />
+<br />
+<p>
+	<asp:HyperLink ID="lnkAdd" runat="server"> 
+	<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
+	Add Entry</asp:HyperLink>
+</p>
 <div id="SortableGrid">
 	<carrot:CarrotGridView DefaultSort="GalleryTitle ASC" CssClass="datatable" ID="gvPages" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 		AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">

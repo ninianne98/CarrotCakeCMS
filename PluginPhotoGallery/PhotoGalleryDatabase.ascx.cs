@@ -14,15 +14,22 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	public partial class PhotoGalleryDatabase : AdminModule {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
+			DatabaseUpdateResponse dbRes = new DatabaseUpdateResponse();
+			string sqlUpdate = "";
+			string sqlTest = "";
+			int iCt = 0;
+			litMsg.Text = "";
 
-			string sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.PhotoGallery.scripts.CreateGallery.sql");
+			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.PhotoGallery.tblGallery.sql");
 
-			var ex = du.ExecScriptContents(sqlUpdate, false);
+			sqlTest = "select * from [information_schema].[columns] where table_name in('tblGalleryImageMeta')";
+			dbRes = du.ApplyUpdateIfNotFound(sqlTest, sqlUpdate, false);
+			iCt++;
 
-			if (!string.IsNullOrEmpty(ex.Message)) {
-				litMsg.Text = ex.ToString();
+			if (dbRes.LastException != null && !string.IsNullOrEmpty(dbRes.LastException.Message)) {
+				litMsg.Text += iCt.ToString() + ")  " + dbRes.LastException.Message + "<br />";
 			} else {
-				litMsg.Text = "Gallery Database is up to date";
+				litMsg.Text += iCt.ToString() + ")  " + dbRes.Response + "<br />";
 			}
 
 		}

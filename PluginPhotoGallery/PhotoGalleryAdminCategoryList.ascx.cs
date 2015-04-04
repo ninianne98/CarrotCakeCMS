@@ -15,6 +15,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		protected void Page_Load(object sender, EventArgs e) {
 
+			lnkAdd.NavigateUrl = CreateLink("GalleryEdit");
+
 			LoadData();
 		}
 

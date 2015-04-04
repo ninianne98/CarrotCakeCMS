@@ -9,11 +9,11 @@ If installing/running CMS for first time run
 			*OR* 
 			-- skip this script and use visual studio to create additional users, groups are auto created for you
 
-		** create tblCalendar.sql
-			-- to use the calendar sample
-		** create tblFAQ.sql
+		** carrot_CalendarEvent.sql
+			-- to use the event calendar sample
+		** carrot_FaqItem.sql
 			-- to use the FAQ sample
-		** create tblGallery.sql
+		** tblGallery.sql
 			-- to use the Gallery sample
 
 If coming from an earlier version, run these scripts
