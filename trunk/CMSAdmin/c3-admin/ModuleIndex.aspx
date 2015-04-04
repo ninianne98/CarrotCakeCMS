@@ -8,8 +8,8 @@
 	Module Index
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<asp:PlaceHolder ID="phAjax" runat="server"></asp:PlaceHolder>
+	<asp:PlaceHolder ID="phAjax" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
-	<asp:PlaceHolder ID="phNoAjax" runat="server"></asp:PlaceHolder>
+	<asp:PlaceHolder ID="phNoAjax" runat="server" />
 </asp:Content>

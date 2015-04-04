@@ -83,6 +83,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 								select m).FirstOrDefault();
 
 				PluginItem = (from m in ModuleFamily.PluginMenus
+							  orderby m.Caption, m.SortOrder
 							  where m.PluginParm == pf
 							  select m).FirstOrDefault();
 
@@ -131,7 +132,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (rpModuleContents != null) {
 				var d = (CMSAdminModule)e.Item.DataItem;
 
-				GeneralUtilities.BindRepeater(rpModuleContents, d.PluginMenus.Where(z => z.IsVisible == true).OrderBy(x => x.SortOrder).ToList());
+				GeneralUtilities.BindRepeater(rpModuleContents, d.PluginMenus.Where(z => z.IsVisible == true).OrderBy(x => x.Caption).OrderBy(x => x.SortOrder).ToList());
 			}
 		}
 
