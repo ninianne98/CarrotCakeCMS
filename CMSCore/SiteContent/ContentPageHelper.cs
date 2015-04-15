@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web;
 using Carrotware.CMS.Data;
+using System.Transactions;
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -891,6 +892,108 @@ namespace Carrotware.CMS.Core {
 			}
 
 		}
+
+		public void RemoveContent(Guid siteID, Guid rootContentID) {
+
+			using (var transaction = new TransactionScope()) {
+
+				try {
+
+					IQueryable<carrot_Content> queryCont = (from ct in db.carrot_Contents
+															where ct.Root_ContentID == rootContentID
+															select ct);
+
+					IQueryable<carrot_RootContent> queryRootContent = (from r in db.carrot_RootContents
+																	   where r.SiteID == siteID
+																		   && r.Root_ContentID == rootContentID
+																	   select r);
+
+					IQueryable<carrot_ContentComment> queryComment = (from r in db.carrot_ContentComments
+																	  where r.Root_ContentID == rootContentID
+																	  select r);
+
+					IQueryable<carrot_TrackbackQueue> queryTrack = (from r in db.carrot_TrackbackQueues
+																	where r.Root_ContentID == rootContentID
+																	select r);
+
+					IQueryable<carrot_Widget> queryWidget = (from r in db.carrot_Widgets
+															 where r.Root_ContentID == rootContentID
+															 select r);
+
+					List<Guid> widgIDs = queryWidget.Select(x => x.Root_WidgetID).Distinct().ToList();
+
+					IQueryable<carrot_WidgetData> queryWidgetData = (from r in db.carrot_WidgetDatas
+																	 where widgIDs.Contains(r.Root_WidgetID)
+																	 select r);
+
+
+					IQueryable<carrot_Content> queryChildPages = (from ct in db.carrot_Contents
+																  join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+																  where r.SiteID == siteID
+																		&& ct.Parent_ContentID == rootContentID
+																  select ct);
+
+					IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(db, rootContentID);
+					IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(db, rootContentID);
+
+
+					db.carrot_Contents.UpdateBatch(queryChildPages, p => new carrot_Content { Parent_ContentID = null });
+
+					db.carrot_TagContentMappings.DeleteBatch(oldContentTags);
+					db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
+
+					db.carrot_WidgetDatas.DeleteBatch(queryWidgetData);
+					db.carrot_Widgets.DeleteBatch(queryWidget);
+
+					db.carrot_ContentComments.DeleteBatch(queryComment);
+					db.carrot_TrackbackQueues.DeleteBatch(queryTrack);
+
+					db.carrot_Contents.DeleteBatch(queryCont);
+					db.carrot_RootContents.DeleteBatch(queryRootContent);
+
+
+					Guid? newHomeID = (from ct in db.carrot_Contents
+									   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+									   orderby ct.NavOrder ascending
+									   where r.SiteID == siteID
+											 && ct.Root_ContentID != rootContentID
+											 && ct.IsLatestVersion == true
+											 && ct.Parent_ContentID == null
+											 && r.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
+									   select ct.Root_ContentID).FirstOrDefault();
+
+					if (newHomeID == null) {
+						newHomeID = (from ct in db.carrot_Contents
+									 join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
+									 orderby ct.NavOrder ascending
+									 where r.SiteID == siteID
+											&& ct.Root_ContentID != rootContentID
+											&& ct.IsLatestVersion == true
+											&& r.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
+									 select ct.Root_ContentID).FirstOrDefault();
+					}
+
+					if (newHomeID.HasValue) {
+						IQueryable<carrot_Content> queryContNH = (from ct in db.carrot_Contents
+																  where ct.Root_ContentID == newHomeID.Value
+																		&& ct.IsLatestVersion == true
+																  select ct);
+
+						db.carrot_Contents.UpdateBatch(queryContNH, p => new carrot_Content { NavOrder = 0 });
+					}
+
+					db.SubmitChanges();
+
+					transaction.Complete();
+
+				} catch (Exception ex) {
+					throw;
+				}
+			}
+
+			FixBlogNavOrder(siteID);
+		}
+
 
 		public ContentPage FindContentByID(Guid siteID, Guid rootContentID) {
 			ContentPage content = null;

@@ -128,6 +128,8 @@
 
 		function cancelEditing() { }
 
+		function deleteContent() { }
+
 		function cmsRecordCancellation() { }
 
 
@@ -178,29 +180,33 @@
 
 		function cancelEditing() {
 
-			$("#divCMSCancelWinMsg").text('Are you sure you want to leave the editor? All changes will be lost!');
-
-			$("#divCMSCancelWin").dialog({
-				open: function () {
-					$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
-				},
-
-				resizable: false,
-				height: 350,
-				width: 450,
-				modal: true,
-				buttons: {
-					"No": function () {
-						$(this).dialog("close");
-					},
-					"Yes": function () {
-						cmsMakeOKToLeave();
-						cmsRecordCancellation();
-						window.setTimeout("location.href = '<%=SiteFilename.PageIndexURL %>';", 800);
-						$(this).dialog("close");
-					}
+			var opts = {
+				"No": function () { cmsAlertModalClose(); },
+				"Yes": function () {
+					cmsMakeOKToLeave();
+					cmsRecordCancellation();
+					window.setTimeout("location.href = '<%=SiteFilename.PageIndexURL %>';", 800);
+					cmsAlertModalClose();
 				}
-			});
+			};
+
+			cmsAlertModalSmallBtns('Are you sure you want to leave the editor? All changes will be lost!', opts);
+
+		}
+
+		function deleteContent() {
+
+			var opts = {
+				"No": function () { cmsAlertModalClose(); },
+				"Yes": function () {
+					cmsMakeOKToLeave();
+					$('#<%=btnDelete.ClientID %>').click();
+					cmsAlertModalClose();
+				}
+			};
+
+			cmsAlertModalSmallBtns('Are you sure you want to delete this content? All version history and widget data will be lost!', opts);
+
 		}
 
 		setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 1500);
@@ -370,7 +376,7 @@
 					titlebar:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="60"
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
@@ -383,7 +389,7 @@
 					filename:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="60"
 						MaxLength="200" />
 					<a href="javascript:void(0)" onclick="openPage();">
 						<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
@@ -403,7 +409,7 @@
 					navigation:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60" MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav" ID="RequiredFieldValidator4"
 						runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
 				</td>
@@ -413,7 +419,7 @@
 					page head:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60" MaxLength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -422,7 +428,7 @@
 					<br />
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="45" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
 					<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>');return false;" />
 				</td>
 			</tr>
@@ -462,7 +468,7 @@
 					meta keywords:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
@@ -470,7 +476,7 @@
 					meta description:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr style="display: none">
@@ -516,7 +522,7 @@
 			</tr>
 		</table>
 		<br />
-		<div id="jqtabs" style="height: 400px; width: 825px; margin-bottom: 10px;">
+		<div id="jqtabs" style="height: 425px; width: 900px; margin-bottom: 10px;">
 			<ul>
 				<li><a href="#pagecontent-tabs-0">Left</a></li>
 				<li><a href="#pagecontent-tabs-1">Center</a></li>
@@ -524,13 +530,13 @@
 				<li><a href="#pagecontent-tabs-5">Text Controls</a></li>
 				<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
 			</ul>
-			<div style="margin-bottom: 25px; height: 380px; width: 800px;">
+			<div style="margin-bottom: 25px; height: 400px; width: 890px;">
 				<div id="pagecontent-tabs-0">
 					<div style="margin-bottom: 25px;">
 						<div runat="server" id="divLeft">
 							body (left)<br />
 							<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
-						<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
@@ -539,7 +545,7 @@
 						<div runat="server" id="divCenter">
 							body (main/center)<br />
 							<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-						<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
@@ -548,7 +554,7 @@
 						<div runat="server" id="divRight">
 							body (right)<br />
 							<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
-						<asp:TextBox Style="height: 280px; width: 780px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
@@ -636,7 +642,7 @@
 						<div runat="server" id="divTrackback">
 							new trackbacks, one per line<br />
 						</div>
-						<asp:TextBox Style="height: 125px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
+						<asp:TextBox Style="height: 255px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
 						<div class="scroll-container" style="height: 175px; width: 780px;">
 							<div class="scroll-area" style="height: 170px; width: 775px;">
 								<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
@@ -670,7 +676,7 @@
 			<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
 		</div>
 		<asp:PlaceHolder ID="pnlButtons" runat="server">
-			<table style="width: 1000px;">
+			<table style="width: 1100px;">
 				<tr>
 					<td>
 						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Save" />
@@ -678,6 +684,8 @@
 						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="return SubmitPageVisit()" Text="Save and Visit" />
 						&nbsp;&nbsp;
 						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
+						&nbsp;&nbsp;
+						<input type="button" runat="server" id="btnDeleteButton" value="Delete" onclick="deleteContent()" />
 					</td>
 					<td>
 						<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
@@ -707,50 +715,28 @@
 
 			if (qs != '00000') {
 
-				$("#confirmRevert").dialog({
-					open: function () {
-						$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
-					},
-
-					resizable: false,
-					height: 350,
-					width: 450,
-					modal: true,
-					buttons: {
-						"No": function () {
-							$(this).dialog("close");
-						},
-						"Yes": function () {
-							cmsMakeOKToLeave();
-							window.setTimeout('location.href = \'<%=SiteData.CurrentScriptName %>?versionid=' + qs + '\'', 500);
-							$(this).dialog("close");
-						}
+				var opts = {
+					"No": function () { cmsAlertModalClose(); },
+					"Yes": function () {
+						cmsMakeOKToLeave();
+						window.setTimeout('location.href = \'<%=SiteData.CurrentScriptName %>?versionid=' + qs + '\'', 500);
+						cmsAlertModalClose();
 					}
-				});
+				};
+
+				cmsAlertModalSmallBtns('Are you sure you want to open this older version of the content? All unsaved changes will be lost.', opts);
 
 			}
 		}
+
 	</script>
 	<br />
 	<div style="display: none">
 		<asp:TextBox ID="txtOldFile" runat="server" />
+		<asp:Button ValidationGroup="inputForm" ID="btnDelete" runat="server" OnClick="btnDelete_Click" Text="Delete" />
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save 1" />
 		<asp:Button ValidationGroup="inputForm" ID="btnSaveVisit" runat="server" OnClick="btnSaveVisit_Click" Text="Save 2" />
-		<div id="divCMSCancelWin" title="Quit Editor?">
-			<p id="divCMSCancelWinMsg">
-				Are you sure you want cancel?</p>
-		</div>
-		<div id="confirmRevert" title="Really Revert?">
-			<div id="confirmRevertMsg">
-				<p>
-					Are you sure you want to open this older version of the content? All unsaved changes will be lost.</p>
-				<p>
-					This will not apply changes to the content until you save the prior version, generating a new copy.</p>
-				<p>
-					Note: this only applies to the page content shown here, all widgets currently assigned will remain.
-				</p>
-			</div>
-		</div>
+		<asp:HiddenField ID="hdnRootID" runat="server" />
 	</div>
 	<script type="text/javascript">
 

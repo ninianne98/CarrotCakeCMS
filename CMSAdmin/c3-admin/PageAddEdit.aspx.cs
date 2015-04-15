@@ -72,6 +72,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				txtRetireDate.Text = dtSite.AddYears(200).ToShortDateString();
 				txtRetireTime.Text = dtSite.AddYears(200).ToShortTimeString();
 
+				hdnRootID.Value = Guid.Empty.ToString();
 				ParentPagePicker.RootContentID = Guid.Empty;
 
 				ContentPage pageContents = null;
@@ -117,6 +118,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					} catch { }
 				}
 
+				if (pageContents == null) {
+					btnDeleteButton.Visible = false;
+				}
+
 				if (pageContents != null) {
 					bool bRet = pageHelper.RecordPageLock(pageContents.Root_ContentID, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
 
@@ -131,6 +136,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					BindTextDataGrid();
 
 					guidRootContentID = pageContents.Root_ContentID;
+					hdnRootID.Value = guidRootContentID.ToString();
 
 					txtOldFile.Text = pageContents.FileName;
 
@@ -235,6 +241,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		protected void btnDelete_Click(object sender, EventArgs e) {
+			guidRootContentID = new Guid(hdnRootID.Value);
+
+			using (ContentPageHelper cph = new ContentPageHelper()) {
+
+				cph.RemoveContent(SiteID, guidRootContentID);
+			}
+
+			Response.Redirect(SiteFilename.PageIndexURL);
+		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			SavePage(false);
