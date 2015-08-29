@@ -22,11 +22,24 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		protected void Page_Load(object sender, EventArgs e) {
 
 			LoadData();
+
 		}
 
 		protected void LoadData() {
-			var lst = CalendarHelper.GetProfileView(SiteID);
+			if (!IsPostBack) {
+				var lst2 = CalendarHelper.GetYears(SiteID);
+				CalendarHelper.BindDataBoundControl(ddlFilter, lst2);
+				ddlFilter.SelectedValue = "-2";
+			}
+
+			var lst = CalendarHelper.GetProfileView(SiteID, int.Parse(ddlFilter.SelectedValue));
 			CalendarHelper.BindDataBoundControl(dgEvents, lst);
+		}
+
+		protected void ddlFilter_SelectedIndexChanged(object sender, EventArgs e) {
+			
+			LoadData();
+
 		}
 
 	}

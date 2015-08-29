@@ -16,26 +16,28 @@
 <script type="text/javascript">
 	var cmsJQLoadCtr = 1;
 	function cmsLoadJQDyn() {
-		var jq2URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jquery183.js")%>';
-		var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-0.js")%>';
+		var jq2URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jquery-1-8-3.js")%>';
+		var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js")%>';
 
-		if (cmsJQLoadCtr <= 25) {
+		if (cmsJQLoadCtr <= 30) {
 			cmsJQLoadCtr++;
-
 			cmsSetJQueryURL(jq2URL, jq1URL);
 
-			setTimeout("cmsLoadJQDyn();", 1500);
+			if ((typeof jQuery.ui == 'undefined') || (typeof jQuery == 'undefined')) {
+				setTimeout("cmsLoadJQDyn();", 500);
+			}
 		}
 	}
+
 	cmsLoadJQDyn();
 </script>
 <script type="text/javascript">
 	var cmsPageInit2 = false;
 
-	if (typeof jQuery == 'undefined') {
+	if (!window.jQuery || (typeof jQuery == 'undefined')) {
 		setTimeout("cmsToolbarPageInit2();", 1000);
-		setTimeout("cmsToolbarPageInit2();", 1500);
-		setTimeout("cmsToolbarPageInit2();", 2500);
+		setTimeout("cmsToolbarPageInit2();", 3000);
+		setTimeout("cmsToolbarPageInit2();", 5000);
 	}
 	
 	$(document).ready(function () {

@@ -1130,12 +1130,12 @@ function cmsDirtyPageRefresh() {
 
 var jqAttemptCount1 = 0;
 var jqAttemptCount2 = 0;
-var jq1URL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
-var jq2URL = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js';
+var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
+var jqui_URL = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js';
 
 function cmsSetJQueryURL(jqPath, jqUIPath) {
-	jq1URL = jqPath;
-	jq2URL = jqUIPath;
+	jqURL = jqPath;
+	jqui_URL = jqUIPath;
 
 	jqAttemptCount1 = 0;
 	jqAttemptCount2 = 0;
@@ -1158,20 +1158,21 @@ function cmsAddScript(scriptURL) {
 }
 
 function cmsAttemptAttachJQ1() {
-	if (jqAttemptCount1 < 25) {
+	if (jqAttemptCount1 < 50) {
 		jqAttemptCount1++;
 
-		if (typeof jQuery == 'undefined') {
+		if (!window.jQuery || (typeof jQuery == 'undefined')) {
 			cmsAttachJQScript1();
 		} else {
 			cmsAttemptExtra();
+			setTimeout('cmsAttemptAttachJQ2()', 500);
 		}
 	}
 }
 
 function cmsAttachJQScript1() {
-	if (typeof jQuery == 'undefined') {
-		cmsAddScript(jq1URL);
+	if (!window.jQuery || (typeof jQuery == 'undefined')) {
+		cmsAddScript(jqURL);
 
 		setTimeout('cmsAttemptAttachJQ1()', 500);
 	}
@@ -1181,7 +1182,7 @@ function cmsAttemptAttachJQ2() {
 	if (jqAttemptCount2 < 200) {
 		jqAttemptCount2++;
 
-		if (typeof jQuery != 'undefined' && typeof jQuery.ui == 'undefined') {
+		if ((window.jQuery || (typeof jQuery != 'undefined')) && typeof jQuery.ui == 'undefined') {
 			cmsAttachJQScript2();
 		}
 	}
@@ -1189,7 +1190,7 @@ function cmsAttemptAttachJQ2() {
 
 function cmsAttachJQScript2() {
 	if (typeof jQuery.ui == 'undefined') {
-		cmsAddScript(jq2URL);
+		cmsAddScript(jqui_URL);
 
 		setTimeout('cmsAttemptAttachJQ2()', 500);
 	}

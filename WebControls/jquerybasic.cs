@@ -109,23 +109,30 @@ namespace Carrotware.Web.UI.Controls {
 			return BaseWebControl.GetWebResourceUrl(typeof(jquerybasic), resource);
 		}
 
+
+		private jquery _jq = new jquery();
+		private jqueryui _jqui = new jqueryui();
+
+		protected override void OnInit(EventArgs e) {
+			base.OnInit(e);
+
+			this.Controls.Add(_jq);
+			this.Controls.Add(_jqui);
+		}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
 
 			output.WriteLine();
 
 			if (!this.StylesheetOnly) {
-				jquery j1 = new jquery();
-				j1.JQVersion = this.JQVersion;
-				j1.UseJqueryMigrate = this.UseJqueryMigrate;
-				this.Controls.Add(j1);
+				_jq.JQVersion = this.JQVersion;
+				_jq.UseJqueryMigrate = this.UseJqueryMigrate;
 
-				jqueryui j2 = new jqueryui();
 				//j2.JQUIVersion = this.JQUIVersion;
-				this.Controls.Add(j2);
 
-				j1.RenderControl(output);
-				j2.RenderControl(output);
+				_jq.RenderControl(output);
+				_jqui.RenderControl(output);
 			}
 
 			sJQFile = "";

@@ -100,7 +100,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				//jquerybasic2.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;
 				//Page.Header.Controls.AddAt(0, jquerybasic2);
 
-				BasicControlUtils.InsertjQuery(this.Page);
+				//BasicControlUtils.InsertjQuery(this.Page);
+
+				BasicControlUtils.InsertjQueryMain(this.Page);
+				BasicControlUtils.InsertjQueryUI(this.Page);
 
 				guidContentID = pageContents.Root_ContentID;
 

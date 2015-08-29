@@ -140,8 +140,8 @@ namespace Carrotware.CMS.Core {
 				CanRead = prop.CanRead,
 				CanWrite = prop.CanWrite,
 				Props = prop,
-				CompanionSourceFieldName = "",
-				FieldMode = (prop.PropertyType.ToString().ToLower() == "system.boolean") ?
+				CompanionSourceFieldName = String.Empty,
+				FieldMode = (prop.PropertyType == typeof(bool)) ?
 						WidgetAttribute.FieldMode.CheckBox : WidgetAttribute.FieldMode.TextBox
 			};
 			try {

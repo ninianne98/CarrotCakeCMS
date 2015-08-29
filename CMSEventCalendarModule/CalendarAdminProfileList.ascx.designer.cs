@@ -13,6 +13,15 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
     public partial class CalendarAdminProfileList {
         
         /// <summary>
+        /// ddlFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFilter;
+        
+        /// <summary>
         /// dgEvents control.
         /// </summary>
         /// <remarks>

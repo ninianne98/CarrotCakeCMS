@@ -164,18 +164,124 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public static jquerybasic FindjQuery(Page thePage) {
-			jquerybasic jquerybasic2 = new jquerybasic();
-			jquerybasic2.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;
+		public static jquerybasic FindjQuery(Control control) {
+			jquerybasic jquerybasic1 = null;
 
-			foreach (var c in thePage.Header.Controls) {
-				if (c is jquerybasic) {
-					jquerybasic2 = (jquerybasic)c;
-					break;
+			if (control is Page) {
+				Page thePage = (Page)control;
+				foreach (Control c in thePage.Header.Controls) {
+					if (c is jquerybasic) {
+						jquerybasic1 = (jquerybasic)c;
+						break;
+					} else {
+						jquerybasic1 = FindjQuery(c);
+						if (jquerybasic1 != null) {
+							break;
+						}
+					}
+				}
+			} else {
+				foreach (Control c in control.Controls) {
+					if (c is jquerybasic) {
+						jquerybasic1 = (jquerybasic)c;
+						break;
+					} else {
+						jquerybasic1 = FindjQuery(c);
+						if (jquerybasic1 != null) {
+							break;
+						}
+					}
 				}
 			}
 
-			return jquerybasic2;
+			return jquerybasic1;
+		}
+
+		public static jquery FindjQueryMain(Control control) {
+			jquery jquery1 = null;
+
+			if (control is Page) {
+				Page thePage = (Page)control;
+				foreach (Control c in thePage.Header.Controls) {
+					if (c is jquery) {
+						jquery1 = (jquery)c;
+						break;
+					} else {
+						jquery1 = FindjQueryMain(c);
+						if (jquery1 != null) {
+							break;
+						}
+					}
+				}
+			} else {
+				foreach (Control c in control.Controls) {
+					if (c is jquery) {
+						jquery1 = (jquery)c;
+						break;
+					} else {
+						jquery1 = FindjQueryMain(c);
+						if (jquery1 != null) {
+							break;
+						}
+					}
+				}
+			}
+
+			return jquery1;
+		}
+
+		public static jqueryui FindjQueryUI(Control control) {
+			jqueryui jqueryui1 = null;
+
+			if (control is Page) {
+				Page thePage = (Page)control;
+				foreach (Control c in thePage.Header.Controls) {
+					if (c is jqueryui) {
+						jqueryui1 = (jqueryui)c;
+						break;
+					} else {
+						jqueryui1 = FindjQueryUI(c);
+						if (jqueryui1 != null) {
+							break;
+						}
+					}
+				}
+			} else {
+				foreach (Control c in control.Controls) {
+					if (c is jqueryui) {
+						jqueryui1 = (jqueryui)c;
+						break;
+					} else {
+						jqueryui1 = FindjQueryUI(c);
+						if (jqueryui1 != null) {
+							break;
+						}
+					}
+				}
+			}
+
+			return jqueryui1;
+		}
+
+		public static void InsertjQueryMain(Page thePage) {
+			jquery jq = FindjQueryMain(thePage);
+
+			if (jq == null) {
+				jq = new jquery();
+				jq.UseJqueryMigrate = true;
+
+				thePage.Header.Controls.AddAt(0, jq);
+			}
+		}
+
+		public static void InsertjQueryUI(Page thePage) {
+			jqueryui jq = FindjQueryUI(thePage);
+
+			if (jq == null) {
+				jq = new jqueryui();
+
+				thePage.Header.Controls.AddAt(1, jq);
+			}
 		}
 
 	}

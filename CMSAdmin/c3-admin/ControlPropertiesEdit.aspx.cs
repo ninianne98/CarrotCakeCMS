@@ -70,49 +70,58 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
-				lstDefProps = ReflectionUtilities.GetObjectProperties(widget);
 				List<ObjectProperty> props = new List<ObjectProperty>();
 				List<ObjectProperty> props_tmp = new List<ObjectProperty>();
 
-				if (widget is Carrotware.CMS.UI.Base.BaseUserControl) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.UI.Base.BaseUserControl));
+				if (widget is BaseUserControl) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(BaseUserControl));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				if (widget is Carrotware.CMS.Interface.BaseShellUserControl) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.BaseShellUserControl));
+				if (widget is BaseShellUserControl) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(BaseShellUserControl));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				if (widget is System.Web.UI.UserControl) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(System.Web.UI.UserControl));
+				if (widget is UserControl) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(UserControl));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				if (widget is Carrotware.CMS.Interface.IAdminModule) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IAdminModule));
+				if (widget is IAdminModule) {
+					var w1 = (IAdminModule)widget;
+					w1.SiteID = SiteData.CurrentSiteID;
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IAdminModule));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				if (widget is Carrotware.CMS.Interface.IWidget) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidget));
+				if (widget is IWidget) {
+					var w1 = (IWidget)widget;
+					w1.SiteID = SiteData.CurrentSiteID;
+					w1.PageWidgetID = w.Root_WidgetID;
+					w1.RootContentID = w.Root_ContentID;
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidget));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				if (widget is Carrotware.CMS.Interface.IWidgetEditStatus) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetEditStatus));
+				if (widget is IWidgetEditStatus) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidgetEditStatus));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				if (widget is Carrotware.CMS.Interface.IWidgetParmData) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetParmData));
+				if (widget is IWidgetParmData) {
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidgetParmData));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				if (widget is Carrotware.CMS.Interface.IWidgetRawData) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(Carrotware.CMS.Interface.IWidgetRawData));
+				if (widget is IWidgetRawData) {
+					var w1 = (IWidgetRawData)widget;
+					w1.RawWidgetData = w.ControlProperties;
+					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidgetRawData));
 					props = props.Union(props_tmp).ToList();
 				}
+
+				lstDefProps = ReflectionUtilities.GetObjectProperties(widget);
 
 				List<string> limitedPropertyList = new List<string>();
 				if (widget is IWidgetLimitedProperties) {
@@ -149,24 +158,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						  where p.Name.ToLower() == sName.ToLower()
 						  select p).FirstOrDefault();
 
-				string sType = dp.PropertyType.ToString().ToLower();
 				if (dp.DefValue != null) {
 					sDefVal = dp.DefValue.ToString();
-					switch (sType) {
-						case "system.boolean":
-							bool vB = Convert.ToBoolean(dp.DefValue.ToString());
-							sDefVal = vB.ToString();
-							break;
-						case "system.drawing.color":
-							System.Drawing.Color vC = (System.Drawing.Color)dp.DefValue;
-							sDefVal = System.Drawing.ColorTranslator.ToHtml(vC);
-							break;
-						default:
-							sDefVal = dp.DefValue.ToString();
-							break;
+
+					if (dp.PropertyType == typeof(bool)) {
+						bool vB = Convert.ToBoolean(dp.DefValue.ToString());
+						sDefVal = vB.ToString();
+					}
+					if (dp.PropertyType == typeof(System.Drawing.Color)) {
+						System.Drawing.Color vC = (System.Drawing.Color)dp.DefValue;
+						sDefVal = System.Drawing.ColorTranslator.ToHtml(vC);
 					}
 				} else {
-					sDefVal = "";
+					sDefVal = String.Empty;
 				}
 
 				return sDefVal;
@@ -175,7 +179,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		protected void rpProps_Bind(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e) {
+		protected void rpProps_Bind(object sender, RepeaterItemEventArgs e) {
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item) {
 
 				HiddenField hdnName = (HiddenField)e.Item.FindControl("hdnName");
@@ -195,7 +199,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 												  select p.CompanionSourceFieldName).FirstOrDefault();
 
 				if (string.IsNullOrEmpty(sListSourcePropertyName)) {
-					sListSourcePropertyName = "";
+					sListSourcePropertyName = String.Empty;
 				}
 
 				ListSourceProperty = (from p in lstDefProps
@@ -267,8 +271,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
-				string sType = dp.PropertyType.ToString().ToLower();
-				if (sType == "system.boolean" || dp.FieldMode == WidgetAttribute.FieldMode.CheckBox) {
+				if (dp.PropertyType == typeof(bool) || dp.FieldMode == WidgetAttribute.FieldMode.CheckBox) {
 					txtValue.Visible = false;
 					chkValue.Visible = true;
 
