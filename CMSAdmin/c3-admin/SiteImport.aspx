@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Site Import" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteImport.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteImport" %>
+﻿<%@ Page Title="Site Import" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteImport.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteImport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
@@ -87,10 +88,10 @@
 			<tr>
 				<td>
 					<asp:CheckBox ID="chkAuthors" runat="server" Checked="true" />
-					Uncheck this box if you do not want new user accounts to be created. Accounts will only be created if the username and email address have not already
-					been used in this system. Password will be set according to normal reset values, and the user will have to request a new password by email to login. If
-					this is unchecked and a matching account exists, the discovered user will be recorded as the content editor. If the user account does not exist, the current
-					user will be recorded as the content editor.
+					Uncheck this box if you do not want new user accounts to be created. Accounts will only be created if the username and email address have not
+					already been used in this system. Password will be set according to normal reset values, and the user will have to request a new password by
+					email to login. If this is unchecked and a matching account exists, the discovered user will be recorded as the content editor. If the user
+					account does not exist, the current user will be recorded as the content editor.
 				</td>
 			</tr>
 			<tr>
@@ -147,8 +148,8 @@
 					<asp:BoundField DataField="FileName" HeaderText="File Name" />
 					<asp:BoundField DataField="NavMenuText" HeaderText="Post Title" />
 					<asp:BoundField DataField="CreateDate" HeaderText="Created On" DataFormatString="{0:d}" />
-					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Published" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-						ShowBooleanImage="true" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Published" AlternateTextFalse="Inactive"
+						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>
 			</carrot:CarrotGridView>
 		</div>
@@ -186,8 +187,8 @@
 					<asp:BoundField DataField="FileName" HeaderText="File Name" />
 					<asp:BoundField DataField="NavMenuText" HeaderText="Post Title" />
 					<asp:BoundField DataField="CreateDate" HeaderText="Created On" DataFormatString="{0:d}" />
-					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Published" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-						ShowBooleanImage="true" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Published" AlternateTextFalse="Inactive"
+						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>
 			</carrot:CarrotGridView>
 		</div>

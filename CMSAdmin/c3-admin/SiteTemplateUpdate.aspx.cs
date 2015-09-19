@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,6 +14,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class SiteTemplateUpdate : AdminBasePage {
 		protected ContentPage pageHome = null;
 		protected ContentPage pageIndex = null;
@@ -31,14 +28,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageHome = pageHelper.FindHome(siteID, true);
 
 			if (!IsPostBack) {
-
 				List<CMSTemplate> lstTemplate = cmsHelper.Templates;
 
 				GeneralUtilities.BindListDefaultText(ddlBlogIndex, lstTemplate, null, sSelTemplate, "0");
 				GeneralUtilities.BindListDefaultText(ddlHome, lstTemplate, null, sSelTemplate, "0");
 
 				if (pageHome != null && pageHome.Root_ContentID != Guid.Empty) {
-
 					if (SiteData.CurrentSite.Blog_Root_ContentID.HasValue) {
 						pageIndex = pageHelper.FindContentByID(siteID, SiteData.CurrentSite.Blog_Root_ContentID.Value);
 					}
@@ -61,11 +56,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				GeneralUtilities.BindListDefaultText(ddlSub, lstTemplate, null, sSelTemplate, "0");
 				GeneralUtilities.BindListDefaultText(ddlPages, lstTemplate, null, sSelTemplate, "0");
 				GeneralUtilities.BindListDefaultText(ddlPosts, lstTemplate, null, sSelTemplate, "0");
-
 			}
 		}
-
-
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			Guid siteID = SiteData.CurrentSiteID;
@@ -105,9 +97,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
-
-
-
 
 	}
 }

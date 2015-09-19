@@ -1,4 +1,5 @@
-<%@ Page Title="Manage Users" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserMembership" %>
+<%@ Page Title="Manage Users" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserMembership.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserMembership" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -30,8 +31,8 @@
 				<carrot:CarrotHeaderSortTemplateField SortExpression="FullName_LastFirst" HeaderText="Name" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="EmailAddress" HeaderText="Email" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataFieldFormat="{0:d}" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsLockedOut" HeaderText="Status" ShowBooleanImage="true" AlternateTextTrue="Locked Out"
-					AlternateTextFalse="Unlocked" ImagePathTrue="/c3-admin/images/lock.png" ImagePathFalse="/c3-admin/images/user.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsLockedOut" HeaderText="Status" ShowBooleanImage="true"
+					AlternateTextTrue="Locked Out" AlternateTextFalse="Unlocked" ImagePathTrue="/c3-admin/images/lock.png" ImagePathFalse="/c3-admin/images/user.png" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>

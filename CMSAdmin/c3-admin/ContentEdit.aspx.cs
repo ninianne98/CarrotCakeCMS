@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,11 +14,11 @@ using Carrotware.CMS.UI.Base;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ContentEdit : AdminBasePage {
 
+	public partial class ContentEdit : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidWidgetID = Guid.Empty;
-		ContentPage pageContents = null;
+		private ContentPage pageContents = null;
 		public string sFieldName = "";
 		public string sMode = "";
 
@@ -56,29 +52,26 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 											 select w).FirstOrDefault();
 
 						reBody.Text = pageWidget.ControlProperties;
-
 					} else {
 						switch (sFieldName) {
 							case "c":
 								reBody.Text = pageContents.PageText;
 								break;
+
 							case "l":
 								reBody.Text = pageContents.LeftPageText;
 								break;
+
 							case "r":
 								reBody.Text = pageContents.RightPageText;
 								break;
 						}
 					}
 				}
-
 			}
-
 		}
 
-
 		protected void btnSave_Click(object sender, EventArgs e) {
-
 			if (pageContents != null) {
 				if (guidWidgetID != Guid.Empty) {
 					List<Widget> lstWidgets = cmsHelper.cmsAdminWidget;
@@ -101,9 +94,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						case "c":
 							pageContents.PageText = reBody.Text;
 							break;
+
 						case "l":
 							pageContents.LeftPageText = reBody.Text;
 							break;
+
 						case "r":
 							pageContents.RightPageText = reBody.Text;
 							break;
@@ -116,7 +111,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString() + Master.SavedSuffix);
 			}
-
 		}
 	}
 }

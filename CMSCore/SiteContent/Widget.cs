@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Linq;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,38 +16,31 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class Widget : IDisposable {
-
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
-
 
 		public Widget() { }
 
 		public Widget(Guid rootWidgetID) {
-
 			vw_carrot_Widget item = CompiledQueries.cqGetLatestWidget(db, rootWidgetID);
 
 			SetVals(item);
 		}
 
 		public void LoadPageWidgetVersion(Guid widgetDataID) {
-
 			vw_carrot_Widget item = CompiledQueries.cqGetWidgetDataByID_VW(db, widgetDataID);
 
 			SetVals(item);
 		}
-
 
 		public Widget(vw_carrot_Widget w) {
 			SetVals(w);
 		}
 
 		private void SetVals(vw_carrot_Widget ww) {
-
 			if (ww != null) {
 				SiteData site = SiteData.GetSiteFromCache(ww.SiteID);
 
@@ -96,6 +88,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
 		public bool IsUnReleased {
 			get {
 				if (this.GoLiveDate > SiteData.CurrentSite.Now) {
@@ -106,11 +99,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public void Save() {
-
 			if (!this.IsWidgetPendingDelete) {
-
 				SiteData site = new SiteData(CompiledQueries.cqGetSiteFromRootContentID(db, this.Root_ContentID));
 
 				carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
@@ -166,17 +156,12 @@ namespace Carrotware.CMS.Core {
 				}
 
 				db.SubmitChanges();
-
 			} else {
-
 				DeleteAll();
-
 			}
 		}
 
-
 		public void DeleteAll() {
-
 			IQueryable<carrot_WidgetData> w1 = CannedQueries.GetWidgetDataByRootAll(db, this.Root_WidgetID);
 
 			carrot_Widget w2 = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
@@ -197,7 +182,6 @@ namespace Carrotware.CMS.Core {
 				db.SubmitChanges();
 			}
 		}
-
 
 		public void Disable() {
 			carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
@@ -230,9 +214,7 @@ namespace Carrotware.CMS.Core {
 			return props;
 		}
 
-
 		public void SaveDefaultControlProperties(List<WidgetProps> props) {
-
 			XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WidgetProps>));
 			string sXML = "";
 			using (StringWriter stringWriter = new StringWriter()) {
@@ -242,7 +224,6 @@ namespace Carrotware.CMS.Core {
 
 			this.ControlProperties = sXML;
 		}
-
 
 		private List<WidgetProps> ParseDefaultControlPropertiesOld(string sProps) {
 			List<WidgetProps> props = new List<WidgetProps>();
@@ -263,9 +244,7 @@ namespace Carrotware.CMS.Core {
 			return props;
 		}
 
-
 		private void SaveDefaultControlPropertiesOld(List<WidgetProps> props) {
-
 			DataSet ds = new DataSet("DefaultControlProperties");
 			DataTable dt = new DataTable("ControlProperties");
 			DataColumn dc1 = new DataColumn("KeyName", typeof(System.String));
@@ -294,7 +273,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		#endregion
+		#endregion IDisposable Members
 	}
 
 	public class WidgetProps {
@@ -303,8 +282,5 @@ namespace Carrotware.CMS.Core {
 
 		public string KeyName { get; set; }
 		public string KeyValue { get; set; }
-
 	}
-
-
 }

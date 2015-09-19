@@ -34,8 +34,8 @@
 					</td>
 					<td class="tablecontents">
 						<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtEmail" runat="server" ValidationGroup="inputForm" />
-						<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail" ErrorMessage="!"
-							ToolTip="Email is required." ValidationGroup="inputForm" Display="Dynamic" Text="**" />
+						<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail"
+							ErrorMessage="!" ToolTip="Email is required." ValidationGroup="inputForm" Display="Dynamic" Text="**" />
 					</td>
 				</tr>
 				<tr>
@@ -71,8 +71,8 @@
 			</legend>
 			<div runat="server" id="divCenter">
 				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="20"
-				Columns="60" />
+			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
+				Rows="20" Columns="60" />
 			<br />
 		</fieldset>
 		<p>

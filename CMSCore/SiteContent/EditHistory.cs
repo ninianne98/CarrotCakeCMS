@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -15,8 +13,8 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class EditHistory {
 
 		public EditHistory() { }
@@ -79,9 +77,7 @@ namespace Carrotware.CMS.Core {
 		public string CreateUserName { get; set; }
 		public string CreateEmail { get; set; }
 
-
 		public static int GetHistoryListCount(Guid siteID, bool showLatestOnly, DateTime? editDate, Guid? editUserID) {
-
 			Guid userID = Guid.Empty;
 			if (editUserID.HasValue) {
 				userID = editUserID.Value;
@@ -96,7 +92,6 @@ namespace Carrotware.CMS.Core {
 			}
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				return (from h in _db.vw_carrot_EditHistories
 						where h.SiteID == siteID
 							&& (!showLatestOnly || h.IsLatestVersion == true)
@@ -104,13 +99,11 @@ namespace Carrotware.CMS.Core {
 								  || (h.EditDate.Date >= dateStart.Date && h.EditDate.Date <= dateEnd.Date))
 							&& (!editUserID.HasValue || h.EditUserId == userID)
 						select h).Count();
-
 			}
 		}
 
 		public static List<EditHistory> GetHistoryList(string orderBy, int pageNumber, int pageSize,
 				Guid siteID, bool showLatestOnly, DateTime? editDate, Guid? editUserID) {
-
 			string sortField = string.Empty;
 			string sortDir = string.Empty;
 
@@ -164,7 +157,6 @@ namespace Carrotware.CMS.Core {
 				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_EditHistory), sortField);
 			}
 
-
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				List<EditHistory> _history = null;
 
@@ -189,9 +181,6 @@ namespace Carrotware.CMS.Core {
 
 				return _history;
 			}
-
 		}
-
-
 	}
 }

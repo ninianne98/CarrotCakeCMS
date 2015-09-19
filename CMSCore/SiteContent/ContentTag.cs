@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,8 +13,8 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class ContentTag : IContentMetaInfo {
 
 		public ContentTag() { }
@@ -75,7 +75,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		internal ContentTag(carrot_ContentTag c) {
 			if (c != null) {
 				this.ContentTagID = c.ContentTagID;
@@ -111,7 +110,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static int GetSimilar(Guid SiteID, Guid TagID, string tagSlug) {
-
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				IQueryable<carrot_ContentTag> query = CompiledQueries.cqGetContentTagNoMatch(_db, SiteID, TagID, tagSlug);
 
@@ -120,7 +118,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static int GetSiteCount(Guid siteID) {
-
 			int iCt = -1;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -131,7 +128,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static List<ContentTag> BuildTagList(Guid rootContentID) {
-
 			List<ContentTag> _types = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -186,7 +182,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		#region IContentMetaInfo Members
 
 		public void SetValue(Guid ContentMetaInfoID) {
@@ -220,6 +215,7 @@ namespace Carrotware.CMS.Core {
 		public int MetaPublicInfoCount {
 			get { return this.PublicUseCount == null ? 0 : Convert.ToInt32(this.PublicUseCount); }
 		}
-		#endregion
+
+		#endregion IContentMetaInfo Members
 	}
 }

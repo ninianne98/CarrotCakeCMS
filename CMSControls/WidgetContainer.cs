@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -47,7 +47,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return userControl;
 		}
-
 
 		protected Control ctrl1 = new Control();
 		protected Control ctrl2 = new Control();
@@ -104,7 +103,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ctrl2.RenderControl(writer);
 		}
-
-
 	}
 }

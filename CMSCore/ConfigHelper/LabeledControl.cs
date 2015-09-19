@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI;
 
 /*
@@ -37,6 +34,5 @@ namespace Carrotware.CMS.Core {
 		public override int GetHashCode() {
 			return ControlLabel.GetHashCode() ^ KeyControl.GetHashCode();
 		}
-
 	}
 }

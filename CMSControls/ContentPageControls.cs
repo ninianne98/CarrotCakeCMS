@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -91,7 +92,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.EnsureChildControls();
 
 			base.Render(writer);
-
 		}
 
 		private ControlUtilities cu = new ControlUtilities();
@@ -104,7 +104,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ContentPage cp = cu.GetContainerContentPage(this);
 
 				if (cp != null) {
-
 					if (sField.StartsWith("Author_") || sField.StartsWith("Credit_")) {
 						ExtendedUserData usr = null;
 						if (sField.StartsWith("Credit_")) {
@@ -123,7 +122,6 @@ namespace Carrotware.CMS.UI.Controls {
 								sFieldValue = string.Format(FieldFormat, objData);
 							}
 						}
-
 					} else {
 						object objData = ReflectionUtilities.GetPropertyValue(cp, sField);
 						if (objData != null) {
@@ -141,7 +139,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnPreRender(e);
 		}
-
 	}
 
 	//========================================
@@ -215,7 +212,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.EnsureChildControls();
 
 			base.Render(output);
-
 		}
 
 		private ControlUtilities cu = new ControlUtilities();
@@ -227,7 +223,6 @@ namespace Carrotware.CMS.UI.Controls {
 			SiteNav navNext = new SiteNav();
 			if (NavigationDirection != NavDirection.Unknown) {
 				using (SiteNavHelper navHelper = new SiteNavHelper()) {
-
 					if (NavigationDirection == NavDirection.Prev) {
 						navNext = navHelper.GetPrevPost(SiteData.CurrentSiteID, cp.Root_ContentID, !SecurityData.IsAuthEditor);
 					}
@@ -258,7 +253,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnPreRender(e);
 		}
-
 	}
 
 	//========================================
@@ -294,12 +288,10 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public override Unit BorderWidth {
-
 			get {
 				if (base.BorderWidth.IsEmpty) {
 					return Unit.Pixel(0);
 				} else {
-
 					return base.BorderWidth;
 				}
 			}
@@ -308,7 +300,6 @@ namespace Carrotware.CMS.UI.Controls {
 				base.BorderWidth = value;
 			}
 		}
-
 
 		[Category("Appearance")]
 		[DefaultValue(false)]
@@ -335,7 +326,6 @@ namespace Carrotware.CMS.UI.Controls {
 			if (cp != null) {
 				SetFileInfo(cp);
 			}
-
 		}
 
 		private void SetFileInfo(ContentPage cp) {
@@ -358,7 +348,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.ImageUrl = sFieldValue;
 		}
-
 	}
 
 	//========================================
@@ -472,7 +461,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.EnsureChildControls();
 
 			base.Render(writer);
-
 		}
 
 		protected override void OnPreRender(EventArgs e) {
@@ -493,14 +481,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnPreRender(e);
 		}
-
 	}
-
 }
 
 /*
 	<carrot:ContentPageImageThumb runat="server" ID="ContentPageImageThumb1" PerformURLResize="true" ScaleImage="true" ThumbSize="180" />
-	 
+
 	<p>
 		By <carrot:ContentPageProperty runat="server" ID="ContentPageProperty1" DataField="Author_FullName_FirstLast" />
 		on <carrot:ContentPageProperty runat="server" ID="ContentPageProperty2" DataField="GoLiveDate" FieldFormat="{0:MMMM d, yyyy}" />

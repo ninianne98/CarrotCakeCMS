@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
 
 namespace Carrotware.Web.UI.Controls {
+
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jsHelperLib runat=server></{0}:jsHelperLib>")]
 	public class jsHelperLib : BaseWebControl {
@@ -29,7 +23,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			int ident = output.Indent;
 
 			string sJSFile = BaseWebControl.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jsHelperLibrary.js");
@@ -51,6 +44,5 @@ namespace Carrotware.Web.UI.Controls {
 
 			output.Indent = ident;
 		}
-
 	}
 }

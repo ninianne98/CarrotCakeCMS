@@ -138,7 +138,8 @@
 					Site URL
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;"
+						runat="server" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtURL" ID="RequiredFieldValidator2"
 						runat="server" ErrorMessage="Site URL is required" ToolTip="Site URL is required" Text="**" Display="Dynamic" />
 				</td>
@@ -195,7 +196,8 @@
 					Meta Description
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+						runat="server" />
 				</td>
 			</tr>
 		</table>
@@ -212,9 +214,9 @@
 					&nbsp;
 				</td>
 				<td>
-					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFoldersValid" ID="CompareValidator1" runat="server"
-						ErrorMessage="Blog folder parameters are not unique or not provided" ToolTip="Blog folder parameters are not unique or not provided" Text="Blog Configuration Errors"
-						Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFoldersValid" ID="CompareValidator1"
+						runat="server" ErrorMessage="Blog folder parameters are not unique or not provided" ToolTip="Blog folder parameters are not unique or not provided"
+						Text="Blog Configuration Errors" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
 					&nbsp;
 				</td>
 			</tr>
@@ -245,8 +247,8 @@
 					Blog Tag Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="60" Style="width: 350px;" runat="server"
-						onblur="CheckFolderPrefixes()" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="60" Style="width: 350px;"
+						runat="server" onblur="CheckFolderPrefixes()" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTagPath" ID="RequiredFieldValidator6"
 						runat="server" ErrorMessage="Blog Tag Path is required" ToolTip="Blog Tag Path is required" Text="**" Display="Dynamic" />
 				</td>
@@ -299,7 +301,7 @@
 	<asp:PlaceHolder ID="phCreatePage" runat="server">
 		<br />
 		<h2>
-			Create inital homepage on site creation?
+			Create initial homepage on site creation?
 			<asp:CheckBox ID="chkHomepage" runat="server" />
 		</h2>
 		<br />

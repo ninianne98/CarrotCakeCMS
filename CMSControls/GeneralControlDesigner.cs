@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Drawing.Design;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.IO;
 using System.Web.UI;
 using System.Web.UI.Design;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,6 +13,7 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Controls {
+
 	public class GeneralControlDesigner : ControlDesigner {
 
 		public override string GetDesignTimeHtml() {
@@ -74,6 +66,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return sw.ToString();
 		}
-
 	}
 }

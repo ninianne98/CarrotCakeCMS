@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using System.IO;
-using Carrotware.CMS.Data;
+using System.Linq;
 using System.Xml.Linq;
-using System.Xml;
+using System.Xml.Serialization;
+using Carrotware.CMS.Data;
 
 namespace Carrotware.CMS.Core {
 
@@ -24,7 +22,6 @@ namespace Carrotware.CMS.Core {
 		public DateTime GoLiveDateLocal { get; set; }
 	}
 
-
 	//===============================
 	public class BlogPostPageUrl {
 		public Guid Root_ContentID { get; set; }
@@ -34,25 +31,20 @@ namespace Carrotware.CMS.Core {
 		public string FileName { get; set; }
 	}
 
-
 	//===============================
 	public class TimeZoneContent {
-
 		public List<ContentLocalTime> ContentLocalDates { get; set; }
 
 		public List<BlogPostPageUrl> BlogPostUrls { get; set; }
 
 		public Guid SiteID { get; set; }
 
-
 		public TimeZoneContent() {
 			this.ContentLocalDates = new List<ContentLocalTime>();
 			this.BlogPostUrls = new List<BlogPostPageUrl>();
 		}
 
-
 		public TimeZoneContent(Guid siteID) {
-
 			// use C# libraries for timezones rather than pass in offset as some dates are +/- an hour off because of DST
 
 			this.SiteID = siteID;
@@ -66,7 +58,6 @@ namespace Carrotware.CMS.Core {
 			List<carrot_RootContent> queryAllContent = null;
 
 			using (CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext()) {
-
 				queryAllContent = CannedQueries.GetAllRootTbl(db, siteID).ToList();
 			}
 
@@ -92,10 +83,8 @@ namespace Carrotware.CMS.Core {
 								 }).ToList();
 		}
 
-
 		public void Save() {
 			using (CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext()) {
-
 				string xml = this.GetXml();
 
 				xml = xml.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>", "");
@@ -105,7 +94,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public string GetXml() {
-
 			XmlSerializer xmlSerializer = new XmlSerializer(typeof(TimeZoneContent));
 			string sXML = "";
 			using (StringWriter stringWriter = new StringWriter()) {
@@ -115,5 +103,4 @@ namespace Carrotware.CMS.Core {
 			return sXML;
 		}
 	}
-
 }

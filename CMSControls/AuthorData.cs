@@ -1,13 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using System.ComponentModel;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Controls {
+
 	//================================================
 	[ToolboxData("<{0}:AuthorLink runat=server></{0}:AuthorLink>")]
 	public class AuthorLink : HyperLink, INamingContainer {
@@ -31,7 +39,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private ExtendedUserData usr = null;
 
 		protected override void OnPreRender(EventArgs e) {
-
 			if (usr == null) {
 				usr = ExtendedUserData.GetEditorFromURL();
 			}
@@ -56,7 +63,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			object contentData = DataBinder.GetDataItem(container);
@@ -71,9 +77,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
-
 
 	//================================================
 	[ToolboxData("<{0}:AuthorTextLabel runat=server></{0}:AuthorTextLabel>")]
@@ -95,7 +99,6 @@ namespace Carrotware.CMS.UI.Controls {
 			Editor,
 			Credited
 		}
-
 
 		[Category("Appearance")]
 		[DefaultValue("{0}")]
@@ -149,7 +152,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private ExtendedUserData _usr = null;
 
 		protected override void OnPreRender(EventArgs e) {
-
 			if (_usr == null) {
 				_usr = ExtendedUserData.GetEditorFromURL();
 			}
@@ -181,7 +183,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			object contentData = DataBinder.GetDataItem(container);
@@ -196,8 +197,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
-
-
 }

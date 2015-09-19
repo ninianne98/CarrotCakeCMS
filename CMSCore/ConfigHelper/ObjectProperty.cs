@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,7 +15,9 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.Core {
 
 	public class ObjectProperty {
+
 		public ObjectProperty() { }
+
 		public string Name { get; set; }
 		public bool CanWrite { get; set; }
 		public bool CanRead { get; set; }
@@ -28,11 +28,10 @@ namespace Carrotware.CMS.Core {
 		public PropertyInfo Props { get; set; }
 
 		public string CompanionSourceFieldName { get; set; }
-		
+
 		public string FieldDescription { get; set; }
 
 		public WidgetAttribute.FieldMode FieldMode { get; set; }
-
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -48,6 +47,5 @@ namespace Carrotware.CMS.Core {
 		public override int GetHashCode() {
 			return Name.GetHashCode() ^ PropertyType.ToString().GetHashCode();
 		}
-
 	}
 }

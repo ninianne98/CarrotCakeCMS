@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -123,7 +120,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		DateTime _date = DateTime.MinValue;
+		private DateTime _date = DateTime.MinValue;
+
 		private DateTime ThisMonth {
 			get {
 				if (_date.Year < 1900) {
@@ -142,7 +140,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 				return _date;
 			}
-
 		}
 
 		protected List<ContentDateLinks> GetMetaInfo() {
@@ -231,7 +228,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			output.WriteLine("		<tbody id=\"" + this.ClientID + "-body\"  " + sCSSClassTableBody + ">");
 			while ((DayOfMonth <= iDaysInMonth) && (DayOfMonth <= 31) && (DayOfMonth >= -7)) {
-
 				for (int DayIndex = 0; DayIndex <= iDayOfWeek; DayIndex++) {
 					if (DayIndex == 0) {
 						output.WriteLine("			<tr id=\"" + this.ClientID + "-week" + WeekNumber.ToString() + "\"> ");
@@ -298,21 +294,16 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					CssClass = GetParmValue("CssClass", "");
 
 					CalendarHead = GetParmValue("CalendarHead", "");
-
 				}
 			} catch (Exception ex) {
 			}
 
 			base.OnPreRender(e);
 		}
-
 	}
 }

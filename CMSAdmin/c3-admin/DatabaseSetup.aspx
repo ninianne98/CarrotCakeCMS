@@ -4,10 +4,12 @@
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<style type="text/css">
-		.errMsg {
+		.errMsg
+		{
 			background-color: #FFE0E0;
 		}
-		.okMsg {
+		.okMsg
+		{
 			background-color: #ffffff;
 		}
 	</style>
@@ -25,11 +27,11 @@
 			<ItemTemplate>
 				<div>
 					<b>
-						<asp:Image ID="imgStat1" runat="server" Visible='<%# (bool)Eval("AlteredData") && !(bool)Eval("HasExceoption") %>' ImageUrl="/c3-admin/images/lightbulb.png"
+						<asp:Image ID="imgStat1" runat="server" Visible='<%# (bool)Eval("AlteredData") && !(bool)Eval("HasException") %>' ImageUrl="/c3-admin/images/lightbulb.png"
 							ToolTip="Executed" />
-						<asp:Image ID="imgStat2" runat="server" Visible='<%# !(bool)Eval("AlteredData") && !(bool)Eval("HasExceoption") %>' ImageUrl="/c3-admin/images/lightbulb_off.png"
+						<asp:Image ID="imgStat2" runat="server" Visible='<%# !(bool)Eval("AlteredData") && !(bool)Eval("HasException") %>' ImageUrl="/c3-admin/images/lightbulb_off.png"
 							ToolTip="Skipped" />
-						<asp:Image ID="imgStat3" runat="server" Visible='<%# (bool)Eval("HasExceoption") %>' ImageUrl="/c3-admin/images/exclamation.png" ToolTip="Error" />
+						<asp:Image ID="imgStat3" runat="server" Visible='<%# (bool)Eval("HasException") %>' ImageUrl="/c3-admin/images/exclamation.png" ToolTip="Error" />
 						<%#Eval("Message")%></b>
 					<%#Eval("Response")%>
 				</div>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -87,7 +88,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			SiteNav pageNav = GetCurrentPage();
 			string sParent = pageNav.FileName.ToLower();
 
@@ -106,7 +106,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (DisplayAsList) {
-
 				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (SiteNav c in lstNav) {
 					IdentifyLinkAsInactive(c);
@@ -117,9 +116,7 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 				output.WriteLine("</ul>");
-
 			} else {
-
 				string sDivider = " " + TextDivider + " ";
 				int iCtr = 1;
 				int iMax = lstNav.Count;
@@ -138,9 +135,7 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 				output.WriteLine("</div>");
-
 			}
 		}
-
 	}
 }

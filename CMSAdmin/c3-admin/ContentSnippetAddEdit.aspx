@@ -101,7 +101,6 @@
 
 		});
 
-
 		function cancelEditing() {
 
 			$("#divCMSCancelWinMsg").text('Are you sure you want to leave the editor? All changes will be lost!');
@@ -210,7 +209,6 @@
 				});
 			}
 		});
-
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -230,7 +228,8 @@
 				name:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateSlug()" ID="txtLabel" runat="server" Columns="60" MaxLength="100" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateSlug()" ID="txtLabel" runat="server" Columns="60"
+					MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtLabel" ID="RequiredFieldValidator3"
 					runat="server" Text="**" ToolTip="Name is required" ErrorMessage="Name is required" Display="Dynamic" />
 			</td>
@@ -240,11 +239,13 @@
 				slug:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckSlug()" ID="txtSlug" runat="server" Columns="60" MaxLength="100" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckSlug()" ID="txtSlug" runat="server" Columns="60"
+					MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSlug" ID="RequiredFieldValidator1"
 					runat="server" Text="**" ToolTip="Slug is required" ErrorMessage="Slug is required" Display="Dynamic" />
-				<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
-					ErrorMessage="Slug is not valid/not unique" ToolTip="Slug is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+				<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1"
+					runat="server" ErrorMessage="Slug is not valid/not unique" ToolTip="Slug is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID"
+					Operator="Equal" />
 				<div style="display: none;">
 					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator2"
@@ -257,8 +258,10 @@
 				release date:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion"
+					Columns="16" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion"
+					Columns="10" />
 			</td>
 		</tr>
 		<tr>
@@ -285,8 +288,8 @@
 			<td>
 				<div runat="server" id="divCenter">
 					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-				<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 650px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="20"
-					Columns="60" />
+				<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 650px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
+					Rows="20" Columns="60" />
 				<br />
 			</td>
 		</tr>
@@ -361,10 +364,6 @@
 	<br />
 	<div style="display: none;">
 		<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
-		<div id="divCMSCancelWin" title="Quit Editor?">
-			<p id="divCMSCancelWinMsg">
-				Are you sure you want cancel?</p>
-		</div>
 		<div id="confirmRevert" title="Really Revert?">
 			<div id="confirmRevertMsg">
 				<p>
@@ -415,8 +414,6 @@
 			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
 			return true;
 		}
-
-
 	</script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">

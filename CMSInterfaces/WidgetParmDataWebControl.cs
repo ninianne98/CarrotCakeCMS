@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI.WebControls;
+﻿using System.Collections.Generic;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,20 +10,20 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Interface {
+
 	public abstract class WidgetParmDataWebControl : WidgetWebControl, IWidgetParmData {
 
 		#region IWidgetParmData Members
 
 		private Dictionary<string, string> _parms = new Dictionary<string, string>();
+
 		public virtual Dictionary<string, string> PublicParmValues {
 			get { return _parms; }
 			set { _parms = value; }
 		}
 
-		#endregion
-
+		#endregion IWidgetParmData Members
 
 		#region Common Parser Routines
 
@@ -46,7 +43,6 @@ namespace Carrotware.CMS.Interface {
 			return ParmParser.GetParmValueList(this.PublicParmValues, sKey);
 		}
 
-		#endregion
-
+		#endregion Common Parser Routines
 	}
 }

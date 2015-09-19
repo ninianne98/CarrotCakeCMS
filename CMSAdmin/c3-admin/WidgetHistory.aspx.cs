@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,14 +16,14 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class WidgetHistory : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidWidgetID = Guid.Empty;
 
-		List<Widget> lstPageWidgets = null;
+		private List<Widget> lstPageWidgets = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			guidWidgetID = GetGuidParameterFromQuery("widgetid");
 			guidContentID = GetGuidPageIDFromQuery();
 
@@ -70,7 +67,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void BindDataGrid() {
-
 			var lstW = widgetHelper.GetWidgetVersionHistory(guidWidgetID);
 			var current = lstW.Where(x => x.IsLatestVersion == true).FirstOrDefault();
 
@@ -96,6 +92,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			BindDataGrid();
 		}
-
 	}
 }

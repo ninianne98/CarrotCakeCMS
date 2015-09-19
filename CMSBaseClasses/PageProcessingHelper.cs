@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,8 +21,8 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Base {
+
 	public class PageProcessingHelper {
 
 		public PageProcessingHelper() {
@@ -53,6 +54,7 @@ namespace Carrotware.CMS.UI.Base {
 		public bool IsPageTemplate = false;
 
 		private int iCtrl = 0;
+
 		public string CtrlId {
 			get {
 				return "WidgetCtrlId" + (iCtrl++);
@@ -60,6 +62,7 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		private int iCtrlW = 0;
+
 		public string WrapCtrlId {
 			get {
 				return "WidgetWrapCtrlId" + (iCtrlW++);
@@ -67,7 +70,6 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		public void AssignContentZones(ContentContainer pageArea, ContentContainer pageSource) {
-
 			pageArea.IsAdminMode = pageSource.IsAdminMode;
 
 			pageArea.Text = pageSource.Text;
@@ -77,11 +79,9 @@ namespace Carrotware.CMS.UI.Base {
 			pageArea.DatabaseKey = pageSource.DatabaseKey;
 
 			pageArea.TextZone = pageSource.TextZone;
-
 		}
 
 		public void LoadData() {
-
 			theSite = SiteData.CurrentSite;
 			pageContents = null;
 			pageWidgets = new List<Widget>();
@@ -95,7 +95,6 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		public void LoadPageControls() {
-
 			this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 
 			List<HtmlMeta> lstMD = GetHtmlMeta(this.CurrentWebPage.Header);
@@ -180,9 +179,7 @@ namespace Carrotware.CMS.UI.Base {
 			contRight = new ContentContainer();
 
 			if (pageContents != null) {
-
 				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-
 					PageViewType pvt = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
 					string sTitleAddendum = pvt.ExtraTitle;
 
@@ -204,7 +201,6 @@ namespace Carrotware.CMS.UI.Base {
 							&& (pvt.CurrentViewType == PageViewType.ViewType.DateDayIndex
 							|| pvt.CurrentViewType == PageViewType.ViewType.DateMonthIndex
 							|| pvt.CurrentViewType == PageViewType.ViewType.DateYearIndex)) {
-
 							titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == PageViewType.ViewType.DateIndex).FirstOrDefault();
 						}
 
@@ -241,23 +237,19 @@ namespace Carrotware.CMS.UI.Base {
 				pageContents = CMSConfigHelper.IdentifyLinkAsInactive(pageContents);
 
 				if (this.CurrentWebPage.User.Identity.IsAuthenticated) {
-
 					HttpContext.Current.Response.Cache.SetNoServerCaching();
 					HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 					dtExpire = DateTime.Now.AddMinutes(-10);
 					HttpContext.Current.Response.Cache.SetExpires(dtExpire);
 
 					if (!SecurityData.AdvancedEditMode) {
-
 						if (SecurityData.IsAdmin || SecurityData.IsSiteEditor) {
 							if (!SiteData.IsPageSampler && !IsPageTemplate) {
 								Control editor = this.CurrentWebPage.LoadControl(SiteFilename.EditNotifierControlPath);
 								this.CurrentWebPage.Form.Controls.Add(editor);
 							}
 						}
-
 					} else {
-
 						contCenter.IsAdminMode = true;
 						contLeft.IsAdminMode = true;
 						contRight.IsAdminMode = true;
@@ -282,7 +274,6 @@ namespace Carrotware.CMS.UI.Base {
 				} else {
 					HttpContext.Current.Response.Cache.SetExpires(dtExpire);
 				}
-
 
 				if (pageWidgets.Count > 0) {
 					CMSConfigHelper cmsHelper = new CMSConfigHelper();
@@ -317,7 +308,6 @@ namespace Carrotware.CMS.UI.Base {
 					Assembly a = Assembly.GetExecutingAssembly();
 
 					foreach (Widget theWidget in lstWidget) {
-
 						WidgetContainer plcHolder = (WidgetContainer)(from d in lstPlaceholders
 																	  where d.ControlLabel == theWidget.PlaceholderName
 																	  select d.KeyControl).FirstOrDefault();
@@ -395,7 +385,6 @@ namespace Carrotware.CMS.UI.Base {
 							}
 
 							if (SecurityData.AdvancedEditMode) {
-
 								WidgetWrapper plcWrapper = plcHolder.AddWidget(widget, theWidget);
 
 								CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
@@ -427,7 +416,6 @@ namespace Carrotware.CMS.UI.Base {
 							}
 
 							widget.ID = CtrlId;
-
 						}
 					}
 
@@ -468,9 +456,7 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		public void AssignControls() {
-
 			if (pageContents != null) {
-
 				cu.ResetFind();
 				Control ctrlHead = cu.FindControl("litPageHeading", this.CurrentWebPage);
 				if (ctrlHead != null && ctrlHead is ITextControl) {
@@ -497,10 +483,10 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		bool bFound = false;
-		WidgetContainer widgetCtrl = new WidgetContainer();
-		protected WidgetContainer FindTheControl(string ControlName, Control X) {
+		private bool bFound = false;
+		private WidgetContainer widgetCtrl = new WidgetContainer();
 
+		protected WidgetContainer FindTheControl(string ControlName, Control X) {
 			if (X is Page) {
 				bFound = false;
 				widgetCtrl = new WidgetContainer();
@@ -520,8 +506,8 @@ namespace Carrotware.CMS.UI.Base {
 			return widgetCtrl;
 		}
 
+		private List<HtmlMeta> lstHtmlMeta = new List<HtmlMeta>();
 
-		List<HtmlMeta> lstHtmlMeta = new List<HtmlMeta>();
 		protected List<HtmlMeta> GetHtmlMeta(Control X) {
 			lstHtmlMeta = new List<HtmlMeta>();
 
@@ -529,8 +515,8 @@ namespace Carrotware.CMS.UI.Base {
 
 			return lstHtmlMeta;
 		}
-		protected void FindHtmlMeta(Control X) {
 
+		protected void FindHtmlMeta(Control X) {
 			foreach (Control c in X.Controls) {
 				if (c is HtmlMeta) {
 					lstHtmlMeta.Add((HtmlMeta)c);
@@ -539,6 +525,5 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 		}
-
 	}
 }

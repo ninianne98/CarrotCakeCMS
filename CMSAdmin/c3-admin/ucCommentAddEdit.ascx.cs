@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,10 +11,9 @@ using Carrotware.CMS.UI.Base;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucCommentAddEdit : AdminBaseUserControl {
 
+	public partial class ucCommentAddEdit : AdminBaseUserControl {
 		public string ReturnPageURL { get; set; }
 
 		public string ReturnPageQueryString { get; set; }
@@ -88,7 +82,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Response.Redirect(SiteData.CurrentScriptName + "?id=" + item.ContentCommentID.ToString());
 		}
 
-
 		public void FetchItem() {
 			guidItemID = GetGuidIDFromQuery();
 			item = PostComment.GetContentCommentByID(guidItemID);
@@ -113,7 +106,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			ReturnPageURL = string.Format("{0}?{1}", ReturnPage, ReturnPageQueryString);
 		}
-
-
 	}
 }

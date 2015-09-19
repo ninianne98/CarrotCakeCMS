@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -21,18 +22,15 @@ using System.Web.UI.WebControls;
 namespace Carrotware.Web.UI.Controls {
 
 	[ToolboxData("<{0}:CarrotGridView runat=server></{0}:CarrotGridView>")]
-
 	public class CarrotGridView : GridView {
 
 		public CarrotGridView()
 			: base() {
-
 			//SortDownIndicator = "&nbsp;&#x25BC;";
 			//SortUpIndicator = "&nbsp;&#x25B2;";
 			SortDownIndicator = "&nbsp;&#9660;";
 			SortUpIndicator = "&nbsp;&#9650;";
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -47,7 +45,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["DefaultSort"] = value;
 			}
 		}
-
 
 		public string CurrentSort {
 			get {
@@ -66,14 +63,12 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public string GetClickedCommand() {
-
 			HttpRequest request = HttpContext.Current.Request;
 			KeyValuePair<string, string> pair = new KeyValuePair<string, string>(" -- ", "");
 
 			if (request.ServerVariables["REQUEST_METHOD"] != null &&
 				request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper() == "POST"
 				&& request.Form["__EVENTARGUMENT"] != null) {
-
 				string arg = request.Form["__EVENTARGUMENT"].ToString();
 				string tgt = request.Form["__EVENTTARGET"].ToString();
 
@@ -87,7 +82,6 @@ namespace Carrotware.Web.UI.Controls {
 				if (tgt.StartsWith(sParm)
 					&& tgt.Contains("$lnkHead")
 					&& tgt.Contains(this.ID + "$")) {
-
 					string[] btn = this.LinkButtonCommands.Split(';');
 					string[] parms = tgt.Split('$');
 					string sKey = parms[parms.Length - 1];
@@ -111,7 +105,6 @@ namespace Carrotware.Web.UI.Controls {
 
 			return pair.Value;
 		}
-
 
 		public string PredictNewSort {
 			get {
@@ -139,8 +132,6 @@ namespace Carrotware.Web.UI.Controls {
 				return sSort;
 			}
 		}
-
-
 
 		private string SortField {
 			get {
@@ -171,7 +162,6 @@ namespace Carrotware.Web.UI.Controls {
 			get;
 			set;
 		}
-
 
 		public void lblSort_Command(object sender, EventArgs e) {
 			SortParm = DefaultSort;
@@ -219,7 +209,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void SetData() {
-
 			SetTemplates();
 
 			if (!string.IsNullOrEmpty(DefaultSort) && this.DataSource != null) {
@@ -254,13 +243,10 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		public DataTable SortDataTable(DataTable dt) {
-
 			DataTable dtNew = dt.Clone();
 
 			if (!string.IsNullOrEmpty(SortField)) {
-
 				dtNew.DefaultView.RowFilter = dt.DefaultView.RowFilter;
 				DataRow[] copyRows = dt.DefaultView.Table.Select(dt.DefaultView.RowFilter, SortField + "   " + SortDir);
 
@@ -273,15 +259,11 @@ namespace Carrotware.Web.UI.Controls {
 
 				return dtNew;
 			} else {
-
 				return dt;
 			}
-
 		}
 
-
 		public IList SortDataListType(IList lst) {
-
 			IList query = null;
 			List<object> d = lst.Cast<object>().ToList();
 			IEnumerable<object> enuQueryable = d.AsQueryable();
@@ -310,15 +292,12 @@ namespace Carrotware.Web.UI.Controls {
 			return query;
 		}
 
-
 		private IList SortDataListType(IList lst, string sSort) {
 			ResetSortToColumn(sSort);
 			return SortDataListType(lst);
 		}
 
-
 		protected override void Render(HtmlTextWriter writer) {
-
 			this.EnsureChildControls();
 
 			if (this.Rows.Count > 0) {
@@ -328,9 +307,7 @@ namespace Carrotware.Web.UI.Controls {
 			base.Render(writer);
 		}
 
-
 		protected override void PerformDataBinding(IEnumerable data) {
-
 			SetData();
 
 			if (this.DataSource != null) {
@@ -403,9 +380,7 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		private string ResetSortToColumn(string sSortField) {
-
 			if (SortField.Length < 1) {
 				SortField = sSortField;
 				SortDir = string.Empty;
@@ -425,8 +400,6 @@ namespace Carrotware.Web.UI.Controls {
 			return sSortField;
 		}
 
-
-
 		private object GetPropertyValue(object obj, string property) {
 			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
 			return propertyInfo.GetValue(obj, null);
@@ -445,9 +418,7 @@ namespace Carrotware.Web.UI.Controls {
 			return props;
 		}
 
-
 		private void WalkGridForHeadings(Control X) {
-
 			if (string.IsNullOrEmpty(SortField) || string.IsNullOrEmpty(SortDir)) {
 				SortParm = string.Empty;
 			}
@@ -455,9 +426,7 @@ namespace Carrotware.Web.UI.Controls {
 			WalkGridForHeadings(X, SortField, SortDir);
 		}
 
-
 		private void WalkGridForHeadings(Control X, string sSortFld, string sSortDir) {
-
 			sSortFld = sSortFld.ToLower();
 			sSortDir = sSortDir.ToLower();
 
@@ -480,7 +449,5 @@ namespace Carrotware.Web.UI.Controls {
 				}
 			}
 		}
-
-
 	}
 }

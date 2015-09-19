@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web.Security;
 using System.Xml;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,10 +13,10 @@ using System.Xml;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class WPBlogReader {
+
 		public WPBlogReader() { }
 
 		public XmlDocument LoadFile(string FileName) {
@@ -73,7 +72,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
-
 			site.Tags = new List<InfoKVP>();
 
 			XmlNodeList tagNodes = doc.SelectNodes("//rss/channel/wp:tag", rssNamespace);
@@ -91,7 +89,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 
-
 			XmlNodeList rssAuthors = doc.SelectNodes("//rss/channel/wp:author", rssNamespace);
 			foreach (XmlNode node in rssAuthors) {
 				WordPressUser wpu = new WordPressUser();
@@ -104,7 +101,6 @@ namespace Carrotware.CMS.Core {
 
 				lstAuth.Add(wpu);
 			}
-
 
 			XmlNodeList nodes = doc.SelectNodes("//rss/channel/item");
 
@@ -138,9 +134,11 @@ namespace Carrotware.CMS.Core {
 					case "attachment":
 						wpp.PostType = WordPressPost.WPPostType.Attachment;
 						break;
+
 					case "post":
 						wpp.PostType = WordPressPost.WPPostType.BlogPost;
 						break;
+
 					case "page":
 						wpp.PostType = WordPressPost.WPPostType.Page;
 						break;
@@ -256,13 +254,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public WordPressSite GetContent(XmlDocument doc) {
-
 			WordPressSite site = GetAllData(doc);
 
 			site.Content.RemoveAll(x => x.PostType == WordPressPost.WPPostType.Attachment || x.PostType == WordPressPost.WPPostType.Unknown);
 
 			return site;
 		}
-
 	}
 }

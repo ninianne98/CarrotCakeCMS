@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,8 +15,8 @@ using Carrotware.CMS.UI.Base;
 */
 
 namespace Carrotware.CMS.UI.Admin {
-	public class AdminBaseMasterPage : BaseMasterPage {
 
+	public class AdminBaseMasterPage : BaseMasterPage {
 		protected SiteData siteHelper = new SiteData();
 
 		public enum SectionID {
@@ -65,9 +62,11 @@ namespace Carrotware.CMS.UI.Admin {
 				case ControlLocation.PublicFooter:
 					sControlPath = config.AdminFooterControls.ControlPathPublic;
 					break;
+
 				case ControlLocation.PopupFooter:
 					sControlPath = config.AdminFooterControls.ControlPathPopup;
 					break;
+
 				case ControlLocation.MainFooter:
 					sControlPath = config.AdminFooterControls.ControlPathMain;
 					break;
@@ -81,6 +80,5 @@ namespace Carrotware.CMS.UI.Admin {
 				}
 			}
 		}
-
 	}
 }

@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Post Index" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostIndex.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostIndex" %>
+﻿<%@ Page Title="Post Index" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostIndex.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostIndex" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -132,12 +133,12 @@
 					<carrot:CarrotHeaderSortTemplateField SortExpression="GoLiveDate" HeaderText="Go Live" DataField="GoLiveDate" DataFieldFormat="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField SortExpression="RetireDate" HeaderText="Retire On" DataField="RetireDate" DataFieldFormat="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField SortExpression="VersionCount" HeaderText="Versions" DataField="VersionCount" />
-					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
-						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
-					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
-						AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
-					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
-						AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsRetired" HeaderText="Retired" ShowBooleanImage="true"
+						AlternateTextTrue="Retired" AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsUnReleased" HeaderText="Released" ShowBooleanImage="true"
+						AlternateTextTrue="Unreleased" AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true"
+						AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
 					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Public" AlternateTextFalse="Inactive"
 						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>

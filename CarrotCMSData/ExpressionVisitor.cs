@@ -75,8 +75,7 @@ namespace Carrotware.CMS.Data {
 	/// (from http://blogs.msdn.com/mattwar/archive/2007/07/31/linq-building-an-iqueryable-provider-part-ii.aspx)
 	/// </summary>
 	public abstract class ExpressionVisitor {
-		protected ExpressionVisitor() {
-		}
+		protected ExpressionVisitor() { }
 
 		protected virtual Expression Visit(Expression exp) {
 			if (exp == null)

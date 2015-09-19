@@ -1,15 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
 using System.Web.UI;
-using System.Reflection;
 
 namespace Carrotware.CMS.Core {
 
 	public class ProfileManager {
-
 		private ProfileBase _profile = new ProfileBase();
 
 		public ProfileManager() { }
@@ -17,10 +16,10 @@ namespace Carrotware.CMS.Core {
 		public void Load(string username) {
 			_profile = ProfileBase.Create(username);
 		}
+
 		public void Load(string username, bool anon) {
 			_profile = ProfileBase.Create(username, anon);
 		}
-
 
 		public void Update() {
 			_profile.Save();
@@ -29,12 +28,12 @@ namespace Carrotware.CMS.Core {
 		public ProfileManager(string username) {
 			Load(username);
 		}
+
 		public ProfileManager(string username, bool anon) {
 			Load(username, anon);
 		}
 
 		public bool ResetPassword(string Email, Control theControl) {
-
 			MembershipUser user = null;
 
 			if (!String.IsNullOrEmpty(Email)) {
@@ -46,7 +45,6 @@ namespace Carrotware.CMS.Core {
 			}
 
 			if (user != null) {
-
 				Assembly _assembly = Assembly.GetExecutingAssembly();
 
 				string sBody = String.Empty;
@@ -102,18 +100,20 @@ namespace Carrotware.CMS.Core {
 			} else {
 				return false;
 			}
-
 		}
 
 		//create constant strings for each type of characters
-		static string alphaCaps = "QWERTYUIOPASDFGHJKLZXCVBNM";
-		static string alphaLow = "qwertyuiopasdfghjklzxcvbnm";
-		static string numerics = "1234567890";
-		static string special = "@#$";
-		static string nonalphanum = "&%=:";
+		private static string alphaCaps = "QWERTYUIOPASDFGHJKLZXCVBNM";
+
+		private static string alphaLow = "qwertyuiopasdfghjklzxcvbnm";
+		private static string numerics = "1234567890";
+		private static string special = "@#$";
+		private static string nonalphanum = "&%=:";
+
 		//create another string which is a concatenation of all above
-		static string allChars = alphaCaps + alphaLow + numerics + special;
-		static string specialChars = special + nonalphanum;
+		private static string allChars = alphaCaps + alphaLow + numerics + special;
+
+		private static string specialChars = special + nonalphanum;
 
 		public static string GenerateSimplePassword() {
 			int length = 8;
@@ -134,7 +134,5 @@ namespace Carrotware.CMS.Core {
 
 			return generatedPassword;
 		}
-
-
 	}
 }

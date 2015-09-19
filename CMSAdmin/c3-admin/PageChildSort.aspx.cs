@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class PageChildSort : AdminBasePage {
 
+	public partial class PageChildSort : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
-		bool bClickedSort = false;
+		private bool bClickedSort = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
-				Master.UsesSaved = true;
-				Master.HideSave();
+			Master.UsesSaved = true;
+			Master.HideSave();
 
 			guidContentID = GetGuidPageIDFromQuery();
 
 			if (!IsPostBack) {
 				DoDataBind();
 			}
-
 		}
 
 		protected void DoDataBind() {
@@ -42,18 +35,23 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					case "alpha":
 						lstNav = lstNav.OrderBy(x => x.NavMenuText).ToList();
 						break;
+
 					case "datecreated":
 						lstNav = lstNav.OrderBy(x => x.CreateDate).ToList();
 						break;
+
 					case "dateupdated":
 						lstNav = lstNav.OrderBy(x => x.EditDate).ToList();
 						break;
+
 					case "alpha2":
 						lstNav = lstNav.OrderByDescending(x => x.NavMenuText).ToList();
 						break;
+
 					case "datecreated2":
 						lstNav = lstNav.OrderByDescending(x => x.CreateDate).ToList();
 						break;
+
 					case "dateupdated2":
 						lstNav = lstNav.OrderByDescending(x => x.EditDate).ToList();
 						break;
@@ -69,7 +67,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (lstNav.Count < 2) {
 				btnSave.Visible = false;
 			}
-
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
@@ -88,7 +85,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			DoDataBind();
 		}
-
-
 	}
 }

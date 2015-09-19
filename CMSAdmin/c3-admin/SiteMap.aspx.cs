@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
-using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,12 +11,11 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class SiteMap : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSiteMap);
-
 		}
-
 	}
 }

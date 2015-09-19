@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Profile;
 using System.Web.Security;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,6 +16,7 @@ using Carrotware.CMS.UI.Base;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class UserAdd : AdminBasePage {
 
 		protected HtmlGenericControl divMsg {
@@ -25,6 +24,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return ((HtmlGenericControl)CreateUserWizardStep1.ContentTemplateContainer.FindControl("divMsg"));
 			}
 		}
+
 		protected Literal FailureText {
 			get {
 				return ((Literal)CreateUserWizardStep1.ContentTemplateContainer.FindControl("FailureText"));
@@ -54,7 +54,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void createWizard_CreatingUser(object sender, LoginCancelEventArgs e) {
-
 		}
 
 		protected void createWizard_CreateUserError(object sender, CreateUserErrorEventArgs e) {
@@ -71,6 +70,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			FailureText.Text = sFieldValue;
 		}
-
 	}
 }

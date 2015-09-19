@@ -1,4 +1,5 @@
-﻿<%@ Page Title="SiteDetail" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteDetail.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteDetail" %>
+﻿<%@ Page Title="SiteDetail" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteDetail.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteDetail" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -87,8 +88,8 @@
 								<asp:BoundField DataField="EmailAddress" HeaderText="Email" />
 								<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsAdmin" HeaderText="Is Admin" ShowBooleanImage="true" AlternateTextTrue="Yes"
 									AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
-								<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsEditor" HeaderText="Is Editor" ShowBooleanImage="true" AlternateTextTrue="Yes"
-									AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
+								<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsEditor" HeaderText="Is Editor" ShowBooleanImage="true"
+									AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 							</Columns>
 						</carrot:CarrotGridView>
 					</div>

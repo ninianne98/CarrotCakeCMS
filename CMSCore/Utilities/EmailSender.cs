@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Xml;
 
 namespace Carrotware.CMS.Core {
+
 	public class EmailSender {
 
 		public class EMailSettings {
@@ -18,7 +19,6 @@ namespace Carrotware.CMS.Core {
 			public string MailPassword { get; set; }
 			public string ReturnAddress { get; set; }
 		}
-
 
 		public Dictionary<string, string> ContentPlaceholders { get; set; }
 
@@ -126,6 +126,5 @@ namespace Carrotware.CMS.Core {
 
 			client.Send(mailMessage);
 		}
-
 	}
 }

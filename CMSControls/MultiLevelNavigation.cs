@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -45,6 +43,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.NavigationData = navHelper.GetLevelDepthNavigation(SiteData.CurrentSiteID, LevelDepth, !SecurityData.IsAuthEditor);
 		}
-
 	}
 }

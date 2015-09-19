@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Xml;
-using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,6 +15,7 @@ using Carrotware.CMS.Data;
 */
 
 namespace Carrotware.CMS.Core {
+
 	public class SiteMapHelper {
 
 		public SiteMapHelper() { }
@@ -72,8 +72,6 @@ namespace Carrotware.CMS.Core {
 
 			writer.Flush();
 			writer.Close();
-
 		}
-
 	}
 }

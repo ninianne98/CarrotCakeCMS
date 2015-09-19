@@ -11,6 +11,7 @@ using System.Web.Caching;
 using System.Web.UI;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -21,11 +22,9 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class CMSConfigHelper : IDisposable {
-
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
@@ -42,7 +41,6 @@ namespace Carrotware.CMS.Core {
 			SiteMapping
 		}
 
-
 		#region IDisposable Members
 
 		public void Dispose() {
@@ -51,7 +49,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		#endregion
+		#endregion IDisposable Members
 
 		private static string keyAdminMenuModules = "cms_AdminMenuModules";
 
@@ -71,9 +69,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string keyAdminWidget = "cmsAdminWidget";
 
-
 		public void ResetConfigs() {
-
 			HttpContext.Current.Cache.Remove(keyAdminMenuModules);
 
 			HttpContext.Current.Cache.Remove(keyAdminToolboxModules);
@@ -102,7 +98,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private static Page CachedPage {
 			get {
 				if (_CachedPage == null) {
@@ -112,6 +107,7 @@ namespace Carrotware.CMS.Core {
 				return _CachedPage;
 			}
 		}
+
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
@@ -170,28 +166,36 @@ namespace Carrotware.CMS.Core {
 					sPlugCfg = sRealPath + config.ConfigFileLocation.AdminModules;
 					iExpectedTblCount = 2;
 					break;
+
 				case CMSConfigFileType.PublicControls:
 					sPlugCfg = sRealPath + config.ConfigFileLocation.PublicControls;
 					break;
+
 				case CMSConfigFileType.SiteSkins:
 					sPlugCfg = sRealPath + config.ConfigFileLocation.SiteSkins;
 					break;
+
 				case CMSConfigFileType.SiteTextWidgets:
 					sPlugCfg = sRealPath + config.ConfigFileLocation.TextContentProcessors;
 					break;
+
 				case CMSConfigFileType.SiteMapping:
 					sPlugCfg = sRealPath + config.ConfigFileLocation.SiteMapping;
 					break;
+
 				case CMSConfigFileType.AdminMod:
 					sPlugCfg = sRealPath + "Admin.config";
 					iExpectedTblCount = 2;
 					break;
+
 				case CMSConfigFileType.PublicCtrl:
 					sPlugCfg = sRealPath + "Public.config";
 					break;
+
 				case CMSConfigFileType.SkinDef:
 					sPlugCfg = sRealPath + "Skin.config";
 					break;
+
 				default:
 					sPlugCfg = sRealPath + "default.config";
 					iExpectedTblCount = -1;
@@ -242,6 +246,7 @@ namespace Carrotware.CMS.Core {
 						reqCols1.Add("pluginid");
 
 						break;
+
 					case CMSConfigFileType.PublicCtrl:
 					case CMSConfigFileType.PublicControls:
 						reqCols0.Add("filepath");
@@ -249,6 +254,7 @@ namespace Carrotware.CMS.Core {
 						table1Name = "ctrlfile";
 
 						break;
+
 					case CMSConfigFileType.SkinDef:
 					case CMSConfigFileType.SiteSkins:
 						reqCols0.Add("templatefile");
@@ -256,18 +262,21 @@ namespace Carrotware.CMS.Core {
 						table1Name = "pagenames";
 
 						break;
+
 					case CMSConfigFileType.SiteTextWidgets:
 						reqCols0.Add("pluginassembly");
 						reqCols0.Add("pluginname");
 						table1Name = "plugin";
 
 						break;
+
 					case CMSConfigFileType.SiteMapping:
 						reqCols0.Add("domname");
 						reqCols0.Add("siteid");
 						table1Name = "sitedetail";
 
 						break;
+
 					default:
 						reqCols0.Add("caption");
 						reqCols0.Add("pluginid");
@@ -277,7 +286,6 @@ namespace Carrotware.CMS.Core {
 				}
 
 				if (ds.Tables.Contains(table1Name)) {
-
 					//validate that the dataset has the right table configuration
 					DataTable dt0 = ds.Tables[table1Name];
 					foreach (string c in reqCols0) {
@@ -303,7 +311,6 @@ namespace Carrotware.CMS.Core {
 						}
 					}
 				}
-
 			}
 
 			return ds;
@@ -315,7 +322,6 @@ namespace Carrotware.CMS.Core {
 
 		public List<CMSAdminModule> AdminModules {
 			get {
-
 				var _modules = new List<CMSAdminModule>();
 
 				bool bCached = false;
@@ -377,7 +383,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private List<CMSPlugin> GetPluginsByDirectory() {
 			var _plugins = new List<CMSPlugin>();
 
@@ -386,7 +391,6 @@ namespace Carrotware.CMS.Core {
 			string sPlugCfg = HttpContext.Current.Server.MapPath(config.ConfigFileLocation.PluginPath);
 
 			if (Directory.Exists(sPlugCfg)) {
-
 				string[] subdirs;
 				try {
 					subdirs = Directory.GetDirectories(sPlugCfg);
@@ -396,7 +400,6 @@ namespace Carrotware.CMS.Core {
 
 				if (subdirs != null) {
 					foreach (string theDir in subdirs) {
-
 						string sTplDef = theDir + @"\Public.config";
 
 						if (File.Exists(sTplDef)) {
@@ -437,14 +440,12 @@ namespace Carrotware.CMS.Core {
 								FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
 								Caption = d.Field<string>("crtldesc")
 							}).ToList();
-
 			}
 
 			_plugins.Where(x => x.FilePath.StartsWith("~~/")).ToList().ForEach(r => r.FilePath = r.FilePath.Replace("~~/", "~/"));
 
 			return _plugins;
 		}
-
 
 		public CMSAdminModuleMenu GetCurrentAdminModuleControl() {
 			Guid ModuleID = Guid.Empty;
@@ -467,12 +468,10 @@ namespace Carrotware.CMS.Core {
 					  orderby m.Caption, m.SortOrder
 					  where m.PluginParm == pf
 					  select m).FirstOrDefault();
-
 			}
 
 			return cc;
 		}
-
 
 		public List<CMSAdminModuleMenu> GetCurrentAdminModuleControlList() {
 			Guid ModuleID = Guid.Empty;
@@ -494,12 +493,10 @@ namespace Carrotware.CMS.Core {
 				cc = (from m in mod.PluginMenus
 					  orderby m.Caption, m.SortOrder
 					  select m).ToList();
-
 			}
 
 			return cc;
 		}
-
 
 		public void GetFile(string sRemoteFile, string sLocalFile) {
 			Uri remoteFile = new Uri(sRemoteFile);
@@ -526,7 +523,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private List<CMSAdminModule> GetModulesByDirectory() {
 			var _plugins = new List<CMSAdminModule>();
 
@@ -535,7 +531,6 @@ namespace Carrotware.CMS.Core {
 			string sPlugCfg = HttpContext.Current.Server.MapPath(config.ConfigFileLocation.PluginPath);
 
 			if (Directory.Exists(sPlugCfg)) {
-
 				string[] subdirs;
 				try {
 					subdirs = Directory.GetDirectories(sPlugCfg);
@@ -545,7 +540,6 @@ namespace Carrotware.CMS.Core {
 
 				if (subdirs != null) {
 					foreach (string theDir in subdirs) {
-
 						string sTplDef = theDir + @"\Admin.config";
 
 						if (File.Exists(sTplDef)) {
@@ -586,9 +580,7 @@ namespace Carrotware.CMS.Core {
 			return _plugins;
 		}
 
-
 		public List<CMSTextWidgetPicker> GetAllWidgetSettings(Guid siteID) {
-
 			List<TextWidget> lstPreferenced = TextWidget.GetSiteTextWidgets(siteID);
 
 			List<string> lstInUse = lstPreferenced.Select(x => x.TextWidgetAssembly).Distinct().ToList();
@@ -638,14 +630,11 @@ namespace Carrotware.CMS.Core {
 
 			lstExisting = lstExisting.Union(lstConfigured2).ToList();
 
-
 			return lstExisting;
 		}
 
-
 		public List<CMSPlugin> ToolboxPlugins {
 			get {
-
 				var _plugins = new List<CMSPlugin>();
 
 				bool bCached = false;
@@ -703,7 +692,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private List<CMSTemplate> GetTemplatesByDirectory() {
 			var _plugins = new List<CMSTemplate>();
 
@@ -712,7 +700,6 @@ namespace Carrotware.CMS.Core {
 			string sPlugCfg = HttpContext.Current.Server.MapPath(config.ConfigFileLocation.TemplatePath);
 
 			if (Directory.Exists(sPlugCfg)) {
-
 				string[] subdirs;
 				try {
 					subdirs = Directory.GetDirectories(sPlugCfg);
@@ -722,7 +709,6 @@ namespace Carrotware.CMS.Core {
 
 				if (subdirs != null) {
 					foreach (string theDir in subdirs) {
-
 						string sTplDef = theDir + @"\Skin.config";
 
 						if (File.Exists(sTplDef)) {
@@ -737,7 +723,6 @@ namespace Carrotware.CMS.Core {
 									   }).ToList();
 
 							_plugins = _plugins.Union(_p2).ToList();
-
 						}
 					}
 				}
@@ -746,10 +731,8 @@ namespace Carrotware.CMS.Core {
 			return _plugins;
 		}
 
-
 		public List<CMSTemplate> Templates {
 			get {
-
 				List<CMSTemplate> _plugins = null;
 				string sDefTemplate = SiteData.DefaultTemplateFilename.ToLower();
 
@@ -797,7 +780,6 @@ namespace Carrotware.CMS.Core {
 
 		public List<CMSTextWidget> TextWidgets {
 			get {
-
 				List<CMSTextWidget> _plugins = null;
 				bool bCached = false;
 
@@ -832,7 +814,6 @@ namespace Carrotware.CMS.Core {
 
 		public static List<DynamicSite> SiteList {
 			get {
-
 				var _sites = new List<DynamicSite>();
 
 				bool bCached = false;
@@ -861,7 +842,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static DynamicSite DynSite {
 			get {
 				DynamicSite _site = new DynamicSite();
@@ -879,7 +859,6 @@ namespace Carrotware.CMS.Core {
 				}
 
 				if ((SiteList.Count > 0) && !bCached) {
-
 					_site = (from ss in SiteList
 							 where ss.DomainName == DomainName
 							 select ss).FirstOrDefault();
@@ -892,7 +871,6 @@ namespace Carrotware.CMS.Core {
 
 		//public static List<CMSTemplateFile> TemplateFileList {
 		//    get {
-
 		//        var _sites = new List<CMSTemplateFile>();
 
 		//        bool bCached = false;
@@ -907,7 +885,6 @@ namespace Carrotware.CMS.Core {
 		//        }
 
 		//        if (!bCached) {
-
 		//            var _sites1 = new List<CMSTemplateFile>();
 		//            var _sites2 = new List<CMSTemplateFile>();
 
@@ -1018,7 +995,6 @@ namespace Carrotware.CMS.Core {
 			return TimeZoneInfo.ConvertTimeToUtc(dateSite, oTZ);
 		}
 
-
 		//===================
 
 		public static string InactivePagePrefix {
@@ -1026,20 +1002,26 @@ namespace Carrotware.CMS.Core {
 				return "&#9746; ";
 			}
 		}
+
 		public static string RetiredPagePrefix {
 			get {
 				return "&#9851; ";
 			}
 		}
+
 		public static string UnreleasedPagePrefix {
 			get {
 				return "&#9888; ";
 			}
 		}
 
+		public static string PendingDeletePrefix {
+			get {
+				return "&#9940; ";
+			}
+		}
 
 		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
-
 			if (!nav.PageActive) {
 				nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
 				nav.PageHead = InactivePagePrefix + nav.PageHead;
@@ -1059,7 +1041,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static ContentPage IdentifyLinkAsInactive(ContentPage cp) {
-
 			if (!cp.PageActive) {
 				cp.NavMenuText = InactivePagePrefix + cp.NavMenuText;
 				cp.PageHead = InactivePagePrefix + cp.PageHead;
@@ -1078,9 +1059,7 @@ namespace Carrotware.CMS.Core {
 			return cp;
 		}
 
-
 		//=====================
-
 
 		public static string DecodeBase64(string ValIn) {
 			string val = String.Empty;
@@ -1100,7 +1079,6 @@ namespace Carrotware.CMS.Core {
 			}
 			return val;
 		}
-
 
 		public void OverrideKey(Guid guidContentID) {
 			filePage = null;
@@ -1135,7 +1113,6 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 			}
-
 		}
 
 		public ContentPage cmsAdminContent {
@@ -1198,9 +1175,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static void SaveSerialized(Guid itemID, string sKey, string sData) {
-
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				bool bAdd = false;
 
@@ -1226,11 +1201,9 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static string GetSerialized(Guid itemID, string sKey) {
 			string sData = String.Empty;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(_db, itemID, sKey);
 
 				if (itm != null) {
@@ -1241,11 +1214,9 @@ namespace Carrotware.CMS.Core {
 			return sData;
 		}
 
-
 		public static bool ClearSerialized(Guid itemID, string sKey) {
 			bool bRet = false;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(_db, itemID, sKey);
 
 				if (itm != null) {
@@ -1257,14 +1228,12 @@ namespace Carrotware.CMS.Core {
 			return bRet;
 		}
 
-
 		private void SaveSerialized(string sKey, string sData) {
 			LoadGuids();
 			if (filePage != null) {
 				CMSConfigHelper.SaveSerialized(filePage.Root_ContentID, sKey, sData);
 			}
 		}
-
 
 		private string GetSerialized(string sKey) {
 			string sData = String.Empty;
@@ -1275,7 +1244,6 @@ namespace Carrotware.CMS.Core {
 			}
 			return sData;
 		}
-
 
 		private bool ClearSerialized(string sKey) {
 			LoadGuids();
@@ -1296,8 +1264,5 @@ namespace Carrotware.CMS.Core {
 				_db.SubmitChanges();
 			}
 		}
-
 	}
-
-
 }

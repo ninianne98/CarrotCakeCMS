@@ -97,6 +97,19 @@
 			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
+			<a href="/c3-admin/ContentSnippetIndex.aspx">
+				<img alt="" src="Images/PageIndex.png" class="imgNoBorder" />
+				<br />
+				<br />
+				Snippets
+				<asp:Literal ID="litSmippet" runat="server" /></a>
+			<p>
+				<a href="/c3-admin/ContentSnippetAddEdit.aspx?id=">
+					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
+					Add</a>
+			</p>
+		</div>
+		<div class="ui-widget-header ui-corner-all dashboardCell">
 			<a href="/c3-admin/ModuleIndex.aspx">
 				<img alt="" src="Images/ModuleAdmin.png" class="imgNoBorder" />
 				<br />

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -104,7 +103,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 
@@ -112,7 +110,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			string sBody = string.Empty;
 
 			ContentSnippet cs = null;
@@ -130,7 +127,6 @@ namespace Carrotware.CMS.UI.Controls {
 				string sIdent = String.Empty;
 
 				if (cs != null) {
-
 					if (bIsEditor && (cs.IsRetired || cs.IsUnReleased || !cs.ContentSnippetActive)) {
 						string sBodyFlags = string.Empty;
 						if (!cs.ContentSnippetActive) {
@@ -156,7 +152,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 					sBody = string.Format("{0}\r\n{1}\r\n{2}", sIdent, cs.ContentBody, sBodyNote);
 				}
-
 			} catch {
 				if (!SiteData.IsWebView) {
 					if (this.SnippetID != Guid.Empty) {
@@ -182,23 +177,16 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					//this.SnippetSlug = GetParmValue("SnippetSlug", "");
 					this.SnippetID = new Guid(GetParmValue("SnippetID", Guid.Empty.ToString()));
 					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
-
 				}
 			} catch (Exception ex) {
 			}
 		}
-
-
 	}
-
 }

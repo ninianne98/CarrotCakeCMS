@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -136,7 +131,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.ParentFileName = parentPageNav.FileName.ToLower();
 
 			if (lstNav != null && lstNav.Count > 0) {
-
 				output.WriteLine();
 				WriteListPrefix(output);
 
@@ -249,11 +243,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-
 				base.OnPreRender(e);
 
 				if (PublicParmValues.Count > 0) {
-
 					string sTmp = "";
 
 					sTmp = GetParmValue("CSSSelected", "");
@@ -283,8 +275,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			} catch (Exception ex) {
 			}
-
 		}
-
 	}
 }

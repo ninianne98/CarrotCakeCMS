@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,8 +12,8 @@ using Carrotware.CMS.UI.Base;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class PageAddChild : AdminBasePage {
 
+	public partial class PageAddChild : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		private ContentPage pageContents = null;
 
@@ -39,7 +33,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pnlSaved.Visible = false;
 			}
 		}
-
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			pageContents = new ContentPage(SiteID, ContentPageType.PageType.ContentEntry);
@@ -88,6 +81,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.ShowSave();
 		}
-
 	}
 }

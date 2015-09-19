@@ -2,16 +2,12 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Carrotware.Web.UI.Controls.test {
-	public partial class CAPTCHA2 : System.Web.UI.Page {
-		protected override void OnInit(EventArgs e) {
 
+	public partial class CAPTCHA2 : System.Web.UI.Page {
+
+		protected override void OnInit(EventArgs e) {
 			int imageHeight = 50;
 			int topPadding = 10; // top and bottom padding in pixels
 			int sidePadding = 10; // side padding in pixels
@@ -44,7 +40,6 @@ namespace Carrotware.Web.UI.Controls.test {
 			bitmap.Dispose();
 
 			this.Response.End();
-
 		}
 	}
 }

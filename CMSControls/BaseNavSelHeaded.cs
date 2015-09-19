@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,7 +16,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SiblingNavigation runat=server></{0}:SiblingNavigation>")]
 	public class BaseNavSelHeaded : BaseNavSel, IHeadedList {
-
 		public int ItemCount { get; set; }
 
 		[Category("Appearance")]
@@ -51,7 +48,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
-
 			if (this.NavigationData != null) {
 				this.ItemCount = this.NavigationData.Count;
 			}
@@ -64,17 +60,14 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 
 			try {
-
 				if (PublicParmValues.Count > 0) {
 					this.MetaDataTitle = GetParmValue("MetaDataTitle", "");
 				}
 			} catch (Exception ex) {
 			}
 		}
-
 	}
 }

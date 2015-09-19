@@ -1,4 +1,5 @@
-﻿<%@ Page Title="User" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="User.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.User" %>
+﻿<%@ Page Title="User" Language="C#" MasterPageFile="MasterPages/Main.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="User.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.User" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -84,8 +85,8 @@
 			</legend>
 			<div runat="server" id="divCenter">
 				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="20"
-				Columns="60" />
+			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
+				Rows="20" Columns="60" />
 			<br />
 		</fieldset>
 	</div>

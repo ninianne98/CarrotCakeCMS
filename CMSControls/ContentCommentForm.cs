@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.Design;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -71,7 +70,6 @@ namespace Carrotware.CMS.UI.Controls {
 		protected List<Control> ThanksControls = new List<Control>();
 
 		protected override void OnInit(EventArgs e) {
-
 			base.OnInit(e);
 
 			if (CommentEntryTemplate == null) {
@@ -93,7 +91,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void CreateChildControls() {
-
 			if (CommentEntryTemplate != null || CommentThanksTemplate != null) {
 				this.Controls.Clear();
 			}
@@ -141,7 +138,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void FindEntryFormCtrls(Control X) {
-
 			foreach (Control c in X.Controls) {
 				EntryFormControls.Add(c);
 
@@ -157,6 +153,7 @@ namespace Carrotware.CMS.UI.Controls {
 						case "SubmitCommentButton":
 							z.Click += new EventHandler(this.Submit_ContentCommentForm);
 							break;
+
 						default:
 							break;
 					}
@@ -168,7 +165,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void FindThanksFormCtrls(Control X) {
-
 			foreach (Control c in X.Controls) {
 				ThanksControls.Add(c);
 				FindThanksFormCtrls(c);
@@ -176,7 +172,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected Control GetEntryFormControl(string ControlName) {
-
 			return (from x in EntryFormControls
 					where x.ID != null
 					&& x.ID.ToLower() == ControlName.ToLower()
@@ -278,9 +273,7 @@ namespace Carrotware.CMS.UI.Controls {
 				phEntry.Visible = false;
 				phThanks.Visible = true;
 			}
-
 		}
-
 	}
 
 	//======================================
@@ -319,7 +312,5 @@ namespace Carrotware.CMS.UI.Controls {
 				return collection;
 			}
 		}
-
 	}
-
 }

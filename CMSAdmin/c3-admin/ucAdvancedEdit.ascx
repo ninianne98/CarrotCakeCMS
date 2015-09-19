@@ -39,7 +39,7 @@
 		setTimeout("cmsToolbarPageInit2();", 3000);
 		setTimeout("cmsToolbarPageInit2();", 5000);
 	}
-	
+
 	$(document).ready(function () {
 		cmsToolbarPageInit2();
 	});
@@ -57,7 +57,6 @@
 		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit, .cmsGlossySeaGreen input:reset").button();
 		$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit, #cmsGlossySeaGreenID input:reset").button();
 	}
-
 </script>
 <script type="text/javascript">
 
@@ -120,7 +119,6 @@
 			cmsPageInit1 = true;
 		}
 	}
-
 </script>
 <div class="cmsMainAdvControls">
 	<div id="cmsGlossySeaGreenID" class="cmsGlossySeaGreen">

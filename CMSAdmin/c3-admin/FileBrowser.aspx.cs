@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
-using Carrotware.Web.UI.Controls;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -21,6 +16,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class FileBrowser : AdminBasePage {
 		public string sQueryPath = string.Empty;
 		public string sQueryMode = "1";
@@ -86,7 +82,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			lnkThumbView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=thumb", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
 			lnkFileView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=file", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
 
-
 			if (!IsPostBack) {
 				LoadLists();
 			}
@@ -116,7 +111,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		public string CreateFileSrc(string sPath, string sFile, string sMime) {
-
 			if (FileImageLink(sMime).ToLower() == "image") {
 				return String.Format("{0}{1}", sPath, sFile).ToLower();
 			} else {
@@ -125,7 +119,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		public string FileImageLink(string sMime) {
-
 			sMime = sMime.ToLower();
 			var mime = sMime.Substring(0, sMime.IndexOf("/"));
 
@@ -135,15 +128,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				case "image":
 					sImage = "image";
 					break;
+
 				case "audio":
 					sImage = "audio";
 					break;
+
 				case "video":
 					sImage = "video";
 					break;
+
 				case "application":
 					sImage = "application";
 					break;
+
 				default:
 					sImage = "plain";
 					break;
@@ -153,17 +150,21 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				case "application/pdf":
 					sImage = "pdf";
 					break;
+
 				case "text/html":
 				case "text/asp":
 					sImage = "html";
 					break;
+
 				case "application/excel":
 					sImage = "spreadsheet";
 					break;
+
 				case "application/rtf":
 				case "application/msword":
 					sImage = "wordprocessing";
 					break;
+
 				case "application/x-compressed":
 				case "application/zip":
 					sImage = "compress";
@@ -184,7 +185,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					if ((from b in helpFile.BlockedTypes
 						 where uploadedFileName.ToLower().Contains("." + b.ToLower())
 						 select b).Count() < 1) {
-
 						if (chkSpaceEscape.Checked) {
 							uploadedFileName = uploadedFileName.Replace(" ", "-");
 						}
@@ -225,6 +225,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected string SetSitePath(string sPath) {
 			return FileDataHelper.MakeFileFolderPath(sPath);
 		}
-
 	}
 }

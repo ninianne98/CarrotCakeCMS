@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -12,10 +12,10 @@ using System.Text;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class WordPressSite {
+
 		public WordPressSite() { }
 
 		public Guid NewSiteID { get; set; }

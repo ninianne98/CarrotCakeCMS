@@ -4,10 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,12 +17,11 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class wp_SiteImport : AdminBasePage {
 
+	public partial class wp_SiteImport : AdminBasePage {
 		public Guid guidImportID = Guid.Empty;
-		WordPressSite wpSite = null;
+		private WordPressSite wpSite = null;
 		private int iPageCount = 0;
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -50,7 +48,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litDate.Text = wpSite.ExtractDate.ToString();
 
 				if (!IsPostBack) {
-
 					BuildFolderList();
 
 					BindData();
@@ -86,13 +83,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		protected void GrabAttachments(WordPressPost wpPage) {
 			if (chkFileGrab.Checked) {
 				wpPage.GrabAttachments(ddlFolders.SelectedValue, wpSite);
 			}
 		}
-
 
 		protected void BuildFolderList() {
 			List<FileData> lstFolders = new List<FileData>();
@@ -120,7 +115,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			GeneralUtilities.BindListDefaultText(ddlFolders, lstFolders.OrderBy(f => f.FileName), null, "Folders", "-[none]-");
 		}
-
 
 		protected void RepairBody(WordPressPost wpp) {
 			wpp.CleanBody();
@@ -185,10 +179,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				foreach (var v in lstCat) {
 					v.Save();
 				}
-
 			}
 			SetMsg(sMsg);
-
 
 			if (chkSite.Checked) {
 				sMsg += "<p>Updated Site Name</p>";
@@ -197,7 +189,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				site.Save();
 			}
 			SetMsg(sMsg);
-
 
 			if (!chkMapAuthor.Checked) {
 				wpSite.Authors = new List<WordPressUser>();
@@ -237,13 +228,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-
 			wpSite.Comments.ForEach(r => r.ImportRootID = Guid.Empty);
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
-
 				if (chkPages.Checked) {
-
 					sMsg += "<p>Imported Pages</p>";
 
 					int iOrder = 0;
@@ -256,7 +244,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										 where c.PostType == WordPressPost.WPPostType.Page
 										 orderby c.PostOrder, c.PostTitle
 										 select c).ToList()) {
-
 						GrabAttachments(wpp);
 						RepairBody(wpp);
 
@@ -324,7 +311,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 										 where c.PostType == WordPressPost.WPPostType.BlogPost
 										 orderby c.PostOrder
 										 select c).ToList()) {
-
 						GrabAttachments(wpp);
 						RepairBody(wpp);
 
@@ -361,8 +347,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 			SetMsg(sMsg);
-
-
 
 			wpSite.Comments.RemoveAll(r => r.ImportRootID == Guid.Empty);
 
@@ -409,6 +393,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			BindData();
 		}
-
 	}
 }

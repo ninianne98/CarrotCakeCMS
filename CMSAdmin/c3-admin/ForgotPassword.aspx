@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Forgot Password?" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="ForgotPassword.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ForgotPassword" %>
+﻿<%@ Page Title="Forgot Password?" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="ForgotPassword.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ForgotPassword" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -12,8 +13,8 @@
 			</td>
 			<td class="tableback">
 				<b class="caption">email address</b>&nbsp;
-				<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail" ErrorMessage="!"
-					ToolTip="email is required." ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
+				<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail"
+					ErrorMessage="!" ToolTip="email is required." ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
 				<br />
 				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate" TabIndex="1" />
 			</td>

@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Site Export" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteExport.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteExportPage" %>
+﻿<%@ Page Title="Site Export" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteExport.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteExportPage" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -56,7 +57,6 @@
 			}
 
 		}
-
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -70,7 +70,7 @@
 			</label>
 		</legend>
 		<p>
-			Will not restrct selection by any critera other than page/post content type.<br />
+			Will not restrict selection by any criteria other than page/post content type.<br />
 			<br />
 			<asp:RadioButton ID="rdoAll" runat="server" GroupName="rdoExportGroup" Checked="true" value='all' />
 			<b>All date ranges</b>
@@ -78,7 +78,7 @@
 		</p>
 		<p>
 			<br />
-			Restrict pages/posts to those with a go live data that falls in the selectedrange
+			Restrict pages/posts to those with a go live data that falls in the selected range
 			<br />
 			<br />
 			<asp:RadioButton ID="rdoRange" runat="server" GroupName="rdoExportGroup" value='range' />

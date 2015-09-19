@@ -4,13 +4,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,6 +21,7 @@ using System.Web.UI.WebControls;
 */
 
 namespace Carrotware.Web.UI.Controls {
+
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:Calendar runat=server></{0}:Calendar>")]
 	public class Calendar : WebControl {
@@ -54,10 +54,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
-
-
-
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -86,8 +82,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
-
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -115,7 +109,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["TodayBackground"] = ColorTranslator.ToHtml(value);
 			}
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -159,7 +152,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -188,7 +180,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -202,7 +193,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["NormalLink"] = ColorTranslator.ToHtml(value);
 			}
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -218,8 +208,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["JavascriptForDate"] = value;
 			}
 		}
-
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -250,7 +238,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["OverrideCSS"] = value;
 			}
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -294,10 +281,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public List<DateTime> HilightDateList { get; set; }
 
-
-
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			int indent = output.Indent;
 
 			string CtrlID = this.ClientID;
@@ -349,7 +333,6 @@ namespace Carrotware.Web.UI.Controls {
 			int WeekNumber = 1;
 
 			while ((DayOfMonth <= iDaysInMonth) && (DayOfMonth <= 31) && (DayOfMonth >= -7)) {
-
 				for (int DayIndex = 0; DayIndex <= iDayOfWeek; DayIndex++) {
 					if (DayIndex == 0) {
 						sb.Append("<tr class=\"weekdayrow\" id=\"" + CtrlID + "-weekRow" + WeekNumber.ToString() + "\">\n");
@@ -392,7 +375,6 @@ namespace Carrotware.Web.UI.Controls {
 						sb.Append("</tr>\n");
 					}
 				}
-
 			}
 
 			output.WriteLine("<table  id=\"" + CtrlID + "-CalTable\" class=\"calendarGrid\" cellspacing=\"0\" cellpadding=\"3\" align=\"center\" border=\"1\">");
@@ -434,13 +416,10 @@ namespace Carrotware.Web.UI.Controls {
 			output.WriteLine("</table>");
 
 			output.Indent = indent;
-
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			if (string.IsNullOrEmpty(OverrideCSS)) {
-
 				string sCSS = String.Empty;
 
 				Assembly _assembly = Assembly.GetExecutingAssembly();
@@ -470,7 +449,6 @@ namespace Carrotware.Web.UI.Controls {
 				Literal link = new Literal();
 				link.Text = sCSS;
 				Page.Header.Controls.Add(link);
-
 			} else {
 				HtmlLink link = new HtmlLink();
 				link.Href = OverrideCSS;
@@ -481,6 +459,5 @@ namespace Carrotware.Web.UI.Controls {
 
 			base.OnPreRender(e);
 		}
-
 	}
 }

@@ -33,7 +33,6 @@
 		setTimeout("AjaxLoadDrillMenu();", 750);
 	});
 
-
 	function AjaxLoadDrillMenu() {
 		mouseNode();
 		getCrumbs();
@@ -105,7 +104,6 @@
 		makeMenuClickable();
 	}
 
-
 	var bMoused = false;
 
 	function makeMenuClickable() {
@@ -165,9 +163,6 @@
 		bLoad = false;
 	}
 
-
-
-
 	function ajaxReturnNode(data, status) {
 
 		var lstData = data.d;
@@ -211,8 +206,6 @@
 
 		setTimeout("hideMnu();", 250);
 	}
-
-
 </script>
 <asp:TextBox Style="display: none" runat="server" ID="txtParent" />
 <div style="float: left;">

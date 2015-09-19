@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Security;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,10 +14,9 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
-	public class ExtendedUserData {
 
+	public class ExtendedUserData {
 		public Guid UserId { get; set; }
 		public string UserName { get; set; }
 
@@ -68,7 +67,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public ExtendedUserData() { }
 
 		public ExtendedUserData(string UserName) {
@@ -106,6 +104,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private List<Guid> _siteIDs = null;
+
 		public List<Guid> MemberSiteIDs {
 			get {
 				if (_siteIDs == null) {
@@ -145,7 +144,6 @@ namespace Carrotware.CMS.Core {
 				return false;
 			}
 		}
-
 
 		public bool AddToSite(Guid siteID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -191,7 +189,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 		public void Save() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -244,6 +241,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
 		public bool IsEditor {
 			get {
 				try {
@@ -283,6 +281,5 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 	}
 }

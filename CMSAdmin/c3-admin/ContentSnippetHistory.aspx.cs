@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,12 +15,11 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class ContentSnippetHistory : AdminBasePage {
 		public Guid guidSnippetID = Guid.Empty;
 
-
 		protected void Page_Load(object sender, EventArgs e) {
-
 			guidSnippetID = GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
@@ -32,9 +27,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		private void BindDataGrid() {
-
 			ContentSnippet current = ContentSnippet.Get(guidSnippetID);
 			litSlug.Text = current.ContentSnippetSlug;
 			litSnippetName.Text = current.ContentSnippetName;
@@ -71,6 +64,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			BindDataGrid();
 		}
-
 	}
 }

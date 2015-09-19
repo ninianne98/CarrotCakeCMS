@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -15,6 +15,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class SiteContentStatusChange : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -23,7 +24,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			RedirectIfNoSite();
 
 			if (!IsPostBack) {
-
 				BindDDLs();
 
 				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
@@ -37,14 +37,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void BindDDLs() {
-
 			GeneralUtilities.BindOptionalYesNoList(ddlActive);
 			GeneralUtilities.BindOptionalYesNoList(ddlNavigation);
 			GeneralUtilities.BindOptionalYesNoList(ddlSiteMap);
 			GeneralUtilities.BindOptionalYesNoList(ddlHide);
-
 		}
-
 
 		protected void SetGrid(bool bAll, DateTime dateRange, int dateRangeDays) {
 			List<ContentPage> lstContent = null;
@@ -69,9 +66,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			GeneralUtilities.BindDataBoundControl(gvPages, lstContent);
 		}
 
-
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
-
 			List<Guid> lstUpd = GeneralUtilities.GetCheckedItemGuids(gvPages, true, "chkSelect", "hdnContentID");
 
 			string sAct = ddlAction.SelectedValue;
@@ -117,13 +112,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void LoadGrid() {
-
 			if (rdoFilterResults2.Checked) {
 				SetGrid(true, SiteData.CurrentSite.Now, 0);
 			} else {
 				SetGrid(false, Convert.ToDateTime(txtDate.Text), int.Parse(ddlDateRange.SelectedValue));
 			}
 		}
-
 	}
 }

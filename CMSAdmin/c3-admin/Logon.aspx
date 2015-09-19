@@ -19,8 +19,8 @@
 							</td>
 							<td>
 								&nbsp;<b class="caption">username</b>
-								<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName" ErrorMessage="!"
-									ToolTip="Username is required" ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
+								<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName"
+									ErrorMessage="!" ToolTip="Username is required" ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
 								<br />
 								<asp:TextBox ID="UserName" runat="server" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" TabIndex="1" />
 							</td>
@@ -42,8 +42,8 @@
 							<td>
 								<br />
 								&nbsp;<b class="caption">password</b>
-								<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Password" ErrorMessage="!"
-									ToolTip="Password is required" ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
+								<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Password"
+									ErrorMessage="!" ToolTip="Password is required" ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
 								<br />
 								<asp:TextBox ID="Password" runat="server" TextMode="Password" Width="180px" MaxLength="60" ValidationGroup="loginTemplate" TabIndex="2" />
 							</td>

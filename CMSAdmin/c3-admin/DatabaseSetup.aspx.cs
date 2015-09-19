@@ -7,6 +7,7 @@ using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,11 +18,10 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class DatabaseSetup : BasePage {
 
-		bool bOK = false;
+	public partial class DatabaseSetup : BasePage {
+		private bool bOK = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
@@ -39,7 +39,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				du.HandleResponse(lst, DatabaseUpdate.LastSQLError);
 				DatabaseUpdate.LastSQLError = null;
 			} else {
-
 				bool bUpdate = true;
 
 				if (!du.DoCMSTablesExist()) {
@@ -49,12 +48,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				bUpdate = du.DatabaseNeedsUpdate();
 
 				if (bUpdate) {
-
 					DatabaseUpdateStatus status = du.PerformUpdates();
 					lst = du.MergeMessages(lst, status.Messages);
-
 				} else {
-
 					DataInfo ver = DatabaseUpdate.GetDbSchemaVersion();
 					du.HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 				}
@@ -107,6 +103,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void btnCreate_Click(object sender, EventArgs e) {
 			Response.Redirect(SiteFilename.CreateFirstAdminURL);
 		}
-
 	}
 }

@@ -74,12 +74,10 @@
 			});
 		}
 
-
 		$(document).ready(function () {
 			setTimeout("CheckFileName();", 250);
 			cmsIsPageValid();
 		});
-
 
 		function editFilenameCallback(data, status) {
 			if (data.d != "FAIL" && data.d != "OK") {
@@ -163,7 +161,6 @@
 		function deleteContent() { }
 
 		function cmsRecordCancellation() { }
-
 
 		function openPage() {
 			var theURL = $('#<%= txtOldFile.ClientID %>').val();
@@ -258,9 +255,7 @@
 			}
 		}
 
-
 		/* </asp:placeholder> */
-
 	</script>
 	<script type="text/javascript">
 
@@ -277,7 +272,6 @@
 				}
 			}
 		});
-
 
 		$(document).ready(function () {
 			if (!cmsIsPageLocked) {
@@ -308,7 +302,6 @@
 
 			ShowWindowNoRefresh(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
 		}
-
 	</script>
 	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
@@ -341,7 +334,6 @@
 				cmsSetTextMessage(data.d);
 			}
 		}
-
 	</script>
 	<script src="Includes/FindUsers.js" type="text/javascript"></script>
 	<script type="text/javascript">
@@ -387,10 +379,10 @@
 					release date:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16"
-						onblur="CheckFileName()" onchange="CheckFileName();" />
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10"
-						onblur="CheckFileName()" onchange="CheckFileName();" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion"
+						Columns="16" onblur="CheckFileName()" onchange="CheckFileName();" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion"
+						Columns="10" onblur="CheckFileName()" onchange="CheckFileName();" />
 				</td>
 			</tr>
 			<tr>
@@ -407,8 +399,8 @@
 					titlebar:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="60"
-						MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server"
+						Columns="60" MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
@@ -430,14 +422,15 @@
 					filename:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug" runat="server" Columns="60"
-						MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug" runat="server"
+						Columns="60" MaxLength="200" />
 					<a href="javascript:void(0)" onclick="openPage();">
 						<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtPageSlug" ID="RequiredFieldValidator2"
 						runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic" Text="**" />
-					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
-						ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1"
+						runat="server" ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID"
+						Operator="Equal" />
 					<div style="display: none;">
 						<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
 						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator3"
@@ -507,7 +500,8 @@
 					meta description:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine"
+						runat="server" />
 				</td>
 			</tr>
 		</table>
@@ -637,8 +631,8 @@
 											</asp:TemplateField>
 											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
 											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
-											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-												ShowBooleanImage="true" />
+											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+												AlternateTextTrue="Active" ShowBooleanImage="true" />
 											<asp:TemplateField>
 												<HeaderTemplate>
 												</HeaderTemplate>
@@ -670,8 +664,8 @@
 											</asp:TemplateField>
 											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
 											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
-											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-												ShowBooleanImage="true" />
+											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+												AlternateTextTrue="Active" ShowBooleanImage="true" />
 											<asp:TemplateField>
 												<HeaderTemplate>
 												</HeaderTemplate>
@@ -701,8 +695,8 @@
 										<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
 										<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
 										<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
-										<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked" AlternateTextTrue="Tracked"
-											ShowBooleanImage="true" />
+										<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked"
+											AlternateTextTrue="Tracked" ShowBooleanImage="true" />
 									</Columns>
 								</carrot:CarrotGridView>
 							</div>
@@ -778,7 +772,6 @@
 
 			}
 		}
-
 	</script>
 	<br />
 	<div style="display: none">
@@ -822,7 +815,6 @@
 			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
 			return true;
 		}
-
 	</script>
 	<script type="text/javascript">
 

@@ -13,7 +13,7 @@
       where [table_name] in ('vw_carrot_CategoryURL')
     </sql>
 	</querynugget>
-	
+
 	<querynugget>
 		<priority>20</priority>
 		<mode>LT</mode>
@@ -27,7 +27,7 @@
 			and p.[name] = '@xmlDocument'
 		</sql>
 	</querynugget>
-	
+
   <querynugget>
     <priority>20</priority>
     <mode>LT</mode>

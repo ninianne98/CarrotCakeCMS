@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,7 +17,7 @@ using System.Web.UI.WebControls;
 
 namespace Carrotware.Web.UI.Controls {
 
-	class CarrotSortButtonHeaderTemplate : ITemplate {
+	internal class CarrotSortButtonHeaderTemplate : ITemplate {
 		private string _cmd { get; set; }
 		private string _text { get; set; }
 		private string _lnkname { get; set; }
@@ -47,11 +47,9 @@ namespace Carrotware.Web.UI.Controls {
 		public void InstantiateIn(Control container) {
 			var x = container.Parent;
 			if (!string.IsNullOrEmpty(_cmd)) {
-
 				PlaceHolder lit = new PlaceHolder();
 				lit.DataBinding += new EventHandler(litContent_DataBinding);
 				container.Controls.Add(lit);
-
 			} else {
 				Literal lit = new Literal();
 				lit.Text = _text;
@@ -74,7 +72,6 @@ namespace Carrotware.Web.UI.Controls {
 
 			ph.Controls.Add(lb);
 		}
-
 	}
 
 	//=========================================
@@ -89,7 +86,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void InstantiateIn(Control container) {
-
 			Literal litContent = new Literal();
 			litContent.Text = _field;
 
@@ -108,10 +104,7 @@ namespace Carrotware.Web.UI.Controls {
 				litContent.Text = _field;
 			}
 		}
-
 	}
-
-
 
 	//=========================================
 
@@ -128,7 +121,6 @@ namespace Carrotware.Web.UI.Controls {
 		public static string IconResourceNegative = "Carrotware.Web.UI.Controls.CarrotGridView.cancel.png";
 
 		public CarrotBooleanImageItemTemplate(string fieldParm, string cssStyle) {
-
 			SetImage();
 
 			_field = fieldParm;
@@ -138,10 +130,8 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void SetImage() {
-
 			_imageTrue = HttpUtility.HtmlEncode(BaseWebControl.GetWebResourceUrl(this.GetType(), CarrotBooleanImageItemTemplate.IconResourceAffirm));
 			_imageFalse = HttpUtility.HtmlEncode(BaseWebControl.GetWebResourceUrl(this.GetType(), CarrotBooleanImageItemTemplate.IconResourceNegative));
-
 		}
 
 		public void SetVerbiage(string imageTextTrue, string imageTextFalse) {
@@ -214,10 +204,7 @@ namespace Carrotware.Web.UI.Controls {
 				imgBool.ToolTip = _field;
 			}
 		}
-
 	}
-
-
 
 	//=========================================
 
@@ -238,7 +225,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void InstantiateIn(Control container) {
-
 			Image imgEnum = new Image();
 			if (!string.IsNullOrEmpty(_css)) {
 				imgEnum.CssClass = _css;
@@ -274,8 +260,5 @@ namespace Carrotware.Web.UI.Controls {
 				imgEnum.ToolTip = _field;
 			}
 		}
-
 	}
-
-
 }

@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.DBUpdater;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,11 +14,11 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class SiteDetail : AdminBasePage {
-		Guid guidSiteID = Guid.Empty;
-		SiteData theSite = null;
+		private Guid guidSiteID = Guid.Empty;
+		private SiteData theSite = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteIndex);
@@ -44,12 +38,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!IsPostBack) {
 				GetUserList();
-
 			}
 		}
 
 		protected void GetUserList() {
-
 			List<ExtendedUserData> usrs = theSite.GetMappedUsers();
 			GeneralUtilities.BindDataBoundControl(gvUsers, usrs);
 
@@ -59,9 +51,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnAddUsers_Click(object sender, EventArgs e) {
-
 			if (!string.IsNullOrEmpty(hdnUserID.Value)) {
-
 				ExtendedUserData exUsr = new ExtendedUserData(hdnUserID.Value);
 				exUsr.AddToSite(guidSiteID);
 
@@ -74,7 +64,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnRemove_Click(object sender, EventArgs e) {
-
 			CheckBox chkSelected = null;
 			HiddenField hdnUserId = null;
 
@@ -95,8 +84,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName + "?id=" + guidSiteID.ToString());
 		}
-
-
 
 	}
 }

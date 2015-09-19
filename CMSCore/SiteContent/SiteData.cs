@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Xml;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,14 +21,13 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class SiteData {
 
 		public SiteData() { }
 
 		public SiteData(carrot_Site s) {
-
 			if (s != null && string.IsNullOrEmpty(s.TimeZone)) {
 				s.TimeZone = SiteTimeZoneInfo.Id;
 			}
@@ -104,7 +104,6 @@ namespace Carrotware.CMS.Core {
 			return TextContent;
 		}
 
-
 		public static string DefaultPageTitlePattern {
 			get {
 				return "[[CARROT_SITE_NAME]] - [[CARROT_PAGE_TITLEBAR]]";
@@ -124,7 +123,7 @@ namespace Carrotware.CMS.Core {
 					sb.Replace("[[CARROT_PAGE_PAGEHEAD]]", "{3}");
 					sb.Replace("[[CARROT_PAGE_NAVMENUTEXT]]", "{4}");
 					sb.Replace("[[CARROT_PAGE_DATE_GOLIVE]]", "{5}");
-					sb.Replace("[[CARROT_PAGE_DATE_GOLIVE]]", "{6}");
+					sb.Replace("[[CARROT_PAGE_DATE_EDIT]]", "{6}");
 
 					// [[CARROT_SITE_NAME]]: [[CARROT_PAGE_TITLEBAR]] ([[CARROT_PAGE_DATE_GOLIVE:MMMM d, yyyy]])
 					var p5 = ParsePlaceholder(s.SiteTitlebarPattern, "[[CARROT_PAGE_DATE_GOLIVE:*]]", 5);
@@ -132,7 +131,7 @@ namespace Carrotware.CMS.Core {
 						sb.Replace(p5.Key, p5.Value);
 					}
 
-					var p6 = ParsePlaceholder(s.SiteTitlebarPattern, "[[CARROT_PAGE_DATE_GOLIVE:*]]", 6);
+					var p6 = ParsePlaceholder(s.SiteTitlebarPattern, "[[CARROT_PAGE_DATE_EDIT:*]]", 6);
 					if (!string.IsNullOrEmpty(p6.Key)) {
 						sb.Replace(p6.Key, p6.Value);
 					}
@@ -144,7 +143,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private static KeyValuePair<string, string> ParsePlaceholder(string titleString, string placeHolder, int posNum) {
 			KeyValuePair<string, string> pair = new KeyValuePair<string, string>(String.Empty, String.Empty);
 
@@ -155,7 +153,6 @@ namespace Carrotware.CMS.Core {
 			string formatPattern = String.Format("{{{0}}}", posNum);
 
 			if (titleString.Contains(frag0)) {
-
 				int idx1 = titleString.IndexOf(frag0);
 				int idx2 = titleString.IndexOf("]]", idx1 + 4);
 				int len = idx2 - idx1 - frag0.Length - 1;
@@ -177,7 +174,6 @@ namespace Carrotware.CMS.Core {
 
 		public static List<SiteData> GetSiteList() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				return (from l in _db.carrot_Sites orderby l.SiteName select new SiteData(l)).ToList();
 			}
 		}
@@ -197,7 +193,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 		public List<ContentCategory> GetCategoryList() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -228,7 +223,6 @@ namespace Carrotware.CMS.Core {
 
 		public void SendTrackbackQueue() {
 			if (this.SendTrackbacks) {
-
 				List<TrackBackEntry> lstTBQ = TrackBackEntry.GetTrackBackSiteQueue(this.SiteID);
 
 				foreach (TrackBackEntry t in lstTBQ) {
@@ -239,7 +233,6 @@ namespace Carrotware.CMS.Core {
 							t.TrackedBack = true;
 							t.Save();
 						} catch (Exception ex) { }
-
 					}
 				}
 			}
@@ -261,7 +254,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static SiteData GetSiteFromCache(Guid siteID) {
-
 			string ContentKey = SiteKeyPrefix + siteID.ToString();
 			SiteData currentSite = null;
 			if (IsWebView) {
@@ -289,7 +281,6 @@ namespace Carrotware.CMS.Core {
 				currentSite.Blog_DatePattern = "yyyy/MM/dd";
 			}
 			return currentSite;
-
 		}
 
 		public static SiteData CurrentSite {
@@ -312,10 +303,31 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public SiteData GetCurrentSite() {
 			//return Get(CurrentSiteID);
 			return CurrentSite;
+		}
+
+		public static SiteData InitNewSite(Guid siteID) {
+			SiteData site = new SiteData();
+			site.SiteID = siteID;
+			site.BlockIndex = true;
+
+			site.MainURL = "http://" + CMSConfigHelper.DomainName;
+			site.SiteName = CMSConfigHelper.DomainName;
+
+			site.SiteTitlebarPattern = SiteData.DefaultPageTitlePattern;
+
+			site.Blog_FolderPath = "archive";
+			site.Blog_CategoryPath = "category";
+			site.Blog_TagPath = "tag";
+			site.Blog_DatePath = "date";
+			site.Blog_EditorPath = "author";
+			site.Blog_DatePattern = "yyyy/MM/dd";
+
+			site.TimeZoneIdentifier = TimeZoneInfo.Local.Id;
+
+			return site;
 		}
 
 		public void Save() {
@@ -371,12 +383,10 @@ namespace Carrotware.CMS.Core {
 		private void FixMeta() {
 			this.MetaKeyword = string.IsNullOrEmpty(this.MetaKeyword) ? String.Empty : this.MetaKeyword;
 			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? String.Empty : this.MetaDescription;
-
 		}
 
 		public List<ExtendedUserData> GetMappedUsers() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				return (from l in _db.carrot_UserSiteMappings
 						join u in _db.vw_carrot_UserDatas on l.UserId equals u.UserId
 						where l.SiteID == this.SiteID
@@ -385,7 +395,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public bool VerifyUserHasSiteAccess(Guid siteID, Guid userID) {
-
 			//all admins have rights to all sites
 			if (SecurityData.IsAdmin) {
 				return true;
@@ -410,7 +419,6 @@ namespace Carrotware.CMS.Core {
 			return false;
 		}
 
-
 		public void CleanUpSerialData() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				IQueryable<carrot_SerialCache> lst = (from c in _db.carrot_SerialCaches
@@ -418,11 +426,9 @@ namespace Carrotware.CMS.Core {
 													  && c.SiteID == CurrentSiteID
 													  select c);
 
-
 				_db.carrot_SerialCaches.DeleteBatch(lst);
 				_db.SubmitChanges();
 			}
-
 		}
 
 		public int GetSitePageCount(ContentPageType.PageType entryType) {
@@ -432,10 +438,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public void MapUserToSite(Guid siteID, Guid userID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				carrot_UserSiteMapping map = new carrot_UserSiteMapping();
 				map.UserSiteMappingID = Guid.NewGuid();
 				map.SiteID = siteID;
@@ -443,13 +447,10 @@ namespace Carrotware.CMS.Core {
 
 				_db.carrot_UserSiteMappings.InsertOnSubmit(map);
 				_db.SubmitChanges();
-
 			}
 		}
 
-
 		public static ContentPage GetCurrentPage() {
-
 			ContentPage pageContents = null;
 
 			if (IsWebView) {
@@ -477,7 +478,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static List<Widget> GetCurrentPageWidgets(Guid guidContentID) {
-
 			List<Widget> pageWidgets = new List<Widget>();
 
 			if (IsWebView) {
@@ -506,11 +506,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static ContentPage GetCurrentLivePage() {
-
 			ContentPage pageContents = null;
 
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-
 				bool IsPageTemplate = false;
 				string sCurrentPage = SiteData.CurrentScriptName;
 				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
@@ -551,8 +549,6 @@ namespace Carrotware.CMS.Core {
 			return pageWidgets;
 		}
 
-
-
 		public List<BasicContentData> GetFullSiteFileList() {
 			List<BasicContentData> map = new List<BasicContentData>();
 
@@ -587,8 +583,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private static string _siteQS = null;
+
 		public static string OldSiteQuerystring {
 			get {
 				if (_siteQS == null) {
@@ -603,17 +599,15 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static AspNetHostingPermissionLevel CurrentTrustLevel {
 			get {
-
 				foreach (AspNetHostingPermissionLevel trustLevel in
 					new AspNetHostingPermissionLevel[] {
 						AspNetHostingPermissionLevel.Unrestricted,
 						AspNetHostingPermissionLevel.High,
 						AspNetHostingPermissionLevel.Medium,
 						AspNetHostingPermissionLevel.Low,
-						AspNetHostingPermissionLevel.Minimal 
+						AspNetHostingPermissionLevel.Minimal
 					  }) {
 					try {
 						new AspNetHostingPermission(trustLevel).Demand();
@@ -653,24 +647,26 @@ namespace Carrotware.CMS.Core {
 		public DateTime ConvertUTCToSiteTime(DateTime dateUTC) {
 			return TimeZoneInfo.ConvertTimeFromUtc(dateUTC, SiteTimeZoneInfo);
 		}
+
 		public DateTime ConvertSiteTimeToUTC(DateTime dateSite) {
 			DateTime dateSiteSrc = DateTime.SpecifyKind(dateSite, DateTimeKind.Unspecified);
 			return TimeZoneInfo.ConvertTimeToUtc(dateSiteSrc, SiteTimeZoneInfo);
 		}
+
 		public string ConvertSiteTimeToISO8601(DateTime dateSite) {
 			return ConvertSiteTimeToUTC(dateSite).ToString("s") + "Z";
 		}
+
 		public DateTime ConvertSiteTimeToLocalServer(DateTime dateSite) {
 			DateTime dateSiteSrc = DateTime.SpecifyKind(dateSite, DateTimeKind.Unspecified);
 			DateTime utc = TimeZoneInfo.ConvertTimeToUtc(dateSiteSrc, SiteTimeZoneInfo);
 
 			return TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZoneInfo.Local);
 		}
-		public DateTime ConvertUTCToLocalServer(DateTime dateUTC) {
 
+		public DateTime ConvertUTCToLocalServer(DateTime dateUTC) {
 			return TimeZoneInfo.ConvertTimeFromUtc(dateUTC, TimeZoneInfo.Local);
 		}
-
 
 		public bool SendTrackbacks { get; set; }
 		public bool AcceptTrackbacks { get; set; }
@@ -684,7 +680,7 @@ namespace Carrotware.CMS.Core {
 		public string SiteTitlebarPattern { get; set; }
 		public string TimeZoneIdentifier { get; set; }
 
-		List<TextWidget> SiteTextWidgets { get; set; }
+		private List<TextWidget> SiteTextWidgets { get; set; }
 
 		public Guid? Blog_Root_ContentID { get; set; }
 		public string Blog_FolderPath { get; set; }
@@ -701,15 +697,19 @@ namespace Carrotware.CMS.Core {
 		public string BlogCategoryPath {
 			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_CategoryPath + "/"); }
 		}
+
 		public string BlogTagPath {
 			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_TagPath + "/"); }
 		}
+
 		public string BlogDateFolderPath {
 			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_DatePath + "/"); }
 		}
+
 		public string BlogEditorFolderPath {
 			get { return RemoveDupeSlashes(BlogFolderPath + this.Blog_EditorPath + "/"); }
 		}
+
 		public string SiteSearchPath {
 			get { return RemoveDupeSlashes(BlogFolderPath + SiteSearchPageName); }
 		}
@@ -717,39 +717,44 @@ namespace Carrotware.CMS.Core {
 		public bool IsBlogCategoryPath {
 			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogCategoryPath); }
 		}
+
 		public bool IsBlogTagPath {
 			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogTagPath); }
 		}
+
 		public bool IsBlogDateFolderPath {
 			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogDateFolderPath); }
 		}
+
 		public bool IsBlogEditorFolderPath {
 			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogEditorFolderPath); }
 		}
+
 		public bool IsSiteSearchPath {
 			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.SiteSearchPath); }
 		}
 
-
 		public bool CheckIsBlogCategoryPath(string sFilterPath) {
 			return sFilterPath.ToLower().StartsWith(this.BlogCategoryPath);
 		}
+
 		public bool CheckIsBlogTagPath(string sFilterPath) {
 			return sFilterPath.ToLower().StartsWith(this.BlogTagPath);
 		}
+
 		public bool CheckIsBlogDateFolderPath(string sFilterPath) {
 			return sFilterPath.ToLower().StartsWith(this.BlogDateFolderPath);
 		}
+
 		public bool CheckIsBlogEditorFolderPath(string sFilterPath) {
 			return sFilterPath.ToLower().StartsWith(this.BlogEditorFolderPath);
 		}
+
 		public bool CheckIsSiteSearchPath(string sFilterPath) {
 			return sFilterPath.ToLower().StartsWith(this.SiteSearchPath);
 		}
 
-
 		public List<string> GetSpecialFilePathPrefixes() {
-
 			List<string> lst = new List<string>();
 
 			lst.Add(this.BlogCategoryPath.ToLower());
@@ -772,12 +777,15 @@ namespace Carrotware.CMS.Core {
 		public string DefaultCanonicalURL {
 			get { return RemoveDupeSlashesURL(this.MainCanonicalURL + CurrentScriptName); }
 		}
+
 		public string ConstructedCanonicalURL(string sFileName) {
 			return RemoveDupeSlashesURL(this.MainCanonicalURL + sFileName);
 		}
+
 		public string ConstructedCanonicalURL(ContentPage cp) {
 			return RemoveDupeSlashesURL(this.MainCanonicalURL + cp.FileName);
 		}
+
 		public string ConstructedCanonicalURL(SiteNav nav) {
 			return RemoveDupeSlashesURL(this.MainCanonicalURL + nav.FileName);
 		}
@@ -785,6 +793,7 @@ namespace Carrotware.CMS.Core {
 		public string BuildDateSearchLink(DateTime postDate) {
 			return RemoveDupeSlashes(this.BlogDateFolderPath + postDate.ToString("/yyyy/MM/dd/") + SiteData.SiteSearchPageName);
 		}
+
 		public string BuildMonthSearchLink(DateTime postDate) {
 			return RemoveDupeSlashes(this.BlogDateFolderPath + postDate.ToString("/yyyy/MM/") + SiteData.SiteSearchPageName);
 		}
@@ -875,13 +884,10 @@ namespace Carrotware.CMS.Core {
 				sBody = sBody.Replace("{PAGE_TITLE}", httpEx.Message);
 				sBody = sBody.Replace("{SHORT_NAME}", httpEx.Message);
 				sBody = sBody.Replace("{LONG_NAME}", "HTTP " + httpEx.GetHttpCode() + " - " + FormatToHTML(httpEx.Message));
-
 			} else {
-
 				sBody = sBody.Replace("{PAGE_TITLE}", objErr.Message);
 				sBody = sBody.Replace("{SHORT_NAME}", objErr.Message);
 				sBody = sBody.Replace("{LONG_NAME}", FormatToHTML(" [" + objErr.GetType().ToString() + "] " + objErr.Message));
-
 			}
 
 			if (objErr.StackTrace != null) {
@@ -938,7 +944,6 @@ namespace Carrotware.CMS.Core {
 			context.Response.Write(FormatErrorOutput(ex));
 		}
 
-
 		public static void WriteDebugException(string sSrc, Exception objErr) {
 			bool bWriteError = false;
 
@@ -975,13 +980,11 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static void PerformRedirectToErrorPage(int ErrorKey, string sReqURL) {
 			PerformRedirectToErrorPage(ErrorKey.ToString(), sReqURL);
 		}
 
 		public static void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {
-
 			//parse web.config as XML because of medium trust issues
 			HttpContext context = HttpContext.Current;
 
@@ -1039,7 +1042,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static bool IsFilenameCurrentPage(string sCurrentFile) {
-
 			if (string.IsNullOrEmpty(sCurrentFile)) {
 				return false;
 			}
@@ -1068,19 +1070,22 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static string SearchQueryParameter {
 			get { return "search".ToLower(); }
 		}
+
 		public static string DefaultDirectoryFilename {
 			get { return "/default.aspx".ToLower(); }
 		}
+
 		public static string DefaultTemplateFilename {
 			get { return SiteData.AdminFolderPath + "PlainTemplate.aspx".ToLower(); }
 		}
+
 		public static string VirtualCMSEditPrefix {
 			get { return ("/carrotcake/edit-" + CurrentSiteID.ToString() + "/").ToLower(); }
 		}
+
 		public static string PreviewTemplateFilePage {
 			get { return VirtualCMSEditPrefix + "templatepreview/Page.aspx"; }
 		}
@@ -1128,7 +1133,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static bool IsPageSpecial(string sPageName) {
-
 			return SiteData.SpecialFiles.Contains(sPageName.ToLower()) || sPageName.ToLower().StartsWith(AdminFolderPath);
 		}
 
@@ -1214,6 +1218,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private static string _adminFolderPath = null;
+
 		public static string AdminFolderPath {
 			get {
 				if (_adminFolderPath == null) {
@@ -1238,7 +1243,6 @@ namespace Carrotware.CMS.Core {
 
 				if (IsWebView) {
 					if (!CurrentScriptName.ToLower().StartsWith(AdminFolderPath)) {
-
 						string sScrubbedURL = CheckForSpecialURL(CurrentSite);
 
 						if (sScrubbedURL.ToLower() == sCurrentPage.ToLower()) {
@@ -1247,7 +1251,6 @@ namespace Carrotware.CMS.Core {
 
 						if (!sScrubbedURL.ToLower().StartsWith(sCurrentPage.ToLower())
 							&& !sCurrentPage.ToLower().EndsWith(DefaultDirectoryFilename)) {
-
 							if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
 								sCurrentPage = sScrubbedURL;
 							}
@@ -1258,7 +1261,6 @@ namespace Carrotware.CMS.Core {
 				return sCurrentPage;
 			}
 		}
-
 
 		public static string CheckForSpecialURL(SiteData site) {
 			string sRequestedURL = "/";
@@ -1322,9 +1324,7 @@ namespace Carrotware.CMS.Core {
 
 			context.Response.StatusCode = 200;
 			context.Response.StatusDescription = "OK";
-
 		}
-
 
 		public static string RssDocType { get { return "application/rss+xml"; } }
 
@@ -1358,7 +1358,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private List<SyndicationItem> GetRecentPagesOrPosts(RSSFeedInclude feedData) {
-
 			List<SyndicationItem> syndRSS = new List<SyndicationItem>();
 			List<SiteNav> lst = new List<SiteNav>();
 
@@ -1404,15 +1403,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		//==========END RSS=================
-
 	}
-
 
 	//============================================
 
 	public class BlogDatePathParser {
-		string _FileName = String.Empty;
-		SiteData _site = new SiteData();
+		private string _FileName = String.Empty;
+		private SiteData _site = new SiteData();
 
 		private DateTime _dateBegin = DateTime.MinValue;
 		private DateTime _dateEnd = DateTime.MaxValue;
@@ -1433,6 +1430,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
 		public DateTime DateEndUTC {
 			get {
 				if (_site != null) {
@@ -1503,8 +1501,5 @@ namespace Carrotware.CMS.Core {
 				_dateEnd = _dateBegin.AddDays(1).AddMilliseconds(-1);
 			}
 		}
-
-
 	}
 }
-

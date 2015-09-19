@@ -1,14 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Web;
 
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.Web.UI.Controls {
+
 	public class CaptchaImage {
 
 		public static string EncodeColor(string ColorCode) {
@@ -30,7 +38,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 			return sColor;
 		}
-
 
 		public static string BGColorDef {
 			get {
@@ -95,7 +102,6 @@ namespace Carrotware.Web.UI.Controls {
 			return guid.ToUpper();
 		}
 
-
 		public static Bitmap GetCaptchaImage(Color fg, Color bg, Color n) {
 			int topPadding = 2; // top and bottom padding in pixels
 			int sidePadding = 3; // side padding in pixels
@@ -141,7 +147,5 @@ namespace Carrotware.Web.UI.Controls {
 
 			return bmpCaptcha;
 		}
-
-
 	}
 }

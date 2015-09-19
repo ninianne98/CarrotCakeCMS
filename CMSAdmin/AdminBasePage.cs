@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,11 +19,11 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin {
+
 	public class AdminBasePage : BasePage {
 
 		protected override void OnInit(EventArgs e) {
 			if (Page.User.Identity.IsAuthenticated) {
-
 				bool bHasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 				if (!bHasAccess) {
@@ -36,7 +37,6 @@ namespace Carrotware.CMS.UI.Admin {
 			Response.Cache.SetExpires(dtExpire);
 
 			base.OnInit(e);
-
 		}
 
 		protected Guid GetGuidPageIDFromQuery() {
@@ -62,7 +62,6 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {
-
 			dateIn = dateIn.AddMinutes(-2);
 			int iMin = 5 * (dateIn.Minute / 5);
 
@@ -98,6 +97,5 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 			return lst;
 		}
-
 	}
 }

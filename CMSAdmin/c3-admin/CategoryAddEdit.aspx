@@ -101,7 +101,8 @@
 				caption:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateSlug()" ID="txtLabel" runat="server" Columns="45" MaxLength="100" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateSlug()" ID="txtLabel" runat="server" Columns="45"
+					MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtLabel" ID="RequiredFieldValidator3"
 					runat="server" Text="**" ToolTip="Required" ErrorMessage="Required" Display="Dynamic" />
 			</td>
@@ -111,11 +112,12 @@
 				url slug:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckSlug()" ID="txtSlug" runat="server" Columns="45" MaxLength="100" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckSlug()" ID="txtSlug" runat="server" Columns="45"
+					MaxLength="100" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSlug" ID="RequiredFieldValidator1"
 					runat="server" Text="**" ToolTip="Required" ErrorMessage="Required" Display="Dynamic" />
-				<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
-					ErrorMessage="not valid/not unique" ToolTip="not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+				<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1"
+					runat="server" ErrorMessage="not valid/not unique" ToolTip="not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
 				<div style="display: none;">
 					<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator2"
@@ -172,7 +174,6 @@
 		function cancelEditing() {
 			window.setTimeout("location.href = './CategoryIndex.aspx';", 250);
 		}
-
 	</script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">

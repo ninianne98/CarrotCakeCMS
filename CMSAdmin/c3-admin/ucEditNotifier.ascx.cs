@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
-using System.IO;
 using Carrotware.CMS.UI.Controls;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucEditNotifier : AdminBaseUserControl {
 
+	public partial class ucEditNotifier : AdminBaseUserControl {
 		public string EditPageURL = "";
 		public string PageIndexURL = "";
 		public bool IsPageTemplate = false;
@@ -22,9 +17,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
-
 				string sCurrentPage = SiteData.CurrentScriptName;
 				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
@@ -103,7 +96,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 												SiteID = n.SiteID
 											}).ToList();
 
-
 					if (lstNavTop != null) {
 						lstNav = lstNavTop.Union(lstNav).ToList();
 					}
@@ -117,6 +109,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 		}
-
 	}
 }

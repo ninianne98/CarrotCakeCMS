@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Carrotware.CMS.Data;
 using System.Web;
 using System.Web.Caching;
+using Carrotware.CMS.Data;
 
 namespace Carrotware.CMS.Core {
+
 	public class ContentPageType : IDisposable {
-
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
-
 
 		public enum PageType {
 			Unknown,
@@ -18,16 +16,13 @@ namespace Carrotware.CMS.Core {
 			ContentEntry
 		}
 
-
 		public Guid ContentTypeID { get; set; }
 		public string ContentTypeValue { get; set; }
-
 
 		private static string keyContentPageType = "cms_ContentPageTypeList";
 
 		public static List<ContentPageType> ContentPageTypeList {
 			get {
-
 				List<ContentPageType> _types = new List<ContentPageType>();
 
 				bool bCached = false;
@@ -64,17 +59,13 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static PageType GetTypeByID(Guid contentTypeID) {
-
 			ContentPageType _type = ContentPageTypeList.Where(t => t.ContentTypeID == contentTypeID).FirstOrDefault();
 
 			return GetTypeByName(_type.ContentTypeValue);
 		}
 
-
 		public static PageType GetTypeByName(string contentTypeValue) {
-
 			PageType pt = PageType.ContentEntry;
 
 			if (!string.IsNullOrEmpty(contentTypeValue)) {
@@ -86,14 +77,11 @@ namespace Carrotware.CMS.Core {
 			return pt;
 		}
 
-
 		public static Guid GetIDByType(PageType contentType) {
-
 			ContentPageType _type = ContentPageTypeList.Where(t => t.ContentTypeValue.ToLower() == contentType.ToString().ToLower()).FirstOrDefault();
 
 			return _type.ContentTypeID;
 		}
-
 
 		#region IDisposable Members
 
@@ -103,8 +91,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		#endregion
-
-
+		#endregion IDisposable Members
 	}
 }

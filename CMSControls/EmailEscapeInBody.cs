@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -15,16 +15,14 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
+
 	public class EmailEscapeInBody : ITextBodyUpdate {
 
 		#region ITextBodyUpdate Members
 
 		public string UpdateContent(string TextContent) {
-
 			if (!string.IsNullOrEmpty(TextContent)) {
-
 				List<EmailReplace> _mail = FindEmails(TextContent);
 
 				if (_mail.Count > 0) {
@@ -70,7 +68,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected List<EmailReplace> FindEmails(string strIn) {
-
 			string MailRegExString = @"([a-zA-Z_0-9.-]+\@[a-zA-Z_0-9.-]+\.\w+)";
 
 			Regex mailRegEx = new Regex(MailRegExString, RegexOptions.Compiled);
@@ -91,6 +88,6 @@ namespace Carrotware.CMS.UI.Controls {
 			public int Length { get; set; }
 		}
 
-		#endregion
+		#endregion ITextBodyUpdate Members
 	}
 }

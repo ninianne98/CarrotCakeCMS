@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,17 +19,16 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	/// <summary>
 	/// Summary description for CMS
 	/// </summary>
 	[WebService(Namespace = "http://carrotware.com/cms/")]
 	[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 	[System.ComponentModel.ToolboxItem(false)]
-	// To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
+	// To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
 	[System.Web.Script.Services.ScriptService]
-
 	public class CMS : System.Web.Services.WebService {
-
 		private ContentPageHelper pageHelper = new ContentPageHelper();
 		private WidgetHelper widgetHelper = new WidgetHelper();
 		private SiteMapOrderHelper sitemapHelper = new SiteMapOrderHelper();
@@ -37,6 +37,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private ContentPage filePage = null;
 
 		private List<ContentPage> _pages = null;
+
 		protected List<ContentPage> lstActivePages {
 			get {
 				if (_pages == null) {
@@ -71,7 +72,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						sXML = stringWriter.ToString();
 					}
 					SaveSerialized(CMSConfigHelper.keyAdminContent, sXML);
-
 				}
 			}
 		}
@@ -99,18 +99,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						sXML = stringWriter.ToString();
 					}
 					SaveSerialized(CMSConfigHelper.keyAdminWidget, sXML);
-
 				}
 			}
 		}
-
 
 		private void SaveSerialized(string sKey, string sData) {
 			LoadGuids();
 
 			CMSConfigHelper.SaveSerialized(CurrentPageGuid, sKey, sData);
 		}
-
 
 		private string GetSerialized(string sKey) {
 			string sData = "";
@@ -120,7 +117,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			return sData;
 		}
-
 
 		private bool ClearSerialized(string sKey) {
 			LoadGuids();
@@ -148,9 +144,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		private string CurrentEditPage = "";
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -165,14 +159,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				} else {
 					return Convert.ToDateTime("12/31/1899").ToString();
 				}
-
 			} catch (Exception ex) {
 				SiteData.WriteDebugException("webservice", ex);
 
 				return DateTime.MinValue.ToString();
 			}
 		}
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -208,7 +200,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return ex.ToString();
 			}
 		}
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -264,11 +255,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<SiteMapOrder> GetChildPages(string PageID, string CurrPageID) {
-
 			Guid? ParentID = Guid.Empty;
 			if (!string.IsNullOrEmpty(PageID)) {
 				if (PageID.Length > 20) {
@@ -306,7 +295,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<SiteMapOrder> GetPageCrumbs(string PageID, string CurrPageID) {
-
 			Guid? ContentPageID = Guid.Empty;
 			if (!string.IsNullOrEmpty(PageID)) {
 				if (PageID.Length > 20) {
@@ -350,8 +338,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			return lstSiteMap.OrderByDescending(y => y.NavLevel).ToList();
 		}
-
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -409,7 +395,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				bool bDuplicate = ct.Where(x => x.Value > 1).Count() > 0 ? true : false;
 
 				if (SiteData.CurretSiteExists && !bDuplicate) {
-
 					var i1 = pageHelper.FindCountPagesBeginingWith(SiteData.CurrentSite.SiteID, sFolderPath);
 
 					if (i1 < 1) {
@@ -429,11 +414,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<MembershipUser> FindUsers(string searchTerm) {
-
 			string search = CMSConfigHelper.DecodeBase64(searchTerm);
 
 			List<MembershipUser> lstUsers = SecurityData.GetUserSearch(search);
@@ -444,7 +427,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<MembershipUser> FindCreditUsers(string searchTerm) {
-
 			string search = CMSConfigHelper.DecodeBase64(searchTerm);
 
 			List<MembershipUser> lstUsers = SecurityData.GetCreditUserSearch(search);
@@ -481,7 +463,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string ValidateUniqueTag(string TheSlug, string ItemID) {
@@ -511,7 +492,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string RecordSnippetHeartbeat(string ItemID) {
@@ -530,14 +510,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				} else {
 					return Convert.ToDateTime("12/31/1899").ToString();
 				}
-
 			} catch (Exception ex) {
 				SiteData.WriteDebugException("webservice", ex);
 
 				return DateTime.MinValue.ToString();
 			}
 		}
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -607,7 +585,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string GetSnippetVersionText(string DBKey) {
 			try {
-
 				Guid guidSnippet = new Guid(DBKey);
 
 				ContentSnippet cs = ContentSnippet.GetVersion(guidSnippet);
@@ -631,8 +608,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return "FAIL";
 			}
 		}
-
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -680,7 +655,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				return ContentPageHelper.ScrubFilename(CurrentPageGuid, sTheFileName).ToLower();
 			} catch (Exception ex) {
-
 				SiteData.WriteDebugException("webservice", ex);
 				return "FAIL";
 			}
@@ -707,7 +681,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				if (SiteData.CurrentSite.GetSpecialFilePathPrefixes().Where(x => TheFileName.StartsWith(x.ToLower())).Count() > 0
 					|| TheFileName.StartsWith(SiteData.CurrentSite.BlogFolderPath.ToLower())) {
-
 					return "FAIL";
 				}
 
@@ -738,16 +711,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				DateTime goLiveDate = Convert.ToDateTime(GoLiveDate);
 				ThePageSlug = CMSConfigHelper.DecodeBase64(ThePageSlug);
 
-
 				return ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite.SiteID, goLiveDate, ThePageSlug);
-
 			} catch (Exception ex) {
 				SiteData.WriteDebugException("webservice", ex);
 
 				return "FAIL";
 			}
 		}
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -804,7 +774,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string GenerateCategoryTagSlug(string TheSlug, string Mode) {
@@ -818,7 +787,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return "FAIL";
 			}
 		}
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -886,7 +854,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {
-
 			dateIn = dateIn.AddMinutes(-2);
 			int iMin = 5 * (dateIn.Minute / 5);
 
@@ -996,7 +963,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					ww = (from w in cmsAdminWidget
 						  where w.Root_WidgetID == guidWidget
 						  select w).FirstOrDefault();
-
 				} catch (Exception ex) { }
 
 				if (ww == null) {
@@ -1037,7 +1003,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					ww = (from w in cmsAdminWidget
 						  where w.WidgetDataID == guidWidget
 						  select w).FirstOrDefault();
-
 				} catch (Exception ex) { }
 
 				if (ww == null) {
@@ -1064,7 +1029,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string GetWidgetLatestText(string DBKey, string ThisPage) {
@@ -1078,7 +1042,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					ww = (from w in cmsAdminWidget
 						  where w.Root_WidgetID == guidWidget
 						  select w).FirstOrDefault();
-
 				} catch (Exception ex) { }
 
 				if (ww == null) {
@@ -1245,9 +1208,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
-
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheContentZoneText(string ZoneText, string Zone, string ThisPage) {
@@ -1281,8 +1241,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return ex.ToString();
 			}
 		}
-
-
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -1329,16 +1287,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				GetSetUserEditStateAsEmpty();
 
 				return "OK";
-
 			} catch (Exception ex) {
 				SiteData.WriteDebugException("webservice", ex);
 
 				return ex.ToString();
 			}
 		}
-
-
-
 
 	}
 }

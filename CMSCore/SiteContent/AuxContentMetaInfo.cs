@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Carrotware.CMS.Core {
-
 	//======================================
 
 	public class ContentDateTally : IContentMetaInfo {
@@ -54,14 +50,15 @@ namespace Carrotware.CMS.Core {
 		public int MetaPublicInfoCount {
 			get { return this.MetaInfoCount; }
 		}
-		#endregion
+
+		#endregion IContentMetaInfo Members
 	}
 
 	//======================================
 
 	public class ContentDateLinks : IContentMetaInfo {
-
 		private SiteData _site = new SiteData();
+
 		public SiteData TheSite {
 			get {
 				return _site;
@@ -73,6 +70,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private DateTime _postDate = DateTime.MinValue;
+
 		public DateTime PostDate {
 			get {
 				setDate();
@@ -91,7 +89,6 @@ namespace Carrotware.CMS.Core {
 		#region IContentMetaInfo Members
 
 		public void SetValue(Guid ContentMetaInfoID) {
-
 		}
 
 		public Guid ContentMetaInfoID {
@@ -126,8 +123,7 @@ namespace Carrotware.CMS.Core {
 		public int MetaPublicInfoCount {
 			get { return this.MetaInfoCount; }
 		}
-		#endregion
+
+		#endregion IContentMetaInfo Members
 	}
-
-
 }

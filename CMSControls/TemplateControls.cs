@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -147,7 +148,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void SetCSS() {
-
 			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
@@ -168,7 +168,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private HyperLink lnk = new HyperLink();
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			_linkNavURL = DataBinder.Eval(container, "DataItem.FileName").ToString();
@@ -186,13 +185,10 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
-
 		}
 
 		private void AssignVals() {
-
 			SetCSS();
 
 			if (!string.IsNullOrEmpty(_linkNavURL) && string.IsNullOrEmpty(this.NavigateUrl)) {
@@ -207,7 +203,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void LoadCtrsl() {
-
 			int iMax = this.Controls.Count;
 			lnk.Controls.Clear();
 
@@ -216,9 +211,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			this.Controls.Add(lnk);
-
 		}
-
 	}
 
 	//========================================
@@ -344,11 +337,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.Controls.Clear();
 			this.Controls.Add(ctrlAll);
-
 		}
 
 		private void SetTag() {
-
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
 			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
@@ -369,7 +360,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			string sFileName = DataBinder.Eval(container, "DataItem.FileName").ToString();
@@ -384,15 +374,15 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
 
 	//========================================
 	/*
-	 
+
 	<carrot:ListItemImageThumb runat="server" ID="ListItemImageThumb1" PerformURLResize="true" ScaleImage="true" ThumbSize="180" />
-	 
+
 	*/
+
 	[ToolboxData("<{0}:ListItemImageThumb runat=server></{0}:ListItemImageThumb>")]
 	public class ListItemImageThumb : Image {
 
@@ -410,12 +400,10 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public override Unit BorderWidth {
-
 			get {
 				if (base.BorderWidth.IsEmpty) {
 					return Unit.Pixel(0);
 				} else {
-
 					return base.BorderWidth;
 				}
 			}
@@ -472,11 +460,9 @@ namespace Carrotware.CMS.UI.Controls {
 			this.EnsureChildControls();
 
 			base.Render(writer);
-
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 		}
 
@@ -518,7 +504,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 			string sFieldValue = string.Empty;
 
@@ -535,7 +520,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
 
 	//========================================
@@ -655,7 +639,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			string sFieldValue = string.Empty;
@@ -666,7 +649,6 @@ namespace Carrotware.CMS.UI.Controls {
 				if (sField.StartsWith("Author_") || sField.StartsWith("Credit_")) {
 					SiteNav sn = (SiteNav)DataBinder.GetDataItem(container);
 					if (sn != null) {
-
 						ExtendedUserData usr = null;
 						if (sField.StartsWith("Credit_")) {
 							sField = DataField.ToString().Replace("Credit_", String.Empty);
@@ -687,10 +669,8 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 
 					sFieldValue = string.Format(FieldFormat, sValue);
-
 				} else {
 					sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + sField));
-
 				}
 			} catch {
 				if (!SiteData.IsWebView) {
@@ -708,12 +688,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
 
 	//========================================
 	public class ListItemRepeater : Repeater {
-
 	}
 
 	//========================================
@@ -741,47 +719,36 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class DefaultListOpenNavTemplate : ITemplate {
 
-		public DefaultListOpenNavTemplate() {
-
-		}
+		public DefaultListOpenNavTemplate() { }
 
 		public void InstantiateIn(Control container) {
-
 			Literal litL = new Literal();
 
 			litL.Text = HtmlTextWriter.TagLeftChar + "ul" + HtmlTextWriter.TagRightChar;
 
 			container.Controls.Add(litL);
 		}
-
 	}
 
 	//========================================
 	public class DefaultListCloseNavTemplate : ITemplate {
 
-		public DefaultListCloseNavTemplate() {
-
-		}
+		public DefaultListCloseNavTemplate() { }
 
 		public void InstantiateIn(Control container) {
-
 			Literal litL = new Literal();
 			litL.Text = HtmlTextWriter.EndTagLeftChars + "ul" + HtmlTextWriter.TagRightChar;
 
 			container.Controls.Add(litL);
 		}
-
 	}
 
 	//========================================
 	public class DefaultLinkNavTemplate : ITemplate {
 
-		public DefaultLinkNavTemplate() {
-
-		}
+		public DefaultLinkNavTemplate() { }
 
 		public void InstantiateIn(Control container) {
-
 			ListItemPlaceHolder phAll = new ListItemPlaceHolder();
 
 			NavLinkForTemplate lnk = new NavLinkForTemplate();
@@ -813,12 +780,9 @@ namespace Carrotware.CMS.UI.Controls {
 	//========================================
 	public class DefaultContentCommentFormThanks : ITemplate {
 
-		public DefaultContentCommentFormThanks() {
-
-		}
+		public DefaultContentCommentFormThanks() { }
 
 		public void InstantiateIn(Control container) {
-
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultContentCommentFormThanks";
 
@@ -838,9 +802,7 @@ namespace Carrotware.CMS.UI.Controls {
 			return userControl;
 		}
 
-		public DefaultContentCommentEntryForm() {
-
-		}
+		public DefaultContentCommentEntryForm() { }
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
@@ -850,21 +812,15 @@ namespace Carrotware.CMS.UI.Controls {
 			Control control = GetCtrl(ph);
 
 			ph.Controls.Add(control);
-
 		}
-
 	}
 
 	//========================================
 	/*
 	public class DefaultContentCommentEntryFormB : ITemplate {
-
-		public DefaultContentCommentEntryFormB() {
-
-		}
+		public DefaultContentCommentEntryFormB() { }
 
 		public void InstantiateIn(Control container) {
-
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultContentCommentForm";
 
@@ -943,16 +899,13 @@ namespace Carrotware.CMS.UI.Controls {
 			container.Controls.Add(js);
 			container.Controls.Add(ph);
 		}
-
 	}
 	*/
 
 	//========================================
 	public class DefaultSearchBoxForm : ITemplate {
 
-		public DefaultSearchBoxForm() {
-
-		}
+		public DefaultSearchBoxForm() { }
 
 		private Control GetCtrl(Control X) {
 			ControlUtilities cu = new ControlUtilities(X);
@@ -962,7 +915,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public void InstantiateIn(Control container) {
-
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultSearchBoxForm";
 			container.Controls.Add(ph);
@@ -983,17 +935,13 @@ namespace Carrotware.CMS.UI.Controls {
 			//ph.Controls.Add(new Literal { Text = "</div>\r\n" });
 
 			//ph.Controls.Add(new Literal { Text = " </div>\r\n" });
-
 		}
-
 	}
 
 	//========================================
 	public class DefaultPagerTemplate : ITemplate {
 
-		public DefaultPagerTemplate() {
-
-		}
+		public DefaultPagerTemplate() { }
 
 		private Control GetCtrl(Control X) {
 			cu = new ControlUtilities(X);
@@ -1005,7 +953,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private ControlUtilities cu = new ControlUtilities();
 
 		public void InstantiateIn(Control container) {
-
 			PlaceHolder ph = new PlaceHolder();
 			container.Controls.Add(ph);
 
@@ -1041,15 +988,12 @@ namespace Carrotware.CMS.UI.Controls {
 			lnkBtn.LinkText = sTxt;
 			lnkBtn.PageNumber = int.Parse(sTxt);
 		}
-
 	}
 
 	//========================================
 	public class DefaultSummaryTemplate : ITemplate {
 
-		public DefaultSummaryTemplate() {
-
-		}
+		public DefaultSummaryTemplate() { }
 
 		private Control GetCtrl(Control X) {
 			cu = new ControlUtilities(X);
@@ -1073,7 +1017,6 @@ namespace Carrotware.CMS.UI.Controls {
 			wpltag.DataBinding += new EventHandler(pmwlList_DataBinding);
 
 			ph.Controls.Add(c);
-
 		}
 
 		private void pmwlList_DataBinding(object sender, EventArgs e) {
@@ -1082,14 +1025,11 @@ namespace Carrotware.CMS.UI.Controls {
 			Guid guidSender = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
 			pmContent.AssignedRootContentID = guidSender;
 		}
-
 	}
 
 	public class DefaultCommentTemplate : ITemplate {
 
-		public DefaultCommentTemplate() {
-
-		}
+		public DefaultCommentTemplate() { }
 
 		private Control GetCtrl(Control X) {
 			cu = new ControlUtilities(X);
@@ -1101,16 +1041,13 @@ namespace Carrotware.CMS.UI.Controls {
 		private ControlUtilities cu = new ControlUtilities();
 
 		public void InstantiateIn(Control container) {
-
 			PlaceHolder ph = new PlaceHolder();
 			container.Controls.Add(ph);
 
 			Control c = GetCtrl(ph);
 
 			ph.Controls.Add(c);
-
 		}
-
 	}
 
 	//========================================
@@ -1193,7 +1130,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			bool IsApproved = Convert.ToBoolean(DataBinder.Eval(container, "DataItem.IsApproved").ToString());
@@ -1209,7 +1145,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
 
 	//================================================
@@ -1232,7 +1167,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private Literal litPageNbr = new Literal();
 
 		private void LoadCtrsl() {
-
 			litPageNbr.Text = PageNumber.ToString();
 
 			this.Controls.Clear();
@@ -1240,7 +1174,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			int PageNbr = int.Parse(DataBinder.Eval(container, "DataItem").ToString());
@@ -1251,14 +1184,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
 
 	//========================================
 
 	[ToolboxData("<{0}:NavLinkForPagerTemplate runat=server></{0}:NavLinkForPagerTemplate>")]
 	public class NavLinkForPagerTemplate : Control, IActivatePageNavItem {
-
 		private string _linkTextDefault = string.Empty;
 
 		private string _linkText = string.Empty;
@@ -1275,6 +1206,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private string _toolTip = string.Empty;
+
 		public string ToolTip {
 			get {
 				return _toolTip;
@@ -1380,7 +1312,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void SetCSS() {
-
 			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
@@ -1445,18 +1376,15 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected void lnkBtn_Click(object sender, EventArgs e) {
-
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			SetCSS();
 
 			base.OnPreRender(e);
 		}
 
 		private void LoadCtrsl() {
-
 			int iMax = this.Controls.Count;
 			lnkBtn.Controls.Clear();
 			lnkNav.Controls.Clear();
@@ -1473,7 +1401,6 @@ namespace Carrotware.CMS.UI.Controls {
 				this.Controls.Add(lnkBtn);
 			}
 		}
-
 	}
 
 	//========================================
@@ -1573,11 +1500,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.Controls.Clear();
 			this.Controls.Add(ctrlAll);
-
 		}
 
 		private void SetTag() {
-
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
 			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
@@ -1598,7 +1523,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			int PageNbr = int.Parse(DataBinder.Eval(container, "DataItem").ToString());
@@ -1611,9 +1535,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnDataBinding(e);
 		}
-
 	}
-
 }
 
 /*

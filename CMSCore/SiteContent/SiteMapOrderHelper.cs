@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Carrotware.CMS.Data;
-using System.Reflection;
-using System.Xml.Serialization;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,16 +13,13 @@ using System.Text.RegularExpressions;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class SiteMapOrderHelper : IDisposable {
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
-
 		public SiteMapOrderHelper() { }
-
 
 		public List<SiteMapOrder> CreateSiteMapList(string sMapText) {
 			List<SiteMapOrder> m = new List<SiteMapOrder>();
@@ -89,7 +81,6 @@ namespace Carrotware.CMS.Core {
 			return lstContent;
 		}
 
-
 		public void FixOrphanPages(Guid siteID) {
 			List<SiteMapOrder> lstContent = CannedQueries.GetAllContentList(db, siteID).Select(ct => new SiteMapOrder(ct)).ToList();
 			List<Guid> lstIDs = lstContent.Select(x => x.Root_ContentID).ToList();
@@ -110,11 +101,8 @@ namespace Carrotware.CMS.Core {
 			db.SubmitChanges();
 		}
 
-
 		public void UpdateSiteMap(Guid siteID, List<SiteMapOrder> oMap) {
-
 			foreach (SiteMapOrder m in oMap) {
-
 				carrot_Content c = (from ct in db.carrot_Contents
 									join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 									where r.SiteID == siteID
@@ -130,7 +118,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<SiteMapOrder> GetChildPages(Guid siteID, Guid? parentID, Guid contentID) {
-
 			List<vw_carrot_Content> lstOtherPages = CompiledQueries.GetOtherNotPage(db, siteID, contentID, parentID).ToList();
 
 			if (lstOtherPages.Count < 1 && parentID == Guid.Empty) {
@@ -156,7 +143,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteMapOrder GetPageWithLevel(Guid siteID, Guid? contentID, int iLevel) {
-
 			SiteMapOrder cont = (from ct in CompiledQueries.cqGetLatestContentPages(db, siteID, contentID).ToList()
 								 select new SiteMapOrder {
 									 NavLevel = iLevel,
@@ -172,9 +158,7 @@ namespace Carrotware.CMS.Core {
 			return cont;
 		}
 
-
 		public List<SiteMapOrder> GetAdminPageList(Guid siteID, Guid contentID) {
-
 			List<SiteMapOrder> lstSite = (from ct in CompiledQueries.ContentNavAll(db, siteID, false).ToList()
 										  select new SiteMapOrder {
 											  NavLevel = -1,
@@ -208,7 +192,6 @@ namespace Carrotware.CMS.Core {
 							  Parent_ContentID = c.Parent_ContentID,
 							  Root_ContentID = c.Root_ContentID
 						  }).ToList();
-
 
 			while (iBefore != iAfter) {
 				List<SiteMapOrder> lstLevel = (from z in lstSiteMap
@@ -260,7 +243,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		#endregion
+		#endregion IDisposable Members
 	}
-
 }

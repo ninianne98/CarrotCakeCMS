@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,14 +15,14 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class ContentSnippetAddEdit : AdminBasePage {
 		public Guid guidItemID = Guid.Empty;
 		public Guid guidRootItemID = Guid.Empty;
 		public Guid guidVersionItemID = Guid.Empty;
 		public bool bLocked = false;
-		string sPageMode = String.Empty;
+		private string sPageMode = String.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSnippet);
@@ -84,7 +81,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 															   ).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
 					GeneralUtilities.BindListDefaultText(ddlVersions, dataVersions, null, "Versions", "00000");
-
 				} else {
 					btnDeleteButton.Visible = false;
 					pnlReview.Visible = false;
@@ -136,6 +132,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName + "?id=" + item.Root_ContentSnippetID.ToString());
 		}
-
 	}
 }

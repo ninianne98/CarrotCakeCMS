@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
-using System.Text;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -15,6 +14,7 @@ using Carrotware.CMS.Data;
 */
 
 namespace Carrotware.CMS.Core {
+
 	static internal class CannedQueries {
 
 		internal static IQueryable<vw_carrot_Content> GetAllByTypeList(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, ContentPageType.PageType entryType) {
@@ -27,6 +27,18 @@ namespace Carrotware.CMS.Core {
 					&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 					&& ct.IsLatestVersion == true
 					&& ct.ContentTypeID == ContentPageType.GetIDByType(entryType)
+					select ct);
+		}
+
+		internal static IQueryable<vw_carrot_ContentSnippet> GetSnippets(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
+			return (from ct in ctx.vw_carrot_ContentSnippets
+					orderby ct.ContentSnippetName
+					where ct.SiteID == siteID
+					&& ct.IsLatestVersion == true
+					&& (ct.ContentSnippetActive == true || bActiveOnly == false)
+					&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+					&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
+					&& ct.IsLatestVersion == true
 					select ct);
 		}
 
@@ -83,10 +95,8 @@ namespace Carrotware.CMS.Core {
 					select r);
 		}
 
-
 		internal static IQueryable<vw_carrot_Content> GetContentByStatusAndDateRange(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType pageType,
 			DateTime dateBegin, DateTime dateEnd, bool? bActive, bool? bSiteMap, bool? bSiteNav, bool? bBlock) {
-
 			Guid gContent = ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry);
 			Guid gBlog = ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry);
 			Guid contentTypeID = ContentPageType.GetIDByType(pageType);
@@ -131,7 +141,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal static Dictionary<string, float> GetTemplateCounts(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType pageType) {
-
 			Guid contentTypeID = ContentPageType.GetIDByType(pageType);
 
 			return (from ct in ctx.vw_carrot_Contents.Where(c => c.SiteID == siteID && c.ContentTypeID == contentTypeID && c.IsLatestVersion == true)
@@ -188,7 +197,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal static IQueryable<vw_carrot_Content> GetContentByCategoryIDs(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, List<Guid> lstCategories) {
-
 			return GetContentByCategoryIDs(ctx, siteID, bActiveOnly, lstCategories, new List<string>());
 		}
 
@@ -210,7 +218,6 @@ namespace Carrotware.CMS.Core {
 						&& ct.IsLatestVersion == true
 					select ct);
 		}
-
 
 		internal static IQueryable<vw_carrot_Content> GetContentSiteSearch(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, string searchTerm) {
 			return (from ct in ctx.vw_carrot_Contents
@@ -255,7 +262,6 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
-
 		internal static IQueryable<carrot_CategoryContentMapping> GetContentCategoryMapByContentID(CarrotCMSDataContext ctx, Guid rootContentID) {
 			return (from r in ctx.carrot_ContentCategories
 					join c in ctx.carrot_CategoryContentMappings on r.ContentCategoryID equals c.ContentCategoryID
@@ -285,12 +291,14 @@ namespace Carrotware.CMS.Core {
 					where ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 					select ct);
 		}
+
 		internal static IQueryable<carrot_RootContent> GetContentAllRootTbl(CarrotCMSDataContext ctx, Guid siteID) {
 			return (from ct in ctx.carrot_RootContents
 					where ct.SiteID == siteID
 					where ct.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.ContentEntry)
 					select ct);
 		}
+
 		internal static IQueryable<carrot_RootContent> GetAllRootTbl(CarrotCMSDataContext ctx, Guid siteID) {
 			return (from ct in ctx.carrot_RootContents
 					where ct.SiteID == siteID
@@ -417,7 +425,5 @@ namespace Carrotware.CMS.Core {
 						&& r.ContentTypeID == ContentPageType.GetIDByType(contentEntry)
 					select r);
 		}
-
-
 	}
 }

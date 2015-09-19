@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web.Security;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Web.Security;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -15,10 +16,9 @@ using System.Web.Security;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
-	public class ContentImportExportUtils {
 
+	public class ContentImportExportUtils {
 		public static string keyPageImport = "cmsContentPageExport";
 
 		public static void AssignContentPageExportNewIDs(ContentPageExport cpe) {
@@ -37,7 +37,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static void AssignSiteExportNewIDs(SiteExport se) {
 			se.NewSiteID = Guid.NewGuid();
 
@@ -55,7 +54,6 @@ namespace Carrotware.CMS.Core {
 				.ForEach(q => q.ImportFileName = ("/" + sd.ConvertUTCToSiteTime(q.PostDateUTC).ToString(sd.Blog_DatePattern) + "/" + q.ImportFileSlug));
 
 			wps.Content.ToList().ForEach(r => r.ImportFileName = r.ImportFileName.Replace("//", "/"));
-
 		}
 
 		public static ContentPage CreateWPContentPage(WordPressSite wps, WordPressPost c, SiteData site) {
@@ -66,6 +64,7 @@ namespace Carrotware.CMS.Core {
 				case WordPressPost.WPPostType.BlogPost:
 					contType = ContentPageType.PageType.BlogEntry;
 					break;
+
 				case WordPressPost.WPPostType.Page:
 					contType = ContentPageType.PageType.ContentEntry;
 					break;
@@ -149,7 +148,6 @@ namespace Carrotware.CMS.Core {
 			return cont;
 		}
 
-
 		public static SiteExport GetExportSite(Guid siteID) {
 			SiteExport site = new SiteExport(siteID);
 
@@ -199,7 +197,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string GetExportXML<T>(T cpe) {
-
 			XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
 			string sXML = "";
 			using (StringWriter stringWriter = new StringWriter()) {
@@ -238,6 +235,7 @@ namespace Carrotware.CMS.Core {
 			} catch (Exception ex) { }
 			return c;
 		}
+
 		public static SiteExport GetSerializedSiteExport(Guid siteID) {
 			SiteExport c = null;
 			try {
@@ -246,6 +244,7 @@ namespace Carrotware.CMS.Core {
 			} catch (Exception ex) { }
 			return c;
 		}
+
 		public static WordPressSite GetSerializedWPExport(Guid siteID) {
 			WordPressSite c = null;
 			try {
@@ -255,15 +254,16 @@ namespace Carrotware.CMS.Core {
 			return c;
 		}
 
-
 		public static ContentPageExport DeserializeContentPageExport(string sXML) {
 			ContentPageExport c = GetSerialData<ContentPageExport>(sXML) as ContentPageExport;
 			return c;
 		}
+
 		public static SiteExport DeserializeSiteExport(string sXML) {
 			SiteExport c = GetSerialData<SiteExport>(sXML) as SiteExport;
 			return c;
 		}
+
 		public static WordPressSite DeserializeWPExport(string sXML) {
 			WPBlogReader wbp = new WPBlogReader();
 			XmlDocument doc = wbp.LoadText(sXML);
@@ -280,7 +280,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static void SaveSerializedDataExport<T>(Guid guidKey, T theData) {
-
 			if (theData == null) {
 				CMSConfigHelper.ClearSerialized(guidKey, keyPageImport);
 			} else {
@@ -305,7 +304,6 @@ namespace Carrotware.CMS.Core {
 			} catch (Exception ex) { }
 			return obj;
 		}
-
 
 		public static object switch_on { get; set; }
 	}

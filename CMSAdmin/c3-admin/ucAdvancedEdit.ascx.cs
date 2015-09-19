@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,10 +15,9 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucAdvancedEdit : AdminBaseUserControl {
 
+	public partial class ucAdvancedEdit : AdminBaseUserControl {
 		public Guid guidContentID = Guid.Empty;
 		public bool bLocked = false;
 		public ContentPageType.PageType PageType = ContentPageType.PageType.Unknown;
@@ -29,7 +26,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public string EditedPageFileName = "";
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			//jquerybasic jb = BasicControlUtils.FindjQuery(this.Page);
 			//jquerybasic1.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;   //jb.SelectedSkin;
 			//jquerybasic1.JQVersion = jb.JQVersion;
@@ -43,7 +39,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		//protected void Page_Load(object sender, EventArgs e) {
 		protected void Page_Init(object sender, EventArgs e) {
-
 			guidContentID = GetGuidIDFromQuery();
 
 			EditorPrefs = UserEditState.cmsUserEditState;
@@ -119,7 +114,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				cmsDivEditing.Visible = false;
 
 				BasicControlUtils.MakeXUACompatibleFirst(this.Page);
-
 			} else {
 				pnlCMSEditZone.Visible = false;
 				rpTools.Visible = false;
@@ -137,6 +131,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 		}
-
 	}
 }

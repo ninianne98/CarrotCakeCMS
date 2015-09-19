@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -231,7 +232,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private HiddenField hdnPageNbr = new HiddenField();
 
 		protected override void OnInit(EventArgs e) {
-
 			hdnPageNbr.ID = "hdnPageNbr";
 			this.Controls.Add(hdnPageNbr);
 
@@ -267,15 +267,23 @@ namespace Carrotware.CMS.UI.Controls {
 			rpPager.ItemCommand += new RepeaterCommandEventHandler(this.Pager_ItemCommand);
 		}
 
-		public virtual void Content_ItemDataBound(object sender, RepeaterItemEventArgs e) { }
-		public virtual void Pager_ItemDataBound(object sender, RepeaterItemEventArgs e) { }
+		public virtual void Content_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+		}
 
-		public virtual void Content_ItemCreated(object sender, RepeaterItemEventArgs e) { }
-		public virtual void Pager_ItemCreated(object sender, RepeaterItemEventArgs e) { }
+		public virtual void Pager_ItemDataBound(object sender, RepeaterItemEventArgs e) {
+		}
 
-		public virtual void Content_ItemCommand(object sender, RepeaterCommandEventArgs e) { }
-		public virtual void Pager_ItemCommand(object sender, RepeaterCommandEventArgs e) { }
+		public virtual void Content_ItemCreated(object sender, RepeaterItemEventArgs e) {
+		}
 
+		public virtual void Pager_ItemCreated(object sender, RepeaterItemEventArgs e) {
+		}
+
+		public virtual void Content_ItemCommand(object sender, RepeaterCommandEventArgs e) {
+		}
+
+		public virtual void Pager_ItemCommand(object sender, RepeaterCommandEventArgs e) {
+		}
 
 		public virtual object DataSource { get; set; }
 
@@ -289,7 +297,6 @@ namespace Carrotware.CMS.UI.Controls {
 		protected string sBtnName = "lnkPagerBtn";
 
 		protected override void RenderContents(HtmlTextWriter writer) {
-
 			DetectPagePosition();
 
 			FetchData();
@@ -365,7 +372,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public virtual void WriteOutData(HtmlTextWriter writer) {
-
 			rpPagedContents.EnableViewState = this.EnableViewState;
 			rpPager.EnableViewState = true;
 
@@ -440,7 +446,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			writer.Indent--;
 			writer.Indent--;
-
 		}
 
 		protected void RenderWrappedControl(HtmlTextWriter writer, Control ctrl, string sCSSValue) {
@@ -456,13 +461,10 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					this.PageSize = int.Parse(GetParmValue("PageSize", "10"));
 
 					this.PagerBelowContent = Convert.ToBoolean(GetParmValue("PagerBelowContent", "true"));
@@ -478,11 +480,9 @@ namespace Carrotware.CMS.UI.Controls {
 					this.CSSPageListing = GetParmValue("CSSPageListing", "");
 
 					this.CSSPageFooter = GetParmValue("CSSPageFooter", "");
-
 				}
 			} catch (Exception ex) {
 			}
-
 		}
 
 		protected void WalkCtrlsForAssignment(Control X) {
@@ -498,7 +498,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 		}
-
 	}
 
 	//===================
@@ -506,5 +505,4 @@ namespace Carrotware.CMS.UI.Controls {
 		public string SortField { get; set; }
 		public string SortDirection { get; set; }
 	}
-
 }

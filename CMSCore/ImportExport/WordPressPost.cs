@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -12,10 +12,10 @@ using System.Text;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class WordPressPost {
+
 		public enum WPPostType {
 			Unknown,
 			Attachment,
@@ -87,9 +87,7 @@ namespace Carrotware.CMS.Core {
 			this.PostContent = this.PostContent.Replace("</p><p>", "</p>\n<p>");
 		}
 
-
 		public void GrabAttachments(string folderName, WordPressSite wpSite) {
-
 			int iPost = this.PostID;
 
 			List<WordPressPost> lstA = (from a in wpSite.Content
@@ -112,6 +110,5 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 	}
 }

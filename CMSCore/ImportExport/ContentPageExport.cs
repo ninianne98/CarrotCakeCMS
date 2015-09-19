@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -10,7 +10,6 @@ using System.Linq;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.Core {
 
@@ -37,7 +36,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ContentPageExport(ContentPage cp, List<Widget> widgets) {
-
 			SetVals(cp, widgets);
 		}
 
@@ -108,7 +106,6 @@ namespace Carrotware.CMS.Core {
 			} else {
 				this.CreditUser = null;
 			}
-
 		}
 
 		public string CarrotCakeVersion { get; set; }
@@ -132,6 +129,5 @@ namespace Carrotware.CMS.Core {
 		public SiteExportUser TheUser { get; set; }
 
 		public SiteExportUser CreditUser { get; set; }
-
 	}
 }

@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -149,7 +150,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnDataBinding(EventArgs e) {
-
 			RepeaterItem container = (RepeaterItem)this.NamingContainer;
 
 			Guid pageID = new Guid(DataBinder.Eval(container, "DataItem.Root_ContentID").ToString());
@@ -217,11 +217,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					TakeTop = int.Parse(GetParmValue("TakeTop", "20"));
 
 					IsSimpleDisplayMode = Convert.ToBoolean(GetParmValue("IsSimpleDisplayMode", "false"));
@@ -234,13 +231,11 @@ namespace Carrotware.CMS.UI.Controls {
 					MetaDataTitle = GetParmValue("MetaDataTitle", "");
 
 					ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
-
 				}
 			} catch (Exception ex) {
 			}
 
 			base.OnPreRender(e);
 		}
-
 	}
 }

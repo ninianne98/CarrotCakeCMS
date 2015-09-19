@@ -1,17 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.Web.UI.Controls {
 
 	[ToolboxData("<{0}:ImageSizer runat=server></{0}:ImageSizer>")]
 	public class ImageSizer : Image {
-
 		private string handlerURL = "/carrotwarethumb.axd";
 
 		[Bindable(true)]
@@ -45,12 +51,10 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public override Unit BorderWidth {
-
 			get {
 				if (base.BorderWidth.IsEmpty) {
 					return Unit.Pixel(0);
 				} else {
-
 					return base.BorderWidth;
 				}
 			}
@@ -60,21 +64,14 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		protected override void OnPreRender(EventArgs e) {
-
 			if (!this.ImageUrl.StartsWith(handlerURL)) {
 				string sImg = this.ImageUrl;
 
 				this.ImageUrl = string.Format("{0}?thumb={1}&square={2}&scale={3}", handlerURL, HttpUtility.UrlEncode(sImg), HttpUtility.UrlEncode(this.ThumbSize.ToString()), HttpUtility.UrlEncode(this.ScaleImage.ToString()));
-
 			}
 
 			base.OnPreRender(e);
 		}
-
-
 	}
-
-
 }

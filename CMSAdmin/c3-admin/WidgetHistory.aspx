@@ -35,7 +35,6 @@
 				cmsSetTextMessage(data.d);
 			}
 		}
-
 	</script>
 	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>

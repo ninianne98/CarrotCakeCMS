@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -15,9 +16,10 @@ using Carrotware.CMS.UI.Base;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class CreateFirstAdmin : BasePage {
+
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
 			if (du.UsersExist) {
@@ -44,14 +46,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					Roles.AddUserToRole(usr.UserName, SecurityData.CMSGroup_Admins);
 				}
 			} catch (Exception ex) {
-
 			}
 		}
 
 		protected void createWizard_CreatingUser(object sender, LoginCancelEventArgs e) {
-
 		}
-
-
 	}
 }

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,7 +10,6 @@ using Carrotware.CMS.Data;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.Core {
 
@@ -34,7 +30,6 @@ namespace Carrotware.CMS.Core {
 		public ContentPageType.PageType ContentType { get; set; }
 
 		internal BasicContentData(vw_carrot_Content c) {
-
 			if (c != null) {
 				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
 
@@ -100,5 +95,4 @@ namespace Carrotware.CMS.Core {
 			return Root_ContentID.GetHashCode();
 		}
 	}
-
 }

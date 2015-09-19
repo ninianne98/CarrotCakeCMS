@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -10,7 +11,6 @@ using System.Linq;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.Core {
 
@@ -77,7 +77,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteExport(SiteData s, List<ContentPageExport> pages) {
-
 			SetVals(s, pages);
 		}
 
@@ -130,7 +129,6 @@ namespace Carrotware.CMS.Core {
 
 		public List<ContentPageExport> ThePages { get; set; }
 
-
 		public List<ContentPageExport> TheContentPages {
 			get {
 				return (from c in this.ThePages
@@ -139,6 +137,7 @@ namespace Carrotware.CMS.Core {
 						select c).ToList();
 			}
 		}
+
 		public List<ContentPageExport> TheBlogPages {
 			get {
 				return (from c in this.ThePages
@@ -161,7 +160,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public List<CommentExport> TheComments { get; set; }
 
 		public List<ContentCategory> TheCategories { get; set; }
@@ -171,6 +169,5 @@ namespace Carrotware.CMS.Core {
 		public List<ContentSnippet> TheSnippets { get; set; }
 
 		public List<SiteExportUser> TheUsers { get; set; }
-
 	}
 }

@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Widget Time" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetTime.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetTime" %>
+﻿<%@ Page Title="Widget Time" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetTime.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetTime" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
@@ -18,8 +19,10 @@
 				release date:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion"
+					Columns="16" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion"
+					Columns="10" />
 			</td>
 		</tr>
 		<tr>

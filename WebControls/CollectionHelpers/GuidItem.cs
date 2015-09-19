@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -38,7 +39,5 @@ namespace Carrotware.Web.UI.Controls {
 				_value = value;
 			}
 		}
-
-
 	}
 }

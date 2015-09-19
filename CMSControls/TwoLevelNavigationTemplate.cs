@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -151,10 +152,9 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstTwoLevelNav.Where(ct => ct.FileName.ToLower() == sPath.ToLower()).FirstOrDefault();
 		}
 
-		Control fndCtrl = null;
+		private Control fndCtrl = null;
 
 		private Control FindSubControl(Control X) {
-
 			fndCtrl = null;
 
 			FindSubControl2(X);
@@ -204,7 +204,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 				UpdateHyperLink(rSubNav);
 			}
-
 		}
 
 		private ListItemRepeater rTopNav = new ListItemRepeater();
@@ -247,7 +246,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected void LoadData() {
-
 			ParentPageNav = GetParentPage();
 
 			if (ShowSecondLevel) {
@@ -303,11 +301,9 @@ namespace Carrotware.CMS.UI.Controls {
 					SetSubNav(rTopNav.Items[iIdx], lstTop[iIdx].Root_ContentID);
 				}
 			}
-
 		}
 
 		private void ModWrap(IActivateNavItem lnk) {
-
 			if (!string.IsNullOrEmpty(this.CSSSelected)) {
 				lnk.CSSSelected = this.CSSSelected;
 			}
@@ -327,7 +323,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void UpdateHyperLink(Control X) {
-
 			foreach (Control c in X.Controls) {
 				if (c is IActivateNavItem) {
 					IActivateNavItem lnk = (IActivateNavItem)c;
@@ -340,15 +335,11 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					OverrideCSS = GetParmValue("OverrideCSS", "");
 
 					CSSSelected = GetParmValue("CSSSelected", "");
-
 				}
 			} catch (Exception ex) {
 			}
@@ -363,9 +354,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnPreRender(e);
 		}
-
 	}
-
 }
 
 /*

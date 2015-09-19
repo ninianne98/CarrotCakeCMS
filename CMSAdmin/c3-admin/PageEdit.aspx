@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Edit Page Info" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageEdit" %>
+﻿<%@ Page Title="Edit Page Info" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageEdit.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageEdit" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -29,8 +30,10 @@
 				release date:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion" Columns="16" />
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion"
+					Columns="16" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion"
+					Columns="10" />
 			</td>
 		</tr>
 		<tr>
@@ -124,7 +127,8 @@
 				meta description:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
+				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+					runat="server" />
 			</td>
 		</tr>
 	</table>

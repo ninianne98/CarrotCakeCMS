@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,8 +17,8 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucAdminModule : AdminBaseUserControl {
 
+	public partial class ucAdminModule : AdminBaseUserControl {
 		public Guid ModuleID { get; set; }
 
 		public string pf { get; set; }
@@ -61,7 +59,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		protected override void OnInit(EventArgs e) {
 			if (!bLoadModule) {
 				LoadModule();
@@ -69,15 +66,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			base.OnInit(e);
 		}
 
-
 		public void LoadModule() {
-
 			ModuleID = AdminModuleQueryStringRoutines.GetModuleID();
 			pf = AdminModuleQueryStringRoutines.GetPluginFile();
 
 			if (!string.IsNullOrEmpty(pf)) {
-
-
 				ModuleFamily = (from m in cmsHelper.AdminModules
 								where m.PluginID == ModuleID
 								select m).FirstOrDefault();
@@ -106,13 +99,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected string MarkSelected(string sID, string sParm) {
-
 			if (sID == ModuleID.ToString().ToLower() && sParm == pf) {
 				return " class=\"selectedModule\" ";
 			} else {
 				return " ";
 			}
-
 		}
 
 		protected string CreateLink(string sPop, string sID, string sParm) {
@@ -121,11 +112,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			} else {
 				return String.Format("{0}?pi={1}&pf={2}", SiteData.CurrentScriptName, Eval("PluginID"), Eval("PluginParm"));
 			}
-
 		}
 
 		protected void rpModuleList_ItemDataBound(object sender, RepeaterItemEventArgs e) {
-
 			Repeater rpModuleContents = (Repeater)e.Item.FindControl("rpModuleContents");
 			HiddenField hdnID = (HiddenField)e.Item.FindControl("hdnID");
 
@@ -135,6 +124,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				GeneralUtilities.BindRepeater(rpModuleContents, d.PluginMenus.Where(z => z.IsVisible == true).OrderBy(x => x.Caption).OrderBy(x => x.SortOrder).ToList());
 			}
 		}
-
 	}
 }

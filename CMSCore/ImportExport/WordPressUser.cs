@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -12,10 +10,10 @@ using System.Text;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class WordPressUser {
+
 		public WordPressUser() { }
 
 		public int AuthorId { get; set; }
@@ -27,6 +25,5 @@ namespace Carrotware.CMS.Core {
 
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
-
 	}
 }

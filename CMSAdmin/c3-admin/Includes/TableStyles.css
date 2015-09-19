@@ -11,7 +11,6 @@
 	padding: 3px;
 }
 
-
 .dataentrytable {
 	border-collapse: collapse;
 	border: 0px solid #000000;
@@ -43,7 +42,7 @@ table .tablehead a, #SortableGrid table a, .SortableGrid table a {
 }
 
 .rowalt, .rowalt td {
-	background-color: #CCCCCC;
+	background-color: #efefef;
 	border: 1px solid #000000;
 	font-size: 12px;
 	font-weight: normal;
@@ -54,7 +53,6 @@ table .tablehead a, #SortableGrid table a, .SortableGrid table a {
 	font-size: 12px;
 	font-weight: normal;
 }
-
 
 .SortableGrid input.inputFld, .SortableGrid td .dateRegion {
 	background: #ffffff;

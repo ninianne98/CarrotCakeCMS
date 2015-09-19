@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.Design;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -73,11 +71,13 @@ namespace Carrotware.CMS.UI.Controls {
 				return "CarrotCakeSiteSearch_" + this.ClientID;
 			}
 		}
+
 		protected string JS_EnterSearch {
 			get {
 				return "CarrotCakeSiteSearchEnter_" + this.ClientID;
 			}
 		}
+
 		protected string JS_EnterSearch2 {
 			get {
 				return "CarrotCakeSiteSearchEnter2_" + this.ClientID;
@@ -85,13 +85,11 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnInit(EventArgs e) {
-
 			base.OnInit(e);
 
 			if (SearchTemplate == null) {
 				SearchTemplate = new DefaultSearchBoxForm();
 			}
-
 		}
 
 		protected override void Render(HtmlTextWriter writer) {
@@ -105,7 +103,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void CreateChildControls() {
-
 			string sScript = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.SearchBoxJS.txt");
 
 			if (SearchTemplate != null) {
@@ -157,7 +154,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected Control GetEntryFormControl(string ControlName) {
-
 			return (from x in EntryFormControls
 					where x.ID != null
 					&& x.ID.ToLower() == ControlName.ToLower()
@@ -165,7 +161,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected Control GetEntryFormControl(Type type) {
-
 			return (from x in EntryFormControls
 					where x.ID != null
 					&& x.GetType() == type
@@ -173,7 +168,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void FindEntryFormCtrls(Control X) {
-
 			foreach (Control c in X.Controls) {
 				EntryFormControls.Add(c);
 
@@ -200,7 +194,6 @@ namespace Carrotware.CMS.UI.Controls {
 				FindEntryFormCtrls(c);
 			}
 		}
-
 	}
 
 	//======================================
@@ -238,7 +231,5 @@ namespace Carrotware.CMS.UI.Controls {
 				return collection;
 			}
 		}
-
 	}
-
 }

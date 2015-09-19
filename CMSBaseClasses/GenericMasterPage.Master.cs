@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,10 +12,9 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Base {
-	public partial class GenericMasterPage : System.Web.UI.MasterPage {
 
+	public partial class GenericMasterPage : System.Web.UI.MasterPage {
 		protected PageProcessingHelper pph = new PageProcessingHelper();
 
 		public ContentPage ThePage { get { return pageContents; } }
@@ -27,7 +24,6 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentPage pageContents = null;
 		protected SiteData theSite = null;
 		protected List<Widget> pageWidgets = null;
-
 
 		protected override void OnInit(EventArgs e) {
 			base.OnInit(e);
@@ -51,6 +47,5 @@ namespace Carrotware.CMS.UI.Base {
 
 			pph.AssignControls();
 		}
-
 	}
 }

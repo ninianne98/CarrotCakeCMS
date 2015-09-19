@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Web;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,9 +17,11 @@ namespace Carrotware.CMS.Core {
 
 	[Serializable()]
 	public class CMSAdminModule {
+
 		public CMSAdminModule() {
 			PluginMenus = new List<CMSAdminModuleMenu>();
 		}
+
 		public Guid PluginID { get; set; }
 		public string PluginName { get; set; }
 		public List<CMSAdminModuleMenu> PluginMenus { get; set; }
@@ -36,11 +37,11 @@ namespace Carrotware.CMS.Core {
 		public bool UseAjax { get; set; }
 		public bool UsePopup { get; set; }
 		public bool IsVisible { get; set; }
-
 	}
 
 	[Serializable()]
 	public class CMSPlugin {
+
 		public CMSPlugin() {
 			this.SortOrder = 1000;
 		}
@@ -79,7 +80,6 @@ namespace Carrotware.CMS.Core {
 	public class DynamicSite {
 		public Guid SiteID { get; set; }
 		public string DomainName { get; set; }
-
 	}
 
 	[Serializable()]
@@ -127,5 +127,4 @@ namespace Carrotware.CMS.Core {
 			return TemplateFile.ToLower().GetHashCode() ^ SiteID.GetHashCode();
 		}
 	}
-
 }

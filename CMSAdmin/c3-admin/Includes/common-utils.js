@@ -11,30 +11,67 @@
 		alwaysOpen: false
 	});
 
-	$(function () {
-		$("#jqradioset, .jqradioset").buttonset();
+	//	$(function () {
+	//		$("#jqradioset, .jqradioset").buttonset();
+	//	});
+
+	$("input:button, input:submit, input:reset").button();
+
+	$('input').iCheck({
+		checkboxClass: 'icheckbox_flat-grey',
+		radioClass: 'iradio_flat-grey'
 	});
 
-	$(document).ready(function () {
-		$("input:button, input:submit, input:reset").button();
+	$('.iradio_flat-grey, .icheckbox_flat-grey').each(function () {
+		var chk = $(this).find("input");
+		var onclick = $(chk).attr("onclick");
+
+		if (chk.length > 0 && onclick != undefined && onclick.length > 0) {
+			$(chk).on('ifClicked', function (event) {
+				if ($(chk).attr("type") == 'radio') {
+					setTimeout(function () { $(chk).click(); }, 200);
+				} else {
+					$(chk).trigger("click");
+				}
+			});
+		}
 	});
 
 	$(".dateRegion").each(function (i) {
 		$(this).datepicker({
 			changeMonth: true,
 			changeYear: true,
-			showOn: 'button',
+			showOn: "both",
 			buttonImage: '/c3-admin/images/calendar.png',
 			buttonImageOnly: true,
 			constrainInput: true
 		});
 	});
 
-	$('.timeRegion').timepicker({
-		showPeriod: true,
-		showLeadingZero: true
+	//	$('.timeRegion').timepicker({
+	//		showPeriod: true,
+	//		showLeadingZero: true
+	//	});
+
+	$(".timeRegion").each(function () {
+		if (!$(this).hasClass("hasTimePicker")) {
+			$(this).addClass("hasTimePicker");
+			var id = $(this).attr('id');
+			$('<img class="ui-timepicker-trigger" src="/c3-admin/images/clock.png" for="' + id + '" id="' + id + '_triggerbtn" alt="..." title="...">').insertAfter(this);
+
+			$(this).timepicker({
+				showOn: "both",
+				button: '#' + id + '_triggerbtn',
+				showPeriod: true,
+				showLeadingZero: true
+			});
+		};
 	});
 }
+
+$(document).ready(function () {
+	AjaxBtnLoad();
+});
 
 var htmlAjaxSpinnerTable = '<table style="TableSpinner"><tr><td><img style="RingSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>';
 
@@ -150,7 +187,6 @@ function cmsAlertModalLarge(request) {
 	cmsAlertModalHeightWidth(request, 550, 700);
 }
 
-
 function cmsAlertModalHeightWidthBtns(request, h, w, buttonsOpts) {
 	$("#divCMSModalMsg").html('');
 
@@ -176,7 +212,6 @@ function cmsAlertModalSmallBtns(request, buttonsOpts) {
 function cmsAlertModalLargeBtns(request, buttonsOpts) {
 	cmsAlertModalHeightWidthBtns(request, 550, 700, buttonsOpts);
 }
-
 
 function cmsOpenPage(theURL) {
 	$("#divCMSCancelWinMsg").html('');
@@ -210,8 +245,7 @@ function cmsOpenPage(theURL) {
 	}
 }
 
-
-// begin fancy validator stylings 
+// begin fancy validator stylings
 
 $(document).ready(function () {
 	loadValidationStyles();
@@ -263,7 +297,6 @@ function cmsOverrideValidation(validator) {
 }
 
 function cmsChkCtrlValid(val) {
-
 	if (typeof val.controltocompare != 'undefined') {
 		var id2 = val.controltocompare;
 		var ctrl2 = document.getElementById(id2);
@@ -293,7 +326,6 @@ function cmsChkCtrlValid(val) {
 	return true;
 }
 
-
 function cmsLoadPrettyValidationPopup(validSummaryFld) {
 	if (!Page_IsValid) {
 		var txt = $('#' + validSummaryFld).html();
@@ -309,7 +341,7 @@ function cmsLoadPrettyValidation(validSummary) {
 	});
 }
 
-// end fancy validator stylings 
+// end fancy validator stylings
 
 function ProcessKeyPress(e) {
 	var obj = window.event ? event : e;
@@ -322,7 +354,6 @@ function ProcessKeyPress(e) {
 	}
 	return true;
 }
-
 
 function checkIntNumber(obj) {
 	var n = obj.value;
@@ -348,11 +379,9 @@ function checkFloatNumber(obj) {
 }
 
 function cmsSendTrackbackBatch() {
-
 	var webMthd = webSvc + "/SendTrackbackBatch";
 
 	if (!cmsGetOKToLeaveStatus()) {
-
 		$.ajax({
 			type: "POST",
 			url: webMthd,
@@ -361,7 +390,6 @@ function cmsSendTrackbackBatch() {
 			success: cmsAjaxGeneralCallback,
 			error: cmsAjaxFailedSwallow
 		});
-
 	}
 
 	setTimeout("cmsSendTrackbackBatch();", 10000);
@@ -369,13 +397,10 @@ function cmsSendTrackbackBatch() {
 
 //setTimeout("cmsSendTrackbackBatch();", 5000);
 
-
 function cmsSendTrackbackPageBatch(thePageID) {
-
 	var webMthd = webSvc + "/SendTrackbackPageBatch";
 
 	if (!cmsGetOKToLeaveStatus()) {
-
 		$.ajax({
 			type: "POST",
 			url: webMthd,
@@ -385,12 +410,10 @@ function cmsSendTrackbackPageBatch(thePageID) {
 			success: cmsAjaxGeneralCallback,
 			error: cmsAjaxFailedSwallow
 		});
-
 	}
 
 	setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 12000);
 }
-
 
 function cmsSaveMakeOKAndCancelLeave() {
 	cmsMakeOKToLeave();
@@ -402,7 +425,6 @@ function cmsSaveMakeOKAndCancelLeave() {
 }
 
 function cmsIsPageValid() {
-
 	if (typeof (Page_ClientValidate) == 'function') {
 		Page_ClientValidate();
 	} else {
@@ -415,7 +437,6 @@ function cmsIsPageValid() {
 		return false;
 	}
 }
-
 
 function cmsForceInputValidation(inputId) {
 	var targetedControl = document.getElementById(inputId);
@@ -431,10 +452,8 @@ function cmsForceInputValidation(inputId) {
 
 //====================================
 
-
 var TheURL = '';
 var RefreshPage = 0;
-
 
 //============ full page
 function ShowWindowNoRefresh(theURL) {
@@ -469,7 +488,6 @@ function LaunchWindow(theURL) {
 	setTimeout("LoadWindow();", 800);
 }
 
-
 //============ popup page
 function ShowWindowNoRefreshPop(theURL) {
 	RefreshPage = 0;
@@ -498,7 +516,6 @@ function LaunchWindowPop(theURL) {
 	setTimeout("LoadWindow();", 800);
 }
 
-
 function LoadWindow() {
 	$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
 		//$.modal.close(); // must call this!
@@ -512,7 +529,6 @@ function LoadWindow() {
 	return false;
 }
 
-
 //======================================
 
 var IsDirty = 0;
@@ -521,7 +537,6 @@ function SetDirtyPage() {
 	IsDirty = 1;
 }
 function DirtyPageRefresh() {
-
 	if (RefreshPage == 1) {
 		$("#cmsAjaxMainDiv").block({ message: htmlAjaxSpinnerTable,
 			css: {},
@@ -633,4 +648,3 @@ function cmsGetOKToLeaveStatus() {
 function cmsRequireConfirmToLeave(confirmLeave) {
 	cmsConfirmLeavingPage = confirmLeave;
 }
-

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,7 +14,6 @@ using Carrotware.CMS.Data;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.Core {
 
@@ -58,9 +57,7 @@ namespace Carrotware.CMS.Core {
 			this.ContentTags = new List<ContentTag>();
 		}
 
-
 		internal ContentPage(vw_carrot_Content c) {
-
 			if (c != null) {
 				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
 
@@ -127,7 +124,6 @@ namespace Carrotware.CMS.Core {
 			return sd;
 		}
 
-
 		public void ResetHeartbeatLock() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
@@ -150,7 +146,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public bool IsPageLocked() {
-
 			bool bLock = false;
 			if (this.Heartbeat_UserId != null) {
 				if (this.Heartbeat_UserId != SecurityData.CurrentUserGuid
@@ -164,7 +159,6 @@ namespace Carrotware.CMS.Core {
 			}
 			return bLock;
 		}
-
 
 		public void LoadAttributes() {
 			var lstC = this.ContentCategories;
@@ -180,7 +174,6 @@ namespace Carrotware.CMS.Core {
 
 			return widgets;
 		}
-
 
 		public List<Widget> GetAllWidgetsOrUnsaved() {
 			List<Widget> widgets = new List<Widget>();
@@ -201,14 +194,11 @@ namespace Carrotware.CMS.Core {
 			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? String.Empty : this.MetaDescription;
 		}
 
-
 		private void SaveKeywordsAndTags(CarrotCMSDataContext _db) {
-
 			IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(_db, this.Root_ContentID);
 			IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(_db, this.Root_ContentID);
 
 			if (this.ContentType == ContentPageType.PageType.BlogEntry) {
-
 				List<carrot_TagContentMapping> newContentTags = (from x in this.ContentTags
 																 select new carrot_TagContentMapping {
 																	 ContentTagID = x.ContentTagID,
@@ -235,9 +225,7 @@ namespace Carrotware.CMS.Core {
 			_db.carrot_CategoryContentMappings.DeleteBatch(oldContentCategories);
 		}
 
-
 		private void PerformCommonSaveRoot(SiteData pageSite, carrot_RootContent rc) {
-
 			rc.Root_ContentID = this.Root_ContentID;
 			rc.PageActive = true;
 			rc.BlockIndex = false;
@@ -258,12 +246,9 @@ namespace Carrotware.CMS.Core {
 			if (this.CreateDate.Year > 1950) {
 				rc.CreateDate = pageSite.ConvertSiteTimeToUTC(this.CreateDate);
 			}
-
 		}
 
-
 		private void PerformCommonSave(SiteData pageSite, carrot_RootContent rc, carrot_Content c) {
-
 			c.NavOrder = this.NavOrder;
 
 			if (this.ContentType == ContentPageType.PageType.BlogEntry) {
@@ -319,12 +304,9 @@ namespace Carrotware.CMS.Core {
 			this.CreateDate = pageSite.ConvertUTCToSiteTime(rc.CreateDate);
 			this.GoLiveDate = pageSite.ConvertUTCToSiteTime(rc.GoLiveDate);
 			this.RetireDate = pageSite.ConvertUTCToSiteTime(rc.RetireDate);
-
 		}
 
-
 		public void SaveTrackbacks() {
-
 			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
 			if (!string.IsNullOrEmpty(this.NewTrackBackURLs)) {
@@ -359,9 +341,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public void SaveTrackbackTop() {
-
 			SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
 			if (this.IsLatestVersion && site.SendTrackbacks) {
@@ -472,7 +452,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public ContentPageType.PageType ContentType { get; set; }
 		public string PageSlug { get; set; }
 
@@ -514,7 +493,6 @@ namespace Carrotware.CMS.Core {
 
 		public string NewTrackBackURLs { get; set; }
 
-
 		public bool IsRetired {
 			get {
 				if (this.RetireDate < SiteData.CurrentSite.Now) {
@@ -524,6 +502,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
 		public bool IsUnReleased {
 			get {
 				if (this.GoLiveDate > SiteData.CurrentSite.Now) {
@@ -535,6 +514,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private int _commentCount = -1;
+
 		public int CommentCount {
 			get {
 				if (_commentCount < 0) {
@@ -547,8 +527,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private List<ContentTag> _contentTags = null;
+
 		public List<ContentTag> ContentTags {
 			get {
 				if (_contentTags == null) {
@@ -562,6 +542,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private List<ContentCategory> _contentCategories = null;
+
 		public List<ContentCategory> ContentCategories {
 			get {
 				if (_contentCategories == null) {
@@ -574,7 +555,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		ExtendedUserData _user = null;
+		private ExtendedUserData _user = null;
+
 		public ExtendedUserData GetUserInfo() {
 			if (_user == null && this.EditUserId.HasValue) {
 				_user = new ExtendedUserData(this.EditUserId.Value);
@@ -582,7 +564,8 @@ namespace Carrotware.CMS.Core {
 			return _user;
 		}
 
-		ExtendedUserData _creditUser = null;
+		private ExtendedUserData _creditUser = null;
+
 		public ExtendedUserData GetCreditUserInfo() {
 			if (_creditUser == null && this.CreditUserId.HasValue) {
 				_creditUser = new ExtendedUserData(this.CreditUserId.Value);
@@ -590,12 +573,9 @@ namespace Carrotware.CMS.Core {
 			return _creditUser;
 		}
 
-
 		public List<TrackBackEntry> GetTrackbacks() {
-
 			return TrackBackEntry.GetPageTrackBackList(this.Root_ContentID);
 		}
-
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -613,7 +593,6 @@ namespace Carrotware.CMS.Core {
 		public override int GetHashCode() {
 			return ContentID.GetHashCode() ^ SiteID.GetHashCode() ^ Root_ContentID.GetHashCode() ^ FileName.GetHashCode();
 		}
-
 
 		public string PageTextPlainSummaryMedium {
 			get {
@@ -650,7 +629,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public string TemplateFolderPath {
 			get {
 				if (!string.IsNullOrEmpty(TemplateFile)) {
@@ -668,8 +646,5 @@ namespace Carrotware.CMS.Core {
 		public string RequestedFileName {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
-
 	}
-
-
 }

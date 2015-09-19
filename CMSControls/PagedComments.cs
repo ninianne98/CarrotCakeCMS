@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -36,7 +34,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnInit(EventArgs e) {
-
 			if (ContentTemplate == null) {
 				ContentTemplate = new DefaultCommentTemplate();
 			}
@@ -45,7 +42,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public override void FetchData() {
-
 			HttpContext context = HttpContext.Current;
 
 			if (string.IsNullOrEmpty(OrderBy)) {
@@ -86,6 +82,5 @@ namespace Carrotware.CMS.UI.Controls {
 				return lst;
 			}
 		}
-
 	}
 }

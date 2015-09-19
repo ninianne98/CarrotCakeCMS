@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -7,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.Design;
 using System.Web.UI.Design.WebControls;
 using System.Web.UI.WebControls;
 using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -26,7 +25,6 @@ namespace Carrotware.CMS.UI.Controls {
 	[Designer(typeof(CarrotGridPagedDesigner))]
 	[ParseChildren(true, "TheGrid"), PersistChildren(true)]
 	[ToolboxData("<{0}:CarrotGridPaged runat=server></{0}:CarrotGridPaged>")]
-
 	public class CarrotGridPaged : DataBoundControl, INamingContainer {
 
 		[Category("Appearance")]
@@ -123,7 +121,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.Controls.Add(ThePager);
 
 			base.OnInit(e);
-
 		}
 
 		private Repeater GetCtrl() {
@@ -180,7 +177,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void SetSort() {
-
 			string sSort = this.TheGrid.CurrentSort;
 			if (bHeadClicked) {
 				sSort = this.TheGrid.PredictNewSort;
@@ -188,7 +184,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.SortingBy = sSort;
 		}
-
 
 		[Browsable(false)]
 		public override object DataSource {
@@ -232,7 +227,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			WalkCtrlsForAssignment(this.ThePager);
-
 		}
 
 		private void WalkCtrlsForAssignment(Control X) {
@@ -248,7 +242,6 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 		}
-
 	}
 
 	//======================================
@@ -291,7 +284,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			for (int r = 0; r < 5; r++) {
-
 				TableRow tr = new TableRow();
 				if (r % 2 == 0) {
 					tr.CssClass = theGrid.RowStyle.CssClass;
@@ -301,7 +293,6 @@ namespace Carrotware.CMS.UI.Controls {
 				table.Rows.Add(tr);
 
 				foreach (DataControlField col in theGrid.Columns) {
-
 					TableCell tc = new TableCell();
 					tc.Text = " &nbsp; ";
 					tr.Controls.Add(tc);
@@ -375,13 +366,10 @@ namespace Carrotware.CMS.UI.Controls {
 		private string RenderCtrl(Control ctrl) {
 			StringWriter sw = new StringWriter();
 			using (HtmlTextWriter tw = new HtmlTextWriter(sw)) {
-
 				ctrl.RenderControl(tw);
 
 				return sw.ToString();
 			}
 		}
-
 	}
-
 }

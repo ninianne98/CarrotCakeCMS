@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,6 +14,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class PageTemplateUpdate : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -26,13 +23,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			RedirectIfNoSite();
 
 			if (!IsPostBack) {
-
 				GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
 
 				SetGrid(false, null);
 			}
 		}
-
 
 		protected void SetGrid(bool bAll, Guid? guidParentID) {
 			List<ContentPage> lstContent = null;
@@ -49,9 +44,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			GeneralUtilities.BindDataBoundControl(gvPages, lstContent);
 		}
 
-
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
-
 			List<Guid> lstUpd = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, true, "chkSelect");
 
 			pageHelper.BulkUpdateTemplate(SiteData.CurrentSiteID, lstUpd, ddlTemplate.SelectedValue);
@@ -78,6 +71,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				SetGrid(false, ParentPagePicker.SelectedPage);
 			}
 		}
-
 	}
 }

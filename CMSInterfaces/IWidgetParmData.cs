@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,8 +13,6 @@ using System.Linq;
 namespace Carrotware.CMS.Interface {
 
 	public interface IWidgetParmData {
-
 		Dictionary<string, string> PublicParmValues { get; set; }
-
 	}
 }

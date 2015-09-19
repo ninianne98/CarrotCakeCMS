@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,8 +16,8 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class PageAddEdit : AdminBasePage {
 
+	public partial class PageAddEdit : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidRootContentID = Guid.Empty;
 		public Guid guidVersionContentID = Guid.Empty;
@@ -28,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public Guid guidImportContentID = Guid.Empty;
 
 		public bool bLocked = false;
-		string sPageMode = String.Empty;
+		private string sPageMode = String.Empty;
 
 		private int iPageCount = 0;
 
@@ -206,7 +203,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 
 					GeneralUtilities.SelectListValue(ddlTemplate, pageContents.TemplateFile.ToLower());
-
 				}
 			}
 
@@ -245,7 +241,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidRootContentID = new Guid(hdnRootID.Value);
 
 			using (ContentPageHelper cph = new ContentPageHelper()) {
-
 				cph.RemoveContent(SiteID, guidRootContentID);
 			}
 
@@ -261,7 +256,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void SavePage(bool bRedirect) {
-
 			ContentPage pageContents = null;
 			if (guidVersionContentID != Guid.Empty) {
 				pageContents = pageHelper.GetVersion(SiteID, guidVersionContentID);
@@ -333,7 +327,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			pageContents.NewTrackBackURLs = txtTrackback.Text;
 
-
 			if (!chkDraft.Checked) {
 				pageContents.SavePageEdit();
 			} else {
@@ -387,8 +380,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				Response.Redirect(pageContents.FileName);
 			}
 		}
-
-
 
 	}
 }

@@ -52,6 +52,15 @@ tt, pre, code, kbd, samp {
 	display: block;
 }
 
+.jqradioset label {
+	margin-left: 0.5em;
+	margin-right: 3em;
+}
+
+.icheckbox_flat-grey, .iradio_flat-grey {
+	margin: 0 3px 2px 3px;
+}
+
 /*  OTHER */
 
 .tableback {
@@ -273,7 +282,6 @@ table.centered {
 }
 
 /* validations */
-
 
 .validationError, .validationExclaim, .validationDelete, .validationCross {
 	font-weight: bolder;

@@ -16,7 +16,7 @@
 					Bulk Apply Templates/Skins</a>
 			</td>
 		</tr>
-		<%-- 
+		<%--
 		<tr>
 			<td style="width: 48%;">
 				<a href="SiteMap.aspx">

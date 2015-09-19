@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
-using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -24,9 +21,7 @@ namespace Carrotware.Web.UI.Controls {
 	public class CarrotHeaderSortTemplateField : TemplateField {
 
 		public CarrotHeaderSortTemplateField()
-			: base() {
-
-		}
+			: base() { }
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -113,7 +108,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
@@ -128,8 +122,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["ShowEnumImage"] = value.ToString();
 			}
 		}
-
-
 
 		private List<CarrotImageColumnData> imageList = null;
 
@@ -151,7 +143,6 @@ namespace Carrotware.Web.UI.Controls {
 				return imageList;
 			}
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -180,6 +171,5 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["AlternateTextFalse"] = value;
 			}
 		}
-
 	}
 }

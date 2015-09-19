@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace Carrotware.CMS.Core {
+
 	public interface IContentMetaInfo {
 		Guid ContentMetaInfoID { get; }
 		string MetaInfoText { get; }
@@ -12,6 +13,5 @@ namespace Carrotware.CMS.Core {
 		DateTime? MetaDataDate { get; }
 
 		void SetValue(Guid ContentMetaInfoID);
-
 	}
 }

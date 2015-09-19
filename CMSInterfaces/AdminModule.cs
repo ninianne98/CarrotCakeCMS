@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,8 +11,8 @@ using System.Web;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Interface {
+
 	public abstract class AdminModule : BaseShellUserControl, IAdminModule {
 
 		protected override void OnInit(EventArgs e) {
@@ -30,33 +28,26 @@ namespace Carrotware.CMS.Interface {
 		}
 
 		public string CreateLink(string sModuleName, string sIDParm) {
-
 			return CreateLink(false, sModuleName, sIDParm);
 		}
 
 		public string CreateLink(string sScriptName, string sModuleName, string sIDParm) {
-
 			return CreateLink(false, sScriptName, sModuleName, sIDParm);
 		}
 
 		public string CreateLink(string sModuleName) {
-
 			return CreateLink(false, sModuleName);
 		}
 
-
 		public string CreatePopupLink(string sModuleName, string sIDParm) {
-
 			return CreateLink(true, sModuleName, sIDParm);
 		}
 
 		public string CreatePopupLink(string sScriptName, string sModuleName, string sIDParm) {
-
 			return CreateLink(true, sScriptName, sModuleName, sIDParm);
 		}
 
 		public string CreatePopupLink(string sModuleName) {
-
 			return CreateLink(true, sModuleName);
 		}
 
@@ -95,7 +86,6 @@ namespace Carrotware.CMS.Interface {
 			return sQueryStringFile;
 		}
 
-
 		#region IAdminModule Members
 
 		public virtual Guid SiteID { get; set; }
@@ -108,8 +98,7 @@ namespace Carrotware.CMS.Interface {
 
 		public virtual string ModuleName { get; set; }
 
-		#endregion
-
+		#endregion IAdminModule Members
 
 		public string ResolveResourceFilePath(string sPath) {
 			string sPathOut = null;
@@ -130,7 +119,6 @@ namespace Carrotware.CMS.Interface {
 
 			return sPathOut;
 		}
-
 	}
 
 	//===========================
@@ -146,6 +134,7 @@ namespace Carrotware.CMS.Interface {
 			}
 			return moduleID;
 		}
+
 		public static string GetPluginFile() {
 			string plug = "";
 			if (HttpContext.Current.Request.QueryString["pf"] != null) {
@@ -162,7 +151,6 @@ namespace Carrotware.CMS.Interface {
 			return "pf={0}&pi=" + moduleID.ToString();
 		}
 
-		#endregion
+		#endregion Common Querystring Parsing Routines
 	}
-
 }

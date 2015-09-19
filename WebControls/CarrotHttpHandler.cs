@@ -1,25 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Text;
 using System.Web;
 using System.Web.SessionState;
 
-
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.Web.UI.Controls {
-	class CarrotHttpHandler : IHttpHandler, IRequiresSessionState {
 
+	internal class CarrotHttpHandler : IHttpHandler, IRequiresSessionState {
 
 		public bool IsReusable {
 			get { return true; }
 		}
 
 		public void ProcessRequest(HttpContext context) {
-
 			if (context.Request.Path.ToLower() == "/carrotwarecaptcha.axd") {
 				DoCaptcha(context);
 			}
@@ -29,10 +34,7 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
-
 		private Bitmap ResizeBitmap(Bitmap bmpIn, int w, int h) {
-
 			if (w < 1) {
 				w = 1;
 			}
@@ -46,7 +48,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 			return bmpNew;
 		}
-
 
 		private void DoCaptcha(HttpContext context) {
 			Color f = ColorTranslator.FromHtml(CaptchaImage.FGColorDef);
@@ -90,7 +91,6 @@ namespace Carrotware.Web.UI.Controls {
 			if (sImageIn.Contains("//") || sImageIn.Contains(@"\\")) {
 				throw new Exception("Cannot use UNC paths.");
 			}
-
 
 			string sScale = "false";
 			if (context.Request.QueryString["scale"] != null) {
@@ -186,7 +186,5 @@ namespace Carrotware.Web.UI.Controls {
 
 			context.Response.End();
 		}
-
 	}
-
 }

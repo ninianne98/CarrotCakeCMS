@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,7 +20,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SiteMetaWordList runat=server></{0}:SiteMetaWordList>")]
 	public class SiteMetaWordList : BaseServerControl, IHeadedList {
-
 		public int ItemCount { get; set; }
 
 		[Category("Appearance")]
@@ -166,18 +166,20 @@ namespace Carrotware.CMS.UI.Controls {
 				case MetaDataType.Tag:
 					lstNav = navHelper.GetTagList(SiteData.CurrentSiteID, iTakeTop);
 					break;
+
 				case MetaDataType.Category:
 					lstNav = navHelper.GetCategoryList(SiteData.CurrentSiteID, iTakeTop);
 					break;
+
 				case MetaDataType.DateMonth:
 					lstNav = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, iTakeTop, !SecurityData.IsAuthEditor);
 					break;
+
 				default:
 					break;
 			}
 
 			if (lstNav != null) {
-
 				if (SecurityData.IsAuthEditor) {
 					lstNav.RemoveAll(x => x.MetaInfoCount < 1 && this.ShowNonZeroCountOnly);
 					lstNav = lstNav.OrderByDescending(x => x.MetaInfoCount).ToList();
@@ -248,11 +250,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					TakeTop = int.Parse(GetParmValue("TakeTop", "10"));
 
 					CssClass = GetParmValue("CssClass", "");
@@ -262,13 +261,11 @@ namespace Carrotware.CMS.UI.Controls {
 					ShowUseCount = Convert.ToBoolean(GetParmValue("ShowUseCount", "false"));
 
 					ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
-
 				}
 			} catch (Exception ex) {
 			}
 
 			base.OnPreRender(e);
 		}
-
 	}
 }

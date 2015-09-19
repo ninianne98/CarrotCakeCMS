@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,8 +13,8 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class TextWidgetIndex : AdminBasePage {
 
 		protected List<CMSTextWidgetPicker> PickerValues {
@@ -41,7 +37,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-
 			List<CMSTextWidgetPicker> lst = PickerValues;
 
 			List<Guid> lstUpd1 = GeneralUtilities.GetCheckedItemGuidsByValue(gvContent, true, "chkSelect1");
@@ -83,7 +78,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
-
-
 	}
 }

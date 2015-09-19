@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
 using System.Xml;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,12 +16,11 @@ using System.Xml;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class TrackbackHelper {
 
 		public TrackbackHelper() { }
-
 
 		public string PostRequest(Uri url, string postData) {
 			if (postData == null) {
@@ -68,13 +67,11 @@ namespace Carrotware.CMS.Core {
 			return doc;
 		}
 
-
 		public Uri FindTrackBackURL(string sURL) {
 			return FindTrackBackURL(new Uri(sURL));
 		}
 
 		public Uri FindTrackBackURL(Uri url) {
-
 			Uri urlTB = null;
 			string sPageData = GetPageHtml(url);
 
@@ -103,7 +100,6 @@ namespace Carrotware.CMS.Core {
 			return urlTB;
 		}
 
-
 		public void ProcessTrackback(HttpContext context, bool bRequireID) {
 			HttpRequest request = context.Request;
 			HttpResponse response = context.Response;
@@ -117,7 +113,6 @@ namespace Carrotware.CMS.Core {
 			if (request.Form.AllKeys.Count() < 6 && (!string.IsNullOrEmpty(request["id"]) || !bRequireID)
 				&& !string.IsNullOrEmpty(request["excerpt"])
 				&& !string.IsNullOrEmpty(request["blog_name"])) {
-
 				string blogId = string.Empty;
 				if (!string.IsNullOrEmpty(request["id"]))
 					blogId = request["id"];
@@ -151,13 +146,11 @@ namespace Carrotware.CMS.Core {
 				};
 
 				if (request.HttpMethod == "POST") {
-
 					// Store trackback based on the id parameter
 					GenerateSuccessResponse(request, writer, tb);
 				} else {
 					GenerateErrorResponse(2, "Only HTTP POST verb can be used to send trackbacks", writer);
 				}
-
 			} else {
 				GenerateErrorResponse(1, "Item identifier is missing", writer);
 			}
@@ -177,7 +170,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void GenerateSuccessResponse(HttpRequest request, XmlWriter writer, TrackBackInfo tb) {
-
 			SiteNav navData = null;
 			using (SiteNavHelper snh = new SiteNavHelper()) {
 				navData = snh.FindByFilename(SiteData.CurrentSiteID, tb.BlogPostID);
@@ -231,7 +223,6 @@ namespace Carrotware.CMS.Core {
 			writer.Close();
 		}
 
-
 		public void GenerateErrorResponse(int number, string message, XmlWriter writer) {
 			writer.WriteStartElement("response");
 
@@ -248,9 +239,7 @@ namespace Carrotware.CMS.Core {
 			writer.Close();
 		}
 
-
 		private string GetPageHtml(Uri uri) {
-
 			string result = null;
 
 			WebRequest request = WebRequest.Create(uri);
@@ -271,11 +260,11 @@ namespace Carrotware.CMS.Core {
 
 			return result;
 		}
-
 	}
 
 	//=================================
 	public class TrackBackInfo {
+
 		public TrackBackInfo() { }
 
 		public string BlogPostID { get; set; }
@@ -288,11 +277,9 @@ namespace Carrotware.CMS.Core {
 	//========================
 
 	public class TrackBacker {
-
 		public SiteData BlogSite { get; set; }
 		public Uri DestinationUrl { get; set; }
 		public SiteNav SourcePage { get; set; }
-
 
 		public string SendTrackback(Guid sourceGuid, Guid siteID, string sTgtURL) {
 			this.DestinationUrl = new Uri(sTgtURL);
@@ -305,7 +292,6 @@ namespace Carrotware.CMS.Core {
 			return SendTrackback();
 		}
 
-
 		public string SendTrackback(string sourceURL, Guid siteID, string sTgtURL) {
 			this.DestinationUrl = new Uri(sTgtURL);
 			this.BlogSite = SiteData.GetSiteFromCache(siteID);
@@ -317,7 +303,6 @@ namespace Carrotware.CMS.Core {
 			return SendTrackback();
 		}
 
-
 		public string SendTrackback(Uri targetURL, SiteNav pageNav) {
 			this.DestinationUrl = targetURL;
 			this.SourcePage = pageNav;
@@ -325,7 +310,6 @@ namespace Carrotware.CMS.Core {
 
 			return SendTrackback();
 		}
-
 
 		public string SendTrackback() {
 			if (this.BlogSite.SendTrackbacks) {
@@ -345,6 +329,4 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 	}
-
-
 }

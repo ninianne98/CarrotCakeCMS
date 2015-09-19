@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -26,6 +27,7 @@ namespace Carrotware.Web.UI.Controls {
 				return _CachedPage;
 			}
 		}
+
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
@@ -72,15 +74,12 @@ namespace Carrotware.Web.UI.Controls {
 			get { return HttpContext.Current.Request.ServerVariables["script_name"].ToString(); }
 		}
 
-
 		protected override void Render(HtmlTextWriter writer) {
 			RenderContents(writer);
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 		}
-
 
 		protected void BaseRender(HtmlTextWriter writer) {
 			base.Render(writer);
@@ -89,7 +88,5 @@ namespace Carrotware.Web.UI.Controls {
 		protected void BaseRenderContents(HtmlTextWriter output) {
 			base.RenderContents(output);
 		}
-
-
 	}
 }

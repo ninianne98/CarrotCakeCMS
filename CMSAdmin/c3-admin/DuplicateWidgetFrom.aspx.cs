@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,8 +15,8 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class DuplicateWidgetFrom : AdminBasePage {
 
+	public partial class DuplicateWidgetFrom : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		public string sZone = "";
 
@@ -88,7 +84,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			} else {
 				GeneralUtilities.BindDataBoundControl(gvWidgets, null);
 			}
-
 		}
 
 		protected void btnDuplicate_Click(object sender, EventArgs e) {
@@ -96,13 +91,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			ContentPage pageSrc = pageHelper.FindContentByID(SiteID, gSrc);
 
 			if (pageSrc != null) {
-
 				phDone.Visible = true;
 				List<Guid> lstSel = GeneralUtilities.GetCheckedItemGuidsByValue(gvWidgets, true, "chkContent");
 				litCount.Text = string.Format(" {0} ", lstSel.Count);
 
 				if (cmsHelper.cmsAdminWidget != null) {
-
 					List<Widget> cacheWidget = cmsHelper.cmsAdminWidget;
 
 					List<Widget> ww = (from w in pageSrc.GetWidgetList()
@@ -136,7 +129,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 		}
-
-
 	}
 }

@@ -1,4 +1,5 @@
-﻿<%@ Page Title="SiteIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteIndex.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteIndex" %>
+﻿<%@ Page Title="SiteIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="SiteIndex.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.SiteIndex" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -30,8 +31,8 @@
 						<asp:Image ID="imgStatus" runat="server" ImageUrl="images/house.png" ToolTip="Current Site" Visible='<%#  Eval("SiteID").ToString() == SiteData.CurrentSiteID.ToString() %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
-					AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true"
+					AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="SendTrackbacks" HeaderText="Send Trackbacks" AlternateTextFalse="N"
 					AlternateTextTrue="Y" ShowBooleanImage="true" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="AcceptTrackbacks" HeaderText="Accept Trackbacks" AlternateTextFalse="N"

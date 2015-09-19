@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Carrotware.CMS.Data;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,8 +14,8 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class TextWidget {
 
 		public TextWidget() { }
@@ -31,8 +31,8 @@ namespace Carrotware.CMS.Core {
 		public bool ProcessComment { get; set; }
 		public bool ProcessSnippet { get; set; }
 
-
 		private ITextBodyUpdate _txt = null;
+
 		public ITextBodyUpdate TextProcessor {
 			get {
 				if (_txt == null && !string.IsNullOrEmpty(this.TextWidgetAssembly)) {
@@ -106,7 +106,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public void Delete() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_TextWidget s = CompiledQueries.cqTextWidgetByID(_db, this.TextWidgetID);
@@ -117,7 +116,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 		public static TextWidget Get(Guid textWidgetID) {
 			TextWidget _item = null;
@@ -143,7 +141,5 @@ namespace Carrotware.CMS.Core {
 
 			return _lst;
 		}
-
-
 	}
 }

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Carrotware.CMS.Core;
-using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -15,6 +15,7 @@ using System.Web.UI.WebControls;
 */
 
 namespace Carrotware.CMS.UI.Controls {
+
 	[ToolboxData("<{0}:OpenGraph runat=server></{0}:OpenGraph>")]
 	public class OpenGraph : BaseServerControl {
 
@@ -92,7 +93,6 @@ namespace Carrotware.CMS.UI.Controls {
 				SiteData theSite = SiteData.CurrentSite;
 
 				if (cp != null) {
-
 					HtmlMeta metaSub = new HtmlMeta();
 					metaSub.Attributes["property"] = "og:description";
 					metaSub.Content = string.IsNullOrEmpty(cp.MetaDescription) ? theSite.MetaDescription : cp.MetaDescription;
@@ -152,12 +152,9 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 			} catch (Exception ex) {
-
 			}
 
 			base.OnPreRender(e);
 		}
-
 	}
-
 }

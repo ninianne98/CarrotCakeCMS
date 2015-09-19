@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,6 +15,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class BlogPostTemplateUpdate : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -36,9 +34,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				LoadGrid();
 			}
-
 		}
-
 
 		protected void SetGrid(bool bAll, DateTime dateRange, int dateRangeDays) {
 			List<ContentPage> lstContent = null;
@@ -51,7 +47,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			GeneralUtilities.BindDataBoundControl(gvPages, lstContent);
 		}
-
 
 		protected void btnSaveMapping_Click(object sender, EventArgs e) {
 			List<Guid> lstUpd = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, true, "chkSelect");
@@ -80,6 +75,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				SetGrid(false, Convert.ToDateTime(txtDate.Text), int.Parse(ddlDateRange.SelectedValue));
 			}
 		}
-
 	}
 }

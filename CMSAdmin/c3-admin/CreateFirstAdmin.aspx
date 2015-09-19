@@ -4,7 +4,8 @@
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<style type="text/css">
-		#CreateUserForm table {
+		#CreateUserForm table
+		{
 			width: 400px !important;
 		}
 	</style>
@@ -57,8 +58,8 @@
 								</td>
 								<td>
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="ConfirmPassword" runat="server" TextMode="Password" TabIndex="3" />
-									<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword" ErrorMessage="!"
-										ToolTip="Confirm Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
+									<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword"
+										ErrorMessage="!" ToolTip="Confirm Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 									<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword"
 										Display="Dynamic" ErrorMessage="!!" ToolTip="Confirm Password does not match Password." ValidationGroup="createWizard" />
 								</td>
@@ -71,8 +72,8 @@
 								</td>
 								<td>
 									<asp:TextBox Style="width: 175px;" ValidationGroup="createWizard" ID="Email" runat="server" TabIndex="4" />
-									<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="!" ToolTip="E-mail is required."
-										ValidationGroup="createWizard" Display="Dynamic" Text="**" />
+									<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="!"
+										ToolTip="E-mail is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 						</table>
@@ -112,7 +113,7 @@
 			</WizardSteps>
 		</asp:CreateUserWizard>
 		<asp:Label ID="lblLogon" runat="server" Visible="false">
-			<p> 
+			<p>
 				Click <a href="<%=SiteFilename.LogonURL %>">here </a>to logon.
 			</p>
 		</asp:Label>

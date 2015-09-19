@@ -9,8 +9,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
-		These assemblies and classes listed below will be used to pre-process the text content types selected when rendered in the CMS via the associated page.
-		If you don't want a particular class to be used for processing, simply uncheck all boxes on that entry's row and it will no be used for processing.
+		These assemblies and classes listed below will be used to pre-process the text content types selected when rendered in the CMS via the associated
+		page. If you don't want a particular class to be used for processing, simply uncheck all boxes on that entry's row and it will no be used for
+		processing.
 	</p>
 	<div style="height: 50px; margin-top: 10px; margin-bottom: 10px;">
 		<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />

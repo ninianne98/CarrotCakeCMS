@@ -1131,7 +1131,7 @@ function cmsDirtyPageRefresh() {
 var jqAttemptCount1 = 0;
 var jqAttemptCount2 = 0;
 var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
-var jqui_URL = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js';
+var jqui_URL = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js';
 
 function cmsSetJQueryURL(jqPath, jqUIPath) {
 	jqURL = jqPath;

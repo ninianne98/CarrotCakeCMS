@@ -1,4 +1,5 @@
-﻿<%@ Page Title="PageWidgets" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageWidgets.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageWidgets" %>
+﻿<%@ Page Title="PageWidgets" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageWidgets.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageWidgets" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
@@ -34,7 +35,6 @@
 				cmsSetTextMessage(data.d);
 			}
 		}
-
 	</script>
 	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>
@@ -43,8 +43,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
-		Leave checked the widgets you want to have enabled, and uncheck the ones that do not want to load in the page, click the button to apply changes. You
-		can also edit the Go Live and Retire date/time by selecting the edit icon.
+		Leave checked the widgets you want to have enabled, and uncheck the ones that do not want to load in the page, click the button to apply changes.
+		You can also edit the Go Live and Retire date/time by selecting the edit icon.
 	</p>
 	<p>
 		<asp:Button ID="btnUpdate" runat="server" OnClick="btnUpdate_Click" Text="Update" /><br />
@@ -63,8 +63,8 @@
 						<asp:CheckBox runat="server" ID="chkContent" value='<%# Eval("Root_WidgetID") %>' Checked='<%# Eval("IsWidgetActive") %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Status" DataField="IsWidgetActive" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-					ShowBooleanImage="true" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" HeaderText="Status" DataField="IsWidgetActive" AlternateTextFalse="Inactive"
+					AlternateTextTrue="Active" ShowBooleanImage="true" />
 				<asp:TemplateField>
 					<HeaderTemplate>
 					</HeaderTemplate>
@@ -90,8 +90,8 @@
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
 					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
-					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsUnReleased" HeaderText="Released" ShowBooleanImage="true"
+					AlternateTextTrue="Unreleased" AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>

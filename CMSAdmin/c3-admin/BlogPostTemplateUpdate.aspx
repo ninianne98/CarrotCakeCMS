@@ -109,8 +109,8 @@
 				<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0:d}" />
 				<asp:BoundField HeaderText="Created On" DataField="CreateDate" DataFormatString="{0:d}" />
 				<asp:BoundField HeaderText="Go Live" DataField="GoLiveDate" DataFormatString="{0:d}" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-					ShowBooleanImage="true" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Active" AlternateTextFalse="Inactive"
+					AlternateTextTrue="Active" ShowBooleanImage="true" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>

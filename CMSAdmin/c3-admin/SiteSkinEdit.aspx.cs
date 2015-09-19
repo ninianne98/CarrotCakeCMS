@@ -4,11 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,6 +18,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class SiteSkinEdit : AdminBasePage {
 		protected FileDataHelper helpFile = new FileDataHelper();
 		public string sTemplateFileQS = String.Empty;
@@ -27,7 +26,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected string sFullFilePath = String.Empty;
 		protected string sDirectory = String.Empty;
 		protected string sEditFile = String.Empty;
-
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSkinEdit);
@@ -65,7 +63,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				SetSourceFiles(sDirectory);
-
 			}
 		}
 
@@ -80,7 +77,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
 			}
-
 		}
 
 		public string EncodePath(string sIn) {
@@ -91,7 +87,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void SetSourceFiles(string sDir) {
-
 			List<FileData> flsWorking = new List<FileData>();
 			List<FileData> fldrWorking = new List<FileData>();
 
@@ -102,7 +97,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			lstFileExtensions.Add(".master");
 
 			if (Directory.Exists(sDir)) {
-
 				string sDirParent = "";
 
 				if (sDir.LastIndexOf(@"\") > 0) {
@@ -153,8 +147,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				GeneralUtilities.BindRepeater(rpFiles, flsWorking.OrderBy(x => x.FileName).OrderBy(x => x.FolderPath).ToList());
 			}
 		}
-
-
 
 	}
 }

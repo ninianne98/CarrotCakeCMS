@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Carrotware.Web.UI.Controls {
+
 	public class SimpleStyle {
 
 		public SimpleStyle() { }
@@ -18,7 +15,6 @@ namespace Carrotware.Web.UI.Controls {
 		[Category("Appearance")]
 		[DefaultValue("")]
 		public string Style { get; set; }
-
 
 		public string StyleToString() {
 			if (!string.IsNullOrEmpty(this.Style)) {
@@ -39,6 +35,5 @@ namespace Carrotware.Web.UI.Controls {
 		public override string ToString() {
 			return this.StyleToString() + this.CssClassToString();
 		}
-
 	}
 }

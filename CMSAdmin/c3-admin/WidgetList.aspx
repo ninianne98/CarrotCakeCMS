@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Widget List" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetList.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetList" %>
+﻿<%@ Page Title="Widget List" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="WidgetList.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.WidgetList" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -33,8 +34,6 @@
 				cmsSetTextMessage(data.d);
 			}
 		}
-
-
 	</script>
 	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>
@@ -64,8 +63,8 @@
 						<asp:HiddenField ID="hdnDelete" runat="server" Value='<%# Eval("IsWidgetPendingDelete")%>' Visible="false" />
 					</ItemTemplate>
 				</asp:TemplateField>
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-					ShowBooleanImage="true" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+					AlternateTextTrue="Active" ShowBooleanImage="true" />
 				<asp:TemplateField>
 					<HeaderTemplate>
 						Active
@@ -73,7 +72,8 @@
 					<ItemTemplate>
 						<asp:Button CommandName='<%#String.Format("restore_{0}", Eval("Root_WidgetID")) %>' ID="btnRestore" runat="server" Text="Show" OnCommand="ClickAction"
 							Visible="false" />
-						<asp:Button CommandName='<%#String.Format("remove_{0}", Eval("Root_WidgetID")) %>' ID="btnRemove" runat="server" Text="Hide" OnCommand="ClickAction" Visible="false" />
+						<asp:Button CommandName='<%#String.Format("remove_{0}", Eval("Root_WidgetID")) %>' ID="btnRemove" runat="server" Text="Hide" OnCommand="ClickAction"
+							Visible="false" />
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>
@@ -93,8 +93,8 @@
 				<carrot:CarrotHeaderSortTemplateField HeaderText="Retire On" DataField="RetireDate" DataFieldFormat="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
 					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsUnReleased" HeaderText="Released" ShowBooleanImage="true" AlternateTextTrue="Unreleased"
-					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsUnReleased" HeaderText="Released" ShowBooleanImage="true"
+					AlternateTextTrue="Unreleased" AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
 			</Columns>
 		</carrot:CarrotGridView>
 	</div>

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,7 +13,6 @@ using System.Linq;
 namespace Carrotware.CMS.Interface {
 
 	public interface IWidget {
-
 		Guid PageWidgetID { get; set; }
 
 		Guid RootContentID { get; set; }
@@ -24,7 +22,5 @@ namespace Carrotware.CMS.Interface {
 		string JSEditFunction { get; }
 
 		bool EnableEdit { get; }
-
-
 	}
 }

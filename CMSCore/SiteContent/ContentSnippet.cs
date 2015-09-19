@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,8 +13,8 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class ContentSnippet {
 
 		public ContentSnippet() { }
@@ -29,7 +29,6 @@ namespace Carrotware.CMS.Core {
 			this.GoLiveDate = this.CreateDate.AddHours(-1);
 			this.RetireDate = this.CreateDate.AddYears(2);
 		}
-
 
 		public Guid Root_ContentSnippetID { get; set; }
 		public Guid SiteID { get; set; }
@@ -59,6 +58,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
 		public bool IsUnReleased {
 			get {
 				if (this.GoLiveDate > SiteData.CurrentSite.Now) {
@@ -70,7 +70,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal ContentSnippet(vw_carrot_ContentSnippet c) {
-
 			if (c != null) {
 				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
 
@@ -94,7 +93,6 @@ namespace Carrotware.CMS.Core {
 				this.EditHeartbeat = c.EditHeartbeat;
 
 				this.VersionCount = c.VersionCount;
-
 			}
 		}
 
@@ -120,7 +118,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public bool IsSnippetLocked() {
-
 			bool bLock = false;
 			if (this.Heartbeat_UserId != null) {
 				if (this.Heartbeat_UserId != SecurityData.CurrentUserGuid
@@ -136,7 +133,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public bool IsSnippetLocked(Guid currentUserID) {
-
 			bool bLock = false;
 			if (this.Heartbeat_UserId != null) {
 				if (this.Heartbeat_UserId != currentUserID
@@ -200,7 +196,6 @@ namespace Carrotware.CMS.Core {
 				return _types;
 			}
 		}
-
 
 		public void Delete() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -295,14 +290,12 @@ namespace Carrotware.CMS.Core {
 
 				_db.SubmitChanges();
 
-
 				this.ContentSnippetID = c.ContentSnippetID;
 				this.Root_ContentSnippetID = rc.Root_ContentSnippetID;
 			}
 		}
 
 		public static int GetSimilar(Guid siteID, Guid rootSnippetID, string categorySlug) {
-
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				IQueryable<vw_carrot_ContentSnippet> query = CompiledQueries.cqGetContentSnippetNoMatch(_db, siteID, rootSnippetID, categorySlug);
 
@@ -366,7 +359,5 @@ namespace Carrotware.CMS.Core {
 				return _types;
 			}
 		}
-
-
 	}
 }

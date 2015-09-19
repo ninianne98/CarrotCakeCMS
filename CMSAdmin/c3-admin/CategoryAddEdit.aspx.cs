@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,11 +11,10 @@ using Carrotware.CMS.Core;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class CategoryAddEdit : AdminBasePage {
 		public Guid guidItemID = Guid.Empty;
-
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.BlogCategory);
@@ -64,6 +58,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName + "?id=" + item.ContentCategoryID.ToString());
 		}
-
 	}
 }

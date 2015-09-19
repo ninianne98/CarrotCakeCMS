@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,13 +15,12 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class SiteImport : AdminBasePage {
 
+	public partial class SiteImport : AdminBasePage {
 		public Guid guidImportID = Guid.Empty;
-		SiteExport exSite = null;
-		List<BasicContentData> sitePageList = new List<BasicContentData>();
+		private SiteExport exSite = null;
+		private List<BasicContentData> sitePageList = new List<BasicContentData>();
 		private int iPageCount = 0;
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -80,7 +77,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private int iAccessCounter = 0;
 
 		protected BasicContentData GetFileInfoFromList(SiteData site, string sFilename) {
-
 			if (sitePageList == null || sitePageList.Count < 1 || iAccessCounter % 25 == 0) {
 				sitePageList = site.GetFullSiteFileList();
 				iAccessCounter = 0;
@@ -100,7 +96,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			return pageData;
 		}
 
-		SiteNav _navHome = null;
+		private SiteNav _navHome = null;
+
 		protected SiteNav GetHomePage(SiteData site) {
 			if (_navHome == null) {
 				using (SiteNavHelper navHelper = new SiteNavHelper()) {
@@ -117,7 +114,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litMessage.Text += ex.ToString();
 			}
 		}
-
 
 		private Guid FindUser(Guid userId) {
 			MembershipUser usr = SecurityData.GetUserByGuid(userId);
@@ -136,7 +132,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void ImportStuff() {
-
 			SiteData.CurrentSite = null;
 
 			SiteData site = SiteData.CurrentSite;
@@ -145,7 +140,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			string sMsg = "";
 
 			if (chkSite.Checked || chkPages.Checked || chkPosts.Checked) {
-
 				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLower()).ToList();
 				List<string> cats = site.GetCategoryList().Select(x => x.CategorySlug.ToLower()).ToList();
 
@@ -181,9 +175,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			SetMsg(sMsg);
 
-
 			if (chkSnippet.Checked) {
-
 				List<string> snippets = site.GetContentSnippetList().Select(x => x.ContentSnippetSlug.ToLower()).ToList();
 
 				exSite.TheSnippets.RemoveAll(x => snippets.Contains(x.ContentSnippetSlug.ToLower()));
@@ -213,7 +205,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			SetMsg(sMsg);
 
-
 			if (chkSite.Checked) {
 				sMsg += "<p>Updated Site Name</p>";
 				site.SiteName = exSite.TheSite.SiteName;
@@ -221,7 +212,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				site.Save();
 			}
 			SetMsg(sMsg);
-
 
 			if (!chkMapAuthor.Checked) {
 				exSite.TheUsers = new List<SiteExportUser>();
@@ -261,7 +251,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-
 			if (chkPages.Checked) {
 				sMsg += "<p>Imported Pages</p>";
 				sitePageList = site.GetFullSiteFileList();
@@ -278,7 +267,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 									   where c.ThePage.ContentType == ContentPageType.PageType.ContentEntry
 									   orderby c.ThePage.NavOrder, c.ThePage.NavMenuText
 									   select c).ToList()) {
-
 					ContentPage cp = impCP.ThePage;
 					cp.Root_ContentID = impCP.NewRootContentID;
 					cp.ContentID = Guid.NewGuid();
@@ -336,7 +324,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			SetMsg(sMsg);
 
-
 			if (chkPosts.Checked) {
 				sMsg += "<p>Imported Posts</p>";
 				sitePageList = site.GetFullSiteFileList();
@@ -348,7 +335,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 									   where c.ThePage.ContentType == ContentPageType.PageType.BlogEntry
 									   orderby c.ThePage.CreateDate
 									   select c).ToList()) {
-
 					ContentPage cp = impCP.ThePage;
 					cp.Root_ContentID = impCP.NewRootContentID;
 					cp.ContentID = Guid.NewGuid();
@@ -396,7 +382,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			SetMsg(sMsg);
 
-
 			if (chkComments.Checked) {
 				sMsg += "<p>Imported Comments</p>";
 				sitePageList = site.GetFullSiteFileList();
@@ -404,7 +389,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				foreach (var impCP in (from c in exSite.TheComments
 									   orderby c.TheComment.CreateDate
 									   select c).ToList()) {
-
 					int iCommentCount = -1;
 					PostComment pc = impCP.TheComment;
 					BasicContentData navData = GetFileInfoFromList(site, pc.FileName);
@@ -427,8 +411,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			BindData();
 		}
-
-
 
 	}
 }

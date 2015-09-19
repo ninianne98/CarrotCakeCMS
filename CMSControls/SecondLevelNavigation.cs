@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,7 +18,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SecondLevelNavigation runat=server></{0}:SecondLevelNavigation>")]
 	public class SecondLevelNavigation : BaseNavSelHeaded {
-
 		public bool IncludeParent { get; set; }
 
 		protected override void LoadData() {
@@ -46,6 +45,5 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			return pageNav;
 		}
-
 	}
 }

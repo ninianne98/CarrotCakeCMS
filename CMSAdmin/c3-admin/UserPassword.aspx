@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Edit Profile" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="UserPassword.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserPassword" %>
+﻿<%@ Page Title="Edit Profile" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="UserPassword.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserPassword" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
@@ -30,8 +31,8 @@
 								<td class="tablecontents">
 									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" MaxLength="100" ID="CurrentPassword" TextMode="Password"
 										runat="server" />
-									<asp:RequiredFieldValidator ID="CurrentPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="CurrentPassword" ErrorMessage="!"
-										ToolTip="Current password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
+									<asp:RequiredFieldValidator ID="CurrentPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="CurrentPassword"
+										ErrorMessage="!" ToolTip="Current password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
 								</td>
 							</tr>
 							<tr>
@@ -49,7 +50,8 @@
 									<b class="caption">Confirm Password </b>
 								</td>
 								<td class="tablecontents">
-									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" ID="ConfirmNewPassword" runat="server" TextMode="Password" />
+									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" ID="ConfirmNewPassword" runat="server"
+										TextMode="Password" />
 									<asp:RequiredFieldValidator ID="ConfirmNewPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmNewPassword"
 										ErrorMessage="!" ToolTip="Confirm Password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
 									<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="NewPassword" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmNewPassword"

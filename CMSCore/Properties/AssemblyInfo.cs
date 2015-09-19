@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web.UI;
 
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CMSCore")]
@@ -15,8 +14,8 @@ using System.Web.UI;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
@@ -26,27 +25,23 @@ using System.Web.UI;
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
-//      Minor Version 
+//      Minor Version
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Build and Revision Numbers 
+// You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("4.3.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
 
-
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Default.htm", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm", "text/plain")]
-
 [assembly: WebResource("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.FirstPage.txt", "text/plain")]
-
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt", "text/html", PerformSubstitution = true)]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt", "text/html", PerformSubstitution = true)]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.SampleContent3.txt", "text/html", PerformSubstitution = true)]
-
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample1.png", "image/png")]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample2.png", "image/png")]
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Mock.sample3.png", "image/png")]

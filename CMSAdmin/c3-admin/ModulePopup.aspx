@@ -1,5 +1,5 @@
-﻿<%@ Page ValidateRequest="false" Title="Module Index" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true"
-	CodeBehind="ModulePopup.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ModulePopup" %>
+﻿<%@ Page ValidateRequest="false" Title="Module Index" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="ModulePopup.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ModulePopup" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

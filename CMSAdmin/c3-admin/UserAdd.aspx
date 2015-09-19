@@ -55,8 +55,8 @@
 								</td>
 								<td>
 									<asp:TextBox Style="width: 140px;" ValidationGroup="createWizard" ID="ConfirmPassword" runat="server" TextMode="Password" TabIndex="3" />
-									<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword" ErrorMessage="Confirm Password is required."
-										ToolTip="Confirm Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
+									<asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword"
+										ErrorMessage="Confirm Password is required." ToolTip="Confirm Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 									<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword"
 										Display="Dynamic" ErrorMessage="Confirm Password does not match Password." ToolTip="Confirm Password does not match Password." ValidationGroup="createWizard" />
 								</td>

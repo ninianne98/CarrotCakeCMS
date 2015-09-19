@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,15 +19,13 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ControlPropertiesEdit : AdminBasePage {
 
+	public partial class ControlPropertiesEdit : AdminBasePage {
 		public Guid guidWidget = Guid.Empty;
 		public Guid guidContentID = Guid.Empty;
 		public List<WidgetProps> lstProps = null;
 		public List<ObjectProperty> lstDefProps = null;
-
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.UsesSaved = true;
@@ -45,7 +43,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						select aw).FirstOrDefault();
 
 			if (!IsPostBack) {
-
 				lstProps = w.ParseDefaultControlProperties();
 
 				Control widget = new Control();
@@ -147,13 +144,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		public string GetSavedValue(string sDefVal, string sName) {
-
 			var pp = (from p in lstProps
 					  where p.KeyName.ToLower() == sName.ToLower()
 					  select p).FirstOrDefault();
 
 			if (pp == null) {
-
 				var dp = (from p in lstDefProps
 						  where p.Name.ToLower() == sName.ToLower()
 						  select p).FirstOrDefault();
@@ -181,7 +176,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void rpProps_Bind(object sender, RepeaterItemEventArgs e) {
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item) {
-
 				HiddenField hdnName = (HiddenField)e.Item.FindControl("hdnName");
 				TextBox txtValue = (TextBox)e.Item.FindControl("txtValue");
 				DropDownList ddlValue = (DropDownList)e.Item.FindControl("ddlValue");
@@ -208,11 +202,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 									  && p.Name.ToLower() == sListSourcePropertyName.ToLower()
 									  select p).FirstOrDefault();
 
-
 				var dp = (from p in lstDefProps
 						  where p.Name.ToLower() == sName.ToLower()
 						  select p).FirstOrDefault();
-
 
 				if (ListSourceProperty != null) {
 					if (ListSourceProperty.DefValue is Dictionary<string, string>) {
@@ -243,7 +235,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 							GeneralUtilities.BindList(chkValues, ListSourceProperty.DefValue);
 
-							// since this is a multi selected capable field, look for anything that starts with the 
+							// since this is a multi selected capable field, look for anything that starts with the
 							// field name and has the delimeter trailing
 							var pp = (from p in lstProps
 									  where p.KeyName.ToLower().StartsWith(sName.ToLower() + "|")
@@ -277,13 +269,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					chkValue.Checked = Convert.ToBoolean(txtValue.Text);
 				}
-
 			}
 		}
 
-
 		protected void btnSave_Click(object sender, EventArgs e) {
-
 			Widget w = (from aw in cmsHelper.cmsAdminWidget
 						where aw.Root_WidgetID == guidWidget
 						orderby aw.WidgetOrder, aw.EditDate
@@ -292,7 +281,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			var props = new List<WidgetProps>();
 
 			foreach (RepeaterItem r in rpProps.Items) {
-
 				HiddenField hdnName = (HiddenField)r.FindControl("hdnName");
 				TextBox txtValue = (TextBox)r.FindControl("txtValue");
 				DropDownList ddlValue = (DropDownList)r.FindControl("ddlValue");
@@ -342,7 +330,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.ShowSave();
 		}
-
-
 	}
 }

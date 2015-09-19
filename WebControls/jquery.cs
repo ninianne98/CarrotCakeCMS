@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Web.UI;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -11,12 +12,11 @@ using System.Web.UI;
 * Date: October 2011
 */
 
-
 namespace Carrotware.Web.UI.Controls {
+
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jquery runat=server></{0}:jquery>")]
 	public class jquery : BaseWebControl {
-
 
 		public static string DefaultJQVersion {
 			get {
@@ -52,13 +52,11 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		public static string GetWebResourceUrl(string resource) {
 			return BaseWebControl.GetWebResourceUrl(typeof(jquery), resource);
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			string sJQFile = "";
 			string jqVer = JQVersion;
 
@@ -75,22 +73,27 @@ namespace Carrotware.Web.UI.Controls {
 					jqVer = "1.11.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-11-2.js");
 					break;
+
 				case "1.10":
 					jqVer = "1.10.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-10-2.js");
 					break;
+
 				case "1.9":
 					jqVer = "1.9.1";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-9-1.js");
 					break;
+
 				case "1.8":
 					jqVer = "1.8.3";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-8-3.js");
 					break;
+
 				case "1.7":
 					jqVer = "1.7.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-7-2.js");
 					break;
+
 				case "1":
 				case "1.3":
 				case "1.4":
@@ -99,6 +102,7 @@ namespace Carrotware.Web.UI.Controls {
 					jqVer = "1.6.4";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-6-4.js");
 					break;
+
 				default:
 					jqVer = "1.11.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-11-2.js");
@@ -114,9 +118,6 @@ namespace Carrotware.Web.UI.Controls {
 					output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 				}
 			}
-
 		}
-
-
 	}
 }

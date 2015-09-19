@@ -20,7 +20,7 @@
 			</td>
 			<td>
 				<asp:Literal ID="lblFile" runat="server" />
-				&nbsp;&nbsp;<asp:HyperLink ID="lnkPage" runat="server" Target="_blank"><img class="imgNoBorder" src="images/html2.png" 
+				&nbsp;&nbsp;<asp:HyperLink ID="lnkPage" runat="server" Target="_blank"><img class="imgNoBorder" src="images/html2.png"
 				title="Visit page" alt="Visit page" /></asp:HyperLink>
 			</td>
 		</tr>
@@ -139,5 +139,4 @@
 	function cancelEditing() {
 		window.setTimeout("location.href = './<%=ReturnPageURL %>';", 250);
 	}
-
 </script>

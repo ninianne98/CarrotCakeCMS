@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,7 +23,6 @@ using System.Web.Caching;
 namespace Carrotware.CMS.DBUpdater {
 
 	public class DatabaseUpdate {
-
 		public static SqlException LastSQLError { get; set; }
 
 		public static string CurrentDbVersion { get { return "20141025"; } }
@@ -33,12 +33,10 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static string DbVersion12 { get { return "20141025"; } }
 
-
 		public DatabaseUpdate() {
 			LastSQLError = null;
 			TestDatabaseWithQuery();
 		}
-
 
 		public bool IsPostStep04 {
 			get {
@@ -48,6 +46,7 @@ namespace Carrotware.CMS.DBUpdater {
 				return false;
 			}
 		}
+
 		public bool IsPostStep09 {
 			get {
 				if (!FailedSQL) {
@@ -56,6 +55,7 @@ namespace Carrotware.CMS.DBUpdater {
 				return false;
 			}
 		}
+
 		public bool IsPostStep10 {
 			get {
 				if (!FailedSQL) {
@@ -87,6 +87,7 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		private static string ContentKey = "cms_SiteSetUpSQLState";
+
 		public static bool FailedSQL {
 			get {
 				bool c = false;
@@ -115,7 +116,6 @@ namespace Carrotware.CMS.DBUpdater {
 					|| msg.Contains("invalid column name")
 					|| msg.Contains("could not find stored procedure")
 					|| msg.Contains("not found")) {
-
 					return true;
 				}
 			}
@@ -202,7 +202,6 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		public List<DatabaseUpdateMessage> HandleResponse(List<DatabaseUpdateMessage> lstMsgs, string sMsg, DatabaseUpdateResponse execMessage) {
-
 			if (lstMsgs == null) {
 				lstMsgs = new List<DatabaseUpdateMessage>();
 			}
@@ -210,7 +209,6 @@ namespace Carrotware.CMS.DBUpdater {
 			DatabaseUpdateMessage item = new DatabaseUpdateMessage();
 
 			if (!string.IsNullOrEmpty(sMsg)) {
-
 				item.Message = sMsg;
 
 				if (execMessage != null) {
@@ -218,7 +216,7 @@ namespace Carrotware.CMS.DBUpdater {
 					item.Response = execMessage.Response;
 
 					if (execMessage.LastException != null && !string.IsNullOrEmpty(execMessage.LastException.Message)) {
-						item.HasExceoption = true;
+						item.HasException = true;
 						item.ExceptionText = execMessage.LastException.Message;
 						if (execMessage.LastException.InnerException != null && !string.IsNullOrEmpty(execMessage.LastException.InnerException.Message)) {
 							item.InnerExceptionText = execMessage.LastException.InnerException.Message;
@@ -257,9 +255,7 @@ namespace Carrotware.CMS.DBUpdater {
 			int iUpdate = 1;
 
 			if (bUpdate || (ver.DataValue != DatabaseUpdate.CurrentDbVersion)) {
-
 				if (ver.DataValue != DatabaseUpdate.CurrentDbVersion) {
-
 					if (!IsPostStep04) {
 						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep00());
 						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep01());
@@ -291,11 +287,9 @@ namespace Carrotware.CMS.DBUpdater {
 							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep12());
 						}
 					}
-
 				} else {
 					HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 				}
-
 			} else {
 				HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 			}
@@ -557,7 +551,7 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
-		#endregion
+		#endregion Pre Blog alters
 
 		#region Blog alters
 
@@ -625,7 +619,7 @@ namespace Carrotware.CMS.DBUpdater {
 			return res;
 		}
 
-		#endregion
+		#endregion Blog alters
 
 		public DatabaseUpdateResponse AlterStep10() {
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
@@ -645,7 +639,6 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		public DatabaseUpdateResponse AlterStep11() {
-
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep11");
@@ -663,7 +656,6 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		public DatabaseUpdateResponse AlterStep12() {
-
 			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
 
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep12");
@@ -681,7 +673,6 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		private string ReadEmbededScript(string filePath) {
-
 			string sFile = "";
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
@@ -711,7 +702,6 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		public Exception ExecScriptContents(string sConnectionString, string sScriptContents, bool bIgnoreErr) {
-
 			return ExecNonQuery(sConnectionString, sScriptContents, bIgnoreErr);
 		}
 
@@ -722,7 +712,6 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		private Exception ExecFileContents(string sConnectionString, string sResourceName, bool bIgnoreErr) {
-
 			string sScriptContents = ReadEmbededScript(sResourceName);
 
 			Exception response = ExecScriptContents(sConnectionString, sScriptContents, bIgnoreErr);
@@ -730,7 +719,7 @@ namespace Carrotware.CMS.DBUpdater {
 			return response;
 		}
 
-		#endregion
+		#endregion Execute SQL statements
 
 		#region Work with data keys
 
@@ -807,12 +796,11 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 		}
 
-		#endregion
+		#endregion Work with data keys
 
 		#region General database routines
 
 		private Exception ExecNonQuery(string sConnectionString, string sSQLQuery, bool bIgnoreErr) {
-
 			Exception exc = new Exception("");
 
 			using (SqlConnection myConnection = new SqlConnection(sConnectionString)) {
@@ -936,7 +924,6 @@ namespace Carrotware.CMS.DBUpdater {
 			DataTable dt = new DataTable();
 
 			try {
-
 				using (SqlConnection cn = new SqlConnection(sConnectionString)) {
 					cn.Open(); // throws if invalid
 
@@ -990,7 +977,7 @@ namespace Carrotware.CMS.DBUpdater {
 			return ds;
 		}
 
-		#endregion
+		#endregion General database routines
 	}
 
 	//======================
@@ -998,7 +985,6 @@ namespace Carrotware.CMS.DBUpdater {
 		public bool NeedsUpdate { get; set; }
 
 		public List<DatabaseUpdateMessage> Messages { get; set; }
-
 
 		public DatabaseUpdateStatus() {
 			this.Messages = new List<DatabaseUpdateMessage>();
@@ -1008,27 +994,25 @@ namespace Carrotware.CMS.DBUpdater {
 
 	//======================
 	public class DataInfo {
-
 		public string DataKey { get; set; }
 		public string DataValue { get; set; }
 	}
 
 	//======================
 	public class DatabaseUpdateMessage {
-
 		public string Message { get; set; }
 		public string ExceptionText { get; set; }
 		public string InnerExceptionText { get; set; }
 		public string Response { get; set; }
 		public int Order { get; set; }
 		public bool AlteredData { get; set; }
-		public bool HasExceoption { get; set; }
+		public bool HasException { get; set; }
 
 		public DatabaseUpdateMessage() {
 			this.ExceptionText = null;
 			this.InnerExceptionText = null;
 			this.AlteredData = false;
-			this.HasExceoption = false;
+			this.HasException = false;
 			this.Message = "";
 			this.Response = "";
 			this.Order = -1;
@@ -1037,7 +1021,6 @@ namespace Carrotware.CMS.DBUpdater {
 
 	//======================
 	public class DatabaseUpdateResponse {
-
 		public Exception LastException { get; set; }
 		public string Response { get; set; }
 		public bool RanUpdate { get; set; }

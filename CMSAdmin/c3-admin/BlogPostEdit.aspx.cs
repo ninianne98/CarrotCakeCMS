@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,10 +15,10 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class BlogPostEdit : AdminBasePage {
 
+	public partial class BlogPostEdit : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
-		ContentPage pageContents = null;
+		private ContentPage pageContents = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.UsesSaved = true;
@@ -37,7 +33,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litPageName.Text = pageContents.FileName;
 
 				if (!IsPostBack) {
-
 					GeneralUtilities.BindRepeater(rpCat, SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText));
 
 					GeneralUtilities.BindRepeater(rpTag, SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText));
@@ -73,9 +68,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		protected void btnSave_Click(object sender, EventArgs e) {
-
 			if (pageContents != null) {
 				pageContents.TitleBar = txtTitle.Text;
 				pageContents.NavMenuText = txtNav.Text;
@@ -124,7 +117,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString() + Master.SavedSuffix);
 			}
-
 		}
 	}
 }

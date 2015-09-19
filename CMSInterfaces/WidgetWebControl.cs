@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,8 +11,8 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Interface {
+
 	public abstract class WidgetWebControl : WebControl, IWidget {
 
 		#region IWidget Members
@@ -28,10 +26,11 @@ namespace Carrotware.CMS.Interface {
 		public virtual string JSEditFunction {
 			get { return ""; }
 		}
+
 		public virtual bool EnableEdit {
 			get { return true; }
 		}
-		#endregion
 
+		#endregion IWidget Members
 	}
 }

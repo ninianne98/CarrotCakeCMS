@@ -1,7 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.UI.Controls {
 
@@ -28,12 +35,10 @@ namespace Carrotware.CMS.UI.Controls {
 		TagType HeadWrapTag { get; set; }
 
 		int ItemCount { get; set; }
-
 	}
 
 	//========================================
 	public interface ICMSCoreControl {
-
 		bool IsAdminMode { get; set; }
 
 		Guid DatabaseKey { get; set; }
@@ -41,7 +46,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 	public interface IActivateNavItem {
-
 		string CSSSelected { get; set; }
 
 		string CssClassNormal { get; set; }
@@ -53,12 +57,10 @@ namespace Carrotware.CMS.UI.Controls {
 		string NavigateUrl { get; set; }
 
 		Guid ContentID { get; set; }
-
 	}
 
 	//========================================
 	public interface IActivatePageNavItem {
-
 		string CSSSelected { get; set; }
 
 		string CssClassNormal { get; set; }
@@ -66,6 +68,5 @@ namespace Carrotware.CMS.UI.Controls {
 		bool IsSelected { get; set; }
 
 		int PageNumber { get; set; }
-
 	}
 }

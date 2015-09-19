@@ -19,7 +19,7 @@
 					$(this).datepicker({
 						changeMonth: true,
 						changeYear: true,
-						showOn: 'button',
+						showOn: "both",
 						buttonImage: '/c3-admin/images/calendar.png',
 						buttonImageOnly: true,
 						constrainInput: true

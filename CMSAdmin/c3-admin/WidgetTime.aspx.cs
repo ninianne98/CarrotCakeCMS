@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
-using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,11 +14,12 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class WidgetTime : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidWidgetID = Guid.Empty;
 
-		List<Widget> lstPageWidgets = null;
+		private List<Widget> lstPageWidgets = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.UsesSaved = true;
@@ -61,7 +57,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-
 		protected void GetCtrlName(Widget ww) {
 			string sName = "";
 
@@ -77,7 +72,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			litControlPathName.Text = sName;
 		}
-
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			Widget ww = null;
@@ -107,9 +101,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.ShowSave();
 		}
-
-
-
 
 	}
 }

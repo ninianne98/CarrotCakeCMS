@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,8 +13,8 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class TrackBackEntry : IDisposable {
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
@@ -30,7 +30,6 @@ namespace Carrotware.CMS.Core {
 		public TrackBackEntry() { }
 
 		internal TrackBackEntry(vw_carrot_TrackbackQueue c) {
-
 			if (c != null) {
 				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
 				this.TrackbackQueueID = c.TrackbackQueueID;
@@ -42,7 +41,6 @@ namespace Carrotware.CMS.Core {
 				this.TrackedBack = c.TrackedBack;
 			}
 		}
-
 
 		public static TrackBackEntry Get(Guid TrackbackQueueID) {
 			TrackBackEntry _item = null;
@@ -81,7 +79,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static List<TrackBackEntry> GetPageTrackBackList(Guid rootContentID) {
-
 			List<TrackBackEntry> _types = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -94,9 +91,7 @@ namespace Carrotware.CMS.Core {
 			return _types;
 		}
 
-
 		public static List<TrackBackEntry> GetTrackBackQueue(Guid rootContentID) {
-
 			List<TrackBackEntry> _types = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -110,7 +105,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static List<TrackBackEntry> GetTrackBackSiteQueue(Guid siteID) {
-
 			List<TrackBackEntry> _types = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -124,7 +118,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static List<TrackBackEntry> FindTrackbackByURL(Guid rootContentID, string sURL) {
-
 			List<TrackBackEntry> _types = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -162,6 +155,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		#endregion
+		#endregion IDisposable Members
 	}
 }

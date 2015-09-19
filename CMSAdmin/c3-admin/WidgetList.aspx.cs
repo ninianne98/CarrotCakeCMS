@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,10 +15,10 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class WidgetList : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		public string sZone = "";
-
 
 		protected void Page_Load(object sender, EventArgs e) {
 			guidContentID = GetGuidPageIDFromQuery();
@@ -51,7 +47,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void BindDataGrid() {
-
 			if (sZone.ToLower() != "cms-all-placeholder-zones") {
 				gvPages.Columns[4].Visible = false;
 			}
@@ -93,9 +88,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						btnDelete.Visible = true;
 					}
 				}
-
 			}
-
 		}
 
 		protected void ClickAction(object sender, CommandEventArgs e) {
@@ -106,7 +99,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				var vals = e.CommandName.Split('_');
 				sAction = vals[0];
 				guidWidget = new Guid(vals[1]);
-
 			}
 
 			cmsHelper.OverrideKey(guidContentID);
@@ -120,7 +112,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			int iPos = cacheWidget.Max(x => x.WidgetOrder) + 1;
 
 			if (ww != null) {
-
 				foreach (var w in ww) {
 					iPos++;
 
@@ -147,9 +138,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.ShowSave();
 		}
-
-
-
 
 	}
 }

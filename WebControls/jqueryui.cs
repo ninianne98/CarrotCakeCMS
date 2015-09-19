@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Web.UI;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -11,8 +12,8 @@ using System.Web.UI;
 * Date: October 2011
 */
 
-
 namespace Carrotware.Web.UI.Controls {
+
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jqueryui runat=server></{0}:jqueryui>")]
 	public class jqueryui : BaseWebControl {
@@ -42,7 +43,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			string sJQFile = "";
 			string jqVer = JQUIVersion;
 
@@ -57,22 +57,27 @@ namespace Carrotware.Web.UI.Controls {
 					jqVer = "1.11.4";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-4.js");
 					break;
+
 				case "1.10":
 					jqVer = "1.10.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js");
 					break;
+
 				case "1.9":
 					jqVer = "1.9.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-9-2.js");
 					break;
+
 				case "1.8":
 					jqVer = "1.8.24";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-8-24.js");
 					break;
+
 				case "1.7":
 					jqVer = "1.7.3";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-7-3.js");
 					break;
+
 				default:
 					jqVer = "1.11.4";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-4.js");
@@ -80,9 +85,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			output.WriteLine("<!-- JQuery UI v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
-
 		}
-
-
 	}
 }

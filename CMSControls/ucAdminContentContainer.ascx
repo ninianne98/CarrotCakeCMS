@@ -6,7 +6,8 @@
 		</div>
 		<div id="cmsEditMenuList" class="cmsContentContainerMenu">
 			<ul class="cmsContentContainerMenu cmsMnuParent">
-				<li class="cmsWidgetCogIcon"><a title="" alt="Modify" class="cmsWidgetBarLink cmsWidgetBarIconCog" id="cmsWidgetBarIcon" href="javascript:void(0);">M</a>
+				<li class="cmsWidgetCogIcon"><a title="" alt="Modify" class="cmsWidgetBarLink cmsWidgetBarIconCog" id="cmsWidgetBarIcon" href="javascript:void(0);">
+					M</a>
 					<ul class="cmsContentContainerMenu cmsMnuChildren">
 						<li runat="server" id="cmsContentAreaLink1_{ZONE_ID}"><a title="Edit HTML" alt="Edit HTML" class="cmsWidgetBarLink cmsWidgetBarIconPencil2" id="cmsContentEditLink1"
 							href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','html'); ">Edit HTML</a></li>

@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Linq;
 using System.Linq;
-using System.Web;
-using System.Web.Caching;
-using System.Web.Profile;
-using System.Web.Security;
-using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -23,12 +15,11 @@ using System.Web.UI.WebControls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class GridSorting {
 
 		public GridSorting() {
-
 			//SortUpIndicator = "&nbsp;&uarr;";
 			//SortDownIndicator = "&nbsp;&darr;";
 
@@ -42,26 +33,28 @@ namespace Carrotware.CMS.Core {
 			get;
 			set;
 		}
+
 		public string SortField {
 			get;
 			set;
 		}
+
 		public string SortDir {
 			get;
 			set;
 		}
+
 		public string SortUpIndicator {
 			get;
 			set;
 		}
+
 		public string SortDownIndicator {
 			get;
 			set;
 		}
 
-
 		public string Sort {
-
 			get {
 				string sSort = "";
 				try {
@@ -88,7 +81,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public void SetHeaderClick(Control TheControl, EventHandler CmdFunc) {
 			//add the command click event to the link buttons on the datagrid heading
 
@@ -102,9 +94,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public string ResetSortToColumn(string sSortField) {
-
 			if (SortField.Length < 1) {
 				SortField = sSortField;
 				SortDir = string.Empty;
@@ -124,9 +114,7 @@ namespace Carrotware.CMS.Core {
 			return sSortField;
 		}
 
-
 		public List<T> SortDataList<T>(List<T> d) {
-
 			List<T> query = null;
 			IEnumerable<T> myEnumerables = d.AsEnumerable();
 
@@ -141,7 +129,6 @@ namespace Carrotware.CMS.Core {
 			}
 
 			return query.ToList<T>();
-
 		}
 
 		protected List<T> SortDataList<T>(List<T> d, string sSort) {
@@ -158,9 +145,7 @@ namespace Carrotware.CMS.Core {
 			WalkGridForHeadings(X, SortField, SortDir);
 		}
 
-
 		private void WalkGridForHeadings(Control X, string strSortFld, string strSortDir) {
-
 			strSortFld = strSortFld.ToLower();
 			strSortDir = strSortDir.ToLower();
 
@@ -185,7 +170,5 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
-
 	}
 }

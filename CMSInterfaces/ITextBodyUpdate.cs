@@ -1,9 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.Interface {
+
 	public interface ITextBodyUpdate {
 
 		string UpdateContent(string TextContent);
@@ -15,6 +21,5 @@ namespace Carrotware.CMS.Interface {
 		string UpdateContentComment(string TextContent);
 
 		string UpdateContentSnippet(string TextContent);
-
 	}
 }

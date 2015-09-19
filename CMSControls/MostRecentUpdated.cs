@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -74,6 +72,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private List<GuidItem> guidList = null;
+
 		[
 		Category("Behavior"),
 		Description("The GuidItem collection"),
@@ -95,6 +94,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private List<StringItem> stringList = null;
+
 		[
 		Category("Behavior"),
 		Description("The StringItem collection"),
@@ -135,6 +135,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private List<string> _slugs = null;
+
 		public List<string> SelectedCategorySlugs {
 			get {
 				if (_slugs == null) {
@@ -154,7 +155,6 @@ namespace Carrotware.CMS.UI.Controls {
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
 			get {
-
 				Dictionary<string, string> _dict = (from c in SiteData.CurrentSite.GetCategoryList()
 													orderby c.CategoryText
 													where c.SiteID == SiteData.CurrentSiteID
@@ -198,16 +198,17 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected List<SiteNav> GetUpdates() {
-
 			List<SiteNav> lst = new List<SiteNav>();
 
 			switch (ContentType) {
 				case ListContentType.Blog:
 					lst = navHelper.GetLatestPosts(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
 					break;
+
 				case ListContentType.ContentPage:
 					lst = navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
 					break;
+
 				case ListContentType.SpecifiedCategories:
 					if (TakeTop > 0) {
 						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, TakeTop, 0, "GoLiveDate", "DESC");
@@ -238,13 +239,10 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					TakeTop = int.Parse(GetParmValue("TakeTop", "5"));
 
 					ContentType = (ListContentType)Enum.Parse(typeof(ListContentType), GetParmValue("ContentType", "Blog"), true);

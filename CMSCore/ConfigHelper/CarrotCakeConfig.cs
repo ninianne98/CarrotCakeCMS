@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.Configuration;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,7 +14,6 @@ using System.Web.Configuration;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.Core {
 
@@ -79,7 +79,6 @@ namespace Carrotware.CMS.Core {
 	//==============================
 	public class MainConfigElement : ConfigurationElement {
 
-
 		[Description("Site identity")]
 		[ConfigurationProperty("SiteID", DefaultValue = null, IsRequired = false)]
 		public Guid? SiteID {
@@ -99,14 +98,12 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		[Description("Override parameter for admin folder")]
 		[ConfigurationProperty("AdminFolderPath", DefaultValue = "/c3-admin/", IsRequired = false)]
 		public String AdminFolderPath {
 			get { return (String)this["AdminFolderPath"]; }
 			set { this["AdminFolderPath"] = value; }
 		}
-
 	}
 
 	//==============================
@@ -182,7 +179,6 @@ namespace Carrotware.CMS.Core {
 			get { return (String)this["PluginPath"]; }
 			set { this["PluginPath"] = value; }
 		}
-
 	}
 
 	//==============================
@@ -205,8 +201,5 @@ namespace Carrotware.CMS.Core {
 			get { return (String)this["ControlPathPublic"]; }
 			set { this["ControlPathPublic"] = value; }
 		}
-
 	}
-
-
 }

@@ -16,6 +16,8 @@
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="LightGreen" />
 	<script src="/c3-admin/includes/jquery.ui.timepicker.js" type="text/javascript"></script>
 	<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
+	<script src="/c3-admin/iCheck/icheck.min.js" type="text/javascript"></script>
 	<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/main.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
@@ -41,8 +43,6 @@
 			UpdateAjaxJQuery();
 			AjaxBtnLoad();
 		});
-
-
 	</script>
 	<!-- TinyMCE -->
 	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
@@ -177,14 +177,14 @@
 				<div id="cmsModalFrame">
 				</div>
 			</div>
-			<div style="display: none">
-				<img src="/c3-admin/images/x.png" alt="x" />
+			<img src="/c3-admin/images/x.png" alt="x" />
+			<div id="divCMSModal" title="CarrotCake CMS">
+				<div id="divCMSModalMsg">
+					&nbsp;</div>
 			</div>
-			<div style="display: none">
-				<div id="divCMSModal" title="CarrotCake CMS">
-					<div id="divCMSModalMsg">
-						&nbsp;</div>
-				</div>
+			<div id="divCMSCancelWin" title="Quit Editor?">
+				<p id="divCMSCancelWinMsg">
+					Are you sure you want cancel?</p>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -203,7 +203,6 @@
 			function ClickLogout() {
 				$('#<%=btnLogout.ClientID %>').click();
 			}
-		
 		</script>
 		<div style="display: none;">
 			<asp:Button ValidationGroup="logoutForm" ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />

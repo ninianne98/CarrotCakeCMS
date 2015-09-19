@@ -1,4 +1,5 @@
-﻿<%@ Page Title="TagIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="TagIndex.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.TagIndex" %>
+﻿<%@ Page Title="TagIndex" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="TagIndex.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.TagIndex" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

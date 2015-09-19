@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,8 +17,8 @@ using Carrotware.CMS.UI.Base;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class Logon : BasePage {
 
 		protected HtmlGenericControl divMsg {
@@ -25,6 +26,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return ((HtmlGenericControl)loginTemplate.FindControl("divMsg"));
 			}
 		}
+
 		protected HtmlAnchor lnkForgot {
 			get {
 				return ((HtmlAnchor)loginTemplate.FindControl("lnkForgot"));
@@ -32,7 +34,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			DatabaseUpdate du = new DatabaseUpdate();
 			divMsg.Visible = false;
 
@@ -49,7 +50,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void cmdLogon_Click(object sender, EventArgs e) {
-
 		}
 
 		protected void loginTemplate_LoggedIn(object sender, EventArgs e) {
@@ -65,6 +65,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				divMsg.Visible = true;
 			}
 		}
-
 	}
 }

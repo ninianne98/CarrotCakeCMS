@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -10,7 +11,6 @@ using System.Linq;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.Core {
 
@@ -30,7 +30,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public CommentExport(PostComment pc) {
-
 			SetVals(pc);
 		}
 
@@ -51,7 +50,6 @@ namespace Carrotware.CMS.Core {
 			OriginalContentCommentID = TheComment.ContentCommentID;
 
 			TheComment.ContentCommentID = NewContentCommentID;
-
 		}
 
 		public string CarrotCakeVersion { get; set; }
@@ -65,6 +63,5 @@ namespace Carrotware.CMS.Core {
 		public Guid OriginalRootContentID { get; set; }
 
 		public PostComment TheComment { get; set; }
-
 	}
 }

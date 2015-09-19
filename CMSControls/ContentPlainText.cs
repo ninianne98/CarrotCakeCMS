@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -41,13 +37,13 @@ namespace Carrotware.CMS.UI.Controls {
 			get { return "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'plain');"; }
 		}
 
-		#endregion
+		#endregion IWidget Members
 
 		#region IWidgetRawData Members
 
 		public string RawWidgetData { get; set; }
 
-		#endregion
+		#endregion IWidgetRawData Members
 
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
@@ -69,6 +65,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			output.Indent = indent;
 		}
-
 	}
 }

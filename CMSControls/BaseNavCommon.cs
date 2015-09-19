@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -62,6 +62,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public List<SiteNav> NavigationData { get; set; }
 
 		private bool _stripNotInSiteNav = true;
+
 		protected virtual bool StripNotInSiteNav {
 			get {
 				return _stripNotInSiteNav;
@@ -70,7 +71,9 @@ namespace Carrotware.CMS.UI.Controls {
 				_stripNotInSiteNav = value;
 			}
 		}
+
 		private bool _stripNotInSiteMap = false;
+
 		protected virtual bool StripNotInSiteMap {
 			get {
 				return _stripNotInSiteMap;
@@ -98,9 +101,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected virtual void WriteListPrefix(HtmlTextWriter output) {
-
 			if (this.NavigationData != null && this.NavigationData.Count > 0) {
-
 				string sCSS = "";
 
 				if (!string.IsNullOrEmpty(this.CssClass)) {
@@ -128,21 +129,16 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					this.CssClass = GetParmValue("CssClass", "");
 
 					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
-
 				}
 			} catch (Exception ex) {
 			}
 		}
-
 	}
 }

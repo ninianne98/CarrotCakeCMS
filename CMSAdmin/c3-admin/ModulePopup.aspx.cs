@@ -1,13 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,13 +13,10 @@ using Carrotware.CMS.Interface;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class ModulePopup : AdminBasePage {
 
-
-
 		protected void Page_Load(object sender, EventArgs e) {
-
-		
 		}
 
 		protected override void OnInit(EventArgs e) {
@@ -41,8 +32,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			base.OnInit(e);
 		}
-
-
 
 	}
 }

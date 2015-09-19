@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.Design;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -11,7 +12,9 @@ using System.ComponentModel.Design;
 */
 
 namespace Carrotware.Web.UI.Controls {
+
 	public class GuidItemCollectionEditor : CollectionEditor {
+
 		public GuidItemCollectionEditor(Type type)
 			: base(type) {
 		}

@@ -43,7 +43,6 @@
 				cmsSetTextMessage(data.d);
 			}
 		}
-
 	</script>
 	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>
@@ -105,14 +104,14 @@
 								<carrot:CarrotImageColumnData ImageAltText="Page" ImagePath="/c3-admin/images/page_world.png" KeyValue="ContentEntry" />
 							</ImageSelectors>
 						</carrot:CarrotHeaderSortTemplateField>
-						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteNav" HeaderText="Navigation" ShowBooleanImage="true" AlternateTextTrue="Yes"
-							AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
-						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteMap" HeaderText="In SiteMap" ShowBooleanImage="true" AlternateTextTrue="Yes"
-							AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
-						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true" AlternateTextTrue="Yes"
-							AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
-						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Public" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-							ShowBooleanImage="true" />
+						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteNav" HeaderText="Navigation" ShowBooleanImage="true"
+							AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
+						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteMap" HeaderText="In SiteMap" ShowBooleanImage="true"
+							AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
+						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="BlockIndex" HeaderText="Block Index" ShowBooleanImage="true"
+							AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/zoom_out.png" ImagePathFalse="/c3-admin/images/magnifier.png" />
+						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="PageActive" HeaderText="Public" AlternateTextFalse="Inactive"
+							AlternateTextTrue="Active" ShowBooleanImage="true" />
 					</Columns>
 				</carrot:CarrotGridView>
 			</div>
@@ -149,8 +148,8 @@
 						<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
 						<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
 						<asp:BoundField HeaderText="Control Path" DataField="ControlPath" DataFormatString="{0}" />
-						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-							ShowBooleanImage="true" />
+						<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+							AlternateTextTrue="Active" ShowBooleanImage="true" />
 					</Columns>
 				</carrot:CarrotGridView>
 			</div>

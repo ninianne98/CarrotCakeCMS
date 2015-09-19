@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,7 +21,6 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Controls {
 
 	public abstract class BaseServerControl : WidgetParmDataWebControl {
-
 		protected SiteNavHelper navHelper = new SiteNavHelper();
 
 		protected void SetSiteID() {
@@ -60,7 +60,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 		}
 
 		protected void BaseRender(HtmlTextWriter writer) {
@@ -78,7 +77,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected bool AreFilenamesSame(string sParm1, string sParm2) {
-
 			if (sParm1 == null || sParm2 == null) {
 				return false;
 			}
@@ -91,7 +89,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected SiteNav GetParentPage() {
-
 			SiteNav pageNav = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
 
 			//assign bogus page name for comp purposes
@@ -143,6 +140,5 @@ namespace Carrotware.CMS.UI.Controls {
 		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
 			return CMSConfigHelper.IdentifyLinkAsInactive(nav);
 		}
-
 	}
 }

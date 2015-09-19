@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,8 +18,8 @@ using Carrotware.CMS.Data;
 */
 
 namespace Carrotware.CMS.Core {
-	public class SiteNavHelper : IDisposable, ISiteNavHelper {
 
+	public class SiteNavHelper : IDisposable, ISiteNavHelper {
 		private ISiteNavHelper _navHelper = null;
 
 		public SiteNavHelper() {
@@ -63,6 +64,7 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetChildNavigation(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 			return _navHelper.GetChildNavigation(siteID, ParentID, bActiveOnly);
 		}
+
 		public List<SiteNav> GetChildNavigation(Guid siteID, string sParentID, bool bActiveOnly) {
 			return _navHelper.GetChildNavigation(siteID, sParentID, bActiveOnly);
 		}
@@ -70,6 +72,7 @@ namespace Carrotware.CMS.Core {
 		public int GetChildNavigationCount(Guid siteID, Guid? ParentID, bool bActiveOnly) {
 			return _navHelper.GetChildNavigationCount(siteID, ParentID, bActiveOnly);
 		}
+
 		public int GetChildNavigationCount(Guid siteID, string sParentID, bool bActiveOnly) {
 			return _navHelper.GetChildNavigationCount(siteID, sParentID, bActiveOnly);
 		}
@@ -77,12 +80,15 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetLatest(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetLatest(siteID, iUpdates, bActiveOnly);
 		}
+
 		public List<SiteNav> GetLatestPosts(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetLatestPosts(siteID, iUpdates, bActiveOnly);
 		}
+
 		public List<SiteNav> GetLatestUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetLatestUpdates(siteID, iUpdates, bActiveOnly);
 		}
+
 		public List<SiteNav> GetLatestPostUpdates(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetLatestPostUpdates(siteID, iUpdates, bActiveOnly);
 		}
@@ -90,24 +96,31 @@ namespace Carrotware.CMS.Core {
 		public List<IContentMetaInfo> GetMonthBlogUpdateList(Guid siteID, int iUpdates, bool bActiveOnly) {
 			return _navHelper.GetMonthBlogUpdateList(siteID, iUpdates, bActiveOnly);
 		}
+
 		public List<ContentDateLinks> GetSingleMonthBlogUpdateList(SiteData currentSite, DateTime monthDate, bool bActiveOnly) {
 			return _navHelper.GetSingleMonthBlogUpdateList(currentSite, monthDate, bActiveOnly);
 		}
+
 		public List<IContentMetaInfo> GetCategoryList(Guid siteID, int iUpdates) {
 			return _navHelper.GetCategoryList(siteID, iUpdates);
 		}
+
 		public List<IContentMetaInfo> GetTagList(Guid siteID, int iUpdates) {
 			return _navHelper.GetTagList(siteID, iUpdates);
 		}
+
 		public List<IContentMetaInfo> GetTagListForPost(Guid siteID, int iUpdates, string urlFileName) {
 			return _navHelper.GetTagListForPost(siteID, iUpdates, urlFileName);
 		}
+
 		public List<IContentMetaInfo> GetCategoryListForPost(Guid siteID, int iUpdates, string urlFileName) {
 			return _navHelper.GetCategoryListForPost(siteID, iUpdates, urlFileName);
 		}
+
 		public List<IContentMetaInfo> GetTagListForPost(Guid siteID, int iUpdates, Guid rootContentID) {
 			return _navHelper.GetTagListForPost(siteID, iUpdates, rootContentID);
 		}
+
 		public List<IContentMetaInfo> GetCategoryListForPost(Guid siteID, int iUpdates, Guid rootContentID) {
 			return _navHelper.GetCategoryListForPost(siteID, iUpdates, rootContentID);
 		}
@@ -119,6 +132,7 @@ namespace Carrotware.CMS.Core {
 		public SiteNav GetPrevPost(Guid siteID, Guid rootContentID, bool bActiveOnly) {
 			return _navHelper.GetPrevPost(siteID, rootContentID, bActiveOnly);
 		}
+
 		public SiteNav GetNextPost(Guid siteID, Guid rootContentID, bool bActiveOnly) {
 			return _navHelper.GetNextPost(siteID, rootContentID, bActiveOnly);
 		}
@@ -178,9 +192,11 @@ namespace Carrotware.CMS.Core {
 		public int GetFilteredContentPagedCount(SiteData currentSite, string sFilterPath, bool bActiveOnly) {
 			return _navHelper.GetFilteredContentPagedCount(currentSite, sFilterPath, bActiveOnly);
 		}
+
 		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly) {
 			return _navHelper.GetFilteredContentByIDPagedCount(currentSite, lstCategories, bActiveOnly);
 		}
+
 		public int GetFilteredContentByIDPagedCount(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly) {
 			return _navHelper.GetFilteredContentByIDPagedCount(currentSite, lstCategoryGUIDs, lstCategorySlugs, bActiveOnly);
 		}
@@ -192,9 +208,11 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetFilteredContentPagedList(SiteData currentSite, string sFilterPath, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return _navHelper.GetFilteredContentPagedList(currentSite, sFilterPath, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
+
 		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategories, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return _navHelper.GetFilteredContentByIDPagedList(currentSite, lstCategories, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
+
 		public List<SiteNav> GetFilteredContentByIDPagedList(SiteData currentSite, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return _navHelper.GetFilteredContentByIDPagedList(currentSite, lstCategoryGUIDs, lstCategorySlugs, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
@@ -238,6 +256,7 @@ namespace Carrotware.CMS.Core {
 		public List<SiteNav> GetLatestChildContentPagedList(Guid siteID, Guid? parentContentID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return _navHelper.GetLatestChildContentPagedList(siteID, parentContentID, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
+
 		public List<SiteNav> GetLatestChildContentPagedList(Guid siteID, string sParentPage, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir) {
 			return _navHelper.GetLatestChildContentPagedList(siteID, sParentPage, bActiveOnly, pageSize, pageNumber, sortField, sortDir);
 		}
@@ -262,14 +281,12 @@ namespace Carrotware.CMS.Core {
 			return _navHelper.PerformDataPagingQueryableContent(siteID, bActiveOnly, pageSize, pageNumber, sortField, sortDir, QueryInput);
 		}
 
-
-		#endregion
+		#endregion ISiteNavHelper Members
 
 		public static List<string> GetSiteDirectoryPaths() {
 			List<string> lstContent = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				lstContent = (from ct in _db.vw_carrot_Contents
 							  where ct.IsLatestVersion == true
 								  && ct.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)
@@ -278,7 +295,6 @@ namespace Carrotware.CMS.Core {
 
 			return lstContent;
 		}
-
 
 		public static SiteNav GetEmptyHome() {
 			SiteNav navData = new SiteNav();
@@ -352,7 +368,6 @@ namespace Carrotware.CMS.Core {
 			sn.Parent_ContentID = rootParentID;
 
 			return sn;
-
 		}
 
 		public static string GetSampleBody() {
@@ -364,7 +379,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string GetSampleBody(Control X, string sContentSampleNumber) { // SampleContent2
-
 			if (string.IsNullOrEmpty(sContentSampleNumber)) {
 				sContentSampleNumber = "SampleContent2";
 			}
@@ -386,14 +400,12 @@ namespace Carrotware.CMS.Core {
 					var imgURL = CMSConfigHelper.GetWebResourceUrl(X, typeof(SiteNav), img);
 					sFile2 = sFile2.Replace(img, imgURL);
 				}
-
 			} catch { }
 
 			return sFile2;
 		}
 
 		public static SiteNav GetSamplerView() {
-
 			string sFile2 = GetSampleBody();
 
 			SiteNav navNew = new SiteNav();
@@ -432,7 +444,6 @@ namespace Carrotware.CMS.Core {
 			return navNew;
 		}
 
-
 		#region IDisposable Members
 
 		public void Dispose() {
@@ -441,7 +452,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		#endregion
-
+		#endregion IDisposable Members
 	}
 }

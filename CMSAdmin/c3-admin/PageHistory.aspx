@@ -1,10 +1,12 @@
-﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageHistory" %>
+﻿<%@ Page Title="Page History" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageHistory.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageHistory" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<style type="text/css">
-		.scrollingArea {
+		.scrollingArea
+		{
 			clear: both;
 			border: solid 0px #000000;
 			height: 300px;

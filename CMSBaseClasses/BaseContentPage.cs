@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using System.Collections.Generic;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,10 +11,9 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Base {
-	public class BaseContentPage : System.Web.UI.Page {
 
+	public class BaseContentPage : System.Web.UI.Page {
 		protected PageProcessingHelper pph = new PageProcessingHelper();
 
 		public ContentPage ThePage { get { return pageContents; } }
@@ -29,8 +23,6 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentPage pageContents = null;
 		protected SiteData theSite = null;
 		protected List<Widget> pageWidgets = null;
-
-
 
 	}
 }

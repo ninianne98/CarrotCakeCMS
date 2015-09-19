@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web.UI;
 
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CMSControls")]
@@ -14,8 +13,8 @@ using System.Web.UI;
 [assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 // The following GUID is for the ID of the typelib if this project is exposed to COM
@@ -23,11 +22,11 @@ using System.Web.UI;
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
-//      Minor Version 
+//      Minor Version
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Revision and Build Numbers 
+// You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("4.3.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
@@ -72,21 +71,16 @@ using System.Web.UI;
 [assembly: TagPrefix("TrackBack", "carrot")]
 [assembly: TagPrefix("PostCalendar", "carrot")]
 [assembly: TagPrefix("ContentSnippetText", "carrot")]
-
 [assembly: TagPrefix("AuthorTextLabel", "carrot")]
 [assembly: TagPrefix("AuthorLink", "carrot")]
-
 [assembly: TagPrefix("PagedDataNextPrevLinkWrapper", "carrot")]
 [assembly: TagPrefix("PagedDataNextPrevLink", "carrot")]
 [assembly: TagPrefix("PagedDataNextPrevText", "carrot")]
-
 [assembly: WebResource("Carrotware.CMS.UI.Controls.SearchBoxJS.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenuRes.txt", "text/css")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.feed.png", "image/png")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.Trackback.txt", "text/css")]
-
-
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSearchForm.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSimplePager1.ascx", "text/plain")]
@@ -94,17 +88,11 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx", "text/plain")]
-
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx", "text/plain")]
-
-
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget1.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget2.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetMenuItem.ascx", "text/plain")]
-
-
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer1.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer2.ascx", "text/plain")]
-

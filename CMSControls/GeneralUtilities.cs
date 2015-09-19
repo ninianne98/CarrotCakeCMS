@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using System.Web.UI;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,8 +15,8 @@ using System.Web.UI;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Controls {
+
 	public class GeneralUtilities {
 
 		#region binding utilitites
@@ -29,6 +28,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			return sVal;
 		}
+
 		public static int? GetSelectedInt(ListControl ddl) {
 			int? iVal = null;
 			if (ddl.SelectedItem != null) {
@@ -36,6 +36,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			return iVal;
 		}
+
 		public static Guid? GetSelectedGuid(ListControl ddl) {
 			Guid? gVal = null;
 			if (ddl.SelectedItem != null) {
@@ -58,6 +59,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ctrl.DataSource = dataSource;
 			ctrl.DataBind();
 		}
+
 		public static void BindList(ListControl ctrl, object dataSource, string SelectedValue) {
 			BindList(ctrl, dataSource);
 			SelectListValue(ctrl, SelectedValue);
@@ -66,6 +68,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public static void BindListChooseOne(ListControl ctrl, object dataSource) {
 			BindListChooseOne(ctrl, dataSource, null);
 		}
+
 		public static void BindListChooseOne(ListControl ctrl, object dataSource, string SelectedValue) {
 			BindListDefaultText(ctrl, dataSource, SelectedValue, "Choose One", "");
 		}
@@ -87,7 +90,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		#endregion
+		#endregion binding utilitites
 
 		#region table checkbox parsers
 
@@ -118,7 +121,6 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstUpd;
 		}
 
-
 		public static List<string> GetCheckedItemString(GridView grid, bool CollectState, string CheckBoxName, string HiddenName) {
 			List<string> lstUpd = new List<string>();
 
@@ -132,7 +134,7 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstUpd;
 		}
 
-		#endregion
+		#endregion table checkbox parsers
 
 		#region boolean list stuff
 
@@ -149,9 +151,7 @@ namespace Carrotware.CMS.UI.Controls {
 			return bVal;
 		}
 
-
 		public static void BindOptionalBooleanList(ListControl ctrl, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue, string TrueChoiceText, string FalseChoiceText) {
-
 			EmptyChoiceValue = string.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
 
 			List<ListItem> lst = new List<ListItem>();
@@ -170,22 +170,20 @@ namespace Carrotware.CMS.UI.Controls {
 		public static void BindOptionalYesNoList(ListControl ctrl) {
 			BindOptionalYesNoList(ctrl, null);
 		}
+
 		public static void BindOptionalYesNoList(ListControl ctrl, string SelectedValue) {
-
 			BindOptionalBooleanList(ctrl, SelectedValue, "Choose One", "-1", "Yes", "No");
-
 		}
 
 		public static void BindOptionalTrueFalseList(ListControl ctrl) {
 			BindOptionalTrueFalseList(ctrl, null);
 		}
+
 		public static void BindOptionalTrueFalseList(ListControl ctrl, string SelectedValue) {
-
 			BindOptionalBooleanList(ctrl, SelectedValue, "Choose One", "-1", "True", "False");
-
 		}
 
-		#endregion
+		#endregion boolean list stuff
 
 		#region QueryString Parsers
 
@@ -219,8 +217,7 @@ namespace Carrotware.CMS.UI.Controls {
 			return id;
 		}
 
-		#endregion
-
+		#endregion QueryString Parsers
 
 		public static string ResolvePath(Control srcControl, string sPath) {
 			string sPathOut = null;
@@ -241,6 +238,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return sPathOut;
 		}
-
 	}
 }

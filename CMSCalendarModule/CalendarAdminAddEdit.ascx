@@ -50,15 +50,14 @@
 		</td>
 	</tr>
 </table>
-
 <script type="text/javascript">
 
-	$(document).ready(function() {
-		$(".dateRegion").each(function(i) {
+	$(document).ready(function () {
+		$(".dateRegion").each(function (i) {
 			$(this).datepicker({
 				changeMonth: true,
 				changeYear: true,
-				showOn: 'button',
+				showOn: "both",
 				buttonImage: '/c3-admin/images/calendar.png',
 				buttonImageOnly: true,
 
@@ -69,9 +68,7 @@
 			});
 		});
 	});
-	
 </script>
-
 <script language="javascript">
     function calAutoSynchMCE() {
 
@@ -104,7 +101,6 @@
         $('#<%=btnAdd.ClientID %>').click();
     }
 
-    		
     function fnDelete() {
 	    var oFrm = document.forms[0];
 	    if (confirm("You sure you want to delete?")) {
@@ -112,5 +108,4 @@
 	    }
     }
 </script>
-
 </asp:Content>

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,6 +15,7 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Controls {
+
 	[ToolboxData("<{0}:RSSFeed runat=server></{0}:RSSFeed>")]
 	public class RSSFeed : BaseServerControl {
 
@@ -114,7 +116,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(this.CssClass)) {
 				sCSS = " class=\"" + this.CssClass + "\" ";
@@ -129,11 +130,13 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.PageOnly:
 							output.Write("<!-- RSS Header Feed --> <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" /> \r\n");
 							break;
+
 						default:
 							break;
 					}
 
 					break;
+
 				case RSSRenderAs.ImageLink:
 
 					switch (this.RSSFeedType) {
@@ -143,11 +146,13 @@ namespace Carrotware.CMS.UI.Controls {
 							string sImg = GeneralUtilities.ResolvePath(this, this.ImageURI);
 							output.Write("<!-- RSS Feed Image Link--> <a " + sCSS + " title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" ><img alt=\"" + this.RSSFeedType.ToString() + "\" src=\"" + sImg + "\" /></a>\r\n");
 							break;
+
 						default:
 							break;
 					}
 
 					break;
+
 				case RSSRenderAs.TextLink:
 
 					switch (this.RSSFeedType) {
@@ -156,17 +161,16 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.PageOnly:
 							output.Write("<!-- RSS Feed Text Link--> <a " + sCSS + " title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
 							break;
+
 						default:
 							break;
 					}
 
 					break;
+
 				default:
 					break;
 			}
-
 		}
-
 	}
-
 }

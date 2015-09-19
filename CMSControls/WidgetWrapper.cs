@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -105,7 +105,6 @@ namespace Carrotware.CMS.UI.Controls {
 		public Widget WidgetData { get; set; }
 
 		private string ScrubCtrl(string sCtrl) {
-
 			sCtrl = sCtrl.Replace("{WIDGET_ID}", this.ClientID);
 			sCtrl = sCtrl.Replace("{WIDGET_KEY}", this.DatabaseKey.ToString());
 			sCtrl = sCtrl.Replace("{WIDGET_ORDER}", this.Order.ToString());
@@ -118,7 +117,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return sCtrl;
 		}
-
 
 		private Control GetCtrl(string CtrlFile, Control X) {
 			ControlUtilities cu = new ControlUtilities(this);
@@ -167,7 +165,9 @@ namespace Carrotware.CMS.UI.Controls {
 			if (this.WidgetData.IsUnReleased) {
 				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.UnreleasedPagePrefix, this.ControlTitle);
 			}
-
+			if (this.WidgetData.IsWidgetPendingDelete) {
+				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.PendingDeletePrefix, this.ControlTitle);
+			}
 
 			if (SiteData.IsWebView) {
 				if (this.IsAdminMode) {
@@ -186,7 +186,6 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 
 					if (string.IsNullOrEmpty(this.JSEditFunction)) {
-
 						ControlUtilities cu = new ControlUtilities();
 						HtmlGenericControl edit = (HtmlGenericControl)cu.FindControl("liEdit", ctrl1);
 						HtmlGenericControl hist = (HtmlGenericControl)cu.FindControl("liHistory", ctrl1);
@@ -194,14 +193,12 @@ namespace Carrotware.CMS.UI.Controls {
 						edit.Visible = false;
 						hist.Visible = false;
 					}
-
 				} else {
 					ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
 					ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
 				}
 			}
 		}
-
 
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
@@ -214,7 +211,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			ctrl2.RenderControl(writer);
 		}
-
-
 	}
 }

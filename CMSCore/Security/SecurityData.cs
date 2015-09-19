@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Security;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,6 +17,7 @@ using Carrotware.CMS.Data;
 */
 
 namespace Carrotware.CMS.Core {
+
 	public class SecurityData {
 
 		public SecurityData() { }
@@ -100,7 +102,6 @@ namespace Carrotware.CMS.Core {
 			List<MembershipUser> usrs = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				List<Guid> admins = (from ur in _db.aspnet_UsersInRoles
 									 join r in _db.aspnet_Roles on ur.RoleId equals r.RoleId
 									 where r.RoleName == CMSGroup_Admins
@@ -139,7 +140,6 @@ namespace Carrotware.CMS.Core {
 			return usrs;
 		}
 
-
 		public static List<MembershipUser> GetUserList() {
 			List<MembershipUser> usrs = new List<MembershipUser>();
 			foreach (MembershipUser usr in Membership.GetAllUsers()) {
@@ -164,11 +164,13 @@ namespace Carrotware.CMS.Core {
 				return "CarrotCMS Administrators";
 			}
 		}
+
 		public static string CMSGroup_Editors {
 			get {
 				return "CarrotCMS Editors";
 			}
 		}
+
 		public static string CMSGroup_Users {
 			get {
 				return "CarrotCMS Users";
@@ -184,6 +186,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
 		public static bool IsEditor {
 			get {
 				try {
@@ -193,6 +196,7 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
+
 		public static bool IsUsers {
 			get {
 				try {
@@ -206,10 +210,10 @@ namespace Carrotware.CMS.Core {
 		public static bool IsUserInRole(string groupName) {
 			return Roles.IsUserInRole(groupName);
 		}
+
 		public static bool IsUserInRole(string userName, string groupName) {
 			return Roles.IsUserInRole(userName, groupName);
 		}
-
 
 		public static bool IsSiteEditor {
 			get {
@@ -223,7 +227,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static bool IsAuthEditor {
 			get {
 				if (SiteData.IsWebView) {
@@ -233,7 +236,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 		public static ExtendedUserData CurrentExtendedUser {
 			get {
@@ -270,7 +272,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static MembershipUser CurrentUser {
-
 			get {
 				MembershipUser _currentUser = null;
 				if (SiteData.IsWebView && HttpContext.Current.User.Identity.IsAuthenticated) {
@@ -305,9 +306,7 @@ namespace Carrotware.CMS.Core {
 				return _Advanced;
 			}
 		}
-
 	}
-
 
 	//============
 	public class MembershipRole {
@@ -320,6 +319,7 @@ namespace Carrotware.CMS.Core {
 			this.RoleName = roleName;
 			this.RoleId = Guid.Empty;
 		}
+
 		public MembershipRole(string roleName, Guid roleID) {
 			this.RoleName = roleName;
 			this.RoleId = roleID;
@@ -345,9 +345,7 @@ namespace Carrotware.CMS.Core {
 		public string Description { get; set; }
 
 		public void Save() {
-
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-
 				aspnet_Role role = (from l in _db.aspnet_Roles
 									where l.LoweredRoleName.ToLower() == this.RoleName.ToLower()
 										|| l.RoleId == this.RoleId
@@ -364,7 +362,5 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
-
 	}
 }

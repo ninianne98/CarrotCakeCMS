@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Profile;
 using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,8 +17,8 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class User : AdminBasePage {
 
+	public partial class User : AdminBasePage {
 		public Guid userID = Guid.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -95,15 +92,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 			}
-
 		}
 
-
-
 		protected void btnApply_Click(object sender, EventArgs e) {
-
 			if (userID != Guid.Empty) {
-
 				MembershipUser usr = Membership.GetUser(userID);
 				usr.Email = Email.Text;
 				Membership.UpdateUser(usr);
@@ -165,9 +157,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 			}
-
 		}
-
-
 	}
 }

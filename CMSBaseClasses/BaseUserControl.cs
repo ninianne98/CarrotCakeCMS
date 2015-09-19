@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Caching;
-using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -22,12 +14,11 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Base {
-	public abstract class BaseUserControl : System.Web.UI.UserControl {
 
+	public abstract class BaseUserControl : System.Web.UI.UserControl {
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected WidgetHelper widgetHelper = new WidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
-
 
 		protected string CurrentDLLVersion {
 			get { return SiteData.CurrentDLLVersion; }
@@ -39,10 +30,10 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-		bool bFound = false;
-		PlaceHolder x = new PlaceHolder();
-		protected PlaceHolder FindTheControl(string ControlName, Control X) {
+		private bool bFound = false;
+		private PlaceHolder x = new PlaceHolder();
 
+		protected PlaceHolder FindTheControl(string ControlName, Control X) {
 			if (X is Page) {
 				bFound = false;
 				x = new PlaceHolder();
@@ -61,7 +52,5 @@ namespace Carrotware.CMS.UI.Base {
 			}
 			return x;
 		}
-
-
 	}
 }

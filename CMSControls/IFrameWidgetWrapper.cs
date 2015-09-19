@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -110,11 +104,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					CssClass = GetParmValue("CssClass", "");
 
 					CSSStyle = GetParmValue("CSSStyle", "width: 300px; height: 100px;");
@@ -128,6 +119,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnPreRender(e);
 		}
-
 	}
 }

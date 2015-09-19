@@ -6,7 +6,7 @@
 }
 
 .headerRow {
-	background-color: #97AC88;
+	background-color: #7dad8e;
 	color: #FFFFFF;
 }
 
@@ -60,11 +60,11 @@ td {
 th {
 	font-size: 11px;
 	color: #FFFFFF;
-	background-color: #97AC88;
+	background-color: #7dad8e;
 }
 
 .head2 {
-	color: #97AC88;
+	color: #7dad8e;
 }
 
 .ImgGroup {
@@ -100,7 +100,6 @@ th {
 }
 
 /* table resets */
-
 
 /* cellpadding */
 th, td {
@@ -155,4 +154,13 @@ table.centered {
 }
 .uploadFail {
 	color: #990000;
+}
+
+.jqradioset label {
+	margin-left: 0.5em;
+	margin-right: 3em;
+}
+
+.icheckbox_flat-grey, .iradio_flat-grey {
+	margin: 0 3px 2px 3px;
 }

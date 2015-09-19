@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -65,7 +66,6 @@ namespace Carrotware.CMS.UI.Controls {
 		private ControlUtilities cu = new ControlUtilities();
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			string sTrackback = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.Trackback.txt");
 
 			ContentPage cp = cu.GetContainerContentPage(this);
@@ -82,7 +82,5 @@ namespace Carrotware.CMS.UI.Controls {
 				tbh.ProcessTrackback(HttpContext.Current, false);
 			}
 		}
-
 	}
-
 }

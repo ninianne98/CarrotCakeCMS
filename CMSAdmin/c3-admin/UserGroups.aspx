@@ -1,4 +1,5 @@
-﻿<%@ Page Title="User Groups" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserGroups.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserGroups" %>
+﻿<%@ Page Title="User Groups" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="UserGroups.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserGroups" %>
 
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

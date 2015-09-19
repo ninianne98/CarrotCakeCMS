@@ -1,11 +1,11 @@
 using System;
-using System.IO;
 using System.Web;
 using System.Web.Compilation;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 using Carrotware.CMS.DBUpdater;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,11 +16,9 @@ using Carrotware.CMS.DBUpdater;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class VirtualFileSystem : IHttpHandler, IRequiresSessionState {
-
 		private const string REQ_PATH = "RewriteOrigPath";
 		private const string REQ_QUERY = "RewriteOrigQuery";
 
@@ -35,10 +33,8 @@ namespace Carrotware.CMS.Core {
 		private bool bAlreadyDone = false;
 		private bool bURLOverride = false;
 
-
 		public void ProcessRequest(HttpContext context) {
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
-
 				SiteNav navData = null;
 				string sFileRequested = context.Request.Path;
 				sRequestedURL = sFileRequested;
@@ -55,7 +51,6 @@ namespace Carrotware.CMS.Core {
 					}
 
 					VirtualDirectory.RegisterRoutes();
-
 				} catch (Exception ex) {
 					//assumption is database is probably empty / needs updating, so trigger the under construction view
 					if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
@@ -84,7 +79,6 @@ namespace Carrotware.CMS.Core {
 					} catch (Exception ex) { }
 				}
 
-
 				if (sFileRequested.ToLower().EndsWith(".aspx") || sFileRequested.Length < 3) {
 					bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
@@ -95,7 +89,6 @@ namespace Carrotware.CMS.Core {
 					}
 
 					if (!CMSConfigHelper.CheckRequestedFileExistence(sFileRequested, SiteData.CurrentSiteID) || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
-
 						context.Items[REQ_PATH] = context.Request.PathInfo;
 						context.Items[REQ_QUERY] = context.Request.QueryString.ToString();
 
@@ -122,7 +115,6 @@ namespace Carrotware.CMS.Core {
 						try {
 							bool bIsHomePage = false;
 							if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
-
 								navData = navHelper.FindHome(SiteData.CurrentSiteID, !bIgnorePublishState);
 
 								if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
@@ -139,7 +131,6 @@ namespace Carrotware.CMS.Core {
 							if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
 								navData = SiteNavHelper.GetEmptyHome();
 							}
-
 						} catch (Exception ex) {
 							//assumption is database is probably empty / needs updating, so trigger the under construction view
 							if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
@@ -176,14 +167,10 @@ namespace Carrotware.CMS.Core {
 							}
 
 							RewriteCMSPath(context, sSelectedTemplate, queryString);
-
 						} else {
-
 							SiteData.PerformRedirectToErrorPage(404, sFileRequested);
 							SiteData.Show404MessageFull(true);
-
 						}
-
 					} else {
 						sVirtualReqFile = sFileRequested;
 
@@ -196,7 +183,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private void RewriteCMSPath(HttpContext context, string sTmplateFile, string sQuery) {
-
 			try {
 				if (string.IsNullOrEmpty(sVirtualReqFile)) {
 					sVirtualReqFile = SiteData.DefaultDirectoryFilename;
@@ -213,7 +199,6 @@ namespace Carrotware.CMS.Core {
 				Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(sTmplateFile, typeof(Page));
 				hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
 				hand.ProcessRequest(context);
-
 			} catch (Exception ex) {
 				//assumption is database is probably empty / needs updating, so trigger the under construction view
 				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
@@ -223,7 +208,6 @@ namespace Carrotware.CMS.Core {
 					throw;
 				}
 			}
-
 		}
 
 		protected void hand_PreRenderComplete(object sender, EventArgs e) {
@@ -238,6 +222,5 @@ namespace Carrotware.CMS.Core {
 				bAlreadyDone = true;
 			}
 		}
-
 	}
 }

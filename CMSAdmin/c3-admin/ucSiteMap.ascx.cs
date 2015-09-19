@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,16 +15,13 @@ using Carrotware.CMS.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class ucSiteMap : AdminBaseUserControl {
-		List<ContentPage> lstSite = new List<ContentPage>();
 
+	public partial class ucSiteMap : AdminBaseUserControl {
+		private List<ContentPage> lstSite = new List<ContentPage>();
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!IsPostBack) {
-
 				rpSub.ItemTemplate = rpTop.ItemTemplate;
 
 				lstSite = (from c in pageHelper.GetAllLatestContentList(SiteID)
@@ -49,7 +44,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return "*";
 			}
 		}
-
 
 		public string ReturnNavImage(bool bFlag) {
 			if (bFlag) {
@@ -90,7 +84,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					GeneralUtilities.BindRepeater(rp, lst);
 				}
 			}
-
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
@@ -115,7 +108,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
-
-
 	}
 }

@@ -6,7 +6,8 @@
 				{WIDGETCONTAINER_ID}</div>
 			<div id="cmsEditMenuList" class="cmsWidgetContainerMenu">
 				<ul class="cmsWidgetContainerMenu cmsMnuParent">
-					<li class="cmsWidgetCogIcon"><a title="" alt="Modify" class="cmsWidgetBarLink cmsWidgetBarIconCog" id="cmsWidgetBarIcon" href="javascript:void(0);">M</a>
+					<li class="cmsWidgetCogIcon"><a title="" alt="Modify" class="cmsWidgetBarLink cmsWidgetBarIconCog" id="cmsWidgetBarIcon" href="javascript:void(0);">
+						M</a>
 						<ul class="cmsWidgetContainerMenu cmsMnuChildren">
 							<li><a title="Widgets" alt="Widgets" class="cmsWidgetBarLink cmsWidgetBarIconWidget" id="cmsContentEditLink" href="javascript:cmsManageWidgetList('{WIDGETCONTAINER_ID}')">
 								Widgets </a></li>

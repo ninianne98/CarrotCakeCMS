@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,6 +14,7 @@ using System.Web.UI.WebControls;
 */
 
 namespace Carrotware.Web.UI.Controls {
+
 	public class BasicControlUtils {
 		private Page _page;
 
@@ -71,8 +69,8 @@ namespace Carrotware.Web.UI.Controls {
 
 		private bool bFoundPage = false;
 		private Page _page2 = null;
-		private Page FindPage(object X) {
 
+		private Page FindPage(object X) {
 			if (X is Page) {
 				bFoundPage = true;
 				_page2 = (Page)X;
@@ -283,6 +281,5 @@ namespace Carrotware.Web.UI.Controls {
 				thePage.Header.Controls.AddAt(1, jq);
 			}
 		}
-
 	}
 }

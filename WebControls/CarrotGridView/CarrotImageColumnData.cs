@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Web.UI;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -30,7 +29,6 @@ namespace Carrotware.Web.UI.Controls {
 			_caption = label;
 		}
 
-
 		[
 		Category("Behavior"),
 		DefaultValue(""),
@@ -45,7 +43,6 @@ namespace Carrotware.Web.UI.Controls {
 				_name = value;
 			}
 		}
-
 
 		[
 		Category("Behavior"),
@@ -62,7 +59,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		[
 		Category("Behavior"),
 		DefaultValue(""),
@@ -77,10 +73,8 @@ namespace Carrotware.Web.UI.Controls {
 				_caption = value;
 			}
 		}
-
 	}
 }
-
 
 /*
 <carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="PageActive" HeaderText="Active" ShowEnumImage="true">

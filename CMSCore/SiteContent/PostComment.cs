@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using Carrotware.CMS.Data;
 using System.Text;
+using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,8 +14,8 @@ using System.Text;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class PostComment {
 
 		public PostComment() { }
@@ -32,6 +30,7 @@ namespace Carrotware.CMS.Core {
 		public string PostCommentText { get; set; }
 
 		private string _commentPlain = null;
+
 		public string PostCommentEscaped {
 			get {
 				if (_commentPlain == null) {
@@ -46,6 +45,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private string _commentPr = null;
+
 		public string PostCommentProcessed {
 			get {
 				if (_commentPr == null) {
@@ -64,7 +64,6 @@ namespace Carrotware.CMS.Core {
 		public string FileName { get; set; }
 
 		internal PostComment(vw_carrot_Comment c) {
-
 			if (c != null) {
 				this.ContentCommentID = c.ContentCommentID;
 				this.Root_ContentID = c.Root_ContentID;
@@ -91,7 +90,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 		public void Save() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -132,7 +130,6 @@ namespace Carrotware.CMS.Core {
 				this.CreateDate = c.CreateDate;
 			}
 		}
-
 
 		public static List<PostComment> GetCommentsByContentPage(Guid rootContentID, bool bActiveOnly) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -188,14 +185,12 @@ namespace Carrotware.CMS.Core {
 			return lstComments.Skip(startRec).Take(iPageSize).ToList().Select(v => new PostComment(v)).ToList();
 		}
 
-
 		public static int GetCommentCountBySiteAndType(Guid siteID, ContentPageType.PageType pageType) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				return (from c in CannedQueries.GetSiteContentCommentsByPostType(_db, siteID, pageType)
 						select c).Count();
 			}
 		}
-
 
 		public static int GetCommentCountByContent(Guid rootContentID, bool bActiveOnly) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -210,6 +205,7 @@ namespace Carrotware.CMS.Core {
 						select c).Count();
 			}
 		}
+
 		public static int GetCommentCountByContent(Guid siteID, Guid rootContentID, DateTime postDate, string postIP) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				return (from c in CannedQueries.FindCommentsByDate(_db, siteID, rootContentID, postDate, postIP)
@@ -223,14 +219,12 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public static int GetAllCommentCountBySite(Guid siteID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				return (from c in CannedQueries.GetSiteContentComments(_db, siteID)
 						select c).Count();
 			}
 		}
-
 
 		public static List<PostComment> GetAllCommentsBySite(Guid siteID) {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
@@ -240,7 +234,6 @@ namespace Carrotware.CMS.Core {
 				return s.ToList();
 			}
 		}
-
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -258,7 +251,5 @@ namespace Carrotware.CMS.Core {
 		public override int GetHashCode() {
 			return ContentCommentID.GetHashCode() ^ Root_ContentID.GetHashCode();
 		}
-
-
 	}
 }

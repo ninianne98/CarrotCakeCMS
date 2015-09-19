@@ -13,9 +13,11 @@ using System.Web;
 *
 * Date: October 2011
 */
+
 namespace Carrotware.CMS.Core {
 
 	public class FileData {
+
 		public FileData() {
 			this.FolderPath = "";
 			this.FileName = "unknown";
@@ -36,9 +38,11 @@ namespace Carrotware.CMS.Core {
 	}
 
 	public class FileDataHelper {
+
 		public FileDataHelper() { }
 
 		private static string _wwwpath = null;
+
 		private static string WWWPath {
 			get {
 				if (_wwwpath == null) {
@@ -51,8 +55,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		private string _FileTypes = null;
+
 		public List<string> BlockedTypes {
 			get {
 				if (_FileTypes == null) {
@@ -72,9 +76,7 @@ namespace Carrotware.CMS.Core {
 			_FileTypes = String.Empty;
 		}
 
-
 		public FileData GetFolderInfo(string sQuery, string myFile) {
-
 			string sPath = MakeFileFolderPath(sQuery);
 
 			string myFileName;
@@ -97,9 +99,7 @@ namespace Carrotware.CMS.Core {
 			return f;
 		}
 
-
 		public List<FileData> GetFolders(string sQuery) {
-
 			string sPath = MakeFileFolderPath(sQuery);
 
 			var dsID = new List<FileData>();
@@ -120,9 +120,7 @@ namespace Carrotware.CMS.Core {
 			return dsID;
 		}
 
-
 		public FileData GetFileInfo(string sQuery, string myFile) {
-
 			sQuery = MakeFilePathUniform(sQuery);
 			string sPath = MakeFileFolderPath(sQuery);
 
@@ -213,7 +211,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<FileData> GetFiles(string sQuery) {
-
 			string sPath = MakeFileFolderPath(sQuery);
 
 			var dsID = new List<FileData>();
@@ -228,7 +225,6 @@ namespace Carrotware.CMS.Core {
 					f.FileName = myFileName;
 
 					if (myFileName.Length > 0) {
-
 						f = GetFileInfo(sQuery, myFile);
 
 						try {
@@ -245,11 +241,9 @@ namespace Carrotware.CMS.Core {
 			return dsID;
 		}
 
-
-		List<string> _spiderdirs = null;
+		private List<string> _spiderdirs = null;
 
 		private void SpiderFolders(string sPath) {
-
 			string[] subdirs;
 			try {
 				if (Directory.Exists(sPath)) {
@@ -269,9 +263,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public List<string> SpiderDeepFolders(string sQuery) {
-
 			string sPath = MakeFileFolderPath(sQuery);
 
 			_spiderdirs = new List<string>();
@@ -281,11 +273,9 @@ namespace Carrotware.CMS.Core {
 			return _spiderdirs;
 		}
 
-
-		List<FileData> _spiderFD = null;
+		private List<FileData> _spiderFD = null;
 
 		private void SpiderFoldersFD(string sQuery) {
-
 			string sPath = MakeFileFolderPath(sQuery);
 
 			string[] subdirs;
@@ -308,7 +298,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public List<FileData> SpiderDeepFoldersFD(string sQuery) {
 			_spiderFD = new List<FileData>();
 
@@ -318,7 +307,6 @@ namespace Carrotware.CMS.Core {
 
 			return _spiderFD;
 		}
-
 
 		private static Dictionary<string, string> _dict = null;
 
@@ -542,9 +530,5 @@ namespace Carrotware.CMS.Core {
 				return _dict;
 			}
 		}
-
-
 	}
-
-
 }

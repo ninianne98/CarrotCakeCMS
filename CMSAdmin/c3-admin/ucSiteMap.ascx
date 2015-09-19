@@ -1,7 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucSiteMap.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucSiteMap" %>
 <script src="Includes/jquery.ui.nestedSortable.js" type="text/javascript"></script>
 <style type="text/css">
-	#cmsSiteMap ol {
+	#cmsSiteMap ol
+	{
 		list-style: none;
 		padding: 0;
 		margin: 0;
@@ -9,12 +10,14 @@
 		margin-top: 2px;
 		margin-bottom: 2px;
 	}
-	#cmsSiteMap a {
+	#cmsSiteMap a
+	{
 		text-decoration: none;
 		color: #000000;
 		border: 0;
 	}
-	#cmsSiteMap li {
+	#cmsSiteMap li
+	{
 		list-style: none;
 		padding: 0;
 		margin: 0;
@@ -22,26 +25,31 @@
 		margin-left: 5px;
 		margin-bottom: 8px;
 	}
-	#cmsSiteMap .image-handle {
+	#cmsSiteMap .image-handle
+	{
 		padding: 3px;
 		margin: 0;
 		cursor: move;
 		line-height: 25px;
 	}
-	
-	#cmsSiteMap span.page-status, #cmsSiteMap span.handle-expand a {
+
+	#cmsSiteMap span.page-status, #cmsSiteMap span.handle-expand a
+	{
 		cursor: pointer;
 	}
-	#cmsSiteMap span.handle-expand {
+	#cmsSiteMap span.handle-expand
+	{
 		width: 50px !important;
 		height: 25px !important;
 		border: 1px dashed #ffffff;
 	}
-	
-	#cmsSiteMap img {
+
+	#cmsSiteMap img
+	{
 		vertical-align: text-top;
 	}
-	.HighlightPH {
+	.HighlightPH
+	{
 		height: 25px !important;
 		margin: 5px;
 		padding: 5px;
@@ -60,14 +68,13 @@
 			//alert("sortupdate");
 			var id = $(ui.item).attr('id');
 			var p = $(ui.item).parent().parent().attr('id');
-			//alert(p + '  ->  ' + id);	
+			//alert(p + '  ->  ' + id);
 
 			setTimeout("itterateTree();", 250);
 			setTimeout("BuildOrder();", 500);
 			setTimeout("FindArrowAndOpen('" + p + "');", 750);
 
 		});
-
 
 		$("ol.sortable").nestedSortable({
 			disableNesting: 'no-nest',
@@ -101,7 +108,6 @@
 		});
 	}
 
-
 	function setDblClickSpan(elm) {
 		$(elm).dblclick(function () {
 			var target = $(elm).parent();
@@ -113,7 +119,6 @@
 			}
 		});
 	}
-
 
 	function setListItem(item) {
 
@@ -161,7 +166,6 @@
 		}
 	}
 
-
 	function ToggleTree(arrow) {
 		var a = $(arrow);
 		//alert($(arrow).text() + '  ' + $(arrow).parent().parent().attr('id'));
@@ -198,7 +202,6 @@
 	$(document).ready(function () {
 		setTimeout("BuildOrder();", 250);
 	});
-		
 </script>
 <div style="display: none;">
 	<asp:TextBox runat="server" ID="txtMap" TextMode="MultiLine" Columns="90" Rows="5" />

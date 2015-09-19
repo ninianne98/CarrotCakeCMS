@@ -10,12 +10,33 @@
 <head id="Head1" runat="server">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
+	<link href="iCheck/iCheck.css" rel="stylesheet" type="text/css" />
+	<script src="iCheck/icheck.min.js" type="text/javascript"></script>
 	<link href="Includes/filebrowser.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("input:button, input:submit, input:reset").button();
-		});
 
+			$('input').iCheck({
+				checkboxClass: 'icheckbox_flat-grey',
+				radioClass: 'iradio_flat-grey'
+			});
+
+			$('.iradio_flat-grey, .icheckbox_flat-grey').each(function () {
+				var chk = $(this).find("input");
+				var onclick = $(chk).attr("onclick");
+
+				if (chk.length > 0 && onclick != undefined && onclick.length > 0) {
+					$(chk).on('ifClicked', function (event) {
+						if ($(chk).attr("type") == 'radio') {
+							setTimeout(function () { $(chk).click(); }, 200);
+						} else {
+							$(chk).trigger("click");
+						}
+					});
+				}
+			});
+		});
 	</script>
 	<script type="text/javascript">
 		function SetFile(val) {
@@ -37,14 +58,13 @@
 
 			return false;
 		}
-
 	</script>
 	<asp:Literal runat="server" ID="pnlTiny">
-	
+
 	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
 
 	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce_popup.js"></script>
-	
+
 	<script type="text/javascript">
 
 		var FileBrowserDialogue = {
@@ -77,7 +97,6 @@
 		}
 
 		tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
-
 	</script>
 
 	<script type="text/javascript">
@@ -107,9 +126,7 @@
 		window.onbeforeunload = myExitFunction;
 
 		tinyMCEPopup.executeOnLoad('myInitFunction();');
-		
 	</script>
-	
 	</asp:Literal>
 	<title>Browser</title>
 </head>
@@ -140,7 +157,7 @@
 						</td>
 						<td>
 							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}&viewmode={3}", Eval("FolderPath"),  sQueryMode, sReturnMode, sViewMode ) %>'>
-								<%# String.Format( "{0}", Eval("FileName") ).ToUpper() %></a>
+								<%# String.Format( "{0}", Eval("FileName") ) %></a>
 						</td>
 						<td>
 							&nbsp;&nbsp;
@@ -179,7 +196,7 @@
 								</a>
 							</div>
 							<div style="margin: 3px; text-align: center;">
-								<%# String.Format( "{0}", Eval("FileName") ).ToLower() %><br />
+								<%# String.Format( "{0}", Eval("FileName") ) %><br />
 								<%# String.Format( "{0:d}", Eval("FileDate") ) %>
 							</div>
 						</div>
@@ -219,7 +236,7 @@
 							<div class="ImgGroup" runat="server" id="imgContainerGroup">
 								<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'file')">
 									<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
-										<%# String.Format( "{0}", Eval("FileName") ).ToLower() %></a>
+										<%# String.Format( "{0}", Eval("FileName") ) %></a>
 								</div>
 								<div id="imgWrapper" style="display: none;">
 									<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,7 +14,6 @@ using Carrotware.CMS.Core;
 *
 * Date: October 2011
 */
-
 
 namespace Carrotware.CMS.UI.Controls {
 
@@ -41,7 +38,6 @@ namespace Carrotware.CMS.UI.Controls {
 			_label = labelText;
 			_format = formatText;
 		}
-
 
 		[
 		Category("Behavior"),
@@ -91,6 +87,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//==================
 	public class PagedDataSummaryTitleOptionEditor : CollectionEditor {
+
 		public PagedDataSummaryTitleOptionEditor(Type type)
 			: base(type) {
 		}
@@ -104,18 +101,13 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 	}
 
-
-
 	//==========================
 
 	public class PagedDataNextPrevLinkPair {
-
 		public PagedDataNextPrevLinkWrapper LinkWrapper { get; set; }
 
 		public PagedDataNextPrevLink PageLink { get; set; }
-
 	}
-
 
 	//==========================
 	[ToolboxData("<{0}:PagedDataNextPrevLinkWrapper runat=server></{0}:PagedDataNextPrevLinkWrapper>")]
@@ -128,9 +120,7 @@ namespace Carrotware.CMS.UI.Controls {
 			First,
 			Last,
 		}
-
 	}
-
 
 	//==========================
 	[ToolboxData("<{0}:PagedDataNextPrevLink runat=server></{0}:PagedDataNextPrevLink>")]
@@ -174,12 +164,12 @@ namespace Carrotware.CMS.UI.Controls {
 				this.Text = this.NavDirection.ToString();
 			}
 		}
+
 		public void SetText(string linkText) {
 			this.Text = linkText;
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			this.SetText();
 
 			if (!this.UseDefaultText) {
@@ -192,9 +182,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			base.OnPreRender(e);
 		}
-
 	}
-
 
 	//==========================
 	[ToolboxData("<{0}:PagedDataNextPrevText runat=server></{0}:PagedDataNextPrevText>")]
@@ -223,12 +211,12 @@ namespace Carrotware.CMS.UI.Controls {
 				this.Text = this.NavDirection.ToString();
 			}
 		}
+
 		public void SetText(string linkText) {
 			this.Text = linkText;
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			if (string.IsNullOrEmpty(this.Text) && this.NavDirection != PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown) {
 				this.SetText();
 			}
@@ -236,6 +224,4 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 		}
 	}
-
-
 }

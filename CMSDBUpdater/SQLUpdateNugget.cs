@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,6 +16,7 @@ using System.Text;
 */
 
 namespace Carrotware.CMS.DBUpdater {
+
 	public class SQLUpdateNugget {
 
 		public enum CompareMode {
@@ -35,7 +35,6 @@ namespace Carrotware.CMS.DBUpdater {
 		public string SQLQuery { get; set; }
 		public bool AlwaysCheck { get; set; }
 
-
 		protected static CompareMode GetModeType(string sVal) {
 			CompareMode c = CompareMode.LT;
 			if (!string.IsNullOrEmpty(sVal)) {
@@ -44,8 +43,8 @@ namespace Carrotware.CMS.DBUpdater {
 			return c;
 		}
 
-
 		private static List<SQLUpdateNugget> _nuggets = null;
+
 		public static List<SQLUpdateNugget> SQLNuggets {
 			get {
 				if (_nuggets == null) {
@@ -76,7 +75,6 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 		}
 
-
 		public static bool EvalManditoryChecks() {
 			List<SQLUpdateNugget> nugs = (from s in SQLNuggets
 										  where s.AlwaysCheck == true
@@ -102,7 +100,6 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		private static bool RunEval(List<SQLUpdateNugget> nugs) {
-
 			foreach (var n in nugs) {
 				DataTable table1 = DatabaseUpdate.GetTestData(n.SQLQuery);
 				int iMatchCount = table1.Rows.Count;
@@ -113,31 +110,37 @@ namespace Carrotware.CMS.DBUpdater {
 							return true;
 						}
 						break;
+
 					case CompareMode.EQ:
 						if (iMatchCount == n.RowCount) {
 							return true;
 						}
 						break;
+
 					case CompareMode.LT:
 						if (iMatchCount < n.RowCount) {
 							return true;
 						}
 						break;
+
 					case CompareMode.GT:
 						if (iMatchCount > n.RowCount) {
 							return true;
 						}
 						break;
+
 					case CompareMode.LTE:
 						if (iMatchCount <= n.RowCount) {
 							return true;
 						}
 						break;
+
 					case CompareMode.GTE:
 						if (iMatchCount >= n.RowCount) {
 							return true;
 						}
 						break;
+
 					default:
 						break;
 				}
@@ -145,7 +148,5 @@ namespace Carrotware.CMS.DBUpdater {
 
 			return false;
 		}
-
 	}
-
 }

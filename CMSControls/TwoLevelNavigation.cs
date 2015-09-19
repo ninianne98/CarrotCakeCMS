@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -69,7 +67,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["InsertCssEarly"] = value.ToString();
 			}
 		}
-
 
 		[Category("Appearance")]
 		[DefaultValue(true)]
@@ -324,7 +321,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
-
 			if (!SiteData.IsWebView) {
 				cssText.RenderControl(output);
 				output.Write(GetCtrlText(cssText));
@@ -398,13 +394,10 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					string sTmp = "";
 
 					this.OverrideCSS = GetParmValue("OverrideCSS", "");
@@ -489,9 +482,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (string.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled) {
-
 				ParseCSS();
-
 			} else {
 				if (!string.IsNullOrEmpty(this.OverrideCSS)) {
 					HtmlLink link = new HtmlLink();
@@ -513,7 +504,6 @@ namespace Carrotware.CMS.UI.Controls {
 			if (!this.AutoStylingDisabled) {
 				this.WrapList = false;
 			}
-
 		}
 
 		private void ParseCSS() {
@@ -583,6 +573,5 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 		}
-
 	}
 }

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,14 +15,13 @@ using System.Web.UI.WebControls;
 */
 
 namespace Carrotware.Web.UI.Controls {
+
 	[DefaultProperty("CaptchaText")]
 	[ToolboxData("<{0}:Captcha runat=server></{0}:Captcha>")]
-
 	[ValidationPropertyAttribute("CaptchaText")]
 	public class Captcha : BaseWebControl, ITextControl {
 
 		public Captcha() {
-
 			this.CaptchaImageBoxStyle = new SimpleStyle();
 			this.CaptchaTextStyle = new SimpleStyle();
 			this.CaptchaInstructionStyle = new SimpleStyle();
@@ -33,9 +29,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			this.CaptchaIsValidStyle = new SimpleStyle();
 			this.CaptchaIsNotValidStyle = new SimpleStyle();
-
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -78,7 +72,6 @@ namespace Carrotware.Web.UI.Controls {
 			get;
 			set;
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -150,7 +143,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue("")]
@@ -164,7 +156,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["BackColor"] = ColorTranslator.ToHtml(value);
 			}
 		}
-
 
 		[NotifyParentProperty(true)]
 		[Bindable(true)]
@@ -196,7 +187,6 @@ namespace Carrotware.Web.UI.Controls {
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public SimpleStyle CaptchaIsNotValidStyle { get; set; }
 
-
 		public bool Validate() {
 			this.IsValid = CaptchaImage.Validate(this.CaptchaText);
 
@@ -210,7 +200,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			var key = CaptchaImage.GetKey();
 
 			output.Write("<div style=\"clear: both;\" id=\"" + this.ClientID + "_wrapper\">\r\n");
@@ -253,7 +242,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private string GetCaptchaImageURI() {
-
 			if (this.IsWebView) {
 				return "/CarrotwareCaptcha.axd?t=" + DateTime.Now.Ticks +
 						"&fgcolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(this.ForeColor)) +
@@ -269,8 +257,6 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		protected override void OnInit(EventArgs e) {
-
-
 			if (this.IsWebView) {
 				if (HttpContext.Current.Request.Form.Count > 0) {
 					var s = HttpContext.Current.Request.Form[this.UniqueID];
@@ -280,7 +266,5 @@ namespace Carrotware.Web.UI.Controls {
 
 			base.OnInit(e);
 		}
-
-
 	}
 }

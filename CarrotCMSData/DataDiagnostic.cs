@@ -1,15 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
 using System.Data;
+using System.Diagnostics;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.Data {
+
 	public class DataDiagnostic {
 
-		public DataDiagnostic() {
-		}
+		public DataDiagnostic() { }
 
 		private int iDBCounter = -1;
 
@@ -23,7 +30,6 @@ namespace Carrotware.CMS.Data {
 			db.Connection.StateChange += DBContextChange;
 			db.Log = new DebugTextWriter();
 		}
-
 
 		private Stopwatch ThisWatch = new Stopwatch();
 
@@ -39,6 +45,5 @@ namespace Carrotware.CMS.Data {
 				Debug.WriteLine(iDBCounter + " ~~~~~~~~~~~~~~~~ CLOSE ~~~~~~~~~~~~~~~~~~");
 			}
 		}
-
 	}
 }

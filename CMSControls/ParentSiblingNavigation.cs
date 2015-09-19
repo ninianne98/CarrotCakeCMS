@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -62,24 +62,28 @@ namespace Carrotware.CMS.UI.Controls {
 				case SortOrder.TitleAsc:
 					this.NavigationData = lstNav.OrderBy(ct => ct.NavMenuText).ToList();
 					break;
+
 				case SortOrder.TitleDesc:
 					this.NavigationData = lstNav.OrderByDescending(ct => ct.NavMenuText).ToList();
 					break;
+
 				case SortOrder.DateAsc:
 					this.NavigationData = lstNav.OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.GoLiveDate).ToList();
 					break;
+
 				case SortOrder.DateDesc:
 					this.NavigationData = lstNav.OrderBy(ct => ct.NavMenuText).OrderByDescending(ct => ct.GoLiveDate).ToList();
 					break;
+
 				case SortOrder.SortDesc:
 					this.NavigationData = lstNav.OrderBy(ct => ct.NavMenuText).OrderByDescending(ct => ct.NavOrder).ToList();
 					break;
+
 				case SortOrder.SortAsc:
 				default:
 					this.NavigationData = lstNav.OrderBy(ct => ct.NavMenuText).OrderBy(ct => ct.NavOrder).ToList();
 					break;
 			}
 		}
-
 	}
 }

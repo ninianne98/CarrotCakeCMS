@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 
 namespace Carrotware.CMS.Core {
-	public interface ISiteContent {
 
+	public interface ISiteContent {
 		Guid ContentID { get; set; }
 		DateTime CreateDate { get; set; }
 		DateTime GoLiveDate { get; set; }
@@ -38,7 +38,5 @@ namespace Carrotware.CMS.Core {
 		List<ContentCategory> ContentCategories { get; set; }
 
 		ExtendedUserData GetUserInfo();
-
-
 	}
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -13,8 +11,8 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class ContentEditor : IContentMetaInfo {
 
 		public ContentEditor() { }
@@ -63,7 +61,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 		public static ContentEditor Get(Guid SiteID, Guid UserID) {
 			ContentEditor _item = null;
@@ -122,8 +119,7 @@ namespace Carrotware.CMS.Core {
 		public int MetaPublicInfoCount {
 			get { return this.PublicUseCount == null ? 0 : Convert.ToInt32(this.PublicUseCount); }
 		}
-		#endregion
+
+		#endregion IContentMetaInfo Members
 	}
-
-
 }

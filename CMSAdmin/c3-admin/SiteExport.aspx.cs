@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,9 +11,10 @@ using Carrotware.CMS.UI.Base;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
+
 	public partial class SiteExportPage : AdminBasePage {
+
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteExport);
 
@@ -26,7 +22,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				txtBegin.Text = SiteData.CurrentSite.Now.AddMonths(-6).ToShortDateString();
 				txtEnd.Text = SiteData.CurrentSite.Now.AddDays(5).ToShortDateString();
 			}
-
 		}
 	}
 }

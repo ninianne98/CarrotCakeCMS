@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,6 +17,7 @@ using Carrotware.CMS.Core;
 */
 
 namespace Carrotware.CMS.UI.Controls {
+
 	public class ControlUtilities {
 		private Page _page;
 
@@ -98,10 +100,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public Control CreateControlFromString(string sControlText) {
-
 			return _page.ParseControl(sControlText);
 		}
-
 
 		private static Page CachedPage {
 			get {
@@ -112,6 +112,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return _CachedPage;
 			}
 		}
+
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
@@ -132,7 +133,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public static Control ParseControl(string resource) {
-
 			return CachedPage.ParseControl(resource);
 		}
 
@@ -196,8 +196,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private bool bFoundPage = false;
 		private Page page = null;
-		public Page FindPage(object X) {
 
+		public Page FindPage(object X) {
 			if (!bFoundPage) {
 				if (X is Page) {
 					bFoundPage = true;
@@ -226,8 +226,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private bool bFoundPlaceHolder = false;
 		private PlaceHolder plcholder = null;
-		public PlaceHolder FindPlaceHolder(string ControlName, Control X) {
 
+		public PlaceHolder FindPlaceHolder(string ControlName, Control X) {
 			if (X is Page) {
 				bFoundPlaceHolder = false;
 				plcholder = new PlaceHolder();
@@ -250,8 +250,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private bool bFoundControl = false;
 		private Control ctrl = null;
-		public Control FindControl(string ControlName, Control X) {
 
+		public Control FindControl(string ControlName, Control X) {
 			if (X is Page) {
 				bFoundControl = false;
 				ctrl = new Control();
@@ -273,7 +273,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public Control FindControl(Type type, Control X) {
-
 			foreach (Control c in X.Controls) {
 				if (c.GetType() == type) {
 					bFoundControl = true;

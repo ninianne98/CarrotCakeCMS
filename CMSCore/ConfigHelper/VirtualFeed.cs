@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.SessionState;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -10,10 +11,9 @@ using System.Web.SessionState;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
-	public class VirtualFeed : IHttpHandler, IRequiresSessionState {
 
+	public class VirtualFeed : IHttpHandler, IRequiresSessionState {
 
 		public bool IsReusable {
 			get {
@@ -21,9 +21,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public void ProcessRequest(HttpContext context) {
-
 			string sFileRequested = context.Request.Path;
 
 			if (sFileRequested.ToLower().EndsWith("/rss.ashx")) {
@@ -48,6 +46,5 @@ namespace Carrotware.CMS.Core {
 
 			context.Response.End();
 		}
-
 	}
 }

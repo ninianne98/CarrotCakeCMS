@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,10 +12,10 @@ using Carrotware.CMS.UI.Base;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class PageEdit : AdminBasePage {
 
+	public partial class PageEdit : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
-		ContentPage pageContents = null;
+		private ContentPage pageContents = null;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.UsesSaved = true;
@@ -36,7 +30,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litPageName.Text = pageContents.FileName;
 
 				if (!IsPostBack) {
-
 					txtTitle.Text = pageContents.TitleBar;
 					txtNav.Text = pageContents.NavMenuText;
 					txtHead.Text = pageContents.PageHead;
@@ -62,13 +55,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						hdnCreditUserID.Value = usr.UserName;
 						txtSearchUser.Text = string.Format("{0} ({1})", usr.UserName, usr.EmailAddress);
 					}
-
 				}
 			}
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-
 			if (pageContents != null) {
 				pageContents.TitleBar = txtTitle.Text;
 				pageContents.NavMenuText = txtNav.Text;
@@ -100,9 +91,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				Master.ShowSave();
 
 				Response.Redirect(SiteData.CurrentScriptName + "?pageid=" + pageContents.Root_ContentID.ToString() + Master.SavedSuffix);
-
 			}
-
 		}
 	}
 }

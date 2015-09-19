@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Caching;
-using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -23,8 +14,8 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Base {
-	public abstract class BasePage : System.Web.UI.Page {
 
+	public abstract class BasePage : System.Web.UI.Page {
 		//protected GridSorting gs = new GridSorting();
 
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
@@ -57,9 +48,6 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
-
-
-
 		/*
 				public void LoadGrid<T>(GridView TheGrid, HiddenField SortValue, List<T> lst, string sSortKey) {
 					List<T> lstVals = null;
@@ -79,7 +67,6 @@ namespace Carrotware.CMS.UI.Base {
 					TheGrid.DataBind();
 				}
 
-
 				public void LoadGridLive<T>(GridView TheGrid, HiddenField SortValue, List<T> lstVals, string sSortKey) {
 					gs.DefaultSort = SortValue.Value;
 
@@ -92,12 +79,10 @@ namespace Carrotware.CMS.UI.Base {
 				}
 		*/
 
+		private bool bFound = false;
+		private WidgetContainer x = new WidgetContainer();
 
-
-		bool bFound = false;
-		WidgetContainer x = new WidgetContainer();
 		protected WidgetContainer FindTheControl(string ControlName, Control X) {
-
 			if (X is Page) {
 				bFound = false;
 				x = new WidgetContainer();
@@ -116,10 +101,6 @@ namespace Carrotware.CMS.UI.Base {
 			}
 			return x;
 		}
-
-
-
-
 
 	}
 }

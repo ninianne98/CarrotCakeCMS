@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿namespace Carrotware.CMS.Core {
 
-namespace Carrotware.CMS.Core {
 	public class PageViewType {
 
 		public enum ViewType {
@@ -23,6 +19,5 @@ namespace Carrotware.CMS.Core {
 		public string ExtraTitle { get; set; }
 
 		public object RawValue { get; set; }
-
 	}
 }

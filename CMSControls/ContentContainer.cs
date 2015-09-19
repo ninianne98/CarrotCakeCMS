@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.Design;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -122,7 +122,6 @@ namespace Carrotware.CMS.UI.Controls {
 			this.EnsureChildControls();
 
 			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
-
 				ContentPage pageContents = cu.GetContainerContentPage(this);
 
 				if (pageContents != null) {
@@ -134,14 +133,17 @@ namespace Carrotware.CMS.UI.Controls {
 							this.ZoneChar = "l";
 							this.Text = pageContents.LeftPageText;
 							break;
+
 						case TextFieldZone.TextCenter:
 							this.ZoneChar = "c";
 							this.Text = pageContents.PageText;
 							break;
+
 						case TextFieldZone.TextRight:
 							this.ZoneChar = "r";
 							this.Text = pageContents.RightPageText;
 							break;
+
 						default:
 							break;
 					}
@@ -153,11 +155,9 @@ namespace Carrotware.CMS.UI.Controls {
 			string outputText = SiteData.CurrentSite.UpdateContent(this.Text);
 
 			if (IsAdminMode) {
-
 				ctrl = GetCtrl(this);
 				Literal lit = (Literal)cu.FindControl("litContent", ctrl);
 				lit.Text = outputText;
-
 			} else {
 				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" });
 				ctrl.Controls.Add(new Literal { Text = outputText });
@@ -165,9 +165,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			ctrl.RenderControl(writer);
-
 		}
-
 	}
 
 	//=======================
@@ -197,7 +195,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			return sTextOut + sPageOutText;
 		}
-
 	}
-
 }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Carrotware.CMS.Core {
+
 	internal class SearchParameterObject {
 
 		public SearchParameterObject() {
@@ -52,6 +50,5 @@ namespace Carrotware.CMS.Core {
 		public string StringParm3 { get; set; }
 		public string StringParm4 { get; set; }
 		public string StringParm5 { get; set; }
-
 	}
 }

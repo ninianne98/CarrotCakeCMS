@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Carrotware.CMS.Core {
+
 	public class WordPressComment {
+
 		public WordPressComment() { }
 
 		public Guid ImportRootID { get; set; }
@@ -18,6 +17,5 @@ namespace Carrotware.CMS.Core {
 		public string CommentContent { get; set; }
 		public string Approved { get; set; }
 		public string Type { get; set; }
-
 	}
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using Carrotware.CMS.Data;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,7 +13,6 @@ using Carrotware.CMS.Data;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
 
 	public class SiteNav : ISiteContent {
@@ -22,7 +20,6 @@ namespace Carrotware.CMS.Core {
 		public SiteNav() { }
 
 		internal SiteNav(vw_carrot_Content c) {
-
 			if (c != null) {
 				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
 
@@ -51,7 +48,6 @@ namespace Carrotware.CMS.Core {
 				this.NavOrder = c.NavOrder;
 				this.TemplateFile = c.TemplateFile;
 			}
-
 		}
 
 		public ContentPage GetContentPage() {
@@ -65,7 +61,6 @@ namespace Carrotware.CMS.Core {
 			}
 			return cp;
 		}
-
 
 		public string PageTextPlainSummaryMedium {
 			get {
@@ -102,7 +97,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		public string TemplateFolderPath {
 			get {
 				if (!string.IsNullOrEmpty(TemplateFile)) {
@@ -116,7 +110,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 		}
-
 
 		public Guid ContentID { get; set; }
 		public DateTime EditDate { get; set; }
@@ -144,7 +137,6 @@ namespace Carrotware.CMS.Core {
 		public Guid SiteID { get; set; }
 
 		public ContentPageType.PageType ContentType { get; set; }
-
 
 		public bool IsRetired {
 			get {
@@ -175,6 +167,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private int _commentCount = -1;
+
 		public int CommentCount {
 			get {
 				if (_commentCount < 0) {
@@ -188,6 +181,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private List<ContentTag> _contentTags = null;
+
 		public List<ContentTag> ContentTags {
 			get {
 				if (_contentTags == null) {
@@ -201,6 +195,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private List<ContentCategory> _ContentCategories = null;
+
 		public List<ContentCategory> ContentCategories {
 			get {
 				if (_ContentCategories == null) {
@@ -213,8 +208,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		private ExtendedUserData _user = null;
 
-		ExtendedUserData _user = null;
 		public ExtendedUserData GetUserInfo() {
 			if (_user == null && this.EditUserId.HasValue) {
 				_user = new ExtendedUserData(this.EditUserId.Value);
@@ -222,14 +217,14 @@ namespace Carrotware.CMS.Core {
 			return _user;
 		}
 
-		ExtendedUserData _creditUser = null;
+		private ExtendedUserData _creditUser = null;
+
 		public ExtendedUserData GetCreditUserInfo() {
 			if (_creditUser == null && this.CreditUserId.HasValue) {
 				_creditUser = new ExtendedUserData(this.CreditUserId.Value);
 			}
 			return _creditUser;
 		}
-
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
@@ -247,7 +242,5 @@ namespace Carrotware.CMS.Core {
 		public override int GetHashCode() {
 			return ContentID.GetHashCode() ^ SiteID.GetHashCode() ^ Root_ContentID.GetHashCode() ^ FileName.GetHashCode();
 		}
-
 	}
-
 }

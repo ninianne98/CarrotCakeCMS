@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -42,7 +39,6 @@ namespace Carrotware.CMS.UI.Controls {
 					}
 				}
 				output.Indent--;
-
 			} else {
 				output.WriteLine("<span style=\"display: none;\" id=\"" + this.HtmlClientID + "\"></span>");
 			}
@@ -51,7 +47,5 @@ namespace Carrotware.CMS.UI.Controls {
 
 			output.Indent = indent;
 		}
-
-
 	}
 }

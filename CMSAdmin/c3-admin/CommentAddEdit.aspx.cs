@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,11 +11,11 @@ using Carrotware.CMS.UI.Base;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class CommentAddEdit : AdminBasePage {
-		protected void Page_Load(object sender, EventArgs e) {
 
+	public partial class CommentAddEdit : AdminBasePage {
+
+		protected void Page_Load(object sender, EventArgs e) {
 			ucCommentAddEdit1.FetchItem();
 
 			if (ucCommentAddEdit1.pageType == ContentPageType.PageType.BlogEntry) {
@@ -31,8 +26,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				Master.ActivateTab(AdminBaseMasterPage.SectionID.PageComment);
 			}
 		}
-
-
 
 	}
 }

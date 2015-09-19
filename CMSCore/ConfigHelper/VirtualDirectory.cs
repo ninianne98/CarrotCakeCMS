@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Routing;
 using Carrotware.CMS.DBUpdater;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -14,20 +15,18 @@ using Carrotware.CMS.DBUpdater;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
-	public class VirtualDirectory : IRouteHandler {
 
+	public class VirtualDirectory : IRouteHandler {
 
 		public VirtualDirectory(string virtualPath) {
 			this.VirtualPath = virtualPath;
 		}
 
-
 		public string VirtualPath { get; private set; }
 
-
 		private static string ContentKey = "cms_RegisterRoutes";
+
 		public static bool HasRegisteredRoutes {
 			get {
 				bool c = false;
@@ -53,14 +52,11 @@ namespace Carrotware.CMS.Core {
 			RegisterRoutes(routes, false);
 		}
 
-
 		public static void RegisterRoutes(RouteCollection routes, bool OverrideRefresh) {
-
 			try {
 				string sKeyPrefix = "CarrotCakeCMS_";
 
 				if (!HasRegisteredRoutes || OverrideRefresh) {
-
 					List<string> listFiles = SiteNavHelper.GetSiteDirectoryPaths();
 					int iRoute = 0;
 					List<Route> lstRoute = new List<Route>();
@@ -92,7 +88,6 @@ namespace Carrotware.CMS.Core {
 
 					HasRegisteredRoutes = true;
 				}
-
 			} catch (Exception ex) {
 				//assumption is database is probably empty / needs updating, so trigger the under construction view
 				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
@@ -105,16 +100,14 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-
 		#region IRouteHandler Members
 
 		public IHttpHandler GetHttpHandler(RequestContext requestContext) {
-
 			IHttpHandler p = new VirtualFileSystem();
 
 			return p;
 		}
 
-		#endregion
+		#endregion IRouteHandler Members
 	}
 }

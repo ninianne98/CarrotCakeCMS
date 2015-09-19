@@ -62,6 +62,5 @@
 				active: parseInt('<%=SelMenu %>')
 			});
 		}
-			
 	</script>
 </asp:PlaceHolder>

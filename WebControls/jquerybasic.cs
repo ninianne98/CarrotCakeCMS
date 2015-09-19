@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Web.UI;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -11,8 +12,8 @@ using System.Web.UI;
 * Date: October 2011
 */
 
-
 namespace Carrotware.Web.UI.Controls {
+
 	[DefaultProperty("Text")]
 	[ToolboxData("<{0}:jquerybasic runat=server></{0}:jquerybasic>")]
 	public class jquerybasic : BaseWebControl {
@@ -26,7 +27,6 @@ namespace Carrotware.Web.UI.Controls {
 			LightGreen,
 			NotUsed
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -47,7 +47,6 @@ namespace Carrotware.Web.UI.Controls {
 				ViewState["SelectedSkin"] = value.ToString();
 			}
 		}
-
 
 		[Bindable(true)]
 		[Category("Appearance")]
@@ -109,7 +108,6 @@ namespace Carrotware.Web.UI.Controls {
 			return BaseWebControl.GetWebResourceUrl(typeof(jquerybasic), resource);
 		}
 
-
 		private jquery _jq = new jquery();
 		private jqueryui _jqui = new jqueryui();
 
@@ -141,18 +139,23 @@ namespace Carrotware.Web.UI.Controls {
 				case jQueryTheme.GlossyBlack:
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css");
 					break;
+
 				case jQueryTheme.Purple:
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-purple.css");
 					break;
+
 				case jQueryTheme.Green:
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-green.css");
 					break;
+
 				case jQueryTheme.Blue:
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-blue.css");
 					break;
+
 				case jQueryTheme.LightGreen:
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css");
 					break;
+
 				case jQueryTheme.Silver:
 				default:
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-silver.css");
@@ -162,13 +165,9 @@ namespace Carrotware.Web.UI.Controls {
 			if (this.SelectedSkin != jQueryTheme.NotUsed) {
 				output.Write("<!-- JQuery UI CSS " + SelectedSkin.ToString() + " --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 			}
-
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 		}
-
-
 	}
 }

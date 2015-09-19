@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -16,6 +14,7 @@ using Carrotware.CMS.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin {
+
 	public class AdminBaseUserControl : BaseUserControl {
 
 		protected Guid GetGuidPageIDFromQuery() {
@@ -35,7 +34,5 @@ namespace Carrotware.CMS.UI.Admin {
 				Response.Redirect(SiteFilename.SiteInfoURL);
 			}
 		}
-
-
 	}
 }

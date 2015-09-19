@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Add Page Info" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageAddChild.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageAddChild" %>
+﻿<%@ Page Title="Add Page Info" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="PageAddChild.aspx.cs"
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageAddChild" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
@@ -85,7 +86,6 @@
 			CheckFileName();
 		}
 
-
 		function CheckFileName() {
 			if (doesFilenameExists()) {
 
@@ -113,7 +113,6 @@
 			cmsIsPageValid();
 		});
 
-
 		function editFilenameCallback(data, status) {
 			if (data.d != "FAIL" && data.d != "OK") {
 				cmsAlertModal(data.d);
@@ -130,7 +129,6 @@
 			var ret = cmsIsPageValid();
 			setTimeout("cmsForceInputValidation('<%= txtFileValid.ClientID %>');", 800);
 		}
-
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
@@ -154,8 +152,8 @@
 	</asp:Panel>
 	<asp:Panel runat="server" ID="pnlAdd">
 		<p>
-			This creates a blank and unpublished page (no content) with the specified filename and title etc. This new page will use the plain/default template. You
-			will have the opportunity to update the appearance when you visit the new page.
+			This creates a blank and unpublished page (no content) with the specified filename and title etc. This new page will use the plain/default template.
+			You will have the opportunity to update the appearance when you visit the new page.
 		</p>
 		<table style="width: 700px;">
 			<tr>
@@ -163,8 +161,8 @@
 					titlebar:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server" Columns="45"
-						MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server"
+						Columns="45" MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
@@ -176,12 +174,13 @@
 					filename:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server" Columns="45"
-						MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
+						Columns="45" MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileName" ID="RequiredFieldValidator2"
 						runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic" Text="**" />
-					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1" runat="server"
-						ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
+					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1"
+						runat="server" ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID"
+						Operator="Equal" />
 					<div style="display: none;">
 						<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
 						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator3"
@@ -212,8 +211,8 @@
 					meta keywords:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4"
-						TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
+						Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
@@ -221,7 +220,8 @@
 					meta description:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+						runat="server" />
 				</td>
 			</tr>
 			<tr>

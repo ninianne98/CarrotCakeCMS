@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+using System.Web.Security;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
-using System.Web.Security;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -19,11 +16,11 @@ using System.Web.Security;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class PageHistory : AdminBasePage {
 
+	public partial class PageHistory : AdminBasePage {
 		public Guid guidRootID = Guid.Empty;
 		public Guid guidContentID = Guid.Empty;
-		string sPageMode = String.Empty;
+		private string sPageMode = String.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.UsesSaved = true;
@@ -68,9 +65,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				imgStatus.ToolTip = imgStatus.AlternateText;
 			}
 
-
 			lnkReturn.NavigateUrl = SiteFilename.PageHistoryURL + "?id=" + guidRootID.ToString();
-
 		}
 
 		protected string GetUserName(Guid userId) {
@@ -83,15 +78,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void LoadGrid() {
-
 			var lstCont = pageHelper.GetVersionHistory(SiteID, guidRootID);
 
 			GeneralUtilities.BindDataBoundControl(gvPages, lstCont);
-
 		}
 
 		protected void gvPages_DataBound(object sender, EventArgs e) {
-
 			var current = pageHelper.FindContentByID(SiteID, guidRootID);
 
 			foreach (GridViewRow dgItem in gvPages.Rows) {
@@ -116,7 +108,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnRemove_Click(object sender, EventArgs e) {
-
 			List<Guid> lstDel = GeneralUtilities.GetCheckedItemGuidsByValue(gvPages, true, "chkContent");
 
 			pageHelper.RemoveVersions(SiteID, lstDel);
@@ -125,7 +116,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.ShowSave();
 		}
-
-
 	}
 }

@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web;
 
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
+
 namespace Carrotware.CMS.Interface {
+
 	public static class ParmParser {
 
 		public static string GetParmValue(Dictionary<string, string> parmDictionary, string sKey) {
@@ -42,7 +52,6 @@ namespace Carrotware.CMS.Interface {
 		}
 
 		public static List<string> GetParmValueList(Dictionary<string, string> parmDictionary, string sKey) {
-
 			sKey = sKey.EndsWith("|") ? sKey : sKey + "|";
 			sKey = sKey.ToLower();
 
@@ -56,7 +65,6 @@ namespace Carrotware.CMS.Interface {
 
 			return ret;
 		}
-
 
 		#region QueryString Parsers
 
@@ -90,7 +98,6 @@ namespace Carrotware.CMS.Interface {
 			return id;
 		}
 
-		#endregion
-
+		#endregion QueryString Parsers
 	}
 }

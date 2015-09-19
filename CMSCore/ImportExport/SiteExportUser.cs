@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -12,14 +10,13 @@ using System.Text;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.Core {
+
 	public class SiteExportUser {
 
 		public SiteExportUser() { }
 
 		public SiteExportUser(ExtendedUserData user) {
-
 			if (user != null) {
 				this.ExportUserID = user.UserId;
 				this.Email = user.EmailAddress;
@@ -40,7 +37,5 @@ namespace Carrotware.CMS.Core {
 		public string LastName { get; set; }
 
 		public string UserNickname { get; set; }
-
-
 	}
 }

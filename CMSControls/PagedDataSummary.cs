@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
-using System.IO;
 using System.Linq;
-using System.Security.Permissions;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -26,8 +24,8 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PagedDataSummary runat=server></{0}:PagedDataSummary>")]
 	public class PagedDataSummary : BasePagedDataTemplate, IWidgetLimitedProperties {
-
 		private List<GuidItem> guidList = null;
+
 		[
 		Category("Behavior"),
 		Description("The GuidItem collection"),
@@ -49,6 +47,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private List<StringItem> stringList = null;
+
 		[
 		Category("Behavior"),
 		Description("The StringItem collection"),
@@ -68,7 +67,6 @@ namespace Carrotware.CMS.UI.Controls {
 				return stringList;
 			}
 		}
-
 
 		private List<PagedDataSummaryTitleOption> typeLabels = null;
 
@@ -96,7 +94,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		[Category("Appearance")]
 		public string LinkNext {
 			get {
@@ -107,6 +104,7 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["LinkNext"] = value;
 			}
 		}
+
 		[Category("Appearance")]
 		public string LinkPrev {
 			get {
@@ -117,6 +115,7 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["LinkPrev"] = value;
 			}
 		}
+
 		[Category("Appearance")]
 		public string LinkFirst {
 			get {
@@ -127,6 +126,7 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["LinkFirst"] = value;
 			}
 		}
+
 		[Category("Appearance")]
 		public string LinkLast {
 			get {
@@ -137,7 +137,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["LinkLast"] = value;
 			}
 		}
-
 
 		[Category("Appearance")]
 		[DefaultValue(false)]
@@ -153,8 +152,6 @@ namespace Carrotware.CMS.UI.Controls {
 				ViewState["IgnoreSitePath"] = value;
 			}
 		}
-
-
 
 		[Category("Appearance")]
 		[DefaultValue("Blog")]
@@ -217,6 +214,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private List<string> _slugs = null;
+
 		public List<string> SelectedCategorySlugs {
 			get {
 				if (_slugs == null) {
@@ -237,7 +235,6 @@ namespace Carrotware.CMS.UI.Controls {
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
 			get {
-
 				Dictionary<string, string> _dict = (from c in SiteData.CurrentSite.GetCategoryList()
 													orderby c.CategoryText
 													where c.SiteID == SiteData.CurrentSiteID
@@ -303,21 +300,25 @@ namespace Carrotware.CMS.UI.Controls {
 						TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor);
 						lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
+
 					case SummaryContentType.ChildContentPage:
 						viewContentType = ContentPageType.PageType.ContentEntry;
 						TotalRecords = navHelper.GetChildNavigationCount(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor);
 						lstContents = navHelper.GetLatestChildContentPagedList(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
+
 					case SummaryContentType.ContentPage:
 						viewContentType = ContentPageType.PageType.ContentEntry;
 						TotalRecords = navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor);
 						lstContents = navHelper.GetLatestContentPagedList(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
+
 					case SummaryContentType.SpecifiedCategories:
 						viewContentType = ContentPageType.PageType.BlogEntry;
 						TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor);
 						lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
+
 					case SummaryContentType.SiteSearch:
 						TotalRecords = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor);
 						lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
@@ -362,7 +363,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnInit(EventArgs e) {
-
 			if (ContentTemplate == null) {
 				ContentTemplate = new DefaultSummaryTemplate();
 			}
@@ -389,7 +389,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected void SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection dir, PagedDataNextPrevLinkPair lnkPair, int iPage, bool ShowLink) {
-
 			if (lnkPair.PageLink != null) {
 				SetNextPrevLink(dir, lnkPair.PageLink, iPage);
 				lnkPair.PageLink.Visible = ShowLink;
@@ -417,9 +416,7 @@ namespace Carrotware.CMS.UI.Controls {
 			return pair;
 		}
 
-
 		protected void PrevNext() {
-
 			int iTotalPages = this.TotalRecords / this.PageSize;
 			if ((this.TotalRecords % this.PageSize) > 0) {
 				iTotalPages++;
@@ -468,15 +465,11 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 
 			try {
-
 				if (PublicParmValues.Count > 0) {
-
 					this.ContentType = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), GetParmValue("ContentType", "Blog"), true);
 
 					SelectedCategories = new List<Guid>();
@@ -491,11 +484,8 @@ namespace Carrotware.CMS.UI.Controls {
 				if (SelectedCategories.Count > 0) {
 					this.ContentType = SummaryContentType.SpecifiedCategories;
 				}
-
 			} catch (Exception ex) {
 			}
-
 		}
-
 	}
 }

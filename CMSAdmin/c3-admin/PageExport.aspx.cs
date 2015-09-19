@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-	public partial class PageExport : AdminBasePage {
 
+	public partial class PageExport : AdminBasePage {
 		public Guid guidContentID = Guid.Empty;
 		public Guid guidNodeID = Guid.Empty;
 		public DateTime dateBegin = DateTime.MinValue;
@@ -85,6 +81,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Response.StatusDescription = "OK";
 			Response.End();
 		}
-
 	}
 }
