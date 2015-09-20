@@ -162,7 +162,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			this.Text = sBody;
+			this.Text = SiteData.CurrentSite.UpdateContentSnippet(sBody);
 
 			int indent = output.Indent;
 
