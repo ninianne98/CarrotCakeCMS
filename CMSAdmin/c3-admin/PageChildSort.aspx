@@ -45,25 +45,21 @@
 		});
 	</script>
 	<style type="text/css">
-		#sortable
-		{
+		#sortable {
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
 			width: 700px;
 		}
-		#sortable li
-		{
+		#sortable li {
 			margin: 5px;
 			padding: 5px;
 			height: 2.5em;
 		}
-		html > body #sortable li
-		{
+		html > body #sortable li {
 			line-height: 1.1em;
 		}
-		.ui-state-highlight
-		{
+		.ui-state-highlight {
 			line-height: 1.1em;
 		}
 	</style>

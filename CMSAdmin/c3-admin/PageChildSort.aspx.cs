@@ -28,8 +28,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SecurityData.IsAuthEditor);
 			}
 
-			lstNav.ToList().ForEach(q => CMSConfigHelper.IdentifyLinkAsInactive(q));
-
 			if (bClickedSort && ddlAlternateSort.SelectedIndex > 0) {
 				switch (ddlAlternateSort.SelectedValue) {
 					case "alpha":
@@ -61,6 +59,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						break;
 				}
 			}
+
+			lstNav.ToList().ForEach(q => CMSConfigHelper.IdentifyLinkAsInactive(q));
 
 			GeneralUtilities.BindRepeater(rpPages, lstNav);
 
