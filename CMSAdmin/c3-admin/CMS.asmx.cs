@@ -1293,6 +1293,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				return ex.ToString();
 			}
 		}
-
 	}
 }

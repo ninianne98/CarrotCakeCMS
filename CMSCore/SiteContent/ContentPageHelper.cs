@@ -279,6 +279,8 @@ namespace Carrotware.CMS.Core {
 				newFileName = newFileName + ".aspx";
 			}
 
+			newFileName = newFileName.Replace("-.", ".");
+
 			return newFileName;
 		}
 

@@ -23,6 +23,5 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentPage pageContents = null;
 		protected SiteData theSite = null;
 		protected List<Widget> pageWidgets = null;
-
 	}
 }

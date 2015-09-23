@@ -72,11 +72,23 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				if (guidImportContentID != Guid.Empty) {
 					ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID);
+
 					if (cpe != null) {
 						pageContents = cpe.ThePage;
 						pageContents.EditDate = SiteData.CurrentSite.Now;
 						pageContents.Parent_ContentID = null;
 					}
+
+					var rp = pageHelper.GetLatestContentByURL(SiteID, false, pageContents.FileName);
+					if (rp != null) {
+						pageContents.Root_ContentID = rp.Root_ContentID;
+						pageContents.ContentID = rp.ContentID;
+					} else {
+						pageContents.Root_ContentID = Guid.Empty;
+						pageContents.ContentID = Guid.Empty;
+					}
+					pageContents.Parent_ContentID = null;
+					pageContents.NavOrder = SiteData.BlogSortOrderNumber;
 				}
 
 				//if (pageContents == null) {
@@ -243,11 +255,23 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 			if (guidImportContentID != Guid.Empty) {
 				pageContents = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID).ThePage;
+
 				if (pageContents != null) {
 					pageContents.SiteID = SiteID;
 					pageContents.EditDate = SiteData.CurrentSite.Now;
 					pageContents.CreateUserId = SecurityData.CurrentUserGuid;
 					pageContents.CreateDate = SiteData.CurrentSite.Now;
+
+					var rp = pageHelper.GetLatestContentByURL(SiteID, false, pageContents.FileName);
+					if (rp != null) {
+						pageContents.Root_ContentID = rp.Root_ContentID;
+						pageContents.ContentID = rp.ContentID;
+					} else {
+						pageContents.Root_ContentID = Guid.Empty;
+						pageContents.ContentID = Guid.Empty;
+					}
+					pageContents.Parent_ContentID = null;
+					pageContents.NavOrder = SiteData.BlogSortOrderNumber;
 				}
 			}
 
@@ -288,7 +312,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			pageContents.Parent_ContentID = null;
 
-			if (string.IsNullOrEmpty(hdnCreditUserID.Value)) {
+			if (String.IsNullOrEmpty(hdnCreditUserID.Value)) {
 				pageContents.CreditUserId = null;
 			} else {
 				var usr = new ExtendedUserData(hdnCreditUserID.Value);
@@ -368,6 +392,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				Response.Redirect(pageContents.FileName);
 			}
 		}
-
 	}
 }
