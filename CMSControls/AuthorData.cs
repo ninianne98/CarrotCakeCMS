@@ -118,7 +118,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["DataField"];
 				AuthorTextFieldName c = AuthorTextFieldName.FullName_FirstLast;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					try {
 						c = (AuthorTextFieldName)Enum.Parse(typeof(AuthorTextFieldName), s, true);
 					} catch (Exception ex) { }
@@ -136,7 +136,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["SourceField"];
 				AuthorSource c = AuthorSource.Editor;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					try {
 						c = (AuthorSource)Enum.Parse(typeof(AuthorSource), s, true);
 					} catch (Exception ex) { }
@@ -175,7 +175,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (_usr != null) {
 				object objData = ReflectionUtilities.GetPropertyValue(_usr, DataField.ToString());
 				if (objData != null) {
-					sFieldValue = string.Format(FieldFormat, objData);
+					sFieldValue = String.Format(FieldFormat, objData);
 				}
 
 				this.Text = sFieldValue;

@@ -228,21 +228,21 @@ namespace Carrotware.CMS.UI.Controls {
 					if ((this.AutoApproveAdmin)) {
 						pc.IsApproved = SecurityData.IsAdmin;
 					}
-					if (!string.IsNullOrEmpty(this.AutoApproveGroupName)) {
+					if (!String.IsNullOrEmpty(this.AutoApproveGroupName)) {
 						pc.IsApproved = SecurityData.IsUserInRole(this.AutoApproveGroupName);
 					}
 				}
 
 				pc.Save();
 
-				if (!string.IsNullOrEmpty(this.DirectEmail) || !string.IsNullOrEmpty(this.DirectEmailKeyName)) {
+				if (!String.IsNullOrEmpty(this.DirectEmail) || !String.IsNullOrEmpty(this.DirectEmailKeyName)) {
 					string sEmail = "";
 					EmailSender mailer = new EmailSender();
 
-					if (!string.IsNullOrEmpty(this.DirectEmail)) {
+					if (!String.IsNullOrEmpty(this.DirectEmail)) {
 						sEmail = this.DirectEmail.ToString();
 					}
-					if (!string.IsNullOrEmpty(this.DirectEmailKeyName)) {
+					if (!String.IsNullOrEmpty(this.DirectEmailKeyName)) {
 						sEmail = ConfigurationManager.AppSettings[this.DirectEmailKeyName].ToString();
 					}
 

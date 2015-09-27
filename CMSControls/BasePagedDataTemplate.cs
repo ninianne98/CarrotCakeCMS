@@ -310,7 +310,7 @@ namespace Carrotware.CMS.UI.Controls {
 			string sSortFld = string.Empty;
 			string sSortDir = string.Empty;
 
-			if (!string.IsNullOrEmpty(this.OrderBy)) {
+			if (!String.IsNullOrEmpty(this.OrderBy)) {
 				int pos = this.OrderBy.LastIndexOf(" ");
 				sSortFld = this.OrderBy.Substring(0, pos).Trim();
 				sSortDir = this.OrderBy.Substring(pos).Trim();
@@ -332,7 +332,7 @@ namespace Carrotware.CMS.UI.Controls {
 						string tgt = context.Request.Form["__EVENTTARGET"].ToString();
 
 						string sParm = this.ClientID.Replace(this.ID, "").Replace("_", "$");
-						if (string.IsNullOrEmpty(sParm)) {
+						if (String.IsNullOrEmpty(sParm)) {
 							sParm = this.ID + "$";
 						}
 
@@ -358,7 +358,7 @@ namespace Carrotware.CMS.UI.Controls {
 					if (context.Request[sPageParm] != null) {
 						sPageNbr = context.Request[sPageParm].ToString();
 					}
-					if (!string.IsNullOrEmpty(sPageNbr)) {
+					if (!String.IsNullOrEmpty(sPageNbr)) {
 						int pg = int.Parse(sPageNbr);
 						this.PageNumber = pg;
 						hdnPageNbr.Value = this.PageNumber.ToString();
@@ -366,7 +366,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			if (this.PageNumber <= 1 && !string.IsNullOrEmpty(hdnPageNbr.Value)) {
+			if (this.PageNumber <= 1 && !String.IsNullOrEmpty(hdnPageNbr.Value)) {
 				this.PageNumber = int.Parse(hdnPageNbr.Value);
 			}
 		}
@@ -450,11 +450,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected void RenderWrappedControl(HtmlTextWriter writer, Control ctrl, string sCSSValue) {
 			writer.WriteLine();
-			if (!string.IsNullOrEmpty(sCSSValue)) {
+			if (!String.IsNullOrEmpty(sCSSValue)) {
 				writer.WriteLine("<span class=\"" + sCSSValue + "\">");
 			}
 			ctrl.RenderControl(writer);
-			if (!string.IsNullOrEmpty(sCSSValue)) {
+			if (!String.IsNullOrEmpty(sCSSValue)) {
 				writer.WriteLine("</span>");
 			}
 			writer.WriteLine();

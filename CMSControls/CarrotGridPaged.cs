@@ -167,7 +167,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			if (PageNumber <= 1 && !string.IsNullOrEmpty(hdnPageNbr.Value)) {
+			if (PageNumber <= 1 && !String.IsNullOrEmpty(hdnPageNbr.Value)) {
 				PageNumber = int.Parse(hdnPageNbr.Value);
 			}
 

@@ -85,7 +85,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
+			if (!String.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 

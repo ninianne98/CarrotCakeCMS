@@ -147,7 +147,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["NavDirection"];
 				PagedDataNextPrevLinkWrapper.PagedDataDirection c = PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					try {
 						c = (PagedDataNextPrevLinkWrapper.PagedDataDirection)Enum.Parse(typeof(PagedDataNextPrevLinkWrapper.PagedDataDirection), s, true);
 					} catch (Exception ex) { }
@@ -194,7 +194,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["NavDirection"];
 				PagedDataNextPrevLinkWrapper.PagedDataDirection c = PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					try {
 						c = (PagedDataNextPrevLinkWrapper.PagedDataDirection)Enum.Parse(typeof(PagedDataNextPrevLinkWrapper.PagedDataDirection), s, true);
 					} catch (Exception ex) { }
@@ -207,7 +207,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public void SetText() {
-			if (string.IsNullOrEmpty(this.Text)) {
+			if (String.IsNullOrEmpty(this.Text)) {
 				this.Text = this.NavDirection.ToString();
 			}
 		}
@@ -217,7 +217,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-			if (string.IsNullOrEmpty(this.Text) && this.NavDirection != PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown) {
+			if (String.IsNullOrEmpty(this.Text) && this.NavDirection != PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown) {
 				this.SetText();
 			}
 

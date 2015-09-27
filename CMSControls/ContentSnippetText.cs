@@ -88,7 +88,7 @@ namespace Carrotware.CMS.UI.Controls {
 													orderby c.ContentSnippetName
 													where c.SiteID == SiteID
 													select c).ToList().ToDictionary(k => k.Root_ContentSnippetID.ToString(),
-													v => string.Format("{0} - {1} ({2})", v.ContentSnippetSlug, v.ContentSnippetName, (v.ContentSnippetActive ? "active" : "inactive")));
+													v => String.Format("{0} - {1} ({2})", v.ContentSnippetSlug, v.ContentSnippetName, (v.ContentSnippetActive ? "active" : "inactive")));
 				return _dict;
 			}
 		}
@@ -150,7 +150,7 @@ namespace Carrotware.CMS.UI.Controls {
 						sIdent = "<div class=\"cmsSnippetOuter\"> <div class=\"cmsSnippetInner\">\r\n" + cs.ContentSnippetSlug + ": " + cs.ContentSnippetName + "\r\n<br style=\"clear: both;\" /></div></div>";
 					}
 
-					sBody = string.Format("{0}\r\n{1}\r\n{2}", sIdent, cs.ContentBody, sBodyNote);
+					sBody = String.Format("{0}\r\n{1}\r\n{2}", sIdent, cs.ContentBody, sBodyNote);
 				}
 			} catch {
 				if (!SiteData.IsWebView) {

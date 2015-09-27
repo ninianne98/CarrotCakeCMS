@@ -219,8 +219,8 @@ namespace Carrotware.CMS.UI.Controls {
 			rTopNav.EnableViewState = this.EnableViewState;
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
-				sCSS = string.Format(" class=\"{0}\"", CssClass);
+			if (!String.IsNullOrEmpty(CssClass)) {
+				sCSS = String.Format(" class=\"{0}\"", CssClass);
 			}
 			int indent = writer.Indent;
 
@@ -304,17 +304,17 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void ModWrap(IActivateNavItem lnk) {
-			if (!string.IsNullOrEmpty(this.CSSSelected)) {
+			if (!String.IsNullOrEmpty(this.CSSSelected)) {
 				lnk.CSSSelected = this.CSSSelected;
 			}
 
 			if ((SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) || AreFilenamesSame(lnk.NavigateUrl, ParentPageNav.FileName))
-					&& !string.IsNullOrEmpty(lnk.CSSSelected)) {
+					&& !String.IsNullOrEmpty(lnk.CSSSelected)) {
 				lnk.IsSelected = true;
 			}
 
-			if (GetChildren(lnk.ContentID).Count > 0 && !string.IsNullOrEmpty(lnk.CssClassHasChild)) {
-				if (!string.IsNullOrEmpty(lnk.CssClassNormal)) {
+			if (GetChildren(lnk.ContentID).Count > 0 && !String.IsNullOrEmpty(lnk.CssClassHasChild)) {
+				if (!String.IsNullOrEmpty(lnk.CssClassNormal)) {
 					lnk.CssClassNormal = lnk.CssClassNormal + " " + lnk.CssClassHasChild;
 				} else {
 					lnk.CssClassNormal = lnk.CssClassHasChild;
@@ -344,7 +344,7 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-			if (!string.IsNullOrEmpty(OverrideCSS)) {
+			if (!String.IsNullOrEmpty(OverrideCSS)) {
 				HtmlLink link = new HtmlLink();
 				link.Href = OverrideCSS;
 				link.Attributes.Add("rel", "stylesheet");

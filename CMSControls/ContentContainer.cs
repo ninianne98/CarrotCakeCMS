@@ -92,7 +92,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["TextZone"];
 				TextFieldZone c = TextFieldZone.Unknown;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (TextFieldZone)Enum.Parse(typeof(TextFieldZone), s, true);
 				}
 				return c;
@@ -121,7 +121,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 
-			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
+			if (this.TextZone != TextFieldZone.Unknown && (String.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
 				ContentPage pageContents = cu.GetContainerContentPage(this);
 
 				if (pageContents != null) {

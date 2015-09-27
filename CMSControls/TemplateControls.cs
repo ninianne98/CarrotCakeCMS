@@ -148,7 +148,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void SetCSS() {
-			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
+			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -156,7 +156,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				sCSS = string.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
+				sCSS = String.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
 
 				lnk.CssClass = sCSS.Trim();
 			}
@@ -191,11 +191,11 @@ namespace Carrotware.CMS.UI.Controls {
 		private void AssignVals() {
 			SetCSS();
 
-			if (!string.IsNullOrEmpty(_linkNavURL) && string.IsNullOrEmpty(this.NavigateUrl)) {
+			if (!String.IsNullOrEmpty(_linkNavURL) && String.IsNullOrEmpty(this.NavigateUrl)) {
 				this.NavigateUrl = _linkNavURL;
 			}
 
-			if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
+			if (!String.IsNullOrEmpty(_linkTextDefault) && String.IsNullOrEmpty(this.LinkText)) {
 				if (UseDefaultText) {
 					this.LinkText = _linkTextDefault;
 				}
@@ -343,7 +343,7 @@ namespace Carrotware.CMS.UI.Controls {
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
 			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
-			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
+			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -351,8 +351,8 @@ namespace Carrotware.CMS.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(sSelCss)) {
-					sCSS = string.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
+				if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(sSelCss)) {
+					sCSS = String.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
 				}
 
 				litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + HtmlTextWriter.TagRightChar;
@@ -471,33 +471,33 @@ namespace Carrotware.CMS.UI.Controls {
 		private void SetFileInfo(string sImageName, string sTemplateFolderPath) {
 			string sFieldValue = sImageName;
 
-			if (string.IsNullOrEmpty(sFieldValue)) {
+			if (String.IsNullOrEmpty(sFieldValue)) {
 				// if page itself has no image, see if the image had been specified directly
 				sFieldValue = this.ImageUrl;
 			}
-			if (string.IsNullOrEmpty(sFieldValue)) {
+			if (String.IsNullOrEmpty(sFieldValue)) {
 				this.Visible = false;
 			}
-			if (!string.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
+			if (!String.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
 				sFieldValue = sTemplateFolderPath + sFieldValue;
 			}
 
-			if (!string.IsNullOrEmpty(sFieldValue) && !File.Exists(HttpContext.Current.Server.MapPath(sFieldValue))) {
+			if (!String.IsNullOrEmpty(sFieldValue) && !File.Exists(HttpContext.Current.Server.MapPath(sFieldValue))) {
 				ContentPage cp = cu.GetContainerContentPage(this);
 				sFieldValue = sImageName;
-				if (string.IsNullOrEmpty(sFieldValue)) {
+				if (String.IsNullOrEmpty(sFieldValue)) {
 					sFieldValue = this.ImageUrl;
 				}
 
 				if (cp != null) {
-					if (!string.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
+					if (!String.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
 						sFieldValue = cp.TemplateFolderPath + sFieldValue;
 					}
 				}
 			}
 
-			if (PerformURLResize && !string.IsNullOrEmpty(sFieldValue)) {
-				sFieldValue = string.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
+			if (PerformURLResize && !String.IsNullOrEmpty(sFieldValue)) {
+				sFieldValue = String.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
 			}
 
 			this.ImageUrl = sFieldValue;
@@ -620,7 +620,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["DataField"];
 				NavTextFieldName c = NavTextFieldName.NavMenuText;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					try {
 						c = (NavTextFieldName)Enum.Parse(typeof(NavTextFieldName), s, true);
 					} catch (Exception ex) { }
@@ -668,9 +668,9 @@ namespace Carrotware.CMS.UI.Controls {
 						}
 					}
 
-					sFieldValue = string.Format(FieldFormat, sValue);
+					sFieldValue = String.Format(FieldFormat, sValue);
 				} else {
-					sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + sField));
+					sFieldValue = String.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + sField));
 				}
 			} catch {
 				if (!SiteData.IsWebView) {
@@ -1111,7 +1111,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["DataField"];
 				CommentTextFieldName c = CommentTextFieldName.CommenterName;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					try {
 						c = (CommentTextFieldName)Enum.Parse(typeof(CommentTextFieldName), s, true);
 					} catch (Exception ex) { }
@@ -1137,7 +1137,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.ContentCommentID = pageID;
 
-			string sTxt1 = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
+			string sTxt1 = String.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
 			if (!IsApproved) {
 				sTxt1 = String.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, sTxt1);
 			}
@@ -1312,7 +1312,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void SetCSS() {
-			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
+			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -1320,7 +1320,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				sCSS = string.Format("{0} {1}", CssClassNormal, sSelCss);
+				sCSS = String.Format("{0} {1}", CssClassNormal, sSelCss);
 
 				lnkBtn.CssClass = sCSS.Trim();
 				lnkNav.CssClass = sCSS.Trim();
@@ -1352,7 +1352,7 @@ namespace Carrotware.CMS.UI.Controls {
 			_linkTextDefault = PageNbr.ToString();
 			this.PageNumber = PageNbr;
 
-			if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
+			if (!String.IsNullOrEmpty(_linkTextDefault) && String.IsNullOrEmpty(this.LinkText)) {
 				if (UseDefaultText) {
 					_linkText = _linkTextDefault;
 				}
@@ -1506,7 +1506,7 @@ namespace Carrotware.CMS.UI.Controls {
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
 			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
-			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
+			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -1514,8 +1514,8 @@ namespace Carrotware.CMS.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(sSelCss)) {
-					sCSS = string.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
+				if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(sSelCss)) {
+					sCSS = String.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
 				}
 
 				litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + HtmlTextWriter.TagRightChar;

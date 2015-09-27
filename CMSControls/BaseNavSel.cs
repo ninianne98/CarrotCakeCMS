@@ -105,7 +105,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
 			string sCSS = (this.CSSULClassTop + " " + this.CssClass).Trim();
-			if (!string.IsNullOrEmpty(sCSS)) {
+			if (!String.IsNullOrEmpty(sCSS)) {
 				output.WriteLine("<ul id=\"" + this.HtmlClientID + "\" class=\"" + sCSS + "\">");
 			} else {
 				output.WriteLine("<ul id=\"" + this.HtmlClientID + "\" >");
@@ -137,8 +137,8 @@ namespace Carrotware.CMS.UI.Controls {
 				int indent2 = output.Indent + 1;
 
 				string sItemCSS = "";
-				if (!string.IsNullOrEmpty(CSSItem)) {
-					sItemCSS = string.Format(" {0} ", this.CSSItem);
+				if (!String.IsNullOrEmpty(CSSItem)) {
+					sItemCSS = String.Format(" {0} ", this.CSSItem);
 				}
 
 				string sThis1CSS = sItemCSS;
@@ -249,27 +249,27 @@ namespace Carrotware.CMS.UI.Controls {
 					string sTmp = "";
 
 					sTmp = GetParmValue("CSSSelected", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
+					if (!String.IsNullOrEmpty(sTmp)) {
 						this.CSSSelected = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSHasChildren", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
+					if (!String.IsNullOrEmpty(sTmp)) {
 						this.CSSHasChildren = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSULClassTop", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
+					if (!String.IsNullOrEmpty(sTmp)) {
 						this.CSSULClassTop = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSULClassLower", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
+					if (!String.IsNullOrEmpty(sTmp)) {
 						this.CSSULClassLower = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSHasChildren", "");
-					if (!string.IsNullOrEmpty(sTmp)) {
+					if (!String.IsNullOrEmpty(sTmp)) {
 						this.CSSHasChildren = sTmp;
 					}
 				}

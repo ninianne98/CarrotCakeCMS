@@ -122,7 +122,7 @@ namespace Carrotware.CMS.UI.Controls {
 			FindEntryFormCtrls(phEntry);
 
 			TextBox txtSearchText = null;
-			if (string.IsNullOrEmpty(OverrideTextboxName)) {
+			if (String.IsNullOrEmpty(OverrideTextboxName)) {
 				txtSearchText = (TextBox)GetEntryFormControl("SearchText");
 
 				if (txtSearchText == null) {
@@ -139,7 +139,7 @@ namespace Carrotware.CMS.UI.Controls {
 				sScript = sScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
 				sScript = sScript.Replace("{SEARCH_ENTERFUNC2}", JS_EnterSearch2);
 
-				if (string.IsNullOrEmpty(OverrideTextboxName)) {
+				if (String.IsNullOrEmpty(OverrideTextboxName)) {
 					sScript = sScript.Replace("{SEARCH_TEXT}", this.ClientID + "_" + txtSearchText.ID);
 				} else {
 					sScript = sScript.Replace("{SEARCH_TEXT}", OverrideTextboxName);

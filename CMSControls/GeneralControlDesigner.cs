@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.Design;
 
@@ -25,7 +26,7 @@ namespace Carrotware.CMS.UI.Controls {
 			string sTextOut = "[" + sType + " - " + sID + "]";
 
 			if (myctrl is ITextControl) {
-				if (!string.IsNullOrEmpty(((ITextControl)myctrl).Text)) {
+				if (!String.IsNullOrEmpty(((ITextControl)myctrl).Text)) {
 					sTextOut = "[" + sType + " - " + sID + " : " + ((ITextControl)myctrl).Text + "]";
 				}
 			}

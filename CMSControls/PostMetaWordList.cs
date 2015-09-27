@@ -127,7 +127,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["ContentType"];
 				MetaDataType c = MetaDataType.Category;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (MetaDataType)Enum.Parse(typeof(MetaDataType), s, true);
 				}
 				return c;
@@ -188,7 +188,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
+			if (!String.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 			string sOuter = HtmlTagNameOuter;
@@ -202,7 +202,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("<" + sOuter + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
 
-			if (!string.IsNullOrEmpty(MetaDataTitle) && lstNav.Count > 0) {
+			if (!String.IsNullOrEmpty(MetaDataTitle) && lstNav.Count > 0) {
 				output.WriteLine("<" + sInner + " class=\"meta-caption\">" + MetaDataTitle + "  </" + sInner + "> ");
 			}
 

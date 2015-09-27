@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Controls {
 				_page = GetContainerPage(X);
 			}
 
-			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
+			//if (!SiteData.IsWebView && String.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
 			//    _page.AppRelativeVirtualPath = "~/";
 			//}
 		}
@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ResetFind();
 			_page = X;
 
-			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
+			//if (!SiteData.IsWebView && String.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
 			//    _page.AppRelativeVirtualPath = "~/";
 			//}
 		}

@@ -44,7 +44,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public override void FetchData() {
 			HttpContext context = HttpContext.Current;
 
-			if (string.IsNullOrEmpty(OrderBy)) {
+			if (String.IsNullOrEmpty(OrderBy)) {
 				this.OrderBy = "CreateDate  desc";
 			}
 

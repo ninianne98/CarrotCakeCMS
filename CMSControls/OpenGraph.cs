@@ -66,7 +66,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["OpenGraphType"];
 				OpenGraphTypeDef c = OpenGraphTypeDef.Default;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (OpenGraphTypeDef)Enum.Parse(typeof(OpenGraphTypeDef), s, true);
 				}
 				return c;
@@ -95,7 +95,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (cp != null) {
 					HtmlMeta metaSub = new HtmlMeta();
 					metaSub.Attributes["property"] = "og:description";
-					metaSub.Content = string.IsNullOrEmpty(cp.MetaDescription) ? theSite.MetaDescription : cp.MetaDescription;
+					metaSub.Content = String.IsNullOrEmpty(cp.MetaDescription) ? theSite.MetaDescription : cp.MetaDescription;
 					this.Controls.Add(metaSub);
 
 					HtmlMeta metaURL = new HtmlMeta();
@@ -120,14 +120,21 @@ namespace Carrotware.CMS.UI.Controls {
 
 					this.Controls.Add(metaType);
 
-					if (!string.IsNullOrEmpty(this.Page.Title)) {
+					if (!String.IsNullOrEmpty(this.Page.Title)) {
 						HtmlMeta metaTitle = new HtmlMeta();
 						metaTitle.Attributes["property"] = "og:title";
 						metaTitle.Content = cp.TitleBar;
 						this.Controls.Add(metaTitle);
 					}
 
-					if (!string.IsNullOrEmpty(theSite.SiteName)) {
+					if (!String.IsNullOrEmpty(cp.Thumbnail)) {
+						HtmlMeta metaTitle = new HtmlMeta();
+						metaTitle.Attributes["property"] = "og:image";
+						metaTitle.Content = String.Format("{0}/{1}", theSite.MainCanonicalURL, cp.Thumbnail).Replace(@"//", @"/").Replace(@"//", @"/").Replace(@":/", @"://");
+						this.Controls.Add(metaTitle);
+					}
+
+					if (!String.IsNullOrEmpty(theSite.SiteName)) {
 						HtmlMeta metaSite = new HtmlMeta();
 						metaSite.Attributes["property"] = "og:site_name";
 						metaSite.Content = theSite.SiteName;

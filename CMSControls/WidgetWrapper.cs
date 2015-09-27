@@ -111,7 +111,7 @@ namespace Carrotware.CMS.UI.Controls {
 			sCtrl = sCtrl.Replace("{WIDGET_PATH}", this.ControlPath);
 			sCtrl = sCtrl.Replace("{WIDGET_TITLE}", this.ControlTitle);
 
-			if (!string.IsNullOrEmpty(this.JSEditFunction)) {
+			if (!String.IsNullOrEmpty(this.JSEditFunction)) {
 				sCtrl = sCtrl.Replace("{WIDGET_JS}", this.JSEditFunction);
 			}
 
@@ -185,7 +185,7 @@ namespace Carrotware.CMS.UI.Controls {
 						this.JSEditFunction = null;
 					}
 
-					if (string.IsNullOrEmpty(this.JSEditFunction)) {
+					if (String.IsNullOrEmpty(this.JSEditFunction)) {
 						ControlUtilities cu = new ControlUtilities();
 						HtmlGenericControl edit = (HtmlGenericControl)cu.FindControl("liEdit", ctrl1);
 						HtmlGenericControl hist = (HtmlGenericControl)cu.FindControl("liHistory", ctrl1);

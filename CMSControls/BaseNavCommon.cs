@@ -104,7 +104,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (this.NavigationData != null && this.NavigationData.Count > 0) {
 				string sCSS = "";
 
-				if (!string.IsNullOrEmpty(this.CssClass)) {
+				if (!String.IsNullOrEmpty(this.CssClass)) {
 					sCSS = " class=\"" + this.CssClass + "\" ";
 				}
 				output.WriteLine("<ul" + sCSS + " id=\"" + this.HtmlClientID + "\">");

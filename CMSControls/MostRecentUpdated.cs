@@ -48,7 +48,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["ContentType"];
 				ListContentType c = ListContentType.ContentPage;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (ListContentType)Enum.Parse(typeof(ListContentType), s, true);
 				}
 				return c;
@@ -218,8 +218,8 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 			}
 
-			if (this.ShowUpdateDate && !string.IsNullOrEmpty(this.DateFormat)) {
-				lst.ForEach(x => x.NavMenuText = string.Format("{0}  {1}", x.NavMenuText, string.Format(this.DateFormat, x.GoLiveDate)));
+			if (this.ShowUpdateDate && !String.IsNullOrEmpty(this.DateFormat)) {
+				lst.ForEach(x => x.NavMenuText = String.Format("{0}  {1}", x.NavMenuText, String.Format(this.DateFormat, x.GoLiveDate)));
 			}
 
 			return lst;
@@ -251,7 +251,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					List<string> lstCategories = GetParmValueList("SelectedCategories");
 					foreach (string sCat in lstCategories) {
-						if (!string.IsNullOrEmpty(sCat)) {
+						if (!String.IsNullOrEmpty(sCat)) {
 							SelectedCategories.Add(new Guid(sCat));
 						}
 					}

@@ -40,7 +40,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
 				TagType c = TagType.H2;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (TagType)Enum.Parse(typeof(TagType), s, true);
 				}
 				return c;
@@ -116,7 +116,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["ContentType"];
 				MetaDataType c = MetaDataType.Category;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (MetaDataType)Enum.Parse(typeof(MetaDataType), s, true);
 				}
 				return c;
@@ -206,18 +206,18 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (lstNav != null && lstNav.Count > 0 && !string.IsNullOrEmpty(MetaDataTitle)) {
+			if (lstNav != null && lstNav.Count > 0 && !String.IsNullOrEmpty(MetaDataTitle)) {
 				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
+			if (!String.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
 			string sItemCSS = "";
-			if (!string.IsNullOrEmpty(CSSItem)) {
-				sItemCSS = string.Format(" {0} ", CSSItem);
+			if (!String.IsNullOrEmpty(CSSItem)) {
+				sItemCSS = String.Format(" {0} ", CSSItem);
 			}
 
 			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\"> ");
@@ -233,7 +233,7 @@ namespace Carrotware.CMS.UI.Controls {
 					sCount = c.MetaPublicInfoCount.ToString();
 				}
 				if (ShowUseCount) {
-					sText = string.Format("{0}  ({1})", c.MetaInfoText, sCount);
+					sText = String.Format("{0}  ({1})", c.MetaInfoText, sCount);
 				}
 
 				if (SiteData.IsFilenameCurrentPage(c.MetaInfoURL)) {

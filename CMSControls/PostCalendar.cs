@@ -159,32 +159,32 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
+			if (!String.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
 			string sCSSClassTable = "";
-			if (!string.IsNullOrEmpty(CSSClassTable)) {
+			if (!String.IsNullOrEmpty(CSSClassTable)) {
 				sCSSClassTable = " class=\"" + CSSClassTable + "\" ";
 			}
 			string sCSSClassCaption = "";
-			if (!string.IsNullOrEmpty(CSSClassCaption)) {
+			if (!String.IsNullOrEmpty(CSSClassCaption)) {
 				sCSSClassCaption = " class=\"" + CSSClassCaption + "\" ";
 			}
 			string sCSSClassDayHead = "";
-			if (!string.IsNullOrEmpty(CSSClassDayHead)) {
+			if (!String.IsNullOrEmpty(CSSClassDayHead)) {
 				sCSSClassDayHead = " class=\"" + CSSClassDayHead + "\" ";
 			}
 			string sCSSClassTableBody = "";
-			if (!string.IsNullOrEmpty(CSSClassTableBody)) {
+			if (!String.IsNullOrEmpty(CSSClassTableBody)) {
 				sCSSClassTableBody = " class=\"" + CSSClassTableBody + "\" ";
 			}
 			string sCSSClassDateLink = "";
-			if (!string.IsNullOrEmpty(CSSClassDateLink)) {
+			if (!String.IsNullOrEmpty(CSSClassDateLink)) {
 				sCSSClassDateLink = " class=\"" + CSSClassDateLink + "\" ";
 			}
 			string sCSSClassTableFoot = "";
-			if (!string.IsNullOrEmpty(CSSClassTableFoot)) {
+			if (!String.IsNullOrEmpty(CSSClassTableFoot)) {
 				sCSSClassTableFoot = " class=\"" + CSSClassTableFoot + "\" ";
 			}
 
@@ -194,7 +194,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
 
-			if (!string.IsNullOrEmpty(CalendarHead)) {
+			if (!String.IsNullOrEmpty(CalendarHead)) {
 				output.WriteLine("<h2 class=\"calendar-caption\">" + CalendarHead + "  </h2> ");
 			}
 

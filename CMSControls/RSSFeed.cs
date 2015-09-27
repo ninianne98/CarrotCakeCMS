@@ -32,7 +32,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["RenderRSSMode"];
 				RSSRenderAs c = RSSRenderAs.HeaderLink;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (RSSRenderAs)Enum.Parse(typeof(RSSRenderAs), s, true);
 				}
 				return c;
@@ -63,7 +63,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["RSSFeedType"];
 				SiteData.RSSFeedInclude c = SiteData.RSSFeedInclude.BlogAndPages;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (SiteData.RSSFeedInclude)Enum.Parse(typeof(SiteData.RSSFeedInclude), s, true);
 				}
 				return c;
@@ -90,7 +90,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string ImageURI {
 			get {
 				string s = (string)ViewState["ImageURI"];
-				if (string.IsNullOrEmpty(s)) {
+				if (String.IsNullOrEmpty(s)) {
 					s = this.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
 				}
 				try {
@@ -117,7 +117,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(this.CssClass)) {
+			if (!String.IsNullOrEmpty(this.CssClass)) {
 				sCSS = " class=\"" + this.CssClass + "\" ";
 			}
 

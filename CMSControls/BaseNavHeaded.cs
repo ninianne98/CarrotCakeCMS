@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
 				TagType c = TagType.H2;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (TagType)Enum.Parse(typeof(TagType), s, true);
 				}
 				return c;
@@ -51,7 +51,7 @@ namespace Carrotware.CMS.UI.Controls {
 				this.ItemCount = this.NavigationData.Count;
 			}
 
-			if (this.NavigationData != null && this.NavigationData.Count > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
+			if (this.NavigationData != null && this.NavigationData.Count > 0 && !String.IsNullOrEmpty(this.MetaDataTitle)) {
 				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 

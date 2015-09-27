@@ -95,13 +95,13 @@ namespace Carrotware.CMS.UI.Controls {
 			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
+			if (!String.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 			string sSelCSS = (CSSSelected + " " + CSSWrapper).Trim();
 
 			string sWrapCSS = "";
-			if (!string.IsNullOrEmpty(CSSWrapper)) {
+			if (!String.IsNullOrEmpty(CSSWrapper)) {
 				sWrapCSS = " class=\"" + CSSWrapper + "\" ";
 			}
 

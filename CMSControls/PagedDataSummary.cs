@@ -160,7 +160,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["ContentType"];
 				SummaryContentType c = SummaryContentType.Blog;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					c = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), s, true);
 				}
 				return c;
@@ -258,7 +258,7 @@ namespace Carrotware.CMS.UI.Controls {
 			HttpContext context = HttpContext.Current;
 			string sPagePath = SiteData.CurrentScriptName;
 
-			if (string.IsNullOrEmpty(this.OrderBy)) {
+			if (String.IsNullOrEmpty(this.OrderBy)) {
 				this.OrderBy = "GoLiveDate  desc";
 			}
 
@@ -269,7 +269,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ContentPageType.PageType viewContentType = ContentPageType.PageType.BlogEntry;
 
 			if (this.IgnoreSitePath) {
-				sPagePath = string.Format("/siteid-{0}.aspx", SiteData.CurrentSiteID);
+				sPagePath = String.Format("/siteid-{0}.aspx", SiteData.CurrentSiteID);
 			}
 
 			if (context != null) {
@@ -380,10 +380,10 @@ namespace Carrotware.CMS.UI.Controls {
 				lnkNP.NavDirection = dir;
 				lnkNP.SetText();
 
-				lnkNP.NavigateUrl = string.Format("{0}?{1}={2}", SiteData.CurrentScriptName, sPageParm, iPage);
+				lnkNP.NavigateUrl = String.Format("{0}?{1}={2}", SiteData.CurrentScriptName, sPageParm, iPage);
 
-				if (!string.IsNullOrEmpty(sSearchTerm)) {
-					lnkNP.NavigateUrl = string.Format("{0}&{1}={2}", lnkNP.NavigateUrl, SiteData.SearchQueryParameter, context.Server.UrlEncode(sSearchTerm));
+				if (!String.IsNullOrEmpty(sSearchTerm)) {
+					lnkNP.NavigateUrl = String.Format("{0}&{1}={2}", lnkNP.NavigateUrl, SiteData.SearchQueryParameter, context.Server.UrlEncode(sSearchTerm));
 				}
 			}
 		}
@@ -422,7 +422,7 @@ namespace Carrotware.CMS.UI.Controls {
 				iTotalPages++;
 			}
 
-			if (!string.IsNullOrEmpty(this.LinkNext)) {
+			if (!String.IsNullOrEmpty(this.LinkNext)) {
 				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkNext);
 
 				int iPageNum = this.PageNumber + 1;
@@ -432,7 +432,7 @@ namespace Carrotware.CMS.UI.Controls {
 				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.Next, pair, iPageNum, bShowLink);
 			}
 
-			if (!string.IsNullOrEmpty(this.LinkPrev)) {
+			if (!String.IsNullOrEmpty(this.LinkPrev)) {
 				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkPrev);
 
 				int iPageNum = this.PageNumber - 1;
@@ -441,7 +441,7 @@ namespace Carrotware.CMS.UI.Controls {
 				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.Previous, pair, iPageNum, bShowLink);
 			}
 
-			if (!string.IsNullOrEmpty(this.LinkFirst)) {
+			if (!String.IsNullOrEmpty(this.LinkFirst)) {
 				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkFirst);
 
 				int iPageNum = 1;
@@ -450,7 +450,7 @@ namespace Carrotware.CMS.UI.Controls {
 				SetNextPrevLinkVisibility(PagedDataNextPrevLinkWrapper.PagedDataDirection.First, pair, iPageNum, bShowLink);
 			}
 
-			if (!string.IsNullOrEmpty(this.LinkLast)) {
+			if (!String.IsNullOrEmpty(this.LinkLast)) {
 				PagedDataNextPrevLinkPair pair = FindPrevNextCtrl(this.LinkLast);
 
 				int iPageNum = iTotalPages;
@@ -476,7 +476,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					List<string> lstCategories = GetParmValueList("SelectedCategories");
 					foreach (string sCat in lstCategories) {
-						if (!string.IsNullOrEmpty(sCat)) {
+						if (!String.IsNullOrEmpty(sCat)) {
 							SelectedCategories.Add(new Guid(sCat));
 						}
 					}

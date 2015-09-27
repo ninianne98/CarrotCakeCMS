@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["SortNavBy"];
 				SortOrder c = SortOrder.SortAsc;
-				if (!string.IsNullOrEmpty(s)) {
+				if (!String.IsNullOrEmpty(s)) {
 					try {
 						c = (SortOrder)Enum.Parse(typeof(SortOrder), s, true);
 					} catch (Exception ex) { }

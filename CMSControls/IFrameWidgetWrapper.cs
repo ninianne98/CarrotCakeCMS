@@ -76,15 +76,15 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			string sCSS = "";
-			if (!string.IsNullOrEmpty(CssClass)) {
+			if (!String.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 			string sStyle = "";
-			if (!string.IsNullOrEmpty(CSSStyle)) {
+			if (!String.IsNullOrEmpty(CSSStyle)) {
 				sStyle = " style=\"" + CSSStyle + "\" ";
 			}
 			string sHREF = "";
-			if (!string.IsNullOrEmpty(Hyperlink)) {
+			if (!String.IsNullOrEmpty(Hyperlink)) {
 				sHREF = " src=\"" + Hyperlink + "\" ";
 			}
 			string sScroll = "";
