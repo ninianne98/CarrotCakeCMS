@@ -1213,7 +1213,5 @@ namespace Carrotware.CMS.Core {
 							&& (ct.GoLiveDate < sp.DateCompare || sp.ActiveOnly == false)
 							&& (ct.RetireDate > sp.DateCompare || sp.ActiveOnly == false)
 					   select ct).FirstOrDefault());
-
 	}
-
 }

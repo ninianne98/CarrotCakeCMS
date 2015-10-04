@@ -294,6 +294,10 @@ namespace Carrotware.CMS.DBUpdater {
 				HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 			}
 
+			if (HttpContext.Current.Cache[ContentSqlStateKey] != null) {
+				HttpContext.Current.Cache.Remove(ContentSqlStateKey);
+			}
+
 			bUpdate = DatabaseNeedsUpdate();
 
 			status.NeedsUpdate = bUpdate;
@@ -378,6 +382,26 @@ namespace Carrotware.CMS.DBUpdater {
 
 			res.Response = "Did not apply any updates";
 			return res;
+		}
+
+		private static string ContentSqlStateKey = "cms_SqlTablesIncomplete";
+
+		public static bool TablesIncomplete {
+			get {
+				string tablesIncomplete = String.Empty;
+				bool c = true;
+
+				if (HttpContext.Current.Cache[ContentSqlStateKey] != null) {
+					tablesIncomplete = HttpContext.Current.Cache[ContentSqlStateKey].ToString();
+				} else {
+					try { c = AreCMSTablesIncomplete(); } catch { }
+					tablesIncomplete = c.ToString();
+					HttpContext.Current.Cache.Insert(ContentSqlStateKey, tablesIncomplete, null, DateTime.Now.AddMinutes(3), Cache.NoSlidingExpiration);
+				}
+
+				c = Convert.ToBoolean(tablesIncomplete);
+				return c;
+			}
 		}
 
 		public static bool AreCMSTablesIncomplete() {

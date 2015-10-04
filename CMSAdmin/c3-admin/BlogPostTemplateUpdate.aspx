@@ -6,15 +6,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		function CheckTheBoxes() {
-			$('#<%=gvPages.ClientID %> input[type=checkbox]').each(function () {
-				$(this).prop('checked', true);
-			});
+			checkGridBoxes('<%=gvPages.ClientID %>');
 		}
 
 		function UncheckTheBoxes() {
-			$('#<%=gvPages.ClientID %> input[type=checkbox]').each(function () {
-				$(this).prop('checked', false);
-			});
+			uncheckGridBoxes('<%=gvPages.ClientID %>');
 		}
 	</script>
 </asp:Content>

@@ -1,5 +1,14 @@
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
+<!--
+Citrus Island 1.1 is is a free, W3C-compliant, CSS-based website template by styleshout.com.
+This work is distributed under the Creative Commons Attribution 2.5 License, which means that you
+are free to use and modify it for any purpose. All I ask is that you include a link back to my website in your credits.
+
+http://www.styleshout.com/
+
+Conversion to CarrotCake CMS Template: Carrotware
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -42,8 +51,10 @@
 		<div style="clear: both;">
 		</div>
 		<div id="sidebar">
-			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="DateMonth" MetaDataTitle="Dates" TakeTop="14" />
-			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Category" MetaDataTitle="Categories" ShowUseCount="true" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="DateMonth" MetaDataTitle="Dates"
+				TakeTop="14" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Category" MetaDataTitle="Categories"
+				ShowUseCount="true" />
 			<carrot:SiteMetaWordList ID="SiteMetaWordList3" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Tag" MetaDataTitle="Tags" ShowUseCount="true" />
 			<carrot:WidgetContainer ID="phLeftTop" runat="server" />
 			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" TextZone="TextLeft" runat="server" />
@@ -58,8 +69,8 @@
 			<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" TextZone="TextCenter" runat="server" />
 			<div style="clear: both;">
 			</div>
-			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected" LinkNext="lnkNextWrap" LinkPrev="lnkPrevWrap"
-				LinkFirst="lnkFirstWrap" LinkLast="lnkLastWrap">
+			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected" LinkNext="lnkNextWrap"
+				LinkPrev="lnkPrevWrap" LinkFirst="lnkFirstWrap" LinkLast="lnkLastWrap">
 				<TypeLabelPrefixes>
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateIndex" LabelText="Date:" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateDayIndex" LabelText="Day:" FormatText="{0:dddd, d MMMM yyyy}" />
@@ -173,8 +184,8 @@
 					<%=String.Format("&copy; {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
 					All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
 					<br />
-					Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> | Valid <a target="_blank" href="http://validator.w3.org/check/referer">XHTML</a>
-					| <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+					Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> | Valid <a target="_blank" href="http://validator.w3.org/check/referer">
+						XHTML</a> | <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
 				</div>
 			</asp:PlaceHolder>
 		</div>

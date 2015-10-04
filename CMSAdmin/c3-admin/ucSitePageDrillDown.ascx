@@ -91,12 +91,12 @@
 
 		if (lstData.length > 0) {
 			$.each(lstData, function (i, v) {
-				var del = "<a href='javascript:void(0);' title='Remove' thevalue='" + val + "' onclick='selectDrillItem(this);'><div class='ui-icon ui-icon-closethick' style='float:left'></div></a>";
+				var del = "<a href='javascript:void(0);' title='Remove' data-rootcontent='" + val + "' onclick='selectDrillItem(this);'><div class='ui-icon ui-icon-closethick' style='float:left'></div></a>";
 				if (i != (lstData.length - 1)) {
 					del = '';
 				}
 				val = v.Root_ContentID;
-				var bc = "<div class='pageNodeDrillDown2' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + " </div>";
+				var bc = "<div class='pageNodeDrillDown2' data-rootcontent='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + " </div>";
 				$(mnuName).append("<div class='ui-widget-header ui-corner-all pageNodeDrillDown3' >" + bc + del + "<div  style='clear: both;'></div></div>");
 			});
 		}
@@ -174,7 +174,7 @@
 
 		$.each(lstData, function (i, v) {
 			//$('#returneditems').append(new Option(v.PageFile, v.Root_ContentID));
-			$(mnuName).append("<div><a href='javascript:void(0);' onclick='selectDrillItem(this);' thevalue='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + "</a></div>");
+			$(mnuName).append("<div><a href='javascript:void(0);' onclick='selectDrillItem(this);' data-rootcontent='" + v.Root_ContentID + "' id='node' >" + v.NavMenuText + "</a></div>");
 		});
 
 		if ($(mnuName).text().length < 2) {
@@ -191,7 +191,7 @@
 
 		var tgt = $(a);
 
-		$('#' + menuValue).val(tgt.attr('thevalue'));
+		$('#' + menuValue).val(tgt.data('rootcontent'));
 
 		mouseNode();
 		getCrumbs();
@@ -214,7 +214,7 @@
 	<div class="pageNodeDrillDown5">
 		<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" class="menuitems pageNodeDrillDown4 ui-widget-header ui-corner-all">
 			<div class="pageNodeDrillDown6">
-				Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectDrillItem(this);' thevalue=''><span style="float: right;" class="ui-icon ui-icon-power">
+				Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectDrillItem(this);' data-rootcontent=''><span style="float: right;" class="ui-icon ui-icon-power">
 				</span></a>
 			</div>
 		</div>

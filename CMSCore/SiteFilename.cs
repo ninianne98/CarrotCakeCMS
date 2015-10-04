@@ -1,4 +1,6 @@
-﻿/*
+﻿using System;
+
+/*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *

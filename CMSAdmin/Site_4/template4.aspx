@@ -1,12 +1,14 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
+<!--
+Created by Artisteer v3.0.0.39952
+Base template (without user's data) checked by http://validator.w3.org : "This page is valid XHTML 1.0 Transitional"
+
+Conversion to CarrotCake CMS Template: Carrotware
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"[]>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
 <head id="Head1" runat="server">
-	<!--
-    Created by Artisteer v3.0.0.39952
-    Base template (without user's data) checked by http://validator.w3.org : "This page is valid XHTML 1.0 Transitional"
-    -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>New Page</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="GlossyBlack" />
@@ -33,7 +35,6 @@
 				$(this).attr('class', 'active');
 			});
 		}
-
 	</script>
 	<link href="style.css" rel="stylesheet" type="text/css" media="screen" runat="server" />
 	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />

@@ -1,5 +1,14 @@
 <%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
+<!--
+Citrus Island 1.1 is is a free, W3C-compliant, CSS-based website template by styleshout.com.
+This work is distributed under the Creative Commons Attribution 2.5 License, which means that you
+are free to use and modify it for any purpose. All I ask is that you include a link back to my website in your credits.
+
+http://www.styleshout.com/
+
+Conversion to CarrotCake CMS Template: Carrotware
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -80,12 +89,14 @@
 							<p class="padding10">
 								<label>
 									name:
-									<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterName" ErrorMessage="*" />
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterName"
+										ErrorMessage="*" />
 								</label>
 								<asp:TextBox runat="server" ID="CommenterName" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
 								<label>
 									email:
-									<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterEmail" ErrorMessage="*" />
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterEmail"
+										ErrorMessage="*" />
 								</label>
 								<asp:TextBox runat="server" ID="CommenterEmail" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
 								<label>
@@ -101,8 +112,9 @@
 								<div class="padding10">
 									<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="ContentCommentCaptcha"
 										ErrorMessage="**" />
-									<carrot:Captcha runat="server" ID="ContentCommentCaptcha" ValidationGroup="ContentCommentForm" CaptchaIsValidStyle-Style="clear: both; color: green;" CaptchaIsNotValidStyle-Style="clear: both; color: red;"
-										CaptchaImageBoxStyle-Style="clear: both;" CaptchaInstructionStyle-Style="clear: both;" CaptchaTextStyle-Style="clear: both;" IsNotValidMessage="Code is not correct!" />
+									<carrot:Captcha runat="server" ID="ContentCommentCaptcha" ValidationGroup="ContentCommentForm" CaptchaIsValidStyle-Style="clear: both; color: green;"
+										CaptchaIsNotValidStyle-Style="clear: both; color: red;" CaptchaImageBoxStyle-Style="clear: both;" CaptchaInstructionStyle-Style="clear: both;"
+										CaptchaTextStyle-Style="clear: both;" IsNotValidMessage="Code is not correct!" />
 								</div>
 								<div class="padding10">
 									<asp:Button ID="SubmitCommentButton" CssClass="button padding10" runat="server" Text="Submit Comment" ValidationGroup="ContentCommentForm" />
@@ -196,8 +208,8 @@
 					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
 					All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
 					<br />
-					Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> | Valid <a target="_blank" href="http://validator.w3.org/check/referer">XHTML</a>
-					| <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+					Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> | Valid <a target="_blank" href="http://validator.w3.org/check/referer">
+						XHTML</a> | <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
 				</div>
 			</asp:PlaceHolder>
 		</div>

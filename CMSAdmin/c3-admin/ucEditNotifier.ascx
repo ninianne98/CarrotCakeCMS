@@ -1,19 +1,23 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucEditNotifier.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucEditNotifier" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <link href="/c3-admin/includes/edit-notifier.css" rel="stylesheet" type="text/css" />
+
 <div style="clear: both;">
 	&nbsp;</div>
 <div class="cmsNavFooterBox">
 	<p class="cmsFooterP">
-		<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">EDIT</a> <a class="cmsFooterLinks" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">
-			ADVANCED EDIT</a> <a class="cmsFooterLinks" target="_top" href="<%=PageIndexURL %>">CONTENT INDEX</a> <a class="cmsFooterLinks" target="_top"
-				href="/c3-admin/ModuleIndex.aspx">MODULE INDEX</a>
+		<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">EDIT</a> 
+		<a class="cmsFooterLinks" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
+		<a class="cmsFooterLinks" target="_top" href="<%=PageIndexURL %>">CONTENT INDEX</a> 
+		<a class="cmsFooterLinks" target="_top" href="/c3-admin/ModuleIndex.aspx">MODULE INDEX</a>
 	</p>
 	<p class="cmsFooterP">
-		<a class="cmsFooterLinks" href="/">HOME PAGE</a> <a class="cmsFooterLinks" runat="server" id="lnkParent" href="#">PARENT PAGE</a> <a class="cmsFooterLinks"
-			runat="server" id="lnkCurrent" href="#">CURRENT PAGE</a>
+		<a class="cmsFooterLinks" href="/">HOME PAGE</a> 
+		<a class="cmsFooterLinks" runat="server" id="lnkParent" href="#">PARENT PAGE</a>
+		<a class="cmsFooterLinks" runat="server" id="lnkCurrent" href="#">CURRENT PAGE</a>
 		<asp:Label ID="lblChildDDL" runat="server" CssClass="cmsFooterLinks">CHILD PAGES</asp:Label>
-		<asp:DropDownList ID="ddlCMSLinks" runat="server" onchange="cmsNavPage(this);" DataTextField="NavMenuText" DataValueField="FileName" ValidationGroup="cmsMenuLinkGroup">
+		<asp:DropDownList ID="ddlCMSLinks" runat="server" onchange="cmsNavPage(this);" DataTextField="NavMenuText" DataValueField="FileName"
+			ValidationGroup="cmsMenuLinkGroup">
 		</asp:DropDownList>
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
@@ -23,10 +27,8 @@
 		<asp:Literal runat="server" ID="litTemplate" />
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
-		Release Date:
-		<asp:Literal runat="server" ID="litRelease" />
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retire Date:
-		<asp:Literal runat="server" ID="litRetire" />
+		Release Date: <asp:Literal runat="server" ID="litRelease" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		Retire Date: <asp:Literal runat="server" ID="litRetire" />
 	</p>
 </div>
 <script type="text/javascript">

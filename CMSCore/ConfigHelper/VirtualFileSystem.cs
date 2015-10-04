@@ -113,23 +113,29 @@ namespace Carrotware.CMS.Core {
 						}
 
 						try {
-							bool bIsHomePage = false;
-							if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
-								navData = navHelper.FindHome(SiteData.CurrentSiteID, !bIgnorePublishState);
-
-								if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
-									sFileRequested = navData.FileName;
-									bIsHomePage = true;
-								}
-							}
-
-							if (!bIsHomePage) {
-								string pageName = sFileRequested;
-								navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, pageName);
-							}
-
-							if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
+							//periodic test of database up-to-dated-ness
+							if (DatabaseUpdate.TablesIncomplete) {
 								navData = SiteNavHelper.GetEmptyHome();
+							} else {
+								bool bIsHomePage = false;
+
+								if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
+									navData = navHelper.FindHome(SiteData.CurrentSiteID, !bIgnorePublishState);
+
+									if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
+										sFileRequested = navData.FileName;
+										bIsHomePage = true;
+									}
+								}
+
+								if (!bIsHomePage) {
+									string pageName = sFileRequested;
+									navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, pageName);
+								}
+
+								if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
+									navData = SiteNavHelper.GetEmptyHome();
+								}
 							}
 						} catch (Exception ex) {
 							//assumption is database is probably empty / needs updating, so trigger the under construction view

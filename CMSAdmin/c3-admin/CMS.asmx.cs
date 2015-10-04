@@ -65,7 +65,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (value == null) {
 					ClearSerialized(CMSConfigHelper.keyAdminContent);
 				} else {
-					string sXML = "";
+					string sXML = String.Empty;
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
@@ -92,7 +92,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (value == null) {
 					ClearSerialized(CMSConfigHelper.keyAdminWidget);
 				} else {
-					string sXML = "";
+					string sXML = String.Empty;
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
@@ -110,7 +110,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private string GetSerialized(string sKey) {
-			string sData = "";
+			string sData = String.Empty;
 			LoadGuids();
 
 			sData = CMSConfigHelper.GetSerialized(CurrentPageGuid, sKey);
@@ -126,7 +126,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		private void LoadGuids() {
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				if (!string.IsNullOrEmpty(CurrentEditPage)) {
+				if (!String.IsNullOrEmpty(CurrentEditPage)) {
 					filePage = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, CurrentEditPage);
 					if (filePage != null) {
 						CurrentPageGuid = filePage.Root_ContentID;
@@ -144,7 +144,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		private string CurrentEditPage = "";
+		private string CurrentEditPage = String.Empty;
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -242,13 +242,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				editor.Init();
 			}
 
-			editor.EditorMargin = string.IsNullOrEmpty(ToolbarMargin) ? "L" : ToolbarMargin.ToUpper();
-			editor.EditorOpen = string.IsNullOrEmpty(ToolbarState) ? "true" : ToolbarState.ToLower();
-			editor.EditorWidgetScrollPosition = string.IsNullOrEmpty(WidgetScroll) ? "0" : WidgetScroll.ToLower();
-			editor.EditorScrollPosition = string.IsNullOrEmpty(ToolbarScroll) ? "0" : ToolbarScroll.ToLower();
-			editor.EditorSelectedTabIdx = string.IsNullOrEmpty(SelTabID) ? "0" : SelTabID.ToLower();
+			editor.EditorMargin = String.IsNullOrEmpty(ToolbarMargin) ? "L" : ToolbarMargin.ToUpper();
+			editor.EditorOpen = String.IsNullOrEmpty(ToolbarState) ? "true" : ToolbarState.ToLower();
+			editor.EditorWidgetScrollPosition = String.IsNullOrEmpty(WidgetScroll) ? "0" : WidgetScroll.ToLower();
+			editor.EditorScrollPosition = String.IsNullOrEmpty(ToolbarScroll) ? "0" : ToolbarScroll.ToLower();
+			editor.EditorSelectedTabIdx = String.IsNullOrEmpty(SelTabID) ? "0" : SelTabID.ToLower();
 
-			if (string.IsNullOrEmpty(ToolbarMargin) && string.IsNullOrEmpty(ToolbarState)) {
+			if (String.IsNullOrEmpty(ToolbarMargin) && String.IsNullOrEmpty(ToolbarState)) {
 				UserEditState.cmsUserEditState = null;
 			} else {
 				UserEditState.cmsUserEditState = editor;
@@ -259,14 +259,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<SiteMapOrder> GetChildPages(string PageID, string CurrPageID) {
 			Guid? ParentID = Guid.Empty;
-			if (!string.IsNullOrEmpty(PageID)) {
+			if (!String.IsNullOrEmpty(PageID)) {
 				if (PageID.Length > 20) {
 					ParentID = new Guid(PageID);
 				}
 			}
 
 			Guid ContPageID = Guid.Empty;
-			if (!string.IsNullOrEmpty(CurrPageID)) {
+			if (!String.IsNullOrEmpty(CurrPageID)) {
 				if (CurrPageID.Length > 20) {
 					ContPageID = new Guid(CurrPageID);
 				}
@@ -296,14 +296,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public List<SiteMapOrder> GetPageCrumbs(string PageID, string CurrPageID) {
 			Guid? ContentPageID = Guid.Empty;
-			if (!string.IsNullOrEmpty(PageID)) {
+			if (!String.IsNullOrEmpty(PageID)) {
 				if (PageID.Length > 20) {
 					ContentPageID = new Guid(PageID);
 				}
 			}
 
 			Guid ContPageID = Guid.Empty;
-			if (!string.IsNullOrEmpty(CurrPageID)) {
+			if (!String.IsNullOrEmpty(CurrPageID)) {
 				if (CurrPageID.Length > 20) {
 					ContPageID = new Guid(CurrPageID);
 				}
@@ -373,9 +373,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				string sDatePath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(DatePath));
 				string sEditorPath = ContentPageHelper.ScrubSlug(CMSConfigHelper.DecodeBase64(EditorPath));
 
-				if (string.IsNullOrEmpty(sFolderPath) || string.IsNullOrEmpty(sCategoryPath)
-					|| string.IsNullOrEmpty(sTagPath) || string.IsNullOrEmpty(sDatePath)
-					|| string.IsNullOrEmpty(sEditorPath)) {
+				if (String.IsNullOrEmpty(sFolderPath) || String.IsNullOrEmpty(sCategoryPath)
+					|| String.IsNullOrEmpty(sTagPath) || String.IsNullOrEmpty(sDatePath)
+					|| String.IsNullOrEmpty(sEditorPath)) {
 					return "FAIL";
 				}
 				if (sFolderPath.Length < 1 || sCategoryPath.Length < 1 || sTagPath.Length < 1 || sDatePath.Length < 1 || sEditorPath.Length < 1) {
@@ -442,7 +442,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				TheSlug = CMSConfigHelper.DecodeBase64(TheSlug);
 				TheSlug = ContentPageHelper.ScrubSlug(TheSlug);
 
-				if (string.IsNullOrEmpty(TheSlug)) {
+				if (String.IsNullOrEmpty(TheSlug)) {
 					return "FAIL";
 				}
 				if (TheSlug.Length < 1) {
@@ -471,7 +471,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				TheSlug = CMSConfigHelper.DecodeBase64(TheSlug);
 				TheSlug = ContentPageHelper.ScrubSlug(TheSlug);
 
-				if (string.IsNullOrEmpty(TheSlug)) {
+				if (String.IsNullOrEmpty(TheSlug)) {
 					return "FAIL";
 				}
 				if (TheSlug.Length < 1) {
@@ -554,7 +554,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				TheSlug = CMSConfigHelper.DecodeBase64(TheSlug);
 				TheSlug = ContentPageHelper.ScrubSlug(TheSlug);
 
-				if (string.IsNullOrEmpty(TheSlug)) {
+				if (String.IsNullOrEmpty(TheSlug)) {
 					return "FAIL";
 				}
 				if (TheSlug.Length < 1) {
@@ -590,7 +590,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ContentSnippet cs = ContentSnippet.GetVersion(guidSnippet);
 
 				if (cs != null) {
-					if (string.IsNullOrEmpty(cs.ContentBody)) {
+					if (String.IsNullOrEmpty(cs.ContentBody)) {
 						return "No Data";
 					} else {
 						if (cs.ContentBody.Length < 768) {
@@ -617,7 +617,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				DateTime goLiveDate = Convert.ToDateTime(GoLiveDate);
 				string sThePageTitle = CMSConfigHelper.DecodeBase64(ThePageTitle);
-				if (string.IsNullOrEmpty(sThePageTitle)) {
+				if (String.IsNullOrEmpty(sThePageTitle)) {
 					sThePageTitle = CurrentPageGuid.ToString();
 				}
 				sThePageTitle = sThePageTitle.Replace("/", "-");
@@ -633,7 +633,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 								sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sTestFile);
 								break;
 							} else {
-								sTheFileName = "";
+								sTheFileName = String.Empty;
 							}
 						}
 					}
@@ -647,7 +647,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 								sTheFileName = ContentPageHelper.ScrubFilename(CurrentPageGuid, sTestFile);
 								break;
 							} else {
-								sTheFileName = "";
+								sTheFileName = String.Empty;
 							}
 						}
 					}
@@ -881,7 +881,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				string[] arrWidgRows = WidgetAddition.Split('\n');
 
 				foreach (string arrWidgCell in arrWidgRows) {
-					if (!string.IsNullOrEmpty(arrWidgCell)) {
+					if (!String.IsNullOrEmpty(arrWidgCell)) {
 						bool bGoodWidget = false;
 						string[] w = arrWidgCell.Split('\t');
 
@@ -970,7 +970,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				if (ww != null) {
-					if (string.IsNullOrEmpty(ww.ControlProperties)) {
+					if (String.IsNullOrEmpty(ww.ControlProperties)) {
 						return "No Data";
 					} else {
 						if (ww.ControlProperties.Length < 768) {
@@ -1010,7 +1010,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				if (ww != null) {
-					if (string.IsNullOrEmpty(ww.ControlProperties)) {
+					if (String.IsNullOrEmpty(ww.ControlProperties)) {
 						return "No Data";
 					} else {
 						if (ww.ControlProperties.Length < 768) {
@@ -1049,7 +1049,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				if (ww != null) {
-					if (string.IsNullOrEmpty(ww.ControlProperties)) {
+					if (String.IsNullOrEmpty(ww.ControlProperties)) {
 						return "No Data";
 					} else {
 						if (ww.ControlProperties.Length < 768) {

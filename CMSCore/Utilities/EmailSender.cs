@@ -8,6 +8,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
 
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 2 licenses.
+*
+* Date: October 2011
+*/
+
 namespace Carrotware.CMS.Core {
 
 	public class EmailSender {
