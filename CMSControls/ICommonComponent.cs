@@ -44,29 +44,4 @@ namespace Carrotware.CMS.UI.Controls {
 		Guid DatabaseKey { get; set; }
 	}
 
-	//========================================
-	public interface IActivateNavItem {
-		string CSSSelected { get; set; }
-
-		string CssClassNormal { get; set; }
-
-		string CssClassHasChild { get; set; }
-
-		bool IsSelected { get; set; }
-
-		string NavigateUrl { get; set; }
-
-		Guid ContentID { get; set; }
-	}
-
-	//========================================
-	public interface IActivatePageNavItem {
-		string CSSSelected { get; set; }
-
-		string CssClassNormal { get; set; }
-
-		bool IsSelected { get; set; }
-
-		int PageNumber { get; set; }
-	}
 }

@@ -81,6 +81,7 @@
       <DependentUpon>CAPTCHA.aspx.cs</DependentUpon>
     </Compile>
     <Compile Include="captcha\CaptchaImage.cs" />
+    <Compile Include="CarrotGridPaged.cs" />
     <Compile Include="SimpleStyle.cs" />
     <Compile Include="CarrotGridView\CarrotGridView.cs" />
     <Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="jquerybasic.cs" />
     <Compile Include="jqueryui.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateControls.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="calendar.txt" />
@@ -267,6 +269,7 @@
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_25_fbf9ee_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_70_000000_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_f2f5f7_1x400.png" />
+    <EmbeddedResource Include="ucFancyPager.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

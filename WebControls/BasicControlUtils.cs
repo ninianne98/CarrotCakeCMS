@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -67,6 +70,43 @@ namespace Carrotware.Web.UI.Controls {
 			return foundPage;
 		}
 
+		public Control CreateControlFromResource(string resourceName) {
+			string s = GetResourceText(resourceName);
+
+			return CreateControlFromString(s);
+		}
+
+		public string GetResourceText(string resourceName) {
+			string s = GetManifestResourceStream(resourceName);
+
+			return s;
+		}
+
+		public Control CreateControlFromString(string sControlText) {
+			return _page.ParseControl(sControlText);
+		}
+
+		public static string GetManifestResourceStream(string sResouceName) {
+			string sReturn = null;
+
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
+				sReturn = oTextStream.ReadToEnd();
+			}
+
+			return sReturn;
+		}
+
+		public static string GetCtrlText(Control ctrl) {
+			StringBuilder sb = new StringBuilder();
+			StringWriter tw = new StringWriter(sb);
+			HtmlTextWriter hw = new HtmlTextWriter(tw);
+
+			ctrl.RenderControl(hw);
+
+			return sb.ToString();
+		}
+
 		private bool bFoundPage = false;
 		private Page _page2 = null;
 
@@ -84,6 +124,46 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			return _page2;
+		}
+
+		private bool bFoundControl = false;
+		private Control ctrl = null;
+
+		public Control FindControl(string ControlName, Control X) {
+			if (X is Page) {
+				bFoundControl = false;
+				ctrl = new Control();
+			}
+
+			foreach (Control c in X.Controls) {
+				if (c.ID == ControlName && c is Control) {
+					bFoundControl = true;
+					ctrl = (Control)c;
+					return ctrl;
+				} else {
+					if (!bFoundControl) {
+						FindControl(ControlName, c);
+					}
+				}
+			}
+
+			return ctrl;
+		}
+
+		public Control FindControl(Type type, Control X) {
+			foreach (Control c in X.Controls) {
+				if (c.GetType() == type) {
+					bFoundControl = true;
+					ctrl = (Control)c;
+					return ctrl;
+				} else {
+					if (!bFoundControl) {
+						FindControl(type, c);
+					}
+				}
+			}
+
+			return ctrl;
 		}
 
 		public static void MakeXUACompatibleFirst(Page thePage) {

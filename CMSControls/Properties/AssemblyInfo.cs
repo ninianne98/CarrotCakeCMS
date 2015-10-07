@@ -28,7 +28,7 @@ using System.Web.UI;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("4.3.*")]
+[assembly: AssemblyVersion("4.4.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
 [assembly: TagPrefix("SiblingNavigation", "carrot")]
 [assembly: TagPrefix("TopLevelNavigation", "carrot")]
@@ -87,7 +87,6 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSimplePager2.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget1.ascx", "text/plain")]

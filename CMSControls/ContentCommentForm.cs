@@ -236,7 +236,7 @@ namespace Carrotware.CMS.UI.Controls {
 				pc.Save();
 
 				if (!String.IsNullOrEmpty(this.DirectEmail) || !String.IsNullOrEmpty(this.DirectEmailKeyName)) {
-					string sEmail = "";
+					string sEmail = String.Empty;
 					EmailSender mailer = new EmailSender();
 
 					if (!String.IsNullOrEmpty(this.DirectEmail)) {
@@ -246,19 +246,35 @@ namespace Carrotware.CMS.UI.Controls {
 						sEmail = ConfigurationManager.AppSettings[this.DirectEmailKeyName].ToString();
 					}
 
-					mailer.MailSubject = "Comment Form " + request.ServerVariables["SERVER_NAME"];
+					mailer.MailSubject = "Comment Form " + request.ServerVariables["HTTP_HOST"];
 					mailer.Recepient = sEmail;
 					mailer.TemplateFile = null;
 					mailer.IsHTML = false;
 					mailer.WebControl = this;
 
+					string strHTTPHost = String.Empty;
+					try { strHTTPHost = request.ServerVariables["HTTP_HOST"] + String.Empty; } catch { strHTTPHost = String.Empty; }
+
+					string strHTTPProto = "http://";
+					try {
+						strHTTPProto = request.ServerVariables["SERVER_PORT_SECURE"] + String.Empty;
+						if (strHTTPProto == "1") {
+							strHTTPProto = "https://";
+						} else {
+							strHTTPProto = "http://";
+						}
+					} catch { }
+
+					strHTTPHost = String.Format("{0}{1}", strHTTPProto, strHTTPHost).ToLower();
+
 					string sBody = "Name:   " + pc.CommenterName
 						+ "\r\nEmail:   " + pc.CommenterEmail
 						+ "\r\nURL:   " + pc.CommenterURL
-						+ "\r\n-----------------\r\nComment:\r\n" + pc.PostCommentText
+						+ "\r\n-----------------\r\nComment:\r\n" + HttpUtility.HtmlEncode(pc.PostCommentText)
 						+ "\r\n=================\r\n\r\nIP:   " + pc.CommenterIP
-						+ "\r\nSite Page:   " + request.ServerVariables["script_name"].ToString()
-						+ "\r\nSite Time:   " + pc.CreateDate.ToString()
+						//+ "\r\nSite Page:   " + request.ServerVariables["script_name"].ToString()
+						+ "\r\nSite URL:   " + String.Format("{0}{1}", strHTTPHost, request.ServerVariables["script_name"])
+						+ "\r\nSite Time:   " + SiteData.CurrentSite.Now.ToString()
 						+ "\r\nUTC Time:   " + DateTime.UtcNow.ToString();
 
 					mailer.Body = sBody;

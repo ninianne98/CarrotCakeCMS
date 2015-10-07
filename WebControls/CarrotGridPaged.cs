@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.Design.WebControls;
 using System.Web.UI.WebControls;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -20,7 +19,7 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.UI.Controls {
+namespace Carrotware.Web.UI.Controls {
 
 	[Designer(typeof(CarrotGridPagedDesigner))]
 	[ParseChildren(true, "TheGrid"), PersistChildren(true)]
@@ -127,8 +126,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Repeater r = new Repeater();
 
 			try {
-				ControlUtilities cu = new ControlUtilities(this);
-				Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx");
+				BasicControlUtils cu = new BasicControlUtils(this);
+				Control userControl = cu.CreateControlFromResource("Carrotware.Web.UI.Controls.ucFancyPager.ascx");
 				r = (Repeater)cu.FindControl("rpPager", userControl);
 			} catch { }
 
@@ -355,8 +354,8 @@ namespace Carrotware.CMS.UI.Controls {
 			Repeater r = new Repeater();
 
 			try {
-				ControlUtilities cu = new ControlUtilities(ctrl);
-				Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucFancyPager.ascx");
+				BasicControlUtils cu = new BasicControlUtils(ctrl);
+				Control userControl = cu.CreateControlFromResource("Carrotware.Web.UI.Controls.ucFancyPager.ascx");
 				r = (Repeater)cu.FindControl("rpPager", userControl);
 			} catch { }
 

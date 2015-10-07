@@ -65,7 +65,6 @@
     <Compile Include="BasePagedDataTemplate.cs" />
     <Compile Include="BaseServerControl.cs" />
     <Compile Include="BaseNavSel.cs" />
-    <Compile Include="CarrotGridPaged.cs" />
     <Compile Include="ChildNavigation.cs" />
     <Compile Include="ContentCommentForm.cs" />
     <Compile Include="ContentPageControls.cs" />
@@ -140,7 +139,6 @@
     <EmbeddedResource Include="ucCommentDisplay.ascx" />
     <EmbeddedResource Include="Trackback.txt" />
     <EmbeddedResource Include="SearchBoxJS.txt" />
-    <EmbeddedResource Include="ucFancyPager.ascx" />
     <EmbeddedResource Include="ucAdminContentContainer.ascx" />
     <EmbeddedResource Include="ucAdminWidget.ascx" />
     <EmbeddedResource Include="ucAdminWidgetContainer.ascx" />

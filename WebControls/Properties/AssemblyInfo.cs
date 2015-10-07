@@ -42,7 +42,7 @@ using System.Web.UI;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("4.3.*")]
+[assembly: AssemblyVersion("4.4.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
 
 [assembly: TagPrefix("Captcha", "carrot")]
@@ -171,3 +171,5 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_468b5e_256x240.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_cd0a0a_256x240.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.lightgreen.ui-icons_ffffff_256x240.png", "image/png")]
+
+[assembly: WebResource("Carrotware.Web.UI.Controls.ucFancyPager.ascx", "text/plain")]
