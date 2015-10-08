@@ -269,7 +269,11 @@
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_25_fbf9ee_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_70_000000_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_f2f5f7_1x400.png" />
-    <EmbeddedResource Include="ucFancyPager.ascx" />
+    <EmbeddedResource Include="ucFancyPager.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucSimplePager1.ascx" />
+    <EmbeddedResource Include="ucSimplePager2.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

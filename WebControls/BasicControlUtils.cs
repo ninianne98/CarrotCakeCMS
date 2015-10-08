@@ -166,6 +166,26 @@ namespace Carrotware.Web.UI.Controls {
 			return ctrl;
 		}
 
+		public static string SearchQueryParameter {
+			get { return "search".ToLower(); }
+		}
+
+		public static string CurrentScriptName {
+			get {
+				string sPath = "/";
+				try { sPath = HttpContext.Current.Request.ServerVariables["script_name"].ToString(); } catch { }
+				return sPath;
+			}
+		}
+
+		public static string RefererScriptName {
+			get {
+				string sPath = String.Empty;
+				try { sPath = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
+				return sPath;
+			}
+		}
+
 		public static void MakeXUACompatibleFirst(Page thePage) {
 			int iOrder = 0;
 			bool bFoundEdge = false;

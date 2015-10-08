@@ -133,8 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ucSearchForm.ascx" />
-    <EmbeddedResource Include="ucSimplePager1.ascx" />
-    <EmbeddedResource Include="ucSimplePager2.ascx" />
     <EmbeddedResource Include="ucSummaryDisplay.ascx" />
     <EmbeddedResource Include="ucCommentDisplay.ascx" />
     <EmbeddedResource Include="Trackback.txt" />
