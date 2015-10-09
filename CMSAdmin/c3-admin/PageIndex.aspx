@@ -52,11 +52,6 @@
 		</tr>
 	</table>
 	<p>
-		<br />
-	</p>
-	<p>
-		<asp:Label ID="lblPages" runat="server" Text="Label" />
-		total records<br />
 		<asp:Panel ID="pnlPager" runat="server">
 			<asp:Button ID="btnChangePage" runat="server" Text="Change Page Size" OnClick="btnChangePage_Click" />
 			<asp:DropDownList ID="ddlSize" runat="server">
@@ -66,6 +61,10 @@
 				<asp:ListItem>100</asp:ListItem>
 			</asp:DropDownList>
 		</asp:Panel>
+	</p>
+	<p>
+		<asp:Label ID="lblPages" runat="server" Text="Label" />
+		total records<br />
 	</p>
 	<div class="SortableGrid">
 		<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="25">

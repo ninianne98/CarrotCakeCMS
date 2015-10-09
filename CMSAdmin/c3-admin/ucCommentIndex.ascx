@@ -2,6 +2,40 @@
 <p>
 	<br />
 </p>
+<table>
+	<tr>
+		<td class="tablecaption">
+			public:
+		</td>
+		<td>
+			<asp:DropDownList ID="ddlActive" runat="server" />
+		</td>
+		<td class="tablecaption">
+			spam:
+		</td>
+		<td>
+			<asp:DropDownList ID="ddlSpam" runat="server" />
+		</td>
+		<td class="tablecaption">
+			page size:
+		</td>
+		<td>
+			<asp:DropDownList ID="ddlSize" runat="server">
+				<asp:ListItem>10</asp:ListItem>
+				<asp:ListItem>25</asp:ListItem>
+				<asp:ListItem>50</asp:ListItem>
+				<asp:ListItem>100</asp:ListItem>
+			</asp:DropDownList>
+		</td>
+		<td>
+			<asp:Button ID="btnApply" runat="server" Text="Apply" OnClick="btnApply_Click" />
+		</td>
+	</tr>
+</table>
+<p>
+	<asp:Label ID="lblPages" runat="server" Text="Label" />
+	total records<br />
+</p>
 <div class="SortableGrid">
 	<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="20">
 		<TheGrid ID="TheGrid1" runat="server" CssClass="datatable" DefaultSort="CreateDate desc" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
@@ -29,8 +63,8 @@
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsSpam" HeaderText="Spam" AlternateTextFalse="Not Spam"
 					AlternateTextTrue="Spam" ShowBooleanImage="true" ImagePathTrue="/c3-admin/images/error.png" ImagePathFalse="/c3-admin/images/comment.png" />
-				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsApproved" HeaderText="Active" AlternateTextFalse="Inactive"
-					AlternateTextTrue="Active" ShowBooleanImage="true" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsApproved" HeaderText="Approved" AlternateTextFalse="Inactive"
+					AlternateTextTrue="Approved" ShowBooleanImage="true" />
 			</Columns>
 		</TheGrid>
 		<%--

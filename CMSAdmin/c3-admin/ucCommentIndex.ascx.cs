@@ -26,19 +26,35 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageType = ContentPageType.GetTypeByName(Request.QueryString["type"].ToString());
 			}
 
+			if (!IsPostBack) {
+				ddlSize.SelectedValue = pagedDataGrid.PageSize.ToString();
+
+				GeneralUtilities.BindOptionalYesNoList(ddlActive);
+				GeneralUtilities.BindOptionalYesNoList(ddlSpam);
+			}
+
 			guidRootContentID = GetGuidIDFromQuery();
 
 			BindData();
 		}
 
+		protected void btnApply_Click(object sender, EventArgs e) {
+		}
+
 		protected void BindData() {
 			int iRecCount = -1;
 
+			bool? active = GeneralUtilities.GetNullableBoolValue(ddlActive);
+			bool? spam = GeneralUtilities.GetNullableBoolValue(ddlSpam);
+			pagedDataGrid.PageSize = int.Parse(ddlSize.SelectedValue);
+
 			if (guidRootContentID == Guid.Empty) {
-				iRecCount = PostComment.GetCommentCountBySiteAndType(SiteData.CurrentSiteID, pageType);
+				iRecCount = PostComment.GetCommentCountBySiteAndType(SiteData.CurrentSiteID, pageType, active, spam);
 			} else {
-				iRecCount = PostComment.GetCommentCountByContent(guidRootContentID, false);
+				iRecCount = PostComment.GetCommentCountByContent(guidRootContentID, active, spam);
 			}
+
+			lblPages.Text = String.Format(" {0} ", iRecCount);
 
 			pagedDataGrid.BuildSorting();
 
@@ -50,9 +66,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			List<PostComment> lstComments = new List<PostComment>();
 
 			if (guidRootContentID == Guid.Empty) {
-				lstComments = PostComment.GetCommentsBySitePageNumber(SiteData.CurrentSiteID, iPgNbr, iPageSize, sSort, pageType);
+				lstComments = PostComment.GetCommentsBySitePageNumber(SiteData.CurrentSiteID, iPgNbr, iPageSize, sSort, pageType, active, spam);
 			} else {
-				lstComments = PostComment.GetCommentsByContentPageNumber(guidRootContentID, iPgNbr, iPageSize, sSort, false);
+				lstComments = PostComment.GetCommentsByContentPageNumber(guidRootContentID, iPgNbr, iPageSize, sSort, active, spam);
 			}
 
 			GeneralUtilities.BindDataBoundControl(pagedDataGrid, lstComments);
