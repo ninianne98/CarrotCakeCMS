@@ -79,7 +79,7 @@ Conversion to CarrotCake CMS Template: Carrotware
 				<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl2" runat="server" ContentType="Tag" MetaDataTitle="Tags:" />
 			</p>
 			<div>
-				<carrot:ContentCommentForm runat="server" ID="commentFrm">
+				<carrot:ContentCommentForm runat="server" ID="commentFrm" NotifyEditors="true">
 					<CommentEntryTemplate>
 						<carrot:jsHelperLib runat="server" ID="jsHelperLib1" />
 						<div>

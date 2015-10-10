@@ -63,6 +63,10 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(null)]
 		public string DirectEmailKeyName { get; set; }
 
+		[Browsable(true)]
+		[DefaultValue(false)]
+		public bool NotifyEditors { get; set; }
+
 		protected PlaceHolder phEntry = new PlaceHolder();
 		protected List<Control> EntryFormControls = new List<Control>();
 
@@ -235,16 +239,30 @@ namespace Carrotware.CMS.UI.Controls {
 
 				pc.Save();
 
-				if (!String.IsNullOrEmpty(this.DirectEmail) || !String.IsNullOrEmpty(this.DirectEmailKeyName)) {
-					string sEmail = String.Empty;
+				if (!String.IsNullOrEmpty(this.DirectEmail) || this.NotifyEditors || !String.IsNullOrEmpty(this.DirectEmailKeyName)) {
+					List<string> emails = new List<string>();
+
 					EmailSender mailer = new EmailSender();
 
 					if (!String.IsNullOrEmpty(this.DirectEmail)) {
-						sEmail = this.DirectEmail.ToString();
+						emails.Add(this.DirectEmail);
 					}
 					if (!String.IsNullOrEmpty(this.DirectEmailKeyName)) {
-						sEmail = ConfigurationManager.AppSettings[this.DirectEmailKeyName].ToString();
+						emails.Add(ConfigurationManager.AppSettings[this.DirectEmailKeyName].ToString());
 					}
+					if (this.NotifyEditors) {
+						ContentPage page = navData.GetContentPage();
+						emails.Add(page.CreateUser.EmailAddress);
+
+						if (page.EditUser.UserId != page.CreateUser.UserId) {
+							emails.Add(page.EditUser.EmailAddress);
+						}
+						if (page.CreditUserId.HasValue) {
+							emails.Add(page.CreditUser.EmailAddress);
+						}
+					}
+
+					string sEmail = String.Join(",", emails.ToArray());
 
 					mailer.MailSubject = "Comment Form " + request.ServerVariables["HTTP_HOST"];
 					mailer.Recepient = sEmail;
