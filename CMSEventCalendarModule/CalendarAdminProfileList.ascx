@@ -12,7 +12,7 @@
 	<asp:DropDownList ID="ddlFilter" runat="server" AutoPostBack="true" DataTextField="Value" DataValueField="Key" OnSelectedIndexChanged="ddlFilter_SelectedIndexChanged" />
 </p>
 <div class="SortableGrid">
-	<carrot:CarrotGridView CssClass="datatable" DefaultSort="EventStartDate DESC" ID="dgEvents" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+	<carrot:CarrotGridView CssClass="datatable" DefaultSort="EventStartDate ASC" ID="dgEvents" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 		AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 		<EmptyDataTemplate>
 			<p>

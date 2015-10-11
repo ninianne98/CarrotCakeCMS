@@ -90,26 +90,36 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 							select c).ToList();
 				}
 
-				if (eventYear == -2) {
-					DateTime dateBack = DateTime.Now.Date.AddDays(-90);
-					DateTime dateFwd = DateTime.Now.Date.AddDays(180);
+				DateTime dateStart = DateTime.MinValue;
+				DateTime dateEnd = DateTime.MaxValue;
 
+				if (eventYear == -2) {
+					dateStart = DateTime.Now.Date.AddDays(-90);
+					dateEnd = DateTime.Now.Date.AddDays(180);
+				}
+
+				if (eventYear == -3) {
+					dateStart = DateTime.UtcNow.Date.AddDays(-1);
+					dateEnd = DateTime.Now.Date.AddYears(200);
+				}
+
+				if (eventYear > 1000) {
+					dateStart = Convert.ToDateTime(String.Format("{0}-01-01", eventYear));
+					dateEnd = Convert.ToDateTime(String.Format("{0}-01-01", eventYear + 1)).AddMilliseconds(-1);
+				}
+
+				if (eventYear == -2 || eventYear > 1000) {
 					return (from c in db.vw_carrot_CalendarEventProfiles
 							orderby c.EventStartDate
 							where c.SiteID == siteID
-									&& ((c.EventStartDate >= dateBack && c.EventStartDate <= dateFwd)
-										|| (c.EventEndDate >= dateBack && c.EventEndDate <= dateFwd))
+									&& (c.EventEndDate >= dateStart && c.EventStartDate <= dateEnd)
 							select c).ToList();
 				}
-
-				DateTime dateStart = Convert.ToDateTime(String.Format("{0}-01-01", eventYear));
-				DateTime dateEnd = Convert.ToDateTime(String.Format("{0}-01-01", eventYear + 1)).AddMilliseconds(-1);
 
 				return (from c in db.vw_carrot_CalendarEventProfiles
 						orderby c.EventStartDate
 						where c.SiteID == siteID
-								&& ((c.EventStartDate >= dateStart && c.EventStartDate <= dateEnd)
-									|| (c.EventEndDate >= dateStart && c.EventEndDate <= dateEnd))
+								&& (c.EventStartDate >= dateStart)
 						select c).ToList();
 			}
 		}
@@ -139,6 +149,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 				   select new KeyValuePair<int, string>(r, String.Format("Events in {0}", r)))
 					.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
+			lst.Add(-3, "Future Only");
 			lst.Add(-2, "Current Events");
 			lst.Add(-1, "All Events");
 
