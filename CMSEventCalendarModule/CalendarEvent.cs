@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -12,9 +12,10 @@ using System.Web;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
+
 	public class CalendarEvent {
+
 		public CalendarEvent() { }
 
 		internal CalendarEvent(carrot_CalendarEventProfile p) {

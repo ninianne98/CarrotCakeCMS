@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -15,8 +13,8 @@ using Carrotware.CMS.Interface;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
+
 	public partial class CalendarAdminDetailSingle : AdminModule {
 
 		public string CancelURL {
@@ -49,12 +47,10 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			}
 		}
 
-
 		protected void btnSave_Click(object sender, EventArgs e) {
 			bool bAdd = false;
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
-
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				var currItem = (from c in db.carrot_CalendarEvents
 								where c.CalendarEventID == ItemGuid
 								select c).FirstOrDefault();
@@ -81,7 +77,5 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			Response.Redirect(CreateLink(ModuleName, String.Format("id={0}", ItemGuid)));
 		}
-
-
 	}
 }

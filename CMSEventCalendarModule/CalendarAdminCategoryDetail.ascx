@@ -76,8 +76,6 @@
 
 		initColors();
 	});
-
-
 </script>
 <div>
 	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" Text="Save" OnClick="btnSaveButton_Click" />

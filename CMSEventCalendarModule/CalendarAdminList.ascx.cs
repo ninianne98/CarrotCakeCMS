@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -16,12 +14,11 @@ using Carrotware.CMS.Interface;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
+
 	public partial class CalendarAdminList : AdminModule {
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (SiteID == Guid.Empty) {
 				SiteID = SiteData.CurrentSiteID;
 			}
@@ -54,7 +51,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			SetCalendar();
 		}
 
-
 		protected void SetCalendar() {
 			SiteData site = SiteData.CurrentSite;
 
@@ -64,8 +60,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			dtStart = site.ConvertSiteTimeToUTC(dtStart);
 			dtEnd = site.ConvertSiteTimeToUTC(dtEnd);
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
-
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				List<vw_carrot_CalendarEvent> lst = (from c in db.vw_carrot_CalendarEvents
 													 where c.EventDate >= dtStart
 													  && c.EventDate < dtEnd
@@ -82,7 +77,5 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 				CalendarHelper.BindDataBoundControl(dgEvents, lst);
 			}
 		}
-
-
 	}
 }

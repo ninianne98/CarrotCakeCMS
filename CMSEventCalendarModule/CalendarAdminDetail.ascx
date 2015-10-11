@@ -73,7 +73,8 @@
 				start date:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartDate" runat="server" CssClass="dateRegion" Columns="16" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartDate" runat="server" CssClass="dateRegion"
+					Columns="16" MaxLength="12" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtEventStartDate" ID="RequiredFieldValidator4"
 					runat="server" Text="**" ToolTip="Start date is required" ErrorMessage="Start date is required" Display="Dynamic" />
 			</td>
@@ -81,7 +82,8 @@
 				end by date:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndDate" runat="server" CssClass="dateRegion" Columns="16" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndDate" runat="server" CssClass="dateRegion"
+					Columns="16" MaxLength="12" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtEventEndDate" ID="RequiredFieldValidator3"
 					runat="server" Text="**" ToolTip="End date is required" ErrorMessage="End date is required" Display="Dynamic" />
 			</td>
@@ -102,13 +104,15 @@
 				time from:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartTime" runat="server" CssClass="timeRegion"
+					Columns="16" MaxLength="12" />
 			</td>
 			<td class="tablecaption" style="text-align: right;">
 				time to:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndTime" runat="server" CssClass="timeRegion"
+					Columns="16" MaxLength="12" />
 			</td>
 		</tr>
 	</table>
@@ -231,7 +235,6 @@
 		initDays();
 	});
 
-
 	function setCatColor(pat) {
 		$('#<%=ddlColors.ClientID %>').val(pat);
 		var txt = $("#<%=ddlColors.ClientID %> option:selected").text();
@@ -256,6 +259,4 @@
 
 		initCatColor();
 	});
-
-
 </script>

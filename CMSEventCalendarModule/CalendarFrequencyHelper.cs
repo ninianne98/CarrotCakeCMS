@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -14,7 +12,6 @@ using Carrotware.CMS.Interface;
 *
 * Date: June 2013
 */
-
 
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
@@ -37,11 +34,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			List<DateTime> eventUTCDates = (from d in eventDates select site.ConvertSiteTimeToUTC(d)).ToList();
 
 			if (oldItem.SiteID == Guid.Empty && oldItem.CalendarFrequencyID == Guid.Empty) {
-
 				InsertEventsFromList(ctx, newItem, eventDates);
-
 			} else {
-
 				DateTime oldStartDateTime = GetStartDateTimeFromItem(oldItem);
 
 				int iDays = GetDateDiffDays(newStartDateTime, oldStartDateTime);
@@ -82,7 +76,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 					|| iMin != 0 || iDays != 0 || (iMaxRange != iFuture && iFuture > 0)
 					|| oldItem.EventEndDate.Date != newItem.EventEndDate.Date
 					|| oldItem.EventStartDate.Date != newItem.EventStartDate.Date) {
-
 					var lstEvents = (from c in ctx.carrot_CalendarEvents
 									 orderby c.EventDate
 									 where c.CalendarEventProfileID == newItem.CalendarEventProfileID
@@ -115,7 +108,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 						lstEvents.ForEach(x => x.EventDate = site.ConvertSiteTimeToUTC(x.EventDate));
 					}
-
 
 					var lstDel = (from l in lstEvents
 								  orderby l.EventDate
@@ -198,9 +190,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 							dateToAdd = dateToAdd.AddDays(7 * eventProfile.RecursEvery);
 						}
 					} else {
-
 						while (eventDates.Count < 5000 && dateToAdd.Date <= endDateRange && dateToAdd.Date <= eventProfile.EventEndDate) {
-
 							if (eventProfile.DaysValid.Contains(dateToAdd.DayOfWeek)) {
 								if (!createRecentOnly || (createRecentOnly && dateToAdd.Date >= backportDate)) {
 									eventDates.Add(dateToAdd.Date);
@@ -276,14 +266,17 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		public static int GetDateDiffMonths(DateTime date1, DateTime date2) {
 			return ((date1.Year - date2.Year) * 12) + date1.Month - date2.Month;
 		}
+
 		public static int GetDateDiffWeeks(DateTime date1, DateTime date2) {
 			return GetDateDiffDays(date1, date2) / 7;
 		}
+
 		public static int GetDateDiffDays(DateTime date1, DateTime date2) {
 			TimeSpan dateOffset = date1.Subtract(date2);
 			int iDays = (int)dateOffset.TotalDays;
 			return iDays;
 		}
+
 		public static int GetDateDiffMinutes(TimeSpan time1, TimeSpan time2) {
 			TimeSpan dateOffset = time1.Subtract(time2);
 			int iMin = (int)dateOffset.TotalMinutes;
@@ -304,7 +297,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static Dictionary<Guid, string> FrequencyTypeDictionary {
 			get {
-
 				if (_types == null) {
 					_types = (from c in GetCalendarFrequencies()
 							  orderby c.FrequencySortOrder
@@ -316,14 +308,12 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static FrequencyType GetFrequencyTypeByID(Guid contentTypeID) {
-
 			KeyValuePair<Guid, string> _type = FrequencyTypeDictionary.Where(t => t.Key == contentTypeID).FirstOrDefault();
 
 			return GetTypeByName(_type.Value);
 		}
 
 		public static FrequencyType GetTypeByName(string typeValue) {
-
 			FrequencyType pt = FrequencyType.Daily;
 
 			if (!string.IsNullOrEmpty(typeValue)) {
@@ -336,23 +326,18 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static Guid GetIDByFrequencyType(FrequencyType contentType) {
-
 			KeyValuePair<Guid, string> _type = FrequencyTypeDictionary.Where(t => t.Value.ToLower() == contentType.ToString().ToLower()).FirstOrDefault();
 
 			return _type.Key;
 		}
 
 		public static List<carrot_CalendarFrequency> GetCalendarFrequencies() {
-
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
-
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				return (from c in db.carrot_CalendarFrequencies
 						orderby c.FrequencySortOrder
 						select c).ToList();
 			}
 		}
-
-
 
 	}
 }

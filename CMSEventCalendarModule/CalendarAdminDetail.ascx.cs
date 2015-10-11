@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -16,8 +14,8 @@ using Carrotware.CMS.Interface;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
+
 	public partial class CalendarAdminDetail : AdminModule {
 
 		public string CancelURL {
@@ -38,7 +36,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			btnDelete.Visible = !(ItemGuid == Guid.Empty);
 
 			if (!IsPostBack) {
-
 				CalendarHelper.BindRepeater(rpDays, CalendarHelper.DaysOfTheWeek);
 
 				Dictionary<Guid, string> colors = (from c in CalendarHelper.GetCalendarCategories(SiteID)
@@ -84,21 +81,17 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			}
 		}
 
-
 		protected void btnCopy_Click(object sender, EventArgs e) {
 			carrot_CalendarEventProfile p = CalendarHelper.CopyEvent(ItemGuid);
 			ItemGuid = p.CalendarEventProfileID;
 
-
 			btnSave_Click(sender, e);
 		}
-
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			bool bAdd = false;
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
-
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				var currItem = (from c in db.carrot_CalendarEventProfiles
 								where c.CalendarEventProfileID == ItemGuid
 								select c).FirstOrDefault();
@@ -125,7 +118,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 				if (CalendarFrequencyHelper.GetFrequencyTypeByID(currItem.CalendarFrequencyID) == CalendarFrequencyHelper.FrequencyType.Weekly
 					&& days.Count > 0) {
-
 					int dayMask = (from d in days select int.Parse(d)).Sum();
 
 					if (dayMask > 0) {
@@ -161,15 +153,12 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		protected void btnDelete_Click(object sender, EventArgs e) {
-
 			CalendarHelper.RemoveEvent(ItemGuid);
 
 			Response.Redirect(CreateLink(CalendarHelper.PluginKeys.AdminProfileList.ToString()));
 		}
 
-
 		public bool GetSelectedDays(int dayInt) {
-
 			if (selectedDatePattern.HasValue) {
 				if ((selectedDatePattern.Value & dayInt) != 0) {
 					return true;
@@ -179,9 +168,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			} else {
 				return false;
 			}
-
 		}
-
-
 	}
 }

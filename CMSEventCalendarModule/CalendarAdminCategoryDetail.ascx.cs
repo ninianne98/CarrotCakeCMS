@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -15,8 +13,8 @@ using Carrotware.CMS.Interface;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
+
 	public partial class CalendarAdminCategoryDetail : AdminModule {
 		protected Guid ItemGuid = Guid.Empty;
 
@@ -30,7 +28,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			ItemGuid = ParmParser.GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
-
 				CalendarHelper.BindDropDownList(ddlFGColor, CalendarHelper.ColorCodes, CalendarHelper.HEX_Black);
 				CalendarHelper.BindDropDownList(ddlBGColor, CalendarHelper.ColorCodes, CalendarHelper.HEX_White);
 
@@ -41,15 +38,13 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 					ddlFGColor.SelectedValue = itm.CategoryFGColor;
 					ddlBGColor.SelectedValue = itm.CategoryBGColor;
 				}
-
 			}
 		}
 
 		protected void btnSaveButton_Click(object sender, EventArgs e) {
 			bool bAdd = false;
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
-
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				var itm = (from c in db.carrot_CalendarEventCategories
 						   where c.CalendarEventCategoryID == ItemGuid
 						   select c).FirstOrDefault();
@@ -75,8 +70,5 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			Response.Redirect(CreateLink(ModuleName, String.Format("id={0}", ItemGuid)));
 		}
-
-
-
 	}
 }

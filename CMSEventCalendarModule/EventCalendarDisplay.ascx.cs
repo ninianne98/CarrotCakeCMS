@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -17,10 +15,9 @@ using Carrotware.CMS.Interface;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
-	public partial class EventCalendarDisplay : WidgetParmDataUserControl {
 
+	public partial class EventCalendarDisplay : WidgetParmDataUserControl {
 		public string SpecifiedCSSFile { get; set; }
 
 		public string JavascriptFunctionNameDate { get; set; }
@@ -28,7 +25,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		public string LaunchURLWindow { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!IsPostBack) {
 				Calendar1.CalendarDate = SiteData.CurrentSite.Now.Date;
 
@@ -64,7 +60,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		protected override void OnInit(EventArgs e) {
-
 			if (PublicParmValues.Count > 0) {
 				try {
 					string sFoundVal = GetParmValue("SpecifiedCSSFile", "");
@@ -91,7 +86,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 				} catch (Exception ex) { }
 			}
 
-
 			if (!string.IsNullOrEmpty(LaunchURLWindow) && string.IsNullOrEmpty(JavascriptFunctionNameDate)) {
 				JavascriptFunctionNameDate = "eventCalendarDateLaunch";
 			}
@@ -108,14 +102,12 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 		}
 
 		public DateTime GetTimeFromTimeSpan(TimeSpan? timeSpan) {
 			return CalendarHelper.GetFullDateTime(timeSpan);
 		}
-
 
 		protected void btnLast_Click(object sender, EventArgs e) {
 			Calendar1.CalendarDate = Calendar1.CalendarDate.AddMonths(-1);
@@ -126,7 +118,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			Calendar1.CalendarDate = Calendar1.CalendarDate.AddMonths(1);
 			SetCalendar();
 		}
-
 
 		protected void SetCalendar() {
 			SiteData site = SiteData.CurrentSite;
@@ -139,8 +130,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			List<vw_carrot_CalendarEvent> lst = null;
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
-
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				lst = (from c in db.vw_carrot_CalendarEvents
 					   where c.EventDate >= dtStart
 						&& c.EventDate < dtEnd
@@ -150,7 +140,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 						&& (!c.IsCancelledSeries || c.IsCancelledPublic)
 					   orderby c.EventDate ascending, c.EventStartTime ascending, c.IsCancelledEvent ascending
 					   select c).ToList();
-
 			}
 
 			lst.ForEach(x => x.EventDate = site.ConvertUTCToSiteTime(x.EventDate));
@@ -177,6 +166,5 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			Calendar1.CalendarDate = new DateTime(int.Parse(ddlYear.SelectedValue), ddlMonth.SelectedIndex + 1, 15);
 			SetCalendar();
 		}
-
 	}
 }

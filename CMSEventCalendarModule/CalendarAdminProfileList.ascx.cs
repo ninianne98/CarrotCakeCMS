@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -15,14 +13,12 @@ using Carrotware.CMS.Interface;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
+
 	public partial class CalendarAdminProfileList : AdminModule {
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			LoadData();
-
 		}
 
 		protected void LoadData() {
@@ -37,10 +33,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		protected void ddlFilter_SelectedIndexChanged(object sender, EventArgs e) {
-			
 			LoadData();
-
 		}
-
 	}
 }

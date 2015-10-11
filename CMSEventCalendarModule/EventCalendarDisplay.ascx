@@ -32,10 +32,12 @@
 							<ItemTemplate>
 								<div>
 									<asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible='<%# !(bool)Eval("IsAllDayEvent")%>'>
-										<asp:Literal ID="litSTime1" runat="server" Text='<%# String.Format(" {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTime")) ) %>' Visible='<%# (Eval("EventStartTimeOverride") == null) %>' />
+										<asp:Literal ID="litSTime1" runat="server" Text='<%# String.Format(" {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTime")) ) %>'
+											Visible='<%# (Eval("EventStartTimeOverride") == null) %>' />
 										<asp:Literal ID="litSTime2" runat="server" Text='<%# String.Format(" {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTimeOverride")) ) %>'
 											Visible='<%# (Eval("EventStartTimeOverride") != null) %>' />
-										<asp:Literal ID="litETime1" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTime")) ) %>' Visible='<%# (Eval("EventEndTime") != null) && (Eval("EventEndTimeOverride") == null) %>' />
+										<asp:Literal ID="litETime1" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTime")) ) %>'
+											Visible='<%# (Eval("EventEndTime") != null) && (Eval("EventEndTimeOverride") == null) %>' />
 										<asp:Literal ID="litETime2" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTimeOverride")) ) %>'
 											Visible='<%# (Eval("EventEndTimeOverride") != null) %>' />
 									</asp:PlaceHolder>

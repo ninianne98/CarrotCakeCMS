@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI.WebControls;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -13,8 +13,8 @@ using System.Web.UI.WebControls;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
+
 	public class CalendarHelper {
 
 		public enum PluginKeys {
@@ -31,11 +31,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		public static string HEX_Black = "#000000";
 
 		public static List<carrot_CalendarEventCategory> GetCalendarCategories(Guid siteID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
-				if (db.carrot_CalendarEventCategories.Count() < 1) {
-
+				if (!db.carrot_CalendarEventCategories.Where(x => x.SiteID == siteID).Any()) {
 					carrot_CalendarEventCategory itm = new carrot_CalendarEventCategory();
 
 					itm = new carrot_CalendarEventCategory();
@@ -59,20 +56,15 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static carrot_CalendarEventCategory GetCalendarCategory(Guid calendarEventCategoryID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				return (from c in db.carrot_CalendarEventCategories
 						where c.CalendarEventCategoryID == calendarEventCategoryID
 						select c).FirstOrDefault();
 			}
 		}
 
-
 		public static List<carrot_CalendarEventProfile> GetProfileList(Guid siteID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				return (from c in db.carrot_CalendarEventProfiles
 						orderby c.EventStartDate
 						where c.SiteID == siteID
@@ -81,9 +73,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static List<vw_carrot_CalendarEventProfile> GetProfileView(Guid siteID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				return (from c in db.vw_carrot_CalendarEventProfiles
 						orderby c.EventStartDate
 						where c.SiteID == siteID
@@ -92,9 +82,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static List<vw_carrot_CalendarEventProfile> GetProfileView(Guid siteID, int eventYear) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				if (eventYear == -1) {
 					return (from c in db.vw_carrot_CalendarEventProfiles
 							orderby c.EventStartDate
@@ -131,7 +119,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			List<int> years = new List<int>();
 
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				MinMaxDate mm = (from c in db.vw_carrot_CalendarEventProfiles
 								 where c.SiteID == siteID
 								 group c by 1 into g
@@ -159,9 +146,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static carrot_CalendarEventProfile GetProfile(Guid calendarEventProfileID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				return (from c in db.carrot_CalendarEventProfiles
 						where c.CalendarEventProfileID == calendarEventProfileID
 						select c).FirstOrDefault();
@@ -169,9 +154,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static void RemoveEvent(Guid calendarEventProfileID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				var profile = (from c in db.carrot_CalendarEventProfiles
 							   where c.CalendarEventProfileID == calendarEventProfileID
 							   select c).FirstOrDefault();
@@ -189,11 +172,9 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static carrot_CalendarEventProfile CopyEvent(Guid calendarEventProfileID) {
-
 			var srcProfile = GetProfile(calendarEventProfileID);
 
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				var item = new carrot_CalendarEventProfile();
 				item.CalendarEventProfileID = Guid.NewGuid();
 				item.SiteID = srcProfile.SiteID;
@@ -239,11 +220,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			}
 		}
 
-
 		public static List<carrot_CalendarEvent> GetEventList(Guid calendarEventProfileID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				return (from c in db.carrot_CalendarEvents
 						orderby c.EventDate
 						where c.CalendarEventProfileID == calendarEventProfileID
@@ -252,9 +230,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static List<vw_carrot_CalendarEvent> GetEventView(Guid calendarEventProfileID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				return (from c in db.vw_carrot_CalendarEvents
 						orderby c.EventDate
 						where c.CalendarEventProfileID == calendarEventProfileID
@@ -263,19 +239,15 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static carrot_CalendarEvent GetEvent(Guid calendarEventID) {
-
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-
 				return (from c in db.carrot_CalendarEvents
 						where c.CalendarEventID == calendarEventID
 						select c).FirstOrDefault();
 			}
 		}
 
-
 		public static Dictionary<int, string> DaysOfTheWeek {
 			get {
-
 				Dictionary<int, string> daysOfWeek = new Dictionary<int, string>();
 
 				daysOfWeek.Add(64, DayOfWeek.Sunday.ToString());
@@ -508,7 +480,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			return lstUpd;
 		}
 
-
 		private static DateTime fakeDate {
 			get {
 				return Convert.ToDateTime("1899-12-31").Date;
@@ -516,7 +487,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static void SetTextboxToTimeSpan(TextBox txt, TimeSpan? timeSpan) {
-
 			if (timeSpan.HasValue) {
 				txt.Text = fakeDate.Add(timeSpan.Value).ToShortTimeString();
 			} else {
@@ -525,7 +495,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static string GetTextFromTimeSpan(TimeSpan? timeSpan) {
-
 			if (timeSpan.HasValue) {
 				return GetFullDateTime(fakeDate, timeSpan).ToShortTimeString();
 			} else {
@@ -538,7 +507,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static DateTime GetFullDateTime(DateTime theDate, TimeSpan? timeSpan) {
-
 			if (timeSpan.HasValue) {
 				return theDate.Date.Add(timeSpan.Value);
 			} else {
@@ -555,13 +523,10 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			return ts;
 		}
-
-
 	}
 
 	public class MinMaxDate {
 		public DateTime MinDate { get; set; }
 		public DateTime MaxDate { get; set; }
 	}
-
 }

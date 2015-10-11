@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+
 /*
 * CarrotCake CMS - Event Calendar
 * http://www.carrotware.com/
@@ -16,31 +14,31 @@ using Carrotware.CMS.Interface;
 * Date: June 2013
 */
 
-
 namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
-	public partial class EventCalendarDisplayUpcoming : WidgetParmDataUserControl {
 
+	public partial class EventCalendarDisplayUpcoming : WidgetParmDataUserControl {
 		private int _past = -2;
+
 		public int DaysInPast {
 			get { return _past; }
 			set { _past = value; }
 		}
 
 		private int _future = 14;
+
 		public int DaysInFuture {
 			get { return _future; }
 			set { _future = value; }
 		}
 
 		private int _top = 10;
+
 		public int TakeTop {
 			get { return _top; }
 			set { _top = value; }
 		}
 
 		public string CalendarURL { get; set; }
-
-
 
 		private DateTime lastDate = DateTime.MinValue.Date;
 
@@ -54,16 +52,13 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!IsPostBack) {
 				SetCalendar();
 			}
 		}
 
 		protected override void OnInit(EventArgs e) {
-
 			if (PublicParmValues.Count > 0) {
-
 				try {
 					string sFoundVal = GetParmValue("CalendarURL", "");
 
@@ -97,12 +92,10 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 				} catch (Exception ex) { }
 			}
 
-
 			base.OnInit(e);
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 		}
 
@@ -119,8 +112,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			dtStart = site.ConvertSiteTimeToUTC(dtStart);
 			dtEnd = site.ConvertSiteTimeToUTC(dtEnd);
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext() ) {
-
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				var lst = (from c in db.vw_carrot_CalendarEvents
 						   where c.EventDate >= dtStart
 							&& c.EventDate <= dtEnd
@@ -142,9 +134,6 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			} else {
 				phLink.Visible = false;
 			}
-
 		}
-
-
 	}
 }

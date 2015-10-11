@@ -12,8 +12,8 @@
 	<asp:DropDownList ID="ddlFilter" runat="server" AutoPostBack="true" DataTextField="Value" DataValueField="Key" OnSelectedIndexChanged="ddlFilter_SelectedIndexChanged" />
 </p>
 <div class="SortableGrid">
-	<carrot:CarrotGridView CssClass="datatable" DefaultSort="EventStartDate DESC" ID="dgEvents" runat="server" AutoGenerateColumns="false"
-		HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+	<carrot:CarrotGridView CssClass="datatable" DefaultSort="EventStartDate DESC" ID="dgEvents" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+		AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 		<EmptyDataTemplate>
 			<p>
 				<b>No event profiles found.</b>
@@ -29,12 +29,10 @@
 			<carrot:CarrotHeaderSortTemplateField SortExpression="EventTitle" HeaderText="Title" DataField="EventTitle" />
 			<carrot:CarrotHeaderSortTemplateField SortExpression="FrequencyName" HeaderText="Recurrs" DataField="FrequencyName" />
 			<carrot:CarrotHeaderSortTemplateField SortExpression="CategoryName" HeaderText="Category" DataField="CategoryName" />
-			<carrot:CarrotHeaderSortTemplateField SortExpression="EventStartDate" HeaderText="Start Date" DataField="EventStartDate"
-				DataFieldFormat="{0:d}" />
+			<carrot:CarrotHeaderSortTemplateField SortExpression="EventStartDate" HeaderText="Start Date" DataField="EventStartDate" DataFieldFormat="{0:d}" />
 			<carrot:CarrotHeaderSortTemplateField SortExpression="EventEndDate" HeaderText="End By Date" DataField="EventEndDate" DataFieldFormat="{0:d}" />
-			<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsCancelled" HeaderText="Cancelled"
-				ShowBooleanImage="true" AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb_off.png"
-				ImagePathFalse="/c3-admin/images/lightbulb.png" />
+			<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsCancelled" HeaderText="Cancelled" ShowBooleanImage="true"
+				AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb_off.png" ImagePathFalse="/c3-admin/images/lightbulb.png" />
 			<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsPublic" HeaderText="Public" ShowBooleanImage="true"
 				AlternateTextTrue="Yes" AlternateTextFalse="No" />
 		</Columns>
