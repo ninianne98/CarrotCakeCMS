@@ -76,24 +76,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.Repeater rpFolders;
         
         /// <summary>
-        /// upFile control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload upFile;
-        
-        /// <summary>
-        /// btnUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
-        
-        /// <summary>
         /// chkSpaceEscape control.
         /// </summary>
         /// <remarks>
@@ -101,6 +83,33 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkSpaceEscape;
+        
+        /// <summary>
+        /// lnkRefresh control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkRefresh;
+        
+        /// <summary>
+        /// PostedFiles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputFile PostedFiles;
+        
+        /// <summary>
+        /// FileDirectory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField FileDirectory;
         
         /// <summary>
         /// lblWarning control.

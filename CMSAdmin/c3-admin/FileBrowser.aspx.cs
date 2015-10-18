@@ -82,10 +82,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			lnkThumbView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=thumb", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
 			lnkFileView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=file", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
 
+			if (!lnkThumbView.Visible) {
+				lnkRefresh.NavigateUrl = lnkThumbView.NavigateUrl;
+			} else {
+				lnkRefresh.NavigateUrl = lnkFileView.NavigateUrl;
+			}
+
 			if (!IsPostBack) {
 				LoadLists();
 			}
 
+			FileDirectory.Value = sQueryPath;
 			litPath.Text = sQueryPath;
 		}
 
@@ -177,6 +184,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void btnUpload_Click(object sender, EventArgs e) {
 			lblWarning.Text = string.Empty;
 			lblWarning.CssClass = string.Empty;
+			/*
 			try {
 				if (upFile.HasFile) {
 					var sPath = SetSitePath(sQueryPath);
@@ -206,6 +214,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				lblWarning.Text = ex.ToString();
 				lblWarning.CssClass = "uploadFail";
 			}
+			*/
 		}
 
 		protected void btnRemove_Click(object sender, EventArgs e) {

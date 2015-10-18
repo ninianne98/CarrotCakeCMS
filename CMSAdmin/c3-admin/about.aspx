@@ -90,6 +90,23 @@
 		<br />
 	</p>
 	<p>
+		<b>jQuery Form Plugin</b>
+		<br />
+		Copyright (c) 2014 M. Alsup, <a target="_blank" href="http://malsup.com/jquery/form/">http://malsup.com/jquery/form/</a>
+		<br />
+		Dual licensed under the MIT and GPL licenses. https://github.com/malsup/form#copyright-and-license
+		<br />
+	</p>
+	<p>
+		<b>jQuery Upload File Plugin</b>
+		<br />
+		Copyright (c) 2013 Ravishanker Kusuma
+		<br />
+		<a target="_blank" href="http://hayageek.com/">http://hayageek.com/</a>
+		<br />
+		MIT License, https://github.com/hayageek/jquery-upload-file/blob/master/MIT-License.txt
+	</p>
+	<p>
 		<b>jQuery UI Nested Sortable - jQuery Plugin</b>
 		<br />
 		<a target="_blank" href="http://mjsarfatti.com/sandbox/nestedSortable">http://mjsarfatti.com/sandbox/nestedSortable</a>

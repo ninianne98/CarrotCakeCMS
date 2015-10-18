@@ -13,6 +13,9 @@
 	<link href="iCheck/iCheck.css" rel="stylesheet" type="text/css" />
 	<script src="iCheck/icheck.min.js" type="text/javascript"></script>
 	<script src="Includes/icheck.init.js" type="text/javascript"></script>
+	<script src="Includes/jquery.form.min.js" type="text/javascript"></script>
+	<script src="Includes/jquery.uploadfile.min.js" type="text/javascript"></script>
+	<link href="Includes/uploadfile.css" rel="stylesheet" type="text/css" />
 	<link href="Includes/filebrowser.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -38,6 +41,42 @@
 			window.parent.cmsSetFileNameReturn(fld.val());
 
 			return false;
+		}
+	</script>
+	<script type="text/javascript">
+		var upLoad = null;
+
+		$(document).ready(function () {
+			upLoad = $("#fileuploader").uploadFile({
+				url: "./FileUp.ashx",
+				dragDrop: true,
+				multiple: true,
+				maxFileCount: -1,
+				fileName: '<%=PostedFiles.ClientID %>',
+				maxFileSize: 5 * 1024 * 1024,
+
+				statusBarWidth: 400,
+				dragdropWidth: 400,
+				showPreview: true,
+				previewHeight: "auto",
+				previewWidth: "100px",
+
+				dynamicFormData: function () {
+					var data = {
+						'FileDirectory': $('#<%=FileDirectory.ClientID %>').val(),
+						'EscapeSpaces': $('#<%=chkSpaceEscape.ClientID %>').prop("checked")
+					};
+					//alert(JSON.stringify(data));
+					return data;
+				},
+
+				returnType: "json",
+				showDone: true
+			});
+		});
+
+		function resetUp() {
+			upLoad.reset();
 		}
 	</script>
 	<asp:Literal runat="server" ID="pnlTiny">
@@ -152,7 +191,7 @@
 					</table></FooterTemplate>
 			</asp:Repeater>
 		</div>
-		<p>
+		<%--<p>
 			<br />
 			Select a file to upload to the current folder:<br />
 			<asp:FileUpload ID="upFile" runat="server" Width="400" />
@@ -161,7 +200,24 @@
 			Change spaces to dashes
 			<br />
 			<asp:Label ID="lblWarning" runat="server" />
-		</p>
+		</p>--%>
+		<div style="margin-top: 10px; margin-bottom: 10px;">
+			<div>
+				<asp:CheckBox runat="server" ID="chkSpaceEscape" Checked="true" />
+				Change spaces to dashes &nbsp;&nbsp;&nbsp;&nbsp; [<asp:HyperLink runat="server" ID="lnkRefresh" Text="Refresh" />]
+				<br />
+			</div>
+			<div>
+				Drag files to upload here:<br />
+				<div id="fileuploader">
+					Upload</div>
+			</div>
+			<div style="display: none;">
+				<input type="file" id="PostedFiles" name="PostedFiles" runat="server" />
+				<asp:HiddenField ID="FileDirectory" runat="server" />
+			</div>
+			<asp:Label ID="lblWarning" runat="server" />
+		</div>
 		<div class="scroll" id="fileZone">
 			<asp:Repeater ID="rpThumbs" runat="server">
 				<ItemTemplate>

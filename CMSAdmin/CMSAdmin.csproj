@@ -204,6 +204,9 @@
     <Compile Include="c3-admin\DuplicateWidgetFrom.aspx.designer.cs">
       <DependentUpon>DuplicateWidgetFrom.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\FileUp.ashx.cs">
+      <DependentUpon>FileUp.ashx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\SiteDetail.aspx.cs">
       <DependentUpon>SiteDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -765,6 +768,9 @@
     <Content Include="c3-admin\iCheck\square\_all.css" />
     <Content Include="c3-admin\Includes\FindUsers.js" />
     <Content Include="c3-admin\Includes\icheck.init.js" />
+    <Content Include="c3-admin\Includes\jquery.form.min.js" />
+    <Content Include="c3-admin\Includes\jquery.uploadfile.min.js" />
+    <Content Include="c3-admin\Includes\uploadfile.css" />
     <Content Include="c3-admin\SiteDetail.aspx" />
     <Content Include="c3-admin\SiteIndex.aspx" />
     <Content Include="c3-admin\tiny_mce\classes\adapter\jquery\adapter.js" />
@@ -1407,6 +1413,7 @@
     <Content Include="abundant\abundant.master" />
     <Content Include="abundant\abundant-orig.zip" />
     <Content Include="AdminModules.config" />
+    <Content Include="c3-admin\FileUp.ashx" />
     <None Include="c3-admin\iCheck\customized\grey-alt2%402x.pdn" />
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
