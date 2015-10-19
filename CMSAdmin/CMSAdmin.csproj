@@ -645,12 +645,15 @@
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_468b5e_256x240.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="c3-admin\iCheck\customized\grey-alt3.css" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1%402x.png" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1.css" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1.png" />
     <Content Include="c3-admin\iCheck\customized\grey-alt2%402x.png" />
     <Content Include="c3-admin\iCheck\customized\grey-alt2.css" />
     <Content Include="c3-admin\iCheck\customized\grey-alt2.png" />
+    <Content Include="c3-admin\iCheck\customized\grey-alt3%402x.png" />
+    <Content Include="c3-admin\iCheck\customized\grey-alt3.png" />
     <Content Include="c3-admin\iCheck\customized\_all.css" />
     <Content Include="c3-admin\iCheck\flat\aero%402x.png" />
     <Content Include="c3-admin\iCheck\flat\aero.css" />
@@ -766,6 +769,7 @@
     <Content Include="c3-admin\iCheck\square\yellow.css" />
     <Content Include="c3-admin\iCheck\square\yellow.png" />
     <Content Include="c3-admin\iCheck\square\_all.css" />
+    <Content Include="c3-admin\Images\cloud-up.png" />
     <Content Include="c3-admin\Includes\FindUsers.js" />
     <Content Include="c3-admin\Includes\icheck.init.js" />
     <Content Include="c3-admin\Includes\jquery.form.min.js" />
@@ -1415,6 +1419,7 @@
     <Content Include="AdminModules.config" />
     <Content Include="c3-admin\FileUp.ashx" />
     <None Include="c3-admin\iCheck\customized\grey-alt2%402x.pdn" />
+    <None Include="c3-admin\iCheck\customized\grey-alt3%402x.pdn" />
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>

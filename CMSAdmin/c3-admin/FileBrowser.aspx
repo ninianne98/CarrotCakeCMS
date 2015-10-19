@@ -14,8 +14,8 @@
 	<script src="iCheck/icheck.min.js" type="text/javascript"></script>
 	<script src="Includes/icheck.init.js" type="text/javascript"></script>
 	<script src="Includes/jquery.form.min.js" type="text/javascript"></script>
-	<script src="Includes/jquery.uploadfile.min.js" type="text/javascript"></script>
 	<link href="Includes/uploadfile.css" rel="stylesheet" type="text/css" />
+	<script src="Includes/jquery.uploadfile.min.js" type="text/javascript"></script>
 	<link href="Includes/filebrowser.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -49,12 +49,16 @@
 		$(document).ready(function () {
 			upLoad = $("#fileuploader").uploadFile({
 				url: "./FileUp.ashx",
+				fileName: '<%=PostedFiles.ClientID %>',
+
 				dragDrop: true,
 				multiple: true,
 				maxFileCount: -1,
-				fileName: '<%=PostedFiles.ClientID %>',
-				maxFileSize: 5 * 1024 * 1024,
+				maxFileSize: 8 * 1024 * 1024,
 
+				uploadButtonClass: "ajax-file-upload-none",
+				uploadStr: "  ",
+				dragDropStr: "<span>Drag files here to upload</span>",
 				statusBarWidth: 400,
 				dragdropWidth: 400,
 				showPreview: true,
@@ -66,7 +70,6 @@
 						'FileDirectory': $('#<%=FileDirectory.ClientID %>').val(),
 						'EscapeSpaces': $('#<%=chkSpaceEscape.ClientID %>').prop("checked")
 					};
-					//alert(JSON.stringify(data));
 					return data;
 				},
 
@@ -79,75 +82,71 @@
 			upLoad.reset();
 		}
 	</script>
-	<asp:Literal runat="server" ID="pnlTiny">
+	<asp:PlaceHolder runat="server" ID="pnlTiny">
+		<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
+		<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce_popup.js"></script>
+		<script type="text/javascript">
 
-	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
+			var FileBrowserDialogue = {
+				init: function () {
+					if (tinyMCE.selectedInstance != null) {
+						tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true;
+					}
+					// Here goes your code for setting your custom things onLoad.
+				},
+				mySubmit: function () {
 
-	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce_popup.js"></script>
+					var fldN = '#txtSelectedFile';
+					var fld = $(fldN);
+					var URL = fld.val();
+					var win = tinyMCEPopup.getWindowArg("window");
+					// insert information now
+					if (win.document != null) {
+						win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
+					}
+					// are we an image browser
+					if (typeof (win.ImageDialog) != "undefined") {
+						// we are, so update image dimensions and preview if necessary
+						if (win.ImageDialog.getImageData) win.ImageDialog.getImageData();
+						if (win.ImageDialog.showPreviewImage) win.ImageDialog.showPreviewImage(URL);
+					}
 
-	<script type="text/javascript">
-
-		var FileBrowserDialogue = {
-			init: function () {
-				if (tinyMCE.selectedInstance != null) {
-					tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true;
-				}
-				// Here goes your code for setting your custom things onLoad.
-			},
-			mySubmit: function () {
-
-				var fldN = '#txtSelectedFile';
-				var fld = $(fldN);
-				var URL = fld.val();
-				var win = tinyMCEPopup.getWindowArg("window");
-				// insert information now
-				if (win.document != null) {
-					win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
-				}
-				// are we an image browser
-				if (typeof (win.ImageDialog) != "undefined") {
-					// we are, so update image dimensions and preview if necessary
-					if (win.ImageDialog.getImageData) win.ImageDialog.getImageData();
-					if (win.ImageDialog.showPreviewImage) win.ImageDialog.showPreviewImage(URL);
-				}
-
-				// close popup window
-				tinyMCEPopup.close();
-			}
-		}
-
-		tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
-	</script>
-
-	<script type="text/javascript">
-		myInitFunction = function () {
-
-			// patch TinyMCEPopup.close
-			tinyMCEPopup.close_original = tinyMCEPopup.close;
-			tinyMCEPopup.close = function () {
-				// remove blocking of opening another file browser window
-				if (tinyMCE.selectedInstance != null) {
-					tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
-				}
-
-				// call original function to close the file browser window
-				tinyMCEPopup.close_original();
-			};
-		}
-
-		myExitFunction = function () {
-			if (tinyMCE != null) {
-				if (tinyMCE.selectedInstance != null) {
-					tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
+					// close popup window
+					tinyMCEPopup.close();
 				}
 			}
-		}
 
-		window.onbeforeunload = myExitFunction;
+			tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
+		</script>
+		<script type="text/javascript">
+			myInitFunction = function () {
 
-		tinyMCEPopup.executeOnLoad('myInitFunction();');
-	</script>
-	</asp:Literal>
+				// patch TinyMCEPopup.close
+				tinyMCEPopup.close_original = tinyMCEPopup.close;
+				tinyMCEPopup.close = function () {
+					// remove blocking of opening another file browser window
+					if (tinyMCE.selectedInstance != null) {
+						tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
+					}
+
+					// call original function to close the file browser window
+					tinyMCEPopup.close_original();
+				};
+			}
+
+			myExitFunction = function () {
+				if (tinyMCE != null) {
+					if (tinyMCE.selectedInstance != null) {
+						tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
+					}
+				}
+			}
+
+			window.onbeforeunload = myExitFunction;
+
+			tinyMCEPopup.executeOnLoad('myInitFunction();');
+		</script>
+	</asp:PlaceHolder>
 	<title>Browser</title>
 </head>
 <body>
@@ -208,9 +207,9 @@
 				<br />
 			</div>
 			<div>
-				Drag files to upload here:<br />
 				<div id="fileuploader">
-					Upload</div>
+					Upload
+				</div>
 			</div>
 			<div style="display: none;">
 				<input type="file" id="PostedFiles" name="PostedFiles" runat="server" />
