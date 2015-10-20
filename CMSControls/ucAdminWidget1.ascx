@@ -20,6 +20,8 @@
 								href="javascript:cmsManageWidgetHistory('{WIDGET_KEY}')">History </a></li>
 							<li runat="server" id="liRemove"><a title="Remove" alt="Remove" class="cmsWidgetBarLink cmsWidgetBarIconCross" id="cmsContentRemoveLink" href="javascript:cmsRemoveWidgetLink('{WIDGET_KEY}');">
 								Remove </a></li>
+							<li runat="server" id="liActivate"><a title="Activate" alt="Activate" class="cmsWidgetBarLink cmsWidgetBarIconActive" id="cmsContentActivateLink"
+								href="javascript:cmsActivateWidgetLink('{WIDGET_KEY}');">Activate </a></li>
 						</ul>
 					</li>
 				</ul>

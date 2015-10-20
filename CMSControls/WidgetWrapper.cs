@@ -170,13 +170,13 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (SiteData.IsWebView) {
+				ControlUtilities cu = new ControlUtilities();
+
 				if (this.IsAdminMode) {
 					ctrl1 = GetCtrl("ucAdminWidget1", this);
 					ctrl2 = GetCtrl("ucAdminWidget2", this);
 
 					if (this.JSEditFunctions != null && this.JSEditFunctions.Count > 0) {
-						ControlUtilities cu = new ControlUtilities();
-
 						PlaceHolder phMenuItems = (PlaceHolder)cu.FindControl("phMenuItems", ctrl1);
 						foreach (KeyValuePair<string, string> f in this.JSEditFunctions) {
 							Control itm = GetCtrl(this, f.Key, f.Value);
@@ -185,8 +185,13 @@ namespace Carrotware.CMS.UI.Controls {
 						this.JSEditFunction = null;
 					}
 
+					HtmlGenericControl remove = (HtmlGenericControl)cu.FindControl("liRemove", ctrl1);
+					HtmlGenericControl act = (HtmlGenericControl)cu.FindControl("liActivate", ctrl1);
+
+					act.Visible = !this.WidgetData.IsWidgetActive;
+					remove.Visible = this.WidgetData.IsWidgetActive;
+
 					if (String.IsNullOrEmpty(this.JSEditFunction)) {
-						ControlUtilities cu = new ControlUtilities();
 						HtmlGenericControl edit = (HtmlGenericControl)cu.FindControl("liEdit", ctrl1);
 						HtmlGenericControl hist = (HtmlGenericControl)cu.FindControl("liHistory", ctrl1);
 

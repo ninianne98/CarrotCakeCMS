@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -292,7 +291,7 @@ namespace Carrotware.CMS.UI.Base {
 						lstWidget = (from w in pageWidgets
 									 orderby w.WidgetOrder, w.EditDate
 									 where w.Root_ContentID == pageContents.Root_ContentID
-									   && w.IsWidgetActive == true
+										 //&& w.IsWidgetActive == true
 									   && w.IsWidgetPendingDelete == false
 									 select w).ToList();
 					} else {
@@ -304,8 +303,6 @@ namespace Carrotware.CMS.UI.Base {
 									   && w.IsWidgetPendingDelete == false
 									 select w).ToList();
 					}
-
-					Assembly a = Assembly.GetExecutingAssembly();
 
 					foreach (Widget theWidget in lstWidget) {
 						WidgetContainer plcHolder = (WidgetContainer)(from d in lstPlaceholders
@@ -393,6 +390,8 @@ namespace Carrotware.CMS.UI.Base {
 
 								if (plug != null) {
 									plcWrapper.ControlTitle = plug.Caption;
+								} else {
+									plcWrapper.ControlTitle = "UNTITLED";
 								}
 
 								plcWrapper.ID = WrapCtrlId;

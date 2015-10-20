@@ -1182,6 +1182,37 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string ActivateWidget(string DBKey, string ThisPage) {
+			try {
+				CurrentPageGuid = new Guid(ThisPage);
+				LoadGuids();
+				Guid guidWidget = new Guid(DBKey);
+
+				List<Widget> cacheWidget = cmsAdminWidget;
+
+				List<Widget> ww = (from w in cacheWidget
+								   where w.Root_WidgetID == guidWidget
+								   select w).ToList();
+
+				if (ww != null) {
+					foreach (var w in ww) {
+						w.IsWidgetActive = true;
+						w.EditDate = SiteData.CurrentSite.Now;
+					}
+				}
+
+				cmsAdminWidget = cacheWidget;
+
+				return "OK";
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("webservice", ex);
+
+				return ex.ToString();
+			}
+		}
+
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheGenericContent(string ZoneText, string DBKey, string ThisPage) {
 			try {
 				ZoneText = CMSConfigHelper.DecodeBase64(ZoneText);
