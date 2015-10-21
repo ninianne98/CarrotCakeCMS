@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -202,7 +203,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("<" + sOuter + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
 
-			if (!String.IsNullOrEmpty(MetaDataTitle) && lstNav.Count > 0) {
+			if (!String.IsNullOrEmpty(MetaDataTitle) && lstNav.Any()) {
 				output.WriteLine("<" + sInner + " class=\"meta-caption\">" + MetaDataTitle + "  </" + sInner + "> ");
 			}
 
@@ -218,7 +219,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					TakeTop = int.Parse(GetParmValue("TakeTop", "20"));
 
 					IsSimpleDisplayMode = Convert.ToBoolean(GetParmValue("IsSimpleDisplayMode", "false"));

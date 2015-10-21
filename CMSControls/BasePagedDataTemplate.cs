@@ -465,7 +465,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					this.PageSize = int.Parse(GetParmValue("PageSize", "10"));
 
 					this.PagerBelowContent = Convert.ToBoolean(GetParmValue("PagerBelowContent", "true"));

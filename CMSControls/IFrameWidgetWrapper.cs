@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 
 /*
@@ -105,7 +107,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					CssClass = GetParmValue("CssClass", "");
 
 					CSSStyle = GetParmValue("CSSStyle", "width: 300px; height: 100px;");

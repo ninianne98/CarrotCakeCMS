@@ -127,7 +127,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					limitedPropertyList = (from p in lstDefProps
 										   select p.Name.ToLower()).ToList();
 				}
-				if (limitedPropertyList != null && limitedPropertyList.Count > 0) {
+				if (limitedPropertyList != null && limitedPropertyList.Any()) {
 					limitedPropertyList = (from p in limitedPropertyList
 										   select p.ToLower()).ToList();
 				}
@@ -241,7 +241,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 									  where p.KeyName.ToLower().StartsWith(sName.ToLower() + "|")
 									  select p).ToList();
 
-							if (pp.Count > 0) {
+							if (pp.Any()) {
 								foreach (ListItem v in chkValues.Items) {
 									v.Selected = (from p in pp
 												  where p.KeyValue == v.Value

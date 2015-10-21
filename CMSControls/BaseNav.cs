@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 
@@ -28,7 +29,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			WriteListPrefix(output);
 
-			if (lstNav != null && lstNav.Count > 0) {
+			if (lstNav != null && lstNav.Any()) {
 				output.Indent++;
 
 				foreach (SiteNav c in lstNav) {

@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						   where l.Parent_ContentID == d.Root_ContentID
 						   select l).ToList();
 
-				if (lst.Count > 0) {
+				if (lst.Any()) {
 					Repeater rp = new Repeater();
 
 					rp.HeaderTemplate = rpSub.HeaderTemplate;

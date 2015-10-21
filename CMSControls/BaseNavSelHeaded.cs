@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 
 /*
@@ -52,7 +54,7 @@ namespace Carrotware.CMS.UI.Controls {
 				this.ItemCount = this.NavigationData.Count;
 			}
 
-			if (this.NavigationData != null && this.NavigationData.Count > 0 && !String.IsNullOrEmpty(this.MetaDataTitle)) {
+			if (this.NavigationData != null && this.NavigationData.Any() && !String.IsNullOrEmpty(this.MetaDataTitle)) {
 				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
@@ -63,7 +65,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					this.MetaDataTitle = GetParmValue("MetaDataTitle", "");
 				}
 			} catch (Exception ex) {

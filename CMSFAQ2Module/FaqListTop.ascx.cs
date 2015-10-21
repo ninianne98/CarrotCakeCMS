@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
 using System.ComponentModel;
-using Carrotware.CMS.Core;
-
+using System.Linq;
 
 namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
+
 	public partial class FaqListTop : FaqPublicBase {
 
 		[Description("Rows to return")]
@@ -22,9 +17,8 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 			return iFaq.ToString();
 		}
 
-
 		protected void LoadValues() {
-			if (PublicParmValues.Count > 0) {
+			if (PublicParmValues.Any()) {
 				TakeTop = 3;
 
 				try {
@@ -34,7 +28,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 						TakeTop = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
-
 			}
 		}
 
@@ -53,7 +46,5 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 				rpFAQ.Visible = true;
 			}
 		}
-
-
 	}
 }

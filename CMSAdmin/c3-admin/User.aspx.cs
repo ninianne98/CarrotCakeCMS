@@ -46,7 +46,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 						chkSelected = null;
 
-						if (lstSites.Count > 0) {
+						if (lstSites.Any()) {
 							HiddenField hdnSiteID = null;
 							foreach (GridViewRow dgItem in gvSites.Rows) {
 								hdnSiteID = (HiddenField)dgItem.FindControl("hdnSiteID");

@@ -115,7 +115,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				float iThird = (float)(iPageCount - 1) / (float)3;
 
 				Dictionary<string, float> dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.ContentEntry);
-				if (dictTemplates.Count > 0 && dictTemplates.First().Value >= iThird) {
+				if (dictTemplates.Any() && dictTemplates.First().Value >= iThird) {
 					try {
 						GeneralUtilities.SelectListValue(ddlTemplate, dictTemplates.First().Key);
 					} catch { }

@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using System.Collections.Generic;
+
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 
@@ -90,9 +94,20 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			SiteNav pageNav = GetCurrentPage();
 			string sParent = pageNav.FileName.ToLower();
+			List<SiteNav> lstNav = new List<SiteNav>();
 
-			List<SiteNav> lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
-			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
+			if (SiteData.CurretSiteExists && SiteData.CurrentSite.Blog_Root_ContentID.HasValue &&
+				pageNav.ContentType == ContentPageType.PageType.BlogEntry) {
+				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentSite.Blog_Root_ContentID.Value, !SecurityData.IsAuthEditor);
+
+				if (lstNav != null && lstNav.Any()) {
+					pageNav.NavOrder = lstNav.Count + 10;
+					lstNav.Add(pageNav);
+				}
+			} else {
+				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
+			}
+			lstNav.RemoveAll(x => x.ShowInSiteNav == false && x.ContentType == ContentPageType.PageType.ContentEntry);
 
 			string sCSS = "";
 			if (!String.IsNullOrEmpty(CssClass)) {

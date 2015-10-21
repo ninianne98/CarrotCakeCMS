@@ -274,7 +274,7 @@ namespace Carrotware.CMS.UI.Base {
 					HttpContext.Current.Response.Cache.SetExpires(dtExpire);
 				}
 
-				if (pageWidgets.Count > 0) {
+				if (pageWidgets.Any()) {
 					CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 					//find each placeholder in use ONCE!

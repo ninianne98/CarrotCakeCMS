@@ -206,7 +206,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (lstNav != null && lstNav.Count > 0 && !String.IsNullOrEmpty(MetaDataTitle)) {
+			if (lstNav != null && lstNav.Any() && !String.IsNullOrEmpty(MetaDataTitle)) {
 				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
@@ -251,7 +251,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					TakeTop = int.Parse(GetParmValue("TakeTop", "10"));
 
 					CssClass = GetParmValue("CssClass", "");

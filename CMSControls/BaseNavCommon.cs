@@ -101,8 +101,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected virtual void WriteListPrefix(HtmlTextWriter output) {
-			if (this.NavigationData != null && this.NavigationData.Count > 0) {
-				string sCSS = "";
+			if (this.NavigationData != null && this.NavigationData.Any()) {
+				string sCSS = String.Empty;
 
 				if (!String.IsNullOrEmpty(this.CssClass)) {
 					sCSS = " class=\"" + this.CssClass + "\" ";
@@ -112,7 +112,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected virtual void WriteListSuffix(HtmlTextWriter output) {
-			if (this.NavigationData != null && this.NavigationData.Count > 0) {
+			if (this.NavigationData != null && this.NavigationData.Any()) {
 				output.WriteLine("</ul>");
 			}
 		}
@@ -132,7 +132,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					this.CssClass = GetParmValue("CssClass", "");
 
 					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));

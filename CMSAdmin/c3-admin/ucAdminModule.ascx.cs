@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -37,7 +38,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
-				if (!HideList && cmsHelper.AdminModules.Count > 0) {
+				if (!HideList && cmsHelper.AdminModules.Any()) {
 					GeneralUtilities.BindRepeater(rpModuleList, cmsHelper.AdminModules);
 				} else {
 					rpModuleList.Visible = false;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Security;
 using System.Web.UI;
 using Carrotware.CMS.Core;
@@ -75,7 +77,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				EditedPageFileName = cmsHelper.cmsAdminContent.FileName;
 			}
 
-			if (cmsHelper.ToolboxPlugins.Count > 0) {
+			if (cmsHelper.ToolboxPlugins.Any()) {
 				GeneralUtilities.BindRepeater(rpTools, cmsHelper.ToolboxPlugins);
 			} else {
 				rpTools.Visible = false;

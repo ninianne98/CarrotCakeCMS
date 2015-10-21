@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
-
+using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
+
 	public partial class PhotoGalleryFancyBox2 : WidgetParmDataUserControl, IWidgetEditStatus {
 
 		#region IWidgetEditStatus Members
 
 		public bool IsBeingEdited { get; set; }
 
-		#endregion
+		#endregion IWidgetEditStatus Members
 
 		public bool ShowHeading { get; set; }
 
@@ -43,14 +40,12 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
 		public int ThumbSize { get; set; }
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstSizes {
 			get {
-
 				Dictionary<string, string> _dict = new Dictionary<string, string>();
 
 				_dict.Add("25", "25px");
@@ -68,11 +63,8 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-
 		protected void Page_Load(object sender, EventArgs e) {
-
-			if (PublicParmValues.Count > 0) {
-
+			if (PublicParmValues.Any()) {
 				GalleryIDs = new List<Guid>();
 
 				try {
@@ -92,7 +84,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						ShowHeading = Convert.ToBoolean(sFoundVal);
 					}
 				} catch (Exception ex) { }
-
 
 				try {
 					string sFoundVal = GetParmValue("ScaleImage", "false");
@@ -128,14 +119,11 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				rpGalleries.DataBind();
 			}
 
-
 			if (rpGalleries.Items.Count > 0) {
 				pnlGallery.Visible = true;
 			} else {
 				pnlGallery.Visible = false;
 			}
-
 		}
-
 	}
 }

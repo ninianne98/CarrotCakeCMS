@@ -73,12 +73,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Dictionary<string, float> dictTemplates = null;
 
 			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.ContentEntry);
-			if (dictTemplates.Count > 0 && dictTemplates.First().Value >= iThird) {
+			if (dictTemplates.Any() && dictTemplates.First().Value >= iThird) {
 				try { ddlTemplatePage.SelectedValue = dictTemplates.First().Key; } catch { }
 			}
 
 			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
-			if (dictTemplates.Count > 0) {
+			if (dictTemplates.Any()) {
 				try { ddlTemplatePost.SelectedValue = dictTemplates.First().Key; } catch { }
 			}
 		}
@@ -350,7 +350,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			wpSite.Comments.RemoveAll(r => r.ImportRootID == Guid.Empty);
 
-			if (wpSite.Comments.Count > 0) {
+			if (wpSite.Comments.Any()) {
 				sMsg += "<p>Imported Comments</p>";
 			}
 

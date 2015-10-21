@@ -103,7 +103,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				divEditing.Visible = false;
 
 				Dictionary<string, float> dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
-				if (dictTemplates.Count > 0) {
+				if (dictTemplates.Any()) {
 					try {
 						GeneralUtilities.SelectListValue(ddlTemplate, dictTemplates.First().Key);
 					} catch { }

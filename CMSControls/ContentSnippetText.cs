@@ -180,7 +180,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					//this.SnippetSlug = GetParmValue("SnippetSlug", "");
 					this.SnippetID = new Guid(GetParmValue("SnippetID", Guid.Empty.ToString()));
 					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));

@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarDisplay : WidgetParmDataUserControl {
 
+	public partial class CalendarDisplay : WidgetParmDataUserControl {
 		public string SpecifiedCSSFile { get; set; }
 
 		public string JavascriptFunctionNameDate { get; set; }
@@ -17,8 +13,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		public string LaunchURLWindow { get; set; }
 
 		protected override void OnInit(EventArgs e) {
-
-			if (PublicParmValues.Count > 0) {
+			if (PublicParmValues.Any()) {
 				try {
 					string sFoundVal = GetParmValue("SpecifiedCSSFile", "");
 
@@ -44,7 +39,6 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				} catch (Exception ex) { }
 			}
 
-
 			if (!string.IsNullOrEmpty(this.LaunchURLWindow) && string.IsNullOrEmpty(this.JavascriptFunctionNameDate)) {
 				this.JavascriptFunctionNameDate = "eventCalendarDateLaunch";
 			}
@@ -61,16 +55,13 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-
 			base.OnPreRender(e);
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!IsPostBack) {
 				SetCalendar();
 			}
-
 		}
 
 		protected void btnLast_Click(object sender, EventArgs e) {
@@ -83,9 +74,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			SetCalendar();
 		}
 
-
 		protected void SetCalendar() {
-
 			DateTime dtStart = Calendar1.CalendarDate.AddDays(1 - Calendar1.CalendarDate.Day);
 			DateTime dtEnd = dtStart.AddMonths(1);
 
@@ -105,11 +94,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 				dgEvents.DataSource = lst;
 				dgEvents.DataBind();
-
 			}
 		}
-
-
-
 	}
 }

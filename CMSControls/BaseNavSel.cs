@@ -130,7 +130,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.ParentFileName = parentPageNav.FileName.ToLower();
 
-			if (lstNav != null && lstNav.Count > 0) {
+			if (lstNav != null && lstNav.Any()) {
 				output.WriteLine();
 				WriteListPrefix(output);
 
@@ -149,7 +149,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					string sChild = " ";
 					if (this.MultiLevel) {
-						if (cc != null && cc.Count > 0) {
+						if (cc != null && cc.Any()) {
 							sChild = " level1-haschildren " + this.CSSHasChildren + " ";
 						}
 						sThis1CSS = " level1 " + sItemCSS + sChild;
@@ -172,7 +172,7 @@ namespace Carrotware.CMS.UI.Controls {
 					output.WriteLine("<li id=\"listitem" + iItemNumber.ToString() + "\" class=\"" + sThis1CSS + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
 
 					int indent3 = output.Indent;
-					if (this.MultiLevel && cc != null && cc.Count > 0) {
+					if (this.MultiLevel && cc != null && cc.Any()) {
 						LoadChildren(output, c1.Root_ContentID, sItemCSS, iItemNumber, 2);
 					}
 					output.Indent = indent3;
@@ -194,7 +194,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			string sThis2CSS = sItemCSS;
 
-			if (lstNav != null && lstNav.Count > 0) {
+			if (lstNav != null && lstNav.Any()) {
 				output.WriteLine();
 				output.WriteLine("<ul id=\"listitem" + iParent.ToString() + "-childlist\" class=\"childlist childlevel" + iLevel + " " + this.CSSULClassLower + "\">");
 				int indent2 = output.Indent + 1;
@@ -204,7 +204,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					if (this.MultiLevel) {
 						string sChild = " ";
-						if (cc != null && cc.Count > 0) {
+						if (cc != null && cc.Any()) {
 							sChild = " level" + iLevel + "-haschildren " + this.CSSHasChildren + " ";
 						}
 						sThis2CSS = " level" + iLevel + " " + sItemCSS + sChild;
@@ -220,7 +220,7 @@ namespace Carrotware.CMS.UI.Controls {
 					iItemNumber++;
 					output.WriteLine("<li id=\"listitem" + iItemNumber.ToString() + "\" class=\"" + sThis2CSS + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a>");
 					int indent3 = output.Indent;
-					if (cc != null && cc.Count > 0) {
+					if (cc != null && cc.Any()) {
 						LoadChildren(output, c2.Root_ContentID, sItemCSS, iItemNumber, iLevel + 1);
 					}
 					output.Indent = indent3;
@@ -245,7 +245,7 @@ namespace Carrotware.CMS.UI.Controls {
 			try {
 				base.OnPreRender(e);
 
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					string sTmp = "";
 
 					sTmp = GetParmValue("CSSSelected", "");

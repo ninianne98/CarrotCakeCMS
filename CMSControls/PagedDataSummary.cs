@@ -200,7 +200,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public List<Guid> SelectedCategories {
 			get {
 				if (_guids == null) {
-					if (CategoryGuidList.Count > 0) {
+					if (CategoryGuidList.Any()) {
 						_guids = (from n in CategoryGuidList select n.GuidValue).ToList();
 					} else {
 						_guids = new List<Guid>();
@@ -218,7 +218,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public List<string> SelectedCategorySlugs {
 			get {
 				if (_slugs == null) {
-					if (CategorySlugList.Count > 0) {
+					if (CategorySlugList.Any()) {
 						_slugs = (from n in CategorySlugList select n.StringValue).ToList();
 					} else {
 						_slugs = new List<string>();
@@ -469,7 +469,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					this.ContentType = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), GetParmValue("ContentType", "Blog"), true);
 
 					SelectedCategories = new List<Guid>();
@@ -481,7 +481,7 @@ namespace Carrotware.CMS.UI.Controls {
 						}
 					}
 				}
-				if (SelectedCategories.Count > 0) {
+				if (SelectedCategories.Any()) {
 					this.ContentType = SummaryContentType.SpecifiedCategories;
 				}
 			} catch (Exception ex) {

@@ -851,7 +851,7 @@ namespace Carrotware.CMS.Core {
 			//                                    && ct.IsLatestVersion != true
 			//                                   select ct).ToList();
 
-			//if (lstContent.Count > 0) {
+			//if (lstContent.Any()) {
 			//    db.carrot_Contents.DeleteAllOnSubmit(lstContent);
 			//    db.SubmitChanges();
 			//}
@@ -864,7 +864,7 @@ namespace Carrotware.CMS.Core {
 													 && ct.IsLatestVersion != true
 													select ct);
 
-			if (lstDel.Count > 0) {
+			if (lstDel.Any()) {
 				db.carrot_Contents.DeleteBatch(queryCont);
 				db.SubmitChanges();
 			}

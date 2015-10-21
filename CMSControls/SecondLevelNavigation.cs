@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Controls {
 			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 
 			if (IncludeParent) {
-				if (lstNav != null && lstNav.Count > 0) {
+				if (lstNav != null && lstNav.Any()) {
 					SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
 					if (p != null) {
 						p.NavOrder = -100;

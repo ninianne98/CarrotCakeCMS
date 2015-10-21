@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -176,7 +177,7 @@ namespace Carrotware.CMS.UI.Controls {
 					ctrl1 = GetCtrl("ucAdminWidget1", this);
 					ctrl2 = GetCtrl("ucAdminWidget2", this);
 
-					if (this.JSEditFunctions != null && this.JSEditFunctions.Count > 0) {
+					if (this.JSEditFunctions != null && this.JSEditFunctions.Any()) {
 						PlaceHolder phMenuItems = (PlaceHolder)cu.FindControl("phMenuItems", ctrl1);
 						foreach (KeyValuePair<string, string> f in this.JSEditFunctions) {
 							Control itm = GetCtrl(this, f.Key, f.Value);

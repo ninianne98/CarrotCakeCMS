@@ -188,7 +188,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			List<SiteNav> lstNav = GetChildren(rootContentID);
 
-			if (lstNav != null && lstNav.Count > 0) {
+			if (lstNav != null && lstNav.Any()) {
 				ListItemRepeater rSubNav = new ListItemRepeater();
 
 				rSubNav.ID = "rSubNav";
@@ -314,7 +314,7 @@ namespace Carrotware.CMS.UI.Controls {
 				lnk.IsSelected = true;
 			}
 
-			if (GetChildren(lnk.ContentID).Count > 0 && !String.IsNullOrEmpty(lnk.CssClassHasChild)) {
+			if (GetChildren(lnk.ContentID).Any() && !String.IsNullOrEmpty(lnk.CssClassHasChild)) {
 				if (!String.IsNullOrEmpty(lnk.CssClassNormal)) {
 					lnk.CssClassNormal = lnk.CssClassNormal + " " + lnk.CssClassHasChild;
 				} else {
@@ -337,7 +337,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					OverrideCSS = GetParmValue("OverrideCSS", "");
 
 					CSSSelected = GetParmValue("CSSSelected", "");

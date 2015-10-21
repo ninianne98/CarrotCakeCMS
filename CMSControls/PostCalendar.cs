@@ -295,7 +295,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (PublicParmValues.Any()) {
 					CssClass = GetParmValue("CssClass", "");
 
 					CalendarHead = GetParmValue("CalendarHead", "");

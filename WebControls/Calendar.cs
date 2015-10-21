@@ -314,7 +314,7 @@ namespace Carrotware.Web.UI.Controls {
 			List<DateTime> dates = new List<DateTime>();
 
 			if (HilightDateList != null) {
-				if (HilightDateList.Count > 0) {
+				if (HilightDateList.Any()) {
 					dates = HilightDateList;
 				}
 			} else {
