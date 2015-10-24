@@ -95,7 +95,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			string sAction = "";
 			Guid guidWidget = Guid.Empty;
 
-			if (!string.IsNullOrEmpty(e.CommandName)) {
+			if (!String.IsNullOrEmpty(e.CommandName)) {
 				var vals = e.CommandName.Split('_');
 				sAction = vals[0];
 				guidWidget = new Guid(vals[1]);

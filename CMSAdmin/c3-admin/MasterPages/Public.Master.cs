@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
-using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -17,11 +13,11 @@ using Carrotware.Web.UI.Controls;
 * Date: October 2011
 */
 
-
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
-	public partial class Public : AdminBaseMasterPage {
-		protected void Page_Load(object sender, EventArgs e) {
 
+	public partial class Public : AdminBaseMasterPage {
+
+		protected void Page_Load(object sender, EventArgs e) {
 			LoadFooterCtrl(plcFooter, ControlLocation.PublicFooter);
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
@@ -29,8 +25,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 #if DEBUG
 			metaCrawl.Visible = false;
 #endif
-
 		}
-
 	}
 }

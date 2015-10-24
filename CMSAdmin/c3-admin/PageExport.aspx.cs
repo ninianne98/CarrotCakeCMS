@@ -18,17 +18,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			guidNodeID = GetGuidParameterFromQuery("node");
 
-			if (!string.IsNullOrEmpty(Request.QueryString["comment"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["comment"])) {
 				bExportComments = true;
 			}
 
-			if (!string.IsNullOrEmpty(Request.QueryString["datebegin"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["datebegin"])) {
 				dateBegin = Convert.ToDateTime(Request.QueryString["datebegin"].ToString()).Date;
 			}
-			if (!string.IsNullOrEmpty(Request.QueryString["dateend"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["dateend"])) {
 				dateEnd = Convert.ToDateTime(Request.QueryString["dateend"].ToString()).Date;
 			}
-			if (!string.IsNullOrEmpty(Request.QueryString["exportwhat"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["exportwhat"])) {
 				ExportWhat = (SiteExport.ExportType)Enum.Parse(typeof(SiteExport.ExportType), Request.QueryString["exportwhat"].ToString(), true); ;
 			}
 

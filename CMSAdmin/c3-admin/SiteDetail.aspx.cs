@@ -51,7 +51,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnAddUsers_Click(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(hdnUserID.Value)) {
+			if (!String.IsNullOrEmpty(hdnUserID.Value)) {
 				ExtendedUserData exUsr = new ExtendedUserData(hdnUserID.Value);
 				exUsr.AddToSite(guidSiteID);
 

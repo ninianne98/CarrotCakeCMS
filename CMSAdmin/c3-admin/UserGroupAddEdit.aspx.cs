@@ -65,7 +65,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnAddUsers_Click(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(hdnUserID.Value)) {
+			if (!String.IsNullOrEmpty(hdnUserID.Value)) {
 				MembershipRole role = getCurrentGroup();
 
 				ExtendedUserData exUsr = new ExtendedUserData(hdnUserID.Value);
@@ -86,7 +86,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			foreach (GridViewRow dgItem in gvUsers.Rows) {
 				hdnUserName = (HiddenField)dgItem.FindControl("hdnUserName");
 
-				if (!string.IsNullOrEmpty(hdnUserName.Value)) {
+				if (!String.IsNullOrEmpty(hdnUserName.Value)) {
 					chkSelected = (CheckBox)dgItem.FindControl("chkSelected");
 					if (chkSelected.Checked) {
 						Roles.RemoveUserFromRole(hdnUserName.Value, currentRoleName);

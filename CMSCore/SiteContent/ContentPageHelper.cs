@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
 using Carrotware.CMS.Data;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -252,7 +253,7 @@ namespace Carrotware.CMS.Core {
 		public static string ScrubFilename(Guid rootContentID, string FileName) {
 			string newFileName = FileName;
 
-			if (string.IsNullOrEmpty(newFileName)) {
+			if (String.IsNullOrEmpty(newFileName)) {
 				newFileName = rootContentID.ToString();
 			}
 			newFileName = newFileName.Replace(@"\", @"/");
@@ -433,7 +434,7 @@ namespace Carrotware.CMS.Core {
 			string sortDir = "";
 			IQueryable<vw_carrot_Content> query1 = null;
 
-			if (!string.IsNullOrEmpty(sSortParm)) {
+			if (!String.IsNullOrEmpty(sSortParm)) {
 				int pos = sSortParm.LastIndexOf(" ");
 				sortField = sSortParm.Substring(0, pos).Trim();
 				sortDir = sSortParm.Substring(pos).Trim();
@@ -601,11 +602,11 @@ namespace Carrotware.CMS.Core {
 				pageNumber = 0;
 			}
 
-			if (string.IsNullOrEmpty(sortField)) {
+			if (String.IsNullOrEmpty(sortField)) {
 				sortField = "CreateDate";
 			}
 
-			if (string.IsNullOrEmpty(sortDir)) {
+			if (String.IsNullOrEmpty(sortDir)) {
 				sortDir = "DESC";
 			}
 
@@ -617,7 +618,7 @@ namespace Carrotware.CMS.Core {
 						 where p.ToLower().Trim() == sortField.ToLower().Trim()
 						 select p).FirstOrDefault();
 
-			if (!string.IsNullOrEmpty(sortField)) {
+			if (!String.IsNullOrEmpty(sortField)) {
 				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_Content), sortField);
 			}
 

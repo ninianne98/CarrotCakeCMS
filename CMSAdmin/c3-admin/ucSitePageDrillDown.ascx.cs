@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		public Guid? SelectedPage {
 			get {
-				if (!string.IsNullOrEmpty(txtParent.Text)) {
+				if (!String.IsNullOrEmpty(txtParent.Text)) {
 					_selectedPage = new Guid(txtParent.Text);
 				} else {
 					_selectedPage = null;

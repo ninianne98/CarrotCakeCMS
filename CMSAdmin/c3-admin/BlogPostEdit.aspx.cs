@@ -102,7 +102,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.ContentCategories = lstCat;
 				pageContents.ContentTags = lstTag;
 
-				if (string.IsNullOrEmpty(hdnCreditUserID.Value)) {
+				if (String.IsNullOrEmpty(hdnCreditUserID.Value)) {
 					pageContents.CreditUserId = null;
 				} else {
 					var usr = new ExtendedUserData(hdnCreditUserID.Value);

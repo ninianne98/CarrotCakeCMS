@@ -48,7 +48,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			List<EditHistory> lstHistory = null;
 
 			DateTime? dtFilter = null;
-			if (!string.IsNullOrEmpty(txtDate.Text)) {
+			if (!String.IsNullOrEmpty(txtDate.Text)) {
 				dtFilter = Convert.ToDateTime(txtDate.Text);
 			}
 

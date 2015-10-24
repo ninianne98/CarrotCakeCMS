@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS

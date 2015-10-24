@@ -33,7 +33,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 			string sTest = "";
-			if (!string.IsNullOrEmpty(sXML) && sXML.Length > 500) {
+			if (!String.IsNullOrEmpty(sXML) && sXML.Length > 500) {
 				sTest = sXML.Substring(0, 250).ToLower();
 
 				try {

@@ -59,13 +59,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				btnReturnFile.Visible = true;
 			}
 
-			if (!string.IsNullOrEmpty(sQueryPath)) {
+			if (!String.IsNullOrEmpty(sQueryPath)) {
 				if (sQueryPath.Length == 1) {
 					sQueryPath = string.Empty;
 				}
 			}
 
-			if (string.IsNullOrEmpty(sQueryPath)) {
+			if (String.IsNullOrEmpty(sQueryPath)) {
 				sQueryPath = "/";
 				lnkUp.Visible = false;
 			} else {

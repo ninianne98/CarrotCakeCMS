@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Carrotware.CMS.Data;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -186,17 +187,17 @@ namespace Carrotware.CMS.Core {
 			string sortField = "";
 			string sortDir = "";
 
-			if (!string.IsNullOrEmpty(SortBy)) {
+			if (!String.IsNullOrEmpty(SortBy)) {
 				int pos = SortBy.LastIndexOf(" ");
 				sortField = SortBy.Substring(0, pos).Trim();
 				sortDir = SortBy.Substring(pos).Trim();
 			}
 
-			if (string.IsNullOrEmpty(sortField)) {
+			if (String.IsNullOrEmpty(sortField)) {
 				sortField = "CreateDate";
 			}
 
-			if (string.IsNullOrEmpty(sortDir)) {
+			if (String.IsNullOrEmpty(sortDir)) {
 				sortDir = "DESC";
 			}
 

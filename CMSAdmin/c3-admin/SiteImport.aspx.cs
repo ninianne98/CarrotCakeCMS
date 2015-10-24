@@ -126,7 +126,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void SetMsg(string sMessage) {
-			if (!string.IsNullOrEmpty(sMessage)) {
+			if (!String.IsNullOrEmpty(sMessage)) {
 				litMessage.Text = sMessage;
 			}
 		}
@@ -242,7 +242,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					if (seu.ImportUserID != Guid.Empty) {
 						ExtendedUserData ud = new ExtendedUserData(seu.ImportUserID);
-						if (!string.IsNullOrEmpty(seu.FirstName) || !string.IsNullOrEmpty(seu.LastName)) {
+						if (!String.IsNullOrEmpty(seu.FirstName) || !String.IsNullOrEmpty(seu.LastName)) {
 							ud.FirstName = seu.FirstName;
 							ud.LastName = seu.LastName;
 							ud.Save();

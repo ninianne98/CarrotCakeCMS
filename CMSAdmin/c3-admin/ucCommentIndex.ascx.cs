@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public string LinkingPage { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!string.IsNullOrEmpty(Request.QueryString["type"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["type"])) {
 				pageType = ContentPageType.GetTypeByName(Request.QueryString["type"].ToString());
 			}
 

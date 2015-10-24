@@ -45,8 +45,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void SetMsgVisible() {
-			divErrMsg.Visible = !string.IsNullOrEmpty(FailureText.Text);
-			divInfoMsg.Visible = !string.IsNullOrEmpty(InfoMessage.Text);
+			divErrMsg.Visible = !String.IsNullOrEmpty(FailureText.Text);
+			divInfoMsg.Visible = !String.IsNullOrEmpty(InfoMessage.Text);
 		}
 
 		protected void cmdCancel_Click(object sender, EventArgs e) {

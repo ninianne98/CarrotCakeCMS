@@ -79,7 +79,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.ShowInSiteMap = chkSiteMap.Checked;
 				pageContents.BlockIndex = chkHide.Checked;
 
-				if (string.IsNullOrEmpty(hdnCreditUserID.Value)) {
+				if (String.IsNullOrEmpty(hdnCreditUserID.Value)) {
 					pageContents.CreditUserId = null;
 				} else {
 					var usr = new ExtendedUserData(hdnCreditUserID.Value);

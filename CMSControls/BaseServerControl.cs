@@ -110,8 +110,12 @@ namespace Carrotware.CMS.UI.Controls {
 			if (cp != null) {
 				pageNav = new SiteNav();
 				pageNav.Root_ContentID = cp.Root_ContentID;
+				pageNav.NavMenuText = cp.NavMenuText;
 				pageNav.FileName = cp.FileName;
 				pageNav.TemplateFile = cp.TemplateFile;
+				pageNav.ContentType = cp.ContentType;
+
+				pageNav = cp.GetSiteNav();
 			} else {
 				pageNav = navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
 				//assign bogus page name for comp purposes

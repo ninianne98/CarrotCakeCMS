@@ -71,24 +71,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				List<ObjectProperty> props_tmp = new List<ObjectProperty>();
 
 				if (widget is BaseUserControl) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(BaseUserControl));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(BaseUserControl));
 					props = props.Union(props_tmp).ToList();
 				}
 
 				if (widget is BaseShellUserControl) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(BaseShellUserControl));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(BaseShellUserControl));
 					props = props.Union(props_tmp).ToList();
 				}
 
 				if (widget is UserControl) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(UserControl));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(UserControl));
 					props = props.Union(props_tmp).ToList();
 				}
 
 				if (widget is IAdminModule) {
 					var w1 = (IAdminModule)widget;
 					w1.SiteID = SiteData.CurrentSiteID;
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IAdminModule));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(IAdminModule));
 					props = props.Union(props_tmp).ToList();
 				}
 
@@ -97,28 +97,28 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					w1.SiteID = SiteData.CurrentSiteID;
 					w1.PageWidgetID = w.Root_WidgetID;
 					w1.RootContentID = w.Root_ContentID;
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidget));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(IWidget));
 					props = props.Union(props_tmp).ToList();
 				}
 
 				if (widget is IWidgetEditStatus) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidgetEditStatus));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(IWidgetEditStatus));
 					props = props.Union(props_tmp).ToList();
 				}
 
 				if (widget is IWidgetParmData) {
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidgetParmData));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(IWidgetParmData));
 					props = props.Union(props_tmp).ToList();
 				}
 
 				if (widget is IWidgetRawData) {
 					var w1 = (IWidgetRawData)widget;
 					w1.RawWidgetData = w.ControlProperties;
-					props_tmp = ReflectionUtilities.GetTypeProperties(typeof(IWidgetRawData));
+					props_tmp = ObjectProperty.GetTypeProperties(typeof(IWidgetRawData));
 					props = props.Union(props_tmp).ToList();
 				}
 
-				lstDefProps = ReflectionUtilities.GetObjectProperties(widget);
+				lstDefProps = ObjectProperty.GetObjectProperties(widget);
 
 				List<string> limitedPropertyList = new List<string>();
 				if (widget is IWidgetLimitedProperties) {
@@ -189,10 +189,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				string sListSourcePropertyName = (from p in lstDefProps
 												  where p.Name.ToLower() == sName.ToLower()
-														&& !string.IsNullOrEmpty(p.CompanionSourceFieldName)
+														&& !String.IsNullOrEmpty(p.CompanionSourceFieldName)
 												  select p.CompanionSourceFieldName).FirstOrDefault();
 
-				if (string.IsNullOrEmpty(sListSourcePropertyName)) {
+				if (String.IsNullOrEmpty(sListSourcePropertyName)) {
 					sListSourcePropertyName = String.Empty;
 				}
 
@@ -219,7 +219,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 							GeneralUtilities.BindListDefaultText(ddlValue, ListSourceProperty.DefValue, null, "Select Value", "");
 
-							if (!string.IsNullOrEmpty(txtValue.Text)) {
+							if (!String.IsNullOrEmpty(txtValue.Text)) {
 								try {
 									GeneralUtilities.SelectListValue(ddlValue, txtValue.Text);
 								} catch { }

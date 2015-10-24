@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			ModuleID = AdminModuleQueryStringRoutines.GetModuleID();
 			pf = AdminModuleQueryStringRoutines.GetPluginFile();
 
-			if (!string.IsNullOrEmpty(pf)) {
+			if (!String.IsNullOrEmpty(pf)) {
 				ModuleFamily = (from m in cmsHelper.AdminModules
 								where m.PluginID == ModuleID
 								select m).FirstOrDefault();

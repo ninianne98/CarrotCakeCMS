@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -16,7 +15,7 @@ using Carrotware.CMS.Interface;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.Core {
+namespace Carrotware.Web.UI.Controls {
 
 	public static class ReflectionUtilities {
 
@@ -103,52 +102,6 @@ namespace Carrotware.CMS.Core {
 								 orderby i.Name
 								 select i).FirstOrDefault();
 			return prop;
-		}
-
-		public static List<ObjectProperty> GetObjectProperties(Object obj) {
-			List<ObjectProperty> props = (from i in GetProperties(obj)
-										  select GetCustProps(obj, i)).ToList();
-			return props;
-		}
-
-		public static List<ObjectProperty> GetTypeProperties(Type theType) {
-			List<ObjectProperty> props = (from i in GetProperties(theType)
-										  select new ObjectProperty {
-											  Name = i.Name,
-											  PropertyType = i.PropertyType,
-											  CanRead = i.CanRead,
-											  CanWrite = i.CanWrite
-										  }).ToList();
-			return props;
-		}
-
-		public static ObjectProperty GetCustProps(Object obj, PropertyInfo prop) {
-			ObjectProperty objprop = new ObjectProperty {
-				Name = prop.Name,
-				DefValue = obj.GetType().GetProperty(prop.Name).GetValue(obj, null),
-				PropertyType = prop.PropertyType,
-				CanRead = prop.CanRead,
-				CanWrite = prop.CanWrite,
-				Props = prop,
-				CompanionSourceFieldName = String.Empty,
-				FieldMode = (prop.PropertyType == typeof(bool)) ?
-						WidgetAttribute.FieldMode.CheckBox : WidgetAttribute.FieldMode.TextBox
-			};
-			try {
-				foreach (Attribute attr in objprop.Props.GetCustomAttributes(true)) {
-					if (attr is WidgetAttribute) {
-						var widgetAttrib = attr as WidgetAttribute;
-						if (null != widgetAttrib) {
-							try { objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource; } catch { objprop.CompanionSourceFieldName = ""; }
-							try { objprop.FieldMode = widgetAttrib.Mode; } catch { objprop.FieldMode = WidgetAttribute.FieldMode.Unknown; }
-						}
-					}
-				}
-			} catch (Exception ex) { }
-
-			objprop.FieldDescription = GetDescriptionAttribute(obj.GetType(), objprop.Name);
-
-			return objprop;
 		}
 
 		public static string GetDescriptionAttribute(Type type, string fieldName) {

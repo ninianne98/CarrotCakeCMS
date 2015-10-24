@@ -65,6 +65,16 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		[ConfigurationProperty("PublicSite")]
+		public PublicSiteElement PublicSiteControls {
+			get {
+				return (PublicSiteElement)this["PublicSite"];
+			}
+			set {
+				this["PublicSite"] = value;
+			}
+		}
+
 		[ConfigurationProperty("OverrideConfigFile")]
 		public ConfigFileElement ConfigFileLocation {
 			get {
@@ -200,6 +210,22 @@ namespace Carrotware.CMS.Core {
 		public String ControlPathPublic {
 			get { return (String)this["ControlPathPublic"]; }
 			set { this["ControlPathPublic"] = value; }
+		}
+	}
+
+	//==============================
+	public class PublicSiteElement : ConfigurationElement {
+
+		[ConfigurationProperty("ControlPathHeader", DefaultValue = null, IsRequired = false)]
+		public String ControlPathHeader {
+			get { return (String)this["ControlPathHeader"]; }
+			set { this["ControlPathHeader"] = value; }
+		}
+
+		[ConfigurationProperty("ControlPathFooter", DefaultValue = null, IsRequired = false)]
+		public String ControlPathFooter {
+			get { return (String)this["ControlPathFooter"]; }
+			set { this["ControlPathFooter"] = value; }
 		}
 	}
 }

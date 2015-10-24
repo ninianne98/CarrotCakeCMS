@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
-using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -18,8 +15,8 @@ using Carrotware.Web.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
-	public partial class MainPopup : AdminBaseMasterPage {
 
+	public partial class MainPopup : AdminBaseMasterPage {
 		public bool ShowSaved { get; set; }
 		public bool UsesSaved { get; set; }
 
@@ -30,12 +27,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				pnlDirty.Visible = true;
 			}
 
-
 			if (!this.UsesSaved) {
 				HideSave();
 			} else {
-
-				if (this.ShowSaved || !string.IsNullOrEmpty(Request.QueryString["showsaved"])) {
+				if (this.ShowSaved || !String.IsNullOrEmpty(Request.QueryString["showsaved"])) {
 					this.ShowSaved = true;
 					ShowSave();
 				}
@@ -46,7 +41,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 		public string SavedSuffix {
 			get {
-
 				return "&showsaved=true";
 			}
 		}
@@ -60,12 +54,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			hdnShow.Value = "SHOW";
 		}
 
-
 		public void HideSave() {
 			this.ShowSaved = false;
 			hdnShow.Value = String.Empty;
 		}
-
 
 		// so that it is easy to toggle master pages
 		public void ActivateTab(SectionID sectionID) {
@@ -92,6 +84,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 			ScriptManager1.AsyncPostBackErrorMessage = sError;
 		}
-
 	}
 }

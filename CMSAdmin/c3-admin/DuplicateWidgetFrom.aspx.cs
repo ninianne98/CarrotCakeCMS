@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			GeneralUtilities.BindDataBoundControl(gvWidgets, null);
 
-			if (!string.IsNullOrEmpty(gvPages.DefaultSort)) {
+			if (!String.IsNullOrEmpty(gvPages.DefaultSort)) {
 				int pos = gvPages.DefaultSort.LastIndexOf(" ");
 				sSortFld = gvPages.DefaultSort.Substring(0, pos).Trim();
 				sSortDir = gvPages.DefaultSort.Substring(pos).Trim();
@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			bool bLimit = chkActive.Checked;
 
 			using (SiteNavHelper navHelper = new SiteNavHelper()) {
-				if (!string.IsNullOrEmpty(sSearchTerm)) {
+				if (!String.IsNullOrEmpty(sSearchTerm)) {
 					iTotal = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, bLimit);
 					lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, bLimit, iTake, 0, sSortFld, sSortDir);
 				}

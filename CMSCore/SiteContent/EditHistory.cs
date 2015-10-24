@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Carrotware.CMS.Data;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -107,18 +108,18 @@ namespace Carrotware.CMS.Core {
 			string sortField = string.Empty;
 			string sortDir = string.Empty;
 
-			if (!string.IsNullOrEmpty(orderBy)) {
+			if (!String.IsNullOrEmpty(orderBy)) {
 				int pos = orderBy.LastIndexOf(" ");
 
 				sortField = orderBy.Substring(0, pos).Trim();
 				sortDir = orderBy.Substring(pos).Trim();
 			}
 
-			if (string.IsNullOrEmpty(sortField)) {
+			if (String.IsNullOrEmpty(sortField)) {
 				sortField = "EditDate";
 			}
 
-			if (string.IsNullOrEmpty(sortDir)) {
+			if (String.IsNullOrEmpty(sortDir)) {
 				sortDir = "DESC";
 			}
 
@@ -153,7 +154,7 @@ namespace Carrotware.CMS.Core {
 						 where p.ToLower().Trim() == sortField.ToLower().Trim()
 						 select p).FirstOrDefault();
 
-			if (!string.IsNullOrEmpty(sortField)) {
+			if (!String.IsNullOrEmpty(sortField)) {
 				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_EditHistory), sortField);
 			}
 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -55,7 +56,7 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void LoadFooterCtrl(PlaceHolder plcHolder, ControlLocation CtrlKey) {
-			string sControlPath = "";
+			string sControlPath = String.Empty;
 			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 
 			switch (CtrlKey) {
@@ -72,7 +73,7 @@ namespace Carrotware.CMS.UI.Admin {
 					break;
 			}
 
-			if (!string.IsNullOrEmpty(sControlPath)) {
+			if (!String.IsNullOrEmpty(sControlPath)) {
 				if (File.Exists(Server.MapPath(sControlPath))) {
 					Control ctrl = new Control();
 					ctrl = Page.LoadControl(sControlPath);

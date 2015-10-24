@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -14,7 +17,7 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.Core {
 
-	public class ObjectProperty {
+	public partial class ObjectProperty {
 
 		public ObjectProperty() { }
 
@@ -46,6 +49,54 @@ namespace Carrotware.CMS.Core {
 
 		public override int GetHashCode() {
 			return Name.GetHashCode() ^ PropertyType.ToString().GetHashCode();
+		}
+
+		//==========================
+
+		public static List<ObjectProperty> GetObjectProperties(Object obj) {
+			List<ObjectProperty> props = (from i in ReflectionUtilities.GetProperties(obj)
+										  select GetCustProps(obj, i)).ToList();
+			return props;
+		}
+
+		public static List<ObjectProperty> GetTypeProperties(Type theType) {
+			List<ObjectProperty> props = (from i in ReflectionUtilities.GetProperties(theType)
+										  select new ObjectProperty {
+											  Name = i.Name,
+											  PropertyType = i.PropertyType,
+											  CanRead = i.CanRead,
+											  CanWrite = i.CanWrite
+										  }).ToList();
+			return props;
+		}
+
+		public static ObjectProperty GetCustProps(Object obj, PropertyInfo prop) {
+			ObjectProperty objprop = new ObjectProperty {
+				Name = prop.Name,
+				DefValue = obj.GetType().GetProperty(prop.Name).GetValue(obj, null),
+				PropertyType = prop.PropertyType,
+				CanRead = prop.CanRead,
+				CanWrite = prop.CanWrite,
+				Props = prop,
+				CompanionSourceFieldName = String.Empty,
+				FieldMode = (prop.PropertyType == typeof(bool)) ?
+						WidgetAttribute.FieldMode.CheckBox : WidgetAttribute.FieldMode.TextBox
+			};
+			try {
+				foreach (Attribute attr in objprop.Props.GetCustomAttributes(true)) {
+					if (attr is WidgetAttribute) {
+						var widgetAttrib = attr as WidgetAttribute;
+						if (null != widgetAttrib) {
+							try { objprop.CompanionSourceFieldName = widgetAttrib.SelectFieldSource; } catch { objprop.CompanionSourceFieldName = ""; }
+							try { objprop.FieldMode = widgetAttrib.Mode; } catch { objprop.FieldMode = WidgetAttribute.FieldMode.Unknown; }
+						}
+					}
+				}
+			} catch (Exception ex) { }
+
+			objprop.FieldDescription = ReflectionUtilities.GetDescriptionAttribute(obj.GetType(), objprop.Name);
+
+			return objprop;
 		}
 	}
 }

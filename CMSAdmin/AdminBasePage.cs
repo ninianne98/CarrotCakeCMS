@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		public void SetBlankText(ITextControl textControl) {
-			if (string.IsNullOrEmpty(textControl.Text)) {
+			if (String.IsNullOrEmpty(textControl.Text)) {
 				textControl.Text = ContentPage.PageContentEmpty;
 			}
 		}

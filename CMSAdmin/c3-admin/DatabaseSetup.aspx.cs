@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
 
-			if (!string.IsNullOrEmpty(Request.QueryString["signout"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["signout"])) {
 				FormsAuthentication.SignOut();
 			}
 
@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				du.HandleResponse(lst, DatabaseUpdate.LastSQLError);
 			}
 
-			if (lst.Where(x => !string.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {
+			if (lst.Where(x => !String.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {
 				bOK = false;
 			} else {
 				bOK = true;

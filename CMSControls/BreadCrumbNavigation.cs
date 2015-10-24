@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using System.Collections.Generic;
-
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
@@ -101,21 +98,22 @@ namespace Carrotware.CMS.UI.Controls {
 				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentSite.Blog_Root_ContentID.Value, !SecurityData.IsAuthEditor);
 
 				if (lstNav != null && lstNav.Any()) {
-					pageNav.NavOrder = lstNav.Count + 10;
+					pageNav.NavOrder = lstNav.Max(x => x.NavOrder) + 100;
 					lstNav.Add(pageNav);
 				}
 			} else {
 				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
 			}
 			lstNav.RemoveAll(x => x.ShowInSiteNav == false && x.ContentType == ContentPageType.PageType.ContentEntry);
+			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
-			string sCSS = "";
+			string sCSS = String.Empty;
 			if (!String.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 			string sSelCSS = (CSSSelected + " " + CSSWrapper).Trim();
 
-			string sWrapCSS = "";
+			string sWrapCSS = String.Empty;
 			if (!String.IsNullOrEmpty(CSSWrapper)) {
 				sWrapCSS = " class=\"" + CSSWrapper + "\" ";
 			}
@@ -123,7 +121,6 @@ namespace Carrotware.CMS.UI.Controls {
 			if (DisplayAsList) {
 				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (SiteNav c in lstNav) {
-					IdentifyLinkAsInactive(c);
 					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
 						output.WriteLine("<li class=\"" + sSelCSS + "\">" + c.NavMenuText + "</li> ");
 					} else {
@@ -137,7 +134,6 @@ namespace Carrotware.CMS.UI.Controls {
 				int iMax = lstNav.Count;
 				output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\">");
 				foreach (SiteNav c in lstNav) {
-					IdentifyLinkAsInactive(c);
 					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
 						output.WriteLine("<span class=\"" + sSelCSS + "\">" + c.NavMenuText + " " + sDivider + "</span> ");
 					} else {
@@ -146,7 +142,7 @@ namespace Carrotware.CMS.UI.Controls {
 					iCtr++;
 
 					if (iCtr == iMax) {
-						sDivider = "";
+						sDivider = String.Empty;
 					}
 				}
 				output.WriteLine("</div>");

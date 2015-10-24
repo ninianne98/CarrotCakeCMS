@@ -30,14 +30,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSkinEdit);
 
-			if (!string.IsNullOrEmpty(Request.QueryString["path"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["path"])) {
 				sTemplateFileQS = Request.QueryString["path"].ToString();
 				sTemplateFile = CMSConfigHelper.DecodeBase64(sTemplateFileQS);
 				sFullFilePath = HttpContext.Current.Server.MapPath(sTemplateFile);
 				sEditFile = sFullFilePath;
 			}
 
-			if (!string.IsNullOrEmpty(Request.QueryString["alt"])) {
+			if (!String.IsNullOrEmpty(Request.QueryString["alt"])) {
 				string sAltFileQS = Request.QueryString["alt"].ToString();
 				string sAltFile = CMSConfigHelper.DecodeBase64(sAltFileQS);
 				sEditFile = HttpContext.Current.Server.MapPath(sAltFile);

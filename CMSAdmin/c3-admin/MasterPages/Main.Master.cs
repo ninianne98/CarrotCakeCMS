@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Base;
-using Carrotware.Web.UI.Controls;
+
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
@@ -20,12 +16,11 @@ using Carrotware.Web.UI.Controls;
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
-	public partial class Main : AdminBaseMasterPage {
 
+	public partial class Main : AdminBaseMasterPage {
 		public string userName = String.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!Page.User.Identity.IsAuthenticated) {
 				FormsAuthentication.SignOut();
 				Response.Redirect(SiteFilename.LogonURL);
@@ -48,7 +43,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				litSiteIdent.Text = SiteData.CurrentSite.SiteName;
 				litTag.Text = SiteData.CurrentSite.SiteTagline;
 
-				if (!string.IsNullOrEmpty(SiteData.CurrentSite.SiteName) && !string.IsNullOrEmpty(SiteData.CurrentSite.SiteTagline)) {
+				if (!String.IsNullOrEmpty(SiteData.CurrentSite.SiteName) && !String.IsNullOrEmpty(SiteData.CurrentSite.SiteTagline)) {
 					litSiteIdent.Text = SiteData.CurrentSite.SiteName.Trim() + ":   ";
 				}
 			} else {
@@ -66,7 +61,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		}
 
 		public void HideWhenNoSiteProfileExists() {
-
 			bool bShowTop = SiteData.CurretSiteExists;
 
 			tabContentTop.Visible = bShowTop;
@@ -85,47 +79,51 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			tabHistory.Visible = bShowTop;
 		}
 
-
 		protected void btnLogout_Click(object sender, EventArgs e) {
 			FormsAuthentication.SignOut();
 			Response.Redirect(SiteFilename.LogonURL);
 		}
-
 
 		public void ActivateTab(SectionID sectionID) {
 			string sCSSTop = "current sub";
 			string sCSSSecondary = "current";
 
 			switch (sectionID) {
-
 				case SectionID.SiteDashboard:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					//tabDashboard.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.SiteInfo:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabMain.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.ContentHistory:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabHistory.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.SiteTemplate:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabMainTemplate.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.ContentSkinEdit:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabContentSkin.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.DataImport:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabImportContent.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.SiteExport:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabExportSite.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.StatusChange:
 					tabMainTop.Attributes["class"] = sCSSTop;
 					tabStatusChange.Attributes["class"] = sCSSSecondary;
@@ -135,14 +133,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					tabContentTop.Attributes["class"] = sCSSTop;
 					tabContent.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.ContentTemplate:
 					tabContentTop.Attributes["class"] = sCSSTop;
 					tabContentTemplate.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.PageComment:
 					tabContentTop.Attributes["class"] = sCSSTop;
 					tabContentCommentIndex.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.ContentSiteMap:
 					tabContentTop.Attributes["class"] = sCSSTop;
 					tabContentSiteMap.Attributes["class"] = sCSSSecondary;
@@ -152,10 +153,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					tabExtensions.Attributes["class"] = sCSSTop;
 					tabModules.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.TextWidget:
 					tabExtensions.Attributes["class"] = sCSSTop;
 					tabTxtWidgets.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.ContentSnippet:
 					tabExtensions.Attributes["class"] = sCSSTop;
 					tabSnippets.Attributes["class"] = sCSSSecondary;
@@ -165,10 +168,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					tabUserSecurity.Attributes["class"] = sCSSTop;
 					tabUserAdmin.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.GroupAdmin:
 					tabUserSecurity.Attributes["class"] = sCSSTop;
 					tabGroupAdmin.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.SiteIndex:
 					tabUserSecurity.Attributes["class"] = sCSSTop;
 					tabSites.Attributes["class"] = sCSSSecondary;
@@ -178,28 +183,32 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					tabBlogTop.Attributes["class"] = sCSSTop;
 					tabBlogContent.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.BlogIndex:
 					tabBlogTop.Attributes["class"] = sCSSTop;
 					tabBlogContent.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.BlogCategory:
 					tabBlogTop.Attributes["class"] = sCSSTop;
 					tabBlogCategoryIndex.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.BlogTag:
 					tabBlogTop.Attributes["class"] = sCSSTop;
 					tabBlogTagIndex.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.BlogTemplate:
 					tabBlogTop.Attributes["class"] = sCSSTop;
 					tabBlogTemplate.Attributes["class"] = sCSSSecondary;
 					break;
+
 				case SectionID.BlogComment:
 					tabBlogTop.Attributes["class"] = sCSSTop;
 					tabBlogCommentIndex.Attributes["class"] = sCSSSecondary;
 					break;
 			}
-
 		}
 
 		protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e) {
@@ -223,6 +232,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 			ScriptManager1.AsyncPostBackErrorMessage = sError;
 		}
-
 	}
 }

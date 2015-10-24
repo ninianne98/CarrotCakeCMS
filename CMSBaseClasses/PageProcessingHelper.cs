@@ -68,6 +68,34 @@ namespace Carrotware.CMS.UI.Base {
 			}
 		}
 
+		protected enum ControlLocation {
+			Footer,
+			Header,
+		}
+
+		protected void InsertSpecialCtrl(Control control, ControlLocation CtrlKey) {
+			string sControlPath = String.Empty;
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+
+			switch (CtrlKey) {
+				case ControlLocation.Header:
+					sControlPath = config.PublicSiteControls.ControlPathHeader;
+					break;
+
+				case ControlLocation.Footer:
+					sControlPath = config.PublicSiteControls.ControlPathFooter;
+					break;
+			}
+
+			if (!String.IsNullOrEmpty(sControlPath)) {
+				if (File.Exists(HttpContext.Current.Server.MapPath(sControlPath))) {
+					Control ctrl = new Control();
+					ctrl = CurrentWebPage.LoadControl(sControlPath);
+					control.Controls.Add(ctrl);
+				}
+			}
+		}
+
 		public void AssignContentZones(ContentContainer pageArea, ContentContainer pageSource) {
 			pageArea.IsAdminMode = pageSource.IsAdminMode;
 
@@ -128,6 +156,8 @@ namespace Carrotware.CMS.UI.Base {
 				}
 			}
 
+			InsertSpecialCtrl(this.CurrentWebPage.Header, ControlLocation.Header);
+
 			if (pageContents != null) {
 				HtmlMeta metaDesc = new HtmlMeta();
 				HtmlMeta metaKey = new HtmlMeta();
@@ -145,32 +175,32 @@ namespace Carrotware.CMS.UI.Base {
 
 				metaDesc.Name = "description";
 				metaKey.Name = "keywords";
-				metaDesc.Content = string.IsNullOrEmpty(pageContents.MetaDescription) ? theSite.MetaDescription : pageContents.MetaDescription;
-				metaKey.Content = string.IsNullOrEmpty(pageContents.MetaKeyword) ? theSite.MetaKeyword : pageContents.MetaKeyword;
+				metaDesc.Content = String.IsNullOrEmpty(pageContents.MetaDescription) ? theSite.MetaDescription : pageContents.MetaDescription;
+				metaKey.Content = String.IsNullOrEmpty(pageContents.MetaKeyword) ? theSite.MetaKeyword : pageContents.MetaKeyword;
 
 				int indexPos = 6;
 				if (this.CurrentWebPage.Header.Controls.Count > indexPos) {
-					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
+					if (!String.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, metaDesc);
 					}
-					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
+					if (!String.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, metaKey);
 					}
 				} else {
-					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
+					if (!String.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
 						this.CurrentWebPage.Header.Controls.Add(metaDesc);
 						this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 					}
-					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
+					if (!String.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
 						this.CurrentWebPage.Header.Controls.Add(metaKey);
 						this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 					}
 				}
 
-				metaDesc.Visible = !string.IsNullOrEmpty(metaDesc.Content);
-				metaKey.Visible = !string.IsNullOrEmpty(metaKey.Content);
+				metaDesc.Visible = !String.IsNullOrEmpty(metaDesc.Content);
+				metaKey.Visible = !String.IsNullOrEmpty(metaKey.Content);
 			}
 
 			contCenter = new ContentContainer();
@@ -182,8 +212,8 @@ namespace Carrotware.CMS.UI.Base {
 					PageViewType pvt = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
 					string sTitleAddendum = pvt.ExtraTitle;
 
-					if (!string.IsNullOrEmpty(sTitleAddendum)) {
-						if (!string.IsNullOrEmpty(pageContents.PageHead)) {
+					if (!String.IsNullOrEmpty(sTitleAddendum)) {
+						if (!String.IsNullOrEmpty(pageContents.PageHead)) {
 							pageContents.PageHead = pageContents.PageHead.Trim() + ": " + sTitleAddendum;
 						} else {
 							pageContents.PageHead = sTitleAddendum;
@@ -203,12 +233,12 @@ namespace Carrotware.CMS.UI.Base {
 							titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == PageViewType.ViewType.DateIndex).FirstOrDefault();
 						}
 
-						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.FormatText)) {
+						if (titleOpts != null && !String.IsNullOrEmpty(titleOpts.FormatText)) {
 							pvt.ExtraTitle = string.Format(titleOpts.FormatText, pvt.RawValue);
 							sTitleAddendum = pvt.ExtraTitle;
 						}
 
-						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.LabelText)) {
+						if (titleOpts != null && !String.IsNullOrEmpty(titleOpts.LabelText)) {
 							pageContents.PageHead = titleOpts.LabelText + " " + sTitleAddendum;
 							pageContents.NavMenuText = pageContents.PageHead;
 							pageContents.TitleBar = pageContents.PageHead;
@@ -273,6 +303,8 @@ namespace Carrotware.CMS.UI.Base {
 				} else {
 					HttpContext.Current.Response.Cache.SetExpires(dtExpire);
 				}
+
+				InsertSpecialCtrl(this.CurrentWebPage.Form, ControlLocation.Footer);
 
 				if (pageWidgets.Any()) {
 					CMSConfigHelper cmsHelper = new CMSConfigHelper();
@@ -400,7 +432,7 @@ namespace Carrotware.CMS.UI.Base {
 									if (w.EnableEdit) {
 										if (lstMenus.Count < 1) {
 											string sScript = w.JSEditFunction;
-											if (string.IsNullOrEmpty(sScript)) {
+											if (String.IsNullOrEmpty(sScript)) {
 												sScript = "cmsGenericEdit('" + pageContents.Root_ContentID + "','" + plcWrapper.DatabaseKey + "')";
 											}
 
@@ -424,7 +456,7 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		public string SetPageTitle(ContentPage pageData) {
-			string sPrefix = "";
+			string sPrefix = String.Empty;
 
 			if (!pageData.PageActive) {
 				sPrefix = "* UNPUBLISHED * ";

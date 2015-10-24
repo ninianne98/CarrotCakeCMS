@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Carrotware.CMS.Data;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -666,11 +667,11 @@ namespace Carrotware.CMS.Core {
 				pageNumber = 0;
 			}
 
-			if (string.IsNullOrEmpty(sortField)) {
+			if (String.IsNullOrEmpty(sortField)) {
 				sortField = "CreateDate";
 			}
 
-			if (string.IsNullOrEmpty(sortDir)) {
+			if (String.IsNullOrEmpty(sortDir)) {
 				sortDir = "DESC";
 			}
 
@@ -682,7 +683,7 @@ namespace Carrotware.CMS.Core {
 						 where p.ToLower().Trim() == sortField.ToLower().Trim()
 						 select p).FirstOrDefault();
 
-			if (!string.IsNullOrEmpty(sortField)) {
+			if (!String.IsNullOrEmpty(sortField)) {
 				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_Content), sortField);
 			}
 
