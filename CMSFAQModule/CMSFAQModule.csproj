@@ -74,14 +74,12 @@
     </Compile>
     <Compile Include="FAQAdmin.ascx.cs">
       <DependentUpon>FAQAdmin.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FAQAdmin.ascx.designer.cs">
       <DependentUpon>FAQAdmin.ascx</DependentUpon>
     </Compile>
     <Compile Include="FAQAdminAddEdit.ascx.cs">
       <DependentUpon>FAQAdminAddEdit.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FAQAdminAddEdit.ascx.designer.cs">
       <DependentUpon>FAQAdminAddEdit.ascx</DependentUpon>

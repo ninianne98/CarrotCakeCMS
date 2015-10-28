@@ -162,28 +162,24 @@
     <Compile Include="GalleryObjects\GalleryMetaData.cs" />
     <Compile Include="PhotoGalleryAdminExport.ascx.cs">
       <DependentUpon>PhotoGalleryAdminExport.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryAdminExport.ascx.designer.cs">
       <DependentUpon>PhotoGalleryAdminExport.ascx</DependentUpon>
     </Compile>
     <Compile Include="PhotoGalleryAdminImport.ascx.cs">
       <DependentUpon>PhotoGalleryAdminImport.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryAdminImport.ascx.designer.cs">
       <DependentUpon>PhotoGalleryAdminImport.ascx</DependentUpon>
     </Compile>
     <Compile Include="PhotoGalleryAdminImportWP.ascx.cs">
       <DependentUpon>PhotoGalleryAdminImportWP.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryAdminImportWP.ascx.designer.cs">
       <DependentUpon>PhotoGalleryAdminImportWP.ascx</DependentUpon>
     </Compile>
     <Compile Include="PhotoGalleryDatabase.ascx.cs">
       <DependentUpon>PhotoGalleryDatabase.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryDatabase.ascx.designer.cs">
       <DependentUpon>PhotoGalleryDatabase.ascx</DependentUpon>
@@ -197,7 +193,6 @@
     </Compile>
     <Compile Include="PhotoGalleryAdminMetaData.ascx.cs">
       <DependentUpon>PhotoGalleryAdminMetaData.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryAdminMetaData.ascx.designer.cs">
       <DependentUpon>PhotoGalleryAdminMetaData.ascx</DependentUpon>
@@ -228,14 +223,12 @@
     </Compile>
     <Compile Include="PhotoGalleryAdminCategory.ascx.cs">
       <DependentUpon>PhotoGalleryAdminCategory.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryAdminCategory.ascx.designer.cs">
       <DependentUpon>PhotoGalleryAdminCategory.ascx</DependentUpon>
     </Compile>
     <Compile Include="PhotoGalleryAdminCategoryList.ascx.cs">
       <DependentUpon>PhotoGalleryAdminCategoryList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryAdminCategoryList.ascx.designer.cs">
       <DependentUpon>PhotoGalleryAdminCategoryList.ascx</DependentUpon>
@@ -249,7 +242,6 @@
     </Compile>
     <Compile Include="PhotoGalleryAdmin.ascx.cs">
       <DependentUpon>PhotoGalleryAdmin.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PhotoGalleryAdmin.ascx.designer.cs">
       <DependentUpon>PhotoGalleryAdmin.ascx</DependentUpon>
