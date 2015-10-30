@@ -85,42 +85,49 @@
     </Compile>
     <Compile Include="CalendarAdminCategoryDetail.ascx.cs">
       <DependentUpon>CalendarAdminCategoryDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminCategoryDetail.ascx.designer.cs">
       <DependentUpon>CalendarAdminCategoryDetail.ascx</DependentUpon>
     </Compile>
     <Compile Include="CalendarAdminCategoryList.ascx.cs">
       <DependentUpon>CalendarAdminCategoryList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminCategoryList.ascx.designer.cs">
       <DependentUpon>CalendarAdminCategoryList.ascx</DependentUpon>
     </Compile>
     <Compile Include="CalendarAdminDatabase.ascx.cs">
       <DependentUpon>CalendarAdminDatabase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminDatabase.ascx.designer.cs">
       <DependentUpon>CalendarAdminDatabase.ascx</DependentUpon>
     </Compile>
     <Compile Include="CalendarAdminDetail.ascx.cs">
       <DependentUpon>CalendarAdminDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminDetail.ascx.designer.cs">
       <DependentUpon>CalendarAdminDetail.ascx</DependentUpon>
     </Compile>
     <Compile Include="CalendarAdminDetailSingle.ascx.cs">
       <DependentUpon>CalendarAdminDetailSingle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminDetailSingle.ascx.designer.cs">
       <DependentUpon>CalendarAdminDetailSingle.ascx</DependentUpon>
     </Compile>
     <Compile Include="CalendarAdminList.ascx.cs">
       <DependentUpon>CalendarAdminList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminList.ascx.designer.cs">
       <DependentUpon>CalendarAdminList.ascx</DependentUpon>
     </Compile>
     <Compile Include="CalendarAdminProfileList.ascx.cs">
       <DependentUpon>CalendarAdminProfileList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminProfileList.ascx.designer.cs">
       <DependentUpon>CalendarAdminProfileList.ascx</DependentUpon>

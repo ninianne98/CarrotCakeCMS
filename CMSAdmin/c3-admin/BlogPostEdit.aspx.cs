@@ -33,9 +33,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litPageName.Text = pageContents.FileName;
 
 				if (!IsPostBack) {
-					GeneralUtilities.BindRepeater(rpCat, SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText));
-
-					GeneralUtilities.BindRepeater(rpTag, SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText));
+					GeneralUtilities.BindList(listCats, SiteData.CurrentSite.GetCategoryList().OrderBy(x => x.CategoryText));
+					GeneralUtilities.BindList(listTags, SiteData.CurrentSite.GetTagList().OrderBy(x => x.TagText));
 
 					txtTitle.Text = pageContents.TitleBar;
 					txtNav.Text = pageContents.NavMenuText;
@@ -61,9 +60,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						txtSearchUser.Text = string.Format("{0} ({1})", usr.UserName, usr.EmailAddress);
 					}
 
-					PreselectCheckboxRepeater(rpCat, pageContents.ContentCategories.Cast<IContentMetaInfo>().ToList());
-
-					PreselectCheckboxRepeater(rpTag, pageContents.ContentTags.Cast<IContentMetaInfo>().ToList());
+					GeneralUtilities.SelectListValues(listTags, pageContents.ContentTags.Cast<IContentMetaInfo>().Select(x => x.ContentMetaInfoID.ToString()).ToList());
+					GeneralUtilities.SelectListValues(listCats, pageContents.ContentCategories.Cast<IContentMetaInfo>().Select(x => x.ContentMetaInfoID.ToString()).ToList());
 				}
 			}
 		}
@@ -91,11 +89,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				List<ContentCategory> lstCat = new List<ContentCategory>();
 				List<ContentTag> lstTag = new List<ContentTag>();
 
-				lstCat = (from cr in CollectCheckboxRepeater(rpCat)
+				lstCat = (from cr in GeneralUtilities.GetSelectedValues(listCats).Select(x => new Guid(x))
 						  join l in SiteData.CurrentSite.GetCategoryList() on cr equals l.ContentCategoryID
 						  select l).ToList();
 
-				lstTag = (from cr in CollectCheckboxRepeater(rpTag)
+				lstTag = (from cr in GeneralUtilities.GetSelectedValues(listTags).Select(x => new Guid(x))
 						  join l in SiteData.CurrentSite.GetTagList() on cr equals l.ContentTagID
 						  select l).ToList();
 

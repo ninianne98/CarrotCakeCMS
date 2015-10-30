@@ -70,30 +70,35 @@
   <ItemGroup>
     <Compile Include="AdminCategoryDetail.ascx.cs">
       <DependentUpon>AdminCategoryDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminCategoryDetail.ascx.designer.cs">
       <DependentUpon>AdminCategoryDetail.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminCategoryList.ascx.cs">
       <DependentUpon>AdminCategoryList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminCategoryList.ascx.designer.cs">
       <DependentUpon>AdminCategoryList.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminDatabase.ascx.cs">
       <DependentUpon>AdminDatabase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminDatabase.ascx.designer.cs">
       <DependentUpon>AdminDatabase.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminDetail.ascx.cs">
       <DependentUpon>AdminDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminDetail.ascx.designer.cs">
       <DependentUpon>AdminDetail.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminList.ascx.cs">
       <DependentUpon>AdminList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AdminList.ascx.designer.cs">
       <DependentUpon>AdminList.ascx</DependentUpon>

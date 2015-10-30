@@ -30,6 +30,18 @@ namespace Carrotware.CMS.UI.Controls {
 			return sVal;
 		}
 
+		public static List<string> GetSelectedValues(ListControl list) {
+			List<string> sVal = new List<string>();
+			if (list.Items != null) {
+				foreach (ListItem itm in list.Items) {
+					if (itm.Selected) {
+						sVal.Add(itm.Value);
+					}
+				}
+			}
+			return sVal;
+		}
+
 		public static int? GetSelectedInt(ListControl ddl) {
 			int? iVal = null;
 			if (ddl.SelectedItem != null) {
@@ -87,6 +99,20 @@ namespace Carrotware.CMS.UI.Controls {
 			if (ctrl.Items.Count > 0) {
 				if (SelectedValue != null) {
 					try { ctrl.SelectedValue = SelectedValue; } catch { }
+				}
+			}
+		}
+
+		public static void SelectListValues(ListControl list, List<string> SelectedValues) {
+			if (list != null && list.Items.Count > 0 && SelectedValues != null) {
+				if (SelectedValues.Any()) {
+					try {
+						foreach (ListItem itm in list.Items) {
+							if (SelectedValues.Where(x => x.ToLower() == itm.Value.ToLower()).Any()) {
+								itm.Selected = true;
+							}
+						}
+					} catch { }
 				}
 			}
 		}

@@ -265,22 +265,22 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.TextBox txtDescription;
         
         /// <summary>
-        /// rpCat control.
+        /// listCats control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpCat;
+        protected global::System.Web.UI.WebControls.ListBox listCats;
         
         /// <summary>
-        /// rpTag control.
+        /// listTags control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpTag;
+        protected global::System.Web.UI.WebControls.ListBox listTags;
         
         /// <summary>
         /// ddlTemplate control.

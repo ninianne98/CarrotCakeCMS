@@ -50,7 +50,7 @@
 				titlebar:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="45" MaxLength="200" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="60" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
 					runat="server" ErrorMessage="Titlebar is required" ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
 			</td>
@@ -60,7 +60,7 @@
 				navigation:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60" MaxLength="200" />
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav" ID="RequiredFieldValidator4"
 					runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
 			</td>
@@ -70,7 +70,7 @@
 				page head:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60" MaxLength="200" />
 			</td>
 		</tr>
 		<tr>
@@ -79,7 +79,7 @@
 				<br />
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="45" MaxLength="200" />
+				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
 				<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturnPop('<%=txtThumb.ClientID %>');return false;" />
 			</td>
 		</tr>
@@ -122,43 +122,38 @@
 			</td>
 		</tr>
 	</table>
-	<table style="width: 700px;">
+	<table style="width: 700px; min-height: 75px;">
 		<tr>
-			<td style="width: 350px;">
-				<div style="width: 340px; clear: both;">
-					<div class="picker-area ui-widget-header ui-state-default ui-corner-top" style="width: 340px">
-						categories</div>
-					<div class="picker-area ui-widget-content ui-corner-bottom scroll-container" style="width: 340px">
-						<div class="scroll-area">
-							<asp:Repeater ID="rpCat" runat="server">
-								<ItemTemplate>
-									<asp:CheckBox runat="server" ID="chk" Text='<%#Eval("CategoryText") %>' value='<%#Eval("ContentCategoryID") %>' /><br />
-								</ItemTemplate>
-							</asp:Repeater>
-						</div>
-					</div>
-				</div>
-				<div style="clear: both;">
-				</div>
-			</td>
 			<td>
-				&nbsp;&nbsp;
-			</td>
-			<td style="width: 350px;">
-				<div style="width: 340px; clear: both;">
-					<div class="picker-area ui-widget-header ui-state-default ui-corner-top" style="width: 340px">
-						tags</div>
-					<div class="picker-area ui-widget-content ui-corner-bottom scroll-container" style="width: 340px">
-						<div class="scroll-area">
-							<asp:Repeater ID="rpTag" runat="server">
-								<ItemTemplate>
-									<asp:CheckBox runat="server" ID="chk" Text='<%#Eval("TagText") %>' value='<%#Eval("ContentTagID") %>' /><br />
-								</ItemTemplate>
-							</asp:Repeater>
+				<div class="ui-widget ui-widget-content ui-corner-all clear">
+					<div class="picker-area ui-widget-header ui-state-default ui-corner-top">
+						categories
+					</div>
+					<div class="picker-area ui-widget-content ui-corner-bottom">
+						<div>
+							<asp:ListBox ID="listCats" DataValueField="ContentMetaInfoID" DataTextField="MetaInfoText" runat="server" SelectionMode="Multiple" CssClass="chosen-select"
+								size="2" data-placeholder="select categories" />
 						</div>
 					</div>
 				</div>
-				<div style="clear: both;">
+				<div class="clear">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="ui-widget ui-widget-content ui-corner-all clear">
+					<div class="picker-area ui-widget-header ui-state-default ui-corner-top">
+						tags
+					</div>
+					<div class="picker-area ui-widget-content ui-corner-bottom">
+						<div>
+							<asp:ListBox ID="listTags" DataValueField="ContentMetaInfoID" DataTextField="MetaInfoText" runat="server" SelectionMode="Multiple" CssClass="chosen-select"
+								size="2" data-placeholder="select tags" />
+						</div>
+					</div>
+				</div>
+				<div class="clear">
 				</div>
 			</td>
 		</tr>
@@ -172,6 +167,10 @@
 		<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Apply" />
 	</div>
 	<script type="text/javascript">
+		$(document).ready(function () {
+			$(".chosen-select").chosen({ width: "695px" });
+		});
+
 		function SubmitPage() {
 			cmsIsPageValid();
 			setTimeout("ClickSaveBtn();", 800);

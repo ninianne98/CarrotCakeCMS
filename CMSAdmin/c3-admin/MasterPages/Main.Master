@@ -16,6 +16,8 @@
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="LightGreen" />
 	<script src="/c3-admin/includes/jquery.ui.timepicker.js" type="text/javascript"></script>
 	<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+	<link href="/c3-admin/includes/chosen.min.css" rel="stylesheet" type="text/css" />
+	<script src="/c3-admin/includes/chosen.jquery.min.js" type="text/javascript"></script>
 	<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
 	<script src="/c3-admin/iCheck/icheck.min.js" type="text/javascript"></script>
 	<script src="/c3-admin/includes/icheck.init.js" type="text/javascript"></script>
@@ -114,7 +116,8 @@
 						<li runat="server" id="tabAddContent"><a href="/c3-admin/PageAddEdit.aspx">Add Page</a> </li>
 						<li runat="server" id="tabContentTemplate"><a href="/c3-admin/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabContentSiteMap"><a href="/c3-admin/SiteMap.aspx">Edit Site Map</a> </li>
-						<li runat="server" id="tabContentCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
+						<li runat="server" id="tabContentCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a>
+						</li>
 					</ul>
 				</li>
 				<li runat="server" id="tabBlogTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
@@ -124,7 +127,8 @@
 						<li runat="server" id="tabBlogTemplate"><a href="/c3-admin/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabBlogCategoryIndex"><a href="/c3-admin/CategoryIndex.aspx">Blog Category Index</a> </li>
 						<li runat="server" id="tabBlogTagIndex"><a href="/c3-admin/TagIndex.aspx">Blog Tag Index</a> </li>
-						<li runat="server" id="tabBlogCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
+						<li runat="server" id="tabBlogCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a>
+						</li>
 					</ul>
 				</li>
 				<li runat="server" id="tabExtensions" class="sub"><a href="javascript:void(0)" class="lnkPopup">Extensions </a>
@@ -147,12 +151,14 @@
 				<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
 					<%=String.Format("My Profile [{0}]", userName)%></a>
 					<ul class="children">
-						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
-						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>
+						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a>
+						</li>
+						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a>
+						</li>
 						<li><a href="javascript:void(0)" class="lnkPopup" onclick="LogoutLink();">Logout</a> </li>
 					</ul>
 				</li>
-				<li><a href="javascript:void(0)">&nbsp;</a></li>
+				<li>&nbsp;</li>
 			</ul>
 		</div>
 		<div class="widthshim">

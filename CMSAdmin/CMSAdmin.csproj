@@ -772,7 +772,11 @@
     <Content Include="c3-admin\iCheck\square\yellow.css" />
     <Content Include="c3-admin\iCheck\square\yellow.png" />
     <Content Include="c3-admin\iCheck\square\_all.css" />
+    <Content Include="c3-admin\Images\chosen-sprite%402x.png" />
+    <Content Include="c3-admin\Images\chosen-sprite.png" />
     <Content Include="c3-admin\Images\cloud-up.png" />
+    <Content Include="c3-admin\Includes\chosen.jquery.min.js" />
+    <Content Include="c3-admin\Includes\chosen.min.css" />
     <Content Include="c3-admin\Includes\FindUsers.js" />
     <Content Include="c3-admin\Includes\icheck.init.js" />
     <Content Include="c3-admin\Includes\jquery.form.min.js" />

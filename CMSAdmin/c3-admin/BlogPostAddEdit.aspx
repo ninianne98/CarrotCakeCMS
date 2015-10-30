@@ -1,5 +1,5 @@
-﻿<%@ Page ValidateRequest="false" Title="Blog Post Add/Edit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostAddEdit.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostAddEdit" %>
+﻿<%@ Page ValidateRequest="false" Title="Blog Post Add/Edit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true"
+	CodeBehind="BlogPostAddEdit.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostAddEdit" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
@@ -390,8 +390,10 @@
 					retire date:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion"
+						Columns="16" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion"
+						Columns="10" />
 				</td>
 			</tr>
 			<tr>
@@ -399,12 +401,13 @@
 					titlebar:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server"
-						Columns="60" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle"
+						runat="server" Columns="60" MaxLength="200" />
 					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
 						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
-						runat="server" ErrorMessage="Titlebar is required" ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle"
+						ID="RequiredFieldValidator1" runat="server" ErrorMessage="Titlebar is required" ToolTip="Titlebar is required" Display="Dynamic"
+						Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -422,19 +425,21 @@
 					filename:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug" runat="server"
-						Columns="60" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug"
+						runat="server" Columns="60" MaxLength="200" />
 					<a href="javascript:void(0)" onclick="openPage();">
 						<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtPageSlug" ID="RequiredFieldValidator2"
-						runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic" Text="**" />
-					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1"
-						runat="server" ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID"
-						Operator="Equal" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtPageSlug"
+						ID="RequiredFieldValidator2" runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic"
+						Text="**" />
+					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid"
+						ID="CompareValidator1" runat="server" ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique"
+						Text="##" Display="Dynamic" ValueToCompare="VALID" Operator="Equal" />
 					<div style="display: none;">
 						<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
-						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator3"
-							runat="server" ErrorMessage="Filename validation is required" ToolTip="Filename validation is required" Display="Dynamic" Text="**" />
+						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid"
+							ID="RequiredFieldValidator3" runat="server" ErrorMessage="Filename validation is required" ToolTip="Filename validation is required"
+							Display="Dynamic" Text="**" />
 					</div>
 				</td>
 			</tr>
@@ -443,9 +448,11 @@
 					navigation:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60" MaxLength="200" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav" ID="RequiredFieldValidator4"
-						runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60"
+						MaxLength="200" />
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav"
+						ID="RequiredFieldValidator4" runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required"
+						Display="Dynamic" Text="**" />
 				</td>
 			</tr>
 			<tr>
@@ -453,7 +460,8 @@
 					page head:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60"
+						MaxLength="200" />
 				</td>
 			</tr>
 			<tr>
@@ -462,7 +470,8 @@
 					<br />
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60"
+						MaxLength="200" />
 					<input type="button" id="Button1" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>');return false;" />
 				</td>
 			</tr>
@@ -483,7 +492,8 @@
 				<td>
 					<b>find:</b> <span id="spanResults"></span>
 					<br />
-					<asp:TextBox ValidationGroup="inputForm" ID="txtSearchUser" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtSearchUser" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100"
+						runat="server" />
 					<asp:HiddenField ID="hdnCreditUserID" runat="server" />
 				</td>
 			</tr>
@@ -492,7 +502,8 @@
 					meta keywords:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine"
+						runat="server" />
 				</td>
 			</tr>
 			<tr>
@@ -500,48 +511,43 @@
 					meta description:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine"
-						runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4"
+						TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 		</table>
-		<table style="width: 700px;">
+		<table style="width: 700px; min-height: 75px;">
 			<tr>
-				<td style="width: 350px;">
-					<div style="width: 340px; clear: both;">
-						<div class="picker-area ui-widget-header ui-state-default ui-corner-top" style="width: 340px">
-							categories</div>
-						<div class="picker-area ui-widget-content ui-corner-bottom scroll-container" style="width: 340px">
-							<div class="scroll-area">
-								<asp:Repeater ID="rpCat" runat="server">
-									<ItemTemplate>
-										<asp:CheckBox runat="server" ID="chk" Text='<%#Eval("CategoryText") %>' value='<%#Eval("ContentCategoryID") %>' /><br />
-									</ItemTemplate>
-								</asp:Repeater>
-							</div>
-						</div>
-					</div>
-					<div style="clear: both;">
-					</div>
-				</td>
 				<td>
-					&nbsp;&nbsp;
-				</td>
-				<td style="width: 350px;">
-					<div style="width: 340px; clear: both;">
-						<div class="picker-area ui-widget-header ui-state-default ui-corner-top" style="width: 340px">
-							tags</div>
-						<div class="picker-area ui-widget-content ui-corner-bottom scroll-container" style="width: 340px">
-							<div class="scroll-area">
-								<asp:Repeater ID="rpTag" runat="server">
-									<ItemTemplate>
-										<asp:CheckBox runat="server" ID="chk" Text='<%#Eval("TagText") %>' value='<%#Eval("ContentTagID") %>' /><br />
-									</ItemTemplate>
-								</asp:Repeater>
+					<div class="ui-widget ui-widget-content ui-corner-all clear">
+						<div class="picker-area ui-widget-header ui-state-default ui-corner-top">
+							categories
+						</div>
+						<div class="picker-area ui-widget-content ui-corner-bottom">
+							<div>
+								<asp:ListBox ID="listCats" DataValueField="ContentMetaInfoID" DataTextField="MetaInfoText" runat="server" SelectionMode="Multiple"
+									CssClass="chosen-select" size="2" data-placeholder="select categories" />
 							</div>
 						</div>
 					</div>
-					<div style="clear: both;">
+					<div class="clear">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="ui-widget ui-widget-content ui-corner-all clear">
+						<div class="picker-area ui-widget-header ui-state-default ui-corner-top">
+							tags
+						</div>
+						<div class="picker-area ui-widget-content ui-corner-bottom">
+							<div>
+								<asp:ListBox ID="listTags" DataValueField="ContentMetaInfoID" DataTextField="MetaInfoText" runat="server" SelectionMode="Multiple"
+									CssClass="chosen-select" size="2" data-placeholder="select tags" />
+							</div>
+						</div>
+					</div>
+					<div class="clear">
 					</div>
 				</td>
 			</tr>
@@ -580,7 +586,8 @@
 						<div runat="server" id="divLeft">
 							body (left)<br />
 							<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
-						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine"
+							Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
@@ -589,7 +596,8 @@
 						<div runat="server" id="divCenter">
 							body (main/center)<br />
 							<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
-						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15"
+							Columns="80" />
 						<br />
 					</div>
 				</div>
@@ -598,7 +606,8 @@
 						<div runat="server" id="divRight">
 							body (right)<br />
 							<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
-						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine"
+							Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
@@ -609,8 +618,8 @@
 								<div>
 									<h3>
 										HTML Rich Text Widgets</h3>
-									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvHtmControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvHtmControls" runat="server" AutoGenerateColumns="false"
+										HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 										<EmptyDataTemplate>
 											<p>
 												<b>No html text widgets found.</b>
@@ -648,8 +657,8 @@
 								<div>
 									<h3>
 										Plain Text Widgets</h3>
-									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvTxtControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvTxtControls" runat="server" AutoGenerateColumns="false"
+										HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 										<EmptyDataTemplate>
 											<p>
 												<b>No plain text widgets found.</b>
@@ -686,11 +695,12 @@
 						<div runat="server" id="divTrackback">
 							new trackbacks, one per line<br />
 						</div>
-						<asp:TextBox Style="height: 255px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
+						<asp:TextBox Style="height: 255px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine"
+							Rows="8" Columns="80" />
 						<div class="scroll-container" style="height: 175px; width: 780px;">
 							<div class="scroll-area" style="height: 170px; width: 775px;">
-								<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-									AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+								<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false"
+									HeaderStyle-CssClass="tablehead" AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 									<Columns>
 										<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
 										<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
@@ -819,6 +829,8 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
+			$(".chosen-select").chosen({ width: "695px" });
+
 			setTimeout("$('#jqtabs').tabs('option', 'active', 1);", 500);
 		});
 	</script>

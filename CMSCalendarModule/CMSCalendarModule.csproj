@@ -66,12 +66,14 @@
   <ItemGroup>
     <Compile Include="CalendarAdmin.ascx.cs">
       <DependentUpon>CalendarAdmin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdmin.ascx.designer.cs">
       <DependentUpon>CalendarAdmin.ascx</DependentUpon>
     </Compile>
     <Compile Include="CalendarAdminAddEdit.ascx.cs">
       <DependentUpon>CalendarAdminAddEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CalendarAdminAddEdit.ascx.designer.cs">
       <DependentUpon>CalendarAdminAddEdit.ascx</DependentUpon>
