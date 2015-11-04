@@ -455,7 +455,7 @@
 				<td>
 					<b>find:</b> <span id="spanResults"></span>
 					<br />
-					<asp:TextBox ValidationGroup="inputForm" ID="txtSearchUser" onkeypress="return ProcessKeyPress(event)" Width="350px" MaxLength="100" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtSearchUser" onkeypress="return ProcessKeyPress(event)" Columns="60" MaxLength="100" runat="server" />
 					<asp:HiddenField ID="hdnCreditUserID" runat="server" />
 				</td>
 			</tr>

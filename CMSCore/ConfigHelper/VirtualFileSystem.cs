@@ -79,7 +79,7 @@ namespace Carrotware.CMS.Core {
 					} catch (Exception ex) { }
 				}
 
-				if (sFileRequested.ToLower().EndsWith(".aspx") || sFileRequested.Length < 3) {
+				if (sFileRequested.ToLower().EndsWith(".aspx") || SiteData.IsLikelyHomePage(sFileRequested)) {
 					bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
 					string queryString = String.Empty;
@@ -88,13 +88,13 @@ namespace Carrotware.CMS.Core {
 						queryString = String.Empty;
 					}
 
-					if (!CMSConfigHelper.CheckRequestedFileExistence(sFileRequested, SiteData.CurrentSiteID) || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
+					if (!CMSConfigHelper.CheckRequestedFileExistence(sFileRequested, SiteData.CurrentSiteID) || SiteData.IsLikelyHomePage(sFileRequested)) {
 						context.Items[REQ_PATH] = context.Request.PathInfo;
 						context.Items[REQ_QUERY] = context.Request.QueryString.ToString();
 
 						// handle a case where this site was migrated from a format where all pages varied on a consistent querystring
 						// allow this QS parm to be set in a config file.
-						if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
+						if (SiteData.IsLikelyHomePage(sFileRequested)) {
 							string sParm = String.Empty;
 							if (SiteData.OldSiteQuerystring != string.Empty) {
 								if (context.Request.QueryString[SiteData.OldSiteQuerystring] != null) {
@@ -119,10 +119,10 @@ namespace Carrotware.CMS.Core {
 							} else {
 								bool bIsHomePage = false;
 
-								if (sFileRequested.Length < 3 || sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename) {
+								if (SiteData.IsLikelyHomePage(sFileRequested)) {
 									navData = navHelper.FindHome(SiteData.CurrentSiteID, !bIgnorePublishState);
 
-									if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData != null) {
+									if (SiteData.IsLikelyHomePage(sFileRequested) && navData != null) {
 										sFileRequested = navData.FileName;
 										bIsHomePage = true;
 									}
@@ -133,7 +133,7 @@ namespace Carrotware.CMS.Core {
 									navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, pageName);
 								}
 
-								if (sFileRequested.ToLower() == SiteData.DefaultDirectoryFilename && navData == null) {
+								if (SiteData.IsLikelyHomePage(sFileRequested) && navData == null) {
 									navData = SiteNavHelper.GetEmptyHome();
 								}
 							}
