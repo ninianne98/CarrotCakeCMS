@@ -143,8 +143,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public Dictionary<string, string> lstContentType {
 			get {
 				Dictionary<string, string> _dict = new Dictionary<string, string>();
-				_dict.Add("Category", "Categories");
-				_dict.Add("Tag", "Tags");
+				_dict.Add(MetaDataType.Category.ToString(), "Categories");
+				_dict.Add(MetaDataType.Tag.ToString(), "Tags");
 
 				return _dict;
 			}
@@ -161,21 +161,21 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected List<IContentMetaInfo> GetMetaInfo() {
-			int iTakeTop = TakeTop;
-			if (TakeTop < 0) {
-				iTakeTop = 100000;
+			int takeTop = this.TakeTop;
+			if (this.TakeTop < 0) {
+				takeTop = 300000;
 			}
-			if (AssignedRootContentID == Guid.Empty) {
-				if (ContentType == MetaDataType.Tag) {
-					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, iTakeTop, SiteData.CurrentScriptName);
+			if (this.AssignedRootContentID == Guid.Empty) {
+				if (this.ContentType == MetaDataType.Tag) {
+					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, takeTop, SiteData.CurrentScriptName);
 				} else {
-					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, iTakeTop, SiteData.CurrentScriptName);
+					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, takeTop, SiteData.CurrentScriptName);
 				}
 			} else {
-				if (ContentType == MetaDataType.Tag) {
-					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, iTakeTop, AssignedRootContentID);
+				if (this.ContentType == MetaDataType.Tag) {
+					return navHelper.GetTagListForPost(SiteData.CurrentSiteID, takeTop, AssignedRootContentID);
 				} else {
-					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, iTakeTop, AssignedRootContentID);
+					return navHelper.GetCategoryListForPost(SiteData.CurrentSiteID, takeTop, AssignedRootContentID);
 				}
 			}
 		}
@@ -188,27 +188,41 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			string sCSS = "";
-			if (!String.IsNullOrEmpty(CssClass)) {
-				sCSS = " class=\"" + CssClass + "\" ";
+			string sCSS = String.Empty;
+			if (!String.IsNullOrEmpty(this.CssClass)) {
+				sCSS = " class=\"" + this.CssClass + "\" ";
 			}
-			string sOuter = HtmlTagNameOuter;
-			string sInner = HtmlTagNameInner;
+			string sOuter = this.HtmlTagNameOuter;
+			string sInner = this.HtmlTagNameInner;
 
-			if (IsSimpleDisplayMode) {
+			if (this.IsSimpleDisplayMode) {
 				sOuter = "div";
 				sInner = "span";
 			}
 
+			int blogCount = navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
+
 			output.WriteLine("<" + sOuter + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
 
-			if (!String.IsNullOrEmpty(MetaDataTitle) && lstNav.Any()) {
-				output.WriteLine("<" + sInner + " class=\"meta-caption\">" + MetaDataTitle + "  </" + sInner + "> ");
+			if (!String.IsNullOrEmpty(this.MetaDataTitle) && lstNav.Any()) {
+				output.WriteLine("<" + sInner + " class=\"meta-caption\">" + this.MetaDataTitle + "  </" + sInner + "> ");
 			}
 
 			foreach (IContentMetaInfo c in lstNav) {
-				output.WriteLine("<" + sInner + " class=\"meta-used-" + c.MetaInfoCount.ToString() + "\"><a href=\"" + c.MetaInfoURL + "\">" + c.MetaInfoText + "</a></" + sInner + ">  ");
+				double percUsed = Math.Ceiling(100 * (float)c.MetaInfoCount / (((float)blogCount + 0.000001)));
+				percUsed = Math.Round(percUsed / 5) * 5;
+				if (percUsed < 1 && c.MetaInfoCount > 0) {
+					percUsed = 1;
+				}
+				if (c.MetaInfoCount <= 0) {
+					percUsed = 0;
+				}
+				if (percUsed > 100) {
+					percUsed = 100;
+				}
+
+				output.WriteLine("<" + sInner + " class=\"meta-item meta-perc-used-" + percUsed.ToString() + " meta-used-" + c.MetaInfoCount.ToString() + "\"><a href=\"" + c.MetaInfoURL + "\">" + c.MetaInfoText + "</a></" + sInner + ">  ");
 			}
 
 			output.Indent--;
@@ -219,19 +233,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Any()) {
-					TakeTop = int.Parse(GetParmValue("TakeTop", "20"));
+				if (this.PublicParmValues.Any()) {
+					this.TakeTop = int.Parse(GetParmValue("TakeTop", "20"));
 
-					IsSimpleDisplayMode = Convert.ToBoolean(GetParmValue("IsSimpleDisplayMode", "false"));
+					this.IsSimpleDisplayMode = Convert.ToBoolean(GetParmValue("IsSimpleDisplayMode", "false"));
 
-					CssClass = GetParmValue("CssClass", "");
+					this.CssClass = GetParmValue("CssClass", "");
 
-					HtmlTagNameOuter = GetParmValue("HtmlTagNameOuter", "ul");
-					HtmlTagNameInner = GetParmValue("HtmlTagNameInner", "li");
+					this.HtmlTagNameOuter = GetParmValue("HtmlTagNameOuter", "ul");
+					this.HtmlTagNameInner = GetParmValue("HtmlTagNameInner", "li");
 
-					MetaDataTitle = GetParmValue("MetaDataTitle", "");
+					this.MetaDataTitle = GetParmValue("MetaDataTitle", "");
 
-					ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
+					this.ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
 				}
 			} catch (Exception ex) {
 			}

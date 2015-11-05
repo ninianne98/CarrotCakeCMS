@@ -26,11 +26,11 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("")]
 		public string MetaDataTitle {
 			get {
-				string s = (string)ViewState["MetaDataTitle"];
+				string s = (string)ViewState["this.MetaDataTitle"];
 				return ((s == null) ? "" : s);
 			}
 			set {
-				ViewState["MetaDataTitle"] = value;
+				ViewState["this.MetaDataTitle"] = value;
 			}
 		}
 
@@ -55,11 +55,11 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("")]
 		public string CSSItem {
 			get {
-				string s = (string)ViewState["CSSItem"];
+				string s = (string)ViewState["this.CSSItem"];
 				return ((s == null) ? "" : s);
 			}
 			set {
-				ViewState["CSSItem"] = value;
+				ViewState["this.CSSItem"] = value;
 			}
 		}
 
@@ -157,22 +157,22 @@ namespace Carrotware.CMS.UI.Controls {
 		protected List<IContentMetaInfo> GetMetaInfo() {
 			List<IContentMetaInfo> lstNav = new List<IContentMetaInfo>();
 
-			int iTakeTop = TakeTop;
-			if (TakeTop < 0) {
-				iTakeTop = 100000;
+			int takeTop = this.TakeTop;
+			if (this.TakeTop < 0) {
+				takeTop = 300000;
 			}
 
 			switch (ContentType) {
 				case MetaDataType.Tag:
-					lstNav = navHelper.GetTagList(SiteData.CurrentSiteID, iTakeTop);
+					lstNav = navHelper.GetTagList(SiteData.CurrentSiteID, takeTop);
 					break;
 
 				case MetaDataType.Category:
-					lstNav = navHelper.GetCategoryList(SiteData.CurrentSiteID, iTakeTop);
+					lstNav = navHelper.GetCategoryList(SiteData.CurrentSiteID, takeTop);
 					break;
 
 				case MetaDataType.DateMonth:
-					lstNav = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, iTakeTop, !SecurityData.IsAuthEditor);
+					lstNav = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, takeTop, !SecurityData.IsAuthEditor);
 					break;
 
 				default:
@@ -206,22 +206,31 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (lstNav != null && lstNav.Any() && !String.IsNullOrEmpty(MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
+			if (lstNav != null && lstNav.Any() && !String.IsNullOrEmpty(this.MetaDataTitle)) {
+				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + " class=\"meta-caption\">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
 			}
 
-			string sCSS = "";
-			if (!String.IsNullOrEmpty(CssClass)) {
-				sCSS = " class=\"" + CssClass + "\" ";
+			string sCSS = String.Empty;
+			if (!String.IsNullOrEmpty(this.CssClass)) {
+				sCSS = " class=\"" + this.CssClass + "\" ";
 			}
 
-			string sItemCSS = "";
-			if (!String.IsNullOrEmpty(CSSItem)) {
-				sItemCSS = String.Format(" {0} ", CSSItem);
+			string sItemCSS = String.Empty;
+			if (!String.IsNullOrEmpty(this.CSSItem)) {
+				sItemCSS = String.Format(" {0} ", this.CSSItem);
 			}
 
 			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\"> ");
 			output.Indent++;
+
+			int contentCount = 0;
+
+			if (this.ContentType == MetaDataType.DateMonth) {
+				contentCount = navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry)
+								+ navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
+			} else {
+				contentCount = navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
+			}
 
 			foreach (IContentMetaInfo c in lstNav) {
 				string sText = c.MetaInfoText;
@@ -232,14 +241,26 @@ namespace Carrotware.CMS.UI.Controls {
 				} else {
 					sCount = c.MetaPublicInfoCount.ToString();
 				}
-				if (ShowUseCount) {
+				if (this.ShowUseCount) {
 					sText = String.Format("{0}  ({1})", c.MetaInfoText, sCount);
 				}
 
+				double percUsed = Math.Ceiling(100 * (float)c.MetaInfoCount / (((float)contentCount + 0.000001)));
+				percUsed = Math.Round(percUsed / 5) * 5;
+				if (percUsed < 1 && c.MetaInfoCount > 0) {
+					percUsed = 1;
+				}
+				if (c.MetaInfoCount <= 0) {
+					percUsed = 0;
+				}
+				if (percUsed > 100) {
+					percUsed = 100;
+				}
+
 				if (SiteData.IsFilenameCurrentPage(c.MetaInfoURL)) {
-					output.WriteLine("<li class=\"meta-used-" + sCount + sItemCSS + " selected\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
+					output.WriteLine("<li class=\"meta-item meta-perc-used-" + percUsed.ToString() + " meta-used-" + sCount + sItemCSS + " selected\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
 				} else {
-					output.WriteLine("<li class=\"meta-used-" + sCount + sItemCSS + "\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
+					output.WriteLine("<li class=\"meta-item meta-perc-used-" + percUsed.ToString() + " meta-used-" + sCount + sItemCSS + "\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
 				}
 			}
 
@@ -251,16 +272,16 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Any()) {
-					TakeTop = int.Parse(GetParmValue("TakeTop", "10"));
+				if (this.PublicParmValues.Any()) {
+					this.TakeTop = int.Parse(GetParmValue("TakeTop", "10"));
 
-					CssClass = GetParmValue("CssClass", "");
+					this.CssClass = GetParmValue("this.CssClass", "");
 
-					MetaDataTitle = GetParmValue("MetaDataTitle", "");
+					this.MetaDataTitle = GetParmValue("this.MetaDataTitle", "");
 
-					ShowUseCount = Convert.ToBoolean(GetParmValue("ShowUseCount", "false"));
+					this.ShowUseCount = Convert.ToBoolean(GetParmValue("ShowUseCount", "false"));
 
-					ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
+					this.ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
 				}
 			} catch (Exception ex) {
 			}
