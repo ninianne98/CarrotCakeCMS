@@ -19,24 +19,27 @@
 			<img src="images/carrotcake.png" height="125" alt="carrot" title="carrot" /></a>
 	</p>
 	<p>
-		The Carrotware carrot is &copy; 1997, 2002 Samantha Copeland</p>
+		The Carrotware carrot is &copy; 1997, 2002 Samantha Copeland
+	</p>
 	<p>
-		The Powered by Carrotware badge is &copy; 2005, 2009 Samantha Copeland</p>
+		The Powered by Carrotware badge is &copy; 2005, 2009 Samantha Copeland
+	</p>
 	<p>
-		The CarrotCakeCMS logo is &copy; 2011 Samantha Copeland</p>
+		The CarrotCakeCMS logo is &copy; 2011 Samantha Copeland
+	</p>
 	<p>
 		These works are licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons Attribution-NonCommercial-NoDerivs
 			3.0 Unported License</a>.
 	</p>
 	<p>
-		These images may freely be used in conjunction with promotion of the CarrotCake CMS.</p>
+		These images may freely be used in conjunction with promotion of the CarrotCake CMS.
+	</p>
 	<h2>
 		Components Utilized</h2>
 	<p>
 		<b>jQuery JavaScript Library</b>
 		<br />
-		http://jquery.com/
-		<br />
+		<a target="_blank" href="http://jquery.com/">http://jquery.com/</a><br />
 		<br />
 		Copyright 2011, John Resig
 		<br />
@@ -56,22 +59,11 @@
 		<br />
 	</p>
 	<p>
-		<b>jQuery UI CSS Framework</b>
-		<br />
-		Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
-		<br />
-		Dual licensed under the MIT or GPL Version 2 licenses.
-		<br />
-		http://jquery.org/license
-		<br />
-		<br />
-		http://docs.jquery.com/UI/Theming/API
-		<br />
-	</p>
-	<p>
 		<b>jQuery UI</b>
 		<br />
-		Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+		<a target="_blank" href="http://jqueryui.com/">http://jqueryui.com/</a><br />
+		<br />
+		Copyright 2011 (http://jqueryui.com/about)
 		<br />
 		Dual licensed under the MIT or GPL Version 2 licenses.
 		<br />
@@ -79,6 +71,19 @@
 		<br />
 		<br />
 		http://docs.jquery.com/UI
+		<br />
+	</p>
+	<p>
+		<b>Chosen</b>
+		<br />
+		<a target="_blank" href="http://harvesthq.github.io/chosen/">http://harvesthq.github.io/chosen/</a>
+		<br />
+		<br />
+		Chosen, a Select Box Enhancer for jQuery and Prototype
+		<br />
+		by Patrick Filler for Harvest, http://getharvest.com
+		<br />
+		MIT License, https://github.com/harvesthq/chosen/blob/master/LICENSE.md
 		<br />
 	</p>
 	<p>
@@ -122,8 +127,12 @@
 	<p>
 		<b>LinqToSqlExtensions / ExpressionExtensions</b>
 		<br />
-		<a target="_blank" href="http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx">http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx</a>
+		<a target="_blank" href="https://terryaney.wordpress.com/2008/04/14/batch-updates-and-deletes-with-linq-to-sql/">https://terryaney.wordpress.com/2008/04/14/batch-updates-and-deletes-with-linq-to-sql/</a>
 		<br />
+		<%--<a target="_blank" href="http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx">
+			http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx</a>
+		<br />
+		--%>
 		<br />
 		Copyright 2008 Terry Aney
 		<br />
@@ -215,18 +224,22 @@
 	<h2>
 		The MIT License (MIT)</h2>
 	<p>
-		Copyright (c) 2011 Samantha Copeland, http://www.carrotware.com/</p>
+		Copyright (c) 2011 Samantha Copeland, http://www.carrotware.com/
+	</p>
 	<p>
 		Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
 		to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
-		and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+		and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+	</p>
 	<p>
-		The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+		The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+	</p>
 	<p>
 		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 		OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-		OTHER DEALINGS IN THE SOFTWARE.</p>
+		OTHER DEALINGS IN THE SOFTWARE.
+	</p>
 	<h2>
 		<a name="SEC1">GNU GENERAL PUBLIC LICENSE</a></h2>
 	<p>
@@ -449,7 +462,8 @@ of this license document, but changing it is not allowed.
 	</p>
 	<a name="section11"></a>
 	<p>
-		<strong>NO WARRANTY</strong></p>
+		<strong>NO WARRANTY</strong>
+	</p>
 	<p>
 		<strong>11.</strong> BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE
 		LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY

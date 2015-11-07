@@ -6,12 +6,18 @@ using System.Linq.Expressions;
 
 /*
  * Terry Aney
- http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx
+ * http://www.aneyfamily.com/terryandann/post/2008/04/Batch-Updates-and-Deletes-with-LINQ-to-SQL.aspx
+ * https://terryaney.wordpress.com/2008/04/14/batch-updates-and-deletes-with-linq-to-sql/
+ *
+ * Where can I get the source for this?
+ * Download the source code and give it a go.  Let me know if you find any issues or have any suggestions.
+ * Disclaimer: I’m not responsible for anything! ;)  I’ve given the code a good run through and use it in my day to day ‘maintenance queries’ against production data so I’m fairly confident that everything will be in working order.  However, when looking at the source, you’ll see some TODO’s for me to polish up the documentation and/or find better ways of parsing the little bit of SQL text I need to process.  It currently behaves itself for my needs, but rest assured, as soon as I address those…actually I should say, as soon as I can get Chris to explain in layman’s terms what is going on, I’ll update the documentation and the provided source code!
 */
 
-
 namespace Carrotware.CMS.Data {
+
 	public static class ExpressionExtensions {
+
 		public static Expression Visit<T>(
 			this Expression exp,
 			Func<T, Expression> visitor) where T : Expression {
@@ -45,7 +51,7 @@ namespace Carrotware.CMS.Data {
 	/// be merged (and they don't share the same ParameterExpressions).
 	/// </summary>
 	public class ExpressionVisitor<T> : ExpressionVisitor where T : Expression {
-		Func<T, Expression> visitor;
+		private Func<T, Expression> visitor;
 
 		public ExpressionVisitor(Func<T, Expression> visitor) {
 			this.visitor = visitor;
@@ -75,6 +81,7 @@ namespace Carrotware.CMS.Data {
 	/// (from http://blogs.msdn.com/mattwar/archive/2007/07/31/linq-building-an-iqueryable-provider-part-ii.aspx)
 	/// </summary>
 	public abstract class ExpressionVisitor {
+
 		protected ExpressionVisitor() { }
 
 		protected virtual Expression Visit(Expression exp) {
