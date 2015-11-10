@@ -34,7 +34,7 @@ namespace Carrotware.CMS.Core {
 		private bool bURLOverride = false;
 
 		public void ProcessRequest(HttpContext context) {
-			using (SiteNavHelper navHelper = new SiteNavHelper()) {
+			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				SiteNav navData = null;
 				string sFileRequested = context.Request.Path;
 				sRequestedURL = sFileRequested;

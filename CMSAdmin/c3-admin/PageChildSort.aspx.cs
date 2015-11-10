@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void DoDataBind() {
 			List<SiteNav> lstNav = null;
 
-			using (SiteNavHelper navHelper = new SiteNavHelper()) {
+			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, guidContentID, !SecurityData.IsAuthEditor);
 			}
 

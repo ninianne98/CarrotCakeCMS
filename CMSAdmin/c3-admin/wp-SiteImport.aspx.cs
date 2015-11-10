@@ -230,7 +230,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			wpSite.Comments.ForEach(r => r.ImportRootID = Guid.Empty);
 
-			using (SiteNavHelper navHelper = new SiteNavHelper()) {
+			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				if (chkPages.Checked) {
 					sMsg += "<p>Imported Pages</p>";
 

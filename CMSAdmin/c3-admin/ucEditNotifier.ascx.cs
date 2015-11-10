@@ -17,7 +17,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			using (SiteNavHelper navHelper = new SiteNavHelper()) {
+			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				string sCurrentPage = SiteData.CurrentScriptName;
 				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
 

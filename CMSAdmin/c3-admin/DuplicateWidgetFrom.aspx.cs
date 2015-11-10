@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			bool bLimit = chkActive.Checked;
 
-			using (SiteNavHelper navHelper = new SiteNavHelper()) {
+			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				if (!String.IsNullOrEmpty(sSearchTerm)) {
 					iTotal = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, bLimit);
 					lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, bLimit, iTake, 0, sSortFld, sSortDir);

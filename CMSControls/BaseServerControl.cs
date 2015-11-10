@@ -21,7 +21,7 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Controls {
 
 	public abstract class BaseServerControl : WidgetParmDataWebControl {
-		protected SiteNavHelper navHelper = new SiteNavHelper();
+		protected ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper();
 
 		protected void SetSiteID() {
 			try {

@@ -223,7 +223,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ContentPage cp = cu.GetContainerContentPage(this);
 			SiteNav navNext = new SiteNav();
 			if (NavigationDirection != NavDirection.Unknown) {
-				using (SiteNavHelper navHelper = new SiteNavHelper()) {
+				using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 					if (NavigationDirection == NavDirection.Prev) {
 						navNext = navHelper.GetPrevPost(SiteData.CurrentSiteID, cp.Root_ContentID, !SecurityData.IsAuthEditor);
 					}

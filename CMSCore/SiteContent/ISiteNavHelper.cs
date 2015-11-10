@@ -15,7 +15,7 @@ using Carrotware.CMS.Data;
 
 namespace Carrotware.CMS.Core {
 
-	public interface ISiteNavHelper {
+	public interface ISiteNavHelper : IDisposable {
 
 		SiteNav FindByFilename(Guid siteID, string urlFileName);
 
@@ -132,5 +132,7 @@ namespace Carrotware.CMS.Core {
 		List<SiteNav> GetTwoLevelNavigation(Guid siteID, bool bActiveOnly);
 
 		List<SiteNav> PerformDataPagingQueryableContent(Guid siteID, bool bActiveOnly, int pageSize, int pageNumber, string sortField, string sortDir, IQueryable<vw_carrot_Content> QueryInput);
+
+		//void Dispose();
 	}
 }
