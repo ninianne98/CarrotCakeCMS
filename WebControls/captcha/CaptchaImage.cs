@@ -10,7 +10,7 @@ using System.Web;
 * http://www.carrotware.com/
 *
 * Copyright 2011, Samantha Copeland
-* Dual licensed under the MIT or GPL Version 2 licenses.
+* Dual licensed under the MIT or GPL Version 3 licenses.
 *
 * Date: October 2011
 */

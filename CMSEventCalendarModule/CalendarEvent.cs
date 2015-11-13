@@ -7,7 +7,7 @@ using System.Linq;
 * http://www.carrotware.com/
 *
 * Copyright 2013, Samantha Copeland
-* Dual licensed under the MIT or GPL Version 2 licenses.
+* Dual licensed under the MIT or GPL Version 3 licenses.
 *
 * Date: June 2013
 */
