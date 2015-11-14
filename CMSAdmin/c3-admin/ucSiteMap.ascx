@@ -1,8 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucSiteMap.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucSiteMap" %>
 <script src="Includes/jquery.ui.nestedSortable.js" type="text/javascript"></script>
 <style type="text/css">
-	#cmsSiteMap ol
-	{
+	#cmsSiteMap ol {
 		list-style: none;
 		padding: 0;
 		margin: 0;
@@ -10,14 +9,12 @@
 		margin-top: 2px;
 		margin-bottom: 2px;
 	}
-	#cmsSiteMap a
-	{
+	#cmsSiteMap a {
 		text-decoration: none;
 		color: #000000;
 		border: 0;
 	}
-	#cmsSiteMap li
-	{
+	#cmsSiteMap li {
 		list-style: none;
 		padding: 0;
 		margin: 0;
@@ -25,31 +22,26 @@
 		margin-left: 5px;
 		margin-bottom: 8px;
 	}
-	#cmsSiteMap .image-handle
-	{
+	#cmsSiteMap .image-handle {
 		padding: 3px;
 		margin: 0;
 		cursor: move;
 		line-height: 25px;
 	}
 
-	#cmsSiteMap span.page-status, #cmsSiteMap span.handle-expand a
-	{
+	#cmsSiteMap span.page-status, #cmsSiteMap span.handle-expand a {
 		cursor: pointer;
 	}
-	#cmsSiteMap span.handle-expand
-	{
+	#cmsSiteMap span.handle-expand {
 		width: 50px !important;
 		height: 25px !important;
 		border: 1px dashed #ffffff;
 	}
 
-	#cmsSiteMap img
-	{
+	#cmsSiteMap img {
 		vertical-align: text-top;
 	}
-	.HighlightPH
-	{
+	.HighlightPH {
 		height: 25px !important;
 		margin: 5px;
 		padding: 5px;
@@ -93,7 +85,6 @@
 
 		itterateTree();
 		itterateTreeSetToggle();
-
 	});
 
 	function itterateTree() {
@@ -133,22 +124,17 @@
 		//var t = nodeNav.text();
 		var lst = $(item).find("ol").first();
 		var blankField = '&nbsp;&#9671;&nbsp; ';
+		//alert($(item).find("ol li").length + '  : ' + h);
 
-		if (h.indexOf("ToggleTree") < 0) {
-			if (lst.length > 0) {
+		if ($(item).find("ol li").length < 1) {
+			var lnk = nodeNav.find("a").first();
+			lnk.remove();
+			nodeNav.html(blankField);
+		} else {
+			if (h.indexOf("ToggleTree") < 0) {
 				//nodeNav.html('<a state="close" id="menu-lnk-' + id + '" onclick="ToggleTree(this);" href="javascript:void(0);">&#9658;</a>  ' + t); // &#9660;
 				nodeNav.html('&nbsp;<a state="close" id="menu-lnk-' + id + '" onclick="ToggleTree(this);" href="javascript:void(0);">&#9658;</a>&nbsp; '); // &#9660;
 				lst.attr('style', 'display:none;');
-			} else {
-				var lnk = nodeNav.find("a").first();
-				lnk.remove();
-				nodeNav.html(blankField);
-			}
-		} else {
-			if (lst.length < 1) {
-				var lnk = nodeNav.find("a").first();
-				lnk.remove();
-				nodeNav.html(blankField);
 			}
 		}
 	}
@@ -170,6 +156,7 @@
 		var a = $(arrow);
 		//alert($(arrow).text() + '  ' + $(arrow).parent().parent().attr('id'));
 		var lst = a.parent().parent().parent().find("ol").first();
+
 		if (a.attr('state') != 'open') {
 			a.html("&#9660;");
 			lst.attr('style', 'display:block;');
@@ -219,8 +206,8 @@
 			<ol class="sortable">
 		</HeaderTemplate>
 		<ItemTemplate>
-			<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand" id="filename-<%#Eval("Root_ContentID") %>">
-				&nbsp; </span>
+			<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand"
+				id="filename-<%#Eval("Root_ContentID") %>">&nbsp; </span>
 				<img src="/c3-admin/images/webpage.png" class="imgNoBorder image-handle" title="webpage" alt="webpage" id="img-<%#Eval("Root_ContentID") %>" />
 				<span class="page-status"><a href="<%#Eval("FileName")%>" target="_blank">
 					<%#Eval("FileName")%>
