@@ -163,7 +163,7 @@
 	<br />
 	<script type="text/javascript">
 		function ClickApplyBtn() {
-			var ret = tinyMCE.triggerSave();
+			var ret = cmsPreSaveTrigger();
 
 			if (cmsIsPageValid()) {
 				return true;

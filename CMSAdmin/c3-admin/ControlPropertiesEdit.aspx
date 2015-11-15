@@ -44,7 +44,7 @@
 	</div>
 	<script type="text/javascript">
 		function SubmitPage() {
-			var ret = tinyMCE.triggerSave();
+			var ret = cmsPreSaveTrigger();
 			setTimeout("ClickBtn();", 800);
 		}
 		function ClickBtn() {

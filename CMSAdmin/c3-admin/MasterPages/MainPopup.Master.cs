@@ -49,6 +49,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			litSaveMessage.Text = saveMessage;
 		}
 
+		public void ShowSave(string saveMessage) {
+			SetSaveMessage(saveMessage);
+
+			ShowSave();
+		}
+
 		public void ShowSave() {
 			this.ShowSaved = true;
 			hdnShow.Value = "SHOW";

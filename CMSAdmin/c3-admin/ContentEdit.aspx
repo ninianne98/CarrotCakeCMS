@@ -26,7 +26,7 @@
 	<asp:Panel ID="pnlRichEdit" runat="server" Visible="false">
 		<script type="text/javascript">
 			function SubmitPage() {
-				var ret = tinyMCE.triggerSave();
+				var ret = cmsPreSaveTrigger();
 				setTimeout("ClickBtn();", 500);
 			}
 			function ClickBtn() {

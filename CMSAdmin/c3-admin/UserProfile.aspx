@@ -98,7 +98,7 @@
 		}
 
 		function SaveCommon() {
-			var ret = tinyMCE.triggerSave();
+			var ret = cmsPreSaveTrigger();
 
 			return true;
 		}

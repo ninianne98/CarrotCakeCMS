@@ -764,7 +764,7 @@
 
 		function SaveCommon() {
 			cmsSaveMakeOKAndCancelLeave();
-			var ret = tinyMCE.triggerSave();
+			var ret = cmsPreSaveTrigger();
 			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
 			return true;
 		}

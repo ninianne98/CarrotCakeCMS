@@ -9,8 +9,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserFn);
 
+			Master.UsesSaved = true;
+			Master.HideSave();
+			Master.ShowSave("Profile Updated");
+
 			divInfoMsg.Visible = false;
-			InfoMessage.Text = "";
+			InfoMessage.Text = String.Empty;
 
 			if (!IsPostBack) {
 				txtEmail.Text = SecurityData.CurrentUser.Email;
@@ -37,6 +41,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			divInfoMsg.Visible = true;
 			InfoMessage.Text = "Profile Updated";
+
+			Master.ShowSave();
 		}
 	}
 }

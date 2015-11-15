@@ -2,15 +2,12 @@
 var tinyBrowseWidth = 500;
 var tinyBrowseResize = false;
 
-
 function TinyMCEParamInit(winWidth, winHeight, allowResize) {
-
 	tinyBrowseHeight = parseInt(winHeight);
 	tinyBrowseWidth = parseInt(winWidth);
 	tinyBrowseResize = allowResize;
 
 	tinyMCE.init({
-
 		//		mode : "textareas",
 		//		theme : "advanced",
 		//		theme_advanced_toolbar_location : "top",
@@ -49,10 +46,8 @@ function TinyMCEParamInit(winWidth, winHeight, allowResize) {
 				}
 			});
 		}
-
 	});
 }
-
 
 // http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
 function cmsFileBrowserCallback(field_name, url, type, win) {
@@ -84,11 +79,14 @@ function cmsFileBrowserCallback(field_name, url, type, win) {
 	return false;
 }
 
-
 function tinyResetFileBrowserOpenStatus() {
 	tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
 }
 
+function cmsPreSaveTrigger() {
+	var tgr = tinyMCE.triggerSave();
+	return true;
+}
 
 function cmsToggleTinyMCE(id) {
 	if (!tinyMCE.get(id))
@@ -96,7 +94,6 @@ function cmsToggleTinyMCE(id) {
 	else
 		tinyMCE.execCommand('mceRemoveControl', false, id);
 }
-
 
 var fldName = '';
 var winBrowse = null;
@@ -114,7 +111,6 @@ function cmsFileBrowserOpen(fldN) {
 
 	return false;
 }
-
 
 function cmsSetFileName(v) {
 	var fldN = '#' + fldName;
