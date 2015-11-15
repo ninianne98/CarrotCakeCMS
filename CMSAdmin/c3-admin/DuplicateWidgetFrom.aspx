@@ -10,7 +10,6 @@
 			$('#<%=btnLoadWidgets.ClientID %>').click();
 		}
 	</script>
-	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 		var thisPageID = '';
@@ -44,7 +43,8 @@
 			}
 		}
 	</script>
-	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
+	<link href="/c3-admin/Includes/tooltipster.css" rel="stylesheet" type="text/css" />
+	<script src="/c3-admin/Includes/jquery.tooltipster.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Duplicate Widget From?
@@ -142,7 +142,7 @@
 							</HeaderTemplate>
 							<ItemTemplate>
 								<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
-									<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
+									<img src="/c3-admin/images/doc.png" alt="text" /></a>
 							</ItemTemplate>
 						</asp:TemplateField>
 						<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />

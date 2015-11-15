@@ -780,7 +780,9 @@
     <Content Include="c3-admin\Includes\FindUsers.js" />
     <Content Include="c3-admin\Includes\icheck.init.js" />
     <Content Include="c3-admin\Includes\jquery.form.min.js" />
+    <Content Include="c3-admin\Includes\jquery.tooltipster.min.js" />
     <Content Include="c3-admin\Includes\jquery.uploadfile.min.js" />
+    <Content Include="c3-admin\Includes\tooltipster.css" />
     <Content Include="c3-admin\Includes\uploadfile.css" />
     <Content Include="c3-admin\SiteDetail.aspx" />
     <Content Include="c3-admin\SiteIndex.aspx" />
@@ -1172,15 +1174,6 @@
     <Content Include="c3-admin\Images\arrow_in.png" />
     <Content Include="c3-admin\Images\audio.png" />
     <Content Include="c3-admin\Images\back.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_bottom.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_bottomLeft.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_bottomRight.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_left.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_right.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_tail.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_top.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_topLeft.png" />
-    <Content Include="c3-admin\Images\balloons\balloon_topRight.png" />
     <Content Include="c3-admin\Images\book_next.png" />
     <Content Include="c3-admin\Images\book_previous.png" />
     <Content Include="c3-admin\Images\brick.png" />
@@ -1291,8 +1284,6 @@
     <Content Include="c3-admin\PageTemplateUpdate.aspx" />
     <Content Include="c3-admin\PageAddChild.aspx" />
     <Content Include="c3-admin\Includes\advanced-editor.css" />
-    <Content Include="c3-admin\Includes\tooltiphelper.css" />
-    <Content Include="c3-admin\Includes\tooltiphelper.js" />
     <Content Include="c3-admin\PageChildSort.aspx" />
     <Content Include="c3-admin\SiteSkinEdit.aspx" />
     <Content Include="c3-admin\SiteSkinIndex.aspx" />

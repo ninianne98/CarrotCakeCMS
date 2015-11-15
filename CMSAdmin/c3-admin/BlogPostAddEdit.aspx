@@ -303,7 +303,6 @@
 			ShowWindowNoRefresh(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
 		}
 	</script>
-	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 		var thisPageID = '<%=guidContentID.ToString() %>';
@@ -335,13 +334,14 @@
 			}
 		}
 	</script>
+	<link href="/c3-admin/Includes/tooltipster.css" rel="stylesheet" type="text/css" />
+	<script src="/c3-admin/Includes/jquery.tooltipster.min.js" type="text/javascript"></script>
 	<script src="Includes/FindUsers.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
 			initFindUsersMethod("<%=hdnCreditUserID.ClientID %>", "<%=txtSearchUser.ClientID %>", "FindCreditUsers");
 		});
 	</script>
-	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Blog Post Add/Edit
@@ -633,7 +633,7 @@
 												</HeaderTemplate>
 												<ItemTemplate>
 													<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
-														<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
+														<img src="/c3-admin/images/doc.png" alt="text" /></a>
 												</ItemTemplate>
 											</asp:TemplateField>
 										</Columns>
@@ -666,7 +666,7 @@
 												</HeaderTemplate>
 												<ItemTemplate>
 													<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
-														<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
+														<img src="/c3-admin/images/doc.png" alt="text" /></a>
 												</ItemTemplate>
 											</asp:TemplateField>
 										</Columns>

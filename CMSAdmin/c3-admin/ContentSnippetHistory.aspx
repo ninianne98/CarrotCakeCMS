@@ -2,7 +2,6 @@
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ContentSnippetHistory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
-	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 
@@ -33,7 +32,8 @@
 			}
 		}
 	</script>
-	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
+	<link href="/c3-admin/Includes/tooltipster.css" rel="stylesheet" type="text/css" />
+	<script src="/c3-admin/Includes/jquery.tooltipster.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Content Snippet History
@@ -68,7 +68,7 @@
 					</HeaderTemplate>
 					<ItemTemplate>
 						<a class="dataPopupTrigger" rel="<%# Eval("ContentSnippetID") %>" href="javascript:void(0)">
-							<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
+							<img src="/c3-admin/images/doc.png" alt="text" /></a>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />

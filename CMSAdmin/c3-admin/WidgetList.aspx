@@ -3,7 +3,6 @@
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
-	<link href="/c3-admin/Includes/tooltiphelper.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 		var thisPageID = '<%=guidContentID.ToString() %>';
@@ -35,7 +34,8 @@
 			}
 		}
 	</script>
-	<script src="/c3-admin/Includes/tooltiphelper.js" type="text/javascript"></script>
+	<link href="/c3-admin/Includes/tooltipster.css" rel="stylesheet" type="text/css" />
+	<script src="/c3-admin/Includes/jquery.tooltipster.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Widget List
@@ -57,7 +57,7 @@
 					<ItemTemplate>
 						<%# Eval("ControlPath")%><br />
 						<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
-							<img src="/c3-admin/images/doc.png" alt="text" title="text" /></a>
+							<img src="/c3-admin/images/doc.png" alt="text" /></a>
 						<%# GetCtrlName(Eval("ControlPath").ToString() )%>
 						<asp:HiddenField ID="hdnActive" runat="server" Value='<%# Eval("IsWidgetActive")%>' Visible="false" />
 						<asp:HiddenField ID="hdnDelete" runat="server" Value='<%# Eval("IsWidgetPendingDelete")%>' Visible="false" />
