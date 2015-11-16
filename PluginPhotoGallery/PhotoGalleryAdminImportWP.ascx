@@ -76,10 +76,12 @@
 		</table>
 		<br />
 		<p>
-			<asp:Literal ID="litTrust" runat="server"><b>Downloading images requires a full trust website, and this installation has not been detected as such, leaving the download option disabled. </b></asp:Literal>
-			The selected directory must already exist and be write enabled (to import images, if not already present). Images may be downloaded as part of this import
-			provided the file does not already exist locally, the directory can be written to, and the remote file is reachable. Please download the images manually
-			if you are unable to write files or simply do not want to download the images, simply check the box below to block the downloading of the images.
+			<asp:PlaceHolder ID="litTrust" runat="server"><b>Downloading images requires a full trust website, and this installation has not been detected as
+				such, leaving the download option disabled. </b></asp:PlaceHolder>
+			The selected directory must already exist and be write enabled (to import images, if not already present). Images may be downloaded as part
+			of this import provided the file does not already exist locally, the directory can be written to, and the remote file is reachable. Please download
+			the images manually if you are unable to write files or simply do not want to download the images, simply check the box below to block the downloading
+			of the images.
 		</p>
 		<p>
 			<asp:Button ID="btnCreate" runat="server" Text="Import Selected" OnClick="btnCreate_Click" /><br />
@@ -103,8 +105,8 @@
 					</asp:TemplateField>
 					<asp:BoundField DataField="PostTitle" HeaderText="Post Title" />
 					<asp:BoundField DataField="PostDateUTC" HeaderText="Created On" DataFormatString="{0:d}" />
-					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsPublished" HeaderText="Published" AlternateTextFalse="Inactive" AlternateTextTrue="Active"
-						ShowBooleanImage="true" />
+					<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsPublished" HeaderText="Published" AlternateTextFalse="Inactive"
+						AlternateTextTrue="Active" ShowBooleanImage="true" />
 				</Columns>
 			</carrot:CarrotGridView>
 		</div>

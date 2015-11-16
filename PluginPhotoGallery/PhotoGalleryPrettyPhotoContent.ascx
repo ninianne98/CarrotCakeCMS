@@ -7,15 +7,15 @@
 	<div runat="server" id="divGallery">
 		<asp:Panel ID="pnlGalleryHead" runat="server">
 			<h2>
-				<asp:Literal ID="litGalleryName" runat="server"></asp:Literal></h2>
+				<asp:Literal ID="litGalleryName" runat="server" /></h2>
 		</asp:Panel>
 		<asp:Panel ID="pnlGallery" runat="server">
 			<carrot:PrettyPhoto runat="server" ID="PrettyPhoto1" />
 			<div class="prettyphotoGallery  gallery">
 				<asp:Repeater ID="rpGallery" runat="server">
 					<ItemTemplate>
-						<a href="#<%# CtrlTopId %>" rel="prettyPhoto[<%=this.ClientID %>]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
-							<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# Eval("GalleryImage")  %>' ThumbSize='<%# ThumbSize1 %>' ScaleImage='<%# ScaleImage %>'
+						<a href="#<%# CtrlTopId %>" rel="prettyPhoto[<%=pnlGallery.ClientID %>]" title="<%# String.Format("{0}", Eval("GalleryImage"))  %>">
+							<carrot:ImageSizer runat="server" ID="ImageSizer2" ImageUrl='<%# Eval("GalleryImage")  %>' ThumbSize='<%# ThumbSize1 %>' ScaleImage='<%# ScaleImage %>'
 								ToolTip="" />
 						</a>
 					</ItemTemplate>
@@ -43,14 +43,19 @@
 				</asp:Repeater>
 			</div>
 			<asp:Panel ID="pnlScript" runat="server">
-				<script type="text/javascript">
-			function InitPrettyPhoto<%=pnlGallery.ClientID %>() {
-				$("#<%=pnlGallery.ClientID %> a[rel^='prettyPhoto']").prettyPhoto( { theme:'<%=PrettyPhotoSkin %>', default_width: <%=GetWindowWidth() %>, social_tools : '' } );
-			}
+				<%--<script type="text/javascript">
+					function InitPrettyPhoto<%=pnlGallery.ClientID %>() {
+						$("#<%=pnlGallery.ClientID %> a[rel^='prettyPhoto']").prettyPhoto( { theme:'<%=PrettyPhotoSkin %>', default_width: <%=GetWindowWidth() %>, social_tools : '' } );
+					}
 
-			$(document).ready(function() {
-				InitPrettyPhoto<%=pnlGallery.ClientID %>();
-			});
+					$(document).ready(function() {
+						InitPrettyPhoto<%=pnlGallery.ClientID %>();
+					});
+				</script>--%>
+				<script type="text/javascript">
+					$(document).ready(function () {
+						InitPrettyPhoto2("#<%=pnlGallery.ClientID %> a[rel^='prettyPhoto']", "<%=PrettyPhotoSkin %>", <%=GetWindowWidth() %>);
+					});
 				</script>
 			</asp:Panel>
 		</asp:Panel>

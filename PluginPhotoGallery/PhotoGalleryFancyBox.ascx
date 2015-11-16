@@ -6,7 +6,7 @@
 	<div runat="server" id="divGallery">
 		<asp:Panel ID="pnlGalleryHead" runat="server">
 			<h2>
-				<asp:Literal ID="litGalleryName" runat="server"></asp:Literal></h2>
+				<asp:Literal ID="litGalleryName" runat="server" /></h2>
 		</asp:Panel>
 		<asp:Panel ID="pnlGallery" runat="server">
 			<carrot:FancyBox runat="server" ID="FancyBox1" />

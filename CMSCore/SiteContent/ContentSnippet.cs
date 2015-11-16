@@ -206,7 +206,7 @@ namespace Carrotware.CMS.Core {
 															 where m.Root_ContentSnippetID == s.Root_ContentSnippetID
 															 select m);
 
-					_db.carrot_ContentSnippets.DeleteBatch(lst);
+					_db.carrot_ContentSnippets.BatchDelete(lst);
 					_db.carrot_RootContentSnippets.DeleteOnSubmit(s);
 					_db.SubmitChanges();
 				}
@@ -224,7 +224,7 @@ namespace Carrotware.CMS.Core {
 																&& m.IsLatestVersion != true
 															 select m);
 
-					_db.carrot_ContentSnippets.DeleteBatch(lst);
+					_db.carrot_ContentSnippets.BatchDelete(lst);
 					_db.SubmitChanges();
 				}
 			}

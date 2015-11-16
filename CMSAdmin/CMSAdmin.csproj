@@ -1206,7 +1206,6 @@
     <Content Include="c3-admin\Images\flag_red.png" />
     <Content Include="c3-admin\Images\flag_yellow.png" />
     <Content Include="c3-admin\Images\folder.png" />
-    <Content Include="c3-admin\Images\folder_up.png" />
     <Content Include="c3-admin\Images\group.png" />
     <Content Include="c3-admin\Images\heading-gradient.png" />
     <Content Include="c3-admin\Images\house.png" />

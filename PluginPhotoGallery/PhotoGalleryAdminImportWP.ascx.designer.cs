@@ -127,7 +127,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTrust;
+        protected global::System.Web.UI.WebControls.PlaceHolder litTrust;
         
         /// <summary>
         /// btnCreate control.
