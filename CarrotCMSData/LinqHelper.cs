@@ -20,6 +20,9 @@ using System.Text;
 * Date: October 2011
 */
 
+// portions derived from https://terryaney.wordpress.com/2008/04/14/batch-updates-and-deletes-with-linq-to-sql/
+// Copyright(c) 2015 Terry Aney, MIT License https://bitbucket.org/terryaney/linqtosqlextensions/
+
 namespace Carrotware.CMS.Data {
 
 	public static class LinqHelper {
@@ -268,26 +271,6 @@ namespace Carrotware.CMS.Data {
 					Func<T, Expression> visitor) where T : Expression {
 			return ExpressionVisitor<T>.Visit(exp, visitor);
 		}
-
-		public static TExp Visit<T, TExp>(
-			this TExp exp,
-			Func<T, Expression> visitor)
-			where T : Expression
-			where TExp : Expression {
-			return (TExp)ExpressionVisitor<T>.Visit(exp, visitor);
-		}
-
-		public static Expression<TDelegate> Visit<T, TDelegate>(
-			this Expression<TDelegate> exp,
-			Func<T, Expression> visitor) where T : Expression {
-			return ExpressionVisitor<T>.Visit<TDelegate>(exp, visitor);
-		}
-
-		public static IQueryable<TSource> Visit<T, TSource>(
-			this IQueryable<TSource> source,
-			Func<T, Expression> visitor) where T : Expression {
-			return source.Provider.CreateQuery<TSource>(ExpressionVisitor<T>.Visit(source.Expression, visitor));
-		}
 	}
 
 	// =============================
@@ -311,7 +294,7 @@ namespace Carrotware.CMS.Data {
 			return (Expression<TDelegate>)new ExpressionVisitor<T>(visitor).Visit(exp);
 		}
 
-		protected override Expression Visit(Expression exp) {
+		public override Expression Visit(Expression exp) {
 			if (exp is T && _visitor != null) exp = _visitor((T)exp);
 
 			return base.Visit(exp);
