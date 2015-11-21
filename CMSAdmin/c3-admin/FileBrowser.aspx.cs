@@ -18,24 +18,25 @@ using Carrotware.CMS.UI.Controls;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class FileBrowser : AdminBasePage {
-		public string sQueryPath = string.Empty;
+		public string sQueryPath = String.Empty;
 		public string sQueryMode = "1";
 		public string sReturnMode = "0";
-		public string sViewMode = string.Empty;
+		public string sViewMode = String.Empty;
 		private string defaultBrowseMode = "file";
 
 		protected FileDataHelper helpFile = new FileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			sQueryPath = Request.QueryString["fldrpath"];
+			try { sQueryPath = Request.QueryString["fldrpath"]; } catch { sQueryPath = @"/"; }
+
 			sViewMode = defaultBrowseMode;
-			lblWarning.Text = string.Empty;
+			lblWarning.Text = String.Empty;
 
-			try { sQueryMode = Request.QueryString["useTiny"]; } catch { }
-			try { sReturnMode = Request.QueryString["returnvalue"]; } catch { }
-			try { sViewMode = Request.QueryString["viewmode"]; } catch { }
+			try { sQueryMode = Request.QueryString["useTiny"].ToString(); } catch { sQueryMode = "0"; }
+			try { sReturnMode = Request.QueryString["returnvalue"].ToString(); } catch { sReturnMode = "0"; }
+			try { sViewMode = Request.QueryString["viewmode"].ToString(); } catch { sViewMode = defaultBrowseMode; }
 
-			if (sViewMode.ToLower() != defaultBrowseMode) {
+			if (String.Format("{0}", sViewMode).ToLower() != defaultBrowseMode) {
 				lnkThumbView.Visible = false;
 				lnkFileView.Visible = true;
 				btnRemove.Visible = false;
@@ -61,7 +62,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!String.IsNullOrEmpty(sQueryPath)) {
 				if (sQueryPath.Length == 1) {
-					sQueryPath = string.Empty;
+					sQueryPath = String.Empty;
 				}
 			}
 
@@ -114,7 +115,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		public string CreateFileLink(string sPath) {
-			return string.Format("javascript:SetFile('{0}');", sPath);
+			return String.Format("javascript:SetFile('{0}');", sPath);
 		}
 
 		public string CreateFileSrc(string sPath, string sFile, string sMime) {
@@ -182,8 +183,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnUpload_Click(object sender, EventArgs e) {
-			lblWarning.Text = string.Empty;
-			lblWarning.CssClass = string.Empty;
+			lblWarning.Text = String.Empty;
+			lblWarning.CssClass = String.Empty;
 			/*
 			try {
 				if (upFile.HasFile) {
@@ -198,10 +199,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						}
 
 						upFile.SaveAs(Path.Combine(sPath, uploadedFileName));
-						lblWarning.Text = string.Format("file [{0}] uploaded!", uploadedFileName);
+						lblWarning.Text = String.Format("file [{0}] uploaded!", uploadedFileName);
 						lblWarning.CssClass = "uploadSuccess";
 					} else {
-						lblWarning.Text = string.Format("[{0}] is a blocked filetype.", uploadedFileName);
+						lblWarning.Text = String.Format("[{0}] is a blocked filetype.", uploadedFileName);
 						lblWarning.CssClass = "uploadBlocked";
 					}
 

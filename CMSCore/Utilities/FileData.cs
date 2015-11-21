@@ -19,10 +19,10 @@ namespace Carrotware.CMS.Core {
 	public class FileData {
 
 		public FileData() {
-			this.FolderPath = "";
+			this.FolderPath = String.Empty;
 			this.FileName = "unknown";
 			this.FileSize = 0;
-			this.FileExtension = "";
+			this.FileExtension = String.Empty;
 			this.FileSizeFriendly = "0B";
 			this.FileDate = DateTime.MinValue.Date;
 			this.MimeType = "x-application/octet-stream";
@@ -35,6 +35,13 @@ namespace Carrotware.CMS.Core {
 		public string FileSizeFriendly { get; set; }
 		public string FolderPath { get; set; }
 		public string MimeType { get; set; }
+		public bool SelectedItem { get; set; }
+
+		public string FullFileName {
+			get {
+				return String.Format("/{0}/{1}", this.FolderPath, this.FileName).Replace(@"///", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+			}
+		}
 	}
 
 	public class FileDataHelper {
@@ -229,7 +236,7 @@ namespace Carrotware.CMS.Core {
 
 						try {
 							if ((from b in BlockedTypes
-								 where b.ToLower().Replace(".", "") == f.FileExtension.Replace(".", "")
+								 where b.ToLower().Replace(".", String.Empty) == f.FileExtension.Replace(".", String.Empty)
 								 select b).Count() < 1) {
 								dsID.Add(f);
 							}

@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 
-
-
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public partial class PhotoGalleryAdmin : AdminModule {
 
-		Guid gTheID = Guid.Empty;
+	public partial class PhotoGalleryAdmin : AdminModule {
+		private Guid gTheID = Guid.Empty;
 
 		protected FileDataHelper fileHelper = new FileDataHelper();
 
@@ -91,11 +87,9 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 
 			SetSourceFiles(null, "/");
-
 		}
 
 		protected Dictionary<int, string> ParseGalleryImages() {
-
 			var sImageList = txtGalleryOrder.Text;
 			Dictionary<int, string> lstImages = new Dictionary<int, string>();
 
@@ -118,18 +112,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			return lstImages;
 		}
 
-
 		protected void btnApply_Click(object sender, EventArgs e) {
 			SetSrcFiles();
 		}
-
 
 		protected void chkFilter_CheckedChanged(object sender, EventArgs e) {
 			SetSrcFiles();
 		}
 
-		protected void SetSrcFiles() {
+		protected string EncodeBase64(string input) {
+			return CMSConfigHelper.EncodeBase64(input);
+		}
 
+		protected void SetSrcFiles() {
 			Dictionary<int, string> lstImages = ParseGalleryImages();
 
 			DateTime? dtFilter = null;
@@ -156,9 +151,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			SetSourceFiles(dtFilter, sPath);
 		}
 
-
 		protected void SetSourceFiles(DateTime? dtFilter, string sPath) {
-
 			List<FileData> flsWorking = new List<FileData>();
 			List<FileData> fldrWorking = new List<FileData>();
 
@@ -202,9 +195,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			int iPos = 0;
 
 			foreach (var img in lstImages) {
-
 				if (!string.IsNullOrEmpty(img.Value)) {
-
 					var theImg = gh.GalleryImageEntryGetByFilename(gTheID, img.Value);
 
 					if (theImg == null) {
@@ -225,14 +216,11 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 									select l.Value.ToLower()).ToList();
 
 				gh.GalleryImageCleanup(gTheID, lst);
-
 			}
 
 			var stringFile = CreateLink(ModuleName, string.Format("id={0}", gTheID));
 
 			Response.Redirect(stringFile);
 		}
-
-
 	}
 }

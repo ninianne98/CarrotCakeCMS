@@ -57,7 +57,7 @@
 		font-size: 16px;
 		font-weight: bold;
 	}
-	
+
 	.HighlightPH {
 		height: 25px !important;
 		margin: 5px;
@@ -73,7 +73,7 @@
 	#gallerySource .icoDel {
 		display: none;
 	}
-	
+
 	#galleryTarget .editMetaData {
 		display: block;
 		float: right;
@@ -82,12 +82,11 @@
 	#gallerySource .editMetaData {
 		display: none;
 	}
-	
+
 	.inputFields {
 		display: none;
 	}
-	
-	
+
 	#imgWrapperMain {
 		display: block;
 		min-height: 2px;
@@ -100,14 +99,14 @@
 		text-align: center;
 		margin: 10px auto;
 	}
-	
+
 	#imgWrapperMain #imgThmbnail {
 		min-height: 2px;
 		min-width: 2px;
 		max-height: 105px;
 		width: auto;
 	}
-	
+
 	.thumbpreview {
 		display: block;
 		min-height: 2px;
@@ -163,7 +162,6 @@
 		img.attr('src', '/c3-admin/images/document.png');
 		img.attr('src', newImgSrc);
 	}
-
 
 	function galleryOrder() {
 
@@ -227,7 +225,6 @@
 		});
 	}
 
-
 	function clearFolderContents() {
 		$("#galleryTarget").find('li').each(function (i) {
 			$(this).remove();
@@ -259,7 +256,6 @@
 		setTimeout("galleryOrder();", 500);
 		return false;
 	}
-	
 </script>
 <br />
 <table>
@@ -306,15 +302,15 @@
 						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="<%# ResolveResourceFilePath( "PhotoIcon.png" ) %>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
 						<div style="float: left; max-width: 240px" class="fileInfo">
-							<%# String.Format("<span id=\"imgName\">{0}{1}</span>", Eval("FolderPath"), Eval("FileName"))%>
+							<%# String.Format("<span id=\"imgName\">{0}</span>", Eval("FullFileName"))%>
 							<br />
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
-						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
-						</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ Carrotware.CMS.Core.CMSConfigHelper.EncodeBase64(Eval("FolderPath").ToString() + Eval("FileName").ToString()))%>">
-							<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
-						</a></li>
+						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'>
+							<span class="ui-icon ui-icon-closethick"></span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
+								<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
+							</a></li>
 				</ItemTemplate>
 			</asp:Repeater>
 		</ul>
@@ -324,18 +320,18 @@
 			<asp:Repeater ID="rpGallery" runat="server">
 				<ItemTemplate>
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
-						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) )%>"
+						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FullFileName")) )%>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
 						<div style="float: left; max-width: 240px" class="fileInfo">
-							<%# String.Format("<span id=\"imgName\">{0}{1}</span>", Eval("FolderPath"), Eval("FileName"))%>
+							<%# String.Format("<span id=\"imgName\">{0}</span>", Eval("FullFileName"))%>
 							<br />
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
-						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
-						</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ Carrotware.CMS.Core.CMSConfigHelper.EncodeBase64(Eval("FolderPath").ToString() + Eval("FileName").ToString()))%>">
-							<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
-						</a></li>
+						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'>
+							<span class="ui-icon ui-icon-closethick"></span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
+								<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
+							</a></li>
 				</ItemTemplate>
 			</asp:Repeater>
 		</ul>
@@ -343,5 +339,5 @@
 	<div style="clear: both">
 	</div>
 </div>
-<asp:TextBox ID="txtGalleryOrder" CssClass="inputFields" TextMode="MultiLine" Rows="8" Columns="60" runat="server"></asp:TextBox>
+<asp:TextBox ID="txtGalleryOrder" CssClass="inputFields" TextMode="MultiLine" Rows="8" Columns="60" runat="server" />
 <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
