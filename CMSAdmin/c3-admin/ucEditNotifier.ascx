@@ -80,3 +80,9 @@
 		</div>
 	</div>
 </div>
+
+<div style="display: none;">
+	<img alt="" src="/c3-admin/images/ani-smallbar.gif" />
+	<img alt="" src="/c3-admin/images/ui-anim_basic_16x16.gif" />
+	<img alt="" src="/c3-admin/images/mini-spinner3-6F997D.gif" />
+</div>

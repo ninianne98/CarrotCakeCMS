@@ -38,9 +38,36 @@
 	z-index: 99100;
 }
 
-#cmsToolBoxWrap input[type="submit"], #cmsToolBoxWrap input[type="reset"], #cmsToolBoxWrap input[type="button"], #cmsToolBoxWrap .button {
-	min-width: 4em;
-	padding: 0.6em;
+#cmsToolBoxWrap input[type="submit"], #cmsToolBoxWrap input[type="reset"], #cmsToolBoxWrap input[type="button"], #cmsToolBoxWrap .button, #cmsToolBoxWrap .ui-dialog-buttonpane button, #cmsModalFrame button, #cmsModalFrame .button, #cmsModalFrame input[type="button"] {
+	min-width: 3em;
+	padding: 0.6em 0.8em;
+	border: 1px solid #8E908E;
+	background-color: #CEE4D7;
+	color: #676F6A;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+.cmsGlossySeaGreen input[type="submit"], .cmsGlossySeaGreen input[type="reset"], .cmsGlossySeaGreen input[type="button"], .cmsGlossySeaGreen .button, .cmsGlossySeaGreen .ui-dialog-buttonpane button {
+	min-width: 2em;
+	padding: 0.6em 0.8em;
+	border: 1px solid #8E908E;
+	background-color: #CEE4D7;
+	color: #676F6A;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+#cmsToolBoxWrap .btn, .cmsGlossySeaGreen button, .cmsGlossySeaGreen .btn, #cmsGlossySeaGreenID .btn, #cmsModalFrame .btn {
+	border: 1px solid #8E908E;
+	color: #676F6A;
+}
+
+#cmsToolBoxWrap .btn-primary, .cmsGlossySeaGreen .btn-primary, .cmsGlossySeaGreen button.btn-primary, #cmsGlossySeaGreenID .btn-primary, #cmsGlossySeaGreenID input.btn-primary {
+	font-weight: bold;
+	background-color: #ECFAF1;
 }
 
 .cmsGlossySeaGreen .ui-widget P {
@@ -55,7 +82,6 @@
 .cmsGlossySeaGreen .ui-front, #cmsGlossySeaGreenID .ui-front {
 	z-index: 10000000;
 }
-
 
 #cmsWidgetHead p, #cmsWidgetHead ul, #cmsWidgetHead ol, #cmsWidgetHead h1, #cmsWidgetHead h2, #cmsWidgetHead h3, #cmsWidgetHead div, #cmsWidgetHead span, #cmsWidgetHead input, #cmsWidgetHead select, #cmsWidgetHead button, #cmsWidgetHead textarea {
 	text-shadow: 0 0 0 transparent;
@@ -491,7 +517,6 @@ p.cmsToolItem {
 
 /* end menus */
 
-
 /*  Widget Styles   */
 
 .cmsSnippetOuter, .cmsSnippetInner {
@@ -663,4 +688,3 @@ p.cmsToolItem {
 	-moz-border-radius-bottomright: 6px;
 	-moz-border-radius-bottomleft: 6px;
 }
-

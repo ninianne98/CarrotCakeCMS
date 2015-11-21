@@ -1,4 +1,8 @@
-﻿var cmsIsPageLocked = true;
+﻿if (typeof jQuery === 'undefined') {
+	throw new Error('Advanced Editor JavaScript requires jQuery')
+}
+
+var cmsIsPageLocked = true;
 
 function cmsSetPageStatus(stat) {
 	cmsIsPageLocked = stat;
@@ -366,6 +370,7 @@ function cmsPreviewTemplate() {
 	$('#cmsAjaxMainDiv2').attr('id', 'cmsAjaxMainDiv3');
 
 	setTimeout("cmsSetIframeRealSrc('cmsFrameEditorPreview');", 1500);
+	cmsStyleButtons();
 }
 
 function cmsLateBtnStyle() {
@@ -768,17 +773,20 @@ function cmsFixSpinner() {
 var cmsHtmlSpinner = '<table width="100%" class="cmsImageSpinnerTbl" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/c3-admin/images/ani-smallbar.gif"/></td></tr></table>';
 
 function cmsSpinnerShort() {
-	$("#cmsDivActive").block({ message: cmsHtmlSpinner,
+	$("#cmsDivActive").block({
+		message: cmsHtmlSpinner,
 		css: { border: 'none', backgroundColor: 'transparent' },
 		fadeOut: 500,
 		timeout: 750,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
+
 	cmsFixSpinner();
 }
 
 function cmsSpinnerLong() {
-	$("#cmsDivActive").block({ message: cmsHtmlSpinner,
+	$("#cmsDivActive").block({
+		message: cmsHtmlSpinner,
 		css: { border: 'none', backgroundColor: 'transparent' },
 		fadeOut: 10000,
 		timeout: 12000,
@@ -984,6 +992,27 @@ function cmsMoveWidgetResizer(key, state) {
 	}
 }
 
+setTimeout("cmsStyleButtons();", 500);
+
+function cmsStyleButtons() {
+	cmsDoStyleButtons('.cmsGlossySeaGreen input[type="button"]');
+	cmsDoStyleButtons('.cmsGlossySeaGreen input[type="submit"]');
+	cmsDoStyleButtons('.cmsGlossySeaGreen button');
+	cmsDoStyleButtons('.ui-dialog-buttonpane button');
+}
+
+function cmsDoStyleButtons(fltPrefix) {
+	if ($(fltPrefix + ' .ui-button').length < 1) {
+		$(fltPrefix).addClass('ui-button ui-widget ui-state-default ui-corner-all');
+
+		$(fltPrefix).hover(function () {
+			$(this).addClass("ui-state-hover");
+		}, function () {
+			$(this).removeClass("ui-state-hover");
+		});
+	}
+}
+
 function cmsFixDialog(dialogname) {
 	var dilg = $("#" + dialogname).parent().parent();
 
@@ -998,8 +1027,39 @@ function cmsFixDialog(dialogname) {
 	$(d).wrap("<div class=\"cmsGlossySeaGreen\" />");
 	$(d).css('zIndex', 9950005);
 
+	//alert($(dilg).prop('id'));
+
+	var dialogWrapper = 'cmsDlgWrap_' + dialogname;
+
+	if ($(dilg).prop('id').length < 1) {
+		$(dilg).prop('id', dialogWrapper);
+	}
+
+	dialogWrapper = '#' + dialogWrapper;
+
 	//$(dilg).find('.ui-dialog-titlebar').addClass("cmsGlossySeaGreen");
 	//$(dilg).find('ui-dialog-title').addClass("cmsGlossySeaGreen");
+
+	if ($(dialogWrapper + " .ui-dialog-titlebar .ui-dialog-titlebar-close .ui-icon-closethick").length < 1) {
+		var closeBtn = $(dialogWrapper + ' .ui-dialog-titlebar-close');
+		closeBtn.addClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only');
+		closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text"> </span>');
+
+		closeBtn.hover(function () {
+			$(this).addClass("ui-state-hover");
+		}, function () {
+			$(this).removeClass("ui-state-hover");
+		});
+	}
+
+	if ($(dialogWrapper + " .ui-dialog-buttonpane .ui-dialog-buttonset btn").length < 1) {
+		var btns = $(dialogWrapper + ' .ui-dialog-buttonset button');
+		btns.addClass('btn btn-default');
+		var btn = $(dialogWrapper + ' .ui-dialog-buttonset button:first-child');
+		btn.removeClass('btn-default').addClass('btn-primary ui-state-focus');
+	}
+
+	cmsStyleButtons();
 }
 
 function cmsOverrideCSSScope(elm, xtra) {
@@ -1026,15 +1086,17 @@ function cmsLaunchWindow(theURL) {
 function cmsLoadWindow() {
 	cmsSaveToolbarPosition();
 
-	$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
-		//$.modal.close(); // must call this!
-		setTimeout("$.modal.close();", 800);
-		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
-		cmsDirtyPageRefresh();
-	}
+	$("#cms-basic-modal-content").modal({
+		onClose: function (dialog) {
+			//$.modal.close(); // must call this!
+			setTimeout("$.modal.close();", 800);
+			$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+			cmsDirtyPageRefresh();
+		}
 	});
 
 	$('#cms-basic-modal-content').modal();
+	cmsStyleButtons();
 	return false;
 }
 
@@ -1050,12 +1112,14 @@ function cmsSetiFrameSource(theURL) {
 
 	setTimeout("cmsSetIframeRealSrc('cmsFrameEditor');", 1500);
 
-	$("#cmsAjaxMainDiv2").block({ message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+	$("#cmsAjaxMainDiv2").block({
+		message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
+	cmsStyleButtons();
 }
 
 function cmsLaunchWindowOnly(theURL) {
@@ -1070,14 +1134,16 @@ function cmsLaunchWindowOnly(theURL) {
 function cmsLoadWindowOnly() {
 	cmsSaveToolbarPosition();
 
-	$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
-		//$.modal.close(); // must call this!
-		setTimeout("$.modal.close();", 800);
-		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
-	}
+	$("#cms-basic-modal-content").modal({
+		onClose: function (dialog) {
+			//$.modal.close(); // must call this!
+			setTimeout("$.modal.close();", 800);
+			$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+		}
 	});
 
 	$('#cms-basic-modal-content').modal();
+	cmsStyleButtons();
 	return false;
 }
 

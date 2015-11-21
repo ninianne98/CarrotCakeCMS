@@ -1354,40 +1354,6 @@
     <Content Include="c3-admin\PageEdit.aspx" />
     <Content Include="c3-admin\ucEditNotifier.ascx" />
     <Content Include="MIT-LICENSE.txt" />
-    <Content Include="Site_4\images\block_h.png" />
-    <Content Include="Site_4\images\block_s.png" />
-    <Content Include="Site_4\images\block_v.png" />
-    <Content Include="Site_4\images\Bottom_texture.jpg" />
-    <Content Include="Site_4\images\button.png" />
-    <Content Include="Site_4\images\footer_t.png" />
-    <Content Include="Site_4\images\header.jpg" />
-    <Content Include="Site_4\images\menuitem.png" />
-    <Content Include="Site_4\images\menuseparator.png" />
-    <Content Include="Site_4\images\nav.png" />
-    <Content Include="Site_4\images\postauthoricon.png" />
-    <Content Include="Site_4\images\postbullets.png" />
-    <Content Include="Site_4\images\postcategoryicon.png" />
-    <Content Include="Site_4\images\postcommentsicon.png" />
-    <Content Include="Site_4\images\postdateicon.png" />
-    <Content Include="Site_4\images\postediticon.png" />
-    <Content Include="Site_4\images\postquote.png" />
-    <Content Include="Site_4\images\posttagicon.png" />
-    <Content Include="Site_4\images\preview.jpg" />
-    <Content Include="Site_4\images\rssicon.png" />
-    <Content Include="Site_4\images\sheet_h.png" />
-    <Content Include="Site_4\images\sheet_s.png" />
-    <Content Include="Site_4\images\sheet_v.png" />
-    <Content Include="Site_4\images\spacer.gif" />
-    <Content Include="Site_4\images\subitem.png" />
-    <Content Include="Site_4\images\vmenublock_h.png" />
-    <Content Include="Site_4\images\vmenublock_s.png" />
-    <Content Include="Site_4\images\vmenublock_v.png" />
-    <Content Include="Site_4\images\vmenuitem.png" />
-    <Content Include="Site_4\script.js" />
-    <Content Include="Site_4\style.css" />
-    <Content Include="Site_4\style.ie6.css" />
-    <Content Include="Site_4\style.ie7.css" />
-    <Content Include="Site_4\template4.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1421,7 +1387,6 @@
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Site_4\Site_4-orig.zip" />
     <Content Include="citrus-island\citrus-island-orig.zip" />
     <Content Include="TextContentProcessors.config" />
     <None Include="c3-admin\tiny_mce\classes\firebug\FIREBUG.LICENSE" />

@@ -1,4 +1,8 @@
-﻿function AjaxBtnLoad() {
+﻿if (typeof jQuery === 'undefined') {
+	throw new Error('Common Utils JavaScript requires jQuery')
+}
+
+function AjaxBtnLoad() {
 	$(function () {
 		$('#jqtabs, .jqtabs').tabs();
 	});
@@ -61,7 +65,8 @@ function BlockUI(elementID) {
 	if (typeof (Sys) != 'undefined') {
 		var prm = Sys.WebForms.PageRequestManager.getInstance();
 		prm.add_beginRequest(function () {
-			$("#" + elementID).block({ message: htmlAjaxSpinnerTable,
+			$("#" + elementID).block({
+				message: htmlAjaxSpinnerTable,
 				css: {
 					padding: 0,
 					margin: 0,
@@ -472,7 +477,8 @@ function LaunchWindow(theURL) {
 
 	setTimeout("SetIframeRealSrc('cmsFrameEditor');", 1500);
 
-	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
+	$("#cmsAjaxMainDiv2").block({
+		message: htmlAjaxSpinnerTable,
 		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
@@ -500,7 +506,8 @@ function LaunchWindowPop(theURL) {
 
 	setTimeout("SetIframeRealSrc('cmsFrameEditor');", 1500);
 
-	$("#cmsAjaxMainDiv2").block({ message: htmlAjaxSpinnerTable,
+	$("#cmsAjaxMainDiv2").block({
+		message: htmlAjaxSpinnerTable,
 		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
@@ -511,12 +518,13 @@ function LaunchWindowPop(theURL) {
 }
 
 function LoadWindow() {
-	$("#cms-basic-modal-content").modal({ onClose: function (dialog) {
-		//$.modal.close(); // must call this!
-		setTimeout("$.modal.close();", 800);
-		$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
-		DirtyPageRefresh();
-	}
+	$("#cms-basic-modal-content").modal({
+		onClose: function (dialog) {
+			//$.modal.close(); // must call this!
+			setTimeout("$.modal.close();", 800);
+			$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+			DirtyPageRefresh();
+		}
 	});
 	IsDirty = 0;
 	$('#cms-basic-modal-content').modal();
@@ -532,7 +540,8 @@ function SetDirtyPage() {
 }
 function DirtyPageRefresh() {
 	if (RefreshPage == 1) {
-		$("#cmsAjaxMainDiv").block({ message: htmlAjaxSpinnerTable,
+		$("#cmsAjaxMainDiv").block({
+			message: htmlAjaxSpinnerTable,
 			css: {},
 			fadeOut: 1000,
 			timeout: 1200,
@@ -541,7 +550,8 @@ function DirtyPageRefresh() {
 
 		setTimeout("__doPostBack('PageRefresh', 'JavaScript');", 800);
 	} else {
-		$("#cmsAjaxMainDiv").block({ message: htmlAjaxSpinnerTable,
+		$("#cmsAjaxMainDiv").block({
+			message: htmlAjaxSpinnerTable,
 			css: {},
 			fadeOut: 250,
 			timeout: 500,
