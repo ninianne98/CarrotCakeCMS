@@ -706,7 +706,21 @@ namespace Carrotware.CMS.Core {
 		public string SiteTitlebarPattern { get; set; }
 		public string TimeZoneIdentifier { get; set; }
 
-		private List<TextWidget> SiteTextWidgets { get; set; }
+		private List<TextWidget> _lstTextWidgets = null;
+
+		internal List<TextWidget> SiteTextWidgets {
+			get {
+				if (_lstTextWidgets == null) {
+					_lstTextWidgets = new List<TextWidget>();
+				}
+
+				return _lstTextWidgets;
+			}
+
+			set {
+				_lstTextWidgets = value;
+			}
+		}
 
 		public Guid? Blog_Root_ContentID { get; set; }
 		public string Blog_FolderPath { get; set; }

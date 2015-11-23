@@ -35,9 +35,16 @@ namespace Carrotware.CMS.Core {
 
 		public ITextBodyUpdate TextProcessor {
 			get {
-				if (_txt == null && !string.IsNullOrEmpty(this.TextWidgetAssembly)) {
+				if (_txt == null && !String.IsNullOrEmpty(this.TextWidgetAssembly)) {
 					Type t = Type.GetType(this.TextWidgetAssembly);
-					Object o = Activator.CreateInstance(t);
+					Object o = null;
+
+					try {
+						o = Activator.CreateInstance(t);
+					} catch (Exception ex) {
+						o = null;
+						SiteData.WriteDebugException("textprocessor", ex);
+					}
 
 					if (o != null && o is ITextBodyUpdate) {
 						_txt = o as ITextBodyUpdate;
