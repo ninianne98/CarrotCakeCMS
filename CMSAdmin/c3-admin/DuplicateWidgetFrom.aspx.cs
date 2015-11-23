@@ -114,10 +114,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 								ControlPath = w.ControlPath,
 								ControlProperties = w.ControlProperties,
 								IsLatestVersion = true,
-								IsWidgetActive = w.IsWidgetActive,
 								IsPendingChange = true,
+								IsWidgetActive = true,
 								IsWidgetPendingDelete = false,
 								WidgetOrder = w.WidgetOrder,
+								GoLiveDate = w.GoLiveDate,
+								RetireDate = w.RetireDate,
 								EditDate = SiteData.CurrentSite.Now
 							};
 
