@@ -133,15 +133,21 @@ function cmsMakeStringSafe(val) {
 
 function cmsAjaxFailedSwallow(request) {
 	var s = "";
-	s = s + "<b>status: </b>" + request.status + '<br />\r\n';
-	s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
-	s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';
-	// cmsAlertModal(s);
+	if (request.status > 0) {
+		s = s + "cmsAjaxFailedSwallow(request) \r\n";
+		s = s + "status: " + request.status + ' \r\n';
+		s = s + "statusText:  " + request.statusText + ' \r\n';
+		s = s + "responseText:  " + request.responseText + ' \r\n';
+		if (typeof (console) !== "undefined" && console.log) {
+			console.log(s);
+		}
+	}
 }
 
 function cmsAjaxFailed(request) {
 	var s = "";
 	if (request.status > 0) {
+		s = s + "cmsAjaxFailed(request) \r\n";
 		s = s + "<b>status: </b>" + request.status + '<br />\r\n';
 		s = s + "<b>statusText: </b>" + request.statusText + '<br />\r\n';
 		s = s + "<b>responseText: </b>" + request.responseText + '<br />\r\n';

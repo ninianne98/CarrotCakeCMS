@@ -756,8 +756,24 @@ namespace Carrotware.CMS.DBUpdater {
 
 		#region Work with data keys
 
+		private static object schemaCheckLocker = new Object();
+
+		//private static string SchemaKey = "cms_GetDbSchemaVersion";
+
 		public static DataInfo GetDbSchemaVersion() {
-			return GetDataKeyValue("DBSchema");
+			DataInfo di = null;
+			lock (schemaCheckLocker) {
+				//if (HttpContext.Current.Cache[ContentKey] != null) {
+				//	try { di = (DataInfo)HttpContext.Current.Cache[ContentKey]; } catch { }
+				//} else {
+				//	di = GetDataKeyValue("DBSchema");
+				//	HttpContext.Current.Cache.Insert(ContentKey, di, null, DateTime.Now.AddSeconds(5), Cache.NoSlidingExpiration);
+				//}
+
+				di = GetDataKeyValue("DBSchema");
+
+				return di;
+			}
 		}
 
 		public static void SetDbSchemaVersion(string dataKeyValue) {
