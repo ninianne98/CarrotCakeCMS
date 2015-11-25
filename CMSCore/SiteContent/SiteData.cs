@@ -984,6 +984,8 @@ namespace Carrotware.CMS.Core {
 			context.Response.Write(FormatErrorOutput(ex));
 		}
 
+		private static object logLocker = new Object();
+
 		public static void WriteDebugException(string sSrc, Exception objErr) {
 			bool bWriteError = false;
 
@@ -1011,11 +1013,15 @@ namespace Carrotware.CMS.Core {
 					sb.AppendLine(objErr.InnerException.Message);
 				}
 
-				string sDir = HttpContext.Current.Server.MapPath("~/carrot_errors.txt");
+				string filePath = HttpContext.Current.Server.MapPath("~/carrot_errors.txt");
 
 				Encoding encode = Encoding.Default;
-				using (StreamWriter oWriter = new StreamWriter(sDir, true, encode)) {
-					oWriter.Write(sb.ToString());
+				lock (logLocker) {
+					using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
+						using (StreamWriter oWriter = new StreamWriter(fs, encode)) {
+							oWriter.Write(sb.ToString());
+						}
+					}
 				}
 			}
 		}

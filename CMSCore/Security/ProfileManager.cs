@@ -104,7 +104,6 @@ namespace Carrotware.CMS.Core {
 
 		//create constant strings for each type of characters
 		private static string alphaCaps = "QWERTYUIOPASDFGHJKLZXCVBNM";
-
 		private static string alphaLow = "qwertyuiopasdfghjklzxcvbnm";
 		private static string numerics = "1234567890";
 		private static string special = "@#$";
@@ -112,21 +111,24 @@ namespace Carrotware.CMS.Core {
 
 		//create another string which is a concatenation of all above
 		private static string allChars = alphaCaps + alphaLow + numerics + special;
-
 		private static string specialChars = special + nonalphanum;
 
 		public static string GenerateSimplePassword() {
-			int length = 8;
+			int length = 12;
 			Random r = new Random();
-			String generatedPassword = "";
+			string generatedPassword = String.Empty;
 
 			for (int i = 0; i < length; i++) {
 				double rand = r.NextDouble();
 				if (i == 0) {
 					//First character is an upper case alphabet
 					generatedPassword += alphaCaps.ToCharArray()[(int)Math.Floor(rand * alphaCaps.Length)];
-				} else if (i == length - 2) {
+				} else if (i == length - 3) {
 					generatedPassword += specialChars.ToCharArray()[(int)Math.Floor(rand * specialChars.Length)];
+				} else if (i == length - 5) {
+					generatedPassword += numerics.ToCharArray()[(int)Math.Floor(rand * numerics.Length)];
+				} else if (i == length - 7) {
+					generatedPassword += alphaLow.ToCharArray()[(int)Math.Floor(rand * alphaLow.Length)];
 				} else {
 					generatedPassword += allChars.ToCharArray()[(int)Math.Floor(rand * allChars.Length)];
 				}

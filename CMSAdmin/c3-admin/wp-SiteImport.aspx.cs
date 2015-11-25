@@ -219,10 +219,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					if (wpu.ImportUserID != Guid.Empty) {
 						ExtendedUserData ud = new ExtendedUserData(wpu.ImportUserID);
-						if (!String.IsNullOrEmpty(wpu.FirstName) || !String.IsNullOrEmpty(wpu.LastName)) {
-							ud.FirstName = wpu.FirstName;
-							ud.LastName = wpu.LastName;
-							ud.Save();
+						if (ud != null) {
+							if (!String.IsNullOrEmpty(wpu.FirstName) || !String.IsNullOrEmpty(wpu.LastName)) {
+								ud.FirstName = wpu.FirstName;
+								ud.LastName = wpu.LastName;
+								ud.Save();
+							}
+						} else {
+							throw new Exception(String.Format("Could not find new user: {0} ({1})", wpu.Login, wpu.Email));
 						}
 					}
 				}
