@@ -82,7 +82,9 @@
 </div>
 
 <div style="display: none;">
-	<img alt="" src="/c3-admin/images/ani-smallbar.gif" />
-	<img alt="" src="/c3-admin/images/ui-anim_basic_16x16.gif" />
-	<img alt="" src="/c3-admin/images/mini-spinner3-6F997D.gif" />
+	<img src="/c3-admin/images/ui-anim_basic_16x16.gif" alt="anim_basic_16x16"/>
+	<img src="/c3-admin/images/x.png" alt="x" />
+	<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
+	<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />
+	<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
 </div>

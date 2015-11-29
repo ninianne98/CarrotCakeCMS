@@ -131,6 +131,9 @@
 			<img src="/c3-admin/images/arrow_in.png" alt="" />
 			<img src="/c3-admin/images/dragbg.png" alt="" />
 			<img src="/c3-admin/images/x.png" alt="x" />
+			<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
+			<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />
+			<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
 		</div>
 		<div style="display: none">
 			<div id="cms-basic-modal-content" class="cmsGlossySeaGreen">

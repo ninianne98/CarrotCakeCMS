@@ -116,8 +116,7 @@
 						<li runat="server" id="tabAddContent"><a href="/c3-admin/PageAddEdit.aspx">Add Page</a> </li>
 						<li runat="server" id="tabContentTemplate"><a href="/c3-admin/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabContentSiteMap"><a href="/c3-admin/SiteMap.aspx">Edit Site Map</a> </li>
-						<li runat="server" id="tabContentCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a>
-						</li>
+						<li runat="server" id="tabContentCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
 					</ul>
 				</li>
 				<li runat="server" id="tabBlogTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
@@ -127,8 +126,7 @@
 						<li runat="server" id="tabBlogTemplate"><a href="/c3-admin/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
 						<li runat="server" id="tabBlogCategoryIndex"><a href="/c3-admin/CategoryIndex.aspx">Blog Category Index</a> </li>
 						<li runat="server" id="tabBlogTagIndex"><a href="/c3-admin/TagIndex.aspx">Blog Tag Index</a> </li>
-						<li runat="server" id="tabBlogCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a>
-						</li>
+						<li runat="server" id="tabBlogCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
 					</ul>
 				</li>
 				<li runat="server" id="tabExtensions" class="sub"><a href="javascript:void(0)" class="lnkPopup">Extensions </a>
@@ -151,10 +149,8 @@
 				<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
 					<%=String.Format("My Profile [{0}]", userName)%></a>
 					<ul class="children">
-						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a>
-						</li>
-						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a>
-						</li>
+						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
+						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>
 						<li><a href="javascript:void(0)" class="lnkPopup" onclick="LogoutLink();">Logout</a> </li>
 					</ul>
 				</li>
@@ -185,6 +181,9 @@
 				</div>
 			</div>
 			<img src="/c3-admin/images/x.png" alt="x" />
+			<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
+			<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />
+			<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
 			<div id="divCMSModal" title="CarrotCake CMS">
 				<div id="divCMSModalMsg">
 					&nbsp;</div>
