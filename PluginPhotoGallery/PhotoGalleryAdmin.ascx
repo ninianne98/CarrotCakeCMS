@@ -307,10 +307,13 @@
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
-						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'>
-							<span class="ui-icon ui-icon-closethick"></span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
+						<div style="float: right; max-width: 32px; min-width: 16px;">
+							<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
+							</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
 								<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
-							</a></li>
+							</a>
+						</div>
+					</li>
 				</ItemTemplate>
 			</asp:Repeater>
 		</ul>
@@ -328,10 +331,13 @@
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
-						<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'>
-							<span class="ui-icon ui-icon-closethick"></span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
+						<div style="float: right; max-width: 32px; min-width: 16px;">
+							<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
+							</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
 								<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
-							</a></li>
+							</a>
+						</div>
+					</li>
 				</ItemTemplate>
 			</asp:Repeater>
 		</ul>
