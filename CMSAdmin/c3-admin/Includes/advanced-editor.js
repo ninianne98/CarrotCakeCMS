@@ -319,7 +319,7 @@ function cmsPreviewTemplate2() {
 	$(editIFrame).attr('src', srcURL);
 	$(editIFrame).attr('realsrc', srcURL);
 
-	setTimeout("cmsSetIframeRealSrc('cmsFrameEditorPreview');", 500);
+	setTimeout("cmsSetIframeRealSrc('cmsFrameEditorPreview');", 250);
 
 	window.frames["cmsFrameEditorPreview"].location.reload();
 }
@@ -368,9 +368,9 @@ function cmsPreviewTemplate() {
 		templateList += "<option value='" + this.value + "'>" + this.text + "</option>";
 	});
 
-	var btnWide1 = ' <input type="radio" id="btnDeskTemplateCMS" name="btnWidthTemplateCMS" value="0" onclick="cmsWideDesk();" checked /><label for="btnDeskTemplateCMS">Desktop Size</label> ';
-	var btnWide2 = ' <input type="radio" id="btnTabletTemplateCMS" name="btnWidthTemplateCMS" value="1" onclick="cmWideTablet();" /><label for="btnTabletTemplateCMS">Tablet Size</label> ';
-	var btnWide3 = ' <input type="radio" id="btnMobileTemplateCMS" name="btnWidthTemplateCMS" value="2" onclick="cmsWideMobile();" /><label for="btnMobileTemplateCMS">Mobile Size</label> ';
+	var btnWide1 = '<input type="radio" id="btnDeskTemplateCMS" name="btnWidthTemplateCMS" value="0" onclick="cmsWideDesk();" checked /><label for="btnDeskTemplateCMS">Desktop Size</label>';
+	var btnWide2 = '<input type="radio" id="btnTabletTemplateCMS" name="btnWidthTemplateCMS" value="1" onclick="cmWideTablet();" /><label for="btnTabletTemplateCMS">Tablet Size</label>';
+	var btnWide3 = '<input type="radio" id="btnMobileTemplateCMS" name="btnWidthTemplateCMS" value="2" onclick="cmsWideMobile();" /><label for="btnMobileTemplateCMS">Mobile Size</label>';
 
 	var ddlPreview = ' <select id="cmsTemplateList">' + templateList + '</select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ';
 
@@ -1140,7 +1140,7 @@ function cmsSetiFrameSource(theURL) {
 
 	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + TheURL + '" src="/c3-admin/includes/Blank.htm" /> </div>');
 
-	setTimeout("cmsSetIframeRealSrc('cmsFrameEditor');", 1500);
+	setTimeout("cmsSetIframeRealSrc('cmsFrameEditor');", 500);
 
 	$("#cmsAjaxMainDiv2").block({
 		message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
