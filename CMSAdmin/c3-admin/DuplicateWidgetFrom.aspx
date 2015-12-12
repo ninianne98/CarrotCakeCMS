@@ -15,10 +15,9 @@
 		var thisPageID = '';
 
 		function cmsGetWidgetText(val) {
-
 			thisPageID = $('#<%=hdnSelectedItem.ClientID %>').val();
 
-			var webMthd = webSvc + "/GetWidgetLatestText";
+			var webMthd = webSvc + "/GetWidgetText";
 
 			$.ajax({
 				type: "POST",

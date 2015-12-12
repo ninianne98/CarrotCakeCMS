@@ -36,7 +36,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnSearch_Click(object sender, EventArgs e) {
 			List<SiteNav> lstContents = new List<SiteNav>();
-			int iTake = 10;
+			int iTake = 25;
 			int iTotal = -1;
 
 			phResults.Visible = true;
