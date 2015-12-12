@@ -172,7 +172,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			try {
 				CurrentPageGuid = new Guid(ThisPage);
 
-				pageHelper.ResetHeartbeatLock(CurrentPageGuid, SiteData.CurrentSite.SiteID);
+				pageHelper.ResetHeartbeatLock(CurrentPageGuid, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
 
 				GetSetUserEditStateAsEmpty();
 

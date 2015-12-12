@@ -145,19 +145,21 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public bool IsPageLocked() {
-			bool bLock = false;
-			if (this.Heartbeat_UserId != null) {
-				if (this.Heartbeat_UserId != SecurityData.CurrentUserGuid
-						&& this.EditHeartbeat.Value > DateTime.UtcNow.AddMinutes(-2)) {
-					bLock = true;
+		public bool IsPageLocked {
+			get {
+				bool bLock = false;
+				if (this.Heartbeat_UserId != null) {
+					if (this.Heartbeat_UserId != SecurityData.CurrentUserGuid
+							&& this.EditHeartbeat.Value > DateTime.UtcNow.AddMinutes(-2)) {
+						bLock = true;
+					}
+					if (this.Heartbeat_UserId == SecurityData.CurrentUserGuid
+						|| this.Heartbeat_UserId == null) {
+						bLock = false;
+					}
 				}
-				if (this.Heartbeat_UserId == SecurityData.CurrentUserGuid
-					|| this.Heartbeat_UserId == null) {
-					bLock = false;
-				}
+				return bLock;
 			}
-			return bLock;
 		}
 
 		public void LoadAttributes() {

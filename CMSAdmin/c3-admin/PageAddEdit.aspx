@@ -231,10 +231,7 @@
 	</script>
 	<script type="text/javascript">
 
-		var cmsIsPageLocked = true;
-		if ('<%=bLocked.ToString().ToLower() %>' != 'true') {
-			cmsIsPageLocked = false;
-		}
+		var cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
 		$(window).bind('beforeunload', function () {
 			//cmsConfirmLeavingPage = false;

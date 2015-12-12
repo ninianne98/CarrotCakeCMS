@@ -25,7 +25,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public ContentPageType.PageType PageType = ContentPageType.PageType.Unknown;
 		public UserEditState EditorPrefs = null;
 
-		public string EditedPageFileName = "";
+		public string EditedPageFileName = String.Empty;
+		public string EditUserName = String.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			//jquerybasic jb = BasicControlUtils.FindjQuery(this.Page);
@@ -83,7 +84,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				rpTools.Visible = false;
 			}
 
-			bLocked = pageHelper.IsPageLocked(pageContents);
+			bLocked = pageHelper.IsPageLocked(pageContents.Root_ContentID, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 			GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
 			try { GeneralUtilities.SelectListValue(ddlTemplate, cmsHelper.cmsAdminContent.TemplateFile.ToLower()); } catch { }
@@ -128,6 +129,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				if (bLocked && pageContents.Heartbeat_UserId != null) {
 					MembershipUser usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
+					EditUserName = usr.UserName;
 					litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
 						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 				}

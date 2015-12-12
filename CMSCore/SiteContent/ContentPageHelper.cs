@@ -639,13 +639,21 @@ namespace Carrotware.CMS.Core {
 			return lstContent.ToList();
 		}
 
-		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID) {
+		public void ResetHeartbeatLock(Guid rootContentID, Guid siteID, Guid currentUserID) {
 			carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, siteID, rootContentID);
 
 			if (rc != null) {
-				rc.EditHeartbeat = DateTime.UtcNow.AddHours(-2);
-				rc.Heartbeat_UserId = null;
-				db.SubmitChanges();
+				if (rc.Heartbeat_UserId.HasValue && rc.Heartbeat_UserId.Value == currentUserID) {
+					rc.EditHeartbeat = DateTime.UtcNow.AddHours(-2);
+					rc.Heartbeat_UserId = null;
+					db.SubmitChanges();
+				} else {
+					if (!rc.Heartbeat_UserId.HasValue) {
+						rc.EditHeartbeat = DateTime.UtcNow.AddHours(-4);
+						rc.Heartbeat_UserId = null;
+						db.SubmitChanges();
+					}
+				}
 			}
 		}
 

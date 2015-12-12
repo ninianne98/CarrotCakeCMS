@@ -56,6 +56,18 @@ namespace Carrotware.Web.UI.Controls {
 			return BaseWebControl.GetWebResourceUrl(typeof(jquery), resource);
 		}
 
+		private static string _generalUri = null;
+
+		public static string GeneralUri {
+			get {
+				if (String.IsNullOrEmpty(_generalUri)) {
+					_generalUri = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery-1-8-3.js");
+				}
+
+				return _generalUri;
+			}
+		}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 			string sJQFile = "";
 			string jqVer = JQVersion;

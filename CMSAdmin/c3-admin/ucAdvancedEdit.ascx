@@ -9,6 +9,13 @@
 	<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/advanced-editor.css" rel="stylesheet" type="text/css" />
 </asp:PlaceHolder>
+<%--
+	<!-- jQuery CDN -->
+	<script>		setTimeout(function () { window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"><\/script>'); }, 100);  </script>
+	<script>		setTimeout(function () { window.jQuery.ui || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"><\/script>'); }, 200);  </script>
+--%>
+<script>	(!window.jQuery || (typeof jQuery == 'undefined')) || document.write('<script src="<% = Carrotware.Web.UI.Controls.jquery.GeneralUri %>" type="text/javascript"><\/script>'); </script>
+<script>	window.jQuery.ui || document.write('<script src="<% = Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>" type="text/javascript"><\/script>'); </script>
 <script src="/c3-admin/includes/jquery.simplemodal.js" type="text/javascript"></script>
 <script src="/c3-admin/includes/jquery.blockUI.js" type="text/javascript"></script>
 <script src="/c3-admin/includes/base64.js" type="text/javascript"></script>
@@ -16,8 +23,8 @@
 <script type="text/javascript">
 	var cmsJQLoadCtr = 1;
 	function cmsLoadJQDyn() {
-		var jq2URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jquery-1-8-3.js")%>';
-		var jq1URL = '<%=GetWebControlUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js")%>';
+		var jq2URL = '<%= Carrotware.Web.UI.Controls.jquery.GeneralUri %>';
+		var jq1URL = '<%= Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>';
 
 		if (cmsJQLoadCtr <= 30) {
 			cmsJQLoadCtr++;
@@ -33,6 +40,7 @@
 </script>
 <script type="text/javascript">
 	var cmsPageInit2 = false;
+	var cmsPageLocked = <%=bLocked.ToString().ToLower() %>;
 
 	if (!window.jQuery || (typeof jQuery == 'undefined')) {
 		setTimeout("cmsToolbarPageInit2();", 1000);
@@ -46,19 +54,20 @@
 
 	function cmsToolbarPageInit2() {
 		if (!cmsPageInit2) {
-			<% if (!bLocked) { %>
-				setTimeout('cmsEditHB();', 750);
-			<%} else { %>
-				cmsAlertModal('<%=litUser.Text %>');
-			<%} %>
+			cmsSetPageStatus(cmsPageLocked);
+
+			if(!cmsPageLocked){
+				setTimeout('cmsEditHB();', 1000);
+			} else{
+				setTimeout(function () { cmsAlertModal("The content is already being edited by '<%= EditUserName %>' "); }, 250);
+			}
+
 			cmsPageInit2 = true;
 		}
 
 		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit, .cmsGlossySeaGreen input:reset").button();
 		$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit, #cmsGlossySeaGreenID input:reset").button();
 	}
-</script>
-<script type="text/javascript">
 
 	var cmsPageInit1 = false;
 
@@ -86,12 +95,8 @@
 		var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";
 		var cmsOpenStat = true;
 
-		if ('<%=bLocked.ToString().ToLower() %>' != 'true') {
-			cmsSetPageStatus(false);
-		} else {
-			cmsSetPageStatus(true);
-		}
-
+		cmsSetPageStatus(cmsPageLocked);
+		
 		if ('<%= EditorPrefs.EditorOpen %>' == 'false') {
 			cmsOpenStat = false;
 		}
@@ -181,6 +186,7 @@
 										<li><a href="#cmsTabIdx-tabs-3">Page Info</a></li>
 									</ul>
 									<div id="cmsTabIdx-tabs-1">
+										<% if (!bLocked) { %>
 										<div style="display: none;">
 											cmsFullOrder<br />
 											<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
@@ -214,10 +220,16 @@
 											<FooterTemplate>
 												</div></FooterTemplate>
 										</asp:Repeater>
+										<%} else { %>
+										<div class="cmsCenter5px">
+											<input type="button" id="Button2" value="Cancel" onclick="cmsCancelEdit();" />
+										</div>
+										<%} %>
 										<div style="clear: both;">
 										</div>
 									</div>
 									<div id="cmsTabIdx-tabs-2">
+										<% if (!bLocked) { %>
 										<div class="cmsLeft5px">
 											<p>
 												Templates / Skins<br />
@@ -238,10 +250,12 @@
 												<input type="button" id="btnToolboxCancel2" value="Cancel" onclick="cmsCancelEdit();" />
 											</div>
 										</div>
+										<%} %>
 										<div style="clear: both;">
 										</div>
 									</div>
 									<div id="cmsTabIdx-tabs-3">
+										<% if (!bLocked) { %>
 										<div class="cmsLeft5px">
 											<p>
 												<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" />
@@ -264,6 +278,7 @@
 											&nbsp;&nbsp;&nbsp;
 											<input type="button" id="btnToolboxCancel3" value="Cancel" onclick="cmsCancelEdit();" />
 										</div>
+										<%} %>
 										<div style="clear: both;">
 										</div>
 									</div>
