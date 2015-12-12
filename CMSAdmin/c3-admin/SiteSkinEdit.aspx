@@ -27,8 +27,8 @@
 					<ul>
 						<asp:Repeater ID="rpFiles" runat="server">
 							<ItemTemplate>
-								<li><a href="<%# String.Format("{0}?path={1}&alt={2}", SiteData.CurrentScriptName, sTemplateFileQS, EncodePath(String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName"))) ) %>">
-									<%# String.Format("{0}{1}", Eval("FolderPath"), Eval("FileName")) %>
+								<li><a href="<%# String.Format("{0}?path={1}&alt={2}", SiteData.CurrentScriptName, sTemplateFileQS, EncodePath(String.Format("{0}", Eval("FullFileName"))) ) %>">
+									<%# String.Format("{0}", Eval("FullFileName") )%>
 								</a>
 									<br />
 									<br />

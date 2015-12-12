@@ -42,8 +42,25 @@ namespace Carrotware.CMS.Core {
 				return String.Format("/{0}/{1}", this.FolderPath, this.FileName).Replace(@"///", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
 			}
 		}
+
+		public override bool Equals(Object obj) {
+			//Check for null and compare run-time types.
+			if (obj == null || GetType() != obj.GetType()) return false;
+
+			if (obj is FileData) {
+				FileData p = (FileData)obj;
+				return (String.Format("{0}", this.FullFileName).ToLower() == String.Format("{0}", p.FullFileName).ToLower());
+			} else {
+				return false;
+			}
+		}
+
+		public override int GetHashCode() {
+			return String.Format("{0}", this.FullFileName).ToLower().GetHashCode();
+		}
 	}
 
+	//=================================================
 	public class FileDataHelper {
 
 		public FileDataHelper() { }
@@ -87,20 +104,30 @@ namespace Carrotware.CMS.Core {
 			string sPath = MakeFileFolderPath(sQuery);
 
 			string myFileName;
-			string myFileDate;
 
 			FileData f = new FileData();
 			f.FileName = myFile;
 
-			myFileName = Path.GetFileName(myFile).Trim();
-			if (myFileName.Length > 0) {
-				FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
-				myFileDate = File.GetLastWriteTime(MyFile.FullName).ToString();
-				string sP = sQuery + myFileName + "/";
+			bool IsFolder = Directory.Exists(myFile);
 
-				f.FileName = myFileName;
-				f.FolderPath = MakeFilePathUniform(sP);
-				f.FileDate = Convert.ToDateTime(myFileDate);
+			if (IsFolder) {
+				myFileName = myFile;
+				f.FileName = Path.GetFileName(myFileName).Trim();
+				if (myFile.Length >= sPath.Length) {
+					f.FolderPath = String.Format("/{0}/{1}/", sQuery, myFile.Substring(sPath.Length)).Replace(@"\", @"/").Replace(@"///", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+				}
+				f.FileDate = Convert.ToDateTime(Directory.GetLastWriteTime(myFile));
+			} else {
+				myFileName = Path.GetFileName(myFile).Trim();
+
+				if (myFileName.Length > 0) {
+					FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
+					string sP = sQuery + myFileName + "/";
+
+					f.FileName = myFileName;
+					f.FolderPath = MakeFilePathUniform(sP);
+					f.FileDate = File.GetLastWriteTime(MyFile.FullName);
+				}
 			}
 
 			return f;
@@ -131,9 +158,9 @@ namespace Carrotware.CMS.Core {
 			sQuery = MakeFilePathUniform(sQuery);
 			string sPath = MakeFileFolderPath(sQuery);
 
-			string myFileName;
-			string myFileDate;
-			string myFileSizeF;
+			string myFileName = String.Empty;
+			DateTime myFileDate = Convert.ToDateTime("1899-01-01"); ;
+			string myFileSizeF = String.Empty;
 			long myFileSize;
 
 			FileData f = new FileData();
@@ -142,7 +169,7 @@ namespace Carrotware.CMS.Core {
 			myFileName = Path.GetFileName(myFile).Trim();
 			if (myFileName.Length > 0 && File.Exists(sPath + "/" + myFileName)) {
 				FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
-				myFileDate = File.GetLastWriteTime(MyFile.FullName).ToString();
+				myFileDate = File.GetLastWriteTime(MyFile.FullName);
 				myFileSize = MyFile.Length;
 
 				myFileSizeF = myFileSize.ToString() + " B";
@@ -158,7 +185,7 @@ namespace Carrotware.CMS.Core {
 
 				f.FileName = myFileName;
 				f.FolderPath = MakeFilePathUniform(sP);
-				f.FileDate = Convert.ToDateTime(myFileDate);
+				f.FileDate = myFileDate;
 				f.FileSize = Convert.ToInt32(myFileSize);
 				f.FileSizeFriendly = myFileSizeF;
 				if (!string.IsNullOrEmpty(MyFile.Extension)) {

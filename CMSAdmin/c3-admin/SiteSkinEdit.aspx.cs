@@ -115,21 +115,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				try {
 					if (Directory.Exists(Server.MapPath("~/includes"))) {
-						FileData incFolder = helpFile.GetFolderInfo("/", "/includes");
+						FileData incFolder = helpFile.GetFolderInfo("/", Server.MapPath("~/includes"));
 						fldrWorking.Add(incFolder);
 					}
 					if (Directory.Exists(Server.MapPath("~/js"))) {
-						FileData incFolder = helpFile.GetFolderInfo("/", "/js");
+						FileData incFolder = helpFile.GetFolderInfo("/", Server.MapPath("~/js"));
 						fldrWorking.Add(incFolder);
 					}
 					if (Directory.Exists(Server.MapPath("~/css"))) {
-						FileData incFolder = helpFile.GetFolderInfo("/", "/css");
+						FileData incFolder = helpFile.GetFolderInfo("/", Server.MapPath("~/css"));
 						fldrWorking.Add(incFolder);
 					}
-					//if (Directory.Exists(Server.MapPath("~/files"))) {
-					//    FileData incFolder = helpFile.GetFolderInfo("/", Server.MapPath("files"));
-					//    fldrWorking.Add(incFolder);
-					//}
 				} catch (Exception ex) { }
 
 				helpFile.IncludeAllFiletypes();
@@ -144,9 +140,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("text") && (x.FolderPath.ToLower().StartsWith(SiteData.AdminFolderPath) == false)).ToList();
 
-				GeneralUtilities.BindRepeater(rpFiles, flsWorking.OrderBy(x => x.FileName).OrderBy(x => x.FolderPath).ToList());
+				GeneralUtilities.BindRepeater(rpFiles, flsWorking.Distinct().OrderBy(x => x.FileName).OrderBy(x => x.FolderPath).ToList());
 			}
 		}
-
 	}
 }
