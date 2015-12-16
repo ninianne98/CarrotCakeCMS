@@ -217,17 +217,27 @@
 						<asp:HiddenField ID="hdnContentID" runat="server" Value='<%# Eval("Root_ContentID") %>' />
 					</ItemTemplate>
 				</asp:TemplateField>
-				<asp:BoundField HeaderText="Nav Menu Text" DataField="NavMenuText" />
-				<asp:BoundField HeaderText="Filename" DataField="Filename" />
-				<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0:d}" />
-				<asp:BoundField HeaderText="Created On" DataField="CreateDate" DataFormatString="{0:d}" />
-				<asp:BoundField HeaderText="Go Live" DataField="GoLiveDate" DataFormatString="{0:d}" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ContentType" HeaderText="Content Type" ShowEnumImage="true">
 					<ImageSelectors>
 						<carrot:CarrotImageColumnData ImageAltText="Post" ImagePath="/c3-admin/images/blogger.png" KeyValue="BlogEntry" />
 						<carrot:CarrotImageColumnData ImageAltText="Page" ImagePath="/c3-admin/images/page_world.png" KeyValue="ContentEntry" />
 					</ImageSelectors>
 				</carrot:CarrotHeaderSortTemplateField>
+				<asp:BoundField HeaderText="Nav Menu Text" DataField="NavMenuText" />
+				<asp:BoundField HeaderText="Filename" DataField="Filename" />
+				<asp:TemplateField>
+					<ItemTemplate>
+						<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit4" NavigateUrl='<%# String.Format("{0}", Eval("FileName")) %>'><img class="imgNoBorder" src="/c3-admin/images/html.png" alt="Visit Page" title="Visit Page" /></asp:HyperLink>
+					</ItemTemplate>
+				</asp:TemplateField>
+				<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField HeaderText="Last Edited" DataField="EditDate" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField HeaderText="Go Live" DataField="GoLiveDate" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField HeaderText="Retire On" DataField="RetireDate" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsRetired" HeaderText="Retired" ShowBooleanImage="true" AlternateTextTrue="Retired"
+					AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
+				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsUnReleased" HeaderText="Released" ShowBooleanImage="true"
+					AlternateTextTrue="Unreleased" AlternateTextFalse="Active" ImagePathTrue="/c3-admin/images/clock_red.png" ImagePathFalse="/c3-admin/images/clock.png" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteNav" HeaderText="Navigation" ShowBooleanImage="true"
 					AlternateTextTrue="Yes" AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="ShowInSiteMap" HeaderText="In SiteMap" ShowBooleanImage="true"

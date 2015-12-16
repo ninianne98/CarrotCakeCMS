@@ -14,8 +14,10 @@
 	<script>		setTimeout(function () { window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"><\/script>'); }, 100);  </script>
 	<script>		setTimeout(function () { window.jQuery.ui || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"><\/script>'); }, 200);  </script>
 --%>
-<script>	(!window.jQuery || (typeof jQuery == 'undefined')) || document.write('<script src="<% = Carrotware.Web.UI.Controls.jquery.GeneralUri %>" type="text/javascript"><\/script>'); </script>
-<script>	window.jQuery.ui || document.write('<script src="<% = Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>" type="text/javascript"><\/script>'); </script>
+<%--
+	<script>	(!window.jQuery || (typeof jQuery == 'undefined')) || document.write('<script src="<% = Carrotware.Web.UI.Controls.jquery.GeneralUri %>" type="text/javascript"><\/script>'); </script>
+	<script>	window.jQuery.ui || document.write('<script src="<% = Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>" type="text/javascript"><\/script>'); </script>
+--%>
 <script src="/c3-admin/includes/jquery.simplemodal.js" type="text/javascript"></script>
 <script src="/c3-admin/includes/jquery.blockUI.js" type="text/javascript"></script>
 <script src="/c3-admin/includes/base64.js" type="text/javascript"></script>
@@ -96,7 +98,7 @@
 		var cmsOpenStat = true;
 
 		cmsSetPageStatus(cmsPageLocked);
-		
+
 		if ('<%= EditorPrefs.EditorOpen %>' == 'false') {
 			cmsOpenStat = false;
 		}
@@ -200,8 +202,8 @@
 										</div>
 										<asp:Repeater ID="rpTools" runat="server">
 											<HeaderTemplate>
-												<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 240px; padding: 5px; margin: 5px; float: left;
-													border: solid 1px #000;">
+												<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 240px; padding: 5px;
+													margin: 5px; float: left; border: solid 1px #000;">
 											</HeaderTemplate>
 											<ItemTemplate>
 												<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper">

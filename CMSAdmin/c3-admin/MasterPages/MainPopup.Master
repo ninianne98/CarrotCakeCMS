@@ -117,7 +117,7 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-	<div runat="server" id="divSaved" class="info-saved">
+	<div runat="server" id="divSaved" class="info-saved" style="display: none;">
 		<h2>
 			<asp:Literal ID="litSaveMessage" runat="server" Text="Changes Applied" />
 		</h2>
