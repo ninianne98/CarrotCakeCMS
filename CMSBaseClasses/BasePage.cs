@@ -23,6 +23,22 @@ namespace Carrotware.CMS.UI.Base {
 		protected WidgetHelper widgetHelper = new WidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
+		public override void Dispose() {
+			base.Dispose();
+
+			if (pageHelper != null) {
+				pageHelper.Dispose();
+			}
+
+			if (widgetHelper != null) {
+				widgetHelper.Dispose();
+			}
+
+			if (cmsHelper != null) {
+				cmsHelper.Dispose();
+			}
+		}
+
 		protected string CurrentDLLVersion {
 			get { return SiteData.CurrentDLLVersion; }
 		}

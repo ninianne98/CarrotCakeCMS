@@ -47,6 +47,22 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		protected override void Dispose(bool disposing) {
+			base.Dispose(disposing);
+
+			if (pageHelper != null) {
+				pageHelper.Dispose();
+			}
+
+			if (widgetHelper != null) {
+				widgetHelper.Dispose();
+			}
+
+			if (sitemapHelper != null) {
+				sitemapHelper.Dispose();
+			}
+		}
+
 		public ContentPage cmsAdminContent {
 			get {
 				ContentPage c = null;
