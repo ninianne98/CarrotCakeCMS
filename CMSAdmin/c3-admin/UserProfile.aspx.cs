@@ -2,6 +2,16 @@
 using System.Web.Security;
 using Carrotware.CMS.Core;
 
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 3 licenses.
+*
+* Date: October 2011
+*/
+
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class UserProfile : AdminBasePage {
@@ -11,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.UsesSaved = true;
 			Master.HideSave();
-			Master.ShowSave("Profile Updated");
+			Master.SetSaveMessage("Profile Updated");
 
 			divInfoMsg.Visible = false;
 			InfoMessage.Text = String.Empty;

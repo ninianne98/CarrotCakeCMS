@@ -74,7 +74,7 @@
 	</asp:ContentPlaceHolder>
 </head>
 <body>
-	<form id="form1" runat="server">
+	<form id="aspnetForm" runat="server">
 	<div id="cmsAjaxMainDiv">
 		<div id="headercontainer">
 			<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />

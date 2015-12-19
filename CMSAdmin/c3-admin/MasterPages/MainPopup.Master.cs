@@ -21,6 +21,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		public bool UsesSaved { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e) {
+			ResetSave();
+
 			if (!IsPostBack) {
 				pnlDirty.Visible = false;
 			} else {
@@ -30,13 +32,21 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			if (!this.UsesSaved) {
 				HideSave();
 			} else {
-				if (this.ShowSaved || !String.IsNullOrEmpty(Request.QueryString["showsaved"])) {
+				if (this.ShowSaved || !String.IsNullOrEmpty(this.ShowSaveQuery)) {
 					this.ShowSaved = true;
 					ShowSave();
 				}
 			}
 
 			LoadFooterCtrl(plcFooter, ControlLocation.PopupFooter);
+		}
+
+		protected string ShowSaveQuery {
+			get {
+				return Request.QueryString["showsaved"] != null
+					? Request.QueryString["showsaved"].ToString()
+					: String.Empty;
+			}
 		}
 
 		public string SavedSuffix {
@@ -62,12 +72,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 		public void HideSave() {
 			this.ShowSaved = false;
+			ResetSave();
+		}
+
+		public void ResetSave() {
 			hdnShow.Value = String.Empty;
 		}
 
 		// so that it is easy to toggle master pages
-		public void ActivateTab(SectionID sectionID) {
-		}
+		public void ActivateTab(SectionID sectionID) { }
 
 		protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e) {
 			string sError = String.Empty;

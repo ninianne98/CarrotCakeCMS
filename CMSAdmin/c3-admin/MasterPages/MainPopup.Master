@@ -54,10 +54,17 @@
 
 		var pnl = '#<%=divSaved.ClientID %>';
 		var fld = '#<%=hdnShow.ClientID %>';
-		var frm = "#aspnetForm";
+		var frmid = "#aspnetForm";
 		var timer1 = '';
+		var frm = '';
 
 		function DisplaySaveBox() {
+
+			if ($(frmid).length > 0) {
+				frm = $(frmid);
+			} else {
+				frm = $('form');
+			}
 
 			var act = $(frm).attr("action");
 			var pos = act.indexOf("showsaved=true");
@@ -116,7 +123,7 @@
 	</asp:ContentPlaceHolder>
 </head>
 <body>
-	<form id="form1" runat="server">
+	<form id="aspnetForm" runat="server">
 	<div runat="server" id="divSaved" class="info-saved" style="display: none;">
 		<h2>
 			<asp:Literal ID="litSaveMessage" runat="server" Text="Changes Applied" />
