@@ -28,7 +28,7 @@ Licensed under the MIT or GPL v3 License
 
 CarrotCakeCMS is maintained by Samantha Copeland
 
-### Install Development Tools and required libraries
+### Install Development Tools
 
 1. **[Visual Studio Express 2010][IDE2010]** Professional (or higher) editions OK. [Later][IDEALT] versions mostly OK (make sure to target the 3.5 framework), the database project won't load, but that's OK because it's just there to maintain a schema history, it is not part of any build event
 1. **[SQL Server Express 2008 (or higher/later)][SQL]**
