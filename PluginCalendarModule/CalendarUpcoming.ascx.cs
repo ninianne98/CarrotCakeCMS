@@ -1,53 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
 
-
-
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
+
 	public partial class CalendarUpcoming : WidgetParmDataUserControl {
 
-		private int _past = -3;
-		public int DaysInPast {
-			get { return _past; }
-			set { _past = value; }
+		public CalendarUpcoming() {
+			this.DaysInFuture = 30;
+			this.DaysInPast = -3;
 		}
 
-		private int _future = 30;
-		public int DaysInFuture {
-			get { return _future; }
-			set { _future = value; }
-		}
+		public int DaysInPast { get; set; }
 
-
+		public int DaysInFuture { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!IsPostBack) {
 				SetCalendar();
 			}
 		}
 
 		protected override void OnInit(EventArgs e) {
-
-			if (PublicParmValues.Count > 0) {
+			if (this.PublicParmValues.Count > 0) {
 				try {
 					string sFoundVal = GetParmValue("DaysInPast", "-3");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						DaysInPast = Convert.ToInt32(sFoundVal);
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.DaysInPast = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
 
 				try {
 					string sFoundVal = GetParmValue("DaysInFuture", "30");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						DaysInFuture = Convert.ToInt32(sFoundVal);
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.DaysInFuture = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
 			}
@@ -55,28 +44,22 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			base.OnInit(e);
 		}
 
-
 		protected void SetCalendar() {
-
-			DateTime dtStart = DateTime.Now.AddDays(DaysInPast);
-			DateTime dtEnd = DateTime.Now.AddDays(DaysInFuture);
+			DateTime dtStart = DateTime.Now.Date.AddDays(this.DaysInPast);
+			DateTime dtEnd = DateTime.Now.Date.AddDays(this.DaysInFuture);
 
 			using (dbCalendarDataContext db = dbCalendarDataContext.GetDataContext()) {
 				var lst = (from c in db.tblCalendars
 						   where c.EventDate >= dtStart
 							&& c.EventDate < dtEnd
 							&& c.IsActive == true
-							&& c.SiteID == SiteID
+							&& c.SiteID == this.SiteID
 						   orderby c.EventDate
 						   select c).ToList();
-
 
 				dgEvents.DataSource = lst;
 				dgEvents.DataBind();
 			}
-
 		}
-
-
 	}
 }

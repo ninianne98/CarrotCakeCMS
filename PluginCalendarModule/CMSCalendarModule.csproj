@@ -107,7 +107,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbCalendar.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Site1.Master.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site1.Master.designer.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdmin.aspx.cs">
+      <DependentUpon>CalendarAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdmin.aspx.designer.cs">
+      <DependentUpon>CalendarAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarAdminAddEdit.aspx.cs">
+      <DependentUpon>CalendarAdminAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarAdminAddEdit.aspx.designer.cs">
+      <DependentUpon>CalendarAdminAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarDisplay.aspx.cs">
+      <DependentUpon>CalendarDisplay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarDisplay.aspx.designer.cs">
+      <DependentUpon>CalendarDisplay.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="calendar1.css" />
@@ -117,10 +152,14 @@
     <Content Include="CalendarAdminAddEdit.ascx" />
     <Content Include="CalendarDisplay.ascx" />
     <Content Include="CalendarUpcoming.ascx" />
+    <Content Include="CalendarAdmin.aspx" />
+    <Content Include="CalendarAdminAddEdit.aspx" />
+    <Content Include="CalendarDisplay.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CalendarDateInfo.ascx" />
     <Content Include="create tblCalendar.sql" />
+    <Content Include="Default.aspx" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +174,7 @@
     <None Include="dbCalendar.dbml.layout">
       <DependentUpon>dbCalendar.dbml</DependentUpon>
     </None>
+    <Content Include="Site1.Master" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMSInterfaces\CMSInterfaces.csproj">

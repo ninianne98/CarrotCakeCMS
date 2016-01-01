@@ -13,11 +13,11 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		public string LaunchURLWindow { get; set; }
 
 		protected override void OnInit(EventArgs e) {
-			if (PublicParmValues.Any()) {
+			if (this.PublicParmValues.Any()) {
 				try {
 					string sFoundVal = GetParmValue("SpecifiedCSSFile", "");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
+					if (!String.IsNullOrEmpty(sFoundVal)) {
 						this.SpecifiedCSSFile = sFoundVal;
 					}
 				} catch (Exception ex) { }
@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				try {
 					string sFoundVal = GetParmValue("JavascriptFunctionNameDate", "");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
+					if (!String.IsNullOrEmpty(sFoundVal)) {
 						this.JavascriptFunctionNameDate = sFoundVal;
 					}
 				} catch (Exception ex) { }
@@ -33,21 +33,21 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				try {
 					string sFoundVal = GetParmValue("LaunchURLWindow", "");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
+					if (!String.IsNullOrEmpty(sFoundVal)) {
 						this.LaunchURLWindow = sFoundVal;
 					}
 				} catch (Exception ex) { }
 			}
 
-			if (!string.IsNullOrEmpty(this.LaunchURLWindow) && string.IsNullOrEmpty(this.JavascriptFunctionNameDate)) {
+			if (!String.IsNullOrEmpty(this.LaunchURLWindow) && String.IsNullOrEmpty(this.JavascriptFunctionNameDate)) {
 				this.JavascriptFunctionNameDate = "eventCalendarDateLaunch";
 			}
 
-			if (!string.IsNullOrEmpty(this.SpecifiedCSSFile)) {
+			if (!String.IsNullOrEmpty(this.SpecifiedCSSFile)) {
 				Calendar1.OverrideCSS = this.SpecifiedCSSFile;
 			}
 
-			if (!string.IsNullOrEmpty(this.JavascriptFunctionNameDate)) {
+			if (!String.IsNullOrEmpty(this.JavascriptFunctionNameDate)) {
 				Calendar1.JavascriptForDate = this.JavascriptFunctionNameDate;
 			}
 
@@ -83,7 +83,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 						   where c.EventDate >= dtStart
 							&& c.EventDate < dtEnd
 							&& c.IsActive == true
-							&& c.SiteID == SiteID
+							&& c.SiteID == this.SiteID
 						   orderby c.EventDate
 						   select c).ToList();
 

@@ -7,7 +7,7 @@
 		text-align: center;
 		padding-bottom: 10px;
 	}
-	
+
 	.calendarCenter2 {
 		width: 75%;
 		margin: 0px auto;
@@ -15,12 +15,12 @@
 		text-align: center;
 		padding-bottom: 10px;
 	}
-	
+
 	.calendarEventDetail {
 		width: 500px;
 		padding: 25px;
 	}
-	
+
 	table.calendarGrid {
 		margin: 0px auto !important;
 	}

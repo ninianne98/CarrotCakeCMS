@@ -1,29 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
 
-
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarAdminAddEdit : AdminModule {
 
+	public partial class CalendarAdminAddEdit : AdminModule {
 		protected dbCalendarDataContext db = dbCalendarDataContext.GetDataContext();
 		protected Guid ItemGuid = Guid.Empty;
-
 
 		protected void Page_Load(object sender, EventArgs e) {
 			ItemGuid = ParmParser.GetGuidIDFromQuery();
 
-
 			if (ItemGuid != Guid.Empty) {
-
 				cmdSave.Text = "Save";
-
 			} else {
-
 				ItemGuid = Guid.NewGuid();
 				txtID.Text = ItemGuid.ToString();
 
@@ -33,9 +24,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				btnDelete.Visible = false;
 			}
 
-
 			if (!IsPostBack) {
-
 				txtDate.Text = DateTime.Now.Date.ToShortDateString();
 
 				var itm = (from c in db.tblCalendars
@@ -51,10 +40,15 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			}
 
 			txtID.Text = ItemGuid.ToString();
-
 		}
 
+		public override void Dispose() {
+			base.Dispose();
 
+			if (db != null) {
+				db.Dispose();
+			}
+		}
 
 		protected void cmdAdd_Click(object sender, System.EventArgs e) {
 			ItemGuid = Guid.NewGuid();
@@ -67,7 +61,6 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		}
 
 		protected void cmdDelete_Click(object sender, System.EventArgs e) {
-
 			var itm = (from c in db.tblCalendars
 					   where c.CalendarID == ItemGuid
 					   select c).FirstOrDefault();
@@ -78,7 +71,6 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			string filePath = CreateLink("CalendarAdmin");
 
 			Response.Redirect(filePath);
-
 		}
 
 		protected void Save() {
@@ -103,7 +95,6 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				itm.SiteID = SiteID;
 			}
 
-
 			if (bAdd) {
 				db.tblCalendars.InsertOnSubmit(itm);
 			}
@@ -113,7 +104,5 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 			Response.Redirect(filePath);
 		}
-
-
 	}
 }

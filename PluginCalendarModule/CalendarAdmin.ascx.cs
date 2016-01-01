@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
-	public partial class CalendarAdmin : AdminModule {
 
-		private dbCalendarDataContext db = dbCalendarDataContext.GetDataContext();
+	public partial class CalendarAdmin : AdminModule {
+		protected dbCalendarDataContext db = dbCalendarDataContext.GetDataContext();
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!IsPostBack) {
 				txtDate.Text = DateTime.Now.ToShortDateString();
 				LoadData();
 			}
+		}
 
+		public override void Dispose() {
+			base.Dispose();
+
+			if (db != null) {
+				db.Dispose();
+			}
 		}
 
 		protected void btnLast_Click(object sender, EventArgs e) {
@@ -31,12 +33,9 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			LoadData();
 		}
 
-
 		protected void LoadData() {
-
 			DateTime dtStart = Calendar1.CalendarDate.AddDays(1 - Calendar1.CalendarDate.Day);
 			DateTime dtEnd = dtStart.AddMonths(1);
-
 
 			var lst = (from c in db.tblCalendars
 					   where c.EventDate >= dtStart
@@ -60,7 +59,5 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			Calendar1.CalendarDate = Convert.ToDateTime(txtDate.Text).Date;
 			LoadData();
 		}
-
-
 	}
 }

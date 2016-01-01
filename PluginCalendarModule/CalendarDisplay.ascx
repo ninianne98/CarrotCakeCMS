@@ -3,11 +3,14 @@
 </div>
 <div>
 	<center>
-	<carrot:Calendar runat="server" ID="Calendar1" />
+	<div><carrot:Calendar runat="server" ID="Calendar1" />
 	<br />
+	</div>
+	<div>
 	<asp:Button CssClass="calendarbutton" ID="btnLast" runat="server" Text="«««««" OnClick="btnLast_Click" />
 	&nbsp;&nbsp;&nbsp;
 	<asp:Button CssClass="calendarbutton" ID="btnNext" runat="server" Text="»»»»»" OnClick="btnNext_Click" />
+	</div>
 	<div style="width: 500px; padding: 25px;">
 		<asp:DataGrid ID="dgEvents" runat="server" CellPadding="2" ShowHeader="False" GridLines="None" AutoGenerateColumns="False">
 			<ItemStyle></ItemStyle>
@@ -15,8 +18,7 @@
 				<asp:TemplateColumn HeaderText="EventDate">
 					<ItemStyle HorizontalAlign="Left" VerticalAlign="Top"></ItemStyle>
 					<ItemTemplate>
-						<asp:Label ID="lblDate" runat="server" Text='<%# String.Format( "{0:d}", DataBinder.Eval(Container, "DataItem.EventDate") ) %>'>
-						</asp:Label>
+						<asp:Literal ID="litDate" runat="server" Text='<%# String.Format( "{0:d}", DataBinder.Eval(Container, "DataItem.EventDate") ) %>' />
 					</ItemTemplate>
 				</asp:TemplateColumn>
 				<asp:TemplateColumn HeaderText="EventDate">
@@ -28,10 +30,9 @@
 					<ItemStyle HorizontalAlign="Left" VerticalAlign="Top"></ItemStyle>
 					<ItemTemplate>
 						<b>
-							<asp:Label ID="lblEvent" runat="server" Text='<%# String.Format( "{0}", DataBinder.Eval(Container, "DataItem.EventTitle") ) %>'>
-							</asp:Label></b><br />
-						<asp:Label ID="lblDetail" runat="server" Text='<%# String.Format( "{0}<br /><br />", DataBinder.Eval(Container, "DataItem.EventDetail") ) %>'>
-						</asp:Label>
+							<asp:Literal ID="litEvent" runat="server" Text='<%# String.Format( "{0}", DataBinder.Eval(Container, "DataItem.EventTitle") ) %>' />
+							 </b><br />
+						<asp:Literal ID="litDetail" runat="server" Text='<%# String.Format( "{0}<br /><br />", DataBinder.Eval(Container, "DataItem.EventDetail") ) %>' />
 					</ItemTemplate>
 				</asp:TemplateColumn>
 			</Columns>
