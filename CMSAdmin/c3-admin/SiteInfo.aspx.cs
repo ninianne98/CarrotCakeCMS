@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Controls;
 
 /*
@@ -27,9 +26,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			litID.Text = SiteData.CurrentSiteID.ToString();
 
 			if (!IsPostBack) {
-				if (DatabaseUpdate.AreCMSTablesIncomplete()) {
-					Response.Redirect(SiteFilename.DatabaseSetupURL);
-				}
+				CheckDatabase();
 
 				SiteData site = siteHelper.GetCurrentSite();
 

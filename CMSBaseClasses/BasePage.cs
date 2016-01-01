@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Controls;
 
 /*
@@ -16,8 +17,6 @@ using Carrotware.CMS.UI.Controls;
 namespace Carrotware.CMS.UI.Base {
 
 	public abstract class BasePage : System.Web.UI.Page {
-		//protected GridSorting gs = new GridSorting();
-
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
 		protected WidgetHelper widgetHelper = new WidgetHelper();
@@ -46,6 +45,15 @@ namespace Carrotware.CMS.UI.Base {
 		protected Guid SiteID {
 			get {
 				return SiteData.CurrentSiteID;
+			}
+		}
+
+		protected void CheckDatabase() {
+			if (DatabaseUpdate.AreCMSTablesIncomplete() || !DatabaseUpdate.UsersExist) {
+				DatabaseUpdate.ResetFailedSQL();
+				DatabaseUpdate.ResetSQLState();
+
+				Response.Redirect(SiteFilename.DatabaseSetupURL);
 			}
 		}
 

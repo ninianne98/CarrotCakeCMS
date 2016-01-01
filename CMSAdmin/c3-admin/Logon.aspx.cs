@@ -4,7 +4,6 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
 
 /*
@@ -34,15 +33,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			DatabaseUpdate du = new DatabaseUpdate();
 			divMsg.Visible = false;
 
 			lnkForgot.HRef = SiteFilename.ForgotPasswordURL;
 
-			if (DatabaseUpdate.FailedSQL || du.DatabaseNeedsUpdate() || !du.UsersExist) {
-				FormsAuthentication.SignOut();
-				Response.Redirect(SiteFilename.DatabaseSetupURL);
-			}
+			CheckDatabase();
 
 			if (Page.User.Identity.IsAuthenticated) {
 				Response.Redirect(SiteFilename.DashboardURL);

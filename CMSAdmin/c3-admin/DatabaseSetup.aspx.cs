@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private bool bOK = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
-			DatabaseUpdate du = new DatabaseUpdate();
+			DatabaseUpdate du = new DatabaseUpdate(true);
 
 			if (!String.IsNullOrEmpty(Request.QueryString["signout"])) {
 				FormsAuthentication.SignOut();
@@ -58,7 +58,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				bUpdate = du.DatabaseNeedsUpdate();
 
 				if (!bUpdate && DatabaseUpdate.LastSQLError == null) {
-					if (du.UsersExist) {
+					if (DatabaseUpdate.UsersExist) {
 						btnLogin.Visible = true;
 					} else {
 						btnCreate.Visible = true;

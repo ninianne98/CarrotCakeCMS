@@ -775,6 +775,7 @@
     <Content Include="c3-admin\Images\chosen-sprite%402x.png" />
     <Content Include="c3-admin\Images\chosen-sprite.png" />
     <Content Include="c3-admin\Images\cloud-up.png" />
+    <Content Include="c3-admin\Images\information.png" />
     <Content Include="c3-admin\Includes\chosen.jquery.min.js" />
     <Content Include="c3-admin\Includes\chosen.min.css" />
     <Content Include="c3-admin\Includes\FindUsers.js" />
