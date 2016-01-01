@@ -77,7 +77,7 @@
 </div>
 <script type="text/javascript">
 	function SubmitPage() {
-		var ret = tinyMCE.triggerSave();
+		var ret = cmsPreSaveTrigger();
 		cmsIsPageValid();
 		setTimeout("ClickSaveBtn();", 500);
 	}

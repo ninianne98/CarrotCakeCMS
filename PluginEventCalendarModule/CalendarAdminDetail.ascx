@@ -164,7 +164,7 @@
 <script type="text/javascript">
 
 	function SubmitPage(parm) {
-		var ret = tinyMCE.triggerSave();
+		var ret = cmsPreSaveTrigger();
 		cmsIsPageValid();
 		setTimeout("ClickSaveBtn('" + parm + "');", 800);
 

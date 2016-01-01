@@ -42,18 +42,18 @@
 			&nbsp;<asp:Button ID="cmdSave" runat="server" OnClientClick="SubmitPage()" Text="Save" />
 			<span style="display: none">
 				<asp:Button ID="cmdDelete" runat="server" Text="cmdDelete" OnClick="cmdDelete_Click" />
-				&nbsp;<asp:Button ID="btnAdd" runat="server" Text="Clone" OnClick="cmdAdd_Click" />
+				<asp:Button ID="btnAdd" runat="server" Text="Clone" OnClick="cmdAdd_Click" />
 				<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="cmdSave_Click" />
 				<asp:TextBox onkeypress="return ProcessKeyPress(event)" ID="txtID" runat="server" Columns="5" Text="0" />
 			</span>
 		</td>
 	</tr>
 </table>
-<script language="javascript">
+<script type="text/javascript">
     function calAutoSynchMCE() {
 
         if (saving != 1) {
-            tinyMCE.triggerSave();
+            var ret = cmsPreSaveTrigger();
             setTimeout("calAutoSynchMCE();", 2500);
             //alert("AutoSynchMCE");
         }
@@ -80,7 +80,6 @@
     function ClickAdd() {
         $('#<%=btnAdd.ClientID %>').click();
     }
-
 
     function fnDelete() {
         var oFrm = document.forms[0];
