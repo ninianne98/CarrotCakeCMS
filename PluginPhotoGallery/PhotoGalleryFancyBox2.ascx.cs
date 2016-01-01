@@ -1,109 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
-	public partial class PhotoGalleryFancyBox2 : WidgetParmDataUserControl, IWidgetEditStatus {
+	public partial class PhotoGalleryFancyBox2 : PublicGalleryBase {
 
-		#region IWidgetEditStatus Members
+		public PhotoGalleryFancyBox2() {
+			this.ScaleImage = true;
+			this.ShowHeading = false;
+			this.ThumbSize = 100;
+		}
 
-		public bool IsBeingEdited { get; set; }
-
-		#endregion IWidgetEditStatus Members
-
-		public bool ShowHeading { get; set; }
-
-		public bool ScaleImage { get; set; }
-
+		[Description("Galleries to display")]
 		[Widget(WidgetAttribute.FieldMode.CheckBoxList, "lstGalleryID")]
 		public List<Guid> GalleryIDs { get; set; }
 
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstGalleryID {
-			get {
-				if (SiteID == Guid.Empty) {
-					SiteID = SiteData.CurrentSiteID;
-				}
-				Dictionary<string, string> _dict = null;
-
-				GalleryHelper gh = new GalleryHelper(SiteID);
-
-				_dict = (from c in gh.GalleryGroupListGetBySiteID()
-						 orderby c.GalleryTitle
-						 where c.SiteID == SiteID
-						 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
-
-				return _dict;
-			}
-		}
-
+		[Description("Gallery image pixel height/width")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
 		public int ThumbSize { get; set; }
 
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstSizes {
-			get {
-				Dictionary<string, string> _dict = new Dictionary<string, string>();
-
-				_dict.Add("25", "25px");
-				_dict.Add("50", "50px");
-				_dict.Add("75", "75px");
-				_dict.Add("100", "100px");
-				_dict.Add("125", "125px");
-				_dict.Add("150", "150px");
-				_dict.Add("175", "175px");
-				_dict.Add("200", "200px");
-				_dict.Add("225", "225px");
-				_dict.Add("250", "250px");
-
-				return _dict;
-			}
-		}
-
 		protected void Page_Load(object sender, EventArgs e) {
-			if (PublicParmValues.Any()) {
-				GalleryIDs = new List<Guid>();
+			GetPublicParmValues();
+
+			if (this.PublicParmValues.Any()) {
+				this.GalleryIDs = new List<Guid>();
+
+				this.ThumbSize = 150;
 
 				try {
 					List<string> lstGallery = GetParmValueList("GalleryIDs");
 
 					foreach (string sGallery in lstGallery) {
-						if (!string.IsNullOrEmpty(sGallery)) {
-							GalleryIDs.Add(new Guid(sGallery));
+						if (!String.IsNullOrEmpty(sGallery)) {
+							this.GalleryIDs.Add(new Guid(sGallery));
 						}
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ShowHeading", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ShowHeading = Convert.ToBoolean(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ScaleImage", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ScaleImage = Convert.ToBoolean(sFoundVal);
 					}
 				} catch (Exception ex) { }
 
 				try {
 					string sFoundVal = GetParmValue("ThumbSize", "150");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ThumbSize = Convert.ToInt32(sFoundVal);
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.ThumbSize = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
 			}
 
-			if (GalleryIDs == null) {
-				GalleryIDs = new List<Guid>();
+			if (this.GalleryIDs == null) {
+				this.GalleryIDs = new List<Guid>();
 			}
 
 			GalleryHelper gh = new GalleryHelper(SiteID);

@@ -7,36 +7,20 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
-	public partial class PhotoGalleryPrettyPhotoContent : WidgetParmDataUserControl, IWidgetEditStatus {
+	public partial class PhotoGalleryPrettyPhotoContent : PublicGalleryBase {
 
-		[Description("Display gallery heading")]
-		public bool ShowHeading { get; set; }
-
-		[Description("Scale gallery images")]
-		public bool ScaleImage { get; set; }
+		public PhotoGalleryPrettyPhotoContent() {
+			this.ScaleImage = true;
+			this.ShowHeading = false;
+			this.ThumbSize1 = 150;
+			this.ThumbSize2 = 200;
+			this.WindowWidth = 500;
+			this.PrettyPhotoSkin = "light_rounded";
+		}
 
 		[Description("Gallery to display")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstGalleryID")]
 		public Guid GalleryID { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstGalleryID {
-			get {
-				if (SiteID == Guid.Empty) {
-					SiteID = SiteData.CurrentSiteID;
-				}
-				Dictionary<string, string> _dict = null;
-
-				GalleryHelper gh = new GalleryHelper(SiteID);
-
-				_dict = (from c in gh.GalleryGroupListGetBySiteID()
-						 orderby c.GalleryTitle
-						 where c.SiteID == SiteID
-						 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
-
-				return _dict;
-			}
-		}
 
 		private int iCtrl1 = 0;
 
@@ -54,12 +38,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-		#region IWidgetEditStatus Members
-
-		public bool IsBeingEdited { get; set; }
-
-		#endregion IWidgetEditStatus Members
-
 		[Description("Gallery main image pixel height/width")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
 		public int ThumbSize1 { get; set; }
@@ -67,29 +45,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		[Description("Gallery detail image pixel height/width")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
 		public int ThumbSize2 { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstSizes {
-			get {
-				Dictionary<string, string> _dict = new Dictionary<string, string>();
-
-				_dict.Add("25", "25px");
-				_dict.Add("50", "50px");
-				_dict.Add("75", "75px");
-				_dict.Add("100", "100px");
-				_dict.Add("125", "125px");
-				_dict.Add("150", "150px");
-				_dict.Add("175", "175px");
-				_dict.Add("200", "200px");
-				_dict.Add("225", "225px");
-				_dict.Add("250", "250px");
-				_dict.Add("275", "275px");
-				_dict.Add("300", "300px");
-				_dict.Add("325", "325px");
-				_dict.Add("350", "350px");
-				return _dict;
-			}
-		}
 
 		[Description("Gallery popup window width in pixels")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes2")]
@@ -130,19 +85,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public string GetScale() {
-			return ScaleImage.ToString().ToLower();
+			return this.ScaleImage.ToString().ToLower();
 		}
 
 		public string GetThumbSize() {
-			return ThumbSize1.ToString().ToLower();
+			return this.ThumbSize1.ToString().ToLower();
 		}
 
 		public string GetThumbSize2() {
-			return ThumbSize2.ToString().ToLower();
+			return this.ThumbSize2.ToString().ToLower();
 		}
 
 		public string GetWindowWidth() {
-			return WindowWidth.ToString().ToLower();
+			return this.WindowWidth.ToString().ToLower();
 		}
 
 		private List<GalleryMetaData> imageData = new List<GalleryMetaData>();
@@ -172,75 +127,61 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (PublicParmValues.Any()) {
+			GetPublicParmValues();
+
+			if (this.PublicParmValues.Any()) {
 				try {
 					string sFoundVal = GetParmValue("GalleryID", Guid.Empty.ToString());
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						GalleryID = new Guid(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ShowHeading", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ShowHeading = Convert.ToBoolean(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ScaleImage", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ScaleImage = Convert.ToBoolean(sFoundVal);
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.GalleryID = new Guid(sFoundVal);
 					}
 				} catch (Exception ex) { }
 
 				try {
 					string sFoundVal = GetParmValueDefaultEmpty("WindowWidth", "500");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						WindowWidth = Convert.ToInt32(sFoundVal);
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.WindowWidth = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
 
 				try {
 					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize1", "150");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ThumbSize1 = Convert.ToInt32(sFoundVal);
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.ThumbSize1 = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
 
 				try {
 					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize2", "200");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ThumbSize2 = Convert.ToInt32(sFoundVal);
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.ThumbSize2 = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
 
 				try {
 					string sFoundVal = GetParmValue("PrettyPhotoSkin", "light_rounded");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						PrettyPhotoSkin = sFoundVal;
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.PrettyPhotoSkin = sFoundVal;
 					}
 				} catch (Exception ex) { }
 			}
 
-			if (string.IsNullOrEmpty(PrettyPhotoSkin)) {
-				PrettyPhotoSkin = "light_rounded";
+			if (String.IsNullOrEmpty(PrettyPhotoSkin)) {
+				this.PrettyPhotoSkin = "light_rounded";
 			}
 
 			imageData = new List<GalleryMetaData>();
 
 			List<GalleryImageEntry> gallery = null;
 
-			GalleryHelper gh = new GalleryHelper(SiteID);
+			GalleryHelper gh = new GalleryHelper(this.SiteID);
 
-			var gal = gh.GalleryGroupGetByID(GalleryID);
+			var gal = gh.GalleryGroupGetByID(this.GalleryID);
 
 			if (gal != null) {
 				litGalleryName.Text = gal.GalleryTitle;
@@ -265,7 +206,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				pnlGallery.Visible = false;
 			}
 
-			if (!IsBeingEdited) {
+			if (!this.IsBeingEdited) {
 				pnlScript.Visible = true;
 			} else {
 				pnlScript.Visible = false;

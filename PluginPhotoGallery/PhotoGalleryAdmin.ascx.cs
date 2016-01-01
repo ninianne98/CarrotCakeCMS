@@ -99,10 +99,10 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			int iRow = 0;
 			foreach (string arrImgCell in arrImageRows) {
-				if (!string.IsNullOrEmpty(arrImgCell)) {
+				if (!String.IsNullOrEmpty(arrImgCell)) {
 					var w = arrImgCell.Split('\t');
 					var img = w[1];
-					if (!string.IsNullOrEmpty(img)) {
+					if (!String.IsNullOrEmpty(img)) {
 						lstImages.Add(iRow, img);
 					}
 				}
@@ -195,7 +195,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			int iPos = 0;
 
 			foreach (var img in lstImages) {
-				if (!string.IsNullOrEmpty(img.Value)) {
+				if (!String.IsNullOrEmpty(img.Value)) {
 					var theImg = gh.GalleryImageEntryGetByFilename(gTheID, img.Value);
 
 					if (theImg == null) {

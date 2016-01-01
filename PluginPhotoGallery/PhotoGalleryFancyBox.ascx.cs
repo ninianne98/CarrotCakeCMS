@@ -1,109 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
-	public partial class PhotoGalleryFancyBox : WidgetParmDataUserControl, IWidgetEditStatus {
-		public bool ShowHeading { get; set; }
+	public partial class PhotoGalleryFancyBox : PublicGallerySingleBase {
 
-		public bool ScaleImage { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstGalleryID")]
-		public Guid GalleryID { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstGalleryID {
-			get {
-				if (SiteID == Guid.Empty) {
-					SiteID = SiteData.CurrentSiteID;
-				}
-				Dictionary<string, string> _dict = null;
-
-				GalleryHelper gh = new GalleryHelper(SiteID);
-
-				_dict = (from c in gh.GalleryGroupListGetBySiteID()
-						 orderby c.GalleryTitle
-						 where c.SiteID == SiteID
-						 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
-
-				return _dict;
-			}
+		public PhotoGalleryFancyBox() {
+			this.ScaleImage = true;
+			this.ShowHeading = false;
+			this.ThumbSize = 100;
 		}
-
-		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
-		public int ThumbSize { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstSizes {
-			get {
-				Dictionary<string, string> _dict = new Dictionary<string, string>();
-
-				_dict.Add("25", "25px");
-				_dict.Add("50", "50px");
-				_dict.Add("75", "75px");
-				_dict.Add("100", "100px");
-				_dict.Add("125", "125px");
-				_dict.Add("150", "150px");
-				_dict.Add("175", "175px");
-				_dict.Add("200", "200px");
-				_dict.Add("225", "225px");
-				_dict.Add("250", "250px");
-
-				return _dict;
-			}
-		}
-
-		#region IWidgetEditStatus Members
-
-		public bool IsBeingEdited { get; set; }
-
-		#endregion IWidgetEditStatus Members
 
 		public string GetScale() {
-			return ScaleImage.ToString().ToLower();
+			return this.ScaleImage.ToString().ToLower();
 		}
 
 		public string GetThumbSize() {
-			return ThumbSize.ToString().ToLower();
+			return this.ThumbSize.ToString().ToLower();
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (PublicParmValues.Any()) {
-				try {
-					string sFoundVal = GetParmValue("GalleryID", Guid.Empty.ToString());
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						GalleryID = new Guid(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ShowHeading", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ShowHeading = Convert.ToBoolean(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ScaleImage", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ScaleImage = Convert.ToBoolean(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ThumbSize", "150");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ThumbSize = Convert.ToInt32(sFoundVal);
-					}
-				} catch (Exception ex) { }
-			}
+			GetPublicParmValues();
 
 			GalleryHelper gh = new GalleryHelper(SiteID);
 
@@ -127,7 +45,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				pnlGallery.Visible = false;
 			}
 
-			if (!IsBeingEdited) {
+			if (!this.IsBeingEdited) {
 				pnlScript.Visible = true;
 			} else {
 				pnlScript.Visible = false;

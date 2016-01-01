@@ -13,7 +13,7 @@ Conversion to CarrotCake CMS Template: Carrotware
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="Silver" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="Silver" UseJqueryMigrate="true" />
 	<link runat="server" id="theCSS" href="style.css" rel="stylesheet" type="text/css" media="screen" />
 	<title>Citrus Island</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />

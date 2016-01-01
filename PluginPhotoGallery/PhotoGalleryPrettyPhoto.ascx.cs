@@ -7,59 +7,13 @@ using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
-	public partial class PhotoGalleryPrettyPhoto : WidgetParmDataUserControl, IWidgetEditStatus {
+	public partial class PhotoGalleryPrettyPhoto : PublicGallerySingleBase {
 
-		[Description("Display gallery heading")]
-		public bool ShowHeading { get; set; }
-
-		[Description("Scale gallery images")]
-		public bool ScaleImage { get; set; }
-
-		[Description("Gallery to display")]
-		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstGalleryID")]
-		public Guid GalleryID { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstGalleryID {
-			get {
-				if (SiteID == Guid.Empty) {
-					SiteID = SiteData.CurrentSiteID;
-				}
-				Dictionary<string, string> _dict = null;
-
-				GalleryHelper gh = new GalleryHelper(SiteID);
-
-				_dict = (from c in gh.GalleryGroupListGetBySiteID()
-						 orderby c.GalleryTitle
-						 where c.SiteID == SiteID
-						 select c).ToList().ToDictionary(k => k.GalleryID.ToString(), v => v.GalleryTitle);
-
-				return _dict;
-			}
-		}
-
-		[Description("Gallery image pixel height/width")]
-		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
-		public int ThumbSize { get; set; }
-
-		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
-		public Dictionary<string, string> lstSizes {
-			get {
-				Dictionary<string, string> _dict = new Dictionary<string, string>();
-
-				_dict.Add("25", "25px");
-				_dict.Add("50", "50px");
-				_dict.Add("75", "75px");
-				_dict.Add("100", "100px");
-				_dict.Add("125", "125px");
-				_dict.Add("150", "150px");
-				_dict.Add("175", "175px");
-				_dict.Add("200", "200px");
-				_dict.Add("225", "225px");
-				_dict.Add("250", "250px");
-
-				return _dict;
-			}
+		public PhotoGalleryPrettyPhoto() {
+			this.ScaleImage = true;
+			this.ShowHeading = false;
+			this.ThumbSize = 100;
+			this.PrettyPhotoSkin = "light_rounded";
 		}
 
 		public string GetScale() {
@@ -69,12 +23,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public string GetThumbSize() {
 			return ThumbSize.ToString().ToLower();
 		}
-
-		#region IWidgetEditStatus Members
-
-		public bool IsBeingEdited { get; set; }
-
-		#endregion IWidgetEditStatus Members
 
 		[Description("Gallery appearance (pretty photo skin)")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstPrettySkins")]
@@ -96,49 +44,24 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (PublicParmValues.Any()) {
-				try {
-					string sFoundVal = GetParmValue("GalleryID", Guid.Empty.ToString());
+			this.ScaleImage = true;
+			this.ShowHeading = false;
+			this.ThumbSize = 100;
+			this.PrettyPhotoSkin = "light_rounded";
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						GalleryID = new Guid(sFoundVal);
-					}
-				} catch (Exception ex) { }
+			GetPublicParmValues();
 
-				try {
-					string sFoundVal = GetParmValue("ShowHeading", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ShowHeading = Convert.ToBoolean(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValue("ScaleImage", "false");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ScaleImage = Convert.ToBoolean(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
-				try {
-					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize", "150");
-
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						ThumbSize = Convert.ToInt32(sFoundVal);
-					}
-				} catch (Exception ex) { }
-
+			if (this.PublicParmValues.Any()) {
 				try {
 					string sFoundVal = GetParmValue("PrettyPhotoSkin", "light_rounded");
 
-					if (!string.IsNullOrEmpty(sFoundVal)) {
-						PrettyPhotoSkin = sFoundVal;
+					if (!String.IsNullOrEmpty(sFoundVal)) {
+						this.PrettyPhotoSkin = sFoundVal;
 					}
 				} catch (Exception ex) { }
 			}
 
-			if (string.IsNullOrEmpty(PrettyPhotoSkin)) {
+			if (String.IsNullOrEmpty(PrettyPhotoSkin)) {
 				PrettyPhotoSkin = "light_rounded";
 			}
 
@@ -164,7 +87,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				pnlGallery.Visible = false;
 			}
 
-			if (!IsBeingEdited) {
+			if (!this.IsBeingEdited) {
 				pnlScript.Visible = true;
 			} else {
 				pnlScript.Visible = false;
