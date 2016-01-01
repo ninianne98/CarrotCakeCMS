@@ -23,6 +23,36 @@
 		$(document).ready(function () {
 			$("input:button, input:submit, input:reset, button").button();
 		});
+
+		function ShowAbout() {
+			var w = $(window).width() * 0.75;
+			var h = $(window).height() * 0.75;
+
+			var t = '<iframe frameborder="0" style="overflow: hidden; margin: 4px; padding: 0; height: 98%; width: 100%;" src="<%= SiteFilename.AboutURL %>"></iframe>';
+
+			cmsAlertModalHeightWidth(t, h, w);
+		}
+
+		function cmsAlertModalClose() {
+			$("#divCMSModal").dialog("close");
+		}
+
+		function cmsAlertModalHeightWidth(request, h, w) {
+			$("#divCMSModalMsg").html('');
+
+			$("#divCMSModalMsg").html(request);
+
+			$("#divCMSModal").dialog({
+				height: h,
+				width: w,
+				modal: true,
+				buttons: {
+					"OK": function () {
+						cmsAlertModalClose();
+					}
+				}
+			});
+		}
 	</script>
 	<meta name="robots" content="noindex,nofollow,noarchive" runat="server" id="metaCrawl" />
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
@@ -50,6 +80,9 @@
 						</p>
 						<p>
 							<asp:Literal ID="litCMSBuildInfo" runat="server" />
+							<a href="javascript:ShowAbout()">
+								<img class="imgNoBorder" src="/c3-admin/Images/information.png" alt="information" title="information" />
+							</a>
 						</p>
 					</div>
 					<div class="box-carrot">
@@ -67,6 +100,11 @@
 		</div>
 	</div>
 	<div style="display: none">
+		<div id="divCMSModal" title="CarrotCake CMS">
+			<div id="divCMSModalMsg" style="overflow: hidden; margin: 0; padding: 2px; height: 100%; width: 100%;">
+				&nbsp;
+			</div>
+		</div>
 		<asp:Button ID="cmdDummy" runat="server"></asp:Button>
 	</div>
 	<asp:PlaceHolder ID="plcFooter" runat="server" />

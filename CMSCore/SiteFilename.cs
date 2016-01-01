@@ -38,6 +38,10 @@ namespace Carrotware.CMS.Core {
 			get { return SiteData.AdminFolderPath + "DatabaseSetup.aspx"; }
 		}
 
+		public static string AboutURL {
+			get { return SiteData.AdminFolderPath + "About.aspx"; }
+		}
+
 		public static string LogonURL {
 			get { return SiteData.AdminFolderPath + "Logon.aspx"; }
 		}
