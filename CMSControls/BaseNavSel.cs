@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -17,7 +18,7 @@ using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	public abstract class BaseNavSel : BaseNavCommon {
+	public abstract class BaseNavSel : BaseNavCommon, IWidgetLimitedProperties {
 
 		[Category("Appearance")]
 		[DefaultValue("selected")]
@@ -76,6 +77,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				ViewState["CSSHasChildren"] = value;
+			}
+		}
+
+		public virtual List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("CssClass");
+
+				lst.Add("CSSSelected");
+				lst.Add("CSSItem");
+				lst.Add("CSSULClassTop");
+				lst.Add("CSSULClassLower");
+				lst.Add("CSSHasChildren");
+				return lst;
 			}
 		}
 
@@ -242,11 +257,21 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-			try {
-				base.OnPreRender(e);
+			base.OnPreRender(e);
 
-				if (PublicParmValues.Any()) {
+			try {
+				if (this.PublicParmValues.Any()) {
 					string sTmp = "";
+
+					sTmp = GetParmValue("CssClass", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.CssClass = sTmp;
+					}
+
+					sTmp = GetParmValue("CSSItem", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.CSSItem = sTmp;
+					}
 
 					sTmp = GetParmValue("CSSSelected", "");
 					if (!String.IsNullOrEmpty(sTmp)) {
@@ -266,11 +291,6 @@ namespace Carrotware.CMS.UI.Controls {
 					sTmp = GetParmValue("CSSULClassLower", "");
 					if (!String.IsNullOrEmpty(sTmp)) {
 						this.CSSULClassLower = sTmp;
-					}
-
-					sTmp = GetParmValue("CSSHasChildren", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
-						this.CSSHasChildren = sTmp;
 					}
 				}
 			} catch (Exception ex) {

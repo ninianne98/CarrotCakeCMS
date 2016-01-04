@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
+using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -14,7 +17,15 @@ using System.Web.UI;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	public abstract class BaseNavHeaded : BaseNav, IHeadedList {
+	public abstract class BaseNavHeaded : BaseNav, IHeadedList, IWidgetLimitedProperties {
+
+		public BaseNavHeaded()
+			: base() {
+			this.ItemCount = -1;
+			this.MetaDataTitle = String.Empty;
+			this.HeadWrapTag = TagType.H2;
+		}
+
 		public int ItemCount { get; set; }
 
 		[Category("Appearance")]
@@ -58,15 +69,34 @@ namespace Carrotware.CMS.UI.Controls {
 			base.WriteListPrefix(output);
 		}
 
-		protected override void OnPreRender(EventArgs e) {
-			base.OnPreRender(e);
+		public virtual List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("MetaDataTitle");
+				lst.Add("HeadWrapTag");
 
-			try {
-				if (PublicParmValues.Count > 0) {
-					this.MetaDataTitle = GetParmValue("MetaDataTitle", "");
-				}
-			} catch (Exception ex) {
+				return lst.Distinct().ToList();
 			}
+		}
+
+		protected override void OnPreRender(System.EventArgs e) {
+			if (this.PublicParmValues.Any()) {
+				string sTmp = "";
+				try {
+					sTmp = GetParmValue("MetaDataTitle", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.MetaDataTitle = sTmp;
+					}
+
+					sTmp = GetParmValue("HeadWrapTag", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.HeadWrapTag = (TagType)Enum.Parse(typeof(TagType), sTmp, true);
+					}
+				} catch (Exception ex) {
+				}
+			}
+
+			base.OnPreRender(e);
 		}
 	}
 }

@@ -21,7 +21,7 @@ using Carrotware.Web.UI.Controls;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:MostRecentUpdated runat=server></{0}:MostRecentUpdated>")]
-	public class MostRecentUpdated : BaseNavHeaded, IWidgetLimitedProperties {
+	public class MostRecentUpdated : BaseNavHeaded {
 
 		public enum ListContentType {
 			Unknown,
@@ -225,16 +225,16 @@ namespace Carrotware.CMS.UI.Controls {
 			return lst;
 		}
 
-		public List<string> LimitedPropertyList {
+		public override List<string> LimitedPropertyList {
 			get {
-				List<string> lst = new List<string>();
+				List<string> lst = base.LimitedPropertyList;
 				lst.Add("TakeTop");
 				lst.Add("MetaDataTitle");
 				lst.Add("CssClass");
-				lst.Add("EnableViewState");
 				lst.Add("ContentType");
 				lst.Add("SelectedCategories");
-				return lst;
+
+				return lst.Distinct().ToList();
 			}
 		}
 

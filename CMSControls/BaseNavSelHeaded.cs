@@ -18,6 +18,14 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SiblingNavigation runat=server></{0}:SiblingNavigation>")]
 	public class BaseNavSelHeaded : BaseNavSel, IHeadedList {
+
+		public BaseNavSelHeaded()
+			: base() {
+			this.ItemCount = -1;
+			this.MetaDataTitle = String.Empty;
+			this.HeadWrapTag = TagType.H2;
+		}
+
 		public int ItemCount { get; set; }
 
 		[Category("Appearance")]
@@ -49,6 +57,36 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		public override List<string> LimitedPropertyList {
+			get {
+				List<string> lst = base.LimitedPropertyList;
+				lst.Add("MetaDataTitle");
+				lst.Add("HeadWrapTag");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
+		protected override void OnPreRender(System.EventArgs e) {
+			if (this.PublicParmValues.Any()) {
+				string sTmp = "";
+				try {
+					sTmp = GetParmValue("MetaDataTitle", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.MetaDataTitle = sTmp;
+					}
+
+					sTmp = GetParmValue("HeadWrapTag", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.HeadWrapTag = (TagType)Enum.Parse(typeof(TagType), sTmp, true);
+					}
+				} catch (Exception ex) {
+				}
+			}
+
+			base.OnPreRender(e);
+		}
+
 		protected override void WriteListPrefix(HtmlTextWriter output) {
 			if (this.NavigationData != null) {
 				this.ItemCount = this.NavigationData.Count;
@@ -59,17 +97,6 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			base.WriteListPrefix(output);
-		}
-
-		protected override void OnPreRender(EventArgs e) {
-			base.OnPreRender(e);
-
-			try {
-				if (PublicParmValues.Any()) {
-					this.MetaDataTitle = GetParmValue("MetaDataTitle", "");
-				}
-			} catch (Exception ex) {
-			}
 		}
 	}
 }

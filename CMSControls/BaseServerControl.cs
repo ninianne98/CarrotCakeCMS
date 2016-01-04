@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -43,6 +44,22 @@ namespace Carrotware.CMS.UI.Controls {
 			SetSiteID();
 
 			base.OnInit(e);
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+			base.OnPreRender(e);
+
+			try {
+				if (this.PublicParmValues.Any()) {
+					string sTmp = "";
+
+					sTmp = GetParmValue("CssClass", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.CssClass = sTmp;
+					}
+				}
+			} catch (Exception ex) {
+			}
 		}
 
 		public override void Dispose() {

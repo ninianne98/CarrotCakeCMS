@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -18,7 +19,7 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:TopLevelNavigation runat=server></{0}:TopLevelNavigation>")]
-	public class TopLevelNavigation : BaseServerControl {
+	public class TopLevelNavigation : BaseServerControl, IWidgetLimitedProperties {
 
 		[Category("Appearance")]
 		[DefaultValue("selected")]
@@ -29,6 +30,43 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			set {
 				ViewState["CSSSelected"] = value;
+			}
+		}
+
+		public virtual List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("CssClass");
+				lst.Add("CSSSelected");
+				lst.Add("RenderHTMLWithID");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
+		protected override void OnPreRender(EventArgs e) {
+			base.OnPreRender(e);
+
+			try {
+				if (this.PublicParmValues.Any()) {
+					string sTmp = "";
+
+					sTmp = GetParmValue("CssClass", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.CssClass = sTmp;
+					}
+
+					sTmp = GetParmValue("CSSSelected", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.CSSSelected = sTmp;
+					}
+
+					sTmp = GetParmValue("RenderHTMLWithID", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.RenderHTMLWithID = Convert.ToBoolean(sTmp);
+					}
+				}
+			} catch (Exception ex) {
 			}
 		}
 

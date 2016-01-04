@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -21,7 +21,7 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:TwoLevelNavigation runat=server></{0}:TwoLevelNavigation>")]
-	public class TwoLevelNavigation : BaseNavSel, IWidgetLimitedProperties {
+	public class TwoLevelNavigation : BaseNavSel {
 
 		[Category("Appearance")]
 		[DefaultValue(true)]
@@ -364,9 +364,9 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public List<string> LimitedPropertyList {
+		public override List<string> LimitedPropertyList {
 			get {
-				List<string> lst = new List<string>();
+				List<string> lst = base.LimitedPropertyList;
 				lst.Add("OverrideCSS");
 				lst.Add("CssClass");
 				lst.Add("ExtraCSS");
@@ -389,7 +389,8 @@ namespace Carrotware.CMS.UI.Controls {
 				lst.Add("SelBGColor");
 				lst.Add("SubFGColor");
 				lst.Add("SubBGColor");
-				return lst;
+
+				return lst.Distinct().ToList();
 			}
 		}
 
@@ -397,7 +398,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Count > 0) {
+				if (this.PublicParmValues.Count > 0) {
 					string sTmp = "";
 
 					this.OverrideCSS = GetParmValue("OverrideCSS", "");
@@ -493,7 +494,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			if (!String.IsNullOrEmpty(ExtraCSS)) {
+			if (!String.IsNullOrEmpty(this.ExtraCSS)) {
 				HtmlLink link = new HtmlLink();
 				link.Href = ExtraCSS;
 				link.Attributes.Add("rel", "stylesheet");

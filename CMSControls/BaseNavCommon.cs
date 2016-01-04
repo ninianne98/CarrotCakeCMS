@@ -19,6 +19,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public abstract class BaseNavCommon : BaseServerControl {
 
+		public BaseNavCommon() {
+			this.EnableViewState = false;
+			this.RenderHTMLWithID = false;
+		}
+
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		public override bool EnableViewState {
@@ -50,7 +55,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public virtual string HtmlClientID {
 			get {
-				if (RenderHTMLWithID) {
+				if (this.RenderHTMLWithID) {
 					return this.ID;
 				} else {
 					return this.ClientID;
@@ -136,6 +141,8 @@ namespace Carrotware.CMS.UI.Controls {
 					this.CssClass = GetParmValue("CssClass", "");
 
 					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));
+
+					this.RenderHTMLWithID = Convert.ToBoolean(GetParmValue("RenderHTMLWithID", "false"));
 				}
 			} catch (Exception ex) {
 			}

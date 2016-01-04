@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 
@@ -17,6 +20,10 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:MultiLevelNavigation runat=server></{0}:MultiLevelNavigation>")]
 	public class MultiLevelNavigation : BaseNavSel {
 
+		public MultiLevelNavigation() {
+			this.LevelDepth = 3;
+		}
+
 		[Category("Appearance")]
 		[DefaultValue(true)]
 		public override bool MultiLevel {
@@ -27,21 +34,36 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue(3)]
-		public int LevelDepth {
-			get {
-				int s = 3;
-				try { s = int.Parse(ViewState["LevelDepth"].ToString()); } catch { }
-				return s;
-			}
-			set {
-				ViewState["LevelDepth"] = value.ToString();
-			}
-		}
+		public int LevelDepth { get; set; }
 
 		protected override void LoadData() {
 			base.LoadData();
 
 			this.NavigationData = navHelper.GetLevelDepthNavigation(SiteData.CurrentSiteID, LevelDepth, !SecurityData.IsAuthEditor);
+		}
+
+		public override List<string> LimitedPropertyList {
+			get {
+				List<string> lst = base.LimitedPropertyList;
+				lst.Add("LevelDepth");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
+		protected override void OnPreRender(System.EventArgs e) {
+			if (this.PublicParmValues.Any()) {
+				string sTmp = "";
+				try {
+					sTmp = GetParmValue("LevelDepth", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.LevelDepth = Convert.ToInt32(sTmp);
+					}
+				} catch (Exception ex) {
+				}
+			}
+
+			base.OnPreRender(e);
 		}
 	}
 }

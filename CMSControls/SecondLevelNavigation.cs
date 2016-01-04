@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
@@ -18,14 +19,46 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SecondLevelNavigation runat=server></{0}:SecondLevelNavigation>")]
 	public class SecondLevelNavigation : BaseNavSelHeaded {
+
+		public SecondLevelNavigation()
+			: base() {
+			this.IncludeParent = false;
+		}
+
+		[Category("Appearance")]
+		[DefaultValue("false")]
 		public bool IncludeParent { get; set; }
+
+		public override List<string> LimitedPropertyList {
+			get {
+				List<string> lst = base.LimitedPropertyList;
+				lst.Add("IncludeParent");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
+		protected override void OnPreRender(System.EventArgs e) {
+			if (this.PublicParmValues.Any()) {
+				string sTmp = "";
+				try {
+					sTmp = GetParmValue("IncludeParent", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.IncludeParent = Convert.ToBoolean(sTmp);
+					}
+				} catch (Exception ex) {
+				}
+			}
+
+			base.OnPreRender(e);
+		}
 
 		protected override void LoadData() {
 			base.LoadData();
 
 			List<SiteNav> lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 
-			if (IncludeParent) {
+			if (this.IncludeParent) {
 				if (lstNav != null && lstNav.Any()) {
 					SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
 					if (p != null) {

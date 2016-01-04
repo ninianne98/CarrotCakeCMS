@@ -20,6 +20,12 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:ChildNavigation runat=server></{0}:ChildNavigation>")]
 	public class ChildNavigation : BaseNavHeaded {
 
+		public ChildNavigation()
+			: base() {
+			this.SortNavBy = SortOrder.DateAsc;
+			this.IncludeParent = false;
+		}
+
 		public enum SortOrder {
 			SortAsc,
 			SortDesc,
@@ -47,7 +53,39 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue("false")]
 		public bool IncludeParent { get; set; }
+
+		public override List<string> LimitedPropertyList {
+			get {
+				List<string> lst = base.LimitedPropertyList;
+				lst.Add("SortNavBy");
+				lst.Add("IncludeParent");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
+		protected override void OnPreRender(System.EventArgs e) {
+			if (this.PublicParmValues.Any()) {
+				string sTmp = "";
+				try {
+					sTmp = GetParmValue("SortNavBy", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.SortNavBy = (SortOrder)Enum.Parse(typeof(SortOrder), sTmp, true);
+					}
+
+					sTmp = GetParmValue("IncludeParent", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.IncludeParent = Convert.ToBoolean(sTmp);
+					}
+				} catch (Exception ex) {
+				}
+			}
+
+			base.OnPreRender(e);
+		}
 
 		protected override void LoadData() {
 			base.LoadData();

@@ -20,6 +20,11 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:ParentSiblingNavigation runat=server></{0}:ParentSiblingNavigation>")]
 	public class ParentSiblingNavigation : BaseNavSelHeaded {
 
+		public ParentSiblingNavigation()
+			: base() {
+			this.SortNavBy = SortOrder.DateAsc;
+		}
+
 		public enum SortOrder {
 			SortAsc,
 			SortDesc,
@@ -45,6 +50,30 @@ namespace Carrotware.CMS.UI.Controls {
 			set {
 				ViewState["SortNavBy"] = value.ToString();
 			}
+		}
+
+		public override List<string> LimitedPropertyList {
+			get {
+				List<string> lst = base.LimitedPropertyList;
+				lst.Add("SortNavBy");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
+		protected override void OnPreRender(System.EventArgs e) {
+			if (this.PublicParmValues.Any()) {
+				string sTmp = "";
+				try {
+					sTmp = GetParmValue("SortNavBy", "");
+					if (!String.IsNullOrEmpty(sTmp)) {
+						this.SortNavBy = (SortOrder)Enum.Parse(typeof(SortOrder), sTmp, true);
+					}
+				} catch (Exception ex) {
+				}
+			}
+
+			base.OnPreRender(e);
 		}
 
 		protected override void LoadData() {
