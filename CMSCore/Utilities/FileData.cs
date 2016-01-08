@@ -90,7 +90,7 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 				if (_FileTypes == null) {
-					_FileTypes = "aspx;ascx;asmx;asax;axd;dll;pdb;cs;master;config;xml;user;csproj;sln";
+					_FileTypes = "asp;aspx;ascx;asmx;svc;asax;axd;ashx;dll;pdb;exe;cs;vb;cshtml;vbhtml;master;config;xml;user;csproj;vbproj;sln";
 				}
 				return _FileTypes.Split(';').ToList();
 			}

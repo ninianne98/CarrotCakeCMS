@@ -5,8 +5,8 @@ Source code for CarrotCakeCMS
 [REPO_GH]: https://github.com/ninianne98/CarrotCakeCMS/
 [REPO_CX]: http://carrotcakecms.codeplex.com/
 
-[DOC]: http://www.carrotware.com/carrotcake-download.aspx?from=github "CarrotCakeCMS User Documentation"
-[TMPLT]: http://www.carrotware.com/carrotcake-templates.aspx?from=github
+[DOC]: http://www.carrotware.com/carrotcake-download?from=github "CarrotCakeCMS User Documentation"
+[TMPLT]: http://www.carrotware.com/carrotcake-templates?from=github
 [IDE2010]: http://go.microsoft.com/?linkid=9709969
 [IDEALT]: https://www.visualstudio.com/downloads/download-visual-studio-vs
 [SQL]: https://www.microsoft.com/en-us/download/details.aspx?id=22973

@@ -108,7 +108,12 @@ namespace Carrotware.CMS.Core {
 			response.Clear();
 			response.ContentType = "application/xml";
 
-			XmlWriter writer = XmlWriter.Create(response.Output);
+			XmlWriterSettings settings = new XmlWriterSettings();
+			settings.Indent = true;
+			settings.Encoding = Encoding.UTF8;
+			settings.CheckCharacters = true;
+
+			XmlWriter writer = XmlWriter.Create(response.Output, settings);
 
 			if (request.Form.AllKeys.Count() < 6 && (!string.IsNullOrEmpty(request["id"]) || !bRequireID)
 				&& !string.IsNullOrEmpty(request["excerpt"])
@@ -164,7 +169,12 @@ namespace Carrotware.CMS.Core {
 			response.Clear();
 			response.ContentType = "application/xml";
 
-			XmlWriter writer = XmlWriter.Create(response.Output);
+			XmlWriterSettings settings = new XmlWriterSettings();
+			settings.Indent = true;
+			settings.Encoding = Encoding.UTF8;
+			settings.CheckCharacters = true;
+
+			XmlWriter writer = XmlWriter.Create(response.Output, settings);
 
 			GenerateErrorResponse(1, "Sorry, trackbacks are not accepted for this site.", writer);
 		}

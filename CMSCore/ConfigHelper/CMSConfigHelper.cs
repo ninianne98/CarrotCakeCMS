@@ -665,7 +665,7 @@ namespace Carrotware.CMS.Core {
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Most Recent Updated &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MostRecentUpdated, Carrotware.CMS.UI.Controls" });
 
-					// _p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Multi Level Nav List &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MultiLevelNavigation, Carrotware.CMS.UI.Controls" });
+					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Multi Level Nav List &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MultiLevelNavigation, Carrotware.CMS.UI.Controls" });
 
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
 					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Comments &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });

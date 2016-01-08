@@ -175,7 +175,8 @@ namespace Carrotware.CMS.Core {
 							RewriteCMSPath(context, sSelectedTemplate, queryString);
 						} else {
 							SiteData.PerformRedirectToErrorPage(404, sFileRequested);
-							SiteData.Show404MessageFull(true);
+							//SiteData.Show404MessageFull(true);
+							SiteData.Show404MessageShort();
 						}
 					} else {
 						sVirtualReqFile = sFileRequested;

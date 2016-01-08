@@ -967,9 +967,11 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static void Show404MessageShort() {
-			HttpContext context = HttpContext.Current;
-			context.Response.StatusCode = 404;
-			context.Response.StatusDescription = "Not Found";
+			throw new HttpException(404, "HTTP/1.1 404 Object Not Found");
+
+			//HttpContext context = HttpContext.Current;
+			//context.Response.StatusCode = 404;
+			//context.Response.StatusDescription = "Not Found";
 		}
 
 		public static void Show301Message(string sFileRequested) {
