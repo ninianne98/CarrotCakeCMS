@@ -199,6 +199,11 @@ tt, pre, code, kbd, samp {
 	margin-right: 5px;
 }
 
+.widgetTitle {
+	margin-bottom: 1em;
+	display: block;
+}
+
 /* fieldset */
 
 fieldset {

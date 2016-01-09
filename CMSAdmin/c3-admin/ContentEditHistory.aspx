@@ -65,11 +65,11 @@
 							<carrot:CarrotImageColumnData ImageAltText="Page" ImagePath="/c3-admin/images/page_world.png" KeyValue="ContentEntry" />
 						</ImageSelectors>
 					</carrot:CarrotHeaderSortTemplateField>
-					<carrot:CarrotHeaderSortTemplateField SortExpression="CreateUserName" HeaderText="Create User Name" DataField="CreateUserName" />
-					<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d} {0:h:mm tt}"
-						ItemStyle-Wrap="false" />
 					<carrot:CarrotHeaderSortTemplateField SortExpression="EditUserName" HeaderText="Edit User Name" DataField="EditUserName" />
 					<carrot:CarrotHeaderSortTemplateField SortExpression="EditDate" HeaderText="Last Edited" DataField="EditDate" DataFieldFormat="{0:d} {0:h:mm tt}"
+						ItemStyle-Wrap="false" />
+					<carrot:CarrotHeaderSortTemplateField SortExpression="CreateUserName" HeaderText="Create User Name" DataField="CreateUserName" />
+					<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d} {0:h:mm tt}"
 						ItemStyle-Wrap="false" />
 					<carrot:CarrotHeaderSortTemplateField SortExpression="GoLiveDate" HeaderText="Go Live" DataField="GoLiveDate" DataFieldFormat="{0:d}" />
 					<carrot:CarrotHeaderSortTemplateField SortExpression="RetireDate" HeaderText="Retire On" DataField="RetireDate" DataFieldFormat="{0:d}" />

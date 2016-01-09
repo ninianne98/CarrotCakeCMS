@@ -191,10 +191,10 @@
 	});
 </script>
 <div style="display: none;">
-	<asp:TextBox runat="server" ID="txtMap" TextMode="MultiLine" Columns="90" Rows="5" />
+	<asp:TextBox runat="server" ID="txtMap" TextMode="MultiLine" Columns="90" Rows="10" />
 </div>
 <p>
-	<asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
+	<asp:Button ID="btnSave" runat="server" Text="Save Sitemap" OnClick="btnSave_Click" />
 	&nbsp;&nbsp;&nbsp;
 	<asp:Button ID="btnFixOrphan" runat="server" Text="Fix Orphaned Pages " OnClick="btnFixOrphan_Click" />
 	&nbsp;&nbsp;&nbsp;
@@ -206,8 +206,8 @@
 			<ol class="sortable">
 		</HeaderTemplate>
 		<ItemTemplate>
-			<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand"
-				id="filename-<%#Eval("Root_ContentID") %>">&nbsp; </span>
+			<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand" id="filename-<%#Eval("Root_ContentID") %>">
+				&nbsp; </span>
 				<img src="/c3-admin/images/webpage.png" class="imgNoBorder image-handle" title="webpage" alt="webpage" id="img-<%#Eval("Root_ContentID") %>" />
 				<span class="page-status"><a href="<%#Eval("FileName")%>" target="_blank">
 					<%#Eval("FileName")%>

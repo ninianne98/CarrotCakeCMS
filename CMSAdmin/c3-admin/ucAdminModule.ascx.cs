@@ -38,24 +38,40 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
-				if (!HideList && cmsHelper.AdminModules.Any()) {
+				if (!this.HideList && cmsHelper.AdminModules.Any()) {
 					GeneralUtilities.BindRepeater(rpModuleList, cmsHelper.AdminModules);
 				} else {
 					rpModuleList.Visible = false;
 				}
 			}
 
-			pnlNav.Visible = !HideList;
+			pnlNav.Visible = !this.HideList;
 
-			if (ModuleID != Guid.Empty) {
+			if (this.ModuleID != Guid.Empty) {
 				pnlSetter.Visible = true;
 				int x = 0;
 				foreach (var row in cmsHelper.AdminModules) {
-					if (ModuleID.ToString().ToLower() == row.PluginID.ToString().ToLower()) {
-						SelMenu = x.ToString();
+					if (this.ModuleID.ToString().ToLower() == row.PluginID.ToString().ToLower()) {
+						this.SelMenu = x.ToString();
 						break;
 					}
 					x++;
+				}
+
+				this.ModuleFamily = (from m in cmsHelper.AdminModules
+									 where m.PluginID == this.ModuleID
+									 select m).FirstOrDefault();
+				if (this.ModuleFamily != null) {
+					litModuleTitle.Text = this.ModuleFamily.PluginName;
+
+					this.PluginItem = (from m in this.ModuleFamily.PluginMenus
+									   orderby m.Caption, m.SortOrder
+									   where m.PluginParm == pf
+									   select m).FirstOrDefault();
+
+					if (this.PluginItem != null) {
+						litModuleTitle.Text = String.Format("{0} : {1}", this.ModuleFamily.PluginName, this.PluginItem.Caption);
+					}
 				}
 			}
 		}
@@ -72,27 +88,27 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pf = AdminModuleQueryStringRoutines.GetPluginFile();
 
 			if (!String.IsNullOrEmpty(pf)) {
-				ModuleFamily = (from m in cmsHelper.AdminModules
-								where m.PluginID == ModuleID
-								select m).FirstOrDefault();
+				this.ModuleFamily = (from m in cmsHelper.AdminModules
+									 where m.PluginID == this.ModuleID
+									 select m).FirstOrDefault();
 
-				PluginItem = (from m in ModuleFamily.PluginMenus
-							  orderby m.Caption, m.SortOrder
-							  where m.PluginParm == pf
-							  select m).FirstOrDefault();
+				this.PluginItem = (from m in this.ModuleFamily.PluginMenus
+								   orderby m.Caption, m.SortOrder
+								   where m.PluginParm == pf
+								   select m).FirstOrDefault();
 
-				UseAjax = PluginItem.UseAjax;
+				this.UseAjax = this.PluginItem.UseAjax;
 
-				Control c = Page.LoadControl(PluginItem.ControlFile);
+				Control c = Page.LoadControl(this.PluginItem.ControlFile);
 				phAdminModule.Controls.Add(c);
 
 				if (c is IAdminModule) {
 					var w = (IAdminModule)c;
 					w.SiteID = SiteData.CurrentSiteID;
-					w.ModuleID = ModuleID;
+					w.ModuleID = this.ModuleID;
 					w.ModuleName = pf;
-					w.QueryStringFragment = AdminModuleQueryStringRoutines.GenerateQueryStringFragment(pf, ModuleID);
-					w.QueryStringPattern = AdminModuleQueryStringRoutines.GenerateQueryStringPattern(ModuleID);
+					w.QueryStringFragment = AdminModuleQueryStringRoutines.GenerateQueryStringFragment(pf, this.ModuleID);
+					w.QueryStringPattern = AdminModuleQueryStringRoutines.GenerateQueryStringPattern(this.ModuleID);
 				}
 			}
 
@@ -100,7 +116,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected string MarkSelected(string sID, string sParm) {
-			if (sID == ModuleID.ToString().ToLower() && sParm == pf) {
+			if (sID == this.ModuleID.ToString().ToLower() && sParm == pf) {
 				return " class=\"selectedModule\" ";
 			} else {
 				return " ";
