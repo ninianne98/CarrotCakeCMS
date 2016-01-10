@@ -51,11 +51,12 @@ Conversion to CarrotCake CMS Template: Carrotware
 		<div style="clear: both;">
 		</div>
 		<div id="sidebar">
-			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="DateMonth" MetaDataTitle="Dates"
-				TakeTop="14" />
-			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Category" MetaDataTitle="Categories"
+			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="DateMonth"
+				MetaDataTitle="Dates" TakeTop="14" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Category"
+				MetaDataTitle="Categories" ShowUseCount="true" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList3" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Tag" MetaDataTitle="Tags"
 				ShowUseCount="true" />
-			<carrot:SiteMetaWordList ID="SiteMetaWordList3" HeadWrapTag="h1" CssClass="sidemenu" runat="server" ContentType="Tag" MetaDataTitle="Tags" ShowUseCount="true" />
 			<carrot:WidgetContainer ID="phLeftTop" runat="server" />
 			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" TextZone="TextLeft" runat="server" />
 			<carrot:WidgetContainer ID="phLeftBottom" runat="server" />
@@ -69,8 +70,8 @@ Conversion to CarrotCake CMS Template: Carrotware
 			<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" TextZone="TextCenter" runat="server" />
 			<div style="clear: both;">
 			</div>
-			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected" LinkNext="lnkNextWrap"
-				LinkPrev="lnkPrevWrap" LinkFirst="lnkFirstWrap" LinkLast="lnkLastWrap">
+			<carrot:PagedDataSummary ID="PagedDataSummary1" runat="server" ContentType="Blog" PageSize="5" CSSSelectedPage="selected"
+				LinkNext="lnkNextWrap" LinkPrev="lnkPrevWrap" LinkFirst="lnkFirstWrap" LinkLast="lnkLastWrap">
 				<TypeLabelPrefixes>
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateIndex" LabelText="Date:" />
 					<carrot:PagedDataSummaryTitleOption KeyValue="DateDayIndex" LabelText="Day:" FormatText="{0:dddd, d MMMM yyyy}" />
@@ -97,7 +98,7 @@ Conversion to CarrotCake CMS Template: Carrotware
 							<b class="green" style="font-size: 110%;">
 								<carrot:NavLinkForTemplate CssClassNormal="green" ID="NavLinkForTemplate1" runat="server" UseDefaultText="true" />
 								&nbsp;|&nbsp;
-								<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="CreateDate" FieldFormat="{0:d}" />
+								<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="GoLiveDate" FieldFormat="{0:d}" />
 							</b>
 							<br />
 							by
@@ -106,7 +107,8 @@ Conversion to CarrotCake CMS Template: Carrotware
 							<carrot:ListItemNavText runat="server" ID="ListItemNavText2" DataField="PageTextPlainSummary" />
 						</p>
 						<p>
-							<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
+							<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl1" runat="server" ContentType="Category"
+								MetaDataTitle="Categories:" />
 							<br />
 							<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl2" runat="server" ContentType="Tag" MetaDataTitle="Tags:" />
 						</p>
@@ -116,7 +118,7 @@ Conversion to CarrotCake CMS Template: Carrotware
 							<span class="comments">Comments
 								<carrot:ListItemNavText runat="server" ID="ListItemNavText4" DataField="CommentCount" FieldFormat=" ({0}) " />
 							</span><span class="date">
-								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="CreateDate" FieldFormat="{0:MMM d, yyyy}" />
+								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="GoLiveDate" FieldFormat="{0:MMM d, yyyy}" />
 							</span>
 						</p>
 					</div>

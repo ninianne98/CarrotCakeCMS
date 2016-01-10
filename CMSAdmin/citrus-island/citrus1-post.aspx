@@ -51,7 +51,8 @@ Conversion to CarrotCake CMS Template: Carrotware
 		<div style="clear: both;">
 		</div>
 		<div id="sidebar">
-			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" runat="server" ContentType="Category" MetaDataTitle="Categories" CssClass="sidemenu" />
+			<carrot:SiteMetaWordList ID="SiteMetaWordList1" HeadWrapTag="h1" runat="server" ContentType="Category" MetaDataTitle="Categories"
+				CssClass="sidemenu" />
 			<carrot:SiteMetaWordList ID="SiteMetaWordList2" HeadWrapTag="h1" runat="server" ContentType="Tag" MetaDataTitle="Tags" CssClass="sidemenu" />
 			<carrot:WidgetContainer ID="phLeftTop" runat="server" />
 			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" TextZone="TextLeft" runat="server" />
@@ -74,7 +75,8 @@ Conversion to CarrotCake CMS Template: Carrotware
 			<div style="clear: both;">
 			</div>
 			<p>
-				<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
+				<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl1" runat="server" ContentType="Category"
+					MetaDataTitle="Categories:" />
 				<br />
 				<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl2" runat="server" ContentType="Tag" MetaDataTitle="Tags:" />
 			</p>
@@ -105,8 +107,8 @@ Conversion to CarrotCake CMS Template: Carrotware
 								<asp:TextBox runat="server" ID="CommenterURL" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
 								<label>
 									comment:
-									<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="VisitorComments" ClientValidationFunction="__carrotware_ValidateLongText"
-										EnableClientScript="true" ErrorMessage="**" />
+									<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="VisitorComments"
+										ClientValidationFunction="__carrotware_ValidateLongText" EnableClientScript="true" ErrorMessage="**" />
 								</label>
 								<asp:TextBox runat="server" ID="VisitorComments" TextMode="MultiLine" Rows="8" Columns="40" MaxLength="1024" />
 								<div class="padding10">
@@ -142,7 +144,7 @@ Conversion to CarrotCake CMS Template: Carrotware
 								<b>
 									<carrot:ListItemCommentText runat="server" ID="ListItemCommentText1" DataField="CommenterName" />
 									on
-									<carrot:ListItemCommentText runat="server" ID="ListItemCommentText2" DataField="CreateDate" FieldFormat="{0:d}" />
+									<carrot:ListItemCommentText runat="server" ID="ListItemCommentText2" DataField="GoLiveDate" FieldFormat="{0:d}" />
 								</b>
 							</p>
 							<div class="comment-border top">
@@ -159,7 +161,8 @@ Conversion to CarrotCake CMS Template: Carrotware
 						<div class="pagerfooterlinks">
 					</PagerHeaderTemplate>
 					<PagerTemplate>
-						<carrot:ListItemWrapperForPager HtmlTagName="div" ID="ListItemWrapperForPager1" runat="server" CSSSelected="selectedwrap" CssClassNormal="pagerlink">
+						<carrot:ListItemWrapperForPager HtmlTagName="div" ID="ListItemWrapperForPager1" runat="server" CSSSelected="selectedwrap"
+							CssClassNormal="pagerlink">
 							<carrot:NavLinkForPagerTemplate ID="lnkBtn" CSSSelected="selected" runat="server" />
 						</carrot:ListItemWrapperForPager>
 					</PagerTemplate>
