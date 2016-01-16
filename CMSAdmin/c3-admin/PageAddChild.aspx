@@ -2,6 +2,7 @@
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageAddChild" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
@@ -41,7 +42,7 @@
 
 				var theTitle = $(tTitle).val();
 				var theFile = $(tValidFile).val();
-				var sGoLiveDate = '<%=DateTime.Now.ToShortDateString() %>';
+				var sGoLiveDate = '<%=SiteData.CurrentSite.Now.ToShortDateString() %>';
 
 				if (theTitle.length > 0) {
 

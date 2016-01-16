@@ -1063,6 +1063,15 @@ namespace Carrotware.CMS.Core {
 
 		//=====================
 
+		public static DateTime CalcNearestFiveMinTime(DateTime dateIn) {
+			DateTime dateOut = dateIn.AddMinutes(-2);
+			int iMin = 5 * (dateOut.Minute / 5);
+
+			dateOut = dateOut.AddMinutes(0 - dateOut.Minute).AddMinutes(iMin);
+
+			return dateOut;
+		}
+
 		public static string DecodeBase64(string ValIn) {
 			string val = String.Empty;
 			if (!string.IsNullOrEmpty(ValIn)) {

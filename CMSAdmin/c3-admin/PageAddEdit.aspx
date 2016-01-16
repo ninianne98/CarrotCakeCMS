@@ -1,8 +1,9 @@
 ﻿<%@ Page ValidateRequest="false" Title="Page Add/Edit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="PageAddEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.PageAddEdit" %>
 
-<%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
+<%@ Register Src="ucEditDateTime.ascx" TagPrefix="uc1" TagName="datetime" %>
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
@@ -33,7 +34,7 @@
 		function GeneratePageFilename() {
 			var theTitle = $(tTitle).val();
 			var theFile = $(tValidFile).val();
-			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
+			var sGoLiveDate = $('#<%= ucReleaseDate.DateField.ClientID %>').val();
 
 			if (theTitle.length > 0) {
 
@@ -348,10 +349,7 @@
 					release date:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion"
-						Columns="16" />
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion"
-						Columns="10" />
+					<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" />
 				</td>
 			</tr>
 			<tr>
@@ -359,8 +357,7 @@
 					retire date:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+					<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
 				</td>
 			</tr>
 			<tr>

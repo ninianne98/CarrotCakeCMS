@@ -35,8 +35,7 @@
 	</script>
 	<title>plain</title>
 	<style type="text/css">
-		body
-		{
+		body {
 			margin: 0;
 			padding: 0;
 			background: #FFFFFF;
@@ -44,43 +43,35 @@
 			font-size: 12px;
 			color: #787878;
 		}
-		h1, h2, h3
-		{
+		h1, h2, h3 {
 			margin: 0;
 			padding: 0;
 			font-weight: normal;
 			color: #000000;
 			margin-bottom: 5px;
 		}
-		h1
-		{
+		h1 {
 			font-size: 2.5em;
 		}
-		h2
-		{
+		h2 {
 			font-size: 2em;
 		}
-		h3
-		{
+		h3 {
 			font-size: 1.5em;
 		}
-		p, ul, ol
-		{
+		p, ul, ol {
 			margin-top: 0;
 			line-height: 180%;
 		}
-		a
-		{
+		a {
 			text-decoration: none;
 			color: #424242;
 		}
-		a:hover
-		{
+		a:hover {
 			text-decoration: underline;
 			color: #333333;
 		}
-		#wrapper
-		{
+		#wrapper {
 			width: 980px;
 			margin: 0 auto;
 			padding: 0;
@@ -88,8 +79,7 @@
 
 		/* Header */
 
-		#header
-		{
+		#header {
 			clear: both;
 			width: 980px;
 			height: 300px;
@@ -99,8 +89,7 @@
 
 		/* Menu */
 
-		#menu
-		{
+		#menu {
 			width: 940px;
 			margin: 0 auto;
 			padding: 0;
@@ -109,50 +98,42 @@
 
 		/* Page */
 
-		#page
-		{
+		#page {
 			width: 940px;
 			margin: 0 auto;
 			padding: 0px 0px 0px 0px;
 		}
-		#page-bgtop
-		{
+		#page-bgtop {
 			padding: 10px 0px;
 		}
 
 		/* Content */
 
-		#content
-		{
+		#content {
 			float: right;
 			width: 580px;
 			padding: 20px 0px 0px 0px;
 		}
-		.post
-		{
+		.post {
 			margin-bottom: 15px;
 		}
-		.post .title
-		{
+		.post .title {
 			height: 38px;
 			margin-bottom: 10px;
 			padding: 12px 0 0 0px;
 			letter-spacing: -.5px;
 			color: #82050B;
 		}
-		.post .title a
-		{
+		.post .title a {
 			color: #82050B;
 			border: none;
 		}
-		.post .entry
-		{
+		.post .entry {
 			padding: 0px 0px 20px 0px;
 			padding-bottom: 20px;
 			text-align: justify;
 		}
-		.links
-		{
+		.links {
 			padding-top: 20px;
 			font-size: 12px;
 			font-weight: bold;
@@ -160,64 +141,54 @@
 
 		/* Sidebar */
 
-		#sidebar
-		{
+		#sidebar {
 			float: left;
 			width: 280px;
 			margin: 0px;
 			padding: 0px 0px 0px 0px;
 			color: #787878;
 		}
-		#sidebar ul
-		{
+		#sidebar ul {
 			margin: 0;
 			padding: 0;
 			list-style: none;
 		}
-		#sidebar li
-		{
+		#sidebar li {
 			margin: 0;
 			padding: 0;
 		}
-		#sidebar li ul
-		{
+		#sidebar li ul {
 			margin: 0px 0px;
 			padding-bottom: 30px;
 		}
-		#sidebar li li
-		{
+		#sidebar li li {
 			line-height: 25px;
 			margin: 0px 30px 15px;
 			border-left: none;
 			border-bottom: dotted 1px #737373;
 		}
-		#sidebar h2
-		{
+		#sidebar h2 {
 			height: 30px;
 			padding-left: 30px;
 			letter-spacing: -.5px;
 			font-size: 1.8em;
 		}
-		#sidebar p
-		{
+		#sidebar p {
 			margin: 0 0px;
 			padding: 0px 30px 20px 30px;
 			text-align: justify;
 		}
-		#sidebar a
-		{
+		#sidebar a {
 			border: none;
 		}
-		#sidebar a:hover
-		{
+		#sidebar a:hover {
 			text-decoration: underline;
 			color: #8A8A8A;
 		}
 
 		/* Footer */
 
-		#footer
-		{
+		#footer {
 			height: 50px;
 			margin: 0 auto;
 			padding: 0px 0 15px 0;
@@ -225,8 +196,7 @@
 			border-top: 1px solid #DEDEDE;
 			font-family: Arial, Helvetica, sans-serif;
 		}
-		#footer p
-		{
+		#footer p {
 			margin: 0;
 			padding-top: 20px;
 			line-height: normal;
@@ -235,28 +205,24 @@
 			text-align: center;
 			color: #A0A0A0;
 		}
-		#footer a
-		{
+		#footer a {
 			color: #8A8A8A;
 		}
 
 		/* OTHER */
 
-		.aligncenter, div.aligncenter
-		{
+		.aligncenter, div.aligncenter {
 			display: block;
 			margin-left: auto;
 			margin-right: auto;
 		}
 
-		.pagerfooterlinks
-		{
+		.pagerfooterlinks {
 			line-height: normal;
 			color: #ffffff;
 		}
 
-		.pagerfooterlinks .pagerlink
-		{
+		.pagerfooterlinks .pagerlink {
 			margin: 2px 2px 2px 2px;
 			padding: 5px 5px 5px 5px;
 			border: 2px solid #333333;
@@ -264,22 +230,19 @@
 			float: left;
 		}
 
-		.pagerfooterlinks .pagerlink a
-		{
+		.pagerfooterlinks .pagerlink a {
 			margin: 2px 2px 2px 2px;
 			padding: 5px 5px 5px 5px;
 			font-weight: bold;
 			color: #666666;
 		}
 
-		.pagerfooterlinks .pagerlink a.selected
-		{
+		.pagerfooterlinks .pagerlink a.selected {
 			color: #ffffff;
 			font-weight: bold;
 		}
 
-		.pagerfooterlinks .selectedwrap
-		{
+		.pagerfooterlinks .selectedwrap {
 			color: #ffffff;
 			background-color: #333333;
 			font-weight: bold;
@@ -298,8 +261,8 @@
 			<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
 		</p>
 		<div id="menu">
-			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878"
-				SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
+			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff"
+				SubBGColor="#787878" SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
 		</div>
 		<div style="clear: both;">
 		</div>
@@ -357,7 +320,8 @@
 										<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="PageTextPlainSummary" />
 									</p>
 									<p>
-										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
+										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category"
+											MetaDataTitle="Categories:" />
 									</p>
 								</div>
 							</ContentTemplate>

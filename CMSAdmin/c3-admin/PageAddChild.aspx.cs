@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void btnSave_Click(object sender, EventArgs e) {
 			pageContents = new ContentPage(SiteID, ContentPageType.PageType.ContentEntry);
 
-			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+			DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 
 			int iOrder = pageHelper.GetMaxNavOrder(SiteID) + 1;
 			Guid? parentContentID = ParentPagePicker.SelectedPage;
@@ -64,8 +64,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			pageContents.ShowInSiteNav = true;
 			pageContents.ContentType = ContentPageType.PageType.ContentEntry;
 
-			pageContents.RetireDate = dtSite.AddYears(200);
 			pageContents.GoLiveDate = dtSite;
+			pageContents.RetireDate = dtSite.AddYears(200);
 
 			pageContents.SavePageEdit();
 

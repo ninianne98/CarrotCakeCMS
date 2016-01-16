@@ -44,10 +44,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					txtDescription.Text = pageContents.MetaDescription;
 					txtKey.Text = pageContents.MetaKeyword;
 
-					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
-					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();
-					txtRetireDate.Text = pageContents.RetireDate.ToShortDateString();
-					txtRetireTime.Text = pageContents.RetireDate.ToShortTimeString();
+					ucReleaseDate.SetDate(pageContents.GoLiveDate);
+					ucRetireDate.SetDate(pageContents.RetireDate);
 
 					lblUpdated.Text = pageContents.EditDate.ToString();
 
@@ -78,8 +76,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				pageContents.EditDate = SiteData.CurrentSite.Now;
 
-				pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
-				pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
+				pageContents.GoLiveDate = ucReleaseDate.GetDate();
+				pageContents.RetireDate = ucRetireDate.GetDate();
 
 				pageContents.PageActive = chkActive.Checked;
 				pageContents.ShowInSiteNav = false;

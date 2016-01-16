@@ -3,6 +3,7 @@
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Register Src="ucEditDateTime.ascx" TagPrefix="uc1" TagName="datetime" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
@@ -258,10 +259,7 @@
 				release date:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion"
-					Columns="16" />
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion"
-					Columns="10" />
+				<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>
@@ -269,8 +267,7 @@
 				retire date:
 			</td>
 			<td>
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
-				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+				<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>

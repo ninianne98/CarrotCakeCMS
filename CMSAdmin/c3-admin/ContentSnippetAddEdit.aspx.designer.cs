@@ -112,40 +112,22 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
-        /// txtReleaseDate control.
+        /// ucReleaseDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtReleaseDate;
+        protected global::Carrotware.CMS.UI.Admin.c3_admin.ucEditDateTime ucReleaseDate;
         
         /// <summary>
-        /// txtReleaseTime control.
+        /// ucRetireDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtReleaseTime;
-        
-        /// <summary>
-        /// txtRetireDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRetireDate;
-        
-        /// <summary>
-        /// txtRetireTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRetireTime;
+        protected global::Carrotware.CMS.UI.Admin.c3_admin.ucEditDateTime ucRetireDate;
         
         /// <summary>
         /// chkPublic control.

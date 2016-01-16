@@ -61,15 +61,6 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
-		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {
-			dateIn = dateIn.AddMinutes(-2);
-			int iMin = 5 * (dateIn.Minute / 5);
-
-			DateTime dateOut = dateIn.AddMinutes(0 - dateIn.Minute).AddMinutes(iMin);
-
-			return dateOut;
-		}
-
 		public void SetBlankText(ITextControl textControl) {
 			if (String.IsNullOrEmpty(textControl.Text)) {
 				textControl.Text = ContentPage.PageContentEmpty;

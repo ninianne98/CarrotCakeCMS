@@ -126,7 +126,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (!bNewSite) {
 				Response.Redirect(SiteData.CurrentScriptName);
 			} else {
-				DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+				DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 
 				if (chkHomepage.Checked) {
 					ContentPage pageContents = new ContentPage {

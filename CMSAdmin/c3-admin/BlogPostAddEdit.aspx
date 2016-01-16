@@ -1,8 +1,9 @@
 ﻿<%@ Page ValidateRequest="false" Title="Blog Post Add/Edit" Language="C#" MasterPageFile="MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="BlogPostAddEdit.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.BlogPostAddEdit" %>
 
-<%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
+<%@ Register Src="ucEditDateTime.ascx" TagPrefix="uc1" TagName="datetime" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
@@ -20,7 +21,7 @@
 		}
 
 		function GenerateBlogFilePrefix() {
-			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
+			var sGoLiveDate = $('#<%= ucReleaseDate.DateField.ClientID %>').val();
 			var pageTitle = $(tValidSlug).val();
 			var myPage = MakeStringSafe(pageTitle);
 
@@ -58,7 +59,7 @@
 
 			$(tValid).val('');
 
-			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
+			var sGoLiveDate = $('#<%= ucReleaseDate.DateField.ClientID %>').val();
 
 			var webMthd = webSvc + "/ValidateUniqueBlogFilename";
 			var myPage = MakeStringSafe(thePage);
@@ -109,7 +110,7 @@
 		function GeneratePageFilename() {
 			var theTitle = $(tTitle).val();
 			var theFile = $(tValidSlug).val();
-			var sGoLiveDate = $('#<%= txtReleaseDate.ClientID %>').val();
+			var sGoLiveDate = $('#<%= ucReleaseDate.DateField.ClientID %>').val();
 
 			if (theTitle.length > 0) {
 
@@ -376,10 +377,7 @@
 					release date:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseDate" runat="server" CssClass="dateRegion"
-						Columns="16" onblur="CheckFileName()" onchange="CheckFileName();" />
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtReleaseTime" runat="server" CssClass="timeRegion"
-						Columns="10" onblur="CheckFileName()" onchange="CheckFileName();" />
+					<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" OnBlur="CheckFileName()" OnChange="CheckFileName();" />
 				</td>
 			</tr>
 			<tr>
@@ -387,8 +385,7 @@
 					retire date:
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireDate" runat="server" CssClass="dateRegion" Columns="16" />
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtRetireTime" runat="server" CssClass="timeRegion" Columns="10" />
+					<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
 				</td>
 			</tr>
 			<tr>

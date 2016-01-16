@@ -1456,7 +1456,7 @@ namespace Carrotware.CMS.Core {
 	//============================================
 
 	public class BlogDatePathParser {
-		private string _FileName = String.Empty;
+		private string _filename = String.Empty;
 		private SiteData _site = new SiteData();
 
 		private DateTime _dateBegin = DateTime.MinValue;
@@ -1490,61 +1490,61 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public BlogDatePathParser() {
-			_FileName = SiteData.CurrentScriptName;
+			_filename = SiteData.CurrentScriptName;
 			_site = SiteData.CurrentSite;
 
 			ParseString();
 		}
 
 		public BlogDatePathParser(SiteData site) {
-			_FileName = SiteData.CurrentScriptName;
+			_filename = SiteData.CurrentScriptName;
 			_site = site;
 
 			ParseString();
 		}
 
-		public BlogDatePathParser(string FolderPath) {
-			_FileName = FolderPath;
+		public BlogDatePathParser(string folderPath) {
+			_filename = folderPath;
 			_site = SiteData.CurrentSite;
 
 			ParseString();
 		}
 
-		public BlogDatePathParser(SiteData site, string FolderPath) {
-			_FileName = FolderPath;
+		public BlogDatePathParser(SiteData site, string folderPath) {
+			_filename = folderPath;
 			_site = site;
 
 			ParseString();
 		}
 
 		private void ParseString() {
-			_FileName = _FileName.Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
-			string sFile = _FileName.ToLower().Replace(_site.BlogDateFolderPath, "");
+			_filename = _filename.Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
+			string sFile = _filename.ToLower().Replace(_site.BlogDateFolderPath, String.Empty);
 
-			if (sFile.ToLower().EndsWith(".aspx")) {
-				sFile = sFile.ToLower().Substring(0, sFile.ToLower().LastIndexOf("/"));
+			if (sFile.EndsWith(".aspx")) {
+				sFile = sFile.Substring(0, sFile.ToLower().LastIndexOf("/"));
 			}
 
 			string[] parms = sFile.Split('/');
 			if (parms.Length > 2) {
-				Day = int.Parse(parms[2]);
+				this.Day = int.Parse(parms[2]);
 			}
 			if (parms.Length > 1) {
-				Month = int.Parse(parms[1]);
+				this.Month = int.Parse(parms[1]);
 			}
 			if (parms.Length > 0) {
-				Year = int.Parse(parms[0]);
+				this.Year = int.Parse(parms[0]);
 			}
 
-			if (Month == null && Day == null) {
+			if (this.Month == null && this.Day == null) {
 				_dateBegin = new DateTime(Convert.ToInt32(this.Year), 1, 1);
 				_dateEnd = _dateBegin.AddYears(1).AddMilliseconds(-1);
 			}
-			if (Month != null && Day == null) {
+			if (this.Month != null && this.Day == null) {
 				_dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), 1);
 				_dateEnd = _dateBegin.AddMonths(1).AddMilliseconds(-1);
 			}
-			if (Month != null && Day != null) {
+			if (this.Month != null && this.Day != null) {
 				_dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), Convert.ToInt32(this.Day));
 				_dateEnd = _dateBegin.AddDays(1).AddMilliseconds(-1);
 			}

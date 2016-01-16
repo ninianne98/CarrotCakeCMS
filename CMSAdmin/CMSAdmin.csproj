@@ -221,6 +221,13 @@
     <Compile Include="c3-admin\SiteIndex.aspx.designer.cs">
       <DependentUpon>SiteIndex.aspx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\ucEditDateTime.ascx.cs">
+      <DependentUpon>ucEditDateTime.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ucEditDateTime.ascx.designer.cs">
+      <DependentUpon>ucEditDateTime.ascx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\UserProfile.aspx.cs">
       <DependentUpon>UserProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1078,6 +1085,7 @@
     <Content Include="c3-admin\tiny_mce\utils\form_utils.js" />
     <Content Include="c3-admin\tiny_mce\utils\mctabs.js" />
     <Content Include="c3-admin\tiny_mce\utils\validate.js" />
+    <Content Include="c3-admin\ucEditDateTime.ascx" />
     <Content Include="c3-admin\UserProfile.aspx" />
     <Content Include="c3-admin\Default.aspx" />
     <Content Include="c3-admin\Images\arrowdown.png" />

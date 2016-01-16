@@ -45,10 +45,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					ww = widgetHelper.Get(guidWidgetID);
 				}
 
-				txtReleaseDate.Text = ww.GoLiveDate.ToShortDateString();
-				txtReleaseTime.Text = ww.GoLiveDate.ToShortTimeString();
-				txtRetireDate.Text = ww.RetireDate.ToShortDateString();
-				txtRetireTime.Text = ww.RetireDate.ToShortTimeString();
+				ucReleaseDate.SetDate(ww.GoLiveDate);
+				ucRetireDate.SetDate(ww.RetireDate);
+
 				chkActive.Checked = ww.IsWidgetActive;
 
 				litControlPath.Text = ww.ControlPath;
@@ -88,8 +87,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			ww.IsWidgetActive = chkActive.Checked;
 
 			ww.EditDate = SiteData.CurrentSite.Now;
-			ww.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
-			ww.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
+			ww.GoLiveDate = ucReleaseDate.GetDate();
+			ww.RetireDate = ucRetireDate.GetDate();
 
 			if (guidContentID != Guid.Empty) {
 				lstPageWidgets.RemoveAll(x => x.Root_WidgetID == ww.Root_WidgetID);
@@ -101,6 +100,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.ShowSave();
 		}
-
 	}
 }

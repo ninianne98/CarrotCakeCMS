@@ -37,11 +37,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (!IsPostBack) {
-				DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
-				txtReleaseDate.Text = dtSite.ToShortDateString();
-				txtReleaseTime.Text = dtSite.ToShortTimeString();
-				txtRetireDate.Text = dtSite.AddYears(200).ToShortDateString();
-				txtRetireTime.Text = dtSite.AddYears(200).ToShortTimeString();
+				DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+				ucReleaseDate.SetDate(dtSite);
+				ucRetireDate.SetDate(dtSite.AddYears(200));
 
 				ContentSnippet item = null;
 
@@ -65,10 +63,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					reBody.Text = item.ContentBody;
 					guidRootItemID = item.Root_ContentSnippetID;
 
-					txtReleaseDate.Text = item.GoLiveDate.ToShortDateString();
-					txtReleaseTime.Text = item.GoLiveDate.ToShortTimeString();
-					txtRetireDate.Text = item.RetireDate.ToShortDateString();
-					txtRetireTime.Text = item.RetireDate.ToShortTimeString();
+					ucReleaseDate.SetDate(item.GoLiveDate);
+					ucRetireDate.SetDate(item.RetireDate);
 
 					chkPublic.Checked = item.ContentSnippetActive;
 					btnDeleteButton.Visible = true;
@@ -125,8 +121,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			item.ContentBody = reBody.Text;
 			item.EditUserId = SecurityData.CurrentUserGuid;
 			item.ContentSnippetActive = chkPublic.Checked;
-			item.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
-			item.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
+
+			item.GoLiveDate = ucReleaseDate.GetDate();
+			item.RetireDate = ucRetireDate.GetDate();
 
 			item.Save();
 

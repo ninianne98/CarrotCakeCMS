@@ -50,11 +50,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (!IsPostBack) {
-				DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
-				txtReleaseDate.Text = dtSite.ToShortDateString();
-				txtReleaseTime.Text = dtSite.ToShortTimeString();
-				txtRetireDate.Text = dtSite.AddYears(200).ToShortDateString();
-				txtRetireTime.Text = dtSite.AddYears(200).ToShortTimeString();
+				DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+
+				ucReleaseDate.SetDate(dtSite);
+				ucRetireDate.SetDate(dtSite.AddYears(200));
 
 				hdnRootID.Value = Guid.Empty.ToString();
 
@@ -176,10 +175,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					GeneralUtilities.BindDataBoundControl(gvTracks, pageContents.GetTrackbacks());
 
-					txtReleaseDate.Text = pageContents.GoLiveDate.ToShortDateString();
-					txtReleaseTime.Text = pageContents.GoLiveDate.ToShortTimeString();
-					txtRetireDate.Text = pageContents.RetireDate.ToShortDateString();
-					txtRetireTime.Text = pageContents.RetireDate.ToShortTimeString();
+					ucReleaseDate.SetDate(pageContents.GoLiveDate);
+					ucRetireDate.SetDate(pageContents.RetireDate);
 
 					if (pageContents.CreditUserId.HasValue) {
 						var usr = new ExtendedUserData(pageContents.CreditUserId.Value);
@@ -277,7 +274,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents = new ContentPage(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
 			}
 
-			DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+			DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 			pageContents.GoLiveDate = dtSite.AddMinutes(-5);
 			pageContents.RetireDate = dtSite.AddYears(200);
 
@@ -317,8 +314,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.CreditUserId = usr.UserId;
 			}
 
-			pageContents.GoLiveDate = Convert.ToDateTime(txtReleaseDate.Text + " " + txtReleaseTime.Text);
-			pageContents.RetireDate = Convert.ToDateTime(txtRetireDate.Text + " " + txtRetireTime.Text);
+			pageContents.GoLiveDate = ucReleaseDate.GetDate();
+			pageContents.RetireDate = ucRetireDate.GetDate();
+
 			pageContents.EditUserId = SecurityData.CurrentUserGuid;
 
 			pageContents.NewTrackBackURLs = txtTrackback.Text;

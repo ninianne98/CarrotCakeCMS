@@ -290,8 +290,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							cp.NavOrder = 0;
 						}
 
-						cp.RetireDate = CalcNearestFiveMinTime(cp.CreateDate).AddYears(200);
-						cp.GoLiveDate = CalcNearestFiveMinTime(cp.CreateDate).AddMinutes(-5);
+						cp.RetireDate = CMSConfigHelper.CalcNearestFiveMinTime(cp.CreateDate).AddYears(200);
+						cp.GoLiveDate = CMSConfigHelper.CalcNearestFiveMinTime(cp.CreateDate).AddMinutes(-5);
 
 						//if URL exists already, make this become a new version in the current series
 						if (navData != null) {
@@ -328,8 +328,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 						SiteNav navData = navHelper.GetLatestVersion(site.SiteID, false, cp.FileName.ToLower());
 
-						cp.RetireDate = CalcNearestFiveMinTime(cp.CreateDate).AddYears(200);
-						cp.GoLiveDate = CalcNearestFiveMinTime(cp.CreateDate).AddMinutes(-5);
+						cp.RetireDate = CMSConfigHelper.CalcNearestFiveMinTime(cp.CreateDate).AddYears(200);
+						cp.GoLiveDate = CMSConfigHelper.CalcNearestFiveMinTime(cp.CreateDate).AddMinutes(-5);
 
 						//if URL exists already, make this become a new version in the current series
 						if (navData != null) {

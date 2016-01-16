@@ -869,15 +869,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		public DateTime CalcNearestFiveMinTime(DateTime dateIn) {
-			dateIn = dateIn.AddMinutes(-2);
-			int iMin = 5 * (dateIn.Minute / 5);
-
-			DateTime dateOut = dateIn.AddMinutes(0 - dateIn.Minute).AddMinutes(iMin);
-
-			return dateOut;
-		}
-
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string CacheWidgetUpdate(string WidgetAddition, string ThisPage) {
@@ -906,7 +897,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							rWidg.ControlPath = w[2];
 							rWidg.Root_WidgetID = Guid.NewGuid();
 
-							DateTime dtSite = CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+							DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 							rWidg.GoLiveDate = dtSite;
 							rWidg.RetireDate = dtSite.AddYears(200);
 
