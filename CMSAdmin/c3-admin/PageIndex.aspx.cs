@@ -19,7 +19,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class PageIndex : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
-			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentAdd);
+			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentIndex);
 
 			RedirectIfNoSite();
 

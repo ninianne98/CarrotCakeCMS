@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Security;
@@ -22,13 +23,13 @@ namespace Carrotware.CMS.Core {
 
 		public SecurityData() { }
 
-		public static MembershipRole FindMembershipRole(string RoleName) {
+		public static MembershipRole FindMembershipRole(string roleName) {
 			MembershipRole role = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				role = (from l in _db.aspnet_Roles
-						where l.LoweredRoleName.ToLower() == RoleName.ToLower()
-						select new MembershipRole(l)).FirstOrDefault();
+				role = (from r in _db.aspnet_Roles
+						where r.LoweredRoleName == roleName
+						select new MembershipRole(r)).FirstOrDefault();
 			}
 
 			return role;
@@ -38,9 +39,9 @@ namespace Carrotware.CMS.Core {
 			MembershipRole role = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				role = (from l in _db.aspnet_Roles
-						where l.RoleId == roleID
-						select new MembershipRole(l)).FirstOrDefault();
+				role = (from r in _db.aspnet_Roles
+						where r.RoleId == roleID
+						select new MembershipRole(r)).FirstOrDefault();
 			}
 
 			return role;
@@ -50,9 +51,9 @@ namespace Carrotware.CMS.Core {
 			List<MembershipRole> roles = new List<MembershipRole>();
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				roles = (from l in _db.aspnet_Roles
-						 orderby l.RoleName
-						 select new MembershipRole(l)).ToList();
+				roles = (from r in _db.aspnet_Roles
+						 orderby r.RoleName
+						 select new MembershipRole(r)).ToList();
 			}
 
 			return roles;
@@ -63,15 +64,15 @@ namespace Carrotware.CMS.Core {
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				if (!SecurityData.IsAdmin) {
-					roles = (from l in _db.aspnet_Roles
-							 where l.RoleName != SecurityData.CMSGroup_Users && l.RoleName != SecurityData.CMSGroup_Admins
-							 orderby l.RoleName
-							 select new MembershipRole(l)).ToList();
+					roles = (from r in _db.aspnet_Roles
+							 where r.RoleName != SecurityData.CMSGroup_Users && r.RoleName != SecurityData.CMSGroup_Admins
+							 orderby r.RoleName
+							 select new MembershipRole(r)).ToList();
 				} else {
-					roles = (from l in _db.aspnet_Roles
-							 where l.RoleName != SecurityData.CMSGroup_Users
-							 orderby l.RoleName
-							 select new MembershipRole(l)).ToList();
+					roles = (from r in _db.aspnet_Roles
+							 where r.RoleName != SecurityData.CMSGroup_Users
+							 orderby r.RoleName
+							 select new MembershipRole(r)).ToList();
 				}
 			}
 
@@ -80,18 +81,12 @@ namespace Carrotware.CMS.Core {
 
 		public static List<MembershipUser> GetUserSearch(string searchTerm) {
 			List<MembershipUser> usrs = null;
-			//usrs = GetUserListByEmail(searchTerm);
-			//List<MembershipUser> usrs2 = GetUserListByName(searchTerm);
-			//List<string> usrKeys = (from u in usrs
-			//                        select u.ProviderUserKey.ToString()).ToList();
-			//usrs2.RemoveAll(x => usrKeys.Contains(x.ProviderUserKey.ToString()));
-			//usrs = usrs.Union(usrs2).ToList();
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				usrs = (from u in _db.aspnet_Users
 						join m in _db.aspnet_Memberships on u.UserId equals m.UserId
-						where u.UserName.ToLower().Contains(searchTerm)
-							|| m.Email.ToLower().Contains(searchTerm)
+						where u.UserName.Contains(searchTerm)
+							|| m.Email.Contains(searchTerm)
 						select Membership.GetUser(u.UserName)).Take(50).ToList();
 			}
 
@@ -113,8 +108,8 @@ namespace Carrotware.CMS.Core {
 
 				usrs = (from u in _db.aspnet_Users
 						join m in _db.aspnet_Memberships on u.UserId equals m.UserId
-						where (u.UserName.ToLower().Contains(searchTerm)
-									|| m.Email.ToLower().Contains(searchTerm))
+						where (u.UserName.Contains(searchTerm)
+									|| m.Email.Contains(searchTerm))
 							&& admins.Union(editors).Contains(u.UserId)
 						select Membership.GetUser(u.UserName)).Take(50).ToList();
 			}
@@ -148,8 +143,8 @@ namespace Carrotware.CMS.Core {
 			return usrs;
 		}
 
-		public static List<MembershipUser> GetUsersInRole(string groupName) {
-			string[] usersInRole = Roles.GetUsersInRole(groupName);
+		public static List<MembershipUser> GetUsersInRole(string roleName) {
+			string[] usersInRole = Roles.GetUsersInRole(roleName);
 			List<MembershipUser> usrs = new List<MembershipUser>();
 			foreach (string u in usersInRole) {
 				foreach (MembershipUser usr in Membership.FindUsersByName(u)) {
@@ -177,13 +172,48 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		private static string keyIsAdmin = "cms_IsAdmin";
+
+		private static string keyIsSiteEditor = "cms_IsSiteEditor";
+
+		public static bool GetIsAdminFromCache() {
+			bool keyVal = false;
+
+			if (SiteData.IsWebView && IsAuthenticated) {
+				string key = String.Format("{0}_{1}", keyIsAdmin, SecurityData.CurrentUserIdentityName);
+				if (HttpContext.Current.Cache[key] != null) {
+					keyVal = Convert.ToBoolean(HttpContext.Current.Cache[key]);
+				} else {
+					keyVal = IsUserInRole(SecurityData.CMSGroup_Admins);
+					HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+				}
+			}
+
+			return keyVal;
+		}
+
+		public static bool GetIsSiteEditorFromCache() {
+			bool keyVal = false;
+
+			if (SiteData.IsWebView && IsAuthenticated) {
+				string key = String.Format("{0}_{1}_{2}", keyIsSiteEditor, SecurityData.CurrentUserIdentityName, SiteData.CurrentSiteID);
+				if (HttpContext.Current.Cache[key] != null) {
+					keyVal = Convert.ToBoolean(HttpContext.Current.Cache[key]);
+				} else {
+					ExtendedUserData usrEx = SecurityData.CurrentExtendedUser;
+
+					keyVal = (IsEditor || usrEx.IsEditor) && usrEx.MemberSiteIDs.Contains(SiteData.CurrentSiteID);
+
+					HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+				}
+			}
+
+			return keyVal;
+		}
+
 		public static bool IsAdmin {
 			get {
-				try {
-					return IsUserInRole(SecurityData.CMSGroup_Admins);
-				} catch {
-					return false;
-				}
+				return GetIsAdminFromCache();
 			}
 		}
 
@@ -207,29 +237,69 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static IPrincipal UserPrincipal {
+			get {
+				return HttpContext.Current.User;
+			}
+		}
+
+		public static bool IsAuthenticated {
+			get {
+				if (SiteData.IsWebView && UserPrincipal.Identity.IsAuthenticated) {
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		public static string GetUserName() {
+			if (SiteData.IsWebView && IsAuthenticated) {
+				return UserPrincipal.Identity.Name;
+			}
+
+			return String.Empty;
+		}
+
+		public static string CurrentUserIdentityName {
+			get {
+				return GetUserName();
+			}
+		}
+
 		public static bool IsUserInRole(string groupName) {
 			return Roles.IsUserInRole(groupName);
 		}
 
+		private static string keyIsUserInRole = "cms_IsUserInRole";
+
 		public static bool IsUserInRole(string userName, string groupName) {
-			return Roles.IsUserInRole(userName, groupName);
+			bool keyVal = false;
+
+			if (SiteData.IsWebView && IsAuthenticated) {
+				string key = String.Format("{0}_{1}_{2}", keyIsUserInRole, userName, groupName);
+
+				if (HttpContext.Current.Cache[key] != null) {
+					keyVal = Convert.ToBoolean(HttpContext.Current.Cache[key]);
+				} else {
+					keyVal = Roles.IsUserInRole(userName, groupName);
+
+					HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(15), Cache.NoSlidingExpiration);
+				}
+			}
+
+			return keyVal;
 		}
 
 		public static bool IsSiteEditor {
 			get {
-				if (SiteData.IsWebView && HttpContext.Current.User.Identity.IsAuthenticated) {
-					ExtendedUserData usrEx = SecurityData.CurrentExtendedUser;
-
-					return usrEx.IsEditor && usrEx.MemberSiteIDs.Contains(SiteData.CurrentSiteID);
-				} else {
-					return false;
-				}
+				return GetIsSiteEditorFromCache();
 			}
 		}
 
 		public static bool IsAuthEditor {
 			get {
-				if (SiteData.IsWebView) {
+				if (SiteData.IsWebView && IsAuthenticated) {
 					return AdvancedEditMode || IsAdmin || IsSiteEditor;
 				} else {
 					return false;
@@ -239,23 +309,24 @@ namespace Carrotware.CMS.Core {
 
 		public static ExtendedUserData CurrentExtendedUser {
 			get {
-				Guid userID = SecurityData.CurrentUserGuid;
-				string cacheKey = "cms_CurrentExUser" + userID.ToString();
 				ExtendedUserData currentUser = null;
-				if (SiteData.IsWebView && userID != Guid.Empty) {
-					try { currentUser = (ExtendedUserData)HttpContext.Current.Cache[cacheKey]; } catch { }
-					if (currentUser == null) {
+
+				if (SiteData.IsWebView && IsAuthenticated) {
+					Guid userID = SecurityData.CurrentUserGuid;
+					string key = String.Format("cms_CurrentExtendedUser_{0}", userID);
+
+					if (HttpContext.Current.Cache[key] != null) {
+						currentUser = (ExtendedUserData)HttpContext.Current.Cache[key];
+					} else {
 						currentUser = new ExtendedUserData(userID);
 						if (currentUser != null) {
-							HttpContext.Current.Cache.Insert(cacheKey, currentUser, null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
-						} else {
-							HttpContext.Current.Cache.Remove(cacheKey);
+							HttpContext.Current.Cache.Insert(key, currentUser, null, DateTime.Now.AddSeconds(90), Cache.NoSlidingExpiration);
 						}
 					}
 				} else {
 					currentUser = new ExtendedUserData();
 					currentUser.UserId = Guid.Empty;
-					currentUser.UserName = "anonymous-user-" + userID.ToString();
+					currentUser.UserName = "anonymous-user-" + Guid.Empty.ToString();
 				}
 				return currentUser;
 			}
@@ -264,7 +335,7 @@ namespace Carrotware.CMS.Core {
 		public static Guid CurrentUserGuid {
 			get {
 				Guid _currentUserGuid = Guid.Empty;
-				if (CurrentUser != null) {
+				if (SiteData.IsWebView && IsAuthenticated) {
 					_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
 				}
 				return _currentUserGuid;
@@ -274,10 +345,8 @@ namespace Carrotware.CMS.Core {
 		public static MembershipUser CurrentUser {
 			get {
 				MembershipUser _currentUser = null;
-				if (SiteData.IsWebView && HttpContext.Current.User.Identity.IsAuthenticated) {
-					if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)) {
-						_currentUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
-					}
+				if (SiteData.IsWebView && IsAuthenticated) {
+					_currentUser = GetUserByName(CurrentUserIdentityName);
 				}
 				return _currentUser;
 			}
@@ -294,13 +363,11 @@ namespace Carrotware.CMS.Core {
 		public static bool AdvancedEditMode {
 			get {
 				bool _Advanced = false;
-				if (SiteData.IsWebView) {
-					if (HttpContext.Current.User.Identity.IsAuthenticated) {
-						if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
-							_Advanced = true;
-						} else {
-							_Advanced = false;
-						}
+				if (SiteData.IsWebView && IsAuthenticated) {
+					if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
+						_Advanced = true;
+					} else {
+						_Advanced = false;
 					}
 				}
 				return _Advanced;
@@ -308,7 +375,7 @@ namespace Carrotware.CMS.Core {
 		}
 	}
 
-	//============
+	//================================================
 	public class MembershipRole {
 
 		public MembershipRole() {
@@ -340,14 +407,14 @@ namespace Carrotware.CMS.Core {
 
 		public string RoleName { get; set; }
 
-		public string LoweredRoleName { get { return this.RoleName.ToLower(); } }
+		public string LoweredRoleName { get { return this.RoleName.ToLowerInvariant(); } }
 
 		public string Description { get; set; }
 
 		public void Save() {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				aspnet_Role role = (from l in _db.aspnet_Roles
-									where l.LoweredRoleName.ToLower() == this.RoleName.ToLower()
+									where l.LoweredRoleName == this.RoleName
 										|| l.RoleId == this.RoleId
 									select l).FirstOrDefault();
 
@@ -357,7 +424,7 @@ namespace Carrotware.CMS.Core {
 					}
 				} else {
 					role.RoleName = this.RoleName;
-					role.LoweredRoleName = role.RoleName.ToLower();
+					role.LoweredRoleName = role.RoleName.ToLowerInvariant();
 					_db.SubmitChanges();
 				}
 			}

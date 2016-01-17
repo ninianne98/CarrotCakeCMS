@@ -18,17 +18,17 @@ using Carrotware.CMS.Core;
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 	public partial class Main : AdminBaseMasterPage {
-		public string userName = String.Empty;
+		public string UserName { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!Page.User.Identity.IsAuthenticated) {
+			this.UserName = String.Empty;
+
+			if (!SecurityData.IsAuthenticated) {
 				FormsAuthentication.SignOut();
 				Response.Redirect(SiteFilename.LogonURL);
 			}
 
-			if (SecurityData.CurrentUser != null) {
-				userName = SecurityData.CurrentUser.UserName;
-			}
+			this.UserName = SecurityData.CurrentUserIdentityName;
 
 			if (!SecurityData.IsAdmin) {
 				tabUserSecurity.Visible = false;
@@ -39,23 +39,21 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			tabSites.Visible = tabUserSecurity.Visible;
 
 			if (SiteData.CurretSiteExists) {
-				litServerTime.Text = SiteData.CurrentSite.Now.ToString() + " " + SiteData.CurrentSite.TimeZoneIdentifier;
+				litServerTime.Text = String.Format("{0} {1}", SiteData.CurrentSite.Now, SiteData.CurrentSite.TimeZoneIdentifier);
 				litSiteIdent.Text = SiteData.CurrentSite.SiteName;
 				litTag.Text = SiteData.CurrentSite.SiteTagline;
 
 				if (!String.IsNullOrEmpty(SiteData.CurrentSite.SiteName) && !String.IsNullOrEmpty(SiteData.CurrentSite.SiteTagline)) {
-					litSiteIdent.Text = SiteData.CurrentSite.SiteName.Trim() + ":   ";
+					litSiteIdent.Text = String.Format("{0}: ", SiteData.CurrentSite.SiteName.Trim());
 				}
 			} else {
-				litServerTime.Text = DateTime.UtcNow.ToString() + " UTC";
+				litServerTime.Text = String.Format("{0} UTC", DateTime.UtcNow);
 			}
 
 			LoadFooterCtrl(plcFooter, ControlLocation.MainFooter);
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 			litVersion.Text = SiteData.CarrotCakeCMSVersionMM;
-
-			tabModules.Visible = CMSConfigHelper.HasAdminModules();
 
 			HideWhenNoSiteProfileExists();
 		}
@@ -129,9 +127,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 					tabStatusChange.Attributes["class"] = sCSSSecondary;
 					break;
 
-				case SectionID.ContentAdd:
+				case SectionID.ContentIndex:
 					tabContentTop.Attributes["class"] = sCSSTop;
 					tabContent.Attributes["class"] = sCSSSecondary;
+					break;
+
+				case SectionID.ContentAdd:
+					tabContentTop.Attributes["class"] = sCSSTop;
+					tabAddContent.Attributes["class"] = sCSSSecondary;
 					break;
 
 				case SectionID.ContentTemplate:
@@ -181,7 +184,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 				case SectionID.BlogContentAdd:
 					tabBlogTop.Attributes["class"] = sCSSTop;
-					tabBlogContent.Attributes["class"] = sCSSSecondary;
+					tabAddBlogContent.Attributes["class"] = sCSSSecondary;
 					break;
 
 				case SectionID.BlogIndex:
