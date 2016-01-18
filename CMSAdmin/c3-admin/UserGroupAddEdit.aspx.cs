@@ -131,12 +131,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private bool CheckValidEditing(string sLoweredRoleName) {
-			sLoweredRoleName = sLoweredRoleName.ToLower();
+			sLoweredRoleName = sLoweredRoleName.ToLowerInvariant();
 
 			if (groupID != Guid.Empty
-						&& sLoweredRoleName != SecurityData.CMSGroup_Admins.ToLower()
-						&& sLoweredRoleName != SecurityData.CMSGroup_Editors.ToLower()
-						&& sLoweredRoleName != SecurityData.CMSGroup_Users.ToLower()) {
+						&& sLoweredRoleName != SecurityData.CMSGroup_Admins.ToLowerInvariant()
+						&& sLoweredRoleName != SecurityData.CMSGroup_Editors.ToLowerInvariant()
+						&& sLoweredRoleName != SecurityData.CMSGroup_Users.ToLowerInvariant()) {
 				return true;
 			}
 

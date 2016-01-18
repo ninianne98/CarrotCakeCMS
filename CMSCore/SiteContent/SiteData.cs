@@ -267,7 +267,7 @@ namespace Carrotware.CMS.Core {
 				return false;
 			}
 
-			return String.Format("{0}", filePath).Length < 4 || (filePath.ToLower() == DefaultDirectoryFilename.ToLower());
+			return String.Format("{0}", filePath).Length < 4 || (filePath.ToLowerInvariant() == DefaultDirectoryFilename.ToLowerInvariant());
 		}
 
 		private static string SiteKeyPrefix = "cms_SiteData_";
@@ -539,7 +539,7 @@ namespace Carrotware.CMS.Core {
 				string sCurrentPage = SiteData.CurrentScriptName;
 				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
-				if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+				if (sScrubbedURL.ToLowerInvariant() != sCurrentPage.ToLowerInvariant()) {
 					sCurrentPage = sScrubbedURL;
 				}
 
@@ -618,7 +618,7 @@ namespace Carrotware.CMS.Core {
 					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 					if (config.ExtraOptions != null
 						&& !String.IsNullOrEmpty(config.ExtraOptions.OldSiteQuerystring)) {
-						_siteQS = config.ExtraOptions.OldSiteQuerystring.ToLower();
+						_siteQS = config.ExtraOptions.OldSiteQuerystring.ToLowerInvariant();
 					}
 				}
 				return _siteQS;
@@ -755,59 +755,59 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public bool IsBlogCategoryPath {
-			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogCategoryPath); }
+			get { return SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(this.BlogCategoryPath); }
 		}
 
 		public bool IsBlogTagPath {
-			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogTagPath); }
+			get { return SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(this.BlogTagPath); }
 		}
 
 		public bool IsBlogDateFolderPath {
-			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogDateFolderPath); }
+			get { return SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(this.BlogDateFolderPath); }
 		}
 
 		public bool IsBlogEditorFolderPath {
-			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.BlogEditorFolderPath); }
+			get { return SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(this.BlogEditorFolderPath); }
 		}
 
 		public bool IsSiteSearchPath {
-			get { return SiteData.CurrentScriptName.ToLower().StartsWith(this.SiteSearchPath); }
+			get { return SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(this.SiteSearchPath); }
 		}
 
 		public bool CheckIsBlogCategoryPath(string sFilterPath) {
-			return sFilterPath.ToLower().StartsWith(this.BlogCategoryPath);
+			return sFilterPath.ToLowerInvariant().StartsWith(this.BlogCategoryPath);
 		}
 
 		public bool CheckIsBlogTagPath(string sFilterPath) {
-			return sFilterPath.ToLower().StartsWith(this.BlogTagPath);
+			return sFilterPath.ToLowerInvariant().StartsWith(this.BlogTagPath);
 		}
 
 		public bool CheckIsBlogDateFolderPath(string sFilterPath) {
-			return sFilterPath.ToLower().StartsWith(this.BlogDateFolderPath);
+			return sFilterPath.ToLowerInvariant().StartsWith(this.BlogDateFolderPath);
 		}
 
 		public bool CheckIsBlogEditorFolderPath(string sFilterPath) {
-			return sFilterPath.ToLower().StartsWith(this.BlogEditorFolderPath);
+			return sFilterPath.ToLowerInvariant().StartsWith(this.BlogEditorFolderPath);
 		}
 
 		public bool CheckIsSiteSearchPath(string sFilterPath) {
-			return sFilterPath.ToLower().StartsWith(this.SiteSearchPath);
+			return sFilterPath.ToLowerInvariant().StartsWith(this.SiteSearchPath);
 		}
 
 		public List<string> GetSpecialFilePathPrefixes() {
 			List<string> lst = new List<string>();
 
-			lst.Add(this.BlogCategoryPath.ToLower());
-			lst.Add(this.BlogTagPath.ToLower());
-			lst.Add(this.BlogDateFolderPath.ToLower());
-			lst.Add(this.BlogEditorFolderPath.ToLower());
-			lst.Add(this.SiteSearchPath.ToLower());
+			lst.Add(this.BlogCategoryPath.ToLowerInvariant());
+			lst.Add(this.BlogTagPath.ToLowerInvariant());
+			lst.Add(this.BlogDateFolderPath.ToLowerInvariant());
+			lst.Add(this.BlogEditorFolderPath.ToLowerInvariant());
+			lst.Add(this.SiteSearchPath.ToLowerInvariant());
 
 			return lst;
 		}
 
 		protected static string SiteSearchPageName {
-			get { return "/search.aspx".ToLower(); }
+			get { return "/search.aspx".ToLowerInvariant(); }
 		}
 
 		public string MainCanonicalURL {
@@ -848,7 +848,7 @@ namespace Carrotware.CMS.Core {
 
 		private string RemoveDupeSlashesURL(string sInput) {
 			if (!String.IsNullOrEmpty(sInput)) {
-				if (!sInput.ToLower().StartsWith("http")) {
+				if (!sInput.ToLowerInvariant().StartsWith("http")) {
 					sInput = "http://" + sInput;
 				}
 				return RemoveDupeSlashes(sInput.Replace("://", "¤¤¤")).Replace("¤¤¤", "://");
@@ -1003,7 +1003,7 @@ namespace Carrotware.CMS.Core {
 			if (bWriteError && objErr != null) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.AppendLine("----------------  " + sSrc.ToUpper() + " - " + DateTime.Now.ToString() + "  ----------------");
+				sb.AppendLine("----------------  " + sSrc.ToUpperInvariant() + " - " + DateTime.Now.ToString() + "  ----------------");
 
 				sb.AppendLine("[" + objErr.GetType().ToString() + "] " + objErr.Message);
 
@@ -1044,7 +1044,7 @@ namespace Carrotware.CMS.Core {
 			if (xmlCustomErrors != null) {
 				string redirectPage = "";
 
-				if (xmlCustomErrors.Attributes["mode"] != null && xmlCustomErrors.Attributes["mode"].Value.ToLower() != "off") {
+				if (xmlCustomErrors.Attributes["mode"] != null && xmlCustomErrors.Attributes["mode"].Value.ToLowerInvariant() != "off") {
 					if (xmlCustomErrors.Attributes["defaultRedirect"] != null) {
 						redirectPage = xmlCustomErrors.Attributes["defaultRedirect"].Value;
 					}
@@ -1062,7 +1062,7 @@ namespace Carrotware.CMS.Core {
 						}
 					}
 
-					if (!String.IsNullOrEmpty(redirectPage) && !sQS.ToLower().Contains("aspxerrorpath")) {
+					if (!String.IsNullOrEmpty(redirectPage) && !sQS.ToLowerInvariant().Contains("aspxerrorpath")) {
 						context.Response.Redirect(redirectPage + "?aspxerrorpath=" + sReqURL + sQS);
 					}
 				}
@@ -1098,8 +1098,8 @@ namespace Carrotware.CMS.Core {
 				sCurrentFile = sCurrentFile.Substring(0, sCurrentFile.IndexOf("?"));
 			}
 
-			if (sCurrentFile.ToLower() == SiteData.CurrentScriptName.ToLower()
-				|| sCurrentFile.ToLower() == SiteData.AlternateCurrentScriptName.ToLower()) {
+			if (sCurrentFile.ToLowerInvariant() == SiteData.CurrentScriptName.ToLowerInvariant()
+				|| sCurrentFile.ToLowerInvariant() == SiteData.AlternateCurrentScriptName.ToLowerInvariant()) {
 				return true;
 			}
 			return false;
@@ -1119,19 +1119,19 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string SearchQueryParameter {
-			get { return "search".ToLower(); }
+			get { return "search".ToLowerInvariant(); }
 		}
 
 		public static string DefaultDirectoryFilename {
-			get { return "/default.aspx".ToLower(); }
+			get { return "/default.aspx".ToLowerInvariant(); }
 		}
 
 		public static string DefaultTemplateFilename {
-			get { return SiteData.AdminFolderPath + "PlainTemplate.aspx".ToLower(); }
+			get { return SiteData.AdminFolderPath + "PlainTemplate.aspx".ToLowerInvariant(); }
 		}
 
 		public static string VirtualCMSEditPrefix {
-			get { return ("/carrotcake/edit-" + CurrentSiteID.ToString() + "/").ToLower(); }
+			get { return ("/carrotcake/edit-" + CurrentSiteID.ToString() + "/").ToLowerInvariant(); }
 		}
 
 		public static string PreviewTemplateFilePage {
@@ -1140,15 +1140,15 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsPageSampler {
 			get {
-				string _prefix = (VirtualCMSEditPrefix + "templatepreview/").ToLower();
-				return CurrentScriptName.ToLower().StartsWith(_prefix);
+				string _prefix = (VirtualCMSEditPrefix + "templatepreview/").ToLowerInvariant();
+				return CurrentScriptName.ToLowerInvariant().StartsWith(_prefix);
 			}
 		}
 
 		public static bool IsPageReal {
 			get {
 				if (IsWebView
-					&& CurrentScriptName.ToLower() != DefaultDirectoryFilename.ToLower()
+					&& CurrentScriptName.ToLowerInvariant() != DefaultDirectoryFilename.ToLowerInvariant()
 					&& File.Exists(HttpContext.Current.Server.MapPath(CurrentScriptName))) {
 					return true;
 				} else {
@@ -1176,12 +1176,12 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsCurrentPageSpecial {
 			get {
-				return SiteData.SpecialFiles.Contains(CurrentScriptName.ToLower()) || CurrentScriptName.ToLower().StartsWith(AdminFolderPath);
+				return SiteData.SpecialFiles.Contains(CurrentScriptName.ToLowerInvariant()) || CurrentScriptName.ToLowerInvariant().StartsWith(AdminFolderPath);
 			}
 		}
 
 		public static bool IsPageSpecial(string sPageName) {
-			return SiteData.SpecialFiles.Contains(sPageName.ToLower()) || sPageName.ToLower().StartsWith(AdminFolderPath);
+			return SiteData.SpecialFiles.Contains(sPageName.ToLowerInvariant()) || sPageName.ToLowerInvariant().StartsWith(AdminFolderPath);
 		}
 
 		public static string PreviewTemplateFile {
@@ -1251,7 +1251,7 @@ namespace Carrotware.CMS.Core {
 		public static string AppendDefaultPath(string sRequestedURL) {
 			if (!String.IsNullOrEmpty(sRequestedURL)) {
 				sRequestedURL = sRequestedURL.Replace(@"\", @"/");
-				if (sRequestedURL.EndsWith("/") || !sRequestedURL.ToLower().EndsWith(".aspx")) {
+				if (sRequestedURL.EndsWith("/") || !sRequestedURL.ToLowerInvariant().EndsWith(".aspx")) {
 					sRequestedURL = (sRequestedURL + DefaultDirectoryFilename).Replace("//", "/");
 				}
 			}
@@ -1270,15 +1270,16 @@ namespace Carrotware.CMS.Core {
 		public static string AdminFolderPath {
 			get {
 				if (_adminFolderPath == null) {
+					string _defPath = "/c3-admin/";
 					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 					if (config.MainConfig != null && !String.IsNullOrEmpty(config.MainConfig.AdminFolderPath)) {
 						_adminFolderPath = config.MainConfig.AdminFolderPath;
-						_adminFolderPath = ("/" + _adminFolderPath + "/").Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
+						_adminFolderPath = String.Format("/{0}/", _adminFolderPath).Replace(@"\", "/").Replace("///", "/").Replace("//", "/").Replace("//", "/");
 					} else {
-						_adminFolderPath = "/c3-admin/";
+						_adminFolderPath = _defPath;
 					}
 					if (String.IsNullOrEmpty(_adminFolderPath) || _adminFolderPath.Length < 2) {
-						_adminFolderPath = "/c3-admin/";
+						_adminFolderPath = _defPath;
 					}
 				}
 				return _adminFolderPath;
@@ -1290,16 +1291,16 @@ namespace Carrotware.CMS.Core {
 				string sCurrentPage = CurrentScriptName;
 
 				if (IsWebView) {
-					if (!CurrentScriptName.ToLower().StartsWith(AdminFolderPath)) {
+					if (!CurrentScriptName.ToLowerInvariant().StartsWith(AdminFolderPath)) {
 						string sScrubbedURL = CheckForSpecialURL(CurrentSite);
 
-						if (sScrubbedURL.ToLower() == sCurrentPage.ToLower()) {
+						if (sScrubbedURL.ToLowerInvariant() == sCurrentPage.ToLowerInvariant()) {
 							sCurrentPage = AppendDefaultPath(sCurrentPage);
 						}
 
-						if (!sScrubbedURL.ToLower().StartsWith(sCurrentPage.ToLower())
-							&& !sCurrentPage.ToLower().EndsWith(DefaultDirectoryFilename)) {
-							if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+						if (!sScrubbedURL.ToLowerInvariant().StartsWith(sCurrentPage.ToLowerInvariant())
+							&& !sCurrentPage.ToLowerInvariant().EndsWith(DefaultDirectoryFilename)) {
+							if (sScrubbedURL.ToLowerInvariant() != sCurrentPage.ToLowerInvariant()) {
 								sCurrentPage = sScrubbedURL;
 							}
 						}
@@ -1317,9 +1318,9 @@ namespace Carrotware.CMS.Core {
 				sRequestedURL = CurrentScriptName;
 				string sFileRequested = sRequestedURL;
 
-				if (!sRequestedURL.ToLower().StartsWith(AdminFolderPath) && site != null) {
-					if (sFileRequested.ToLower().StartsWith(site.BlogFolderPath.ToLower())) {
-						if (site.GetSpecialFilePathPrefixes().Where(x => sFileRequested.ToLower().StartsWith(x)).Count() > 0) {
+				if (!sRequestedURL.ToLowerInvariant().StartsWith(AdminFolderPath) && site != null) {
+					if (sFileRequested.ToLowerInvariant().StartsWith(site.BlogFolderPath.ToLowerInvariant())) {
+						if (site.GetSpecialFilePathPrefixes().Where(x => sFileRequested.ToLowerInvariant().StartsWith(x)).Count() > 0) {
 							if (site.Blog_Root_ContentID.HasValue) {
 								using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 									SiteNav blogNavPage = navHelper.GetLatestVersion(site.SiteID, site.Blog_Root_ContentID.Value);
@@ -1519,10 +1520,10 @@ namespace Carrotware.CMS.Core {
 
 		private void ParseString() {
 			_filename = _filename.Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
-			string sFile = _filename.ToLower().Replace(_site.BlogDateFolderPath, String.Empty);
+			string sFile = _filename.ToLowerInvariant().Replace(_site.BlogDateFolderPath, String.Empty);
 
 			if (sFile.EndsWith(".aspx")) {
-				sFile = sFile.Substring(0, sFile.ToLower().LastIndexOf("/"));
+				sFile = sFile.Substring(0, sFile.ToLowerInvariant().LastIndexOf("/"));
 			}
 
 			string[] parms = sFile.Split('/');

@@ -167,7 +167,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static string SearchQueryParameter {
-			get { return "search".ToLower(); }
+			get { return "search".ToLowerInvariant(); }
 		}
 
 		public static string CurrentScriptName {
@@ -193,7 +193,7 @@ namespace Carrotware.Web.UI.Controls {
 			foreach (var c in thePage.Header.Controls) {
 				if (c is HtmlMeta) {
 					HtmlMeta metaTest = (HtmlMeta)c;
-					if (metaTest.HttpEquiv.ToLower() == "x-ua-compatible") {
+					if (metaTest.HttpEquiv.ToLowerInvariant() == "x-ua-compatible") {
 						metaEdge = new HtmlMeta();
 						metaEdge.HttpEquiv = metaTest.HttpEquiv;
 						metaEdge.Content = metaTest.Content;
@@ -225,7 +225,7 @@ namespace Carrotware.Web.UI.Controls {
 			foreach (var c in thePage.Header.Controls) {
 				//if (c is jquery && !bFoundjQuery) {
 				//    jq = (jquery)c;
-				//    if (jq.JQVersion.ToLower() == (new jquery()).JQVersion) {
+				//    if (jq.JQVersion.ToLowerInvariant() == (new jquery()).JQVersion) {
 				//        bFoundjQuery = true;
 				//    }
 				//}

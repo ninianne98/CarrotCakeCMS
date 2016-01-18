@@ -25,11 +25,11 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void ProcessRequest(HttpContext context) {
-			if (context.Request.Path.ToLower() == "/carrotwarecaptcha.axd") {
+			if (context.Request.Path.ToLowerInvariant() == "/carrotwarecaptcha.axd") {
 				DoCaptcha(context);
 			}
 
-			if (context.Request.Path.ToLower() == "/carrotwarethumb.axd") {
+			if (context.Request.Path.ToLowerInvariant() == "/carrotwarethumb.axd") {
 				DoThumb(context);
 			}
 		}
@@ -94,7 +94,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			string sScale = "false";
 			if (context.Request.QueryString["scale"] != null) {
-				sScale = context.Request.QueryString["scale"].ToLower();
+				sScale = context.Request.QueryString["scale"].ToLowerInvariant();
 			}
 
 			if (context.Request.QueryString["square"] != null) {

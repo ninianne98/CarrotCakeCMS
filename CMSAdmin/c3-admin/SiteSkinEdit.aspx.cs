@@ -83,7 +83,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (!(sIn.StartsWith(@"\") || sIn.StartsWith(@"/"))) {
 				sIn = @"/" + sIn;
 			}
-			return CMSConfigHelper.EncodeBase64(sIn.ToLower());
+			return CMSConfigHelper.EncodeBase64(sIn.ToLowerInvariant());
 		}
 
 		protected void SetSourceFiles(string sDir) {
@@ -134,11 +134,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					List<FileData> fls = helpFile.GetFiles(f.FolderPath);
 
 					flsWorking = (from m in flsWorking.Union(fls).ToList()
-								  join e in lstFileExtensions on m.FileExtension.ToLower() equals e
+								  join e in lstFileExtensions on m.FileExtension.ToLowerInvariant() equals e
 								  select m).ToList();
 				}
 
-				flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("text") && (x.FolderPath.ToLower().StartsWith(SiteData.AdminFolderPath) == false)).ToList();
+				flsWorking = flsWorking.Where(x => x.MimeType.StartsWith("text") && (x.FolderPath.ToLowerInvariant().StartsWith(SiteData.AdminFolderPath) == false)).ToList();
 
 				GeneralUtilities.BindRepeater(rpFiles, flsWorking.Distinct().OrderBy(x => x.FileName).OrderBy(x => x.FolderPath).ToList());
 			}

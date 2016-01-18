@@ -21,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				string sCurrentPage = SiteData.CurrentScriptName;
 				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
-				if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+				if (sScrubbedURL.ToLowerInvariant() != sCurrentPage.ToLowerInvariant()) {
 					sCurrentPage = sScrubbedURL;
 				}
 

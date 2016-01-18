@@ -212,9 +212,9 @@
 				<span class="page-status"><a href="<%#Eval("FileName")%>" target="_blank">
 					<%#Eval("FileName")%>
 					&nbsp;&nbsp;&nbsp;&nbsp; [<b><%#Eval("NavMenuText")%></b>] </a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<img alt="status" title="status <%#Eval("PageActive").ToString().ToLower() %>" class="image-status-icon img-status-<%#Eval("PageActive").ToString().ToLower() %>"
+					<img alt="status" title="status <%#Eval("PageActive").ToString().ToLowerInvariant() %>" class="image-status-icon img-status-<%#Eval("PageActive").ToString().ToLowerInvariant() %>"
 						src='<%#ReturnImage(Convert.ToBoolean(Eval("PageActive")))%>' />
-					<img alt="navstatus" title="navstatus <%#Eval("ShowInSiteNav").ToString().ToLower() %>" class="image-navstatus-icon img-navstatus-<%#Eval("ShowInSiteNav").ToString().ToLower() %>"
+					<img alt="navstatus" title="navstatus <%#Eval("ShowInSiteNav").ToString().ToLowerInvariant() %>" class="image-navstatus-icon img-navstatus-<%#Eval("ShowInSiteNav").ToString().ToLowerInvariant() %>"
 						src='<%#ReturnNavImage(Convert.ToBoolean(Eval("ShowInSiteNav")))%>' />
 				</span></span>
 				<asp:PlaceHolder ID="ph" runat="server"></asp:PlaceHolder>

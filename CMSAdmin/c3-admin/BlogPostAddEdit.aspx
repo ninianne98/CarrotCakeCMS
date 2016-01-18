@@ -260,7 +260,7 @@
 	</script>
 	<script type="text/javascript">
 
-		var cmsIsPageLocked = <%=bLocked.ToString().ToLower() %>;
+		var cmsIsPageLocked = <%=bLocked.ToString().ToLowerInvariant() %>;
 
 		$(window).bind('beforeunload', function () {
 			//cmsConfirmLeavingPage = false;

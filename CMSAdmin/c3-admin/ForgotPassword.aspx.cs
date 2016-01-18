@@ -28,10 +28,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (bReset) {
 				InfoMessage.Text = "Email sent with new password.";
 			} else {
-				if (lblErr.Text.ToLower().Contains("system.net.mail.smtpclient")
-						|| lblErr.Text.ToLower().Contains("system.net.mime.mailbnfhelper.readmailaddress")
-						|| lblErr.Text.ToLower().Contains("system.net.mail.mailaddresscollection")
-						|| lblErr.Text.ToLower().Contains("system.security.securityexception")) {
+				if (lblErr.Text.ToLowerInvariant().Contains("system.net.mail.smtpclient")
+						|| lblErr.Text.ToLowerInvariant().Contains("system.net.mime.mailbnfhelper.readmailaddress")
+						|| lblErr.Text.ToLowerInvariant().Contains("system.net.mail.mailaddresscollection")
+						|| lblErr.Text.ToLowerInvariant().Contains("system.security.securityexception")) {
 					FailureText.Text = "Error sending reset message.";
 				} else {
 					FailureText.Text = "Invalid username/email.";

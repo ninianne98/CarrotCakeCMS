@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						}
 
 						if ((from b in helpFile.BlockedTypes
-							 where uploadedFileName.ToLower().EndsWith(String.Format(".{0}", b).ToLower())
+							 where uploadedFileName.ToLowerInvariant().EndsWith(String.Format(".{0}", b).ToLowerInvariant())
 							 select b).Count() < 1) {
 							if (esc) {
 								uploadedFileName = uploadedFileName.Replace(" ", "-");

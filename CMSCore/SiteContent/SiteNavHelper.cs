@@ -57,8 +57,8 @@ namespace Carrotware.CMS.Core {
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				lstContent = (from ct in _db.vw_carrot_Contents
 							  where ct.IsLatestVersion == true
-								  && ct.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)
-							  select ct.FileName.ToLower()).Distinct().ToList();
+								  && ct.FileName.EndsWith(SiteData.DefaultDirectoryFilename)
+							  select ct.FileName).Distinct().ToList();
 			}
 
 			return lstContent;

@@ -29,8 +29,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidContentID = GetGuidPageIDFromQuery();
 			guidWidgetID = GetGuidParameterFromQuery("widgetid");
 
-			sFieldName = GetStringParameterFromQuery("field").ToLower();
-			sMode = GetStringParameterFromQuery("mode").ToLower();
+			sFieldName = GetStringParameterFromQuery("field").ToLowerInvariant();
+			sMode = GetStringParameterFromQuery("mode").ToLowerInvariant();
 
 			cmsHelper.OverrideKey(guidContentID);
 

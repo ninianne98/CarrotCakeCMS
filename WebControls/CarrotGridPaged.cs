@@ -68,7 +68,7 @@ namespace Carrotware.Web.UI.Controls {
 		public bool IsPostBack {
 			get {
 				string sReq = "GET";
-				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
+				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpperInvariant(); } catch { }
 				return sReq != "GET" ? true : false;
 			}
 		}

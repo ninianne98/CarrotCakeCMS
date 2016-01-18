@@ -360,7 +360,7 @@ namespace Carrotware.CMS.UI.Base {
 								}
 							}
 
-							if (theWidget.ControlPath.ToLower().StartsWith("class:")) {
+							if (theWidget.ControlPath.ToLowerInvariant().StartsWith("class:")) {
 								try {
 									string className = theWidget.ControlPath.Replace("CLASS:", "");
 									Type t = Type.GetType(className);
@@ -417,7 +417,7 @@ namespace Carrotware.CMS.UI.Base {
 								WidgetWrapper plcWrapper = plcHolder.AddWidget(widget, theWidget);
 
 								CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
-												  where p.FilePath.ToLower() == plcWrapper.ControlPath.ToLower()
+												  where p.FilePath.ToLowerInvariant() == plcWrapper.ControlPath.ToLowerInvariant()
 												  select p).FirstOrDefault();
 
 								if (plug != null) {

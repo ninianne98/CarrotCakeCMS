@@ -113,7 +113,7 @@ namespace Carrotware.CMS.UI.Controls {
 			int indent = output.Indent;
 
 			SiteNav pageNav = GetParentPage();
-			string sParent = pageNav.FileName.ToLower();
+			string sParent = pageNav.FileName.ToLowerInvariant();
 
 			List<SiteNav> lstNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			lstNav.RemoveAll(x => x.ShowInSiteNav == false);

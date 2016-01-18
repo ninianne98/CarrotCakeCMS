@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			string sCurrentPage = SiteData.CurrentScriptName;
 			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
-			if (sScrubbedURL.ToLower() != sCurrentPage.ToLower()) {
+			if (sScrubbedURL.ToLowerInvariant() != sCurrentPage.ToLowerInvariant()) {
 				sCurrentPage = sScrubbedURL;
 			}
 
@@ -87,7 +87,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			bLocked = pageHelper.IsPageLocked(pageContents.Root_ContentID, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 			GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
-			try { GeneralUtilities.SelectListValue(ddlTemplate, cmsHelper.cmsAdminContent.TemplateFile.ToLower()); } catch { }
+			try { GeneralUtilities.SelectListValue(ddlTemplate, cmsHelper.cmsAdminContent.TemplateFile.ToLowerInvariant()); } catch { }
 
 			if (!bLocked) {
 				foreach (Control c in plcIncludes.Controls) {

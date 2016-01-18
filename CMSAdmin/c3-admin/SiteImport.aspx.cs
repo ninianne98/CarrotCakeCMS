@@ -84,12 +84,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			iAccessCounter++;
 
 			BasicContentData pageData = (from m in sitePageList
-										 where m.FileName.ToLower() == sFilename.ToLower()
+										 where m.FileName.ToLowerInvariant() == sFilename.ToLowerInvariant()
 										 select m).FirstOrDefault();
 
 			if (pageData == null) {
 				using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
-					pageData = BasicContentData.CreateBasicContentDataFromSiteNav(navHelper.GetLatestVersion(site.SiteID, false, sFilename.ToLower()));
+					pageData = BasicContentData.CreateBasicContentDataFromSiteNav(navHelper.GetLatestVersion(site.SiteID, false, sFilename.ToLowerInvariant()));
 				}
 			}
 
@@ -140,11 +140,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			string sMsg = "";
 
 			if (chkSite.Checked || chkPages.Checked || chkPosts.Checked) {
-				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLower()).ToList();
-				List<string> cats = site.GetCategoryList().Select(x => x.CategorySlug.ToLower()).ToList();
+				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLowerInvariant()).ToList();
+				List<string> cats = site.GetCategoryList().Select(x => x.CategorySlug.ToLowerInvariant()).ToList();
 
-				exSite.TheTags.RemoveAll(x => tags.Contains(x.TagSlug.ToLower()));
-				exSite.TheCategories.RemoveAll(x => cats.Contains(x.CategorySlug.ToLower()));
+				exSite.TheTags.RemoveAll(x => tags.Contains(x.TagSlug.ToLowerInvariant()));
+				exSite.TheCategories.RemoveAll(x => cats.Contains(x.CategorySlug.ToLowerInvariant()));
 
 				sMsg += "<p>Imported Tags and Categories</p>";
 
@@ -176,9 +176,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			SetMsg(sMsg);
 
 			if (chkSnippet.Checked) {
-				List<string> snippets = site.GetContentSnippetList().Select(x => x.ContentSnippetSlug.ToLower()).ToList();
+				List<string> snippets = site.GetContentSnippetList().Select(x => x.ContentSnippetSlug.ToLowerInvariant()).ToList();
 
-				exSite.TheSnippets.RemoveAll(x => snippets.Contains(x.ContentSnippetSlug.ToLower()));
+				exSite.TheSnippets.RemoveAll(x => snippets.Contains(x.ContentSnippetSlug.ToLowerInvariant()));
 
 				sMsg += "<p>Imported Content Snippets</p>";
 
@@ -287,7 +287,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					ContentPageExport parent = (from c in exSite.ThePages
 												where c.ThePage.ContentType == ContentPageType.PageType.ContentEntry
-												  && c.ThePage.FileName.ToLower() == impCP.ParentFileName.ToLower()
+												  && c.ThePage.FileName.ToLowerInvariant() == impCP.ParentFileName.ToLowerInvariant()
 												select c).FirstOrDefault();
 
 					BasicContentData navParent = null;
@@ -310,7 +310,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						}
 					}
 					//preserve homepage
-					if (navHome != null && navHome.FileName.ToLower() == cp.FileName.ToLower()) {
+					if (navHome != null && navHome.FileName.ToLowerInvariant() == cp.FileName.ToLowerInvariant()) {
 						cp.NavOrder = 0;
 					}
 					//if the file url in the upload has an existing ID, use that, not the ID from the queue
@@ -355,11 +355,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.TemplateFile = ddlTemplatePost.SelectedValue;
 
 					cp.ContentCategories = (from l in lstCategories
-											join o in impCP.ThePage.ContentCategories on l.CategorySlug.ToLower() equals o.CategorySlug.ToLower()
+											join o in impCP.ThePage.ContentCategories on l.CategorySlug.ToLowerInvariant() equals o.CategorySlug.ToLowerInvariant()
 											select l).Distinct().ToList();
 
 					cp.ContentTags = (from l in lstTags
-									  join o in impCP.ThePage.ContentTags on l.TagSlug.ToLower() equals o.TagSlug.ToLower()
+									  join o in impCP.ThePage.ContentTags on l.TagSlug.ToLowerInvariant() equals o.TagSlug.ToLowerInvariant()
 									  select l).Distinct().ToList();
 
 					BasicContentData navData = GetFileInfoFromList(site, cp.FileName);

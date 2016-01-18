@@ -90,7 +90,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void RenderContents(HtmlTextWriter output) {
 			SiteNav pageNav = GetCurrentPage();
-			string sParent = pageNav.FileName.ToLower();
+			string sParent = pageNav.FileName.ToLowerInvariant();
 			List<SiteNav> lstNav = new List<SiteNav>();
 
 			if (SiteData.CurretSiteExists && SiteData.CurrentSite.Blog_Root_ContentID.HasValue &&

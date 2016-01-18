@@ -185,10 +185,7 @@
 
 		/* </asp:PlaceHolder> */
 
-		var cmsIsPageLocked = true;
-		if ('<%=bLocked.ToString().ToLower() %>' != 'true') {
-			cmsIsPageLocked = false;
-		}
+		var cmsIsPageLocked = <%=bLocked.ToString().ToLowerInvariant() %>;
 
 		$(window).bind('beforeunload', function () {
 			//cmsConfirmLeavingPage = false;

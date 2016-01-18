@@ -150,7 +150,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected SiteNav GetPageInfo(string sPath) {
-			return lstTwoLevelNav.Where(ct => ct.FileName.ToLower() == sPath.ToLower()).FirstOrDefault();
+			return lstTwoLevelNav.Where(ct => ct.FileName.ToLowerInvariant() == sPath.ToLowerInvariant()).FirstOrDefault();
 		}
 
 		private Control fndCtrl = null;

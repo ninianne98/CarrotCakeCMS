@@ -84,7 +84,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			sPageMode = GetStringParameterFromQuery("mode");
-			if (sPageMode.ToLower() == "raw") {
+			if (sPageMode.ToLowerInvariant() == "raw") {
 				reBody.CssClass = "rawEditor";
 				divCenter.Visible = false;
 			}

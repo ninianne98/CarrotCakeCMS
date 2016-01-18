@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (IsPostBack) {
 				Master.ShowSave();
 			} else {
-				if (!SiteData.RefererScriptName.ToLower().EndsWith(SiteData.CurrentScriptName.ToLower())) {
+				if (!SiteData.RefererScriptName.ToLowerInvariant().EndsWith(SiteData.CurrentScriptName.ToLowerInvariant())) {
 					Master.HideSave();
 				} else {
 					Master.ShowSave();

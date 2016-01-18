@@ -42,7 +42,7 @@
 </script>
 <script type="text/javascript">
 	var cmsPageInit2 = false;
-	var cmsPageLocked = <%=bLocked.ToString().ToLower() %>;
+	var cmsPageLocked = <%=bLocked.ToString().ToLowerInvariant() %>;
 
 	if (!window.jQuery || (typeof jQuery == 'undefined')) {
 		setTimeout("cmsToolbarPageInit2();", 1000);

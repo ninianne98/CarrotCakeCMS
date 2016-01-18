@@ -49,14 +49,14 @@ namespace Carrotware.CMS.Core {
 
 			if (obj is FileData) {
 				FileData p = (FileData)obj;
-				return (String.Format("{0}", this.FullFileName).ToLower() == String.Format("{0}", p.FullFileName).ToLower());
+				return (String.Format("{0}", this.FullFileName).ToLowerInvariant() == String.Format("{0}", p.FullFileName).ToLowerInvariant());
 			} else {
 				return false;
 			}
 		}
 
 		public override int GetHashCode() {
-			return String.Format("{0}", this.FullFileName).ToLower().GetHashCode();
+			return String.Format("{0}", this.FullFileName).ToLowerInvariant().GetHashCode();
 		}
 	}
 
@@ -189,7 +189,7 @@ namespace Carrotware.CMS.Core {
 				f.FileSize = Convert.ToInt32(myFileSize);
 				f.FileSizeFriendly = myFileSizeF;
 				if (!string.IsNullOrEmpty(MyFile.Extension)) {
-					f.FileExtension = MyFile.Extension.ToLower();
+					f.FileExtension = MyFile.Extension.ToLowerInvariant();
 				} else {
 					f.FileExtension = ".";
 				}
@@ -198,10 +198,10 @@ namespace Carrotware.CMS.Core {
 
 				try {
 					if ((from b in MimeTypes
-						 where b.Key.ToLower() == f.FileExtension.ToLower()
+						 where b.Key.ToLowerInvariant() == f.FileExtension.ToLowerInvariant()
 						 select b).Count() > 0) {
 						f.MimeType = (from b in MimeTypes
-									  where b.Key.ToLower() == f.FileExtension.ToLower()
+									  where b.Key.ToLowerInvariant() == f.FileExtension.ToLowerInvariant()
 									  select b.Value).FirstOrDefault();
 					}
 				} catch (Exception ex) { }
@@ -263,7 +263,7 @@ namespace Carrotware.CMS.Core {
 
 						try {
 							if ((from b in BlockedTypes
-								 where b.ToLower().Replace(".", String.Empty) == f.FileExtension.Replace(".", String.Empty)
+								 where b.ToLowerInvariant().Replace(".", String.Empty) == f.FileExtension.Replace(".", String.Empty)
 								 select b).Count() < 1) {
 								dsID.Add(f);
 							}

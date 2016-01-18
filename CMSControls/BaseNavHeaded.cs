@@ -63,7 +63,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (this.NavigationData != null && this.NavigationData.Count > 0 && !String.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
+				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">\r\n");
 			}
 
 			base.WriteListPrefix(output);

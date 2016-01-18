@@ -67,7 +67,7 @@ namespace Carrotware.Web.UI.Controls {
 			bool bValid = false;
 			string guid = GetKey();
 
-			if (TestValue.ToLower() == guid.ToLower()) {
+			if (TestValue.ToLowerInvariant() == guid.ToLowerInvariant()) {
 				bValid = true;
 			}
 
@@ -99,7 +99,7 @@ namespace Carrotware.Web.UI.Controls {
 					HttpContext.Current.Session["captcha_key"] = guid;
 				}
 			}
-			return guid.ToUpper();
+			return guid.ToUpperInvariant();
 		}
 
 		public static Bitmap GetCaptchaImage(Color fg, Color bg, Color n) {

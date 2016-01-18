@@ -107,15 +107,15 @@ namespace Carrotware.CMS.UI.Controls {
 					metaType.Attributes["property"] = "og:type";
 					if (this.OpenGraphType == OpenGraphTypeDef.Default) {
 						if (cp.ContentType == ContentPageType.PageType.BlogEntry) {
-							metaType.Content = OpenGraphTypeDef.Blog.ToString().ToLower();
+							metaType.Content = OpenGraphTypeDef.Blog.ToString().ToLowerInvariant();
 						} else {
-							metaType.Content = OpenGraphTypeDef.Article.ToString().ToLower();
+							metaType.Content = OpenGraphTypeDef.Article.ToString().ToLowerInvariant();
 						}
 						if (theSite.Blog_Root_ContentID.HasValue && cp.Root_ContentID == theSite.Blog_Root_ContentID) {
-							metaType.Content = OpenGraphTypeDef.Website.ToString().ToLower();
+							metaType.Content = OpenGraphTypeDef.Website.ToString().ToLowerInvariant();
 						}
 					} else {
-						metaType.Content = this.OpenGraphType.ToString().ToLower();
+						metaType.Content = this.OpenGraphType.ToString().ToLowerInvariant();
 					}
 
 					this.Controls.Add(metaType);

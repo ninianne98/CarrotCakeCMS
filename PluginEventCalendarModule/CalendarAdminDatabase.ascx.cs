@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			litMsg.Text = "";
 
 			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent.sql");
-			sqlTest = "select * from information_schema.columns where table_name = 'carrot_CalendarEventProfile' and column_name = 'RecursEvery'";
+			sqlTest = "select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name = 'carrot_CalendarEventProfile' and column_name = 'RecursEvery'";
 			dbRes = du.ApplyUpdateIfNotFound(sqlTest, sqlUpdate, false);
 			iCt++;
 

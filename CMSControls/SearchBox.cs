@@ -156,7 +156,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected Control GetEntryFormControl(string ControlName) {
 			return (from x in EntryFormControls
 					where x.ID != null
-					&& x.ID.ToLower() == ControlName.ToLower()
+					&& x.ID.ToLowerInvariant() == ControlName.ToLowerInvariant()
 					select x).FirstOrDefault();
 		}
 
@@ -179,14 +179,14 @@ namespace Carrotware.CMS.UI.Controls {
 
 				if (c is TextBox && c.ID != null) {
 					TextBox z = (TextBox)c;
-					if (z.ID.ToLower().Contains("search")) {
+					if (z.ID.ToLowerInvariant().Contains("search")) {
 						z.Attributes["onkeypress"] = "return " + JS_EnterSearch + "()";
 					}
 				}
 
 				if (c is Button && c.ID != null) {
 					Button z = (Button)c;
-					if (z.ID.ToLower().Contains("search")) {
+					if (z.ID.ToLowerInvariant().Contains("search")) {
 						z.OnClientClick = "return " + JS_SearchName + "()";
 					}
 				}

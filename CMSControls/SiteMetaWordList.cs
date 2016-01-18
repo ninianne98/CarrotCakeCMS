@@ -207,7 +207,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			if (lstNav != null && lstNav.Any() && !String.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLower() + " class=\"meta-caption\">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLower() + ">\r\n");
+				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLowerInvariant() + " class=\"meta-caption\">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">\r\n");
 			}
 
 			string sCSS = String.Empty;

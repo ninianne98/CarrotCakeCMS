@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.PhotoGallery.tblGallery.sql");
 
-			sqlTest = "select * from [information_schema].[columns] where table_name in('tblGalleryImageMeta')";
+			sqlTest = "select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name in('tblGalleryImageMeta')";
 			dbRes = du.ApplyUpdateIfNotFound(sqlTest, sqlUpdate, false);
 			iCt++;
 

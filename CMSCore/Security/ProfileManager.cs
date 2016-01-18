@@ -83,7 +83,7 @@ namespace Carrotware.CMS.Core {
 					}
 				} catch { }
 
-				strHTTPHost = strHTTPProto + strHTTPHost.ToLower();
+				strHTTPHost = strHTTPProto + strHTTPHost.ToLowerInvariant();
 
 				mailer.ContentPlaceholders.Add("{%%UserName%%}", user.UserName);
 				mailer.ContentPlaceholders.Add("{%%Password%%}", newPassword);

@@ -99,7 +99,7 @@ namespace Carrotware.CMS.Core {
 				SortField = sSortField;
 				SortDir = string.Empty;
 			} else {
-				if (SortField.ToLower() != sSortField.ToLower()) {
+				if (SortField.ToLowerInvariant() != sSortField.ToLowerInvariant()) {
 					SortDir = string.Empty;  //previous sort not the same field, force ASC
 				}
 				SortField = sSortField;
@@ -146,13 +146,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private void WalkGridForHeadings(Control X, string strSortFld, string strSortDir) {
-			strSortFld = strSortFld.ToLower();
-			strSortDir = strSortDir.ToLower();
+			strSortFld = strSortFld.ToLowerInvariant();
+			strSortDir = strSortDir.ToLowerInvariant();
 
 			foreach (Control c in X.Controls) {
 				if (c is LinkButton) {
 					LinkButton lb = (LinkButton)c;
-					if (strSortFld == lb.CommandName.ToLower()) {
+					if (strSortFld == lb.CommandName.ToLowerInvariant()) {
 						//don't add the arrows if alread sorted!
 						if (lb.Text.IndexOf("arr;") < 0) {
 							if (strSortDir != "asc") {

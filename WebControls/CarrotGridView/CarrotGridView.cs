@@ -67,7 +67,7 @@ namespace Carrotware.Web.UI.Controls {
 			KeyValuePair<string, string> pair = new KeyValuePair<string, string>(" -- ", "");
 
 			if (request.ServerVariables["REQUEST_METHOD"] != null &&
-				request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper() == "POST"
+				request.ServerVariables["REQUEST_METHOD"].ToString().ToUpperInvariant() == "POST"
 				&& request.Form["__EVENTARGUMENT"] != null) {
 				string arg = request.Form["__EVENTARGUMENT"].ToString();
 				string tgt = request.Form["__EVENTTARGET"].ToString();
@@ -115,12 +115,12 @@ namespace Carrotware.Web.UI.Controls {
 					string sCurrentSortField = string.IsNullOrEmpty(SortField) ? "" : SortField;
 					string sSortDir = string.IsNullOrEmpty(SortDir) ? "" : SortDir;
 
-					if (sCurrentSortField.ToLower().Trim() != sNewSortField.ToLower().Trim()) {
+					if (sCurrentSortField.ToLowerInvariant().Trim() != sNewSortField.ToLowerInvariant().Trim()) {
 						SortDir = string.Empty;  //previous sort not the same field, force ASC
 					}
 					sCurrentSortField = sNewSortField;
 
-					if (sSortDir.Trim().ToUpper().IndexOf("ASC") < 0) {
+					if (sSortDir.Trim().ToUpperInvariant().IndexOf("ASC") < 0) {
 						sSortDir = "ASC";
 					} else {
 						sSortDir = "DESC";
@@ -222,7 +222,7 @@ namespace Carrotware.Web.UI.Controls {
 					this.DataSource = lstVals;
 				}
 
-				if (this.DataSource is DataSet || theType.Name.ToLower() == "dataset") {
+				if (this.DataSource is DataSet || theType == typeof(DataSet)) {
 					DataSet ds = (DataSet)this.DataSource;
 					if (ds.Tables.Count > 0) {
 						SortParm = DefaultSort;
@@ -233,7 +233,7 @@ namespace Carrotware.Web.UI.Controls {
 					}
 				}
 
-				if (this.DataSource is DataTable || theType.Name.ToLower() == "datatable") {
+				if (this.DataSource is DataTable || theType == typeof(DataTable)) {
 					DataTable dt = (DataTable)this.DataSource;
 					SortParm = DefaultSort;
 					var dsVals = SortDataTable(dt);
@@ -269,13 +269,13 @@ namespace Carrotware.Web.UI.Controls {
 			IEnumerable<object> enuQueryable = d.AsQueryable();
 
 			if (lst != null && lst.Count > 0) {
-				SortField = GetProperties(d[0]).Where(x => x.ToLower() == SortField.ToLower()).FirstOrDefault();
+				SortField = GetProperties(d[0]).Where(x => x.ToLowerInvariant() == SortField.ToLowerInvariant()).FirstOrDefault();
 			} else {
 				SortField = string.Empty;
 			}
 
 			if (!string.IsNullOrEmpty(SortField)) {
-				if (SortDir.ToUpper().Trim().IndexOf("ASC") < 0) {
+				if (SortDir.ToUpperInvariant().Trim().IndexOf("ASC") < 0) {
 					query = (from enu in enuQueryable
 							 orderby GetPropertyValue(enu, SortField) descending
 							 select enu).ToList();
@@ -316,12 +316,12 @@ namespace Carrotware.Web.UI.Controls {
 					data = (IList)this.DataSource;
 				}
 
-				if (this.DataSource is DataSet || theType.Name.ToLower() == "dataset") {
+				if (this.DataSource is DataSet || theType == typeof(DataSet)) {
 					if (((DataSet)this.DataSource).Tables.Count > 0) {
 						data = ((DataSet)this.DataSource).Tables[0].AsDataView();
 					}
 				}
-				if (this.DataSource is DataTable || theType.Name.ToLower() == "datatable") {
+				if (this.DataSource is DataTable || theType == typeof(DataTable)) {
 					data = ((DataTable)this.DataSource).AsDataView();
 				}
 			}
@@ -364,7 +364,7 @@ namespace Carrotware.Web.UI.Controls {
 				}
 
 				SortField = sSortFld.Trim();
-				SortDir = sSortDir.Trim().ToUpper();
+				SortDir = sSortDir.Trim().ToUpperInvariant();
 			}
 		}
 
@@ -385,13 +385,13 @@ namespace Carrotware.Web.UI.Controls {
 				SortField = sSortField;
 				SortDir = string.Empty;
 			} else {
-				if (SortField.ToLower() != sSortField.ToLower()) {
+				if (SortField.ToLowerInvariant() != sSortField.ToLowerInvariant()) {
 					SortDir = string.Empty;  //previous sort not the same field, force ASC
 				}
 				SortField = sSortField;
 			}
 
-			if (SortDir.Trim().ToUpper().IndexOf("ASC") < 0) {
+			if (SortDir.Trim().ToUpperInvariant().IndexOf("ASC") < 0) {
 				SortDir = "ASC";
 			} else {
 				SortDir = "DESC";
@@ -427,13 +427,13 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void WalkGridForHeadings(Control X, string sSortFld, string sSortDir) {
-			sSortFld = sSortFld.ToLower();
-			sSortDir = sSortDir.ToLower();
+			sSortFld = sSortFld.ToLowerInvariant();
+			sSortDir = sSortDir.ToLowerInvariant();
 
 			foreach (Control c in X.Controls) {
 				if (c is LinkButton) {
 					LinkButton lb = (LinkButton)c;
-					if (sSortFld == lb.CommandName.ToLower()) {
+					if (sSortFld == lb.CommandName.ToLowerInvariant()) {
 						//don't add the arrows if alread sorted!
 						if (lb.Text.IndexOf("#x25B") < 0) {
 							if (sSortDir != "asc") {

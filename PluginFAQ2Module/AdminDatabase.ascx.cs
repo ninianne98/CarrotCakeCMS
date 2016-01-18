@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 
 			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.FAQ2Module.carrot_FaqItem.sql");
-			sqlTest = "select * from [information_schema].[columns] where table_name in('carrot_FaqItem')";
+			sqlTest = "select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name in('carrot_FaqItem')";
 			dbRes = du.ApplyUpdateIfNotFound(sqlTest, sqlUpdate, false);
 			iCt++;
 

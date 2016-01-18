@@ -75,7 +75,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			litPageName.Text = pageContents.FileName;
 			lnkNew.NavigateUrl = pageContents.FileName;
 
-			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
+			if (pageContents.FileName.ToLowerInvariant().EndsWith(SiteData.DefaultDirectoryFilename)) {
 				VirtualDirectory.RegisterRoutes(true);
 			}
 

@@ -45,7 +45,7 @@ namespace Carrotware.CMS.Core {
 				try {
 					sScrubbedURL = SiteData.AlternateCurrentScriptName;
 
-					if (sScrubbedURL.ToLower() != sRequestedURL.ToLower()) {
+					if (sScrubbedURL.ToLowerInvariant() != sRequestedURL.ToLowerInvariant()) {
 						sFileRequested = sScrubbedURL;
 						bURLOverride = true;
 					}
@@ -68,10 +68,10 @@ namespace Carrotware.CMS.Core {
 				if (context.User.Identity.IsAuthenticated) {
 					try {
 						if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
-							if (context.Request.UrlReferrer.AbsolutePath.ToLower().Contains(FormsAuthentication.LoginUrl.ToLower())
-								|| FormsAuthentication.LoginUrl.ToLower() == sFileRequested.ToLower()) {
-								if (SiteFilename.DashboardURL.ToLower() != sFileRequested.ToLower()
-								&& SiteFilename.SiteInfoURL.ToLower() != sFileRequested.ToLower()) {
+							if (context.Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains(FormsAuthentication.LoginUrl.ToLowerInvariant())
+								|| FormsAuthentication.LoginUrl.ToLowerInvariant() == sFileRequested.ToLowerInvariant()) {
+								if (SiteFilename.DashboardURL.ToLowerInvariant() != sFileRequested.ToLowerInvariant()
+								&& SiteFilename.SiteInfoURL.ToLowerInvariant() != sFileRequested.ToLowerInvariant()) {
 									sFileRequested = SiteData.AdminDefaultFile;
 								}
 							}
@@ -79,7 +79,7 @@ namespace Carrotware.CMS.Core {
 					} catch (Exception ex) { }
 				}
 
-				if (sFileRequested.ToLower().EndsWith(".aspx") || SiteData.IsLikelyHomePage(sFileRequested)) {
+				if (sFileRequested.ToLowerInvariant().EndsWith(".aspx") || SiteData.IsLikelyHomePage(sFileRequested)) {
 					bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
 					string queryString = String.Empty;
@@ -156,7 +156,7 @@ namespace Carrotware.CMS.Core {
 							if (SecurityData.AdvancedEditMode) {
 								using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
 									if (cmsHelper.cmsAdminContent != null) {
-										try { sSelectedTemplate = cmsHelper.cmsAdminContent.TemplateFile.ToLower(); } catch { }
+										try { sSelectedTemplate = cmsHelper.cmsAdminContent.TemplateFile.ToLowerInvariant(); } catch { }
 									}
 								}
 							}

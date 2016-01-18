@@ -233,7 +233,7 @@ namespace Carrotware.CMS.Core {
 				SiteNav p = (SiteNav)obj;
 				return (this.ContentID == p.ContentID)
 						&& (this.SiteID == p.SiteID)
-						&& (this.FileName.ToLower() == p.FileName.ToLower());
+						&& (this.FileName.ToLowerInvariant() == p.FileName.ToLowerInvariant());
 			} else {
 				return false;
 			}

@@ -36,7 +36,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			try { sReturnMode = Request.QueryString["returnvalue"].ToString(); } catch { sReturnMode = "0"; }
 			try { sViewMode = Request.QueryString["viewmode"].ToString(); } catch { sViewMode = defaultBrowseMode; }
 
-			if (String.Format("{0}", sViewMode).ToLower() != defaultBrowseMode) {
+			if (String.Format("{0}", sViewMode).ToLowerInvariant() != defaultBrowseMode) {
 				lnkThumbView.Visible = false;
 				lnkFileView.Visible = true;
 				btnRemove.Visible = false;
@@ -103,7 +103,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			GeneralUtilities.BindRepeater(rpFolders, fldr);
 
-			if (sViewMode.ToLower() != defaultBrowseMode) {
+			if (sViewMode.ToLowerInvariant() != defaultBrowseMode) {
 				GeneralUtilities.BindRepeater(rpThumbs, fls.Where(x => x.MimeType.StartsWith("image/")).ToList());
 				rpThumbs.Visible = true;
 				rpFiles.Visible = false;
@@ -119,15 +119,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		public string CreateFileSrc(string sPath, string sFile, string sMime) {
-			if (FileImageLink(sMime).ToLower() == "image") {
-				return String.Format("{0}{1}", sPath, sFile).ToLower();
+			if (FileImageLink(sMime).ToLowerInvariant() == "image") {
+				return String.Format("{0}{1}", sPath, sFile).ToLowerInvariant();
 			} else {
 				return SiteData.AdminFolderPath + "images/document.png";
 			}
 		}
 
 		public string FileImageLink(string sMime) {
-			sMime = sMime.ToLower();
+			sMime = sMime.ToLowerInvariant();
 			var mime = sMime.Substring(0, sMime.IndexOf("/"));
 
 			string sImage = "plain";
@@ -192,7 +192,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					string uploadedFileName = upFile.FileName;
 
 					if ((from b in helpFile.BlockedTypes
-						 where uploadedFileName.ToLower().Contains("." + b.ToLower())
+						 where uploadedFileName.ToLowerInvariant().Contains("." + b.ToLowerInvariant())
 						 select b).Count() < 1) {
 						if (chkSpaceEscape.Checked) {
 							uploadedFileName = uploadedFileName.Replace(" ", "-");

@@ -78,7 +78,7 @@ namespace Carrotware.CMS.Core {
 				if (xmlMailSettings.Attributes["from"] != null) {
 					mailSettings.ReturnAddress = xmlMailSettings.Attributes["from"].Value;
 				}
-				if (xmlMailSettings.Attributes["deliveryMethod"] != null && xmlMailSettings.Attributes["deliveryMethod"].Value.ToLower() == "network") {
+				if (xmlMailSettings.Attributes["deliveryMethod"] != null && xmlMailSettings.Attributes["deliveryMethod"].Value.ToLowerInvariant() == "network") {
 					mailSettings.DeliveryMethod = SmtpDeliveryMethod.Network;
 					if (xmlMailSettings.HasChildNodes) {
 						XmlNode xmlNetSettings = xmlMailSettings.SelectSingleNode("//system.net/mailSettings/smtp/network");
@@ -120,7 +120,7 @@ namespace Carrotware.CMS.Core {
 			mailMessage.Headers.Add("X-Originating-IP", context.Request.ServerVariables["REMOTE_ADDR"].ToString());
 			mailMessage.Headers.Add("X-Application", "CarrotCake CMS " + CurrentDLLVersion);
 			mailMessage.Headers.Add("User-Agent", "CarrotCake CMS " + CurrentDLLVersion);
-			mailMessage.Headers.Add("Message-ID", "<" + Guid.NewGuid().ToString().ToLower() + "@" + mailSettings.MailDomainName + ">");
+			mailMessage.Headers.Add("Message-ID", "<" + Guid.NewGuid().ToString().ToLowerInvariant() + "@" + mailSettings.MailDomainName + ">");
 
 			SmtpClient client = new SmtpClient();
 			mailMessage.From = new MailAddress(mailSettings.ReturnAddress);

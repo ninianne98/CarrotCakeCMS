@@ -1,5 +1,5 @@
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_FaqCategory' and column_name = 'FaqCategoryID') BEGIN
 
 

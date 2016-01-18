@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 
-				if (w.ControlPath.ToLower().StartsWith("class:")) {
+				if (w.ControlPath.ToLowerInvariant().StartsWith("class:")) {
 					try {
 						Assembly a = Assembly.GetExecutingAssembly();
 						var className = w.ControlPath.Replace("CLASS:", "");
@@ -125,15 +125,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					limitedPropertyList = ((IWidgetLimitedProperties)(widget)).LimitedPropertyList;
 				} else {
 					limitedPropertyList = (from p in lstDefProps
-										   select p.Name.ToLower()).ToList();
+										   select p.Name.ToLowerInvariant()).ToList();
 				}
 				if (limitedPropertyList != null && limitedPropertyList.Any()) {
 					limitedPropertyList = (from p in limitedPropertyList
-										   select p.ToLower()).ToList();
+										   select p.ToLowerInvariant()).ToList();
 				}
 
 				var defprops = (from p in lstDefProps
-								join l in limitedPropertyList on p.Name.ToLower() equals l.ToLower()
+								join l in limitedPropertyList on p.Name.ToLowerInvariant() equals l.ToLowerInvariant()
 								where p.CanRead == true
 								&& p.CanWrite == true
 								&& !props.Contains(p)
@@ -145,12 +145,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		public string GetSavedValue(string sDefVal, string sName) {
 			var pp = (from p in lstProps
-					  where p.KeyName.ToLower() == sName.ToLower()
+					  where p.KeyName.ToLowerInvariant() == sName.ToLowerInvariant()
 					  select p).FirstOrDefault();
 
 			if (pp == null) {
 				var dp = (from p in lstDefProps
-						  where p.Name.ToLower() == sName.ToLower()
+						  where p.Name.ToLowerInvariant() == sName.ToLowerInvariant()
 						  select p).FirstOrDefault();
 
 				if (dp.DefValue != null) {
@@ -188,7 +188,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ObjectProperty ListSourceProperty = new ObjectProperty();
 
 				string sListSourcePropertyName = (from p in lstDefProps
-												  where p.Name.ToLower() == sName.ToLower()
+												  where p.Name.ToLowerInvariant() == sName.ToLowerInvariant()
 														&& !String.IsNullOrEmpty(p.CompanionSourceFieldName)
 												  select p.CompanionSourceFieldName).FirstOrDefault();
 
@@ -199,11 +199,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ListSourceProperty = (from p in lstDefProps
 									  where p.CanRead == true
 									  && p.CanWrite == false
-									  && p.Name.ToLower() == sListSourcePropertyName.ToLower()
+									  && p.Name.ToLowerInvariant() == sListSourcePropertyName.ToLowerInvariant()
 									  select p).FirstOrDefault();
 
 				var dp = (from p in lstDefProps
-						  where p.Name.ToLower() == sName.ToLower()
+						  where p.Name.ToLowerInvariant() == sName.ToLowerInvariant()
 						  select p).FirstOrDefault();
 
 				if (ListSourceProperty != null) {
@@ -238,7 +238,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							// since this is a multi selected capable field, look for anything that starts with the
 							// field name and has the delimeter trailing
 							var pp = (from p in lstProps
-									  where p.KeyName.ToLower().StartsWith(sName.ToLower() + "|")
+									  where p.KeyName.ToLowerInvariant().StartsWith(sName.ToLowerInvariant() + "|")
 									  select p).ToList();
 
 							if (pp.Any()) {

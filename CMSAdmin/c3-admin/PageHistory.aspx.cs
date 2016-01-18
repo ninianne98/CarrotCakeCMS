@@ -92,7 +92,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				CheckBox chkContent = (CheckBox)dgItem.FindControl("chkContent");
 
 				if (hdnIsActive != null && imgActive != null) {
-					if (hdnIsActive.Value.ToLower() != "true") {
+					if (hdnIsActive.Value.ToLowerInvariant() != "true") {
 						imgActive.ImageUrl = hdnInactive.Value;
 						imgActive.AlternateText = "Inactive";
 					}

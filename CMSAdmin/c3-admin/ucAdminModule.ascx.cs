@@ -51,7 +51,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pnlSetter.Visible = true;
 				int x = 0;
 				foreach (var row in cmsHelper.AdminModules) {
-					if (this.ModuleID.ToString().ToLower() == row.PluginID.ToString().ToLower()) {
+					if (this.ModuleID.ToString().ToLowerInvariant() == row.PluginID.ToString().ToLowerInvariant()) {
 						this.SelMenu = x.ToString();
 						break;
 					}
@@ -116,7 +116,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected string MarkSelected(string sID, string sParm) {
-			if (sID == this.ModuleID.ToString().ToLower() && sParm == pf) {
+			if (sID == this.ModuleID.ToString().ToLowerInvariant() && sParm == pf) {
 				return " class=\"selectedModule\" ";
 			} else {
 				return " ";

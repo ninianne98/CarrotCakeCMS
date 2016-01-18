@@ -36,7 +36,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected string GetCtrlName(string sCtrlName) {
 			string sName = "";
 			CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
-							  where p.FilePath.ToLower() == sCtrlName.ToLower()
+							  where p.FilePath.ToLowerInvariant() == sCtrlName.ToLowerInvariant()
 							  select p).FirstOrDefault();
 
 			if (plug != null) {
@@ -47,12 +47,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void BindDataGrid() {
-			if (sZone.ToLower() != "cms-all-placeholder-zones") {
+			if (sZone.ToLowerInvariant() != "cms-all-placeholder-zones") {
 				gvPages.Columns[4].Visible = false;
 			}
 
 			var lstW = (from aw in cmsHelper.cmsAdminWidget
-						where aw.PlaceholderName.ToLower() == sZone.ToLower() || sZone.ToLower() == "cms-all-placeholder-zones"
+						where aw.PlaceholderName.ToLowerInvariant() == sZone.ToLowerInvariant() || sZone.ToLowerInvariant() == "cms-all-placeholder-zones"
 						orderby aw.PlaceholderName ascending, aw.IsWidgetPendingDelete ascending, aw.IsWidgetActive descending, aw.WidgetOrder
 						select aw).ToList();
 

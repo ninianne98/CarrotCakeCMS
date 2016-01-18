@@ -90,7 +90,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string GetPropertyString(Type type, string PropertyName) {
 			string prop = (from i in GetProperties(type)
-						   where i.Name.ToLower().Trim() == PropertyName.ToLower().Trim()
+						   where i.Name.ToLowerInvariant().Trim() == PropertyName.ToLowerInvariant().Trim()
 						   orderby i.Name
 						   select i.Name).FirstOrDefault();
 			return prop;
@@ -98,7 +98,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static PropertyInfo GetProperty(Type type, string PropertyName) {
 			PropertyInfo prop = (from i in GetProperties(type)
-								 where i.Name.ToLower().Trim() == PropertyName.ToLower().Trim()
+								 where i.Name.ToLowerInvariant().Trim() == PropertyName.ToLowerInvariant().Trim()
 								 orderby i.Name
 								 select i).FirstOrDefault();
 			return prop;
@@ -123,7 +123,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static IQueryable<T> SortByParm<T>(IQueryable<T> source, string sortByFieldName, string sortDirection) {
-			sortDirection = String.IsNullOrEmpty(sortDirection) ? "ASC" : sortDirection.Trim().ToUpper();
+			sortDirection = String.IsNullOrEmpty(sortDirection) ? "ASC" : sortDirection.Trim().ToUpperInvariant();
 
 			string SortDir = sortDirection.Contains("DESC") ? "OrderByDescending" : "OrderBy";
 

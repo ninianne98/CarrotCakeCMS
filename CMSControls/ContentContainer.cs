@@ -185,11 +185,11 @@ namespace Carrotware.CMS.UI.Controls {
 				myctrl.TextZone = ContentContainer.TextFieldZone.TextCenter;
 			}
 			sPageOutText = "<h2>Content D CENTER</h2>\r\n" + sPageText;
-			if (myctrl.ClientID.ToLower().Contains("left") || myctrl.TextZone == ContentContainer.TextFieldZone.TextLeft) {
+			if (myctrl.ClientID.ToLowerInvariant().Contains("left") || myctrl.TextZone == ContentContainer.TextFieldZone.TextLeft) {
 				sPageOutText = "<h2>Content D LEFT</h2>\r\n" + sPageText;
 			}
 
-			if (myctrl.ClientID.ToLower().Contains("right") || myctrl.TextZone == ContentContainer.TextFieldZone.TextRight) {
+			if (myctrl.ClientID.ToLowerInvariant().Contains("right") || myctrl.TextZone == ContentContainer.TextFieldZone.TextRight) {
 				sPageOutText = "<h2>Content D RIGHT</h2>\r\n" + sPageText;
 			}
 

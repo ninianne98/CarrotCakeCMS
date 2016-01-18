@@ -40,7 +40,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidImportContentID = GetGuidParameterFromQuery("importid");
 
 			sPageMode = GetStringParameterFromQuery("mode");
-			if (sPageMode.ToLower() == "raw") {
+			if (sPageMode.ToLowerInvariant() == "raw") {
 				reBody.CssClass = "rawEditor";
 				reLeftBody.CssClass = "rawEditor";
 				reRightBody.CssClass = "rawEditor";
@@ -186,7 +186,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					pageContents.Parent_ContentID = null;
 
-					GeneralUtilities.SelectListValue(ddlTemplate, pageContents.TemplateFile.ToLower());
+					GeneralUtilities.SelectListValue(ddlTemplate, pageContents.TemplateFile.ToLowerInvariant());
 
 					GeneralUtilities.SelectListValues(listTags, pageContents.ContentTags.Cast<IContentMetaInfo>().Select(x => x.ContentMetaInfoID.ToString()).ToList());
 					GeneralUtilities.SelectListValues(listCats, pageContents.ContentCategories.Cast<IContentMetaInfo>().Select(x => x.ContentMetaInfoID.ToString()).ToList());
@@ -374,7 +374,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			cmsHelper.cmsAdminContent = null;
 			cmsHelper.cmsAdminWidget = null;
 
-			if (pageContents.FileName.ToLower().EndsWith(SiteData.DefaultDirectoryFilename)) {
+			if (pageContents.FileName.ToLowerInvariant().EndsWith(SiteData.DefaultDirectoryFilename)) {
 				VirtualDirectory.RegisterRoutes(true);
 			}
 

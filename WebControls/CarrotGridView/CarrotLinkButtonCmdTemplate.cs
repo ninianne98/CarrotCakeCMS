@@ -246,7 +246,7 @@ namespace Carrotware.Web.UI.Controls {
 				string sValue = DataBinder.Eval(container, "DataItem." + _field).ToString();
 
 				CarrotImageColumnData img = (from i in _images
-											 where i.KeyValue.ToLower() == sValue.ToLower()
+											 where i.KeyValue.ToLowerInvariant() == sValue.ToLowerInvariant()
 											 select i).FirstOrDefault();
 				if (img != null) {
 					imgEnum.ImageUrl = img.ImagePath;

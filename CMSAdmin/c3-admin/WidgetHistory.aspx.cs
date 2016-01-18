@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			string sName = "";
 
 			CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
-							  where p.FilePath.ToLower() == ww.ControlPath.ToLower()
+							  where p.FilePath.ToLowerInvariant() == ww.ControlPath.ToLowerInvariant()
 							  select p).FirstOrDefault();
 
 			if (plug != null) {

@@ -178,7 +178,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected Control GetEntryFormControl(string ControlName) {
 			return (from x in EntryFormControls
 					where x.ID != null
-					&& x.ID.ToLower() == ControlName.ToLower()
+					&& x.ID.ToLowerInvariant() == ControlName.ToLowerInvariant()
 					select x).FirstOrDefault();
 		}
 
@@ -283,7 +283,7 @@ namespace Carrotware.CMS.UI.Controls {
 						}
 					} catch { }
 
-					strHTTPHost = String.Format("{0}{1}", strHTTPProto, strHTTPHost).ToLower();
+					strHTTPHost = String.Format("{0}{1}", strHTTPProto, strHTTPHost).ToLowerInvariant();
 
 					string sBody = "Name:   " + pc.CommenterName
 						+ "\r\nEmail:   " + pc.CommenterEmail

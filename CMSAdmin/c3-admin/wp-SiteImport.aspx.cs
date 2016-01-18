@@ -108,10 +108,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith(SiteData.AdminFolderPath));
-			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/bin/"));
-			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/obj/"));
-			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/app_data/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith(SiteData.AdminFolderPath));
+			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/bin/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/obj/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/app_data/"));
 
 			GeneralUtilities.BindListDefaultText(ddlFolders, lstFolders.OrderBy(f => f.FileName), null, "Folders", "-[none]-");
 		}
@@ -147,11 +147,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			string sMsg = "";
 
 			if (chkSite.Checked || chkPages.Checked || chkPosts.Checked) {
-				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLower()).ToList();
-				List<string> cats = site.GetCategoryList().Select(x => x.CategorySlug.ToLower()).ToList();
+				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLowerInvariant()).ToList();
+				List<string> cats = site.GetCategoryList().Select(x => x.CategorySlug.ToLowerInvariant()).ToList();
 
-				wpSite.Tags.RemoveAll(x => tags.Contains(x.InfoKey.ToLower()));
-				wpSite.Categories.RemoveAll(x => cats.Contains(x.InfoKey.ToLower()));
+				wpSite.Tags.RemoveAll(x => tags.Contains(x.InfoKey.ToLowerInvariant()));
+				wpSite.Categories.RemoveAll(x => cats.Contains(x.InfoKey.ToLowerInvariant()));
 
 				sMsg += "<p>Imported Tags and Categories</p>";
 
@@ -265,9 +265,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 						SiteNav navParent = null;
 
-						SiteNav navData = navHelper.GetLatestVersion(site.SiteID, false, cp.FileName.ToLower());
+						SiteNav navData = navHelper.GetLatestVersion(site.SiteID, false, cp.FileName.ToLowerInvariant());
 						if (parent != null) {
-							navParent = navHelper.GetLatestVersion(site.SiteID, false, parent.ImportFileName.ToLower());
+							navParent = navHelper.GetLatestVersion(site.SiteID, false, parent.ImportFileName.ToLowerInvariant());
 						}
 
 						//if URL exists already, make this become a new version in the current series
@@ -286,7 +286,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							}
 						}
 						//preserve homepage
-						if (navHome != null && navHome.FileName.ToLower() == cp.FileName.ToLower()) {
+						if (navHome != null && navHome.FileName.ToLowerInvariant() == cp.FileName.ToLowerInvariant()) {
 							cp.NavOrder = 0;
 						}
 
@@ -326,7 +326,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						cp.NavOrder = SiteData.BlogSortOrderNumber;
 						cp.TemplateFile = ddlTemplatePost.SelectedValue;
 
-						SiteNav navData = navHelper.GetLatestVersion(site.SiteID, false, cp.FileName.ToLower());
+						SiteNav navData = navHelper.GetLatestVersion(site.SiteID, false, cp.FileName.ToLowerInvariant());
 
 						cp.RetireDate = CMSConfigHelper.CalcNearestFiveMinTime(cp.CreateDate).AddYears(200);
 						cp.GoLiveDate = CMSConfigHelper.CalcNearestFiveMinTime(cp.CreateDate).AddMinutes(-5);
@@ -383,10 +383,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					if (wpc.Approved == "1") {
 						pc.IsApproved = true;
 					}
-					if (wpc.Approved.ToLower() == "trash") {
+					if (wpc.Approved.ToLowerInvariant() == "trash") {
 						pc.IsSpam = true;
 					}
-					if (wpc.Type.ToLower() == "trackback" || wpc.Type.ToLower() == "pingback") {
+					if (wpc.Type.ToLowerInvariant() == "trackback" || wpc.Type.ToLowerInvariant() == "pingback") {
 						pc.CommenterEmail = wpc.Type;
 					}
 

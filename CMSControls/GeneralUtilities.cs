@@ -108,7 +108,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (SelectedValues.Any()) {
 					try {
 						foreach (ListItem itm in list.Items) {
-							if (SelectedValues.Where(x => x.ToLower() == itm.Value.ToLower()).Any()) {
+							if (SelectedValues.Where(x => x.ToLowerInvariant() == itm.Value.ToLowerInvariant()).Any()) {
 								itm.Selected = true;
 							}
 						}

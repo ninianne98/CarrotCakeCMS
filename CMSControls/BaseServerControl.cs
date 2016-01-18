@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public bool IsPostBack {
 			get {
 				string sReq = "GET";
-				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpper(); } catch { }
+				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpperInvariant(); } catch { }
 				return sReq != "GET" ? true : false;
 			}
 		}
@@ -90,7 +90,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected string GetParentPageName() {
 			SiteNav nav = GetParentPage();
 
-			return nav.FileName.ToLower();
+			return nav.FileName.ToLowerInvariant();
 		}
 
 		protected bool AreFilenamesSame(string sParm1, string sParm2) {
@@ -98,7 +98,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return false;
 			}
 
-			return (sParm1.ToLower() == sParm2.ToLower()) ? true : false;
+			return (sParm1.ToLowerInvariant() == sParm2.ToLowerInvariant()) ? true : false;
 		}
 
 		protected List<SiteNav> GetPageNavTree() {
