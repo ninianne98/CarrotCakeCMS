@@ -4,13 +4,13 @@
 -- USE [CarrotwareCMS]
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'GoLiveDate') BEGIN
 
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [GoLiveDate] [datetime] NULL
 
 END
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'GoLiveDateLocal') BEGIN
 
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [GoLiveDateLocal] [datetime] NULL
@@ -69,7 +69,7 @@ GO
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'RetireDate') BEGIN
 
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [RetireDate] [datetime] NULL
@@ -113,7 +113,7 @@ GO
 --===================================
 -- Convert the timestamps from whatever was localtime to approximatly UTC
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Sites' and column_name = 'TimeZone') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Sites] ADD [TimeZone] [nvarchar](128) NULL

@@ -1,7 +1,7 @@
 -- 2012-01-25
 -- added two new columns to tblContent
 
-if not exists( select * from information_schema.columns 
+if not exists( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'tblContent' and column_name = 'MetaKeyword') begin
 
 	ALTER TABLE tblContent ADD [MetaKeyword] [varchar](1000) NULL

@@ -48,7 +48,7 @@ ALTER TABLE [dbo].[carrot_WidgetData]
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_ContentType' and column_name = 'ContentTypeValue') BEGIN 
 
 	CREATE TABLE [dbo].[carrot_ContentType](
@@ -93,7 +93,7 @@ END
 GO
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'ContentTypeID') BEGIN
 
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [ContentTypeID] [uniqueidentifier] NULL
@@ -161,7 +161,7 @@ GO
 --============== CREATE Category and Tag Tables ========================
 
 
-IF EXISTS( select * from information_schema.columns 
+IF EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Sites' and column_name = 'SiteFolder') BEGIN
 
 	ALTER TABLE carrot_Sites DROP COLUMN SiteFolder
@@ -169,7 +169,7 @@ IF EXISTS( select * from information_schema.columns
 END
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Sites' and column_name = 'SiteTagline') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Sites] ADD [SiteTagline] [nvarchar](1024) NULL
@@ -179,7 +179,7 @@ IF NOT EXISTS( select * from information_schema.columns
 END
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Sites' and column_name = 'Blog_Root_ContentID') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_Root_ContentID] [uniqueidentifier] NULL
@@ -195,7 +195,7 @@ IF NOT EXISTS( select * from information_schema.columns
 END
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'PageSlug') BEGIN
 	
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [PageSlug] [nvarchar](256) NULL
@@ -203,7 +203,7 @@ IF NOT EXISTS( select * from information_schema.columns
 END	
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'PageThumbnail') BEGIN
 	
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [PageThumbnail] [nvarchar](128) NULL
@@ -290,7 +290,7 @@ END
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_ContentTag' and column_name = 'SiteID') BEGIN 
 
 		CREATE TABLE [dbo].[carrot_ContentTag](
@@ -343,7 +343,7 @@ END
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_ContentCategory' and column_name = 'SiteID') BEGIN 
 
 	CREATE TABLE [dbo].[carrot_ContentCategory](
@@ -395,7 +395,7 @@ END
 GO
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_CategoryContentMapping' and column_name = 'Root_ContentID') BEGIN 
 
 	CREATE TABLE [dbo].[carrot_CategoryContentMapping](
@@ -453,7 +453,7 @@ END
 GO
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_TagContentMapping' and column_name = 'Root_ContentID') BEGIN 
 
 	CREATE TABLE [dbo].[carrot_TagContentMapping](
@@ -519,7 +519,7 @@ END
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_ContentComment' and column_name = 'Root_ContentID') BEGIN 
 
 		CREATE TABLE [dbo].[carrot_ContentComment](
@@ -558,7 +558,7 @@ ALTER TABLE [dbo].[carrot_ContentComment]
 GO
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_ContentComment' and column_name = 'CommenterURL') BEGIN
 
 	ALTER TABLE [dbo].[carrot_ContentComment] ADD [CommenterURL] [nvarchar](128) NULL
@@ -738,7 +738,7 @@ END
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_UserData' and column_name = 'UserId') BEGIN 
 
 		CREATE TABLE [dbo].[carrot_UserData](

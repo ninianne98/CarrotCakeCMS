@@ -103,7 +103,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Content' and column_name = 'CreditUserId') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Content] ADD [CreditUserId] [uniqueidentifier] NULL

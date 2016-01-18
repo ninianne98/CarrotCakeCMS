@@ -53,7 +53,7 @@ ALTER TABLE [dbo].[carrot_RootContent] DROP CONSTRAINT [carrot_RootContent_Creat
 GO
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'ShowInSiteNav') BEGIN
 
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [ShowInSiteNav] [bit] NULL
@@ -155,7 +155,7 @@ GO
 --==============================
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_ContentTag' and column_name = 'IsPublic') BEGIN
 
 	ALTER TABLE [dbo].[carrot_ContentTag] ADD [IsPublic] [bit] NULL
@@ -255,7 +255,7 @@ GO
 --=====================================
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContent' and column_name = 'ShowInSiteMap') BEGIN
 
 	ALTER TABLE [dbo].[carrot_RootContent] ADD [ShowInSiteMap] [bit] NULL
@@ -315,7 +315,7 @@ GO
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Sites' and column_name = 'Blog_DatePath') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_DatePath] [nvarchar](64) NULL

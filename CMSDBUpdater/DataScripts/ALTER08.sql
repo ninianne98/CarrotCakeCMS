@@ -103,7 +103,7 @@ GO
 --==============================
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Sites' and column_name = 'SendTrackbacks') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Sites] ADD [SendTrackbacks] [bit] NULL

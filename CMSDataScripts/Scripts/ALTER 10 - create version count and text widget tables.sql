@@ -62,7 +62,7 @@ END
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_TextWidget' and column_name = 'ProcessSnippet') BEGIN
 
 	ALTER TABLE [dbo].[carrot_TextWidget] ADD [ProcessSnippet] [bit] NULL
@@ -199,7 +199,7 @@ END
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_RootContentSnippet' and column_name = 'EditHeartbeat') BEGIN
 
 	ALTER TABLE [dbo].[carrot_RootContentSnippet] ADD [Heartbeat_UserId] [uniqueidentifier] NULL
@@ -321,7 +321,7 @@ GO
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_UserData' and column_name = 'UserBio') BEGIN
 
 	ALTER TABLE [dbo].[carrot_UserData] ADD [UserBio] [nvarchar](max) NULL
@@ -330,7 +330,7 @@ END
 
 GO
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Sites' and column_name = 'Blog_EditorPath') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Sites] ADD [Blog_EditorPath] [nvarchar](64) NULL
@@ -394,7 +394,7 @@ LEFT JOIN [dbo].carrot_UserData AS ud ON m.UserId = ud.UserId
 GO
 
 
-IF NOT EXISTS( select * from information_schema.columns 
+IF NOT EXISTS( select * from [INFORMATION_SCHEMA].[COLUMNS] 
 		where table_name = 'carrot_Widget' and column_name = 'GoLiveDate') BEGIN
 
 	ALTER TABLE [dbo].[carrot_Widget] ADD [GoLiveDate] [datetime] NULL

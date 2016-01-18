@@ -9,7 +9,7 @@
 		<testcontext>|AlterStep12|DatabaseNeedsUpdate|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where [table_name] in ('vw_carrot_CategoryURL')
 		</sql>
 	</querynugget>
@@ -36,7 +36,7 @@
 		<testcontext>|AlterStep12|DatabaseNeedsUpdate|</testcontext>
 		<sql>
 			select distinct table_name, column_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in('carrot_Content') and column_name in('CreditUserId')
 		</sql>
 	</querynugget>
@@ -49,7 +49,7 @@
 		<testcontext>|AlterStep11|</testcontext>
 		<sql>
 			select o.name, o.type_desc
-			from sys.objects  o
+			from sys.objects o
 			where o.name = 'carrot_BlogMonthlyTallies'
 			AND o.object_id in (select m.object_id
 			from sys.sql_modules as m
@@ -64,7 +64,7 @@
 		<testcontext>|AlterStep10|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where [table_name] in ('vw_carrot_EditHistory')
 		</sql>
 	</querynugget>
@@ -76,7 +76,7 @@
 		<testcontext>|AlterStep09|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where [table_name] in ('vw_carrot_Content')
 		</sql>
 	</querynugget>
@@ -88,7 +88,7 @@
 		<testcontext>|AlterStep09|</testcontext>
 		<sql>
 			select distinct table_name, column_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in('carrot_Sites') and column_name in('Blog_DatePath')
 		</sql>
 	</querynugget>
@@ -100,7 +100,7 @@
 		<testcontext>|AlterStep09|AlterStep08|AlterStep07|</testcontext>
 		<sql>
 			select distinct table_name, column_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in('carrot_RootContent') and column_name in('ShowInSiteMap')
 		</sql>
 	</querynugget>
@@ -112,7 +112,7 @@
 		<testcontext>|AlterStep08|</testcontext>
 		<sql>
 			select distinct [view_name], [table_name], [column_name]
-			from [information_schema].[view_column_usage]
+			from [INFORMATION_SCHEMA].[VIEW_COLUMN_USAGE]
 			where [view_name] in ('vw_carrot_Comment')
 		</sql>
 	</querynugget>
@@ -124,7 +124,7 @@
 		<testcontext>|AlterStep07|AlterStep06|</testcontext>
 		<sql>
 			select [specific_name], [ordinal_position], [parameter_name]
-			from [information_schema].[parameters]
+			from [INFORMATION_SCHEMA].[PARAMETERS]
 			where [specific_name] like 'carrot%'
 		</sql>
 	</querynugget>
@@ -136,7 +136,7 @@
 		<testcontext>|AlterStep07|</testcontext>
 		<sql>
 			select distinct table_name, column_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in('carrot_RootContent') and column_name in('GoLiveDate', 'RetireDate')
 		</sql>
 	</querynugget>
@@ -148,7 +148,7 @@
 		<testcontext>|AlterStep06|</testcontext>
 		<sql>
 			select distinct table_name, column_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in('carrot_ContentType', 'carrot_ContentTag', 'carrot_ContentCategory') and column_name in('ContentTypeID', 'SiteID')
 		</sql>
 	</querynugget>
@@ -160,7 +160,7 @@
 		<testcontext>|IsPostStep10|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where [table_name] in ('carrot_DataInfo')
 		</sql>
 	</querynugget>
@@ -172,7 +172,7 @@
 		<testcontext>|IsPostStep09|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where [table_name] in ('vw_carrot_Content')
 		</sql>
 	</querynugget>
@@ -184,7 +184,7 @@
 		<testcontext>|IsPostStep04|</testcontext>
 		<sql>
 			select distinct table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget')
 		</sql>
 	</querynugget>
@@ -196,7 +196,7 @@
 		<testcontext>|DoCMSTablesExist|</testcontext>
 		<sql>
 			select distinct table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in ('aspnet_Membership', 'aspnet_Users', 'tblSites', 'tblRootContent', 'carrot_Sites', 'carrot_RootContent')
 		</sql>
 	</querynugget>
@@ -208,7 +208,7 @@
 		<alwayscheck>False</alwayscheck>
 		<testcontext>|DoUsersExist|</testcontext>
 		<sql>
-			if exists( select * from information_schema.columns  where table_name = 'aspnet_Users' ) begin
+			if exists( select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name = 'aspnet_Users' ) begin
 			select top 3 * from [dbo].[aspnet_Users]
 			end else begin
 			select top 0 GetDate() as FauxColumn
@@ -224,7 +224,7 @@
 		<testcontext>|DatabaseNeedsUpdate|AreCMSTablesIncomplete|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData')
 		</sql>
 	</querynugget>
@@ -236,7 +236,7 @@
 		<testcontext>|DatabaseNeedsUpdate|AreCMSTablesIncomplete|</testcontext>
 		<sql>
 			select distinct table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in ('tblSites', 'tblRootContent', 'tblContent', 'tblWidget')
 		</sql>
 	</querynugget>
@@ -248,7 +248,7 @@
 		<testcontext>|HasCarrotPrefix|</testcontext>
 		<sql>
 			select distinct [table_schema], [table_name]
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where [table_name] in ('carrot_Content', 'carrot_RootContent', 'carrot_SerialCache', 'carrot_Sites', 'carrot_UserSiteMapping', 'carrot_Widget', 'carrot_WidgetData')
 		</sql>
 	</querynugget>
@@ -260,7 +260,7 @@
 		<testcontext>|PreCarrotPrefix|</testcontext>
 		<sql>
 			select distinct table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in ('tblSites', 'carrot_Sites')
 		</sql>
 	</querynugget>
@@ -272,7 +272,7 @@
 		<testcontext>|AlterStep00|PreCarrotPrefix|</testcontext>
 		<sql>
 			select column_name, table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where column_name='SerialCacheID' and table_name in ('tblSerialCache', 'carrot_SerialCache')
 		</sql>
 	</querynugget>
@@ -284,7 +284,7 @@
 		<testcontext>|AlterStep01|PreCarrotPrefix|</testcontext>
 		<sql>
 			select column_name, table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in ('tblContent', 'carrot_Content') and column_name = 'MetaKeyword'
 		</sql>
 	</querynugget>
@@ -296,7 +296,7 @@
 		<testcontext>|AlterStep02|PreCarrotPrefix|</testcontext>
 		<sql>
 			select column_name, table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in ('tblWidget', 'carrot_Widget') and column_name = 'Root_WidgetID'
 		</sql>
 	</querynugget>
@@ -308,7 +308,7 @@
 		<testcontext>|AlterStep03|PreCarrotPrefix|</testcontext>
 		<sql>
 			select column_name, table_name
-			from [information_schema].[columns]
+			from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name in ('tblRootContent', 'carrot_RootContent') and column_name = 'CreateDate'
 		</sql>
 	</querynugget>
@@ -320,8 +320,8 @@
 		<testcontext>|AlterStep04|PreCarrotPrefix|</testcontext>
 		<sql>
 			select column_name, table_name
-			from [information_schema].[columns]
-			where table_name in  ('carrot_Sites', 'carrot_RootContent')
+			from [INFORMATION_SCHEMA].[COLUMNS]
+			where table_name in ('carrot_Sites', 'carrot_RootContent')
 		</sql>
 	</querynugget>
 	<querynugget>
@@ -332,7 +332,7 @@
 		<testcontext>|AlterStep05|</testcontext>
 		<sql>
 			select distinct [view_name], [table_name], [column_name]
-			from [information_schema].[view_column_usage]
+			from [INFORMATION_SCHEMA].[VIEW_COLUMN_USAGE]
 			where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget') and column_name in ('Root_WidgetID', 'Root_ContentID')
 		</sql>
 	</querynugget>
@@ -344,7 +344,7 @@
 		<testcontext>|AlterStep05|</testcontext>
 		<sql>
 			select distinct [view_name], [table_name], [column_name]
-			from [information_schema].[view_column_usage]
+			from [INFORMATION_SCHEMA].[VIEW_COLUMN_USAGE]
 			where [view_name] in ( 'vw_carrot_Content', 'vw_carrot_Widget')
 		</sql>
 	</querynugget>
@@ -355,7 +355,7 @@
 		<alwayscheck>False</alwayscheck>
 		<testcontext>|SchemaVersionCheck|</testcontext>
 		<sql>
-			if not exists(select [table_name]  from [information_schema].[columns] where [table_name] in ('carrot_DataInfo') ) begin
+			if not exists(select [table_name] from [INFORMATION_SCHEMA].[COLUMNS] where [table_name] in ('carrot_DataInfo') ) begin
 			select @DataKey as [DataKey], '' [DataValue]
 			end else begin
 			select [DataKey], [DataValue] from dbo.[carrot_DataInfo] where [DataKey] = @DataKey
@@ -370,7 +370,7 @@
 		<alwayscheck>False</alwayscheck>
 		<testcontext>|SchemaVersionUpdate|</testcontext>
 		<sql>
-			if exists(select [table_name]  from [information_schema].[columns] where [table_name] in ('carrot_DataInfo') ) begin
+			if exists(select [table_name] from [INFORMATION_SCHEMA].[COLUMNS] where [table_name] in ('carrot_DataInfo') ) begin
 
 			if not exists(select * from dbo.[carrot_DataInfo] where [DataKey] = @DataKey) begin
 
