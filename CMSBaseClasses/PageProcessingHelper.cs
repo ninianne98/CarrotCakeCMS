@@ -265,7 +265,7 @@ namespace Carrotware.CMS.UI.Base {
 
 				pageContents = CMSConfigHelper.IdentifyLinkAsInactive(pageContents);
 
-				if (this.CurrentWebPage.User.Identity.IsAuthenticated) {
+				if (SecurityData.IsAuthenticated) {
 					HttpContext.Current.Response.Cache.SetNoServerCaching();
 					HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 					dtExpire = DateTime.Now.AddMinutes(-10);

@@ -65,7 +65,7 @@ namespace Carrotware.CMS.Core {
 
 				sFileRequested = SiteData.AppendDefaultPath(sFileRequested);
 
-				if (context.User.Identity.IsAuthenticated) {
+				if (SecurityData.IsAuthenticated) {
 					try {
 						if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
 							if (context.Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains(FormsAuthentication.LoginUrl.ToLowerInvariant())

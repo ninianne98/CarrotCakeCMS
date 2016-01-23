@@ -228,7 +228,7 @@ namespace Carrotware.CMS.UI.Controls {
 					pc.CommenterURL = txtCommenterURL.Text;
 				}
 
-				if (SiteData.IsWebView && HttpContext.Current.User.Identity.IsAuthenticated) {
+				if (SiteData.IsWebView && SecurityData.IsAuthenticated) {
 					if ((this.AutoApproveAdmin)) {
 						pc.IsApproved = SecurityData.IsAdmin;
 					}
