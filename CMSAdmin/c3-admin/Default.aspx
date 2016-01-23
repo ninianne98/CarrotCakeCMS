@@ -10,121 +10,121 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<div class="ui-widget-content ui-corner-all" style="width: 762px; clear: both;">
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/SiteInfo.aspx">
+			<a href="<%= SiteFilename.SiteInfoURL %>">
 				<img alt="" src="Images/SiteData.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Site Info</a>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/PageImport.aspx">
+			<a href="<%= SiteFilename.PageImportURL %>">
 				<img alt="" src="Images/ImportData.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Import Content</a>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/SiteExport.aspx">
+			<a href="<%= SiteFilename.SiteExportURL %>">
 				<img alt="" src="Images/ExportData.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Export Content</a>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/SiteTemplateUpdate.aspx">
+			<a href="<%= SiteFilename.SiteTemplateUpdateURL %>">
 				<img alt="" src="Images/TemplateUpdate.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Bulk Apply Templates</a>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/SiteContentStatusChange.aspx">
+			<a href="<%= SiteFilename.SiteContentStatusChangeURL %>">
 				<img alt="" src="Images/StatusChange.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Bulk Change Status</a>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/PageIndex.aspx">
+			<a href="<%= SiteFilename.PageIndexURL %>">
 				<img alt="" src="Images/PageIndex.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Pages
 				<asp:Literal ID="litPage" runat="server" /></a>
 			<p>
-				<a href="PageAddEdit.aspx?id=">
+				<a href="<%= SiteFilename.PageAddEditURL %>">
 					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 					Add</a>
 			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/BlogPostIndex.aspx">
+			<a href="<%= SiteFilename.BlogPostIndexURL %>">
 				<img alt="" src="Images/BlogIndex.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Posts
 				<asp:Literal ID="litPost" runat="server" /></a>
 			<p>
-				<a href="BlogPostAddEdit.aspx?id=">
+				<a href="<%= SiteFilename.BlogPostAddEditURL %>">
 					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 					Add </a>
 			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/CategoryIndex.aspx">
+			<a href="<%= SiteFilename.CategoryIndexURL %>">
 				<img alt="" src="Images/PostCategories.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Categories
 				<asp:Literal ID="litCat" runat="server" /></a>
 			<p>
-				<a href="CategoryAddEdit.aspx?id=">
+				<a href="<%= SiteFilename.CategoryAddEditURL %>">
 					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 					Add </a>
 			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/TagIndex.aspx">
+			<a href="<%= SiteFilename.TagIndexURL %>">
 				<img alt="" src="Images/PostTags.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Tags
 				<asp:Literal ID="litTag" runat="server" /></a>
 			<p>
-				<a href="TagAddEdit.aspx?id=">
+				<a href="<%= SiteFilename.TagAddEditURL %>">
 					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 					Add </a>
 			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/ContentSnippetIndex.aspx">
+			<a href="<%= SiteFilename.ContentSnippetIndexURL %>">
 				<img alt="" src="Images/PageIndex.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Snippets
 				<asp:Literal ID="litSmippet" runat="server" /></a>
 			<p>
-				<a href="/c3-admin/ContentSnippetAddEdit.aspx?id=">
+				<a href="<%= SiteFilename.ContentSnippetAddEditURL %>">
 					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 					Add</a>
 			</p>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/ModuleIndex.aspx">
+			<a href="<%= SiteFilename.ModuleIndexURL %>">
 				<img alt="" src="Images/ModuleAdmin.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Modules</a>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/SiteMap.aspx">
+			<a href="<%= SiteFilename.SiteMapURL %>">
 				<img alt="" src="Images/SiteMap.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Edit Site Map</a>
 		</div>
 		<div class="ui-widget-header ui-corner-all dashboardCell">
-			<a href="/c3-admin/SiteSkinIndex.aspx">
+			<a href="<%= SiteFilename.SiteSkinIndexURL %>">
 				<img alt="" src="Images/SiteSkins.png" class="imgNoBorder" />
 				<br />
 				<br />
@@ -132,14 +132,14 @@
 		</div>
 		<asp:PlaceHolder ID="phUserSecurity" runat="server">
 			<div class="ui-widget-header ui-corner-all dashboardCell">
-				<a href="/c3-admin/UserMembership.aspx">
+				<a href="<%= SiteFilename.UserMembershipURL %>">
 					<img alt="" src="Images/UserList.png" class="imgNoBorder" />
 					<br />
 					<br />
 					Users</a>
 			</div>
 			<div class="ui-widget-header ui-corner-all dashboardCell">
-				<a href="/c3-admin/UserGroups.aspx">
+				<a href="<%= SiteFilename.UserGroupsURL %>">
 					<img alt="" src="Images/GroupList.png" class="imgNoBorder" />
 					<br />
 					<br />

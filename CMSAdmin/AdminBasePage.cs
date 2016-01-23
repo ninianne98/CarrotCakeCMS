@@ -23,7 +23,7 @@ namespace Carrotware.CMS.UI.Admin {
 	public class AdminBasePage : BasePage {
 
 		protected override void OnInit(EventArgs e) {
-			if (Page.User.Identity.IsAuthenticated) {
+			if (SecurityData.IsAuthenticated) {
 				bool bHasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 				if (!bHasAccess) {

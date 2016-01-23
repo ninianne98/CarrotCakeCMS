@@ -76,6 +76,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         protected global::System.Web.UI.WebControls.Literal litCMSBuildInfo;
         
         /// <summary>
+        /// phLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phLogin;
+        
+        /// <summary>
         /// cmdDummy control.
         /// </summary>
         /// <remarks>

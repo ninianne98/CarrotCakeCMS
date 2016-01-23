@@ -38,6 +38,42 @@ namespace Carrotware.CMS.Core {
 			get { return SiteData.AdminFolderPath + "DatabaseSetup.aspx"; }
 		}
 
+		public static string PageImportURL {
+			get { return SiteData.AdminFolderPath + "PageImport.aspx"; }
+		}
+
+		public static string SiteExportURL {
+			get { return SiteData.AdminFolderPath + "SiteExport.aspx"; }
+		}
+
+		public static string SiteTemplateUpdateURL {
+			get { return SiteData.AdminFolderPath + "SiteTemplateUpdate.aspx"; }
+		}
+
+		public static string SiteContentStatusChangeURL {
+			get { return SiteData.AdminFolderPath + "SiteContentStatusChange.aspx"; }
+		}
+
+		public static string CategoryAddEditURL {
+			get { return SiteData.AdminFolderPath + "CategoryAddEdit.aspx"; }
+		}
+
+		public static string TagAddEditURL {
+			get { return SiteData.AdminFolderPath + "TagAddEdit.aspx"; }
+		}
+
+		public static string ModuleIndexURL {
+			get { return SiteData.AdminFolderPath + "ModuleIndex.aspx"; }
+		}
+
+		public static string SiteMapURL {
+			get { return SiteData.AdminFolderPath + "SiteMap.aspx"; }
+		}
+
+		public static string SiteSkinIndexURL {
+			get { return SiteData.AdminFolderPath + "SiteSkinIndex.aspx"; }
+		}
+
 		public static string AboutURL {
 			get { return SiteData.AdminFolderPath + "About.aspx"; }
 		}

@@ -22,6 +22,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 
+			phLogin.Visible = !SecurityData.IsAuthenticated;
+
 #if DEBUG
 			metaCrawl.Visible = false;
 #endif

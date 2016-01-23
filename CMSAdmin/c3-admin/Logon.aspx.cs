@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
@@ -39,7 +38,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			CheckDatabase();
 
-			if (Page.User.Identity.IsAuthenticated) {
+			if (SecurityData.IsAuthenticated) {
 				Response.Redirect(SiteFilename.DashboardURL);
 			}
 		}
@@ -48,7 +47,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void loginTemplate_LoggedIn(object sender, EventArgs e) {
-			if (Page.User.Identity.IsAuthenticated) {
+			if (SecurityData.IsAuthenticated) {
 				Response.Redirect(SiteFilename.DashboardURL);
 			}
 		}

@@ -84,6 +84,12 @@
 								<img class="imgNoBorder" src="/c3-admin/Images/information.png" alt="information" title="information" />
 							</a>
 						</p>
+						<p>
+							Database Status <a href="<%= SiteFilename.DatabaseSetupURL %>">
+								<img class="imgNoBorder" src="/c3-admin/Images/database.png" alt="database" title="database" /></a>
+							<asp:PlaceHolder ID="phLogin" runat="server">&nbsp;&nbsp;&nbsp; Login <a href="<%= SiteFilename.LogonURL %>">
+								<img class="imgNoBorder" src="/c3-admin/Images/user.png" alt="login" title="login" /></a> </asp:PlaceHolder>
+						</p>
 					</div>
 					<div class="box-carrot">
 					</div>

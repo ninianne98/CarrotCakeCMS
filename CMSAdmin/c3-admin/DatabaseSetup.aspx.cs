@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
-using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Base;
@@ -93,7 +92,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnLogin_Click(object sender, EventArgs e) {
-			if (Page.User.Identity.IsAuthenticated) {
+			if (SecurityData.IsAuthenticated) {
 				Response.Redirect(SiteFilename.DashboardURL);
 			}
 
