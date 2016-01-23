@@ -12,28 +12,56 @@
 <br />
 <style type="text/css">
 	#galleryTarget, #gallerySource {
+		float: left;
+		font-size: 11pt;
 		list-style-type: none;
 		margin: 0;
-		padding: 0;
-		float: left;
 		margin-right: 10px;
 		padding: 5px;
 		min-height: 40px;
 		min-width: 300px;
 	}
+
 	#galleryTarget li, #gallerySource li {
+		font-size: 11pt;
 		margin: 5px;
 		padding: 5px;
-		font-size: 11px;
 		width: 350px;
-		height: 60px;
+		height: 64px;
 	}
+
 	#galleryTarget li img, #gallerySource li img {
 		margin: 3px;
 	}
+
 	.fileInfo {
-		margin: 8px;
+		display: block;
+		float: left;
+		padding: 0;
+		margin: 5px;
+		max-height: 60px;
+		max-width: 240px;
+		min-height: 10px;
+		overflow: hidden;
 	}
+
+	#imgName {
+		padding: 0;
+		margin: 0;
+		font-size: 0.85em;
+		display: block;
+		max-height: 45px;
+		max-width: 225px;
+		min-height: 10px;
+		overflow: hidden;
+		padding-bottom: 2px;
+	}
+
+	#imgThumb {
+		margin: 0;
+		padding: 2px 0;
+	}
+
 	div.galleryScroll {
 		height: 300px;
 		width: 420px;
@@ -45,6 +73,7 @@
 		margin-top: 10px;
 		margin-bottom: 25px;
 	}
+
 	div.galleryScrollHead {
 		padding: 2px;
 		margin-right: 25px;
@@ -53,6 +82,7 @@
 		width: 420px;
 		float: left;
 	}
+
 	div.galleryScrollHead strong, div.galleryScrollHead b {
 		font-size: 16px;
 		font-weight: bold;
@@ -65,11 +95,13 @@
 		background: #FFFFAA !important;
 		border: 2px dashed #676F6A !important;
 	}
+
 	#galleryTarget .icoDel {
 		display: block;
 		float: right;
 		padding: 4px;
 	}
+
 	#gallerySource .icoDel {
 		display: none;
 	}
@@ -79,6 +111,7 @@
 		float: right;
 		padding: 4px;
 	}
+
 	#gallerySource .editMetaData {
 		display: none;
 	}
@@ -301,9 +334,8 @@
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
 						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="<%# ResolveResourceFilePath( "PhotoIcon.png" ) %>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
-						<div style="float: left; max-width: 240px" class="fileInfo">
-							<%# String.Format("<span id=\"imgName\">{0}</span>", Eval("FullFileName"))%>
-							<br />
+						<div class="fileInfo">
+							<%# String.Format("<div id=\"imgName\">{0}</div>", Eval("FullFileName"))%>
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
@@ -325,9 +357,8 @@
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
 						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FullFileName")) )%>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
-						<div style="float: left; max-width: 240px" class="fileInfo">
-							<%# String.Format("<span id=\"imgName\">{0}</span>", Eval("FullFileName"))%>
-							<br />
+						<div class="fileInfo">
+							<%# String.Format("<div id=\"imgName\">{0}</div>", Eval("FullFileName"))%>
 							<%# String.Format("{0:d}", Eval("FileDate"))%>
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
