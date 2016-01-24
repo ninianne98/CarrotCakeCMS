@@ -114,6 +114,15 @@
 			width: 580px;
 			padding: 20px 0px 0px 0px;
 		}
+		.text-danger {
+			color: #990000;
+		}
+		.searchbox {
+			background: #ffffff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAAK/INwWK6QAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC42/Ixj3wAAAWlJREFUKM9t0L1LglEUx/Hv82jklPVUlDZEYBAJjVnwEC01hoQUEQ1B9gf0AkJTEeRQg2tLoLSJuPQHBC4Ojb0MJdSQVGCI7957vS2lFP3OeD6cwzmGBnYDZgTbsDSNQj1TiyaytGPCftiRbo3WYkX/p78ck6PO9Gq4A4ydgCPdvFhP4GcExTO3p1tsloNX2Z8JEZFfjzPPON248DG7dy7zRDorbJFiEjcKhULgxldJmXYbOKxmEg8SgUSgUAw1klg/wKmQIBFoFAqNQgpE54pqQYV4RiJRKCSSvApVC21Qz7SWeeAD8Y0+ybkOGrk2qEW1J7pNlkdKlHnk5ixnu9T0xNr3HzTBcNdRPd9I1ZMSHfIczpg+SlzyMPzyBoYGFgNETBurRbXU7V5hDAf3nLSE9/3N0PzO5IY/vsQgBa45f+qbcv7pc5cYoxhfAIqM9FVM9D/l3ejRc9r72jug+Rdo+i3nca9Lo/kCQxOt+BiAd1oAAAAASUVORK5CYII=") no-repeat scroll 4px 4px;
+			padding: 0.1em 0.1em 0.1em 25px;
+			font-size: 14pt;
+			width: 175px;
+		}
 		.post {
 			margin-bottom: 15px;
 		}
@@ -261,8 +270,8 @@
 			<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
 		</p>
 		<div id="menu">
-			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff"
-				SubBGColor="#787878" SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
+			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878"
+				SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
 		</div>
 		<div style="clear: both;">
 		</div>
@@ -273,6 +282,15 @@
 				<div id="page-bgbtm">
 					<div id="sidebar">
 						<ul>
+							<li>
+								<carrot:SearchBox ID="search1" runat="server">
+									<SearchTemplate>
+										<p>
+											<asp:TextBox ID="SearchText" runat="server" CssClass="searchbox" MaxLength="40" />
+										</p>
+									</SearchTemplate>
+								</carrot:SearchBox>
+							</li>
 							<li>
 								<carrot:WidgetContainer ID="phLeftTop" runat="server" />
 								<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
@@ -320,8 +338,7 @@
 										<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="PageTextPlainSummary" />
 									</p>
 									<p>
-										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category"
-											MetaDataTitle="Categories:" />
+										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
 									</p>
 								</div>
 							</ContentTemplate>
