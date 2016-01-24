@@ -264,7 +264,6 @@
     <EmbeddedResource Include="jquerybasic\black\animated-overlay.gif" />
     <EmbeddedResource Include="jquery-1-2-1-mig.js" />
     <EmbeddedResource Include="jquery-1-10-2.js" />
-    <EmbeddedResource Include="jquery-1-11-2.js" />
     <EmbeddedResource Include="jqueryui-1-11-4.js" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_15_fceaea_40x100.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_flat_25_fbf9ee_40x100.png" />
@@ -275,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ucSimplePager1.ascx" />
     <EmbeddedResource Include="ucSimplePager2.ascx" />
+    <EmbeddedResource Include="jquery-1-11-3.js" />
+    <EmbeddedResource Include="jquery-1-12-0.js" />
+    <EmbeddedResource Include="jquery-1-3-0-mig.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

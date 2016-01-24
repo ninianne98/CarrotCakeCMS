@@ -1,5 +1,4 @@
-﻿
-function __carrotware_ValidateLongText(sender, args) {
+﻿function __carrotware_ValidateLongText(sender, args) {
 	var txtValue = args.Value;
 	var maxLen = 1000;
 
@@ -19,7 +18,6 @@ function __carrotware_ValidateLongText(sender, args) {
 	args.IsValid = true;
 }
 
-
 //====================================================
 
 function __carrotware_RedirectWithQuerystring(url, query) {
@@ -27,7 +25,6 @@ function __carrotware_RedirectWithQuerystring(url, query) {
 }
 
 function __carrotware_RedirectWithQuerystringParm(url, parm, query) {
-
 	if (query.length > 0) {
 		var esc = encodeURIComponent(query);
 		//alert(esc);
@@ -37,9 +34,9 @@ function __carrotware_RedirectWithQuerystringParm(url, parm, query) {
 
 //====================================================
 
-
 var jqAttemptCount = 0;
-//var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js';
+//var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
+//var jqURL = '<%= Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>';
 var jqURL = '/<%=WebResource("Carrotware.Web.UI.Controls.jquery-1-8-3.js")%>';
 
 function __carrotware_SetJQueryURL(jqPath) {
@@ -62,7 +59,6 @@ function __carrotware_LoadJQScript() {
 	}
 }
 
-
 function __carrotware_LoadJS() {
 	jqAttemptCount++;
 	if (jqAttemptCount < 50) {
@@ -77,7 +73,6 @@ function __carrotware_PageValidate() {
 }
 
 function __carrotware_IsPageValid() {
-
 	if (typeof (Page_ClientValidate) == 'function') {
 		Page_ClientValidate();
 	} else {
@@ -90,7 +85,6 @@ function __carrotware_IsPageValid() {
 		return false;
 	}
 }
-
 
 //setTimeout('__carrotware_LoadJS()', 150);
 

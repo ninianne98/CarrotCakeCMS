@@ -57,7 +57,6 @@ using System.Web.UI;
 [assembly: TagPrefix("NavLinkForPagerTemplate", "carrot")]
 [assembly: TagPrefix("NavLinkForTemplate", "carrot")]
 [assembly: TagPrefix("NavPageNumberDisplay", "carrot")]
-
 [assembly: TagPrefix("jquery", "carrot")]
 [assembly: TagPrefix("jquerybasic", "carrot")]
 [assembly: TagPrefix("jqueryui", "carrot")]
@@ -66,16 +65,16 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.ucFancyPager.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.ucSimplePager1.ascx", "text/plain")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.ucSimplePager2.ascx", "text/plain")]
-
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.accept.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.attach.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.cancel.png", "image/png")]
-
 [assembly: WebResource("Carrotware.Web.UI.Controls.jsHelperLibrary.js", "text/javascript", PerformSubstitution = true)]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-10-2.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-11-2.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-11-3.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-12-0.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-2-1-mig.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-3-0-mig.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-6-4.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-7-2.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-8-3.js", "text/javascript")]
