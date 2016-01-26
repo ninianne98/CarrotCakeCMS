@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="captcha\CaptchaImage.cs" />
     <Compile Include="CarrotGridPaged.cs" />
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="ReflectionUtilities.cs" />
     <Compile Include="SimpleStyle.cs" />
     <Compile Include="CarrotGridView\CarrotGridView.cs" />
