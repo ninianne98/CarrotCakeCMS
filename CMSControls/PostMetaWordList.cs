@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -20,7 +21,16 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PostMetaWordList runat=server></{0}:PostMetaWordList>")]
-	public class PostMetaWordList : BaseServerControl {
+	public class PostMetaWordList : BaseServerControl, IWidgetLimitedProperties {
+
+		public PostMetaWordList()
+			: base() {
+			this.ContentType = MetaDataType.Category;
+			this.HtmlTagNameInner = TagType.LI;
+			this.HtmlTagNameOuter = TagType.UL;
+			this.MetaDataTitle = String.Empty;
+			this.TakeTop = 20;
+		}
 
 		[Category("Appearance")]
 		[DefaultValue(false)]
@@ -51,26 +61,47 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		[Category("Appearance")]
-		[DefaultValue("ul")]
-		public string HtmlTagNameOuter {
+		[DefaultValue("UL")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstTagType")]
+		public TagType HtmlTagNameOuter {
 			get {
-				string s = (string)ViewState["HtmlTagNameOuter"];
-				return ((s == null) ? "ul" : s);
+				String s = (String)ViewState["HtmlTagNameOuter"];
+				TagType c = TagType.UL;
+				if (!String.IsNullOrEmpty(s)) {
+					c = (TagType)Enum.Parse(typeof(TagType), s, true);
+				}
+				return c;
 			}
 			set {
-				ViewState["HtmlTagNameOuter"] = value;
+				ViewState["HtmlTagNameOuter"] = value.ToString();
 			}
 		}
 
 		[Category("Appearance")]
-		[DefaultValue("li")]
-		public string HtmlTagNameInner {
+		[DefaultValue("LI")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstTagType")]
+		public TagType HtmlTagNameInner {
 			get {
-				string s = (string)ViewState["HtmlTagNameInner"];
-				return ((s == null) ? "li" : s);
+				String s = (String)ViewState["HtmlTagNameInner"];
+				TagType c = TagType.LI;
+				if (!String.IsNullOrEmpty(s)) {
+					c = (TagType)Enum.Parse(typeof(TagType), s, true);
+				}
+				return c;
 			}
 			set {
-				ViewState["HtmlTagNameInner"] = value;
+				ViewState["HtmlTagNameInner"] = value.ToString();
+			}
+		}
+
+		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
+		public Dictionary<string, string> lstTagType {
+			get {
+				Dictionary<string, string> _dict = new Dictionary<string, string>();
+
+				_dict = EnumHelper.ToList<TagType>().OrderBy(x => x.Text).ToDictionary(k => k.Text, v => v.Description);
+
+				return _dict;
 			}
 		}
 
@@ -86,8 +117,28 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		public List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("MetaDataTitle");
+				lst.Add("HtmlTagNameInner");
+				lst.Add("HtmlTagNameOuter");
+				lst.Add("TakeTop");
+				lst.Add("ShowUseCount");
+				lst.Add("EnableViewState");
+				lst.Add("ContentType");
+				lst.Add("IsSimpleDisplayMode");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
 		public enum MetaDataType {
+
+			[Description("Tags")]
 			Tag,
+
+			[Description("Categories")]
 			Category,
 		}
 
@@ -143,8 +194,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public Dictionary<string, string> lstContentType {
 			get {
 				Dictionary<string, string> _dict = new Dictionary<string, string>();
-				_dict.Add(MetaDataType.Category.ToString(), "Categories");
-				_dict.Add(MetaDataType.Tag.ToString(), "Tags");
+
+				_dict = EnumHelper.ToList<MetaDataType>().OrderBy(x => x.Text).ToDictionary(k => k.Text, v => v.Description);
 
 				return _dict;
 			}
@@ -192,8 +243,8 @@ namespace Carrotware.CMS.UI.Controls {
 			if (!String.IsNullOrEmpty(this.CssClass)) {
 				sCSS = " class=\"" + this.CssClass + "\" ";
 			}
-			string sOuter = this.HtmlTagNameOuter;
-			string sInner = this.HtmlTagNameInner;
+			string sOuter = this.HtmlTagNameOuter.ToString().ToLowerInvariant();
+			string sInner = this.HtmlTagNameInner.ToString().ToLowerInvariant();
 
 			if (this.IsSimpleDisplayMode) {
 				sOuter = "div";
@@ -238,14 +289,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 					this.IsSimpleDisplayMode = Convert.ToBoolean(GetParmValue("IsSimpleDisplayMode", "false"));
 
-					this.CssClass = GetParmValue("CssClass", "");
+					this.CssClass = GetParmValue("CssClass", String.Empty);
 
-					this.HtmlTagNameOuter = GetParmValue("HtmlTagNameOuter", "ul");
-					this.HtmlTagNameInner = GetParmValue("HtmlTagNameInner", "li");
+					this.MetaDataTitle = GetParmValue("MetaDataTitle", String.Empty);
 
-					this.MetaDataTitle = GetParmValue("MetaDataTitle", "");
-
-					this.ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
+					this.HtmlTagNameOuter = (TagType)Enum.Parse(typeof(TagType), GetParmValue("HtmlTagNameOuter", TagType.UL.ToString()), true);
+					this.HtmlTagNameInner = (TagType)Enum.Parse(typeof(TagType), GetParmValue("HtmlTagNameInner", TagType.LI.ToString()), true);
+					this.ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", MetaDataType.Category.ToString()), true);
 				}
 			} catch (Exception ex) {
 			}

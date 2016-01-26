@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -26,16 +28,40 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public enum SortOrder {
+
+			[Description("Link Order Ascending")]
 			SortAsc,
+
+			[Description("Link Order Descending")]
 			SortDesc,
+
+			[Description("Go Live Date Ascending")]
 			DateAsc,
+
+			[Description("Go Live Date Descending")]
 			DateDesc,
+
+			[Description("Sort Link Text Ascending")]
 			TitleAsc,
+
+			[Description("Sort Link Text Descending")]
 			TitleDesc,
+		}
+
+		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
+		public Dictionary<string, string> lstSortOrder {
+			get {
+				Dictionary<string, string> _dict = new Dictionary<string, string>();
+
+				_dict = EnumHelper.ToList<SortOrder>().ToDictionary(k => k.Text, v => v.Description);
+
+				return _dict;
+			}
 		}
 
 		[Category("Appearance")]
 		[DefaultValue("SortAsc")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSortOrder")]
 		public SortOrder SortNavBy {
 			get {
 				string s = (string)ViewState["SortNavBy"];

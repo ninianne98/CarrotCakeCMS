@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -42,6 +43,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue("H2")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstTagType")]
 		public TagType HeadWrapTag {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
@@ -57,13 +59,26 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
+		public Dictionary<string, string> lstTagType {
+			get {
+				Dictionary<string, string> _dict = new Dictionary<string, string>();
+
+				_dict = EnumHelper.ToList<TagType>().OrderBy(x => x.Text).ToDictionary(k => k.Text, v => v.Description);
+
+				return _dict;
+			}
+		}
+
 		protected override void WriteListPrefix(HtmlTextWriter output) {
 			if (this.NavigationData != null) {
 				this.ItemCount = this.NavigationData.Count;
 			}
 
+			string headTag = this.HeadWrapTag.ToString().ToLowerInvariant();
+
 			if (this.NavigationData != null && this.NavigationData.Count > 0 && !String.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">\r\n");
+				output.WriteLine("<" + headTag + ">" + this.MetaDataTitle + "</" + headTag + ">\r\n");
 			}
 
 			base.WriteListPrefix(output);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -19,23 +20,35 @@ using Carrotware.CMS.Interface;
 namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:SiteMetaWordList runat=server></{0}:SiteMetaWordList>")]
-	public class SiteMetaWordList : BaseServerControl, IHeadedList {
+	public class SiteMetaWordList : BaseServerControl, IHeadedList, IWidgetLimitedProperties {
+
+		public SiteMetaWordList()
+			: base() {
+			this.ItemCount = -1;
+			this.MetaDataTitle = String.Empty;
+			this.CSSItem = String.Empty;
+			this.ShowUseCount = false;
+			this.TakeTop = 10;
+			this.ContentType = MetaDataType.Category;
+		}
+
 		public int ItemCount { get; set; }
 
 		[Category("Appearance")]
 		[DefaultValue("")]
 		public string MetaDataTitle {
 			get {
-				string s = (string)ViewState["this.MetaDataTitle"];
+				string s = (string)ViewState["MetaDataTitle"];
 				return ((s == null) ? "" : s);
 			}
 			set {
-				ViewState["this.MetaDataTitle"] = value;
+				ViewState["MetaDataTitle"] = value;
 			}
 		}
 
 		[Category("Appearance")]
 		[DefaultValue("H2")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstTagType")]
 		public TagType HeadWrapTag {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
@@ -51,15 +64,26 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
+		public Dictionary<string, string> lstTagType {
+			get {
+				Dictionary<string, string> _dict = new Dictionary<string, string>();
+
+				_dict = EnumHelper.ToList<TagType>().OrderBy(x => x.Text).ToDictionary(k => k.Text, v => v.Description);
+
+				return _dict;
+			}
+		}
+
 		[Category("Appearance")]
 		[DefaultValue("")]
 		public string CSSItem {
 			get {
-				string s = (string)ViewState["this.CSSItem"];
+				string s = (string)ViewState["CSSItem"];
 				return ((s == null) ? "" : s);
 			}
 			set {
-				ViewState["this.CSSItem"] = value;
+				ViewState["CSSItem"] = value;
 			}
 		}
 
@@ -103,9 +127,31 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		public List<string> LimitedPropertyList {
+			get {
+				List<string> lst = new List<string>();
+				lst.Add("MetaDataTitle");
+				lst.Add("HeadWrapTag");
+				lst.Add("CSSItem");
+				lst.Add("ShowUseCount");
+				lst.Add("EnableViewState");
+				lst.Add("TakeTop");
+				lst.Add("ContentType");
+				lst.Add("ShowNonZeroCountOnly");
+
+				return lst.Distinct().ToList();
+			}
+		}
+
 		public enum MetaDataType {
+
+			[Description("Tags")]
 			Tag,
+
+			[Description("Categories")]
 			Category,
+
+			[Description("Dates")]
 			DateMonth,
 		}
 
@@ -131,9 +177,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public Dictionary<string, string> lstContentType {
 			get {
 				Dictionary<string, string> _dict = new Dictionary<string, string>();
-				_dict.Add("Category", "Categories");
-				_dict.Add("Tag", "Tags");
-				_dict.Add("DateMonth", "Dates");
+
+				_dict = EnumHelper.ToList<MetaDataType>().OrderBy(x => x.Text).ToDictionary(k => k.Text, v => v.Description);
 
 				return _dict;
 			}
@@ -275,13 +320,15 @@ namespace Carrotware.CMS.UI.Controls {
 				if (this.PublicParmValues.Any()) {
 					this.TakeTop = int.Parse(GetParmValue("TakeTop", "10"));
 
-					this.CssClass = GetParmValue("this.CssClass", "");
+					this.CssClass = GetParmValue("CssClass", String.Empty);
 
-					this.MetaDataTitle = GetParmValue("this.MetaDataTitle", "");
+					this.MetaDataTitle = GetParmValue("MetaDataTitle", String.Empty);
 
 					this.ShowUseCount = Convert.ToBoolean(GetParmValue("ShowUseCount", "false"));
 
-					this.ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", "MetaDataType.Category"), true);
+					this.ContentType = (MetaDataType)Enum.Parse(typeof(MetaDataType), GetParmValue("ContentType", MetaDataType.Category.ToString()), true);
+
+					this.HeadWrapTag = (TagType)Enum.Parse(typeof(TagType), GetParmValue("HeadWrapTag", TagType.H2.ToString()), true);
 				}
 			} catch (Exception ex) {
 			}

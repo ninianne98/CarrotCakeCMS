@@ -25,7 +25,8 @@ namespace Carrotware.CMS.UI.Controls {
 		I,
 		STRONG,
 		P,
-		LI
+		LI,
+		UL,
 	}
 
 	//========================================
