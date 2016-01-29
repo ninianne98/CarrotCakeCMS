@@ -4,8 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public ParentSiblingNavigation()
 			: base() {
-			this.SortNavBy = SortOrder.DateAsc;
+			this.SortNavBy = SortOrder.SortAsc;
 		}
 
 		public enum SortOrder {
@@ -41,10 +41,10 @@ namespace Carrotware.CMS.UI.Controls {
 			[Description("Go Live Date Descending")]
 			DateDesc,
 
-			[Description("Sort Link Text Ascending")]
+			[Description("Link Text Ascending")]
 			TitleAsc,
 
-			[Description("Sort Link Text Descending")]
+			[Description("Link Text Descending")]
 			TitleDesc,
 		}
 

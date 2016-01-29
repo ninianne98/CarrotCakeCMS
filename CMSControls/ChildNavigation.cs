@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public ChildNavigation()
 			: base() {
-			this.SortNavBy = SortOrder.DateAsc;
+			this.SortNavBy = SortOrder.SortAsc;
 			this.IncludeParent = false;
 		}
 
@@ -42,10 +42,10 @@ namespace Carrotware.CMS.UI.Controls {
 			[Description("Go Live Date Descending")]
 			DateDesc,
 
-			[Description("Sort Link Text Ascending")]
+			[Description("Link Text Ascending")]
 			TitleAsc,
 
-			[Description("Sort Link Text Descending")]
+			[Description("Link Text Descending")]
 			TitleDesc,
 		}
 
