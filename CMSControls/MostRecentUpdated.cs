@@ -23,10 +23,24 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:MostRecentUpdated runat=server></{0}:MostRecentUpdated>")]
 	public class MostRecentUpdated : BaseNavHeaded {
 
+		public MostRecentUpdated()
+			: base() {
+			this.ContentType = ListContentType.Blog;
+			this.TakeTop = 5;
+			this.ShowUpdateDate = false;
+			this.DateFormat = "({0:d})";
+		}
+
 		public enum ListContentType {
 			Unknown,
+
+			[Description("Blog")]
 			Blog,
+
+			[Description("Content Page")]
 			ContentPage,
+
+			[Description("Specified Categories")]
 			SpecifiedCategories
 		}
 
@@ -34,20 +48,20 @@ namespace Carrotware.CMS.UI.Controls {
 		public Dictionary<string, string> lstContentType {
 			get {
 				Dictionary<string, string> _dict = new Dictionary<string, string>();
-				_dict.Add("Blog", "Blog");
-				_dict.Add("ContentPage", "Content Page");
-				_dict.Add("SpecifiedCategories", "Specified Categories");
+
+				_dict = EnumHelper.ToList<ListContentType>().Where(x => x.Value != (int)ListContentType.Unknown).ToDictionary(k => k.Text, v => v.Description);
+
 				return _dict;
 			}
 		}
 
 		[Category("Appearance")]
-		[DefaultValue("ContentPage")]
+		[DefaultValue("Blog")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
 		public ListContentType ContentType {
 			get {
 				String s = (String)ViewState["ContentType"];
-				ListContentType c = ListContentType.ContentPage;
+				ListContentType c = ListContentType.Blog;
 				if (!String.IsNullOrEmpty(s)) {
 					c = (ListContentType)Enum.Parse(typeof(ListContentType), s, true);
 				}
@@ -172,6 +186,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue(false)]
+		[Widget(WidgetAttribute.FieldMode.CheckBox)]
 		public bool ShowUpdateDate {
 			get {
 				bool s = false;
@@ -187,6 +202,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue("({0:d})")]
+		[Widget(WidgetAttribute.FieldMode.TextBox)]
 		public string DateFormat {
 			get {
 				String s = ViewState["DateFormat"] as String;
@@ -218,6 +234,10 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 			}
 
+			if (this.ShowUpdateDate && String.IsNullOrEmpty(this.DateFormat)) {
+				this.DateFormat = "({0:d})";
+			}
+
 			if (this.ShowUpdateDate && !String.IsNullOrEmpty(this.DateFormat)) {
 				lst.ForEach(x => x.NavMenuText = String.Format("{0}  {1}", x.NavMenuText, String.Format(this.DateFormat, x.GoLiveDate)));
 			}
@@ -233,6 +253,8 @@ namespace Carrotware.CMS.UI.Controls {
 				lst.Add("CssClass");
 				lst.Add("ContentType");
 				lst.Add("SelectedCategories");
+				lst.Add("ShowUpdateDate");
+				lst.Add("DateFormat");
 
 				return lst.Distinct().ToList();
 			}
@@ -242,22 +264,26 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Any()) {
-					TakeTop = int.Parse(GetParmValue("TakeTop", "5"));
+				if (this.PublicParmValues.Any()) {
+					this.TakeTop = int.Parse(GetParmValue("TakeTop", "5"));
 
-					ContentType = (ListContentType)Enum.Parse(typeof(ListContentType), GetParmValue("ContentType", "Blog"), true);
+					this.DateFormat = GetParmValue("DateFormat", "({0:d})");
 
-					SelectedCategories = new List<Guid>();
+					this.ShowUpdateDate = Convert.ToBoolean(GetParmValue("ShowUpdateDate", "false"));
+
+					this.ContentType = (ListContentType)Enum.Parse(typeof(ListContentType), GetParmValue("ContentType", ListContentType.Blog.ToString()), true);
+
+					this.SelectedCategories = new List<Guid>();
 
 					List<string> lstCategories = GetParmValueList("SelectedCategories");
 					foreach (string sCat in lstCategories) {
 						if (!String.IsNullOrEmpty(sCat)) {
-							SelectedCategories.Add(new Guid(sCat));
+							this.SelectedCategories.Add(new Guid(sCat));
 						}
 					}
 				}
-				if (SelectedCategories.Any()) {
-					ContentType = ListContentType.SpecifiedCategories;
+				if (this.SelectedCategories.Any()) {
+					this.ContentType = ListContentType.SpecifiedCategories;
 				}
 			} catch (Exception ex) {
 			}
