@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -42,6 +44,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue("H2")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstTagType")]
 		public TagType HeadWrapTag {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
@@ -57,6 +60,17 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
+		public Dictionary<string, string> lstTagType {
+			get {
+				Dictionary<string, string> _dict = new Dictionary<string, string>();
+
+				_dict = EnumHelper.ToList<TagType>().OrderBy(x => x.Text).ToDictionary(k => k.Text, v => v.Description);
+
+				return _dict;
+			}
+		}
+
 		public override List<string> LimitedPropertyList {
 			get {
 				List<string> lst = base.LimitedPropertyList;
@@ -69,14 +83,14 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(System.EventArgs e) {
 			if (this.PublicParmValues.Any()) {
-				string sTmp = "";
+				string sTmp = String.Empty;
 				try {
-					sTmp = GetParmValue("MetaDataTitle", "");
+					sTmp = GetParmValue("MetaDataTitle", String.Empty);
 					if (!String.IsNullOrEmpty(sTmp)) {
 						this.MetaDataTitle = sTmp;
 					}
 
-					sTmp = GetParmValue("HeadWrapTag", "");
+					sTmp = GetParmValue("HeadWrapTag", TagType.H2.ToString());
 					if (!String.IsNullOrEmpty(sTmp)) {
 						this.HeadWrapTag = (TagType)Enum.Parse(typeof(TagType), sTmp, true);
 					}
@@ -92,8 +106,10 @@ namespace Carrotware.CMS.UI.Controls {
 				this.ItemCount = this.NavigationData.Count;
 			}
 
+			string headTag = this.HeadWrapTag.ToString().ToLowerInvariant();
+
 			if (this.NavigationData != null && this.NavigationData.Any() && !String.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">\r\n");
+				output.WriteLine("<" + headTag + ">" + this.MetaDataTitle + "</" + headTag + ">\r\n");
 			}
 
 			base.WriteListPrefix(output);

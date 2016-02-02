@@ -103,7 +103,7 @@ namespace Carrotware.CMS.UI.Controls {
 						this.MetaDataTitle = sTmp;
 					}
 
-					sTmp = GetParmValue("HeadWrapTag", "");
+					sTmp = GetParmValue("HeadWrapTag", TagType.H2.ToString());
 					if (!String.IsNullOrEmpty(sTmp)) {
 						this.HeadWrapTag = (TagType)Enum.Parse(typeof(TagType), sTmp, true);
 					}
