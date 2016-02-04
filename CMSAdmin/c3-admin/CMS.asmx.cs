@@ -36,6 +36,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private Guid CurrentPageGuid = Guid.Empty;
 		private ContentPage filePage = null;
 
+		public CMS() {
+			if (!this.User.Identity.IsAuthenticated) {
+				throw new Exception("Not Authenticated!");
+			}
+
+			if (!(SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
+				throw new Exception("Not Authorizeed!");
+			}
+		}
+
 		private List<ContentPage> _pages = null;
 
 		protected List<ContentPage> lstActivePages {

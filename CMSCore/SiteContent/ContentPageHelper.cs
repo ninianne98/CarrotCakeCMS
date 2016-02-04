@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
@@ -104,24 +105,24 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string CreateBlogDatePrefix(Guid siteID, DateTime goLiveDate) {
-			string FileName = "";
+			string fileName = String.Empty;
 
 			var ss = SiteData.GetSiteFromCache(siteID);
 			if (ss.Blog_DatePattern.Length > 1) {
-				FileName = "/" + goLiveDate.ToString(ss.Blog_DatePattern) + "/";
+				fileName = "/" + goLiveDate.ToString(ss.Blog_DatePattern) + "/";
 			} else {
-				FileName = "/";
+				fileName = "/";
 			}
 
-			return ScrubPath(FileName);
+			return ScrubPath(fileName);
 		}
 
 		public static string CreateFileNameFromSlug(Guid siteID, DateTime goLiveDate, string PageSlug) {
-			string FileName = "";
+			string fileName = String.Empty;
 
-			FileName = "/" + CreateBlogDatePrefix(siteID, goLiveDate) + "/" + PageSlug;
+			fileName = "/" + CreateBlogDatePrefix(siteID, goLiveDate) + "/" + PageSlug;
 
-			return ScrubFilename(Guid.Empty, FileName);
+			return ScrubFilename(Guid.Empty, fileName);
 		}
 
 		public void BulkBlogFileNameUpdateFromDate(Guid siteID) {
@@ -250,24 +251,19 @@ namespace Carrotware.CMS.Core {
 			db.SubmitChanges();
 		}
 
-		public static string ScrubFilename(Guid rootContentID, string FileName) {
-			string newFileName = FileName;
+		public static string ScrubFilename(Guid rootContentID, string fileName) {
+			string newFileName = String.Format("{0}", fileName).Trim();
 
 			if (String.IsNullOrEmpty(newFileName)) {
 				newFileName = rootContentID.ToString();
 			}
-			newFileName = newFileName.Replace(@"\", @"/");
-
-			if (!newFileName.StartsWith(@"/")) {
-				newFileName = @"/" + newFileName;
-			}
-
-			newFileName = ScrubSpecial(newFileName);
 
 			if (newFileName.EndsWith(@"/")) {
 				newFileName = newFileName + SiteData.DefaultDirectoryFilename;
 				newFileName = newFileName.Replace("//", "/");
 			}
+
+			newFileName = ScrubFilePath(newFileName).Trim();
 
 			if (newFileName.ToLowerInvariant().EndsWith(".htm")) {
 				newFileName = newFileName.Substring(0, newFileName.Length - 4) + ".aspx";
@@ -286,7 +282,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private static string ScrubSpecial(string sInput) {
-			string sOutput = sInput;
+			sInput = String.Format("{0}", sInput).Trim();
+
+			Encoding iso = Encoding.GetEncoding("ISO-8859-8");
+			Encoding utf8 = Encoding.UTF8;
+			byte[] utfBytes = utf8.GetBytes(sInput);
+			byte[] isoBytes = Encoding.Convert(utf8, iso, utfBytes);
+			string sOutput = iso.GetString(isoBytes);
 
 			sOutput = sOutput.Replace("...", ".").Replace("...", ".").Replace("..", ".");
 			sOutput = sOutput.Replace(" ", "-");
@@ -304,38 +306,41 @@ namespace Carrotware.CMS.Core {
 			sOutput = Regex.Replace(sOutput, @"[^0-9a-zA-Z.-/_]+", "-");
 
 			sOutput = sOutput.Replace("--", "-").Replace("--", "-");
-			sOutput = sOutput.Replace("//", "/").Replace("//", "/");
-			sOutput = sOutput.Trim();
 
-			return sOutput;
+			return sOutput.Trim();
 		}
 
-		public static string ScrubSlug(string SlugValue) {
-			string newSlug = SlugValue;
+		public static string ScrubSlug(string slugValue) {
+			string newSlug = String.Format("{0}", slugValue).Trim();
 
-			newSlug = newSlug.Replace(@"\", "");
-			newSlug = newSlug.Replace(@"/", "");
+			newSlug = newSlug.Replace(@"\", String.Empty);
+			newSlug = newSlug.Replace(@"/", String.Empty);
 
 			newSlug = ScrubSpecial(newSlug);
 
 			return newSlug;
 		}
 
-		public static string ScrubPath(string FilePath) {
-			string newFilePath = FilePath;
+		public static string ScrubPath(string filePath) {
+			string newFilePath = ScrubFilePath(filePath);
 
-			newFilePath = newFilePath.Replace(@"\", @"/");
+			if (!newFilePath.EndsWith(@"/")) {
+				newFilePath = String.Format("{0}/", newFilePath).Trim();
+			}
+
+			return newFilePath;
+		}
+
+		private static string ScrubFilePath(string filePath) {
+			string newFilePath = String.Format("{0}", filePath).Trim().Replace(@"//", @"/").Replace(@"\", @"/");
+
+			string[] newPaths = newFilePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			newPaths = newPaths.ToList().Select(x => ScrubSpecial(x)).ToArray();
+			newFilePath = String.Join("/", newPaths.ToArray());
 
 			if (!newFilePath.StartsWith(@"/")) {
-				newFilePath = @"/" + newFilePath;
+				newFilePath = String.Format("/{0}", newFilePath).Trim();
 			}
-			if (!newFilePath.EndsWith(@"/")) {
-				newFilePath = newFilePath + @"/";
-			}
-
-			newFilePath = ScrubSpecial(newFilePath);
-
-			newFilePath = newFilePath.Replace("//", "/");
 
 			return newFilePath;
 		}
