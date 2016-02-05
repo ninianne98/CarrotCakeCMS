@@ -284,28 +284,43 @@ namespace Carrotware.CMS.Core {
 		private static string ScrubSpecial(string sInput) {
 			sInput = String.Format("{0}", sInput).Trim();
 
-			Encoding iso = Encoding.GetEncoding("ISO-8859-8");
+			Encoding iso = Encoding.GetEncoding("ISO-8859-8");  //use ISO-8859-8 to auto drop accent chars
 			Encoding utf8 = Encoding.UTF8;
 			byte[] utfBytes = utf8.GetBytes(sInput);
 			byte[] isoBytes = Encoding.Convert(utf8, iso, utfBytes);
 			string sOutput = iso.GetString(isoBytes);
 
-			sOutput = sOutput.Replace("...", ".").Replace("...", ".").Replace("..", ".");
-			sOutput = sOutput.Replace(" ", "-");
-			sOutput = sOutput.Replace("'", "-");
-			sOutput = sOutput.Replace("\"", "-");
+			iso = Encoding.ASCII;  //once accents are dropped, turn ASCII
+			utfBytes = utf8.GetBytes(sOutput);
+			isoBytes = Encoding.Convert(utf8, iso, utfBytes);
+			sOutput = iso.GetString(isoBytes);
+
 			sOutput = sOutput.Replace("*", "-star-");
 			sOutput = sOutput.Replace("%", "-percent-");
 			sOutput = sOutput.Replace("&", "-n-");
 
-			sOutput = sOutput.Replace("--", "-").Replace("--", "-");
-			sOutput = sOutput.Replace("//", "/").Replace("//", "/");
+			char[] badPathChars = Path.GetInvalidPathChars();  // if chars not valid for a path make into a dash
+			sOutput = new String(sOutput.Select(x => badPathChars.Contains(x) ? '-' : x).ToArray());
+
+			sOutput = sOutput.Replace("....", "-").Replace("...", "-").Replace("..", "-");
+			sOutput = sOutput.Replace(" ", "-");
+			sOutput = sOutput.Replace("'", "-");
+			sOutput = sOutput.Replace("\"", "-");
+			sOutput = sOutput.Replace(",", "-");
+			sOutput = sOutput.Replace("+", "-");
+
+			sOutput = sOutput.Replace("---", "-").Replace("--", "-");
+			sOutput = sOutput.Replace(@"///", "/").Replace(@"//", "/");
 			sOutput = sOutput.Trim();
 
 			sOutput = Regex.Replace(sOutput, "[:\"*?<>|]+", "-");
 			sOutput = Regex.Replace(sOutput, @"[^0-9a-zA-Z.-/_]+", "-");
 
-			sOutput = sOutput.Replace("--", "-").Replace("--", "-");
+			sOutput = sOutput.Replace("----", "-").Replace("---", "-").Replace("--", "-").Replace("--", "-");
+			sOutput = sOutput.Replace(@"////", "/").Replace(@"///", "/").Replace(@"//", "/").Replace(@"//", "/");
+			sOutput = sOutput.Trim();
+
+			sOutput = sOutput.Replace("-.", ".");
 
 			return sOutput.Trim();
 		}
