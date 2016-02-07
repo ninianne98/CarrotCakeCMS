@@ -184,7 +184,7 @@ Conversion to CarrotCake CMS Template: Carrotware
 			<asp:PlaceHolder ID="myFooter" runat="server">
 				<div id="footer-left">
 					<%=String.Format("&copy; {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
-					All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms.aspx">carrotcake cms</a>
+					All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms">carrotcake cms</a>
 					<br />
 					Design by: <a target="_blank" href="http://www.styleshout.com/">styleshout</a> | Valid <a target="_blank" href="http://validator.w3.org/check/referer">
 						XHTML</a> | <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
