@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-
+using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 	public class GalleryBase {
-
 		protected FileDataHelper fileHelper = new FileDataHelper();
 
 		private SiteData _site = null;
@@ -28,7 +22,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				_site = value;
 			}
 		}
-
-
 	}
 }

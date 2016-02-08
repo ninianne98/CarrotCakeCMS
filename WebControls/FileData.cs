@@ -14,7 +14,7 @@ using System.Web;
 * Date: October 2011
 */
 
-namespace Carrotware.CMS.Core {
+namespace Carrotware.Web.UI.Controls {
 
 	public class FileData {
 
@@ -31,7 +31,7 @@ namespace Carrotware.CMS.Core {
 		public string FileName { get; set; }
 		public string FileExtension { get; set; }
 		public DateTime FileDate { get; set; }
-		public int FileSize { get; set; }
+		public long FileSize { get; set; }
 		public string FileSizeFriendly { get; set; }
 		public string FolderPath { get; set; }
 		public string MimeType { get; set; }
@@ -65,6 +65,10 @@ namespace Carrotware.CMS.Core {
 
 		public FileDataHelper() { }
 
+		public FileDataHelper(string blockedExts) {
+			_blockedTypes = blockedExts;
+		}
+
 		private static string _wwwpath = null;
 
 		private static string WWWPath {
@@ -79,25 +83,19 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private string _FileTypes = null;
+		private string _blockedTypes = null;
 
 		public List<string> BlockedTypes {
 			get {
-				if (_FileTypes == null) {
-					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
-					if (config.FileManagerConfig != null && !string.IsNullOrEmpty(config.FileManagerConfig.BlockedExtensions)) {
-						_FileTypes = config.FileManagerConfig.BlockedExtensions;
-					}
+				if (_blockedTypes == null) {
+					_blockedTypes = "asp;aspx;ascx;asmx;svc;asax;axd;ashx;dll;pdb;exe;cs;vb;cshtml;vbhtml;master;config;xml;user;csproj;vbproj;sln";
 				}
-				if (_FileTypes == null) {
-					_FileTypes = "asp;aspx;ascx;asmx;svc;asax;axd;ashx;dll;pdb;exe;cs;vb;cshtml;vbhtml;master;config;xml;user;csproj;vbproj;sln";
-				}
-				return _FileTypes.Split(';').ToList();
+				return _blockedTypes.Split(';').ToList();
 			}
 		}
 
 		public void IncludeAllFiletypes() {
-			_FileTypes = String.Empty;
+			_blockedTypes = String.Empty;
 		}
 
 		public FileData GetFolderInfo(string sQuery, string myFile) {
@@ -186,7 +184,7 @@ namespace Carrotware.CMS.Core {
 				f.FileName = myFileName;
 				f.FolderPath = MakeFilePathUniform(sP);
 				f.FileDate = myFileDate;
-				f.FileSize = Convert.ToInt32(myFileSize);
+				f.FileSize = myFileSize;
 				f.FileSizeFriendly = myFileSizeF;
 				if (!string.IsNullOrEmpty(MyFile.Extension)) {
 					f.FileExtension = MyFile.Extension.ToLowerInvariant();
@@ -356,13 +354,14 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".aps", "application/mime");
 					_dict.Add(".arc", "application/octet-stream");
 					_dict.Add(".arj", "application/octet-stream");
+					_dict.Add(".asa", "text/asp");
+					_dict.Add(".asax", "text/aspx");
+					_dict.Add(".ascx", "text/aspx");
 					_dict.Add(".asf", "video/x-ms-asf");
 					_dict.Add(".asm", "text/x-asm");
-					_dict.Add(".asmx", "text/asp");
-					_dict.Add(".ascx", "text/asp");
+					_dict.Add(".asmx", "text/aspx");
 					_dict.Add(".asp", "text/asp");
-					_dict.Add(".aspx", "text/asp");
-					_dict.Add(".asax", "text/asp");
+					_dict.Add(".aspx", "text/aspx");
 					_dict.Add(".asx", "video/x-ms-asf");
 					_dict.Add(".au", "audio/basic");
 					_dict.Add(".avi", "video/avi");
@@ -378,10 +377,11 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".class", "application/java");
 					_dict.Add(".com", "application/octet-stream");
 					_dict.Add(".conf", "text/plain");
-					_dict.Add(".config", "text/asp");
+					_dict.Add(".config", "text/aspx");
 					_dict.Add(".cpp", "text/x-c");
 					_dict.Add(".crt", "application/x-x509-ca-cert");
 					_dict.Add(".csh", "application/x-csh");
+					_dict.Add(".cshtml", "text/aspx");
 					_dict.Add(".css", "text/css");
 					_dict.Add(".def", "text/plain");
 					_dict.Add(".dir", "application/x-director");
@@ -460,10 +460,10 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".movie", "video/x-sgi-movie");
 					_dict.Add(".mp2", "video/mpeg");
 					_dict.Add(".mp3", "audio/mpeg3");
+					_dict.Add(".mp4", "video/mp4");
 					_dict.Add(".mpa", "audio/mpeg");
 					_dict.Add(".mpeg", "video/mpeg");
 					_dict.Add(".mpg", "video/mpeg");
-					_dict.Add(".mp4", "video/mp4");
 					_dict.Add(".mpga", "audio/mpeg");
 					_dict.Add(".mpp", "application/vnd.ms-project");
 					_dict.Add(".mpt", "application/x-project");
@@ -527,6 +527,7 @@ namespace Carrotware.CMS.Core {
 					_dict.Add(".tiff", "image/tiff");
 					_dict.Add(".uu", "application/octet-stream");
 					_dict.Add(".uue", "text/x-uuencode");
+					_dict.Add(".vbhtml", "text/aspx");
 					_dict.Add(".vcs", "text/x-vcalendar");
 					_dict.Add(".vda", "application/vda");
 					_dict.Add(".vrml", "application/x-vrml");

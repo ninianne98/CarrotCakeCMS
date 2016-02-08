@@ -128,7 +128,6 @@
     <Compile Include="Security\ProfileManager.cs" />
     <Compile Include="Security\SecurityData.cs" />
     <Compile Include="ConfigHelper\UserEditState.cs" />
-    <Compile Include="Utilities\FileData.cs" />
     <Compile Include="ConfigHelper\LabeledControl.cs" />
     <Compile Include="SiteContent\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

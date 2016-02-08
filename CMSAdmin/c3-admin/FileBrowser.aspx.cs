@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -24,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public string sViewMode = String.Empty;
 		private string defaultBrowseMode = "file";
 
-		protected FileDataHelper helpFile = new FileDataHelper();
+		protected FileDataHelper helpFile = CMSConfigHelper.GetFileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			try { sQueryPath = Request.QueryString["fldrpath"]; } catch { sQueryPath = @"/"; }

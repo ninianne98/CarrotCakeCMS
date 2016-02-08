@@ -11,6 +11,7 @@ using System.Web.Caching;
 using System.Web.UI;
 using System.Xml.Serialization;
 using Carrotware.CMS.Data;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -152,6 +153,17 @@ namespace Carrotware.CMS.Core {
 			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
 				return cmsHelper.AdminModules.Any();
 			}
+		}
+
+		public static FileDataHelper GetFileDataHelper() {
+			string fileTypes = null;
+
+			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+			if (config.FileManagerConfig != null && !String.IsNullOrEmpty(config.FileManagerConfig.BlockedExtensions)) {
+				fileTypes = config.FileManagerConfig.BlockedExtensions;
+			}
+
+			return new FileDataHelper(fileTypes);
 		}
 
 		private static DataSet ReadDataSetConfig(CMSConfigFileType cfg, string sPath) {

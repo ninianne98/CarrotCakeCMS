@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
 using Carrotware.CMS.Core;
-
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
-	public partial class PhotoGalleryAdminMetaData : AdminModule {
 
-		Guid gTheID = Guid.Empty;
+	public partial class PhotoGalleryAdminMetaData : AdminModule {
+		private Guid gTheID = Guid.Empty;
 		public string sImageFile = "";
 
 		protected FileDataHelper helpFile = new FileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
-
 			if (!string.IsNullOrEmpty(Request.QueryString["id"])) {
 				gTheID = new Guid(Request.QueryString["id"].ToString());
 			}
@@ -45,7 +41,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-
 			GalleryHelper gh = new GalleryHelper(SiteID);
 			var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
 
@@ -63,6 +58,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());
 		}
-
 	}
 }

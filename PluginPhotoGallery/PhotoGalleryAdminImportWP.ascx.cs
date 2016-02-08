@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 

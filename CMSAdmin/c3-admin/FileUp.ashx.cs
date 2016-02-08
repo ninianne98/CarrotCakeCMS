@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -23,7 +24,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			try {
 				if (context.Request.Files != null && context.Request.Files.Count > 0) {
-					FileDataHelper helpFile = new FileDataHelper();
+					FileDataHelper helpFile = CMSConfigHelper.GetFileDataHelper();
 
 					for (int i = 0; i < context.Request.Files.Count; i++) {
 						HttpPostedFile file = context.Request.Files[i];

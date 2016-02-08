@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -20,7 +21,7 @@ using Carrotware.CMS.UI.Controls;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class SiteSkinEdit : AdminBasePage {
-		protected FileDataHelper helpFile = new FileDataHelper();
+		protected FileDataHelper helpFile = CMSConfigHelper.GetFileDataHelper();
 		public string sTemplateFileQS = String.Empty;
 		protected string sTemplateFile = String.Empty;
 		protected string sFullFilePath = String.Empty;

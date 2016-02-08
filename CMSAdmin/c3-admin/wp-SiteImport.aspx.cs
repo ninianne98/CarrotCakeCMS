@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -109,9 +110,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith(SiteData.AdminFolderPath));
+			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/app_code/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/app_data/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/aspnet_client/"));
 			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/bin/"));
 			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/obj/"));
-			lstFolders.RemoveAll(f => f.FileName.ToLowerInvariant().StartsWith("/app_data/"));
 
 			GeneralUtilities.BindListDefaultText(ddlFolders, lstFolders.OrderBy(f => f.FileName), null, "Folders", "-[none]-");
 		}
