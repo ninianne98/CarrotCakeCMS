@@ -7,6 +7,6 @@ Your password has been reset to: {%%Password%%}
 -- CMS Site
 
 
-Powered by CarrotCake CMS
+Powered by CarrotCake CMS {%%Version%%}
 
 Request sent at {%%Time%%}

@@ -82,6 +82,8 @@
     </Compile>
     <Compile Include="captcha\CaptchaImage.cs" />
     <Compile Include="CarrotGridPaged.cs" />
+    <Compile Include="Email\EmailHelper.cs" />
+    <Compile Include="Email\EMailSettings.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="ReflectionUtilities.cs" />

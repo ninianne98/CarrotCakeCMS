@@ -242,8 +242,6 @@ namespace Carrotware.CMS.UI.Controls {
 				if (!String.IsNullOrEmpty(this.DirectEmail) || this.NotifyEditors || !String.IsNullOrEmpty(this.DirectEmailKeyName)) {
 					List<string> emails = new List<string>();
 
-					EmailSender mailer = new EmailSender();
-
 					if (!String.IsNullOrEmpty(this.DirectEmail)) {
 						emails.Add(this.DirectEmail);
 					}
@@ -264,14 +262,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 					string sEmail = String.Join(",", emails.ToArray());
 
-					mailer.MailSubject = "Comment Form " + request.ServerVariables["HTTP_HOST"];
-					mailer.Recepient = sEmail;
-					mailer.TemplateFile = null;
-					mailer.IsHTML = false;
-					mailer.WebControl = this;
-
 					string strHTTPHost = String.Empty;
 					try { strHTTPHost = request.ServerVariables["HTTP_HOST"] + String.Empty; } catch { strHTTPHost = String.Empty; }
+
+					string hostName = strHTTPHost.ToLowerInvariant();
 
 					string strHTTPProto = "http://";
 					try {
@@ -282,6 +276,8 @@ namespace Carrotware.CMS.UI.Controls {
 							strHTTPProto = "http://";
 						}
 					} catch { }
+
+					string mailSubject = String.Format("Comment Form From {0}", hostName);
 
 					strHTTPHost = String.Format("{0}{1}", strHTTPProto, strHTTPHost).ToLowerInvariant();
 
@@ -295,9 +291,7 @@ namespace Carrotware.CMS.UI.Controls {
 						+ "\r\nSite Time:   " + SiteData.CurrentSite.Now.ToString()
 						+ "\r\nUTC Time:   " + DateTime.UtcNow.ToString();
 
-					mailer.Body = sBody;
-
-					mailer.SendMail();
+					EmailHelper.SendMail(null, sEmail, mailSubject, sBody, false);
 				}
 
 				//if (lbl != null && txt1 != null && txt2 != null) {

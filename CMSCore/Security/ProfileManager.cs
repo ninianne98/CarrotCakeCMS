@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
 using System.Web.UI;
+using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.Core {
 
@@ -23,6 +24,10 @@ namespace Carrotware.CMS.Core {
 
 		public void Update() {
 			_profile.Save();
+		}
+
+		private static string CurrentDLLVersion {
+			get { return SiteData.CurrentDLLVersion; }
 		}
 
 		public ProfileManager(string username) {
@@ -45,6 +50,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			if (user != null) {
+				HttpRequest request = HttpContext.Current.Request;
 				Assembly _assembly = Assembly.GetExecutingAssembly();
 
 				string sBody = String.Empty;
@@ -61,40 +67,30 @@ namespace Carrotware.CMS.Core {
 
 				user.ChangePassword(tmpPassword, newPassword); // set to simpler password
 
-				EmailSender mailer = new EmailSender {
-					Recepient = user.Email,
-					MailSubject = "Password Reset",
-					TemplateFile = null,
-					Body = sBody,
-					IsHTML = false,
-					WebControl = theControl
-				};
+				string strHTTPHost = String.Empty;
+				try { strHTTPHost = request.ServerVariables["HTTP_HOST"].ToString().Trim(); } catch { strHTTPHost = String.Empty; }
 
-				string strHTTPHost = "";
-				try { strHTTPHost = HttpContext.Current.Request.ServerVariables["HTTP_HOST"] + ""; } catch { strHTTPHost = ""; }
+				string hostName = strHTTPHost.ToLowerInvariant();
 
-				string strHTTPProto = "http://";
+				string strHTTPPrefix = "http://";
 				try {
-					strHTTPProto = HttpContext.Current.Request.ServerVariables["SERVER_PORT_SECURE"] + "";
-					if (strHTTPProto == "1") {
-						strHTTPProto = "https://";
-					} else {
-						strHTTPProto = "http://";
-					}
-				} catch { }
+					strHTTPPrefix = request.ServerVariables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://";
+				} catch { strHTTPPrefix = "http://"; }
 
-				strHTTPHost = strHTTPProto + strHTTPHost.ToLowerInvariant();
+				strHTTPHost = String.Format("{0}{1}", strHTTPPrefix, strHTTPHost).ToLowerInvariant();
 
-				mailer.ContentPlaceholders.Add("{%%UserName%%}", user.UserName);
-				mailer.ContentPlaceholders.Add("{%%Password%%}", newPassword);
-				mailer.ContentPlaceholders.Add("{%%SiteURL%%}", strHTTPHost);
+				sBody = sBody.Replace("{%%UserName%%}", user.UserName);
+				sBody = sBody.Replace("{%%Password%%}", newPassword);
+				sBody = sBody.Replace("{%%SiteURL%%}", strHTTPHost);
+				sBody = sBody.Replace("{%%Version%%}", CurrentDLLVersion);
+
 				if (SiteData.CurretSiteExists) {
-					mailer.ContentPlaceholders.Add("{%%Time%%}", SiteData.CurrentSite.Now.ToString());
+					sBody = sBody.Replace("{%%Time%%}", SiteData.CurrentSite.Now.ToString());
 				} else {
-					mailer.ContentPlaceholders.Add("{%%Time%%}", DateTime.Now.ToString());
+					sBody = sBody.Replace("{%%Time%%}", DateTime.Now.ToString());
 				}
 
-				mailer.SendMail();
+				EmailHelper.SendMail(null, user.Email, String.Format("Reset Password {0}", hostName), sBody, false);
 
 				return true;
 			} else {
@@ -104,6 +100,7 @@ namespace Carrotware.CMS.Core {
 
 		//create constant strings for each type of characters
 		private static string alphaCaps = "QWERTYUIOPASDFGHJKLZXCVBNM";
+
 		private static string alphaLow = "qwertyuiopasdfghjklzxcvbnm";
 		private static string numerics = "1234567890";
 		private static string special = "@#$";
@@ -111,6 +108,7 @@ namespace Carrotware.CMS.Core {
 
 		//create another string which is a concatenation of all above
 		private static string allChars = alphaCaps + alphaLow + numerics + special;
+
 		private static string specialChars = special + nonalphanum;
 
 		public static string GenerateSimplePassword() {
