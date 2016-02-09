@@ -83,6 +83,7 @@ namespace Carrotware.CMS.Core {
 				sBody = sBody.Replace("{%%Password%%}", newPassword);
 				sBody = sBody.Replace("{%%SiteURL%%}", strHTTPHost);
 				sBody = sBody.Replace("{%%Version%%}", CurrentDLLVersion);
+				sBody = sBody.Replace("{%%AdminFolderPath%%}", String.Format("{0}{1}", strHTTPHost, SiteData.AdminFolderPath));
 
 				if (SiteData.CurretSiteExists) {
 					sBody = sBody.Replace("{%%Time%%}", SiteData.CurrentSite.Now.ToString());

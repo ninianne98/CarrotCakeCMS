@@ -2,9 +2,9 @@
 
 Your password has been reset to: {%%Password%%}
 
-		{%%SiteURL%%}/c3-admin/
+		{%%AdminFolderPath%%}
 
--- CMS Site
+-- CMS Site {%%SiteURL%%}
 
 
 Powered by CarrotCake CMS {%%Version%%}
