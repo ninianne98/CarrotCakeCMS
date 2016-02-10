@@ -312,10 +312,7 @@ namespace Carrotware.CMS.UI.Base {
 					//find each placeholder in use ONCE!
 					List<LabeledControl> lstPlaceholders = (from ph in pageWidgets
 															where ph.Root_ContentID == pageContents.Root_ContentID
-															select new LabeledControl {
-																ControlLabel = ph.PlaceholderName,
-																KeyControl = FindTheControl(ph.PlaceholderName, this.CurrentWebPage)
-															}).Distinct().ToList();
+															select new LabeledControl(ph.PlaceholderName, FindTheControl(ph.PlaceholderName, this.CurrentWebPage))).Distinct().ToList();
 
 					List<Widget> lstWidget = null;
 
@@ -474,9 +471,9 @@ namespace Carrotware.CMS.UI.Base {
 			return sPageTitle;
 		}
 
-		public void MarkWidgets(Control X, bool bAdmin) {
+		public void MarkWidgets(Control control, bool bAdmin) {
 			//add the command click event to the link buttons on the datagrid heading
-			foreach (Control c in X.Controls) {
+			foreach (Control c in control.Controls) {
 				if (c is WidgetContainer) {
 					WidgetContainer ph = (WidgetContainer)c;
 					ph.IsAdminMode = bAdmin;
@@ -517,13 +514,13 @@ namespace Carrotware.CMS.UI.Base {
 		private bool bFound = false;
 		private WidgetContainer widgetCtrl = new WidgetContainer();
 
-		protected WidgetContainer FindTheControl(string ControlName, Control X) {
-			if (X is Page) {
+		protected WidgetContainer FindTheControl(string ControlName, Control control) {
+			if (control is Page) {
 				bFound = false;
 				widgetCtrl = new WidgetContainer();
 			}
 
-			foreach (Control c in X.Controls) {
+			foreach (Control c in control.Controls) {
 				if (c.ID == ControlName && c is WidgetContainer) {
 					bFound = true;
 					widgetCtrl = (WidgetContainer)c;
@@ -539,16 +536,16 @@ namespace Carrotware.CMS.UI.Base {
 
 		private List<HtmlMeta> lstHtmlMeta = new List<HtmlMeta>();
 
-		protected List<HtmlMeta> GetHtmlMeta(Control X) {
+		protected List<HtmlMeta> GetHtmlMeta(Control control) {
 			lstHtmlMeta = new List<HtmlMeta>();
 
-			FindHtmlMeta(X);
+			FindHtmlMeta(control);
 
 			return lstHtmlMeta;
 		}
 
-		protected void FindHtmlMeta(Control X) {
-			foreach (Control c in X.Controls) {
+		protected void FindHtmlMeta(Control control) {
+			foreach (Control c in control.Controls) {
 				if (c is HtmlMeta) {
 					lstHtmlMeta.Add((HtmlMeta)c);
 				} else {

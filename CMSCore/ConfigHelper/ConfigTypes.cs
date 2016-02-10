@@ -19,7 +19,7 @@ namespace Carrotware.CMS.Core {
 	public class CMSAdminModule {
 
 		public CMSAdminModule() {
-			PluginMenus = new List<CMSAdminModuleMenu>();
+			this.PluginMenus = new List<CMSAdminModuleMenu>();
 		}
 
 		public Guid PluginID { get; set; }
@@ -29,6 +29,9 @@ namespace Carrotware.CMS.Core {
 
 	[Serializable()]
 	public class CMSAdminModuleMenu {
+
+		public CMSAdminModuleMenu() { }
+
 		public Guid PluginID { get; set; }
 		public int SortOrder { get; set; }
 		public string Caption { get; set; }
@@ -53,6 +56,9 @@ namespace Carrotware.CMS.Core {
 
 	[Serializable()]
 	public class CMSTemplate {
+
+		public CMSTemplate() { }
+
 		public string TemplatePath { get; set; }
 		public string Caption { get; set; }
 		public string EncodedPath { get; set; }
@@ -60,12 +66,18 @@ namespace Carrotware.CMS.Core {
 
 	[Serializable()]
 	public class CMSTextWidget {
+
+		public CMSTextWidget() { }
+
 		public string AssemblyString { get; set; }
 		public string DisplayName { get; set; }
 	}
 
 	[Serializable()]
 	public class CMSTextWidgetPicker {
+
+		public CMSTextWidgetPicker() { }
+
 		public Guid TextWidgetPickerID { get; set; }
 		public string AssemblyString { get; set; }
 		public string DisplayName { get; set; }
@@ -78,6 +90,9 @@ namespace Carrotware.CMS.Core {
 
 	[Serializable()]
 	public class DynamicSite {
+
+		public DynamicSite() { }
+
 		public Guid SiteID { get; set; }
 		public string DomainName { get; set; }
 	}
@@ -92,18 +107,15 @@ namespace Carrotware.CMS.Core {
 			this.TemplateFile = null;
 		}
 
-		public CMSFilePath(string fileName) {
-			this.DateChecked = DateTime.UtcNow;
+		public CMSFilePath(string fileName)
+			: this() {
 			this.TemplateFile = fileName.ToLowerInvariant();
-			this.SiteID = Guid.Empty;
 			this.FileExists = File.Exists(HttpContext.Current.Server.MapPath(this.TemplateFile));
 		}
 
-		public CMSFilePath(string fileName, Guid siteID) {
-			this.DateChecked = DateTime.UtcNow;
-			this.TemplateFile = fileName.ToLowerInvariant();
+		public CMSFilePath(string fileName, Guid siteID)
+			: this(fileName) {
 			this.SiteID = siteID;
-			this.FileExists = File.Exists(HttpContext.Current.Server.MapPath(this.TemplateFile));
 		}
 
 		public DateTime DateChecked { get; set; }
@@ -113,7 +125,7 @@ namespace Carrotware.CMS.Core {
 
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
-			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj == null || this.GetType() != obj.GetType()) return false;
 			if (obj is CMSFilePath) {
 				CMSFilePath p = (CMSFilePath)obj;
 				return (this.TemplateFile.ToLowerInvariant() == p.TemplateFile.ToLowerInvariant())
@@ -124,7 +136,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public override int GetHashCode() {
-			return TemplateFile.ToLowerInvariant().GetHashCode() ^ SiteID.GetHashCode();
+			return this.TemplateFile.ToLowerInvariant().GetHashCode() ^ this.SiteID.GetHashCode();
 		}
 	}
 }

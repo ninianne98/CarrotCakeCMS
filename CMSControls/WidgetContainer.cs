@@ -77,8 +77,7 @@ namespace Carrotware.CMS.UI.Controls {
 			wrapper.Order = widgetData.WidgetOrder;
 			wrapper.DatabaseKey = widgetData.Root_WidgetID;
 
-			wrapper.Controls.Add(widget);
-			this.Controls.Add(wrapper);
+			AddWidget(widget, wrapper);
 
 			return wrapper;
 		}

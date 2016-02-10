@@ -15,24 +15,35 @@ namespace Carrotware.CMS.Core {
 
 	public class LabeledControl {
 
-		public LabeledControl() { }
+		public LabeledControl() {
+			this.ControlLabel = String.Empty;
+			this.KeyControl = null;
+		}
+
+		public LabeledControl(string controlLabel, Control keyControl)
+			: this() {
+			this.ControlLabel = controlLabel;
+			this.KeyControl = keyControl;
+		}
 
 		public string ControlLabel { get; set; }
+
 		public Control KeyControl { get; set; }
 
+		//===============
 		public override bool Equals(Object obj) {
 			//Check for null and compare run-time types.
-			if (obj == null || GetType() != obj.GetType()) return false;
+			if (obj == null || this.GetType() != obj.GetType()) return false;
 			if (obj is LabeledControl) {
 				LabeledControl p = (LabeledControl)obj;
-				return (ControlLabel.ToLowerInvariant() == p.ControlLabel.ToLowerInvariant());
+				return (this.ControlLabel.ToLowerInvariant() == p.ControlLabel.ToLowerInvariant());
 			} else {
 				return false;
 			}
 		}
 
 		public override int GetHashCode() {
-			return ControlLabel.GetHashCode() ^ KeyControl.GetHashCode();
+			return this.ControlLabel.GetHashCode() ^ this.KeyControl.GetHashCode();
 		}
 	}
 }
