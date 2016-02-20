@@ -81,8 +81,7 @@
 						<p>
 							<asp:Literal ID="litCMSBuildInfo" runat="server" />
 							<a href="javascript:ShowAbout()">
-								<img class="imgNoBorder" src="/c3-admin/Images/information.png" alt="information" title="information" />
-							</a>
+								<img class="imgNoBorder" src="/c3-admin/Images/information.png" alt="information" title="information" /></a>
 						</p>
 						<p>
 							Database Status <a href="<%= SiteFilename.DatabaseSetupURL %>">

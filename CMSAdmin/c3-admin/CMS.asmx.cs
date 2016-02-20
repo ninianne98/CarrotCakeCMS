@@ -170,6 +170,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
+		[WebMethod]
+		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+		public string GetSiteAdminFolder() {
+			return SiteData.AdminFolderPath;
+		}
+
 		private string CurrentEditPage = String.Empty;
 
 		[WebMethod]
