@@ -13,7 +13,7 @@ Source code for CarrotCakeCMS
 
 Welcome to the GitHub project for CarrotCake CMS, an open source c# project. CarrotCake is a [template-based][TMPLT] ASP.Net CMS (content management system) built with C#, SQL server, jQueryUI, and TinyMCE. This content management system supports multi-tenant webroots with shared databases and works well in medium trust. 
 
-Source code and documentation is available on [Microsoft CodePlex][REPO_CX], [SourceForge][REPO_SF], and [GitHub][REPO_GH]. Documentation and assemblies can be found [here][DOC].
+Source code and documentation is available on [GitHub][REPO_GH], [SourceForge][REPO_SF], and [Microsoft CodePlex][REPO_CX]. Documentation and assemblies can be found [here][DOC].
 
 Some features include: blogging engine, configurable date based blog post URLs, blog post content association with categories and tags, assignment/customization of category and tag URL patterns, simple content feedback collection and review, blog post pagination/indexes (with templating support), designation of default blog page (required to make search, category links, or tag links function), URL date formatting patterns, RSS feed support for posts and pages, import and export of site content, and import of content from WordPress XML export files (tested against versions 2.9, 3.0, 3.4, and 3.5).
 
