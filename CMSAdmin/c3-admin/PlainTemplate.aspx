@@ -15,6 +15,10 @@
 			PagedDataSummary2.PageSize = 3;
 			PagedDataSummary2.ContentType = PagedDataSummary.SummaryContentType.Unknown;
 		}
+
+		if (ThePage.ContentType != ContentPageType.PageType.BlogEntry) {
+			phMeta.Visible = false;
+		}
 	}
 </script>
 <!DOCTYPE html>
@@ -76,9 +80,9 @@
 			margin: 0 auto;
 			padding: 0;
 		}
-
+		
 		/* Header */
-
+		
 		#header {
 			clear: both;
 			width: 980px;
@@ -86,18 +90,18 @@
 			margin: 0 auto;
 			padding: 0px;
 		}
-
+		
 		/* Menu */
-
+		
 		#menu {
 			width: 940px;
 			margin: 0 auto;
 			padding: 0;
 			padding-bottom: 10px;
 		}
-
+		
 		/* Page */
-
+		
 		#page {
 			width: 940px;
 			margin: 0 auto;
@@ -106,9 +110,9 @@
 		#page-bgtop {
 			padding: 10px 0px;
 		}
-
+		
 		/* Content */
-
+		
 		#content {
 			float: right;
 			width: 580px;
@@ -147,9 +151,9 @@
 			font-size: 12px;
 			font-weight: bold;
 		}
-
+		
 		/* Sidebar */
-
+		
 		#sidebar {
 			float: left;
 			width: 280px;
@@ -194,9 +198,9 @@
 			text-decoration: underline;
 			color: #8A8A8A;
 		}
-
+		
 		/* Footer */
-
+		
 		#footer {
 			height: 50px;
 			margin: 0 auto;
@@ -217,20 +221,20 @@
 		#footer a {
 			color: #8A8A8A;
 		}
-
+		
 		/* OTHER */
-
+		
 		.aligncenter, div.aligncenter {
 			display: block;
 			margin-left: auto;
 			margin-right: auto;
 		}
-
+		
 		.pagerfooterlinks {
 			line-height: normal;
 			color: #ffffff;
 		}
-
+		
 		.pagerfooterlinks .pagerlink {
 			margin: 2px 2px 2px 2px;
 			padding: 5px 5px 5px 5px;
@@ -238,19 +242,19 @@
 			background-color: #cccccc;
 			float: left;
 		}
-
+		
 		.pagerfooterlinks .pagerlink a {
 			margin: 2px 2px 2px 2px;
 			padding: 5px 5px 5px 5px;
 			font-weight: bold;
 			color: #666666;
 		}
-
+		
 		.pagerfooterlinks .pagerlink a.selected {
 			color: #ffffff;
 			font-weight: bold;
 		}
-
+		
 		.pagerfooterlinks .selectedwrap {
 			color: #ffffff;
 			background-color: #333333;
@@ -270,8 +274,8 @@
 			<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
 		</p>
 		<div id="menu">
-			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff" SubBGColor="#787878"
-				SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
+			<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff"
+				SubBGColor="#787878" SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
 		</div>
 		<div style="clear: both;">
 		</div>
@@ -315,6 +319,14 @@
 							<div class="entry">
 								<carrot:WidgetContainer ID="phCenterTop" runat="server" />
 								<carrot:ContentContainer EnableViewState="false" ID="BodyCenter" runat="server" />
+								<asp:PlaceHolder ID="phMeta" runat="server">
+									<div>
+										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl1" runat="server" ContentType="Category"
+											MetaDataTitle="Categories:" />
+										<br />
+										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl2" runat="server" ContentType="Tag" MetaDataTitle="Tags:" />
+									</div>
+								</asp:PlaceHolder>
 								<carrot:WidgetContainer ID="phCenterBottom" runat="server" />
 							</div>
 							<div style="clear: both;">
@@ -338,7 +350,8 @@
 										<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="PageTextPlainSummary" />
 									</p>
 									<p>
-										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category" MetaDataTitle="Categories:" />
+										<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category"
+											MetaDataTitle="Categories:" />
 									</p>
 								</div>
 							</ContentTemplate>

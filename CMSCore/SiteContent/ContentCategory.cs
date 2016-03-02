@@ -49,10 +49,16 @@ namespace Carrotware.CMS.Core {
 			if (c != null) {
 				this.ContentCategoryID = c.ContentCategoryID;
 				this.SiteID = c.SiteID;
-				this.CategorySlug = c.CategorySlug;
+				this.CategorySlug = ContentPageHelper.ScrubSlug(c.CategorySlug);
 				this.CategoryText = c.CategoryText;
 				this.UseCount = c.UseCount;
+				this.PublicUseCount = 1;
 				this.IsPublic = c.IsPublic;
+
+				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
+				if (site != null) {
+					this.CategoryURL = ContentPageHelper.ScrubFilename(c.ContentCategoryID, String.Format("/{0}/{1}.aspx", site.BlogCategoryPath, c.CategorySlug.Trim()));
+				}
 			}
 		}
 
@@ -62,7 +68,7 @@ namespace Carrotware.CMS.Core {
 
 				this.ContentCategoryID = c.ContentCategoryID;
 				this.SiteID = c.SiteID;
-				this.CategoryURL = c.CategoryUrl;
+				this.CategoryURL = ContentPageHelper.ScrubFilename(c.ContentCategoryID, c.CategoryUrl);
 				this.CategoryText = c.CategoryText;
 				this.UseCount = c.UseCount;
 				this.PublicUseCount = c.PublicUseCount;
@@ -78,9 +84,16 @@ namespace Carrotware.CMS.Core {
 			if (c != null) {
 				this.ContentCategoryID = c.ContentCategoryID;
 				this.SiteID = c.SiteID;
-				this.CategorySlug = c.CategorySlug;
+				this.CategorySlug = ContentPageHelper.ScrubSlug(c.CategorySlug);
 				this.CategoryText = c.CategoryText;
 				this.IsPublic = c.IsPublic;
+				this.UseCount = 1;
+				this.PublicUseCount = 1;
+
+				SiteData site = SiteData.GetSiteFromCache(c.SiteID);
+				if (site != null) {
+					this.CategoryURL = ContentPageHelper.ScrubFilename(c.ContentCategoryID, String.Format("/{0}/{1}.aspx", site.BlogCategoryPath, c.CategorySlug.Trim()));
+				}
 			}
 		}
 
@@ -130,7 +143,7 @@ namespace Carrotware.CMS.Core {
 			List<ContentCategory> _types = null;
 
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				IQueryable<vw_carrot_CategoryURL> query = CompiledQueries.cqGetContentCategoryByContentID(_db, rootContentID);
+				IQueryable<carrot_ContentCategory> query = CompiledQueries.cqGetContentCategoryByContentID(_db, rootContentID);
 
 				_types = (from d in query.ToList()
 						  select new ContentCategory(d)).ToList();

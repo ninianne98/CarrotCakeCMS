@@ -335,7 +335,7 @@ namespace Carrotware.CMS.Core {
 		public static Guid CurrentUserGuid {
 			get {
 				Guid _currentUserGuid = Guid.Empty;
-				if (SiteData.IsWebView && IsAuthenticated) {
+				if (SiteData.IsWebView && CurrentUser != null && IsAuthenticated) {
 					_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
 				}
 				return _currentUserGuid;

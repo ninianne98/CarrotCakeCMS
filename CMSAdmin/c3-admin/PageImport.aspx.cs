@@ -41,6 +41,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						|| sTest.Contains("<contentpageexport xmlns:xsd=\"http://www.w3.org/2001/xmlschema\" xmlns:xsi=\"http://www.w3.org/2001/xmlschema-instance\">")) {
 						ContentPageExport cph = ContentImportExportUtils.DeserializeContentPageExport(sXML);
 						ContentImportExportUtils.AssignContentPageExportNewIDs(cph);
+						ContentImportExportUtils.MapSiteCategoryTags(cph);
 						ContentImportExportUtils.SaveSerializedDataExport<ContentPageExport>(cph.NewRootContentID, cph);
 
 						if (cph.ThePage.ContentType == ContentPageType.PageType.ContentEntry) {
@@ -85,6 +86,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				lblWarning.Attributes["style"] = "color: #990000;";
 			}
 		}
-
 	}
 }
