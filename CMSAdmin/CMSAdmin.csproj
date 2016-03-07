@@ -1394,11 +1394,26 @@
     <None Include="c3-admin\iCheck\customized\grey-alt2%402x.pdn" />
     <None Include="c3-admin\iCheck\customized\grey-alt3%402x.pdn" />
     <None Include="c3-admin\iCheck\customized\grey-alt4%402x.pdn" />
+    <None Include="c3-admin\Includes\C3SiteConfigSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="c3-admin\Includes\C3TemplateSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="citrus-island\citrus-island-orig.zip" />
     <Content Include="TextContentProcessors.config" />
+    <None Include="c3-admin\Includes\C3WidgetAdminSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="c3-admin\Includes\C3WidgetPublicSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="c3-admin\Includes\C3WidgetTextSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="c3-admin\tiny_mce\classes\firebug\FIREBUG.LICENSE" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

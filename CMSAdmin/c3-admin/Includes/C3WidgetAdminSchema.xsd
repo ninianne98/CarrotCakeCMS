@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CarrotCakeAdminWidgetSchema"
+					elementFormDefault="qualified"
+					 attributeFormDefault="unqualified"
+					targetNamespace="urn:schema-carrotcakecms-com:widget-admin"
+					xmlns="urn:schema-carrotcakecms-com:widget-admin"
+					xmlns:mstns="urn:schema-carrotcakecms-com:widget-admin"
+					xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:vs="http://schemas.microsoft.com/Visual-Studio-Intellisense">
+
+	<xs:simpleType name="guid">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="tbls">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pluginlist">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="pluginid" type="guid"></xs:element>
+							<xs:element name="caption" type="xs:string"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="plugincontrols" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="pluginid" type="guid"></xs:element>
+							<xs:element name="menuorder" type="xs:int"></xs:element>
+							<xs:element name="parm" type="xs:string"></xs:element>
+							<xs:element name="pluginlabel" type="xs:string"></xs:element>
+							<xs:element name="plugincontrol" type="xs:string"></xs:element>
+							<xs:element name="visible" type="xs:boolean"></xs:element>
+							<xs:element name="useajax" type="xs:boolean"></xs:element>
+							<xs:element name="usepopup" type="xs:boolean"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
