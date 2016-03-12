@@ -117,6 +117,10 @@ namespace Carrotware.CMS.UI.Controls {
 							usr = cp.GetUserInfo();
 						}
 
+						if (usr == null) {
+							usr = cp.BylineUser;
+						}
+
 						if (usr != null) {
 							object objData = ReflectionUtilities.GetPropertyValue(usr, sField);
 							if (objData != null) {

@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			if (usr == null) {
 				ContentPage cp = cu.GetContainerContentPage(this);
-				usr = cp.GetUserInfo();
+				usr = cp.BylineUser;
 			}
 
 			AssignUser();
@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (contentData is ISiteContent) {
 				ISiteContent content = (ISiteContent)(contentData);
 
-				usr = content.GetUserInfo();
+				usr = content.BylineUser;
 
 				AssignUser();
 			}
@@ -97,7 +97,9 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public enum AuthorSource {
+			Default,
 			Editor,
+			Created,
 			Credited
 		}
 
@@ -158,10 +160,23 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 			if (_usr == null) {
 				ContentPage cp = cu.GetContainerContentPage(this);
-				if (this.SourceField == AuthorSource.Editor) {
-					_usr = cp.GetUserInfo();
-				} else {
-					_usr = cp.GetCreditUserInfo();
+
+				switch (this.SourceField) {
+					case AuthorSource.Editor:
+						_usr = cp.GetUserInfo();
+						break;
+
+					case AuthorSource.Created:
+						_usr = cp.GetCreateUserInfo();
+						break;
+
+					case AuthorSource.Credited:
+						_usr = cp.GetCreditUserInfo();
+						break;
+
+					default:
+						_usr = cp.BylineUser;
+						break;
 				}
 			}
 
@@ -171,7 +186,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void AssignUser() {
-			string sFieldValue = string.Empty;
+			string sFieldValue = String.Empty;
 
 			if (_usr != null) {
 				object objData = ReflectionUtilities.GetPropertyValue(_usr, DataField.ToString());
@@ -191,7 +206,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (contentData is ISiteContent) {
 				ISiteContent content = (ISiteContent)(contentData);
 
-				_usr = content.GetUserInfo();
+				_usr = content.BylineUser;
 
 				AssignUser();
 			}

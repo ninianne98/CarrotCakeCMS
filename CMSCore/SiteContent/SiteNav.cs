@@ -211,19 +211,64 @@ namespace Carrotware.CMS.Core {
 		private ExtendedUserData _user = null;
 
 		public ExtendedUserData GetUserInfo() {
-			if (_user == null && this.EditUserId.HasValue) {
-				_user = new ExtendedUserData(this.EditUserId.Value);
+			return this.EditUser;
+		}
+
+		public ExtendedUserData EditUser {
+			get {
+				if (_user == null && this.EditUserId.HasValue) {
+					_user = new ExtendedUserData(this.EditUserId.Value);
+				}
+				return _user;
 			}
-			return _user;
+		}
+
+		private ExtendedUserData _crUser = null;
+
+		public ExtendedUserData GetCreateUserInfo() {
+			return this.CreateUser;
+		}
+
+		public ExtendedUserData CreateUser {
+			get {
+				if (_crUser == null) {
+					_crUser = new ExtendedUserData(this.CreateUserId);
+				}
+				return _crUser;
+			}
 		}
 
 		private ExtendedUserData _creditUser = null;
 
 		public ExtendedUserData GetCreditUserInfo() {
-			if (_creditUser == null && this.CreditUserId.HasValue) {
-				_creditUser = new ExtendedUserData(this.CreditUserId.Value);
+			return this.CreditUser;
+		}
+
+		public ExtendedUserData CreditUser {
+			get {
+				if (_creditUser == null && this.CreditUserId.HasValue) {
+					_creditUser = new ExtendedUserData(this.CreditUserId.Value);
+				}
+				return _creditUser;
 			}
-			return _creditUser;
+		}
+
+		private ExtendedUserData _bylineUser = null;
+
+		public ExtendedUserData BylineUser {
+			get {
+				if (_bylineUser == null) {
+					_bylineUser = this.CreditUser;
+				}
+				if (_bylineUser == null) {
+					_bylineUser = this.EditUser;
+				}
+				if (_bylineUser == null) {
+					_bylineUser = this.CreateUser;
+				}
+
+				return _bylineUser;
+			}
 		}
 
 		public override bool Equals(Object obj) {
