@@ -1,0 +1,156 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericMasterPage" %>
+
+<!DOCTYPE HTML>
+<!--
+	Aqueous by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+
+	Conversion to CarrotCake CMS Template: Carrotware
+-->
+<html>
+<head id="Head1" runat="server">
+	<title>Aqueous by TEMPLATED</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="Blue" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700italic,400,300,700' rel='stylesheet' type='text/css'>
+	<asp:PlaceHolder ID="myHeaderStuff" runat="server">
+		<!--[if lte IE 8]><script type="text/javascript" src="<%=ThePage.TemplateFolderPath %>js/html5shiv.js"></script><![endif]-->
+		<script type="text/javascript" src="<%=ThePage.TemplateFolderPath %>js/jquery.dropotron.min.js"></script>
+		<script type="text/javascript" src="<%=ThePage.TemplateFolderPath %>js/skel.min.js"></script>
+		<script type="text/javascript" src="<%=ThePage.TemplateFolderPath %>js/skel-panels.min.js"></script>
+		<script type="text/javascript" src="<%=ThePage.TemplateFolderPath %>js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" runat="server" href="css/skel-noscript.css" />
+			<link rel="stylesheet" runat="server" href="css/style.css" />
+			<link rel="stylesheet" runat="server" href="css/style-desktop.css" />
+		</noscript>
+		<script type="text/javascript">
+
+			$(document).ready(function () {
+
+				$("input:button, input:submit, input:reset, button").button();
+
+				$("#sidebar .sidebar").each(function () {
+					$(this).find("h2:first").wrapAll('<header></header>');
+					$(this).find("li:first").addClass('first');
+				});
+
+				$(".cal-lst li:first").addClass('first');
+
+				setTimeout("moveCMSZone();", 1250);
+
+				// Dropdowns.
+				$('#nav > ul').dropotron({
+					mode: 'fade',
+					speed: 300,
+					alignment: 'center',
+					noOpenerFade: true
+				});
+
+			});
+
+			var cmsHasMoved = false;
+
+			function moveCMSZone() {
+				if (!cmsHasMoved) {
+					$(document.body).append($('.cmsNavigationBlock').detach());
+					$(document.body).append($('.cmsMainAdvControls').detach());
+					cmsHasMoved = true;
+				}
+			}
+
+			function setBodyCSS(bodyCSS) {
+				var b = $('body');
+				b.addClass(bodyCSS);
+			}
+		</script>
+	</asp:PlaceHolder>
+	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
+	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
+	<carrot:OpenGraph runat="server" ID="OpenGraph1" />
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+	</asp:ContentPlaceHolder>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<!-- Header -->
+	<div id="header-wrapper">
+		<div id="header">
+			<div class="container">
+				<div id="logo">
+					<!-- Logo -->
+					<h1>
+						<a href="/">
+							<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a></h1>
+					<span>
+						<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" /></span>
+				</div>
+			</div>
+			<div id="menu-wrapper">
+				<div class="container">
+					<nav id="nav">
+						<%--<carrot:TopLevelNavigation runat="server" ID="TopLevelNavigation1" CSSSelected="active" />--%>
+						<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" CSSSelected="current" WrapList="false" AutoStylingDisabled="true" />
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Header -->
+	<!-- Main -->
+	<div id="main-wrapper">
+		<asp:ContentPlaceHolder ID="BannerBodyContentPlaceHolder" runat="server">
+		</asp:ContentPlaceHolder>
+		<div class="container">
+			<div id="main">
+				<div class="row">
+					<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+					</asp:ContentPlaceHolder>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Main -->
+	<!-- Footer -->
+	<div class="container">
+		<div id="footer">
+			<div class="row">
+				<carrot:PagedDataSummary ID="PagedDataSummary1" HideSpanWrapper="true" runat="server" ContentType="Blog" PageSize="3" ShowPager="false"
+					IgnoreSitePath="true">
+					<ContentTemplate>
+						<section class="4u">
+							<header>
+								<h2>
+									<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="NavMenuText" />
+									<carrot:ListItemNavText runat="server" ID="ListItemNavText2" DataField="GoLiveDate" FieldFormat=" | {0:d} " />
+								</h2>
+							</header>
+							<p>
+								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="PageTextPlainSummary" />
+								<br style="clear: both" />
+								<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" CssClassNormal="button small" LinkText="Read more" />
+								<br style="clear: both" />
+							</p>
+						</section>
+					</ContentTemplate>
+				</carrot:PagedDataSummary>
+			</div>
+		</div>
+	</div>
+	<!-- /Footer -->
+	<!-- Copyright -->
+	<asp:PlaceHolder ID="myFooter" runat="server">
+		<div id="copyright">
+			<div class="container">
+				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %><br />
+				Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)<br />
+				Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms">carrotcake cms</a>
+			</div>
+		</div>
+	</asp:PlaceHolder>
+	</form>
+</body>
+</html>
