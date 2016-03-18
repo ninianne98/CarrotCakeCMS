@@ -35,8 +35,7 @@
 	</div>
 	<!-- Sidebar -->
 	<div id="sidebar" class="4u">
-		<carrot:PagedDataSummary ID="PagedDataSummary2" HideSpanWrapper="true" runat="server" ContentType="Blog" PageSize="5" ShowPager="false"
-			IgnoreSitePath="true">
+		<carrot:PagedDataSummary ID="PagedDataSummary2" HideSpanWrapper="true" runat="server" ContentType="Blog" PageSize="5" ShowPager="false" IgnoreSitePath="true">
 			<ContentHeaderTemplate>
 				<ul class="style1 cal-lst">
 			</ContentHeaderTemplate>

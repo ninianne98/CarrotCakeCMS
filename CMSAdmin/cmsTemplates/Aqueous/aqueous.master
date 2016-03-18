@@ -118,8 +118,7 @@
 	<div class="container">
 		<div id="footer">
 			<div class="row">
-				<carrot:PagedDataSummary ID="PagedDataSummary1" HideSpanWrapper="true" runat="server" ContentType="Blog" PageSize="3" ShowPager="false"
-					IgnoreSitePath="true">
+				<carrot:PagedDataSummary ID="PagedDataSummary1" HideSpanWrapper="true" runat="server" ContentType="Blog" PageSize="3" ShowPager="false" IgnoreSitePath="true">
 					<ContentTemplate>
 						<section class="4u">
 							<header>
