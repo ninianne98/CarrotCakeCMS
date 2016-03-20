@@ -1,9 +1,9 @@
 /********************************************
-	AUTHOR:				Erwin Aligam 
+	AUTHOR:				Erwin Aligam
 	WEBSITE:			http://www.styleshout.com/
 	TEMPLATE NAME:		Citrus Island
 	TEMPLATE CODE:		S-0004
-	VERSION:			1.1          	
+	VERSION:			1.1
  *******************************************/
 
 /********************************************
@@ -165,7 +165,7 @@ input.button {
 }
 
 /**************************************
-   LAYOUT 
+   LAYOUT
 ***************************************/
 #wrap {
 	margin: 0 auto;
@@ -398,7 +398,6 @@ input.button {
 	padding: 5px;
 }
 
-
 .inputform p, .padding10 {
 	padding: 10px;
 	clear: both;
@@ -433,7 +432,6 @@ img.rssimage, .rssimage img {
 .rsszone {
 	padding-left: 60px;
 }
-
 
 /*
 comments
@@ -487,5 +485,3 @@ comments
 	padding: 7px;
 	position: relative;
 }
-
-

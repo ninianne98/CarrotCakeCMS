@@ -35,8 +35,8 @@ Conversion to CarrotCake CMS Template: Carrotware
 	<div id="wrapper">
 		<div id="header">
 			<div id="menu-wrapper">
-				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="14px" ForeColor="#FFFFFF" SelBGColor="#9D0708" HoverBGColor="#D4260B"
-					SubBGColor="#8E1318" />
+				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="14px" ForeColor="#FFFFFF" SelBGColor="#9D0708"
+					HoverBGColor="#D4260B" SubBGColor="#8E1318" />
 			</div>
 			<!-- end #menu -->
 		</div>

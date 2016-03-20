@@ -54,8 +54,10 @@ Conversion to CarrotCake CMS Template: Carrotware
 		<div style="clear: both;">
 		</div>
 		<div id="sidebar">
-			<carrot:ChildNavigation MetaDataTitle="Child Pages" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="ChildNavigation1" />
-			<carrot:SiblingNavigation MetaDataTitle="In This Section" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server" ID="SiblingNavigation1" />
+			<carrot:ChildNavigation MetaDataTitle="Child Pages" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server"
+				ID="ChildNavigation1" />
+			<carrot:SiblingNavigation MetaDataTitle="In This Section" HeadWrapTag="h1" CssClass="sidemenu" CSSSelected="active" runat="server"
+				ID="SiblingNavigation1" />
 			<carrot:WidgetContainer ID="phLeftTop" runat="server" />
 			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" TextZone="TextLeft" runat="server" />
 			<carrot:WidgetContainer ID="phLeftBottom" runat="server" />
