@@ -82,7 +82,9 @@ function cmsShiftPosition(p) {
 	}
 }
 
-setTimeout("cmsResetToolbarScroll()", 500);
+$(document).ready(function () {
+	setTimeout("cmsResetToolbarScroll()", 1250);
+});
 
 var cmsToolTabIdx = 0;
 var cmsScrollPos = 0;
@@ -106,6 +108,11 @@ function cmsResetToolbarScroll() {
 
 	$(document).scrollTop(cmsScrollPos);
 	$('#cmsToolBox').scrollTop(cmsScrollWPos);
+
+	setTimeout(function () {
+		$(document).scrollTop(cmsScrollPos);
+		$('#cmsToolBox').scrollTop(cmsScrollWPos);
+	}, 250);
 }
 
 function cmsMenuFixImages() {
