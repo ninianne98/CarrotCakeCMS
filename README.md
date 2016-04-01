@@ -1,6 +1,7 @@
 # CarrotCakeCMS
 Source code for CarrotCakeCMS
 
+[SITE_CT]: http://www.carrotware.com/contact
 [REPO_SF]: http://sourceforge.net/projects/carrotcakecms/
 [REPO_GH]: https://github.com/ninianne98/CarrotCakeCMS/
 [REPO_CX]: http://carrotcakecms.codeplex.com/
@@ -14,6 +15,8 @@ Source code for CarrotCakeCMS
 [SQL]: https://www.microsoft.com/en-us/download/details.aspx?id=22973
 
 Welcome to the GitHub project for CarrotCake CMS, an open source c# project. CarrotCake is a [template-based][TMPLT] ASP.Net CMS (content management system) built with C#, SQL server, jQueryUI, and TinyMCE. This content management system supports multi-tenant webroots with shared databases and works well in medium trust. 
+
+## If you have found this tool useful please [contact us][SITE_CT].
 
 Source code and [documentation][DOC_PDF] is available on [GitHub][REPO_GH], [SourceForge][REPO_SF], and [Microsoft CodePlex][REPO_CX]. Documentation and assemblies can be found [here][DOC]. Interactive help can be found through the [Google Community][GP_COMM].
 
