@@ -1,7 +1,7 @@
 # CarrotCakeCMS
 Source code for CarrotCakeCMS
 
-[SITE_CT]: http://www.carrotware.com/contact
+[SITE_CT]: http://www.carrotware.com/contact?from=github
 [REPO_SF]: http://sourceforge.net/projects/carrotcakecms/
 [REPO_GH]: https://github.com/ninianne98/CarrotCakeCMS/
 [REPO_CX]: http://carrotcakecms.codeplex.com/
