@@ -196,7 +196,9 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 				WriteListSuffix(output);
 			} else {
+#if DEBUG
 				output.WriteLine("<span style=\"display: none;\" id=\"" + this.ClientID + "\"></span>");
+#endif
 			}
 
 			output.Indent = indent;

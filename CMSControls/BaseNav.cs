@@ -41,7 +41,9 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 				output.Indent--;
 			} else {
+#if DEBUG
 				output.WriteLine("<span style=\"display: none;\" id=\"" + this.HtmlClientID + "\"></span>");
+#endif
 			}
 
 			WriteListSuffix(output);

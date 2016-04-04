@@ -59,8 +59,12 @@ namespace Carrotware.CMS.UI.Controls {
 					ctrl1 = GetCtrl("ucAdminWidgetContainer1", this);
 					ctrl2 = GetCtrl("ucAdminWidgetContainer2", this);
 				} else {
+					ctrl1 = new Literal { Text = "\r\n" };
+					ctrl2 = new Literal { Text = "\r\n" };
+#if DEBUG
 					ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
 					ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
+#endif
 				}
 			}
 		}

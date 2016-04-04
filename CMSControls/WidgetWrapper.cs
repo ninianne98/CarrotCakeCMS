@@ -200,8 +200,12 @@ namespace Carrotware.CMS.UI.Controls {
 						hist.Visible = false;
 					}
 				} else {
+					ctrl1 = new Literal { Text = "\r\n" };
+					ctrl2 = new Literal { Text = "\r\n" };
+#if DEBUG
 					ctrl1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
 					ctrl2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
+#endif
 				}
 			}
 		}

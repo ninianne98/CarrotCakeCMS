@@ -159,9 +159,13 @@ namespace Carrotware.CMS.UI.Controls {
 				Literal lit = (Literal)cu.FindControl("litContent", ctrl);
 				lit.Text = outputText;
 			} else {
-				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" });
-				ctrl.Controls.Add(new Literal { Text = outputText });
+#if DEBUG
+				ctrl.Controls.Add(new Literal { Text = "\r\n<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>" });
+#endif
+				ctrl.Controls.Add(new Literal { Text = String.Format("\r\n {0} \r\n", outputText) });
+#if DEBUG
 				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
+#endif
 			}
 
 			ctrl.RenderControl(writer);
