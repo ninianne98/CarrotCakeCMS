@@ -42,7 +42,7 @@
 
 				var theTitle = $(tTitle).val();
 				var theFile = $(tValidFile).val();
-				var sGoLiveDate = '<%=SiteData.CurrentSite.Now.ToShortDateString() %>';
+				var sGoLiveDate = '<%=SiteData.CurrentSite.Now.ToString(Helper.ShortDatePattern) %>';
 
 				if (theTitle.length > 0) {
 

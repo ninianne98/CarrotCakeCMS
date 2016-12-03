@@ -21,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentHistory);
 
 			if (!IsPostBack) {
-				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
+				txtDate.Text = SiteData.CurrentSite.Now.ToString(Helper.ShortDatePattern);
 				ddlSize.SelectedValue = pagedDataGrid.PageSize.ToString();
 
 				GeneralUtilities.BindListDefaultText(ddlUsers, ExtendedUserData.GetUserList(), null, "select user", Guid.Empty.ToString());

@@ -26,10 +26,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			CMSConfigHelper.CleanUpSerialData();
 
 			if (!IsPostBack) {
-				txtDate.Text = SiteData.CurrentSite.Now.ToShortDateString();
+				txtDate.Text = SiteData.CurrentSite.Now.ToString(Helper.ShortDatePattern);
 				ContentPage cp = pageHelper.GetLatestPosts(SiteData.CurrentSiteID, 2, false).FirstOrDefault();
 				if (cp != null) {
-					txtDate.Text = cp.GoLiveDate.ToShortDateString();
+					txtDate.Text = cp.GoLiveDate.ToString(Helper.ShortDatePattern);
 				}
 
 				ddlSize.SelectedValue = pagedDataGrid.PageSize.ToString();

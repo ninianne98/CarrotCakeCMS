@@ -39,8 +39,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public void SetDate(DateTime date) {
 			this.TheDate = date;
 
-			txtDate.Text = this.TheDate.ToString("MM/dd/yyyy");
-			txtTime.Text = this.TheDate.ToString("hh:mm tt");
+			txtDate.Text = this.TheDate.ToString(Helper.ShortDatePattern);
+			txtTime.Text = this.TheDate.ToString(Helper.ShortTimePattern);
 		}
 
 		public DateTime GetDate() {

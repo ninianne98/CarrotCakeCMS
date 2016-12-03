@@ -682,8 +682,8 @@
 									AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 									<Columns>
 										<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
-										<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
-										<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:MM/dd/yy h:mm tt}" />
+										<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:d} {0:t}" />
+										<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d} {0:t}" />
 										<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked"
 											AlternateTextTrue="Tracked" ShowBooleanImage="true" />
 									</Columns>

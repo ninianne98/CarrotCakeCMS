@@ -19,8 +19,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteExport);
 
 			if (!IsPostBack) {
-				txtBegin.Text = SiteData.CurrentSite.Now.AddMonths(-6).ToShortDateString();
-				txtEnd.Text = SiteData.CurrentSite.Now.AddDays(5).ToShortDateString();
+				txtBegin.Text = SiteData.CurrentSite.Now.AddMonths(-6).ToString(Helper.ShortDatePattern);
+				txtEnd.Text = SiteData.CurrentSite.Now.AddDays(5).ToString(Helper.ShortDatePattern);
 			}
 		}
 	}

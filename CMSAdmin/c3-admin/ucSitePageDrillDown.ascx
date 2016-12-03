@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucSitePageDrillDown.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucSitePageDrillDown" %>
-<script src="/c3-admin/Includes/common-utils.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 	var thisPageID = '<%=RootContentID.ToString() %>';

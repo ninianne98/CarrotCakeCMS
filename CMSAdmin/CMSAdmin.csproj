@@ -207,6 +207,7 @@
     <Compile Include="c3-admin\FileUp.ashx.cs">
       <DependentUpon>FileUp.ashx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\Helper.cs" />
     <Compile Include="c3-admin\SiteDetail.aspx.cs">
       <DependentUpon>SiteDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
