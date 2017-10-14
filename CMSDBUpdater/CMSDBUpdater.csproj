@@ -105,19 +105,19 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)\DataScripts\CREATE01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\CREATE 01 - whole database.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 01 - add meta fields to content.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER02.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 02 - new widget structure.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER03.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER04.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER05.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER06.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER07.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER08.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 08 - create trackback queue and comment view.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER09.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 09 - parent child view and misc setting properties.sql" /F /R /Y /I						
-xcopy "$(ProjectDir)\DataScripts\ALTER10.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 10 - create version count and text widget tables.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER11.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 11 - update tally sproc.sql" /F /R /Y /I
-xcopy "$(ProjectDir)\DataScripts\ALTER12.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 12 - update time zone and credits.sql" /F /R /Y /I
+    <PostBuildEvent>rem xcopy "$(ProjectDir)\DataScripts\CREATE01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\CREATE 01 - whole database.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER01.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 01 - add meta fields to content.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER02.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 02 - new widget structure.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER03.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER04.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER05.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER06.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER07.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER08.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 08 - create trackback queue and comment view.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER09.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 09 - parent child view and misc setting properties.sql" /F /R /Y /I						
+rem xcopy "$(ProjectDir)\DataScripts\ALTER10.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 10 - create version count and text widget tables.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER11.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 11 - update tally sproc.sql" /F /R /Y /I
+rem xcopy "$(ProjectDir)\DataScripts\ALTER12.sql" "$(SolutionDir)\CMSDataScripts\Scripts\ALTER 12 - update time zone and credits.sql" /F /R /Y /I
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

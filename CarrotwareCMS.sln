@@ -1,24 +1,30 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "database scripts", "{835815E6-C641-402B-A6C5-E6E8A4B2C754}"
 	ProjectSection(SolutionItems) = preProject
 		CMSDataScripts\Scripts\__README.txt = CMSDataScripts\Scripts\__README.txt
-		CMSDataScripts\Scripts\ALTER 01 - add meta fields to content.sql = CMSDataScripts\Scripts\ALTER 01 - add meta fields to content.sql
-		CMSDataScripts\Scripts\ALTER 02 - new widget structure.sql = CMSDataScripts\Scripts\ALTER 02 - new widget structure.sql
-		CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql = CMSDataScripts\Scripts\ALTER 03 - add create date to root content.sql
-		CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql = CMSDataScripts\Scripts\ALTER 04 - move data to carrot prefix tables.sql
-		CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql = CMSDataScripts\Scripts\ALTER 05 - create combined content view.sql
-		CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql = CMSDataScripts\Scripts\ALTER 06 - create blog tables and views.sql
-		CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql = CMSDataScripts\Scripts\ALTER 07 - create date based publishing.sql
-		CMSDataScripts\Scripts\ALTER 08 - create trackback queue and comment view.sql = CMSDataScripts\Scripts\ALTER 08 - create trackback queue and comment view.sql
-		CMSDataScripts\Scripts\ALTER 09 - parent child view and misc setting properties.sql = CMSDataScripts\Scripts\ALTER 09 - parent child view and misc setting properties.sql
-		CMSDataScripts\Scripts\ALTER 10 - create version count and text widget tables.sql = CMSDataScripts\Scripts\ALTER 10 - create version count and text widget tables.sql
-		CMSDataScripts\Scripts\ALTER 11 - update tally sproc.sql = CMSDataScripts\Scripts\ALTER 11 - update tally sproc.sql
-		CMSDataScripts\Scripts\ALTER 12 - update time zone and credits.sql = CMSDataScripts\Scripts\ALTER 12 - update time zone and credits.sql
-		CMSDataScripts\Scripts\CREATE 01 - whole database.sql = CMSDataScripts\Scripts\CREATE 01 - whole database.sql
-		CMSDataScripts\Scripts\CREATE 02 - default user.sql = CMSDataScripts\Scripts\CREATE 02 - default user.sql
+		CMSDBUpdater\DataScripts\ALTER01.sql = CMSDBUpdater\DataScripts\ALTER01.sql
+		CMSDBUpdater\DataScripts\ALTER01a.sql = CMSDBUpdater\DataScripts\ALTER01a.sql
+		CMSDBUpdater\DataScripts\ALTER02.sql = CMSDBUpdater\DataScripts\ALTER02.sql
+		CMSDBUpdater\DataScripts\ALTER03.sql = CMSDBUpdater\DataScripts\ALTER03.sql
+		CMSDBUpdater\DataScripts\ALTER04.sql = CMSDBUpdater\DataScripts\ALTER04.sql
+		CMSDBUpdater\DataScripts\ALTER05.sql = CMSDBUpdater\DataScripts\ALTER05.sql
+		CMSDBUpdater\DataScripts\ALTER06.sql = CMSDBUpdater\DataScripts\ALTER06.sql
+		CMSDBUpdater\DataScripts\ALTER07.sql = CMSDBUpdater\DataScripts\ALTER07.sql
+		CMSDBUpdater\DataScripts\ALTER08.sql = CMSDBUpdater\DataScripts\ALTER08.sql
+		CMSDBUpdater\DataScripts\ALTER09.sql = CMSDBUpdater\DataScripts\ALTER09.sql
+		CMSDBUpdater\DataScripts\ALTER10.sql = CMSDBUpdater\DataScripts\ALTER10.sql
+		CMSDBUpdater\DataScripts\ALTER11.sql = CMSDBUpdater\DataScripts\ALTER11.sql
+		CMSDBUpdater\DataScripts\ALTER12.sql = CMSDBUpdater\DataScripts\ALTER12.sql
+		CMSDBUpdater\DataScripts\CREATE01.sql = CMSDBUpdater\DataScripts\CREATE01.sql
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "widgets", "widgets", "{53B5D160-56A0-42F9-8189-E0E87726B5CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server controls", "server controls", "{8A505549-83D1-4BBF-87DE-0276139946D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSAdmin", "CMSAdmin\CMSAdmin.csproj", "{3137431F-6BE3-4996-9CF8-4D50414B403A}"
 EndProject
@@ -38,12 +44,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSFAQModule", "PluginFAQMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebControls", "WebControls\WebControls.csproj", "{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "widgets", "widgets", "{53B5D160-56A0-42F9-8189-E0E87726B5CA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server controls", "server controls", "{8A505549-83D1-4BBF-87DE-0276139946D2}"
-EndProject
-Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginPhotoGallery", "PluginPhotoGallery\PluginPhotoGallery.csproj", "{AB1DE455-438E-4249-B282-52937F9D1386}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSDBUpdater", "CMSDBUpdater\CMSDBUpdater.csproj", "{18B29BF3-D8DE-4BF4-AC22-2DD5AE389DEC}"
@@ -51,6 +51,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSEventCalendarModule", "PluginEventCalendarModule\CMSEventCalendarModule.csproj", "{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSFAQ2Module", "PluginFAQ2Module\CMSFAQ2Module.csproj", "{1B626E78-C8BF-4997-AC15-A6EA654681E6}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.sqlproj", "{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,16 +154,6 @@ Global
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}.Release|x86.ActiveCfg = Release|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
-		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|x86.ActiveCfg = Release|Any CPU
 		{AB1DE455-438E-4249-B282-52937F9D1386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB1DE455-438E-4249-B282-52937F9D1386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB1DE455-438E-4249-B282-52937F9D1386}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -202,15 +194,29 @@ Global
 		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1B626E78-C8BF-4997-AC15-A6EA654681E6}.Release|x86.ActiveCfg = Release|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7} = {8A505549-83D1-4BBF-87DE-0276139946D2}
 		{2DEB6A0C-B032-4B78-96BD-CC9271473CA1} = {8A505549-83D1-4BBF-87DE-0276139946D2}
-		{38E7C46A-F4B6-4CB7-8F39-C0088F109748} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{A16BD8A1-3FF5-4539-87B8-CA8DAA987E53} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
+		{38E7C46A-F4B6-4CB7-8F39-C0088F109748} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
+		{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7} = {8A505549-83D1-4BBF-87DE-0276139946D2}
 		{AB1DE455-438E-4249-B282-52937F9D1386} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{1B626E78-C8BF-4997-AC15-A6EA654681E6} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
