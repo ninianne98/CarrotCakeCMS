@@ -37,7 +37,7 @@ CarrotCakeCMS is maintained by Samantha Copeland
 
 ### Install Development Tools
 
-1. **[Visual Studio Express 2013][IDE2013]** Professional (or higher) editions OK. [Later][IDEALT] versions mostly OK (make sure to target the 3.5 framework), the database project may not load load with other than the expected version, but that's OK because it's just there to maintain a schema history, it is not part of any build event
+1. **[Visual Studio Express 2013][IDE2013]** Professional (or higher) editions OK. [Later][IDEALT] versions mostly OK (make sure to target the 3.5 framework).  The database project may not load with other than the expected version, but that's OK because it's just there to maintain a schema history, it is not part of any build event.
 1. **[SQL Server Express 2008 (or higher/later)][SQL]**
 
 ### Get the Source Code
