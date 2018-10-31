@@ -10,7 +10,9 @@ Source code for CarrotCakeCMS
 [DOC_PDF]: http://www.carrotware.com/fileassets/CarrotCakeCMSDevNotes.pdf?from=github
 [DOC]: http://www.carrotware.com/carrotcake-download?from=github "CarrotCakeCMS User Documentation"
 [TMPLT]: http://www.carrotware.com/carrotcake-templates?from=github
-[IDE2010]: http://go.microsoft.com/?linkid=9709969
+[IDE2013]: https://www.visualstudio.com/en-us/news/vs2013-community-vs.aspx
+[VWDISO2013]: https://go.microsoft.com/fwlink/?LinkId=532501&type=ISO&clcid=0x409
+[CEISO2013]: https://go.microsoft.com/fwlink/?LinkId=532496&type=ISO&clcid=0x409
 [IDEALT]: https://www.visualstudio.com/downloads/download-visual-studio-vs
 [SQL]: https://www.microsoft.com/en-us/download/details.aspx?id=22973
 
@@ -35,7 +37,7 @@ CarrotCakeCMS is maintained by Samantha Copeland
 
 ### Install Development Tools
 
-1. **[Visual Studio Express 2010][IDE2010]** Professional (or higher) editions OK. [Later][IDEALT] versions mostly OK (make sure to target the 3.5 framework), the database project won't load, but that's OK because it's just there to maintain a schema history, it is not part of any build event
+1. **[Visual Studio Express 2013][IDE2013]** Professional (or higher) editions OK. [Later][IDEALT] versions mostly OK (make sure to target the 3.5 framework), the database project may not load load with other than the expected version, but that's OK because it's just there to maintain a schema history, it is not part of any build event
 1. **[SQL Server Express 2008 (or higher/later)][SQL]**
 
 ### Get the Source Code
@@ -46,7 +48,7 @@ CarrotCakeCMS is maintained by Samantha Copeland
 
 ### Open the Project
 
-1. Start **Visual Studio 2010**
+1. Start **Visual Studio 2013**
 
 1. Open **CarrotwareCMS.sln** solution in the root of the repository
 

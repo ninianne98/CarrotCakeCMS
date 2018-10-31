@@ -39,7 +39,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static string GetWebResourceUrl(string resource) {
-			return BaseWebControl.GetWebResourceUrl(typeof(jqueryui), resource);
+			return WebControlHelper.GetWebResourceUrl(typeof(jqueryui), resource);
 		}
 
 		private static string _generalUri = null;

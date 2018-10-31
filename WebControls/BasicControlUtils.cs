@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -39,28 +38,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public string GetWebResourceUrl(Type type, string resource) {
-			string sPath = "";
-
-			try {
-				sPath = _page.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpUtility.HtmlEncode(sPath);
-			} catch { }
-
-			return sPath;
-		}
-
-		public string GetWebResourceUrl(Page page, Type type, string resource) {
-			string sPath = "";
-
-			try {
-				sPath = page.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpUtility.HtmlEncode(sPath);
-			} catch { }
-
-			return sPath;
-		}
-
 		public Page GetContainerPage(object X) {
 			bFoundPage = false;
 			_page2 = null;
@@ -86,15 +63,16 @@ namespace Carrotware.Web.UI.Controls {
 			return _page.ParseControl(sControlText);
 		}
 
-		public static string GetManifestResourceStream(string sResouceName) {
-			string sReturn = null;
+		public string GetWebResourceUrl(Type type, string resource) {
+			return WebControlHelper.GetWebResourceUrl(_page, type, resource);
+		}
 
-			Assembly _assembly = Assembly.GetExecutingAssembly();
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
-				sReturn = oTextStream.ReadToEnd();
-			}
+		public string GetWebResourceUrl(Page page, Type type, string resource) {
+			return WebControlHelper.GetWebResourceUrl(page, type, resource);
+		}
 
-			return sReturn;
+		public string GetManifestResourceStream(string resource) {
+			return WebControlHelper.GetManifestResourceStream(resource);
 		}
 
 		public static string GetCtrlText(Control ctrl) {

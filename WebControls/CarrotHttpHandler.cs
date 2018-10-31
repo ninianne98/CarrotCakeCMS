@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 using System.Web;
 using System.Web.SessionState;
 
@@ -31,6 +32,10 @@ namespace Carrotware.Web.UI.Controls {
 
 			if (context.Request.Path.ToLowerInvariant() == "/carrotwarethumb.axd") {
 				DoThumb(context);
+			}
+
+			if (context.Request.Path.ToLowerInvariant() == "/carrotwarehelper.axd") {
+				DoHelper(context);
 			}
 		}
 
@@ -183,6 +188,48 @@ namespace Carrotware.Web.UI.Controls {
 
 			bmpThumb.Dispose();
 			bmpIn.Dispose();
+
+			context.Response.End();
+		}
+
+		private void DoHelper(HttpContext context) {
+			DateTime now = DateTime.Now;
+
+			DateTime dtMod = now.AddMinutes(-90);
+			TimeSpan ts = TimeSpan.FromMinutes(10);
+			DateTime dtModified = new DateTime(((dtMod.Ticks + ts.Ticks - 1) / ts.Ticks) * ts.Ticks);
+
+			string strModifed = dtModified.ToString("r");
+			context.Response.AppendHeader("Last-Modified", strModifed);
+			context.Response.AppendHeader("Date", strModifed);
+			context.Response.Cache.SetLastModified(dtModified);
+
+			DateTime dtExpire = now.AddMinutes(10);
+			context.Response.Cache.SetExpires(dtExpire);
+			context.Response.Cache.SetMaxAge(ts);
+			context.Response.Cache.SetValidUntilExpires(true);
+			context.Response.Cache.SetCacheability(HttpCacheability.Public);
+			context.Response.Cache.VaryByParams["ts"] = true;
+
+			string sBody = WebControlHelper.GetManifestResourceStream("Carrotware.Web.UI.Controls.carrotHelp.js");
+			DateTime timeAM = DateTime.Now.Date.AddHours(6);  // 6AM
+			DateTime timePM = DateTime.Now.Date.AddHours(12);  // 6PM
+
+			sBody = sBody.Replace("[[TIMESTAMP]]", DateTime.UtcNow.ToString("u"));
+
+			sBody = sBody.Replace("[[SHORTDATEPATTERN]]", WebControlHelper.ShortDatePattern);
+			sBody = sBody.Replace("[[SHORTTIMEPATTERN]]", WebControlHelper.ShortTimePattern);
+
+			sBody = sBody.Replace("[[AM_TIMEPATTERN]]", timeAM.ToString("tt"));
+			sBody = sBody.Replace("[[PM_TIMEPATTERN]]", timePM.ToString("tt"));
+
+			context.Response.ContentType = "text/javascript";
+
+			var byteArray = Encoding.UTF8.GetBytes(sBody);
+
+			using (MemoryStream memStream = new MemoryStream(byteArray)) {
+				memStream.WriteTo(context.Response.OutputStream);
+			}
 
 			context.Response.End();
 		}

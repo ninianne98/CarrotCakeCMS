@@ -53,7 +53,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static string GetWebResourceUrl(string resource) {
-			return BaseWebControl.GetWebResourceUrl(typeof(jquery), resource);
+			return WebControlHelper.GetWebResourceUrl(typeof(jquery), resource);
 		}
 
 		private static string _generalUri = null;
@@ -141,6 +141,10 @@ namespace Carrotware.Web.UI.Controls {
 					output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 				}
 			}
+
+			string key = WebControlHelper.DateKey();
+
+			output.WriteLine("<!-- Carrot Helpers --> <script src=\"/carrotwarehelper.axd?ts=" + key + "\" type=\"text/javascript\"></script> ");
 		}
 	}
 }

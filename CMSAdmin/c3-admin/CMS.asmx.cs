@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Script.Services;
 using System.Web.Security;
 using System.Web.Services;
 using System.Xml.Serialization;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -37,8 +36,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private Guid CurrentPageGuid = Guid.Empty;
 		private ContentPage filePage = null;
 
-		private DateTimeFormatInfo _dtf = CultureInfo.CurrentCulture.DateTimeFormat;
-
 		public CMS() {
 			if (!this.User.Identity.IsAuthenticated) {
 				throw new Exception("Not Authenticated!");
@@ -46,10 +43,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!(SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
 				throw new Exception("Not Authorizeed!");
-			}
-
-			if (_dtf == null) {
-				_dtf = CultureInfo.CreateSpecificCulture("en-US").DateTimeFormat;
 			}
 		}
 
@@ -181,18 +174,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 		public string GetSiteAdminFolder() {
 			return SiteData.AdminFolderPath;
-		}
-
-		[WebMethod]
-		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public string GetShortDatePattern() {
-			return Helper.ShortDatePattern;
-		}
-
-		[WebMethod]
-		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public string GetShortTimePattern() {
-			return Helper.ShortTimePattern;
 		}
 
 		private string CurrentEditPage = String.Empty;

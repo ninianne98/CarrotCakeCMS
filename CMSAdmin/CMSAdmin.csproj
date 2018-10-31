@@ -18,10 +18,6 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <UseIISExpress>false</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1423,7 +1419,6 @@
     <Folder Include="c3-admin\tiny_mce\plugins\autosave\langs\" />
     <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\includes\" />
-    <Folder Include="cmsPlugins\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant.master" />

@@ -18,43 +18,6 @@ namespace Carrotware.Web.UI.Controls {
 
 	public abstract class BaseWebControl : WebControl {
 
-		private static Page CachedPage {
-			get {
-				if (_CachedPage == null) {
-					_CachedPage = new Page();
-					_CachedPage.AppRelativeVirtualPath = "~/";
-				}
-				return _CachedPage;
-			}
-		}
-
-		private static Page _CachedPage;
-
-		public static string GetWebResourceUrl(Type type, string resource) {
-			string sPath = "";
-
-			try {
-				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpUtility.HtmlEncode(sPath);
-			} catch { }
-
-			return sPath;
-		}
-
-		public static string GetWebResourceUrl(Page page, Type type, string resource) {
-			string sPath = "";
-			if (page != null) {
-				try {
-					sPath = page.ClientScript.GetWebResourceUrl(type, resource);
-					sPath = HttpUtility.HtmlEncode(sPath);
-				} catch { }
-			} else {
-				sPath = GetWebResourceUrl(type, resource);
-			}
-
-			return sPath;
-		}
-
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool IsPostBack {

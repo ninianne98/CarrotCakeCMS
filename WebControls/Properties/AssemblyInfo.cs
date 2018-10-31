@@ -70,6 +70,8 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.CarrotGridView.cancel.png", "image/png")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jsHelperLibrary.js", "text/javascript", PerformSubstitution = true)]
 
+[assembly: WebResource("Carrotware.Web.UI.Components.carrotHelp.js", "text/javascript")]
+
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-10-2.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-11-3.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery-1-12-0.js", "text/javascript")]
