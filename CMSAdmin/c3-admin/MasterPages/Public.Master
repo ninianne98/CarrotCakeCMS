@@ -60,59 +60,59 @@
 </head>
 <body>
 	<form id="aspnetForm" runat="server">
-	<div class="wrappedcontent">
-		<div class="box-top-center">
-			<div class="box-top-left">
+		<div class="wrappedcontent">
+			<div class="box-top-center">
+				<div class="box-top-left">
+				</div>
+				<div class="box-top-right">
+				</div>
 			</div>
-			<div class="box-top-right">
-			</div>
-		</div>
-		<div class="box-inner">
-			<div class="box-right">
-				<div class="box-left">
-					<div class="wrappedcontent-inner">
-						<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
-						</asp:ContentPlaceHolder>
-					</div>
-					<div class="box-buildversion">
-						<p>
-							&nbsp;
-						</p>
-						<p>
-							<asp:Literal ID="litCMSBuildInfo" runat="server" />
-							<a href="javascript:ShowAbout()">
-								<img class="imgNoBorder" src="/c3-admin/Images/information.png" alt="information" title="information" /></a>
-						</p>
-						<p>
-							Database Status <a href="<%= SiteFilename.DatabaseSetupURL %>">
-								<img class="imgNoBorder" src="/c3-admin/Images/database.png" alt="database" title="database" /></a>
-							<asp:PlaceHolder ID="phLogin" runat="server">&nbsp;&nbsp;&nbsp; Login <a href="<%= SiteFilename.LogonURL %>">
-								<img class="imgNoBorder" src="/c3-admin/Images/user.png" alt="login" title="login" /></a> </asp:PlaceHolder>
-						</p>
-					</div>
-					<div class="box-carrot">
+			<div class="box-inner">
+				<div class="box-right">
+					<div class="box-left">
+						<div class="wrappedcontent-inner">
+							<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+							</asp:ContentPlaceHolder>
+						</div>
+						<div class="box-buildversion">
+							<p>
+								&nbsp;
+							</p>
+							<p>
+								<asp:Literal ID="litCMSBuildInfo" runat="server" />
+								<a href="javascript:ShowAbout()">
+									<img class="imgNoBorder" src="/c3-admin/Images/information.png" alt="information" title="information" /></a>
+							</p>
+							<p>
+								Database Status <a href="<%= SiteFilename.DatabaseSetupURL %>">
+									<img class="imgNoBorder" src="/c3-admin/Images/database.png" alt="database" title="database" /></a>
+								<asp:PlaceHolder ID="phLogin" runat="server">&nbsp;&nbsp;&nbsp; Login <a href="<%= SiteFilename.LogonURL %>">
+									<img class="imgNoBorder" src="/c3-admin/Images/user.png" alt="login" title="login" /></a> </asp:PlaceHolder>
+							</p>
+						</div>
+						<div class="box-carrot">
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div style="clear: both;">
-		</div>
-		<div class="box-bottom-center">
-			<div class="box-bottom-left">
+			<div style="clear: both;">
 			</div>
-			<div class="box-bottom-right">
-			</div>
-		</div>
-	</div>
-	<div style="display: none">
-		<div id="divCMSModal" title="CarrotCake CMS">
-			<div id="divCMSModalMsg" style="overflow: hidden; margin: 0; padding: 2px; height: 100%; width: 100%;">
-				&nbsp;
+			<div class="box-bottom-center">
+				<div class="box-bottom-left">
+				</div>
+				<div class="box-bottom-right">
+				</div>
 			</div>
 		</div>
-		<asp:Button ID="cmdDummy" runat="server"></asp:Button>
-	</div>
-	<asp:PlaceHolder ID="plcFooter" runat="server" />
+		<div style="display: none">
+			<div id="divCMSModal" title="CarrotCake CMS">
+				<div id="divCMSModalMsg" style="overflow: hidden; margin: 0; padding: 2px; height: 100%; width: 100%;">
+					&nbsp;
+				</div>
+			</div>
+			<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+		</div>
+		<asp:PlaceHolder ID="plcFooter" runat="server" />
 	</form>
 </body>
 </html>

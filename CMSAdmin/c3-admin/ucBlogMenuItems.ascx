@@ -7,8 +7,7 @@
 					<img class="imgNoBorder" src="/c3-admin/images/table.png" alt="View Blog Index" title="View Blog Index" />
 					View Blog Index</a>
 			</td>
-			<td>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td style="width: 48%;">
 				<a href="BlogPostTemplateUpdate.aspx">
@@ -35,8 +34,7 @@
 					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 					Add Blog Post (with HTML editor)</a>
 			</td>
-			<td>
-				&nbsp;
+			<td>&nbsp;
 			</td>
 			<td style="width: 48%;">
 				<a href="BlogPostAddEdit.aspx?mode=raw&id=">

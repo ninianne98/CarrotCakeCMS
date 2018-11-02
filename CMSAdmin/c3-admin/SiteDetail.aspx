@@ -23,8 +23,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 160px;">
-					Site ID
+				<td class="tablecaption" style="width: 160px;">Site ID
 				</td>
 				<td>
 					<div style="padding: 5px; padding-left: 10px; width: 275px;" class=" ui-widget-content ui-corner-all ">
@@ -33,24 +32,21 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site URL
+				<td class="tablecaption">Site URL
 				</td>
 				<td>
 					<asp:Literal ID="litURL" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Name
+				<td class="tablecaption">Site Name
 				</td>
 				<td>
 					<asp:Literal ID="litSiteName" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Tagline
+				<td class="tablecaption">Site Tagline
 				</td>
 				<td>
 					<asp:Literal ID="litTagline" runat="server" />
@@ -99,8 +95,7 @@
 					</p>
 				</fieldset>
 			</td>
-			<td>
-				&nbsp;&nbsp;&nbsp;
+			<td>&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
 				<fieldset style="width: 400px;">

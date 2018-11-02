@@ -213,8 +213,7 @@
 	<div class="pageNodeDrillDown5">
 		<div id="menuhead" onmouseout="hideMnu()" onmouseover="mouseNode()" class="menuitems pageNodeDrillDown4 ui-widget-header ui-corner-all">
 			<div class="pageNodeDrillDown6">
-				Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectDrillItem(this);' data-rootcontent=''><span style="float: right;" class="ui-icon ui-icon-power">
-				</span></a>
+				Pages <a title="Reset Path" href='javascript:void(0);' onclick='selectDrillItem(this);' data-rootcontent=''><span style="float: right;" class="ui-icon ui-icon-power"></span></a>
 			</div>
 		</div>
 		<div id="menuitemsouter">

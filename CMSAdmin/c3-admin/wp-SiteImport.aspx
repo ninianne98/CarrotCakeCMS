@@ -76,8 +76,7 @@
 					Attempt to download page/post attachments and place them in the selected folder.
 					<asp:Literal ID="litTrust" runat="server"><b>Downloading images requires a full trust website, and this installation has not been detected as such, leaving the download option disabled. </b> </asp:Literal>
 				</td>
-				<td>
-					&nbsp;&nbsp;&nbsp;
+				<td>&nbsp;&nbsp;&nbsp;
 				</td>
 				<td>
 					<asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Required" Display="Dynamic" CssClass="validationError" ForeColor="" ControlToValidate="ddlFolders"
@@ -90,11 +89,9 @@
 					<asp:CheckBox ID="chkFixBodies" runat="server" Checked="true" />
 					Uncheck this box if you want the content bodies to remain in their original format, otherwise paragraph and line break tags will be added.
 				</td>
-				<td>
-					&nbsp;
+				<td>&nbsp;
 				</td>
-				<td>
-					&nbsp;
+				<td>&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -105,11 +102,9 @@
 					email to login. If this is unchecked and a matching account exists, the discovered user will be recorded as the content editor. If the user
 					account does not exist, the current user will be recorded as the content editor.
 				</td>
-				<td>
-					&nbsp;
+				<td>&nbsp;
 				</td>
-				<td>
-					&nbsp;
+				<td>&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -117,11 +112,9 @@
 					<asp:CheckBox ID="chkMapAuthor" runat="server" Checked="true" />
 					Uncheck this box if you want all imported content to be recorded under the current user. This option trumps the account creation checkbox.
 				</td>
-				<td>
-					&nbsp;
+				<td>&nbsp;
 				</td>
-				<td>
-					&nbsp;
+				<td>&nbsp;
 				</td>
 			</tr>
 		</table>
@@ -138,8 +131,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 175px;">
-					Exported from WP Version
+				<td class="tablecaption" style="width: 175px;">Exported from WP Version
 				</td>
 				<td>
 					<asp:Literal ID="litImportSource" runat="server" /><br />
@@ -148,29 +140,25 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Export Date
+				<td class="tablecaption">Export Date
 				</td>
 				<td>
 					<asp:Literal ID="litDate" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					&nbsp;
+				<td colspan="2">&nbsp;
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Name
+				<td class="tablecaption">Site Name
 				</td>
 				<td>
 					<asp:Literal ID="litName" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Description
+				<td class="tablecaption">Site Description
 				</td>
 				<td>
 					<asp:Literal ID="litDescription" runat="server" />
@@ -187,8 +175,7 @@
 		</legend>
 		<table>
 			<tr>
-				<td class="tablecaption">
-					template:
+				<td class="tablecaption">template:
 				</td>
 				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePage" runat="server" />
@@ -227,8 +214,7 @@
 		</legend>
 		<table>
 			<tr>
-				<td class="tablecaption">
-					template:
+				<td class="tablecaption">template:
 				</td>
 				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePost" runat="server" />

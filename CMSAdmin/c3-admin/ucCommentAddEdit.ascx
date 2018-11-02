@@ -7,16 +7,14 @@
 	</legend>
 	<table style="width: 700px;">
 		<tr>
-			<td style="width: 125px;" class="tablecaption">
-				title:
+			<td style="width: 125px;" class="tablecaption">title:
 			</td>
 			<td>
 				<asp:Literal ID="lblTitle" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				filename:
+			<td class="tablecaption">filename:
 			</td>
 			<td>
 				<asp:Literal ID="lblFile" runat="server" />
@@ -34,24 +32,21 @@
 	</legend>
 	<table style="width: 700px;">
 		<tr>
-			<td style="width: 150px;" class="tablecaption">
-				IP address:
+			<td style="width: 150px;" class="tablecaption">IP address:
 			</td>
 			<td>
 				<asp:Literal ID="lblIP" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				date:
+			<td class="tablecaption">date:
 			</td>
 			<td>
 				<asp:Literal ID="lblDate" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				email:
+			<td class="tablecaption">email:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtEmail" runat="server" Columns="60"
@@ -62,8 +57,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				name:
+			<td class="tablecaption">name:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtName" runat="server" Columns="60" MaxLength="200" />
@@ -72,16 +66,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				url:
+			<td class="tablecaption">url:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" runat="server" Columns="60" MaxLength="200" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				&nbsp;
+			<td class="tablecaption">&nbsp;
 			</td>
 			<td>
 				<div class="table-subblock">
@@ -95,8 +87,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				comment:
+			<td class="tablecaption">comment:
 			</td>
 			<td>
 				<asp:TextBox Style="height: 250px; width: 600px;" ID="txtComment" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />

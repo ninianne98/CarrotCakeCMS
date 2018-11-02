@@ -130,52 +130,54 @@
 </head>
 <body>
 	<form id="aspnetForm" runat="server">
-	<div runat="server" id="divSaved" class="info-saved" style="display: none;">
-		<h2>
-			<asp:Literal ID="litSaveMessage" runat="server" Text="Changes Applied" />
-		</h2>
-		<%--
+		<div runat="server" id="divSaved" class="info-saved" style="display: none;">
+			<h2>
+				<asp:Literal ID="litSaveMessage" runat="server" Text="Changes Applied" />
+			</h2>
+			<%--
 		<p>
 			<img alt="[animated]" src="/c3-admin/images/ani-smallbar.gif" />
 		</p>--%>
-	</div>
-	<div id="cmsAjaxMainDiv">
-		<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
-		<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
-			<ContentTemplate>
-				<h1 class="headingColor">
-					<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
+		</div>
+		<div id="cmsAjaxMainDiv">
+			<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
+			<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
+				<ContentTemplate>
+					<h1 class="headingColor">
+						<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
+						</asp:ContentPlaceHolder>
+					</h1>
+					<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
 					</asp:ContentPlaceHolder>
-				</h1>
-				<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
-				</asp:ContentPlaceHolder>
-				<asp:Panel ID="pnlDirty" runat="server">
-				</asp:Panel>
-				<asp:HiddenField ID="hdnShow" runat="server" />
-			</ContentTemplate>
-		</asp:UpdatePanel>
-		<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
-		</asp:ContentPlaceHolder>
-	</div>
-	<asp:PlaceHolder ID="plcFooter" runat="server" />
-	<div style="display: none">
-		<div id="cms-basic-modal-content">
-			<div id="cmsModalFrame">
+					<asp:Panel ID="pnlDirty" runat="server">
+					</asp:Panel>
+					<asp:HiddenField ID="hdnShow" runat="server" />
+				</ContentTemplate>
+			</asp:UpdatePanel>
+			<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
+			</asp:ContentPlaceHolder>
+		</div>
+		<asp:PlaceHolder ID="plcFooter" runat="server" />
+		<div style="display: none">
+			<div id="cms-basic-modal-content">
+				<div id="cmsModalFrame">
+				</div>
+			</div>
+			<img src="/c3-admin/images/x.png" alt="x" />
+			<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
+			<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />
+			<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
+			<div id="divCMSModal" title="CarrotCake CMS">
+				<div id="divCMSModalMsg">
+					&nbsp;
+				</div>
+			</div>
+			<div id="divCMSCancelWin" title="Quit Editor?">
+				<p id="divCMSCancelWinMsg">
+					Are you sure you want cancel?
+				</p>
 			</div>
 		</div>
-		<img src="/c3-admin/images/x.png" alt="x" />
-		<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
-		<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />
-		<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
-		<div id="divCMSModal" title="CarrotCake CMS">
-			<div id="divCMSModalMsg">
-				&nbsp;</div>
-		</div>
-		<div id="divCMSCancelWin" title="Quit Editor?">
-			<p id="divCMSCancelWinMsg">
-				Are you sure you want cancel?</p>
-		</div>
-	</div>
 	</form>
 </body>
 </html>

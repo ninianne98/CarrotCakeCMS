@@ -18,8 +18,7 @@
 	<uc1:ucBlogMenuItems ID="ucBlogMenuItems1" runat="server" />
 	<table>
 		<tr>
-			<td class="tablecaption">
-				show content:
+			<td class="tablecaption">show content:
 			</td>
 			<td colspan="3">
 				<div class="jqradioset">
@@ -31,12 +30,10 @@
 	</table>
 	<table>
 		<tr runat="server" id="trFilter">
-			<td class="tablecaption">
-				go live date post filter:
+			<td class="tablecaption">go live date post filter:
 				<br />
 			</td>
-			<td>
-				&nbsp;&nbsp;
+			<td>&nbsp;&nbsp;
 			</td>
 			<td>
 				<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server" />
@@ -49,8 +46,7 @@
 				<div style="clear: both; height: 2px;">
 				</div>
 			</td>
-			<td>
-				&nbsp;&nbsp;
+			<td>&nbsp;&nbsp;
 			</td>
 			<td>
 				<asp:Button ID="btnFilter" runat="server" Text="Apply" OnClick="btnFilter_Click" />

@@ -16,8 +16,7 @@
 						<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 						Add Content Snippet (with HTML editor)</a>
 				</td>
-				<td>
-					&nbsp;
+				<td>&nbsp;
 				</td>
 				<td style="width: 48%;">
 					<a href="ContentSnippetAddEdit.aspx?mode=raw&id=">

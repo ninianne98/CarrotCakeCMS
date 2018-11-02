@@ -40,7 +40,8 @@
 			</td>
 			<td width="20px">
 				<p>
-					&nbsp;&nbsp;&nbsp;</p>
+					&nbsp;&nbsp;&nbsp;
+				</p>
 			</td>
 			<td>
 				<p>

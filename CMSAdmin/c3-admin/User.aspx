@@ -84,7 +84,8 @@
 					Bio Data</label>
 			</legend>
 			<div runat="server" id="divCenter">
-				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
+				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
+			</div>
 			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 				Rows="20" Columns="60" />
 			<br />
@@ -120,8 +121,7 @@
 					</div>
 				</fieldset>
 			</td>
-			<td>
-				&nbsp;
+			<td>&nbsp;
 			</td>
 			<td>
 				<fieldset style="width: 400px;">
@@ -159,7 +159,7 @@
 	</div>
 	<br />
 	<asp:Button ID="btnApply" runat="server" Text="Save" OnClick="btnApply_Click" ValidationGroup="createWizard" OnClientClick="return ClickApplyBtn()" />
-	<input type="button" id="btnCancel" runat="server" value="Cancel" onclick="javascript:window.location='./UserMembership.aspx';" />
+	<input type="button" id="btnCancel" runat="server" value="Cancel" onclick="javascript: window.location = './UserMembership.aspx';" />
 	<br />
 	<script type="text/javascript">
 		function ClickApplyBtn() {

@@ -51,14 +51,17 @@
 			padding: 0;
 			width: 700px;
 		}
-		#sortable li {
-			margin: 5px;
-			padding: 5px;
-			height: 2.5em;
-		}
-		html > body #sortable li {
-			line-height: 1.1em;
-		}
+
+			#sortable li {
+				margin: 5px;
+				padding: 5px;
+				height: 2.5em;
+			}
+
+			html > body #sortable li {
+				line-height: 1.1em;
+			}
+
 		.ui-state-highlight {
 			line-height: 1.1em;
 		}
@@ -92,7 +95,8 @@
 					&nbsp;&nbsp;&nbsp; [<%# Eval("FileName")%>]</li>
 			</ItemTemplate>
 			<FooterTemplate>
-				</ul></FooterTemplate>
+				</ul>
+			</FooterTemplate>
 		</asp:Repeater>
 	</div>
 	<br style="clear: both;" />

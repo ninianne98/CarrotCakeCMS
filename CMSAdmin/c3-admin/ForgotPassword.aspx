@@ -25,8 +25,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tableback">
-				&nbsp;
+			<td class="tableback">&nbsp;
 			</td>
 			<td class="tableback" align="right">
 				<br />
@@ -34,13 +33,11 @@
 				&nbsp;
 				<asp:Button ID="cmdReset" runat="server" Text="Reset" CommandName="Login" OnClick="cmdReset_Click" ValidationGroup="loginTemplate" TabIndex="3" />
 			</td>
-			<td class="tableback" align="right">
-				&nbsp;
+			<td class="tableback" align="right">&nbsp;
 			</td>
 		</tr>
 		<tr>
-			<td class="tableback">
-				&nbsp;
+			<td class="tableback">&nbsp;
 			</td>
 			<td class="tableback" align="right">
 				<div class="ui-widget" id="divErrMsg" runat="server">
@@ -60,8 +57,7 @@
 					</div>
 				</div>
 			</td>
-			<td class="tableback" align="right">
-				&nbsp;
+			<td class="tableback" align="right">&nbsp;
 			</td>
 		</tr>
 	</table>

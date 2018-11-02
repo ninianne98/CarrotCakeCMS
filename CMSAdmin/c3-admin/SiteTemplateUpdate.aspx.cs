@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+using System;
+using System.Collections.Generic;
 
 /*
 * CarrotCake CMS
@@ -97,6 +97,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
-
 	}
 }

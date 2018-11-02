@@ -9,7 +9,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
-		&nbsp;</p>
+		&nbsp;
+	</p>
 	<fieldset style="width: 400px;">
 		<legend>
 			<label>

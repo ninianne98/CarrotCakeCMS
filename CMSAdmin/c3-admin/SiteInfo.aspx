@@ -87,8 +87,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 160px;">
-					Site ID
+				<td class="tablecaption" style="width: 160px;">Site ID
 				</td>
 				<td>
 					<div style="padding: 5px; padding-left: 10px; width: 275px;" class=" ui-widget-content ui-corner-all ">
@@ -97,8 +96,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Name
+				<td class="tablecaption">Site Name
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="100" Columns="80" Style="width: 425px;"
@@ -108,8 +106,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Tagline
+				<td class="tablecaption">Site Tagline
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagline" MaxLength="512" Columns="80" Style="width: 425px;"
@@ -117,8 +114,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Titlebar Pattern
+				<td class="tablecaption">Site Titlebar Pattern
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitleBar" MaxLength="512" Columns="80" Style="width: 425px;"
@@ -126,16 +122,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Time Zone
+				<td class="tablecaption">Site Time Zone
 				</td>
 				<td>
 					<asp:DropDownList ID="ddlTimeZone" runat="server" DataTextField="DisplayName" DataValueField="Id" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site URL
+				<td class="tablecaption">Site URL
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;"
@@ -145,8 +139,7 @@
 				</td>
 			</tr>
 			<tr id="trSiteIndex" runat="server">
-				<td class="tablecaption">
-					Index Page
+				<td class="tablecaption">Index Page
 					<br />
 				</td>
 				<td>
@@ -157,8 +150,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-				</td>
+				<td class="tablecaption"></td>
 				<td class="tablecaption">
 					<p>
 						Hide from Search Engines
@@ -184,16 +176,14 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 175px;">
-					Meta Keywords
+				<td class="tablecaption" style="width: 175px;">Meta Keywords
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Meta Description
+				<td class="tablecaption">Meta Description
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
@@ -210,8 +200,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 180px;">
-					&nbsp;
+				<td class="tablecaption" style="width: 180px;">&nbsp;
 				</td>
 				<td>
 					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFoldersValid" ID="CompareValidator1"
@@ -221,8 +210,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Blog Feature Base Folder
+				<td class="tablecaption">Blog Feature Base Folder
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="60" Style="width: 350px;"
@@ -232,8 +220,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Blog Category Path
+				<td class="tablecaption">Blog Category Path
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="60" Style="width: 350px;"
@@ -243,8 +230,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Blog Tag Path
+				<td class="tablecaption">Blog Tag Path
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="60" Style="width: 350px;"
@@ -254,8 +240,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Blog Date Path
+				<td class="tablecaption">Blog Date Path
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtDatePath" MaxLength="48" Columns="60" Style="width: 350px;"
@@ -265,8 +250,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Blog Author Path
+				<td class="tablecaption">Blog Author Path
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEditorPath" MaxLength="48" Columns="60" Style="width: 350px;"
@@ -276,8 +260,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Date Pattern
+				<td class="tablecaption">Date Pattern
 				</td>
 				<td>
 					<asp:DropDownList ID="ddlDatePattern" runat="server" ValidationGroup="inputForm">
@@ -300,8 +283,7 @@
 	</div>
 	<asp:PlaceHolder ID="phCreatePage" runat="server">
 		<br />
-		<h2>
-			Create initial homepage on site creation?
+		<h2>Create initial homepage on site creation?
 			<asp:CheckBox ID="chkHomepage" runat="server" />
 		</h2>
 		<br />

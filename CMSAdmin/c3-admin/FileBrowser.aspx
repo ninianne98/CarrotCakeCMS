@@ -151,46 +151,45 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-	<div class="panel_wrapper">
-		<table>
-			<tr>
-				<td>
-					<h2 class="head2">
-						Files On Server</h2>
-					Contents of:
+		<div class="panel_wrapper">
+			<table>
+				<tr>
+					<td>
+						<h2 class="head2">Files On Server</h2>
+						Contents of:
 					<asp:Literal ID="litPath" runat="server" /><br />
-					<asp:HyperLink runat="server" ID="lnkUp"><img src="/c3-admin/images/back.png" border="0" alt="back" /><img src="/c3-admin/images/folder.png" border="0" alt="folder" /> </asp:HyperLink>
-					<br />
-				</td>
-			</tr>
-		</table>
-		<div class="scroll" id="folderZone">
-			<asp:Repeater ID="rpFolders" runat="server">
-				<HeaderTemplate>
-					<table style="width: 98%">
-				</HeaderTemplate>
-				<ItemTemplate>
-					<tr>
-						<td style="width: 32px">
-							<img src="/c3-admin/images/folder.png" alt="folder" />
-						</td>
-						<td>
-							<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}&viewmode={3}", Eval("FolderPath"),  sQueryMode, sReturnMode, sViewMode ) %>'>
-								<%# String.Format( "{0}", Eval("FileName") ) %></a>
-						</td>
-						<td>
-							&nbsp;&nbsp;
-						</td>
-						<td style="width: 150px;">
-							<asp:Literal ID="litFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>' />
-						</td>
-					</tr>
-				</ItemTemplate>
-				<FooterTemplate>
-					</table></FooterTemplate>
-			</asp:Repeater>
-		</div>
-		<%--<p>
+						<asp:HyperLink runat="server" ID="lnkUp"><img src="/c3-admin/images/back.png" border="0" alt="back" /><img src="/c3-admin/images/folder.png" border="0" alt="folder" /> </asp:HyperLink>
+						<br />
+					</td>
+				</tr>
+			</table>
+			<div class="scroll" id="folderZone">
+				<asp:Repeater ID="rpFolders" runat="server">
+					<HeaderTemplate>
+						<table style="width: 98%">
+					</HeaderTemplate>
+					<ItemTemplate>
+						<tr>
+							<td style="width: 32px">
+								<img src="/c3-admin/images/folder.png" alt="folder" />
+							</td>
+							<td>
+								<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}&viewmode={3}", Eval("FolderPath"),  sQueryMode, sReturnMode, sViewMode ) %>'>
+									<%# String.Format( "{0}", Eval("FileName") ) %></a>
+							</td>
+							<td>&nbsp;&nbsp;
+							</td>
+							<td style="width: 150px;">
+								<asp:Literal ID="litFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>' />
+							</td>
+						</tr>
+					</ItemTemplate>
+					<FooterTemplate>
+						</table>
+					</FooterTemplate>
+				</asp:Repeater>
+			</div>
+			<%--<p>
 			<br />
 			Select a file to upload to the current folder:<br />
 			<asp:FileUpload ID="upFile" runat="server" Width="400" />
@@ -200,116 +199,110 @@
 			<br />
 			<asp:Label ID="lblWarning" runat="server" />
 		</p>--%>
-		<div style="margin-top: 10px; margin-bottom: 10px;">
-			<div>
-				<asp:CheckBox runat="server" ID="chkSpaceEscape" Checked="true" />
-				Change spaces to dashes &nbsp;&nbsp;&nbsp;&nbsp; [<asp:HyperLink runat="server" ID="lnkRefresh" Text="Refresh" />]
+			<div style="margin-top: 10px; margin-bottom: 10px;">
+				<div>
+					<asp:CheckBox runat="server" ID="chkSpaceEscape" Checked="true" />
+					Change spaces to dashes &nbsp;&nbsp;&nbsp;&nbsp; [<asp:HyperLink runat="server" ID="lnkRefresh" Text="Refresh" />]
 				<br />
-			</div>
-			<div>
-				<div id="fileuploader">
-					Upload
 				</div>
-			</div>
-			<div style="display: none;">
-				<input type="file" id="PostedFiles" name="PostedFiles" runat="server" />
-				<asp:HiddenField ID="FileDirectory" runat="server" />
-			</div>
-			<asp:Label ID="lblWarning" runat="server" />
-		</div>
-		<div class="scroll" id="fileZone">
-			<asp:Repeater ID="rpThumbs" runat="server">
-				<ItemTemplate>
-					<div class="ui-widget-header ui-corner-all thumbCell" runat="server" id="imgContainerGroup">
-						<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'thumb')">
-							<div id="imgWrapper" style="display: none;">
-								<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />
-							</div>
-							<div style="margin: 3px;" id="imgSubContainer">
-								<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
-									<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )  %>' ThumbSize="50"
-										ScaleImage="true" ToolTip="" />
-								</a>
-							</div>
-							<div style="margin: 3px; text-align: center;">
-								<%# String.Format( "{0}", Eval("FileName") ) %><br />
-								<%# String.Format( "{0:d}", Eval("FileDate") ) %>
-							</div>
-						</div>
+				<div>
+					<div id="fileuploader">
+						Upload
 					</div>
-				</ItemTemplate>
-			</asp:Repeater>
-			<asp:Repeater ID="rpFiles" runat="server">
-				<HeaderTemplate>
-					<table style="width: 98%;">
-						<tr class="headerRow">
-							<th style="width: 20px;">
-							</th>
-							<th style="width: 20px;">
-							</th>
-							<th class="headerRowText">
-								Filename
-							</th>
-							<th style="width: 150px;" class="headerRowText">
-								Date
-							</th>
-							<th>
-							</th>
-							<th style="width: 80px;" class="headerRowText">
-								Size
-							</th>
-						</tr>
-				</HeaderTemplate>
-				<ItemTemplate>
-					<tr>
-						<td>
-							<asp:CheckBox ID="chkRemove" runat="server" value='<%# Eval("FileName") %>' />
-						</td>
-						<td>
-							<img src="/c3-admin/images/<%# FileImageLink(String.Format("{0}", Eval("MimeType")))  %>.png" alt="filetype" />
-						</td>
-						<td>
-							<div class="ImgGroup" runat="server" id="imgContainerGroup">
-								<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'file')">
-									<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
-										<%# String.Format( "{0}", Eval("FileName") ) %></a>
-								</div>
+				</div>
+				<div style="display: none;">
+					<input type="file" id="PostedFiles" name="PostedFiles" runat="server" />
+					<asp:HiddenField ID="FileDirectory" runat="server" />
+				</div>
+				<asp:Label ID="lblWarning" runat="server" />
+			</div>
+			<div class="scroll" id="fileZone">
+				<asp:Repeater ID="rpThumbs" runat="server">
+					<ItemTemplate>
+						<div class="ui-widget-header ui-corner-all thumbCell" runat="server" id="imgContainerGroup">
+							<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'thumb')">
 								<div id="imgWrapper" style="display: none;">
 									<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />
 								</div>
+								<div style="margin: 3px;" id="imgSubContainer">
+									<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
+										<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )  %>' ThumbSize="50"
+											ScaleImage="true" ToolTip="" />
+									</a>
+								</div>
+								<div style="margin: 3px; text-align: center;">
+									<%# String.Format( "{0}", Eval("FileName") ) %><br />
+									<%# String.Format( "{0:d}", Eval("FileDate") ) %>
+								</div>
 							</div>
-						</td>
-						<td>
-							<asp:Literal ID="litFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>' />
-						</td>
-						<td>
-							&nbsp;
-						</td>
-						<td>
-							<asp:Literal ID="litFileSize" runat="server" Text='<%# String.Format( "{0}", Eval("FileSizeFriendly") ) %>' />
-						</td>
-					</tr>
-				</ItemTemplate>
-				<FooterTemplate>
-					</table></FooterTemplate>
-			</asp:Repeater>
-		</div>
-		<div>
-			<asp:HyperLink runat="server" ID="lnkThumbView" Text="View Image Thumbnails" />
-			<asp:HyperLink runat="server" ID="lnkFileView" Text="View All Files" />
-		</div>
-		<div id="imgWrapperMain" style="display: none;">
-			<div style="padding: 5px; min-height: 10px; min-width: 10px;">
-				<div id="imgPreviewCaption">
-					0x0
-				</div>
-				<img alt="document" id="imgThmbnailPreview" src="/c3-admin/images/document.png" class="thumbPreview" />
+						</div>
+					</ItemTemplate>
+				</asp:Repeater>
+				<asp:Repeater ID="rpFiles" runat="server">
+					<HeaderTemplate>
+						<table style="width: 98%;">
+							<tr class="headerRow">
+								<th style="width: 20px;"></th>
+								<th style="width: 20px;"></th>
+								<th class="headerRowText">Filename
+								</th>
+								<th style="width: 150px;" class="headerRowText">Date
+								</th>
+								<th></th>
+								<th style="width: 80px;" class="headerRowText">Size
+								</th>
+							</tr>
+					</HeaderTemplate>
+					<ItemTemplate>
+						<tr>
+							<td>
+								<asp:CheckBox ID="chkRemove" runat="server" value='<%# Eval("FileName") %>' />
+							</td>
+							<td>
+								<img src="/c3-admin/images/<%# FileImageLink(String.Format("{0}", Eval("MimeType")))  %>.png" alt="filetype" />
+							</td>
+							<td>
+								<div class="ImgGroup" runat="server" id="imgContainerGroup">
+									<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'file')">
+										<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
+											<%# String.Format( "{0}", Eval("FileName") ) %></a>
+									</div>
+									<div id="imgWrapper" style="display: none;">
+										<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />
+									</div>
+								</div>
+							</td>
+							<td>
+								<asp:Literal ID="litFileDate" runat="server" Text='<%# String.Format( "{0}", Eval("FileDate") ) %>' />
+							</td>
+							<td>&nbsp;
+							</td>
+							<td>
+								<asp:Literal ID="litFileSize" runat="server" Text='<%# String.Format( "{0}", Eval("FileSizeFriendly") ) %>' />
+							</td>
+						</tr>
+					</ItemTemplate>
+					<FooterTemplate>
+						</table>
+					</FooterTemplate>
+				</asp:Repeater>
 			</div>
-		</div>
-		<div style="display: block; margin-left: -9999px; float: left; max-height: 9000px; max-width: 9000px;">
-			<img alt="document" id="imgRealPreview" src="/c3-admin/images/document.png" />
-		</div>
-		<script type="text/javascript">
+			<div>
+				<asp:HyperLink runat="server" ID="lnkThumbView" Text="View Image Thumbnails" />
+				<asp:HyperLink runat="server" ID="lnkFileView" Text="View All Files" />
+			</div>
+			<div id="imgWrapperMain" style="display: none;">
+				<div style="padding: 5px; min-height: 10px; min-width: 10px;">
+					<div id="imgPreviewCaption">
+						0x0
+					</div>
+					<img alt="document" id="imgThmbnailPreview" src="/c3-admin/images/document.png" class="thumbPreview" />
+				</div>
+			</div>
+			<div style="display: block; margin-left: -9999px; float: left; max-height: 9000px; max-width: 9000px;">
+				<img alt="document" id="imgRealPreview" src="/c3-admin/images/document.png" />
+			</div>
+			<script type="text/javascript">
 
 			var imgSrc = '/c3-admin/images/document.png';
 
@@ -385,34 +378,34 @@
 					setTimeout("resizeImg();", 1500);
 				}
 			}
-		</script>
-		<asp:PlaceHolder ID="phRemove" runat="server">
+			</script>
+			<asp:PlaceHolder ID="phRemove" runat="server">
+				<p>
+					<br />
+					<asp:Button ID="btnRemove" runat="server" Text="Delete Checked" OnClick="btnRemove_Click" />
+				</p>
+			</asp:PlaceHolder>
 			<p>
 				<br />
-				<asp:Button ID="btnRemove" runat="server" Text="Delete Checked" OnClick="btnRemove_Click" />
-			</p>
-		</asp:PlaceHolder>
-		<p>
-			<br />
-			Selected File:
+				Selected File:
 			<asp:TextBox ID="txtSelectedFile" Columns="50" runat="server" />
-			<asp:Button Visible="false" ID="btnSelectedFile" runat="server" Text="Return Selection" OnClientClick="FileBrowserDialogue.mySubmit();" />
-			<asp:Button Visible="false" ID="btnReturnFile" runat="server" Text="Select File" OnClientClick="return cmsSetFileNameReturn();" />
-		</p>
-	</div>
-	<asp:Panel runat="server" ID="pnlTiny2">
-		<div class="mceActionPanel">
-			<input type="submit" id="insert" name="insert" value="Select" onclick="FileBrowserDialogue.mySubmit();return false;" />
-			<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
+				<asp:Button Visible="false" ID="btnSelectedFile" runat="server" Text="Return Selection" OnClientClick="FileBrowserDialogue.mySubmit();" />
+				<asp:Button Visible="false" ID="btnReturnFile" runat="server" Text="Select File" OnClientClick="return cmsSetFileNameReturn();" />
+			</p>
 		</div>
-	</asp:Panel>
-	<div style="display: none">
-		<asp:Panel runat="server" ID="pnlFileMgr">
-			<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName();return false;" />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
+		<asp:Panel runat="server" ID="pnlTiny2">
+			<div class="mceActionPanel">
+				<input type="submit" id="insert" name="insert" value="Select" onclick="FileBrowserDialogue.mySubmit();return false;" />
+				<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
+			</div>
 		</asp:Panel>
-	</div>
+		<div style="display: none">
+			<asp:Panel runat="server" ID="pnlFileMgr">
+				<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName();return false;" />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
+			</asp:Panel>
+		</div>
 	</form>
 </body>
 </html>

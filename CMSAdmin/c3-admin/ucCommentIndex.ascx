@@ -4,20 +4,17 @@
 </p>
 <table>
 	<tr>
-		<td class="tablecaption">
-			public:
+		<td class="tablecaption">public:
 		</td>
 		<td>
 			<asp:DropDownList ID="ddlActive" runat="server" />
 		</td>
-		<td class="tablecaption">
-			spam:
+		<td class="tablecaption">spam:
 		</td>
 		<td>
 			<asp:DropDownList ID="ddlSpam" runat="server" />
 		</td>
-		<td class="tablecaption">
-			page size:
+		<td class="tablecaption">page size:
 		</td>
 		<td>
 			<asp:DropDownList ID="ddlSize" runat="server">

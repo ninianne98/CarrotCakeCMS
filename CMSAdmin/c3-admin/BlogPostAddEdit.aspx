@@ -350,22 +350,21 @@
 		<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px; width: 500px;">
 			<p>
 				<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
-				<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal></p>
+				<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal>
+			</p>
 		</div>
 	</div>
 	<div id="PageContents">
 		<table style="width: 700px;">
 			<tr>
-				<td style="width: 125px;" class="tablecaption">
-					last updated:
+				<td style="width: 125px;" class="tablecaption">last updated:
 				</td>
 				<td style="width: 575px;">
 					<asp:Label ID="lblUpdated" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					create date:
+				<td class="tablecaption">create date:
 				</td>
 				<td>
 					<asp:Label ID="lblCreateDate" runat="server" /><br />
@@ -373,24 +372,21 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					release date:
+				<td class="tablecaption">release date:
 				</td>
 				<td>
 					<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" OnBlur="CheckFileName()" OnChange="CheckFileName();" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					retire date:
+				<td class="tablecaption">retire date:
 				</td>
 				<td>
 					<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					titlebar:
+				<td class="tablecaption">titlebar:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server"
@@ -412,8 +408,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					filename:
+				<td class="tablecaption">filename:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtPageSlug" runat="server"
@@ -433,8 +428,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					navigation:
+				<td class="tablecaption">navigation:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60" MaxLength="200" />
@@ -443,26 +437,23 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					page head:
+				<td class="tablecaption">page head:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60" MaxLength="200" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					thumbnail:
+				<td class="tablecaption">thumbnail:
 					<br />
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
-					<input type="button" id="Button1" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>');return false;" />
+					<input type="button" id="Button1" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>	');return false;" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					&nbsp;
+				<td class="tablecaption">&nbsp;
 				</td>
 				<td>
 					<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
@@ -471,8 +462,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					credit author:
+				<td class="tablecaption">credit author:
 				</td>
 				<td>
 					<b>find:</b> <span id="spanResults"></span>
@@ -482,16 +472,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 125px;" class="tablecaption">
-					meta keywords:
+				<td style="width: 125px;" class="tablecaption">meta keywords:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					meta description:
+				<td class="tablecaption">meta description:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine"
@@ -537,8 +525,7 @@
 		</table>
 		<table style="width: 700px;">
 			<tr>
-				<td class="tablecaption">
-					template:
+				<td class="tablecaption">template:
 				</td>
 				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server" />
@@ -547,8 +534,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-				</td>
+				<td class="tablecaption"></td>
 				<td align="right">
 					<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
 				</td>
@@ -568,7 +554,8 @@
 					<div style="margin-bottom: 25px;">
 						<div runat="server" id="divLeft">
 							body (left)<br />
-							<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a></div>
+							<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a>
+						</div>
 						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
@@ -577,7 +564,8 @@
 					<div style="margin-bottom: 25px;">
 						<div runat="server" id="divCenter">
 							body (main/center)<br />
-							<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
+							<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
+						</div>
 						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
@@ -586,7 +574,8 @@
 					<div style="margin-bottom: 25px;">
 						<div runat="server" id="divRight">
 							body (right)<br />
-							<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a></div>
+							<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a>
+						</div>
 						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
@@ -596,8 +585,7 @@
 						<div class="scroll-area" style="height: 310px; width: 775px;">
 							<div class="SortableGrid">
 								<div>
-									<h3>
-										HTML Rich Text Widgets</h3>
+									<h3>HTML Rich Text Widgets</h3>
 									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvHtmControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 										<EmptyDataTemplate>
@@ -635,8 +623,7 @@
 								</div>
 								<br />
 								<div>
-									<h3>
-										Plain Text Widgets</h3>
+									<h3>Plain Text Widgets</h3>
 									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvTxtControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 										<EmptyDataTemplate>
@@ -698,10 +685,10 @@
 			<tr>
 				<td align="left">
 					<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; min-height: 22px;">
-						&nbsp;</div>
+						&nbsp;
+					</div>
 				</td>
-				<td>
-					&nbsp;&nbsp;
+				<td>&nbsp;&nbsp;
 				</td>
 			</tr>
 		</table>
@@ -723,15 +710,13 @@
 					<td>
 						<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
 					</td>
-					<td>
-						&nbsp;&nbsp;
+					<td>&nbsp;&nbsp;
 					</td>
 					<asp:PlaceHolder runat="server" ID="pnlReview">
 						<td align="right">
 							<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="Key" DataTextField="Value" />
 						</td>
-						<td>
-							&nbsp;&nbsp;
+						<td>&nbsp;&nbsp;
 						</td>
 						<td align="left">
 							<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
@@ -789,19 +774,19 @@
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
 				$('#<%=btnSave.ClientID %>').click();
-			}
 		}
+	}
 
-		function ClickSaveVisitBtn() {
-			if (cmsIsPageValid()) {
-				$('#<%=btnSaveVisit.ClientID %>').click();
-			}
+	function ClickSaveVisitBtn() {
+		if (cmsIsPageValid()) {
+			$('#<%=btnSaveVisit.ClientID %>').click();
 		}
+	}
 
-		function SaveCommon() {
-			cmsSaveMakeOKAndCancelLeave();
-			var ret = cmsPreSaveTrigger();
-			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+	function SaveCommon() {
+		cmsSaveMakeOKAndCancelLeave();
+		var ret = cmsPreSaveTrigger();
+		cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
 			return true;
 		}
 	</script>

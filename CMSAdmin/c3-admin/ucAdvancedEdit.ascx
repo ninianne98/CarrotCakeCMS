@@ -176,7 +176,8 @@
 							<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
 								<p>
 									<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
-									<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal></p>
+									<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal>
+								</p>
 							</div>
 						</div>
 						<div id="cmsMainToolbox" class="cmsGlossySeaGreen">
@@ -202,8 +203,7 @@
 										</div>
 										<asp:Repeater ID="rpTools" runat="server">
 											<HeaderTemplate>
-												<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 240px; padding: 5px;
-													margin: 5px; float: left; border: solid 1px #000;">
+												<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 240px; padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
 											</HeaderTemplate>
 											<ItemTemplate>
 												<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper">
@@ -220,7 +220,8 @@
 												</div>
 											</ItemTemplate>
 											<FooterTemplate>
-												</div></FooterTemplate>
+												</div>
+											</FooterTemplate>
 										</asp:Repeater>
 										<%} else { %>
 										<div class="cmsCenter5px">
@@ -302,19 +303,23 @@
 	<div style="display: none" class="cmsGlossySeaGreen">
 		<div id="CMSmodalalert" title="CarrotCake CMS" class="cmsGlossySeaGreen">
 			<p id="CMSmodalalertmessage">
-				&nbsp;</p>
+				&nbsp;
+			</p>
 		</div>
 		<div id="CMSremoveconfirm" title="Remove Widget?" class="cmsGlossySeaGreen">
 			<p id="CMSremoveconfirmmsg">
-				Are you sure you want to remove this widget?</p>
+				Are you sure you want to remove this widget?
+			</p>
 		</div>
 		<div id="CMSsavedconfirm" title="Page Saved!" class="cmsGlossySeaGreen">
 			<p id="CMSsavedconfirmmsg">
-				The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...</p>
+				The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...
+			</p>
 		</div>
 		<div id="CMScancelconfirm" title="Quit Editor?" class="cmsGlossySeaGreen">
 			<p id="CMScancelconfirmmsg">
-				Are you sure you want to leave the editor? All changes will be lost!</p>
+				Are you sure you want to leave the editor? All changes will be lost!
+			</p>
 		</div>
 	</div>
 	<div style="width: 1024px; height: 2px; clear: both; left: 0; border: 0px dotted #c0c0c0; z-index: 5000;">
@@ -322,6 +327,7 @@
 	<div style="width: 2px; height: 1024px; clear: both; left: 0; border: 0px dotted #c0c0c0; z-index: 5000;">
 	</div>
 	<div style="clear: both;">
-		&nbsp;</div>
+		&nbsp;
+	</div>
 </div>
 <!-- CarrotCake CMS Editor Control END -->

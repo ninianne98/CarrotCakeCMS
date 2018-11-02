@@ -97,8 +97,7 @@
 	<br />
 	<table style="width: 700px;">
 		<tr>
-			<td style="width: 90px;" class="tablecaption">
-				caption:
+			<td style="width: 90px;" class="tablecaption">caption:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateSlug()" ID="txtLabel" runat="server" Columns="45"
@@ -108,8 +107,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				url slug:
+			<td class="tablecaption">url slug:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckSlug()" ID="txtSlug" runat="server" Columns="45"
@@ -126,8 +124,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				public:
+			<td class="tablecaption">public:
 			</td>
 			<td>
 				<asp:CheckBox ID="chkPublic" runat="server" />

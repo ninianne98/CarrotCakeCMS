@@ -9,7 +9,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
-		&nbsp;</p>
+		&nbsp;
+	</p>
 	<div>
 		<div class="ui-widget" id="divInfoMsg" runat="server" style="width: 400px;">
 			<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
@@ -70,7 +71,8 @@
 					Bio Data</label>
 			</legend>
 			<div runat="server" id="divCenter">
-				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
+				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
+			</div>
 			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 				Rows="20" Columns="60" />
 			<br />

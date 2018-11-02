@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+using System;
+using System.Collections.ObjectModel;
 
 /*
 * CarrotCake CMS

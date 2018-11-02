@@ -3,16 +3,17 @@
 <link href="/c3-admin/includes/edit-notifier.css" rel="stylesheet" type="text/css" />
 
 <div style="clear: both;">
-	&nbsp;</div>
+	&nbsp;
+</div>
 <div class="cmsNavFooterBox">
 	<p class="cmsFooterP">
-		<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">EDIT</a> 
-		<a class="cmsFooterLinks" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a> 
-		<a class="cmsFooterLinks" target="_top" href="<%=PageIndexURL %>">CONTENT INDEX</a> 
+		<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">EDIT</a>
+		<a class="cmsFooterLinks" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a>
+		<a class="cmsFooterLinks" target="_top" href="<%=PageIndexURL %>">CONTENT INDEX</a>
 		<a class="cmsFooterLinks" target="_top" href="/c3-admin/ModuleIndex.aspx">MODULE INDEX</a>
 	</p>
 	<p class="cmsFooterP">
-		<a class="cmsFooterLinks" href="/">HOME PAGE</a> 
+		<a class="cmsFooterLinks" href="/">HOME PAGE</a>
 		<a class="cmsFooterLinks" runat="server" id="lnkParent" href="#">PARENT PAGE</a>
 		<a class="cmsFooterLinks" runat="server" id="lnkCurrent" href="#">CURRENT PAGE</a>
 		<asp:Label ID="lblChildDDL" runat="server" CssClass="cmsFooterLinks">CHILD PAGES</asp:Label>
@@ -27,8 +28,11 @@
 		<asp:Literal runat="server" ID="litTemplate" />
 	</p>
 	<p class="cmsFooterP cmsFooterLinks">
-		Release Date: <asp:Literal runat="server" ID="litRelease" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-		Retire Date: <asp:Literal runat="server" ID="litRetire" />
+		Release Date:
+		<asp:Literal runat="server" ID="litRelease" />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		Retire Date:
+		<asp:Literal runat="server" ID="litRetire" />
 	</p>
 </div>
 <script type="text/javascript">
@@ -82,7 +86,7 @@
 </div>
 
 <div style="display: none;">
-	<img src="/c3-admin/images/ui-anim_basic_16x16.gif" alt="anim_basic_16x16"/>
+	<img src="/c3-admin/images/ui-anim_basic_16x16.gif" alt="anim_basic_16x16" />
 	<img src="/c3-admin/images/x.png" alt="x" />
 	<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
 	<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />

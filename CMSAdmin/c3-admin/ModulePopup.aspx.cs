@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Web.UI;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -32,6 +32,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			base.OnInit(e);
 		}
-
 	}
 }

@@ -40,6 +40,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void Page_Load(object sender, EventArgs e) {
 		}
-
 	}
 }

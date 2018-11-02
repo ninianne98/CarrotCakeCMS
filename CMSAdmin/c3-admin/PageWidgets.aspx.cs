@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Carrotware.CMS.UI.Controls;
+using System;
 using System.Collections.Generic;
-using Carrotware.CMS.UI.Controls;
 
 /*
 * CarrotCake CMS

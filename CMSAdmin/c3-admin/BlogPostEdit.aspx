@@ -19,32 +19,28 @@
 		<asp:Literal ID="litPageName" runat="server" /></h2>
 	<table style="width: 700px;">
 		<tr>
-			<td style="width: 125px;" class="tablecaption">
-				last updated:
+			<td style="width: 125px;" class="tablecaption">last updated:
 			</td>
 			<td style="width: 575px;">
 				<asp:Label ID="lblUpdated" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				release date:
+			<td class="tablecaption">release date:
 			</td>
 			<td>
 				<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				retire date:
+			<td class="tablecaption">retire date:
 			</td>
 			<td>
 				<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				titlebar:
+			<td class="tablecaption">titlebar:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitle" runat="server" Columns="60" MaxLength="200" />
@@ -53,8 +49,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				navigation:
+			<td class="tablecaption">navigation:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60" MaxLength="200" />
@@ -63,26 +58,23 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				page head:
+			<td class="tablecaption">page head:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60" MaxLength="200" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				thumbnail:
+			<td class="tablecaption">thumbnail:
 				<br />
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
-				<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturnPop('<%=txtThumb.ClientID %>');return false;" />
+				<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturnPop('<%=txtThumb.ClientID %>	');return false;" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				&nbsp;
+			<td class="tablecaption">&nbsp;
 			</td>
 			<td>
 				<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
@@ -91,8 +83,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				credit author:
+			<td class="tablecaption">credit author:
 			</td>
 			<td>
 				<b>find:</b> <span id="spanResults"></span>
@@ -102,16 +93,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				meta keywords:
+			<td class="tablecaption">meta keywords:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				meta description:
+			<td class="tablecaption">meta description:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"

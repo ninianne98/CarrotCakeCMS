@@ -7,8 +7,7 @@
 					<img class="imgNoBorder" src="/c3-admin/images/table.png" alt="View Page Index" title="View Page Index" />
 					View Page Index</a>
 			</td>
-			<td>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</td>
 			<td style="width: 48%;">
 				<a href="PageTemplateUpdate.aspx">
@@ -39,8 +38,7 @@
 					<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add as WYSIWYG" />
 					Add Page (with HTML editor)</a>
 			</td>
-			<td>
-				&nbsp;
+			<td>&nbsp;
 			</td>
 			<td style="width: 48%;">
 				<a href="PageAddEdit.aspx?mode=raw&id=">

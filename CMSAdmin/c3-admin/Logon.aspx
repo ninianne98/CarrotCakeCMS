@@ -14,11 +14,9 @@
 								<div style="height: 35px; width: 50px; border: 1px solid #ffffff;">
 								</div>
 							</td>
-							<td>
-								&nbsp;
+							<td>&nbsp;
 							</td>
-							<td>
-								&nbsp;<b class="caption">username</b>
+							<td>&nbsp;<b class="caption">username</b>
 								<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName"
 									ErrorMessage="!" ToolTip="Username is required" ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
 								<br />
@@ -36,8 +34,7 @@
 								<div style="height: 35px; width: 10px; border: 1px solid #ffffff;">
 								</div>
 							</td>
-							<td>
-								&nbsp;
+							<td>&nbsp;
 							</td>
 							<td>
 								<br />
@@ -53,16 +50,14 @@
 								<div style="height: 25px; width: 10px; border: 1px solid #ffffff;">
 								</div>
 							</td>
-							<td>
-								&nbsp;
+							<td>&nbsp;
 							</td>
 							<td>
 								<div style="float: right; clear: both; margin-right: 10px;">
 									<asp:Button ID="cmdLogon" runat="server" Text="Logon" CommandName="Login" OnClick="cmdLogon_Click" ValidationGroup="loginTemplate" TabIndex="3" />
 								</div>
 							</td>
-							<td>
-								&nbsp;
+							<td>&nbsp;
 							</td>
 						</tr>
 					</table>

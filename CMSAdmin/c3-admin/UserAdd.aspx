@@ -85,8 +85,7 @@
 								<td>
 									<asp:Button ID="StepNextButton" runat="server" Text="Create User" CommandName="MoveNext" ValidationGroup="createWizard" TabIndex="5" OnClientClick="return ClickApplyBtn()" />
 								</td>
-								<td>
-									&nbsp;
+								<td>&nbsp;
 								</td>
 								<td>
 									<asp:Button ID="CancelButtonButton" runat="server" Text="Cancel" CommandName="Cancel" TabIndex="6" />
@@ -97,8 +96,7 @@
 				</asp:CreateUserWizardStep>
 				<asp:CompleteWizardStep ID="CreateUserWizardStep2" runat="server">
 					<ContentTemplate>
-						<h3>
-							Account Created</h3>
+						<h3>Account Created</h3>
 						<p>
 							&nbsp;
 						</p>

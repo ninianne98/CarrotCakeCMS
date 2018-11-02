@@ -71,8 +71,7 @@
 						</p>
 					</fieldset>
 				</td>
-				<td>
-					&nbsp;&nbsp;&nbsp;
+				<td>&nbsp;&nbsp;&nbsp;
 				</td>
 				<td>
 					<fieldset style="width: 400px;">

@@ -1,5 +1,5 @@
-﻿using System;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
+using System;
 
 /*
 * CarrotCake CMS

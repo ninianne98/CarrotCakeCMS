@@ -3,6 +3,7 @@
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
+
 <%@ Register Src="ucSitePageDrillDown.ascx" TagName="ucSitePageDrillDown" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
@@ -42,7 +43,7 @@
 
 				var theTitle = $(tTitle).val();
 				var theFile = $(tValidFile).val();
-				var sGoLiveDate = '<%=SiteData.CurrentSite.Now.ToString(Helper.ShortDatePattern) %>';
+				var sGoLiveDate = '<%=this.CurrentTime %>';
 
 				if (theTitle.length > 0) {
 
@@ -137,8 +138,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<asp:Panel runat="server" ID="pnlSaved">
-		<h2>
-			The page
+		<h2>The page
 			<asp:HyperLink ID="lnkNew" runat="server" Target="_blank">
 				<asp:Literal ID="litPageName" runat="server" />
 				<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" />
@@ -158,8 +158,7 @@
 		</p>
 		<table style="width: 700px;">
 			<tr>
-				<td style="width: 125px;" class="tablecaption">
-					titlebar:
+				<td style="width: 125px;" class="tablecaption">titlebar:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server"
@@ -171,8 +170,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					filename:
+				<td class="tablecaption">filename:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
@@ -190,8 +188,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					navigation:
+				<td class="tablecaption">navigation:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="45" MaxLength="200" />
@@ -200,16 +197,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					page head:
+				<td class="tablecaption">page head:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="45" MaxLength="200" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					meta keywords:
+				<td class="tablecaption">meta keywords:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;"
@@ -217,8 +212,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					meta description:
+				<td class="tablecaption">meta description:
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
@@ -226,8 +220,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					parent page:
+				<td class="tablecaption">parent page:
 					<br />
 				</td>
 				<td>
@@ -263,13 +256,17 @@
 		</script>
 	</asp:Panel>
 	<p>
-		&nbsp;</p>
+		&nbsp;
+	</p>
 	<p>
-		&nbsp;</p>
+		&nbsp;
+	</p>
 	<p>
-		&nbsp;</p>
+		&nbsp;
+	</p>
 	<p>
-		&nbsp;</p>
+		&nbsp;
+	</p>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

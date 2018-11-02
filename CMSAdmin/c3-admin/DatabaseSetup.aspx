@@ -4,12 +4,11 @@
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<style type="text/css">
-		.errMsg
-		{
+		.errMsg {
 			background-color: #FFE0E0;
 		}
-		.okMsg
-		{
+
+		.okMsg {
 			background-color: #ffffff;
 		}
 	</style>
@@ -36,10 +35,12 @@
 					<%#Eval("Response")%>
 				</div>
 				<div>
-					<%#Eval("ExceptionText")%></div>
+					<%#Eval("ExceptionText")%>
+				</div>
 				<div>
 					<i>
-						<%#Eval("InnerExceptionText")%></i></div>
+						<%#Eval("InnerExceptionText")%></i>
+				</div>
 				<hr />
 			</ItemTemplate>
 			<FooterTemplate>

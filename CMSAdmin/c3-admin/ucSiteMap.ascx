@@ -9,11 +9,13 @@
 		margin-top: 2px;
 		margin-bottom: 2px;
 	}
+
 	#cmsSiteMap a {
 		text-decoration: none;
 		color: #000000;
 		border: 0;
 	}
+
 	#cmsSiteMap li {
 		list-style: none;
 		padding: 0;
@@ -22,6 +24,7 @@
 		margin-left: 5px;
 		margin-bottom: 8px;
 	}
+
 	#cmsSiteMap .image-handle {
 		padding: 3px;
 		margin: 0;
@@ -32,6 +35,7 @@
 	#cmsSiteMap span.page-status, #cmsSiteMap span.handle-expand a {
 		cursor: pointer;
 	}
+
 	#cmsSiteMap span.handle-expand {
 		width: 50px !important;
 		height: 25px !important;
@@ -41,6 +45,7 @@
 	#cmsSiteMap img {
 		vertical-align: text-top;
 	}
+
 	.HighlightPH {
 		height: 25px !important;
 		margin: 5px;
@@ -206,8 +211,7 @@
 			<ol class="sortable">
 		</HeaderTemplate>
 		<ItemTemplate>
-			<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand" id="filename-<%#Eval("Root_ContentID") %>">
-				&nbsp; </span>
+			<li id="<%#Eval("Root_ContentID") %>"><span class="page-info" id="handle-<%#Eval("Root_ContentID") %>"><span class="handle-expand" id="filename-<%#Eval("Root_ContentID") %>">&nbsp; </span>
 				<img src="/c3-admin/images/webpage.png" class="imgNoBorder image-handle" title="webpage" alt="webpage" id="img-<%#Eval("Root_ContentID") %>" />
 				<span class="page-status"><a href="<%#Eval("FileName")%>" target="_blank">
 					<%#Eval("FileName")%>
@@ -221,7 +225,8 @@
 			</li>
 		</ItemTemplate>
 		<FooterTemplate>
-			</ol></FooterTemplate>
+			</ol>
+		</FooterTemplate>
 	</asp:Repeater>
 	<asp:HiddenField runat="server" ID="hdnInactive" Visible="false" Value="/c3-admin/images/cancel.png" />
 	<asp:HiddenField runat="server" ID="hdnActive" Visible="false" Value="/c3-admin/images/accept.png" />
@@ -234,5 +239,6 @@
 	</HeaderTemplate>
 	<%--use ItemTemplate from top level--%>
 	<FooterTemplate>
-		</ol></FooterTemplate>
+		</ol>
+	</FooterTemplate>
 </asp:Repeater>

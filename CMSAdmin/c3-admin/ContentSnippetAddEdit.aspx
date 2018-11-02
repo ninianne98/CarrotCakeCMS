@@ -217,13 +217,13 @@
 		<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px; width: 500px;">
 			<p>
 				<span class="ui-icon ui-icon-info" style="float: left; margin: 3px;"></span>
-				<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal></p>
+				<asp:Literal ID="litUser" runat="server">&nbsp;</asp:Literal>
+			</p>
 		</div>
 	</div>
 	<table style="width: 820px;">
 		<tr>
-			<td style="width: 110px;" class="tablecaption">
-				name:
+			<td style="width: 110px;" class="tablecaption">name:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="GenerateSlug()" ID="txtLabel" runat="server" Columns="60"
@@ -233,8 +233,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				slug:
+			<td class="tablecaption">slug:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckSlug()" ID="txtSlug" runat="server" Columns="60"
@@ -252,48 +251,45 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				release date:
+			<td class="tablecaption">release date:
 			</td>
 			<td>
 				<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				retire date:
+			<td class="tablecaption">retire date:
 			</td>
 			<td>
 				<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				active:
+			<td class="tablecaption">active:
 			</td>
 			<td>
 				<asp:CheckBox ID="chkPublic" runat="server" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				snippet text:
+			<td class="tablecaption">snippet text:
 			</td>
 			<td>
 				<div runat="server" id="divCenter">
-					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a></div>
+					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
+				</div>
 				<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 650px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 					Rows="20" Columns="60" />
 				<br />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				&nbsp;
+			<td class="tablecaption">&nbsp;
 			</td>
 			<td>
 				<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; min-height: 22px;">
-					&nbsp;</div>
+					&nbsp;
+				</div>
 			</td>
 		</tr>
 	</table>
@@ -307,15 +303,13 @@
 					&nbsp;&nbsp;
 					<asp:Button ValidationGroup="deleteForm" ID="btnDeleteButton" runat="server" OnClientClick="return DeleteItem()" Text="Delete" />
 				</td>
-				<td>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</td>
 				<asp:PlaceHolder runat="server" ID="pnlReview">
 					<td align="right">
 						<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="Key" DataTextField="Value" />
 					</td>
-					<td>
-						&nbsp;&nbsp;
+					<td>&nbsp;&nbsp;
 					</td>
 					<td align="left">
 						<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
@@ -361,9 +355,11 @@
 		<div id="confirmRevert" title="Really Revert?">
 			<div id="confirmRevertMsg">
 				<p>
-					Are you sure you want to open this older version of the content? All unsaved changes will be lost.</p>
+					Are you sure you want to open this older version of the content? All unsaved changes will be lost.
+				</p>
 				<p>
-					This will not apply changes to the content until you save the prior version, generating a new copy.</p>
+					This will not apply changes to the content until you save the prior version, generating a new copy.
+				</p>
 			</div>
 		</div>
 	</div>

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Controls;
+using System;
 using System.Linq;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -138,6 +138,5 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Master.ShowSave();
 		}
-
 	}
 }

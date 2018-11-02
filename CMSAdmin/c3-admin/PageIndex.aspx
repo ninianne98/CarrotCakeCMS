@@ -18,8 +18,7 @@
 	<uc1:ucPageMenuItems ID="ucPageMenuItems1" runat="server" />
 	<table>
 		<tr>
-			<td class="tablecaption">
-				show content:
+			<td class="tablecaption">show content:
 			</td>
 			<td colspan="3">
 				<div class="jqradioset">
@@ -31,8 +30,7 @@
 	</table>
 	<table>
 		<tr runat="server" id="trFilter">
-			<td class="tablecaption">
-				page filter:
+			<td class="tablecaption">page filter:
 				<br />
 			</td>
 			<td>
@@ -40,8 +38,7 @@
 				</div>
 				<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
 			</td>
-			<td>
-				&nbsp;&nbsp;
+			<td>&nbsp;&nbsp;
 			</td>
 			<td>
 				<!-- parent page plugin-->

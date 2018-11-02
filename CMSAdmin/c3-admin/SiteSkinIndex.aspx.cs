@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+using System;
+using System.Linq;
 
 /*
 * CarrotCake CMS

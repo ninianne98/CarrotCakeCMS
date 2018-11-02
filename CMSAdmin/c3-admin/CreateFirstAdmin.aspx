@@ -4,8 +4,7 @@
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<style type="text/css">
-		#CreateUserForm table
-		{
+		#CreateUserForm table {
 			width: 400px !important;
 		}
 	</style>
@@ -88,8 +87,7 @@
 								<td>
 									<asp:Button ID="StepNextButton" runat="server" Text="Create User" CommandName="MoveNext" ValidationGroup="createWizard" TabIndex="5" />
 								</td>
-								<td>
-									&nbsp;
+								<td>&nbsp;
 								</td>
 								<td>
 									<asp:Button ID="CancelButtonButton" runat="server" Text="Cancel" CommandName="Cancel" TabIndex="6" />
@@ -100,8 +98,7 @@
 				</asp:CreateUserWizardStep>
 				<asp:CompleteWizardStep ID="CreateUserWizardStep2" runat="server">
 					<ContentTemplate>
-						<h3>
-							Account Created</h3>
+						<h3>Account Created</h3>
 						<p>
 							&nbsp;
 						</p>

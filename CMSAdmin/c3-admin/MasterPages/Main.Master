@@ -75,125 +75,127 @@
 </head>
 <body>
 	<form id="aspnetForm" runat="server">
-	<div id="cmsAjaxMainDiv">
-		<div id="headercontainer">
-			<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
-			<div id="header">
-				<h2>
-					<asp:Literal ID="litVersion" runat="server" /></h2>
-				<div style="clear: both">
+		<div id="cmsAjaxMainDiv">
+			<div id="headercontainer">
+				<asp:ScriptManager ID="ScriptManager1" runat="server" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" />
+				<div id="header">
+					<h2>
+						<asp:Literal ID="litVersion" runat="server" /></h2>
+					<div style="clear: both">
+					</div>
+					<h3>
+						<asp:Literal ID="litSiteIdent" runat="server" />
+						<asp:Literal ID="litTag" runat="server" />
+					</h3>
+					<div class="widthshim">
+					</div>
 				</div>
-				<h3>
-					<asp:Literal ID="litSiteIdent" runat="server" />
-					<asp:Literal ID="litTag" runat="server" />
-				</h3>
-				<div class="widthshim">
+				<div style="display: none">
+					<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+				</div>
+			</div>
+			<div id="nav-menu-container">
+				<ul id="nav-menu">
+					<li runat="server" id="tabHome"><a href="/c3-admin/">
+						<img alt="Home" src="/c3-admin/images/house.png" /></a></li>
+					<li runat="server" id="tabMainTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Site </a>
+						<ul class="children">
+							<%--<li runat="server" id="tabDashboard"><a href="/c3-admin/">Dashboard</a> </li>--%>
+							<li runat="server" id="tabMain"><a href="/c3-admin/SiteInfo.aspx">Site Info</a> </li>
+							<li runat="server" id="tabHistory"><a href="/c3-admin/ContentEditHistory.aspx">Content Edit History</a> </li>
+							<li runat="server" id="tabContentSkin"><a href="/c3-admin/SiteSkinIndex.aspx">Site Skin Index</a> </li>
+							<li runat="server" id="tabMainTemplate"><a href="/c3-admin/SiteTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
+							<li runat="server" id="tabStatusChange"><a href="/c3-admin/SiteContentStatusChange.aspx">Bulk Change Status</a> </li>
+							<li runat="server" id="tabExportSite"><a href="/c3-admin/SiteExport.aspx">Export Site</a> </li>
+							<li runat="server" id="tabImportContent"><a href="/c3-admin/PageImport.aspx">Import Content</a> </li>
+						</ul>
+					</li>
+					<li runat="server" id="tabContentTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Pages </a>
+						<ul class="children">
+							<li runat="server" id="tabContent"><a href="/c3-admin/PageIndex.aspx">Page Index</a> </li>
+							<li runat="server" id="tabAddContent"><a href="/c3-admin/PageAddEdit.aspx">Add Page</a> </li>
+							<li runat="server" id="tabContentTemplate"><a href="/c3-admin/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
+							<li runat="server" id="tabContentSiteMap"><a href="/c3-admin/SiteMap.aspx">Edit Site Map</a> </li>
+							<li runat="server" id="tabContentCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
+						</ul>
+					</li>
+					<li runat="server" id="tabBlogTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
+						<ul class="children">
+							<li runat="server" id="tabBlogContent"><a href="/c3-admin/BlogPostIndex.aspx">Blog Post Index</a> </li>
+							<li runat="server" id="tabAddBlogContent"><a href="/c3-admin/BlogPostAddEdit.aspx">Add Blog Post</a> </li>
+							<li runat="server" id="tabBlogTemplate"><a href="/c3-admin/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
+							<li runat="server" id="tabBlogCategoryIndex"><a href="/c3-admin/CategoryIndex.aspx">Blog Category Index</a> </li>
+							<li runat="server" id="tabBlogTagIndex"><a href="/c3-admin/TagIndex.aspx">Blog Tag Index</a> </li>
+							<li runat="server" id="tabBlogCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
+						</ul>
+					</li>
+					<li runat="server" id="tabExtensions" class="sub"><a href="javascript:void(0)" class="lnkPopup">Extensions </a>
+						<ul class="children">
+							<li runat="server" id="tabModules"><a href="/c3-admin/ModuleIndex.aspx">Modules</a> </li>
+							<li runat="server" id="tabTxtWidgets"><a href="/c3-admin/TextWidgetIndex.aspx">Text Widgets</a> </li>
+							<li runat="server" id="tabSnippets"><a href="/c3-admin/ContentSnippetIndex.aspx">Content Snippets</a> </li>
+						</ul>
+					</li>
+					<li><a href="javascript:void(0)" class="lnkPopup" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
+					<li runat="server" id="tabUserSecurity" class="sub"><a href="javascript:void(0)" class="lnkPopup">Security </a>
+						<ul class="children">
+							<li runat="server" id="tabUserAdmin"><a href="/c3-admin/UserMembership.aspx">Users</a> </li>
+							<li runat="server" id="tabGroupAdmin"><a href="/c3-admin/UserGroups.aspx">Groups</a> </li>
+							<li runat="server" id="tabSites"><a href="/c3-admin/SiteIndex.aspx">Sites</a> </li>
+						</ul>
+					</li>
+					<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/About.aspx?');">About</a></li>
+					<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
+					<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
+						<%=String.Format("My Profile [{0}]", this.UserName) %></a>
+						<ul class="children">
+							<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
+							<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>
+							<li><a href="javascript:void(0)" class="lnkPopup" onclick="LogoutLink();">Logout</a> </li>
+						</ul>
+					</li>
+					<li>&nbsp;</li>
+				</ul>
+			</div>
+			<div class="widthshim">
+			</div>
+			<div id="content">
+				<div class="pad-content">
+					<h1 class="headingColor">
+						<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
+						</asp:ContentPlaceHolder>
+					</h1>
+					<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
+						<ContentTemplate>
+							<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+							</asp:ContentPlaceHolder>
+						</ContentTemplate>
+					</asp:UpdatePanel>
+					<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
+					</asp:ContentPlaceHolder>
 				</div>
 			</div>
 			<div style="display: none">
-				<asp:Button ID="cmdDummy" runat="server"></asp:Button>
-			</div>
-		</div>
-		<div id="nav-menu-container">
-			<ul id="nav-menu">
-				<li runat="server" id="tabHome"><a href="/c3-admin/">
-					<img alt="Home" src="/c3-admin/images/house.png" /></a></li>
-				<li runat="server" id="tabMainTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Site </a>
-					<ul class="children">
-						<%--<li runat="server" id="tabDashboard"><a href="/c3-admin/">Dashboard</a> </li>--%>
-						<li runat="server" id="tabMain"><a href="/c3-admin/SiteInfo.aspx">Site Info</a> </li>
-						<li runat="server" id="tabHistory"><a href="/c3-admin/ContentEditHistory.aspx">Content Edit History</a> </li>
-						<li runat="server" id="tabContentSkin"><a href="/c3-admin/SiteSkinIndex.aspx">Site Skin Index</a> </li>
-						<li runat="server" id="tabMainTemplate"><a href="/c3-admin/SiteTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
-						<li runat="server" id="tabStatusChange"><a href="/c3-admin/SiteContentStatusChange.aspx">Bulk Change Status</a> </li>
-						<li runat="server" id="tabExportSite"><a href="/c3-admin/SiteExport.aspx">Export Site</a> </li>
-						<li runat="server" id="tabImportContent"><a href="/c3-admin/PageImport.aspx">Import Content</a> </li>
-					</ul>
-				</li>
-				<li runat="server" id="tabContentTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Pages </a>
-					<ul class="children">
-						<li runat="server" id="tabContent"><a href="/c3-admin/PageIndex.aspx">Page Index</a> </li>
-						<li runat="server" id="tabAddContent"><a href="/c3-admin/PageAddEdit.aspx">Add Page</a> </li>
-						<li runat="server" id="tabContentTemplate"><a href="/c3-admin/PageTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
-						<li runat="server" id="tabContentSiteMap"><a href="/c3-admin/SiteMap.aspx">Edit Site Map</a> </li>
-						<li runat="server" id="tabContentCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=ContentEntry">Page Comment Index</a> </li>
-					</ul>
-				</li>
-				<li runat="server" id="tabBlogTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">Posts </a>
-					<ul class="children">
-						<li runat="server" id="tabBlogContent"><a href="/c3-admin/BlogPostIndex.aspx">Blog Post Index</a> </li>
-						<li runat="server" id="tabAddBlogContent"><a href="/c3-admin/BlogPostAddEdit.aspx">Add Blog Post</a> </li>
-						<li runat="server" id="tabBlogTemplate"><a href="/c3-admin/BlogPostTemplateUpdate.aspx">Bulk Apply Templates</a> </li>
-						<li runat="server" id="tabBlogCategoryIndex"><a href="/c3-admin/CategoryIndex.aspx">Blog Category Index</a> </li>
-						<li runat="server" id="tabBlogTagIndex"><a href="/c3-admin/TagIndex.aspx">Blog Tag Index</a> </li>
-						<li runat="server" id="tabBlogCommentIndex"><a href="/c3-admin/CommentIndex.aspx?type=BlogEntry">Blog Comment Index</a> </li>
-					</ul>
-				</li>
-				<li runat="server" id="tabExtensions" class="sub"><a href="javascript:void(0)" class="lnkPopup">Extensions </a>
-					<ul class="children">
-						<li runat="server" id="tabModules"><a href="/c3-admin/ModuleIndex.aspx">Modules</a> </li>
-						<li runat="server" id="tabTxtWidgets"><a href="/c3-admin/TextWidgetIndex.aspx">Text Widgets</a> </li>
-						<li runat="server" id="tabSnippets"><a href="/c3-admin/ContentSnippetIndex.aspx">Content Snippets</a> </li>
-					</ul>
-				</li>
-				<li><a href="javascript:void(0)" class="lnkPopup" onclick="cmsFileBrowserOpen('not-a-real-file');">Browse Files</a> </li>
-				<li runat="server" id="tabUserSecurity" class="sub"><a href="javascript:void(0)" class="lnkPopup">Security </a>
-					<ul class="children">
-						<li runat="server" id="tabUserAdmin"><a href="/c3-admin/UserMembership.aspx">Users</a> </li>
-						<li runat="server" id="tabGroupAdmin"><a href="/c3-admin/UserGroups.aspx">Groups</a> </li>
-						<li runat="server" id="tabSites"><a href="/c3-admin/SiteIndex.aspx">Sites</a> </li>
-					</ul>
-				</li>
-				<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/About.aspx?');">About</a></li>
-				<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
-				<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
-					<%=String.Format("My Profile [{0}]", this.UserName) %></a>
-					<ul class="children">
-						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
-						<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>
-						<li><a href="javascript:void(0)" class="lnkPopup" onclick="LogoutLink();">Logout</a> </li>
-					</ul>
-				</li>
-				<li>&nbsp;</li>
-			</ul>
-		</div>
-		<div class="widthshim">
-		</div>
-		<div id="content">
-			<div class="pad-content">
-				<h1 class="headingColor">
-					<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
-					</asp:ContentPlaceHolder>
-				</h1>
-				<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
-					<ContentTemplate>
-						<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
-						</asp:ContentPlaceHolder>
-					</ContentTemplate>
-				</asp:UpdatePanel>
-				<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
-				</asp:ContentPlaceHolder>
-			</div>
-		</div>
-		<div style="display: none">
-			<div id="cms-basic-modal-content">
-				<div id="cmsModalFrame">
+				<div id="cms-basic-modal-content">
+					<div id="cmsModalFrame">
+					</div>
+				</div>
+				<img src="/c3-admin/images/x.png" alt="x" />
+				<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
+				<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />
+				<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
+				<div id="divCMSModal" title="CarrotCake CMS">
+					<div id="divCMSModalMsg">
+						&nbsp;
+					</div>
+				</div>
+				<div id="divCMSCancelWin" title="Quit Editor?">
+					<p id="divCMSCancelWinMsg">
+						Are you sure you want cancel?
+					</p>
 				</div>
 			</div>
-			<img src="/c3-admin/images/x.png" alt="x" />
-			<img src="/c3-admin/images/mini-spinner3-6F997D.gif" alt="spinner" />
-			<img src="/c3-admin/images/Ring-64px-A7B2A0.gif" alt="ring" />
-			<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
-			<div id="divCMSModal" title="CarrotCake CMS">
-				<div id="divCMSModalMsg">
-					&nbsp;</div>
-			</div>
-			<div id="divCMSCancelWin" title="Quit Editor?">
-				<p id="divCMSCancelWinMsg">
-					Are you sure you want cancel?</p>
-			</div>
-		</div>
-		<script type="text/javascript">
+			<script type="text/javascript">
 
 			function LogoutLink() {
 				var opts = {
@@ -209,29 +211,29 @@
 			function ClickLogout() {
 				$('#<%=btnLogout.ClientID %>').click();
 			}
-		</script>
-		<div style="display: none;">
-			<asp:Button ValidationGroup="logoutForm" ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />
-		</div>
-		<div id="footer">
-			<div id="footer-inner">
-				<p>
-					<asp:PlaceHolder ID="myFooter" runat="server">&copy; <a target="_blank" href="http://www.carrotware.com">carrotware.com</a>
-						<%=String.Format("2001 - {0}", DateTime.Now.Year) %>
-					</asp:PlaceHolder>
-					<br />
-					<asp:Literal ID="litCMSBuildInfo" runat="server" />
-					<br />
-					Site Time:
+			</script>
+			<div style="display: none;">
+				<asp:Button ValidationGroup="logoutForm" ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />
+			</div>
+			<div id="footer">
+				<div id="footer-inner">
+					<p>
+						<asp:PlaceHolder ID="myFooter" runat="server">&copy; <a target="_blank" href="http://www.carrotware.com">carrotware.com</a>
+							<%=String.Format("2001 - {0}", DateTime.Now.Year) %>
+						</asp:PlaceHolder>
+						<br />
+						<asp:Literal ID="litCMSBuildInfo" runat="server" />
+						<br />
+						Site Time:
 					<asp:Literal ID="litServerTime" runat="server" />
-					<br />
-				</p>
+						<br />
+					</p>
+				</div>
+				<div class="widthshim">
+				</div>
+				<asp:PlaceHolder ID="plcFooter" runat="server" />
 			</div>
-			<div class="widthshim">
-			</div>
-			<asp:PlaceHolder ID="plcFooter" runat="server" />
 		</div>
-	</div>
 	</form>
 </body>
 </html>

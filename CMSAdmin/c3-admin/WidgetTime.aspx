@@ -16,24 +16,21 @@
 	</p>
 	<table style="width: 700px;">
 		<tr>
-			<td class="tablecaption">
-				release date:
+			<td class="tablecaption">release date:
 			</td>
 			<td>
 				<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				retire date:
+			<td class="tablecaption">retire date:
 			</td>
 			<td>
 				<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				enabled:
+			<td class="tablecaption">enabled:
 			</td>
 			<td>
 				<asp:CheckBox ID="chkActive" runat="server" />

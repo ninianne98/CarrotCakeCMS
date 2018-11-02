@@ -67,32 +67,28 @@
 		<div style="clear: both;">
 			<table>
 				<tr>
-					<td class="tablecaption">
-						show publicly:
+					<td class="tablecaption">show publicly:
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlActive" runat="server" />
 					</td>
 				</tr>
 				<tr>
-					<td class="tablecaption">
-						include in site navigation:
+					<td class="tablecaption">include in site navigation:
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlNavigation" runat="server" />
 					</td>
 				</tr>
 				<tr>
-					<td class="tablecaption">
-						include in sitemap:
+					<td class="tablecaption">include in sitemap:
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlSiteMap" runat="server" />
 					</td>
 				</tr>
 				<tr>
-					<td class="tablecaption">
-						hide from search engines:
+					<td class="tablecaption">hide from search engines:
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlHide" runat="server" />
@@ -101,8 +97,7 @@
 			</table>
 			<table>
 				<tr>
-					<td class="tablecaption">
-						content type:
+					<td class="tablecaption">content type:
 					</td>
 					<td colspan="3">
 						<div class="jqradioset">
@@ -116,8 +111,7 @@
 			</table>
 			<table>
 				<tr>
-					<td class="tablecaption">
-						use date range:
+					<td class="tablecaption">use date range:
 					</td>
 					<td colspan="3">
 						<div class="jqradioset">
@@ -130,12 +124,10 @@
 			</table>
 			<table id="dateFilterTable">
 				<tr>
-					<td class="tablecaption">
-						go live date filter:
+					<td class="tablecaption">go live date filter:
 						<br />
 					</td>
-					<td>
-						&nbsp;&nbsp;
+					<td>&nbsp;&nbsp;
 					</td>
 					<td>
 						<asp:TextBox CssClass="dateRegion" ID="txtDate" Columns="12" runat="server" />
@@ -166,8 +158,7 @@
 		<div style="clear: both;">
 			<table>
 				<tr>
-					<td class="tablecaption">
-						mark selected items as:
+					<td class="tablecaption">mark selected items as:
 					</td>
 					<td>
 						<asp:DropDownList ID="ddlAction" runat="server" ValidationGroup="updateStatus">

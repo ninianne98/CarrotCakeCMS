@@ -47,37 +47,32 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 200px;">
-					Exported from CMS Version
+				<td class="tablecaption" style="width: 200px;">Exported from CMS Version
 				</td>
 				<td>
 					<asp:Literal ID="litImportSource" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Export Date
+				<td class="tablecaption">Export Date
 				</td>
 				<td>
 					<asp:Literal ID="litDate" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					&nbsp;
+				<td colspan="2">&nbsp;
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Name
+				<td class="tablecaption">Site Name
 				</td>
 				<td>
 					<asp:Literal ID="litName" runat="server" />
 				</td>
 			</tr>
 			<tr>
-				<td class="tablecaption">
-					Site Description
+				<td class="tablecaption">Site Description
 				</td>
 				<td>
 					<asp:Literal ID="litDescription" runat="server" />
@@ -123,8 +118,7 @@
 		</legend>
 		<table>
 			<tr>
-				<td class="tablecaption">
-					template:
+				<td class="tablecaption">template:
 				</td>
 				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePage" runat="server" />
@@ -163,8 +157,7 @@
 		</legend>
 		<table>
 			<tr>
-				<td class="tablecaption">
-					template:
+				<td class="tablecaption">template:
 				</td>
 				<td>
 					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplatePost" runat="server" />
