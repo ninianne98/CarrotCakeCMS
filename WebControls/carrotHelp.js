@@ -26,4 +26,12 @@ function __carrotGetPMDateFormat() {
 	return "[[PM_TIMEPATTERN]]";
 }
 
+function __carrotGetDateTemplate() {
+	return "[[SHORTDATEFORMATPATTERN]]";
+}
+
+function __carrotGetDateTimeTemplate() {
+	return "[[SHORTDATETIMEFORMATPATTERN]]";
+}
+
 //================================================================

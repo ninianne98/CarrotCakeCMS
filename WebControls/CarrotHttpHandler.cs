@@ -55,6 +55,12 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void DoCaptcha(HttpContext context) {
+			context.Response.Cache.VaryByParams["fgcolor"] = true;
+			context.Response.Cache.VaryByParams["bgcolor"] = true;
+			context.Response.Cache.VaryByParams["ncolor"] = true;
+
+			DoCacheMagic(context, 3);
+
 			Color f = ColorTranslator.FromHtml(CaptchaImage.FGColorDef);
 			Color b = ColorTranslator.FromHtml(CaptchaImage.BGColorDef);
 			Color n = ColorTranslator.FromHtml(CaptchaImage.NColorDef);
@@ -74,15 +80,20 @@ namespace Carrotware.Web.UI.Controls {
 				captchaImg.Save(memStream, ImageFormat.Png);
 				memStream.WriteTo(context.Response.OutputStream);
 			}
-			context.Response.StatusCode = 200;
-			context.Response.StatusDescription = "OK";
-			context.ApplicationInstance.CompleteRequest();
 
 			captchaImg.Dispose();
+
+			context.ApplicationInstance.CompleteRequest();
 			context.Response.End();
 		}
 
 		private void DoThumb(HttpContext context) {
+			context.Response.Cache.VaryByParams["thumb"] = true;
+			context.Response.Cache.VaryByParams["scale"] = true;
+			context.Response.Cache.VaryByParams["square"] = true;
+
+			DoCacheMagic(context, 3);
+
 			int iThumb = 150;
 			string sImageIn = context.Request.QueryString["thumb"];
 			string sImg = sImageIn;
@@ -182,34 +193,17 @@ namespace Carrotware.Web.UI.Controls {
 				memStream.WriteTo(context.Response.OutputStream);
 			}
 
-			context.Response.StatusCode = 200;
-			context.Response.StatusDescription = "OK";
-			context.ApplicationInstance.CompleteRequest();
-
 			bmpThumb.Dispose();
 			bmpIn.Dispose();
 
+			context.ApplicationInstance.CompleteRequest();
 			context.Response.End();
 		}
 
 		private void DoHelper(HttpContext context) {
-			DateTime now = DateTime.Now;
-
-			DateTime dtMod = now.AddMinutes(-90);
-			TimeSpan ts = TimeSpan.FromMinutes(10);
-			DateTime dtModified = new DateTime(((dtMod.Ticks + ts.Ticks - 1) / ts.Ticks) * ts.Ticks);
-
-			string strModifed = dtModified.ToString("r");
-			context.Response.AppendHeader("Last-Modified", strModifed);
-			context.Response.AppendHeader("Date", strModifed);
-			context.Response.Cache.SetLastModified(dtModified);
-
-			DateTime dtExpire = now.AddMinutes(10);
-			context.Response.Cache.SetExpires(dtExpire);
-			context.Response.Cache.SetMaxAge(ts);
-			context.Response.Cache.SetValidUntilExpires(true);
-			context.Response.Cache.SetCacheability(HttpCacheability.Public);
 			context.Response.Cache.VaryByParams["ts"] = true;
+
+			DoCacheMagic(context, 10);
 
 			string sBody = WebControlHelper.GetManifestResourceStream("Carrotware.Web.UI.Controls.carrotHelp.js");
 			DateTime timeAM = DateTime.Now.Date.AddHours(6);  // 6AM
@@ -219,6 +213,8 @@ namespace Carrotware.Web.UI.Controls {
 
 			sBody = sBody.Replace("[[SHORTDATEPATTERN]]", WebControlHelper.ShortDatePattern);
 			sBody = sBody.Replace("[[SHORTTIMEPATTERN]]", WebControlHelper.ShortTimePattern);
+			sBody = sBody.Replace("[[SHORTDATEFORMATPATTERN]]", WebControlHelper.ShortDateFormatPattern);
+			sBody = sBody.Replace("[[SHORTDATETIMEFORMATPATTERN]]", WebControlHelper.ShortDateTimeFormatPattern);
 
 			sBody = sBody.Replace("[[AM_TIMEPATTERN]]", timeAM.ToString("tt"));
 			sBody = sBody.Replace("[[PM_TIMEPATTERN]]", timePM.ToString("tt"));
@@ -231,7 +227,55 @@ namespace Carrotware.Web.UI.Controls {
 				memStream.WriteTo(context.Response.OutputStream);
 			}
 
+			context.ApplicationInstance.CompleteRequest();
 			context.Response.End();
+		}
+
+		protected void DoCacheMagic(HttpContext context, int interval) {
+			DateTime now = DateTime.Now;
+
+			DateTime dtModified = GetFauxModDate(10);
+			DateTime? dtM = GetModDate(context);
+
+			string strModifed = dtModified.ToUniversalTime().ToString("r");
+			context.Response.AppendHeader("Last-Modified", strModifed);
+			context.Response.AppendHeader("Date", strModifed);
+			context.Response.Cache.SetLastModified(dtModified);
+
+			DateTime dtExpire = now.ToUniversalTime().AddMinutes(interval);
+			context.Response.Cache.SetExpires(dtExpire);
+			context.Response.Cache.SetValidUntilExpires(true);
+			context.Response.Cache.SetCacheability(HttpCacheability.Private);
+
+			if (dtM == null || dtM.Value != dtModified) {
+				context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+				context.Response.StatusDescription = "OK";
+			} else {
+				context.Response.StatusCode = (int)System.Net.HttpStatusCode.NotModified;
+				context.Response.SuppressContent = true;
+			}
+		}
+
+		protected DateTime GetFauxModDate(int interval) {
+			DateTime now = DateTime.Now;
+
+			DateTime dtMod = now.AddMinutes(-90);
+			TimeSpan ts = TimeSpan.FromMinutes(interval);
+			DateTime dtModified = new DateTime(((dtMod.Ticks + ts.Ticks - 1) / ts.Ticks) * ts.Ticks);
+
+			return dtModified;
+		}
+
+		protected DateTime? GetModDate(HttpContext context) {
+			DateTime? dtModSince = null;
+			string modSince = context.Request.Headers.Get("If-Modified-Since");
+
+			if (!String.IsNullOrEmpty(modSince)) {
+				dtModSince = DateTime.Parse(modSince);
+				dtModSince = dtModSince.Value.ToUniversalTime();
+			}
+
+			return dtModSince;
 		}
 	}
 }
