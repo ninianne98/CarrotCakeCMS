@@ -449,7 +449,7 @@
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
-					<input type="button" id="Button1" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>	');return false;" />
+					<input type="button" id="btnThumb" value="Browse" onclick="<%=ClickFileBrowser(txtThumb) %>" />
 				</td>
 			</tr>
 			<tr>
@@ -787,8 +787,8 @@
 		cmsSaveMakeOKAndCancelLeave();
 		var ret = cmsPreSaveTrigger();
 		cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
-			return true;
-		}
+		return true;
+	}
 	</script>
 	<script type="text/javascript">
 

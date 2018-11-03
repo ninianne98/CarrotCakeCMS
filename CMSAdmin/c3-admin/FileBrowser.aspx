@@ -304,80 +304,80 @@
 			</div>
 			<script type="text/javascript">
 
-			var imgSrc = '/c3-admin/images/document.png';
+				var imgSrc = '/c3-admin/images/document.png';
 
-			var imgPreviewId = 'imgWrapperMain';
-			var imgRealId = 'imgRealPreview';
-			var imgThumbId = 'imgThmbnailPreview';
-			var imgSizeId = 'imgPreviewCaption';
+				var imgPreviewId = 'imgWrapperMain';
+				var imgRealId = 'imgRealPreview';
+				var imgThumbId = 'imgThmbnailPreview';
+				var imgSizeId = 'imgPreviewCaption';
 
-			var divImgLayer = $('#' + imgPreviewId);
-			var imgDim = $('#' + imgSizeId);
-			var imgThumb = $('#' + imgThumbId);
-			var imgReal = $('#' + imgRealId);
+				var divImgLayer = $('#' + imgPreviewId);
+				var imgDim = $('#' + imgSizeId);
+				var imgThumb = $('#' + imgThumbId);
+				var imgReal = $('#' + imgRealId);
 
-			function hideImg(obj) {
-				var theNode = $(obj).parent();
-				var grp = $(theNode).attr('id');
+				function hideImg(obj) {
+					var theNode = $(obj).parent();
+					var grp = $(theNode).attr('id');
 
-				$(divImgLayer).attr('style', 'display:none;');
-				$(divImgLayer).attr('class', '');
+					$(divImgLayer).attr('style', 'display:none;');
+					$(divImgLayer).attr('class', '');
 
-				$(imgThumb).attr('src', imgSrc);
-				$(imgThumb).attr('width', 64);
-				$(imgThumb).attr('height', 64);
-				$(imgThumb).removeAttr("width").attr("width");
-				$(imgThumb).removeAttr("height").attr("height");
+					$(imgThumb).attr('src', imgSrc);
+					$(imgThumb).attr('width', 64);
+					$(imgThumb).attr('height', 64);
+					$(imgThumb).removeAttr("width").attr("width");
+					$(imgThumb).removeAttr("height").attr("height");
 
-				$(imgReal).attr('src', imgSrc);
+					$(imgReal).attr('src', imgSrc);
 
-				$(imgDim).html('<br />');
-			}
+					$(imgDim).html('<br />');
+				}
 
-			function showImg(obj, mode) {
-				var theNode = $(obj).parent();
-				var imgSrc = $(theNode).find('img');
-				var imgtype = $(imgSrc).attr('filetype');
+				function showImg(obj, mode) {
+					var theNode = $(obj).parent();
+					var imgSrc = $(theNode).find('img');
+					var imgtype = $(imgSrc).attr('filetype');
 
-				if (imgtype.indexOf('image') >= 0) {
+					if (imgtype.indexOf('image') >= 0) {
 
-					var val = $(imgSrc).attr('src');
-					var grp = $('#fileZone').attr('id');
-					var pos = $('#fileZone').offset();
+						var val = $(imgSrc).attr('src');
+						var grp = $('#fileZone').attr('id');
+						var pos = $('#fileZone').offset();
 
-					$(divImgLayer).attr('style', '');
+						$(divImgLayer).attr('style', '');
 
-					if (mode == 'file') {
-						$(divImgLayer).css({ "left": (pos.left + 150) + "px", "top": (pos.top - 25) + "px" }).show();
-					} else {
-						$(divImgLayer).css({ "left": (pos.left + 20) + "px", "top": (pos.top - 200) + "px" }).show();
+						if (mode == 'file') {
+							$(divImgLayer).css({ "left": (pos.left + 150) + "px", "top": (pos.top - 25) + "px" }).show();
+						} else {
+							$(divImgLayer).css({ "left": (pos.left + 20) + "px", "top": (pos.top - 200) + "px" }).show();
+						}
+
+						$(divImgLayer).attr('class', 'thumbpreview ui-corner-all');
+
+						$(imgThumb).attr('alt', val);
+						$(imgThumb).attr('title', val);
+						$(imgThumb).attr('src', val);
+
+						$(imgReal).attr('src', val);
+
+						resizeImg();
+
+						setTimeout("resizeImg();", 500);
+						setTimeout("resizeImg();", 1500);
+						setTimeout("resizeImg();", 5000);
 					}
-
-					$(divImgLayer).attr('class', 'thumbpreview ui-corner-all');
-
-					$(imgThumb).attr('alt', val);
-					$(imgThumb).attr('title', val);
-					$(imgThumb).attr('src', val);
-
-					$(imgReal).attr('src', val);
-
-					resizeImg();
-
-					setTimeout("resizeImg();", 500);
-					setTimeout("resizeImg();", 1500);
-					setTimeout("resizeImg();", 5000);
 				}
-			}
 
-			function resizeImg() {
+				function resizeImg() {
 
-				$(imgDim).html($(imgReal).width() + ' x ' + $(imgReal).height());
+					$(imgDim).html($(imgReal).width() + ' x ' + $(imgReal).height());
 
-				if ($(imgThumb).height() > 175) {
-					$(imgThumb).attr('height', 165);
-					setTimeout("resizeImg();", 1500);
+					if ($(imgThumb).height() > 175) {
+						$(imgThumb).attr('height', 165);
+						setTimeout("resizeImg();", 1500);
+					}
 				}
-			}
 			</script>
 			<asp:PlaceHolder ID="phRemove" runat="server">
 				<p>
@@ -395,13 +395,13 @@
 		</div>
 		<asp:Panel runat="server" ID="pnlTiny2">
 			<div class="mceActionPanel">
-				<input type="submit" id="insert" name="insert" value="Select" onclick="FileBrowserDialogue.mySubmit();return false;" />
+				<input type="submit" id="insert" name="insert" value="Select" onclick="FileBrowserDialogue.mySubmit(); return false;" />
 				<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
 			</div>
 		</asp:Panel>
 		<div style="display: none">
 			<asp:Panel runat="server" ID="pnlFileMgr">
-				<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName();return false;" />
+				<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName(); return false;" />
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
 			</asp:Panel>

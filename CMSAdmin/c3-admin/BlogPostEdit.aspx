@@ -70,7 +70,7 @@
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
-				<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturnPop('<%=txtThumb.ClientID %>	');return false;" />
+				<input type="button" id="btnThumb" value="Browse" onclick="<%=ClickFileBrowserPop(txtThumb) %>" />
 			</td>
 		</tr>
 		<tr>

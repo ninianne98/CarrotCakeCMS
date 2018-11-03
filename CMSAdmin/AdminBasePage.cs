@@ -67,6 +67,14 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
+		public string ClickFileBrowser(Control ctrl) {
+			return String.Format("cmsFileBrowserOpenReturn('{0}'); return false;", ctrl.ClientID);
+		}
+
+		public string ClickFileBrowserPop(Control ctrl) {
+			return String.Format("cmsFileBrowserOpenReturnPop('{0}'); return false;", ctrl.ClientID);
+		}
+
 		public void PreselectCheckboxRepeater(Repeater repeater, List<IContentMetaInfo> lst) {
 			foreach (RepeaterItem r in repeater.Items) {
 				CheckBox chk = (CheckBox)r.FindControl("chk");

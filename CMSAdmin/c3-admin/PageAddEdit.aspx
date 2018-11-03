@@ -411,7 +411,7 @@
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
-					<input type="button" id="btnThumb" value="Browse" onclick="cmsFileBrowserOpenReturn('<%=txtThumb.ClientID %>');return false;" />
+					<input type="button" id="btnThumb" value="Browse" onclick="<%=ClickFileBrowser(txtThumb) %>" />
 				</td>
 			</tr>
 			<tr>
@@ -729,21 +729,21 @@
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
 				$('#<%=btnSave.ClientID %>').click();
-			}
 		}
+	}
 
-		function ClickSaveVisitBtn() {
-			if (cmsIsPageValid()) {
-				$('#<%=btnSaveVisit.ClientID %>').click();
-			}
+	function ClickSaveVisitBtn() {
+		if (cmsIsPageValid()) {
+			$('#<%=btnSaveVisit.ClientID %>').click();
 		}
+	}
 
-		function SaveCommon() {
-			cmsSaveMakeOKAndCancelLeave();
-			var ret = cmsPreSaveTrigger();
-			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
-			return true;
-		}
+	function SaveCommon() {
+		cmsSaveMakeOKAndCancelLeave();
+		var ret = cmsPreSaveTrigger();
+		cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+		return true;
+	}
 	</script>
 	<script type="text/javascript">
 

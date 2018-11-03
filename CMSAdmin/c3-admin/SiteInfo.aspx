@@ -33,7 +33,8 @@
 				type: "POST",
 				url: webMthd,
 
-				data: JSON.stringify({ FolderPath: myFldr, DatePath: myDateF,
+				data: JSON.stringify({
+					FolderPath: myFldr, DatePath: myDateF,
 					CategoryPath: myCat, TagPath: myTag,
 					EditorPath: myEd
 				}),

@@ -165,12 +165,12 @@
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
 				$('#<%=btnSave.ClientID %>').click();
-			}
 		}
+	}
 
-		function cancelEditing() {
-			window.setTimeout("location.href = './TagIndex.aspx';", 250);
-		}
+	function cancelEditing() {
+		window.setTimeout("location.href = './TagIndex.aspx';", 250);
+	}
 	</script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">

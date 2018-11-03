@@ -395,15 +395,15 @@
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
 				$('#<%=btnSave.ClientID %>').click();
-			}
 		}
+	}
 
-		function SaveCommon() {
-			cmsSaveMakeOKAndCancelLeave();
-			var ret = cmsPreSaveTrigger();
-			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
-			return true;
-		}
+	function SaveCommon() {
+		cmsSaveMakeOKAndCancelLeave();
+		var ret = cmsPreSaveTrigger();
+		cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+		return true;
+	}
 	</script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
