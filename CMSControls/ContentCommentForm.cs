@@ -260,7 +260,7 @@ namespace Carrotware.CMS.UI.Controls {
 						}
 					}
 
-					string sEmail = String.Join(",", emails.ToArray());
+					string sEmail = String.Join(";", emails.ToArray());
 
 					string strHTTPHost = String.Empty;
 					try { strHTTPHost = request.ServerVariables["HTTP_HOST"] + String.Empty; } catch { strHTTPHost = String.Empty; }
