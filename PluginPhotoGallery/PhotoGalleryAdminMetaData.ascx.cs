@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
+using System;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 	public partial class PhotoGalleryAdminMetaData : AdminModule {
 		private Guid gTheID = Guid.Empty;
-		public string sImageFile = "";
+		public string sImageFile = String.Empty;
 
 		protected FileDataHelper helpFile = new FileDataHelper();
 

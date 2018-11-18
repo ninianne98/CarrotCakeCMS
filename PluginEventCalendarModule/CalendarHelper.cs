@@ -501,7 +501,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			if (timeSpan.HasValue) {
 				txt.Text = fakeDate.Add(timeSpan.Value).ToShortTimeString();
 			} else {
-				txt.Text = "";
+				txt.Text = String.Empty;
 			}
 		}
 

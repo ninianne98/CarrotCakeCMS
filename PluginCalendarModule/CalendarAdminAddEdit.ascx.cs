@@ -1,13 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Carrotware.CMS.Interface;
+using System;
 using System.Linq;
-using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 	public partial class CalendarAdminAddEdit : AdminModule {
 		protected dbCalendarDataContext db = dbCalendarDataContext.GetDataContext();
 		protected Guid ItemGuid = Guid.Empty;
+
+		#region IDisposable Members
+
+		public void Dispose() {
+			if (db != null) {
+				db.Dispose();
+			}
+		}
+
+		#endregion IDisposable Members
 
 		protected void Page_Load(object sender, EventArgs e) {
 			ItemGuid = ParmParser.GetGuidIDFromQuery();
@@ -40,14 +49,6 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			}
 
 			txtID.Text = ItemGuid.ToString();
-		}
-
-		public override void Dispose() {
-			base.Dispose();
-
-			if (db != null) {
-				db.Dispose();
-			}
 		}
 
 		protected void cmdAdd_Click(object sender, System.EventArgs e) {

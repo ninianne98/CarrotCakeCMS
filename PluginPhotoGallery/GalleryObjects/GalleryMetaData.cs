@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
+
 	public class GalleryMetaData : GalleryBase {
 
 		public GalleryMetaData() { }
@@ -32,10 +25,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public string ImageTitle { get; set; }
 		public string ImageMetaData { get; set; }
 
-
-
 		public void Save() {
-
 			if (!string.IsNullOrEmpty(this.GalleryImage)) {
 				using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
 					tblGalleryImageMeta gal = (from c in db.tblGalleryImageMetas
@@ -63,7 +53,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-
 		public override string ToString() {
 			return ImageTitle;
 		}
@@ -84,7 +73,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public override int GetHashCode() {
 			return GalleryImageMetaID.GetHashCode() ^ SiteID.GetHashCode() ^ ImageTitle.GetHashCode();
 		}
-
-
 	}
 }

@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-
+﻿using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 	public class FaqBase {
-
-		protected FAQDataContext db = FAQDataContext.GetDataContext();
-
 		private SiteData _site = null;
 
 		protected SiteData ThisSite {
@@ -28,8 +16,5 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 				_site = value;
 			}
 		}
-
-
-
 	}
 }

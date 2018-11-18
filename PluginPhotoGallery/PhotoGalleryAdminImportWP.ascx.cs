@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				pnlUpload.Visible = true;
 			}
 
-			lblWarning.Text = "";
+			lblWarning.Text = String.Empty;
 			lblWarning.Attributes["style"] = "color: #000000;";
 
 			if (gTheID != Guid.Empty) {
@@ -249,13 +249,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void btnUpload_Click(object sender, EventArgs e) {
-			string sXML = "";
+			string sXML = String.Empty;
 			if (upFile.HasFile) {
 				using (StreamReader sr = new StreamReader(upFile.FileContent)) {
 					sXML = sr.ReadToEnd();
 				}
 			}
-			string sTest = "";
+			string sTest = String.Empty;
 			if (!string.IsNullOrEmpty(sXML) && sXML.Length > 500) {
 				sTest = sXML.Substring(0, 250).ToLower();
 

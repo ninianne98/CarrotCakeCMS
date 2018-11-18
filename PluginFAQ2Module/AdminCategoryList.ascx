@@ -1,10 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AdminCategoryList.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.FAQ2Module.AdminCategoryList" %>
-<h2>
-	FAQs : Category List</h2>
+<h2>FAQs : Category List</h2>
 <br />
 <br />
 <p>
-	<asp:HyperLink ID="lnkAdd" runat="server"> 
+	<asp:HyperLink ID="lnkAdd" runat="server">
 	<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
 	Add Entry</asp:HyperLink>
 </p>

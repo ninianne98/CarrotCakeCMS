@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
+
 	public class GalleryImageEntry : GalleryBase {
 
 		public GalleryImageEntry() { }
@@ -29,7 +22,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		public string GalleryImage { get; set; }
 		public int ImageOrder { get; set; }
-
 
 		public void Save() {
 			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
@@ -76,7 +68,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public override int GetHashCode() {
 			return GalleryImageID.GetHashCode() ^ GalleryID.GetHashCode() ^ GalleryImage.GetHashCode();
 		}
-
-
 	}
 }

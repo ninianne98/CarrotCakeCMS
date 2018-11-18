@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
+
 	public partial class PhotoGalleryAdminImport : AdminModule {
-		Guid gTheID = Guid.Empty;
+		private Guid gTheID = Guid.Empty;
 
 		private GalleryExportList lstGalleries = null;
 
@@ -25,7 +23,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				pnlUpload.Visible = true;
 			}
 
-			lblWarning.Text = "";
+			lblWarning.Text = String.Empty;
 			lblWarning.Attributes["style"] = "color: #000000;";
 
 			if (gTheID != Guid.Empty) {
@@ -38,9 +36,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-
 		private void LoadLists() {
-
 			List<GalleryGroup> lst = (from g in lstGalleries.TheGalleries
 									  select g.TheGallery).ToList();
 
@@ -50,22 +46,19 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			lblPages.Text = lst.Count.ToString();
 		}
 
-
 		protected void btnUpload_Click(object sender, EventArgs e) {
-			string sXML = "";
+			string sXML = String.Empty;
 			if (upFile.HasFile) {
 				using (StreamReader sr = new StreamReader(upFile.FileContent)) {
 					sXML = sr.ReadToEnd();
 				}
 			}
-			string sTest = "";
+			string sTest = String.Empty;
 			if (!string.IsNullOrEmpty(sXML) && sXML.Length > 500) {
-
 				sTest = sXML.Substring(0, 250).ToLower();
 
 				try {
 					if (sTest.Contains("<galleryexportlist xmlns:xsi=\"http://www.w3.org/2001/xmlschema-instance\" xmlns:xsd=\"http://www.w3.org/2001/xmlschema\">")) {
-
 						GalleryExportList galExp = GalleryExportList.DeserializeGalleryExport(sXML);
 						Guid gKey = GalleryExportList.SaveSerializedDataExport(galExp);
 
@@ -74,29 +67,23 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 					lblWarning.Text = "File did not appear to match an expected format.";
 					lblWarning.Attributes["style"] = "color: #990000;";
-
 				} catch (Exception ex) {
 					lblWarning.Text = ex.ToString();
 					lblWarning.Attributes["style"] = "color: #990000;";
 				}
-
 			} else {
 				lblWarning.Text = "No file appeared in the upload queue.";
 				lblWarning.Attributes["style"] = "color: #990000;";
 			}
-
 		}
 
 		protected void btnCreate_Click(object sender, EventArgs e) {
-
 			BuildInstallList();
 
 			Response.Redirect(CreateLink("GalleryList"));
 		}
 
-
 		protected void BuildInstallList() {
-
 			pnlReview.Visible = true;
 			SiteData site = SiteData.CurrentSite;
 
@@ -139,6 +126,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				}
 			}
 		}
-
 	}
 }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.Interface;
+using System;
 using System.IO;
 using System.Reflection;
-using Carrotware.CMS.DBUpdater;
-
 
 namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
@@ -17,11 +11,10 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
 			DatabaseUpdateResponse dbRes = new DatabaseUpdateResponse();
-			string sqlUpdate = "";
-			string sqlTest = "";
+			string sqlUpdate = String.Empty;
+			string sqlTest = String.Empty;
 			int iCt = 0;
-			litMsg.Text = "";
-
+			litMsg.Text = String.Empty;
 
 			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.FAQ2Module.carrot_FaqItem.sql");
 			sqlTest = "select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name in('carrot_FaqItem')";
@@ -36,8 +29,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		private string ReadEmbededScript(string filePath) {
-
-			string sFile = "";
+			string sFile = String.Empty;
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 
@@ -47,6 +39,5 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 			return sFile;
 		}
-
 	}
 }

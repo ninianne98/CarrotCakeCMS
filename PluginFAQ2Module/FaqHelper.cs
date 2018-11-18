@@ -1,16 +1,22 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-
 
 namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
+
 	public class FaqHelper : FaqBase, IDisposable {
+		protected FAQDataContext db = FAQDataContext.GetDataContext();
+
+		#region IDisposable Members
+
+		public void Dispose() {
+			if (db != null) {
+				db.Dispose();
+			}
+		}
+
+		#endregion IDisposable Members
 
 		public FaqHelper() { }
 
@@ -22,9 +28,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 			base.ThisSite = SiteData.GetSiteFromCache(siteID);
 		}
 
-
 		public carrot_FaqItem FaqItemGetByID(Guid faqItemID) {
-
 			carrot_FaqItem ff = (from f in db.carrot_FaqItems
 								 where f.FaqItemID == faqItemID
 								 select f).FirstOrDefault();
@@ -32,9 +36,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 			return ff;
 		}
 
-
 		public List<carrot_FaqItem> FaqItemListGetByFaqCategoryID(Guid faqCategoryID) {
-
 			List<carrot_FaqItem> ff = (from f in db.carrot_FaqItems
 									   where f.FaqCategoryID == faqCategoryID
 									   orderby f.ItemOrder
@@ -44,7 +46,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		public List<carrot_FaqItem> FaqItemListPublicGetByFaqCategoryID(Guid faqCategoryID, Guid siteID) {
-
 			List<carrot_FaqItem> ff = (from f in db.carrot_FaqItems
 									   join fc in db.carrot_FaqCategories on f.FaqCategoryID equals fc.FaqCategoryID
 									   where f.FaqCategoryID == faqCategoryID
@@ -56,7 +57,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		public List<carrot_FaqItem> FaqItemListPublicTopGetByFaqCategoryID(Guid faqCategoryID, Guid siteID, int takeCount) {
-
 			if (takeCount < 0) {
 				takeCount = 1;
 			}
@@ -64,7 +64,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 			if (takeCount > 100) {
 				takeCount = 100;
 			}
-			
+
 			List<carrot_FaqItem> ff = (from f in db.carrot_FaqItems
 									   join fc in db.carrot_FaqCategories on f.FaqCategoryID equals fc.FaqCategoryID
 									   where f.FaqCategoryID == faqCategoryID
@@ -76,7 +76,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		public carrot_FaqItem FaqItemListPublicRandGetByFaqCategoryID(Guid faqCategoryID, Guid siteID) {
-
 			Random rand = new Random();
 
 			int toSkip = rand.Next(0, (from f in db.carrot_FaqItems
@@ -85,7 +84,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 												&& f.IsActive == true && fc.SiteID == siteID
 									   orderby f.ItemOrder
 									   select f).Count());
-
 
 			carrot_FaqItem ff = (from f in db.carrot_FaqItems
 								 join fc in db.carrot_FaqCategories on f.FaqCategoryID equals fc.FaqCategoryID
@@ -97,10 +95,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 			return ff;
 		}
 
-
-
 		public void FAQImageCleanup(Guid faqCategoryID, List<Guid> lst) {
-
 			var lstDel = (from f in db.carrot_FaqItems
 						  where f.FaqCategoryID == faqCategoryID
 								&& !lst.Contains(f.FaqItemID)
@@ -112,7 +107,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		public carrot_FaqCategory CategoryGetByID(Guid faqCategoryID) {
-
 			carrot_FaqCategory ge = (from c in db.carrot_FaqCategories
 									 where c.SiteID == this.ThisSite.SiteID
 											&& c.FaqCategoryID == faqCategoryID
@@ -121,14 +115,11 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 			return ge;
 		}
 
-
 		public List<carrot_FaqCategory> CategoryListGetBySiteID() {
-
 			return CategoryListGetBySiteID(this.ThisSite.SiteID);
 		}
 
 		public List<carrot_FaqCategory> CategoryListGetBySiteID(Guid siteID) {
-
 			List<carrot_FaqCategory> ge = (from c in db.carrot_FaqCategories
 										   orderby c.FAQTitle
 										   where c.SiteID == siteID
@@ -136,7 +127,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 			return ge;
 		}
-
 
 		public carrot_FaqCategory Save(carrot_FaqCategory item) {
 			if (item.FaqCategoryID == Guid.Empty) {
@@ -153,7 +143,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		public carrot_FaqItem Save(carrot_FaqItem item) {
-
 			if (item.FaqItemID == Guid.Empty) {
 				item.FaqItemID = Guid.NewGuid();
 			}
@@ -168,7 +157,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		public bool DeleteItem(Guid ItemGuid) {
-
 			var itm = (from c in db.carrot_FaqItems
 					   where c.FaqItemID == ItemGuid
 					   select c).FirstOrDefault();
@@ -179,16 +167,5 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 			return true;
 		}
-
-
-		#region IDisposable Members
-
-		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
-			}
-		}
-
-		#endregion
 	}
 }

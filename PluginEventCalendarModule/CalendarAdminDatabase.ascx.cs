@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Carrotware.CMS.DBUpdater;
+﻿using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.Interface;
+using System;
+using System.IO;
+using System.Reflection;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -23,10 +21,10 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
 			DatabaseUpdateResponse dbRes = new DatabaseUpdateResponse();
-			string sqlUpdate = "";
-			string sqlTest = "";
+			string sqlUpdate = String.Empty;
+			string sqlTest = String.Empty;
 			int iCt = 0;
-			litMsg.Text = "";
+			litMsg.Text = String.Empty;
 
 			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent.sql");
 			sqlTest = "select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name = 'carrot_CalendarEventProfile' and column_name = 'RecursEvery'";
@@ -41,7 +39,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		private string ReadEmbededScript(string filePath) {
-			string sFile = "";
+			string sFile = String.Empty;
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 

@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Carrotware.CMS.Interface;
+using System;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
-
 
 namespace Carrotware.CMS.UI.Plugins.FAQModule {
-	public partial class FAQAdminAddEdit : AdminModule {
 
+	public partial class FAQAdminAddEdit : AdminModule {
 		protected dbFAQDataContext db = dbFAQDataContext.GetDataContext();
 		protected Guid ItemGuid = Guid.Empty;
 
+		#region IDisposable Members
+
+		public void Dispose() {
+			if (db != null) {
+				db.Dispose();
+			}
+		}
+
+		#endregion IDisposable Members
 
 		protected void Page_Load(object sender, EventArgs e) {
 			ItemGuid = ParmParser.GetGuidIDFromQuery();
 
-
 			if (ItemGuid != Guid.Empty) {
-
 				cmdSave.Text = "Save";
-
 			} else {
 				ItemGuid = Guid.NewGuid();
 				txtID.Text = ItemGuid.ToString();
@@ -31,7 +32,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 				cmdDelete.Visible = false;
 				btnDelete.Visible = false;
 			}
-
 
 			if (!IsPostBack) {
 				var itm = (from c in db.tblFAQs
@@ -47,9 +47,7 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 			}
 
 			txtID.Text = ItemGuid.ToString();
-
 		}
-
 
 		protected void cmdAdd_Click(object sender, System.EventArgs e) {
 			ItemGuid = Guid.NewGuid();
@@ -62,7 +60,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 		}
 
 		protected void cmdDelete_Click(object sender, System.EventArgs e) {
-
 			var itm = (from c in db.tblFAQs
 					   where c.FaqID == ItemGuid
 					   select c).FirstOrDefault();
@@ -73,7 +70,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 			string filePath = CreateLink("FAQAdmin");
 
 			Response.Redirect(filePath);
-
 		}
 
 		protected void Save() {
@@ -108,7 +104,5 @@ namespace Carrotware.CMS.UI.Plugins.FAQModule {
 
 			Response.Redirect(filePath);
 		}
-
-
 	}
 }

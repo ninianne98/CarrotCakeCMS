@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Carrotware.CMS.Core;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
@@ -19,17 +17,15 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public string CarrotCakeVersion { get; set; }
 		public DateTime ExportDate { get; set; }
 
-
 		//========================
 		public static string GetGalleryExportXML(Guid siteID, List<Guid> GalleryIDs) {
-
 			GalleryExportList lstGE = new GalleryExportList();
 			lstGE.ExportDate = SiteData.CurrentSite.Now;
 			lstGE.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
 			lstGE.OriginalSite = SiteData.GetSiteFromCache(siteID);
 
 			GalleryHelper gh = new GalleryHelper(siteID);
-			
+
 			foreach (Guid galleryID in GalleryIDs) {
 				GalleryExport ge = new GalleryExport();
 				GalleryGroup gal = gh.GalleryGroupGetByID(galleryID);
@@ -41,7 +37,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 				lstGE.TheGalleries.Add(ge);
 			}
-
 
 			return ContentImportExportUtils.GetExportXML<GalleryExportList>(lstGE);
 		}
@@ -75,18 +70,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 	}
 
-
 	//=================================
 
 	public class GalleryExport {
-
 		public GalleryGroup TheGallery { get; set; }
 		public Guid OriginalGalleryID { get; set; }
 
 		public string CarrotCakeVersion { get; set; }
 		public DateTime ExportDate { get; set; }
-
 	}
-
-
 }

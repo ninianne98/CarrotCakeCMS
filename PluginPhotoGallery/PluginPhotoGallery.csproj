@@ -153,7 +153,6 @@
     <EmbeddedResource Include="prettyphoto\prettyPhoto.js" />
     <EmbeddedResource Include="prettyphoto\prettyPhoto.css" />
     <Content Include="PhotoIcon.png" />
-    <Content Include="PluginPhotoGallery.sln" />
     <Content Include="prettyphoto\README.txt" />
     <EmbeddedResource Include="tblGallery.sql" />
     <Content Include="Web.config" />

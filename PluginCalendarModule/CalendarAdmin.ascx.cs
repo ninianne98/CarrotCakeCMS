@@ -1,25 +1,27 @@
-﻿using System;
+﻿using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 
 	public partial class CalendarAdmin : AdminModule {
 		protected dbCalendarDataContext db = dbCalendarDataContext.GetDataContext();
 
+		#region IDisposable Members
+
+		public void Dispose() {
+			if (db != null) {
+				db.Dispose();
+			}
+		}
+
+		#endregion IDisposable Members
+
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
 				txtDate.Text = DateTime.Now.ToShortDateString();
 				LoadData();
-			}
-		}
-
-		public override void Dispose() {
-			base.Dispose();
-
-			if (db != null) {
-				db.Dispose();
 			}
 		}
 

@@ -1,15 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
+
 	public class GalleryHelper : GalleryBase {
 
 		public GalleryHelper() { }
@@ -22,7 +17,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			base.ThisSite = SiteData.GetSiteFromCache(siteID);
 		}
 
-
 		public GalleryImageEntry GalleryImageEntryGetByID(Guid galleryImageID) {
 			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
 				GalleryImageEntry ge = (from c in db.tblGalleryImages
@@ -33,7 +27,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			}
 		}
 
-
 		public List<GalleryImageEntry> GalleryImageEntryListGetByGalleryID(Guid galleryID) {
 			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
 				List<GalleryImageEntry> ge = (from c in db.tblGalleryImages
@@ -43,7 +36,6 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				return ge;
 			}
 		}
-
 
 		public GalleryImageEntry GalleryImageEntryGetByFilename(Guid galleryID, string galleryImage) {
 			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
@@ -143,7 +135,5 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				return ge;
 			}
 		}
-
-
 	}
 }

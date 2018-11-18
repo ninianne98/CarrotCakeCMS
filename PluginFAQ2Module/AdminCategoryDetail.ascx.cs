@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Carrotware.CMS.Interface;
-
+﻿using Carrotware.CMS.Interface;
+using System;
 
 namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 	public partial class AdminCategoryDetail : AdminModule {
-		Guid ItemGuid = Guid.Empty;
+		private Guid ItemGuid = Guid.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			ItemGuid = ParmParser.GetGuidIDFromQuery();
@@ -28,7 +22,6 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			using (FaqHelper fh = new FaqHelper(SiteID)) {
-
 				var fc = fh.CategoryGetByID(ItemGuid);
 
 				if (fc == null || ItemGuid == Guid.Empty) {
@@ -47,9 +40,5 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 
 			Response.Redirect(stringFile);
 		}
-
-
-
-
 	}
 }
