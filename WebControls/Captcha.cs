@@ -256,13 +256,22 @@ namespace Carrotware.Web.UI.Controls {
 			return this.CaptchaText;
 		}
 
-		protected override void OnInit(EventArgs e) {
+		// call directly in user control when in dynamically inserted controls like cms widgets
+		public void RefreshField() {
 			if (this.IsWebView) {
-				if (HttpContext.Current.Request.Form.Count > 0) {
-					var s = HttpContext.Current.Request.Form[this.UniqueID];
-					this.CaptchaText = s;
+				//ViewState["Text"] = null;
+				this.CaptchaText = String.Empty;
+
+				if (HttpContext.Current.Request.Form[this.UniqueID] != null) {
+					var val = HttpContext.Current.Request.Form[this.UniqueID];
+					ViewState["Text"] = val;
+					this.CaptchaText = val;
 				}
 			}
+		}
+
+		protected override void OnInit(EventArgs e) {
+			RefreshField();
 
 			base.OnInit(e);
 		}
