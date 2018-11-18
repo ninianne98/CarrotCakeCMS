@@ -50,14 +50,30 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			if (SecurityData.IsAuthenticated) {
 				Response.Redirect(SiteFilename.DashboardURL);
 			}
+
+			DoAuth();
 		}
 
 		protected void loginTemplate_LoggingIn(object sender, LoginCancelEventArgs e) {
-			if (FormsAuthentication.Authenticate(loginTemplate.UserName, loginTemplate.Password)) {
-				FormsAuthentication.RedirectFromLoginPage(loginTemplate.UserName, false);
+			if (DoAuth()) {
+				FormsAuthentication.RedirectFromLoginPage(loginTemplate.UserName, true, "/");
 			} else {
 				divMsg.Visible = true;
 			}
+		}
+
+		protected bool DoAuth() {
+			if (!String.IsNullOrEmpty(loginTemplate.UserName) && !String.IsNullOrEmpty(loginTemplate.Password)) {
+				if (FormsAuthentication.Authenticate(loginTemplate.UserName, loginTemplate.Password)) {
+					FormsAuthentication.SetAuthCookie(loginTemplate.UserName, true, "/");
+
+					SecurityData.AuthCookieTime();
+
+					return true;
+				}
+			}
+
+			return false;
 		}
 	}
 }

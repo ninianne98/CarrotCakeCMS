@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using Carrotware.CMS.Data;
 
 /*
 * CarrotCake CMS
@@ -105,7 +105,7 @@ namespace Carrotware.CMS.Core {
 
 		public string GetXml() {
 			XmlSerializer xmlSerializer = new XmlSerializer(typeof(TimeZoneContent));
-			string sXML = "";
+			string sXML = String.Empty;
 			using (StringWriter stringWriter = new StringWriter()) {
 				xmlSerializer.Serialize(stringWriter, this);
 				sXML = stringWriter.ToString();

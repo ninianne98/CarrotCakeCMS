@@ -711,7 +711,7 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		private string ReadEmbededScript(string filePath) {
-			string sFile = "";
+			string sFile = String.Empty;
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 
@@ -1067,8 +1067,8 @@ namespace Carrotware.CMS.DBUpdater {
 			this.InnerExceptionText = null;
 			this.AlteredData = false;
 			this.HasException = false;
-			this.Message = "";
-			this.Response = "";
+			this.Message = String.Empty;
+			this.Response = String.Empty;
 			this.Order = -1;
 		}
 	}
@@ -1081,7 +1081,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public DatabaseUpdateResponse() {
 			this.LastException = null;
-			this.Response = "";
+			this.Response = String.Empty;
 			this.RanUpdate = false;
 		}
 	}

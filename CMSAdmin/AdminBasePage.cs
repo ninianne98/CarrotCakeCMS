@@ -4,7 +4,6 @@ using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -27,7 +26,7 @@ namespace Carrotware.CMS.UI.Admin {
 				bool bHasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 				if (!bHasAccess) {
-					FormsAuthentication.SignOut();
+					SecurityData.ResetAuth();
 					Response.Redirect(SiteFilename.LogonURL);
 				}
 			}

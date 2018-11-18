@@ -1,5 +1,5 @@
-﻿using System;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
+using System;
 
 /*
 * CarrotCake CMS
@@ -34,6 +34,8 @@ namespace Carrotware.CMS.UI.Base {
 
 		protected override void OnLoad(EventArgs e) {
 			base.OnLoad(e);
+
+			SecurityData.AuthCookieTime();
 
 			pph.AssignControls();
 		}

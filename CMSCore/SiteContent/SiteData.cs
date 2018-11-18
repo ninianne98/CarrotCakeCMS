@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +10,6 @@ using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Xml;
-using Carrotware.CMS.Data;
 
 /*
 * CarrotCake CMS
@@ -1030,6 +1030,22 @@ namespace Carrotware.CMS.Core {
 
 		public static void PerformRedirectToErrorPage(int ErrorKey, string sReqURL) {
 			PerformRedirectToErrorPage(ErrorKey.ToString(), sReqURL);
+		}
+
+		public static string GetAuthFormProp(string keyName) {
+			//parse web.config as XML because of medium trust issues
+			HttpContext context = HttpContext.Current;
+
+			XmlDocument xDoc = new XmlDocument();
+			xDoc.Load(context.Server.MapPath("~/Web.config"));
+
+			XmlElement xmlCustomErrors = xDoc.SelectSingleNode("//system.web/authentication/forms") as XmlElement;
+
+			if (xmlCustomErrors.Attributes[keyName] != null) {
+				return xmlCustomErrors.Attributes[keyName].Value.ToString();
+			}
+
+			return null;
 		}
 
 		public static void PerformRedirectToErrorPage(string sErrorKey, string sReqURL) {

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Security;
-using Carrotware.CMS.Data;
 
 /*
 * CarrotCake CMS
@@ -233,6 +233,62 @@ namespace Carrotware.CMS.Core {
 					return IsUserInRole(SecurityData.CMSGroup_Users);
 				} catch {
 					return false;
+				}
+			}
+		}
+
+		public static string AuthKey {
+			get {
+				if (SecurityData.IsAuthenticated) {
+					return String.Format("cms_authToken_{0}", SecurityData.CurrentUserIdentityName);
+				}
+				return "cms_authToken";
+			}
+		}
+
+		public static void ResetAuth() {
+			if (SecurityData.IsAuthenticated) {
+				HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName);
+
+				authCookie = HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName];
+				authCookie.Value = String.Empty;
+				authCookie.Expires = DateTime.Now.AddDays(-10);
+				authCookie.Path = "/";
+
+				HttpContext.Current.Cache.Remove(SecurityData.AuthKey);
+			}
+
+			FormsAuthentication.SignOut();
+		}
+
+		public static void AuthCookieTime() {
+			if (SecurityData.IsAuthenticated && FormsAuthentication.SlidingExpiration) {
+				string key = SecurityData.AuthKey;
+
+				string lastSet = HttpContext.Current.Cache[key] != null ? HttpContext.Current.Cache[key].ToString() : String.Empty;
+
+				if (String.IsNullOrEmpty(lastSet)) {
+					string tOut = SiteData.GetAuthFormProp("timeout");
+					int timeout = Convert.ToInt32((tOut == null ? "30" : tOut));
+
+					if (timeout < 5) {
+						timeout = 5;
+					}
+
+					int expCache = timeout <= 60 ? 5 : 30;
+
+					HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName);
+
+					FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(SecurityData.CurrentUserIdentityName, true, timeout);
+
+					string theTicket = FormsAuthentication.Encrypt(ticket);
+
+					authCookie = HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName];
+					authCookie.Value = theTicket;
+					authCookie.Expires = DateTime.Now.AddMinutes((timeout + 2));
+					authCookie.Path = "/";
+
+					HttpContext.Current.Cache.Insert(key, SecurityData.CurrentUserIdentityName, null, DateTime.Now.AddMinutes(expCache), Cache.NoSlidingExpiration);
 				}
 			}
 		}

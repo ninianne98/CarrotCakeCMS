@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 using System.Web.UI;
 
 /*
@@ -24,7 +23,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			this.UserName = String.Empty;
 
 			if (!SecurityData.IsAuthenticated) {
-				FormsAuthentication.SignOut();
+				SecurityData.ResetAuth();
 				Response.Redirect(SiteFilename.LogonURL);
 			}
 
@@ -78,7 +77,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		}
 
 		protected void btnLogout_Click(object sender, EventArgs e) {
-			FormsAuthentication.SignOut();
+			SecurityData.ResetAuth();
 			Response.Redirect(SiteFilename.LogonURL);
 		}
 

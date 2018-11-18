@@ -1,8 +1,8 @@
-﻿using System;
-using System.Web.UI;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
 using Carrotware.CMS.UI.Controls;
+using System;
+using System.Web.UI;
 
 /*
 * CarrotCake CMS
@@ -21,6 +21,12 @@ namespace Carrotware.CMS.UI.Base {
 		protected SiteData siteHelper = new SiteData();
 		protected WidgetHelper widgetHelper = new WidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
+
+		protected override void OnLoad(EventArgs e) {
+			base.OnLoad(e);
+
+			SecurityData.AuthCookieTime();
+		}
 
 		public override void Dispose() {
 			base.Dispose();

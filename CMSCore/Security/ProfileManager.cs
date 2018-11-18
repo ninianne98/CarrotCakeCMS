@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Carrotware.Web.UI.Controls;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Web;
 using System.Web.Profile;
 using System.Web.Security;
 using System.Web.UI;
-using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.Core {
 
@@ -102,17 +102,17 @@ namespace Carrotware.CMS.Core {
 		private static string alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private static string alphaLower = "abcdefghijklmnopqrstuvwxyz";
 		private static string numericChars = "1234567890";
-		private static string specialChars = "@#$&%";
+		private static string specialChars = "@#$%}{";
 
 		private static string allChars = alphaUpper + alphaLower + numericChars + specialChars;
 
 		private static int _length = -1;
 
-		private static int MinRequiredPasswordLength {
+		private static int GeneratedPasswordLength {
 			get {
 				if (_length <= 3) {
 					_length = Membership.MinRequiredPasswordLength;
-					if (_length <= 9) {
+					if (_length <= 8) {
 						_length = 12;
 					}
 				}
@@ -122,7 +122,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string GenerateSimplePassword() {
-			int length = MinRequiredPasswordLength;
+			int length = GeneratedPasswordLength;
 
 			Random rand = new Random();
 			string generatedPassword = String.Empty;

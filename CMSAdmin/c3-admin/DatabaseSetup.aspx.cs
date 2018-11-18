@@ -5,7 +5,6 @@ using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 
 /*
 * CarrotCake CMS
@@ -26,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			DatabaseUpdate du = new DatabaseUpdate(true);
 
 			if (!String.IsNullOrEmpty(Request.QueryString["signout"])) {
-				FormsAuthentication.SignOut();
+				SecurityData.ResetAuth();
 			}
 
 			List<DatabaseUpdateMessage> lst = new List<DatabaseUpdateMessage>();
