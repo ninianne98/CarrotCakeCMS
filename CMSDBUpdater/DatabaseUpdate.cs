@@ -25,13 +25,15 @@ namespace Carrotware.CMS.DBUpdater {
 	public class DatabaseUpdate {
 		public static SqlException LastSQLError { get; set; }
 
-		public static string CurrentDbVersion { get { return "20141025"; } }
+		public static string CurrentDbVersion { get { return "20200915"; } }
 
 		public static string DbVersion10 { get { return "20130615"; } }
 
 		public static string DbVersion11 { get { return "20130926"; } }
 
 		public static string DbVersion12 { get { return "20141025"; } }
+
+		public static string DbVersion13 { get { return "20200915"; } }
 
 		public DatabaseUpdate() { }
 
@@ -245,72 +247,78 @@ namespace Carrotware.CMS.DBUpdater {
 			return "Update " + (iCount).ToString() + " ";
 		}
 
+		private static object updateLocker = new Object();
+
 		public DatabaseUpdateStatus PerformUpdates() {
 			DatabaseUpdateStatus status = new DatabaseUpdateStatus();
-
 			bool bUpdate = true;
 			List<DatabaseUpdateMessage> lst = new List<DatabaseUpdateMessage>();
 
-			if (!DoCMSTablesExist()) {
-				HandleResponse(lst, "Create Database", CreateCMSDatabase());
-			} else {
-				HandleResponse(lst, "Database already exists");
-			}
+			lock (updateLocker) {
+				if (!DoCMSTablesExist()) {
+					HandleResponse(lst, "Create Database", CreateCMSDatabase());
+				} else {
+					HandleResponse(lst, "Database already exists");
+				}
 
-			bUpdate = DatabaseNeedsUpdate();
+				bUpdate = DatabaseNeedsUpdate();
 
-			DataInfo ver = GetDbSchemaVersion();
+				DataInfo ver = GetDbSchemaVersion();
 
-			int iUpdate = 1;
+				int iUpdate = 1;
 
-			if (bUpdate || (ver.DataValue != DatabaseUpdate.CurrentDbVersion)) {
-				if (ver.DataValue != DatabaseUpdate.CurrentDbVersion) {
-					if (!IsPostStep04) {
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep00());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep01());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep02());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep03());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep04());
-					}
-
-					if (!IsPostStep09) {
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep05());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep06());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep07());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep08());
-						HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep09());
-					}
-
-					ver = GetDbSchemaVersion();
-
+				if (bUpdate || (ver.DataValue != DatabaseUpdate.CurrentDbVersion)) {
 					if (ver.DataValue != DatabaseUpdate.CurrentDbVersion) {
-						if (ver.DataValue.Length < 2 || ver.DataValue.StartsWith("201305") || ver.DataValue.StartsWith("201306")) {
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep10());
+						if (!IsPostStep04) {
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep00());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep01());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep02());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep03());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep04());
 						}
+
+						if (!IsPostStep09) {
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep05());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep06());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep07());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep08());
+							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep09());
+						}
+
 						ver = GetDbSchemaVersion();
-						if (ver.DataValue == DatabaseUpdate.DbVersion10 || ver.DataValue.StartsWith("201306") || ver.DataValue.StartsWith("201309")) {
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep11());
+
+						if (ver.DataValue != DatabaseUpdate.CurrentDbVersion) {
+							if (ver.DataValue.Length < 2 || ver.DataValue.StartsWith("201305") || ver.DataValue.StartsWith("201306")) {
+								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep10());
+							}
+							ver = GetDbSchemaVersion();
+							if (ver.DataValue == DatabaseUpdate.DbVersion10 || ver.DataValue.StartsWith("201306") || ver.DataValue.StartsWith("201309")) {
+								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep11());
+							}
+							ver = GetDbSchemaVersion();
+							if (ver.DataValue == DatabaseUpdate.DbVersion11 || ver.DataValue.StartsWith("2013") || ver.DataValue.StartsWith("201409") || ver.DataValue.StartsWith("201410")) {
+								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep12());
+							}
+							if (ver.DataValue == DatabaseUpdate.DbVersion12 || ver.DataValue.StartsWith("2013") || ver.DataValue.StartsWith("2014") || ver.DataValue.StartsWith("2015")) {
+								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep13());
+							}
 						}
-						ver = GetDbSchemaVersion();
-						if (ver.DataValue == DatabaseUpdate.DbVersion11 || ver.DataValue.StartsWith("201309") || ver.DataValue.StartsWith("201409") || ver.DataValue.StartsWith("201410")) {
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep12());
-						}
+					} else {
+						HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 					}
 				} else {
 					HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 				}
-			} else {
-				HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
+
+				ResetFailedSQL();
+
+				ResetSQLState();
+
+				bUpdate = DatabaseNeedsUpdate();
+
+				status.NeedsUpdate = bUpdate;
+				status.Messages = lst;
 			}
-
-			ResetFailedSQL();
-
-			ResetSQLState();
-
-			bUpdate = DatabaseNeedsUpdate();
-
-			status.NeedsUpdate = bUpdate;
-			status.Messages = lst;
 
 			return status;
 		}
@@ -707,6 +715,30 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 
 			res.Response = "CMS DB time zone sproc already updated";
+			return res;
+		}
+
+		public DatabaseUpdateResponse AlterStep13() {
+			DatabaseUpdateResponse res = new DatabaseUpdateResponse();
+
+			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep13");
+
+			if (bTestResult) {
+				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER13.sql", false);
+				res.Response = "Update timezone sproc";
+				res.RanUpdate = true;
+				SetDbSchemaVersion(DatabaseUpdate.DbVersion13);
+				return res;
+			} else {
+				// if the db version is off, check leading tidbit against current and immediate prior
+				DataInfo ver = GetDbSchemaVersion();
+
+				if (DatabaseUpdate.DbVersion12.Substring(0, 6) == ver.DataValue.Substring(0, 6)) {
+					SetDbSchemaVersion(DatabaseUpdate.DbVersion13);
+				}
+			}
+
+			res.Response = "Timezone sproc update already applied";
 			return res;
 		}
 

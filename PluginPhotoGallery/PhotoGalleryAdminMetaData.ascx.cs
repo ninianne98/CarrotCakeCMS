@@ -7,7 +7,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 	public partial class PhotoGalleryAdminMetaData : AdminModule {
 		private Guid gTheID = Guid.Empty;
-		public string sImageFile = String.Empty;
+		public string imageFile = String.Empty;
 
 		protected FileDataHelper helpFile = new FileDataHelper();
 
@@ -16,12 +16,21 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				gTheID = new Guid(Request.QueryString["id"].ToString());
 			}
 			if (!string.IsNullOrEmpty(Request.QueryString["parm"])) {
-				sImageFile = CMSConfigHelper.DecodeBase64(Request.QueryString["parm"].ToString());
+				imageFile = CMSConfigHelper.DecodeBase64(Request.QueryString["parm"].ToString());
+			}
+			if (imageFile.Contains("../") || imageFile.Contains(@"..\")) {
+				throw new Exception("Cannot use relative paths.");
+			}
+			if (imageFile.Contains(":")) {
+				throw new Exception("Cannot specify drive letters.");
+			}
+			if (imageFile.Contains("//") || imageFile.Contains(@"\\")) {
+				throw new Exception("Cannot use UNC paths.");
 			}
 
-			litImgName.Text = sImageFile;
-			ImageSizer1.ImageUrl = sImageFile;
-			ImageSizer1.ToolTip = sImageFile;
+			litImgName.Text = imageFile;
+			ImageSizer1.ImageUrl = imageFile;
+			ImageSizer1.ToolTip = imageFile;
 
 			if (!IsPostBack) {
 				LoadForm();
@@ -30,7 +39,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		private void LoadForm() {
 			GalleryHelper gh = new GalleryHelper(SiteID);
-			var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
+			var meta = gh.GalleryMetaDataGetByFilename(imageFile);
 
 			if (meta != null) {
 				txtMetaInfo.Text = meta.ImageMetaData;
@@ -40,13 +49,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		protected void btnSave_Click(object sender, EventArgs e) {
 			GalleryHelper gh = new GalleryHelper(SiteID);
-			var meta = gh.GalleryMetaDataGetByFilename(sImageFile);
+			var meta = gh.GalleryMetaDataGetByFilename(imageFile);
 
 			if (meta == null) {
 				meta = new GalleryMetaData();
 				meta.GalleryImageMetaID = Guid.Empty;
 				meta.SiteID = SiteID;
-				meta.GalleryImage = sImageFile.ToLower();
+				meta.GalleryImage = imageFile.ToLower();
 			}
 
 			meta.ImageMetaData = txtMetaInfo.Text;

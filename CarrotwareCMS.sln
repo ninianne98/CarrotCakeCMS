@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "databas
 		CMSDBUpdater\DataScripts\ALTER10.sql = CMSDBUpdater\DataScripts\ALTER10.sql
 		CMSDBUpdater\DataScripts\ALTER11.sql = CMSDBUpdater\DataScripts\ALTER11.sql
 		CMSDBUpdater\DataScripts\ALTER12.sql = CMSDBUpdater\DataScripts\ALTER12.sql
+		CMSDBUpdater\DataScripts\ALTER13.sql = CMSDBUpdater\DataScripts\ALTER13.sql
 		CMSDBUpdater\DataScripts\CREATE01.sql = CMSDBUpdater\DataScripts\CREATE01.sql
 	EndProjectSection
 EndProject
