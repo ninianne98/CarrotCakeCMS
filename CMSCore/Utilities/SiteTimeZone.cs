@@ -19,7 +19,6 @@ using System.Xml.Serialization;
 namespace Carrotware.CMS.Core {
 
 	public class ContentLocalTime {
-
 		public DateTime GoLiveDate { get; set; }
 
 		public DateTime GoLiveDateLocal { get; set; }
@@ -71,7 +70,6 @@ namespace Carrotware.CMS.Core {
 								where p.ContentTypeID == ContentPageType.GetIDByType(ContentPageType.PageType.BlogEntry)
 								select p.GoLiveDate).Distinct().ToList();
 
-
 			this.ContentLocalDates = (from d in allContentDates
 									  select new ContentLocalTime() {
 										  GoLiveDate = d,
@@ -82,10 +80,20 @@ namespace Carrotware.CMS.Core {
 								 join ld in this.ContentLocalDates on bd equals ld.GoLiveDate
 								 select new BlogPostPageUrl() {
 									 GoLiveDate = ld.GoLiveDate,
-									 PostPrefix = ContentPageHelper.CreateFileNameFromSlug(siteID, ld.GoLiveDateLocal, string.Empty),
+									 PostPrefix = CleanPostPrefix(ContentPageHelper.CreateFileNameFromSlug(siteID, ld.GoLiveDateLocal, string.Empty)),
 									 GoLiveDateLocal = ld.GoLiveDateLocal
 								 }).ToList();
+		}
 
+		private string CleanPostPrefix(string pathIn) {
+			string pathOut = pathIn;
+
+			if (!string.IsNullOrEmpty(pathIn) &&
+					pathIn.ToLowerInvariant().EndsWith(SiteData.DefaultDirectoryFilename.ToLowerInvariant())) {
+				pathOut = pathIn.Substring(0, pathIn.Length - SiteData.DefaultDirectoryFilename.Length);
+			}
+
+			return pathOut;
 		}
 
 		public void Save() {
