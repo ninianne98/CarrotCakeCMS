@@ -110,6 +110,7 @@
     <Compile Include="SiteContent\IContentMetaInfo.cs" />
     <Compile Include="SiteContent\PageViewType.cs" />
     <Compile Include="SiteContent\PostComment.cs" />
+    <Compile Include="SiteContent\SiteDataStatic.cs" />
     <Compile Include="SiteContent\SiteMapHelper.cs" />
     <Compile Include="SiteContent\SiteNavHelper.cs" />
     <Compile Include="SiteContent\SiteNavHelperMock.cs" />

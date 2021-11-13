@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using Carrotware.CMS.Data;
 
 /*
 * CarrotCake CMS
@@ -216,7 +216,7 @@ namespace Carrotware.CMS.Core {
 
 		public void SaveDefaultControlProperties(List<WidgetProps> props) {
 			XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WidgetProps>));
-			string sXML = "";
+			string sXML = string.Empty;
 			using (StringWriter stringWriter = new StringWriter()) {
 				xmlSerializer.Serialize(stringWriter, props);
 				sXML = stringWriter.ToString();
