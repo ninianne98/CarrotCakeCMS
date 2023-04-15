@@ -7,8 +7,16 @@ using System.Linq;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class ucEditNotifier : AdminBaseUserControl {
-		public string EditPageURL = "";
-		public string PageIndexURL = "";
+		public string EditPageURL = string.Empty;
+		public string PageIndexURL = string.Empty;
+		public string PageIndexText = string.Empty;
+
+		public string AntiCache {
+			get {
+				return Helper.AntiCache;
+			}
+		}
+
 		public bool IsPageTemplate = false;
 
 		public Guid CurrentPageID {
@@ -45,10 +53,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				EditPageURL = SiteFilename.PageAddEditURL;
 				PageIndexURL = SiteFilename.PageIndexURL;
+				PageIndexText = "CONTENT INDEX";
 
 				if (currentPage.ContentType == ContentPageType.PageType.BlogEntry) {
 					EditPageURL = SiteFilename.BlogPostAddEditURL;
 					PageIndexURL = SiteFilename.BlogPostIndexURL;
+					PageIndexText = "BLOG INDEX";
 				}
 
 				if (!IsPostBack) {

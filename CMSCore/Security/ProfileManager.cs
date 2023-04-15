@@ -1,11 +1,20 @@
 ﻿using Carrotware.Web.UI.Controls;
-using System;
-using System.IO;
-using System.Reflection;
-using System.Web;
+using System.Linq;
 using System.Web.Profile;
 using System.Web.Security;
 using System.Web.UI;
+using System.Web;
+using System;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 3 licenses.
+*
+* Date: October 2011
+*/
 
 namespace Carrotware.CMS.Core {
 
@@ -41,7 +50,7 @@ namespace Carrotware.CMS.Core {
 		public bool ResetPassword(string Email, Control theControl) {
 			MembershipUser user = null;
 
-			if (!String.IsNullOrEmpty(Email)) {
+			if (!string.IsNullOrEmpty(Email)) {
 				MembershipUserCollection membershipCollection = Membership.FindUsersByEmail(Email);
 				foreach (MembershipUser userEnum in membershipCollection) {
 					user = userEnum;
@@ -51,12 +60,8 @@ namespace Carrotware.CMS.Core {
 
 			if (user != null) {
 				HttpRequest request = HttpContext.Current.Request;
-				Assembly _assembly = Assembly.GetExecutingAssembly();
 
-				string sBody = String.Empty;
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt"))) {
-					sBody = oTextStream.ReadToEnd();
-				}
+				string sBody = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt");
 
 				if (user.IsLockedOut && user.LastLockoutDate < DateTime.Now.AddMinutes(-45)) {
 					user.UnlockUser();
@@ -67,9 +72,8 @@ namespace Carrotware.CMS.Core {
 
 				user.ChangePassword(tmpPassword, newPassword); // set to simpler password
 
-				string strHTTPHost = String.Empty;
-				try { strHTTPHost = request.ServerVariables["HTTP_HOST"].ToString().Trim(); } catch { strHTTPHost = String.Empty; }
-
+				string strHTTPHost = string.Empty;
+				try { strHTTPHost = request.ServerVariables["HTTP_HOST"].ToString().Trim(); } catch { strHTTPHost = string.Empty; }
 				string hostName = strHTTPHost.ToLowerInvariant();
 
 				string strHTTPPrefix = "http://";
@@ -77,13 +81,13 @@ namespace Carrotware.CMS.Core {
 					strHTTPPrefix = request.ServerVariables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://";
 				} catch { strHTTPPrefix = "http://"; }
 
-				strHTTPHost = String.Format("{0}{1}", strHTTPPrefix, strHTTPHost).ToLowerInvariant();
+				strHTTPHost = string.Format("{0}{1}", strHTTPPrefix, hostName).ToLowerInvariant();
 
 				sBody = sBody.Replace("{%%UserName%%}", user.UserName);
 				sBody = sBody.Replace("{%%Password%%}", newPassword);
 				sBody = sBody.Replace("{%%SiteURL%%}", strHTTPHost);
 				sBody = sBody.Replace("{%%Version%%}", CurrentDLLVersion);
-				sBody = sBody.Replace("{%%AdminFolderPath%%}", String.Format("{0}{1}", strHTTPHost, SiteData.AdminFolderPath));
+				sBody = sBody.Replace("{%%AdminFolderPath%%}", string.Format("{0}{1}", strHTTPHost, SiteData.AdminFolderPath));
 
 				if (SiteData.CurretSiteExists) {
 					sBody = sBody.Replace("{%%Time%%}", SiteData.CurrentSite.Now.ToString());
@@ -91,7 +95,7 @@ namespace Carrotware.CMS.Core {
 					sBody = sBody.Replace("{%%Time%%}", DateTime.Now.ToString());
 				}
 
-				EmailHelper.SendMail(null, user.Email, String.Format("Reset Password {0}", hostName), sBody, false);
+				EmailHelper.SendMail(null, user.Email, string.Format("Reset Password {0}", hostName), sBody, false);
 
 				return true;
 			} else {
@@ -102,7 +106,7 @@ namespace Carrotware.CMS.Core {
 		private static string alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private static string alphaLower = "abcdefghijklmnopqrstuvwxyz";
 		private static string numericChars = "1234567890";
-		private static string specialChars = "@#$%}{";
+		private static string specialChars = "@!$}{";
 
 		private static string allChars = alphaUpper + alphaLower + numericChars + specialChars;
 
@@ -124,25 +128,34 @@ namespace Carrotware.CMS.Core {
 		public static string GenerateSimplePassword() {
 			int length = GeneratedPasswordLength;
 
-			Random rand = new Random();
-			string generatedPassword = String.Empty;
+			string generatedPassword = SelectRandomString(allChars, 4);
 
 			for (int i = 0; i < length; i++) {
-				double dbl = rand.NextDouble();
-				if (i == 0) {
-					generatedPassword += alphaUpper.ToCharArray()[(int)Math.Floor(dbl * alphaUpper.Length)];
-				} else if (i == length - 3) {
-					generatedPassword += alphaLower.ToCharArray()[(int)Math.Floor(dbl * alphaLower.Length)];
-				} else if (i == length - 5) {
-					generatedPassword += numericChars.ToCharArray()[(int)Math.Floor(dbl * numericChars.Length)];
-				} else if (i == length - 7) {
-					generatedPassword += specialChars.ToCharArray()[(int)Math.Floor(dbl * specialChars.Length)];
+				if (i == 0 || i == 7) {
+					generatedPassword += SelectRandomChar(alphaUpper);
+				} else if (i == 2 || i == 5) {
+					generatedPassword += SelectRandomChar(alphaLower);
+				} else if (i == 4 || i == 3) {
+					generatedPassword += SelectRandomChar(numericChars);
+				} else if (i == 6 || i == 1) {
+					generatedPassword += SelectRandomChar(specialChars);
 				} else {
-					generatedPassword += allChars.ToCharArray()[(int)Math.Floor(dbl * allChars.Length)];
+					generatedPassword += SelectRandomString(allChars, 3);
 				}
 			}
 
 			return generatedPassword;
+		}
+
+		private static string SelectRandomString(string sourceString, int take) {
+			return new string(sourceString.OrderBy(x => Guid.NewGuid()).Take(take).ToArray());
+		}
+
+		private static char SelectRandomChar(string sourceString) {
+			return SelectRandomString(sourceString, 1).FirstOrDefault();
+			//var rand = new Random();
+			//int index = rand.Next(sourceString.Length - 1);
+			//return sourceString.ToCharArray()[index];
 		}
 	}
 }

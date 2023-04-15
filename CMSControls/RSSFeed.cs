@@ -144,7 +144,7 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
 							string sImg = GeneralUtilities.ResolvePath(this, this.ImageURI);
-							output.Write("<!-- RSS Feed Image Link--> <a " + sCSS + " title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" ><img alt=\"" + this.RSSFeedType.ToString() + "\" src=\"" + sImg + "\" /></a>\r\n");
+							output.Write("<!-- RSS Feed Image Link--> <a " + sCSS + " type=\"application/rss+xml\" title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" ><img alt=\"" + this.RSSFeedType.ToString() + "\" src=\"" + sImg + "\" /></a>\r\n");
 							break;
 
 						default:
@@ -159,7 +159,7 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							output.Write("<!-- RSS Feed Text Link--> <a " + sCSS + " title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
+							output.Write("<!-- RSS Feed Text Link--> <a " + sCSS + " type=\"application/rss+xml\" title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
 							break;
 
 						default:

@@ -25,8 +25,8 @@ namespace Carrotware.Web.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter output) {
 			int ident = output.Indent;
 
-			string sJSFile = WebControlHelper.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jsHelperLibrary.js");
-			string sJQFile = WebControlHelper.GetWebResourceUrl(this.GetType(), "Carrotware.Web.UI.Controls.jquery-1-8-3.js");
+			string sJSFile = WebControlHelper.GetWebResourceUrl("Carrotware.Web.UI.Controls.jsHelperLibrary.js");
+			string sJQFile = jquery.GeneralUri;
 
 			output.Indent = ident + 3;
 			output.WriteLine();

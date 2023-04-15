@@ -17,6 +17,17 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 	public class CalendarHelper {
 
+		public class MinMaxDate {
+			public DateTime MinDate { get; set; }
+			public DateTime MaxDate { get; set; }
+		}
+
+		public enum EventLookupType {
+			All = -1,
+			Current = -2,
+			Future = -3,
+		}
+
 		public enum PluginKeys {
 			EventAdminDatabase,
 			AdminProfileList,
@@ -26,6 +37,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			EventAdminCategoryList,
 			EventAdminCategoryDetail,
 		}
+
+		//===============================
 
 		public static string HEX_White = "#FFFFFF";
 		public static string HEX_Black = "#000000";
@@ -83,50 +96,46 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		public static List<vw_carrot_CalendarEventProfile> GetProfileView(Guid siteID, int eventYear) {
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-				if (eventYear == -1) {
-					return (from c in db.vw_carrot_CalendarEventProfiles
-							orderby c.EventStartDate
-							where c.SiteID == siteID
-							select c).ToList();
-				}
-
 				DateTime dateStart = DateTime.MinValue;
 				DateTime dateEnd = DateTime.MaxValue;
 
-				if (eventYear == -2) {
-					dateStart = DateTime.Now.Date.AddDays(-90);
-					dateEnd = DateTime.Now.Date.AddDays(180);
-				}
-
-				if (eventYear == -3) {
-					dateStart = DateTime.UtcNow.Date.AddDays(-1);
-					dateEnd = DateTime.Now.Date.AddYears(200);
-				}
-
 				if (eventYear > 1000) {
+					// looking for everything in a particular year
 					dateStart = Convert.ToDateTime(String.Format("{0}-01-01", eventYear));
-					dateEnd = Convert.ToDateTime(String.Format("{0}-01-01", eventYear + 1)).AddMilliseconds(-1);
-				}
+					dateEnd = Convert.ToDateTime(String.Format("{0}-01-01", eventYear + 1)).AddMilliseconds(-5);
+				} else {
+					if (eventYear == (int)EventLookupType.All) {
+						dateStart = DateTime.Now.Date.AddYears(-250);
+						dateEnd = DateTime.Now.Date.AddYears(250);
+					}
 
-				if (eventYear == -2 || eventYear > 1000) {
-					return (from c in db.vw_carrot_CalendarEventProfiles
-							orderby c.EventStartDate
-							where c.SiteID == siteID
-									&& (c.EventEndDate >= dateStart && c.EventStartDate <= dateEnd)
-							select c).ToList();
+					if (eventYear == (int)EventLookupType.Future) {
+						dateStart = DateTime.UtcNow.Date.AddDays(-1);
+						dateEnd = DateTime.Now.Date.AddYears(250);
+					}
+
+					if (eventYear == (int)EventLookupType.Current) {
+						dateStart = DateTime.Now.Date.AddDays(-90);
+						dateEnd = DateTime.Now.Date.AddDays(180);
+					}
 				}
 
 				return (from c in db.vw_carrot_CalendarEventProfiles
 						orderby c.EventStartDate
 						where c.SiteID == siteID
-								&& (c.EventStartDate >= dateStart)
+								&& (c.EventEndDate >= dateStart && c.EventStartDate <= dateEnd)
 						select c).ToList();
 			}
 		}
 
 		public static Dictionary<int, string> GetYears(Guid siteID) {
-			Dictionary<int, string> lst = new Dictionary<int, string>();
 			List<int> years = new List<int>();
+			Dictionary<int, string> lst1 = new Dictionary<int, string>();
+			Dictionary<int, string> lst2 = new Dictionary<int, string>();
+
+			lst2.Add((int)EventLookupType.All, "All Events");
+			lst2.Add((int)EventLookupType.Current, "Current Events");
+			lst2.Add((int)EventLookupType.Future, "Future Only");
 
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				MinMaxDate mm = (from c in db.vw_carrot_CalendarEventProfiles
@@ -142,18 +151,17 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 					int yearCount = mm.MaxDate.Year - startYear + 1;
 
 					years = Enumerable.Range(startYear, yearCount).ToList();
+				} else {
+					years = Enumerable.Range((DateTime.UtcNow.Year - 3), 5).ToList();
 				}
 			}
 
-			lst = (from r in years
-				   select new KeyValuePair<int, string>(r, String.Format("Events in {0}", r)))
+			lst1 = (from r in years
+					select new KeyValuePair<int, string>(r, String.Format("Events in {0}", r)))
+					.OrderByDescending(x => x.Key)
 					.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-			lst.Add(-3, "Future Only");
-			lst.Add(-2, "Current Events");
-			lst.Add(-1, "All Events");
-
-			return lst.OrderBy(x => x.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			return lst2.Union(lst1).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 		}
 
 		public static carrot_CalendarEventProfile GetProfile(Guid calendarEventProfileID) {
@@ -534,10 +542,5 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 			return ts;
 		}
-	}
-
-	public class MinMaxDate {
-		public DateTime MinDate { get; set; }
-		public DateTime MaxDate { get; set; }
 	}
 }

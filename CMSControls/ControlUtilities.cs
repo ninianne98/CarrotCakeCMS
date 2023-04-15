@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
 using System.IO;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
+using System.Web.UI;
+using System.Web;
+using System;
 
 /*
 * CarrotCake CMS
@@ -46,7 +46,7 @@ namespace Carrotware.CMS.UI.Controls {
 				_page = GetContainerPage(X);
 			}
 
-			//if (!SiteData.IsWebView && String.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
+			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
 			//    _page.AppRelativeVirtualPath = "~/";
 			//}
 		}
@@ -55,7 +55,7 @@ namespace Carrotware.CMS.UI.Controls {
 			ResetFind();
 			_page = X;
 
-			//if (!SiteData.IsWebView && String.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
+			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
 			//    _page.AppRelativeVirtualPath = "~/";
 			//}
 		}
@@ -137,12 +137,12 @@ namespace Carrotware.CMS.UI.Controls {
 			return CachedPage.ParseControl(resource);
 		}
 
-		public static string GetManifestResourceStream(string sResouceName) {
+		public static string GetManifestResourceStream(string resourceName) {
 			string sReturn = null;
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
-				sReturn = oTextStream.ReadToEnd();
+			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(resourceName))) {
+				sReturn = stream.ReadToEnd();
 			}
 
 			return sReturn;

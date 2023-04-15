@@ -264,7 +264,7 @@ namespace Carrotware.CMS.Core {
 			Encoding encoding = Encoding.GetEncoding(encodingName);
 
 			using (Stream stream = response.GetResponseStream()) {
-				using (StreamReader reader = new StreamReader(stream, encoding))
+				using (var reader = new StreamReader(stream, encoding))
 					result = reader.ReadToEnd();
 			}
 

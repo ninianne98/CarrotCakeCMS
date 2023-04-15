@@ -22,9 +22,9 @@ namespace Carrotware.CMS.UI.Base {
 
 			pph.LoadData();
 			if (pph.ThePage != null) {
-				theSite = pph.TheSite;
-				pageContents = pph.ThePage;
-				pageWidgets = pph.ThePageWidgets;
+				_theSite = pph.TheSite;
+				_pageContents = pph.ThePage;
+				_pageWidgets = pph.ThePageWidgets;
 			}
 
 			if (SiteData.IsWebView) {

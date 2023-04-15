@@ -1,14 +1,14 @@
 ﻿using Carrotware.CMS.Data;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Web;
 using System.Web.Caching;
+using System.Web;
 using System.Xml;
+using System;
 
 /*
 * CarrotCake CMS
@@ -391,13 +391,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static void ManuallyWriteDefaultFile(HttpContext context, Exception objErr) {
-			Assembly _assembly = Assembly.GetExecutingAssembly();
 
-			string sBody = string.Empty;
+			string sBody = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Default.htm");
 
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Default.htm"))) {
-				sBody = oTextStream.ReadToEnd();
-			}
 			try {
 				if (CurretSiteExists) {
 					sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
@@ -444,12 +440,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string FormatErrorOutput(Exception objErr) {
-			Assembly _assembly = Assembly.GetExecutingAssembly();
-
-			string sBody = string.Empty;
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm"))) {
-				sBody = oTextStream.ReadToEnd();
-			}
+			string sBody = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm");
 
 			if (objErr is HttpException) {
 				HttpException httpEx = (HttpException)objErr;
@@ -656,14 +647,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string StarterHomePageSample {
 			get {
-				Assembly _assembly = Assembly.GetExecutingAssembly();
-
-				string sBody = string.Empty;
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.FirstPage.txt"))) {
-					sBody = oTextStream.ReadToEnd();
-				}
-
-				return sBody;
+				return SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.FirstPage.txt");
 			}
 		}
 
@@ -896,6 +880,6 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public static string RssDocType { get { return "application/rss+xml"; } }
+		public static string RssDocType { get { return "text/xml"; } }
 	}
 }

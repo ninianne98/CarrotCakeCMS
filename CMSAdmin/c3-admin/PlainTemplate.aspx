@@ -7,7 +7,7 @@
 
 		base.OnLoad(e);
 
-		if (TheSite.Blog_Root_ContentID.HasValue && ThePage.Root_ContentID == TheSite.Blog_Root_ContentID.Value) {
+		if (this.IsSiteIndex) {
 			PagedDataSummary2.Visible = true;
 		} else {
 			PagedDataSummary2.Visible = false;

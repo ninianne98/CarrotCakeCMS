@@ -14,46 +14,49 @@
 	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
 	<title>Public</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="LightGreen" />
-	<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
-	<script src="/c3-admin/iCheck/icheck.min.js" type="text/javascript"></script>
-	<script src="/c3-admin/includes/icheck.init.js" type="text/javascript"></script>
-	<link href="/c3-admin/includes/logon.css" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$("input:button, input:submit, input:reset, button").button();
-		});
 
-		function ShowAbout() {
-			var w = $(window).width() * 0.75;
-			var h = $(window).height() * 0.75;
-
-			var t = '<iframe frameborder="0" style="overflow: hidden; margin: 4px; padding: 0; height: 98%; width: 100%;" src="<%= SiteFilename.AboutURL %>"></iframe>';
-
-			cmsAlertModalHeightWidth(t, h, w);
-		}
-
-		function cmsAlertModalClose() {
-			$("#divCMSModal").dialog("close");
-		}
-
-		function cmsAlertModalHeightWidth(request, h, w) {
-			$("#divCMSModalMsg").html('');
-
-			$("#divCMSModalMsg").html(request);
-
-			$("#divCMSModal").dialog({
-				height: h,
-				width: w,
-				modal: true,
-				buttons: {
-					"OK": function () {
-						cmsAlertModalClose();
-					}
-				}
+	<asp:PlaceHolder runat="server" ID="phHead">
+		<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
+		<script src="/c3-admin/iCheck/icheck.min.js<%=AntiCache%>" type="text/javascript"></script>
+		<script src="/c3-admin/includes/icheck.init.js<%=AntiCache%>" type="text/javascript"></script>
+		<link href="/c3-admin/includes/logon.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("input:button, input:submit, input:reset, button").button();
 			});
-		}
-	</script>
+
+			function ShowAbout() {
+				var w = $(window).width() * 0.75;
+				var h = $(window).height() * 0.75;
+
+				var t = '<iframe frameborder="0" style="overflow: hidden; margin: 4px; padding: 0; height: 98%; width: 100%;" src="<%= SiteFilename.AboutURL %>"></iframe>';
+
+				cmsAlertModalHeightWidth(t, h, w);
+			}
+
+			function cmsAlertModalClose() {
+				$("#divCMSModal").dialog("close");
+			}
+
+			function cmsAlertModalHeightWidth(request, h, w) {
+				$("#divCMSModalMsg").html('');
+
+				$("#divCMSModalMsg").html(request);
+
+				$("#divCMSModal").dialog({
+					height: h,
+					width: w,
+					modal: true,
+					buttons: {
+						"OK": function () {
+							cmsAlertModalClose();
+						}
+					}
+				});
+			}
+		</script>
+	</asp:PlaceHolder>
 	<meta name="robots" content="noindex,nofollow,noarchive" runat="server" id="metaCrawl" />
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>

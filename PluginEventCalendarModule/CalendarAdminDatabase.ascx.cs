@@ -2,6 +2,12 @@
 using Carrotware.CMS.Interface;
 using System;
 using System.IO;
+using System.Linq;
+
+using System.Linq;
+using System.Collections.Generic;
+using System;
+
 using System.Reflection;
 
 /*
@@ -21,10 +27,10 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
 			DatabaseUpdateResponse dbRes = new DatabaseUpdateResponse();
-			string sqlUpdate = String.Empty;
-			string sqlTest = String.Empty;
+			string sqlUpdate = string.Empty;
+			string sqlTest = string.Empty;
 			int iCt = 0;
-			litMsg.Text = String.Empty;
+			litMsg.Text = string.Empty;
 
 			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.EventCalendarModule.carrot_CalendarEvent.sql");
 			sqlTest = "select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name = 'carrot_CalendarEventProfile' and column_name = 'RecursEvery'";
@@ -36,15 +42,31 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			} else {
 				litMsg.Text += iCt.ToString() + ")  " + dbRes.Response + "<br />";
 			}
+
+			var lst = CalendarHelper.GetCalendarCategories(SiteID);
+
+			if (!lst.Any()) {
+				using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
+					var itm = new carrot_CalendarEventCategory();
+					itm.CalendarEventCategoryID = Guid.NewGuid();
+					itm.SiteID = SiteID;
+					itm.CategoryName = "Default";
+					itm.CategoryFGColor = "#8FBC8F";
+					itm.CategoryBGColor = "#FFFFFF";
+
+					db.carrot_CalendarEventCategories.InsertOnSubmit(itm);
+					db.SubmitChanges();
+				}
+			}
 		}
 
 		private string ReadEmbededScript(string filePath) {
-			string sFile = String.Empty;
+			string sFile = string.Empty;
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(filePath))) {
-				sFile = oTextStream.ReadToEnd();
+			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(filePath))) {
+				sFile = stream.ReadToEnd();
 			}
 
 			return sFile;

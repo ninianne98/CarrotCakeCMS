@@ -104,8 +104,8 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public static string GetWebResourceUrl(string resource) {
-			return WebControlHelper.GetWebResourceUrl(typeof(jquerybasic), resource);
+		private static string GetWebResourceUrl(string resource) {
+			return WebControlHelper.GetWebResourceUrl(resource);
 		}
 
 		private jquery _jq = new jquery();

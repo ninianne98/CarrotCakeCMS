@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using Carrotware.CMS.Data;
+using System;
 
 /*
 * CarrotCake CMS
@@ -109,7 +109,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string PageContentEmpty {
-			get { return "<p>&nbsp;</p>"; }
+			get { return "<p>  </p>"; }
 		}
 
 		public SiteNav GetSiteNav() {
@@ -192,8 +192,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private void FixMeta() {
-			this.MetaKeyword = string.IsNullOrEmpty(this.MetaKeyword) ? String.Empty : this.MetaKeyword;
-			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? String.Empty : this.MetaDescription;
+			this.MetaKeyword = string.IsNullOrEmpty(this.MetaKeyword) ? string.Empty : this.MetaKeyword;
+			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? string.Empty : this.MetaDescription;
 		}
 
 		private void SaveKeywordsAndTags(CarrotCMSDataContext _db) {

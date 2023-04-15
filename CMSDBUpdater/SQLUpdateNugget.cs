@@ -53,9 +53,9 @@ namespace Carrotware.CMS.DBUpdater {
 					Assembly _assembly = Assembly.GetExecutingAssembly();
 
 					DataSet ds = new DataSet();
-					string filePath = "Carrotware.CMS.DBUpdater.DatabaseChecks.xml";
-					using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(filePath))) {
-						ds.ReadXml(oTextStream);
+					string resourceName = "Carrotware.CMS.DBUpdater.DatabaseChecks.xml";
+					using (var stream = new StreamReader(_assembly.GetManifestResourceStream(resourceName))) {
+						ds.ReadXml(stream);
 					}
 
 					_nuggets = (from d in ds.Tables[0].AsEnumerable()

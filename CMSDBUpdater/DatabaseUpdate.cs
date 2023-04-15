@@ -82,7 +82,7 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		private static string SetConn() {
-			string _connStr = String.Empty;
+			string _connStr = string.Empty;
 
 			if (ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"] != null) {
 				ConnectionStringSettings conString = ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"];
@@ -405,7 +405,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static bool TablesIncomplete {
 			get {
-				string tablesIncomplete = String.Empty;
+				string tablesIncomplete = string.Empty;
 				bool c = true;
 
 				if (HttpContext.Current.Cache[ContentSqlStateKey] != null) {
@@ -743,12 +743,12 @@ namespace Carrotware.CMS.DBUpdater {
 		}
 
 		private string ReadEmbededScript(string filePath) {
-			string sFile = String.Empty;
+			string sFile = string.Empty;
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(filePath))) {
-				sFile = oTextStream.ReadToEnd();
+			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(filePath))) {
+				sFile = stream.ReadToEnd();
 			}
 
 			return sFile;
@@ -846,7 +846,7 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 
 			if (d != null && string.IsNullOrEmpty(d.DataValue)) {
-				d.DataValue = String.Empty;
+				d.DataValue = string.Empty;
 			}
 
 			return d;
@@ -1099,8 +1099,8 @@ namespace Carrotware.CMS.DBUpdater {
 			this.InnerExceptionText = null;
 			this.AlteredData = false;
 			this.HasException = false;
-			this.Message = String.Empty;
-			this.Response = String.Empty;
+			this.Message = string.Empty;
+			this.Response = string.Empty;
 			this.Order = -1;
 		}
 	}
@@ -1113,7 +1113,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public DatabaseUpdateResponse() {
 			this.LastException = null;
-			this.Response = String.Empty;
+			this.Response = string.Empty;
 			this.RanUpdate = false;
 		}
 	}

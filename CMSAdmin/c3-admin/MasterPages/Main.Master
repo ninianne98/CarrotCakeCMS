@@ -14,62 +14,65 @@
 	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
 	<title>Main</title>
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="LightGreen" />
-	<script src="/c3-admin/includes/jquery.ui.timepicker.js" type="text/javascript"></script>
-	<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/includes/chosen.min.css" rel="stylesheet" type="text/css" />
-	<script src="/c3-admin/includes/chosen.jquery.min.js" type="text/javascript"></script>
-	<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
-	<script src="/c3-admin/iCheck/icheck.min.js" type="text/javascript"></script>
-	<script src="/c3-admin/includes/icheck.init.js" type="text/javascript"></script>
-	<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/includes/main.css" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/includes/TableStyles.css" rel="stylesheet" type="text/css" />
-	<script src="/c3-admin/includes/base64.js" type="text/javascript"></script>
-	<script src="/c3-admin/includes/jquery.simplemodal.js" type="text/javascript"></script>
-	<script src="/c3-admin/includes/jquery.blockUI.js" type="text/javascript"></script>
-	<script src="/c3-admin/includes/common-utils.js" type="text/javascript"></script>
-	<%--<link href="/c3-admin/glossyseagreen/jquery-ui-metro.css" rel="stylesheet" type="text/css" />--%>
-	<%--<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />--%>
-	<script type="text/javascript">
 
-		function UpdateAjaxJQuery() {
-			if (typeof (Sys) != 'undefined') {
-				var prm = Sys.WebForms.PageRequestManager.getInstance();
-				prm.add_endRequest(function () {
-					AjaxBtnLoad();
-				});
+	<asp:PlaceHolder runat="server" ID="phHead">
+		<script src="/c3-admin/includes/jquery.ui.timepicker.js<%=AntiCache%>" type="text/javascript"></script>
+		<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/includes/chosen.min.css" rel="stylesheet" type="text/css" />
+		<script src="/c3-admin/includes/chosen.jquery.min.js<%=AntiCache%>" type="text/javascript"></script>
+		<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
+		<script src="/c3-admin/iCheck/icheck.min.js<%=AntiCache%>" type="text/javascript"></script>
+		<script src="/c3-admin/includes/icheck.init.js<%=AntiCache%>" type="text/javascript"></script>
+		<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/includes/main.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/includes/TableStyles.css" rel="stylesheet" type="text/css" />
+		<script src="/c3-admin/includes/base64.js<%=AntiCache%>" type="text/javascript"></script>
+		<script src="/c3-admin/includes/jquery.simplemodal.js<%=AntiCache%>" type="text/javascript"></script>
+		<script src="/c3-admin/includes/jquery.blockUI.js<%=AntiCache%>" type="text/javascript"></script>
+		<script src="/c3-admin/includes/common-utils.js<%=AntiCache%>" type="text/javascript"></script>
+		<%--<link href="/c3-admin/glossyseagreen/jquery-ui-metro.css" rel="stylesheet" type="text/css" />--%>
+		<%--<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />--%>
+		<script type="text/javascript">
+
+			function UpdateAjaxJQuery() {
+				if (typeof (Sys) != 'undefined') {
+					var prm = Sys.WebForms.PageRequestManager.getInstance();
+					prm.add_endRequest(function () {
+						AjaxBtnLoad();
+					});
+				}
 			}
-		}
 
-		$(document).ready(function () {
-			UpdateAjaxJQuery();
-			AjaxBtnLoad();
-		});
-	</script>
-	<!-- TinyMCE -->
-	<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
-	<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js"></script>
-	<script type="text/javascript">
-		function AjaxTinyLoad() {
-			TinyMCEParamInit("700", "500", false);
-		}
-
-		function UpdateAjaxTiny() {
-			if (typeof (Sys) != 'undefined') {
-				var prm = Sys.WebForms.PageRequestManager.getInstance();
-				prm.add_endRequest(function () {
-					AjaxTinyLoad();
-				});
+			$(document).ready(function () {
+				UpdateAjaxJQuery();
+				AjaxBtnLoad();
+			});
+		</script>
+		<!-- TinyMCE -->
+		<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js<%=AntiCache%>"></script>
+		<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js<%=AntiCache%>"></script>
+		<script type="text/javascript">
+			function AjaxTinyLoad() {
+				TinyMCEParamInit("700", "500", false);
 			}
-		}
 
-		$(document).ready(function () {
-			UpdateAjaxTiny();
-			AjaxTinyLoad();
-		});
-	</script>
-	<!-- /TinyMCE -->
+			function UpdateAjaxTiny() {
+				if (typeof (Sys) != 'undefined') {
+					var prm = Sys.WebForms.PageRequestManager.getInstance();
+					prm.add_endRequest(function () {
+						AjaxTinyLoad();
+					});
+				}
+			}
+
+			$(document).ready(function () {
+				UpdateAjaxTiny();
+				AjaxTinyLoad();
+			});
+		</script>
+		<!-- /TinyMCE -->
+	</asp:PlaceHolder>
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>
 </head>
@@ -197,20 +200,20 @@
 			</div>
 			<script type="text/javascript">
 
-			function LogoutLink() {
-				var opts = {
-					"No": function () { cmsAlertModalClose(); },
-					"Yes": function () { ClickLogout(); }
-				};
+				function LogoutLink() {
+					var opts = {
+						"No": function () { cmsAlertModalClose(); },
+						"Yes": function () { ClickLogout(); }
+					};
 
-				cmsAlertModalSmallBtns('Are you sure you want to logout?.', opts);
+					cmsAlertModalSmallBtns('Are you sure you want to logout?.', opts);
 
-				return false;
-			}
+					return false;
+				}
 
-			function ClickLogout() {
-				$('#<%=btnLogout.ClientID %>').click();
-			}
+				function ClickLogout() {
+					$('#<%=btnLogout.ClientID %>').click();
+				}
 			</script>
 			<div style="display: none;">
 				<asp:Button ValidationGroup="logoutForm" ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />

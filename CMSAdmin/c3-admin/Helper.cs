@@ -1,8 +1,5 @@
-﻿using Carrotware.Web.UI.Controls;
-
-using System;
-
-using System.Collections.Generic;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -39,6 +36,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public static string ShortTimePattern {
 			get {
 				return WebControlHelper.ShortTimePattern;
+			}
+		}
+
+		public static string AntiCache {
+			get {
+				return string.Format("?cms={0}", SiteData.CurrentDLLVersion);
 			}
 		}
 	}

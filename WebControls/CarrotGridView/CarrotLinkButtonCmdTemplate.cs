@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -99,11 +98,20 @@ namespace Carrotware.Web.UI.Controls {
 			GridViewRow container = (GridViewRow)litContent.NamingContainer;
 			try {
 				object oValue = DataBinder.Eval(container, "DataItem." + _field);
-				litContent.Text = String.Format(_format, oValue);
+				litContent.Text = string.Format(_format, oValue);
 			} catch {
 				litContent.Text = _field;
 			}
 		}
+
+	}
+
+	//=========================================
+
+	public class CarrotBooleanImage {
+		public static string IconResourcePaperclip = "Carrotware.Web.UI.Controls.CarrotGridView.attach.png";
+		public static string IconResourceAffirm = "Carrotware.Web.UI.Controls.CarrotGridView.accept.png";
+		public static string IconResourceNegative = "Carrotware.Web.UI.Controls.CarrotGridView.cancel.png";
 	}
 
 	//=========================================
@@ -116,10 +124,6 @@ namespace Carrotware.Web.UI.Controls {
 		private string _field { get; set; }
 		private string _css { get; set; }
 
-		public static string IconResourcePaperclip = "Carrotware.Web.UI.Controls.CarrotGridView.attach.png";
-		public static string IconResourceAffirm = "Carrotware.Web.UI.Controls.CarrotGridView.accept.png";
-		public static string IconResourceNegative = "Carrotware.Web.UI.Controls.CarrotGridView.cancel.png";
-
 		public CarrotBooleanImageItemTemplate(string fieldParm, string cssStyle) {
 			SetImage();
 
@@ -130,8 +134,8 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void SetImage() {
-			_imageTrue = HttpUtility.HtmlEncode(WebControlHelper.GetWebResourceUrl(this.GetType(), CarrotBooleanImageItemTemplate.IconResourceAffirm));
-			_imageFalse = HttpUtility.HtmlEncode(WebControlHelper.GetWebResourceUrl(this.GetType(), CarrotBooleanImageItemTemplate.IconResourceNegative));
+			_imageTrue = WebControlHelper.GetWebResourceUrl(CarrotBooleanImage.IconResourceAffirm);
+			_imageFalse = WebControlHelper.GetWebResourceUrl(CarrotBooleanImage.IconResourceNegative);
 		}
 
 		public void SetVerbiage(string imageTextTrue, string imageTextFalse) {
@@ -186,7 +190,7 @@ namespace Carrotware.Web.UI.Controls {
 			Image imgBool = (Image)sender;
 			GridViewRow container = (GridViewRow)imgBool.NamingContainer;
 
-			imgBool.ImageUrl = HttpUtility.HtmlEncode(WebControlHelper.GetWebResourceUrl(imgBool.Page, this.GetType(), CarrotBooleanImageItemTemplate.IconResourcePaperclip));
+			imgBool.ImageUrl = WebControlHelper.GetWebResourceUrl(CarrotBooleanImage.IconResourcePaperclip);
 
 			try {
 				bool bValue = Convert.ToBoolean(DataBinder.Eval(container, "DataItem." + _field).ToString());
@@ -240,7 +244,7 @@ namespace Carrotware.Web.UI.Controls {
 			Image imgEnum = (Image)sender;
 			GridViewRow container = (GridViewRow)imgEnum.NamingContainer;
 
-			imgEnum.ImageUrl = HttpUtility.HtmlEncode(WebControlHelper.GetWebResourceUrl(imgEnum.Page, this.GetType(), CarrotBooleanImageItemTemplate.IconResourcePaperclip));
+			imgEnum.ImageUrl = WebControlHelper.GetWebResourceUrl(CarrotBooleanImage.IconResourcePaperclip);
 
 			try {
 				string sValue = DataBinder.Eval(container, "DataItem." + _field).ToString();

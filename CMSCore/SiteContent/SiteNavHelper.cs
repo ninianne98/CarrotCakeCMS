@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.UI;
-using Carrotware.CMS.Data;
+using System.Web;
+using System;
 
 /*
 * CarrotCake CMS
@@ -75,17 +74,17 @@ namespace Carrotware.CMS.Core {
 			navData.PageHead = "NONE";
 			navData.TitleBar = "NONE";
 			navData.PageActive = false;
-			navData.PageText = "NO PAGE CONTENT";
-			navData.EditDate = DateTime.Now.Date.AddDays(-1);
+			navData.PageText = "<p>NO PAGE CONTENT</p>" + SiteNavHelperMock.SampleBody;
+			navData.EditDate = DateTime.Now.Date.AddDays(-3);
 			navData.CreateDate = DateTime.Now.Date.AddDays(-10);
-			navData.GoLiveDate = DateTime.Now.Date.AddDays(1);
+			navData.GoLiveDate = DateTime.Now.Date.AddDays(2);
 			navData.RetireDate = DateTime.Now.Date.AddDays(90);
 			navData.ContentType = ContentPageType.PageType.ContentEntry;
 			return navData;
 		}
 
 		internal static List<SiteNav> GetSamplerFakeNav() {
-			return GetSamplerFakeNav(3, null);
+			return GetSamplerFakeNav(4, null);
 		}
 
 		internal static List<SiteNav> GetSamplerFakeNav(int iCount) {
@@ -93,7 +92,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal static List<SiteNav> GetSamplerFakeNav(Guid? rootParentID) {
-			return GetSamplerFakeNav(3, rootParentID);
+			return GetSamplerFakeNav(4, rootParentID);
 		}
 
 		internal static List<SiteNav> GetSamplerFakeNav(int iCount, Guid? rootParentID) {
@@ -102,26 +101,38 @@ namespace Carrotware.CMS.Core {
 
 			while (n < iCount) {
 				SiteNav nav = GetSamplerView();
-				nav.NavOrder = n;
-				nav.NavMenuText = nav.NavMenuText + " " + n.ToString();
+				nav.NavOrder = rootParentID.HasValue ? n * 100 : n;
+				nav.NavMenuText = nav.NavMenuText;
 				nav.CreateDate = nav.CreateDate.AddHours((0 - n) * 25);
 				nav.EditDate = nav.CreateDate.AddHours((0 - n) * 16);
-				nav.GoLiveDate = DateTime.Now.Date.AddMinutes(-5);
-				nav.RetireDate = DateTime.Now.Date.AddDays(90);
+				nav.GoLiveDate = DateTime.Now.Date.AddDays((-2 * n) - 3);
+				nav.RetireDate = DateTime.Now.Date.AddDays(45);
 				nav.CommentCount = (n * 2) + 1;
 				nav.ShowInSiteNav = true;
 				nav.ShowInSiteMap = true;
 
 				if (n > 0 || rootParentID != null) {
-					nav.Root_ContentID = Guid.NewGuid();
+					nav.Root_ContentID = SeqGuid.NextGuid;
 					nav.ContentID = Guid.NewGuid();
 					//nav.FileName = nav.FileName.Replace(".aspx", nav.NavOrder.ToString() + ".aspx");
 					nav.FileName = "/#";
-					if (rootParentID != null) {
-						nav.NavMenuText = nav.NavMenuText + " - " + rootParentID.Value.ToString().Substring(0, 4);
-					}
+					//if (rootParentID != null) {
+					//	nav.NavMenuText = nav.NavMenuText + " - " + rootParentID.Value.ToString().Substring(0, 4);
+					//}
 				}
 				nav.Parent_ContentID = rootParentID;
+
+				var caption = string.Empty;
+				if (rootParentID.HasValue) {
+					caption = SiteNavHelperMock.GetRandomCaption();
+					caption = string.Format("{0} {1}", caption, rootParentID.ToString().Substring(0, 3));
+				} else {
+					caption = SiteNavHelperMock.GetCaption(n);
+				}
+
+				nav.TitleBar = string.Format("{0} T", caption);
+				nav.NavMenuText = string.Format("{0} N", caption);
+				nav.PageHead = string.Format("{0} H", caption);
 
 				navList.Add(nav);
 				n++;
@@ -151,13 +162,12 @@ namespace Carrotware.CMS.Core {
 				sContentSampleNumber = "SampleContent2";
 			}
 
-			string sFile2 = " <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi arcu, lacinia scelerisque blandit nec, mattis non nibh.</p> \r\n <p> Curabitur quis urna at massa placerat auctor. Quisque et mauris sapien, a consectetur nulla.</p>";
+			string sFile = SiteNavHelperMock.SampleBody;
 
 			try {
 				Assembly _assembly = Assembly.GetExecutingAssembly();
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.CMS.Core.SiteContent.Mock." + sContentSampleNumber + ".txt"))) {
-					sFile2 = oTextStream.ReadToEnd();
-				}
+
+				sFile = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Mock." + sContentSampleNumber + ".txt");
 
 				List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
 										   where i.Contains("SiteContent.Mock.sample")
@@ -166,24 +176,40 @@ namespace Carrotware.CMS.Core {
 
 				foreach (string img in imageNames) {
 					var imgURL = CMSConfigHelper.GetWebResourceUrl(X, typeof(SiteNav), img);
-					sFile2 = sFile2.Replace(img, imgURL);
+					sFile = sFile.Replace(img, imgURL);
 				}
 			} catch { }
 
-			return sFile2;
+			return sFile;
+		}
+
+		private static SequentialGuid _seq = new SequentialGuid();
+
+		internal static SequentialGuid SeqGuid {
+			get {
+				if (_seq == null) {
+					_seq = new SequentialGuid();
+				}
+
+				return _seq;
+			}
+			set {
+				_seq = value;
+			}
 		}
 
 		internal static SiteNav GetSamplerView() {
 			string sFile2 = GetSampleBody();
+			var caption = SiteNavHelperMock.GetRandomCaption();
 
 			SiteNav navNew = new SiteNav();
-			navNew.Root_ContentID = Guid.NewGuid();
+			navNew.Root_ContentID = SeqGuid.NextGuid;
 			navNew.ContentID = Guid.NewGuid();
 
 			navNew.NavOrder = -1;
-			navNew.TitleBar = "Template Preview - TITLE";
-			navNew.NavMenuText = "Template PV - NAV"; ;
-			navNew.PageHead = "Template Preview - HEAD";
+			navNew.TitleBar = string.Format("{0} T", caption);
+			navNew.NavMenuText = string.Format("{0} N", caption);
+			navNew.PageHead = string.Format("{0} H", caption);
 			navNew.PageActive = true;
 			navNew.ShowInSiteNav = true;
 			navNew.ShowInSiteMap = true;
@@ -192,7 +218,7 @@ namespace Carrotware.CMS.Core {
 			navNew.CreateDate = DateTime.Now.Date.AddHours(-38);
 			navNew.GoLiveDate = navNew.EditDate.AddHours(-5);
 			navNew.RetireDate = navNew.CreateDate.AddYears(5);
-			navNew.PageText = "<h2>Content CENTER</h2>\r\n";
+			navNew.PageText = "<h2>Content CENTER</h2>\r\n" + SiteNavHelperMock.SampleBody;
 
 			navNew.TemplateFile = SiteData.PreviewTemplateFile;
 			if (SiteData.IsWebView) {

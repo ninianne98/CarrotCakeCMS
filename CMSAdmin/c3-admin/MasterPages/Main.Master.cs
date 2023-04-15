@@ -1,7 +1,5 @@
 ﻿using Carrotware.CMS.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.UI;
 
 /*
@@ -19,8 +17,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 	public partial class Main : AdminBaseMasterPage {
 		public string UserName { get; set; }
 
+		public string AntiCache {
+			get {
+				return Helper.AntiCache;
+			}
+		}
+
 		protected void Page_Load(object sender, EventArgs e) {
-			this.UserName = String.Empty;
+			this.UserName = string.Empty;
 
 			if (!SecurityData.IsAuthenticated) {
 				SecurityData.ResetAuth();
@@ -37,16 +41,20 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			tabGroupAdmin.Visible = tabUserSecurity.Visible;
 			tabSites.Visible = tabUserSecurity.Visible;
 
+			if (!this.Page.Title.StartsWith(SiteData.CarrotCakeCMSVersionMM)) {
+				this.Page.Title = string.Format("{0} - {1}", SiteData.CarrotCakeCMSVersionMM, this.Page.Title);
+			}
+
 			if (SiteData.CurretSiteExists) {
-				litServerTime.Text = String.Format("{0} {1}", SiteData.CurrentSite.Now, SiteData.CurrentSite.TimeZoneIdentifier);
+				litServerTime.Text = string.Format("{0} {1}", SiteData.CurrentSite.Now, SiteData.CurrentSite.TimeZoneIdentifier);
 				litSiteIdent.Text = SiteData.CurrentSite.SiteName;
 				litTag.Text = SiteData.CurrentSite.SiteTagline;
 
-				if (!String.IsNullOrEmpty(SiteData.CurrentSite.SiteName) && !String.IsNullOrEmpty(SiteData.CurrentSite.SiteTagline)) {
-					litSiteIdent.Text = String.Format("{0}: ", SiteData.CurrentSite.SiteName.Trim());
+				if (!string.IsNullOrEmpty(SiteData.CurrentSite.SiteName) && !string.IsNullOrEmpty(SiteData.CurrentSite.SiteTagline)) {
+					litSiteIdent.Text = string.Format("{0}: ", SiteData.CurrentSite.SiteName.Trim());
 				}
 			} else {
-				litServerTime.Text = String.Format("{0} UTC", DateTime.UtcNow);
+				litServerTime.Text = string.Format("{0} UTC", DateTime.UtcNow);
 			}
 
 			LoadFooterCtrl(plcFooter, ControlLocation.MainFooter);
@@ -214,7 +222,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		}
 
 		protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e) {
-			string sError = String.Empty;
+			string sError = string.Empty;
 
 			if (e.Exception != null) {
 				Exception objErr = e.Exception;

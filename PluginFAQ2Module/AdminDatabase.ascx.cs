@@ -11,10 +11,10 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		protected void Page_Load(object sender, EventArgs e) {
 			DatabaseUpdate du = new DatabaseUpdate();
 			DatabaseUpdateResponse dbRes = new DatabaseUpdateResponse();
-			string sqlUpdate = String.Empty;
-			string sqlTest = String.Empty;
+			string sqlUpdate = string.Empty;
+			string sqlTest = string.Empty;
 			int iCt = 0;
-			litMsg.Text = String.Empty;
+			litMsg.Text = string.Empty;
 
 			sqlUpdate = ReadEmbededScript("Carrotware.CMS.UI.Plugins.FAQ2Module.carrot_FaqItem.sql");
 			sqlTest = "select * from [INFORMATION_SCHEMA].[COLUMNS] where table_name in('carrot_FaqItem')";
@@ -29,12 +29,12 @@ namespace Carrotware.CMS.UI.Plugins.FAQ2Module {
 		}
 
 		private string ReadEmbededScript(string filePath) {
-			string sFile = String.Empty;
+			string sFile = string.Empty;
 
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(filePath))) {
-				sFile = oTextStream.ReadToEnd();
+			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(filePath))) {
+				sFile = stream.ReadToEnd();
 			}
 
 			return sFile;

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Web.UI;
+using System.Text;
 using System.Web.UI.Design;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
+using System.Web.UI;
+using System;
 
 /*
 * CarrotCake CMS
@@ -38,7 +39,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string OverrideTextboxName {
 			get {
 				String s = (String)ViewState["OverrideTextboxName"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["OverrideTextboxName"] = value;
@@ -103,7 +104,8 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void CreateChildControls() {
-			string sScript = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.SearchBoxJS.txt");
+			var sbScript = new StringBuilder();
+			sbScript.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.SearchBoxJS.txt"));
 
 			if (SearchTemplate != null) {
 				this.Controls.Clear();
@@ -122,7 +124,7 @@ namespace Carrotware.CMS.UI.Controls {
 			FindEntryFormCtrls(phEntry);
 
 			TextBox txtSearchText = null;
-			if (String.IsNullOrEmpty(OverrideTextboxName)) {
+			if (string.IsNullOrEmpty(OverrideTextboxName)) {
 				txtSearchText = (TextBox)GetEntryFormControl("SearchText");
 
 				if (txtSearchText == null) {
@@ -133,21 +135,21 @@ namespace Carrotware.CMS.UI.Controls {
 				txtSearchText.ID = "over_" + OverrideTextboxName;
 			}
 
-			if (txtSearchText != null) {
-				sScript = sScript.Replace("{SEARCH_PARAM}", SiteData.SearchQueryParameter);
-				sScript = sScript.Replace("{SEARCH_FUNC}", JS_SearchName);
-				sScript = sScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
-				sScript = sScript.Replace("{SEARCH_ENTERFUNC2}", JS_EnterSearch2);
+			if (txtSearchText != null && sbScript.Length > 1) {
+				sbScript.Replace("{SEARCH_PARAM}", SiteData.SearchQueryParameter);
+				sbScript.Replace("{SEARCH_FUNC}", JS_SearchName);
+				sbScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
+				sbScript.Replace("{SEARCH_ENTERFUNC2}", JS_EnterSearch2);
 
-				if (String.IsNullOrEmpty(OverrideTextboxName)) {
-					sScript = sScript.Replace("{SEARCH_TEXT}", this.ClientID + "_" + txtSearchText.ID);
+				if (string.IsNullOrEmpty(OverrideTextboxName)) {
+					sbScript.Replace("{SEARCH_TEXT}", this.ClientID + "_" + txtSearchText.ID);
 				} else {
-					sScript = sScript.Replace("{SEARCH_TEXT}", OverrideTextboxName);
+					sbScript.Replace("{SEARCH_TEXT}", OverrideTextboxName);
 				}
 
-				sScript = sScript.Replace("{SEARCH_URL}", SiteData.CurrentSite.SiteSearchPath);
+				sbScript.Replace("{SEARCH_URL}", SiteData.CurrentSite.SiteSearchPath);
 
-				litScript.Text = sScript;
+				litScript.Text = sbScript.ToString();
 			}
 
 			base.CreateChildControls();

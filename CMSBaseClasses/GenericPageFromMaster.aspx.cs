@@ -31,22 +31,22 @@ namespace Carrotware.CMS.UI.Base {
 		protected void LoadMasterPageInfo() {
 			if (SiteData.IsWebView) {
 				if (Master.ThePage != null) {
-					theSite = Master.TheSite;
-					pageContents = Master.ThePage;
-					pageWidgets = Master.ThePageWidgets;
+					_theSite = Master.TheSite;
+					_pageContents = Master.ThePage;
+					_pageWidgets = Master.ThePageWidgets;
 				} else {
-					if (pageContents == null) {
-						theSite = SiteData.CurrentSite;
-						pageContents = SiteData.GetCurrentPage();
-						if (pageContents != null) {
-							pageWidgets = SiteData.GetCurrentPageWidgets(pageContents.Root_ContentID);
+					if (_pageContents == null) {
+						_theSite = SiteData.CurrentSite;
+						_pageContents = SiteData.GetCurrentPage();
+						if (_pageContents != null) {
+							_pageWidgets = SiteData.GetCurrentPageWidgets(_pageContents.Root_ContentID);
 						}
 					}
 				}
 			} else {
-				theSite = SiteData.CurrentSite;
-				pageContents = SiteData.GetCurrentPage();
-				pageWidgets = new List<Widget>();
+				_theSite = SiteData.CurrentSite;
+				_pageContents = SiteData.GetCurrentPage();
+				_pageWidgets = new List<Widget>();
 			}
 		}
 	}

@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				pnlUpload.Visible = true;
 			}
 
-			lblWarning.Text = String.Empty;
+			lblWarning.Text = string.Empty;
 			lblWarning.Attributes["style"] = "color: #000000;";
 
 			if (gTheID != Guid.Empty) {
@@ -249,13 +249,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void btnUpload_Click(object sender, EventArgs e) {
-			string sXML = String.Empty;
+			string sXML = string.Empty;
 			if (upFile.HasFile) {
-				using (StreamReader sr = new StreamReader(upFile.FileContent)) {
+				using (var sr = new StreamReader(upFile.FileContent)) {
 					sXML = sr.ReadToEnd();
 				}
 			}
-			string sTest = String.Empty;
+			string sTest = string.Empty;
 			if (!string.IsNullOrEmpty(sXML) && sXML.Length > 500) {
 				sTest = sXML.Substring(0, 250).ToLower();
 
@@ -272,7 +272,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						ContentImportExportUtils.AssignWPExportNewIDs(SiteData.CurrentSite, wps);
 						ContentImportExportUtils.SaveSerializedDataExport<WordPressSite>(wps.NewSiteID, wps);
 
-						Response.Redirect(CreateLink("WPGalleryImport", String.Format("id={0}", wps.NewSiteID)));
+						Response.Redirect(CreateLink("WPGalleryImport", string.Format("id={0}", wps.NewSiteID)));
 					}
 
 					lblWarning.Text = "File did not appear to match an expected format.";

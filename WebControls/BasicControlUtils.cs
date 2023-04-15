@@ -67,6 +67,10 @@ namespace Carrotware.Web.UI.Controls {
 			return WebControlHelper.GetWebResourceUrl(_page, type, resource);
 		}
 
+		public string GetWebResourceUrl(string resource) {
+			return WebControlHelper.GetWebResourceUrl(_page, this.GetType(), resource);
+		}
+
 		public string GetWebResourceUrl(Page page, Type type, string resource) {
 			return WebControlHelper.GetWebResourceUrl(page, type, resource);
 		}
@@ -158,7 +162,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string RefererScriptName {
 			get {
-				string sPath = String.Empty;
+				string sPath = string.Empty;
 				try { sPath = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
 				return sPath;
 			}

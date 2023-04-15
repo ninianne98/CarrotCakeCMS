@@ -140,6 +140,11 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 				currItem.EventEndDate = Convert.ToDateTime(txtEventEndDate.Text);
 				currItem.EventEndTime = CalendarHelper.GetTimeSpanFromTextbox(txtEventEndTime);
 
+				if ((currItem.EventEndDate + currItem.EventEndTime) < (currItem.EventStartDate + currItem.EventStartTime)) {
+					currItem.EventEndDate = currItem.EventStartDate;
+					currItem.EventEndTime = currItem.EventStartTime;
+				}
+
 				if (bAdd) {
 					db.carrot_CalendarEventProfiles.InsertOnSubmit(currItem);
 				}

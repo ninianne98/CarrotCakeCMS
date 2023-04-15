@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Web.UI;
+using System.Text;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
+using System.Web.UI;
+using System;
 
 /*
 * CarrotCake CMS
@@ -157,7 +158,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string TopBackgroundStyle {
 			get {
 				String s = (String)ViewState["TopBackgroundStyle"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["TopBackgroundStyle"] = value;
@@ -327,8 +328,8 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			string sCSSWrap = "";
-			if (!String.IsNullOrEmpty(CssClass)) {
-				sCSSWrap = String.Format(" class=\"{0}\"", CssClass);
+			if (!string.IsNullOrEmpty(CssClass)) {
+				sCSSWrap = string.Format(" class=\"{0}\"", CssClass);
 			}
 
 			if (WrapList) {
@@ -346,7 +347,7 @@ namespace Carrotware.CMS.UI.Controls {
 				sLstID = this.HtmlClientID;
 			}
 
-			if (!String.IsNullOrEmpty(sCSSList)) {
+			if (!string.IsNullOrEmpty(sCSSList)) {
 				output.WriteLine("<ul id=\"" + sLstID + "\" class=\"" + sCSSList + "\">");
 			} else {
 				output.WriteLine("<ul id=\"" + sLstID + "\" >");
@@ -405,76 +406,76 @@ namespace Carrotware.CMS.UI.Controls {
 					this.ExtraCSS = GetParmValue("ExtraCSS", "");
 
 					sTmp = GetParmValue("AutoStylingDisabled", "false");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.AutoStylingDisabled = Convert.ToBoolean(sTmp);
 					}
 
 					sTmp = GetParmValue("AttemptResponsiveCSS", "true");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.AttemptResponsiveCSS = Convert.ToBoolean(sTmp);
 					}
 
 					sTmp = GetParmValue("WrapList", "false");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.WrapList = Convert.ToBoolean(sTmp);
 					}
 
 					if (!this.AutoStylingDisabled) {
 						sTmp = GetParmValue("FontSize", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							FontSize = new Unit(sTmp);
 						}
 
 						sTmp = GetParmValue("TopBackgroundStyle", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.TopBackgroundStyle = sTmp;
 						}
 
 						sTmp = GetParmValue("ForeColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.ForeColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("BackColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.BackColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("BGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.BGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("HoverFGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.HoverFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("HoverBGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.HoverBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 
 						sTmp = GetParmValue("UnSelFGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.UnSelFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("UnSelBGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.UnSelBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 
 						sTmp = GetParmValue("SelFGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.SelFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("SelBGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.SelBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 
 						sTmp = GetParmValue("SubFGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.SubFGColor = ColorTranslator.FromHtml(sTmp);
 						}
 						sTmp = GetParmValue("SubBGColor", "");
-						if (!String.IsNullOrEmpty(sTmp)) {
+						if (!string.IsNullOrEmpty(sTmp)) {
 							this.SubBGColor = ColorTranslator.FromHtml(sTmp);
 						}
 					}
@@ -482,10 +483,10 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-			if (String.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled) {
+			if (string.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled) {
 				ParseCSS();
 			} else {
-				if (!String.IsNullOrEmpty(this.OverrideCSS)) {
+				if (!string.IsNullOrEmpty(this.OverrideCSS)) {
 					HtmlLink link = new HtmlLink();
 					link.Href = OverrideCSS;
 					link.Attributes.Add("rel", "stylesheet");
@@ -494,7 +495,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			if (!String.IsNullOrEmpty(this.ExtraCSS)) {
+			if (!string.IsNullOrEmpty(this.ExtraCSS)) {
 				HtmlLink link = new HtmlLink();
 				link.Href = ExtraCSS;
 				link.Attributes.Add("rel", "stylesheet");
@@ -507,68 +508,77 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private void ParseCSS() {
-			if (String.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled && String.IsNullOrEmpty(cssText.Text)) {
-				string sCSSText = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt");
+		private string ConvertColorCode(Color color) {
+			return ColorTranslator.ToHtml(color).ToLowerInvariant();
+		}
 
-				if (this.AttemptResponsiveCSS) {
-					string sCSS1 = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenuRes.txt");
-					sCSSText = sCSS1.Replace("{DESKTOP_CSS}", sCSSText);
+		private void ParseCSS() {
+			if (string.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
+				var sbCSSText = new StringBuilder();
+				sbCSSText.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt"));
+
+				if (this.AttemptResponsiveCSS && sbCSSText.Length > 1) {
+					var sbCSS1 = new StringBuilder();
+					sbCSS1.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenuRes.txt"));
+					sbCSS1.Replace("{DESKTOP_CSS}", sbCSSText.ToString());
+
+					sbCSSText = sbCSS1;
 				}
 
-				if (!String.IsNullOrEmpty(sCSSText)) {
-					sCSSText = sCSSText.Replace("{FORE_HEX}", ColorTranslator.ToHtml(this.ForeColor).ToLowerInvariant());
-					sCSSText = sCSSText.Replace("{BG_HEX}", ColorTranslator.ToHtml(this.BGColor).ToLowerInvariant());
+				if (sbCSSText != null && sbCSSText.Length > 1) {
+					sbCSSText.Replace("{FORE_HEX}", ConvertColorCode(this.ForeColor));
+					sbCSSText.Replace("{BG_HEX}", ConvertColorCode(this.BGColor));
 
-					sCSSText = sCSSText.Replace("{HOVER_FORE_HEX}", ColorTranslator.ToHtml(this.HoverFGColor).ToLowerInvariant());
-					sCSSText = sCSSText.Replace("{HOVER_BG_HEX}", ColorTranslator.ToHtml(this.HoverBGColor).ToLowerInvariant());
+					sbCSSText.Replace("{HOVER_FORE_HEX}", ConvertColorCode(this.HoverFGColor));
+					sbCSSText.Replace("{HOVER_BG_HEX}", ConvertColorCode(this.HoverBGColor));
 
-					sCSSText = sCSSText.Replace("{SEL_FORE_HEX}", ColorTranslator.ToHtml(this.SelFGColor).ToLowerInvariant());
-					sCSSText = sCSSText.Replace("{SEL_BG_HEX}", ColorTranslator.ToHtml(this.SelBGColor).ToLowerInvariant());
+					sbCSSText.Replace("{SEL_FORE_HEX}", ConvertColorCode(this.SelFGColor));
+					sbCSSText.Replace("{SEL_BG_HEX}", ConvertColorCode(this.SelBGColor));
 
-					sCSSText = sCSSText.Replace("{UNSEL_FORE_HEX}", ColorTranslator.ToHtml(this.UnSelFGColor).ToLowerInvariant());
-					sCSSText = sCSSText.Replace("{UNSEL_BG_HEX}", ColorTranslator.ToHtml(this.UnSelBGColor).ToLowerInvariant());
+					sbCSSText.Replace("{UNSEL_FORE_HEX}", ConvertColorCode(this.UnSelFGColor));
+					sbCSSText.Replace("{UNSEL_BG_HEX}", ConvertColorCode(this.UnSelBGColor));
 
-					sCSSText = sCSSText.Replace("{SUB_FORE_HEX}", ColorTranslator.ToHtml(this.SubFGColor).ToLowerInvariant());
-					sCSSText = sCSSText.Replace("{SUB_BG_HEX}", ColorTranslator.ToHtml(this.SubBGColor).ToLowerInvariant());
+					sbCSSText.Replace("{SUB_FORE_HEX}", ConvertColorCode(this.SubFGColor));
+					sbCSSText.Replace("{SUB_BG_HEX}", ConvertColorCode(this.SubBGColor));
 
 					if (this.FontSize.Value > 0) {
-						sCSSText = sCSSText.Replace("{FONT_SIZE}", this.FontSize.ToString());
+						sbCSSText.Replace("{FONT_SIZE}", this.FontSize.ToString());
 					} else {
-						sCSSText = sCSSText.Replace("{FONT_SIZE}", "inherit");
+						sbCSSText.Replace("{FONT_SIZE}", "inherit");
 					}
 
 					if (this.MenuFontSize.Value > 0) {
-						sCSSText = sCSSText.Replace("{MAIN_FONT_SIZE}", this.MenuFontSize.ToString());
+						sbCSSText.Replace("{MAIN_FONT_SIZE}", this.MenuFontSize.ToString());
 					} else {
-						sCSSText = sCSSText.Replace("{MAIN_FONT_SIZE}", "inherit");
+						sbCSSText.Replace("{MAIN_FONT_SIZE}", "inherit");
 					}
 
 					if (this.MobileWidth.Value > 50) {
-						sCSSText = sCSSText.Replace("{MOBILE_WIDTH}", this.MobileWidth.ToString());
+						sbCSSText.Replace("{MOBILE_WIDTH}", this.MobileWidth.ToString());
 					} else {
-						sCSSText = sCSSText.Replace("{MOBILE_WIDTH}", "100%");
+						sbCSSText.Replace("{MOBILE_WIDTH}", "100%");
 					}
 
 					if (this.MobileWidth.Value > 50) {
-						sCSSText = sCSSText.Replace("{DESK_WIDTH}", (this.MobileWidth.Value + 1).ToString() + this.MobileWidth.Type);
+						sbCSSText.Replace("{DESK_WIDTH}", (this.MobileWidth.Value + 1).ToString() + this.MobileWidth.Type);
 					} else {
-						sCSSText = sCSSText.Replace("{DESK_WIDTH}", "100%");
+						sbCSSText.Replace("{DESK_WIDTH}", "100%");
 					}
 
-					sCSSText = sCSSText.Replace("{MENU_SELECT_CLASS}", this.CSSSelected);
-					sCSSText = sCSSText.Replace("{MENU_HASCHILD_CLASS}", this.CSSHasChildren);
+					sbCSSText.Replace("{MENU_SELECT_CLASS}", this.CSSSelected);
+					sbCSSText.Replace("{MENU_HASCHILD_CLASS}", this.CSSHasChildren);
 
-					if (!String.IsNullOrEmpty(this.TopBackgroundStyle)) {
+					if (!string.IsNullOrEmpty(this.TopBackgroundStyle)) {
 						this.TopBackgroundStyle = this.TopBackgroundStyle.Replace(";", "");
-						sCSSText = sCSSText.Replace("{TOP_BACKGROUND_STYLE}", "background: " + this.TopBackgroundStyle + ";");
+						sbCSSText.Replace("{TOP_BACKGROUND_STYLE}", "background: " + this.TopBackgroundStyle + ";");
 					} else {
-						sCSSText = sCSSText.Replace("{TOP_BACKGROUND_STYLE}", "");
+						sbCSSText.Replace("{TOP_BACKGROUND_STYLE}", "");
 					}
 
-					sCSSText = sCSSText.Replace("{MENU_ID}", "#" + this.HtmlClientID + "");
-					sCSSText = sCSSText.Replace("{MENU_WRAPPER_ID}", "#" + this.HtmlClientID + "-wrapper");
-					sCSSText = "\r\n\t<style type=\"text/css\">\r\n" + sCSSText + "\r\n\t</style>\r\n";
+					sbCSSText.Replace("{MENU_ID}", "#" + this.HtmlClientID + "");
+					sbCSSText.Replace("{MENU_WRAPPER_ID}", "#" + this.HtmlClientID + "-wrapper");
+
+					var sCSSText = "\r\n\t<style type=\"text/css\">\r\n" + sbCSSText.ToString() + "\r\n\t</style>\r\n";
 					//sCSSText = "\r\n\t<div type=\"text/css\">\r\n" + sCSSText + "\r\n\t</div>\r\n";
 					cssText.Text = sCSSText;
 				}

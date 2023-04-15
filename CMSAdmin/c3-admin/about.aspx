@@ -34,8 +34,7 @@
 	<p>
 		These images may freely be used in conjunction with promotion of the CarrotCake CMS.
 	</p>
-	<h2>
-		Components Utilized</h2>
+	<h2>Components Utilized</h2>
 	<p>
 		<b>Microsoft .NET framework version 3.5 </b>
 		<br />
@@ -111,7 +110,7 @@
 	<p>
 		<b>jQuery UI Nested Sortable - jQuery Plugin</b>
 		<br />
-		Copyright (c) 2010-2012 Manuele J Sarfatti
+		Copyright (c) 2010-2016 Manuele J Sarfatti and contributors
 		<br />
 		<a target="_blank" href="https://github.com/ilikenwf/nestedSortable">https://github.com/ilikenwf/nestedSortable</a>
 		<br />
@@ -239,8 +238,7 @@
 		License: http://tinymce.moxiecode.com/license
 		<br />
 	</p>
-	<h2>
-		The MIT License (MIT)
+	<h2>The MIT License (MIT)
 	</h2>
 	<p>
 		Copyright (c) 2011, 2015 Samantha Copeland, http://www.carrotware.com/ &lt;<a target="_blank" href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>&gt;
@@ -259,10 +257,10 @@
 		OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 		OTHER DEALINGS IN THE SOFTWARE.
 	</p>
-	<h2>
-		GNU GENERAL PUBLIC LICENSE</h2>
+	<h2>GNU GENERAL PUBLIC LICENSE</h2>
 	<p>
-		Version 3, 29 June 2007</p>
+		Version 3, 29 June 2007
+	</p>
 	<p>
 		Copyright &copy; 2007 Free Software Foundation, Inc. &lt;<a target="_blank" href="http://fsf.org/">http://fsf.org/</a>&gt;
 		<br />
@@ -325,7 +323,8 @@
 	<h4>
 		<a name="section0"></a>0. Definitions.</h4>
 	<p>
-		&ldquo;This License&rdquo; refers to version 3 of the GNU General Public License.</p>
+		&ldquo;This License&rdquo; refers to version 3 of the GNU General Public License.
+	</p>
 	<p>
 		&ldquo;Copyright&rdquo; also means copyright-like laws that apply to other kinds of works, such as semiconductor masks.
 	</p>
@@ -717,7 +716,8 @@
 		a warranty or assumption of liability accompanies a copy of the Program in return for a fee.
 	</p>
 	<p>
-		END OF TERMS AND CONDITIONS</p>
+		END OF TERMS AND CONDITIONS
+	</p>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

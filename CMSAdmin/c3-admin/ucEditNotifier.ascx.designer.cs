@@ -13,6 +13,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
     public partial class ucEditNotifier {
         
         /// <summary>
+        /// plcIncludes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plcIncludes;
+        
+        /// <summary>
+        /// phNotify control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phNotify;
+        
+        /// <summary>
         /// lnkParent control.
         /// </summary>
         /// <remarks>

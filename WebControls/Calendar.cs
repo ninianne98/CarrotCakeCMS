@@ -201,7 +201,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string JavascriptForDate {
 			get {
 				String s = (String)ViewState["JavascriptForDate"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 
 			set {
@@ -420,31 +420,34 @@ namespace Carrotware.Web.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			if (string.IsNullOrEmpty(OverrideCSS)) {
-				string sCSS = String.Empty;
+				string sCSS = string.Empty;
+				var sbCSS = new StringBuilder();
 
 				Assembly _assembly = Assembly.GetExecutingAssembly();
-
-				using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.Web.UI.Controls.calendar.txt"))) {
-					sCSS = oTextStream.ReadToEnd();
+				using (var stream = new StreamReader(_assembly.GetManifestResourceStream("Carrotware.Web.UI.Controls.calendar.txt"))) {
+					sCSS = stream.ReadToEnd();
 				}
 
-				sCSS = sCSS.Replace("{WEEKDAY_CHEX}", ColorTranslator.ToHtml(WeekdayColor));
-				sCSS = sCSS.Replace("{WEEKDAY_BGHEX}", ColorTranslator.ToHtml(WeekdayBackground));
-				sCSS = sCSS.Replace("{CELL_CHEX}", ColorTranslator.ToHtml(CellColor));
-				sCSS = sCSS.Replace("{CELL_BGHEX}", ColorTranslator.ToHtml(CellBackground));
+				sbCSS.Append(sCSS);
 
-				sCSS = sCSS.Replace("{TODAY_CHEX}", ColorTranslator.ToHtml(TodayColor));
-				sCSS = sCSS.Replace("{TODAY_BGHEX}", ColorTranslator.ToHtml(TodayBackground));
-				sCSS = sCSS.Replace("{TODAYSEL_BDR}", ColorTranslator.ToHtml(TodaySelectBorder));
-				sCSS = sCSS.Replace("{TODAY_LNK}", ColorTranslator.ToHtml(TodayLink));
+				sbCSS.Replace("{WEEKDAY_CHEX}", ColorTranslator.ToHtml(WeekdayColor));
+				sbCSS.Replace("{WEEKDAY_BGHEX}", ColorTranslator.ToHtml(WeekdayBackground));
+				sbCSS.Replace("{CELL_CHEX}", ColorTranslator.ToHtml(CellColor));
+				sbCSS.Replace("{CELL_BGHEX}", ColorTranslator.ToHtml(CellBackground));
 
-				sCSS = sCSS.Replace("{NORMAL_CHEX}", ColorTranslator.ToHtml(NormalColor));
-				sCSS = sCSS.Replace("{NORMAL_BGHEX}", ColorTranslator.ToHtml(NormalBackground));
-				sCSS = sCSS.Replace("{NORMALSEL_BDR}", ColorTranslator.ToHtml(NormalSelectBorder));
-				sCSS = sCSS.Replace("{NORMAL_LNK}", ColorTranslator.ToHtml(NormalLink));
+				sbCSS.Replace("{TODAY_CHEX}", ColorTranslator.ToHtml(TodayColor));
+				sbCSS.Replace("{TODAY_BGHEX}", ColorTranslator.ToHtml(TodayBackground));
+				sbCSS.Replace("{TODAYSEL_BDR}", ColorTranslator.ToHtml(TodaySelectBorder));
+				sbCSS.Replace("{TODAY_LNK}", ColorTranslator.ToHtml(TodayLink));
 
-				sCSS = sCSS.Replace("{CALENDAR_ID}", "#" + this.ClientID);
-				sCSS = "\r\n<style type=\"text/css\">\r\n" + sCSS + "\r\n</style>\r\n";
+				sbCSS.Replace("{NORMAL_CHEX}", ColorTranslator.ToHtml(NormalColor));
+				sbCSS.Replace("{NORMAL_BGHEX}", ColorTranslator.ToHtml(NormalBackground));
+				sbCSS.Replace("{NORMALSEL_BDR}", ColorTranslator.ToHtml(NormalSelectBorder));
+				sbCSS.Replace("{NORMAL_LNK}", ColorTranslator.ToHtml(NormalLink));
+
+				sbCSS.Replace("{CALENDAR_ID}", "#" + this.ClientID);
+
+				sCSS = "\r\n<style type=\"text/css\">\r\n" + sbCSS.ToString() + "\r\n</style>\r\n";
 
 				Literal link = new Literal();
 				link.Text = sCSS;

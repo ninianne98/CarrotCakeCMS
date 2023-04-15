@@ -40,26 +40,25 @@ namespace Carrotware.Web.UI.Controls {
 			DateTime now = DateTime.UtcNow;
 			TimeSpan d = TimeSpan.FromMinutes(interval);
 			DateTime dt = new DateTime(((now.Ticks + d.Ticks - 1) / d.Ticks) * d.Ticks);
-			byte[] dateStringBytes = ASCIIEncoding.ASCII.GetBytes(dt.ToString("U"));
+			byte[] dateStringBytes = Encoding.ASCII.GetBytes(dt.ToString("U"));
 
 			return Convert.ToBase64String(dateStringBytes);
 		}
 
-		public static string GetWebResourceUrl(Type type, string resource) {
+		internal static string GetWebResourceUrl(string resource) {
+			return GetWebResourceUrl(CachedPage, typeof(WebControlHelper), resource);
+		}
+
+		internal static string GetWebResourceUrl(Type type, string resource) {
 			return GetWebResourceUrl(CachedPage, type, resource);
 		}
 
-		public static string GetWebResourceUrl(Page page, Type type, string resource) {
-			string sPath = String.Empty;
-
-			if (!resource.StartsWith("Carrotware.Web.UI")) {
-				resource = String.Format("Carrotware.Web.UI.Controls.(0}", resource);
-			}
+		internal static string GetWebResourceUrl(Page page, Type type, string resource) {
+			string sPath = string.Empty;
 
 			if (page != null) {
 				try {
 					sPath = page.ClientScript.GetWebResourceUrl(type, resource);
-					sPath = HttpUtility.HtmlEncode(sPath);
 				} catch { }
 			} else {
 				sPath = GetWebResourceUrl(type, resource);
@@ -68,16 +67,12 @@ namespace Carrotware.Web.UI.Controls {
 			return sPath;
 		}
 
-		public static string GetManifestResourceStream(string resource) {
+		internal static string GetManifestResourceStream(string resource) {
 			string returnText = null;
 
-			if (!resource.StartsWith("Carrotware.Web.UI")) {
-				resource = String.Format("Carrotware.Web.UI.Controls.(0}", resource);
-			}
-
 			Assembly _assembly = Assembly.GetExecutingAssembly();
-			using (StreamReader oTextStream = new StreamReader(_assembly.GetManifestResourceStream(resource))) {
-				returnText = oTextStream.ReadToEnd();
+			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(resource))) {
+				returnText = stream.ReadToEnd();
 			}
 
 			return returnText;

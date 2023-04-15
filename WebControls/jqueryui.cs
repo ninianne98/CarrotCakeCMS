@@ -38,15 +38,15 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public static string GetWebResourceUrl(string resource) {
-			return WebControlHelper.GetWebResourceUrl(typeof(jqueryui), resource);
+		private static string GetWebResourceUrl(string resource) {
+			return WebControlHelper.GetWebResourceUrl(resource);
 		}
 
 		private static string _generalUri = null;
 
 		public static string GeneralUri {
 			get {
-				if (String.IsNullOrEmpty(_generalUri)) {
+				if (string.IsNullOrEmpty(_generalUri)) {
 					_generalUri = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-4.js");
 				}
 
@@ -65,11 +65,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			switch (jqVer) {
-				case "1.11":
-					jqVer = "1.11.4";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-4.js");
-					break;
-
 				case "1.10":
 					jqVer = "1.10.2";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js");
@@ -90,6 +85,7 @@ namespace Carrotware.Web.UI.Controls {
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-7-3.js");
 					break;
 
+				case "1.11":
 				default:
 					jqVer = "1.11.4";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-4.js");

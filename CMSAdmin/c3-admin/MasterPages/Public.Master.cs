@@ -1,7 +1,5 @@
 ﻿using Carrotware.CMS.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 /*
 * CarrotCake CMS
@@ -17,8 +15,18 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 	public partial class Public : AdminBaseMasterPage {
 
+		public string AntiCache {
+			get {
+				return Helper.AntiCache;
+			}
+		}
+
 		protected void Page_Load(object sender, EventArgs e) {
 			LoadFooterCtrl(plcFooter, ControlLocation.PublicFooter);
+
+			if (!this.Page.Title.StartsWith(SiteData.CarrotCakeCMSVersionMM)) {
+				this.Page.Title = string.Format("{0} - {1}", SiteData.CarrotCakeCMSVersionMM, this.Page.Title);
+			}
 
 			litCMSBuildInfo.Text = SiteData.CarrotCakeCMSVersion;
 

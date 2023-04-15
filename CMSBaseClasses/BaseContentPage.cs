@@ -17,12 +17,34 @@ namespace Carrotware.CMS.UI.Base {
 	public class BaseContentPage : System.Web.UI.Page {
 		protected PageProcessingHelper pph = new PageProcessingHelper();
 
-		public ContentPage ThePage { get { return pageContents; } }
-		public SiteData TheSite { get { return theSite; } }
-		public List<Widget> ThePageWidgets { get { return pageWidgets; } }
+		public ContentPage ThePage { get { return _pageContents; } }
+		public SiteData TheSite { get { return _theSite; } }
+		public List<Widget> ThePageWidgets { get { return _pageWidgets; } }
 
-		protected ContentPage pageContents = null;
-		protected SiteData theSite = null;
-		protected List<Widget> pageWidgets = null;
+		public bool IsSiteIndex {
+			get {
+				return this.TheSite != null && this.ThePage != null
+						&& this.TheSite.Blog_Root_ContentID.HasValue
+						&& this.ThePage.Root_ContentID == this.TheSite.Blog_Root_ContentID.Value;
+			}
+		}
+
+		public bool IsBlogPost {
+			get {
+				return this.ThePage != null
+						&& this.ThePage.ContentType == ContentPageType.PageType.BlogEntry;
+			}
+		}
+
+		public bool IsPageContent {
+			get {
+				return this.ThePage != null
+						&& this.ThePage.ContentType == ContentPageType.PageType.ContentEntry;
+			}
+		}
+
+		protected ContentPage _pageContents = null;
+		protected SiteData _theSite = null;
+		protected List<Widget> _pageWidgets = null;
 	}
 }

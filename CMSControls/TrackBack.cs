@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
 using System.ComponentModel;
-using System.Web;
+using System.Text;
 using System.Web.UI;
-using Carrotware.CMS.Core;
+using System.Web;
+using System;
 
 /*
 * CarrotCake CMS
@@ -66,15 +67,16 @@ namespace Carrotware.CMS.UI.Controls {
 		private ControlUtilities cu = new ControlUtilities();
 
 		protected override void RenderContents(HtmlTextWriter output) {
-			string sTrackback = ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.Trackback.txt");
+			var sbTrackback = new StringBuilder();
+			sbTrackback.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.Trackback.txt"));
 
 			ContentPage cp = cu.GetContainerContentPage(this);
 
-			if (cp != null) {
-				sTrackback = sTrackback.Replace("{URL}", SiteData.CurrentSite.ConstructedCanonicalURL(cp));
-				sTrackback = sTrackback.Replace("{TB_TITLE}", cp.NavMenuText);
-				sTrackback = sTrackback.Replace("{TB_URL_ID}", SiteData.CurrentSite.ConstructedCanonicalURL(TrackBackURI) + "?id=" + HttpUtility.UrlEncode(cp.FileName));
-				output.Write(sTrackback);
+			if (cp != null && sbTrackback.Length > 1) {
+				sbTrackback.Replace("{URL}", SiteData.CurrentSite.ConstructedCanonicalURL(cp));
+				sbTrackback.Replace("{TB_TITLE}", cp.NavMenuText);
+				sbTrackback.Replace("{TB_URL_ID}", SiteData.CurrentSite.ConstructedCanonicalURL(TrackBackURI) + "?id=" + HttpUtility.UrlEncode(cp.FileName));
+				output.Write(sbTrackback.ToString());
 			}
 
 			if (IsPostBack && EnableDirectTrackback) {

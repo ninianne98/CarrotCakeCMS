@@ -2,7 +2,6 @@
 using Carrotware.CMS.UI.Controls;
 using Carrotware.Web.UI.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
 using System.Web.UI;
@@ -25,19 +24,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public ContentPageType.PageType PageType = ContentPageType.PageType.Unknown;
 		public UserEditState EditorPrefs = null;
 
-		public string EditedPageFileName = String.Empty;
-		public string EditUserName = String.Empty;
+		public string EditedPageFileName = string.Empty;
+		public string EditUserName = string.Empty;
 
-		protected void Page_Load(object sender, EventArgs e) {
-			//jquerybasic jb = BasicControlUtils.FindjQuery(this.Page);
-			//jquerybasic1.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;   //jb.SelectedSkin;
-			//jquerybasic1.JQVersion = jb.JQVersion;
+		public string AntiCache {
+			get {
+				return Helper.AntiCache;
+			}
 		}
 
-		public string GetWebControlUrl(string resource) {
-			string sPath = "";
-			try { sPath = jquerybasic.GetWebResourceUrl(resource); } catch { }
-			return sPath;
+		protected void Page_Load(object sender, EventArgs e) {
 		}
 
 		//protected void Page_Load(object sender, EventArgs e) {

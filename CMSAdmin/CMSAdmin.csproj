@@ -18,6 +18,11 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -636,20 +641,12 @@
     <Content Include="c3-admin\ContentSnippetIndex.aspx" />
     <Content Include="c3-admin\ContentSnippetHistory.aspx" />
     <Content Include="c3-admin\DuplicateWidgetFrom.aspx" />
-    <Content Include="c3-admin\glossyseagreen\images\animated-overlay.gif" />
-    <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_15_f9cecd_40x100.png" />
-    <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_15_fceaea_40x100.png" />
-    <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_25_fbf9ee_40x100.png" />
-    <Content Include="c3-admin\glossyseagreen\images\ui-bg_flat_70_000000_40x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_b7d7c4_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_dff6e8_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_100_f2f5f7_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_50_468b5e_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_glass_80_b7d7c4_1x400.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-bg_hexagon_90_eeeeee_12x10.png" />
-    <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
-    <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-hard_70_000000_1x100.png" />
-    <Content Include="c3-admin\glossyseagreen\images\ui-bg_highlight-soft_25_fbf9ee_1x100.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_468b5e_256x240.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_cd0a0a_256x240.png" />
@@ -797,74 +794,12 @@
     <Content Include="c3-admin\Includes\uploadfile.css" />
     <Content Include="c3-admin\SiteDetail.aspx" />
     <Content Include="c3-admin\SiteIndex.aspx" />
-    <Content Include="c3-admin\tiny_mce\classes\adapter\jquery\adapter.js" />
-    <Content Include="c3-admin\tiny_mce\classes\adapter\jquery\jquery.tinymce.js" />
-    <Content Include="c3-admin\tiny_mce\classes\adapter\prototype\adapter.js" />
-    <Content Include="c3-admin\tiny_mce\classes\AddOnManager.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ControlManager.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\DOMUtils.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\Element.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\EventUtils.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\Range.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\RangeUtils.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\ScriptLoader.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\Selection.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\Serializer.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\Sizzle.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\TreeWalker.js" />
-    <Content Include="c3-admin\tiny_mce\classes\dom\TridentSelection.js" />
-    <Content Include="c3-admin\tiny_mce\classes\Editor.Events.js" />
-    <Content Include="c3-admin\tiny_mce\classes\Editor.js" />
-    <Content Include="c3-admin\tiny_mce\classes\EditorCommands.js" />
-    <Content Include="c3-admin\tiny_mce\classes\EditorManager.js" />
-    <Content Include="c3-admin\tiny_mce\classes\EnterKey.js" />
-    <Content Include="c3-admin\tiny_mce\classes\firebug\firebug-lite.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ForceBlocks.js" />
-    <Content Include="c3-admin\tiny_mce\classes\Formatter.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\DomParser.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\Entities.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\Node.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\SaxParser.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\Schema.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\Serializer.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\Styles.js" />
-    <Content Include="c3-admin\tiny_mce\classes\html\Writer.js" />
-    <Content Include="c3-admin\tiny_mce\classes\LegacyInput.js" />
-    <Content Include="c3-admin\tiny_mce\classes\Popup.js" />
-    <Content Include="c3-admin\tiny_mce\classes\tinymce.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\Button.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\ColorSplitButton.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\Container.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\Control.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\DropMenu.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\KeyboardNavigation.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\ListBox.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\Menu.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\MenuButton.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\MenuItem.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\NativeListBox.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\Separator.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\SplitButton.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\Toolbar.js" />
-    <Content Include="c3-admin\tiny_mce\classes\ui\ToolbarGroup.js" />
-    <Content Include="c3-admin\tiny_mce\classes\UndoManager.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\Cookie.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\Dispatcher.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\JSON.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\JSONP.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\JSONRequest.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\Quirks.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\URI.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\VK.js" />
-    <Content Include="c3-admin\tiny_mce\classes\util\XHR.js" />
-    <Content Include="c3-admin\tiny_mce\classes\WindowManager.js" />
     <Content Include="c3-admin\tiny_mce\File.gif" />
     <Content Include="c3-admin\tiny_mce\fileUp.gif" />
     <Content Include="c3-admin\tiny_mce\Folder.gif" />
     <Content Include="c3-admin\tiny_mce\FolderOpened.gif" />
     <Content Include="c3-admin\tiny_mce\FolderUp.gif" />
     <Content Include="c3-admin\tiny_mce\insertfile.gif" />
-    <Content Include="c3-admin\tiny_mce\jquery.tinymce.js" />
     <Content Include="c3-admin\tiny_mce\langs\en.js" />
     <Content Include="c3-admin\tiny_mce\license.txt" />
     <Content Include="c3-admin\tiny_mce\plugins\advhr\css\advhr.css" />
@@ -954,6 +889,7 @@
     <Content Include="c3-admin\tiny_mce\plugins\media\moxieplayer.swf" />
     <Content Include="c3-admin\tiny_mce\plugins\nonbreaking\editor_plugin.js" />
     <Content Include="c3-admin\tiny_mce\plugins\noneditable\editor_plugin.js" />
+    <Content Include="c3-admin\tiny_mce\plugins\noneditable\langs\en.js" />
     <Content Include="c3-admin\tiny_mce\plugins\pagebreak\editor_plugin.js" />
     <Content Include="c3-admin\tiny_mce\plugins\paste\editor_plugin.js" />
     <Content Include="c3-admin\tiny_mce\plugins\paste\js\pastetext.js" />
@@ -1079,11 +1015,9 @@
     <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\content.css" />
     <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\img\button_bg.png" />
     <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\ui.css" />
+    <Content Include="c3-admin\tiny_mce\tinymce.zip" />
     <Content Include="c3-admin\tiny_mce\tiny_mce.js" />
-    <Content Include="c3-admin\tiny_mce\tiny_mce.zip" />
-    <Content Include="c3-admin\tiny_mce\tiny_mce_jquery.js" />
     <Content Include="c3-admin\tiny_mce\tiny_mce_popup.js" />
-    <Content Include="c3-admin\tiny_mce\tiny_mce_prototype.js" />
     <Content Include="c3-admin\tiny_mce\utils\editable_selects.js" />
     <Content Include="c3-admin\tiny_mce\utils\form_utils.js" />
     <Content Include="c3-admin\tiny_mce\utils\mctabs.js" />
@@ -1193,6 +1127,7 @@
     <Content Include="cmsTemplates\Aqueous\left-sidebar.aspx" />
     <Content Include="cmsTemplates\Aqueous\no-sidebar.aspx" />
     <Content Include="cmsTemplates\Aqueous\right-sidebar.aspx" />
+    <Content Include="favicon.ico" />
     <Content Include="global.asax" />
     <Content Include="c3-admin\BlogPostAddEdit.aspx" />
     <Content Include="c3-admin\BlogPostIndex.aspx" />
@@ -1416,9 +1351,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="c3-admin\tiny_mce\plugins\autosave\langs\" />
-    <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\classes\utils\" />
-    <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\includes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant.master" />
@@ -1448,7 +1380,6 @@
     <None Include="c3-admin\Includes\C3WidgetTextSchema.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="c3-admin\tiny_mce\classes\firebug\FIREBUG.LICENSE" />
     <Content Include="cmsTemplates\Aqueous\aqueous.master" />
     <Content Include="cmsTemplates\Aqueous\Skin.config" />
     <Content Include="cmsTemplates\Aqueous\aqueous-orig.zip" />

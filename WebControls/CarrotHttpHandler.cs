@@ -76,7 +76,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			context.Response.ContentType = "image/x-png";
 
-			using (MemoryStream memStream = new MemoryStream()) {
+			using (var memStream = new MemoryStream()) {
 				captchaImg.Save(memStream, ImageFormat.Png);
 				memStream.WriteTo(context.Response.OutputStream);
 			}
@@ -167,7 +167,7 @@ namespace Carrotware.Web.UI.Controls {
 
 							graphics.DrawString(sImageIn, font, textBrush, sidePadding, topPadding);
 
-							using (MemoryStream memStream = new MemoryStream()) {
+							using (var memStream = new MemoryStream()) {
 								bmpThumb.Save(memStream, ImageFormat.Png);
 							}
 
@@ -188,7 +188,7 @@ namespace Carrotware.Web.UI.Controls {
 			context.Response.Expires = 5;
 			context.Response.ContentType = "image/x-png";
 
-			using (MemoryStream memStream = new MemoryStream()) {
+			using (var memStream = new MemoryStream()) {
 				bmpThumb.Save(memStream, ImageFormat.Png);
 				memStream.WriteTo(context.Response.OutputStream);
 			}
@@ -206,8 +206,8 @@ namespace Carrotware.Web.UI.Controls {
 			DoCacheMagic(context, 10);
 
 			string sBody = WebControlHelper.GetManifestResourceStream("Carrotware.Web.UI.Controls.carrotHelp.js");
-			DateTime timeAM = DateTime.Now.Date.AddHours(6);  // 6AM
-			DateTime timePM = DateTime.Now.Date.AddHours(12);  // 6PM
+			DateTime timeAM = DateTime.Now.Date.AddHours(7);  // AM
+			DateTime timePM = DateTime.Now.Date.AddHours(17);  // PM
 
 			sBody = sBody.Replace("[[TIMESTAMP]]", DateTime.UtcNow.ToString("u"));
 
@@ -223,7 +223,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			var byteArray = Encoding.UTF8.GetBytes(sBody);
 
-			using (MemoryStream memStream = new MemoryStream(byteArray)) {
+			using (var memStream = new MemoryStream(byteArray)) {
 				memStream.WriteTo(context.Response.OutputStream);
 			}
 
