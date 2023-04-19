@@ -45,23 +45,25 @@
 	line-height: normal;
 	text-align: left;
 	font-size: small;
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: 'Segoe UI',Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	position: absolute;
 	z-index: 99100;
 }
 
-#cmsToolBoxWrap input[type="submit"], #cmsToolBoxWrap input[type="reset"], #cmsToolBoxWrap input[type="button"], #cmsToolBoxWrap .button, #cmsToolBoxWrap .ui-dialog-buttonpane button, #cmsModalFrame button, #cmsModalFrame .button, #cmsModalFrame input[type="button"] {
-	min-width: 3em;
-	padding: 0.6em 0.8em;
-	border: 1px solid #8E908E;
-	background-color: #CEE4D7;
-	color: #676F6A;
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-}
+	#cmsToolBoxWrap input[type="submit"], #cmsToolBoxWrap input[type="reset"], #cmsToolBoxWrap input[type="button"],
+	#cmsToolBoxWrap .button, #cmsToolBoxWrap .ui-dialog-buttonpane button, #cmsModalFrame button, #cmsModalFrame .button, #cmsModalFrame input[type="button"] {
+		min-width: 3em;
+		padding: 0.6em 0.8em;
+		border: 1px solid #8E908E;
+		background-color: #CEE4D7;
+		color: #676F6A;
+		border-radius: 6px;
+		-moz-border-radius: 6px;
+		-webkit-border-radius: 6px;
+	}
 
-.cmsGlossySeaGreen input[type="submit"], .cmsGlossySeaGreen input[type="reset"], .cmsGlossySeaGreen input[type="button"], .cmsGlossySeaGreen .button, .cmsGlossySeaGreen .ui-dialog-buttonpane button {
+.cms-seagreen input[type="submit"], .cms-seagreen input[type="reset"], .cms-seagreen input[type="button"],
+.cms-seagreen .button, .cms-seagreen .ui-dialog-buttonpane button {
 	min-width: 2em;
 	padding: 0.6em 0.8em;
 	border: 1px solid #8E908E;
@@ -72,35 +74,31 @@
 	-webkit-border-radius: 6px;
 }
 
-#cmsToolBoxWrap .btn, .cmsGlossySeaGreen button, .cmsGlossySeaGreen .btn, #cmsGlossySeaGreenID .btn, #cmsModalFrame .btn {
+#cmsToolBoxWrap .btn, .cms-seagreen button, .cms-seagreen .btn, #cms-seagreen-id .btn, #cmsModalFrame .btn {
 	border: 1px solid #8E908E;
 	color: #676F6A;
 }
 
-#cmsToolBoxWrap .btn-primary, .cmsGlossySeaGreen .btn-primary, .cmsGlossySeaGreen button.btn-primary, #cmsGlossySeaGreenID .btn-primary, #cmsGlossySeaGreenID input.btn-primary {
-	font-weight: bold;
-	background-color: #ECFAF1;
-}
+	#cmsToolBoxWrap .btn-primary, .cms-seagreen .btn-primary, .cms-seagreen button.btn-primary,
+	#cms-seagreen-id .btn-primary, #cms-seagreen-id input.btn-primary {
+		font-weight: bold;
+		background-color: #ECFAF1;
+	}
 
-.cmsGlossySeaGreen .ui-widget P {
+.cms-seagreen .ui-widget P {
 	line-height: normal;
 	font-weight: normal;
 }
 
-.cmsGlossySeaGreen .ui-dialog-titlebar, .cmsGlossySeaGreen .ui-dialog-titlebar a, #cmsGlossySeaGreenID .ui-dialog-titlebar, #cmsGlossySeaGreenID .ui-dialog-titlebar a, .cmsGlossySeaGreen .ui-widget-header, #cmsGlossySeaGreenID .ui-widget-header {
+.cms-seagreen .ui-dialog-titlebar, .cms-seagreen .ui-dialog-titlebar a, #cms-seagreen-id .ui-dialog-titlebar, #cms-seagreen-id .ui-dialog-titlebar a, .cms-seagreen .ui-widget-header, #cms-seagreen-id .ui-widget-header {
 	color: #676F6A;
 }
 
-.cmsGlossySeaGreen .ui-front, #cmsGlossySeaGreenID .ui-front {
+.cms-seagreen .ui-front, #cms-seagreen-id .ui-front {
 	z-index: 10000000;
 }
 
-#cmsGlossySeaGreenID .jqradioset, #cmsGlossySeaGreenID .jqradioset .ui-button, #cmsGlossySeaGreenID .jqradioset label, #cmsGlossySeaGreenID .jqradioset span {
-	margin: 0 !important;
-	padding: 4px !important;
-}
-
-#cmsGlossySeaGreenID *, #cmsGlossySeaGreenID *:before, #cmsGlossySeaGreenID *:after {
+#cms-seagreen-id *, #cms-seagreen-id *:before, #cms-seagreen-id *:after {
 	box-sizing: unset;
 	-moz-box-sizing: unset;
 	-webkit-box-sizing: unset;
@@ -114,14 +112,15 @@
 	text-align: left;
 	font-size: small;
 	text-transform: none;
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: 'Segoe UI',Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsAdvEditTemplatePicker {
+	min-width: 200px;
 	max-width: 275px;
 }
 
-#cmsJQTabedToolbox {
+#cmsTabbedToolbox {
 	min-height: 100px;
 	width: 260px;
 	margin: 0;
@@ -129,21 +128,31 @@
 	margin: 0 auto;
 }
 
-#cmsJQTabedToolbox ul.ui-tabs-nav {
-	margin: 2px 2px 0 2px;
-	padding: 3px 3px 0 3px;
-}
+	#cmsTabbedToolbox ul.ui-tabs-nav {
+		margin: 2px 2px 0 2px !important;
+		padding: 3px 3px 0 3px !important;
+	}
 
-#cmsJQTabedToolbox ul.ui-tabs-nav li {
-	margin: 2px 2px -1px 2px;
-	padding: 4px 4px 4px 4px;
-	border-bottom-width: 0px;
-}
+		#cmsTabbedToolbox ul.ui-tabs-nav a {
+			margin: 2px 2px 2px 2px !important;
+			padding: 2px 2px 2px 2px !important;
+		}
 
-#cmsJQTabedToolbox .ui-tabs-panel {
-	margin: 0;
-	border: solid 0px #ffffff !important;
-}
+		#cmsTabbedToolbox ul.ui-tabs-nav li {
+			margin: 2px 2px -1px 2px !important;
+			padding: 3px 3px 3px 3px !important;
+			border-bottom-width: 0px !important;
+		}
+
+	#cmsTabbedToolbox .ui-tabs-panel {
+		margin: 0;
+		border: solid 0px #ffffff !important;
+	}
+
+	#cmsTabbedToolbox .cmsToolboxTab {
+		margin: 1px 1px 1px 1px !important;
+		padding: 2px 2px 2px 2px !important;
+	}
 
 #cmsMainToolbox {
 	padding: 2px;
@@ -190,6 +199,7 @@
 	margin: 2px !important;
 	float: right !important;
 }
+
 .cmsFloatLeft {
 	margin: 2px !important;
 	float: left !important;
@@ -222,12 +232,32 @@
 	text-align: right !important;
 }
 
-.cmsPreviewButtons {
-	float: right;
-	margin: 5px 0px 0px 0px !important;
+#cmsPreviewControls {
+	line-height: normal !important;
+	margin-left: 60px !important;
+	margin-right: 60px !important;
+	min-width: 550px !important;
+}
+
+#cmsPreviewTab a {
+	padding: 6px 9px !important;
+}
+
+.cmsPreview-Right, .cmsPreview-Left {
+	margin: 5px 0px 5px 0px !important;
 	padding: 0 !important;
 	font-size: 12px !important;
 	line-height: normal !important;
+}
+
+.cmsPreview-Left {
+	margin-left: 50px !important;
+	float: left !important;
+}
+
+.cmsPreview-Right {
+	margin-right: 50px !important;
+	float: right !important;
 }
 
 p.cmsToolItem {
@@ -287,6 +317,13 @@ p.cmsToolItem {
 	font-weight: normal;
 	line-height: normal;
 	font-size: 11px;
+	overflow: auto !important;
+	height: 290px !important;
+	width: 240px !important;
+	padding: 2px !important;
+	margin: 4px !important;
+	float: left !important;
+	border: solid 1px #000 !important;
 }
 
 #cmsTemplateList {
@@ -303,7 +340,7 @@ p.cmsToolItem {
 	font-weight: normal;
 	line-height: normal;
 	font-size: 11px;
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: 'Segoe UI',Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 .cmsWidgetToolboxPath {
@@ -345,7 +382,7 @@ p.cmsToolItem {
 	text-align: left;
 	font-size: small;
 	text-transform: none;
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: 'Segoe UI',Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 }
 
 #cmsControlPath, #cmsWidgetHead {
@@ -455,96 +492,98 @@ p.cmsToolItem {
 	float: right !important;
 }
 
-#cmsEditMenuList .cmsMnuChildren, #cmsEditMenuList .cmsWidgetBarIconCog {
-	clear: both !important;
-}
+	#cmsEditMenuList .cmsMnuChildren, #cmsEditMenuList .cmsWidgetBarIconCog {
+		clear: both !important;
+	}
 
-#cmsEditMenuList .cmsMnuParent li a {
-	margin: 0;
-	padding: 0;
-	padding-top: 1px !important;
-	padding-right: 5px !important;
-}
+	#cmsEditMenuList .cmsMnuParent li a {
+		margin: 0;
+		padding: 0;
+		padding-top: 1px !important;
+		padding-right: 5px !important;
+	}
 
-#cmsEditMenuList li.cmsWidgetBarIconCog a, #cmsEditMenuList li.cmsWidgetBarIconCog a img {
-	position: relative !important;
-	z-index: 99000 !important;
-}
+	#cmsEditMenuList li.cmsWidgetBarIconCog a, #cmsEditMenuList li.cmsWidgetBarIconCog a img {
+		position: relative !important;
+		z-index: 99000 !important;
+	}
 
-#cmsEditMenuList ul.cmsMnuChildren {
-	margin: 0;
-	padding: 0;
-	margin: 1px 0 1px 0 !important;
-	padding: 2px 1px 2px 1px !important;
-	width: 125px !important;
-	clear: both !important;
-	font-weight: bold !important;
-	border-width: 1px !important;
-	border-style: solid !important;
-	background-image: none !important;
-	background: transparent !important;
-	border-color: #000000 !important;
-	margin-top: -2px !important;
-	margin-left: -110px !important;
-	position: absolute !important;
-	z-index: 99010 !important;
-}
+	#cmsEditMenuList ul.cmsMnuChildren {
+		margin: 0;
+		padding: 0;
+		margin: 1px 0 1px 0 !important;
+		padding: 2px 1px 2px 1px !important;
+		width: 125px !important;
+		clear: both !important;
+		font-weight: bold !important;
+		border-width: 1px !important;
+		border-style: solid !important;
+		background-image: none !important;
+		background: transparent !important;
+		border-color: #000000 !important;
+		margin-top: -2px !important;
+		margin-left: -110px !important;
+		position: absolute !important;
+		z-index: 99010 !important;
+	}
 
-#cmsEditMenuList ul.cmsWidgetMenu {
-	background: #DFF6E8 !important;
-	color: #676F6A !important;
-}
-#cmsEditMenuList ul.cmsWidgetContainerMenu {
-	background: #8DC0A3 !important;
-	color: #FFFFFF !important;
-}
-#cmsEditMenuList ul.cmsContentContainerMenu {
-	background: #478C5F !important;
-	color: #FFFFFF !important;
-}
+	#cmsEditMenuList ul.cmsWidgetMenu {
+		background: #DFF6E8 !important;
+		color: #676F6A !important;
+	}
 
-#cmsEditMenuList > li {
-	float: none !important;
-	display: inline !important;
-	border: 0px solid transparent;
-}
+	#cmsEditMenuList ul.cmsWidgetContainerMenu {
+		background: #8DC0A3 !important;
+		color: #FFFFFF !important;
+	}
 
-#cmsEditMenuList ul li, #cmsEditMenuList ul li ul li {
-	border: 0px solid transparent;
-}
+	#cmsEditMenuList ul.cmsContentContainerMenu {
+		background: #478C5F !important;
+		color: #FFFFFF !important;
+	}
 
-#cmsEditMenuList ul.cmsMnuChildren li {
-	margin: 0;
-	padding: 0;
-	padding: 0px !important;
-	margin: 1px !important;
-	overflow: hidden !important;
-}
+	#cmsEditMenuList > li {
+		float: none !important;
+		display: inline !important;
+		border: 0px solid transparent;
+	}
 
-#cmsEditMenuList > ul.cmsMnuChildren li a, #cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a {
-	margin: 0;
-	padding: 0;
-	text-decoration: none !important;
-	width: 100% !important;
-	display: inline !important;
-	padding: 0px !important;
-	margin: 1px !important;
-	margin-bottom: 2px !important;
-	float: none !important;
-}
+	#cmsEditMenuList ul li, #cmsEditMenuList ul li ul li {
+		border: 0px solid transparent;
+	}
 
-#cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a {
-	display: block !important;
-	width: 99% !important;
-}
+	#cmsEditMenuList ul.cmsMnuChildren li {
+		margin: 0;
+		padding: 0;
+		padding: 0px !important;
+		margin: 1px !important;
+		overflow: hidden !important;
+	}
 
-#cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a img {
-	padding: 1px !important;
-	margin: 1px !important;
-	padding-right: 5px !important;
-	vertical-align: bottom !important;
-	float: none !important;
-}
+	#cmsEditMenuList > ul.cmsMnuChildren li a, #cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a {
+		margin: 0;
+		padding: 0;
+		text-decoration: none !important;
+		width: 100% !important;
+		display: inline !important;
+		padding: 0px !important;
+		margin: 1px !important;
+		margin-bottom: 2px !important;
+		float: none !important;
+	}
+
+	#cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a {
+		display: block !important;
+		width: 99% !important;
+	}
+
+		#cmsEditMenuList ul.cmsMnuParent li ul.cmsMnuChildren li a img {
+			padding: 1px !important;
+			margin: 1px !important;
+			padding-right: 5px !important;
+			vertical-align: bottom !important;
+			float: none !important;
+		}
 
 /* end menus */
 
@@ -557,7 +596,7 @@ p.cmsToolItem {
 	text-align: left;
 	font-size: small;
 	clear: both;
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: 'Segoe UI',Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	margin: 1px !important;
 	padding: 1px !important;
 	color: #676F6A !important;
@@ -589,13 +628,13 @@ p.cmsToolItem {
 	border: 1px solid #c0c0c0 !important;
 }
 
-.cmsContentContainerTitle, .cmsContentContainerTitle a, .cmsContentContainerTitleText {
-	text-shadow: 0 0 0 transparent !important;
-	text-align: left !important;
-	color: #FFFFFF !important;
-	background: #478C5F !important;
-	text-decoration: none !important;
-}
+	.cmsContentContainerTitle, .cmsContentContainerTitle a, .cmsContentContainerTitleText {
+		text-shadow: 0 0 0 transparent !important;
+		text-align: left !important;
+		color: #FFFFFF !important;
+		background: #478C5F !important;
+		text-decoration: none !important;
+	}
 
 .cmsContentContainerTitleText {
 	float: left !important;
@@ -609,10 +648,10 @@ p.cmsToolItem {
 	text-decoration: none !important;
 }
 
-.cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren, .cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren a {
-	background: #8DC0A3 !important;
-	color: #FFFFFF !important;
-}
+	.cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren, .cmsWidgetControlTitle #cmsEditMenuList-inner li:hover .cmsMnuChildren a {
+		background: #8DC0A3 !important;
+		color: #FFFFFF !important;
+	}
 
 .cmsWidgetTitleBar, .cmsWidgetTitleBar a, .cmsWidgetTargetOuterControl #cmsControl.cmsWidgetToolboxItem p.cmsToolItem {
 	text-shadow: 0 0 0 transparent !important;
@@ -668,7 +707,7 @@ p.cmsToolItem {
 }
 
 #cmsAdminToolbox, #cmsAdminToolbox p, .cmsToolboxHead {
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: 'Segoe UI',Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	padding: 5px 0px 5px 5px;
@@ -689,6 +728,7 @@ p.cmsToolItem {
 	font-size: 12px !important;
 	font-weight: bold !important;
 }
+
 .cmsVersion {
 	font-size: 8px !important;
 	clear: both;
@@ -700,7 +740,7 @@ p.cmsToolItem {
 }
 
 #cmsAdminToolbox {
-	font-family: 'Segoe UI' ,Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
+	font-family: 'Segoe UI',Tahoma, Lucida Grande, Lucida Sans, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	text-shadow: 0 0 0 transparent;

@@ -68,8 +68,8 @@
 			cmsPageInit2 = true;
 		}
 
-		$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit, .cmsGlossySeaGreen input:reset").button();
-		$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit, #cmsGlossySeaGreenID input:reset").button();
+		$(".cms-seagreen input:button, .cms-seagreen input:submit, .cms-seagreen input:reset").button();
+		$("#cms-seagreen-id input:button, #cms-seagreen-id input:submit, #cms-seagreen-id input:reset").button();
 	}
 
 	var cmsPageInit1 = false;
@@ -129,7 +129,7 @@
 	}
 </script>
 <div class="cmsMainAdvControls">
-	<div id="cmsGlossySeaGreenID" class="cmsGlossySeaGreen">
+	<div id="cms-seagreen-id" class="cms-seagreen">
 		<div style="display: none;">
 			<img src="/c3-admin/images/cog.png" alt="" />
 			<img src="/c3-admin/images/cross.png" alt="" />
@@ -144,13 +144,13 @@
 			<img src="/c3-admin/images/ani-smallbar.gif" alt="bar" />
 		</div>
 		<div style="display: none">
-			<div id="cms-basic-modal-content" class="cmsGlossySeaGreen">
+			<div id="cms-basic-modal-content" class="cms-seagreen">
 				<div id="cmsModalFrame">
 				</div>
 			</div>
 		</div>
-		<div id="cmsToolBoxWrap" class="<%=String.Format("cmsToolbarAlignment{0}", EditorPrefs.EditorMargin) %>">
-			<div id="cmsAdminToolbox" class="cmsGlossySeaGreen cmsToolbox2 cmsToolbox3">
+		<div id="cmsToolBoxWrap" class="<%=string.Format("cmsToolbarAlignment{0}", EditorPrefs.EditorMargin) %>">
+			<div id="cmsAdminToolbox" class="cms-seagreen cmsToolbox2 cmsToolbox3">
 				<div class="cmsInsideArea">
 					<div class="ui-widget-header ui-corner-all cmsToolboxHead">
 						<div class="cmsFloatLeft">
@@ -172,7 +172,7 @@
 						<div style="clear: both;">
 						</div>
 					</div>
-					<div id="cmsDivActive" class="cmsGlossySeaGreen">
+					<div id="cmsDivActive" class="cms-seagreen">
 						<div class="ui-widget" runat="server" id="cmsDivEditing">
 							<div class="ui-state-highlight ui-corner-all" style="padding: 5px; margin-top: 5px; margin-bottom: 5px;">
 								<p>
@@ -181,15 +181,15 @@
 								</p>
 							</div>
 						</div>
-						<div id="cmsMainToolbox" class="cmsGlossySeaGreen">
+						<div id="cmsMainToolbox" class="cms-seagreen">
 							<asp:Panel ID="pnlCMSEditZone" runat="server">
-								<div id="cmsJQTabedToolbox">
+								<div id="cmsTabbedToolbox">
 									<ul>
 										<li><a href="#cmsTabIdx-tabs-1">Widgets</a></li>
 										<li><a href="#cmsTabIdx-tabs-2">Templates</a></li>
 										<li><a href="#cmsTabIdx-tabs-3">Page Info</a></li>
 									</ul>
-									<div id="cmsTabIdx-tabs-1">
+									<div id="cmsTabIdx-tabs-1" class="cmsToolboxTab">
 										<% if (!bLocked) { %>
 										<div style="display: none;">
 											cmsFullOrder<br />
@@ -204,7 +204,7 @@
 										</div>
 										<asp:Repeater ID="rpTools" runat="server">
 											<HeaderTemplate>
-												<div id="cmsToolBox" class="ui-widget-content ui-corner-all" style="overflow: auto; height: 290px; width: 240px; padding: 5px; margin: 5px; float: left; border: solid 1px #000;">
+												<div id="cmsToolBox" class="ui-widget-content ui-corner-all">
 											</HeaderTemplate>
 											<ItemTemplate>
 												<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper">
@@ -213,7 +213,7 @@
 															<%# Eval("Caption")%>
 														</p>
 														<p class="cmsWidgetToolboxPath">
-															<%# String.Format("{0}", Eval("FilePath")).Replace(".", ". ").Replace("/", "/ ")%><br />
+															<%# string.Format("{0}", Eval("FilePath")).Replace(".", ". ").Replace("/", "/ ")%><br />
 														</p>
 														<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
 														<input type="hidden" id="cmsCtrlOrder" value="0" />
@@ -232,7 +232,7 @@
 										<div style="clear: both;">
 										</div>
 									</div>
-									<div id="cmsTabIdx-tabs-2">
+									<div id="cmsTabIdx-tabs-2" class="cmsToolboxTab">
 										<% if (!bLocked) { %>
 										<div class="cmsLeft5px">
 											<p>
@@ -258,7 +258,7 @@
 										<div style="clear: both;">
 										</div>
 									</div>
-									<div id="cmsTabIdx-tabs-3">
+									<div id="cmsTabIdx-tabs-3" class="cmsToolboxTab">
 										<% if (!bLocked) { %>
 										<div class="cmsLeft5px">
 											<p>
@@ -301,23 +301,23 @@
 			</div>
 		</div>
 	</div>
-	<div style="display: none" class="cmsGlossySeaGreen">
-		<div id="CMSmodalalert" title="CarrotCake CMS" class="cmsGlossySeaGreen">
+	<div style="display: none" class="cms-seagreen">
+		<div id="CMSmodalalert" title="CarrotCake CMS" class="cms-seagreen">
 			<p id="CMSmodalalertmessage">
 				&nbsp;
 			</p>
 		</div>
-		<div id="CMSremoveconfirm" title="Remove Widget?" class="cmsGlossySeaGreen">
+		<div id="CMSremoveconfirm" title="Remove Widget?" class="cms-seagreen">
 			<p id="CMSremoveconfirmmsg">
 				Are you sure you want to remove this widget?
 			</p>
 		</div>
-		<div id="CMSsavedconfirm" title="Page Saved!" class="cmsGlossySeaGreen">
+		<div id="CMSsavedconfirm" title="Page Saved!" class="cms-seagreen">
 			<p id="CMSsavedconfirmmsg">
 				The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...
 			</p>
 		</div>
-		<div id="CMScancelconfirm" title="Quit Editor?" class="cmsGlossySeaGreen">
+		<div id="CMScancelconfirm" title="Quit Editor?" class="cms-seagreen">
 			<p id="CMScancelconfirmmsg">
 				Are you sure you want to leave the editor? All changes will be lost!
 			</p>

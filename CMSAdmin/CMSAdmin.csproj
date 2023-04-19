@@ -651,6 +651,9 @@
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_468b5e_256x240.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="c3-admin\glossyseagreen\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped2.css" />
+    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen.css" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1%402x.png" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1.css" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1.png" />
@@ -1015,7 +1018,6 @@
     <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\content.css" />
     <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\img\button_bg.png" />
     <Content Include="c3-admin\tiny_mce\themes\simple\skins\o2k7\ui.css" />
-    <Content Include="c3-admin\tiny_mce\tinymce.zip" />
     <Content Include="c3-admin\tiny_mce\tiny_mce.js" />
     <Content Include="c3-admin\tiny_mce\tiny_mce_popup.js" />
     <Content Include="c3-admin\tiny_mce\utils\editable_selects.js" />
@@ -1072,9 +1074,6 @@
     <Content Include="c3-admin\Includes\normalize.css" />
     <Content Include="c3-admin\PageWidgets.aspx" />
     <Content Include="c3-admin\SiteContentStatusChange.aspx" />
-    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped.css" />
-    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen-scoped2.css" />
-    <Content Include="c3-admin\glossyseagreen\jquery-ui-glossyseagreen.css" />
     <Content Include="c3-admin\Images\logonbox-bottomcenter.png" />
     <Content Include="c3-admin\Images\logonbox-bottomleft.png" />
     <Content Include="c3-admin\Images\logonbox-bottomright.png" />
@@ -1127,7 +1126,25 @@
     <Content Include="cmsTemplates\Aqueous\left-sidebar.aspx" />
     <Content Include="cmsTemplates\Aqueous\no-sidebar.aspx" />
     <Content Include="cmsTemplates\Aqueous\right-sidebar.aspx" />
+    <Content Include="cmsTemplates\waterdrops\images\img01.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img02.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img02b.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img03.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img03b.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img04.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img04.png" />
+    <Content Include="cmsTemplates\waterdrops\images\img05.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img06.jpg" />
+    <Content Include="cmsTemplates\waterdrops\images\img07.jpg" />
+    <Content Include="cmsTemplates\waterdrops\index.html" />
+    <Content Include="cmsTemplates\waterdrops\license.txt" />
+    <Content Include="cmsTemplates\waterdrops\style.css" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-blog-index.aspx" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-blog.aspx" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-home.aspx" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-page.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="favicon.png" />
     <Content Include="global.asax" />
     <Content Include="c3-admin\BlogPostAddEdit.aspx" />
     <Content Include="c3-admin\BlogPostIndex.aspx" />
@@ -1351,6 +1368,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="c3-admin\tiny_mce\plugins\autosave\langs\" />
+    <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\classes\utils\" />
+    <Folder Include="c3-admin\tiny_mce\plugins\spellchecker\includes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant.master" />
@@ -1383,6 +1403,7 @@
     <Content Include="cmsTemplates\Aqueous\aqueous.master" />
     <Content Include="cmsTemplates\Aqueous\Skin.config" />
     <Content Include="cmsTemplates\Aqueous\aqueous-orig.zip" />
+    <Content Include="cmsTemplates\waterdrops\Skin.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

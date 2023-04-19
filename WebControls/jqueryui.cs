@@ -20,7 +20,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string DefaultJQUIVersion {
 			get {
-				return "1.11";
+				return "1.13";
 			}
 		}
 
@@ -47,7 +47,7 @@ namespace Carrotware.Web.UI.Controls {
 		public static string GeneralUri {
 			get {
 				if (string.IsNullOrEmpty(_generalUri)) {
-					_generalUri = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-4.js");
+					_generalUri = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-2.js");
 				}
 
 				return _generalUri;
@@ -67,28 +67,38 @@ namespace Carrotware.Web.UI.Controls {
 			switch (jqVer) {
 				case "1.10":
 					jqVer = "1.10.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-10-2.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-10-2.js");
 					break;
 
 				case "1.9":
 					jqVer = "1.9.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-9-2.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-9-2.js");
 					break;
 
 				case "1.8":
 					jqVer = "1.8.24";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-8-24.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-8-24.js");
 					break;
 
 				case "1.7":
 					jqVer = "1.7.3";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-7-3.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-7-3.js");
 					break;
 
 				case "1.11":
-				default:
 					jqVer = "1.11.4";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jqueryui-1-11-4.js");
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-11-4.js");
+					break;
+
+				case "1.12":
+					jqVer = "1.12.1";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-12-1.js");
+					break;
+
+				case "1.13":
+				default:
+					jqVer = "1.13.2";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-2.js");
 					break;
 			}
 

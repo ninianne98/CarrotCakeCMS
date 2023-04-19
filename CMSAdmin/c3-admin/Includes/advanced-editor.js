@@ -116,39 +116,29 @@ function cmsResetToolbarScroll() {
 }
 
 function cmsMenuFixImages() {
-	$(".cmsWidgetBarIconCog").each(function (i) {
-		cmsFixGeneralImage(this, 'cog.png');
+	var styleIcons = [
+		{ styleName: '.cmsWidgetBarIconCog', img: 'cog.png' },
+		{ styleName: '.cmsWidgetBarIconCross', img: 'cross.png' },
+		{ styleName: '.cmsWidgetBarIconDup', img: 'shape_ungroup.png' },
+		{ styleName: '.cmsWidgetBarIconTime', img: 'clock_edit.png' },
+		{ styleName: '.cmsWidgetBarIconCopy', img: 'table_go.png' },
+		{ styleName: '.cmsWidgetBarIconPencil', img: 'pencil.png' },
+		{ styleName: '.cmsWidgetBarIconPencil2', img: 'pencil.png' },
+		{ styleName: '.cmsWidgetBarIconActive', img: 'tick.png' },
+		{ styleName: '.cmsWidgetBarIconWidget', img: 'application_view_tile.png' },
+		{ styleName: '.cmsWidgetBarIconWidget2', img: 'hourglass.png' },
+		{ styleName: '.cmsWidgetBarIconShrink', img: 'arrow_in.png' }
+	];
+
+	$.each(styleIcons, function (i, o) {
+		//console.log(styleIcons[i].styleName);
+		var styleName = styleIcons[i].styleName;
+		var imgIcon = styleIcons[i].img;
+
+		$(styleName).each(function (j) {
+			cmsFixGeneralImage(this, imgIcon);
+		});
 	});
-	$(".cmsWidgetBarIconCross").each(function (i) {
-		cmsFixGeneralImage(this, 'cross.png');
-	});
-	$(".cmsWidgetBarIconDup").each(function (i) {
-		cmsFixGeneralImage(this, 'shape_ungroup.png');
-	});
-	$(".cmsWidgetBarIconTime").each(function (i) {
-		cmsFixGeneralImage(this, 'clock_edit.png');
-	});
-	$(".cmsWidgetBarIconCopy").each(function (i) {
-		cmsFixGeneralImage(this, 'table_go.png');
-	});
-	$(".cmsWidgetBarIconPencil").each(function (i) {
-		cmsFixGeneralImage(this, 'pencil.png');
-	});
-	$(".cmsWidgetBarIconPencil2").each(function (i) {
-		cmsFixGeneralImage(this, 'pencil.png');
-	});
-	$(".cmsWidgetBarIconActive").each(function (i) {
-		cmsFixGeneralImage(this, 'tick.png');
-	});
-	$(".cmsWidgetBarIconWidget").each(function (i) {
-		cmsFixGeneralImage(this, 'application_view_tile.png');
-	});
-	$(".cmsWidgetBarIconWidget2").each(function (i) {
-		cmsFixGeneralImage(this, 'hourglass.png');
-	});
-	//$(".cmsWidgetBarIconShrink").each(function (i) {
-	//cmsFixGeneralImage(this, 'Shrink', 'Shrink', 'arrow_in.png');
-	//});
 }
 
 function cmsBlockImageEdits(elm) {
@@ -258,7 +248,7 @@ function cmsEditHB() {
 function cmsSaveToolbarPosition() {
 	var scrollTopPos = $(document).scrollTop();
 	var scrollWTopPos = $('#cmsToolBox').scrollTop();
-	var tabID = $('#cmsJQTabedToolbox').tabs("option", "active");
+	var tabID = $('#cmsTabbedToolbox').tabs("option", "active");
 
 	var webMthd = webSvc + "/RecordEditorPosition";
 
@@ -375,24 +365,22 @@ function cmsPreviewTemplate() {
 		templateList += "<option value='" + this.value + "'>" + this.text + "</option>";
 	});
 
-	var btnWide1 = '<input type="radio" id="btnDeskTemplateCMS" name="btnWidthTemplateCMS" value="0" onclick="cmsWideDesk();" checked /><label for="btnDeskTemplateCMS">Desktop Size</label>';
-	var btnWide2 = '<input type="radio" id="btnTabletTemplateCMS" name="btnWidthTemplateCMS" value="1" onclick="cmWideTablet();" /><label for="btnTabletTemplateCMS">Tablet Size</label>';
-	var btnWide3 = '<input type="radio" id="btnMobileTemplateCMS" name="btnWidthTemplateCMS" value="2" onclick="cmsWideMobile();" /><label for="btnMobileTemplateCMS">Mobile Size</label>';
+	var btnWide1 = '<a id="btnDeskTemplateCMS" name="btnWidthTemplateCMS" onclick="cmsWideDesk();"> Desktop Size </a>';
+	var btnWide2 = '<a id="btnTabletTemplateCMS" name="btnWidthTemplateCMS" onclick="cmWideTablet();"> Tablet Size </a>';
+	var btnWide3 = '<a id="btnMobileTemplateCMS" name="btnWidthTemplateCMS" onclick="cmsWideMobile();"> Mobile Size </a>';
 
-	var ddlPreview = ' <select id="cmsTemplateList">' + templateList + '</select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ';
+	var ddlPreview = '<span> <select id="cmsTemplateList">' + templateList + '</select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>';
 
 	var btnClose = ' <input type="button" id="btnCloseTemplateCMS" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
 	var btnApply = ' <input type="button" id="btnApplyTemplateCMS" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
 
-	$(editFrame).append('<div id="cmsGlossySeaGreenID"><div id="cmsPreviewControls" class="cmsGlossySeaGreen cmsPreviewButtons"> ' + '<span class="jqradioset">' + btnWide1 + btnWide2 + btnWide3 + '</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' + ddlPreview + btnClose + btnApply + ' </div></div>');
-	window.setTimeout("cmsLateBtnStyle();", 500);
+	$(editFrame).append('<div id="cms-seagreen-id"><div id="cmsPreviewControls" class="cms-seagreen cmsPreviewButtons"> '
+					+ '<div id="cmsPreviewTab" class="cmsTabs cmsPreview-Left"><ul> <li>' + btnWide1 + '</li> <li>' + btnWide2 + '</li> <li>' + btnWide3 + '</li>  </ul> '
+					+ ' \r\n <div id="cmsPreviewTabPanel" style="display: none;" >    </div>\r\n   </div> '
+					+ ' <div class="cmsPreview-Right">' + ddlPreview + btnClose + btnApply + '</div> </div>'
+					+ ' </div>');
 
-	$("#cmsPreviewControls .jqradioset").buttonset();
-
-	//	var list = $(cmsTemplateListPreviewer);
-	//	$(cmsTemplateDDL + " > option").each(function () {
-	//		list.append(new Option(this.text, this.value));
-	//	});
+	window.setTimeout("cmsPreviewStyling();", 300);
 
 	$(cmsTemplateListPreviewer).val(tmplReal);
 
@@ -401,12 +389,31 @@ function cmsPreviewTemplate() {
 
 	setTimeout("cmsSetIframeRealSrc('cmsFrameEditorPreview');", 1000);
 	cmsStyleButtons();
+
 	cmsWideDesk();
+	setTimeout("$('#btnDeskTemplateCMS').click();", 750);
+	setTimeout("$('#btnDeskTemplateCMS').click();", 1500);
+}
+
+function cmsPreviewStyling() {
+	cmsLateBtnStyle();
+
+	$('#cmsPreviewTab').find('li > a').each(function (i) {
+		var tabId = 'cms-pvtab-' + i;
+		$(this).attr('href', '#' + tabId);
+		$('#cmsPreviewTabPanel').append('<div id="' + tabId + '"> <p>' + tabId + '</p> </div>\r\n ');
+	});
+
+	$('#cmsPreviewTab').tabs();
+	$('#cmsPreviewTab').addClass('ui-corner-all');
+	$('#cmsPreviewTab li').addClass('ui-widget ui-state-default ui-corner-all');
+
+	window.setTimeout("$('#cmsPreviewTab').tabs('option', 'active', 0);", 250);
 }
 
 function cmsLateBtnStyle() {
-	$(".cmsGlossySeaGreen input:button, .cmsGlossySeaGreen input:submit, .cmsGlossySeaGreen input:reset").button();
-	$("#cmsGlossySeaGreenID input:button, #cmsGlossySeaGreenID input:submit, #cmsGlossySeaGreenID input:reset").button();
+	$(".cms-seagreen input:button, .cms-seagreen input:submit, .cms-seagreen input:reset").button();
+	$("#cms-seagreen-id input:button, #cms-seagreen-id input:submit, #cms-seagreen-id input:reset").button();
 }
 
 var cmsTemplateDDL = "";
@@ -942,9 +949,9 @@ function cmsInitWidgets() {
 	var cmsSortWidgets = false;
 
 	if (!cmsIsPageLocked) {
-		$('#cmsJQTabedToolbox').tabs();
+		$('#cmsTabbedToolbox').tabs();
 
-		$('#cmsJQTabedToolbox').tabs("option", "active", cmsToolTabIdx);
+		$('#cmsTabbedToolbox').tabs("option", "active", cmsToolTabIdx);
 
 		$("#cmsToolBox div.cmsToolItem").draggable({
 			connectToSortable: ".cmsTargetArea",
@@ -1032,9 +1039,9 @@ function cmsMoveWidgetResizer(key, state) {
 setTimeout("cmsStyleButtons();", 500);
 
 function cmsStyleButtons() {
-	cmsDoStyleButtons('.cmsGlossySeaGreen input[type="button"]');
-	cmsDoStyleButtons('.cmsGlossySeaGreen input[type="submit"]');
-	cmsDoStyleButtons('.cmsGlossySeaGreen button');
+	cmsDoStyleButtons('.cms-seagreen input[type="button"]');
+	cmsDoStyleButtons('.cms-seagreen input[type="submit"]');
+	cmsDoStyleButtons('.cms-seagreen button');
 	cmsDoStyleButtons('.ui-dialog-buttonpane button');
 }
 
@@ -1056,12 +1063,12 @@ function cmsFixDialog(dialogname) {
 	cmsOverrideCSSScope(dilg, "");
 
 	$(".ui-widget-overlay").each(function (i) {
-		$(this).wrap("<div class=\"cmsGlossySeaGreen\" />");
+		$(this).wrap("<div class=\"cms-seagreen\" />");
 		$(this).css('zIndex', 9950001);
 	});
 
 	var d = $(dilg);
-	$(d).wrap("<div class=\"cmsGlossySeaGreen\" />");
+	$(d).wrap("<div class=\"cms-seagreen\" />");
 	$(d).css('zIndex', 9950005);
 
 	//alert($(dilg).prop('id'));
@@ -1074,8 +1081,8 @@ function cmsFixDialog(dialogname) {
 
 	dialogWrapper = '#' + dialogWrapper;
 
-	//$(dilg).find('.ui-dialog-titlebar').addClass("cmsGlossySeaGreen");
-	//$(dilg).find('ui-dialog-title').addClass("cmsGlossySeaGreen");
+	//$(dilg).find('.ui-dialog-titlebar').addClass("cms-seagreen");
+	//$(dilg).find('ui-dialog-title').addClass("cms-seagreen");
 
 	if ($(dialogWrapper + " .ui-dialog-titlebar .ui-dialog-titlebar-close .ui-icon-closethick").length < 1) {
 		var closeBtn = $(dialogWrapper + ' .ui-dialog-titlebar-close');
@@ -1101,10 +1108,10 @@ function cmsFixDialog(dialogname) {
 
 function cmsOverrideCSSScope(elm, xtra) {
 	var c = $(elm).attr('class');
-	if (c.indexOf("cmsGlossySeaGreen") < 0 || c.indexOf(xtra) < 0) {
-		$(elm).attr('class', "cmsGlossySeaGreen " + xtra + " " + c);
+	if (c.indexOf("cms-seagreen") < 0 || c.indexOf(xtra) < 0) {
+		$(elm).attr('class', "cms-seagreen " + xtra + " " + c);
 	}
-	$(elm).addClass("cmsGlossySeaGreen");
+	$(elm).addClass("cms-seagreen");
 }
 
 function cmsGenericEdit(PageId, WidgetId) {

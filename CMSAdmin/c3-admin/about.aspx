@@ -231,7 +231,7 @@
 	<p>
 		<b>TinyMCE</b>
 		<br />
-		Copyright 2009, Moxiecode Systems AB
+		Copyright (c) <a target="_blank" href="https://www.tiny.cloud">Tiny Technologies</a>, Inc. All rights reserved.
 		<br />
 		Released under LGPL License.
 		<br />
