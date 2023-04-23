@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
-using Carrotware.CMS.Data;
 
 /*
 * CarrotCake CMS
@@ -42,7 +42,7 @@ namespace Carrotware.CMS.Core {
 		public string FullName_FirstLast {
 			get {
 				if (!string.IsNullOrEmpty(this.LastName)) {
-					return String.Format("{0} {1}", this.FirstName, this.LastName);
+					return string.Format("{0} {1}", this.FirstName, this.LastName);
 				} else {
 					if (!string.IsNullOrEmpty(this.UserName)) {
 						return this.UserName;
@@ -56,7 +56,7 @@ namespace Carrotware.CMS.Core {
 		public string FullName_LastFirst {
 			get {
 				if (!string.IsNullOrEmpty(this.LastName)) {
-					return String.Format("{0}, {1}", this.LastName, this.FirstName);
+					return string.Format("{0}, {1}", this.LastName, this.FirstName);
 				} else {
 					if (!string.IsNullOrEmpty(this.UserName)) {
 						return this.UserName;
@@ -70,16 +70,24 @@ namespace Carrotware.CMS.Core {
 		public ExtendedUserData() { }
 
 		public ExtendedUserData(string UserName) {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				vw_carrot_UserData rc = CompiledQueries.cqFindUserByName(_db, UserName);
-				LoadUserData(rc);
+			try {
+				using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+					vw_carrot_UserData rc = CompiledQueries.cqFindUserByName(_db, UserName);
+					LoadUserData(rc);
+				}
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("extendeduserdata - user", ex);
 			}
 		}
 
 		public ExtendedUserData(Guid UserID) {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				vw_carrot_UserData rc = CompiledQueries.cqFindUserByID(_db, UserID);
-				LoadUserData(rc);
+			try {
+				using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+					vw_carrot_UserData rc = CompiledQueries.cqFindUserByID(_db, UserID);
+					LoadUserData(rc);
+				}
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("extendeduserdata - guid", ex);
 			}
 		}
 

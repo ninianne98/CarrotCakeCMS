@@ -312,6 +312,11 @@
 				Are you sure you want to remove this widget?
 			</p>
 		</div>
+		<div id="CMSaddconfirm" title="Add Widget?" class="cms-seagreen">
+			<p id="CMSaddconfirmmsg">
+				Would you like to add "<b class="cms-widget-name">W</b>" to placeholder "<b class="cms-widget-target">T</b>"?
+			</p>
+		</div>
 		<div id="CMSsavedconfirm" title="Page Saved!" class="cms-seagreen">
 			<p id="CMSsavedconfirmmsg">
 				The page has been saved. Click OK to return to browse mode. Redirecting in <span id="cmsSaveCountdown">10</span> seconds...

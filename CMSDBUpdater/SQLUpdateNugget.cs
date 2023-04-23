@@ -68,7 +68,7 @@ namespace Carrotware.CMS.DBUpdater {
 									RowCount = int.Parse(d.Field<string>("rowcount"))
 								}).OrderBy(x => x.Priority).ToList();
 
-					_nuggets.RemoveAll(x => !x.SQLQuery.ToLower().Contains("select"));
+					_nuggets.RemoveAll(x => !x.SQLQuery.ToLowerInvariant().Contains("select"));
 				}
 
 				return _nuggets;
@@ -92,7 +92,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static List<SQLUpdateNugget> GetNuggets(string KeyName) {
 			List<SQLUpdateNugget> nugs = (from s in SQLNuggets
-										  where s.AssociatedWith.ToLower().Contains("|" + KeyName.ToLower() + "|")
+										  where s.AssociatedWith.ToLowerInvariant().Contains("|" + KeyName.ToLowerInvariant() + "|")
 										  orderby s.Priority descending
 										  select s).ToList();
 

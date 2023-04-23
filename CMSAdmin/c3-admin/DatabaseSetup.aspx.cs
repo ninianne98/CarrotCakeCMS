@@ -22,13 +22,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private bool bOK = false;
 
 		protected void Page_Load(object sender, EventArgs e) {
-			DatabaseUpdate du = new DatabaseUpdate(true);
-
-			if (!String.IsNullOrEmpty(Request.QueryString["signout"])) {
+			if (!string.IsNullOrEmpty(Request.QueryString["signout"])) {
 				SecurityData.ResetAuth();
+				Response.Redirect(SiteFilename.DatabaseSetupURL);
 			}
 
-			List<DatabaseUpdateMessage> lst = new List<DatabaseUpdateMessage>();
+			DatabaseUpdate du = new DatabaseUpdate(true);
+
+			var lst = new List<DatabaseUpdateMessage>();
 
 			btnLogin.Visible = false;
 			btnCreate.Visible = false;
@@ -68,7 +69,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				du.HandleResponse(lst, DatabaseUpdate.LastSQLError);
 			}
 
-			if (lst.Where(x => !String.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {
+			if (lst.Where(x => !string.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {
 				bOK = false;
 			} else {
 				bOK = true;

@@ -42,7 +42,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (!(SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
-				throw new Exception("Not Authorizeed!");
+				throw new Exception("Not Authorized!");
 			}
 		}
 

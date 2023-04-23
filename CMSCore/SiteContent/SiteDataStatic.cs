@@ -1,14 +1,14 @@
 ﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Web.Caching;
 using System.Web;
+using System.Web.Caching;
 using System.Xml;
-using System;
 
 /*
 * CarrotCake CMS
@@ -34,8 +34,8 @@ namespace Carrotware.CMS.Core {
 			get {
 				string pattern = "{0} - {1}";
 				SiteData s = CurrentSite;
-				if (!String.IsNullOrEmpty(s.SiteTitlebarPattern)) {
-					StringBuilder sb = new StringBuilder(s.SiteTitlebarPattern);
+				if (!string.IsNullOrEmpty(s.SiteTitlebarPattern)) {
+					var sb = new StringBuilder(s.SiteTitlebarPattern);
 					sb.Replace("[[CARROT_SITENAME]]", "{0}");
 					sb.Replace("[[CARROT_SITE_NAME]]", "{0}");
 					sb.Replace("[[CARROT_SITE_SLOGAN]]", "{1}");
@@ -47,13 +47,13 @@ namespace Carrotware.CMS.Core {
 
 					// [[CARROT_SITE_NAME]]: [[CARROT_PAGE_TITLEBAR]] ([[CARROT_PAGE_DATE_GOLIVE:MMMM d, yyyy]])
 					var p5 = ParsePlaceholder(s.SiteTitlebarPattern, "[[CARROT_PAGE_DATE_GOLIVE:*]]", 5);
-					if (!String.IsNullOrEmpty(p5.Key)) {
+					if (!string.IsNullOrEmpty(p5.Key)) {
 						sb.Replace(p5.Key, p5.Value);
 					}
 
 					// [[CARROT_SITE_NAME]]: [[CARROT_PAGE_TITLEBAR]] ([[CARROT_PAGE_DATE_EDIT:MMMM d, yyyy]])
 					var p6 = ParsePlaceholder(s.SiteTitlebarPattern, "[[CARROT_PAGE_DATE_EDIT:*]]", 6);
-					if (!String.IsNullOrEmpty(p6.Key)) {
+					if (!string.IsNullOrEmpty(p6.Key)) {
 						sb.Replace(p6.Key, p6.Value);
 					}
 
@@ -70,7 +70,7 @@ namespace Carrotware.CMS.Core {
 			if (placeHolder.Contains(":")) {
 				string fragTest = placeHolder.Substring(0, placeHolder.IndexOf(":") + 1);
 
-				string formatPattern = String.Format("{{{0}}}", posNum);
+				string formatPattern = string.Format("{{{0}}}", posNum);
 
 				if (titleString.Contains(fragTest)) {
 					int idx1 = titleString.IndexOf(fragTest);
@@ -85,7 +85,7 @@ namespace Carrotware.CMS.Core {
 						}
 						placeHolder = placeHolder.Replace("*", format);
 
-						formatPattern = String.Format("{{{0}:{1}}}", posNum, format);
+						formatPattern = string.Format("{{{0}:{1}}}", posNum, format);
 						pair = new KeyValuePair<string, string>(placeHolder, formatPattern);
 					}
 				}
@@ -136,7 +136,7 @@ namespace Carrotware.CMS.Core {
 				return false;
 			}
 
-			return String.Format("{0}", filePath).Length < 4 || (filePath.ToLowerInvariant() == DefaultDirectoryFilename.ToLowerInvariant());
+			return string.Format("{0}", filePath).Length < 4 || (filePath.ToLowerInvariant() == DefaultDirectoryFilename.ToLowerInvariant());
 		}
 
 		private static string SiteKeyPrefix = "cms_SiteData_";
@@ -355,7 +355,7 @@ namespace Carrotware.CMS.Core {
 					_siteQS = string.Empty;
 					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 					if (config.ExtraOptions != null
-						&& !String.IsNullOrEmpty(config.ExtraOptions.OldSiteQuerystring)) {
+						&& !string.IsNullOrEmpty(config.ExtraOptions.OldSiteQuerystring)) {
 						_siteQS = config.ExtraOptions.OldSiteQuerystring.ToLowerInvariant();
 					}
 				}
@@ -391,45 +391,45 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static void ManuallyWriteDefaultFile(HttpContext context, Exception objErr) {
-
-			string sBody = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Default.htm");
+			var sb = new StringBuilder();
+			sb.Append(SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Default.htm"));
 
 			try {
 				if (CurretSiteExists) {
-					sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
+					sb.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
 				}
 			} catch { }
-			sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
+			sb.Replace("{TIME_STAMP}", DateTime.Now.ToString());
 
 			if (objErr != null) {
-				sBody = sBody.Replace("{LONG_NAME}", FormatToHTML(" [" + objErr.GetType().ToString() + "] " + objErr.Message));
+				sb.Replace("{LONG_NAME}", FormatToHTML(" [" + objErr.GetType().ToString() + "] " + objErr.Message));
 
 				if (objErr.StackTrace != null) {
-					sBody = sBody.Replace("{STACK_TRACE}", FormatToHTML(objErr.StackTrace));
+					sb.Replace("{STACK_TRACE}", FormatToHTML(objErr.StackTrace));
 				}
 				if (objErr.InnerException != null) {
-					sBody = sBody.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
+					sb.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
 				}
 			}
 
-			sBody = sBody.Replace("{STACK_TRACE}", "");
-			sBody = sBody.Replace("{CONTENT_DETAIL}", "");
+			sb.Replace("{STACK_TRACE}", "");
+			sb.Replace("{CONTENT_DETAIL}", "");
 
-			sBody = sBody.Replace("{SITE_ROOT_PATH}", SiteData.AdminFolderPath);
+			sb.Replace("{SITE_ROOT_PATH}", SiteData.AdminFolderPath);
 
 			context.Response.ContentType = "text/html";
 			context.Response.Clear();
 			context.Response.BufferOutput = true;
 
-			context.Response.Write(sBody);
+			context.Response.Write(sb.ToString());
 			context.Response.Flush();
 			context.Response.End();
 		}
 
 		private static string FormatToHTML(string inputString) {
 			string outputString = string.Empty;
-			if (!String.IsNullOrEmpty(inputString)) {
-				StringBuilder sb = new StringBuilder(inputString);
+			if (!string.IsNullOrEmpty(inputString)) {
+				var sb = new StringBuilder(inputString);
 				sb.Replace("\r\n", " <br \\> \r\n");
 				sb.Replace("   ", "&nbsp;&nbsp;&nbsp;");
 				sb.Replace("  ", "&nbsp;&nbsp;");
@@ -510,9 +510,9 @@ namespace Carrotware.CMS.Core {
 			context.Response.Write(FormatErrorOutput(ex));
 		}
 
-		private static object logLocker = new Object();
+		private static object logLocker = new object();
 
-		public static void WriteDebugException(string sSrc, Exception objErr) {
+		public static void WriteDebugException(string debugSource, Exception objErr) {
 			bool bWriteError = false;
 
 			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
@@ -525,10 +525,9 @@ namespace Carrotware.CMS.Core {
 #endif
 
 			if (bWriteError && objErr != null) {
-				StringBuilder sb = new StringBuilder();
+				var sb = new StringBuilder();
 
-				sb.AppendLine("----------------  " + sSrc.ToUpperInvariant() + " - " + DateTime.Now.ToString() + "  ----------------");
-
+				sb.AppendLine("----------------  " + debugSource.ToUpperInvariant() + " - " + DateTime.Now.ToString() + "  ----------------");
 				sb.AppendLine("[" + objErr.GetType().ToString() + "] " + objErr.Message);
 
 				if (objErr.StackTrace != null) {
@@ -597,12 +596,12 @@ namespace Carrotware.CMS.Core {
 					}
 					string sQS = "";
 					if (context.Request.QueryString != null) {
-						if (!String.IsNullOrEmpty(context.Request.QueryString.ToString())) {
+						if (!string.IsNullOrEmpty(context.Request.QueryString.ToString())) {
 							sQS = HttpUtility.UrlEncode("?" + context.Request.QueryString.ToString());
 						}
 					}
 
-					if (!String.IsNullOrEmpty(redirectPage) && !sQS.ToLowerInvariant().Contains("aspxerrorpath")) {
+					if (!string.IsNullOrEmpty(redirectPage) && !sQS.ToLowerInvariant().Contains("aspxerrorpath")) {
 						context.Response.Redirect(redirectPage + "?aspxerrorpath=" + sReqURL + sQS);
 					}
 				}
@@ -616,11 +615,11 @@ namespace Carrotware.CMS.Core {
 				if (section.Mode != CustomErrorsMode.Off) {
 					CustomError configuredError = section.Errors[sErrorKey];
 					if (configuredError != null) {
-						if (!String.IsNullOrEmpty(configuredError.Redirect)) {
+						if (!string.IsNullOrEmpty(configuredError.Redirect)) {
 							context.Response.Redirect(configuredError.Redirect + "?aspxerrorpath=" + sReqURL);
 						}
 					} else {
-						if (!String.IsNullOrEmpty(section.DefaultRedirect)) {
+						if (!string.IsNullOrEmpty(section.DefaultRedirect)) {
 							context.Response.Redirect(section.DefaultRedirect + "?aspxerrorpath=" + sReqURL);
 						}
 					}
@@ -630,7 +629,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static bool IsFilenameCurrentPage(string sCurrentFile) {
-			if (String.IsNullOrEmpty(sCurrentFile)) {
+			if (string.IsNullOrEmpty(sCurrentFile)) {
 				return false;
 			}
 
@@ -782,7 +781,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string AppendDefaultPath(string sRequestedURL) {
-			if (!String.IsNullOrEmpty(sRequestedURL)) {
+			if (!string.IsNullOrEmpty(sRequestedURL)) {
 				sRequestedURL = sRequestedURL.Replace(@"\", @"/");
 				if (sRequestedURL.EndsWith("/") || !sRequestedURL.ToLowerInvariant().EndsWith(".aspx")) {
 					sRequestedURL = (sRequestedURL + DefaultDirectoryFilename).Replace("//", "/");
@@ -805,13 +804,13 @@ namespace Carrotware.CMS.Core {
 				if (_adminFolderPath == null) {
 					string _defPath = "/c3-admin/";
 					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
-					if (config.MainConfig != null && !String.IsNullOrEmpty(config.MainConfig.AdminFolderPath)) {
+					if (config.MainConfig != null && !string.IsNullOrEmpty(config.MainConfig.AdminFolderPath)) {
 						_adminFolderPath = config.MainConfig.AdminFolderPath;
-						_adminFolderPath = String.Format("/{0}/", _adminFolderPath).Replace(@"\", "/").Replace("///", "/").Replace("//", "/").Replace("//", "/");
+						_adminFolderPath = string.Format("/{0}/", _adminFolderPath).Replace(@"\", "/").Replace("///", "/").Replace("//", "/").Replace("//", "/");
 					} else {
 						_adminFolderPath = _defPath;
 					}
-					if (String.IsNullOrEmpty(_adminFolderPath) || _adminFolderPath.Length < 2) {
+					if (string.IsNullOrEmpty(_adminFolderPath) || _adminFolderPath.Length < 2) {
 						_adminFolderPath = _defPath;
 					}
 				}
@@ -874,7 +873,7 @@ namespace Carrotware.CMS.Core {
 			get {
 				string r = SiteData.CurrentScriptName;
 				try { r = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
-				if (String.IsNullOrEmpty(r))
+				if (string.IsNullOrEmpty(r))
 					r = DefaultDirectoryFilename;
 				return r;
 			}

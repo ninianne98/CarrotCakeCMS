@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucSitePageDrillDown.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucSitePageDrillDown" %>
 <script type="text/javascript">
-
 	var thisPageID = '<%=RootContentID.ToString() %>';
 
 	var webSvc = cmsGetServiceAddress();
@@ -10,6 +9,7 @@
 	var menuOuter = 'menuitemsouter';
 	var menuInner = 'menuitemsinner';
 	var menuPath = 'menupath';
+	var menuHead = 'menuhead';
 	var menuValue = '<%=txtParent.ClientID %>';
 
 	var bMoused = false;
@@ -44,7 +44,6 @@
 		$('#' + menuOuter).bind("mouseleave", function (e) {
 			hideMnu();
 		});
-
 		//alert("AjaxLoadDrillMenu");
 	}
 
@@ -111,6 +110,18 @@
 				cmsMakeOKToLeave();
 				setTimeout("cmsMakeNotOKToLeave();", 500);
 			});
+		});
+
+		$("#" + menuHead).on("onmouseout", function () {
+			hideMnu();
+		});
+
+		$("#" + menuHead).on("onmouseover", function () {
+			mouseNode();
+		});
+
+		$("#menuhead, .pageNodeDrillDown6").on("dblclick", function () {
+			mouseNode();
 		});
 	}
 

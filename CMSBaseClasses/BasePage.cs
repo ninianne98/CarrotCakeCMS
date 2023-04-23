@@ -68,8 +68,8 @@ namespace Carrotware.CMS.UI.Base {
 				if (Request.Form["__EVENTARGUMENT"] != null) {
 					string arg = Request["__EVENTARGUMENT"].ToString();
 					string tgt = Request["__EVENTTARGET"].ToString();
-					if (!String.IsNullOrEmpty(arg) && !String.IsNullOrEmpty(tgt)) {
-						if (tgt.ToLower() == "pagerefresh" && arg.ToLower() == "javascript") {
+					if (!string.IsNullOrEmpty(arg) && !string.IsNullOrEmpty(tgt)) {
+						if (tgt.ToLowerInvariant() == "pagerefresh" && arg.ToLowerInvariant() == "javascript") {
 							return true;
 						}
 					}

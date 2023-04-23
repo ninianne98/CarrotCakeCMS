@@ -1,10 +1,10 @@
+using Carrotware.CMS.DBUpdater;
 using System;
 using System.Web;
 using System.Web.Compilation;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
-using Carrotware.CMS.DBUpdater;
 
 /*
 * CarrotCake CMS
@@ -28,8 +28,8 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private string sVirtualReqFile = String.Empty;
-		private string sRequestedURL = String.Empty;
+		private string sVirtualReqFile = string.Empty;
+		private string sRequestedURL = string.Empty;
 		private bool bAlreadyDone = false;
 		private bool bURLOverride = false;
 
@@ -82,10 +82,10 @@ namespace Carrotware.CMS.Core {
 				if (sFileRequested.ToLowerInvariant().EndsWith(".aspx") || SiteData.IsLikelyHomePage(sFileRequested)) {
 					bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
-					string queryString = String.Empty;
+					string queryString = string.Empty;
 					queryString = context.Request.QueryString.ToString();
 					if (string.IsNullOrEmpty(queryString)) {
-						queryString = String.Empty;
+						queryString = string.Empty;
 					}
 
 					if (!CMSConfigHelper.CheckRequestedFileExistence(sFileRequested, SiteData.CurrentSiteID) || SiteData.IsLikelyHomePage(sFileRequested)) {
@@ -95,7 +95,7 @@ namespace Carrotware.CMS.Core {
 						// handle a case where this site was migrated from a format where all pages varied on a consistent querystring
 						// allow this QS parm to be set in a config file.
 						if (SiteData.IsLikelyHomePage(sFileRequested)) {
-							string sParm = String.Empty;
+							string sParm = string.Empty;
 							if (SiteData.OldSiteQuerystring != string.Empty) {
 								if (context.Request.QueryString[SiteData.OldSiteQuerystring] != null) {
 									sParm = context.Request.QueryString[SiteData.OldSiteQuerystring].ToString();
@@ -108,7 +108,7 @@ namespace Carrotware.CMS.Core {
 
 								context.Response.Redirect(sFileRequested);
 								context.Items[REQ_PATH] = sFileRequested;
-								context.Items[REQ_QUERY] = String.Empty;
+								context.Items[REQ_QUERY] = string.Empty;
 							}
 						}
 

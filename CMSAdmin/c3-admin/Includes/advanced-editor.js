@@ -1043,6 +1043,84 @@ function cmsStyleButtons() {
 	cmsDoStyleButtons('.cms-seagreen input[type="submit"]');
 	cmsDoStyleButtons('.cms-seagreen button');
 	cmsDoStyleButtons('.ui-dialog-buttonpane button');
+
+	$(".cmsWidgetControlItem").on("dblclick", function () {
+		cmsDblClickWidget(this);
+	});
+
+	$(".cmsWidgetControlTitle").on("dblclick", function () {
+		cmsDblClickWidgetTarget(this);
+	});
+}
+
+var cmsLastWidget = '';
+var cmsLastWidgetName = '';
+var cmsLastWidgetTarget = '';
+
+function cmsDblClickWidget(item) {
+	cmsLastWidget = $(item).find('#cmsCtrlID').val();
+	cmsLastWidgetName = $.trim($(item).find('.cmsToolItem').text());
+
+	$('#CMSaddconfirmmsg .cms-widget-name').text(cmsLastWidgetName);
+
+	//console.log("cmsDblClickWidget:  " + cmsLastWidgetName);
+	cmsClickAddWidget();
+}
+
+function cmsDblClickWidgetTarget(item) {
+	cmsLastWidgetTarget = $.trim($(item).find('#cmsWidgetContainerName').text());
+
+	$('#CMSaddconfirmmsg .cms-widget-target').text(cmsLastWidgetTarget);
+
+	//console.log("cmsDblClickWidgetTarget:  " + cmsLastWidgetTarget);
+	cmsClickAddWidget();
+}
+
+function cmsCreateNewWidget() {
+	var widget = '<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper cms-seagreen"> \r\n ' +
+					'<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath cms-seagreen" id="cmsControl"> \r\n ' +
+					'<p class="cmsToolItem ui-widget-header cms-seagreen"> ' + cmsLastWidgetName + ' </p> \r\n ' +
+					'<input type="hidden" id="cmsCtrlID" value="' + cmsLastWidget + '" /> \r\n ' +
+					'<input type="hidden" id="cmsCtrlOrder" value="-1" /> \r\n ' +
+					'</div> \r\n ' +
+				 '</div>';
+
+	var zone = $('#cms_' + cmsLastWidgetTarget);
+
+	zone.prepend(widget);
+
+	setTimeout("cmsBuildOrderAndUpdateWidgets();", 500);
+
+	// reset once "dropped"
+	cmsLastWidget = '';
+	cmsLastWidgetTarget = '';
+}
+
+function cmsClickAddWidget() {
+	if (cmsLastWidget.length > 1
+			&& cmsLastWidgetTarget.length > 1) {
+		$("#CMSaddconfirm").dialog({
+			open: function () {
+				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+			},
+
+			resizable: false,
+			height: 250,
+			width: 400,
+			modal: true,
+			buttons: {
+				"No": function () {
+					$(this).dialog("close");
+				},
+				"Yes": function () {
+					cmsCreateNewWidget();
+					$(this).dialog("close");
+				}
+			}
+		});
+
+		cmsFixDialog('CMSaddconfirmmsg');
+	}
 }
 
 function cmsDoStyleButtons(fltPrefix) {

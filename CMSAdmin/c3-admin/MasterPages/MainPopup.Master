@@ -30,14 +30,9 @@
 		<script src="/c3-admin/includes/base64.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/jquery.simplemodal.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/jquery.blockUI.js<%=AntiCache%>" type="text/javascript"></script>
-		<% if (SecurityData.IsAuthenticated) { %>
+		<% if (SecurityData.IsAuthUser) { %>
 		<script src="/c3-admin/includes/common-utils.js<%=AntiCache%>" type="text/javascript"></script>
-		<% } %>
-		<%--<link href="/c3-admin/glossyseagreen/jquery-ui-metro.css" rel="stylesheet" type="text/css" />--%>
-		<%--<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen.css" rel="stylesheet" type="text/css" />--%>
-		<% if (SecurityData.IsAuthenticated) { %>
 		<script type="text/javascript">
-
 			function UpdateAjaxJQuery() {
 				if (typeof (Sys) != 'undefined') {
 					var prm = Sys.WebForms.PageRequestManager.getInstance();
@@ -52,13 +47,10 @@
 				AjaxBtnLoad();
 			});
 		</script>
-		<% } %>
-		<% if (SecurityData.IsAuthenticated) { %>
 		<!-- TinyMCE -->
 		<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js<%=AntiCache%>"></script>
 		<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js<%=AntiCache%>"></script>
 		<script type="text/javascript">
-
 			var pnl = '#<%=divSaved.ClientID %>';
 			var fld = '#<%=hdnShow.ClientID %>';
 			var frmid = "#aspnetForm";
