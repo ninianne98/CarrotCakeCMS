@@ -1,0 +1,168 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<script runat="server">
+	protected string headId = "header-wrapper-sub";
+	protected string headImg = "images/img03b.jpg";
+	protected int headH = 200;
+
+	protected string bannerId = "banner-sub";
+
+	protected override void OnInit(EventArgs e) {
+		base.OnInit(e);
+
+		if (ThePage.TemplateFile.ToLowerInvariant().Contains("home")) {
+			headId = "header-wrapper";
+			headImg = "images/img03.jpg";
+			headH = 320;
+			bannerId = "banner";
+		}
+
+		imgHead.Src = ThePage.TemplateFolderPath + headImg;
+		imgHead.Height = headH;
+	}
+</script>
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : WaterDrops
+
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20120902
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="Purple" />
+	<title>WaterDrops by FCT</title>
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css" />
+	<asp:PlaceHolder ID="myPageHead" runat="server">
+		<link href="<%=ThePage.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+				buttonStyleWater()
+			});
+
+			$(document).ajaxComplete(function (event, xhr, settings) {
+				buttonStyleWater()
+			});
+
+			function buttonStyleWater() {
+				$("input:button, input:submit, input:reset, button").button();
+
+				$("#search input").removeClass("ui-button ui-widget ui-state-default ui-state-hover");
+			}
+		</script>
+	</asp:PlaceHolder>
+	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
+	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
+</head>
+<body>
+	<form id="form1" runat="server">
+		<asp:PlaceHolder ID="PlaceHolderHead" runat="server">
+			<div id="<%=headId %>">
+				<div id="header-med" class="container">
+					<div id="logo-full">
+						<h1>
+							<a href="/">
+								<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a>
+						</h1>
+						<p>
+							<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
+						</p>
+					</div>
+					<div id="navmenu-wrapper">
+						<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" FontSize="16px" CSSSelected="current_page_item" CSSHasChildren="sub" WrapList="false"
+							ForeColor="#ffffff" BackColor="#513256" UnSelFGColor="#CE92A6" HoverFGColor="#ffffff" HoverBGColor="#CE92A6" />
+					</div>
+				</div>
+				<div id="<%=bannerId %>" class="container">
+					<div class="image-style">
+						<img runat="server" id="imgHead" src="images/img03b.jpg" width="970" height="200" alt="" />
+					</div>
+				</div>
+			</div>
+		</asp:PlaceHolder>
+		<div id="wrapper">
+			<div id="page" class="container">
+				<div id="content">
+					<div class="post">
+						<asp:ContentPlaceHolder ID="PageMainContentPlaceHolder" runat="server">
+						</asp:ContentPlaceHolder>
+					</div>
+					<div style="clear: both;">
+						&nbsp;
+					</div>
+				</div>
+				<!-- end #content -->
+				<div id="sidebar">
+					<div id="box1">
+						<h3>Search Here:</h3>
+						<div id="search">
+							<carrot:SearchBox ID="SearchBox1" runat="server">
+								<SearchTemplate>
+									<div class="searchzone">
+										<div id="searchinner">
+											<asp:TextBox ID="SearchText" runat="server" CssClass="search-text" MaxLength="40" />
+											<asp:Button ID="btnSiteSearch" runat="server" CssClass="search-submit" Text="Search" />
+										</div>
+									</div>
+								</SearchTemplate>
+							</carrot:SearchBox>
+						</div>
+						<div style="clear: both;">
+						</div>
+					</div>
+					<div>
+						<carrot:WidgetContainer ID="phRightTop" runat="server">
+						</carrot:WidgetContainer>
+						<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server">
+						</carrot:ContentContainer>
+						<carrot:WidgetContainer ID="phRightBottom" runat="server">
+						</carrot:WidgetContainer>
+					</div>
+					<asp:ContentPlaceHolder ID="PageSideContentPlaceHolder" runat="server">
+					</asp:ContentPlaceHolder>
+					<div>
+						<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" CssClass="list-style1" ContentType="DateMonth" MetaDataTitle="Archive" TakeTop="6" />
+					</div>
+				</div>
+				<!-- end #sidebar -->
+				<div style="clear: both;">
+					&nbsp;
+				</div>
+			</div>
+			<!-- end #page -->
+		</div>
+		<div id="footer-content" class="container">
+			<div id="footer-bg">
+				<asp:ContentPlaceHolder ID="PageFootContentPlaceHolder" runat="server">
+				</asp:ContentPlaceHolder>
+			</div>
+		</div>
+		<asp:PlaceHolder ID="myFooter" runat="server">
+			<div id="footer">
+				<p>
+					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
+					| Design by <a href="http://www.freecsstemplates.org">FCT</a>
+					| Photos by <a href="http://fotogrph.com/">Fotogrph</a>
+					| Site built with <a target="_blank" href="http://www.carrotware.com/">carrotcake cms</a>
+				</p>
+			</div>
+		</asp:PlaceHolder>
+		<!-- end #footer -->
+		<asp:Panel ID="pnlHiddenControls" Visible="false" runat="server">
+			<carrot:WidgetContainer ID="phLeftTop" runat="server">
+			</carrot:WidgetContainer>
+			<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
+			<carrot:WidgetContainer ID="phLeftBottom" runat="server">
+			</carrot:WidgetContainer>
+		</asp:Panel>
+	</form>
+</body>
+</html>

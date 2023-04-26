@@ -347,17 +347,6 @@ function cmsPreviewTemplate() {
 	cmsLaunchWindowOnly(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
 
 	var editFrame = $('#cmsModalFrame');
-	var editIFrame = $('#cmsFrameEditor');
-
-	var frmHgt = 440;
-	var hgt = ($(window).height() * 0.75) - 95;
-
-	if (hgt > frmHgt) {
-		frmHgt = hgt;
-	}
-
-	$(editIFrame).attr('width', '100%');
-	$(editIFrame).attr('height', frmHgt);
 
 	var templateList = '';
 
@@ -380,7 +369,7 @@ function cmsPreviewTemplate() {
 					+ ' <div class="cmsPreview-Right">' + ddlPreview + btnClose + btnApply + '</div> </div>'
 					+ ' </div>');
 
-	window.setTimeout("cmsPreviewStyling();", 300);
+	window.setTimeout("cmsPreviewStyling();", 250);
 
 	$(cmsTemplateListPreviewer).val(tmplReal);
 
@@ -408,7 +397,28 @@ function cmsPreviewStyling() {
 	$('#cmsPreviewTab').addClass('ui-corner-all');
 	$('#cmsPreviewTab li').addClass('ui-widget ui-state-default ui-corner-all');
 
+	window.setTimeout("cmsSetPreviewSize()", 500);
+	window.setTimeout("cmsSetPreviewSize()", 750);
+	window.setTimeout("cmsSetPreviewSize()", 1500);
+
 	window.setTimeout("$('#cmsPreviewTab').tabs('option', 'active', 0);", 250);
+}
+
+function cmsSetPreviewSize() {
+	var modSel = '#cms-simplemodal-container';
+	var frameSel = '#cmsModalFrame';
+
+	var modH = $(modSel).css('height');
+	var modW = $(modSel).css('width');
+
+	var frmH = parseFloat(modH) - 85;
+	var frmW = parseFloat(modW) - 30;
+
+	$(frameSel).css('height', frmH);
+	$(frameSel).attr('height', frmH);
+
+	$(frameSel).css('width', frmW);
+	$(frameSel).attr('width', frmW);
 }
 
 function cmsLateBtnStyle() {
@@ -1212,7 +1222,7 @@ function cmsLoadWindow() {
 		onClose: function (dialog) {
 			//$.modal.close(); // must call this!
 			setTimeout("$.modal.close();", 800);
-			$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+			cmsResetIframe();
 			cmsDirtyPageRefresh();
 		}
 	});
@@ -1260,7 +1270,7 @@ function cmsLoadWindowOnly() {
 		onClose: function (dialog) {
 			//$.modal.close(); // must call this!
 			setTimeout("$.modal.close();", 800);
-			$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+			cmsResetIframe();
 		}
 	});
 
@@ -1272,7 +1282,17 @@ function cmsLoadWindowOnly() {
 function cmsCloseModalWin() {
 	cmsSaveToolbarPosition();
 	setTimeout("$.modal.close();", 250);
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv"></div>');
+	cmsResetIframe();
+}
+
+function cmsResetIframe() {
+	var frameSel = '#cmsModalFrame';
+
+	$(frameSel).css('width', '98%');
+	$(frameSel).attr('width', '98%');
+	$(frameSel).css('height', '99%');
+	$(frameSel).attr('height', '99%');
+	$(frameSel).html('<div id="cmsAjaxMainDiv"></div>');
 }
 
 function cmsDirtyPageRefresh() {

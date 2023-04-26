@@ -1126,6 +1126,33 @@
     <Content Include="cmsTemplates\Aqueous\left-sidebar.aspx" />
     <Content Include="cmsTemplates\Aqueous\no-sidebar.aspx" />
     <Content Include="cmsTemplates\Aqueous\right-sidebar.aspx" />
+    <Content Include="cmsTemplates\Imagination\css\font\fontawesome-webfont.svg" />
+    <Content Include="cmsTemplates\Imagination\css\images\divider1-bg.png" />
+    <Content Include="cmsTemplates\Imagination\css\images\featured-wrapper-bg.jpg" />
+    <Content Include="cmsTemplates\Imagination\css\images\footer-content-wrapper-bg.jpg" />
+    <Content Include="cmsTemplates\Imagination\css\images\header-wrapper-bg.jpg" />
+    <Content Include="cmsTemplates\Imagination\css\images\link-style1-divider.png" />
+    <Content Include="cmsTemplates\Imagination\css\images\main-wrapper-bg.jpg" />
+    <Content Include="cmsTemplates\Imagination\css\images\mobileUI-site-nav-opener-bg.svg" />
+    <Content Include="cmsTemplates\Imagination\css\images\toggle.svg" />
+    <Content Include="cmsTemplates\Imagination\css\skel-noscript.css" />
+    <Content Include="cmsTemplates\Imagination\css\style-1000px.css" />
+    <Content Include="cmsTemplates\Imagination\css\style-desktop.css" />
+    <Content Include="cmsTemplates\Imagination\css\style-mobile.css" />
+    <Content Include="cmsTemplates\Imagination\css\style.css" />
+    <Content Include="cmsTemplates\Imagination\home.aspx" />
+    <Content Include="cmsTemplates\Imagination\images\banner.jpg" />
+    <Content Include="cmsTemplates\Imagination\images\placeholder.png" />
+    <Content Include="cmsTemplates\Imagination\js\html5shiv.js" />
+    <Content Include="cmsTemplates\Imagination\js\init.js" />
+    <Content Include="cmsTemplates\Imagination\js\jquery.dropotron.min.js" />
+    <Content Include="cmsTemplates\Imagination\js\skel-panels.min.js" />
+    <Content Include="cmsTemplates\Imagination\js\skel.min.js" />
+    <Content Include="cmsTemplates\Imagination\left-sidebar.aspx" />
+    <Content Include="cmsTemplates\Imagination\listing.aspx" />
+    <Content Include="cmsTemplates\Imagination\no-sidebar.aspx" />
+    <Content Include="cmsTemplates\Imagination\post.aspx" />
+    <Content Include="cmsTemplates\Imagination\right-sidebar.aspx" />
     <Content Include="cmsTemplates\waterdrops\images\img01.jpg" />
     <Content Include="cmsTemplates\waterdrops\images\img02.jpg" />
     <Content Include="cmsTemplates\waterdrops\images\img02b.jpg" />
@@ -1139,9 +1166,13 @@
     <Content Include="cmsTemplates\waterdrops\index.html" />
     <Content Include="cmsTemplates\waterdrops\license.txt" />
     <Content Include="cmsTemplates\waterdrops\style.css" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-blog-index-master.aspx" />
     <Content Include="cmsTemplates\waterdrops\waterdrops-blog-index.aspx" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-blog-master.aspx" />
     <Content Include="cmsTemplates\waterdrops\waterdrops-blog.aspx" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-home-master.aspx" />
     <Content Include="cmsTemplates\waterdrops\waterdrops-home.aspx" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops-page-master.aspx" />
     <Content Include="cmsTemplates\waterdrops\waterdrops-page.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="favicon.png" />
@@ -1404,6 +1435,13 @@
     <Content Include="cmsTemplates\Aqueous\Skin.config" />
     <Content Include="cmsTemplates\Aqueous\aqueous-orig.zip" />
     <Content Include="cmsTemplates\waterdrops\Skin.config" />
+    <Content Include="cmsTemplates\waterdrops\waterdrops.master" />
+    <Content Include="cmsTemplates\Imagination\css\font\fontawesome-webfont.eot" />
+    <Content Include="cmsTemplates\Imagination\css\font\fontawesome-webfont.ttf" />
+    <Content Include="cmsTemplates\Imagination\css\font\fontawesome-webfont.woff" />
+    <Content Include="cmsTemplates\Imagination\css\font\FontAwesome.otf" />
+    <Content Include="cmsTemplates\Imagination\imagination.master" />
+    <Content Include="cmsTemplates\Imagination\Skin.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
