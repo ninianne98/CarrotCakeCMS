@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.CMS.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,9 +9,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.CMS.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -38,15 +38,15 @@ namespace Carrotware.CMS.UI.Base {
 		protected ContentContainer contRight { get; set; }
 		protected ContentContainer contLeft { get; set; }
 
-		public ContentPage ThePage { get { return pageContents; } }
-		public SiteData TheSite { get { return theSite; } }
-		public List<Widget> ThePageWidgets { get { return pageWidgets; } }
+		public ContentPage ThePage { get { return _pageContents; } }
+		public SiteData TheSite { get { return _theSite; } }
+		public List<Widget> ThePageWidgets { get { return _pageWidgets; } }
 
 		protected ControlUtilities cu = new ControlUtilities();
 
-		protected ContentPage pageContents = null;
-		protected SiteData theSite = null;
-		protected List<Widget> pageWidgets = null;
+		protected ContentPage _pageContents = null;
+		protected SiteData _theSite = null;
+		protected List<Widget> _pageWidgets = null;
 
 		public Guid guidContentID = Guid.Empty;
 
@@ -74,7 +74,7 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		protected void InsertSpecialCtrl(Control control, ControlLocation CtrlKey) {
-			string sControlPath = String.Empty;
+			string sControlPath = string.Empty;
 			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 
 			switch (CtrlKey) {
@@ -87,7 +87,7 @@ namespace Carrotware.CMS.UI.Base {
 					break;
 			}
 
-			if (!String.IsNullOrEmpty(sControlPath)) {
+			if (!string.IsNullOrEmpty(sControlPath)) {
 				if (File.Exists(HttpContext.Current.Server.MapPath(sControlPath))) {
 					Control ctrl = new Control();
 					ctrl = CurrentWebPage.LoadControl(sControlPath);
@@ -109,15 +109,15 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		public void LoadData() {
-			theSite = SiteData.CurrentSite;
-			pageContents = null;
-			pageWidgets = new List<Widget>();
+			_theSite = SiteData.CurrentSite;
+			_pageContents = null;
+			_pageWidgets = new List<Widget>();
 
-			pageContents = SiteData.GetCurrentPage();
+			_pageContents = SiteData.GetCurrentPage();
 
-			if (pageContents != null) {
-				guidContentID = pageContents.Root_ContentID;
-				pageWidgets = SiteData.GetCurrentPageWidgets(guidContentID);
+			if (_pageContents != null) {
+				guidContentID = _pageContents.Root_ContentID;
+				_pageWidgets = SiteData.GetCurrentPageWidgets(guidContentID);
 			}
 		}
 
@@ -136,8 +136,8 @@ namespace Carrotware.CMS.UI.Base {
 				IsPageTemplate = true;
 			}
 
-			if (theSite != null && pageContents != null) {
-				if (theSite.BlockIndex || pageContents.BlockIndex) {
+			if (_theSite != null && _pageContents != null) {
+				if (_theSite.BlockIndex || _pageContents.BlockIndex) {
 					bool bCrawlExist = false;
 					HtmlMeta metaNoCrawl = new HtmlMeta();
 					metaNoCrawl.Name = "robots";
@@ -158,7 +158,7 @@ namespace Carrotware.CMS.UI.Base {
 
 			InsertSpecialCtrl(this.CurrentWebPage.Header, ControlLocation.Header);
 
-			if (pageContents != null) {
+			if (_pageContents != null) {
 				HtmlMeta metaDesc = new HtmlMeta();
 				HtmlMeta metaKey = new HtmlMeta();
 				bool bDescExist = false;
@@ -175,50 +175,50 @@ namespace Carrotware.CMS.UI.Base {
 
 				metaDesc.Name = "description";
 				metaKey.Name = "keywords";
-				metaDesc.Content = String.IsNullOrEmpty(pageContents.MetaDescription) ? theSite.MetaDescription : pageContents.MetaDescription;
-				metaKey.Content = String.IsNullOrEmpty(pageContents.MetaKeyword) ? theSite.MetaKeyword : pageContents.MetaKeyword;
+				metaDesc.Content = string.IsNullOrEmpty(_pageContents.MetaDescription) ? _theSite.MetaDescription : _pageContents.MetaDescription;
+				metaKey.Content = string.IsNullOrEmpty(_pageContents.MetaKeyword) ? _theSite.MetaKeyword : _pageContents.MetaKeyword;
 
 				int indexPos = 6;
 				if (this.CurrentWebPage.Header.Controls.Count > indexPos) {
-					if (!String.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
+					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, metaDesc);
 					}
-					if (!String.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
+					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, new Literal { Text = "\r\n" });
 						this.CurrentWebPage.Header.Controls.AddAt(indexPos, metaKey);
 					}
 				} else {
-					if (!String.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
+					if (!string.IsNullOrEmpty(metaDesc.Content) && !bDescExist) {
 						this.CurrentWebPage.Header.Controls.Add(metaDesc);
 						this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 					}
-					if (!String.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
+					if (!string.IsNullOrEmpty(metaKey.Content) && !bKeyExist) {
 						this.CurrentWebPage.Header.Controls.Add(metaKey);
 						this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 					}
 				}
 
-				metaDesc.Visible = !String.IsNullOrEmpty(metaDesc.Content);
-				metaKey.Visible = !String.IsNullOrEmpty(metaKey.Content);
+				metaDesc.Visible = !string.IsNullOrEmpty(metaDesc.Content);
+				metaKey.Visible = !string.IsNullOrEmpty(metaKey.Content);
 			}
 
 			contCenter = new ContentContainer();
 			contLeft = new ContentContainer();
 			contRight = new ContentContainer();
 
-			if (pageContents != null) {
+			if (_pageContents != null) {
 				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-					PageViewType pvt = pageHelper.GetBlogHeadingFromURL(theSite, SiteData.CurrentScriptName);
+					PageViewType pvt = pageHelper.GetBlogHeadingFromURL(_theSite, SiteData.CurrentScriptName);
 					string sTitleAddendum = pvt.ExtraTitle;
 
-					if (!String.IsNullOrEmpty(sTitleAddendum)) {
-						if (!String.IsNullOrEmpty(pageContents.PageHead)) {
-							pageContents.PageHead = pageContents.PageHead.Trim() + ": " + sTitleAddendum;
+					if (!string.IsNullOrEmpty(sTitleAddendum)) {
+						if (!string.IsNullOrEmpty(_pageContents.PageHead)) {
+							_pageContents.PageHead = _pageContents.PageHead.Trim() + ": " + sTitleAddendum;
 						} else {
-							pageContents.PageHead = sTitleAddendum;
+							_pageContents.PageHead = sTitleAddendum;
 						}
-						pageContents.TitleBar = pageContents.TitleBar.Trim() + ": " + sTitleAddendum;
+						_pageContents.TitleBar = _pageContents.TitleBar.Trim() + ": " + sTitleAddendum;
 					}
 
 					PagedDataSummary pd = (PagedDataSummary)cu.FindControl(typeof(PagedDataSummary), this.CurrentWebPage);
@@ -233,37 +233,37 @@ namespace Carrotware.CMS.UI.Base {
 							titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == PageViewType.ViewType.DateIndex).FirstOrDefault();
 						}
 
-						if (titleOpts != null && !String.IsNullOrEmpty(titleOpts.FormatText)) {
+						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.FormatText)) {
 							pvt.ExtraTitle = string.Format(titleOpts.FormatText, pvt.RawValue);
 							sTitleAddendum = pvt.ExtraTitle;
 						}
 
-						if (titleOpts != null && !String.IsNullOrEmpty(titleOpts.LabelText)) {
-							pageContents.PageHead = titleOpts.LabelText + " " + sTitleAddendum;
-							pageContents.NavMenuText = pageContents.PageHead;
-							pageContents.TitleBar = pageContents.PageHead;
+						if (titleOpts != null && !string.IsNullOrEmpty(titleOpts.LabelText)) {
+							_pageContents.PageHead = titleOpts.LabelText + " " + sTitleAddendum;
+							_pageContents.NavMenuText = _pageContents.PageHead;
+							_pageContents.TitleBar = _pageContents.PageHead;
 						}
 					}
 				}
 
-				this.CurrentWebPage.Title = SetPageTitle(pageContents);
+				this.CurrentWebPage.Title = SetPageTitle(_pageContents);
 
-				DateTime dtModified = theSite.ConvertSiteTimeToLocalServer(pageContents.EditDate);
+				DateTime dtModified = _theSite.ConvertSiteTimeToLocalServer(_pageContents.EditDate);
 				string strModifed = dtModified.ToString("r");
 				HttpContext.Current.Response.AppendHeader("Last-Modified", strModifed);
 				HttpContext.Current.Response.Cache.SetLastModified(dtModified);
 
 				DateTime dtExpire = DateTime.Now.AddSeconds(15);
 
-				contCenter.Text = pageContents.PageText;
-				contLeft.Text = pageContents.LeftPageText;
-				contRight.Text = pageContents.RightPageText;
+				contCenter.Text = _pageContents.PageText;
+				contLeft.Text = _pageContents.LeftPageText;
+				contRight.Text = _pageContents.RightPageText;
 
-				contCenter.DatabaseKey = pageContents.Root_ContentID;
-				contLeft.DatabaseKey = pageContents.Root_ContentID;
-				contRight.DatabaseKey = pageContents.Root_ContentID;
+				contCenter.DatabaseKey = _pageContents.Root_ContentID;
+				contLeft.DatabaseKey = _pageContents.Root_ContentID;
+				contRight.DatabaseKey = _pageContents.Root_ContentID;
 
-				pageContents = CMSConfigHelper.IdentifyLinkAsInactive(pageContents);
+				_pageContents = CMSConfigHelper.FixNavLinkText(_pageContents);
 
 				if (SecurityData.IsAuthenticated) {
 					HttpContext.Current.Response.Cache.SetNoServerCaching();
@@ -291,9 +291,9 @@ namespace Carrotware.CMS.UI.Base {
 						contLeft.TextZone = ContentContainer.TextFieldZone.TextLeft;
 						contRight.TextZone = ContentContainer.TextFieldZone.TextRight;
 
-						contCenter.Text = pageContents.PageText;
-						contLeft.Text = pageContents.LeftPageText;
-						contRight.Text = pageContents.RightPageText;
+						contCenter.Text = _pageContents.PageText;
+						contLeft.Text = _pageContents.LeftPageText;
+						contRight.Text = _pageContents.RightPageText;
 
 						Control editor = this.CurrentWebPage.LoadControl(SiteFilename.AdvancedEditControlPath);
 						this.CurrentWebPage.Form.Controls.Add(editor);
@@ -306,27 +306,27 @@ namespace Carrotware.CMS.UI.Base {
 
 				InsertSpecialCtrl(this.CurrentWebPage.Form, ControlLocation.Footer);
 
-				if (pageWidgets.Any()) {
+				if (_pageWidgets.Any()) {
 					CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 					//find each placeholder in use ONCE!
-					List<LabeledControl> lstPlaceholders = (from ph in pageWidgets
-															where ph.Root_ContentID == pageContents.Root_ContentID
+					List<LabeledControl> lstPlaceholders = (from ph in _pageWidgets
+															where ph.Root_ContentID == _pageContents.Root_ContentID
 															select new LabeledControl(ph.PlaceholderName, FindTheControl(ph.PlaceholderName, this.CurrentWebPage))).Distinct().ToList();
 
 					List<Widget> lstWidget = null;
 
 					if (SecurityData.AdvancedEditMode) {
-						lstWidget = (from w in pageWidgets
+						lstWidget = (from w in _pageWidgets
 									 orderby w.WidgetOrder, w.EditDate
-									 where w.Root_ContentID == pageContents.Root_ContentID
-										 //&& w.IsWidgetActive == true
+									 where w.Root_ContentID == _pageContents.Root_ContentID
+									   //&& w.IsWidgetActive == true
 									   && w.IsWidgetPendingDelete == false
 									 select w).ToList();
 					} else {
-						lstWidget = (from w in pageWidgets
+						lstWidget = (from w in _pageWidgets
 									 orderby w.WidgetOrder, w.EditDate
-									 where w.Root_ContentID == pageContents.Root_ContentID
+									 where w.Root_ContentID == _pageContents.Root_ContentID
 									   && w.IsWidgetActive == true
 									   && w.IsRetired == false && w.IsUnReleased == false
 									   && w.IsWidgetPendingDelete == false
@@ -341,17 +341,19 @@ namespace Carrotware.CMS.UI.Base {
 							plcHolder.EnableViewState = true;
 							Control widget = new Control();
 
-							if (theWidget.ControlPath.EndsWith(".ascx")) {
+							if (theWidget.ControlPath.ToLowerInvariant().EndsWith(".ascx")) {
 								if (File.Exists(this.CurrentWebPage.Server.MapPath(theWidget.ControlPath))) {
 									try {
 										widget = this.CurrentWebPage.LoadControl(theWidget.ControlPath);
 									} catch (Exception ex) {
-										Literal lit = new Literal();
+										SiteData.WriteDebugException("renderwidget-ascx", ex);
+										var lit = new Literal();
 										lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
 										widget = lit;
 									}
 								} else {
-									Literal lit = new Literal();
+									SiteData.WriteDebugException("renderwidget-ascx", new Exception("MISSING FILE: " + theWidget.ControlPath));
+									var lit = new Literal();
 									lit.Text = "MISSING FILE: " + theWidget.ControlPath + "<br />\r\n";
 									widget = lit;
 								}
@@ -361,17 +363,19 @@ namespace Carrotware.CMS.UI.Base {
 								try {
 									string className = theWidget.ControlPath.Replace("CLASS:", "");
 									Type t = Type.GetType(className);
-									Object o = Activator.CreateInstance(t);
+									object o = Activator.CreateInstance(t);
 
 									if (o != null) {
 										widget = o as Control;
 									} else {
-										Literal lit = new Literal();
+										SiteData.WriteDebugException("renderwidget-class", new Exception("OOPS: " + theWidget.ControlPath));
+										var lit = new Literal();
 										lit.Text = "OOPS: " + theWidget.ControlPath + "<br />\r\n";
 										widget = lit;
 									}
 								} catch (Exception ex) {
-									Literal lit = new Literal();
+									SiteData.WriteDebugException("renderwidget-class", ex);
+									var lit = new Literal();
 									lit.Text = "<b>ERROR: " + theWidget.ControlPath + "</b> <br />\r\n" + ex.ToString();
 									widget = lit;
 								}
@@ -429,8 +433,8 @@ namespace Carrotware.CMS.UI.Base {
 									if (w.EnableEdit) {
 										if (lstMenus.Count < 1) {
 											string sScript = w.JSEditFunction;
-											if (String.IsNullOrEmpty(sScript)) {
-												sScript = "cmsGenericEdit('" + pageContents.Root_ContentID + "','" + plcWrapper.DatabaseKey + "')";
+											if (string.IsNullOrEmpty(sScript)) {
+												sScript = "cmsGenericEdit('" + _pageContents.Root_ContentID + "','" + plcWrapper.DatabaseKey + "')";
 											}
 
 											plcWrapper.JSEditFunction = sScript;
@@ -453,20 +457,20 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		public string SetPageTitle(ContentPage pageData) {
-			string sPrefix = String.Empty;
+			string sPrefix = string.Empty;
 
 			if (!pageData.PageActive) {
 				sPrefix = "* UNPUBLISHED * ";
 			}
-			if (pageData.RetireDate < theSite.Now) {
+			if (pageData.RetireDate < _theSite.Now) {
 				sPrefix = "* RETIRED * ";
 			}
-			if (pageData.GoLiveDate > theSite.Now) {
+			if (pageData.GoLiveDate > _theSite.Now) {
 				sPrefix = "* UNRELEASED * ";
 			}
 			string sPattern = sPrefix + SiteData.CurrentTitlePattern;
 
-			string sPageTitle = string.Format(sPattern, theSite.SiteName, theSite.SiteTagline, pageData.TitleBar, pageData.PageHead, pageData.NavMenuText, pageData.GoLiveDate, pageData.EditDate);
+			string sPageTitle = string.Format(sPattern, _theSite.SiteName, _theSite.SiteTagline, pageData.TitleBar, pageData.PageHead, pageData.NavMenuText, pageData.GoLiveDate, pageData.EditDate);
 
 			return sPageTitle;
 		}
@@ -484,11 +488,11 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		public void AssignControls() {
-			if (pageContents != null) {
+			if (_pageContents != null) {
 				cu.ResetFind();
 				Control ctrlHead = cu.FindControl("litPageHeading", this.CurrentWebPage);
 				if (ctrlHead != null && ctrlHead is ITextControl) {
-					((ITextControl)ctrlHead).Text = pageContents.PageHead;
+					((ITextControl)ctrlHead).Text = _pageContents.PageHead;
 				}
 
 				cu.ResetFind();

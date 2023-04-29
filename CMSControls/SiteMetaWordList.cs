@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -25,8 +26,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public SiteMetaWordList()
 			: base() {
 			this.ItemCount = -1;
-			this.MetaDataTitle = String.Empty;
-			this.CSSItem = String.Empty;
+			this.MetaDataTitle = string.Empty;
+			this.CSSItem = string.Empty;
 			this.ShowUseCount = false;
 			this.TakeTop = 10;
 			this.ContentType = MetaDataType.Category;
@@ -53,7 +54,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
 				TagType c = TagType.H2;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (TagType)Enum.Parse(typeof(TagType), s, true);
 				}
 				return c;
@@ -162,7 +163,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["ContentType"];
 				MetaDataType c = MetaDataType.Category;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (MetaDataType)Enum.Parse(typeof(MetaDataType), s, true);
 				}
 				return c;
@@ -251,21 +252,18 @@ namespace Carrotware.CMS.UI.Controls {
 			output.Indent = indent + 3;
 			output.WriteLine();
 
-			if (lstNav != null && lstNav.Any() && !String.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + this.HeadWrapTag.ToString().ToLowerInvariant() + " class=\"meta-caption\">" + this.MetaDataTitle + "</" + this.HeadWrapTag.ToString().ToLowerInvariant() + ">\r\n");
+			var outerItem = new HtmlTag("ul");
+			outerItem.MergeAttribute("id", this.ClientID);
+			outerItem.MergeAttribute("class", this.CssClass);
+
+			if (lstNav != null && lstNav.Any() && !string.IsNullOrEmpty(this.MetaDataTitle)) {
+				var head = new HtmlTag(this.HeadWrapTag.ToString());
+				head.MergeAttribute("class", "meta-caption");
+				head.InnerHtml = HttpUtility.HtmlEncode(this.MetaDataTitle);
+				output.WriteLine(head.RenderTag());
 			}
 
-			string sCSS = String.Empty;
-			if (!String.IsNullOrEmpty(this.CssClass)) {
-				sCSS = " class=\"" + this.CssClass + "\" ";
-			}
-
-			string sItemCSS = String.Empty;
-			if (!String.IsNullOrEmpty(this.CSSItem)) {
-				sItemCSS = String.Format(" {0} ", this.CSSItem);
-			}
-
-			output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\"> ");
+			output.WriteLine(outerItem.OpenTag());
 			output.Indent++;
 
 			int contentCount = 0;
@@ -278,17 +276,19 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			foreach (IContentMetaInfo c in lstNav) {
-				string sText = c.MetaInfoText;
-				string sCount = "0";
+				var childItem = new HtmlTag("li");
+				var childLink = new HtmlTag("a");
 
+				int metaCount = 0;
 				if (SecurityData.IsAuthEditor) {
-					sCount = c.MetaInfoCount.ToString();
+					metaCount = c.MetaInfoCount;
 				} else {
-					sCount = c.MetaPublicInfoCount.ToString();
+					metaCount = c.MetaPublicInfoCount;
 				}
-				if (this.ShowUseCount) {
-					sText = String.Format("{0}  ({1})", c.MetaInfoText, sCount);
-				}
+
+				childLink.Uri = c.MetaInfoURL;
+				childLink.InnerHtml = HttpUtility.HtmlEncode(c.MetaInfoText) + (this.ShowUseCount ? string.Format("  ({0})", metaCount) : "");
+				childItem.InnerHtml = childLink.RenderTag();
 
 				double percUsed = Math.Ceiling(100 * (float)c.MetaInfoCount / (((float)contentCount + 0.000001)));
 				percUsed = Math.Round(percUsed / 5) * 5;
@@ -302,15 +302,20 @@ namespace Carrotware.CMS.UI.Controls {
 					percUsed = 100;
 				}
 
+				childItem.MergeAttribute("class", this.CSSItem);
+				childItem.MergeAttribute("class", string.Format("meta-item meta-perc-used-{0} meta-used-{1}", percUsed, metaCount));
+
+				output.WriteLine(childItem.RenderTag());
+
 				if (SiteData.IsFilenameCurrentPage(c.MetaInfoURL)) {
-					output.WriteLine("<li class=\"meta-item meta-perc-used-" + percUsed.ToString() + " meta-used-" + sCount + sItemCSS + " selected\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
-				} else {
-					output.WriteLine("<li class=\"meta-item meta-perc-used-" + percUsed.ToString() + " meta-used-" + sCount + sItemCSS + "\"><a href=\"" + c.MetaInfoURL + "\">" + sText + "</a></li> ");
+					childItem.MergeAttribute("class", "selected");
 				}
+
+				output.WriteLine(childItem.RenderTag());
 			}
 
 			output.Indent--;
-			output.WriteLine("</ul> ");
+			output.WriteLine(outerItem.CloseTag());
 
 			output.Indent = indent;
 		}
@@ -320,9 +325,9 @@ namespace Carrotware.CMS.UI.Controls {
 				if (this.PublicParmValues.Any()) {
 					this.TakeTop = int.Parse(GetParmValue("TakeTop", "10"));
 
-					this.CssClass = GetParmValue("CssClass", String.Empty);
+					this.CssClass = GetParmValue("CssClass", string.Empty);
 
-					this.MetaDataTitle = GetParmValue("MetaDataTitle", String.Empty);
+					this.MetaDataTitle = GetParmValue("MetaDataTitle", string.Empty);
 
 					this.ShowUseCount = Convert.ToBoolean(GetParmValue("ShowUseCount", "false"));
 

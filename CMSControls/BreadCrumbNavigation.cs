@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -89,9 +90,9 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-			SiteNav pageNav = GetCurrentPage();
-			string sParent = pageNav.FileName.ToLowerInvariant();
-			List<SiteNav> lstNav = new List<SiteNav>();
+			var lstNav = new List<SiteNav>();
+			var pageNav = GetCurrentPage();
+			string currentPageFile = pageNav.FileName.ToLowerInvariant();
 
 			if (SiteData.CurretSiteExists && SiteData.CurrentSite.Blog_Root_ContentID.HasValue &&
 				pageNav.ContentType == ContentPageType.PageType.BlogEntry) {
@@ -104,48 +105,61 @@ namespace Carrotware.CMS.UI.Controls {
 			} else {
 				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
 			}
-			lstNav.RemoveAll(x => x.ShowInSiteNav == false && x.ContentType == ContentPageType.PageType.ContentEntry);
-			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
 
-			string sCSS = String.Empty;
-			if (!String.IsNullOrEmpty(CssClass)) {
-				sCSS = " class=\"" + CssClass + "\" ";
-			}
-			string sSelCSS = (CSSSelected + " " + CSSWrapper).Trim();
+			lstNav = CMSConfigHelper.TweakData(lstNav, false, true);
 
-			string sWrapCSS = String.Empty;
-			if (!String.IsNullOrEmpty(CSSWrapper)) {
-				sWrapCSS = " class=\"" + CSSWrapper + "\" ";
-			}
+			var outerTag = new HtmlTag("ul");
+			outerTag.MergeAttribute("id", this.ClientID);
+			outerTag.MergeAttribute("class", this.CssClass);
 
-			if (DisplayAsList) {
-				output.WriteLine("<ul" + sCSS + " id=\"" + this.ClientID + "\">");
+			if (this.DisplayAsList) {
+				outerTag = new HtmlTag("ul");
+
+				output.WriteLine(outerTag.OpenTag());
+
 				foreach (SiteNav c in lstNav) {
-					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
-						output.WriteLine("<li class=\"" + sSelCSS + "\">" + c.NavMenuText + "</li> ");
+					var item = new HtmlTag("li");
+					var link = new HtmlTag("a");
+
+					item.MergeAttribute("class", this.CSSWrapper);
+					link.Uri = c.FileName;
+					link.InnerHtml = c.NavMenuText;
+
+					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, currentPageFile)) {
+						item.MergeAttribute("class", this.CSSSelected);
+						item.InnerHtml = c.NavMenuText;
 					} else {
-						output.WriteLine("<li" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
+						item.InnerHtml = link.RenderTag();
 					}
+
+					output.WriteLine(item.RenderTag());
 				}
-				output.WriteLine("</ul>");
+
+				output.WriteLine(outerTag.CloseTag());
 			} else {
-				string sDivider = " " + TextDivider + " ";
-				int iCtr = 1;
-				int iMax = lstNav.Count;
-				output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\">");
-				foreach (SiteNav c in lstNav) {
-					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
-						output.WriteLine("<span class=\"" + sSelCSS + "\">" + c.NavMenuText + " " + sDivider + "</span> ");
-					} else {
-						output.WriteLine("<span" + sWrapCSS + "><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a> " + sDivider + "</span> ");
-					}
-					iCtr++;
+				outerTag = new HtmlTag("div");
 
-					if (iCtr == iMax) {
-						sDivider = String.Empty;
+				output.WriteLine(outerTag.OpenTag());
+
+				foreach (SiteNav c in lstNav) {
+					var item = new HtmlTag("span");
+					var link = new HtmlTag("a");
+
+					item.MergeAttribute("class", this.CSSWrapper);
+					link.Uri = c.FileName;
+					link.InnerHtml = c.NavMenuText;
+
+					if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, currentPageFile)) {
+						item.MergeAttribute("class", this.CSSSelected);
+						item.InnerHtml = c.NavMenuText;
+					} else {
+						item.InnerHtml = link.RenderTag() + string.Format(" {0} ", this.TextDivider);
 					}
+
+					output.WriteLine(item.RenderTag());
 				}
-				output.WriteLine("</div>");
+
+				output.WriteLine(outerTag.CloseTag());
 			}
 		}
 	}

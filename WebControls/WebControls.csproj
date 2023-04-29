@@ -86,6 +86,7 @@
     <Compile Include="Email\EMailSettings.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="FileData.cs" />
+    <Compile Include="HtmlTag.cs" />
     <Compile Include="ReflectionUtilities.cs" />
     <Compile Include="SimpleStyle.cs" />
     <Compile Include="CarrotGridView\CarrotGridView.cs" />

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -26,11 +26,11 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
-				Calendar1.CalendarDate = SiteData.CurrentSite.Now.Date;
+				SiteData site = SiteData.CurrentSite;
+
+				Calendar1.CalendarDate = site.Now.Date;
 
 				SetCalendar();
-
-				SiteData site = SiteData.CurrentSite;
 
 				List<int> lstYears = new List<int>();
 				lstYears = Enumerable.Range(DateTime.Now.Year - 10, 20).ToList();
@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		public string GetDateNameString(DateTime eventDate, string dateFormat) {
 			if (lastDate != eventDate) {
 				lastDate = eventDate;
-				return String.Format(dateFormat, lastDate);
+				return string.Format(dateFormat, lastDate);
 			} else {
 				return "";
 			}

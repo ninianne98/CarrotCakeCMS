@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.UI;
 using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
+using System.Web;
 
 /*
 * CarrotCake CMS
@@ -23,7 +24,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public BaseNavHeaded()
 			: base() {
 			this.ItemCount = -1;
-			this.MetaDataTitle = String.Empty;
+			this.MetaDataTitle = string.Empty;
 			this.HeadWrapTag = TagType.H2;
 		}
 
@@ -48,7 +49,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["HeadWrapTag"];
 				TagType c = TagType.H2;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (TagType)Enum.Parse(typeof(TagType), s, true);
 				}
 				return c;
@@ -75,10 +76,11 @@ namespace Carrotware.CMS.UI.Controls {
 				this.ItemCount = this.NavigationData.Count;
 			}
 
-			string headTag = this.HeadWrapTag.ToString().ToLowerInvariant();
-
-			if (this.NavigationData != null && this.NavigationData.Count > 0 && !String.IsNullOrEmpty(this.MetaDataTitle)) {
-				output.WriteLine("<" + headTag + ">" + this.MetaDataTitle + "</" + headTag + ">\r\n");
+			if (this.ItemCount > 0 && !string.IsNullOrEmpty(this.MetaDataTitle)) {
+				var head = new HtmlTag(this.HeadWrapTag.ToString());
+				head.MergeAttribute("class", "meta-caption");
+				head.InnerHtml = HttpUtility.HtmlEncode(this.MetaDataTitle);
+				output.WriteLine(head.RenderTag());
 			}
 
 			base.WriteListPrefix(output);
@@ -99,12 +101,12 @@ namespace Carrotware.CMS.UI.Controls {
 				string sTmp = "";
 				try {
 					sTmp = GetParmValue("MetaDataTitle", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.MetaDataTitle = sTmp;
 					}
 
 					sTmp = GetParmValue("HeadWrapTag", TagType.H2.ToString());
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.HeadWrapTag = (TagType)Enum.Parse(typeof(TagType), sTmp, true);
 					}
 				} catch (Exception ex) {

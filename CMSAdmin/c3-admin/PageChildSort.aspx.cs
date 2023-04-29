@@ -60,7 +60,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-			lstNav.ToList().ForEach(q => CMSConfigHelper.IdentifyLinkAsInactive(q));
+			lstNav = CMSConfigHelper.TweakData(lstNav);
 
 			GeneralUtilities.BindRepeater(rpPages, lstNav);
 

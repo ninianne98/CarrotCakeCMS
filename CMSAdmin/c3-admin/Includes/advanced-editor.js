@@ -1218,16 +1218,16 @@ function cmsLaunchWindow(theURL) {
 function cmsLoadWindow() {
 	cmsSaveToolbarPosition();
 
-	$("#cms-basic-modal-content").modal({
+	$("#cms-basic-modal-content").simplemodal({
 		onClose: function (dialog) {
-			//$.modal.close(); // must call this!
-			setTimeout("$.modal.close();", 800);
+			//$.simplemodal.close(); // must call this!
+			setTimeout("$.simplemodal.close();", 800);
 			cmsResetIframe();
 			cmsDirtyPageRefresh();
 		}
 	});
 
-	$('#cms-basic-modal-content').modal();
+	$('#cms-basic-modal-content').simplemodal();
 	cmsStyleButtons();
 	return false;
 }
@@ -1266,22 +1266,22 @@ function cmsLaunchWindowOnly(theURL) {
 function cmsLoadWindowOnly() {
 	cmsSaveToolbarPosition();
 
-	$("#cms-basic-modal-content").modal({
+	$("#cms-basic-modal-content").simplemodal({
 		onClose: function (dialog) {
-			//$.modal.close(); // must call this!
-			setTimeout("$.modal.close();", 800);
+			//$.simplemodal.close(); // must call this!
+			setTimeout("$.simplemodal.close();", 800);
 			cmsResetIframe();
 		}
 	});
 
-	$('#cms-basic-modal-content').modal();
+	$('#cms-basic-modal-content').simplemodal();
 	cmsStyleButtons();
 	return false;
 }
 
 function cmsCloseModalWin() {
 	cmsSaveToolbarPosition();
-	setTimeout("$.modal.close();", 250);
+	setTimeout("$.simplemodal.close();", 250);
 	cmsResetIframe();
 }
 

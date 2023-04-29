@@ -241,6 +241,8 @@
 												</asp:DropDownList>
 											</p>
 											<p class="cmsCenter5px">
+											</p>
+											<p class="cmsCenter5px">
 												<input runat="server" id="btnTemplate" type="button" value="Apply" onclick="cmsUpdateTemplate();" />
 												&nbsp;&nbsp;&nbsp;
 												<input runat="server" id="btnPreview" type="button" value="Preview" onclick="cmsPreviewTemplate();" />

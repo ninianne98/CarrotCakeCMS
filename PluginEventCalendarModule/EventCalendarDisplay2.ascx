@@ -29,8 +29,7 @@
 						</div>
 						<div style="text-align: left;">
 							<div style="border: solid 1px <%# Eval("CategoryBGColor") %>; background-color: <%# Eval("CategoryFGColor") %>; padding: 1px;">
-								<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>;
-									padding: 5px; margin: 1px; min-width: 250px; text-align: left;">
+								<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>; padding: 5px; margin: 1px; min-width: 250px; text-align: left;">
 									<b>
 										<asp:Literal ID="litEvent" runat="server" Text='<%# String.Format( "{0} ", Eval("EventTitle") ) %>' />
 										<asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible='<%# !(bool)Eval("IsAllDayEvent")%>'>
@@ -71,8 +70,7 @@
 				<asp:Repeater ID="rpCat" runat="server">
 					<ItemTemplate>
 						<div style="border: solid 1px <%# Eval("CategoryBGColor") %>; background-color: <%# Eval("CategoryFGColor") %>; padding: 1px;">
-							<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>;
-								padding: 5px; margin: 1px;">
+							<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>; padding: 5px; margin: 1px;">
 								<%# Eval("CategoryName")%>
 							</div>
 						</div>

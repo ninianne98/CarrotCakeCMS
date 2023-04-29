@@ -2,9 +2,16 @@
 var tinyBrowseWidth = 500;
 var tinyBrowseResize = false;
 
-function TinyMCEParamInit(winWidth, winHeight, allowResize) {
+function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 	tinyBrowseHeight = parseInt(winHeight);
 	tinyBrowseWidth = parseInt(winWidth);
+	if (tinyBrowseWidth < 300) {
+		tinyBrowseWidth = 300;
+	}
+	if (tinyBrowseHeight < 150) {
+		tinyBrowseHeight = 150;
+	}
+
 	tinyBrowseResize = allowResize;
 
 	tinyMCE.init({

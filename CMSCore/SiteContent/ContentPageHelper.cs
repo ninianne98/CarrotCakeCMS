@@ -24,7 +24,6 @@ namespace Carrotware.CMS.Core {
 
 	public class ContentPageHelper : IDisposable {
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
-		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 		public ContentPageHelper() {
 		}
@@ -796,7 +795,7 @@ namespace Carrotware.CMS.Core {
 			pageNew.SiteID = SiteData.CurrentSiteID;
 			pageNew.Parent_ContentID = null;
 
-			pageNew.PageText = "<h2>Content CENTER</h2>\r\n" + sFile1;
+			pageNew.PageText = "<h2>Content CENTER</h2>\r\n" + SiteData.StarterHomePageSample + "\r\n" + sFile1;
 			pageNew.LeftPageText = "<h2>Content LEFT</h2>\r\n" + sFile2;
 			pageNew.RightPageText = "<h2>Content RIGHT</h2>\r\n" + sFile2;
 
@@ -871,18 +870,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void RemoveVersions(Guid siteID, List<Guid> lstDel) {
-			//List<carrot_Content> lstContent = (from ct in db.carrot_Contents
-			//                                   join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
-			//                                   orderby ct.EditDate descending
-			//                                   where r.SiteID == siteID
-			//                                    && lstDel.Contains(ct.ContentID)
-			//                                    && ct.IsLatestVersion != true
-			//                                   select ct).ToList();
-
-			//if (lstContent.Any()) {
-			//    db.carrot_Contents.DeleteAllOnSubmit(lstContent);
-			//    db.SubmitChanges();
-			//}
 
 			IQueryable<carrot_Content> queryCont = (from ct in db.carrot_Contents
 													join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
@@ -1070,8 +1057,6 @@ namespace Carrotware.CMS.Core {
 
 		public List<ContentPage> FindPageByTitleAndDate(Guid siteID, string sTitle, string sFileNameFrag, DateTime dateCreate) {
 			SiteData site = SiteData.GetSiteFromCache(siteID);
-
-			//DateTime dateUTC = site.ConvertSiteTimeToUTC(dateCreate);
 
 			List<ContentPage> lstContent = (from ct in CannedQueries.FindPageByTitleAndDate(db, siteID, sTitle, sFileNameFrag, dateCreate).ToList()
 											select new ContentPage(ct)).ToList();

@@ -49,5 +49,27 @@ namespace Carrotware.CMS.UI.Base {
 
 			pph.AssignControls();
 		}
+
+		public bool IsSiteIndex {
+			get {
+				return this.TheSite != null && this.ThePage != null
+						&& this.TheSite.Blog_Root_ContentID.HasValue
+						&& this.ThePage.Root_ContentID == this.TheSite.Blog_Root_ContentID.Value;
+			}
+		}
+
+		public bool IsBlogPost {
+			get {
+				return this.ThePage != null
+						&& this.ThePage.ContentType == ContentPageType.PageType.BlogEntry;
+			}
+		}
+
+		public bool IsPageContent {
+			get {
+				return this.ThePage != null
+						&& this.ThePage.ContentType == ContentPageType.PageType.ContentEntry;
+			}
+		}
 	}
 }

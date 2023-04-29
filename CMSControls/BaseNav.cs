@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -33,11 +34,21 @@ namespace Carrotware.CMS.UI.Controls {
 				output.Indent++;
 
 				foreach (SiteNav c in lstNav) {
-					if (c.NavOrder >= 0) {
-						output.WriteLine("<li class=\"child-nav\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
+					var childItem = new HtmlTag("li");
+					var childLink = new HtmlTag("a");
+
+					childLink.Uri = c.FileName;
+					childLink.InnerHtml = c.NavMenuText;
+
+					childItem.InnerHtml = childLink.RenderTag();
+
+					if (c.Parent_ContentID.HasValue) {
+						childItem.MergeAttribute("class", "child-nav");
 					} else {
-						output.WriteLine("<li class=\"parent-nav\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
+						childItem.MergeAttribute("class", "parent-nav");
 					}
+
+					output.WriteLine(childItem.RenderTag());
 				}
 				output.Indent--;
 			} else {

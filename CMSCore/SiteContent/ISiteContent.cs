@@ -24,6 +24,7 @@ namespace Carrotware.CMS.Core {
 		string PageTextPlainSummary { get; }
 		Guid? Parent_ContentID { get; set; }
 		Guid Root_ContentID { get; set; }
+		bool MadeSafe { get; set; }
 		Guid SiteID { get; set; }
 		bool ShowInSiteNav { get; set; }
 		string TemplateFile { get; set; }

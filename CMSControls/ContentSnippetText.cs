@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -28,7 +28,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string Text {
 			get {
 				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 
 			set {
@@ -88,7 +88,7 @@ namespace Carrotware.CMS.UI.Controls {
 													orderby c.ContentSnippetName
 													where c.SiteID == SiteID
 													select c).ToList().ToDictionary(k => k.Root_ContentSnippetID.ToString(),
-													v => String.Format("{0} - {1} ({2})", v.ContentSnippetSlug, v.ContentSnippetName, (v.ContentSnippetActive ? "active" : "inactive")));
+													v => string.Format("{0} - {1} ({2})", v.ContentSnippetSlug, v.ContentSnippetName, (v.ContentSnippetActive ? "active" : "inactive")));
 				return _dict;
 			}
 		}
@@ -124,7 +124,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 
 				string sBodyNote = string.Empty;
-				string sIdent = String.Empty;
+				string sIdent = string.Empty;
 
 				if (cs != null) {
 					if (bIsEditor && (cs.IsRetired || cs.IsUnReleased || !cs.ContentSnippetActive)) {
@@ -150,7 +150,7 @@ namespace Carrotware.CMS.UI.Controls {
 						sIdent = "<div class=\"cmsSnippetOuter\"> <div class=\"cmsSnippetInner\">\r\n" + cs.ContentSnippetSlug + ": " + cs.ContentSnippetName + "\r\n<br style=\"clear: both;\" /></div></div>";
 					}
 
-					sBody = String.Format("{0}\r\n{1}\r\n{2}", sIdent, cs.ContentBody, sBodyNote);
+					sBody = string.Format("{0}\r\n{1}\r\n{2}", sIdent, cs.ContentBody, sBodyNote);
 				}
 			} catch {
 				if (!SiteData.IsWebView) {

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Web;
 using System.Web.UI;
+using System.Xml.Linq;
 
 /*
 * CarrotCake CMS
@@ -31,6 +32,78 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private static Page _CachedPage;
+
+		public static string HtmlFormat(StringBuilder input) {
+			if (input != null) {
+				return HtmlFormat(input.ToString());
+			}
+
+			return string.Empty;
+		}
+
+		public static string HtmlFormat(string input) {
+			if (!string.IsNullOrEmpty(input)) {
+				bool autoAddTypes = false;
+				var subs = new Dictionary<string, int>();
+				subs.Add("ndash", 150);
+				subs.Add("mdash", 151);
+				subs.Add("nbsp", 153);
+				subs.Add("trade", 153);
+				subs.Add("copy", 169);
+				subs.Add("reg", 174);
+				subs.Add("laquo", 171);
+				subs.Add("raquo", 187);
+				subs.Add("lsquo", 145);
+				subs.Add("rsquo", 146);
+				subs.Add("ldquo", 147);
+				subs.Add("rdquo", 148);
+				subs.Add("bull", 149);
+				subs.Add("amp", 38);
+				subs.Add("quot", 34);
+
+				var subs2 = new Dictionary<string, int>();
+				subs2.Add("ndash", 150);
+				subs2.Add("mdash", 151);
+				subs2.Add("nbsp", 153);
+				subs2.Add("trade", 153);
+				subs2.Add("copy", 169);
+				subs2.Add("reg", 174);
+				subs2.Add("laquo", 171);
+				subs2.Add("raquo", 187);
+				subs2.Add("bull", 149);
+
+				string docType = string.Empty;
+
+				if (!input.ToLowerInvariant().StartsWith("<!doctype")) {
+					autoAddTypes = true;
+
+					docType = "<!DOCTYPE html [ ";
+					foreach (var s in subs) {
+						docType += string.Format(" <!ENTITY {0} \"&#{1};\"> ", s.Key, s.Value);
+					}
+					docType += " ]>".Replace("  ", " ");
+
+					input = docType + Environment.NewLine + input;
+				}
+
+				var doc = XDocument.Parse(input);
+
+				if (autoAddTypes) {
+					var sb = new StringBuilder();
+					sb.Append(doc.ToString().Replace(docType, string.Empty));
+
+					foreach (var s in subs2) {
+						sb.Replace(Convert.ToChar(s.Value).ToString(), string.Format("&{0};", s.Key));
+					}
+
+					return sb.ToString();
+				}
+
+				return doc.ToString();
+			}
+
+			return string.Empty;
+		}
 
 		public static string DateKey() {
 			return DateKey(15);

@@ -159,6 +159,9 @@ Released   : 20120902
 						<div style="clear: both;">
 						</div>
 					</div>
+					<div id="calendar_wrap">
+						<carrot:PostCalendar runat="server" ID="calendar" CssClass="calendar" RenderHTMLWithID="true" />
+					</div>
 					<div>
 						<carrot:WidgetContainer ID="phRightTop" runat="server">
 						</carrot:WidgetContainer>

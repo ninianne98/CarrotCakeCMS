@@ -1,10 +1,10 @@
 ﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Web.UI;
 using System.Web;
-using System;
+using System.Web.UI;
 
 /*
 * CarrotCake CMS
@@ -82,6 +82,7 @@ namespace Carrotware.CMS.Core {
 			navData.ContentType = ContentPageType.PageType.ContentEntry;
 			return navData;
 		}
+
 
 		internal static List<SiteNav> GetSamplerFakeNav() {
 			return GetSamplerFakeNav(4, null);

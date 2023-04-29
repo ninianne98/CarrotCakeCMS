@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -120,6 +120,29 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		public bool RenderHTMLWithID {
+			get {
+				String s = (String)ViewState["RenderHTMLWithID"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["RenderHTMLWithID"] = value.ToString();
+			}
+		}
+
+		public string HtmlClientID {
+			get {
+				if (this.RenderHTMLWithID) {
+					return this.ID;
+				} else {
+					return this.ClientID;
+				}
+			}
+		}
+
 		private DateTime _date = DateTime.MinValue;
 
 		private DateTime ThisMonth {
@@ -159,42 +182,42 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			string sCSS = "";
-			if (!String.IsNullOrEmpty(CssClass)) {
+			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
 			string sCSSClassTable = "";
-			if (!String.IsNullOrEmpty(CSSClassTable)) {
+			if (!string.IsNullOrEmpty(CSSClassTable)) {
 				sCSSClassTable = " class=\"" + CSSClassTable + "\" ";
 			}
 			string sCSSClassCaption = "";
-			if (!String.IsNullOrEmpty(CSSClassCaption)) {
+			if (!string.IsNullOrEmpty(CSSClassCaption)) {
 				sCSSClassCaption = " class=\"" + CSSClassCaption + "\" ";
 			}
 			string sCSSClassDayHead = "";
-			if (!String.IsNullOrEmpty(CSSClassDayHead)) {
+			if (!string.IsNullOrEmpty(CSSClassDayHead)) {
 				sCSSClassDayHead = " class=\"" + CSSClassDayHead + "\" ";
 			}
 			string sCSSClassTableBody = "";
-			if (!String.IsNullOrEmpty(CSSClassTableBody)) {
+			if (!string.IsNullOrEmpty(CSSClassTableBody)) {
 				sCSSClassTableBody = " class=\"" + CSSClassTableBody + "\" ";
 			}
 			string sCSSClassDateLink = "";
-			if (!String.IsNullOrEmpty(CSSClassDateLink)) {
+			if (!string.IsNullOrEmpty(CSSClassDateLink)) {
 				sCSSClassDateLink = " class=\"" + CSSClassDateLink + "\" ";
 			}
 			string sCSSClassTableFoot = "";
-			if (!String.IsNullOrEmpty(CSSClassTableFoot)) {
+			if (!string.IsNullOrEmpty(CSSClassTableFoot)) {
 				sCSSClassTableFoot = " class=\"" + CSSClassTableFoot + "\" ";
 			}
 
 			ContentDateTally lastMonth = new ContentDateTally { GoLiveDate = ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
 			ContentDateTally nextMonth = new ContentDateTally { GoLiveDate = ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
 
-			output.WriteLine("<div" + sCSS + " id=\"" + this.ClientID + "\"> ");
+			output.WriteLine("<div" + sCSS + " id=\"" + this.HtmlClientID + "\"> ");
 			output.Indent++;
 
-			if (!String.IsNullOrEmpty(CalendarHead)) {
+			if (!string.IsNullOrEmpty(CalendarHead)) {
 				output.WriteLine("<h2 class=\"calendar-caption\">" + CalendarHead + "  </h2> ");
 			}
 
@@ -212,9 +235,9 @@ namespace Carrotware.CMS.UI.Controls {
 			int WeekNumber = 1;
 
 			output.WriteLine("	<table " + sCSSClassTable + "> ");
-			output.WriteLine("		<caption id=\"" + this.ClientID + "-caption\"  " + sCSSClassCaption + "> " + ThisMonth.Date.ToString("MMMM yyyy") + " </caption>");
+			output.WriteLine("		<caption id=\"" + this.HtmlClientID + "-caption\"  " + sCSSClassCaption + "> " + ThisMonth.Date.ToString("MMMM yyyy") + " </caption>");
 
-			output.WriteLine("	<thead id=\"" + this.ClientID + "-head\" " + sCSSClassDayHead + ">");
+			output.WriteLine("	<thead id=\"" + this.HtmlClientID + "-head\" " + sCSSClassDayHead + ">");
 			output.WriteLine("		<tr>");
 			output.WriteLine("			<th scope=\"col\">SU</th>");
 			output.WriteLine("			<th scope=\"col\">M</th>");
@@ -226,11 +249,11 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("		</tr>");
 			output.WriteLine("	</thead>");
 
-			output.WriteLine("		<tbody id=\"" + this.ClientID + "-body\"  " + sCSSClassTableBody + ">");
+			output.WriteLine("		<tbody id=\"" + this.HtmlClientID + "-body\"  " + sCSSClassTableBody + ">");
 			while ((DayOfMonth <= iDaysInMonth) && (DayOfMonth <= 31) && (DayOfMonth >= -7)) {
 				for (int DayIndex = 0; DayIndex <= iDayOfWeek; DayIndex++) {
 					if (DayIndex == 0) {
-						output.WriteLine("			<tr id=\"" + this.ClientID + "-week" + WeekNumber.ToString() + "\"> ");
+						output.WriteLine("			<tr id=\"" + this.HtmlClientID + "-week" + WeekNumber.ToString() + "\"> ");
 						WeekNumber++;
 					}
 
@@ -270,7 +293,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			// as a bot crawler abuse stopper
 
-			output.WriteLine("		<tfoot id=\"" + this.ClientID + "-foot\" " + sCSSClassTableFoot + ">");
+			output.WriteLine("		<tfoot id=\"" + this.HtmlClientID + "-foot\" " + sCSSClassTableFoot + ">");
 			output.WriteLine("		<tr>");
 			output.WriteLine("			<td colspan=\"3\" id=\"prev\" class=\"cal-prev\">");
 			if (lastMonth.GoLiveDate >= SiteData.CurrentSite.Now.AddYears(-5)) {

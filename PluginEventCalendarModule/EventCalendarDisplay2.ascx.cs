@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		public string GetDateNameString(DateTime eventDate, string dateFormat) {
 			if (lastDate != eventDate) {
 				lastDate = eventDate;
-				return String.Format(dateFormat, lastDate);
+				return string.Format(dateFormat, lastDate);
 			} else {
 				return "";
 			}

@@ -20,6 +20,12 @@
 
 		imgHead.Src = ThePage.TemplateFolderPath + headImg;
 		imgHead.Height = headH;
+
+		calendarWrap.Visible = false;
+		if (IsSiteIndex || IsBlogPost) {
+			calendarWrap.Visible = true;
+		}
+
 	}
 </script>
 <!--
@@ -118,6 +124,11 @@ Released   : 20120902
 						<div style="clear: both;">
 						</div>
 					</div>
+					<asp:PlaceHolder runat="server" ID="calendarWrap">
+						<div id="calendar_wrap">
+							<carrot:PostCalendar runat="server" ID="calendar" CssClass="calendar" RenderHTMLWithID="true" />
+						</div>
+					</asp:PlaceHolder>
 					<div>
 						<carrot:WidgetContainer ID="phRightTop" runat="server">
 						</carrot:WidgetContainer>

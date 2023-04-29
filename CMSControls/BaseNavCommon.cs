@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -94,31 +95,25 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected virtual void TweakData() {
-			if (this.NavigationData != null) {
-				if (this.StripNotInSiteNav) {
-					this.NavigationData.RemoveAll(x => x.ShowInSiteNav == false && x.ContentType == ContentPageType.PageType.ContentEntry);
-				}
-				if (this.StripNotInSiteMap) {
-					this.NavigationData.RemoveAll(x => x.ShowInSiteMap == false && x.ContentType == ContentPageType.PageType.ContentEntry);
-				}
-				this.NavigationData.ToList().ForEach(q => IdentifyLinkAsInactive(q));
-			}
+			this.NavigationData = CMSConfigHelper.TweakData(this.NavigationData, this.StripNotInSiteMap, this.StripNotInSiteNav);
 		}
 
-		protected virtual void WriteListPrefix(HtmlTextWriter output) {
-			if (this.NavigationData != null && this.NavigationData.Any()) {
-				string sCSS = String.Empty;
+		protected HtmlTag _topTag = new HtmlTag("ul");
 
-				if (!String.IsNullOrEmpty(this.CssClass)) {
-					sCSS = " class=\"" + this.CssClass + "\" ";
-				}
-				output.WriteLine("<ul" + sCSS + " id=\"" + this.HtmlClientID + "\">");
+		protected virtual void WriteListPrefix(HtmlTextWriter output) {
+			_topTag = new HtmlTag("ul");
+
+			if (this.NavigationData != null && this.NavigationData.Any()) {
+				_topTag.SetAttribute("id", this.HtmlClientID);
+				_topTag.MergeAttribute("class", this.CssClass);
+
+				output.WriteLine(_topTag.OpenTag());
 			}
 		}
 
 		protected virtual void WriteListSuffix(HtmlTextWriter output) {
 			if (this.NavigationData != null && this.NavigationData.Any()) {
-				output.WriteLine("</ul>");
+				output.WriteLine(_topTag.CloseTag());
 			}
 		}
 

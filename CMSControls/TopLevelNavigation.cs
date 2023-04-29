@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -52,17 +52,17 @@ namespace Carrotware.CMS.UI.Controls {
 					string sTmp = "";
 
 					sTmp = GetParmValue("CssClass", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CssClass = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSSelected", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CSSSelected = sTmp;
 					}
 
 					sTmp = GetParmValue("RenderHTMLWithID", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.RenderHTMLWithID = Convert.ToBoolean(sTmp);
 					}
 				}
@@ -116,14 +116,14 @@ namespace Carrotware.CMS.UI.Controls {
 			string sParent = pageNav.FileName.ToLowerInvariant();
 
 			List<SiteNav> lstNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
-			lstNav.RemoveAll(x => x.ShowInSiteNav == false);
-			lstNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
+
+			lstNav = CMSConfigHelper.TweakData(lstNav, false, true);
 
 			output.Indent = indent + 3;
 			output.WriteLine();
 
 			string sCSS = "";
-			if (!String.IsNullOrEmpty(CssClass)) {
+			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 

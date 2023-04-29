@@ -97,8 +97,9 @@
 			}
 
 			function AjaxScriptLoad() {
-
-				TinyMCEParamInit("650", "400", true);
+				var modalSizeW = window.parent.$("#cms-simplemodal-container").width();
+				var tinyW = modalSizeW - 150;
+				cmsTinyMceInit(tinyW, 450, true);
 
 				DisplaySaveBox();
 			}

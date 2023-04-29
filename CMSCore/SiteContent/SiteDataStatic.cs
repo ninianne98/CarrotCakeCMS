@@ -440,37 +440,38 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string FormatErrorOutput(Exception objErr) {
-			string sBody = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm");
+			var sb = new StringBuilder();
+			sb.Append(SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm"));
 
 			if (objErr is HttpException) {
 				HttpException httpEx = (HttpException)objErr;
 
-				sBody = sBody.Replace("{PAGE_TITLE}", httpEx.Message);
-				sBody = sBody.Replace("{SHORT_NAME}", httpEx.Message);
-				sBody = sBody.Replace("{LONG_NAME}", "HTTP " + httpEx.GetHttpCode() + " - " + FormatToHTML(httpEx.Message));
+				sb.Replace("{PAGE_TITLE}", httpEx.Message);
+				sb.Replace("{SHORT_NAME}", httpEx.Message);
+				sb.Replace("{LONG_NAME}", "HTTP " + httpEx.GetHttpCode() + " - " + FormatToHTML(httpEx.Message));
 			} else {
-				sBody = sBody.Replace("{PAGE_TITLE}", objErr.Message);
-				sBody = sBody.Replace("{SHORT_NAME}", objErr.Message);
-				sBody = sBody.Replace("{LONG_NAME}", FormatToHTML(" [" + objErr.GetType().ToString() + "] " + objErr.Message));
+				sb.Replace("{PAGE_TITLE}", objErr.Message);
+				sb.Replace("{SHORT_NAME}", objErr.Message);
+				sb.Replace("{LONG_NAME}", FormatToHTML(" [" + objErr.GetType().ToString() + "] " + objErr.Message));
 			}
 
 			if (objErr.StackTrace != null) {
-				sBody = sBody.Replace("{STACK_TRACE}", FormatToHTML(objErr.StackTrace));
+				sb.Replace("{STACK_TRACE}", FormatToHTML(objErr.StackTrace));
 			}
 
 			if (objErr.InnerException != null) {
-				sBody = sBody.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
+				sb.Replace("{CONTENT_DETAIL}", FormatToHTML(objErr.InnerException.Message));
 			}
 
 			if (CurretSiteExists) {
-				sBody = sBody.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
+				sb.Replace("{TIME_STAMP}", CurrentSite.Now.ToString());
 			}
-			sBody = sBody.Replace("{TIME_STAMP}", DateTime.Now.ToString());
+			sb.Replace("{TIME_STAMP}", DateTime.Now.ToString());
 
-			sBody = sBody.Replace("{CONTENT_DETAIL}", "");
-			sBody = sBody.Replace("{STACK_TRACE}", "");
+			sb.Replace("{CONTENT_DETAIL}", "");
+			sb.Replace("{STACK_TRACE}", "");
 
-			return sBody;
+			return sb.ToString();
 		}
 
 		public static void Show404MessageFull(bool bResponseEnd) {

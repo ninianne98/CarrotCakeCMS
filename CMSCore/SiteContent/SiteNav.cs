@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Carrotware.CMS.Data;
 
 /*
 * CarrotCake CMS
@@ -134,6 +134,7 @@ namespace Carrotware.CMS.Core {
 		public bool BlockIndex { get; set; }
 		public bool PageActive { get; set; }
 		public bool ShowInSiteNav { get; set; }
+		public bool MadeSafe { get; set; }
 		public Guid SiteID { get; set; }
 
 		public ContentPageType.PageType ContentType { get; set; }

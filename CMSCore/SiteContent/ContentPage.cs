@@ -1,9 +1,9 @@
 ﻿using Carrotware.CMS.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using System;
 
 /*
 * CarrotCake CMS
@@ -489,6 +489,7 @@ namespace Carrotware.CMS.Core {
 		public Guid? Heartbeat_UserId { get; set; }
 		public bool PageActive { get; set; }
 		public bool ShowInSiteNav { get; set; }
+		public bool MadeSafe { get; set; }
 		public Guid SiteID { get; set; }
 
 		public string MetaDescription { get; set; }

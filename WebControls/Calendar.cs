@@ -399,8 +399,6 @@ namespace Carrotware.Web.UI.Controls {
 			output.WriteLine("	</tr>");
 			output.WriteLine();
 
-			//output.Write(sb.ToString());
-
 			output.Indent = indent + 4;
 
 			string[] rows = sb.ToString().Split('\n');
@@ -412,7 +410,6 @@ namespace Carrotware.Web.UI.Controls {
 
 			output.Indent = indent + 3;
 
-			//output.WriteLine();
 			output.WriteLine("</table>");
 
 			output.Indent = indent;

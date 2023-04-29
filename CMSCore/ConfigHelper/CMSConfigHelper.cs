@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -10,8 +12,6 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
 using System.Xml.Serialization;
-using Carrotware.CMS.Data;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -112,7 +112,7 @@ namespace Carrotware.CMS.Core {
 		private static Page _CachedPage;
 
 		public static string GetWebResourceUrl(Type type, string resource) {
-			string sPath = String.Empty;
+			string sPath = string.Empty;
 
 			try {
 				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
@@ -123,7 +123,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string GetWebResourceUrl(Control X, Type type, string resource) {
-			string sPath = String.Empty;
+			string sPath = string.Empty;
 
 			if (X != null && X.Page != null) {
 				sPath = X.Page.ClientScript.GetWebResourceUrl(type, resource);
@@ -159,7 +159,7 @@ namespace Carrotware.CMS.Core {
 			string fileTypes = null;
 
 			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
-			if (config.FileManagerConfig != null && !String.IsNullOrEmpty(config.FileManagerConfig.BlockedExtensions)) {
+			if (config.FileManagerConfig != null && !string.IsNullOrEmpty(config.FileManagerConfig.BlockedExtensions)) {
 				fileTypes = config.FileManagerConfig.BlockedExtensions;
 			}
 
@@ -236,7 +236,7 @@ namespace Carrotware.CMS.Core {
 			if (iExpectedTblCount > 0) {
 				iTblCount = ds.Tables.Count;
 
-				string table1Name = String.Empty;
+				string table1Name = string.Empty;
 
 				List<string> reqCols0 = new List<string>();
 				List<string> reqCols1 = new List<string>();
@@ -462,7 +462,7 @@ namespace Carrotware.CMS.Core {
 		public CMSAdminModuleMenu GetCurrentAdminModuleControl() {
 			Guid ModuleID = Guid.Empty;
 			HttpRequest request = HttpContext.Current.Request;
-			string pf = String.Empty;
+			string pf = string.Empty;
 			CMSAdminModuleMenu cc = null;
 
 			if (request.QueryString["pi"] != null) {
@@ -488,7 +488,7 @@ namespace Carrotware.CMS.Core {
 		public List<CMSAdminModuleMenu> GetCurrentAdminModuleControlList() {
 			Guid ModuleID = Guid.Empty;
 			HttpRequest request = HttpContext.Current.Request;
-			string pf = String.Empty;
+			string pf = string.Empty;
 			List<CMSAdminModuleMenu> cc = null;
 
 			if (request.QueryString["pi"] != null) {
@@ -632,7 +632,7 @@ namespace Carrotware.CMS.Core {
 														select new CMSTextWidgetPicker {
 															TextWidgetPickerID = p.TextWidgetID,
 															AssemblyString = p.TextWidgetAssembly,
-															DisplayName = String.Empty,
+															DisplayName = string.Empty,
 															ProcessBody = p.ProcessBody,
 															ProcessPlainText = p.ProcessPlainText,
 															ProcessHTMLText = p.ProcessHTMLText,
@@ -846,7 +846,7 @@ namespace Carrotware.CMS.Core {
 
 					_sites = (from d in ds.Tables[0].AsEnumerable()
 							  select new DynamicSite {
-								  DomainName = string.IsNullOrEmpty(d.Field<string>("domname")) ? String.Empty : d.Field<string>("domname").ToLowerInvariant(),
+								  DomainName = string.IsNullOrEmpty(d.Field<string>("domname")) ? string.Empty : d.Field<string>("domname").ToLowerInvariant(),
 								  SiteID = new Guid(d.Field<string>("siteid"))
 							  }).ToList();
 
@@ -1035,41 +1035,75 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
-			if (!nav.PageActive) {
-				nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
-				nav.PageHead = InactivePagePrefix + nav.PageHead;
-				nav.TitleBar = InactivePagePrefix + nav.TitleBar;
+		public static List<SiteNav> TweakData(List<SiteNav> navs, bool siteMap, bool siteNav) {
+			if (navs != null) {
+				if (siteMap) {
+					navs.RemoveAll(x => x.ShowInSiteMap == false && x.ContentType == ContentPageType.PageType.ContentEntry);
+				}
+				if (siteNav) {
+					navs.RemoveAll(x => x.ShowInSiteNav == false && x.ContentType == ContentPageType.PageType.ContentEntry);
+				}
+
+				navs.ForEach(q => FixNavLinkText(q));
 			}
-			if (nav.IsRetired) {
-				nav.NavMenuText = RetiredPagePrefix + nav.NavMenuText;
-				nav.PageHead = RetiredPagePrefix + nav.PageHead;
-				nav.TitleBar = RetiredPagePrefix + nav.TitleBar;
-			}
-			if (nav.IsUnReleased) {
-				nav.NavMenuText = UnreleasedPagePrefix + nav.NavMenuText;
-				nav.PageHead = UnreleasedPagePrefix + nav.PageHead;
-				nav.TitleBar = UnreleasedPagePrefix + nav.TitleBar;
+
+			return navs;
+		}
+
+		public static List<SiteNav> TweakData(List<SiteNav> navs) {
+			return TweakData(navs, true, true);
+		}
+
+		public static SiteNav FixNavLinkText(SiteNav nav) {
+			if (nav != null && !nav.MadeSafe) {
+				nav.MadeSafe = true;
+				nav.NavMenuText = HttpUtility.HtmlEncode(nav.NavMenuText);
+				nav.PageHead = HttpUtility.HtmlEncode(nav.PageHead);
+				nav.TitleBar = HttpUtility.HtmlEncode(nav.TitleBar);
+
+				if (!nav.PageActive) {
+					nav.NavMenuText = InactivePagePrefix + nav.NavMenuText;
+					nav.PageHead = InactivePagePrefix + nav.PageHead;
+					nav.TitleBar = InactivePagePrefix + nav.TitleBar;
+				}
+				if (nav.IsRetired) {
+					nav.NavMenuText = RetiredPagePrefix + nav.NavMenuText;
+					nav.PageHead = RetiredPagePrefix + nav.PageHead;
+					nav.TitleBar = RetiredPagePrefix + nav.TitleBar;
+				}
+				if (nav.IsUnReleased) {
+					nav.NavMenuText = UnreleasedPagePrefix + nav.NavMenuText;
+					nav.PageHead = UnreleasedPagePrefix + nav.PageHead;
+					nav.TitleBar = UnreleasedPagePrefix + nav.TitleBar;
+				}
 			}
 			return nav;
 		}
 
-		public static ContentPage IdentifyLinkAsInactive(ContentPage cp) {
-			if (!cp.PageActive) {
-				cp.NavMenuText = InactivePagePrefix + cp.NavMenuText;
-				cp.PageHead = InactivePagePrefix + cp.PageHead;
-				cp.TitleBar = InactivePagePrefix + cp.TitleBar;
+		public static ContentPage FixNavLinkText(ContentPage cp) {
+			if (cp != null && !cp.MadeSafe) {
+				cp.MadeSafe = true;
+				cp.NavMenuText = HttpUtility.HtmlEncode(cp.NavMenuText);
+				cp.PageHead = HttpUtility.HtmlEncode(cp.PageHead);
+				cp.TitleBar = HttpUtility.HtmlEncode(cp.TitleBar);
+
+				if (!cp.PageActive) {
+					cp.NavMenuText = InactivePagePrefix + cp.NavMenuText;
+					cp.PageHead = InactivePagePrefix + cp.PageHead;
+					cp.TitleBar = InactivePagePrefix + cp.TitleBar;
+				}
+				if (cp.IsRetired) {
+					cp.NavMenuText = RetiredPagePrefix + cp.NavMenuText;
+					cp.PageHead = RetiredPagePrefix + cp.PageHead;
+					cp.TitleBar = RetiredPagePrefix + cp.TitleBar;
+				}
+				if (cp.IsUnReleased) {
+					cp.NavMenuText = UnreleasedPagePrefix + cp.NavMenuText;
+					cp.PageHead = UnreleasedPagePrefix + cp.PageHead;
+					cp.TitleBar = UnreleasedPagePrefix + cp.TitleBar;
+				}
 			}
-			if (cp.IsRetired) {
-				cp.NavMenuText = RetiredPagePrefix + cp.NavMenuText;
-				cp.PageHead = RetiredPagePrefix + cp.PageHead;
-				cp.TitleBar = RetiredPagePrefix + cp.TitleBar;
-			}
-			if (cp.IsUnReleased) {
-				cp.NavMenuText = UnreleasedPagePrefix + cp.NavMenuText;
-				cp.PageHead = UnreleasedPagePrefix + cp.PageHead;
-				cp.TitleBar = UnreleasedPagePrefix + cp.TitleBar;
-			}
+
 			return cp;
 		}
 
@@ -1085,7 +1119,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string DecodeBase64(string ValIn) {
-			string val = String.Empty;
+			string val = string.Empty;
 			if (!string.IsNullOrEmpty(ValIn)) {
 				Encoding enc = Encoding.GetEncoding("ISO-8859-1"); //Western European (ISO)
 				val = enc.GetString(Convert.FromBase64String(ValIn));
@@ -1094,7 +1128,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string EncodeBase64(string ValIn) {
-			string val = String.Empty;
+			string val = string.Empty;
 			if (!string.IsNullOrEmpty(ValIn)) {
 				Encoding enc = Encoding.GetEncoding("ISO-8859-1"); //Western European (ISO)
 				byte[] toEncodeAsBytes = enc.GetBytes(ValIn);
@@ -1159,7 +1193,7 @@ namespace Carrotware.CMS.Core {
 					ClearSerialized(keyAdminContent);
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					string sXML = String.Empty;
+					string sXML = string.Empty;
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
@@ -1188,7 +1222,7 @@ namespace Carrotware.CMS.Core {
 					ClearSerialized(keyAdminWidget);
 				} else {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
-					string sXML = String.Empty;
+					string sXML = string.Empty;
 					using (StringWriter stringWriter = new StringWriter()) {
 						xmlSerializer.Serialize(stringWriter, value);
 						sXML = stringWriter.ToString();
@@ -1225,7 +1259,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string GetSerialized(Guid itemID, string sKey) {
-			string sData = String.Empty;
+			string sData = string.Empty;
 			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(_db, itemID, sKey);
 
@@ -1259,7 +1293,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private string GetSerialized(string sKey) {
-			string sData = String.Empty;
+			string sData = string.Empty;
 			LoadGuids();
 
 			if (filePage != null) {

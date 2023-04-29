@@ -94,6 +94,9 @@ Released   : 20120902
 						<carrot:WidgetContainer ID="phRightBottom" runat="server">
 						</carrot:WidgetContainer>
 					</div>
+					<div id="calendar_wrap">
+						<carrot:PostCalendar runat="server" ID="calendar" CssClass="calendar" RenderHTMLWithID="true" />
+					</div>
 					<div>
 						<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" CssClass="list-style1" ContentType="DateMonth" MetaDataTitle="Archive" TakeTop="6" />
 					</div>

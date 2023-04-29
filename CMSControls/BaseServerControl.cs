@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -6,8 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -125,13 +125,6 @@ namespace Carrotware.CMS.UI.Controls {
 			ContentPage cp = cu.GetContainerContentPage(this);
 
 			if (cp != null) {
-				pageNav = new SiteNav();
-				pageNav.Root_ContentID = cp.Root_ContentID;
-				pageNav.NavMenuText = cp.NavMenuText;
-				pageNav.FileName = cp.FileName;
-				pageNav.TemplateFile = cp.TemplateFile;
-				pageNav.ContentType = cp.ContentType;
-
 				pageNav = cp.GetSiteNav();
 			} else {
 				pageNav = navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
@@ -158,8 +151,8 @@ namespace Carrotware.CMS.UI.Controls {
 			return sb.ToString();
 		}
 
-		public static SiteNav IdentifyLinkAsInactive(SiteNav nav) {
-			return CMSConfigHelper.IdentifyLinkAsInactive(nav);
+		public static SiteNav FixNavLinkText(SiteNav nav) {
+			return CMSConfigHelper.FixNavLinkText(nav);
 		}
 	}
 }

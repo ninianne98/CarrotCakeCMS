@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -220,8 +220,8 @@ namespace Carrotware.CMS.UI.Controls {
 			rTopNav.EnableViewState = this.EnableViewState;
 
 			string sCSS = "";
-			if (!String.IsNullOrEmpty(CssClass)) {
-				sCSS = String.Format(" class=\"{0}\"", CssClass);
+			if (!string.IsNullOrEmpty(CssClass)) {
+				sCSS = string.Format(" class=\"{0}\"", CssClass);
 			}
 			int indent = writer.Indent;
 
@@ -255,8 +255,7 @@ namespace Carrotware.CMS.UI.Controls {
 				lstTwoLevelNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			}
 
-			lstTwoLevelNav.RemoveAll(x => x.ShowInSiteNav == false);
-			lstTwoLevelNav.ToList().ForEach(q => IdentifyLinkAsInactive(q));
+			lstTwoLevelNav = CMSConfigHelper.TweakData(lstTwoLevelNav, false, true);
 		}
 
 		protected override void OnInit(EventArgs e) {
@@ -305,17 +304,17 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void ModWrap(IActivateNavItem lnk) {
-			if (!String.IsNullOrEmpty(this.CSSSelected)) {
+			if (!string.IsNullOrEmpty(this.CSSSelected)) {
 				lnk.CSSSelected = this.CSSSelected;
 			}
 
 			if ((SiteData.IsFilenameCurrentPage(lnk.NavigateUrl) || AreFilenamesSame(lnk.NavigateUrl, ParentPageNav.FileName))
-					&& !String.IsNullOrEmpty(lnk.CSSSelected)) {
+					&& !string.IsNullOrEmpty(lnk.CSSSelected)) {
 				lnk.IsSelected = true;
 			}
 
-			if (GetChildren(lnk.ContentID).Any() && !String.IsNullOrEmpty(lnk.CssClassHasChild)) {
-				if (!String.IsNullOrEmpty(lnk.CssClassNormal)) {
+			if (GetChildren(lnk.ContentID).Any() && !string.IsNullOrEmpty(lnk.CssClassHasChild)) {
+				if (!string.IsNullOrEmpty(lnk.CssClassNormal)) {
 					lnk.CssClassNormal = lnk.CssClassNormal + " " + lnk.CssClassHasChild;
 				} else {
 					lnk.CssClassNormal = lnk.CssClassHasChild;
@@ -345,7 +344,7 @@ namespace Carrotware.CMS.UI.Controls {
 			} catch (Exception ex) {
 			}
 
-			if (!String.IsNullOrEmpty(OverrideCSS)) {
+			if (!string.IsNullOrEmpty(OverrideCSS)) {
 				HtmlLink link = new HtmlLink();
 				link.Href = OverrideCSS;
 				link.Attributes.Add("rel", "stylesheet");
@@ -373,8 +372,8 @@ namespace Carrotware.CMS.UI.Controls {
 					<%# Eval("NavMenuText").ToString()%>
 				</carrot:NavLinkForTemplate>
 			</li>--%>
-		<%--<li><a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
-				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
+		<%--<li><a href='<%# string.Format("{0}", Eval( "FileName"))%>'>
+				<%# string.Format("{0}", Eval("NavMenuText"))%></a>
 			</li>--%>
 		<%--<li>
 				<carrot:NavLinkForTemplate ID="lnk" runat="server" Target="_blank"></carrot:NavLinkForTemplate>
@@ -405,8 +404,8 @@ namespace Carrotware.CMS.UI.Controls {
 				<%--<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' runat="server">
 				</asp:HyperLink>--%>
 				<carrot:NavLinkForTemplate ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' />
-				<%--<li> -- <a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
-				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
+				<%--<li> -- <a href='<%# string.Format("{0}", Eval( "FileName"))%>'>
+				<%# string.Format("{0}", Eval("NavMenuText"))%></a>
 			</li>--%>
 				-- </li>
 		</SubNavTemplate>

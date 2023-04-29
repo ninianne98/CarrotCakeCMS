@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -66,7 +67,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string ControlPath {
 			get {
 				String s = (String)ViewState["ControlPath"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 
 			set {
@@ -79,7 +80,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string ControlTitle {
 			get {
 				String s = (String)ViewState["ControlTitle"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 
 			set {
@@ -92,7 +93,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string JSEditFunction {
 			get {
 				String s = (String)ViewState["JSEditFunction"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["JSEditFunction"] = value;
@@ -105,28 +106,29 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public Widget WidgetData { get; set; }
 
-		private string ScrubCtrl(string sCtrl) {
-			sCtrl = sCtrl.Replace("{WIDGET_ID}", this.ClientID);
-			sCtrl = sCtrl.Replace("{WIDGET_KEY}", this.DatabaseKey.ToString());
-			sCtrl = sCtrl.Replace("{WIDGET_ORDER}", this.Order.ToString());
-			sCtrl = sCtrl.Replace("{WIDGET_PATH}", this.ControlPath);
-			sCtrl = sCtrl.Replace("{WIDGET_TITLE}", this.ControlTitle);
+		private StringBuilder ScrubCtrl(StringBuilder sb) {
+			sb.Replace("{WIDGET_ID}", this.ClientID);
+			sb.Replace("{WIDGET_KEY}", this.DatabaseKey.ToString());
+			sb.Replace("{WIDGET_ORDER}", this.Order.ToString());
+			sb.Replace("{WIDGET_PATH}", this.ControlPath);
+			sb.Replace("{WIDGET_TITLE}", this.ControlTitle);
 
-			if (!String.IsNullOrEmpty(this.JSEditFunction)) {
-				sCtrl = sCtrl.Replace("{WIDGET_JS}", this.JSEditFunction);
+			if (!string.IsNullOrEmpty(this.JSEditFunction)) {
+				sb.Replace("{WIDGET_JS}", this.JSEditFunction);
 			}
 
-			return sCtrl;
+			return sb;
 		}
 
 		private Control GetCtrl(string CtrlFile, Control X) {
 			ControlUtilities cu = new ControlUtilities(this);
 
-			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx");
+			var sb = new StringBuilder();
+			sb.Append(cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx"));
 
-			sCtrl = ScrubCtrl(sCtrl);
+			sb = ScrubCtrl(sb);
 
-			Control userControl = cu.CreateControlFromString(sCtrl);
+			Control userControl = cu.CreateControlFromString(sb.ToString());
 
 			return userControl;
 		}
@@ -134,14 +136,14 @@ namespace Carrotware.CMS.UI.Controls {
 		private Control GetCtrl(Control X, string MenuText, string MenuFunc) {
 			ControlUtilities cu = new ControlUtilities(this);
 
-			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminWidgetMenuItem.ascx");
+			var sb = new StringBuilder();
+			sb.Append(cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminWidgetMenuItem.ascx"));
 
-			sCtrl = ScrubCtrl(sCtrl);
+			sb = ScrubCtrl(sb);
+			sb.Replace("{WIDGET_MENU_TEXT}", MenuText);
+			sb.Replace("{WIDGET_MENU_JS}", MenuFunc);
 
-			sCtrl = sCtrl.Replace("{WIDGET_MENU_TEXT}", MenuText);
-			sCtrl = sCtrl.Replace("{WIDGET_MENU_JS}", MenuFunc);
-
-			Control userControl = cu.CreateControlFromString(sCtrl);
+			Control userControl = cu.CreateControlFromString(sb.ToString());
 
 			return userControl;
 		}
@@ -158,16 +160,16 @@ namespace Carrotware.CMS.UI.Controls {
 			this.DatabaseKey = this.WidgetData.Root_WidgetID;
 
 			if (!this.WidgetData.IsWidgetActive) {
-				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, this.ControlTitle);
+				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, this.ControlTitle);
 			}
 			if (this.WidgetData.IsRetired) {
-				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.RetiredPagePrefix, this.ControlTitle);
+				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.RetiredPagePrefix, this.ControlTitle);
 			}
 			if (this.WidgetData.IsUnReleased) {
-				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.UnreleasedPagePrefix, this.ControlTitle);
+				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.UnreleasedPagePrefix, this.ControlTitle);
 			}
 			if (this.WidgetData.IsWidgetPendingDelete) {
-				this.ControlTitle = String.Format("{0} {1}", CMSConfigHelper.PendingDeletePrefix, this.ControlTitle);
+				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.PendingDeletePrefix, this.ControlTitle);
 			}
 
 			if (SiteData.IsWebView) {
@@ -192,7 +194,7 @@ namespace Carrotware.CMS.UI.Controls {
 					act.Visible = !this.WidgetData.IsWidgetActive;
 					remove.Visible = this.WidgetData.IsWidgetActive;
 
-					if (String.IsNullOrEmpty(this.JSEditFunction)) {
+					if (string.IsNullOrEmpty(this.JSEditFunction)) {
 						HtmlGenericControl edit = (HtmlGenericControl)cu.FindControl("liEdit", ctrl1);
 						HtmlGenericControl hist = (HtmlGenericControl)cu.FindControl("liHistory", ctrl1);
 

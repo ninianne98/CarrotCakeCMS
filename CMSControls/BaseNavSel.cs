@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -119,21 +120,22 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void WriteListPrefix(HtmlTextWriter output) {
-			string sCSS = (this.CSSULClassTop + " " + this.CssClass).Trim();
-			if (!String.IsNullOrEmpty(sCSS)) {
-				output.WriteLine("<ul id=\"" + this.HtmlClientID + "\" class=\"" + sCSS + "\">");
-			} else {
-				output.WriteLine("<ul id=\"" + this.HtmlClientID + "\" >");
-			}
+			_topTag = new HtmlTag("ul");
+
+			_topTag.SetAttribute("id", this.HtmlClientID);
+			_topTag.MergeAttribute("class", this.CSSULClassTop);
+			_topTag.MergeAttribute("class", this.CssClass);
+
+			output.WriteLine(_topTag.OpenTag());
 		}
 
 		protected override void WriteListSuffix(HtmlTextWriter output) {
-			output.WriteLine("</ul>");
+			output.WriteLine(_topTag.CloseTag());
 		}
 
 		protected string ParentFileName { get; set; }
 
-		private int iItemNumber = 0;
+		private int _itemNumber = 0;
 
 		protected virtual void WriteTopLevel(HtmlTextWriter output) {
 			int indent = output.Indent;
@@ -151,102 +153,114 @@ namespace Carrotware.CMS.UI.Controls {
 
 				int indent2 = output.Indent + 1;
 
-				string sItemCSS = "";
-				if (!String.IsNullOrEmpty(CSSItem)) {
-					sItemCSS = String.Format(" {0} ", this.CSSItem);
-				}
-
-				string sThis1CSS = sItemCSS;
-
 				foreach (SiteNav c1 in lstNav) {
+					var item = new HtmlTag("li");
+					var link = new HtmlTag("a");
+
+					item.MergeAttribute("class", this.CSSItem);
+
+					link.Uri = c1.FileName;
+					link.InnerHtml = c1.NavMenuText;
+
 					output.Indent = indent2;
 					List<SiteNav> cc = GetChildren(c1.Root_ContentID);
 
-					string sChild = " ";
 					if (this.MultiLevel) {
-						if (cc != null && cc.Any()) {
-							sChild = " level1-haschildren " + this.CSSHasChildren + " ";
-						}
-						sThis1CSS = " level1 " + sItemCSS + sChild;
-					} else {
-						sThis1CSS = sItemCSS;
-					}
-					if (SiteData.IsFilenameCurrentPage(c1.FileName) || (IsContained(lstNavTree, c1.Root_ContentID) != null) || AreFilenamesSame(c1.FileName, this.ParentFileName)) {
-						sThis1CSS = sThis1CSS + " " + this.CSSSelected;
-					}
-					if (lstNav.Where(x => x.NavOrder < 0).Count() > 0) {
-						if (c1.NavOrder < 0) {
-							sThis1CSS = sThis1CSS + " parent-nav";
-						} else {
-							sThis1CSS = sThis1CSS + " child-nav";
-						}
-					}
-					sThis1CSS = sThis1CSS.Replace("   ", " ").Replace("  ", " ").Trim();
+						item.MergeAttribute("class", "level1");
 
-					iItemNumber++;
-					output.WriteLine("<li id=\"listitem" + iItemNumber.ToString() + "\" class=\"" + sThis1CSS + "\"><a href=\"" + c1.FileName + "\">" + c1.NavMenuText + "</a>");
+						if (cc != null && cc.Any()) {
+							item.MergeAttribute("class", string.Format(" level1-haschildren {0}", this.CSSHasChildren));
+						}
+					}
+
+					if (SiteData.IsFilenameCurrentPage(c1.FileName) || (IsContained(lstNavTree, c1.Root_ContentID) != null)
+								|| AreFilenamesSame(c1.FileName, this.ParentFileName)) {
+						item.MergeAttribute("class", this.CSSSelected);
+					}
+
+					_itemNumber++;
+					item.SetAttribute("id", string.Format("listitem{0}", _itemNumber));
+
+					output.Write(item.OpenTag());
+
+					link.Uri = c1.FileName;
+					link.InnerHtml = c1.NavMenuText;
+
+					output.WriteLine(link.RenderTag());
 
 					int indent3 = output.Indent;
 					if (this.MultiLevel && cc != null && cc.Any()) {
-						LoadChildren(output, c1.Root_ContentID, sItemCSS, iItemNumber, 2);
+						LoadChildren(output, c1.Root_ContentID, _itemNumber, 2);
 					}
 					output.Indent = indent3;
-					output.WriteLine("</li>");
+
+					output.Write(item.CloseTag());
 					output.WriteLine();
 				}
 				WriteListSuffix(output);
 			} else {
 #if DEBUG
-				output.WriteLine("<span style=\"display: none;\" id=\"" + this.ClientID + "\"></span>");
+				output.WriteLine("<span style=\"display: none;\" id=\"" + this.HtmlClientID + "\"></span>");
 #endif
 			}
 
 			output.Indent = indent;
 		}
 
-		protected virtual void LoadChildren(HtmlTextWriter output, Guid rootContentID, string sItemCSS, int iParent, int iLevel) {
+		protected virtual void LoadChildren(HtmlTextWriter output, Guid rootContentID, int iParent, int iLevel) {
 			List<SiteNav> lstNav = GetChildren(rootContentID);
 			int indent = output.Indent;
 			output.Indent = indent + 1;
 
-			string sThis2CSS = sItemCSS;
-
 			if (lstNav != null && lstNav.Any()) {
+				var childList = new HtmlTag("ul");
+
+				childList.SetAttribute("id", string.Format("listitem{0}-childlist", iParent));
+				childList.MergeAttribute("class", string.Format("childlist childlevel{0}", iLevel));
+				childList.MergeAttribute("class", this.CSSULClassLower);
+
+				output.Write(childList.OpenTag());
 				output.WriteLine();
-				output.WriteLine("<ul id=\"listitem" + iParent.ToString() + "-childlist\" class=\"childlist childlevel" + iLevel + " " + this.CSSULClassLower + "\">");
+
 				int indent2 = output.Indent + 1;
 				foreach (SiteNav c2 in lstNav) {
 					output.Indent = indent2;
 					List<SiteNav> cc = GetChildren(c2.Root_ContentID);
+					var childItem = new HtmlTag("li");
+					var childLink = new HtmlTag("a");
 
 					if (this.MultiLevel) {
-						string sChild = " ";
+						childItem.MergeAttribute("class", string.Format("level{0}", iLevel));
+
 						if (cc != null && cc.Any()) {
-							sChild = " level" + iLevel + "-haschildren " + this.CSSHasChildren + " ";
+							childItem.MergeAttribute("class", string.Format("level{0}-haschildren {1}", iLevel, this.CSSHasChildren));
 						}
-						sThis2CSS = " level" + iLevel + " " + sItemCSS + sChild;
-					} else {
-						sThis2CSS = sItemCSS;
 					}
 
 					if (SiteData.IsFilenameCurrentPage(c2.FileName) || AreFilenamesSame(c2.FileName, this.ParentFileName)) {
-						sThis2CSS = sThis2CSS + " " + this.CSSSelected;
+						childItem.MergeAttribute("class", this.CSSSelected);
 					}
-					sThis2CSS = (sThis2CSS + " child-nav").Replace("   ", " ").Replace("  ", " ").Trim();
 
-					iItemNumber++;
-					output.WriteLine("<li id=\"listitem" + iItemNumber.ToString() + "\" class=\"" + sThis2CSS + "\"><a href=\"" + c2.FileName + "\">" + c2.NavMenuText + "</a>");
+					_itemNumber++;
+					childItem.SetAttribute("id", string.Format("listitem{0}", _itemNumber));
+					childItem.MergeAttribute("class", "child-nav");
+					output.Write(childItem.OpenTag());
+
+					childLink.Uri = c2.FileName;
+					childLink.InnerHtml = c2.NavMenuText;
+					output.WriteLine(childLink.RenderTag());
+
 					int indent3 = output.Indent;
 					if (cc != null && cc.Any()) {
-						LoadChildren(output, c2.Root_ContentID, sItemCSS, iItemNumber, iLevel + 1);
+						LoadChildren(output, c2.Root_ContentID, _itemNumber, iLevel + 1);
 					}
 					output.Indent = indent3;
-					output.Write("</li>");
 
+					output.Write(childItem.CloseTag());
 					output.WriteLine();
 				}
 				output.Indent--;
-				output.WriteLine("</ul> ");
+				output.WriteLine(childList.CloseTag());
 			}
 
 			output.Indent = indent;
@@ -266,32 +280,32 @@ namespace Carrotware.CMS.UI.Controls {
 					string sTmp = "";
 
 					sTmp = GetParmValue("CssClass", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CssClass = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSItem", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CSSItem = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSSelected", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CSSSelected = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSHasChildren", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CSSHasChildren = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSULClassTop", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CSSULClassTop = sTmp;
 					}
 
 					sTmp = GetParmValue("CSSULClassLower", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.CSSULClassLower = sTmp;
 					}
 				}
