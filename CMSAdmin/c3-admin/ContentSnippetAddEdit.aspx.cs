@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public Guid guidRootItemID = Guid.Empty;
 		public Guid guidVersionItemID = Guid.Empty;
 		public bool bLocked = false;
-		private string sPageMode = String.Empty;
+		private string sPageMode = string.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSnippet);
@@ -84,7 +84,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			sPageMode = GetStringParameterFromQuery("mode");
-			if (sPageMode.ToLowerInvariant() == "raw") {
+			if (SiteData.IsRawMode(sPageMode)) {
 				reBody.CssClass = "rawEditor";
 				divCenter.Visible = false;
 			}

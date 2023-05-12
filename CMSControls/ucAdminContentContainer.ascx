@@ -10,9 +10,9 @@
 					M</a>
 					<ul class="cmsContentContainerMenu cmsMnuChildren">
 						<li runat="server" id="cmsContentAreaLink1_{ZONE_ID}"><a title="Edit HTML" alt="Edit HTML" class="cmsWidgetBarLink cmsWidgetBarIconPencil2" id="cmsContentEditLink1"
-							href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','html'); ">Edit HTML</a></li>
+							href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','{HTML_FLAG}'); ">Edit HTML</a></li>
 						<li runat="server" id="cmsContentAreaLink2_{ZONE_ID}"><a title="Edit Text" alt="Edit Text" class="cmsWidgetBarLink cmsWidgetBarIconPencil2" id="cmsContentEditLink2"
-							href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','plain'); ">Edit Text </a></li>
+							href="javascript:cmsShowEditContentForm('{ZONE_CHAR}','{PLAIN_FLAG}'); ">Edit Text </a></li>
 					</ul>
 				</li>
 			</ul>

@@ -112,7 +112,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				cmsDivEditing.Visible = false;
 
-				BasicControlUtils.MakeXUACompatibleFirst(this.Page);
+				//BasicControlUtils.MakeXUACompatibleFirst(this.Page);
 			} else {
 				pnlCMSEditZone.Visible = false;
 				rpTools.Visible = false;

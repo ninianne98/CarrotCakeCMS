@@ -111,20 +111,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="calendar.txt" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_40_111111_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_55_1c1c1c_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_65_dddddd_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_8_333333_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_highlight-hard_100_f9f9f9_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_highlight-hard_40_aaaaaa_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_highlight-soft_50_aaaaaa_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_inset-hard_45_e59494_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_inset-hard_55_ffeb80_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_4ca300_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_ba1214_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_bbbbbb_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_ededed_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_333333_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_aaaaaa_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_efefef_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_50_666666_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_80_111111_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-bg_hexagon_90_eeeeee_12x10.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-icons_111111_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-icons_cd0a0a_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\black\ui-icons_eeeeee_256x240.png" />
     <EmbeddedResource Include="jquerybasic\black\ui-icons_ffffff_256x240.png" />
     <EmbeddedResource Include="jquerybasic\blue\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
     <EmbeddedResource Include="jquerybasic\blue\ui-bg_glass_100_e4f1fb_1x400.png" />
@@ -170,22 +166,18 @@
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_468b5e_256x240.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_cd0a0a_256x240.png" />
     <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_734d99_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_8d78a5_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_a8a3ae_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_ebccce_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_100_d3c4ec_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_100_e3daf2_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_50_774499_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_80_d1c2ea_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-bg_hexagon_90_eeeeee_12x10.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-icons_2e83ff_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-icons_774499_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\purple\ui-icons_cd0a0a_256x240.png" />
     <EmbeddedResource Include="jquerybasic\purple\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_65_ffffff_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_75_dadada_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_95_fef1ec_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <EmbeddedResource Include="jquerybasic\silver\ui-bg_hexagon_80_dddddd_12x10.png" />
     <EmbeddedResource Include="jquerybasic\silver\ui-icons_222222_256x240.png" />
     <EmbeddedResource Include="jquerybasic\silver\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-icons_454545_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-icons_888888_256x240.png" />
     <EmbeddedResource Include="jquerybasic\silver\ui-icons_cd0a0a_256x240.png" />
     <EmbeddedResource Include="jsHelperLibrary.js" />
   </ItemGroup>
@@ -246,6 +238,12 @@
     <EmbeddedResource Include="jquery\jqueryui-1-7-3.js" />
     <EmbeddedResource Include="jquery\jqueryui-1-8-24.js" />
     <EmbeddedResource Include="jquery\jqueryui-1-9-2.js" />
+    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_686868_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d0d0d0_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d6d6d6_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d9d9d9_1x400.png" />
+    <EmbeddedResource Include="jquerybasic\silver\ui-icons_111111_256x240.png" />
+    <EmbeddedResource Include="jquerybasic\silver\ui-icons_ffffff_256x240.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

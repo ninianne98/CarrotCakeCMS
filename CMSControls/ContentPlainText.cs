@@ -34,7 +34,7 @@ namespace Carrotware.CMS.UI.Controls {
 		#region IWidget Members
 
 		public override string JSEditFunction {
-			get { return "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'plain');"; }
+			get { return "cmsShowEditWidgetForm('" + this.PageWidgetID + "', '" + SiteData.RawMode + "');"; }
 		}
 
 		#endregion IWidget Members

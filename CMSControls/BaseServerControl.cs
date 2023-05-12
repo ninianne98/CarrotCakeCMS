@@ -112,8 +112,8 @@ namespace Carrotware.CMS.UI.Controls {
 			if (pageNav == null) {
 				pageNav = new SiteNav();
 				pageNav.Root_ContentID = Guid.Empty;
-				pageNav.FileName = "/##/";
-				pageNav.TemplateFile = "/##/";
+				pageNav.FileName = "javascript:void(0);";
+				pageNav.TemplateFile = "/##/##/";
 			}
 
 			return pageNav;
@@ -132,7 +132,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (pageNav == null) {
 					pageNav = new SiteNav();
 					pageNav.Root_ContentID = Guid.Empty;
-					pageNav.FileName = "/##/##/";
+					pageNav.FileName = "javascript:void(0);";
 					pageNav.TemplateFile = "/##/##/";
 				}
 			}

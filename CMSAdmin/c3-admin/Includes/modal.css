@@ -30,26 +30,30 @@
 	border: 4px solid #444;
 	padding: 10px;
 }
-#cms-simplemodal-container .cms-cms-simplemodal-data {
-	padding: 5px;
-}
-#cms-simplemodal-container a.modalCloseImg, a.modalCloseImg {
-	background: url(/c3-admin/images/x.png) no-repeat;
-	width: 30px;
-	height: 30px;
-	display: inline;
-	z-index: 3200;
-	position: absolute;
-	top: -15px;
-	right: -15px;
-	cursor: pointer;
-}
+
+	#cms-simplemodal-container .cms-cms-simplemodal-data {
+		padding: 5px;
+	}
+
+	#cms-simplemodal-container a.modalCloseImg, a.modalCloseImg {
+		background: url(/c3-admin/images/x.png) no-repeat;
+		width: 30px;
+		height: 30px;
+		display: inline;
+		z-index: 3200;
+		position: absolute;
+		top: -15px;
+		right: -15px;
+		cursor: pointer;
+	}
+
 #cms-basic-modal-content {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 	width: 100%;
 }
+
 #cms-simplemodal-container {
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
@@ -69,7 +73,7 @@
 
 #cms-simplemodal-overlay, .cms-simplemodal-overlay {
 	z-index: 9950005;
-	background: #eeeeee url(../glossyseagreen/images/ui-bg_hexagon_90_eeeeee_12x10.png) 50% 50% repeat !important;
+	background: #eeeeee url(../images/hextile.png) 50% 50% repeat !important;
 	opacity: .8 !important;
 	filter: Alpha(Opacity=80) !important;
 }

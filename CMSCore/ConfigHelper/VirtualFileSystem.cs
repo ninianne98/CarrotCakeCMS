@@ -28,26 +28,26 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private string sVirtualReqFile = string.Empty;
-		private string sRequestedURL = string.Empty;
-		private bool bAlreadyDone = false;
-		private bool bURLOverride = false;
+		private string _virtualReqFile = string.Empty;
+		private string _requestedURL = string.Empty;
+		private bool _alreadyDone = false;
+		private bool _urlOverride = false;
 
 		public void ProcessRequest(HttpContext context) {
 			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				SiteNav navData = null;
-				string sFileRequested = context.Request.Path;
-				sRequestedURL = sFileRequested;
-				string sScrubbedURL = sFileRequested;
+				string fileRequested = context.Request.Path;
+				_requestedURL = fileRequested;
+				string scrubbedURL = fileRequested;
 
-				sRequestedURL = SiteData.AppendDefaultPath(sRequestedURL);
+				_requestedURL = SiteData.AppendDefaultPath(_requestedURL);
 
 				try {
-					sScrubbedURL = SiteData.AlternateCurrentScriptName;
+					scrubbedURL = SiteData.AlternateCurrentScriptName;
 
-					if (sScrubbedURL.ToLowerInvariant() != sRequestedURL.ToLowerInvariant()) {
-						sFileRequested = sScrubbedURL;
-						bURLOverride = true;
+					if (scrubbedURL.ToLowerInvariant() != _requestedURL.ToLowerInvariant()) {
+						fileRequested = scrubbedURL;
+						_urlOverride = true;
 					}
 
 					VirtualDirectory.RegisterRoutes();
@@ -63,23 +63,23 @@ namespace Carrotware.CMS.Core {
 					}
 				}
 
-				sFileRequested = SiteData.AppendDefaultPath(sFileRequested);
+				fileRequested = SiteData.AppendDefaultPath(fileRequested);
 
 				if (SecurityData.IsAuthenticated) {
 					try {
 						if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
 							if (context.Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains(FormsAuthentication.LoginUrl.ToLowerInvariant())
-								|| FormsAuthentication.LoginUrl.ToLowerInvariant() == sFileRequested.ToLowerInvariant()) {
-								if (SiteFilename.DashboardURL.ToLowerInvariant() != sFileRequested.ToLowerInvariant()
-								&& SiteFilename.SiteInfoURL.ToLowerInvariant() != sFileRequested.ToLowerInvariant()) {
-									sFileRequested = SiteData.AdminDefaultFile;
+								|| FormsAuthentication.LoginUrl.ToLowerInvariant() == fileRequested.ToLowerInvariant()) {
+								if (SiteFilename.DashboardURL.ToLowerInvariant() != fileRequested.ToLowerInvariant()
+								&& SiteFilename.SiteInfoURL.ToLowerInvariant() != fileRequested.ToLowerInvariant()) {
+									fileRequested = SiteData.AdminDefaultFile;
 								}
 							}
 						}
 					} catch (Exception ex) { }
 				}
 
-				if (sFileRequested.ToLowerInvariant().EndsWith(".aspx") || SiteData.IsLikelyHomePage(sFileRequested)) {
+				if (fileRequested.ToLowerInvariant().EndsWith(".aspx") || SiteData.IsLikelyHomePage(fileRequested)) {
 					bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
 					string queryString = string.Empty;
@@ -88,13 +88,13 @@ namespace Carrotware.CMS.Core {
 						queryString = string.Empty;
 					}
 
-					if (!CMSConfigHelper.CheckRequestedFileExistence(sFileRequested, SiteData.CurrentSiteID) || SiteData.IsLikelyHomePage(sFileRequested)) {
+					if (!CMSConfigHelper.CheckRequestedFileExistence(fileRequested, SiteData.CurrentSiteID) || SiteData.IsLikelyHomePage(fileRequested)) {
 						context.Items[REQ_PATH] = context.Request.PathInfo;
 						context.Items[REQ_QUERY] = context.Request.QueryString.ToString();
 
 						// handle a case where this site was migrated from a format where all pages varied on a consistent querystring
 						// allow this QS parm to be set in a config file.
-						if (SiteData.IsLikelyHomePage(sFileRequested)) {
+						if (SiteData.IsLikelyHomePage(fileRequested)) {
 							string sParm = string.Empty;
 							if (SiteData.OldSiteQuerystring != string.Empty) {
 								if (context.Request.QueryString[SiteData.OldSiteQuerystring] != null) {
@@ -102,12 +102,12 @@ namespace Carrotware.CMS.Core {
 								}
 							}
 							if (!string.IsNullOrEmpty(sParm)) {
-								sFileRequested = "/" + sParm + ".aspx";
+								fileRequested = string.Format("/{0}.aspx", sParm.Trim());
 
-								SiteData.Show301Message(sFileRequested);
+								SiteData.Show301Message(fileRequested);
 
-								context.Response.Redirect(sFileRequested);
-								context.Items[REQ_PATH] = sFileRequested;
+								context.Response.Redirect(fileRequested);
+								context.Items[REQ_PATH] = fileRequested;
 								context.Items[REQ_QUERY] = string.Empty;
 							}
 						}
@@ -117,23 +117,23 @@ namespace Carrotware.CMS.Core {
 							if (DatabaseUpdate.TablesIncomplete) {
 								navData = SiteNavHelper.GetEmptyHome();
 							} else {
-								bool bIsHomePage = false;
+								bool isHomePage = false;
 
-								if (SiteData.IsLikelyHomePage(sFileRequested)) {
+								if (SiteData.IsLikelyHomePage(fileRequested)) {
 									navData = navHelper.FindHome(SiteData.CurrentSiteID, !bIgnorePublishState);
 
-									if (SiteData.IsLikelyHomePage(sFileRequested) && navData != null) {
-										sFileRequested = navData.FileName;
-										bIsHomePage = true;
+									if (SiteData.IsLikelyHomePage(fileRequested) && navData != null) {
+										fileRequested = navData.FileName;
+										isHomePage = true;
 									}
 								}
 
-								if (!bIsHomePage) {
-									string pageName = sFileRequested;
+								if (!isHomePage) {
+									string pageName = fileRequested;
 									navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, pageName);
 								}
 
-								if (SiteData.IsLikelyHomePage(sFileRequested) && navData == null) {
+								if (SiteData.IsLikelyHomePage(fileRequested) && navData == null) {
 									navData = SiteNavHelper.GetEmptyHome();
 								}
 							}
@@ -152,7 +152,7 @@ namespace Carrotware.CMS.Core {
 						if (navData != null) {
 							string sSelectedTemplate = navData.TemplateFile;
 
-							// selectivly engage the cms helper only if in advance mode
+							// selectively engage the cms helper only if in advance mode
 							if (SecurityData.AdvancedEditMode) {
 								using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
 									if (cmsHelper.cmsAdminContent != null) {
@@ -165,23 +165,23 @@ namespace Carrotware.CMS.Core {
 								sSelectedTemplate = SiteData.DefaultTemplateFilename;
 							}
 
-							sVirtualReqFile = sFileRequested;
+							_virtualReqFile = fileRequested;
 
-							if (bURLOverride) {
-								sVirtualReqFile = sRequestedURL;
-								sFileRequested = sRequestedURL;
+							if (_urlOverride) {
+								_virtualReqFile = _requestedURL;
+								fileRequested = _requestedURL;
 							}
 
 							RewriteCMSPath(context, sSelectedTemplate, queryString);
 						} else {
-							SiteData.PerformRedirectToErrorPage(404, sFileRequested);
+							SiteData.PerformRedirectToErrorPage(404, fileRequested);
 							//SiteData.Show404MessageFull(true);
 							SiteData.Show404MessageShort();
 						}
 					} else {
-						sVirtualReqFile = sFileRequested;
+						_virtualReqFile = fileRequested;
 
-						RewriteCMSPath(context, sVirtualReqFile, queryString);
+						RewriteCMSPath(context, _virtualReqFile, queryString);
 					}
 				}
 
@@ -189,21 +189,21 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		private void RewriteCMSPath(HttpContext context, string sTmplateFile, string sQuery) {
+		private void RewriteCMSPath(HttpContext context, string templateFile, string query) {
 			try {
-				if (string.IsNullOrEmpty(sVirtualReqFile)) {
-					sVirtualReqFile = SiteData.DefaultDirectoryFilename;
+				if (string.IsNullOrEmpty(_virtualReqFile)) {
+					_virtualReqFile = SiteData.DefaultDirectoryFilename;
 				}
-				if (string.IsNullOrEmpty(sTmplateFile)) {
-					sTmplateFile = SiteData.DefaultTemplateFilename;
+				if (string.IsNullOrEmpty(templateFile)) {
+					templateFile = SiteData.DefaultTemplateFilename;
 				}
 
-				context.RewritePath(sVirtualReqFile, string.Empty, sQuery);
+				context.RewritePath(_virtualReqFile, string.Empty, query);
 
 				//cannot work in med trust
 				//Page hand = (Page)PageParser.GetCompiledPageInstance(sFileRequested, context.Server.MapPath(sRealFile), context);
 
-				Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(sTmplateFile, typeof(Page));
+				Page hand = (Page)BuildManager.CreateInstanceFromVirtualPath(templateFile, typeof(Page));
 				hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
 				hand.ProcessRequest(context);
 			} catch (Exception ex) {
@@ -218,15 +218,15 @@ namespace Carrotware.CMS.Core {
 		}
 
 		protected void hand_PreRenderComplete(object sender, EventArgs e) {
-			if (!bAlreadyDone) {
+			if (!_alreadyDone) {
 				try {
 					if (HttpContext.Current.Items[REQ_PATH] != null && HttpContext.Current.Items[REQ_QUERY] != null) {
-						HttpContext.Current.RewritePath(sVirtualReqFile,
+						HttpContext.Current.RewritePath(_virtualReqFile,
 								HttpContext.Current.Items[REQ_PATH].ToString(),
 								HttpContext.Current.Items[REQ_QUERY].ToString());
 					}
 				} catch (Exception ex) { }
-				bAlreadyDone = true;
+				_alreadyDone = true;
 			}
 		}
 	}

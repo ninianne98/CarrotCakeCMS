@@ -8,43 +8,43 @@
 	Site Dashboard
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<div class="ui-widget-content ui-corner-all" style="width: 762px; clear: both;">
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+	<div id="cmsDashboardIcons" class="ui-corner-all">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.SiteInfoURL %>">
 				<img alt="" src="Images/SiteData.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Site Info</a>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.PageImportURL %>">
 				<img alt="" src="Images/ImportData.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Import Content</a>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.SiteExportURL %>">
 				<img alt="" src="Images/ExportData.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Export Content</a>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.SiteTemplateUpdateURL %>">
 				<img alt="" src="Images/TemplateUpdate.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Bulk Apply Templates</a>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.SiteContentStatusChangeURL %>">
 				<img alt="" src="Images/StatusChange.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Bulk Change Status</a>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.PageIndexURL %>">
 				<img alt="" src="Images/PageIndex.png" class="imgNoBorder" />
 				<br />
@@ -57,7 +57,7 @@
 					Add</a>
 			</p>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.BlogPostIndexURL %>">
 				<img alt="" src="Images/BlogIndex.png" class="imgNoBorder" />
 				<br />
@@ -70,7 +70,7 @@
 					Add </a>
 			</p>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.CategoryIndexURL %>">
 				<img alt="" src="Images/PostCategories.png" class="imgNoBorder" />
 				<br />
@@ -83,7 +83,7 @@
 					Add </a>
 			</p>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.TagIndexURL %>">
 				<img alt="" src="Images/PostTags.png" class="imgNoBorder" />
 				<br />
@@ -96,7 +96,7 @@
 					Add </a>
 			</p>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.ContentSnippetIndexURL %>">
 				<img alt="" src="Images/PageIndex.png" class="imgNoBorder" />
 				<br />
@@ -109,21 +109,21 @@
 					Add</a>
 			</p>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.ModuleIndexURL %>">
 				<img alt="" src="Images/ModuleAdmin.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Modules</a>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.SiteMapURL %>">
 				<img alt="" src="Images/SiteMap.png" class="imgNoBorder" />
 				<br />
 				<br />
 				Edit Site Map</a>
 		</div>
-		<div class="ui-widget-header ui-corner-all dashboardCell">
+		<div class="ui-corner-all dashboardCell">
 			<a href="<%= SiteFilename.SiteSkinIndexURL %>">
 				<img alt="" src="Images/SiteSkins.png" class="imgNoBorder" />
 				<br />
@@ -131,14 +131,14 @@
 				Site Skin Index</a>
 		</div>
 		<asp:PlaceHolder ID="phUserSecurity" runat="server">
-			<div class="ui-widget-header ui-corner-all dashboardCell">
+			<div class="ui-corner-all dashboardCell">
 				<a href="<%= SiteFilename.UserMembershipURL %>">
 					<img alt="" src="Images/UserList.png" class="imgNoBorder" />
 					<br />
 					<br />
 					Users</a>
 			</div>
-			<div class="ui-widget-header ui-corner-all dashboardCell">
+			<div class="ui-corner-all dashboardCell">
 				<a href="<%= SiteFilename.UserGroupsURL %>">
 					<img alt="" src="Images/GroupList.png" class="imgNoBorder" />
 					<br />

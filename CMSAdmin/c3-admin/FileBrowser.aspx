@@ -1,14 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FileBrowser.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.FileBrowser" %>
 
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en">
-<!--<![endif]-->
+<html>
 <head id="Head1" runat="server">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
 	<link href="iCheck/iCheck.css" rel="stylesheet" type="text/css" />
 	<script src="iCheck/icheck.min.js" type="text/javascript"></script>

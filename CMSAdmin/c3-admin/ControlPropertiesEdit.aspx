@@ -3,6 +3,56 @@
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
+	<script src="MiniColors/jquery.minicolors.min.js"></script>
+	<link href="MiniColors/jquery.minicolors.css" rel="stylesheet" />
+
+	<script type="text/javascript">
+		function setColorSwatch() {
+			$('.color-field').minicolors({
+				format: 'hex',
+				letterCase: 'lowercase',
+				theme: 'default'
+			});
+		}
+		function colorAjax() {
+			if (typeof (Sys) != 'undefined') {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				prm.add_endRequest(function () {
+					setColorSwatch();
+				});
+			}
+		}
+
+		$(document).ready(function () {
+			colorAjax();
+			setColorSwatch();
+		});
+	</script>
+
+	<style type="text/css">
+		.minicolors-swatch-color, .minicolors-theme-default .minicolors-swatch {
+			height: 28px;
+			width: 28px;
+			margin-left: 12px;
+			border-radius: 50%;
+			display: inline-block;
+			left: auto;
+		}
+
+		.minicolors-swatch::after {
+			box-shadow: none;
+		}
+
+		.minicolors-swatch {
+			border: 1px solid #555555;
+			cursor: pointer;
+		}
+
+		.minicolors-theme-default .minicolors-input {
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+	</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	Edit Properties
@@ -51,6 +101,11 @@
 			$('#<%=btnSave.ClientID %>').click();
 		}
 	</script>
+	<p>
+		<br />
+		&nbsp;<br />
+	</p>
+	<div style="width: 350px; height: 250px; clear: both;"></div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>

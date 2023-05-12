@@ -52,11 +52,11 @@ namespace Carrotware.CMS.Core {
 			RegisterRoutes(routes, false);
 		}
 
-		public static void RegisterRoutes(RouteCollection routes, bool OverrideRefresh) {
+		public static void RegisterRoutes(RouteCollection routes, bool overrideRefresh) {
 			try {
 				string sKeyPrefix = "CarrotCakeCMS_";
 
-				if (!HasRegisteredRoutes || OverrideRefresh) {
+				if (!HasRegisteredRoutes || overrideRefresh) {
 					List<string> listFiles = SiteNavHelper.GetSiteDirectoryPaths();
 					int iRoute = 0;
 					List<Route> lstRoute = new List<Route>();

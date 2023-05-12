@@ -1,13 +1,13 @@
 ﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Web.UI;
-using System;
 
 /*
 * CarrotCake CMS
@@ -370,34 +370,19 @@ namespace Carrotware.CMS.UI.Controls {
 				List<string> lst = base.LimitedPropertyList;
 				lst.Add("OverrideCSS");
 				lst.Add("CssClass");
-				lst.Add("ExtraCSS");
 				lst.Add("AutoStylingDisabled");
-				//lst.Add("AttemptResponsiveCSS");
-				//lst.Add("MobileWidth");
+				lst.Add("WrapList");
 				lst.Add("CSSSelected");
 				lst.Add("CSSHasChildren");
-				lst.Add("WrapList");
 				lst.Add("FontSize");
-				lst.Add("TopBackgroundStyle");
 				lst.Add("ForeColor");
 				lst.Add("BackColor");
-				lst.Add("BGColor");
-				lst.Add("HoverFGColor");
-				lst.Add("HoverBGColor");
-				lst.Add("UnSelFGColor");
-				lst.Add("UnSelBGColor");
-				lst.Add("SelFGColor");
-				lst.Add("SelBGColor");
-				lst.Add("SubFGColor");
-				lst.Add("SubBGColor");
 
 				return lst.Distinct().ToList();
 			}
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-			base.OnPreRender(e);
-
 			try {
 				if (this.PublicParmValues.Count > 0) {
 					string sTmp = "";
@@ -410,7 +395,7 @@ namespace Carrotware.CMS.UI.Controls {
 						this.AutoStylingDisabled = Convert.ToBoolean(sTmp);
 					}
 
-					sTmp = GetParmValue("AttemptResponsiveCSS", "true");
+					sTmp = GetParmValue("AttemptResponsiveCSS", "false");
 					if (!string.IsNullOrEmpty(sTmp)) {
 						this.AttemptResponsiveCSS = Convert.ToBoolean(sTmp);
 					}
@@ -506,6 +491,8 @@ namespace Carrotware.CMS.UI.Controls {
 			if (!this.AutoStylingDisabled) {
 				this.WrapList = false;
 			}
+
+			base.OnPreRender(e);
 		}
 
 		private string ConvertColorCode(Color color) {

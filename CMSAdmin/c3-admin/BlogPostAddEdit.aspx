@@ -547,7 +547,9 @@
 				<li><a href="#pagecontent-tabs-1">Center</a></li>
 				<li><a href="#pagecontent-tabs-3">Right</a></li>
 				<li><a href="#pagecontent-tabs-5">Text Controls</a></li>
-				<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
+				<asp:PlaceHolder runat="server" ID="phTrackback1">
+					<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
+				</asp:PlaceHolder>
 			</ul>
 			<div style="margin-bottom: 25px; height: 400px; width: 890px;">
 				<div id="pagecontent-tabs-0">
@@ -596,13 +598,13 @@
 										<Columns>
 											<asp:TemplateField>
 												<ItemTemplate>
-													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode=html&pageid={1}&widgetid={2}", "ContentEdit.aspx", guidContentID, Eval("Root_WidgetID")) %>');">
+													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.HtmlMode, guidContentID, Eval("Root_WidgetID")) %>');">
 														<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></a>
 												</ItemTemplate>
 											</asp:TemplateField>
 											<asp:TemplateField>
 												<ItemTemplate>
-													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode=plain&pageid={1}&widgetid={2}", "ContentEdit.aspx", guidContentID, Eval("Root_WidgetID")) %>');">
+													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.RawMode, guidContentID, Eval("Root_WidgetID")) %>');">
 														<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
 												</ItemTemplate>
 											</asp:TemplateField>
@@ -634,7 +636,7 @@
 										<Columns>
 											<asp:TemplateField>
 												<ItemTemplate>
-													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode=plain&pageid={1}&widgetid={2}", "ContentEdit.aspx", guidContentID, Eval("Root_WidgetID")) %>');">
+													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.RawMode, guidContentID, Eval("Root_WidgetID")) %>');">
 														<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
 												</ItemTemplate>
 											</asp:TemplateField>
@@ -657,28 +659,30 @@
 						</div>
 					</div>
 				</div>
-				<div id="pagecontent-tabs-4">
-					<div style="margin-bottom: 25px;">
-						<div runat="server" id="divTrackback">
-							new trackbacks, one per line<br />
-						</div>
-						<asp:TextBox Style="height: 255px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
-						<div class="scroll-container" style="height: 175px; width: 780px;">
-							<div class="scroll-area" style="height: 170px; width: 775px;">
-								<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-									AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
-									<Columns>
-										<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
-										<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:d} {0:t}" />
-										<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d} {0:t}" />
-										<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked"
-											AlternateTextTrue="Tracked" ShowBooleanImage="true" />
-									</Columns>
-								</carrot:CarrotGridView>
+				<asp:PlaceHolder runat="server" ID="phTrackback2">
+					<div id="pagecontent-tabs-4">
+						<div style="margin-bottom: 25px;">
+							<div runat="server" id="divTrackback">
+								new trackbacks, one per line<br />
+							</div>
+							<asp:TextBox Style="height: 255px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
+							<div class="scroll-container" style="height: 175px; width: 780px;">
+								<div class="scroll-area" style="height: 170px; width: 775px;">
+									<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+										<Columns>
+											<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
+											<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:d} {0:t}" />
+											<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d} {0:t}" />
+											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked"
+												AlternateTextTrue="Tracked" ShowBooleanImage="true" />
+										</Columns>
+									</carrot:CarrotGridView>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</asp:PlaceHolder>
 			</div>
 		</div>
 		<table style="width: 800px;">

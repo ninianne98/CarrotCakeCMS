@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System;
 
 /*
 * CarrotCake CMS
@@ -116,13 +116,28 @@ namespace Carrotware.CMS.Core {
 			List<SiteNav> lstNav = SiteNavHelper.GetSamplerFakeNav();
 			List<SiteNav> lstNav2 = new List<SiteNav>();
 
-			foreach (SiteNav l1 in lstNav) {
-				List<SiteNav> lst = SiteNavHelper.GetSamplerFakeNav(l1.Root_ContentID);
-				lstNav2 = lstNav2.Union(lst).ToList();
-
-				foreach (SiteNav l2 in lst) {
-					List<SiteNav> lst2 = SiteNavHelper.GetSamplerFakeNav(l2.Root_ContentID);
-					lstNav2 = lstNav2.Union(lst2).ToList();
+			if (iDepth >= 2) {
+				foreach (SiteNav l1 in lstNav) {
+					List<SiteNav> lst = SiteNavHelper.GetSamplerFakeNav(4, l1.Root_ContentID);
+					lstNav2 = lstNav2.Union(lst).ToList();
+					if (iDepth >= 3) {
+						foreach (SiteNav l2 in lst) {
+							List<SiteNav> lst2 = SiteNavHelper.GetSamplerFakeNav(3, l2.Root_ContentID);
+							lstNav2 = lstNav2.Union(lst2).ToList();
+							if (iDepth >= 4) {
+								foreach (SiteNav l3 in lst2) {
+									List<SiteNav> lst3 = SiteNavHelper.GetSamplerFakeNav(2, l2.Root_ContentID);
+									lstNav2 = lstNav2.Union(lst3).ToList();
+									if (iDepth >= 5) {
+										foreach (SiteNav l4 in lst3) {
+											List<SiteNav> lst4 = SiteNavHelper.GetSamplerFakeNav(2, l2.Root_ContentID);
+											lstNav2 = lstNav2.Union(lst4).ToList();
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 

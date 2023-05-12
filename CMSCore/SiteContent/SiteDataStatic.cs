@@ -132,11 +132,12 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static bool IsLikelyHomePage(string filePath) {
-			if (!IsWebView) {
+			if (!IsWebView || filePath == null) {
 				return false;
 			}
 
-			return string.Format("{0}", filePath).Length < 4 || (filePath.ToLowerInvariant() == DefaultDirectoryFilename.ToLowerInvariant());
+			return string.Format("{0}", filePath).Length < 4
+					|| (filePath.ToLowerInvariant() == DefaultDirectoryFilename.ToLowerInvariant());
 		}
 
 		private static string SiteKeyPrefix = "cms_SiteData_";
@@ -220,6 +221,8 @@ namespace Carrotware.CMS.Core {
 			site.Blog_EditorPath = "author";
 			site.Blog_DatePattern = "yyyy/MM/dd";
 
+			site.AcceptTrackbacks = false;
+			site.SendTrackbacks = false;
 			site.TimeZoneIdentifier = TimeZoneInfo.Local.Id;
 
 			return site;
@@ -881,5 +884,20 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string RssDocType { get { return "text/xml"; } }
+
+		public static string RawMode { get { return "raw"; } }
+		public static string HtmlMode { get { return "html"; } }
+
+		public static string EditMode(string mode) {
+			return (string.IsNullOrEmpty(mode) || mode.Trim().ToLowerInvariant() != RawMode) ? HtmlMode.ToLowerInvariant() : RawMode.ToLowerInvariant();
+		}
+
+		public static bool IsRawMode(string mode) {
+			return !string.IsNullOrEmpty(mode) && mode.Trim().ToLowerInvariant() == RawMode;
+		}
+
+		public static bool IsHtmlMode(string mode) {
+			return !string.IsNullOrEmpty(mode) && mode.Trim().ToLowerInvariant() != RawMode;
+		}
 	}
 }

@@ -157,14 +157,16 @@
 						Hide from Search Engines
 						<asp:CheckBox ID="chkHide" runat="server" />
 					</p>
-					<p>
-						Allow sending trackbacks
+					<asp:PlaceHolder runat="server" ID="phTrackback">
+						<p>
+							Allow sending trackbacks
 						<asp:CheckBox ID="chkSendTrackback" runat="server" />
-					</p>
-					<p>
-						Accept incoming trackbacks
+						</p>
+						<p>
+							Accept incoming trackbacks
 						<asp:CheckBox ID="chkAcceptTrackbacks" runat="server" />
-					</p>
+						</p>
+					</asp:PlaceHolder>
 				</td>
 			</tr>
 		</table>

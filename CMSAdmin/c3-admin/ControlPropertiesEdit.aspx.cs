@@ -4,6 +4,7 @@ using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Web.UI;
@@ -165,7 +166,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						sDefVal = System.Drawing.ColorTranslator.ToHtml(vC);
 					}
 				} else {
-					sDefVal = String.Empty;
+					sDefVal = string.Empty;
 				}
 
 				return sDefVal;
@@ -189,11 +190,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				string sListSourcePropertyName = (from p in lstDefProps
 												  where p.Name.ToLowerInvariant() == sName.ToLowerInvariant()
-														&& !String.IsNullOrEmpty(p.CompanionSourceFieldName)
+														&& !string.IsNullOrEmpty(p.CompanionSourceFieldName)
 												  select p.CompanionSourceFieldName).FirstOrDefault();
 
-				if (String.IsNullOrEmpty(sListSourcePropertyName)) {
-					sListSourcePropertyName = String.Empty;
+				if (string.IsNullOrEmpty(sListSourcePropertyName)) {
+					sListSourcePropertyName = string.Empty;
 				}
 
 				ListSourceProperty = (from p in lstDefProps
@@ -219,7 +220,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 							GeneralUtilities.BindListDefaultText(ddlValue, ListSourceProperty.DefValue, null, "Select Value", "");
 
-							if (!String.IsNullOrEmpty(txtValue.Text)) {
+							if (!string.IsNullOrEmpty(txtValue.Text)) {
 								try {
 									GeneralUtilities.SelectListValue(ddlValue, txtValue.Text);
 								} catch { }
@@ -261,6 +262,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					if (dp.FieldMode == WidgetAttribute.FieldMode.RichHTMLTextBox) {
 						txtValue.CssClass = "mceEditor";
 					}
+				}
+
+				if (dp.PropertyType == typeof(Color) || dp.FieldMode == WidgetAttribute.FieldMode.ColorBox) {
+					txtValue.CssClass = "color-field";
+					txtValue.Width = new Unit("90px");
 				}
 
 				if (dp.PropertyType == typeof(bool) || dp.FieldMode == WidgetAttribute.FieldMode.CheckBox) {

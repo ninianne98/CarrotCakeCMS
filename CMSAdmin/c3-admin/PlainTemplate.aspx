@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPage" %>
 
 <%@ Import Namespace="Carrotware.CMS.Core" %>
+<!DOCTYPE HTML>
 <script runat="server">
 
 	protected override void OnLoad(EventArgs e) {
@@ -21,16 +22,9 @@
 		}
 	}
 </script>
-<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en">
-<!--<![endif]-->
+<html>
 <head id="Head1" runat="server">
 	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" UseJqueryMigrate="true" />
 	<script type="text/javascript">
 		$(document).ready(function () {

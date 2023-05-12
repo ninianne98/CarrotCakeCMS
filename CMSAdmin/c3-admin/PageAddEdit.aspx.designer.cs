@@ -292,6 +292,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.DropDownList ddlTemplate;
         
         /// <summary>
+        /// phTrackback1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phTrackback1;
+        
+        /// <summary>
         /// divLeft control.
         /// </summary>
         /// <remarks>
@@ -362,6 +371,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Carrotware.Web.UI.Controls.CarrotGridView gvTxtControls;
+        
+        /// <summary>
+        /// phTrackback2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phTrackback2;
         
         /// <summary>
         /// divTrackback control.

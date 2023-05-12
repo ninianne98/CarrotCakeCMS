@@ -95,12 +95,20 @@
 	font-weight: normal;
 }
 
-.cms-seagreen .ui-dialog-titlebar, .cms-seagreen .ui-dialog-titlebar a, #cms-seagreen-id .ui-dialog-titlebar, #cms-seagreen-id .ui-dialog-titlebar a, .cms-seagreen .ui-widget-header, #cms-seagreen-id .ui-widget-header {
+.cms-seagreen .ui-dialog .ui-dialog-title, #cms-seagreen-id .ui-dialog .ui-dialog-title,
+.cms-seagreen .ui-dialog-titlebar, .cms-seagreen .ui-dialog-titlebar a,
+#cms-seagreen-id .ui-dialog-titlebar, #cms-seagreen-id .ui-dialog-titlebar a,
+.cms-seagreen .ui-widget-header, #cms-seagreen-id .ui-widget-header {
 	color: #676F6A;
 }
 
 .cms-seagreen .ui-front, #cms-seagreen-id .ui-front {
 	z-index: 10000000;
+}
+
+.cms-seagreen .no-close .ui-dialog-titlebar-close,
+#cms-seagreen-id .no-close .ui-dialog-titlebar-close {
+	display: none;
 }
 
 #cms-seagreen-id *, #cms-seagreen-id *:before, #cms-seagreen-id *:after {

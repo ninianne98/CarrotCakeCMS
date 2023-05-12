@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -56,7 +56,7 @@ namespace Carrotware.CMS.UI.Controls {
 				string sTmp = "";
 				try {
 					sTmp = GetParmValue("LevelDepth", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.LevelDepth = Convert.ToInt32(sTmp);
 					}
 				} catch (Exception ex) {

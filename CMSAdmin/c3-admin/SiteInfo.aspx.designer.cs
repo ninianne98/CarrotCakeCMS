@@ -121,6 +121,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.CheckBox chkHide;
         
         /// <summary>
+        /// phTrackback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phTrackback;
+        
+        /// <summary>
         /// chkSendTrackback control.
         /// </summary>
         /// <remarks>

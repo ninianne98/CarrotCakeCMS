@@ -85,7 +85,7 @@
 					</asp:TemplateField>
 					<asp:TemplateField>
 						<ItemTemplate>
-							<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("{0}?mode=raw&id={1}", SiteFilename.BlogPostAddEditURL, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
+							<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("{0}?mode={1}&id={2}", SiteFilename.BlogPostAddEditURL, SiteData.RawMode, Eval("Root_ContentID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField>

@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Content Snippet Index" Language="C#" MasterPageFile="~/c3-admin/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="ContentSnippetIndex.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ContentSnippetIndex" %>
 
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <%@ MasterType VirtualPath="MasterPages/Main.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
@@ -19,7 +20,7 @@
 				<td>&nbsp;
 				</td>
 				<td style="width: 48%;">
-					<a href="ContentSnippetAddEdit.aspx?mode=raw&id=">
+					<a href="ContentSnippetAddEdit.aspx?mode=<%=SiteData.RawMode %>&id=">
 						<img class="imgNoBorder" src="/c3-admin/images/script_add.png" alt="Add" title="Add as Plain Text" />
 						Add Content Snippet (as plain text)</a>
 				</td>
@@ -45,7 +46,7 @@
 				</asp:TemplateField>
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("./ContentSnippetAddEdit.aspx?mode=raw&id={0}", Eval("Root_ContentSnippetID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkEdit2" NavigateUrl='<%# String.Format("./ContentSnippetAddEdit.aspx?mode={0}&id={1}", SiteData.RawMode, Eval("Root_ContentSnippetID")) %>'><img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></asp:HyperLink>
 					</ItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField>

@@ -1,6 +1,7 @@
 ﻿using Carrotware.CMS.Core;
 using System;
 using System.ComponentModel;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -38,12 +39,12 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private Control GetCtrl(string CtrlFile, Control X) {
 			ControlUtilities cu = new ControlUtilities(this);
+			var sb = new StringBuilder();
+			sb.Append(cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx"));
 
-			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls." + CtrlFile + ".ascx");
+			sb.Replace("{WIDGETCONTAINER_ID}", this.ID);
 
-			sCtrl = sCtrl.Replace("{WIDGETCONTAINER_ID}", this.ID);
-
-			Control userControl = cu.CreateControlFromString(sCtrl);
+			Control userControl = cu.CreateControlFromString(sb.ToString());
 
 			return userControl;
 		}

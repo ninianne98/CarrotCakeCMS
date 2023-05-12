@@ -614,14 +614,15 @@ function cmsCountdownWindow() {
 
 function cmsNotifySaved() {
 	$("#CMSsavedconfirm").dialog({
-		open: function () {
-			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
-		},
-
+		dialogClass: "no-close",
+		closeOnEscape: false,
 		resizable: false,
 		height: 250,
 		width: 400,
 		modal: true,
+		open: function () {
+			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+		},
 		buttons: {
 			"OK": function () {
 				cmsMakeOKToLeave();
@@ -654,6 +655,7 @@ function cmsCancelEdit() {
 			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 		},
 
+		closeOnEscape: true,
 		resizable: false,
 		height: 250,
 		width: 400,
@@ -910,6 +912,7 @@ function cmsRemoveWidgetLink(v) {
 			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 		},
 
+		closeOnEscape: true,
 		resizable: false,
 		height: 250,
 		width: 400,
@@ -1114,6 +1117,7 @@ function cmsClickAddWidget() {
 				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 			},
 
+			closeOnEscape: true,
 			resizable: false,
 			height: 250,
 			width: 400,

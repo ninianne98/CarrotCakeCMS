@@ -1,14 +1,14 @@
 ﻿using Carrotware.CMS.Data;
 using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
-using System;
 
 /*
 * CarrotCake CMS
@@ -104,11 +104,16 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static string CreateBlogDatePrefix(Guid siteID, DateTime goLiveDate) {
-			string fileName = string.Empty;
+			var sd = SiteData.GetSiteFromCache(siteID);
 
-			var ss = SiteData.GetSiteFromCache(siteID);
-			if (ss.Blog_DatePattern.Length > 1) {
-				fileName = "/" + goLiveDate.ToString(ss.Blog_DatePattern) + "/";
+			return CreateBlogDatePrefix(sd, goLiveDate);
+		}
+
+		public static string CreateBlogDatePrefix(SiteData site, DateTime goLiveDate) {
+			string fileName = "";
+
+			if (site.Blog_DatePattern.Length > 1) {
+				fileName = "/" + ScrubSpecial(goLiveDate.ToString(site.Blog_DatePattern)) + "/";
 			} else {
 				fileName = "/";
 			}
@@ -116,10 +121,18 @@ namespace Carrotware.CMS.Core {
 			return ScrubPath(fileName);
 		}
 
-		public static string CreateFileNameFromSlug(Guid siteID, DateTime goLiveDate, string PageSlug) {
-			string fileName = string.Empty;
+		public static string CreateFileNameFromSlug(Guid siteID, DateTime goLiveDate, string pageSlug) {
+			string fileName = "";
 
-			fileName = "/" + CreateBlogDatePrefix(siteID, goLiveDate) + "/" + PageSlug;
+			fileName = "/" + CreateBlogDatePrefix(siteID, goLiveDate) + "/" + pageSlug;
+
+			return ScrubFilename(Guid.Empty, fileName);
+		}
+
+		public static string CreateFileNameFromSlug(SiteData site, DateTime goLiveDate, string pageSlug) {
+			string fileName = "";
+
+			fileName = "/" + CreateBlogDatePrefix(site, goLiveDate) + "/" + pageSlug;
 
 			return ScrubFilename(Guid.Empty, fileName);
 		}
@@ -144,7 +157,6 @@ namespace Carrotware.CMS.Core {
 
 		public void ResolveDuplicateBlogURLs(Guid siteID) {
 			SiteData site = SiteData.GetSiteFromCache(siteID);
-			string SiteDatePattern = site.Blog_DatePattern;
 
 			IQueryable<string> queryFindDups = CompiledQueries.cqBlogDupFileNames(db, siteID);
 
@@ -156,7 +168,7 @@ namespace Carrotware.CMS.Core {
 
 				foreach (carrot_RootContent item in queryContentShareFilename) {
 					int c = -1;
-					string sNewFilename = ScrubFilename(item.Root_ContentID, "/" + item.GoLiveDate.ToString(SiteDatePattern) + "/" + item.PageSlug);
+					string sNewFilename = ScrubFilename(item.Root_ContentID, CreateFileNameFromSlug(site, item.GoLiveDate, item.PageSlug));
 					string sSlug = item.PageSlug;
 
 					c = CompiledQueries.cqGetRootContentListNoMatchByURL(db, siteID, item.Root_ContentID, sNewFilename).Count();
@@ -254,23 +266,31 @@ namespace Carrotware.CMS.Core {
 			string newFileName = string.Format("{0}", fileName).Trim();
 
 			if (string.IsNullOrEmpty(newFileName)) {
-				newFileName = rootContentID.ToString();
+				newFileName = "/" + rootContentID.ToString().ToLowerInvariant() + ".aspx";
 			}
+
+			newFileName = newFileName.Replace(@"//", @"/").Replace(@"//", @"/");
 
 			if (newFileName.EndsWith(@"/")) {
 				newFileName = newFileName + SiteData.DefaultDirectoryFilename;
-				newFileName = newFileName.Replace("//", "/");
 			}
 
 			newFileName = ScrubFilePath(newFileName).Trim();
 
-			if (newFileName.ToLowerInvariant().EndsWith(".htm")) {
-				newFileName = newFileName.Substring(0, newFileName.Length - 4) + ".aspx";
-			}
-			if (newFileName.ToLowerInvariant().EndsWith(".html")) {
-				newFileName = newFileName.Substring(0, newFileName.Length - 5) + ".aspx";
+			var ext = new string[] { ".aspx", ".cshtml", ".vbhtml", ".htm", ".html" };
+
+			foreach (var x in ext) {
+				if (newFileName.ToLowerInvariant().EndsWith(x)) {
+					newFileName = newFileName.Substring(0, newFileName.Length - x.Length);
+				}
 			}
 
+			// just in case the whole filename was an extension
+			if (string.IsNullOrEmpty(newFileName) || newFileName.Length < 2) {
+				newFileName = "/" + rootContentID.ToString().ToLowerInvariant() + ".aspx";
+			}
+
+			//restore the valid file extension
 			if (!newFileName.ToLowerInvariant().EndsWith(".aspx")) {
 				newFileName = newFileName + ".aspx";
 			}
@@ -870,7 +890,6 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void RemoveVersions(Guid siteID, List<Guid> lstDel) {
-
 			IQueryable<carrot_Content> queryCont = (from ct in db.carrot_Contents
 													join r in db.carrot_RootContents on ct.Root_ContentID equals r.Root_ContentID
 													orderby ct.EditDate descending

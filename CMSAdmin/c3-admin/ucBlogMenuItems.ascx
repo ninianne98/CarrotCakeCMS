@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucBlogMenuItems.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucBlogMenuItems" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <div>
 	<table style="width: 625px;">
 		<tr>
@@ -37,7 +38,7 @@
 			<td>&nbsp;
 			</td>
 			<td style="width: 48%;">
-				<a href="BlogPostAddEdit.aspx?mode=raw&id=">
+				<a href="BlogPostAddEdit.aspx?mode=<%=SiteData.RawMode %>&id=">
 					<img class="imgNoBorder" src="/c3-admin/images/script_add.png" alt="Add" title="Add as Plain Text" />
 					Add Blog Post (as plain text)</a>
 			</td>

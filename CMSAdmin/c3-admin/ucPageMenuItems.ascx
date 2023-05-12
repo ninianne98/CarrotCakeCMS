@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucPageMenuItems.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucPageMenuItems" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <div>
 	<table style="width: 625px;">
 		<tr>
@@ -41,7 +42,7 @@
 			<td>&nbsp;
 			</td>
 			<td style="width: 48%;">
-				<a href="PageAddEdit.aspx?mode=raw&id=">
+				<a href="PageAddEdit.aspx?mode=<%=SiteData.RawMode %>&id=">
 					<img class="imgNoBorder" src="/c3-admin/images/script_add.png" alt="Add" title="Add as Plain Text" />
 					Add Page (as plain text)</a>
 			</td>

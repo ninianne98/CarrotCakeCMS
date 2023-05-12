@@ -51,7 +51,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pagedDataGrid.PageSize = iRecCount + 10;
 			}
 
-			lblPages.Text = String.Format(" {0} ", iRecCount);
+			lblPages.Text = string.Format(" {0} ", iRecCount);
 
 			pagedDataGrid.BuildSorting();
 

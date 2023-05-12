@@ -43,7 +43,6 @@ BODY {
 	margin: 0px;
 }
 
-
 H1, H2, H3 {
 	font-weight: bold;
 	font-family: Georgia, Times New Roman, Serif;
@@ -99,5 +98,5 @@ H3 {
 	font-weight: bold;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;	
+	-webkit-border-radius: 5px;
 }

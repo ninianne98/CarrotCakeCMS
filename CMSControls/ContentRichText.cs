@@ -45,8 +45,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public Dictionary<string, string> JSEditFunctions {
 			get {
 				Dictionary<string, string> lst = new Dictionary<string, string>();
-				lst.Add("Edit HTML", "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'html');");
-				lst.Add("Edit Text", "cmsShowEditWidgetForm('" + this.PageWidgetID + "', 'plain');");
+				lst.Add("Edit HTML", "cmsShowEditWidgetForm('" + this.PageWidgetID + "', '" + SiteData.HtmlMode + "');");
+				lst.Add("Edit Text", "cmsShowEditWidgetForm('" + this.PageWidgetID + "', '" + SiteData.RawMode + "');");
 				return lst;
 			}
 		}

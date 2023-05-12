@@ -785,6 +785,7 @@
     <Content Include="c3-admin\Images\chosen-sprite.png" />
     <Content Include="c3-admin\Images\cloud-up.png" />
     <Content Include="c3-admin\Images\database.png" />
+    <Content Include="c3-admin\Images\hextile.png" />
     <Content Include="c3-admin\Images\information.png" />
     <Content Include="c3-admin\Includes\chosen.jquery.min.js" />
     <Content Include="c3-admin\Includes\chosen.min.css" />
@@ -793,8 +794,12 @@
     <Content Include="c3-admin\Includes\jquery.form.min.js" />
     <Content Include="c3-admin\Includes\jquery.tooltipster.min.js" />
     <Content Include="c3-admin\Includes\jquery.uploadfile.min.js" />
+    <Content Include="c3-admin\Includes\page-drill-down.js" />
     <Content Include="c3-admin\Includes\tooltipster.css" />
     <Content Include="c3-admin\Includes\uploadfile.css" />
+    <Content Include="c3-admin\MiniColors\jquery.minicolors.css" />
+    <Content Include="c3-admin\MiniColors\jquery.minicolors.min.js" />
+    <Content Include="c3-admin\MiniColors\jquery.minicolors.png" />
     <Content Include="c3-admin\SiteDetail.aspx" />
     <Content Include="c3-admin\SiteIndex.aspx" />
     <Content Include="c3-admin\tiny_mce\File.gif" />
@@ -1245,7 +1250,6 @@
     <Content Include="c3-admin\Images\layout_content.png" />
     <Content Include="c3-admin\Images\layout_edit.png" />
     <Content Include="c3-admin\Images\lock.png" />
-    <Content Include="c3-admin\Images\logonbox.gif" />
     <Content Include="c3-admin\Images\menu-gradient.png" />
     <Content Include="c3-admin\Images\mini-spinner1-6F997D.gif" />
     <Content Include="c3-admin\Images\mini-spinner2-6F997D.gif" />

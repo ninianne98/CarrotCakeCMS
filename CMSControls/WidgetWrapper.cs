@@ -112,6 +112,8 @@ namespace Carrotware.CMS.UI.Controls {
 			sb.Replace("{WIDGET_ORDER}", this.Order.ToString());
 			sb.Replace("{WIDGET_PATH}", this.ControlPath);
 			sb.Replace("{WIDGET_TITLE}", this.ControlTitle);
+			sb.Replace("{HTML_FLAG}", SiteData.HtmlMode);
+			sb.Replace("{PLAIN_FLAG}", SiteData.RawMode);
 
 			if (!string.IsNullOrEmpty(this.JSEditFunction)) {
 				sb.Replace("{WIDGET_JS}", this.JSEditFunction);

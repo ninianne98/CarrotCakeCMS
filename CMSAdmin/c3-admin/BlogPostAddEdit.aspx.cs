@@ -39,8 +39,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidVersionContentID = GetGuidParameterFromQuery("versionid");
 			guidImportContentID = GetGuidParameterFromQuery("importid");
 
+			var site = SiteData.CurrentSite;
+			phTrackback1.Visible = (site.AcceptTrackbacks || site.SendTrackbacks);
+			phTrackback2.Visible = phTrackback1.Visible;
+
 			sPageMode = GetStringParameterFromQuery("mode");
-			if (sPageMode.ToLowerInvariant() == "raw") {
+			if (SiteData.IsRawMode(sPageMode)) {
 				reBody.CssClass = "rawEditor";
 				reLeftBody.CssClass = "rawEditor";
 				reRightBody.CssClass = "rawEditor";
@@ -382,7 +386,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (sPageMode.Length < 1) {
 					Response.Redirect(SiteData.CurrentScriptName + "?id=" + pageContents.Root_ContentID.ToString());
 				} else {
-					Response.Redirect(SiteData.CurrentScriptName + "?mode=raw&id=" + pageContents.Root_ContentID.ToString());
+					Response.Redirect(SiteData.CurrentScriptName + "?mode=" + SiteData.RawMode + "&id=" + pageContents.Root_ContentID.ToString());
 				}
 			} else {
 				Response.Redirect(pageContents.FileName);

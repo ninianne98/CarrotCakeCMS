@@ -25,7 +25,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public Guid guidImportContentID = Guid.Empty;
 
 		public bool bLocked = false;
-		private string sPageMode = String.Empty;
+		private string sPageMode = string.Empty;
 
 		private int iPageCount = 0;
 
@@ -43,6 +43,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidVersionContentID = GetGuidParameterFromQuery("versionid");
 			guidImportContentID = GetGuidParameterFromQuery("importid");
 
+			var site = SiteData.CurrentSite;
+			phTrackback1.Visible = (site.AcceptTrackbacks || site.SendTrackbacks);
+			phTrackback2.Visible = phTrackback1.Visible;
+
 			if (!IsPostBack) {
 				if (iPageCount < 1) {
 					txtSort.Text = "0";
@@ -53,7 +57,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			sPageMode = GetStringParameterFromQuery("mode");
-			if (sPageMode.ToLowerInvariant() == "raw") {
+			if (SiteData.IsRawMode(sPageMode)) {
 				reBody.CssClass = "rawEditor";
 				reLeftBody.CssClass = "rawEditor";
 				reRightBody.CssClass = "rawEditor";
@@ -326,7 +330,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents.Parent_ContentID = null;
 			}
 
-			if (String.IsNullOrEmpty(hdnCreditUserID.Value)) {
+			if (string.IsNullOrEmpty(hdnCreditUserID.Value)) {
 				pageContents.CreditUserId = null;
 			} else {
 				var usr = new ExtendedUserData(hdnCreditUserID.Value);
@@ -386,7 +390,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				if (sPageMode.Length < 1) {
 					Response.Redirect(SiteData.CurrentScriptName + "?id=" + pageContents.Root_ContentID.ToString());
 				} else {
-					Response.Redirect(SiteData.CurrentScriptName + "?mode=raw&id=" + pageContents.Root_ContentID.ToString());
+					Response.Redirect(SiteData.CurrentScriptName + "?mode=" + SiteData.RawMode + "&id=" + pageContents.Root_ContentID.ToString());
 				}
 			} else {
 				Response.Redirect(pageContents.FileName);

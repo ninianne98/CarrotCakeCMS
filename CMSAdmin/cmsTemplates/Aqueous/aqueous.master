@@ -76,80 +76,80 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-	<!-- Header -->
-	<div id="header-wrapper">
-		<div id="header">
-			<div class="container">
-				<div id="logo">
-					<!-- Logo -->
-					<h1>
-						<a href="/">
-							<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a></h1>
-					<span>
-						<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" /></span>
-				</div>
-			</div>
-			<div id="menu-wrapper">
+		<!-- Header -->
+		<div id="header-wrapper">
+			<div id="header">
 				<div class="container">
-					<nav id="nav">
-						<%--<carrot:TopLevelNavigation runat="server" ID="TopLevelNavigation1" CSSSelected="active" />--%>
-						<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" CSSSelected="current" WrapList="false" AutoStylingDisabled="true" />
-					</nav>
+					<div id="logo">
+						<!-- Logo -->
+						<h1>
+							<a href="/">
+								<carrot:SiteDataProperty runat="server" ID="SiteDataProperty1" DataField="SiteName" /></a></h1>
+						<span>
+							<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" /></span>
+					</div>
+				</div>
+				<div id="menu-wrapper">
+					<div class="container">
+						<nav id="nav">
+							<%--<carrot:TopLevelNavigation runat="server" ID="TopLevelNavigation1" CSSSelected="active" />--%>
+							<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" CSSSelected="current" WrapList="false" AutoStylingDisabled="true" />
+						</nav>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Header -->
-	<!-- Main -->
-	<div id="main-wrapper">
-		<asp:ContentPlaceHolder ID="BannerBodyContentPlaceHolder" runat="server">
-		</asp:ContentPlaceHolder>
-		<div class="container">
-			<div id="main">
-				<div class="row">
-					<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
-					</asp:ContentPlaceHolder>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Main -->
-	<!-- Footer -->
-	<div class="container">
-		<div id="footer">
-			<div class="row">
-				<carrot:PagedDataSummary ID="PagedDataSummary1" HideSpanWrapper="true" runat="server" ContentType="Blog" PageSize="3" ShowPager="false" IgnoreSitePath="true">
-					<ContentTemplate>
-						<section class="4u">
-							<header>
-								<h2>
-									<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="NavMenuText" />
-									<carrot:ListItemNavText runat="server" ID="ListItemNavText2" DataField="GoLiveDate" FieldFormat=" | {0:d} " />
-								</h2>
-							</header>
-							<p>
-								<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="PageTextPlainSummary" />
-								<br style="clear: both" />
-								<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" CssClassNormal="button small" LinkText="Read more" />
-								<br style="clear: both" />
-							</p>
-						</section>
-					</ContentTemplate>
-				</carrot:PagedDataSummary>
-			</div>
-		</div>
-	</div>
-	<!-- /Footer -->
-	<!-- Copyright -->
-	<asp:PlaceHolder ID="myFooter" runat="server">
-		<div id="copyright">
+		<!-- Header -->
+		<!-- Main -->
+		<div id="main-wrapper">
+			<asp:ContentPlaceHolder ID="BannerBodyContentPlaceHolder" runat="server">
+			</asp:ContentPlaceHolder>
 			<div class="container">
-				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %><br />
-				Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)<br />
-				Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms">carrotcake cms</a>
+				<div id="main">
+					<div class="row">
+						<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+						</asp:ContentPlaceHolder>
+					</div>
+				</div>
 			</div>
 		</div>
-	</asp:PlaceHolder>
+		<!-- /Main -->
+		<!-- Footer -->
+		<div class="container">
+			<div id="footer">
+				<div class="row">
+					<carrot:PagedDataSummary ID="PagedDataSummary1" HideSpanWrapper="true" runat="server" ContentType="Blog" PageSize="3" ShowPager="false" IgnoreSitePath="true">
+						<ContentTemplate>
+							<section class="4u">
+								<header>
+									<h2>
+										<carrot:ListItemNavText runat="server" ID="ListItemNavText1" DataField="NavMenuText" />
+										<carrot:ListItemNavText runat="server" ID="ListItemNavText2" DataField="GoLiveDate" FieldFormat=" | {0:d} " />
+									</h2>
+								</header>
+								<p>
+									<carrot:ListItemNavText runat="server" ID="ListItemNavText3" DataField="PageTextPlainSummary" />
+									<br style="clear: both" />
+									<carrot:NavLinkForTemplate ID="NavLinkForTemplate1" runat="server" CssClassNormal="button small" LinkText="Read more" />
+									<br style="clear: both" />
+								</p>
+							</section>
+						</ContentTemplate>
+					</carrot:PagedDataSummary>
+				</div>
+			</div>
+		</div>
+		<!-- /Footer -->
+		<!-- Copyright -->
+		<asp:PlaceHolder ID="myFooter" runat="server">
+			<div id="copyright">
+				<div class="container">
+					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %><br />
+					Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)<br />
+					Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms">carrotcake cms</a>
+				</div>
+			</div>
+		</asp:PlaceHolder>
 	</form>
 </body>
 </html>

@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.Design;
 using System.Web.UI.WebControls;
 using Carrotware.CMS.Core;
+using System.Text;
 
 /*
 * CarrotCake CMS
@@ -71,7 +72,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string ZoneChar {
 			get {
 				String s = (String)ViewState["ZoneChar"];
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 
 			set {
@@ -92,7 +93,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["TextZone"];
 				TextFieldZone c = TextFieldZone.Unknown;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (TextFieldZone)Enum.Parse(typeof(TextFieldZone), s, true);
 				}
 				return c;
@@ -106,14 +107,16 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private Control GetCtrl(Control X) {
 			cu = new ControlUtilities(this);
+			var sb = new StringBuilder();
+			sb.Append(cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx"));
 
-			string sCtrl = cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx");
+			sb.Replace("{HTML_FLAG}", SiteData.HtmlMode);
+			sb.Replace("{PLAIN_FLAG}", SiteData.RawMode);
+			sb.Replace("{ZONE_ID}", this.ClientID);
+			sb.Replace("{ZONE_CHAR}", this.ZoneChar);
+			sb.Replace("{ZONE_TYPE}", this.TextZone.ToString());
 
-			sCtrl = sCtrl.Replace("{ZONE_ID}", this.ClientID);
-			sCtrl = sCtrl.Replace("{ZONE_CHAR}", this.ZoneChar);
-			sCtrl = sCtrl.Replace("{ZONE_TYPE}", this.TextZone.ToString());
-
-			Control userControl = cu.CreateControlFromString(sCtrl);
+			Control userControl = cu.CreateControlFromString(sb.ToString());
 
 			return userControl;
 		}
@@ -121,7 +124,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 
-			if (this.TextZone != TextFieldZone.Unknown && (String.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
+			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
 				ContentPage pageContents = cu.GetContainerContentPage(this);
 
 				if (pageContents != null) {
@@ -162,7 +165,7 @@ namespace Carrotware.CMS.UI.Controls {
 #if DEBUG
 				ctrl.Controls.Add(new Literal { Text = "\r\n<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>" });
 #endif
-				ctrl.Controls.Add(new Literal { Text = String.Format("\r\n {0} \r\n", outputText) });
+				ctrl.Controls.Add(new Literal { Text = string.Format("\r\n {0} \r\n", outputText) });
 #if DEBUG
 				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
 #endif

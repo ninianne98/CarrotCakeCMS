@@ -16,12 +16,12 @@ using System.Collections.ObjectModel;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class SiteInfo : AdminBasePage {
-		private bool bNewSite = true;
+		private bool _isNewSite = true;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteInfo);
 
-			bNewSite = !SiteData.CurretSiteExists;
+			_isNewSite = !SiteData.CurretSiteExists;
 
 			litID.Text = SiteData.CurrentSiteID.ToString();
 
@@ -30,9 +30,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				SiteData site = siteHelper.GetCurrentSite();
 
-				if (site == null || !SiteData.CurretSiteExists) {
+				if (site == null || _isNewSite) {
 					site = SiteData.InitNewSite(SiteID);
 				}
+
+				phTrackback.Visible = _isNewSite ? false : (site.AcceptTrackbacks || site.SendTrackbacks);
 
 				ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
 
@@ -123,7 +125,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-			if (!bNewSite) {
+			if (!_isNewSite) {
 				Response.Redirect(SiteData.CurrentScriptName);
 			} else {
 				DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
@@ -143,8 +145,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						PageHead = "Home",
 						FileName = "/home.aspx",
 						PageText = SiteData.StarterHomePageSample,
-						LeftPageText = String.Empty,
-						RightPageText = String.Empty,
+						LeftPageText = string.Empty,
+						RightPageText = string.Empty,
 						NavOrder = 0,
 						IsLatestVersion = true,
 						PageActive = true,

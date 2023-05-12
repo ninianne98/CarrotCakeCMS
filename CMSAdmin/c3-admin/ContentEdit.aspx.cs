@@ -30,14 +30,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			guidWidgetID = GetGuidParameterFromQuery("widgetid");
 
 			sFieldName = GetStringParameterFromQuery("field").ToLowerInvariant();
-			sMode = GetStringParameterFromQuery("mode").ToLowerInvariant();
+			sMode = GetStringParameterFromQuery("mode");
 
 			cmsHelper.OverrideKey(guidContentID);
 
 			if (cmsHelper.cmsAdminContent != null) {
 				pageContents = cmsHelper.cmsAdminContent;
 
-				if (sMode == "plain") {
+				if (SiteData.IsRawMode(sMode)) {
 					divCenter.Visible = false;
 					reBody.CssClass = "mcePlainText";
 					pnlPlain.Visible = true;

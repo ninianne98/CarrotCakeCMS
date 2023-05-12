@@ -8,21 +8,21 @@ a {
 	text-decoration: none;
 }
 
-a:link {
-	color: #0191D8;
-}
+	a:link {
+		color: #0191D8;
+	}
 
-a:active {
-	color: #0191D8;
-}
+	a:active {
+		color: #0191D8;
+	}
 
-a:visited {
-	color: #0191D8;
-}
+	a:visited {
+		color: #0191D8;
+	}
 
-a:hover {
-	text-decoration: underline;
-}
+	a:hover {
+		text-decoration: underline;
+	}
 
 .wrappedcontent {
 	width: 0px;
@@ -67,6 +67,13 @@ a:hover {
 	margin-right: 30px;
 	margin-left: 5px;
 	margin-bottom: 10px;
+}
+
+.box-all {
+	padding: 2em 1.25em 2em 1.25em;
+	background: #ffffff;
+	border-radius: 25px;
+	border: 15px solid #111111;
 }
 
 .box-top-left, .box-top-right, .box-top-center, .box-bottom-left, .box-bottom-right, .box-bottom-center {
@@ -148,4 +155,3 @@ a:hover {
 	padding: 0px;
 	clear: both;
 }
-
