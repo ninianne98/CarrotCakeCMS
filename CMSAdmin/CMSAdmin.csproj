@@ -1409,7 +1409,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abundant\abundant.master" />
-    <Content Include="abundant\abundant-orig.zip" />
     <Content Include="AdminModules.config" />
     <Content Include="c3-admin\FileUp.ashx" />
     <None Include="c3-admin\iCheck\customized\grey-alt2%402x.pdn" />
@@ -1424,7 +1423,6 @@
     <None Include="c3-admin\Includes\C3WebConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="citrus-island\citrus-island-orig.zip" />
     <Content Include="TextContentProcessors.config" />
     <None Include="c3-admin\Includes\C3WidgetAdminSchema.xsd">
       <SubType>Designer</SubType>
@@ -1437,7 +1435,6 @@
     </None>
     <Content Include="cmsTemplates\Aqueous\aqueous.master" />
     <Content Include="cmsTemplates\Aqueous\Skin.config" />
-    <Content Include="cmsTemplates\Aqueous\aqueous-orig.zip" />
     <Content Include="cmsTemplates\waterdrops\Skin.config" />
     <Content Include="cmsTemplates\waterdrops\waterdrops.master" />
     <Content Include="cmsTemplates\Imagination\css\font\fontawesome-webfont.eot" />

@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PhotoGalleryAdmin.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.PhotoGallery.PhotoGalleryAdmin" %>
-<h2>
-	Photo Gallery :
+<h2>Photo Gallery :
 	<asp:Literal ID="litGalleryName" runat="server" /></h2>
 <div id="imgWrapperMain" style="display: none;">
 	<div style="padding: 5px; min-height: 20px; min-width: 20px;">
@@ -22,24 +21,24 @@
 		min-width: 300px;
 	}
 
-	#galleryTarget li, #gallerySource li {
-		font-size: 11pt;
-		margin: 5px;
-		padding: 5px;
-		width: 350px;
-		height: 64px;
-	}
+		#galleryTarget li, #gallerySource li {
+			font-size: 11pt;
+			margin: 5px;
+			padding: 5px;
+			width: 350px;
+			height: 76px;
+		}
 
-	#galleryTarget li img, #gallerySource li img {
-		margin: 3px;
-	}
+			#galleryTarget li img, #gallerySource li img {
+				margin: 3px;
+			}
 
 	.fileInfo {
 		display: block;
 		float: left;
 		padding: 0;
 		margin: 5px;
-		max-height: 60px;
+		max-height: 72px;
 		max-width: 240px;
 		min-height: 10px;
 		overflow: hidden;
@@ -60,10 +59,12 @@
 	#imgThumb {
 		margin: 0;
 		padding: 2px 0;
+		max-height: 64px;
+		max-width: 64px;
 	}
 
 	div.galleryScroll {
-		height: 300px;
+		height: 400px;
 		width: 420px;
 		overflow: auto;
 		border: 1px solid #666;
@@ -83,10 +84,10 @@
 		float: left;
 	}
 
-	div.galleryScrollHead strong, div.galleryScrollHead b {
-		font-size: 16px;
-		font-weight: bold;
-	}
+		div.galleryScrollHead strong, div.galleryScrollHead b {
+			font-size: 16px;
+			font-weight: bold;
+		}
 
 	.HighlightPH {
 		height: 25px !important;
@@ -116,10 +117,6 @@
 		display: none;
 	}
 
-	.inputFields {
-		display: none;
-	}
-
 	#imgWrapperMain {
 		display: block;
 		min-height: 2px;
@@ -133,12 +130,12 @@
 		margin: 10px auto;
 	}
 
-	#imgWrapperMain #imgThmbnail {
-		min-height: 2px;
-		min-width: 2px;
-		max-height: 105px;
-		width: auto;
-	}
+		#imgWrapperMain #imgThmbnail {
+			min-height: 2px;
+			min-width: 2px;
+			max-height: 105px;
+			width: auto;
+		}
 
 	.thumbpreview {
 		display: block;
@@ -152,7 +149,6 @@
 	}
 </style>
 <script type="text/javascript">
-
 	function galleryAjaxJQuery() {
 		if (typeof (Sys) != 'undefined') {
 			var prm = Sys.WebForms.PageRequestManager.getInstance();
@@ -211,10 +207,8 @@
 			var key = liImg.find('#imgName').text();
 			var img = liImg.find('#imgThumb').first();
 
-			var newImgSrc = '/carrotwarethumb.axd?square=55&thumb=' + encodeURIComponent(key);
+			var newImgSrc = '/carrotwarethumb.axd?square=72&thumb=' + encodeURIComponent(key);
 			$(img).attr('src', newImgSrc);
-
-			//alert($(img).attr('src'));
 
 			var keys = (i + '\t' + key);
 
@@ -252,9 +246,7 @@
 				$("#galleryTarget, #gallerySource").disableSelection();
 
 				$("#galleryTarget a").enableSelection();
-
 			});
-
 		});
 	}
 
@@ -280,12 +272,10 @@
 		var tgt = $(a);
 		if (tgt.is("a")) {
 			var p = $($(tgt).parent().parent().parent());
-			//alert(p.attr('id'));
 			var txt = p.find('#imgName');
 			p.remove();
 		}
 
-		//alert("clicked");
 		setTimeout("galleryOrder();", 500);
 		return false;
 	}
@@ -319,11 +309,11 @@
 <div style="width: 960px">
 	<div class="galleryScrollHead">
 		<b>Site Images (<span id="srcGalleryCount">0</span> items)</b> &nbsp;&nbsp;&nbsp;
-		<input type="button" value="copy all" onclick="javascript:copyFolderContents()" />
+		<input type="button" value="copy all" onclick="javascript: copyFolderContents()" />
 	</div>
 	<div class="galleryScrollHead">
 		<b>Gallery Images (<span id="tgtGalleryCount">0</span> items)</b> &nbsp;&nbsp;&nbsp;
-		<input type="button" value="clear all" onclick="javascript:clearFolderContents()" />
+		<input type="button" value="clear all" onclick="javascript: clearFolderContents()" />
 	</div>
 	<div style="clear: both">
 	</div>
@@ -332,7 +322,7 @@
 			<asp:Repeater ID="rpFiles" runat="server">
 				<ItemTemplate>
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
-						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="<%# ResolveResourceFilePath( "PhotoIcon.png" ) %>"
+						<img id="imgThumb" height="64" width="64" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="<%# ResolveResourceFilePath( "PhotoIcon.png" ) %>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
 						<div class="fileInfo">
 							<%# String.Format("<div id=\"imgName\">{0}</div>", Eval("FullFileName"))%>
@@ -340,8 +330,7 @@
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
 						<div style="float: right; max-width: 32px; min-width: 16px;">
-							<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
-							</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
+							<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick"></span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
 								<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
 							</a>
 						</div>
@@ -355,7 +344,7 @@
 			<asp:Repeater ID="rpGallery" runat="server">
 				<ItemTemplate>
 					<li class="ui-widget ui-widget-content" id="ID_0000000000">
-						<img id="imgThumb" height="50" width="50" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="/carrotwarethumb.axd?square=55&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FullFileName")) )%>"
+						<img id="imgThumb" height="64" width="64" onmouseout="hideImg(this)" onmouseover="showImg(this)" style="float: left" src="/carrotwarethumb.axd?square=72&thumb=<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FullFileName")) )%>"
 							title="<%# Eval("FileName").ToString() %>" alt="<%# HttpUtility.UrlEncode( String.Format("{0}", Eval("FileName"))) %>" />
 						<div class="fileInfo">
 							<%# String.Format("<div id=\"imgName\">{0}</div>", Eval("FullFileName"))%>
@@ -363,8 +352,7 @@
 							<%# String.Format("{0}", Eval("FileSizeFriendly"))%>
 						</div>
 						<div style="float: right; max-width: 32px; min-width: 16px;">
-							<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick">
-							</span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
+							<span class="icoDel ui-state-default ui-corner-all"><a href='javascript:void(0);' onclick='galleryRemoveItem(this);' title='Delete'><span class="ui-icon ui-icon-closethick"></span></a></span><a class="editMetaData" href="<%#CreatePopupLink("MetaDataEdit", "parm="+ EncodeBase64(Eval("FullFileName").ToString() ))%>">
 								<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit" title="Edit" />
 							</a>
 						</div>
@@ -376,5 +364,7 @@
 	<div style="clear: both">
 	</div>
 </div>
-<asp:TextBox ID="txtGalleryOrder" CssClass="inputFields" TextMode="MultiLine" Rows="8" Columns="60" runat="server" />
 <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
+<div style="display: none">
+	<asp:TextBox ID="txtGalleryOrder" TextMode="MultiLine" Rows="8" Columns="60" runat="server" />
+</div>

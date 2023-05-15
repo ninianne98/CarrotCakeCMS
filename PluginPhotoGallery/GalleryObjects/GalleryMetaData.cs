@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		public void Save() {
 			if (!string.IsNullOrEmpty(this.GalleryImage)) {
-				using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+				using (var db = PhotoGalleryDataContext.GetDataContext()) {
 					tblGalleryImageMeta gal = (from c in db.tblGalleryImageMetas
 											   where c.GalleryImage.ToLower() == this.GalleryImage.ToLower()
 											   select c).FirstOrDefault();

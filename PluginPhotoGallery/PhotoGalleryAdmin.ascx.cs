@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
@@ -100,10 +100,10 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			int iRow = 0;
 			foreach (string arrImgCell in arrImageRows) {
-				if (!String.IsNullOrEmpty(arrImgCell)) {
+				if (!string.IsNullOrEmpty(arrImgCell)) {
 					var w = arrImgCell.Split('\t');
 					var img = w[1];
-					if (!String.IsNullOrEmpty(img)) {
+					if (!string.IsNullOrEmpty(img)) {
 						lstImages.Add(iRow, img);
 					}
 				}
@@ -190,13 +190,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			GalleryHelper gh = new GalleryHelper(SiteID);
+			var gh = new GalleryHelper(SiteID);
 
 			Dictionary<int, string> lstImages = ParseGalleryImages();
-			int iPos = 0;
+			int pos = 0;
 
 			foreach (var img in lstImages) {
-				if (!String.IsNullOrEmpty(img.Value)) {
+				if (!string.IsNullOrEmpty(img.Value)) {
 					var theImg = gh.GalleryImageEntryGetByFilename(gTheID, img.Value);
 
 					if (theImg == null) {
@@ -206,18 +206,17 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						theImg.GalleryID = gTheID;
 					}
 
-					theImg.ImageOrder = iPos;
-
+					theImg.ImageOrder = pos;
 					theImg.Save();
 				}
 
-				iPos++;
-
-				List<string> lst = (from l in lstImages
-									select l.Value.ToLower()).ToList();
-
-				gh.GalleryImageCleanup(gTheID, lst);
+				pos++;
 			}
+
+			List<string> lst = (from l in lstImages
+								select l.Value.ToLower()).ToList();
+
+			gh.GalleryImageCleanup(gTheID, lst);
 
 			var stringFile = CreateLink(ModuleName, string.Format("id={0}", gTheID));
 

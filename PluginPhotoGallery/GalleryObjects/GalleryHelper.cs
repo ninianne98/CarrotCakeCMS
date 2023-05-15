@@ -18,7 +18,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public GalleryImageEntry GalleryImageEntryGetByID(Guid galleryImageID) {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				GalleryImageEntry ge = (from c in db.tblGalleryImages
 										where c.GalleryImageID == galleryImageID
 										select new GalleryImageEntry(c)).FirstOrDefault();
@@ -28,7 +28,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public List<GalleryImageEntry> GalleryImageEntryListGetByGalleryID(Guid galleryID) {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				List<GalleryImageEntry> ge = (from c in db.tblGalleryImages
 											  where c.GalleryID == galleryID
 											  select new GalleryImageEntry(c)).ToList();
@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public GalleryImageEntry GalleryImageEntryGetByFilename(Guid galleryID, string galleryImage) {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				GalleryImageEntry ge = (from c in db.tblGalleryImages
 										where c.GalleryID == galleryID
 										&& c.GalleryImage.ToLower() == galleryImage.ToLower()
@@ -50,7 +50,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public void GalleryImageCleanup(Guid galleryID, List<string> lst) {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				var lstDel = (from g in db.tblGalleryImages
 							  where g.GalleryID == galleryID
 							  && !lst.Contains(g.GalleryImage.ToLower())
@@ -63,7 +63,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public List<GalleryMetaData> GetGalleryMetaDataListByGalleryID(Guid galleryID) {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				List<GalleryMetaData> imageData = (from g in db.tblGalleryImageMetas
 												   join gg in db.tblGalleryImages on g.GalleryImage.ToLower() equals gg.GalleryImage.ToLower()
 												   where g.SiteID == this.ThisSite.SiteID
@@ -75,7 +75,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public GalleryGroup GalleryGroupGetByID(Guid galleryID) {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				GalleryGroup ge = (from c in db.tblGalleries
 								   where c.SiteID == this.ThisSite.SiteID
 								   && c.GalleryID == galleryID
@@ -88,7 +88,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public GalleryGroup GalleryGroupGetByName(string galleryTitle) {
 			GalleryGroup ge = null;
 
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				if (!string.IsNullOrEmpty(galleryTitle)) {
 					ge = (from c in db.tblGalleries
 						  where c.SiteID == this.ThisSite.SiteID
@@ -101,7 +101,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public List<GalleryGroup> GalleryGroupListGetBySiteID() {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				List<GalleryGroup> ge = (from c in db.tblGalleries
 										 where c.SiteID == this.ThisSite.SiteID
 										 select new GalleryGroup(c)).ToList();
@@ -113,7 +113,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public GalleryMetaData GalleryMetaDataGetByFilename(string galleryImage) {
 			GalleryMetaData ge = null;
 
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				if (!string.IsNullOrEmpty(galleryImage)) {
 					ge = (from c in db.tblGalleryImageMetas
 						  where c.SiteID == this.ThisSite.SiteID
@@ -126,7 +126,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		public GalleryMetaData GalleryMetaDataGetByID(Guid galleryImageMetaID) {
-			using (PhotoGalleryDataContext db = PhotoGalleryDataContext.GetDataContext()) {
+			using (var db = PhotoGalleryDataContext.GetDataContext()) {
 				GalleryMetaData ge = (from c in db.tblGalleryImageMetas
 									  where c.SiteID == this.ThisSite.SiteID
 									  && c.GalleryImageMetaID == galleryImageMetaID
