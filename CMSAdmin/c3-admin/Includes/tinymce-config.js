@@ -5,102 +5,128 @@ var tinyBrowseResize = false;
 function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 	tinyBrowseHeight = parseInt(winHeight);
 	tinyBrowseWidth = parseInt(winWidth);
-	if (tinyBrowseWidth < 300) {
-		tinyBrowseWidth = 300;
+	if (tinyBrowseWidth < 640) {
+		tinyBrowseWidth = 640;
 	}
-	if (tinyBrowseHeight < 150) {
-		tinyBrowseHeight = 150;
+	if (tinyBrowseHeight < 175) {
+		tinyBrowseHeight = 175;
 	}
 
 	tinyBrowseResize = allowResize;
 
-	tinyMCE.init({
-		//		mode : "textareas",
-		//		theme : "advanced",
-		//		theme_advanced_toolbar_location : "top",
-		//		theme_advanced_toolbar_align : "left",
-		//		document_base_url : "http://www.site.com/path1/"
+	/*
+	menu: {
+		file: { title: 'File', items: 'newdocument restoredraft | preview | print ' },
+		edit: { title: 'Edit', items: 'undo redo | cut copy paste | selectall | searchreplace' },
+		view: { title: 'View', items: 'code | visualaid visualchars visualblocks | spellchecker | preview fullscreen' },
+		insert: { title: 'Insert', items: 'image link media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor toc | insertdatetime' },
+		format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | formats blockformats fontformats fontsizes align lineheight | forecolor backcolor | removeformat' },
+		tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | code wordcount' },
+		table: { title: 'Table', items: 'inserttable | cell row column | tableprops deletetable' },
+		help: { title: 'Help', items: 'help' }
+	}
+	 */
 
-		mode: "textareas",
-		theme: "advanced",
-		editor_selector: "mceEditor",
-		skin: "o2k7",
-		skin_variant: "silver",
-		plugins: "advimage,advlink,advlist,media,inlinepopups,searchreplace,visualblocks,paste,table,preview,insertpreformattedtext",
-		file_browser_callback: "cmsFileBrowserCallback",
-		theme_advanced_buttons1: "bold,italic,underline,strikethrough,sub,sup,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,forecolor,backcolor,|,outdent,indent,blockquote,|,bullist,numlist,|,fileupbtn,cleanup,removeformat,help",
-		theme_advanced_buttons2: "search,replace,|,undo,redo,|,tablecontrols,|,pastetext,pasteword,|,link,unlink,anchor,image,media,|,insertpreformattedtext,code,preview,visualblocks",
-		theme_advanced_buttons3: "",
-		theme_advanced_toolbar_location: "top",
-		theme_advanced_toolbar_align: "left",
-		theme_advanced_statusbar_location: "bottom",
-		//theme_advanced_resize_horizontal: true,
-		theme_advanced_resizing: tinyBrowseResize,
-		theme_advanced_source_editor_width: tinyBrowseWidth,
-		theme_advanced_source_editor_height: tinyBrowseHeight,
-		flash_video_player_url: false,
+	if (tinymce) {
+		// because ajax...
+		tinymce.remove();
+	}
+
+	tinymce.init({
+		selector: "textarea.mceEditor",
+		file_picker_types: 'file image media',
+		file_picker_callback: cmsTinyFileBrowserCallback,
+		plugins: 'image imagetools link lists media charmap searchreplace visualblocks paste print table preview code codesample help',
+		toolbar1: 'bold italic underline strikethrough sub sup | formatselect forecolor backcolor | blockquote alignleft aligncenter alignright alignjustify outdent indent | help | ',
+		toolbar2: 'undo redo searchreplace | bullist numlist | removeformat pastetext | link unlink anchor image media customfilebrowser | charmap codesample code preview visualblocks',
+		removed_menuitems: 'newdocument help',
+		codesample_languages: [
+		   { text: 'HTML', value: 'markup' },
+		   { text: 'XML', value: 'xml' },
+		   { text: 'Bash', value: 'bash' },
+		   { text: 'JavaScript', value: 'javascript' },
+		   { text: 'CSS', value: 'css' },
+		   { text: 'SQL', value: 'sql' },
+		   { text: 'PHP', value: 'php' },
+		   { text: 'Ruby', value: 'ruby' },
+		   { text: 'Python', value: 'python' },
+		   { text: 'Java', value: 'java' },
+		   { text: 'C', value: 'c' },
+		   { text: 'C#', value: 'csharp' },
+		   { text: 'C++', value: 'cpp' }
+		],
+		resize: tinyBrowseResize,
+		width: tinyBrowseWidth,
+		height: tinyBrowseHeight,
 		relative_urls: false,
 		remove_script_host: true,
-		content_css: "/c3-admin/Includes/richedit.css",
-
-		// Add a custom button
-		setup: function (ed) {
-			ed.addButton('fileupbtn', {
-				title: 'File Upload',
-				image: '/c3-admin/tiny_mce/insertfile.gif',
-				onclick: function () {
-					ed.focus();
-					var x = cmsFileBrowserCallback(ed, '', '', this);
+		extended_valid_elements: "style,link[href|rel]",
+		custom_elements: "style,link,~link",
+		setup: function (editor) {
+			editor.ui.registry.addButton('customfilebrowser', {
+				icon: 'document-properties',
+				tooltip: 'File Browser',
+				onAction: function (_) {
+					cmsTinyFileBrowser('0');
 				}
 			});
-		}
+		},
+		content_css: "/c3-admin/Includes/richedit.css"
 	});
 }
 
-// http://wiki.moxiecode.com/index.php/TinyMCE:Custom_filebrowser
-function cmsFileBrowserCallback(field_name, url, type, win) {
-	var sURL = "/c3-admin/FileBrowser.aspx?useTiny=1&viewmode=file&fldrpath=/";
-	setTimeout("tinyResetFileBrowserOpenStatus();", 500);
+var lastMetaRequest = null;
+var lastCallback = null;
 
-	// block multiple file browser windows
-	if (!tinyMCE.selectedInstance.fileBrowserAlreadyOpen) {
-		tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true; // but now it will be
+function cmsTinyFileBrowserCallback(callback, value, meta) {
+	lastMetaRequest = meta;
+	lastCallback = callback;
 
-		tinyMCE.activeEditor.windowManager.open({
-			file: sURL,
-			title: 'File Browser',
-			width: tinyBrowseWidth,
-			height: tinyBrowseHeight,
-			resizable: "no",
-			scrollbars: "yes",
-			status: "yes",
-			inline: "yes",
-			close_previous: "yes"
-		}, {
-			window: win,
-			input: field_name
-		});
-	}
+	cmsTinyFileBrowser('1');
+}
 
-	setTimeout("tinyResetFileBrowserOpenStatus();", 1000);
+function cmsTinyFileBrowser(fld) {
+	var sURL = "/c3-admin/FileBrowser.aspx?useTiny=1&returnvalue=" + fld + "&viewmode=file&fldrpath=/";
+
+	tinymce.activeEditor.windowManager.openUrl({
+		url: sURL,
+		title: 'File Browser',
+		resizable: "no",
+		scrollbars: "yes",
+		status: "yes",
+		inline: "yes",
+		close_previous: "yes"
+	});
 
 	return false;
 }
 
-function tinyResetFileBrowserOpenStatus() {
-	tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
+function cmsFileBrowseClose() {
+	tinymce.activeEditor.windowManager.close();
+}
+
+function cmsFileBrowseSetUri(uri, h, w) {
+	if (lastCallback != null) {
+		lastCallback(uri);
+
+		lastCallback = null;
+		lastMetaRequest = null;
+	}
+
+	cmsFileBrowseClose();
 }
 
 function cmsPreSaveTrigger() {
-	var tgr = tinyMCE.triggerSave();
+	var tgr = tinymce.triggerSave();
+
 	return true;
 }
 
 function cmsToggleTinyMCE(id) {
-	if (!tinyMCE.get(id))
-		tinyMCE.execCommand('mceAddControl', false, id);
+	if (!tinymce.get(id))
+		tinymce.execCommand('mceAddControl', false, id);
 	else
-		tinyMCE.execCommand('mceRemoveControl', false, id);
+		tinymce.execCommand('mceRemoveControl', false, id);
 }
 
 var fldName = '';
@@ -113,7 +139,6 @@ function cmsFileBrowserOpen(fldN) {
 	if (winBrowse != null) {
 		winBrowse.close();
 	}
-	//winBrowse = window.open('/c3-admin/FileBrowser.aspx?useTiny=0&viewmode=file&fldrpath=/', '_winBrowse', 'resizable=yes,location=no,menubar=no,scrollbars=yes,status=yes,toolbar=no,fullscreen=no,dependent=yes,width=650,height=500,left=50,top=50');
 
 	ShowWindowNoRefresh('/c3-admin/FileBrowser.aspx?useTiny=0&viewmode=file&fldrpath=/');
 

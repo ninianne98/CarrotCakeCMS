@@ -1,9 +1,11 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Carrotware.CMS.UI.Controls;
 using System;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static Carrotware.CMS.UI.Controls.CmsSkin;
 
 /*
 * CarrotCake CMS
@@ -54,6 +56,29 @@ namespace Carrotware.CMS.UI.Admin {
 			PublicFooter,
 			PopupFooter,
 			MainFooter,
+		}
+
+		public static SkinOption _theme = SkinOption.None;
+
+		public static SkinOption SiteSkin {
+			get {
+				if (_theme == SkinOption.None) {
+					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+					string skin = config.MainConfig.SiteSkin;
+					var actualSkin = SkinOption.Classic;
+					try { actualSkin = (SkinOption)Enum.Parse(typeof(SkinOption), skin, true); } catch { }
+
+					_theme = actualSkin;
+				}
+
+				return _theme;
+			}
+		}
+
+		public static string MainColorCode {
+			get {
+				return CmsSkin.GetPrimaryColorCode(SiteSkin);
+			}
 		}
 
 		protected void LoadFooterCtrl(PlaceHolder plcHolder, ControlLocation CtrlKey) {

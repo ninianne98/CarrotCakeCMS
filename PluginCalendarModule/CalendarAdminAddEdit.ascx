@@ -30,7 +30,7 @@
 			details
 		</td>
 		<td>
-			<a href="javascript:cmsToggleTinyMCE('<%= reContent.ClientID %>');">Add/Remove editor</a>
+			<%--<a href="javascript:cmsToggleTinyMCE('<%= reContent.ClientID %>');">Add/Remove editor</a>--%>
 			<asp:TextBox CssClass="mceEditor" ID="reContent" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
 		</td>
 	</tr>

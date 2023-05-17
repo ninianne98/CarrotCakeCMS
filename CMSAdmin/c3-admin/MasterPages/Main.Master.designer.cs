@@ -22,15 +22,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
         
         /// <summary>
-        /// jquerybasic1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Carrotware.Web.UI.Controls.jquerybasic jquerybasic1;
-        
-        /// <summary>
         /// phHead control.
         /// </summary>
         /// <remarks>
@@ -38,6 +29,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder phHead;
+        
+        /// <summary>
+        /// siteSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Controls.CmsSkin siteSkin;
         
         /// <summary>
         /// HeadContentPlaceHolder control.

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static Carrotware.CMS.UI.Controls.CmsSkin;
 
 /*
 * CarrotCake CMS
@@ -20,6 +21,18 @@ using System.Web.UI.WebControls;
 namespace Carrotware.CMS.UI.Admin {
 
 	public class AdminBasePage : BasePage {
+
+		public SkinOption SiteSkin {
+			get {
+				return AdminBaseMasterPage.SiteSkin;
+			}
+		}
+
+		public string MainColorCode {
+			get {
+				return AdminBaseMasterPage.MainColorCode;
+			}
+		}
 
 		protected override void OnInit(EventArgs e) {
 			if (SecurityData.IsAuthenticated) {

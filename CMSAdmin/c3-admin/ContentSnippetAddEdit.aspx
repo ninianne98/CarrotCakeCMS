@@ -275,9 +275,9 @@
 			<td class="tablecaption">snippet text:
 			</td>
 			<td>
-				<div runat="server" id="divCenter">
+				<%--<div runat="server" id="divCenter">
 					<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
-				</div>
+				</div>--%>
 				<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 650px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 					Rows="20" Columns="60" />
 				<br />

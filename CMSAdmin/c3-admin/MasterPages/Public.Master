@@ -7,14 +7,14 @@
 	<meta charset="utf-8" />
 	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
 	<title>Public</title>
-	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="LightGreen" />
-
 	<asp:PlaceHolder runat="server" ID="phHead">
 		<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
+
+		<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Logon" SelectedColor="Classic" />
+
 		<script src="/c3-admin/iCheck/icheck.min.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/icheck.init.js<%=AntiCache%>" type="text/javascript"></script>
-		<link href="/c3-admin/includes/logon.css" rel="stylesheet" type="text/css" />
-		<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
+
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$("input:button, input:submit, input:reset, button").button();

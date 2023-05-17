@@ -17,30 +17,84 @@
 		});
 	</script>
 	<script type="text/javascript">
-		function SetFile(val) {
-			var fldN = '#txtSelectedFile';
-			var fld = $(fldN);
-			fld.val(val);
+		var imgFileExt = ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp'];
+		var defaultImage = '/c3-admin/images/LargeDoc.png';
+
+		var imgPreviewId = '#imgWrapperMain';
+		var imgRealId = '#imgRealPreview';
+		var imgThumbId = '#imgThmbnailPreview';
+		var imgSizeId = '#imgPreviewCaption';
+		var selFile = '#filePickerFileName';
+		var selFileImgPrev = '#imgThmbnailSelected';
+		var fileZone = '#fileZone';
+
+		$(document).ready(function () {
+			$("input:button, input:submit, input:reset, button").button();
+
+			$(selFile).val('');
+		});
+
+		//=========================
+
+		function SetFile(uri) {
+			var fld = $(selFile);
+
+			fld.val(uri);
+			fld.blur();
+		}
+
+		function cmsUpdateFileName() {
+			$(selFileImgPrev).attr('src', defaultImage);
+
+			var uri = $(selFile).val();
+			var uriExt = uri.substr(uri.lastIndexOf('.') + 1);
+			if ($.inArray(uriExt.toLowerCase(), imgFileExt) > -1) {
+				$(selFileImgPrev).attr('src', uri);
+			}
 		}
 
 		function cmsSetFileName() {
-			var fldN = '#txtSelectedFile';
-			var fld = $(fldN);
+			var fld = $(selFile);
+
 			window.opener.cmsSetFileName(fld.val());
 		}
 
 		function cmsSetFileNameReturn() {
-			var fldN = '#txtSelectedFile';
-			var fld = $(fldN);
+			var fld = $(selFile);
+
 			window.parent.cmsSetFileNameReturn(fld.val());
 
 			return false;
 		}
 	</script>
+
 	<script type="text/javascript">
-		var upLoad = null;
+		var dropResults = '.ajax-file-upload-container';
+		var clrBtnFiles = '#btnClearUploads';
+
+		function clearUploads() {
+			if ($(dropResults).html().length > 10) {
+				$(clrBtnFiles).hide();
+				$(dropResults).html('');
+			}
+			return false;
+		}
+
+		var upLoad = null
 
 		$(document).ready(function () {
+			$(clrBtnFiles).hide();
+
+			$("#fileuploader").on('drop', function (e) {
+				setTimeout(function () {
+					if ($(dropResults).html().length > 10) {
+						$(clrBtnFiles).show();
+					}
+				}, 900);
+
+				return true;
+			});
+
 			upLoad = $("#fileuploader").uploadFile({
 				url: "./FileUp.ashx",
 				fileName: '<%=PostedFiles.ClientID %>',
@@ -52,9 +106,9 @@
 
 				uploadButtonClass: "ajax-file-upload-none",
 				uploadStr: "  ",
-				dragDropStr: "<span>Drag files here to upload</span>",
-				statusBarWidth: 400,
-				dragdropWidth: 400,
+				dragDropStr: "<span>Drag files here to upload <button style='display:none;' id='btnClearUploads' onclick='clearUploads();return false;'>clear uploads</button> </span>",
+				statusBarWidth: 525,
+				dragdropWidth: 525,
 				showPreview: true,
 				previewHeight: "auto",
 				previewWidth: "100px",
@@ -77,68 +131,29 @@
 		}
 	</script>
 	<asp:PlaceHolder runat="server" ID="pnlTiny">
-		<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js"></script>
-		<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce_popup.js"></script>
 		<script type="text/javascript">
+			function tinySubmit() {
+				var fld = $(selFile);
+				var uri = fld.val();
 
-			var FileBrowserDialogue = {
-				init: function () {
-					if (tinyMCE.selectedInstance != null) {
-						tinyMCE.selectedInstance.fileBrowserAlreadyOpen = true;
-					}
-					// Here goes your code for setting your custom things onLoad.
-				},
-				mySubmit: function () {
+				var imgReal = $(imgRealId);
+				$(imgReal).attr('src', '');
+				var h = -1;
+				var w = -1;
+				$(imgReal).attr('src', uri);
 
-					var fldN = '#txtSelectedFile';
-					var fld = $(fldN);
-					var URL = fld.val();
-					var win = tinyMCEPopup.getWindowArg("window");
-					// insert information now
-					if (win.document != null) {
-						win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
-					}
-					// are we an image browser
-					if (typeof (win.ImageDialog) != "undefined") {
-						// we are, so update image dimensions and preview if necessary
-						if (win.ImageDialog.getImageData) win.ImageDialog.getImageData();
-						if (win.ImageDialog.showPreviewImage) win.ImageDialog.showPreviewImage(URL);
+				var uriExt = uri.substr(uri.lastIndexOf('.') + 1);
+
+				// wait a tiny bit so the image can load
+				setTimeout(function () {
+					if ($.inArray(uriExt.toLowerCase(), imgFileExt) > -1) {
+						h = $(imgReal).height();
+						w = $(imgReal).width();
 					}
 
-					// close popup window
-					tinyMCEPopup.close();
-				}
+					window.parent.cmsFileBrowseSetUri(uri, h, w);
+				}, 500);
 			}
-
-			tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
-		</script>
-		<script type="text/javascript">
-			myInitFunction = function () {
-
-				// patch TinyMCEPopup.close
-				tinyMCEPopup.close_original = tinyMCEPopup.close;
-				tinyMCEPopup.close = function () {
-					// remove blocking of opening another file browser window
-					if (tinyMCE.selectedInstance != null) {
-						tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
-					}
-
-					// call original function to close the file browser window
-					tinyMCEPopup.close_original();
-				};
-			}
-
-			myExitFunction = function () {
-				if (tinyMCE != null) {
-					if (tinyMCE.selectedInstance != null) {
-						tinyMCE.selectedInstance.fileBrowserAlreadyOpen = false;
-					}
-				}
-			}
-
-			window.onbeforeunload = myExitFunction;
-
-			tinyMCEPopup.executeOnLoad('myInitFunction();');
 		</script>
 	</asp:PlaceHolder>
 	<title>Browser</title>
@@ -151,7 +166,7 @@
 					<td>
 						<h2 class="head2">Files On Server</h2>
 						Contents of:
-					<asp:Literal ID="litPath" runat="server" /><br />
+						<asp:Literal ID="litPath" runat="server" /><br />
 						<asp:HyperLink runat="server" ID="lnkUp"><img src="/c3-admin/images/back.png" border="0" alt="back" /><img src="/c3-admin/images/folder.png" border="0" alt="folder" /> </asp:HyperLink>
 						<br />
 					</td>
@@ -168,7 +183,7 @@
 								<img src="/c3-admin/images/folder.png" alt="folder" />
 							</td>
 							<td>
-								<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}&viewmode={3}", Eval("FolderPath"),  sQueryMode, sReturnMode, sViewMode ) %>'>
+								<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}&viewmode={3}", Eval("FolderPath"),  useTinyMode, sReturnMode, sViewMode ) %>'>
 									<%# String.Format( "{0}", Eval("FileName") ) %></a>
 							</td>
 							<td>&nbsp;&nbsp;
@@ -290,25 +305,15 @@
 					<div id="imgPreviewCaption">
 						0x0
 					</div>
-					<img alt="document" id="imgThmbnailPreview" src="/c3-admin/images/document.png" class="thumbPreview" />
+					<img alt="document" id="imgThmbnailPreview" src="/c3-admin/images/LargeDoc.png" class="thumbPreview" />
 				</div>
 			</div>
-			<div style="display: block; margin-left: -9999px; float: left; max-height: 9000px; max-width: 9000px;">
-				<img alt="document" id="imgRealPreview" src="/c3-admin/images/document.png" />
-			</div>
+
 			<script type="text/javascript">
-
-				var imgSrc = '/c3-admin/images/document.png';
-
-				var imgPreviewId = 'imgWrapperMain';
-				var imgRealId = 'imgRealPreview';
-				var imgThumbId = 'imgThmbnailPreview';
-				var imgSizeId = 'imgPreviewCaption';
-
-				var divImgLayer = $('#' + imgPreviewId);
-				var imgDim = $('#' + imgSizeId);
-				var imgThumb = $('#' + imgThumbId);
-				var imgReal = $('#' + imgRealId);
+				var divImgLayer = $(imgPreviewId);
+				var imgDim = $(imgSizeId);
+				var imgThumb = $(imgThumbId);
+				var imgReal = $(imgRealId);
 
 				function hideImg(obj) {
 					var theNode = $(obj).parent();
@@ -317,27 +322,27 @@
 					$(divImgLayer).attr('style', 'display:none;');
 					$(divImgLayer).attr('class', '');
 
-					$(imgThumb).attr('src', imgSrc);
+					$(imgThumb).attr('src', defaultImage);
 					$(imgThumb).attr('width', 64);
 					$(imgThumb).attr('height', 64);
 					$(imgThumb).removeAttr("width").attr("width");
 					$(imgThumb).removeAttr("height").attr("height");
 
-					$(imgReal).attr('src', imgSrc);
+					$(imgReal).attr('src', defaultImage);
 
 					$(imgDim).html('<br />');
 				}
 
 				function showImg(obj, mode) {
 					var theNode = $(obj).parent();
-					var imgSrc = $(theNode).find('img');
-					var imgtype = $(imgSrc).attr('filetype');
+					var defaultImage = $(theNode).find('img');
+					var imgtype = $(defaultImage).attr('filetype');
 
 					if (imgtype.indexOf('image') >= 0) {
 
-						var val = $(imgSrc).attr('src');
-						var grp = $('#fileZone').attr('id');
-						var pos = $('#fileZone').offset();
+						var val = $(defaultImage).attr('src');
+						var grp = $(fileZone).attr('id');
+						var pos = $(fileZone).offset();
 
 						$(divImgLayer).attr('style', '');
 
@@ -379,20 +384,31 @@
 					<asp:Button ID="btnRemove" runat="server" Text="Delete Checked" OnClick="btnRemove_Click" />
 				</p>
 			</asp:PlaceHolder>
-			<p>
-				<br />
-				Selected File:
-			<asp:TextBox ID="txtSelectedFile" Columns="50" runat="server" />
-				<asp:Button Visible="false" ID="btnSelectedFile" runat="server" Text="Return Selection" OnClientClick="FileBrowserDialogue.mySubmit();" />
-				<asp:Button Visible="false" ID="btnReturnFile" runat="server" Text="Select File" OnClientClick="return cmsSetFileNameReturn();" />
-			</p>
-		</div>
-		<asp:Panel runat="server" ID="pnlTiny2">
-			<div class="mceActionPanel">
-				<input type="submit" id="insert" name="insert" value="Select" onclick="FileBrowserDialogue.mySubmit(); return false;" />
-				<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
+			<div>
+				<div style="float: left">
+					<p>
+						<br />
+						Selected File:
+						<input name="filePickerFileName" type="text" size="55" id="filePickerFileName" onchange="cmsUpdateFileName();return false;" onblur="cmsUpdateFileName();return false;" />
+						<asp:Button Visible="false" ID="btnSelectedFile" runat="server" Text="Return Selection" OnClientClick="FileBrowserDialogue.mySubmit();" />
+						<asp:Button Visible="false" ID="btnReturnFile" runat="server" Text="Select File" OnClientClick="return cmsSetFileNameReturn();" />
+					</p>
+				</div>
+				<div style="float: left">
+					<div class="ui-widget-header ui-corner-all" style="margin: auto; margin: 5px 0 0 25px; height: 160px; width: 325px; float: left; display: block; border: 1px solid #666;">
+						<img style="max-height: 99%; max-width: 99%; display: block; margin: 2px; margin-left: auto; margin-right: auto;" id="imgThmbnailSelected" src="/c3-admin/images/LargeDoc.png" />
+					</div>
+				</div>
 			</div>
-		</asp:Panel>
+		</div>
+		<div style="clear: both; height: 110px">
+			<asp:Panel runat="server" ID="pnlTiny2">
+				<div class="mceActionPanel fileBrowserButtons">
+					<input type="submit" runat="server" id="insert" name="insert" value="Select" onclick="tinySubmit(); return false;" />
+					<input type="button" runat="server" id="cancel" name="cancel" value="Cancel" onclick="window.parent.cmsFileBrowseClose();" />
+				</div>
+			</asp:Panel>
+		</div>
 		<div style="display: none">
 			<asp:Panel runat="server" ID="pnlFileMgr">
 				<input type="submit" id="Submit1" name="insert" value="Select" onclick="cmsSetFileName(); return false;" />
@@ -400,6 +416,12 @@
 			<input type="button" id="Button1" name="cancel" value="Cancel" onclick="window.close();" />
 			</asp:Panel>
 		</div>
+		<div style="display: block; margin-left: -9999px; margin-top: -9999px; float: left; max-height: 9000px; max-width: 9000px;">
+			<img alt="document" id="imgRealPreview" src="/c3-admin/images/LargeDoc.png" />
+		</div>
+		<p>
+			<br class="clear" />
+		</p>
 	</form>
 </body>
 </html>

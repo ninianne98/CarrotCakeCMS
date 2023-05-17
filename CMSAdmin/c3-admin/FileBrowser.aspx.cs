@@ -19,10 +19,10 @@ using System.Web.UI.WebControls;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class FileBrowser : AdminBasePage {
-		public string sQueryPath = String.Empty;
-		public string sQueryMode = "1";
+		public string sQueryPath = string.Empty;
+		public string useTinyMode = "1";
 		public string sReturnMode = "0";
-		public string sViewMode = String.Empty;
+		public string sViewMode = string.Empty;
 		private string defaultBrowseMode = "file";
 
 		protected FileDataHelper helpFile = CMSConfigHelper.GetFileDataHelper();
@@ -31,13 +31,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			try { sQueryPath = Request.QueryString["fldrpath"]; } catch { sQueryPath = @"/"; }
 
 			sViewMode = defaultBrowseMode;
-			lblWarning.Text = String.Empty;
+			lblWarning.Text = string.Empty;
 
-			try { sQueryMode = Request.QueryString["useTiny"].ToString(); } catch { sQueryMode = "0"; }
+			try { useTinyMode = Request.QueryString["useTiny"].ToString(); } catch { useTinyMode = "0"; }
 			try { sReturnMode = Request.QueryString["returnvalue"].ToString(); } catch { sReturnMode = "0"; }
 			try { sViewMode = Request.QueryString["viewmode"].ToString(); } catch { sViewMode = defaultBrowseMode; }
 
-			if (String.Format("{0}", sViewMode).ToLowerInvariant() != defaultBrowseMode) {
+			if (string.Format("{0}", sViewMode).ToLowerInvariant() != defaultBrowseMode) {
 				lnkThumbView.Visible = false;
 				lnkFileView.Visible = true;
 				btnRemove.Visible = false;
@@ -47,27 +47,30 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				btnRemove.Visible = true;
 			}
 
-			if (sQueryMode != "1") {
-				sQueryMode = "0";
+			if (useTinyMode != "1") {
+				useTinyMode = "0";
 				pnlTiny.Visible = false;
 				pnlTiny2.Visible = false;
 				pnlFileMgr.Visible = true;
 			} else {
-				sQueryMode = "1";
+				useTinyMode = "1";
 				pnlFileMgr.Visible = false;
-			}
-
-			if (sReturnMode == "1") {
-				btnReturnFile.Visible = true;
-			}
-
-			if (!String.IsNullOrEmpty(sQueryPath)) {
-				if (sQueryPath.Length == 1) {
-					sQueryPath = String.Empty;
+				if (sReturnMode != "1") {
+					insert.Visible = false;
 				}
 			}
 
-			if (String.IsNullOrEmpty(sQueryPath)) {
+			if (sReturnMode == "1" && pnlTiny.Visible == false) {
+				btnReturnFile.Visible = true;
+			}
+
+			if (!string.IsNullOrEmpty(sQueryPath)) {
+				if (sQueryPath.Length == 1) {
+					sQueryPath = string.Empty;
+				}
+			}
+
+			if (string.IsNullOrEmpty(sQueryPath)) {
 				sQueryPath = "/";
 				lnkUp.Visible = false;
 			} else {
@@ -78,11 +81,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (lnkUp.Visible) {
 				string sUrlUp = sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
-				lnkUp.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode={4}", SiteData.CurrentScriptName, sUrlUp, sQueryMode, sReturnMode, sViewMode);
+				lnkUp.NavigateUrl = string.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode={4}", SiteData.CurrentScriptName, sUrlUp, useTinyMode, sReturnMode, sViewMode);
 			}
 
-			lnkThumbView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=thumb", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
-			lnkFileView.NavigateUrl = String.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=file", SiteData.CurrentScriptName, sQueryPath, sQueryMode, sReturnMode);
+			lnkThumbView.NavigateUrl = string.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=thumb", SiteData.CurrentScriptName, sQueryPath, useTinyMode, sReturnMode);
+			lnkFileView.NavigateUrl = string.Format("{0}?fldrpath={1}&useTiny={2}&returnvalue={3}&viewmode=file", SiteData.CurrentScriptName, sQueryPath, useTinyMode, sReturnMode);
 
 			if (!lnkThumbView.Visible) {
 				lnkRefresh.NavigateUrl = lnkThumbView.NavigateUrl;
@@ -116,12 +119,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		public string CreateFileLink(string sPath) {
-			return String.Format("javascript:SetFile('{0}');", sPath);
+			return string.Format("javascript:SetFile('{0}');", sPath);
 		}
 
 		public string CreateFileSrc(string sPath, string sFile, string sMime) {
 			if (FileImageLink(sMime).ToLowerInvariant() == "image") {
-				return String.Format("{0}{1}", sPath, sFile).ToLowerInvariant();
+				return string.Format("{0}{1}", sPath, sFile).ToLowerInvariant();
 			} else {
 				return SiteData.AdminFolderPath + "images/document.png";
 			}
@@ -184,8 +187,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnUpload_Click(object sender, EventArgs e) {
-			lblWarning.Text = String.Empty;
-			lblWarning.CssClass = String.Empty;
+			lblWarning.Text = string.Empty;
+			lblWarning.CssClass = string.Empty;
 			/*
 			try {
 				if (upFile.HasFile) {
@@ -200,10 +203,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						}
 
 						upFile.SaveAs(Path.Combine(sPath, uploadedFileName));
-						lblWarning.Text = String.Format("file [{0}] uploaded!", uploadedFileName);
+						lblWarning.Text = string.Format("file [{0}] uploaded!", uploadedFileName);
 						lblWarning.CssClass = "uploadSuccess";
 					} else {
-						lblWarning.Text = String.Format("[{0}] is a blocked filetype.", uploadedFileName);
+						lblWarning.Text = string.Format("[{0}] is a blocked filetype.", uploadedFileName);
 						lblWarning.CssClass = "uploadBlocked";
 					}
 

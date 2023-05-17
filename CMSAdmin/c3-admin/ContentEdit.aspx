@@ -10,9 +10,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<div style="margin-bottom: 25px;">
-		<div runat="server" id="divCenter">
+		<%--<div runat="server" id="divCenter">
 			<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
-		</div>
+		</div>--%>
 		<asp:TextBox ValidationGroup="inputForm" Style="height: 300px; width: 800px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 			Rows="20" Columns="100" />
 		<br />

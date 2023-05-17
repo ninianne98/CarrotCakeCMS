@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				pageContents = cmsHelper.cmsAdminContent;
 
 				if (SiteData.IsRawMode(sMode)) {
-					divCenter.Visible = false;
+					//divCenter.Visible = false;
 					reBody.CssClass = "mcePlainText";
 					pnlPlain.Visible = true;
 				} else {

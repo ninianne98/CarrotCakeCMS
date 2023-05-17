@@ -46,6 +46,7 @@ using System.Web.UI;
 [assembly: TagPrefix("BreadCrumbNavigation", "carrot")]
 [assembly: TagPrefix("CarrotGridPaged", "carrot")]
 [assembly: TagPrefix("ChildNavigation", "carrot")]
+[assembly: TagPrefix("CmsSkin", "carrot")]
 [assembly: TagPrefix("ContentCommentForm", "carrot")]
 [assembly: TagPrefix("ContentContainer", "carrot")]
 [assembly: TagPrefix("ContentPageImageThumb", "carrot")]

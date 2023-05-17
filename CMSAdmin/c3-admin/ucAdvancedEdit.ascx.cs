@@ -90,11 +90,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					this.Page.Header.Controls.Add(c);
 				}
 
-				//jquerybasic jquerybasic2 = new jquerybasic();
-				//jquerybasic2.SelectedSkin = jquerybasic.jQueryTheme.NotUsed;
-				//Page.Header.Controls.AddAt(0, jquerybasic2);
-
-				//BasicControlUtils.InsertjQuery(this.Page);
+				var siteSkin = new CmsSkin() { WindowMode = CmsSkin.SkinMode.AdvEdit, SelectedColor = AdminBaseMasterPage.SiteSkin };
+				this.Page.Header.Controls.Add(siteSkin);
 
 				BasicControlUtils.InsertjQueryMain(this.Page);
 				BasicControlUtils.InsertjQueryUI(this.Page);

@@ -13,15 +13,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
     public partial class ContentEdit {
         
         /// <summary>
-        /// divCenter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCenter;
-        
-        /// <summary>
         /// reBody control.
         /// </summary>
         /// <remarks>

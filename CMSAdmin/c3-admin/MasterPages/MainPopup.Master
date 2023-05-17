@@ -7,20 +7,17 @@
 	<meta charset="utf-8" />
 	<link href="/c3-admin/includes/normalize.css" rel="stylesheet" type="text/css" />
 	<title>MainPopup</title>
-	<carrot:jquerybasic runat="server" ID="jquerybasic1" UseJqueryMigrate="true" SelectedSkin="LightGreen" />
-
 	<asp:PlaceHolder runat="server" ID="phHead">
-		<script src="/c3-admin/includes/jquery.ui.timepicker.js<%=AntiCache%>" type="text/javascript"></script>
-		<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
-		<link href="/c3-admin/includes/chosen.min.css" rel="stylesheet" type="text/css" />
-		<script src="/c3-admin/includes/chosen.jquery.min.js<%=AntiCache%>" type="text/javascript"></script>
 		<link href="/c3-admin/iCheck/iCheck.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/includes/chosen.min.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+
+		<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Popup" SelectedColor="Classic" />
+
+		<script src="/c3-admin/includes/chosen.jquery.min.js<%=AntiCache%>" type="text/javascript"></script>
+		<script src="/c3-admin/includes/jquery.ui.timepicker.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/iCheck/icheck.min.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/icheck.init.js<%=AntiCache%>" type="text/javascript"></script>
-		<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
-		<link href="/c3-admin/includes/mainpopup.css" rel="stylesheet" type="text/css" />
-		<link href="/c3-admin/includes/common.css" rel="stylesheet" type="text/css" />
-		<link href="/c3-admin/includes/TableStyles.css" rel="stylesheet" type="text/css" />
 		<script src="/c3-admin/includes/base64.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/jquery.simplemodal.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/jquery.blockUI.js<%=AntiCache%>" type="text/javascript"></script>
@@ -42,7 +39,7 @@
 			});
 		</script>
 		<!-- TinyMCE -->
-		<script type="text/javascript" src="/c3-admin/tiny_mce/tiny_mce.js<%=AntiCache%>"></script>
+		<script type="text/javascript" src="/c3-admin/tinymce/tinymce.min.js<%=AntiCache%>"></script>
 		<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js<%=AntiCache%>"></script>
 		<script type="text/javascript">
 			var pnl = '#<%=divSaved.ClientID %>';
@@ -112,6 +109,7 @@
 				AjaxScriptLoad();
 			});
 		</script>
+		<link href="/c3-admin/includes/tinymceoverride.css<%=AntiCache%>" rel="stylesheet" />
 		<!-- /TinyMCE -->
 		<% } %>
 	</asp:PlaceHolder>

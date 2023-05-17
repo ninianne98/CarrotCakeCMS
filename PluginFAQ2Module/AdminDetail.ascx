@@ -24,7 +24,7 @@
 			question
 		</td>
 		<td colspan="2">
-			<a href="javascript:cmsToggleTinyMCE('<%= reQuestion.ClientID %>');">Add/Remove editor</a><br />
+			<%--<a href="javascript:cmsToggleTinyMCE('<%= reQuestion.ClientID %>');">Add/Remove editor</a><br />--%>
 			<asp:TextBox Style="height: 150px; width: 625px;" CssClass="mceEditor" ID="reQuestion" runat="server" TextMode="MultiLine" Rows="6" Columns="60" />
 		</td>
 	</tr>
@@ -35,7 +35,7 @@
 			answer
 		</td>
 		<td colspan="2">
-			<a href="javascript:cmsToggleTinyMCE('<%= reAnswer.ClientID %>');">Add/Remove editor</a><br />
+			<%--<a href="javascript:cmsToggleTinyMCE('<%= reAnswer.ClientID %>');">Add/Remove editor</a><br />--%>
 			<asp:TextBox Style="height: 150px; width: 625px;" CssClass="mceEditor" ID="reAnswer" runat="server" TextMode="MultiLine" Rows="6" Columns="60" />
 		</td>
 	</tr>

@@ -27,6 +27,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		protected void Page_Load(object sender, EventArgs e) {
 			ResetSave();
 
+			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
+
 			if (!IsPostBack) {
 				pnlDirty.Visible = false;
 			} else {

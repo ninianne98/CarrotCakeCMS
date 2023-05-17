@@ -301,15 +301,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.PlaceHolder phTrackback1;
         
         /// <summary>
-        /// divLeft control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLeft;
-        
-        /// <summary>
         /// reLeftBody control.
         /// </summary>
         /// <remarks>
@@ -319,15 +310,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         protected global::System.Web.UI.WebControls.TextBox reLeftBody;
         
         /// <summary>
-        /// divCenter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCenter;
-        
-        /// <summary>
         /// reBody control.
         /// </summary>
         /// <remarks>
@@ -335,15 +317,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox reBody;
-        
-        /// <summary>
-        /// divRight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRight;
         
         /// <summary>
         /// reRightBody control.

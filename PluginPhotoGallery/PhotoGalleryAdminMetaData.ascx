@@ -12,7 +12,7 @@
 </p>
 <p>
 	<b>Details</b><br />
-	<a href="javascript:cmsToggleTinyMCE('<%= txtMetaInfo.ClientID %>');">Show/Hide Editor</a>
+	<%--<a href="javascript:cmsToggleTinyMCE('<%= txtMetaInfo.ClientID %>');">Show/Hide Editor</a>--%>
 	<asp:TextBox Style="height: 200px; width: 680px;" CssClass="mceEditor" ID="txtMetaInfo" runat="server" TextMode="MultiLine" Rows="12" Columns="80" />
 </p>
 <br />

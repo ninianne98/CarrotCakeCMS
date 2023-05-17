@@ -25,6 +25,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
+			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
+
 			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				string sCurrentPage = SiteData.CurrentScriptName;
 				string sScrubbedURL = SiteData.AlternateCurrentScriptName;

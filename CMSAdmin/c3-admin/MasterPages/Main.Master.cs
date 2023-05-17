@@ -26,6 +26,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		protected void Page_Load(object sender, EventArgs e) {
 			this.UserName = string.Empty;
 
+			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
+
 			if (!SecurityData.IsAuthenticated) {
 				SecurityData.ResetAuth();
 				Response.Redirect(SiteFilename.LogonURL);

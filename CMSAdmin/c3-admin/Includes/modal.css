@@ -73,7 +73,7 @@
 
 #cms-simplemodal-overlay, .cms-simplemodal-overlay {
 	z-index: 9950005;
-	background: #eeeeee url(../images/hextile.png) 50% 50% repeat !important;
+	background: #eeeeee url(/c3-admin/images/hextile.png) 50% 50% repeat !important;
 	opacity: .8 !important;
 	filter: Alpha(Opacity=80) !important;
 }

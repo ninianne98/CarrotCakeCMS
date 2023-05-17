@@ -397,9 +397,9 @@ function cmsPreviewStyling() {
 	$('#cmsPreviewTab').addClass('ui-corner-all');
 	$('#cmsPreviewTab li').addClass('ui-widget ui-state-default ui-corner-all');
 
-	window.setTimeout("cmsSetPreviewSize()", 500);
-	window.setTimeout("cmsSetPreviewSize()", 750);
-	window.setTimeout("cmsSetPreviewSize()", 1500);
+	window.setTimeout("cmsSetPreviewSize()", 600);
+	window.setTimeout("cmsSetPreviewSize()", 950);
+	window.setTimeout("cmsSetPreviewSize()", 2200);
 
 	window.setTimeout("$('#cmsPreviewTab').tabs('option', 'active', 0);", 250);
 }
@@ -408,14 +408,30 @@ function cmsSetPreviewSize() {
 	var modSel = '#cms-simplemodal-container';
 	var frameSel = '#cmsModalFrame';
 
-	var modH = $(modSel).css('height');
-	var modW = $(modSel).css('width');
+	var modH = parseFloat($(modSel).css('height'));
+	var modW = parseFloat($(modSel).css('width'));
 
-	var frmH = parseFloat(modH) - 85;
-	var frmW = parseFloat(modW) - 30;
+	var frmW = modW - 28;
+
+	var frmH = modH - 55;
+	var frameAdjust = 25;
+
+	if (modW < 1300) {
+		// since the buttons stack & wrap on narrower resolutions, provide more height
+		frameAdjust = 55;
+	}
+
+	if (frameAdjust > frmH) {
+		frameAdjust = frmH - 100;
+	}
 
 	$(frameSel).css('height', frmH);
 	$(frameSel).attr('height', frmH);
+
+	$('#cmsAjaxMainDiv3').attr('height', (frmH - frameAdjust));
+	$('#cmsAjaxMainDiv3').css('height', (frmH - frameAdjust));
+	$('#cmsFrameEditorPreview').attr('height', (frmH - frameAdjust - 15));
+	$('#cmsFrameEditorPreview').css('height', (frmH - frameAdjust - 15));
 
 	$(frameSel).css('width', frmW);
 	$(frameSel).attr('width', frmW);
@@ -1219,10 +1235,23 @@ function cmsLaunchWindow(theURL) {
 	setTimeout("cmsLoadWindow();", 800);
 }
 
+
+var cmsWindoWidth = 640;
+var cmsWindowHeight = 480;
+cmsGetHeightWidth();
+
+function cmsGetHeightWidth() {
+	cmsWindoWidth = parseFloat($(window).width()) - 200; // * 0.85;
+	cmsWindowHeight = parseFloat($(window).height()) - 200; // * 0.75;
+}
+
 function cmsLoadWindow() {
 	cmsSaveToolbarPosition();
+	cmsGetHeightWidth();
 
 	$("#cms-basic-modal-content").simplemodal({
+		minHeight: cmsWindowHeight,
+		minWidth: cmsWindoWidth,
 		onClose: function (dialog) {
 			//$.simplemodal.close(); // must call this!
 			setTimeout("$.simplemodal.close();", 800);
@@ -1269,8 +1298,11 @@ function cmsLaunchWindowOnly(theURL) {
 
 function cmsLoadWindowOnly() {
 	cmsSaveToolbarPosition();
+	cmsGetHeightWidth();
 
 	$("#cms-basic-modal-content").simplemodal({
+		minHeight: cmsWindowHeight,
+		minWidth: cmsWindoWidth,
 		onClose: function (dialog) {
 			//$.simplemodal.close(); // must call this!
 			setTimeout("$.simplemodal.close();", 800);

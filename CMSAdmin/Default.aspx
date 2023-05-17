@@ -6,22 +6,11 @@
 	<meta name="robots" content="noindex,follow,noarchive" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<title>CarrotCake CMS: Under Construction</title>
-	<style type="text/css">
-		body {
-			background-color: #C1CEB9;
-			font-size: 14px;
-			font-family: Georgia, Times New Roman, arial, helvetica;
-		}
-
-		.banner {
-			text-align: center;
-			color: #606060;
-		}
-	</style>
+	<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Logon" SelectedColor="Classic" />
 </head>
-<body bgcolor="#C1CEB9">
+<body>
 	<form id="form1" runat="server">
-		<div class="banner">
+		<div id="banner">
 			<h2></h2>
 			<h2>&nbsp;</h2>
 			<h2 class="banner">UNDER CONSTRUCTION</h2>

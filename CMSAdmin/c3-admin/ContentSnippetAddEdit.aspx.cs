@@ -86,7 +86,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			sPageMode = GetStringParameterFromQuery("mode");
 			if (SiteData.IsRawMode(sPageMode)) {
 				reBody.CssClass = "rawEditor";
-				divCenter.Visible = false;
+				//divCenter.Visible = false;
 			}
 
 			pnlHB.Visible = !bLocked;

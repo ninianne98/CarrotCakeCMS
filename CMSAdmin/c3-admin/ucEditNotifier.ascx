@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucEditNotifier.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucEditNotifier" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:PlaceHolder ID="plcIncludes" runat="server">
-	<link href="/c3-admin/includes/edit-notifier.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
+	<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Notify" SelectedColor="Classic" />
 </asp:PlaceHolder>
 
 <div style="clear: both;">

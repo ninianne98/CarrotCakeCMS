@@ -70,9 +70,9 @@
 				<label>
 					Bio Data</label>
 			</legend>
-			<div runat="server" id="divCenter">
+			<%--<div runat="server" id="divCenter">
 				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
-			</div>
+			</div>--%>
 			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 				Rows="20" Columns="60" />
 			<br />

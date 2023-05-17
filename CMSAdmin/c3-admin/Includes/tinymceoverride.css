@@ -1,0 +1,64 @@
+﻿.tox .tox-tbtn {
+	padding: 1px !important;
+	margin: 0 1px 0 1px !important;
+	height: 22px !important;
+	width: 24px !important;
+}
+
+	.tox .tox-tbtn svg {
+		margin: 1px 0 1px -1px !important;
+		height: auto !important;
+		width: auto !important;
+	}
+
+		.tox .tox-tbtn svg * {
+			padding: 0 !important;
+			margin: 0 !important;
+			width: 90% !important;
+			height: 90% !important;
+		}
+
+.tox-icon .tox-tbtn__icon-wrap {
+	height: 18px !important;
+	width: 18px !important;
+}
+
+.tox .tox-tbtn--select, .tox-split-button {
+	margin: 1px !important;
+	padding: 1px !important;
+	height: 26px !important;
+	width: auto !important;
+}
+
+.tox .tox-toolbar {
+	height: 30px !important;
+	width: auto !important;
+	padding: 0px !important;
+	margin: 0px 2px 0px 2px !important;
+	border-bottom: 1px solid #ccc;
+}
+
+.tox-toolbar-overlord .tox :not(svg):not(rect) {
+	height: 26px !important;
+	font-size: 12px !important;
+}
+
+.tox.tox-platform-touch .tox-split-button__chevron, .tox-tbtn__select-chevron {
+	height: 24px !important;
+	width: 12px !important;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+	.tox.tox-platform-touch .tox-split-button__chevron svg, .tox-tbtn__select-chevron svg {
+		display: inline-block !important;
+		position: relative !important;
+		width: 85% !important;
+	}
+
+.tox .tox-listboxfield .tox-listbox--select,
+.tox .tox-textarea,
+.tox .tox-textfield,
+.tox .tox-toolbar-textfield {
+	font-size: 15px !important;
+}

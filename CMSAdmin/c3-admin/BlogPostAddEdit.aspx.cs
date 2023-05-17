@@ -48,9 +48,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				reBody.CssClass = "rawEditor";
 				reLeftBody.CssClass = "rawEditor";
 				reRightBody.CssClass = "rawEditor";
-				divCenter.Visible = false;
-				divRight.Visible = false;
-				divLeft.Visible = false;
+				//divCenter.Visible = false;
+				//divRight.Visible = false;
+				//divLeft.Visible = false;
 			}
 
 			if (!IsPostBack) {

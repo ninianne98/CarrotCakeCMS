@@ -24,6 +24,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		protected void Page_Load(object sender, EventArgs e) {
 			LoadFooterCtrl(plcFooter, ControlLocation.PublicFooter);
 
+			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
+
 			if (!this.Page.Title.StartsWith(SiteData.CarrotCakeCMSVersionMM)) {
 				this.Page.Title = string.Format("{0} - {1}", SiteData.CarrotCakeCMSVersionMM, this.Page.Title);
 			}

@@ -2,6 +2,7 @@
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 using System;
+using static Carrotware.CMS.UI.Controls.CmsSkin;
 
 /*
 * CarrotCake CMS
@@ -16,6 +17,18 @@ using System;
 namespace Carrotware.CMS.UI.Admin {
 
 	public class AdminBaseUserControl : BaseUserControl {
+
+		public SkinOption SiteSkin {
+			get {
+				return AdminBaseMasterPage.SiteSkin;
+			}
+		}
+
+		public string MainColorCode {
+			get {
+				return AdminBaseMasterPage.MainColorCode;
+			}
+		}
 
 		protected Guid GetGuidPageIDFromQuery() {
 			return GeneralUtilities.GetGuidPageIDFromQuery();

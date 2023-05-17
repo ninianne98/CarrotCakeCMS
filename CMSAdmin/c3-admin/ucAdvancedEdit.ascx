@@ -4,24 +4,20 @@
 <%--<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="NotUsed"   />--%>
 <asp:PlaceHolder ID="plcIncludes" runat="server">
 	<link href="/c3-admin/includes/advanced-editor-reset.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen-scoped2.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/glossyseagreen/jquery-ui-glossyseagreen-scoped.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/modal.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
-	<link href="/c3-admin/includes/advanced-editor.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
-	<%--
-	<!-- jQuery CDN -->
-	<script>		setTimeout(function () { window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"><\/script>'); }, 100);  </script>
-	<script>		setTimeout(function () { window.jQuery.ui || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"><\/script>'); }, 200);  </script>
-	--%>
-	<%--
-	<script>	(!window.jQuery || (typeof jQuery == 'undefined')) || document.write('<script src="<% = Carrotware.Web.UI.Controls.jquery.GeneralUri %>" type="text/javascript"><\/script>'); </script>
-	<script>	window.jQuery.ui || document.write('<script src="<% = Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>" type="text/javascript"><\/script>'); </script>
-	--%>
 	<script src="/c3-admin/includes/jquery.simplemodal.js<%=AntiCache%>" type="text/javascript"></script>
 	<script src="/c3-admin/includes/jquery.blockUI.js<%=AntiCache%>" type="text/javascript"></script>
 	<script src="/c3-admin/includes/base64.js<%=AntiCache%>" type="text/javascript"></script>
 	<script src="/c3-admin/includes/advanced-editor.js<%=AntiCache%>" type="text/javascript"></script>
 </asp:PlaceHolder>
+
+<%--
+<!-- jQuery CDN -->
+<script>		setTimeout(function () { window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"><\/script>'); }, 100);  </script>
+<script>		setTimeout(function () { window.jQuery.ui || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"><\/script>'); }, 200);  </script>
+<script>	(!window.jQuery || (typeof jQuery == 'undefined')) || document.write('<script src="<% = Carrotware.Web.UI.Controls.jquery.GeneralUri %>" type="text/javascript"><\/script>'); </script>
+<script>	window.jQuery.ui || document.write('<script src="<% = Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>" type="text/javascript"><\/script>'); </script>
+--%>
 
 <script type="text/javascript">
 	var cmsJQLoadCtr = 1;
