@@ -816,6 +816,7 @@
     <Content Include="c3-admin\MiniColors\jquery.minicolors.css" />
     <Content Include="c3-admin\MiniColors\jquery.minicolors.min.js" />
     <Content Include="c3-admin\MiniColors\jquery.minicolors.png" />
+    <Content Include="c3-admin\PlainTemplateBW.aspx" />
     <Content Include="c3-admin\SiteDetail.aspx" />
     <Content Include="c3-admin\SiteIndex.aspx" />
     <Content Include="c3-admin\skins\logon.amethystorchid.min.css" />
@@ -1215,6 +1216,7 @@
     <Content Include="c3-admin\WidgetHistory.aspx" />
     <Content Include="c3-admin\WidgetList.aspx" />
     <Content Include="c3-admin\wp-SiteImport.aspx" />
+    <EmbeddedResource Include="cmsTemplates\plain.css" />
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>

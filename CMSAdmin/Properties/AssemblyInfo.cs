@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Web.UI;
 
 /*
 * CarrotCake CMS
@@ -44,3 +45,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("4.4.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
+
+[assembly: WebResource("Carrotware.CMS.UI.Admin.cmsTemplates.plain.css", "text/css", PerformSubstitution = true)]

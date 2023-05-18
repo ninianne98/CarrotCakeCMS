@@ -21,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSkinEdit);
 
 			//get the detected templates in use and mask off the template that is baked in as a the default template.
-			GeneralUtilities.BindDataBoundControl(gvPages, cmsHelper.Templates.Where(x => x.TemplatePath.ToLowerInvariant() != SiteData.DefaultTemplateFilename.ToLowerInvariant()).ToList());
+			GeneralUtilities.BindDataBoundControl(gvPages, cmsHelper.Templates.Where(t => !SiteData.DefaultTemplates.Contains(t.TemplatePath.ToLowerInvariant())).ToList());
 		}
 	}
 }

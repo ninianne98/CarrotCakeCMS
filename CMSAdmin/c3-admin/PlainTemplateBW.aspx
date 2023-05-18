@@ -5,10 +5,6 @@
 
 <!DOCTYPE HTML>
 <script runat="server">
-	string main = string.Empty;
-	string mainXDk = string.Empty;
-	string mainDk = string.Empty;
-	string mainLt = string.Empty;
 	string styleSheetPath = "";
 
 	protected override void OnLoad(EventArgs e) {
@@ -16,13 +12,6 @@
 		base.OnLoad(e);
 
 		styleSheetPath = ControlUtilities.GetWebResourceUrl(typeof(AdminBaseMasterPage), "Carrotware.CMS.UI.Admin.cmsTemplates.plain.css");
-
-		main = AdminBaseMasterPage.MainColorCode;
-		mainXDk = CmsSkin.DarkenColor(main, 0.35);
-		mainDk = CmsSkin.DarkenColor(main, 0.15);
-		mainLt = CmsSkin.LightenColor(main, 0.15);
-
-		TwoLevelNavigation1.SetThemeColor(main);
 
 		if (this.IsSiteIndex) {
 			PagedDataSummary2.Visible = true;
@@ -48,30 +37,8 @@
 		});
 	</script>
 	<title>plain</title>
-
 	<asp:PlaceHolder runat="server" ID="phCss">
 		<link href="<%=styleSheetPath %>" rel="stylesheet" type="text/css" />
-		<style type="text/css">
-			a {
-				color: <%=String.Format("{0}", mainDk)%>;
-			}
-
-				a:hover {
-					color: <%=String.Format("{0}", mainLt)%>;
-				}
-
-			#logo a {
-				color: <%=String.Format("{0}", mainXDk)%>;
-			}
-
-				#logo a:hover {
-					color: <%=String.Format("{0}", mainDk)%>;
-				}
-
-			h1, h2, h3, h4 {
-				color: <%=String.Format("{0}", mainXDk)%>;
-			}
-		</style>
 	</asp:PlaceHolder>
 </head>
 <body>
@@ -86,7 +53,8 @@
 				<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
 			</p>
 			<div id="menu">
-				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" FontSize="14px" />
+				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff"
+					SubBGColor="#787878" SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
 			</div>
 			<div style="clear: both;">
 			</div>

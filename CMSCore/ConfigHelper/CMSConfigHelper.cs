@@ -748,7 +748,6 @@ namespace Carrotware.CMS.Core {
 		public List<CMSTemplate> Templates {
 			get {
 				List<CMSTemplate> _plugins = null;
-				string sDefTemplate = SiteData.DefaultTemplateFilename.ToLowerInvariant();
 
 				bool bCached = false;
 
@@ -762,12 +761,20 @@ namespace Carrotware.CMS.Core {
 				}
 
 				if (!bCached) {
+					var site = SiteData.CurrentSite;
 					_plugins = new List<CMSTemplate>();
-					CMSTemplate t = new CMSTemplate();
-					t.TemplatePath = sDefTemplate;
-					t.EncodedPath = EncodeBase64(sDefTemplate);
-					t.Caption = "   Black 'n White - Plain L-R-C Content [*]   ";
-					_plugins.Add(t);
+
+					var t1 = new CMSTemplate();
+					t1.TemplatePath = site.TemplateFilename;
+					t1.EncodedPath = EncodeBase64(site.TemplateFilename);
+					t1.Caption = string.Format("    {0} [*]  ", ReflectionUtilities.DescriptionFor<SiteData>(x => x.TemplateFilename));
+					_plugins.Add(t1);
+
+					var t2 = new CMSTemplate();
+					t2.TemplatePath = site.TemplateBWFilename;
+					t2.EncodedPath = EncodeBase64(site.TemplateBWFilename);
+					t2.Caption = string.Format("   {0} [*]  ", ReflectionUtilities.DescriptionFor<SiteData>(x => x.TemplateBWFilename));
+					_plugins.Add(t2);
 				}
 
 				if (!bCached) {
@@ -782,8 +789,8 @@ namespace Carrotware.CMS.Core {
 
 					var _p2 = GetTemplatesByDirectory();
 
-					_plugins = _plugins.Union(_p1.Where(t => t.TemplatePath.ToLowerInvariant() != sDefTemplate)).ToList().
-						Union(_p2.Where(t => t.TemplatePath.ToLowerInvariant() != sDefTemplate)).ToList();
+					_plugins = _plugins.Union(_p1.Where(t => !SiteData.DefaultTemplates.Contains(t.TemplatePath.ToLowerInvariant()))).ToList()
+										.Union(_p2.Where(t => !SiteData.DefaultTemplates.Contains(t.TemplatePath.ToLowerInvariant()))).ToList();
 
 					HttpContext.Current.Cache.Insert(keyTemplates, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}

@@ -167,13 +167,25 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue(null)]
+		public Color ThemeColor {
+			get {
+				string s = (string)ViewState["ThemeColor"];
+				return ((s == null) ? Color.Transparent : ColorTranslator.FromHtml(s));
+			}
+			set {
+				ViewState["ThemeColor"] = ConvertColorCode(value);
+			}
+		}
+
+		[Category("Appearance")]
+		[DefaultValue(null)]
 		public override Color ForeColor {
 			get {
 				string s = (string)ViewState["ForeColor"];
 				return ((s == null) ? ColorTranslator.FromHtml("#758569") : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["ForeColor"] = ColorTranslator.ToHtml(value);
+				ViewState["ForeColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -185,7 +197,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? Color.Transparent : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["BGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["BGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -197,7 +209,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? ColorTranslator.FromHtml("#DDDDDD") : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["BackColor"] = ColorTranslator.ToHtml(value);
+				ViewState["BackColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -209,7 +221,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? ForeColor : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["HoverBGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["HoverBGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -221,7 +233,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? BackColor : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["HoverFGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["HoverFGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -233,7 +245,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? ColorTranslator.FromHtml("Transparent") : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["UnSelBGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["UnSelBGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -245,7 +257,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? ForeColor : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["UnSelFGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["UnSelFGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -257,7 +269,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? ForeColor : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["SelBGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["SelBGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -269,7 +281,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? BackColor : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["SelFGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["SelFGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -281,7 +293,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? BackColor : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["SubBGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["SubBGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -293,7 +305,7 @@ namespace Carrotware.CMS.UI.Controls {
 				return ((s == null) ? ForeColor : ColorTranslator.FromHtml(s));
 			}
 			set {
-				ViewState["SubFGColor"] = ColorTranslator.ToHtml(value);
+				ViewState["SubFGColor"] = ConvertColorCode(value);
 			}
 		}
 
@@ -499,6 +511,36 @@ namespace Carrotware.CMS.UI.Controls {
 			return ColorTranslator.ToHtml(color).ToLowerInvariant();
 		}
 
+		public void SetThemeColor(string main) {
+			var mainColor = ColorTranslator.FromHtml(main);
+			SetThemeColor(mainColor);
+		}
+
+		public void SetThemeColor(Color main) {
+			this.ThemeColor = main;
+		}
+
+		protected void UseSingleColor(Unit f, Color main) {
+			var mainD1 = CmsSkin.DarkenColor(main, 0.25);
+			var mainD3 = CmsSkin.DarkenColor(main, 0.85);
+
+			var mainL2 = CmsSkin.LightenColor(main, 0.65);
+			var mainL3 = CmsSkin.LightenColor(main, 0.95);
+
+			this.AutoStylingDisabled = false;
+			this.FontSize = f;
+			this.MenuFontSize = this.FontSize;
+
+			this.ForeColor = main;
+			this.SubBGColor = mainD1;
+
+			this.UnSelBGColor = mainL2;
+			this.UnSelFGColor = mainD3;
+
+			this.SelFGColor = mainL3;
+			this.SubFGColor = mainL3;
+		}
+
 		private void ParseCSS() {
 			if (string.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled && string.IsNullOrEmpty(cssText.Text)) {
 				var sbCSSText = new StringBuilder();
@@ -510,6 +552,12 @@ namespace Carrotware.CMS.UI.Controls {
 					sbCSS1.Replace("{DESKTOP_CSS}", sbCSSText.ToString());
 
 					sbCSSText = sbCSS1;
+				}
+
+				// use a single color to build the menu, Transparent is the unset default
+				// if this is used, any other colors will be ignored/overwritten/wiped
+				if (this.ThemeColor != Color.Transparent) {
+					UseSingleColor(this.FontSize, this.ThemeColor);
 				}
 
 				if (sbCSSText != null && sbCSSText.Length > 1) {

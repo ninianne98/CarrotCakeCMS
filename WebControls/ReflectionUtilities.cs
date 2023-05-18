@@ -25,12 +25,12 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public static Object GetPropertyValue(Object obj, string property) {
+		public static object GetPropertyValue(object obj, string property) {
 			PropertyInfo propertyInfo = obj.GetType().GetProperty(property, PublicInstanceStatic);
 			return propertyInfo.GetValue(obj, null);
 		}
 
-		public static Object GetPropertyValueFlat(Object obj, string property) {
+		public static object GetPropertyValueFlat(object obj, string property) {
 			PropertyInfo[] propertyInfos = obj.GetType().GetProperties(PublicInstanceStatic);
 			PropertyInfo propertyInfo = null;
 			foreach (PropertyInfo info in propertyInfos) {
@@ -46,7 +46,7 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public static bool DoesPropertyExist(Object obj, string property) {
+		public static bool DoesPropertyExist(object obj, string property) {
 			PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
 			return propertyInfo == null ? false : true;
 		}
@@ -56,14 +56,14 @@ namespace Carrotware.Web.UI.Controls {
 			return propertyInfo == null ? false : true;
 		}
 
-		public static List<string> GetPropertyStrings(Object obj) {
+		public static List<string> GetPropertyStrings(object obj) {
 			List<string> props = (from i in GetProperties(obj)
 								  orderby i.Name
 								  select i.Name).ToList();
 			return props;
 		}
 
-		public static List<PropertyInfo> GetProperties(Object obj) {
+		public static List<PropertyInfo> GetProperties(object obj) {
 			PropertyInfo[] info = obj.GetType().GetProperties(PublicInstanceStatic);
 
 			List<PropertyInfo> props = (from i in info.AsEnumerable()
@@ -115,7 +115,35 @@ namespace Carrotware.Web.UI.Controls {
 				}
 			}
 
-			return String.Empty;
+			return string.Empty;
+		}
+
+		public static string DescriptionFor<T>(Expression<Func<T, object>> expression) {
+			string propertyName = string.Empty;
+			PropertyInfo propInfo = null;
+			Type type = null;
+
+			MemberExpression memberExpression = expression.Body as MemberExpression ??
+												((UnaryExpression)expression.Body).Operand as MemberExpression;
+			if (memberExpression != null) {
+				propertyName = memberExpression.Member.Name;
+				type = memberExpression.Member.DeclaringType;
+				propInfo = type.GetProperty(propertyName);
+			}
+
+			if (!string.IsNullOrEmpty(propertyName) && type != null) {
+				DescriptionAttribute attribute1 = propInfo.GetCustomAttributes(typeof(DescriptionAttribute), true).FirstOrDefault() as DescriptionAttribute;
+				if (attribute1 != null) {
+					return attribute1.Description;
+				}
+
+				DisplayNameAttribute attribute2 = propInfo.GetCustomAttributes(typeof(DisplayNameAttribute), true).FirstOrDefault() as DisplayNameAttribute;
+				if (attribute2 != null) {
+					return attribute2.DisplayName;
+				}
+			}
+
+			return string.Empty;
 		}
 
 		public static IQueryable<T> SortByParm<T>(IList<T> source, string sortByFieldName, string sortDirection) {
@@ -123,7 +151,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static IQueryable<T> SortByParm<T>(IQueryable<T> source, string sortByFieldName, string sortDirection) {
-			sortDirection = String.IsNullOrEmpty(sortDirection) ? "ASC" : sortDirection.Trim().ToUpperInvariant();
+			sortDirection = string.IsNullOrEmpty(sortDirection) ? "ASC" : sortDirection.Trim().ToUpperInvariant();
 
 			string SortDir = sortDirection.Contains("DESC") ? "OrderByDescending" : "OrderBy";
 

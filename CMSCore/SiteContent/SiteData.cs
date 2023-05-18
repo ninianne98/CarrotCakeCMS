@@ -1,6 +1,7 @@
 ﻿using Carrotware.CMS.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel.Syndication;
@@ -429,6 +430,16 @@ namespace Carrotware.CMS.Core {
 
 		public bool CheckIsSiteSearchPath(string sFilterPath) {
 			return sFilterPath.ToLowerInvariant().StartsWith(this.SiteSearchPath);
+		}
+
+		[Description("Default - Plain L-R-C Content")]
+		public string TemplateFilename {
+			get { return SiteData.DefaultTemplateFilename.ToLowerInvariant(); }
+		}
+
+		[Description("Black 'n White - Plain L-R-C Content")]
+		public string TemplateBWFilename {
+			get { return SiteData.DefaultTemplateBWFilename.ToLowerInvariant(); }
 		}
 
 		public List<string> GetSpecialFilePathPrefixes() {

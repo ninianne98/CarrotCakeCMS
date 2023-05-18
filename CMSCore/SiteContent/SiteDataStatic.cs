@@ -1,6 +1,7 @@
 ﻿using Carrotware.CMS.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -662,8 +663,22 @@ namespace Carrotware.CMS.Core {
 			get { return "/default.aspx".ToLowerInvariant(); }
 		}
 
+		[Description("Default - Plain L-R-C Content")]
 		public static string DefaultTemplateFilename {
 			get { return SiteData.AdminFolderPath + "PlainTemplate.aspx".ToLowerInvariant(); }
+		}
+
+		[Description("Black 'n White - Plain L-R-C Content")]
+		public static string DefaultTemplateBWFilename {
+			get { return SiteData.AdminFolderPath + "PlainTemplateBW.aspx".ToLowerInvariant(); }
+		}
+
+		public static List<string> DefaultTemplates {
+			get {
+				string[] _defaultTemplates = new string[] { DefaultTemplateFilename, DefaultTemplateBWFilename };
+
+				return _defaultTemplates.ToList();
+			}
 		}
 
 		public static string VirtualCMSEditPrefix {
@@ -700,6 +715,7 @@ namespace Carrotware.CMS.Core {
 				if (_specialFiles == null) {
 					_specialFiles = new List<string>();
 					_specialFiles.Add(DefaultTemplateFilename);
+					_specialFiles.Add(DefaultTemplateBWFilename);
 					_specialFiles.Add(DefaultDirectoryFilename);
 					//_specialFiles.Add("/feed/rss.ashx");
 					//_specialFiles.Add("/feed/sitemap.ashx");
