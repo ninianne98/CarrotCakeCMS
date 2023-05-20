@@ -1110,7 +1110,7 @@ function cmsDblClickWidgetTarget(item) {
 function cmsCreateNewWidget() {
 	var widget = '<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper cms-seagreen"> \r\n ' +
 					'<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath cms-seagreen" id="cmsControl"> \r\n ' +
-					'<p class="cmsToolItem ui-widget-header cms-seagreen"> ' + cmsLastWidgetName + ' </p> \r\n ' +
+					'<p class="cmsToolItem cms-seagreen"> ' + cmsLastWidgetName + ' </p> \r\n ' +
 					'<input type="hidden" id="cmsCtrlID" value="' + cmsLastWidget + '" /> \r\n ' +
 					'<input type="hidden" id="cmsCtrlOrder" value="-1" /> \r\n ' +
 					'</div> \r\n ' +

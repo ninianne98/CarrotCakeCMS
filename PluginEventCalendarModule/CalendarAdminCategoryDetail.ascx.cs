@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Carrotware.CMS.Interface;
+using System;
 using System.Linq;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -28,15 +27,15 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			ItemGuid = ParmParser.GetGuidIDFromQuery();
 
 			if (!IsPostBack) {
-				CalendarHelper.BindDropDownList(ddlFGColor, CalendarHelper.ColorCodes, CalendarHelper.HEX_Black);
-				CalendarHelper.BindDropDownList(ddlBGColor, CalendarHelper.ColorCodes, CalendarHelper.HEX_White);
+				txtFgColor.Text = CalendarHelper.HEX_Black;
+				txtBgColor.Text = CalendarHelper.HEX_White;
 
 				var itm = CalendarHelper.GetCalendarCategory(ItemGuid);
 
 				if (itm != null) {
 					txtCategoryName.Text = itm.CategoryName;
-					ddlFGColor.SelectedValue = itm.CategoryFGColor;
-					ddlBGColor.SelectedValue = itm.CategoryBGColor;
+					txtFgColor.Text = itm.CategoryFGColor;
+					txtBgColor.Text = itm.CategoryBGColor;
 				}
 			}
 		}
@@ -58,8 +57,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 				}
 
 				itm.CategoryName = txtCategoryName.Text;
-				itm.CategoryFGColor = ddlFGColor.SelectedValue;
-				itm.CategoryBGColor = ddlBGColor.SelectedValue;
+				itm.CategoryFGColor = txtFgColor.Text;
+				itm.CategoryBGColor = txtBgColor.Text;
 
 				if (bAdd) {
 					db.carrot_CalendarEventCategories.InsertOnSubmit(itm);

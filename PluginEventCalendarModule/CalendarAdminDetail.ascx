@@ -1,7 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdminDetail.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.EventCalendarModule.CalendarAdminDetail" %>
-<h2>
-	Add/Edit Event
-</h2>
+<h2>Add/Edit Event</h2>
 <fieldset style="width: 700px;">
 	<legend>
 		<label>
@@ -16,18 +14,13 @@
 	</div>
 	<table style="width: 98%">
 		<tr>
-			<td style="width: 25%">
-			</td>
-			<td style="width: 25%">
-			</td>
-			<td style="width: 25%">
-			</td>
-			<td style="width: 25%">
-			</td>
+			<td style="width: 25%"></td>
+			<td style="width: 25%"></td>
+			<td style="width: 25%"></td>
+			<td style="width: 25%"></td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				recurrence frequency:
+			<td class="tablecaption">recurrence frequency:
 			</td>
 			<td>
 				<asp:DropDownList DataTextField="FrequencyName" DataValueField="CalendarFrequencyID" ID="ddlRecurr" runat="server" />
@@ -36,9 +29,10 @@
 				<div style="float: left; display: block; clear: left;">
 					category:
 				</div>
-				<div style="float: right; clear: right; border: 1px dotted #c0c0c0; background-color: #ffffff; margin: 2px; padding: 2px; width: 36px;">
-					<div id="ColorTextSample" style="margin: 2px; padding: 2px; font-weight: bolder; text-align: center;">
-						X</div>
+				<div style="float: right; clear: right; border: 2px dotted #aaaaaa; background-color: #ffffff; margin: 2px; padding: 2px; width: 48px;">
+					<div id="ColorTextSample" style="margin: 2px; padding: 4px; font-size: 14px; font-weight: bolder; text-align: center;">
+						X
+					</div>
 				</div>
 				<div style="clear: both">
 				</div>
@@ -69,8 +63,7 @@
 	</table>
 	<table style="width: 675px">
 		<tr>
-			<td class="tablecaption" style="text-align: right;">
-				start date:
+			<td class="tablecaption" style="text-align: right;">start date:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartDate" runat="server" CssClass="dateRegion"
@@ -78,8 +71,7 @@
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtEventStartDate" ID="RequiredFieldValidator4"
 					runat="server" Text="**" ToolTip="Start date is required" ErrorMessage="Start date is required" Display="Dynamic" />
 			</td>
-			<td class="tablecaption" style="text-align: right;">
-				end by date:
+			<td class="tablecaption" style="text-align: right;">end by date:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndDate" runat="server" CssClass="dateRegion"
@@ -87,8 +79,7 @@
 				<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtEventEndDate" ID="RequiredFieldValidator3"
 					runat="server" Text="**" ToolTip="End date is required" ErrorMessage="End date is required" Display="Dynamic" />
 			</td>
-			<td id="tdRecursEvery1" rowspan="2" class="tablecaption" style="text-align: right;">
-				recurs every:
+			<td id="tdRecursEvery1" rowspan="2" class="tablecaption" style="text-align: right;">recurs every:
 			</td>
 			<td id="tdRecursEvery2" rowspan="2">
 				<asp:TextBox ID="txtRecursEvery" runat="server" ValidationGroup="inputForm" Columns="4" Text="1" MaxLength="5" />
@@ -100,15 +91,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption" style="text-align: right;">
-				time from:
+			<td class="tablecaption" style="text-align: right;">time from:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartTime" runat="server" CssClass="timeRegion"
 					Columns="16" MaxLength="12" />
 			</td>
-			<td class="tablecaption" style="text-align: right;">
-				time to:
+			<td class="tablecaption" style="text-align: right;">time to:
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndTime" runat="server" CssClass="timeRegion"
@@ -235,28 +224,28 @@
 		initDays();
 	});
 
-	function setCatColor(pat) {
-		$('#<%=ddlColors.ClientID %>').val(pat);
-		var txt = $("#<%=ddlColors.ClientID %> option:selected").text();
+		function setCatColor(pat) {
+			$('#<%=ddlColors.ClientID %>').val(pat);
+			var txt = $("#<%=ddlColors.ClientID %> option:selected").text();
 
-		var catColor = txt.split("|");
+			var catColor = txt.split("|");
 
-		$('#ColorTextSample').css('color', catColor[1]);
-		$('#ColorTextSample').css('background-color', catColor[0]);
-	}
+			$('#ColorTextSample').css('color', catColor[1]);
+			$('#ColorTextSample').css('background-color', catColor[0]);
+		}
 
-	function initCatColor() {
-		var val = $('#<%=ddlCategory.ClientID %>').val();
-		setCatColor(val);
-	}
-
-	$(document).ready(function () {
-
-		$("#<%=ddlCategory.ClientID %>").bind("change keyup input", function () {
-			var val = $(this).val();
+		function initCatColor() {
+			var val = $('#<%=ddlCategory.ClientID %>').val();
 			setCatColor(val);
-		});
+		}
 
-		initCatColor();
-	});
+		$(document).ready(function () {
+
+			$("#<%=ddlCategory.ClientID %>").bind("change keyup input", function () {
+				var val = $(this).val();
+				setCatColor(val);
+			});
+
+			initCatColor();
+		});
 </script>

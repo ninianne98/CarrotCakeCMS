@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdminCategoryList.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.EventCalendarModule.CalendarAdminCategoryList" %>
 <%@ Import Namespace="Carrotware.CMS.UI.Plugins.EventCalendarModule" %>
-<h2>
-	Category List
-</h2>
+<h2>Category List</h2>
 <p>
 	<a href="<%= CreateLink(CalendarHelper.PluginKeys.EventAdminCategoryDetail.ToString()) %>">
 		<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
@@ -27,8 +25,7 @@
 			<asp:TemplateField>
 				<ItemTemplate>
 					<div style="border: solid 1px <%# Eval("CategoryBGColor") %>; background-color: <%# Eval("CategoryFGColor") %>; padding: 1px;">
-						<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>;
-							padding: 5px; margin: 1px;">
+						<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>; padding: 5px; margin: 1px;">
 							<%# Eval("CategoryFGColor") %>,
 							<%# Eval("CategoryBGColor") %>
 						</div>

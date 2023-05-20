@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS - Event Calendar

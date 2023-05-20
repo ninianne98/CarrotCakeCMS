@@ -13,6 +13,7 @@
 		<link href="/c3-admin/includes/chosen.min.css" rel="stylesheet" type="text/css" />
 		<link href="/c3-admin/includes/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
 		<link href="/c3-admin/includes/modal.css" rel="stylesheet" type="text/css" />
+		<link href="/c3-admin/MiniColors/jquery.minicolors.css" rel="stylesheet" />
 
 		<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Main" SelectedColor="Classic" />
 
@@ -23,6 +24,7 @@
 		<script src="/c3-admin/includes/base64.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/jquery.simplemodal.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/jquery.blockUI.js<%=AntiCache%>" type="text/javascript"></script>
+		<script src="/c3-admin/MiniColors/jquery.minicolors.min.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/common-utils.js<%=AntiCache%>" type="text/javascript"></script>
 
 		<script type="text/javascript">

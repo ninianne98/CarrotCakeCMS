@@ -202,12 +202,12 @@
 												<div id="cmsToolBox" class="ui-widget-content ui-corner-all">
 											</HeaderTemplate>
 											<ItemTemplate>
-												<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper">
-													<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath" id="cmsControl">
-														<p class="cmsToolItem ui-widget-header">
+												<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper cms-seagreen">
+													<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath cms-seagreen" id="cmsControl">
+														<p class="cmsToolItem cms-seagreen">
 															<%# Eval("Caption")%>
 														</p>
-														<p class="cmsWidgetToolboxPath">
+														<p class="cmsWidgetToolboxPath cms-seagreen">
 															<%# string.Format("{0}", Eval("FilePath")).Replace(".", ". ").Replace("/", "/ ")%><br />
 														</p>
 														<input type="hidden" id="cmsCtrlID" value="<%# Eval("FilePath")%>" />
