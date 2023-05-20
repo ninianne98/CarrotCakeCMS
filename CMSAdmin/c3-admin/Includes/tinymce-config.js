@@ -5,11 +5,11 @@ var tinyBrowseResize = false;
 function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 	tinyBrowseHeight = parseInt(winHeight);
 	tinyBrowseWidth = parseInt(winWidth);
-	if (tinyBrowseWidth < 640) {
-		tinyBrowseWidth = 640;
+	if (tinyBrowseWidth < 700) {
+		tinyBrowseWidth = 700;
 	}
-	if (tinyBrowseHeight < 175) {
-		tinyBrowseHeight = 175;
+	if (tinyBrowseHeight < 150) {
+		tinyBrowseHeight = 150;
 	}
 
 	tinyBrowseResize = allowResize;
@@ -31,6 +31,10 @@ function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 		// because ajax...
 		tinymce.remove();
 	}
+
+	var d = new Date();
+	cmsTimeTick = d.getTime();
+	var contentCss = "/c3-admin/Includes/richedit.css?ts=" + cmsTimeTick;
 
 	tinymce.init({
 		selector: "textarea.mceEditor",
@@ -71,7 +75,7 @@ function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 				}
 			});
 		},
-		content_css: "/c3-admin/Includes/richedit.css"
+		content_css: contentCss
 	});
 }
 

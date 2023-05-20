@@ -91,7 +91,6 @@
 		var cmsScrollPos = parseInt('<%= EditorPrefs.EditorScrollPosition %>');
 		var cmsScrollWPos = parseInt('<%= EditorPrefs.EditorWidgetScrollPosition %>');
 
-		var cmsTimeTick = "<%=DateTime.Now.Ticks.ToString() %>";
 		var cmsOpenStat = true;
 
 		cmsSetPageStatus(cmsPageLocked);
@@ -102,7 +101,7 @@
 
 		cmsSetPrefs(cmsTabIdx, cmsMargin, cmsScrollPos, cmsScrollWPos, cmsOpenStat);
 
-		cmsSetServiceParms(cmsWebSvc, cmsThisPage, cmsThisPageID, cmsTimeTick);
+		cmsSetServiceParms(cmsWebSvc, cmsThisPage, cmsThisPageID);
 
 		cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
 
