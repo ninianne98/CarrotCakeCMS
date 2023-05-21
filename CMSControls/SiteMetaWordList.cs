@@ -253,7 +253,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			var outerItem = new HtmlTag("ul");
-			outerItem.MergeAttribute("id", this.ClientID);
+			outerItem.SetAttribute("id", this.ClientID);
 			outerItem.MergeAttribute("class", this.CssClass);
 
 			if (lstNav != null && lstNav.Any() && !string.IsNullOrEmpty(this.MetaDataTitle)) {
@@ -304,8 +304,6 @@ namespace Carrotware.CMS.UI.Controls {
 
 				childItem.MergeAttribute("class", this.CSSItem);
 				childItem.MergeAttribute("class", string.Format("meta-item meta-perc-used-{0} meta-used-{1}", percUsed, metaCount));
-
-				output.WriteLine(childItem.RenderTag());
 
 				if (SiteData.IsFilenameCurrentPage(c.MetaInfoURL)) {
 					childItem.MergeAttribute("class", "selected");

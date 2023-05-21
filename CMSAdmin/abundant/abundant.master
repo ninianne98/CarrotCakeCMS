@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
 Design by Free CSS Templates
-http://www.freecsstemplates.org
+https://templated.live
 Released for free under a Creative Commons Attribution 2.5 License
 
 Name       : Abundant
@@ -77,7 +77,7 @@ Conversion to CarrotCake CMS Template: Carrotware
 				<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
 				All rights reserved. | Site built with <a target="_blank" href="http://www.carrotware.com/carrotcake-cms">carrotcake cms</a>
 				<br />
-				Design by <a target="_blank" href="http://www.freecsstemplates.org/">Free CSS Templates</a>.
+				Design by <a target="_blank" href="https://templated.live/">Free CSS Templates</a>.
 			</p>
 		</div>
 	</asp:PlaceHolder>

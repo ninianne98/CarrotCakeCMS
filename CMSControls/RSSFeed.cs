@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
@@ -78,7 +79,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string RSSFeedURI {
 			get {
 				string s = (string)ViewState["RSSFeedURI"];
-				return ((s == null) ? "/rss.ashx" : s);
+				return ((s == null) ? SiteFilename.RssFeedUri : s);
 			}
 			set {
 				ViewState["RSSFeedURI"] = value;
@@ -116,10 +117,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-			string sCSS = "";
-			if (!String.IsNullOrEmpty(this.CssClass)) {
-				sCSS = " class=\"" + this.CssClass + "\" ";
-			}
 
 			switch (RenderRSSMode) {
 				case RSSRenderAs.HeaderLink:
@@ -128,7 +125,13 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							output.Write("<!-- RSS Header Feed --> <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" /> \r\n");
+							var link = new HtmlTag("link");
+							link.Uri = string.Format("{0}?type={1}", this.RSSFeedURI, this.RSSFeedType);
+							link.MergeAttribute("rel", "alternate");
+							link.MergeAttribute("type", "application/rss+xml");
+							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
+
+							output.Write("<!-- RSS Header Feed --> " + link.RenderSelfClosingTag() + " \r\n");
 							break;
 
 						default:
@@ -143,8 +146,19 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							string sImg = GeneralUtilities.ResolvePath(this, this.ImageURI);
-							output.Write("<!-- RSS Feed Image Link--> <a " + sCSS + " type=\"application/rss+xml\" title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" ><img alt=\"" + this.RSSFeedType.ToString() + "\" src=\"" + sImg + "\" /></a>\r\n");
+							var img = new HtmlTag(HtmlTag.EasyTag.Image);
+							img.Uri = GeneralUtilities.ResolvePath(this, this.ImageURI);
+							img.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
+
+							var link = new HtmlTag(HtmlTag.EasyTag.AnchorTag);
+							link.Uri = string.Format("{0}?type={1}", this.RSSFeedURI, this.RSSFeedType);
+							link.MergeAttribute("class", this.CssClass);
+							link.MergeAttribute("rel", "alternate");
+							link.MergeAttribute("type", "application/rss+xml");
+							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
+							link.InnerHtml = img.RenderSelfClosingTag();
+
+							output.Write("<!-- RSS Feed Image Link--> " + link.RenderTag() + "\r\n");
 							break;
 
 						default:
@@ -159,7 +173,15 @@ namespace Carrotware.CMS.UI.Controls {
 						case SiteData.RSSFeedInclude.BlogAndPages:
 						case SiteData.RSSFeedInclude.BlogOnly:
 						case SiteData.RSSFeedInclude.PageOnly:
-							output.Write("<!-- RSS Feed Text Link--> <a " + sCSS + " type=\"application/rss+xml\" title=\"" + this.RSSFeedType.ToString() + " RSS Feed\" href=\"" + this.RSSFeedURI + "?type=" + this.RSSFeedType.ToString() + "\" >" + LinkText + "</a>\r\n");
+							var link = new HtmlTag(HtmlTag.EasyTag.AnchorTag);
+							link.Uri = string.Format("{0}?type={1}", this.RSSFeedURI, this.RSSFeedType);
+							link.MergeAttribute("class", this.CssClass);
+							link.MergeAttribute("rel", "alternate");
+							link.MergeAttribute("type", "application/rss+xml");
+							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
+							link.InnerHtml = this.LinkText;
+
+							output.Write("<!-- RSS Feed Text Link--> " + link.RenderTag() + "\r\n");
 							break;
 
 						default:

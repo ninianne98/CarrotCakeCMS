@@ -13,6 +13,9 @@
 namespace Carrotware.CMS.Core {
 
 	public static class SiteFilename {
+		public static string RssFeedUri { get { return "/rss.ashx"; } }
+		public static string SiteMapUri { get { return "/sitemap.ashx"; } }
+		public static string TrackbackUri { get { return "/trackback.ashx"; } }
 
 		public static string PageAddEditURL {
 			get { return SiteData.AdminFolderPath + "PageAddEdit.aspx"; }

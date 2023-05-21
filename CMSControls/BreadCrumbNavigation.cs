@@ -109,7 +109,7 @@ namespace Carrotware.CMS.UI.Controls {
 			lstNav = CMSConfigHelper.TweakData(lstNav, false, true);
 
 			var outerTag = new HtmlTag("ul");
-			outerTag.MergeAttribute("id", this.ClientID);
+			outerTag.SetAttribute("id", this.ClientID);
 			outerTag.MergeAttribute("class", this.CssClass);
 
 			if (this.DisplayAsList) {

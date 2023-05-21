@@ -505,8 +505,11 @@ namespace Carrotware.CMS.Core {
 
 		public enum RSSFeedInclude {
 			Unknown,
+			[Description("Blogs and Pages")]
 			BlogAndPages,
+			[Description("Blog Only")]
 			BlogOnly,
+			[Description("Page Only")]
 			PageOnly
 		}
 

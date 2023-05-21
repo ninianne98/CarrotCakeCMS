@@ -717,9 +717,6 @@ namespace Carrotware.CMS.Core {
 					_specialFiles.Add(DefaultTemplateFilename);
 					_specialFiles.Add(DefaultTemplateBWFilename);
 					_specialFiles.Add(DefaultDirectoryFilename);
-					//_specialFiles.Add("/feed/rss.ashx");
-					//_specialFiles.Add("/feed/sitemap.ashx");
-					//_specialFiles.Add("/feed/xmlrpc.ashx");
 				}
 
 				return _specialFiles;

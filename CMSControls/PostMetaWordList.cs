@@ -1,17 +1,10 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using System;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using Carrotware.Web.UI.Controls;
-
 using System;
 using System.Collections.Generic;
-
 using System.ComponentModel;
-
 using System.Linq;
-
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -256,7 +249,7 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			var outerItem = new HtmlTag(sOuter);
-			outerItem.MergeAttribute("id", this.ClientID);
+			outerItem.SetAttribute("id", this.ClientID);
 			outerItem.MergeAttribute("class", this.CssClass);
 
 			output.WriteLine(outerItem.OpenTag());

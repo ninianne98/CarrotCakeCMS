@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string TrackBackURI {
 			get {
 				string s = (string)ViewState["TrackBackURI"];
-				return ((s == null) ? "/trackback.ashx" : s);
+				return ((s == null) ? SiteFilename.TrackbackUri : s);
 			}
 			set {
 				ViewState["TrackBackURI"] = value;

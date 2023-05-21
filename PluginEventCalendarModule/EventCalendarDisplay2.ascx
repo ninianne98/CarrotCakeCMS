@@ -30,16 +30,16 @@
 						<div style="text-align: left;">
 							<div style="border: solid 1px <%# Eval("CategoryBGColor") %>; background-color: <%# Eval("CategoryFGColor") %>; padding: 1px;">
 								<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>; padding: 5px; margin: 1px; min-width: 250px; text-align: left;">
-									<b>
-										<asp:Literal ID="litEvent" runat="server" Text='<%# String.Format( "{0} ", Eval("EventTitle") ) %>' />
+									<b style="font-weight: bold; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>;">
+										<asp:Literal ID="litEvent" runat="server" Text='<%# string.Format( "{0} ", Eval("EventTitle") ) %>' />
 										<asp:PlaceHolder ID="PlaceHolder1" runat="server" Visible='<%# !(bool)Eval("IsAllDayEvent")%>'>
-											<asp:Literal ID="litSTime1" runat="server" Text='<%# String.Format(" at {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTime")) ) %>'
+											<asp:Literal ID="litSTime1" runat="server" Text='<%# string.Format(" at {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTime")) ) %>'
 												Visible='<%# (Eval("EventStartTimeOverride") == null) %>' />
-											<asp:Literal ID="litSTime2" runat="server" Text='<%# String.Format(" at {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTimeOverride")) ) %>'
+											<asp:Literal ID="litSTime2" runat="server" Text='<%# string.Format(" at {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?)Eval("EventStartTimeOverride")) ) %>'
 												Visible='<%# (Eval("EventStartTimeOverride") != null) %>' />
-											<asp:Literal ID="litETime1" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTime")) ) %>'
+											<asp:Literal ID="litETime1" runat="server" Text='<%# string.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTime")) ) %>'
 												Visible='<%# (Eval("EventEndTime") != null) && (Eval("EventEndTimeOverride") == null) %>' />
-											<asp:Literal ID="litETime2" runat="server" Text='<%# String.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTimeOverride")) ) %>'
+											<asp:Literal ID="litETime2" runat="server" Text='<%# string.Format(" - {0:h:mm tt} ", GetTimeFromTimeSpan( (TimeSpan?) Eval("EventEndTimeOverride")) ) %>'
 												Visible='<%# (Eval("EventEndTimeOverride") != null) %>' />
 										</asp:PlaceHolder>
 										<asp:Literal ID="litStatus" runat="server" Text=" (CANCELLED) " Visible='<%# (bool)Eval("IsCancelledSeries") || (bool)Eval("IsCancelledEvent") %>' />
@@ -48,11 +48,11 @@
 							</div>
 							<asp:PlaceHolder ID="phDetail" runat="server" Visible='<%# !(bool)Eval("IsCancelledEvent") %>'>
 								<div>
-									<asp:Literal ID="litDetail1" runat="server" Text='<%# String.Format( "{0}", DataBinder.Eval(Container, "DataItem.EventSeriesDetail") ) %>' />
+									<asp:Literal ID="litDetail1" runat="server" Text='<%# string.Format( "{0}", DataBinder.Eval(Container, "DataItem.EventSeriesDetail") ) %>' />
 								</div>
 							</asp:PlaceHolder>
 							<div>
-								<asp:Literal ID="litDetail2" runat="server" Text='<%# String.Format( "{0}", DataBinder.Eval(Container, "DataItem.EventDetail") ) %>' />
+								<asp:Literal ID="litDetail2" runat="server" Text='<%# string.Format( "{0}", DataBinder.Eval(Container, "DataItem.EventDetail") ) %>' />
 							</div>
 							<br />
 						</div>
@@ -70,7 +70,7 @@
 				<asp:Repeater ID="rpCat" runat="server">
 					<ItemTemplate>
 						<div style="border: solid 1px <%# Eval("CategoryBGColor") %>; background-color: <%# Eval("CategoryFGColor") %>; padding: 1px;">
-							<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>; padding: 5px; margin: 1px;">
+							<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>; font-weight: bold; padding: 5px; margin: 1px;">
 								<%# Eval("CategoryName")%>
 							</div>
 						</div>

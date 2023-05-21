@@ -24,16 +24,16 @@ namespace Carrotware.CMS.Core {
 		public void ProcessRequest(HttpContext context) {
 			string sFileRequested = context.Request.Path;
 
-			if (sFileRequested.ToLowerInvariant().EndsWith("/rss.ashx")) {
+			if (sFileRequested.ToLowerInvariant().EndsWith(SiteFilename.RssFeedUri)) {
 				SiteData.CurrentSite.RenderRSSFeed(context);
 			}
 
-			if (sFileRequested.ToLowerInvariant().EndsWith("/sitemap.ashx")) {
+			if (sFileRequested.ToLowerInvariant().EndsWith(SiteFilename.SiteMapUri)) {
 				SiteMapHelper smh = new SiteMapHelper();
 				smh.RenderSiteMap(context);
 			}
 
-			if (sFileRequested.ToLowerInvariant().EndsWith("/trackback.ashx")) {
+			if (sFileRequested.ToLowerInvariant().EndsWith(SiteFilename.TrackbackUri)) {
 				TrackbackHelper tbh = new TrackbackHelper();
 				if (SiteData.CurretSiteExists) {
 					if (SiteData.CurrentSite.AcceptTrackbacks) {

@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
 Design by Free CSS Templates
-http://www.freecsstemplates.org
+https://templated.live
 Released for free under a Creative Commons Attribution 2.5 License
 
 Name       : WaterDrops
@@ -113,7 +113,7 @@ Released   : 20120902
 			<div id="footer">
 				<p>
 					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
-					| Design by <a href="http://www.freecsstemplates.org">FCT</a>
+					| Design by <a href="https://templated.live">FCT</a>
 					| Photos by <a href="http://fotogrph.com/">Fotogrph</a>
 					| Site built with <a target="_blank" href="http://www.carrotware.com/">carrotcake cms</a>
 				</p>
