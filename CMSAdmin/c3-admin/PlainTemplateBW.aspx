@@ -74,6 +74,10 @@
 										</SearchTemplate>
 									</carrot:SearchBox>
 								</li>
+								<li id="calendar_wrap">
+									<carrot:PostCalendar runat="server" ID="calendar" CssClass="calendar" RenderHTMLWithID="true" />
+									<br />
+								</li>
 								<li>
 									<carrot:WidgetContainer ID="phLeftTop" runat="server" />
 									<carrot:ContentContainer EnableViewState="false" ID="BodyLeft" runat="server" />
@@ -101,9 +105,10 @@
 									<asp:PlaceHolder ID="phMeta" runat="server">
 										<div>
 											<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl1" runat="server" ContentType="Category"
-												MetaDataTitle="Categories:" />
+												MetaDataTitle="Categories:" CssClass="meta" />
 											<br />
-											<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl2" runat="server" ContentType="Tag" MetaDataTitle="Tags:" />
+											<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="wpl2" runat="server" ContentType="Tag"
+												MetaDataTitle="Tags:" CssClass="meta" />
 										</div>
 									</asp:PlaceHolder>
 									<carrot:WidgetContainer ID="phCenterBottom" runat="server" />
@@ -130,7 +135,7 @@
 										</p>
 										<p>
 											<carrot:PostMetaWordList HtmlTagNameInner="span" HtmlTagNameOuter="span" ID="PostMetaWordList1" runat="server" ContentType="Category"
-												MetaDataTitle="Categories:" />
+												MetaDataTitle="Categories:" CssClass="meta" />
 										</p>
 									</div>
 								</ContentTemplate>

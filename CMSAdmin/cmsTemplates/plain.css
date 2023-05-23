@@ -2,9 +2,9 @@
 	margin: 0;
 	padding: 0;
 	background: #FFFFFF;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #787878;
+	font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #686868;
 }
 
 h1, h2, h3 {
@@ -16,11 +16,11 @@ h1, h2, h3 {
 }
 
 h1 {
-	font-size: 2.5em;
+	font-size: 2.2em;
 }
 
 h2 {
-	font-size: 2em;
+	font-size: 1.8em;
 }
 
 h3 {
@@ -55,7 +55,7 @@ a {
 	width: 980px;
 	height: 300px;
 	margin: 0 auto;
-	padding: 0px;
+	padding: 0;
 }
 
 /* Menu */
@@ -72,19 +72,19 @@ a {
 #page {
 	width: 940px;
 	margin: 0 auto;
-	padding: 0px 0px 0px 0px;
+	padding: 0 0 0 0;
 }
 
 #page-bgtop {
-	padding: 10px 0px;
+	padding: 10px 0;
 }
 
 /* Content */
 
 #content {
 	float: right;
-	width: 580px;
-	padding: 20px 0px 0px 0px;
+	width: 590px;
+	padding: 20px 0 0 0;
 }
 
 .text-danger {
@@ -103,37 +103,76 @@ a {
 }
 
 	.post .title {
-		height: 38px;
+		height: 40px;
 		margin-bottom: 10px;
-		padding: 12px 0 0 0px;
+		padding: 14px 0 0 0;
 		letter-spacing: -.5px;
-		color: #82050B;
+		color: #777777;
 	}
 
 		.post .title a {
-			color: #82050B;
+			color: #777777;
 			border: none;
 		}
 
 	.post .entry {
-		padding: 0px 0px 20px 0px;
+		padding: 0 0 20px 0;
 		padding-bottom: 20px;
-		text-align: justify;
+		text-align: left;
+	}
+
+.meta .meta-item {
+	line-height: 1.8em;
+	padding: 3px;
+	margin: 3px;
+}
+
+	.meta .meta-item a {
+		border: 1px solid #777777;
+		padding: 5px;
+		margin: 3px;
+		line-height: 3em;
 	}
 
 .links {
 	padding-top: 20px;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 }
+
+/* contactForm */
+
+#contactForm {
+	border: 0;
+	margin: 0;
+	clear: both;
+}
+
+	#contactForm input[type="text"], #contactForm textarea {
+		margin: 8px 8px 14px 8px;
+		padding: 4px 2px 4px 2px;
+		border: solid 1px #424242;
+	}
+
+	#contactForm label {
+		font-weight: bold;
+		margin: 10px 2px 14px 2px;
+		padding: 4px 2px 8px 2px;
+		border: solid 1px #ffffff;
+	}
+
+	#contactForm .text-danger {
+		margin-left: 5px;
+		padding-left: 5px;
+	}
 
 /* Sidebar */
 
 #sidebar {
 	float: left;
-	width: 280px;
-	margin: 0px;
-	padding: 0px 0px 0px 0px;
+	width: 290px;
+	margin: 0;
+	padding: 0 0 0 0;
 	color: #787878;
 }
 
@@ -149,13 +188,13 @@ a {
 	}
 
 		#sidebar li ul {
-			margin: 0px 0px;
+			margin: 0 0;
 			padding-bottom: 30px;
 		}
 
 		#sidebar li li {
 			line-height: 25px;
-			margin: 0px 30px 15px;
+			margin: 0 30px 15px;
 			border-left: none;
 			border-bottom: dotted 1px #737373;
 		}
@@ -168,9 +207,9 @@ a {
 	}
 
 	#sidebar p {
-		margin: 0 0px;
-		padding: 0px 30px 20px 30px;
-		text-align: justify;
+		margin: 0 0;
+		padding: 0 30px 20px 30px;
+		text-align: left;
 	}
 
 	#sidebar a {
@@ -182,12 +221,54 @@ a {
 			color: #8A8A8A;
 		}
 
+/* Calendar */
+
+#calendar {
+}
+
+#calendar_wrap {
+	padding: 15px 5px 15px 5px;
+}
+
+#calendar caption {
+	color: #555555;
+	font-size: 1.75em;
+	font-weight: 600;
+	padding: 5px;
+}
+
+#calendar thead {
+	color: #333333;
+	font-size: 1.25em;
+	font-weight: 500;
+}
+
+#calendar table {
+	width: 100%;
+}
+
+#calendar tbody td {
+	text-align: center;
+}
+
+#calendar #prev {
+	text-align: left;
+}
+
+#calendar #next {
+	text-align: right;
+}
+
+#calendar #prev, #calendar #next {
+	font-size: 1.4em;
+}
+
 /* Footer */
 
 #footer {
 	height: 50px;
 	margin: 0 auto;
-	padding: 0px 0 15px 0;
+	padding: 0 0 15px 0;
 	background: #ECECEC;
 	border-top: 1px solid #DEDEDE;
 	font-family: Arial, Helvetica, sans-serif;
@@ -213,6 +294,41 @@ a {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
+}
+
+/* pager */
+
+.index-head {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.readmore {
+	font-weight: bold;
+}
+
+.post-footer {
+	font-size: 1.1em;
+	margin: 0.2em 4em 0.4em 4em;
+	clear: both;
+}
+
+.align-left {
+	text-align: left;
+	clear: both;
+}
+
+.align-right {
+	text-align: right;
+	clear: both;
 }
 
 .pagerfooterlinks {

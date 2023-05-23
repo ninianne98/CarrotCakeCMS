@@ -541,7 +541,7 @@
 			</tr>
 		</table>
 		<br />
-		<div id="jqtabs" style="height: 600px; width: 900px; margin-bottom: 10px;">
+		<div id="jqtabs" style="height: 600px; width: 1024px; margin-bottom: 10px;">
 			<ul>
 				<li><a href="#pagecontent-tabs-0">Left</a></li>
 				<li><a href="#pagecontent-tabs-1">Center</a></li>
@@ -551,34 +551,22 @@
 					<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
 				</asp:PlaceHolder>
 			</ul>
-			<div style="margin-bottom: 25px; height: 580px; width: 890px;">
+			<div style="margin-bottom: 25px; height: 580px; width: 990px;">
 				<div id="pagecontent-tabs-0">
 					<div style="margin-bottom: 25px;">
-						<%--<div runat="server" id="divLeft">
-							body (left)<br />
-							<a href="javascript:cmsToggleTinyMCE('<%= reLeftBody.ClientID %>');">Show/Hide Editor</a>
-						</div>--%>
-						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
 				<div id="pagecontent-tabs-1">
 					<div style="margin-bottom: 25px;">
-						<%--<div runat="server" id="divCenter">
-							body (main/center)<br />
-							<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
-						</div>--%>
-						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
 				<div id="pagecontent-tabs-3">
 					<div style="margin-bottom: 25px;">
-						<%--<div runat="server" id="divRight">
-							body (right)<br />
-							<a href="javascript:cmsToggleTinyMCE('<%= reRightBody.ClientID %>');">Show/Hide Editor</a>
-						</div>--%>
-						<asp:TextBox Style="height: 300px; width: 850px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+						<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
 						<br />
 					</div>
 				</div>
@@ -777,7 +765,7 @@
 
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
-			$('#<%=btnSave.ClientID %>').click();
+				$('#<%=btnSave.ClientID %>').click();
 		}
 	}
 

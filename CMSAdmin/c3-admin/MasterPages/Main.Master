@@ -47,7 +47,7 @@
 		<script type="text/javascript" src="/c3-admin/includes/tinymce-config.js<%=AntiCache%>"></script>
 		<script type="text/javascript">
 			function AjaxTinyLoad() {
-				cmsTinyMceInit(800, 500, false);
+				cmsTinyMceInit(960, 500, false);
 			}
 
 			function UpdateAjaxTiny() {
