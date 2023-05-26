@@ -1,0 +1,5 @@
+*.aspx linguist-language=C#
+*.ascx linguist-language=C#
+*.master linguist-language=C#
+*/editor/*.css linguist-vendored
+*/skins/*.css linguist-vendored
