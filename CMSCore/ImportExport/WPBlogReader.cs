@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Xml;
 
 /*
@@ -16,6 +17,8 @@ using System.Xml;
 namespace Carrotware.CMS.Core {
 
 	public class WPBlogReader {
+		//  https://github.com/WPTT/theme-test-data/blob/master/themeunittestdata.wordpress.xml
+		//  https://codex.wordpress.org/Theme_Unit_Test
 
 		public WPBlogReader() { }
 
@@ -92,7 +95,7 @@ namespace Carrotware.CMS.Core {
 			XmlNodeList rssAuthors = doc.SelectNodes("//rss/channel/wp:author", rssNamespace);
 			foreach (XmlNode node in rssAuthors) {
 				WordPressUser wpu = new WordPressUser();
-				wpu.AuthorId = int.Parse(node.SelectSingleNode("wp:author_id", rssNamespace).InnerText);
+				try { wpu.AuthorId = int.Parse(node.SelectSingleNode("wp:author_id", rssNamespace).InnerText); } catch { wpu.AuthorId = -1; }
 				wpu.Login = node.SelectSingleNode("wp:author_login", rssNamespace).InnerText;
 				wpu.Email = node.SelectSingleNode("wp:author_email", rssNamespace).InnerText;
 				try { wpu.FirstName = node.SelectSingleNode("wp:author_first_name", rssNamespace).InnerText; } catch { }
@@ -113,6 +116,13 @@ namespace Carrotware.CMS.Core {
 
 				wpp.PostTitle = node.SelectSingleNode("title").InnerText.Trim();
 				wpp.PostName = node.SelectSingleNode("wp:post_name", rssNamespace).InnerText.Trim();
+
+				if (!string.IsNullOrEmpty(wpp.PostName)) {
+					//if there are a lot of % then prob escaped
+					if (!wpp.PostName.Contains(" ") && wpp.PostName.Replace("%", "").Length <= (wpp.PostName.Length - 4)) {
+						wpp.PostName = HttpUtility.UrlDecode(wpp.PostName);
+					}
+				}
 
 				if (string.IsNullOrEmpty(wpp.PostName)) {
 					wpp.PostName = wpp.PostTitle.ToLowerInvariant();
@@ -175,6 +185,9 @@ namespace Carrotware.CMS.Core {
 						wpp.PostContent = node.SelectSingleNode("content:encoded", rssNamespace).InnerText;
 					}
 				}
+
+				wpp.ImportFileSlug = (wpp.ImportFileSlug ?? string.Empty).Length > 64 ? wpp.ImportFileSlug.Substring(0, 64) : wpp.ImportFileSlug;
+				wpp.ImportFileName = (wpp.ImportFileName ?? string.Empty).Length > 64 ? wpp.ImportFileName.Substring(0, 64) : wpp.ImportFileName;
 
 				if (string.IsNullOrEmpty(wpp.PostContent)) {
 					wpp.PostContent = "";
