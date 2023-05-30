@@ -14,7 +14,7 @@
 		<asp:Literal ID="litControlPath" runat="server" /><br />
 		<asp:Literal ID="litControlPathName" runat="server" /><br />
 	</p>
-	<table style="width: 700px;">
+	<table class="table-lg">
 		<tr>
 			<td class="tablecaption">release date:
 			</td>

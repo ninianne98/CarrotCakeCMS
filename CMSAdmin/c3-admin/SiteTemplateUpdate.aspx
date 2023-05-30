@@ -9,7 +9,7 @@
 	Site-Wide Template Update
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<fieldset style="width: 500px;">
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Content
@@ -41,7 +41,8 @@
 			<br />
 		</p>
 	</fieldset>
-	<fieldset style="width: 500px;">
+	<br />
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Blog
@@ -67,7 +68,8 @@
 			<br />
 		</p>
 	</fieldset>
-	<fieldset style="width: 500px;">
+	<br />
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Everything (including home and blog index)

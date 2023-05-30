@@ -17,7 +17,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<h2>
 		<asp:Literal ID="litPageName" runat="server" /></h2>
-	<table style="width: 700px;">
+	<table class="table-lg">
 		<tr>
 			<td style="width: 125px;" class="tablecaption">last updated:
 			</td>

@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div style="width: 700px;">
-		<fieldset style="width: 400px;">
+		<fieldset class="fieldset-sm">
 			<legend>
 				<label>
 					Edit Profile
@@ -34,7 +34,7 @@
 						<b class="caption">Email</b>
 					</td>
 					<td class="tablecontents">
-						<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtEmail" runat="server" ValidationGroup="inputForm" />
+						<asp:TextBox onkeypress="return ProcessKeyPress(event)" CssClass="form-control-lg" MaxLength="100" ID="txtEmail" runat="server" ValidationGroup="inputForm" />
 						<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail"
 							ErrorMessage="!" ToolTip="Email is required." ValidationGroup="inputForm" Display="Dynamic" Text="**" />
 					</td>
@@ -44,7 +44,7 @@
 						<b class="caption">Nickname</b>
 					</td>
 					<td class="tablecontents">
-						<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtNickName" runat="server" />
+						<asp:TextBox onkeypress="return ProcessKeyPress(event)" CssClass="form-control-lg" MaxLength="100" ID="txtNickName" runat="server" />
 					</td>
 				</tr>
 				<tr>
@@ -52,7 +52,7 @@
 						<b class="caption">First Name</b>
 					</td>
 					<td class="tablecontents">
-						<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtFirstName" runat="server" />
+						<asp:TextBox onkeypress="return ProcessKeyPress(event)" CssClass="form-control-lg" MaxLength="100" ID="txtFirstName" runat="server" />
 					</td>
 				</tr>
 				<tr>
@@ -60,19 +60,16 @@
 						<b class="caption">Last Name</b>
 					</td>
 					<td class="tablecontents">
-						<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="180px" MaxLength="100" ID="txtLastName" runat="server" />
+						<asp:TextBox onkeypress="return ProcessKeyPress(event)" CssClass="form-control-lg" MaxLength="100" ID="txtLastName" runat="server" />
 					</td>
 				</tr>
 			</table>
 		</fieldset>
-		<fieldset style="width: 650px;">
+		<fieldset>
 			<legend>
 				<label>
 					Bio Data</label>
 			</legend>
-			<%--<div runat="server" id="divCenter">
-				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
-			</div>--%>
 			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 				Rows="20" Columns="60" />
 			<br />
@@ -96,13 +93,13 @@
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
 				$('#<%=btnSaveEmail.ClientID %>').click();
-			}
 		}
+	}
 
-		function SaveCommon() {
-			var ret = cmsPreSaveTrigger();
+	function SaveCommon() {
+		var ret = cmsPreSaveTrigger();
 
-			return true;
-		}
+		return true;
+	}
 	</script>
 </asp:Content>

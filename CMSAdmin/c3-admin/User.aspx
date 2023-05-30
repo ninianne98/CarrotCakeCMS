@@ -9,7 +9,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<br />
-	<fieldset style="width: 400px;">
+	<fieldset class="fieldset-sm">
 		<legend>
 			<label>
 				User Profile
@@ -78,14 +78,11 @@
 		</table>
 	</fieldset>
 	<div>
-		<fieldset style="width: 650px;">
+		<fieldset>
 			<legend>
 				<label>
 					Bio Data</label>
 			</legend>
-			<%--<div runat="server" id="divCenter">
-				<a href="javascript:cmsToggleTinyMCE('<%= reBody.ClientID %>');">Show/Hide Editor</a>
-			</div>--%>
 			<asp:TextBox ValidationGroup="inputForm" Style="height: 250px; width: 550px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine"
 				Rows="20" Columns="60" />
 			<br />
@@ -94,7 +91,7 @@
 	<table>
 		<tr>
 			<td>
-				<fieldset style="width: 300px;">
+				<fieldset class="fieldset-xsm">
 					<legend>
 						<label>
 							Roles
@@ -124,7 +121,7 @@
 			<td>&nbsp;
 			</td>
 			<td>
-				<fieldset style="width: 400px;">
+				<fieldset class="fieldset-sm">
 					<legend>
 						<label>
 							Sites

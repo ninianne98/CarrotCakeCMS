@@ -355,7 +355,7 @@
 		</div>
 	</div>
 	<div id="PageContents">
-		<table style="width: 700px;">
+		<table class="table-lg">
 			<tr>
 				<td style="width: 125px;" class="tablecaption">last updated:
 				</td>
@@ -523,7 +523,7 @@
 				</td>
 			</tr>
 		</table>
-		<table style="width: 700px;">
+		<table class="table-lg">
 			<tr>
 				<td class="tablecaption">template:
 				</td>

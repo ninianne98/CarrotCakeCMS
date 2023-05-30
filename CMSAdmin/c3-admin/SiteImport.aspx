@@ -38,7 +38,7 @@
 	<div style="display: none" id="importMessage">
 		<asp:Literal ID="litMessage" runat="server" />
 	</div>
-	<fieldset style="width: 90%;">
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Site Information
@@ -97,7 +97,8 @@
 			</tr>
 		</table>
 	</fieldset>
-	<fieldset style="width: 90%;">
+	<br />
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Comments
@@ -109,7 +110,8 @@
 			records
 		</p>
 	</fieldset>
-	<fieldset style="width: 90%;">
+	<br />
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Pages
@@ -148,7 +150,8 @@
 			</carrot:CarrotGridView>
 		</div>
 	</fieldset>
-	<fieldset style="width: 90%;">
+	<br />
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Blog Posts
@@ -186,7 +189,8 @@
 			</carrot:CarrotGridView>
 		</div>
 	</fieldset>
-	<fieldset style="width: 90%;">
+	<br />
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Content Snippets

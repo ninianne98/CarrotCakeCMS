@@ -48,7 +48,7 @@
 		<br />
 		Copyright 2011, John Resig
 		<br />
-		Dual licensed under the MIT or GPL Version 3 licenses.
+		Dual licensed under the MIT or GPL Version 2 licenses.
 		<br />
 		http://jquery.org/license
 		<br />
@@ -70,7 +70,7 @@
 		<br />
 		Copyright 2011 (http://jqueryui.com/about)
 		<br />
-		Dual licensed under the MIT or GPL Version 3 licenses.
+		Dual licensed under the MIT or GPL Version 2 licenses.
 		<br />
 		http://jquery.org/license
 		<br />
@@ -241,9 +241,12 @@
 		<br />
 		Released under LGPL License.
 		<br />
+		<br />
 		License: http://tinymce.moxiecode.com/license
 		<br />
+		<br />
 	</p>
+
 	<h2>The MIT License (MIT)
 	</h2>
 	<p>

@@ -1,11 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucCommentAddEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucCommentAddEdit" %>
-<fieldset style="width: 360px;">
+<fieldset class="fieldset-lg">
 	<legend>
 		<label>
 			Page Info
 		</label>
 	</legend>
-	<table style="width: 700px;">
+	<table class="table-lg">
 		<tr>
 			<td style="width: 125px;" class="tablecaption">title:
 			</td>
@@ -24,13 +24,14 @@
 		</tr>
 	</table>
 </fieldset>
-<fieldset style="width: 360px;">
+<br />
+<fieldset class="fieldset-lg">
 	<legend>
 		<label>
 			Comment
 		</label>
 	</legend>
-	<table style="width: 700px;">
+	<table class="table-lg">
 		<tr>
 			<td style="width: 150px;" class="tablecaption">IP address:
 			</td>

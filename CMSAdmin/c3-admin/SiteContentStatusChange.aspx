@@ -58,7 +58,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<fieldset style="width: 500px;">
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Filter Content
@@ -149,7 +149,8 @@
 			<asp:Button ID="btnFilter" runat="server" Text="Filter" OnClick="btnFilter_Click" />
 		</div>
 	</fieldset>
-	<fieldset style="width: 500px;">
+	<br />
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Update to Selected Status

@@ -49,7 +49,7 @@
 	Duplicate Widget From?
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<fieldset style="width: 680px;">
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Search

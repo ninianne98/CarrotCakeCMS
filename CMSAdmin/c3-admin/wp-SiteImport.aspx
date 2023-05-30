@@ -63,13 +63,13 @@
 	<p>
 		The below information (if checked) will be imported to the current site. You can always update the information after importing.
 	</p>
-	<fieldset style="width: 90%;">
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Import Settings
 			</label>
 		</legend>
-		<table style="width: 700px;">
+		<table class="table-lg">
 			<tr>
 				<td>
 					<asp:CheckBox ID="chkFileGrab" runat="server" onclick="chkFileGrabClick(this);" />
@@ -122,7 +122,7 @@
 	<div style="display: none" id="importMessage">
 		<asp:Literal ID="litMessage" runat="server" />
 	</div>
-	<fieldset style="width: 90%;">
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Site Information
@@ -166,7 +166,8 @@
 			</tr>
 		</table>
 	</fieldset>
-	<fieldset style="width: 90%;">
+	<br />
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Pages
@@ -205,7 +206,8 @@
 			</carrot:CarrotGridView>
 		</div>
 	</fieldset>
-	<fieldset style="width: 90%;">
+	<br />
+	<fieldset class="fieldset-xxlg">
 		<legend>
 			<label>
 				Blog Posts

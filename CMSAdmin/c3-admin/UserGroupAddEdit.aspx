@@ -14,7 +14,7 @@
 	User Group Add/Edit
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<fieldset style="width: 400px;">
+	<fieldset class="fieldset-sm">
 		<legend>
 			<label>
 				Role
@@ -37,7 +37,7 @@
 		<table>
 			<tr>
 				<td>
-					<fieldset style="width: 450px;">
+					<fieldset class="fieldset-sm">
 						<legend>
 							<label>
 								Users
@@ -74,7 +74,7 @@
 				<td>&nbsp;&nbsp;&nbsp;
 				</td>
 				<td>
-					<fieldset style="width: 400px;">
+					<fieldset class="fieldset-sm">
 						<legend>
 							<label>
 								Add Users

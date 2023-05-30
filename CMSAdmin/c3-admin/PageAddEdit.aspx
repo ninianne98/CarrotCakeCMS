@@ -327,7 +327,7 @@
 		</div>
 	</div>
 	<div id="PageContents">
-		<table style="width: 700px;">
+		<table class="table-lg">
 			<tr>
 				<td style="width: 125px;" class="tablecaption">last updated:
 				</td>

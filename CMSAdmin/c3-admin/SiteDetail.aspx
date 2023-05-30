@@ -23,10 +23,10 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 160px;">Site ID
+				<td class="tablecaption" style="min-width: 125px; width: 12em;">Site ID
 				</td>
 				<td>
-					<div style="padding: 5px; padding-left: 10px; width: 275px;" class=" ui-widget-content ui-corner-all ">
+					<div style="padding: 5px; padding-left: 10px; min-width: 275px; width: 24em;" class="ui-widget-content ui-corner-all">
 						<asp:Literal ID="litID" runat="server" />
 					</div>
 				</td>
@@ -57,7 +57,7 @@
 	<table>
 		<tr>
 			<td>
-				<fieldset style="width: 450px;">
+				<fieldset class="fieldset-sm">
 					<legend>
 						<label>
 							Users
@@ -98,7 +98,7 @@
 			<td>&nbsp;&nbsp;&nbsp;
 			</td>
 			<td>
-				<fieldset style="width: 400px;">
+				<fieldset class="fieldset-sm">
 					<legend>
 						<label>
 							Add Users

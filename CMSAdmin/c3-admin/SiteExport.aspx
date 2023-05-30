@@ -63,7 +63,7 @@
 	Site Export
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<fieldset style="width: 650px;">
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Export Date Range
@@ -102,7 +102,8 @@
 			</div>
 		</div>
 	</fieldset>
-	<fieldset style="width: 650px;">
+	<br />
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Export Data Types
@@ -120,6 +121,7 @@
 			<br />
 		</p>
 	</fieldset>
+	<br />
 	<input type="button" runat="server" id="btnExport" value="Export Site" onclick="ExportContent();" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">

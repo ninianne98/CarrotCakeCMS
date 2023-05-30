@@ -45,10 +45,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
+			pnlSetter.Visible = true;
 			pnlNav.Visible = !this.HideList;
 
 			if (this.ModuleID != Guid.Empty) {
-				pnlSetter.Visible = true;
 				int x = 0;
 				foreach (var row in cmsHelper.AdminModules) {
 					if (this.ModuleID.ToString().ToLowerInvariant() == row.PluginID.ToString().ToLowerInvariant()) {

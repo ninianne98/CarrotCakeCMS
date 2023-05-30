@@ -80,7 +80,7 @@
 		<input type="button" runat="server" id="btnExport" value="Export Site" onclick="ExportContent();" /> --%>
 		<br />
 	</p>
-	<fieldset style="width: 675px;">
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Site Information
@@ -88,10 +88,10 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 160px;">Site ID
+				<td class="tablecaption" style="min-width: 165px; width: 18em;">Site ID
 				</td>
 				<td>
-					<div style="padding: 5px; padding-left: 10px; width: 275px;" class=" ui-widget-content ui-corner-all ">
+					<div style="padding: 5px; padding-left: 10px; min-width: 275px; width: 24em;" class="ui-widget-content ui-corner-all">
 						<asp:Literal ID="litID" runat="server" />
 					</div>
 				</td>
@@ -126,7 +126,7 @@
 				<td class="tablecaption">Site Time Zone
 				</td>
 				<td>
-					<asp:DropDownList ID="ddlTimeZone" runat="server" DataTextField="DisplayName" DataValueField="Id" />
+					<asp:DropDownList ID="ddlTimeZone" runat="server" DataTextField="DisplayName" DataValueField="Id" CssClass="form-control-xlg" />
 				</td>
 			</tr>
 			<tr>
@@ -171,7 +171,8 @@
 			</tr>
 		</table>
 	</fieldset>
-	<fieldset style="width: 675px;">
+	<br />
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Meta Data
@@ -179,7 +180,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 175px;">Meta Keywords
+				<td class="tablecaption" style="min-width: 165px; width: 18em;">Meta Keywords
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
@@ -195,7 +196,8 @@
 			</tr>
 		</table>
 	</fieldset>
-	<fieldset style="width: 675px;">
+	<br />
+	<fieldset class="fieldset-med">
 		<legend>
 			<label>
 				Blog Settings
@@ -203,7 +205,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="width: 180px;">&nbsp;
+				<td class="tablecaption" style="min-width: 165px; width: 18em;">&nbsp;
 				</td>
 				<td>
 					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFoldersValid" ID="CompareValidator1"

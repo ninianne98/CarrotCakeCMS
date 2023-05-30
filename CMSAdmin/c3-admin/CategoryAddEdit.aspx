@@ -95,7 +95,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<br />
-	<table style="width: 700px;">
+	<table class="table-lg">
 		<tr>
 			<td style="width: 90px;" class="tablecaption">caption:
 			</td>

@@ -4,7 +4,7 @@
 		<asp:PlaceHolder ID="pnlNav" runat="server">
 			<td style="width: 275px;">
 				<div style="width: 250px; padding-right: 25px;">
-					<div id="jqaccordion">
+					<div id="module-accordion">
 						<asp:Repeater ID="rpModuleList" runat="server" OnItemDataBound="rpModuleList_ItemDataBound">
 							<ItemTemplate>
 								<h3>
@@ -37,7 +37,6 @@
 </table>
 <asp:PlaceHolder ID="pnlSetter" runat="server" Visible="false">
 	<script type="text/javascript">
-
 		function moduleUpdateAjaxJQuery() {
 			if (typeof (Sys) != 'undefined') {
 				var prm = Sys.WebForms.PageRequestManager.getInstance();
@@ -59,7 +58,7 @@
 		}
 
 		function modulePageLoad() {
-			$("#jqaccordion").accordion({
+			$("#module-accordion").accordion({
 				heightStyle: "content",
 				active: parseInt('<%=SelMenu %>')
 			});

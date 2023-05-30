@@ -11,7 +11,7 @@
 	<p>
 		&nbsp;
 	</p>
-	<fieldset style="width: 400px;">
+	<fieldset class="fieldset-sm">
 		<legend>
 			<label>
 				Change Password
@@ -20,17 +20,17 @@
 		<asp:Panel ID="pnlChangeUserInfo" runat="server" Visible="true">
 			<asp:ChangePassword runat="server" ID="changePassword" ChangePasswordButtonType="Button" DisplayUserName="false">
 				<ChangePasswordTemplate>
-					<div style="width: 350px">
+					<div>
 						<p style="color: #FF0000;">
 							<asp:Label ID="FailureText" runat="server" EnableViewState="False" />
 						</p>
-						<table style="width: 350px;">
+						<table class="table-sm">
 							<tr>
 								<td class="tablecontents" style="width: 125px;">
 									<b class="caption">Current Password </b>
 								</td>
 								<td class="tablecontents">
-									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" MaxLength="100" ID="CurrentPassword" TextMode="Password"
+									<asp:TextBox onkeypress="return ProcessKeyPress(event)" CssClass="form-control-md" ValidationGroup="changePassword" MaxLength="100" ID="CurrentPassword" TextMode="Password"
 										runat="server" />
 									<asp:RequiredFieldValidator ID="CurrentPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="CurrentPassword"
 										ErrorMessage="!" ToolTip="Current password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
@@ -41,7 +41,7 @@
 									<b class="caption">New Password </b>
 								</td>
 								<td class="tablecontents">
-									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" ID="NewPassword" runat="server" TextMode="Password" />
+									<asp:TextBox onkeypress="return ProcessKeyPress(event)" CssClass="form-control-md" ValidationGroup="changePassword" ID="NewPassword" runat="server" TextMode="Password" />
 									<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="NewPassword" ErrorMessage="!"
 										ToolTip="Password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
 								</td>
@@ -51,7 +51,7 @@
 									<b class="caption">Confirm Password </b>
 								</td>
 								<td class="tablecontents">
-									<asp:TextBox onkeypress="return ProcessKeyPress(event)" ValidationGroup="changePassword" Width="140px" ID="ConfirmNewPassword" runat="server"
+									<asp:TextBox onkeypress="return ProcessKeyPress(event)" CssClass="form-control-md" ValidationGroup="changePassword" ID="ConfirmNewPassword" runat="server"
 										TextMode="Password" />
 									<asp:RequiredFieldValidator ID="ConfirmNewPasswordRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmNewPassword"
 										ErrorMessage="!" ToolTip="Confirm Password is required." ValidationGroup="changePassword" Display="Dynamic" Text="**" />
