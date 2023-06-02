@@ -364,7 +364,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnInit(EventArgs e) {
 			if (ContentTemplate == null) {
-				ContentTemplate = new DefaultSummaryTemplate();
+				ContentTemplate = new DefaultSummaryTemplate(this);
 			}
 
 			base.OnInit(e);

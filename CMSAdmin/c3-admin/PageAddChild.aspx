@@ -33,11 +33,40 @@
 			var theNav = $(tNav).val();
 
 			if (theTitle.length > 0 && theFile.length < 1 && theNav.length < 1) {
-				GeneratePageFilename();
+				GeneratePageFilename2();
 			}
 		}
 
 		function GeneratePageFilename() {
+			var theTitle = $(tTitle).val();
+			var theFile = $(tValidFile).val();
+			var theNav = $(tNav).val();
+
+			var opts = {
+				"No": function () { cmsAlertModalClose(); },
+				"Yes": function () { OverwriteFileData(); }
+			};
+
+			if (theTitle.length > 0) {
+				if (theFile.length > 0 || theNav.length > 0) {
+					cmsAlertModalSmallBtns('There is already content title and/or filename, overwrite?', opts);
+				} else {
+					GeneratePageFilename2();
+				}
+			}
+		}
+
+		function OverwriteFileData() {
+			cmsAlertModalClose();
+
+			$(tValidFile).val('');
+			$(tNav).val('');
+			$(tHead).val('');
+
+			GeneratePageFilename2();
+		}
+
+		function GeneratePageFilename2() {
 
 			if (doesFilenameExists()) {
 

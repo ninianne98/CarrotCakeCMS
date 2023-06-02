@@ -76,8 +76,6 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
 		<asp:Button ValidationGroup="inputForm2" ID="btnResetVars" runat="server" Text="Refresh Configs" OnClick="btnResetVars_Click" />
-		<%--&nbsp;&nbsp;&nbsp;
-		<input type="button" runat="server" id="btnExport" value="Export Site" onclick="ExportContent();" /> --%>
 		<br />
 	</p>
 	<fieldset class="fieldset-med">
@@ -88,7 +86,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="min-width: 165px; width: 18em;">Site ID
+				<td class="tablecaption" style="min-width: 135px; width: 15em;">Site ID
 				</td>
 				<td>
 					<div style="padding: 5px; padding-left: 10px; min-width: 275px; width: 24em;" class="ui-widget-content ui-corner-all">
@@ -100,7 +98,7 @@
 				<td class="tablecaption">Site Name
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="100" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtSiteName" MaxLength="100" Columns="80" CssClass="form-control-xlg"
 						runat="server" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSiteName" ID="RequiredFieldValidator1"
 						runat="server" ErrorMessage="Site Name is required" ToolTip="Site Name is required" Text="**" Display="Dynamic" />
@@ -110,7 +108,7 @@
 				<td class="tablecaption">Site Tagline
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagline" MaxLength="512" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagline" MaxLength="512" Columns="80" CssClass="form-control-xlg"
 						runat="server" />
 				</td>
 			</tr>
@@ -118,7 +116,7 @@
 				<td class="tablecaption">Site Titlebar Pattern
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitleBar" MaxLength="512" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitleBar" MaxLength="512" Columns="80" CssClass="form-control-xlg"
 						runat="server" />
 				</td>
 			</tr>
@@ -133,7 +131,7 @@
 				<td class="tablecaption">Site URL
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" Style="width: 425px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtURL" MaxLength="100" Columns="80" CssClass="form-control-xlg"
 						runat="server" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtURL" ID="RequiredFieldValidator2"
 						runat="server" ErrorMessage="Site URL is required" ToolTip="Site URL is required" Text="**" Display="Dynamic" />
@@ -180,17 +178,17 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="min-width: 165px; width: 18em;">Meta Keywords
+				<td class="tablecaption" style="min-width: 135px; width: 15em;">Meta Keywords
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine" runat="server" />
+					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" CssClass="form-control-xlg" Rows="4" TextMode="MultiLine" runat="server" />
 				</td>
 			</tr>
 			<tr>
 				<td class="tablecaption">Meta Description
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 425px;" Rows="4" TextMode="MultiLine"
+					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" CssClass="form-control-xlg" Rows="4" TextMode="MultiLine"
 						runat="server" />
 				</td>
 			</tr>
@@ -205,7 +203,7 @@
 		</legend>
 		<table style="width: 99%;">
 			<tr>
-				<td class="tablecaption" style="min-width: 165px; width: 18em;">&nbsp;
+				<td class="tablecaption" style="min-width: 135px; width: 15em;">&nbsp;
 				</td>
 				<td>
 					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFoldersValid" ID="CompareValidator1"
@@ -218,7 +216,7 @@
 				<td class="tablecaption">Blog Feature Base Folder
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="60" Style="width: 350px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtFolderPath" MaxLength="48" Columns="60" CssClass="form-control-md"
 						runat="server" onblur="CheckFolderPrefixes()" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFolderPath" ID="RequiredFieldValidator4"
 						runat="server" ErrorMessage="Blog Feature Base Folder is required" ToolTip="Blog Feature Base Folder is required" Text="**" Display="Dynamic" />
@@ -228,7 +226,7 @@
 				<td class="tablecaption">Blog Category Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="60" Style="width: 350px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryPath" MaxLength="48" Columns="60" CssClass="form-control-md"
 						runat="server" onblur="CheckFolderPrefixes()" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtCategoryPath" ID="RequiredFieldValidator5"
 						runat="server" ErrorMessage="Blog Category Path is required" ToolTip="Blog Category Path is required" Text="**" Display="Dynamic" />
@@ -238,7 +236,7 @@
 				<td class="tablecaption">Blog Tag Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="60" Style="width: 350px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTagPath" MaxLength="48" Columns="60" CssClass="form-control-md"
 						runat="server" onblur="CheckFolderPrefixes()" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTagPath" ID="RequiredFieldValidator6"
 						runat="server" ErrorMessage="Blog Tag Path is required" ToolTip="Blog Tag Path is required" Text="**" Display="Dynamic" />
@@ -248,7 +246,7 @@
 				<td class="tablecaption">Blog Date Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtDatePath" MaxLength="48" Columns="60" Style="width: 350px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtDatePath" MaxLength="48" Columns="60" CssClass="form-control-md"
 						runat="server" onblur="CheckFolderPrefixes()" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtDatePath" ID="RequiredFieldValidator7"
 						runat="server" ErrorMessage="Blog Date Path is required" ToolTip="Blog Date Path is required" Text="**" Display="Dynamic" />
@@ -258,7 +256,7 @@
 				<td class="tablecaption">Blog Author Path
 				</td>
 				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEditorPath" MaxLength="48" Columns="60" Style="width: 350px;"
+					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEditorPath" MaxLength="48" Columns="60" CssClass="form-control-md"
 						runat="server" onblur="CheckFolderPrefixes()" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtEditorPath" ID="RequiredFieldValidator3"
 						runat="server" ErrorMessage="Blog Author Path is required" ToolTip="Blog Author Path is required" Text="**" Display="Dynamic" />
@@ -269,7 +267,6 @@
 				</td>
 				<td>
 					<asp:DropDownList ID="ddlDatePattern" runat="server" ValidationGroup="inputForm">
-						<%--<asp:ListItem Value="/" Text="No Date" />--%>
 						<asp:ListItem Value="yyyy/MM/dd" Text="YYYY/MM/DD" />
 						<asp:ListItem Value="yyyy/M/d" Text="YYYY/M/D" />
 						<asp:ListItem Value="yyyy/MM" Text="YYYY/MM" />

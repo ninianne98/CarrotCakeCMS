@@ -23,15 +23,17 @@ namespace Carrotware.Web.UI.Controls {
 
 		private static Page CachedPage {
 			get {
-				if (_CachedPage == null) {
-					_CachedPage = new Page();
-					_CachedPage.AppRelativeVirtualPath = "~/";
+				if (_cachedPage == null) {
+					_cachedPage = new Page();
+					try {
+						_cachedPage.AppRelativeVirtualPath = "~/";
+					} catch (Exception ex) { }
 				}
-				return _CachedPage;
+				return _cachedPage;
 			}
 		}
 
-		private static Page _CachedPage;
+		private static Page _cachedPage;
 
 		public static string HtmlFormat(StringBuilder input) {
 			if (input != null) {
@@ -126,13 +128,17 @@ namespace Carrotware.Web.UI.Controls {
 			return GetWebResourceUrl(CachedPage, type, resource);
 		}
 
+		internal static string GetWebResourceUrl(Control control, string resource) {
+			return GetWebResourceUrl(control.Page, control.GetType(), resource);
+		}
+
 		internal static string GetWebResourceUrl(Page page, Type type, string resource) {
 			string sPath = string.Empty;
 
 			if (page != null) {
 				try {
 					sPath = page.ClientScript.GetWebResourceUrl(type, resource);
-				} catch { }
+				} catch (Exception ex) { }
 			} else {
 				sPath = GetWebResourceUrl(type, resource);
 			}
@@ -149,6 +155,26 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			return returnText;
+		}
+
+		internal static byte[] GetManifestResourceBinary(string resource) {
+			byte[] returnBytes = null;
+			Assembly _assembly = Assembly.GetExecutingAssembly();
+
+			using (var stream = _assembly.GetManifestResourceStream(resource)) {
+				returnBytes = new byte[stream.Length];
+				stream.Read(returnBytes, 0, returnBytes.Length);
+			}
+
+			return returnBytes;
+		}
+
+		internal static string RenderCtrl(Control ctrl) {
+			var sw = new StringWriter();
+			using (var tw = new HtmlTextWriter(sw)) {
+				ctrl.RenderControl(tw);
+				return sw.ToString();
+			}
 		}
 
 		public static string ShortDateFormatPattern {

@@ -200,6 +200,143 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static bool IsUniqueFilename(string theFileName, Guid pageId) {
+			try {
+				if (theFileName.Length < 6) {
+					return false;
+				}
+
+				theFileName = ContentPageHelper.ScrubFilename(pageId, theFileName);
+				theFileName = theFileName.ToLowerInvariant();
+
+				if (SiteData.IsPageSpecial(theFileName) || theFileName.Length < 6 || SiteData.IsLikelyHomePage(theFileName)) {
+					return false;
+				}
+
+				if (SiteData.CurrentSite.GetSpecialFilePathPrefixes().Where(x => theFileName.StartsWith(x.ToLowerInvariant())).Count() > 0
+					|| theFileName.StartsWith(SiteData.CurrentSite.BlogFolderPath.ToLowerInvariant())) {
+					return false;
+				}
+
+				using (var pageHelper = new ContentPageHelper()) {
+					ContentPage fn = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, theFileName);
+					ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, pageId);
+
+					if (cp == null && pageId != Guid.Empty) {
+						cp = pageHelper.GetVersion(SiteData.CurrentSite.SiteID, pageId);
+					}
+
+					if (fn == null || (fn != null && cp != null && fn.Root_ContentID == cp.Root_ContentID)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("isuniquefilename", ex);
+
+				throw;
+			}
+		}
+
+		public static bool IsUniqueBlogFilename(string pageSlug, DateTime dateGoLive, Guid pageId) {
+			try {
+				if (pageSlug.Length < 6) {
+					return false;
+				}
+
+				DateTime dateOrigGoLive = DateTime.MinValue;
+
+				pageSlug = ContentPageHelper.ScrubFilename(pageId, pageSlug);
+				pageSlug = pageSlug.ToLowerInvariant();
+
+				string theFileName = pageSlug;
+
+				using (var pageHelper = new ContentPageHelper()) {
+					ContentPage cp = pageHelper.FindContentByID(SiteData.CurrentSite.SiteID, pageId);
+
+					if (cp != null) {
+						dateOrigGoLive = cp.GoLiveDate;
+					}
+					if (cp == null && pageId != Guid.Empty) {
+						ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(pageId);
+						if (cpe != null) {
+							dateOrigGoLive = cpe.ThePage.GoLiveDate;
+						}
+					}
+
+					theFileName = ContentPageHelper.CreateFileNameFromSlug(SiteData.CurrentSite, dateGoLive, pageSlug);
+
+					if (SiteData.IsPageSpecial(theFileName) || theFileName.Length < 6 || SiteData.IsLikelyHomePage(theFileName)) {
+						return false;
+					}
+
+					ContentPage fn1 = pageHelper.FindByFilename(SiteData.CurrentSite.SiteID, theFileName);
+
+					if (cp == null && pageId != Guid.Empty) {
+						cp = pageHelper.GetVersion(SiteData.CurrentSite.SiteID, pageId);
+					}
+
+					if (fn1 == null || (fn1 != null && cp != null && fn1.Root_ContentID == cp.Root_ContentID)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("isuniqueblogfilename", ex);
+
+				throw;
+			}
+		}
+
+		public static string GenerateNewFilename(Guid pageId, string pageTitle, DateTime goLiveDate,
+			ContentPageType.PageType pageType) {
+			try {
+				if (string.IsNullOrEmpty(pageTitle)) {
+					pageTitle = pageId.ToString();
+				}
+				pageTitle = pageTitle.Replace("/", "-");
+				string theFileName = ContentPageHelper.ScrubFilename(pageId, pageTitle);
+				string testFile = string.Empty;
+
+				if (pageType == ContentPageType.PageType.ContentEntry) {
+					var resp = IsUniqueFilename(theFileName, pageId);
+					if (resp == false) {
+						for (int i = 1; i < 2500; i++) {
+							testFile = string.Format("{0}-{1}", pageTitle, i);
+							resp = IsUniqueFilename(testFile, pageId);
+							if (resp) {
+								theFileName = testFile;
+								break;
+							} else {
+								theFileName = string.Empty;
+							}
+						}
+					}
+				} else {
+					var resp = IsUniqueBlogFilename(theFileName, goLiveDate, pageId);
+					if (resp == false) {
+						for (int i = 1; i < 2500; i++) {
+							testFile = string.Format("{0}-{1}", pageTitle, i);
+							resp = IsUniqueBlogFilename(testFile, goLiveDate, pageId);
+							if (resp) {
+								theFileName = testFile;
+								break;
+							} else {
+								theFileName = string.Empty;
+							}
+						}
+					}
+				}
+
+				return ContentPageHelper.ScrubFilename(pageId, theFileName).ToLowerInvariant();
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("generatenewfilename", ex);
+				throw;
+			}
+		}
+
 		public SiteData GetCurrentSite() {
 			//return Get(CurrentSiteID);
 			return CurrentSite;

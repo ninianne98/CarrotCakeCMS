@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -7,8 +9,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.Design;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -77,10 +77,10 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnInit(e);
 
 			if (CommentEntryTemplate == null) {
-				CommentEntryTemplate = new DefaultContentCommentEntryForm();
+				CommentEntryTemplate = new DefaultContentCommentEntryForm(this);
 			}
 			if (CommentThanksTemplate == null) {
-				CommentThanksTemplate = new DefaultContentCommentFormThanks();
+				CommentThanksTemplate = new DefaultContentCommentFormThanks(this);
 			}
 		}
 
@@ -101,17 +101,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 			phEntry.Visible = true;
 			phEntry.Controls.Clear();
+			this.Controls.Add(phEntry);
+
 			if (CommentEntryTemplate != null) {
 				CommentEntryTemplate.InstantiateIn(phEntry);
 			}
-			this.Controls.Add(phEntry);
 
 			phThanks.Visible = false;
 			phThanks.Controls.Clear();
+			this.Controls.Add(phThanks);
+
 			if (CommentThanksTemplate != null) {
 				CommentThanksTemplate.InstantiateIn(phThanks);
 			}
-			this.Controls.Add(phThanks);
 
 			Literal lit1 = new Literal();
 			lit1.Text = "<div style=\"display: none\">";

@@ -103,11 +103,40 @@
 			var theNav = $(tNav).val();
 
 			if (theTitle.length > 0 && theFile.length < 1 && theNav.length < 1) {
-				GeneratePageFilename();
+				GeneratePageFilename2();
 			}
 		}
 
 		function GeneratePageFilename() {
+			var theTitle = $(tTitle).val();
+			var theFile = $(tValidSlug).val();
+			var theNav = $(tNav).val();
+
+			var opts = {
+				"No": function () { cmsAlertModalClose(); },
+				"Yes": function () { OverwriteFileData(); }
+			};
+
+			if (theTitle.length > 0 ) {
+				if (theFile.length > 0 || theNav.length > 0) {
+					cmsAlertModalSmallBtns('There is already content title and/or filename, overwrite?', opts);
+				} else {
+					GeneratePageFilename2();
+				}
+			}
+		}
+
+		function OverwriteFileData() {
+			cmsAlertModalClose();
+
+			$(tValidSlug).val('');
+			$(tNav).val('');
+			$(tHead).val('');
+
+			GeneratePageFilename2();
+		}
+
+		function GeneratePageFilename2() {
 			var theTitle = $(tTitle).val();
 			var theFile = $(tValidSlug).val();
 			var sGoLiveDate = $('#<%= ucReleaseDate.DateField.ClientID %>').val();
@@ -402,8 +431,8 @@
 					<br />
 				</td>
 				<td>
-					<div style="padding: 3px;" class=" ui-widget-content ui-corner-all ">
-						<asp:Label ID="lblPrefix" runat="server" Text="/yy/mm/dd/" />
+					<div class="ui-widget-content ui-corner-all" style="padding: 3px;">
+						<asp:Label ID="lblPrefix" Style="padding: 2px; height: 1.3em;" runat="server" Text="/yy/mm/dd/" />
 					</div>
 				</td>
 			</tr>

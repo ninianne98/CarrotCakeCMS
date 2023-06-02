@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -102,38 +102,38 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities _cu = new ControlUtilities();
 
 		private void SetFileInfo(string sImageName, string sTemplateFolderPath) {
 			string sFieldValue = sImageName;
 
-			if (String.IsNullOrEmpty(sFieldValue)) {
+			if (string.IsNullOrEmpty(sFieldValue)) {
 				// if page itself has no image, see if the image had been specified directly
 				sFieldValue = this.ImageUrl;
 			}
-			if (String.IsNullOrEmpty(sFieldValue)) {
+			if (string.IsNullOrEmpty(sFieldValue)) {
 				this.Visible = false;
 			}
-			if (!String.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
+			if (!string.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
 				sFieldValue = sTemplateFolderPath + sFieldValue;
 			}
 
-			if (!String.IsNullOrEmpty(sFieldValue) && !File.Exists(HttpContext.Current.Server.MapPath(sFieldValue))) {
-				ContentPage cp = cu.GetContainerContentPage(this);
+			if (!string.IsNullOrEmpty(sFieldValue) && !File.Exists(HttpContext.Current.Server.MapPath(sFieldValue))) {
+				ContentPage cp = _cu.GetContainerContentPage(this);
 				sFieldValue = sImageName;
-				if (String.IsNullOrEmpty(sFieldValue)) {
+				if (string.IsNullOrEmpty(sFieldValue)) {
 					sFieldValue = this.ImageUrl;
 				}
 
 				if (cp != null) {
-					if (!String.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
+					if (!string.IsNullOrEmpty(sFieldValue) && !sFieldValue.StartsWith("/")) {
 						sFieldValue = cp.TemplateFolderPath + sFieldValue;
 					}
 				}
 			}
 
-			if (PerformURLResize && !String.IsNullOrEmpty(sFieldValue)) {
-				sFieldValue = String.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
+			if (PerformURLResize && !string.IsNullOrEmpty(sFieldValue)) {
+				sFieldValue = string.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
 			}
 
 			this.ImageUrl = sFieldValue;
@@ -256,7 +256,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["DataField"];
 				NavTextFieldName c = NavTextFieldName.NavMenuText;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (NavTextFieldName)Enum.Parse(typeof(NavTextFieldName), s, true);
 					} catch (Exception ex) { }
@@ -287,12 +287,12 @@ namespace Carrotware.CMS.UI.Controls {
 					if (sn != null) {
 						ExtendedUserData usr = null;
 						if (sField.StartsWith("Credit_")) {
-							sField = DataField.ToString().Replace("Credit_", String.Empty);
+							sField = DataField.ToString().Replace("Credit_", string.Empty);
 							usr = sn.GetCreditUserInfo();
 						}
 
 						if (sField.StartsWith("Author_") || usr == null) {
-							sField = DataField.ToString().Replace("Credit_", String.Empty).Replace("Author_", String.Empty);
+							sField = DataField.ToString().Replace("Credit_", string.Empty).Replace("Author_", string.Empty);
 							usr = sn.GetUserInfo();
 						}
 
@@ -308,9 +308,9 @@ namespace Carrotware.CMS.UI.Controls {
 						}
 					}
 
-					sFieldValue = String.Format(FieldFormat, sValue);
+					sFieldValue = string.Format(FieldFormat, sValue);
 				} else {
-					sFieldValue = String.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + sField));
+					sFieldValue = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + sField));
 				}
 			} catch {
 				if (!SiteData.IsWebView) {
@@ -332,8 +332,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 	public class DefaultContentCommentFormThanks : ITemplate {
+		private Control _control;
+		private ControlUtilities _cu = new ControlUtilities();
 
-		public DefaultContentCommentFormThanks() { }
+		public DefaultContentCommentFormThanks(Control control) {
+			_control = control;
+			_cu = new ControlUtilities(_control);
+		}
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
@@ -347,22 +352,25 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 	public class DefaultContentCommentEntryForm : ITemplate {
+		private Control _control;
+		private ControlUtilities _cu = new ControlUtilities();
 
-		private Control GetCtrl(Control X) {
-			ControlUtilities cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx");
-
+		private Control GetCtrl() {
+			Control userControl = _cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx");
 			return userControl;
 		}
 
-		public DefaultContentCommentEntryForm() { }
+		public DefaultContentCommentEntryForm(Control control) {
+			_control = control;
+			_cu = new ControlUtilities(_control);
+		}
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultContentCommentForm";
 			container.Controls.Add(ph);
 
-			Control control = GetCtrl(ph);
+			Control control = GetCtrl();
 
 			ph.Controls.Add(control);
 		}
@@ -460,8 +468,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public DefaultSearchBoxForm() { }
 
-		private Control GetCtrl(Control X) {
-			ControlUtilities cu = new ControlUtilities(X);
+		private Control GetCtrl(Control control) {
+			var cu = new ControlUtilities(control);
+
 			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSearchForm.ascx");
 
 			return userControl;
@@ -493,26 +502,27 @@ namespace Carrotware.CMS.UI.Controls {
 
 	//========================================
 	public class DefaultSummaryTemplate : ITemplate {
+		private Control _control;
+		private ControlUtilities _cu = new ControlUtilities();
 
-		public DefaultSummaryTemplate() { }
-
-		private Control GetCtrl(Control X) {
-			cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
-
-			return userControl;
+		public DefaultSummaryTemplate(Control control) {
+			_control = control;
+			_cu = new ControlUtilities(_control);
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private Control GetCtrl() {
+			Control userControl = _cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
+			return userControl;
+		}
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
 			container.Controls.Add(ph);
 
-			Control c = GetCtrl(ph);
+			Control c = GetCtrl();
 
-			PostMetaWordList wplCat = (PostMetaWordList)cu.FindControl("wplCat", c);
-			PostMetaWordList wpltag = (PostMetaWordList)cu.FindControl("wpltag", c);
+			PostMetaWordList wplCat = (PostMetaWordList)_cu.FindControl("wplCat", c);
+			PostMetaWordList wpltag = (PostMetaWordList)_cu.FindControl("wpltag", c);
 
 			wplCat.DataBinding += new EventHandler(pmwlList_DataBinding);
 			wpltag.DataBinding += new EventHandler(pmwlList_DataBinding);
@@ -529,23 +539,24 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 	public class DefaultCommentTemplate : ITemplate {
+		private Control _control;
+		private ControlUtilities _cu = new ControlUtilities();
 
-		public DefaultCommentTemplate() { }
-
-		private Control GetCtrl(Control X) {
-			cu = new ControlUtilities(X);
-			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
-
-			return userControl;
+		public DefaultCommentTemplate(Control control) {
+			_control = control;
+			_cu = new ControlUtilities(_control);
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private Control GetCtrl() {
+			Control userControl = _cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
+			return userControl;
+		}
 
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
 			container.Controls.Add(ph);
 
-			Control c = GetCtrl(ph);
+			Control c = GetCtrl();
 
 			ph.Controls.Add(c);
 		}
@@ -612,7 +623,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["DataField"];
 				CommentTextFieldName c = CommentTextFieldName.CommenterName;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (CommentTextFieldName)Enum.Parse(typeof(CommentTextFieldName), s, true);
 					} catch (Exception ex) { }
@@ -638,9 +649,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.ContentCommentID = pageID;
 
-			string sTxt1 = String.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
+			string sTxt1 = string.Format(FieldFormat, DataBinder.Eval(container, "DataItem." + DataField.ToString()));
 			if (!IsApproved) {
-				sTxt1 = String.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, sTxt1);
+				sTxt1 = string.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, sTxt1);
 			}
 			this.Text = sTxt1;
 
@@ -664,8 +675,8 @@ namespace Carrotware.CMS.UI.Controls {
 					<%# Eval("NavMenuText").ToString()%></asp:HyperLink>
 				<asp:ListItemPlaceHolder runat="server" ID="ph"></asp:ListItemPlaceHolder>
 			</li>--%>
-		<%--<li><a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
-				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
+		<%--<li><a href='<%# string.Format("{0}", Eval( "FileName"))%>'>
+				<%# string.Format("{0}", Eval("NavMenuText"))%></a>
 			</li>--%>
 		<%--<li>
 				<carrot:NavLinkForTemplate ID="lnk" runat="server" Target="_blank"></carrot:NavLinkForTemplate>
@@ -696,8 +707,8 @@ namespace Carrotware.CMS.UI.Controls {
 				<%--<asp:HyperLink ID="lnkNav" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' runat="server">
 				</asp:HyperLink>--%>
 				<carrot:NavLinkForTemplate ID="lnk" runat="server" NavigateUrl='<%# Eval("FileName").ToString()%>' Text='<%# Eval("NavMenuText").ToString()%>' />
-				<%--<li> -- <a href='<%# String.Format("{0}", Eval( "FileName"))%>'>
-				<%# String.Format("{0}", Eval("NavMenuText"))%></a>
+				<%--<li> -- <a href='<%# string.Format("{0}", Eval( "FileName"))%>'>
+				<%# string.Format("{0}", Eval("NavMenuText"))%></a>
 			</li>--%>
 				-- </li>
 		</SubNavTemplate>

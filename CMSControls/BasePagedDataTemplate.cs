@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
@@ -236,13 +236,30 @@ namespace Carrotware.CMS.UI.Controls {
 			hdnPageNbr.ID = "hdnPageNbr";
 			this.Controls.Add(hdnPageNbr);
 
+			rpPagedContents.ID = "rpPagedContents";
+			this.Controls.Add(rpPagedContents);
+
+			rpPager.ID = "rpPager";
+			this.Controls.Add(rpPager);
+
 			base.OnInit(e);
 
-			if (PagerTemplate == null) {
-				PagerTemplate = new DefaultPagerTemplate();
+			if (this.PagerTemplate == null) {
+				var defaultTemp = new DefaultPagerTemplate(this);
+				//this.PagerTemplate = defaultTemp;
+
+				if (this.PagerHeaderTemplate == null
+						&& this.PagerFooterTemplate == null) {
+					var rep = defaultTemp.GetAlternatePager();
+
+					this.PagerHeaderTemplate = rep.HeaderTemplate;
+					this.PagerTemplate = rep.ItemTemplate;
+					this.PagerFooterTemplate = rep.FooterTemplate;
+				} else {
+					this.PagerTemplate = defaultTemp;
+				}
 			}
 
-			rpPagedContents.ID = "rpPagedContents";
 			rpPagedContents.ItemTemplate = this.ContentTemplate;
 			rpPagedContents.HeaderTemplate = this.ContentHeaderTemplate;
 			rpPagedContents.FooterTemplate = this.ContentFooterTemplate;
@@ -250,7 +267,6 @@ namespace Carrotware.CMS.UI.Controls {
 				rpPagedContents.AlternatingItemTemplate = this.ContentTemplateAlt;
 			}
 
-			rpPager.ID = "rpPager";
 			rpPager.ItemTemplate = this.PagerTemplate;
 			rpPager.HeaderTemplate = this.PagerHeaderTemplate;
 			rpPager.FooterTemplate = this.PagerFooterTemplate;

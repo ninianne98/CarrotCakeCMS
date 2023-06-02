@@ -5,8 +5,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.Design.WebControls;
 using System.Web.UI.WebControls;
 
 /*
@@ -21,6 +23,7 @@ using System.Web.UI.WebControls;
 
 namespace Carrotware.Web.UI.Controls {
 
+	[Designer(typeof(CarrotGridViewDesigner))]
 	[ToolboxData("<{0}:CarrotGridView runat=server></{0}:CarrotGridView>")]
 	public class CarrotGridView : GridView {
 
@@ -39,7 +42,7 @@ namespace Carrotware.Web.UI.Controls {
 		public string DefaultSort {
 			get {
 				String s = ViewState["DefaultSort"] as String;
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["DefaultSort"] = value;
@@ -48,14 +51,14 @@ namespace Carrotware.Web.UI.Controls {
 
 		public string CurrentSort {
 			get {
-				return SortParm;
+				return this.SortParm;
 			}
 		}
 
 		public string LinkButtonCommands {
 			get {
 				String s = ViewState["LinkButtonCommands"] as String;
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["LinkButtonCommands"] = value;
@@ -108,25 +111,28 @@ namespace Carrotware.Web.UI.Controls {
 
 		public string PredictNewSort {
 			get {
-				string sSort = DefaultSort;
+				string sSort = this.DefaultSort;
 				string sNewSortField = GetClickedCommand();
+				bool bColChanged = false;
 
 				if (!string.IsNullOrEmpty(sNewSortField)) {
-					string sCurrentSortField = string.IsNullOrEmpty(SortField) ? "" : SortField;
-					string sSortDir = string.IsNullOrEmpty(SortDir) ? "" : SortDir;
+					string sCurrentSortField = string.IsNullOrEmpty(this.SortField) ? string.Empty : this.SortField;
+					string sSortDir = string.IsNullOrEmpty(this.SortDir) ? string.Empty : this.SortDir;
 
 					if (sCurrentSortField.ToLowerInvariant().Trim() != sNewSortField.ToLowerInvariant().Trim()) {
-						SortDir = string.Empty;  //previous sort not the same field, force ASC
+						bColChanged = true;
+						this.SortDir = string.Empty;  //previous sort not the same field, force ASC
 					}
+
 					sCurrentSortField = sNewSortField;
 
-					if (sSortDir.Trim().ToUpperInvariant().IndexOf("ASC") < 0) {
+					if (bColChanged || sSortDir.Trim().ToUpperInvariant().EndsWith("ASC") == false) {
 						sSortDir = "ASC";
 					} else {
 						sSortDir = "DESC";
 					}
 
-					sSort = sCurrentSortField + "   " + sSortDir;
+					sSort = string.Format("{0}   {1}", sCurrentSortField, sSortDir);
 				}
 
 				return sSort;
@@ -136,7 +142,7 @@ namespace Carrotware.Web.UI.Controls {
 		private string SortField {
 			get {
 				String s = ViewState["SortField"] as String;
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["SortField"] = value;
@@ -146,7 +152,7 @@ namespace Carrotware.Web.UI.Controls {
 		private string SortDir {
 			get {
 				String s = ViewState["SortDir"] as String;
-				return ((s == null) ? String.Empty : s);
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["SortDir"] = value;
@@ -164,20 +170,21 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void lblSort_Command(object sender, EventArgs e) {
-			SortParm = DefaultSort;
+			this.SortParm = this.DefaultSort;
 			LinkButton lb = (LinkButton)sender;
 			string sSortField = "";
 			try { sSortField = lb.CommandName.ToString(); } catch { }
 			sSortField = ResetSortToColumn(sSortField);
-			DefaultSort = sSortField;
+			this.DefaultSort = sSortField;
 
 			base.DataBind();
 		}
 
 		private void SetTemplates() {
-			foreach (DataControlField c in this.Columns) {
-				if (c is CarrotHeaderSortTemplateField) {
-					CarrotHeaderSortTemplateField ctf = (CarrotHeaderSortTemplateField)c;
+			foreach (DataControlField col in this.Columns) {
+				if (col is CarrotHeaderSortTemplateField) {
+					var ctf = (CarrotHeaderSortTemplateField)col;
+
 					ctf.HeaderTemplate = new CarrotSortButtonHeaderTemplate(ctf.HeaderText, ctf.SortExpression);
 
 					if (string.IsNullOrEmpty(ctf.DataField) && !string.IsNullOrEmpty(ctf.SortExpression)) {
@@ -190,18 +197,18 @@ namespace Carrotware.Web.UI.Controls {
 						}
 
 						if (ctf.ShowBooleanImage && !ctf.ShowEnumImage) {
-							CarrotBooleanImageItemTemplate iImageItemTemplate = new CarrotBooleanImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass);
+							var itemTemplate = new CarrotBooleanImageItemTemplate(ctf);
 							if (!string.IsNullOrEmpty(ctf.AlternateTextTrue) || !string.IsNullOrEmpty(ctf.AlternateTextFalse)) {
-								iImageItemTemplate.SetVerbiage(ctf.AlternateTextTrue, ctf.AlternateTextFalse);
+								itemTemplate.SetVerbiage(ctf.AlternateTextTrue, ctf.AlternateTextFalse);
 							}
 							if (!string.IsNullOrEmpty(ctf.ImagePathTrue) || !string.IsNullOrEmpty(ctf.ImagePathFalse)) {
-								iImageItemTemplate.SetImage(ctf.ImagePathTrue, ctf.ImagePathFalse);
+								itemTemplate.SetImage(ctf.ImagePathTrue, ctf.ImagePathFalse);
 							}
-							ctf.ItemTemplate = iImageItemTemplate;
+							ctf.ItemTemplate = itemTemplate;
 						}
 
 						if (ctf.ShowEnumImage) {
-							ctf.ItemTemplate = new CarrotImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass, ctf.ImageSelectors);
+							ctf.ItemTemplate = new CarrotImageItemTemplate(ctf);
 						}
 					}
 				}
@@ -211,12 +218,12 @@ namespace Carrotware.Web.UI.Controls {
 		private void SetData() {
 			SetTemplates();
 
-			if (!string.IsNullOrEmpty(DefaultSort) && this.DataSource != null) {
+			if (!string.IsNullOrEmpty(this.DefaultSort) && this.DataSource != null) {
 				Type theType = this.DataSource.GetType();
 
 				if (theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(List<>)) {
 					IList lst = (IList)this.DataSource;
-					SortParm = DefaultSort;
+					this.SortParm = this.DefaultSort;
 					var lstVals = SortDataListType(lst);
 
 					this.DataSource = lstVals;
@@ -225,7 +232,7 @@ namespace Carrotware.Web.UI.Controls {
 				if (this.DataSource is DataSet || theType == typeof(DataSet)) {
 					DataSet ds = (DataSet)this.DataSource;
 					if (ds.Tables.Count > 0) {
-						SortParm = DefaultSort;
+						this.SortParm = this.DefaultSort;
 						DataTable dt = ds.Tables[0];
 						var dsVals = SortDataTable(dt);
 
@@ -235,7 +242,7 @@ namespace Carrotware.Web.UI.Controls {
 
 				if (this.DataSource is DataTable || theType == typeof(DataTable)) {
 					DataTable dt = (DataTable)this.DataSource;
-					SortParm = DefaultSort;
+					this.SortParm = this.DefaultSort;
 					var dsVals = SortDataTable(dt);
 
 					this.DataSource = dsVals;
@@ -246,9 +253,9 @@ namespace Carrotware.Web.UI.Controls {
 		public DataTable SortDataTable(DataTable dt) {
 			DataTable dtNew = dt.Clone();
 
-			if (!string.IsNullOrEmpty(SortField)) {
+			if (!string.IsNullOrEmpty(this.SortField)) {
 				dtNew.DefaultView.RowFilter = dt.DefaultView.RowFilter;
-				DataRow[] copyRows = dt.DefaultView.Table.Select(dt.DefaultView.RowFilter, SortField + "   " + SortDir);
+				DataRow[] copyRows = dt.DefaultView.Table.Select(dt.DefaultView.RowFilter, string.Format("{0}   {1}", this.SortField, this.SortDir));
 
 				int iTotal = dt.Rows.Count;
 
@@ -269,19 +276,19 @@ namespace Carrotware.Web.UI.Controls {
 			IEnumerable<object> enuQueryable = d.AsQueryable();
 
 			if (lst != null && lst.Count > 0) {
-				SortField = GetProperties(d[0]).Where(x => x.ToLowerInvariant() == SortField.ToLowerInvariant()).FirstOrDefault();
+				this.SortField = GetProperties(d[0]).Where(x => x.ToLowerInvariant() == this.SortField.ToLowerInvariant()).FirstOrDefault();
 			} else {
-				SortField = string.Empty;
+				this.SortField = string.Empty;
 			}
 
-			if (!string.IsNullOrEmpty(SortField)) {
-				if (SortDir.ToUpperInvariant().Trim().IndexOf("ASC") < 0) {
+			if (!string.IsNullOrEmpty(this.SortField)) {
+				if (this.SortDir.ToUpperInvariant().Trim().IndexOf("ASC") < 0) {
 					query = (from enu in enuQueryable
-							 orderby GetPropertyValue(enu, SortField) descending
+							 orderby GetPropertyValue(enu, this.SortField) descending
 							 select enu).ToList();
 				} else {
 					query = (from enu in enuQueryable
-							 orderby GetPropertyValue(enu, SortField) ascending
+							 orderby GetPropertyValue(enu, this.SortField) ascending
 							 select enu).ToList();
 				}
 			} else {
@@ -328,8 +335,8 @@ namespace Carrotware.Web.UI.Controls {
 
 			base.PerformDataBinding(data);
 
-			if (string.IsNullOrEmpty(SortField) || string.IsNullOrEmpty(SortDir)) {
-				SortParm = string.Empty;
+			if (string.IsNullOrEmpty(this.SortField) || string.IsNullOrEmpty(this.SortDir)) {
+				this.SortParm = string.Empty;
 			}
 
 			this.LinkButtonCommands = "";
@@ -342,14 +349,14 @@ namespace Carrotware.Web.UI.Controls {
 			get {
 				string sSort = "";
 				try {
-					sSort = SortField + "   " + SortDir;
+					sSort = string.Format("{0}   {1}", this.SortField, this.SortDir);
 				} catch {
-					sSort = DefaultSort;
+					sSort = this.DefaultSort;
 				}
 				return sSort.Trim();
 			}
 			set {
-				string sSort = DefaultSort;
+				string sSort = this.DefaultSort;
 				if (!string.IsNullOrEmpty(value)) {
 					sSort = value;
 				}
@@ -363,17 +370,17 @@ namespace Carrotware.Web.UI.Controls {
 					sSortDir = sSort.Substring(pos).Trim();
 				}
 
-				SortField = sSortFld.Trim();
-				SortDir = sSortDir.Trim().ToUpperInvariant();
+				this.SortField = sSortFld.Trim();
+				this.SortDir = sSortDir.Trim().ToUpperInvariant();
 			}
 		}
 
-		private void WalkGridSetClick(Control X) {
-			foreach (Control c in X.Controls) {
+		private void WalkGridSetClick(Control ctrl) {
+			foreach (Control c in ctrl.Controls) {
 				if (c is LinkButton) {
 					LinkButton lb = (LinkButton)c;
 					lb.Click += new EventHandler(this.lblSort_Command);
-					LinkButtonCommands += lb.ClientID + "|" + lb.CommandName + ";";
+					this.LinkButtonCommands += lb.ClientID + "|" + lb.CommandName + ";";
 				} else {
 					WalkGridSetClick(c);
 				}
@@ -381,22 +388,23 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private string ResetSortToColumn(string sSortField) {
-			if (SortField.Length < 1) {
-				SortField = sSortField;
-				SortDir = string.Empty;
+			if (this.SortField.Length < 1) {
+				this.SortField = sSortField;
+				this.SortDir = string.Empty;
 			} else {
-				if (SortField.ToLowerInvariant() != sSortField.ToLowerInvariant()) {
-					SortDir = string.Empty;  //previous sort not the same field, force ASC
+				if (this.SortField.ToLowerInvariant() != sSortField.ToLowerInvariant()) {
+					this.SortDir = string.Empty;  //previous sort not the same field, force ASC
 				}
-				SortField = sSortField;
+				this.SortField = sSortField;
 			}
 
-			if (SortDir.Trim().ToUpperInvariant().IndexOf("ASC") < 0) {
-				SortDir = "ASC";
+			if (this.SortDir.Trim().ToUpperInvariant().IndexOf("ASC") < 0) {
+				this.SortDir = "ASC";
 			} else {
-				SortDir = "DESC";
+				this.SortDir = "DESC";
 			}
-			sSortField = SortField + "   " + SortDir;
+
+			sSortField = string.Format("{0}   {1}", this.SortField, this.SortDir);
 			return sSortField;
 		}
 
@@ -418,19 +426,19 @@ namespace Carrotware.Web.UI.Controls {
 			return props;
 		}
 
-		private void WalkGridForHeadings(Control X) {
-			if (string.IsNullOrEmpty(SortField) || string.IsNullOrEmpty(SortDir)) {
-				SortParm = string.Empty;
+		private void WalkGridForHeadings(Control ctrl) {
+			if (string.IsNullOrEmpty(this.SortField) || string.IsNullOrEmpty(this.SortDir)) {
+				this.SortParm = string.Empty;
 			}
 
-			WalkGridForHeadings(X, SortField, SortDir);
+			WalkGridForHeadings(ctrl, this.SortField, this.SortDir);
 		}
 
-		private void WalkGridForHeadings(Control X, string sSortFld, string sSortDir) {
+		private void WalkGridForHeadings(Control ctrl, string sSortFld, string sSortDir) {
 			sSortFld = sSortFld.ToLowerInvariant();
 			sSortDir = sSortDir.ToLowerInvariant();
 
-			foreach (Control c in X.Controls) {
+			foreach (Control c in ctrl.Controls) {
 				if (c is LinkButton) {
 					LinkButton lb = (LinkButton)c;
 					if (sSortFld == lb.CommandName.ToLowerInvariant()) {
@@ -448,6 +456,108 @@ namespace Carrotware.Web.UI.Controls {
 					WalkGridForHeadings(c, sSortFld, sSortDir);
 				}
 			}
+		}
+	}
+
+	//======================================
+
+	public class CarrotGridViewDesigner : DataBoundControlDesigner {
+
+		public override string GetDesignTimeHtml() {
+			Control ctrl = base.ViewControl;
+			var myctrl = (CarrotGridView)ctrl;
+
+			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "Carrot, ");
+			string sID = myctrl.ID;
+			string sTextOut = "<span>[" + sType + " - " + sID + "]</span> <br />";
+
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine(sTextOut);
+
+			sb.AppendLine(DoGrid(ctrl));
+
+			return sb.ToString();
+		}
+
+		public string DoGrid(Control ctrl) {
+			CarrotGridView theGrid = (CarrotGridView)ctrl;
+
+			Table table = new Table();
+			table.CssClass = theGrid.CssClass;
+			ctrl.Page.Controls.Add(table);
+
+			TableHeaderRow trh = new TableHeaderRow();
+			trh.CssClass = theGrid.HeaderStyle.CssClass;
+			table.Rows.Add(trh);
+
+			foreach (DataControlField col in theGrid.Columns) {
+				TableHeaderCell thc = new TableHeaderCell();
+				trh.Controls.Add(thc);
+				thc.Text = col.HeaderText;
+			}
+
+			int ps = 5;
+			if (theGrid.PageSize > 0 && theGrid.PageSize < 30) {
+				ps = theGrid.PageSize;
+			}
+
+			for (int r = 0; r < ps; r++) {
+				TableRow tr = new TableRow();
+				var altRow = (r % 2 == 0);
+				if (altRow) {
+					tr.CssClass = theGrid.RowStyle.CssClass;
+				} else {
+					tr.CssClass = theGrid.AlternatingRowStyle.CssClass;
+				}
+				table.Rows.Add(tr);
+
+				foreach (DataControlField col in theGrid.Columns) {
+					TableCell tc = new TableCell();
+					tc.Text = " &nbsp; ";
+					tr.Controls.Add(tc);
+
+					if (col is BoundField) {
+						var bf = (BoundField)col;
+						tc.Text = bf.DataField;
+					}
+
+					if (col is TemplateField) {
+						var tf = (TemplateField)col;
+						try {
+							var ph = new PlaceHolder();
+							tc.Controls.Add(ph);
+							tf.ItemTemplate.InstantiateIn(ph);
+						} catch { }
+					}
+
+					if (col is CarrotHeaderSortTemplateField) {
+						var ctf = (CarrotHeaderSortTemplateField)col;
+						tc.Text = ctf.DataField;
+						try {
+							if (ctf.ShowBooleanImage || ctf.ShowEnumImage) {
+								ITemplate imgTemplate = null;
+								var ph = new PlaceHolder();
+								tc.Controls.Add(ph);
+
+								if (ctf.ShowBooleanImage || !ctf.ShowEnumImage) {
+									imgTemplate = new CarrotBooleanImageItemTemplate(ctf, r, altRow);
+								}
+
+								if (ctf.ShowEnumImage) {
+									imgTemplate = new CarrotImageItemTemplate(ctf, r, altRow);
+								}
+
+								if (imgTemplate != null) {
+									ctf.ItemTemplate = imgTemplate;
+									ctf.ItemTemplate.InstantiateIn(ph);
+								}
+							}
+						} catch (Exception ex) { }
+					}
+				}
+			}
+
+			return WebControlHelper.RenderCtrl(table);
 		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -158,16 +157,16 @@ namespace Carrotware.Web.UI.Controls {
 						if (tgt.Contains("$" + sBtnName) && tgt.Contains("$" + this.ThePager.ID + "$")) {
 							string[] parms = tgt.Split('$');
 							int pg = int.Parse(parms[parms.Length - 1].Replace(sBtnName, ""));
-							PageNumber = pg;
-							hdnPageNbr.Value = PageNumber.ToString();
+							this.PageNumber = pg;
+							hdnPageNbr.Value = pg.ToString();
 							bHeadClicked = false;
 						}
 					}
 				}
 			}
 
-			if (PageNumber <= 1 && !String.IsNullOrEmpty(hdnPageNbr.Value)) {
-				PageNumber = int.Parse(hdnPageNbr.Value);
+			if (this.PageNumber <= 1 && !string.IsNullOrEmpty(hdnPageNbr.Value)) {
+				this.PageNumber = int.Parse(hdnPageNbr.Value);
 			}
 
 			if (IsPostBack) {
@@ -176,7 +175,13 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void SetSort() {
-			string sSort = this.TheGrid.CurrentSort;
+			string sSort = string.Empty;
+			// if current isn't blank use that, otherwise, default kicks in
+			if (!string.IsNullOrEmpty(this.TheGrid.CurrentSort)) {
+				sSort = this.TheGrid.CurrentSort;
+			} else {
+				sSort = this.TheGrid.DefaultSort;
+			}
 			if (bHeadClicked) {
 				sSort = this.TheGrid.PredictNewSort;
 			}
@@ -196,7 +201,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			int iTotalPages = 0;
 
-			int iPageNbr = PageNumber - 1;
+			int iPageNbr = this.PageNumber - 1;
 
 			iTotalPages = this.TotalRecords / this.PageSize;
 
@@ -228,11 +233,11 @@ namespace Carrotware.Web.UI.Controls {
 			WalkCtrlsForAssignment(this.ThePager);
 		}
 
-		private void WalkCtrlsForAssignment(Control X) {
-			foreach (Control c in X.Controls) {
+		private void WalkCtrlsForAssignment(Control ctrl) {
+			foreach (Control c in ctrl.Controls) {
 				if (c is IActivatePageNavItem) {
 					IActivatePageNavItem btn = (IActivatePageNavItem)c;
-					if (btn.PageNumber == PageNumber) {
+					if (btn.PageNumber == this.PageNumber) {
 						btn.IsSelected = true;
 					}
 					WalkCtrlsForAssignment(c);
@@ -248,18 +253,18 @@ namespace Carrotware.Web.UI.Controls {
 	public class CarrotGridPagedDesigner : DataBoundControlDesigner {
 
 		public override string GetDesignTimeHtml() {
-			Control ctrl = (Control)base.ViewControl;
-			CarrotGridPaged myctrl = (CarrotGridPaged)ctrl;
+			Control ctrl = base.ViewControl;
+			var myctrl = (CarrotGridPaged)ctrl;
 
-			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "CMS, ");
+			string sType = myctrl.GetType().ToString().Replace(myctrl.GetType().Namespace + ".", "Carrot, ");
 			string sID = myctrl.ID;
 			string sTextOut = "<span>[" + sType + " - " + sID + "]</span> <br />";
 
 			StringBuilder sb = new StringBuilder();
-			sb.Append(sTextOut);
+			sb.AppendLine(sTextOut);
 
-			sb.Append(DoGrid(ctrl));
-			sb.Append(DoRptr(ctrl));
+			sb.AppendLine(DoGrid(ctrl));
+			sb.AppendLine(DoRptr(ctrl));
 
 			return sb.ToString();
 		}
@@ -268,65 +273,8 @@ namespace Carrotware.Web.UI.Controls {
 			CarrotGridPaged myctrl = (CarrotGridPaged)ctrl;
 			CarrotGridView theGrid = myctrl.TheGrid;
 
-			Table table = new Table();
-			table.CssClass = theGrid.CssClass;
-			myctrl.Page.Controls.Add(table);
-
-			TableHeaderRow trh = new TableHeaderRow();
-			trh.CssClass = theGrid.HeaderStyle.CssClass;
-			table.Rows.Add(trh);
-
-			foreach (DataControlField col in theGrid.Columns) {
-				TableHeaderCell thc = new TableHeaderCell();
-				trh.Controls.Add(thc);
-				thc.Text = col.HeaderText;
-			}
-
-			for (int r = 0; r < 5; r++) {
-				TableRow tr = new TableRow();
-				if (r % 2 == 0) {
-					tr.CssClass = theGrid.RowStyle.CssClass;
-				} else {
-					tr.CssClass = theGrid.AlternatingRowStyle.CssClass;
-				}
-				table.Rows.Add(tr);
-
-				foreach (DataControlField col in theGrid.Columns) {
-					TableCell tc = new TableCell();
-					tc.Text = " &nbsp; ";
-					tr.Controls.Add(tc);
-
-					if (col is BoundField) {
-						var bf = (BoundField)col;
-						tc.Text = bf.DataField;
-					}
-
-					if (col is TemplateField) {
-						var tf = (TemplateField)col;
-						try {
-							PlaceHolder ph = new PlaceHolder();
-							tc.Controls.Add(ph);
-							tf.ItemTemplate.InstantiateIn(ph);
-						} catch { }
-					}
-
-					if (col is CarrotHeaderSortTemplateField) {
-						var ctf = (CarrotHeaderSortTemplateField)col;
-						tc.Text = ctf.DataField;
-						try {
-							if (ctf.ShowBooleanImage || ctf.ShowEnumImage) {
-								PlaceHolder ph = new PlaceHolder();
-								tc.Controls.Add(ph);
-								CarrotBooleanImageItemTemplate imgTemplate = new CarrotBooleanImageItemTemplate(ctf.DataField, ctf.BooleanImageCssClass);
-								ctf.ItemTemplate = imgTemplate;
-								ctf.ItemTemplate.InstantiateIn(ph);
-							}
-						} catch { }
-					}
-				}
-			}
-
-			return RenderCtrl(table);
+			var gvdesign = new CarrotGridViewDesigner();
+			return gvdesign.DoGrid(theGrid);
 		}
 
 		protected string DoRptr(Control ctrl) {
@@ -347,28 +295,21 @@ namespace Carrotware.Web.UI.Controls {
 			thePager.DataSource = pagelist;
 			thePager.DataBind();
 
-			return RenderCtrl(thePager);
+			//since the pretty pager won't show up, append some placeholder text to simulate a pager
+			return WebControlHelper.RenderCtrl(thePager)
+				+ " <br />\r\n <span>[" + string.Join("],  [", pagelist.Select(x => x.ToString()).ToArray()) + "]</span> <br />"; ;
 		}
 
 		private Repeater GetCtrl(Control ctrl) {
 			Repeater r = new Repeater();
 
 			try {
-				BasicControlUtils cu = new BasicControlUtils(ctrl);
+				var cu = new BasicControlUtils(ctrl);
 				Control userControl = cu.CreateControlFromResource("Carrotware.Web.UI.Controls.ucFancyPager.ascx");
 				r = (Repeater)cu.FindControl("rpPager", userControl);
 			} catch { }
 
 			return r;
-		}
-
-		private string RenderCtrl(Control ctrl) {
-			StringWriter sw = new StringWriter();
-			using (HtmlTextWriter tw = new HtmlTextWriter(sw)) {
-				ctrl.RenderControl(tw);
-
-				return sw.ToString();
-			}
 		}
 	}
 }

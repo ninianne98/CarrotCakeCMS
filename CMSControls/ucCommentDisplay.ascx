@@ -5,7 +5,8 @@
 			<carrot:ListItemCommentText runat="server" ID="ListItemCommentText1" DataField="CommenterName" />
 		</b>
 		<carrot:ListItemCommentText runat="server" ID="ListItemCommentText2" DataField="CreateDate" FieldFormat="{0:d}" />
-		<br />
+	</p>
+	<p>
 		<carrot:ListItemCommentText runat="server" ID="ListItemCommentText3" DataField="PostCommentEscaped" />
 	</p>
 </div>

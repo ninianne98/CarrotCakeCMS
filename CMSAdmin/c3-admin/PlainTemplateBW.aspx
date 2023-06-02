@@ -13,6 +13,8 @@
 
 		styleSheetPath = ControlUtilities.GetWebResourceUrl(typeof(AdminBaseMasterPage), "Carrotware.CMS.UI.Admin.cmsTemplates.plain.css");
 
+		TwoLevelNavigation1.SetThemeColor("#444444");
+
 		if (this.IsSiteIndex) {
 			PagedDataSummary2.Visible = true;
 		} else {
@@ -24,6 +26,7 @@
 
 		if (ThePage.ContentType != ContentPageType.PageType.BlogEntry) {
 			phMeta.Visible = false;
+			PagedComments1.Visible = false;
 		}
 	}
 </script>
@@ -54,8 +57,7 @@
 				<carrot:SiteDataProperty runat="server" ID="SiteDataProperty2" DataField="SiteTagline" />
 			</p>
 			<div id="menu">
-				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" ForeColor="#424242" SelFGColor="#ffffff"
-					SubBGColor="#787878" SubFGColor="#ffffff" UnSelBGColor="#808080" UnSelFGColor="#eeeeee" FontSize="14px" />
+				<carrot:TwoLevelNavigation runat="server" ID="TwoLevelNavigation1" WrapList="false" FontSize="14px" />
 			</div>
 			<div style="clear: both;">
 			</div>
@@ -113,6 +115,9 @@
 										</div>
 									</asp:PlaceHolder>
 									<carrot:WidgetContainer ID="phCenterBottom" runat="server" />
+									<div>
+										<carrot:PagedComments ID="PagedComments1" runat="server" PageSize="5" CSSSelectedPage="selected" />
+									</div>
 								</div>
 								<div style="clear: both;">
 								</div>

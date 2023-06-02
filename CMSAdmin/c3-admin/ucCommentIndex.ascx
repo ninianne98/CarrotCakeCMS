@@ -34,7 +34,7 @@
 	total records<br />
 </p>
 <div class="SortableGrid">
-	<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="20">
+	<carrot:CarrotGridPaged runat="server" ID="pagedDataGrid" PageSize="25">
 		<TheGrid ID="TheGrid1" runat="server" CssClass="datatable" DefaultSort="CreateDate desc" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
 			AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
 			<EmptyDataTemplate>
@@ -64,22 +64,5 @@
 					AlternateTextTrue="Approved" ShowBooleanImage="true" />
 			</Columns>
 		</TheGrid>
-		<%--
-		<ThePager ID="ThePager1" runat="server">
-			<HeaderTemplate>
-				<br />
-				<div class="datafooter ui-helper-clearfix ui-widget-content ui-corner-all ui-corner-all">
-			</HeaderTemplate>
-			<ItemTemplate>
-				<carrot:ListItemWrapperForPager HtmlTagName="div" ID="wrap" runat="server" CSSSelected="sel-pagerlink ui-state-active" CssClassNormal="pagerlink ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-					<carrot:NavLinkForPagerTemplate ID="lnkBtn" runat="server" CSSSelected="selected" />
-				</carrot:ListItemWrapperForPager>
-			</ItemTemplate>
-			<FooterTemplate>
-				</div>
-				<br />
-			</FooterTemplate>
-		</ThePager>
-		--%>
 	</carrot:CarrotGridPaged>
 </div>

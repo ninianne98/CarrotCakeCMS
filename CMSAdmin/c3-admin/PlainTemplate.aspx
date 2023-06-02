@@ -35,6 +35,7 @@
 
 		if (ThePage.ContentType != ContentPageType.PageType.BlogEntry) {
 			phMeta.Visible = false;
+			PagedComments1.Visible = false;
 		}
 	}
 </script>
@@ -145,6 +146,9 @@
 										</div>
 									</asp:PlaceHolder>
 									<carrot:WidgetContainer ID="phCenterBottom" runat="server" />
+									<div>
+										<carrot:PagedComments ID="PagedComments1" runat="server" PageSize="5" CSSSelectedPage="selected" />
+									</div>
 								</div>
 								<div style="clear: both;">
 								</div>

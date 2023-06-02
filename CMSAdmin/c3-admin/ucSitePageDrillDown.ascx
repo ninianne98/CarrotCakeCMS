@@ -4,7 +4,7 @@
 	InitDrillParms('<%=RootContentID.ToString() %>', '<%=txtParent.ClientID %>');
 </script>
 <asp:TextBox Style="display: none" runat="server" ID="txtParent" />
-<div style="float: left;">
+<div id="nodedrilldown">
 	<div id="menupath" class="pageNodeDrillDown1 ui-widget">
 	</div>
 	<div class="pageNodeDrillDown5 ui-widget">

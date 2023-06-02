@@ -1,11 +1,11 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.Web.UI.Controls;
+using System;
 using System.IO;
 using System.Reflection;
-using System.Web.UI.WebControls;
-using System.Web.UI;
 using System.Web;
-using System;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 /*
 * CarrotCake CMS
@@ -30,8 +30,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public void AssignPage(Control X) {
 			ResetFind();
 
-			if (X != null && X is Control && ((Control)X).Page != null) {
-				_page = ((Control)X).Page;
+			if (X != null && X is Control && X.Page != null) {
+				_page = X.Page;
 			} else {
 				_page = GetContainerPage(X);
 			}
@@ -40,24 +40,16 @@ namespace Carrotware.CMS.UI.Controls {
 		public ControlUtilities(Control X) {
 			ResetFind();
 
-			if (X != null && X is Control && ((Control)X).Page != null) {
-				_page = ((Control)X).Page;
+			if (X != null && X is Control && X.Page != null) {
+				_page = X.Page;
 			} else {
 				_page = GetContainerPage(X);
 			}
-
-			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
-			//    _page.AppRelativeVirtualPath = "~/";
-			//}
 		}
 
 		public ControlUtilities(Page X) {
 			ResetFind();
 			_page = X;
-
-			//if (!SiteData.IsWebView && string.IsNullOrEmpty(_page.AppRelativeVirtualPath)) {
-			//    _page.AppRelativeVirtualPath = "~/";
-			//}
 		}
 
 		public Page GetContainerPage(object X) {

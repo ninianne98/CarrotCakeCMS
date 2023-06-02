@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnInit(EventArgs e) {
 			if (ContentTemplate == null) {
-				ContentTemplate = new DefaultCommentTemplate();
+				ContentTemplate = new DefaultCommentTemplate(this);
 			}
 
 			base.OnInit(e);

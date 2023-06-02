@@ -148,7 +148,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void SetCSS() {
-			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -156,7 +156,7 @@ namespace Carrotware.Web.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				sCSS = String.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
+				sCSS = string.Format("{0} {1}", CssClassNormal.Trim(), sSelCss);
 
 				lnk.CssClass = sCSS.Trim();
 			}
@@ -191,11 +191,11 @@ namespace Carrotware.Web.UI.Controls {
 		private void AssignVals() {
 			SetCSS();
 
-			if (!String.IsNullOrEmpty(_linkNavURL) && String.IsNullOrEmpty(this.NavigateUrl)) {
+			if (!string.IsNullOrEmpty(_linkNavURL) && string.IsNullOrEmpty(this.NavigateUrl)) {
 				this.NavigateUrl = _linkNavURL;
 			}
 
-			if (!String.IsNullOrEmpty(_linkTextDefault) && String.IsNullOrEmpty(this.LinkText)) {
+			if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
 				if (UseDefaultText) {
 					this.LinkText = _linkTextDefault;
 				}
@@ -343,7 +343,7 @@ namespace Carrotware.Web.UI.Controls {
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
 			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
-			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -351,8 +351,8 @@ namespace Carrotware.Web.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(sSelCss)) {
-					sCSS = String.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
+				if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(sSelCss)) {
+					sCSS = string.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
 				}
 
 				litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + HtmlTextWriter.TagRightChar;
@@ -518,7 +518,7 @@ namespace Carrotware.Web.UI.Controls {
 			litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + HtmlTextWriter.TagRightChar;
 			litClose.Text = HtmlTextWriter.EndTagLeftChars + HtmlTagName + HtmlTextWriter.TagRightChar;
 
-			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -526,8 +526,8 @@ namespace Carrotware.Web.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(sSelCss)) {
-					sCSS = String.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
+				if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(sSelCss)) {
+					sCSS = string.Format(" class=\"{0} {1}\"", CssClassNormal.Trim(), sSelCss);
 				}
 
 				litOpen.Text = HtmlTextWriter.TagLeftChar + HtmlTagName + sCSS + HtmlTextWriter.TagRightChar;
@@ -674,7 +674,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void SetCSS() {
-			if (!String.IsNullOrEmpty(CssClassNormal) || !String.IsNullOrEmpty(CSSSelected)) {
+			if (!string.IsNullOrEmpty(CssClassNormal) || !string.IsNullOrEmpty(CSSSelected)) {
 				string sCSS = "";
 				string sSelCss = "";
 
@@ -682,7 +682,7 @@ namespace Carrotware.Web.UI.Controls {
 					sSelCss = CSSSelected.Trim();
 				}
 
-				sCSS = String.Format("{0} {1}", CssClassNormal, sSelCss);
+				sCSS = string.Format("{0} {1}", CssClassNormal, sSelCss);
 
 				lnkBtn.CssClass = sCSS.Trim();
 				lnkNav.CssClass = sCSS.Trim();
@@ -714,7 +714,7 @@ namespace Carrotware.Web.UI.Controls {
 			_linkTextDefault = PageNbr.ToString();
 			this.PageNumber = PageNbr;
 
-			if (!String.IsNullOrEmpty(_linkTextDefault) && String.IsNullOrEmpty(this.LinkText)) {
+			if (!string.IsNullOrEmpty(_linkTextDefault) && string.IsNullOrEmpty(this.LinkText)) {
 				if (UseDefaultText) {
 					_linkText = _linkTextDefault;
 				}
@@ -854,29 +854,31 @@ namespace Carrotware.Web.UI.Controls {
 
 	//========================================
 	public class DefaultPagerTemplate : ITemplate {
+		private Control _control;
+		private BasicControlUtils _cu = new BasicControlUtils();
 
-		public DefaultPagerTemplate() { }
-
-		private Control GetCtrl(Control X) {
-			cu = new BasicControlUtils(X);
-			Control userControl = cu.CreateControlFromResource("Carrotware.Web.UI.Controls.ucSimplePager1.ascx");
-
-			return userControl;
+		public DefaultPagerTemplate(Control control) {
+			_control = control;
+			_cu = new BasicControlUtils(_control);
 		}
 
-		private BasicControlUtils cu = new BasicControlUtils();
+		public Repeater GetAlternatePager() {
+			Control userControl = _cu.CreateControlFromResource("Carrotware.Web.UI.Controls.ucSimplePager3.ascx");
+			var repeater = (Repeater)_cu.FindControl("rpPager", userControl);
+
+			return repeater;
+		}
 
 		public void InstantiateIn(Control container) {
-			PlaceHolder ph = new PlaceHolder();
+			var ph = new PlaceHolder();
 			container.Controls.Add(ph);
 
-			Control c = GetCtrl(ph);
+			var userControl = _cu.CreateControlFromResource("Carrotware.Web.UI.Controls.ucSimplePager1.ascx");
+			ph.Controls.Add(userControl);
 
-			NavLinkForPagerTemplate lnkBtn = (NavLinkForPagerTemplate)cu.FindControl("lnkBtn", c);
+			NavLinkForPagerTemplate lnkBtn = (NavLinkForPagerTemplate)_cu.FindControl("lnkBtn", userControl);
 
 			lnkBtn.DataBinding += new EventHandler(lnkBtn_DataBinding);
-
-			ph.Controls.Add(c);
 
 			//Literal litL = new Literal();
 			//litL.Text = " [ ";
