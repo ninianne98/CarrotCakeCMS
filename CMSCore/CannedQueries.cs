@@ -1,7 +1,11 @@
-﻿using System;
+﻿using System.Linq;
+using System.Collections.Generic;
+using System;
+using Carrotware.CMS.Data;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Carrotware.CMS.Data;
 
 /*
 * CarrotCake CMS
@@ -91,6 +95,12 @@ namespace Carrotware.CMS.Core {
 
 		internal static IQueryable<carrot_Widget> GetWidgetsByRootContent(CarrotCMSDataContext ctx, Guid rootContentID) {
 			return (from r in ctx.carrot_Widgets
+					where r.Root_ContentID == rootContentID
+					select r);
+		}
+
+		internal static IQueryable<vw_carrot_Content> GetContentByRoot(CarrotCMSDataContext ctx, Guid rootContentID) {
+			return (from r in ctx.vw_carrot_Contents
 					where r.Root_ContentID == rootContentID
 					select r);
 		}

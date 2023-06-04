@@ -87,7 +87,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			using (SiteMapOrderHelper orderHelper = new SiteMapOrderHelper()) {
+			using (var orderHelper = new SiteMapOrderHelper()) {
 				var lst = orderHelper.CreateSiteMapList(txtMap.Text);
 				orderHelper.UpdateSiteMap(SiteID, lst);
 			}
@@ -96,7 +96,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnFixOrphan_Click(object sender, EventArgs e) {
-			using (SiteMapOrderHelper orderHelper = new SiteMapOrderHelper()) {
+			using (var orderHelper = new SiteMapOrderHelper()) {
 				orderHelper.FixOrphanPages(SiteID);
 			}
 
@@ -105,6 +105,10 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnFixBlog_Click(object sender, EventArgs e) {
 			pageHelper.FixBlogNavOrder(SiteID);
+
+			using (var orderHelper = new SiteMapOrderHelper()) {
+				orderHelper.FixOrphanPages(SiteID);
+			}
 
 			Response.Redirect(SiteData.CurrentScriptName);
 		}
