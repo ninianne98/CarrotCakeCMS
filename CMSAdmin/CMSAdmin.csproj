@@ -1295,9 +1295,6 @@
     <Content Include="abundant\abundant.master" />
     <Content Include="AdminModules.config" />
     <Content Include="c3-admin\FileUp.ashx" />
-    <None Include="c3-admin\iCheck\customized\grey-alt2%402x.pdn" />
-    <None Include="c3-admin\iCheck\customized\grey-alt3%402x.pdn" />
-    <None Include="c3-admin\iCheck\customized\grey-alt4%402x.pdn" />
     <None Include="c3-admin\Includes\C3SiteConfigSchema.xsd">
       <SubType>Designer</SubType>
     </None>

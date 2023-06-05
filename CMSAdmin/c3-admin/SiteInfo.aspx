@@ -289,6 +289,10 @@
 			<asp:CheckBox ID="chkHomepage" runat="server" />
 		</h2>
 		<br />
+		<h2>Create initial index (blog results) on site creation?
+			<asp:CheckBox ID="chkIndex" runat="server" />
+		</h2>
+		<br />
 	</asp:PlaceHolder>
 	<br />
 	<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" Text="Apply Changes" OnClick="btnSave_Click" OnClientClick="return ClickApplyBtn()" />

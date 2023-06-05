@@ -32,6 +32,11 @@
 			<h2 class="widgetTitle">
 				<asp:Literal runat="server" ID="litModuleTitle" /></h2>
 			<asp:PlaceHolder ID="phAdminModule" runat="server" />
+			<asp:PlaceHolder ID="phNone" runat="server" Visible="false">
+				<div>
+					<h2>No widget module selected.</h2>
+				</div>
+			</asp:PlaceHolder>
 		</td>
 	</tr>
 </table>

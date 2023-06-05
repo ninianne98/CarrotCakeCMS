@@ -131,38 +131,85 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 
 				if (chkHomepage.Checked) {
-					ContentPage pageContents = new ContentPage {
-						SiteID = SiteID,
-						Root_ContentID = Guid.NewGuid(),
-						ContentID = Guid.NewGuid(),
-						EditDate = SiteData.CurrentSite.Now,
-						CreateUserId = SecurityData.CurrentUserGuid,
-						CreateDate = SiteData.CurrentSite.Now,
-						GoLiveDate = dtSite.AddMinutes(-5),
-						RetireDate = dtSite.AddYears(200),
-						TitleBar = "Home",
-						NavMenuText = "Home",
-						PageHead = "Home",
-						FileName = "/home.aspx",
-						PageText = SiteData.StarterHomePageSample,
-						LeftPageText = string.Empty,
-						RightPageText = string.Empty,
-						NavOrder = 0,
-						IsLatestVersion = true,
-						PageActive = true,
-						ShowInSiteNav = true,
-						ShowInSiteMap = true,
-						BlockIndex = false,
-						EditUserId = SecurityData.CurrentUserGuid,
-						ContentType = ContentPageType.PageType.ContentEntry,
-						TemplateFile = SiteData.DefaultTemplateFilename
-					};
+					var home = CreateEmptyHome();
+					home.SavePageEdit();
+				}
 
-					pageContents.SavePageEdit();
+				if (chkIndex.Checked) {
+					var nav = chkHomepage.Checked ? 100 : 0;
+
+					var idx = CreateEmptyIndex(nav);
+					idx.SavePageEdit();
+
+					site.Blog_Root_ContentID = idx.Root_ContentID;
+					site.Save();
 				}
 
 				Response.Redirect(SiteFilename.DashboardURL);
 			}
+		}
+
+		private ContentPage CreateShellPage() {
+			DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
+
+			var pageContents = new ContentPage {
+				SiteID = this.SiteID,
+				Root_ContentID = Guid.NewGuid(),
+				ContentID = Guid.NewGuid(),
+				EditDate = SiteData.CurrentSite.Now,
+				CreateUserId = SecurityData.CurrentUserGuid,
+				CreateDate = SiteData.CurrentSite.Now,
+				GoLiveDate = dtSite.AddMinutes(-5),
+				RetireDate = dtSite.AddYears(200),
+				TitleBar = "Title",
+				NavMenuText = "Title",
+				PageHead = "Title",
+				FileName = "/title.aspx",
+				PageText = string.Empty,
+				LeftPageText = string.Empty,
+				RightPageText = string.Empty,
+				NavOrder = -1,
+				IsLatestVersion = true,
+				PageActive = true,
+				ShowInSiteNav = true,
+				ShowInSiteMap = true,
+				BlockIndex = false,
+				EditUserId = SecurityData.CurrentUserGuid,
+				ContentType = ContentPageType.PageType.ContentEntry,
+				TemplateFile = SiteData.DefaultTemplateFilename
+			};
+
+			return pageContents;
+		}
+
+		private ContentPage CreateEmptyHome() {
+			var pageContents = CreateShellPage();
+
+			pageContents.TitleBar = "Home";
+			pageContents.NavMenuText = "Home";
+			pageContents.PageHead = "Home";
+			pageContents.FileName = "/home.aspx";
+			pageContents.PageText = SiteData.StarterHomePageSample;
+			pageContents.NavOrder = 0;
+
+			pageContents.SavePageEdit();
+
+			return pageContents;
+		}
+
+		private ContentPage CreateEmptyIndex(int nav) {
+			var pageContents = CreateShellPage();
+
+			pageContents.TitleBar = "Index";
+			pageContents.NavMenuText = "Index";
+			pageContents.PageHead = "Index";
+			pageContents.FileName = "/index.aspx";
+			pageContents.PageText = nav >= 1 ? "<p>Search Results</p>" : SiteData.StarterHomePageSample;
+			pageContents.NavOrder = nav;
+
+			pageContents.SavePageEdit();
+
+			return pageContents;
 		}
 
 		protected void btnResetVars_Click(object sender, EventArgs e) {

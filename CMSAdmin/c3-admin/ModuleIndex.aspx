@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
-	Module Index
+	Modules
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<asp:PlaceHolder ID="phAjax" runat="server" />
@@ -13,3 +13,4 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">
 	<asp:PlaceHolder ID="phNoAjax" runat="server" />
 </asp:Content>
+

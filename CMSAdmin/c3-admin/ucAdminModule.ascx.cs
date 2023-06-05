@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 									   select m).FirstOrDefault();
 
 					if (this.PluginItem != null) {
-						litModuleTitle.Text = String.Format("{0} : {1}", this.ModuleFamily.PluginName, this.PluginItem.Caption);
+						litModuleTitle.Text = string.Format("{0} : {1}", this.ModuleFamily.PluginName, this.PluginItem.Caption);
 					}
 				}
 			}
@@ -87,7 +87,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			ModuleID = AdminModuleQueryStringRoutines.GetModuleID();
 			pf = AdminModuleQueryStringRoutines.GetPluginFile();
 
-			if (!String.IsNullOrEmpty(pf)) {
+			if (!string.IsNullOrEmpty(pf)) {
+				phNone.Visible = false;
+
 				this.ModuleFamily = (from m in cmsHelper.AdminModules
 									 where m.PluginID == this.ModuleID
 									 select m).FirstOrDefault();
@@ -110,6 +112,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					w.QueryStringFragment = AdminModuleQueryStringRoutines.GenerateQueryStringFragment(pf, this.ModuleID);
 					w.QueryStringPattern = AdminModuleQueryStringRoutines.GenerateQueryStringPattern(this.ModuleID);
 				}
+			} else {
+				phNone.Visible = true;
 			}
 
 			bLoadModule = true;
@@ -125,9 +129,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected string CreateLink(string sPop, string sID, string sParm) {
 			if (Convert.ToBoolean(sPop)) {
-				return String.Format("javascript:ShowWindowNoRefresh('{0}?pi={1}&pf={2}');", "./ModulePopup.aspx", Eval("PluginID"), Eval("PluginParm"));
+				return string.Format("javascript:ShowWindowNoRefresh('{0}?pi={1}&pf={2}');", "./ModulePopup.aspx", Eval("PluginID"), Eval("PluginParm"));
 			} else {
-				return String.Format("{0}?pi={1}&pf={2}", SiteData.CurrentScriptName, Eval("PluginID"), Eval("PluginParm"));
+				return string.Format("{0}?pi={1}&pf={2}", SiteData.CurrentScriptName, Eval("PluginID"), Eval("PluginParm"));
 			}
 		}
 
