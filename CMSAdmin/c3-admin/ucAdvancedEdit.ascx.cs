@@ -46,6 +46,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				EditorPrefs.Init();
 			}
 
+			litCmsToolbarTitle.Text = string.Format("CarrotCake CMS {0}", SiteData.CurrentDLLMajorMinorVersion);
+
 			string sCurrentPage = SiteData.CurrentScriptName;
 			string sScrubbedURL = SiteData.AlternateCurrentScriptName;
 

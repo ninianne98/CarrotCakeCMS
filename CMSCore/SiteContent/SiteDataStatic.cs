@@ -425,30 +425,28 @@ namespace Carrotware.CMS.Core {
 			ContentPage pageContents = null;
 
 			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				bool IsPageTemplate = false;
-				string sCurrentPage = SiteData.CurrentScriptName;
-				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
+				bool isTemplate = false;
+				string currentPage = SiteData.CurrentScriptName;
+				string scrubbedURL = SiteData.AlternateCurrentScriptName;
+				var bActiveOnly = !(SecurityData.IsAdmin || SecurityData.IsSiteEditor);
 
-				if (sScrubbedURL.ToLowerInvariant() != sCurrentPage.ToLowerInvariant()) {
-					sCurrentPage = sScrubbedURL;
+				if (scrubbedURL.ToLowerInvariant() != currentPage.ToLowerInvariant()) {
+					currentPage = scrubbedURL;
 				}
 
-				if (SecurityData.IsAdmin || SecurityData.IsSiteEditor) {
-					pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
-				} else {
-					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, true, sCurrentPage);
-				}
+				pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, bActiveOnly, currentPage);
 
 				if (pageContents == null && SiteData.IsPageReal) {
-					IsPageTemplate = true;
+					isTemplate = true;
 				}
 
-				if ((SiteData.IsPageSampler || IsPageTemplate || !IsWebView) && pageContents == null) {
+				if ((SiteData.IsPageSampler || isTemplate || !IsWebView) && pageContents == null) {
+					//SiteNavHelper.ResetFakeData();
 					pageContents = ContentPageHelper.GetSamplerView();
 				}
 
-				if (IsPageTemplate) {
-					pageContents.TemplateFile = sCurrentPage;
+				if (isTemplate) {
+					pageContents.TemplateFile = currentPage;
 				}
 			}
 
@@ -533,7 +531,7 @@ namespace Carrotware.CMS.Core {
 
 		public static void ManuallyWriteDefaultFile(HttpContext context, Exception objErr) {
 			var sb = new StringBuilder();
-			sb.Append(SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Default.htm"));
+			sb.Append(CoreHelper.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Default.htm"));
 
 			try {
 				if (CurretSiteExists) {
@@ -582,7 +580,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string FormatErrorOutput(Exception objErr) {
 			var sb = new StringBuilder();
-			sb.Append(SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm"));
+			sb.Append(CoreHelper.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.ErrorFormat.htm"));
 
 			if (objErr is HttpException) {
 				HttpException httpEx = (HttpException)objErr;
@@ -788,7 +786,7 @@ namespace Carrotware.CMS.Core {
 
 		public static string StarterHomePageSample {
 			get {
-				return SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.FirstPage.txt");
+				return CoreHelper.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.FirstPage.txt");
 			}
 		}
 

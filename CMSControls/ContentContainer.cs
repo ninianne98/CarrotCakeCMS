@@ -185,9 +185,9 @@ namespace Carrotware.CMS.UI.Controls {
 			string sID = myctrl.ID;
 
 			string sTextOut = "<span>[" + sType + " - " + sID + "]</span>\r\n";
-			string sPageOutText = "";
+			string sPageOutText = string.Empty;
 
-			string sPageText = SiteNavHelper.GetSampleBody(myctrl, "SampleContent3");
+			string sPageText = SiteNavHelper.GetSampleBody("SampleContent3");
 			if (myctrl.TextZone == ContentContainer.TextFieldZone.Unknown) {
 				myctrl.TextZone = ContentContainer.TextFieldZone.TextCenter;
 			}

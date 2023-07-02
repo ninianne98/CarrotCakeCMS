@@ -150,7 +150,7 @@
 					<div class="ui-widget-header ui-corner-all cmsToolboxHead">
 						<div class="cmsFloatLeft">
 							<p class="cmsToolboxHeadCaption">
-								CarrotCake CMS
+								<asp:Literal runat="server" ID="litCmsToolbarTitle" Text="CarrotCake CMS" />
 							</p>
 						</div>
 						<div class='cmsFloatRight'>

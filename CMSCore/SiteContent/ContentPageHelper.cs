@@ -701,7 +701,7 @@ namespace Carrotware.CMS.Core {
 
 			if (rc != null) {
 				rc.Heartbeat_UserId = currentUserID;
-				rc.EditHeartbeat = DateTime.UtcNow;
+				rc.EditHeartbeat = DateTime.UtcNow == rc.EditHeartbeat ? DateTime.UtcNow.AddSeconds(-3) : DateTime.UtcNow;
 				db.SubmitChanges();
 				return true;
 			}
@@ -788,14 +788,14 @@ namespace Carrotware.CMS.Core {
 			string sFile1 = string.Empty;
 			string sFile2 = string.Empty;
 
-			SiteNavHelperMock.ResetCaption();
-			var caption = SiteNavHelperMock.GetNextCaption();
+			SiteNavHelper.ResetCaption();
+			var caption = SiteNavHelper.GetNextCaption();
 
 			try {
 				Assembly _assembly = Assembly.GetExecutingAssembly();
 
-				sFile1 = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt");
-				sFile2 = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Mock.SampleContent2.txt");
+				sFile1 = CoreHelper.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Mock.SampleContent1.txt");
+				sFile2 = CoreHelper.ReadEmbededScript("Carrotware.CMS.Core.SiteContent.Mock.SampleContent2.txt");
 
 				List<string> imageNames = (from i in _assembly.GetManifestResourceNames()
 										   where i.Contains("SiteContent.Mock.sample")

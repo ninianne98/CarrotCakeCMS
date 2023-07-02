@@ -76,7 +76,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public string GetManifestResourceStream(string resource) {
-			return WebControlHelper.GetManifestResourceStream(resource);
+			return WebControlHelper.GetManifestResourceText(resource);
 		}
 
 		public static string GetCtrlText(Control ctrl) {

@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using System;
-using Carrotware.CMS.Data;
-
+﻿using Carrotware.CMS.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -243,6 +239,18 @@ namespace Carrotware.CMS.Core {
 						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
 						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 						&& ct.IsLatestVersion == true
+					select ct);
+		}
+
+		internal static IQueryable<vw_carrot_Content> GetContentByParent(CarrotCMSDataContext ctx, Guid siteID, Guid? parentContentID, bool bActiveOnly) {
+			return (from ct in ctx.vw_carrot_Contents
+					orderby ct.NavOrder, ct.NavMenuText
+					where ct.SiteID == siteID
+						   && ct.Parent_ContentID == parentContentID
+						   && ct.IsLatestVersion == true
+						   && (ct.PageActive == true || bActiveOnly == false)
+						   && (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						   && (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
 					select ct);
 		}
 
