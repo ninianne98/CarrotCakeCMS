@@ -169,8 +169,8 @@ namespace Carrotware.Web.UI.Controls {
 					_defaultImageFalse = Path.Combine(tmp, CarrotBooleanImage.IconResourceNegative);
 
 					if (!File.Exists(_defaultImageTrue) || File.GetLastWriteTime(_defaultImageTrue) < DateTime.Now.AddMinutes(-1)) {
-						var affirm = WebControlHelper.GetManifestResourceBinary(CarrotBooleanImage.IconResourceAffirm);
-						var neg = WebControlHelper.GetManifestResourceBinary(CarrotBooleanImage.IconResourceNegative);
+						var affirm = WebControlHelper.GetManifestResourceBytes(CarrotBooleanImage.IconResourceAffirm);
+						var neg = WebControlHelper.GetManifestResourceBytes(CarrotBooleanImage.IconResourceNegative);
 
 						File.WriteAllBytes(_defaultImageTrue, affirm);
 						File.WriteAllBytes(_defaultImageFalse, neg);
@@ -286,7 +286,7 @@ namespace Carrotware.Web.UI.Controls {
 					var defaultFile = Path.Combine(tmp, CarrotBooleanImage.IconResourcePaperclip);
 
 					if (!File.Exists(defaultFile) || File.GetLastWriteTime(defaultFile) < DateTime.Now.AddMinutes(-1)) {
-						var paperclip = WebControlHelper.GetManifestResourceBinary(CarrotBooleanImage.IconResourcePaperclip);
+						var paperclip = WebControlHelper.GetManifestResourceBytes(CarrotBooleanImage.IconResourcePaperclip);
 						File.WriteAllBytes(defaultFile, paperclip);
 					}
 

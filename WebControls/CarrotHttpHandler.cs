@@ -205,7 +205,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			DoCacheMagic(context, 10);
 
-			string sBody = WebControlHelper.GetManifestResourceStream("Carrotware.Web.UI.Controls.carrotHelp.js");
+			string sBody = WebControlHelper.GetManifestResourceText("Carrotware.Web.UI.Controls.carrotHelp.js");
 			DateTime timeAM = DateTime.Now.Date.AddHours(7);  // AM
 			DateTime timePM = DateTime.Now.Date.AddHours(17);  // PM
 

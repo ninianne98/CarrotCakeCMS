@@ -124,15 +124,15 @@ namespace Carrotware.Web.UI.Controls {
 			return GetWebResourceUrl(CachedPage, typeof(WebControlHelper), resource);
 		}
 
-		internal static string GetWebResourceUrl(Type type, string resource) {
+		public static string GetWebResourceUrl(Type type, string resource) {
 			return GetWebResourceUrl(CachedPage, type, resource);
 		}
 
-		internal static string GetWebResourceUrl(Control control, string resource) {
+		public static string GetWebResourceUrl(Control control, string resource) {
 			return GetWebResourceUrl(control.Page, control.GetType(), resource);
 		}
 
-		internal static string GetWebResourceUrl(Page page, Type type, string resource) {
+		public static string GetWebResourceUrl(Page page, Type type, string resource) {
 			string sPath = string.Empty;
 
 			if (page != null) {
@@ -147,9 +147,25 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		internal static string GetManifestResourceStream(string resource) {
+			return GetManifestResourceText(resource);
+		}
+
+		internal static byte[] GetManifestResourceBinary(string resource) {
+			return GetManifestResourceBytes(typeof(WebControlHelper), resource);
+		}
+
+		internal static string GetManifestResourceText(string resource) {
+			return GetManifestResourceText(typeof(WebControlHelper), resource);
+		}
+
+		internal static byte[] GetManifestResourceBytes(string resource) {
+			return GetManifestResourceBytes(typeof(WebControlHelper), resource);
+		}
+
+		public static string GetManifestResourceText(Type type, string resource) {
 			string returnText = null;
 
-			Assembly _assembly = Assembly.GetExecutingAssembly();
+			Assembly _assembly = Assembly.GetAssembly(type);
 			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(resource))) {
 				returnText = stream.ReadToEnd();
 			}
@@ -157,9 +173,9 @@ namespace Carrotware.Web.UI.Controls {
 			return returnText;
 		}
 
-		internal static byte[] GetManifestResourceBinary(string resource) {
+		public static byte[] GetManifestResourceBytes(Type type, string resource) {
 			byte[] returnBytes = null;
-			Assembly _assembly = Assembly.GetExecutingAssembly();
+			Assembly _assembly = Assembly.GetAssembly(type);
 
 			using (var stream = _assembly.GetManifestResourceStream(resource)) {
 				returnBytes = new byte[stream.Length];

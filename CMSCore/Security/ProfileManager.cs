@@ -61,7 +61,7 @@ namespace Carrotware.CMS.Core {
 			if (user != null) {
 				HttpRequest request = HttpContext.Current.Request;
 
-				string sBody = SiteNavHelperMock.ReadEmbededScript("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt");
+				string sBody = CoreHelper.ReadEmbededScript("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt");
 
 				if (user.IsLockedOut && user.LastLockoutDate < DateTime.Now.AddMinutes(-45)) {
 					user.UnlockUser();
