@@ -18,7 +18,7 @@ namespace Carrotware.Web.UI.Controls {
 
 	[ToolboxData("<{0}:ImageSizer runat=server></{0}:ImageSizer>")]
 	public class ImageSizer : Image {
-		private string handlerURL = "/carrotwarethumb.axd";
+		private string handlerURL = UrlPaths.ThumbnailPath;
 
 		[Bindable(true)]
 		[Category("Appearance")]

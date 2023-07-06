@@ -88,6 +88,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			try { GeneralUtilities.SelectListValue(ddlTemplate, cmsHelper.cmsAdminContent.TemplateFile.ToLowerInvariant()); } catch { }
 
 			if (!bLocked) {
+				this.Page.Header.Controls.Add(new AdminScriptInfo());
+
 				foreach (Control c in plcIncludes.Controls) {
 					this.Page.Header.Controls.Add(c);
 				}

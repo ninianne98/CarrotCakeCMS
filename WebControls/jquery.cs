@@ -147,7 +147,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			string key = WebControlHelper.DateKey();
 
-			output.WriteLine("<!-- Carrot Helpers --> <script src=\"/carrotwarehelper.axd?ts=" + key + "\" type=\"text/javascript\"></script> ");
+			output.WriteLine("<!-- Carrot Helpers --> <script src=\"" + UrlPaths.HelperPath + "?ts=" + key + "\" type=\"text/javascript\"></script> ");
 		}
 	}
 }

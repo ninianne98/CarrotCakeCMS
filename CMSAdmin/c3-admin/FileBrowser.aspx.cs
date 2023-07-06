@@ -28,14 +28,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected FileDataHelper helpFile = CMSConfigHelper.GetFileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			try { sQueryPath = Request.QueryString["fldrpath"]; } catch { sQueryPath = @"/"; }
+			try { sQueryPath = this.Context.SafeQueryString("fldrpath", @"/"); } catch { sQueryPath = @"/"; }
 
 			sViewMode = defaultBrowseMode;
 			lblWarning.Text = string.Empty;
 
-			try { useTinyMode = Request.QueryString["useTiny"].ToString(); } catch { useTinyMode = "0"; }
-			try { sReturnMode = Request.QueryString["returnvalue"].ToString(); } catch { sReturnMode = "0"; }
-			try { sViewMode = Request.QueryString["viewmode"].ToString(); } catch { sViewMode = defaultBrowseMode; }
+			try { useTinyMode = this.Context.SafeQueryString("useTiny", "0"); } catch { useTinyMode = "0"; }
+			try { sReturnMode = this.Context.SafeQueryString("returnvalue", "0"); } catch { sReturnMode = "0"; }
+			try { sViewMode = this.Context.SafeQueryString("viewmode", defaultBrowseMode); } catch { sViewMode = defaultBrowseMode; }
 
 			if (string.Format("{0}", sViewMode).ToLowerInvariant() != defaultBrowseMode) {
 				lnkThumbView.Visible = false;

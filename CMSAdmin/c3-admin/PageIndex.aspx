@@ -95,7 +95,7 @@
 					</asp:TemplateField>
 					<asp:TemplateField>
 						<ItemTemplate>
-							<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit5" NavigateUrl='<%# String.Format("{0}?carrotedit=true", Eval("FileName")) %>'><img class="imgNoBorder" src="/c3-admin/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
+							<asp:HyperLink runat="server" Target="_blank" ID="lnkEdit5" NavigateUrl='<%# String.Format("{0}?{1}=true", Eval("FileName"), SiteData.AdvancedEditParameter) %>'><img class="imgNoBorder" src="/c3-admin/images/overlays.png" alt="Advanced Editor" title="Advanced Editor" /></asp:HyperLink>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField>

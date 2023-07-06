@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSFAQ2Module", "PluginFAQ2
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CMSDataScripts", "CMSDataScripts\CMSDataScripts.sqlproj", "{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoremIpsum", "LoremIpsum\LoremIpsum.csproj", "{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,6 +211,18 @@ Global
 		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Debug|x86.Build.0 = Debug|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,5 +235,6 @@ Global
 		{AB1DE455-438E-4249-B282-52937F9D1386} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{C9FE1F2D-9CB1-4298-8090-FDFE3F698D11} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 		{1B626E78-C8BF-4997-AC15-A6EA654681E6} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
+		{C86DA762-C4BC-43FB-B3EA-CC792D197D1D} = {53B5D160-56A0-42F9-8189-E0E87726B5CA}
 	EndGlobalSection
 EndGlobal

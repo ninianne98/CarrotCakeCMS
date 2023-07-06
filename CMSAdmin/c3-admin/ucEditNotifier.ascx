@@ -12,10 +12,10 @@
 	<div class="cmsNavFooterBox">
 		<p class="cmsFooterP">
 			<a class="cmsFooterLinks" target="_top" href="<%=SiteFilename.DashboardURL %>">DASHBOARD</a>
-			<a class="cmsFooterLinks" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">ADVANCED EDIT</a>
-			<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">EDIT</a>
+			<a class="cmsFooterLinks" target="_top" href="<%=AdvEditPageURL %>">ADVANCED EDIT</a>
+			<a class="cmsFooterLinks" target="_blank" href="<%=EditPageURL %>">EDIT</a>
 			<a class="cmsFooterLinks" target="_top" href="<%=PageIndexURL %>"><%=PageIndexText %></a>
-			<a class="cmsFooterLinks" target="_top" href="/c3-admin/ModuleIndex.aspx">MODULE INDEX</a>
+			<a class="cmsFooterLinks" target="_top" href="<%=SiteFilename.ModuleIndexURL %>">MODULE INDEX</a>
 		</p>
 		<p class="cmsFooterP">
 			<a class="cmsFooterLinks" href="/">HOME PAGE</a>
@@ -56,11 +56,11 @@
 					<img alt="DASHBOARD" title="DASHBOARD" src="/c3-admin/images/layout_content.png" /></a>
 			</div>
 			<div class="cmsNavBox1">
-				<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">
+				<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=AdvEditPageURL %>">
 					<img alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/c3-admin/images/overlays.png" /></a>
 			</div>
 			<div class="cmsNavBox1">
-				<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">
+				<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>">
 					<img alt="EDIT" title="EDIT" src="/c3-admin/images/application_edit.png" /></a>
 			</div>
 			<div class="cmsNavBox1">
@@ -68,7 +68,7 @@
 					<img alt="<%=PageIndexText %>" title="<%=PageIndexText %>" src="/c3-admin/images/table.png" /></a>
 			</div>
 			<div class="cmsNavBox2">
-				<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/c3-admin/ModuleIndex.aspx">
+				<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="<%=SiteFilename.ModuleIndexURL %>">
 					<img alt="MODULE INDEX" title="MODULE INDEX" src="/c3-admin/images/brick.png" /></a>
 			</div>
 		</div>
@@ -80,11 +80,11 @@
 					<img alt="DASHBOARD" title="DASHBOARD" src="/c3-admin/images/layout_content.png" /></a>
 			</div>
 			<div class="cmsNavBox1">
-				<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=SiteData.AlternateCurrentScriptName %>?carrotedit=true">
+				<a title="ADVANCED EDIT" class="cmsNavImageLink" target="_top" href="<%=AdvEditPageURL %>">
 					<img alt="ADVANCED EDIT" title="ADVANCED EDIT" src="/c3-admin/images/overlays.png" /></a>
 			</div>
 			<div class="cmsNavBox1">
-				<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>?id=<%=CurrentPageID %>">
+				<a class="cmsNavImageLink" target="_blank" href="<%=EditPageURL %>">
 					<img alt="EDIT" title="EDIT" src="/c3-admin/images/application_edit.png" /></a>
 			</div>
 			<div class="cmsNavBox1">
@@ -92,7 +92,7 @@
 					<img alt="<%=PageIndexText %>" title="<%=PageIndexText %>" src="/c3-admin/images/table.png" /></a>
 			</div>
 			<div class="cmsNavBox2">
-				<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="/c3-admin/ModuleIndex.aspx">
+				<a title="MODULE INDEX" class="cmsNavImageLink" target="_top" href="<%=SiteFilename.ModuleIndexURL %>">
 					<img alt="MODULE INDEX" title="MODULE INDEX" src="/c3-admin/images/brick.png" /></a>
 			</div>
 		</div>

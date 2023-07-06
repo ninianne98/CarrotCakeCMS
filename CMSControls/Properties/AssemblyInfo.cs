@@ -41,6 +41,7 @@ using System.Web.UI;
 [assembly: AssemblyVersion("4.4.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
 
+[assembly: TagPrefix("AdminScriptInfo", "carrot")]
 [assembly: TagPrefix("AuthorLink", "carrot")]
 [assembly: TagPrefix("AuthorTextLabel", "carrot")]
 [assembly: TagPrefix("BreadCrumbNavigation", "carrot")]
@@ -84,22 +85,5 @@ using System.Web.UI;
 [assembly: TagPrefix("WidgetContainer", "carrot")]
 [assembly: TagPrefix("WidgetWrapper", "carrot")]
 
-[assembly: WebResource("Carrotware.CMS.UI.Controls.SearchBoxJS.txt", "text/css")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenu.txt", "text/css")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.TopMenuRes.txt", "text/css")]
-
 [assembly: WebResource("Carrotware.CMS.UI.Controls.feed.png", "image/png")]
 [assembly: WebResource("Carrotware.CMS.UI.Controls.Trackback.txt", "text/css")]
-
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucSearchForm.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget1.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidget2.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetMenuItem.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer1.ascx", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.UI.Controls.ucAdminWidgetContainer2.ascx", "text/plain")]

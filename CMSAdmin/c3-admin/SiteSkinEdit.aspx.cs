@@ -22,24 +22,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class SiteSkinEdit : AdminBasePage {
 		protected FileDataHelper helpFile = CMSConfigHelper.GetFileDataHelper();
-		public string sTemplateFileQS = String.Empty;
-		protected string sTemplateFile = String.Empty;
-		protected string sFullFilePath = String.Empty;
-		protected string sDirectory = String.Empty;
-		protected string sEditFile = String.Empty;
+		public string sTemplateFileQS = string.Empty;
+		protected string sTemplateFile = string.Empty;
+		protected string sFullFilePath = string.Empty;
+		protected string sDirectory = string.Empty;
+		protected string sEditFile = string.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSkinEdit);
 
-			if (!String.IsNullOrEmpty(Request.QueryString["path"])) {
-				sTemplateFileQS = Request.QueryString["path"].ToString();
+			if (!string.IsNullOrEmpty(Request.QueryString["path"])) {
+				sTemplateFileQS = this.Context.SafeQueryString("path");
 				sTemplateFile = CMSConfigHelper.DecodeBase64(sTemplateFileQS);
 				sFullFilePath = HttpContext.Current.Server.MapPath(sTemplateFile);
 				sEditFile = sFullFilePath;
 			}
 
-			if (!String.IsNullOrEmpty(Request.QueryString["alt"])) {
-				string sAltFileQS = Request.QueryString["alt"].ToString();
+			if (!string.IsNullOrEmpty(Request.QueryString["alt"])) {
+				string sAltFileQS = this.Context.SafeQueryString("alt");
 				string sAltFile = CMSConfigHelper.DecodeBase64(sAltFileQS);
 				sEditFile = HttpContext.Current.Server.MapPath(sAltFile);
 			}
@@ -69,11 +69,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnSubmit_Click(object sender, EventArgs e) {
 			if (File.Exists(sEditFile)) {
-				Encoding encode = System.Text.Encoding.Default;
+				Encoding encode = Encoding.Default;
 
-				using (var oWriter = new StreamWriter(sEditFile, false, encode)) {
-					oWriter.Write(txtPageContents.Text);
-					oWriter.Close();
+				using (var stream = new StreamWriter(sEditFile, false, encode)) {
+					stream.Write(txtPageContents.Text);
+					stream.Close();
 				}
 
 				Response.Redirect(SiteData.CurrentScriptName + "?" + Request.QueryString.ToString());

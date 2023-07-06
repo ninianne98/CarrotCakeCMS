@@ -133,7 +133,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (PerformURLResize && !string.IsNullOrEmpty(sFieldValue)) {
-				sFieldValue = string.Format("/carrotwarethumb.axd?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
+				sFieldValue = string.Format(UrlPaths.ThumbnailPath + "?scale={0}&thumb={1}&square={2}", ScaleImage, HttpUtility.UrlEncode(sFieldValue), ThumbSize);
 			}
 
 			this.ImageUrl = sFieldValue;

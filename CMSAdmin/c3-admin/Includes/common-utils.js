@@ -39,7 +39,7 @@ function AjaxBtnLoad() {
 	}
 }
 
-var webSvc = "/c3-admin/CMS.asmx";
+var webSvc = cmsWebServiceApi;
 
 function cmsScrubDate(val) {
 	val = val.replace(/m/gi, 'mm');
@@ -173,7 +173,7 @@ function uncheckGridBoxes(gridID) {
 
 //===================
 
-var webSvc = "/c3-admin/CMS.asmx";
+var webSvc = cmsWebServiceApi;
 
 function cmsGetServiceAddress() {
 	return webSvc;

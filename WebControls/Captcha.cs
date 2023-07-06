@@ -243,12 +243,12 @@ namespace Carrotware.Web.UI.Controls {
 
 		private string GetCaptchaImageURI() {
 			if (this.IsWebView) {
-				return "/CarrotwareCaptcha.axd?t=" + DateTime.Now.Ticks +
+				return UrlPaths.CaptchaPath + "?t=" + DateTime.Now.Ticks +
 						"&fgcolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(this.ForeColor)) +
 						"&bgcolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(this.BackColor)) +
 						"&ncolor=" + CaptchaImage.EncodeColor(ColorTranslator.ToHtml(this.NoiseColor));
 			} else {
-				return "/CarrotwareCaptcha.axd?t=" + DateTime.Now.Ticks;
+				return UrlPaths.CaptchaPath + "?t=" + DateTime.Now.Ticks;
 			}
 		}
 

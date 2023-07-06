@@ -14,6 +14,7 @@
 		<link href="/c3-admin/MiniColors/jquery.minicolors.css" rel="stylesheet" />
 
 		<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Popup" SelectedColor="Classic" />
+		<carrot:AdminScriptInfo runat="server" id="scriptInfo" />
 
 		<script src="/c3-admin/includes/chosen.jquery.min.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/jquery.ui.timepicker.js<%=AntiCache%>" type="text/javascript"></script>

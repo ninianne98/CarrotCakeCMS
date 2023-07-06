@@ -320,14 +320,13 @@
 		});
 
 		var cmsTemplateDDL = '#<%=ddlTemplate.ClientID%>';
-		var cmsTemplatePreview = '<%=SiteData.PreviewTemplateFilePage %>';
 
 		function cmsPreviewTemplate() {
 			var tmpl = $(cmsTemplateDDL).val();
 
 			tmpl = MakeStringSafe(tmpl);
 
-			ShowWindowNoRefresh(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
+			ShowWindowNoRefresh(cmsTemplatePreview + "?" + cmsTemplatePreviewQS + "=" + tmpl);
 		}
 	</script>
 	<script type="text/javascript">
@@ -794,7 +793,7 @@
 
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
-				$('#<%=btnSave.ClientID %>').click();
+			$('#<%=btnSave.ClientID %>').click();
 		}
 	}
 

@@ -54,6 +54,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Design" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -63,6 +64,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminScriptInfo.cs" />
     <Compile Include="AuthorData.cs" />
     <Compile Include="BaseNav.cs" />
     <Compile Include="BaseNavCommon.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="BasePagedDataTemplate.cs" />
     <Compile Include="BaseServerControl.cs" />
     <Compile Include="BaseNavSel.cs" />
+    <Compile Include="CarrotCakeHttpHandler.cs" />
     <Compile Include="ChildNavigation.cs" />
     <Compile Include="CmsSkin.cs" />
     <Compile Include="ContentCommentForm.cs" />
@@ -152,6 +155,7 @@
     <EmbeddedResource Include="ucAdminWidget2.ascx" />
     <EmbeddedResource Include="ucAdminWidget1.ascx" />
     <EmbeddedResource Include="ucAdminWidgetMenuItem.ascx" />
+    <EmbeddedResource Include="adminHelp.js" />
     <Content Include="editor\advedit.amethystorchid.css">
       <DependentUpon>advedit.amethystorchid.less</DependentUpon>
     </Content>

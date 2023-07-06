@@ -7,9 +7,10 @@ using System.Linq;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class ucEditNotifier : AdminBaseUserControl {
-		public string EditPageURL = string.Empty;
-		public string PageIndexURL = string.Empty;
-		public string PageIndexText = string.Empty;
+		public string EditPageURL { get; set; } = string.Empty;
+		public string AdvEditPageURL { get; set; } = string.Empty;
+		public string PageIndexURL { get; set; } = string.Empty;
+		public string PageIndexText { get; set; } = string.Empty;
 
 		public string AntiCache {
 			get {
@@ -17,12 +18,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		public bool IsPageTemplate = false;
-
-		public Guid CurrentPageID {
-			get;
-			set;
-		}
+		public bool IsPageTemplate { get; set; } = false;
+		public Guid CurrentPageID { get; set; } = Guid.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
@@ -50,17 +47,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litRetire.Text = currentPage.RetireDate.ToString();
 				litTemplate.Text = currentPage.TemplateFile;
 
-				CurrentPageID = currentPage.Root_ContentID;
+				this.CurrentPageID = currentPage.Root_ContentID;
 				lnkCurrent.HRef = SiteData.CurrentScriptName;
 
-				EditPageURL = SiteFilename.PageAddEditURL;
-				PageIndexURL = SiteFilename.PageIndexURL;
-				PageIndexText = "CONTENT INDEX";
+				this.AdvEditPageURL = string.Format("{0}?{1}=true", SiteData.AlternateCurrentScriptName, SiteData.AdvancedEditParameter);
+
+				this.EditPageURL = string.Format("{0}?id={1}", SiteFilename.PageAddEditURL, this.CurrentPageID);
+				this.PageIndexURL = SiteFilename.PageIndexURL;
+				this.PageIndexText = "CONTENT INDEX";
 
 				if (currentPage.ContentType == ContentPageType.PageType.BlogEntry) {
-					EditPageURL = SiteFilename.BlogPostAddEditURL;
-					PageIndexURL = SiteFilename.BlogPostIndexURL;
-					PageIndexText = "BLOG INDEX";
+					this.EditPageURL = string.Format("{0}?id={1}", SiteFilename.BlogPostAddEditURL, this.CurrentPageID);
+					this.PageIndexURL = SiteFilename.BlogPostIndexURL;
+					this.PageIndexText = "BLOG INDEX";
 				}
 
 				if (!IsPostBack) {

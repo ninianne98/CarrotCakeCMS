@@ -460,20 +460,19 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public CMSAdminModuleMenu GetCurrentAdminModuleControl() {
-			Guid ModuleID = Guid.Empty;
-			HttpRequest request = HttpContext.Current.Request;
+			Guid moduleId = Guid.Empty;
+			var context = HttpContext.Current;
+			var request = HttpContext.Current.Request;
 			string pf = string.Empty;
 			CMSAdminModuleMenu cc = null;
 
-			if (request.QueryString["pi"] != null) {
-				try { ModuleID = new Guid(request.QueryString["pi"].ToString()); } catch { }
-			}
+			moduleId = context.GetGuidParmFromQuery("pi");
 
 			if (request.QueryString["pf"] != null) {
 				pf = request.QueryString["pf"].ToString();
 
-				CMSAdminModule mod = (from m in AdminModules
-									  where m.PluginID == ModuleID
+				CMSAdminModule mod = (from m in this.AdminModules
+									  where m.PluginID == moduleId
 									  select m).FirstOrDefault();
 
 				cc = (from m in mod.PluginMenus
@@ -486,20 +485,19 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<CMSAdminModuleMenu> GetCurrentAdminModuleControlList() {
-			Guid ModuleID = Guid.Empty;
-			HttpRequest request = HttpContext.Current.Request;
+			Guid moduleId = Guid.Empty;
+			var context = HttpContext.Current;
+			var request = HttpContext.Current.Request;
 			string pf = string.Empty;
 			List<CMSAdminModuleMenu> cc = null;
 
-			if (request.QueryString["pi"] != null) {
-				try { ModuleID = new Guid(request.QueryString["pi"].ToString()); } catch { }
-			}
+			moduleId = context.GetGuidParmFromQuery("pi");
 
 			if (request.QueryString["pf"] != null) {
 				pf = request.QueryString["pf"].ToString();
 
-				CMSAdminModule mod = (from m in AdminModules
-									  where m.PluginID == ModuleID
+				CMSAdminModule mod = (from m in this.AdminModules
+									  where m.PluginID == moduleId
 									  select m).FirstOrDefault();
 
 				cc = (from m in mod.PluginMenus
@@ -1125,23 +1123,12 @@ namespace Carrotware.CMS.Core {
 			return dateOut;
 		}
 
-		public static string DecodeBase64(string ValIn) {
-			string val = string.Empty;
-			if (!string.IsNullOrEmpty(ValIn)) {
-				Encoding enc = Encoding.GetEncoding("ISO-8859-1"); //Western European (ISO)
-				val = enc.GetString(Convert.FromBase64String(ValIn));
-			}
-			return val;
+		public static string DecodeBase64(string text) {
+			return text.DecodeBase64();
 		}
 
-		public static string EncodeBase64(string ValIn) {
-			string val = string.Empty;
-			if (!string.IsNullOrEmpty(ValIn)) {
-				Encoding enc = Encoding.GetEncoding("ISO-8859-1"); //Western European (ISO)
-				byte[] toEncodeAsBytes = enc.GetBytes(ValIn);
-				val = Convert.ToBase64String(toEncodeAsBytes);
-			}
-			return val;
+		public static string EncodeBase64(string text) {
+			return text.EncodeBase64();
 		}
 
 		public void OverrideKey(Guid guidContentID) {
@@ -1164,11 +1151,8 @@ namespace Carrotware.CMS.Core {
 			if (filePage == null) {
 				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
 					if (SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(SiteData.AdminFolderPath)) {
-						Guid guidPage = Guid.Empty;
-						if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
-							guidPage = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
-						}
-						filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidPage);
+						var pageId = HttpContext.Current.GetGuidParmFromQuery("pageid");
+						filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, pageId);
 					} else {
 						filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 					}

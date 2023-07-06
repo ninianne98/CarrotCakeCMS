@@ -1,4 +1,5 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
 using System;
 using System.Web.UI;
 
@@ -53,9 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 		protected string ShowSaveQuery {
 			get {
-				return Request.QueryString["showsaved"] != null
-					? Request.QueryString["showsaved"].ToString()
-					: string.Empty;
+				return this.Context.SafeQueryString("showsaved");
 			}
 		}
 

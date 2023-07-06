@@ -1,6 +1,8 @@
 ﻿using Carrotware.Web.UI.Controls;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Web;
 
 /*
 * CarrotCake CMS
@@ -32,6 +34,17 @@ namespace Carrotware.CMS.Core {
 			} catch { }
 
 			return sPath;
+		}
+
+		public static Guid GetGuidParmFromQuery(this HttpContext context, string key) {
+			Guid id = Guid.Empty;
+			if (SiteData.IsWebView) {
+				if (context.Request.QueryString[key] != null
+					&& !string.IsNullOrEmpty(context.Request.QueryString[key].ToString())) {
+					id = new Guid(context.Request.QueryString[key].ToString());
+				}
+			}
+			return id;
 		}
 
 		public static T Clone<T>(this T source) {

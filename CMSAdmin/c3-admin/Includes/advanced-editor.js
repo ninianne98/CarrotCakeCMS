@@ -8,7 +8,7 @@ function cmsSetPageStatus(stat) {
 	cmsIsPageLocked = stat;
 }
 
-var webSvc = "/c3-admin/CMS.asmx";
+var webSvc = cmsWebServiceApi;
 var thisPage = ""; // used in escaped fashion
 var thisPageNav = "";  // used non-escaped (redirects)
 var thisPageNavSaved = "";  // used non-escaped (redirects)
@@ -302,17 +302,11 @@ function cmsSaveGenericContent(val, key) {
 	});
 }
 
-var cmsTemplatePreview = "";
-
-function cmsSetPreviewFileName(tmplName) {
-	cmsTemplatePreview = tmplName;
-}
-
 function cmsPreviewTemplate2() {
 	var tmpl = $(cmsTemplateListPreviewer).val();
 	tmpl = cmsMakeStringSafe(tmpl);
 
-	var srcURL = cmsTemplatePreview + "?carrot_templatepreview=" + tmpl;
+	var srcURL = cmsTemplatePreview + "?" + cmsTemplatePreviewQS + "=" + tmpl;
 
 	var editIFrame = $('#cmsFrameEditorPreview');
 	$(editIFrame).attr('src', srcURL);
@@ -346,7 +340,7 @@ function cmsPreviewTemplate() {
 	var tmplReal = $(cmsTemplateDDL).val();
 	tmpl = cmsMakeStringSafe(tmplReal);
 
-	cmsLaunchWindowOnly(cmsTemplatePreview + "?carrot_templatepreview=" + tmpl);
+	cmsLaunchWindowOnly(cmsTemplatePreview + "?" + cmsTemplatePreviewQS + "=" + tmpl);
 
 	var editFrame = $('#cmsModalFrame');
 

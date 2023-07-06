@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="About" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="about.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.about" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
+	<style>
+		body {
+			font-size: 1.05em;
+		}
+	</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	About

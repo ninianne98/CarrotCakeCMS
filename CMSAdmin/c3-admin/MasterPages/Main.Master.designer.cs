@@ -40,6 +40,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
         protected global::Carrotware.CMS.UI.Controls.CmsSkin siteSkin;
         
         /// <summary>
+        /// scriptInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Carrotware.CMS.UI.Controls.AdminScriptInfo scriptInfo;
+        
+        /// <summary>
         /// HeadContentPlaceHolder control.
         /// </summary>
         /// <remarks>

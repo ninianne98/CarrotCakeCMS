@@ -247,9 +247,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string GetSearchTerm() {
 			string sSearchTerm = string.Empty;
 
-			if (HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter] != null) {
-				sSearchTerm = HttpContext.Current.Request.QueryString[SiteData.SearchQueryParameter].ToString();
-			}
+			sSearchTerm = HttpContext.Current.SafeQueryString(SiteData.SearchQueryParameter);
 
 			return sSearchTerm;
 		}

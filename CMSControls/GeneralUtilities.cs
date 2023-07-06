@@ -89,8 +89,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public static void BindListDefaultText(ListControl ctrl, object dataSource, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue) {
 			BindList(ctrl, dataSource);
 
-			EmptyChoiceValue = String.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
-			ctrl.Items.Insert(0, new ListItem(String.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
+			EmptyChoiceValue = string.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
+			ctrl.Items.Insert(0, new ListItem(string.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
 
 			SelectListValue(ctrl, SelectedValue);
 		}
@@ -179,12 +179,12 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public static void BindOptionalBooleanList(ListControl ctrl, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue, string TrueChoiceText, string FalseChoiceText) {
-			EmptyChoiceValue = String.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
+			EmptyChoiceValue = string.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
 
 			List<ListItem> lst = new List<ListItem>();
-			lst.Add(new ListItem(String.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
-			lst.Add(new ListItem(String.Format("{0}", TrueChoiceText), "1"));
-			lst.Add(new ListItem(String.Format("{0}", FalseChoiceText), "0"));
+			lst.Add(new ListItem(string.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
+			lst.Add(new ListItem(string.Format("{0}", TrueChoiceText), "1"));
+			lst.Add(new ListItem(string.Format("{0}", FalseChoiceText), "0"));
 
 			ctrl.DataTextField = "Text";
 			ctrl.DataValueField = "Value";
@@ -226,7 +226,7 @@ namespace Carrotware.CMS.UI.Controls {
 			Guid id = Guid.Empty;
 			if (SiteData.IsWebView) {
 				if (HttpContext.Current.Request.QueryString[ParmName] != null
-					&& !String.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
+					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
 					id = new Guid(HttpContext.Current.Request.QueryString[ParmName].ToString());
 				}
 			}
@@ -234,10 +234,10 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public static string GetStringParameterFromQuery(string ParmName) {
-			string id = String.Empty;
+			string id = string.Empty;
 			if (SiteData.IsWebView) {
 				if (HttpContext.Current.Request.QueryString[ParmName] != null
-					&& !String.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
+					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
 					id = HttpContext.Current.Request.QueryString[ParmName].ToString();
 				}
 			}
@@ -248,7 +248,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		public static string ResolvePath(Control srcControl, string sPath) {
 			string sPathOut = null;
-			if (!String.IsNullOrEmpty(sPath)) {
+			if (!string.IsNullOrEmpty(sPath)) {
 				sPathOut = sPath.Replace(@"\", "/");
 			} else {
 				sPathOut = "";

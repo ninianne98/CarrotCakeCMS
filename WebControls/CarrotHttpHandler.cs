@@ -26,15 +26,15 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void ProcessRequest(HttpContext context) {
-			if (context.Request.Path.ToLowerInvariant() == "/carrotwarecaptcha.axd") {
+			if (context.Request.Path.ToLowerInvariant() == UrlPaths.CaptchaPath.ToLowerInvariant()) {
 				DoCaptcha(context);
 			}
 
-			if (context.Request.Path.ToLowerInvariant() == "/carrotwarethumb.axd") {
+			if (context.Request.Path.ToLowerInvariant() == UrlPaths.ThumbnailPath) {
 				DoThumb(context);
 			}
 
-			if (context.Request.Path.ToLowerInvariant() == "/carrotwarehelper.axd") {
+			if (context.Request.Path.ToLowerInvariant() == UrlPaths.HelperPath) {
 				DoHelper(context);
 			}
 		}
@@ -55,9 +55,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void DoCaptcha(HttpContext context) {
-			context.Response.Cache.VaryByParams["fgcolor"] = true;
-			context.Response.Cache.VaryByParams["bgcolor"] = true;
-			context.Response.Cache.VaryByParams["ncolor"] = true;
+			context.VaryCacheByQuery(new string[] { "ts", "fgcolor", "bgcolor", "ncolor" });
 
 			DoCacheMagic(context, 3);
 
@@ -88,14 +86,12 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void DoThumb(HttpContext context) {
-			context.Response.Cache.VaryByParams["thumb"] = true;
-			context.Response.Cache.VaryByParams["scale"] = true;
-			context.Response.Cache.VaryByParams["square"] = true;
+			context.VaryCacheByQuery(new string[] { "ts", "thumb", "scale", "square" });
 
 			DoCacheMagic(context, 3);
 
 			int iThumb = 150;
-			string sImageIn = context.Request.QueryString["thumb"];
+			string sImageIn = context.SafeQueryString("thumb");
 			string sImg = sImageIn;
 
 			if (sImageIn.Contains("../") || sImageIn.Contains(@"..\")) {
@@ -108,13 +104,11 @@ namespace Carrotware.Web.UI.Controls {
 				throw new Exception("Cannot use UNC paths.");
 			}
 
-			string sScale = "false";
-			if (context.Request.QueryString["scale"] != null) {
-				sScale = context.Request.QueryString["scale"].ToLowerInvariant();
-			}
+			string sScale = context.SafeQueryString("scale", "false").ToLowerInvariant();
 
 			if (context.Request.QueryString["square"] != null) {
-				string sImgPX = context.Request.QueryString["square"];
+				string sImgPX = context.SafeQueryString("square");
+
 				if (!string.IsNullOrEmpty(sImgPX)) {
 					try {
 						iThumb = int.Parse(sImgPX);
@@ -201,7 +195,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		private void DoHelper(HttpContext context) {
-			context.Response.Cache.VaryByParams["ts"] = true;
+			context.VaryCacheByQuery(new string[] { "ts" });
 
 			DoCacheMagic(context, 10);
 
@@ -231,7 +225,7 @@ namespace Carrotware.Web.UI.Controls {
 			context.Response.End();
 		}
 
-		protected void DoCacheMagic(HttpContext context, int interval) {
+		protected void DoCacheMagic(HttpContext context, double minutes) {
 			DateTime now = DateTime.Now;
 
 			DateTime dtModified = GetFauxModDate(10);
@@ -242,7 +236,7 @@ namespace Carrotware.Web.UI.Controls {
 			context.Response.AppendHeader("Date", strModifed);
 			context.Response.Cache.SetLastModified(dtModified);
 
-			DateTime dtExpire = now.ToUniversalTime().AddMinutes(interval);
+			DateTime dtExpire = now.ToUniversalTime().AddMinutes(minutes);
 			context.Response.Cache.SetExpires(dtExpire);
 			context.Response.Cache.SetValidUntilExpires(true);
 			context.Response.Cache.SetCacheability(HttpCacheability.Private);
@@ -256,11 +250,11 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		protected DateTime GetFauxModDate(int interval) {
+		protected DateTime GetFauxModDate(double minutes) {
 			DateTime now = DateTime.Now;
 
 			DateTime dtMod = now.AddMinutes(-90);
-			TimeSpan ts = TimeSpan.FromMinutes(interval);
+			TimeSpan ts = TimeSpan.FromMinutes(minutes);
 			DateTime dtModified = new DateTime(((dtMod.Ticks + ts.Ticks - 1) / ts.Ticks) * ts.Ticks);
 
 			return dtModified;

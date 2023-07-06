@@ -1,4 +1,5 @@
 using Carrotware.CMS.DBUpdater;
+using Carrotware.Web.UI.Controls;
 using System;
 using System.Web;
 using System.Web.Compilation;
@@ -97,9 +98,7 @@ namespace Carrotware.CMS.Core {
 						if (SiteData.IsLikelyHomePage(fileRequested)) {
 							string sParm = string.Empty;
 							if (SiteData.OldSiteQuerystring != string.Empty) {
-								if (context.Request.QueryString[SiteData.OldSiteQuerystring] != null) {
-									sParm = context.Request.QueryString[SiteData.OldSiteQuerystring].ToString();
-								}
+								sParm = context.SafeQueryString(SiteData.OldSiteQuerystring);
 							}
 							if (!string.IsNullOrEmpty(sParm)) {
 								fileRequested = string.Format("/{0}.aspx", sParm.Trim());

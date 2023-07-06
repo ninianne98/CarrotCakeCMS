@@ -824,6 +824,12 @@ namespace Carrotware.CMS.Core {
 			get { return VirtualCMSEditPrefix + "templatepreview/Page.aspx"; }
 		}
 
+		public static string AdvancedEditParameter {
+			get { return "carrotedit".ToLowerInvariant(); }
+		}
+
+		public static string TemplatePreviewParameter { get { return "carrot_templatepreview"; } }
+
 		public static bool IsPageSampler {
 			get {
 				string _prefix = (VirtualCMSEditPrefix + "templatepreview/").ToLowerInvariant();
@@ -873,8 +879,8 @@ namespace Carrotware.CMS.Core {
 				string _preview = DefaultTemplateFilename;
 
 				if (IsWebView) {
-					if (HttpContext.Current.Request.QueryString["carrot_templatepreview"] != null) {
-						_preview = HttpContext.Current.Request.QueryString["carrot_templatepreview"].ToString();
+					if (HttpContext.Current.Request.QueryString[TemplatePreviewParameter] != null) {
+						_preview = HttpContext.Current.Request.QueryString[TemplatePreviewParameter].ToString();
 						_preview = CMSConfigHelper.DecodeBase64(_preview);
 					}
 				}

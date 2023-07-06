@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		public string LinkingPage { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!String.IsNullOrEmpty(Request.QueryString["type"])) {
+			if (!string.IsNullOrEmpty(Request.QueryString["type"])) {
 				pageType = ContentPageType.GetTypeByName(Request.QueryString["type"].ToString());
 			}
 
@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				iRecCount = PostComment.GetCommentCountByContent(guidRootContentID, active, spam);
 			}
 
-			lblPages.Text = String.Format(" {0} ", iRecCount);
+			lblPages.Text = string.Format(" {0} ", iRecCount);
 
 			pagedDataGrid.BuildSorting();
 

@@ -442,7 +442,8 @@ namespace Carrotware.CMS.Core {
 			get {
 				bool _Advanced = false;
 				if (SiteData.IsWebView && IsAuthenticated) {
-					if (HttpContext.Current.Request.QueryString["carrotedit"] != null && (SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
+					if (HttpContext.Current.Request.QueryString[SiteData.AdvancedEditParameter] != null
+								&& (SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
 						_Advanced = true;
 					} else {
 						_Advanced = false;

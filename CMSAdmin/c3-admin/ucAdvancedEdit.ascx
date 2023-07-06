@@ -82,7 +82,7 @@
 
 	function cmsToolbarPageInit1() {
 
-		var cmsWebSvc = "/c3-admin/CMS.asmx";
+		var cmsWebSvc = cmsWebServiceApi;
 		var cmsThisPage = "<%=SiteData.AlternateCurrentScriptName %>";
 		var cmsThisPageID = "<%=guidContentID.ToString() %>";
 
@@ -104,8 +104,6 @@
 		cmsSetServiceParms(cmsWebSvc, cmsThisPage, cmsThisPageID);
 
 		cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
-
-		cmsSetPreviewFileName('<%=SiteData.PreviewTemplateFilePage %>');
 
 		cmsOverridePageName('<%=EditedPageFileName %>');
 
