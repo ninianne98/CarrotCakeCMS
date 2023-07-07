@@ -19,10 +19,10 @@ namespace Carrotware.Web.UI.Controls {
 	public class FileData {
 
 		public FileData() {
-			this.FolderPath = String.Empty;
+			this.FolderPath = string.Empty;
 			this.FileName = "unknown";
 			this.FileSize = 0;
-			this.FileExtension = String.Empty;
+			this.FileExtension = string.Empty;
 			this.FileSizeFriendly = "0B";
 			this.FileDate = DateTime.MinValue.Date;
 			this.MimeType = "x-application/octet-stream";
@@ -39,7 +39,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public string FullFileName {
 			get {
-				return String.Format("/{0}/{1}", this.FolderPath, this.FileName).Replace(@"///", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+				return string.Format("/{0}/{1}", this.FolderPath, this.FileName).FixPathSlashes();
 			}
 		}
 
@@ -49,14 +49,14 @@ namespace Carrotware.Web.UI.Controls {
 
 			if (obj is FileData) {
 				FileData p = (FileData)obj;
-				return (String.Format("{0}", this.FullFileName).ToLowerInvariant() == String.Format("{0}", p.FullFileName).ToLowerInvariant());
+				return (string.Format("{0}", this.FullFileName).ToLowerInvariant() == string.Format("{0}", p.FullFileName).ToLowerInvariant());
 			} else {
 				return false;
 			}
 		}
 
 		public override int GetHashCode() {
-			return String.Format("{0}", this.FullFileName).ToLowerInvariant().GetHashCode();
+			return string.Format("{0}", this.FullFileName).ToLowerInvariant().GetHashCode();
 		}
 	}
 
@@ -71,12 +71,12 @@ namespace Carrotware.Web.UI.Controls {
 
 		private static string _wwwpath = null;
 
-		private static string WWWPath {
+		private static string WebPath {
 			get {
 				if (_wwwpath == null) {
-					_wwwpath = HttpContext.Current.Server.MapPath("~/");
-					if (!_wwwpath.EndsWith(@"\")) {
-						_wwwpath += @"\";
+					_wwwpath = HttpContext.Current.Server.MapPath("~/").NormalizeFilename();
+					if (!_wwwpath.EndsWith(Path.AltDirectorySeparatorChar.ToString())) {
+						_wwwpath = _wwwpath + Path.AltDirectorySeparatorChar;
 					}
 				}
 				return _wwwpath;
@@ -95,7 +95,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public void IncludeAllFiletypes() {
-			_blockedTypes = String.Empty;
+			_blockedTypes = string.Empty;
 		}
 
 		public FileData GetFolderInfo(string sQuery, string myFile) {
@@ -103,7 +103,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			string myFileName;
 
-			FileData f = new FileData();
+			var f = new FileData();
 			f.FileName = myFile;
 
 			bool IsFolder = Directory.Exists(myFile);
@@ -112,7 +112,7 @@ namespace Carrotware.Web.UI.Controls {
 				myFileName = myFile;
 				f.FileName = Path.GetFileName(myFileName).Trim();
 				if (myFile.Length >= sPath.Length) {
-					f.FolderPath = String.Format("/{0}/{1}/", sQuery, myFile.Substring(sPath.Length)).Replace(@"\", @"/").Replace(@"///", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+					f.FolderPath = string.Format("/{0}/{1}/", sQuery, myFile.Substring(sPath.Length)).FixPathSlashes();
 				}
 				f.FileDate = Convert.ToDateTime(Directory.GetLastWriteTime(myFile));
 			} else {
@@ -134,41 +134,42 @@ namespace Carrotware.Web.UI.Controls {
 		public List<FileData> GetFolders(string sQuery) {
 			string sPath = MakeFileFolderPath(sQuery);
 
-			var dsID = new List<FileData>();
+			var files = new List<FileData>();
 
 			if (Directory.Exists(sPath)) {
 				foreach (string myFile in Directory.GetDirectories(sPath, "*.*")) {
 					string myFileName;
-					FileData f = new FileData();
+					var f = new FileData();
 					f.FileName = myFile;
 					myFileName = Path.GetFileName(myFile).Trim();
 					if (myFileName.Length > 0) {
 						f = GetFolderInfo(sQuery, myFile);
-						dsID.Add(f);
+						files.Add(f);
 					}
 				}
 			}
 
-			return dsID;
+			return files;
 		}
 
 		public FileData GetFileInfo(string sQuery, string myFile) {
 			sQuery = MakeFilePathUniform(sQuery);
 			string sPath = MakeFileFolderPath(sQuery);
 
-			string myFileName = String.Empty;
-			DateTime myFileDate = Convert.ToDateTime("1899-01-01"); ;
-			string myFileSizeF = String.Empty;
+			string myFileName = Path.GetFileName(myFile).Trim();
+			DateTime myFileDate = Convert.ToDateTime("1899-01-01");
+			string myFileSizeF = string.Empty;
 			long myFileSize;
 
-			FileData f = new FileData();
+			var f = new FileData();
 			f.FileName = myFile;
 
-			myFileName = Path.GetFileName(myFile).Trim();
-			if (myFileName.Length > 0 && File.Exists(sPath + "/" + myFileName)) {
-				FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
-				myFileDate = File.GetLastWriteTime(MyFile.FullName);
-				myFileSize = MyFile.Length;
+			var testFile = Path.Combine(sPath, myFileName).NormalizeFilename();
+
+			if (myFileName.Length > 0 && File.Exists(testFile)) {
+				var fileInfo = new FileInfo(testFile);
+				myFileDate = File.GetLastWriteTime(fileInfo.FullName);
+				myFileSize = fileInfo.Length;
 
 				myFileSizeF = myFileSize.ToString() + " B";
 
@@ -186,8 +187,8 @@ namespace Carrotware.Web.UI.Controls {
 				f.FileDate = myFileDate;
 				f.FileSize = myFileSize;
 				f.FileSizeFriendly = myFileSizeF;
-				if (!string.IsNullOrEmpty(MyFile.Extension)) {
-					f.FileExtension = MyFile.Extension.ToLowerInvariant();
+				if (!string.IsNullOrEmpty(fileInfo.Extension)) {
+					f.FileExtension = fileInfo.Extension.ToLowerInvariant();
 				} else {
 					f.FileExtension = ".";
 				}
@@ -211,15 +212,8 @@ namespace Carrotware.Web.UI.Controls {
 		public static string MakeFilePathUniform(string sDirPath) {
 			string _path = "/";
 			if (!string.IsNullOrEmpty(sDirPath)) {
-				_path = @"/" + sDirPath;
-
-				if (!Directory.Exists(WWWPath + _path)) {
-					_path = _path.Replace(@"\", @"/");
-					_path = _path.Substring(0, _path.Length - 1);
-					_path = _path.Substring(0, _path.LastIndexOf(@"/"));
-				}
+				_path = sDirPath.FixPathSlashes();
 				_path = _path + @"/";
-				_path = _path.Replace(@"\", @"/").Replace(@"///", @"/").Replace("//", "/").Replace("//", "/");
 			}
 			return _path;
 		}
@@ -234,8 +228,8 @@ namespace Carrotware.Web.UI.Controls {
 		public static string MakeWebFolderPath(string sDirPath) {
 			string sPathPrefix = "/";
 
-			if (!String.IsNullOrEmpty(sDirPath)) {
-				sPathPrefix = sDirPath.Replace(WWWPath, @"/");
+			if (!string.IsNullOrEmpty(sDirPath)) {
+				sPathPrefix = sDirPath.NormalizeFilename().Replace(WebPath, @"/");
 			}
 			sPathPrefix = MakeFilePathUniform(sPathPrefix);
 
@@ -245,15 +239,13 @@ namespace Carrotware.Web.UI.Controls {
 		public List<FileData> GetFiles(string sQuery) {
 			string sPath = MakeFileFolderPath(sQuery);
 
-			var dsID = new List<FileData>();
+			var files = new List<FileData>();
 
 			if (Directory.Exists(sPath)) {
 				foreach (string myFile in Directory.GetFiles(sPath, "*.*")) {
-					string myFileName;
+					string myFileName = Path.GetFileName(myFile).Trim();
 
-					myFileName = Path.GetFileName(myFile).Trim();
-
-					FileData f = new FileData();
+					var f = new FileData();
 					f.FileName = myFileName;
 
 					if (myFileName.Length > 0) {
@@ -261,16 +253,16 @@ namespace Carrotware.Web.UI.Controls {
 
 						try {
 							if ((from b in BlockedTypes
-								 where b.ToLowerInvariant().Replace(".", String.Empty) == f.FileExtension.Replace(".", String.Empty)
+								 where b.ToLowerInvariant().Replace(".", string.Empty) == f.FileExtension.Replace(".", string.Empty)
 								 select b).Count() < 1) {
-								dsID.Add(f);
+								files.Add(f);
 							}
 						} catch (Exception ex) { }
 					}
 				}
 			}
 
-			return dsID;
+			return files;
 		}
 
 		private List<string> _spiderdirs = null;
