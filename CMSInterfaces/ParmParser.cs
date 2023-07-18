@@ -17,7 +17,7 @@ namespace Carrotware.CMS.Interface {
 
 	public static class ParmParser {
 
-		public static string GetParmValue(Dictionary<string, string> parmDictionary, string sKey) {
+		public static string GetParmValue(this Dictionary<string, string> parmDictionary, string sKey) {
 			string ret = null;
 
 			if (parmDictionary.Any()) {
@@ -29,7 +29,7 @@ namespace Carrotware.CMS.Interface {
 			return ret;
 		}
 
-		public static string GetParmValue(Dictionary<string, string> parmDictionary, string sKey, string sDefault) {
+		public static string GetParmValue(this Dictionary<string, string> parmDictionary, string sKey, string sDefault) {
 			string ret = null;
 
 			if (parmDictionary.Any()) {

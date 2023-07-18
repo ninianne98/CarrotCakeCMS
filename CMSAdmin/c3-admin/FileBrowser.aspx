@@ -136,7 +136,6 @@
 				var fld = $(selFile);
 				var uri = fld.val();
 
-				var imgReal = $(imgRealId);
 				$(imgReal).attr('src', '');
 				var h = -1;
 				var w = -1;
@@ -231,11 +230,11 @@
 						<div class="ui-widget-header ui-corner-all thumbCell" runat="server" id="imgContainerGroup">
 							<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'thumb')">
 								<div id="imgWrapper" style="display: none;">
-									<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />
+									<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FullFileName").ToString(), Eval("MimeType").ToString())  %>" />
 								</div>
 								<div style="margin: 3px;" id="imgSubContainer">
-									<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
-										<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )  %>' ThumbSize="50"
+									<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format("{0}", Eval("FullFileName"))) %>'>
+										<carrot:ImageSizer runat="server" ID="ImageSizer1" ImageUrl='<%# String.Format("{0}", Eval("FullFileName"))  %>' ThumbSize="50"
 											ScaleImage="true" ToolTip="" />
 									</a>
 								</div>
@@ -273,11 +272,11 @@
 							<td>
 								<div class="ImgGroup" runat="server" id="imgContainerGroup">
 									<div runat="server" id="imgContainer" onmouseout="hideImg(this)" onmouseover="showImg(this, 'file')">
-										<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format( "{0}{1}", Eval("FolderPath"), Eval("FileName") )) %>'>
+										<a runat="server" id="lnkContent" href='<%# CreateFileLink(String.Format("{0}", Eval("FullFileName"))) %>'>
 											<%# String.Format( "{0}", Eval("FileName") ) %></a>
 									</div>
 									<div id="imgWrapper" style="display: none;">
-										<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FolderPath").ToString(), Eval("FileName").ToString(), Eval("MimeType").ToString())  %>" />
+										<img id="imgThmbnail" filetype="<%# FileImageLink(Eval("MimeType").ToString()) %>" alt="" src="<%# CreateFileSrc(Eval("FullFileName").ToString(), Eval("MimeType").ToString())  %>" />
 									</div>
 								</div>
 							</td>
@@ -322,6 +321,8 @@
 					$(divImgLayer).attr('style', 'display:none;');
 					$(divImgLayer).attr('class', '');
 
+					imgReal = $(imgRealId);
+
 					$(imgThumb).attr('src', defaultImage);
 					$(imgThumb).attr('width', 64);
 					$(imgThumb).attr('height', 64);
@@ -354,6 +355,8 @@
 
 						$(divImgLayer).attr('class', 'thumbpreview ui-corner-all');
 
+						imgReal = $(imgRealId);
+
 						$(imgThumb).attr('alt', val);
 						$(imgThumb).attr('title', val);
 						$(imgThumb).attr('src', val);
@@ -369,7 +372,6 @@
 				}
 
 				function resizeImg() {
-
 					$(imgDim).html($(imgReal).width() + ' x ' + $(imgReal).height());
 
 					if ($(imgThumb).height() > 175) {

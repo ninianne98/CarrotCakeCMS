@@ -4,6 +4,7 @@ using Carrotware.Web.UI.Controls;
 using System;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.UI.WebControls;
 
 /*
@@ -77,7 +78,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				lnkUp.Visible = true;
 			}
 			sQueryPath = sQueryPath.StartsWith(@"/") ? sQueryPath : @"/" + sQueryPath;
-			sQueryPath.Replace("//", "/").Replace("//", "/");
+			sQueryPath.FixFolderSlashes();
 
 			if (lnkUp.Visible) {
 				string sUrlUp = sQueryPath.Substring(0, sQueryPath.Substring(0, sQueryPath.Length - 2).LastIndexOf('/')) + @"/";
@@ -118,13 +119,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		public string CreateFileLink(string sPath) {
-			return string.Format("javascript:SetFile('{0}');", sPath);
+		public string CreateFileLink(string sFullPath) {
+			return string.Format("javascript:SetFile('{0}');", HttpUtility.UrlEncode(sFullPath));
 		}
 
-		public string CreateFileSrc(string sPath, string sFile, string sMime) {
+		public string CreateFileSrc(string sFullPath, string sMime) {
 			if (FileImageLink(sMime).ToLowerInvariant() == "image") {
-				return string.Format("{0}{1}", sPath, sFile).ToLowerInvariant();
+				return string.Format("{0}", sFullPath).ToLowerInvariant();
 			} else {
 				return SiteData.AdminFolderPath + "images/document.png";
 			}

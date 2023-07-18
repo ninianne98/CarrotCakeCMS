@@ -24,7 +24,7 @@ namespace Carrotware.Web.UI.Controls {
 			this.FileSize = 0;
 			this.FileExtension = string.Empty;
 			this.FileSizeFriendly = "0B";
-			this.FileDate = DateTime.MinValue.Date;
+			this.FileDate = Convert.ToDateTime("1900-01-01");
 			this.MimeType = "x-application/octet-stream";
 		}
 
@@ -43,7 +43,7 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public override bool Equals(Object obj) {
+		public override bool Equals(object obj) {
 			//Check for null and compare run-time types.
 			if (obj == null || GetType() != obj.GetType()) return false;
 
@@ -75,9 +75,6 @@ namespace Carrotware.Web.UI.Controls {
 			get {
 				if (_wwwpath == null) {
 					_wwwpath = HttpContext.Current.Server.MapPath("~/").NormalizeFilename();
-					if (!_wwwpath.EndsWith(Path.AltDirectorySeparatorChar.ToString())) {
-						_wwwpath = _wwwpath + Path.AltDirectorySeparatorChar;
-					}
 				}
 				return _wwwpath;
 			}
@@ -106,25 +103,25 @@ namespace Carrotware.Web.UI.Controls {
 			var f = new FileData();
 			f.FileName = myFile;
 
-			bool IsFolder = Directory.Exists(myFile);
+			bool isFolder = Directory.Exists(myFile);
 
-			if (IsFolder) {
+			if (isFolder) {
 				myFileName = myFile;
 				f.FileName = Path.GetFileName(myFileName).Trim();
 				if (myFile.Length >= sPath.Length) {
-					f.FolderPath = string.Format("/{0}/{1}/", sQuery, myFile.Substring(sPath.Length)).FixPathSlashes();
+					f.FolderPath = string.Format("/{0}/{1}/", sQuery, myFile.Substring(sPath.Length)).FixFolderSlashes();
 				}
-				f.FileDate = Convert.ToDateTime(Directory.GetLastWriteTime(myFile));
+				f.FileDate = Directory.GetLastWriteTime(myFile);
 			} else {
 				myFileName = Path.GetFileName(myFile).Trim();
 
 				if (myFileName.Length > 0) {
-					FileInfo MyFile = new FileInfo(sPath + "/" + myFileName);
-					string sP = sQuery + myFileName + "/";
+					var fileInfo = new FileInfo(Path.Combine(sPath, myFileName));
+					string path = (sQuery + "/" + myFileName).FixPathSlashes();
 
 					f.FileName = myFileName;
-					f.FolderPath = MakeFilePathUniform(sP);
-					f.FileDate = File.GetLastWriteTime(MyFile.FullName);
+					f.FolderPath = path;
+					f.FileDate = fileInfo.LastWriteTime;
 				}
 			}
 
@@ -153,7 +150,7 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public FileData GetFileInfo(string sQuery, string myFile) {
-			sQuery = MakeFilePathUniform(sQuery);
+			sQuery = sQuery.NormalizeFilename();
 			string sPath = MakeFileFolderPath(sQuery);
 
 			string myFileName = Path.GetFileName(myFile).Trim();
@@ -168,7 +165,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			if (myFileName.Length > 0 && File.Exists(testFile)) {
 				var fileInfo = new FileInfo(testFile);
-				myFileDate = File.GetLastWriteTime(fileInfo.FullName);
+				myFileDate = fileInfo.LastWriteTime;
 				myFileSize = fileInfo.Length;
 
 				myFileSizeF = myFileSize.ToString() + " B";
@@ -180,10 +177,10 @@ namespace Carrotware.Web.UI.Controls {
 						myFileSizeF = (Convert.ToDouble(Convert.ToInt32((myFileSize * 100) / 1024)) / 100).ToString() + " KB";
 					}
 				}
-				string sP = sQuery;
+				string myPath = sQuery.FixPathSlashes();
 
-				f.FileName = myFileName;
-				f.FolderPath = MakeFilePathUniform(sP);
+				f.FileName = Path.GetFileName(myFileName);
+				f.FolderPath = myPath;
 				f.FileDate = myFileDate;
 				f.FileSize = myFileSize;
 				f.FileSizeFriendly = myFileSizeF;
@@ -198,7 +195,7 @@ namespace Carrotware.Web.UI.Controls {
 				try {
 					if ((from b in MimeTypes
 						 where b.Key.ToLowerInvariant() == f.FileExtension.ToLowerInvariant()
-						 select b).Count() > 0) {
+						 select b).Any()) {
 						f.MimeType = (from b in MimeTypes
 									  where b.Key.ToLowerInvariant() == f.FileExtension.ToLowerInvariant()
 									  select b.Value).FirstOrDefault();
@@ -229,7 +226,8 @@ namespace Carrotware.Web.UI.Controls {
 			string sPathPrefix = "/";
 
 			if (!string.IsNullOrEmpty(sDirPath)) {
-				sPathPrefix = sDirPath.NormalizeFilename().Replace(WebPath, @"/");
+				sDirPath = sDirPath.NormalizeFilename();
+				sPathPrefix = sDirPath.Replace(WebPath, @"/");
 			}
 			sPathPrefix = MakeFilePathUniform(sPathPrefix);
 
@@ -252,9 +250,9 @@ namespace Carrotware.Web.UI.Controls {
 						f = GetFileInfo(sQuery, myFile);
 
 						try {
-							if ((from b in BlockedTypes
-								 where b.ToLowerInvariant().Replace(".", string.Empty) == f.FileExtension.Replace(".", string.Empty)
-								 select b).Count() < 1) {
+							if (!(from b in this.BlockedTypes
+								  where b.ToLowerInvariant().Replace(".", "") == f.FileExtension.Replace(".", "")
+								  select b).Any()) {
 								files.Add(f);
 							}
 						} catch (Exception ex) { }
@@ -332,226 +330,229 @@ namespace Carrotware.Web.UI.Controls {
 			return _spiderFD;
 		}
 
+		private static object _lockMime = new object();
+
 		private static Dictionary<string, string> _dict = null;
 
 		public static Dictionary<string, string> MimeTypes {
 			get {
 				if (_dict == null) {
-					_dict = new Dictionary<string, string>();
-
-					_dict.Add(".ai", "application/postscript");
-					_dict.Add(".aif", "audio/aiff");
-					_dict.Add(".aifc", "audio/aiff");
-					_dict.Add(".aiff", "audio/aiff");
-					_dict.Add(".aps", "application/mime");
-					_dict.Add(".arc", "application/octet-stream");
-					_dict.Add(".arj", "application/octet-stream");
-					_dict.Add(".asa", "text/asp");
-					_dict.Add(".asax", "text/aspx");
-					_dict.Add(".ascx", "text/aspx");
-					_dict.Add(".asf", "video/x-ms-asf");
-					_dict.Add(".asm", "text/x-asm");
-					_dict.Add(".asmx", "text/aspx");
-					_dict.Add(".asp", "text/asp");
-					_dict.Add(".aspx", "text/aspx");
-					_dict.Add(".asx", "video/x-ms-asf");
-					_dict.Add(".au", "audio/basic");
-					_dict.Add(".avi", "video/avi");
-					_dict.Add(".avs", "video/avs-video");
-					_dict.Add(".bin", "application/octet-stream");
-					_dict.Add(".bmp", "image/bmp");
-					_dict.Add(".bz", "application/x-bzip");
-					_dict.Add(".bz2", "application/x-bzip2");
-					_dict.Add(".c", "text/plain");
-					_dict.Add(".c++", "text/plain");
-					_dict.Add(".cc", "text/plain");
-					_dict.Add(".cer", "application/x-x509-ca-cert");
-					_dict.Add(".class", "application/java");
-					_dict.Add(".com", "application/octet-stream");
-					_dict.Add(".conf", "text/plain");
-					_dict.Add(".config", "text/aspx");
-					_dict.Add(".cpp", "text/x-c");
-					_dict.Add(".crt", "application/x-x509-ca-cert");
-					_dict.Add(".csh", "application/x-csh");
-					_dict.Add(".cshtml", "text/aspx");
-					_dict.Add(".css", "text/css");
-					_dict.Add(".def", "text/plain");
-					_dict.Add(".dir", "application/x-director");
-					_dict.Add(".doc", "application/msword");
-					_dict.Add(".docx", "application/msword");
-					_dict.Add(".dot", "application/msword");
-					_dict.Add(".dump", "application/octet-stream");
-					_dict.Add(".dvi", "application/x-dvi");
-					_dict.Add(".dwf", "model/vnd.dwf");
-					_dict.Add(".dwg", "application/acad");
-					_dict.Add(".dxf", "application/dxf");
-					_dict.Add(".el", "text/x-script.elisp");
-					_dict.Add(".eps", "application/postscript");
-					_dict.Add(".es", "application/x-esrehber");
-					_dict.Add(".etx", "text/x-setext");
-					_dict.Add(".evy", "application/envoy");
-					_dict.Add(".exe", "application/octet-stream");
-					_dict.Add(".f", "text/plain");
-					_dict.Add(".fif", "image/fif");
-					_dict.Add(".fli", "video/x-fli");
-					_dict.Add(".flo", "image/florian");
-					_dict.Add(".flx", "text/vnd.fmi.flexstor");
-					_dict.Add(".fmf", "video/x-atomic3d-feature");
-					_dict.Add(".for", "text/plain");
-					_dict.Add(".frl", "application/freeloader");
-					_dict.Add(".gif", "image/gif");
-					_dict.Add(".gl", "video/gl");
-					_dict.Add(".gsd", "audio/x-gsm");
-					_dict.Add(".gsm", "audio/x-gsm");
-					_dict.Add(".gsp", "application/x-gsp");
-					_dict.Add(".gss", "application/x-gss");
-					_dict.Add(".gtar", "application/x-gtar");
-					_dict.Add(".gz", "application/x-compressed");
-					_dict.Add(".gzip", "application/x-compressed");
-					_dict.Add(".h", "text/plain");
-					_dict.Add(".help", "application/x-helpfile");
-					_dict.Add(".hh", "text/plain");
-					_dict.Add(".hlp", "application/hlp");
-					_dict.Add(".hpg", "application/vnd.hp-hpgl");
-					_dict.Add(".hpgl", "application/vnd.hp-hpgl");
-					_dict.Add(".hqx", "application/binhex");
-					_dict.Add(".hta", "application/hta");
-					_dict.Add(".htc", "text/x-component");
-					_dict.Add(".htm", "text/html");
-					_dict.Add(".html", "text/html");
-					_dict.Add(".htmls", "text/html");
-					_dict.Add(".htt", "text/webviewhtml");
-					_dict.Add(".htx", "text/html");
-					_dict.Add(".ico", "image/x-icon");
-					_dict.Add(".imap", "application/x-httpd-imap");
-					_dict.Add(".inf", "application/inf");
-					_dict.Add(".it", "audio/it");
-					_dict.Add(".java", "text/plain");
-					_dict.Add(".jpe", "image/jpeg");
-					_dict.Add(".jpeg", "image/jpeg");
-					_dict.Add(".jpg", "image/jpeg");
-					_dict.Add(".js", "text/javascript");
-					_dict.Add(".log", "text/plain");
-					_dict.Add(".m", "text/plain");
-					_dict.Add(".m1v", "video/mpeg");
-					_dict.Add(".m2a", "audio/mpeg");
-					_dict.Add(".m2v", "video/mpeg");
-					_dict.Add(".m3u", "audio/x-mpequrl");
-					_dict.Add(".man", "application/x-troff-man");
-					_dict.Add(".map", "application/x-navimap");
-					_dict.Add(".mcd", "application/mcad");
-					_dict.Add(".mht", "message/rfc822");
-					_dict.Add(".mhtml", "message/rfc822");
-					_dict.Add(".mid", "audio/midi");
-					_dict.Add(".midi", "audio/midi");
-					_dict.Add(".mime", "message/rfc822");
-					_dict.Add(".mm", "application/base64");
-					_dict.Add(".mod", "audio/mod");
-					_dict.Add(".moov", "video/quicktime");
-					_dict.Add(".mov", "video/quicktime");
-					_dict.Add(".movie", "video/x-sgi-movie");
-					_dict.Add(".mp2", "video/mpeg");
-					_dict.Add(".mp3", "audio/mpeg3");
-					_dict.Add(".mp4", "video/mp4");
-					_dict.Add(".mpa", "audio/mpeg");
-					_dict.Add(".mpeg", "video/mpeg");
-					_dict.Add(".mpg", "video/mpeg");
-					_dict.Add(".mpga", "audio/mpeg");
-					_dict.Add(".mpp", "application/vnd.ms-project");
-					_dict.Add(".mpt", "application/x-project");
-					_dict.Add(".mpv", "application/x-project");
-					_dict.Add(".mpx", "application/x-project");
-					_dict.Add(".mrc", "application/marc");
-					_dict.Add(".ms", "application/x-troff-ms");
-					_dict.Add(".mv", "video/x-sgi-movie");
-					_dict.Add(".my", "audio/make");
-					_dict.Add(".o", "application/octet-stream");
-					_dict.Add(".oga", "audio/ogg");
-					_dict.Add(".ogg", "video/ogg");
-					_dict.Add(".ogv", "video/ogg");
-					_dict.Add(".p", "text/x-pascal");
-					_dict.Add(".pas", "text/pascal");
-					_dict.Add(".pbm", "image/x-portable-bitmap");
-					_dict.Add(".pct", "image/x-pict");
-					_dict.Add(".pcx", "image/x-pcx");
-					_dict.Add(".pdf", "application/pdf");
-					_dict.Add(".pgm", "image/x-portable-greymap");
-					_dict.Add(".pic", "image/pict");
-					_dict.Add(".pict", "image/pict");
-					_dict.Add(".pl", "text/x-script.perl");
-					_dict.Add(".png", "image/png");
-					_dict.Add(".pot", "application/mspowerpoint");
-					_dict.Add(".potx", "application/mspowerpoint");
-					_dict.Add(".pps", "application/mspowerpoint");
-					_dict.Add(".ppt", "application/mspowerpoint");
-					_dict.Add(".pptx", "application/mspowerpoint");
-					_dict.Add(".ppz", "application/mspowerpoint");
-					_dict.Add(".pre", "application/x-freelance");
-					_dict.Add(".ps", "application/postscript");
-					_dict.Add(".psd", "application/octet-stream");
-					_dict.Add(".py", "text/x-script.python");
-					_dict.Add(".qif", "image/x-quicktime");
-					_dict.Add(".qt", "video/quicktime");
-					_dict.Add(".ra", "audio/x-pn-realaudio");
-					_dict.Add(".ram", "audio/x-pn-realaudio");
-					_dict.Add(".ras", "application/x-cmu-raster");
-					_dict.Add(".rgb", "image/x-rgb");
-					_dict.Add(".rm", "audio/x-pn-realaudio");
-					_dict.Add(".rt", "text/richtext");
-					_dict.Add(".rtf", "application/rtf");
-					_dict.Add(".rtx", "application/rtf");
-					_dict.Add(".s", "text/x-asm");
-					_dict.Add(".sea", "application/sea");
-					_dict.Add(".sgm", "text/sgml");
-					_dict.Add(".sgml", "text/sgml");
-					_dict.Add(".sh", "application/x-bsh");
-					_dict.Add(".shar", "application/x-bsh");
-					_dict.Add(".shtml", "text/html");
-					_dict.Add(".sit", "application/x-stuffit");
-					_dict.Add(".snd", "audio/basic");
-					_dict.Add(".svc", "text/asp");
-					_dict.Add(".svf", "image/x-dwg");
-					_dict.Add(".swf", "application/x-shockwave-flash");
-					_dict.Add(".t", "application/x-troff");
-					_dict.Add(".tar", "application/x-compressed");
-					_dict.Add(".tgz", "application/x-compressed");
-					_dict.Add(".tif", "image/tiff");
-					_dict.Add(".tiff", "image/tiff");
-					_dict.Add(".uu", "application/octet-stream");
-					_dict.Add(".uue", "text/x-uuencode");
-					_dict.Add(".vbhtml", "text/aspx");
-					_dict.Add(".vcs", "text/x-vcalendar");
-					_dict.Add(".vda", "application/vda");
-					_dict.Add(".vrml", "application/x-vrml");
-					_dict.Add(".vsd", "application/x-visio");
-					_dict.Add(".vst", "application/x-visio");
-					_dict.Add(".vsw", "application/x-visio");
-					_dict.Add(".wav", "audio/wav");
-					_dict.Add(".wmf", "windows/metafile");
-					_dict.Add(".word", "application/msword");
-					_dict.Add(".wp", "application/wordperfect");
-					_dict.Add(".wri", "application/mswrite");
-					_dict.Add(".wsc", "text/scriplet");
-					_dict.Add(".xbm", "image/x-xbitmap");
-					_dict.Add(".xif", "image/vnd.xiff");
-					_dict.Add(".xl", "application/excel");
-					_dict.Add(".xla", "application/excel");
-					_dict.Add(".xlb", "application/excel");
-					_dict.Add(".xlc", "application/excel");
-					_dict.Add(".xld", "application/excel");
-					_dict.Add(".xlk", "application/excel");
-					_dict.Add(".xll", "application/excel");
-					_dict.Add(".xlm", "application/excel");
-					_dict.Add(".xls", "application/excel");
-					_dict.Add(".xlsx", "application/excel");
-					_dict.Add(".xlt", "application/excel");
-					_dict.Add(".xlv", "application/excel");
-					_dict.Add(".xlw", "application/excel");
-					_dict.Add(".xm", "audio/xm");
-					_dict.Add(".xml", "text/xml");
-					_dict.Add(".xpm", "image/xpm");
-					_dict.Add(".zip", "application/zip");
-					_dict.Add(".zsh", "text/x-script.zsh");
+					lock (_lockMime) {
+						_dict = new Dictionary<string, string>();
+						_dict.Add(".ai", "application/postscript");
+						_dict.Add(".aif", "audio/aiff");
+						_dict.Add(".aifc", "audio/aiff");
+						_dict.Add(".aiff", "audio/aiff");
+						_dict.Add(".aps", "application/mime");
+						_dict.Add(".arc", "application/octet-stream");
+						_dict.Add(".arj", "application/octet-stream");
+						_dict.Add(".asa", "text/asp");
+						_dict.Add(".asax", "text/aspx");
+						_dict.Add(".ascx", "text/aspx");
+						_dict.Add(".asf", "video/x-ms-asf");
+						_dict.Add(".asm", "text/x-asm");
+						_dict.Add(".asmx", "text/aspx");
+						_dict.Add(".asp", "text/asp");
+						_dict.Add(".aspx", "text/aspx");
+						_dict.Add(".asx", "video/x-ms-asf");
+						_dict.Add(".au", "audio/basic");
+						_dict.Add(".avi", "video/avi");
+						_dict.Add(".avs", "video/avs-video");
+						_dict.Add(".bin", "application/octet-stream");
+						_dict.Add(".bmp", "image/bmp");
+						_dict.Add(".bz", "application/x-bzip");
+						_dict.Add(".bz2", "application/x-bzip2");
+						_dict.Add(".c", "text/plain");
+						_dict.Add(".c++", "text/plain");
+						_dict.Add(".cc", "text/plain");
+						_dict.Add(".cer", "application/x-x509-ca-cert");
+						_dict.Add(".class", "application/java");
+						_dict.Add(".com", "application/octet-stream");
+						_dict.Add(".conf", "text/plain");
+						_dict.Add(".config", "text/aspx");
+						_dict.Add(".cpp", "text/x-c");
+						_dict.Add(".crt", "application/x-x509-ca-cert");
+						_dict.Add(".csh", "application/x-csh");
+						_dict.Add(".cshtml", "text/aspx");
+						_dict.Add(".css", "text/css");
+						_dict.Add(".def", "text/plain");
+						_dict.Add(".dir", "application/x-director");
+						_dict.Add(".doc", "application/msword");
+						_dict.Add(".docx", "application/msword");
+						_dict.Add(".dot", "application/msword");
+						_dict.Add(".dump", "application/octet-stream");
+						_dict.Add(".dvi", "application/x-dvi");
+						_dict.Add(".dwf", "model/vnd.dwf");
+						_dict.Add(".dwg", "application/acad");
+						_dict.Add(".dxf", "application/dxf");
+						_dict.Add(".el", "text/x-script.elisp");
+						_dict.Add(".eps", "application/postscript");
+						_dict.Add(".es", "application/x-esrehber");
+						_dict.Add(".etx", "text/x-setext");
+						_dict.Add(".evy", "application/envoy");
+						_dict.Add(".exe", "application/octet-stream");
+						_dict.Add(".f", "text/plain");
+						_dict.Add(".fif", "image/fif");
+						_dict.Add(".fli", "video/x-fli");
+						_dict.Add(".flo", "image/florian");
+						_dict.Add(".flx", "text/vnd.fmi.flexstor");
+						_dict.Add(".fmf", "video/x-atomic3d-feature");
+						_dict.Add(".for", "text/plain");
+						_dict.Add(".frl", "application/freeloader");
+						_dict.Add(".gif", "image/gif");
+						_dict.Add(".gl", "video/gl");
+						_dict.Add(".gsd", "audio/x-gsm");
+						_dict.Add(".gsm", "audio/x-gsm");
+						_dict.Add(".gsp", "application/x-gsp");
+						_dict.Add(".gss", "application/x-gss");
+						_dict.Add(".gtar", "application/x-gtar");
+						_dict.Add(".gz", "application/x-compressed");
+						_dict.Add(".gzip", "application/x-compressed");
+						_dict.Add(".h", "text/plain");
+						_dict.Add(".help", "application/x-helpfile");
+						_dict.Add(".hh", "text/plain");
+						_dict.Add(".hlp", "application/hlp");
+						_dict.Add(".hpg", "application/vnd.hp-hpgl");
+						_dict.Add(".hpgl", "application/vnd.hp-hpgl");
+						_dict.Add(".hqx", "application/binhex");
+						_dict.Add(".hta", "application/hta");
+						_dict.Add(".htc", "text/x-component");
+						_dict.Add(".htm", "text/html");
+						_dict.Add(".html", "text/html");
+						_dict.Add(".htmls", "text/html");
+						_dict.Add(".htt", "text/webviewhtml");
+						_dict.Add(".htx", "text/html");
+						_dict.Add(".ico", "image/x-icon");
+						_dict.Add(".imap", "application/x-httpd-imap");
+						_dict.Add(".inf", "application/inf");
+						_dict.Add(".it", "audio/it");
+						_dict.Add(".java", "text/plain");
+						_dict.Add(".jpe", "image/jpeg");
+						_dict.Add(".jpeg", "image/jpeg");
+						_dict.Add(".jpg", "image/jpeg");
+						_dict.Add(".js", "text/javascript");
+						_dict.Add(".log", "text/plain");
+						_dict.Add(".m", "text/plain");
+						_dict.Add(".m1v", "video/mpeg");
+						_dict.Add(".m2a", "audio/mpeg");
+						_dict.Add(".m2v", "video/mpeg");
+						_dict.Add(".m3u", "audio/x-mpequrl");
+						_dict.Add(".man", "application/x-troff-man");
+						_dict.Add(".map", "application/x-navimap");
+						_dict.Add(".mcd", "application/mcad");
+						_dict.Add(".mht", "message/rfc822");
+						_dict.Add(".mhtml", "message/rfc822");
+						_dict.Add(".mid", "audio/midi");
+						_dict.Add(".midi", "audio/midi");
+						_dict.Add(".mime", "message/rfc822");
+						_dict.Add(".mm", "application/base64");
+						_dict.Add(".mod", "audio/mod");
+						_dict.Add(".moov", "video/quicktime");
+						_dict.Add(".mov", "video/quicktime");
+						_dict.Add(".movie", "video/x-sgi-movie");
+						_dict.Add(".mp2", "video/mpeg");
+						_dict.Add(".mp3", "audio/mpeg3");
+						_dict.Add(".mp4", "video/mp4");
+						_dict.Add(".mpa", "audio/mpeg");
+						_dict.Add(".mpeg", "video/mpeg");
+						_dict.Add(".mpg", "video/mpeg");
+						_dict.Add(".mpga", "audio/mpeg");
+						_dict.Add(".mpp", "application/vnd.ms-project");
+						_dict.Add(".mpt", "application/x-project");
+						_dict.Add(".mpv", "application/x-project");
+						_dict.Add(".mpx", "application/x-project");
+						_dict.Add(".mrc", "application/marc");
+						_dict.Add(".ms", "application/x-troff-ms");
+						_dict.Add(".mv", "video/x-sgi-movie");
+						_dict.Add(".my", "audio/make");
+						_dict.Add(".o", "application/octet-stream");
+						_dict.Add(".oga", "audio/ogg");
+						_dict.Add(".ogg", "video/ogg");
+						_dict.Add(".ogv", "video/ogg");
+						_dict.Add(".p", "text/x-pascal");
+						_dict.Add(".pas", "text/pascal");
+						_dict.Add(".pbm", "image/x-portable-bitmap");
+						_dict.Add(".pct", "image/x-pict");
+						_dict.Add(".pcx", "image/x-pcx");
+						_dict.Add(".pdf", "application/pdf");
+						_dict.Add(".pgm", "image/x-portable-greymap");
+						_dict.Add(".pic", "image/pict");
+						_dict.Add(".pict", "image/pict");
+						_dict.Add(".pl", "text/x-script.perl");
+						_dict.Add(".png", "image/png");
+						_dict.Add(".pot", "application/mspowerpoint");
+						_dict.Add(".potx", "application/mspowerpoint");
+						_dict.Add(".pps", "application/mspowerpoint");
+						_dict.Add(".ppt", "application/mspowerpoint");
+						_dict.Add(".pptx", "application/mspowerpoint");
+						_dict.Add(".ppz", "application/mspowerpoint");
+						_dict.Add(".pre", "application/x-freelance");
+						_dict.Add(".ps", "application/postscript");
+						_dict.Add(".psd", "application/octet-stream");
+						_dict.Add(".py", "text/x-script.python");
+						_dict.Add(".qif", "image/x-quicktime");
+						_dict.Add(".qt", "video/quicktime");
+						_dict.Add(".ra", "audio/x-pn-realaudio");
+						_dict.Add(".ram", "audio/x-pn-realaudio");
+						_dict.Add(".ras", "application/x-cmu-raster");
+						_dict.Add(".rgb", "image/x-rgb");
+						_dict.Add(".rm", "audio/x-pn-realaudio");
+						_dict.Add(".rt", "text/richtext");
+						_dict.Add(".rtf", "application/rtf");
+						_dict.Add(".rtx", "application/rtf");
+						_dict.Add(".s", "text/x-asm");
+						_dict.Add(".sea", "application/sea");
+						_dict.Add(".sgm", "text/sgml");
+						_dict.Add(".sgml", "text/sgml");
+						_dict.Add(".sh", "application/x-bsh");
+						_dict.Add(".shar", "application/x-bsh");
+						_dict.Add(".shtml", "text/html");
+						_dict.Add(".sit", "application/x-stuffit");
+						_dict.Add(".snd", "audio/basic");
+						_dict.Add(".svc", "text/asp");
+						_dict.Add(".svf", "image/x-dwg");
+						_dict.Add(".swf", "application/x-shockwave-flash");
+						_dict.Add(".t", "application/x-troff");
+						_dict.Add(".tar", "application/x-compressed");
+						_dict.Add(".tgz", "application/x-compressed");
+						_dict.Add(".tif", "image/tiff");
+						_dict.Add(".tiff", "image/tiff");
+						_dict.Add(".uu", "application/octet-stream");
+						_dict.Add(".uue", "text/x-uuencode");
+						_dict.Add(".vbhtml", "text/aspx");
+						_dict.Add(".vcs", "text/x-vcalendar");
+						_dict.Add(".vda", "application/vda");
+						_dict.Add(".vrml", "application/x-vrml");
+						_dict.Add(".vsd", "application/x-visio");
+						_dict.Add(".vst", "application/x-visio");
+						_dict.Add(".vsw", "application/x-visio");
+						_dict.Add(".wav", "audio/wav");
+						_dict.Add(".wmf", "windows/metafile");
+						_dict.Add(".word", "application/msword");
+						_dict.Add(".wp", "application/wordperfect");
+						_dict.Add(".wri", "application/mswrite");
+						_dict.Add(".wsc", "text/scriplet");
+						_dict.Add(".xbm", "image/x-xbitmap");
+						_dict.Add(".xif", "image/vnd.xiff");
+						_dict.Add(".xl", "application/excel");
+						_dict.Add(".xla", "application/excel");
+						_dict.Add(".xlb", "application/excel");
+						_dict.Add(".xlc", "application/excel");
+						_dict.Add(".xld", "application/excel");
+						_dict.Add(".xlk", "application/excel");
+						_dict.Add(".xll", "application/excel");
+						_dict.Add(".xlm", "application/excel");
+						_dict.Add(".xls", "application/excel");
+						_dict.Add(".xlsx", "application/excel");
+						_dict.Add(".xlt", "application/excel");
+						_dict.Add(".xlv", "application/excel");
+						_dict.Add(".xlw", "application/excel");
+						_dict.Add(".xm", "audio/xm");
+						_dict.Add(".xml", "text/xml");
+						_dict.Add(".xpm", "image/xpm");
+						_dict.Add(".zip", "application/zip");
+						_dict.Add(".zsh", "text/x-script.zsh");
+					}
 				}
 
 				return _dict;

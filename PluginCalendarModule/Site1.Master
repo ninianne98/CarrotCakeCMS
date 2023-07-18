@@ -26,12 +26,15 @@
 		.validationExclaim {
 			color: #CC9900;
 		}
+
 		.validationError {
 			color: #CC0000;
 		}
+
 		.validationDelete {
 			color: #660066;
 		}
+
 		.validationCross {
 			color: #000066;
 		}
@@ -40,14 +43,17 @@
 			border: thin solid #CC9900 !important;
 			background-color: #FFFAE6 !important;
 		}
+
 		.validationErrorBox {
 			border: thin solid #CC0000 !important;
 			background-color: #FFF2F2 !important;
 		}
+
 		.validationDeleteBox {
 			border: thin solid #660066 !important;
 			background-color: #FFD2FF !important;
 		}
+
 		.validationCrossBox {
 			border: thin solid #000066 !important;
 			background-color: #CCCCFF !important;
@@ -88,19 +94,63 @@
 			});
 		});
 	</script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.7/tinymce.min.js" integrity="sha512-Ckge7OuE2kEtJHLhA8wnsn3aEImoJpk3k4MAhbGnGVlxYAgx/5uv/MYdPTzuX6/dCwbPriGxylCRhTKcRd0MZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script type="text/javascript">
+		function cmsTinyMceInit(w, h, r) {
+			tinymce.init({
+				selector: "textarea.mceEditor",
+				height: h,
+				width: w,
+				resize: r,
+				menubar: false,
+				plugins: 'image imagetools link lists media charmap searchreplace visualblocks paste print table preview code codesample help',
+				toolbar: [
+					'undo redo | formatselect forecolor backcolor | bold italic backcolor | bullist numlist outdent indent | help',
+					'bold italic underline strikethrough sub sup | alignleft aligncenter alignright alignjustify | removeformat pastetext charmap | codesample code preview visualblocks'
+				],
+				content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+			});
+		}
+
+		function cmsPreSaveTrigger() {
+			var tgr = tinymce.triggerSave();
+
+			return true;
+		}
+	</script>
+	<script type="text/javascript">
+		function AjaxTinyLoad() {
+			cmsTinyMceInit(720, 500, false);
+		}
+
+		function UpdateAjaxTiny() {
+			if (typeof (Sys) != 'undefined') {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				prm.add_endRequest(function () {
+					AjaxTinyLoad();
+				});
+			}
+		}
+
+		$(document).ready(function () {
+			UpdateAjaxTiny();
+			AjaxTinyLoad();
+		});
+	</script>
 	<asp:ContentPlaceHolder ID="head" runat="server">
 	</asp:ContentPlaceHolder>
 </head>
 <body>
 	<form id="form1" runat="server">
-	<div>
-		<a href="CalendarAdmin.aspx">CalendarAdmin</a> | <a href="CalendarAdminAddEdit.aspx">CalendarAdminAddEdit</a> | <a href="CalendarDisplay.aspx">
-			CalendarDisplay</a>
-	</div>
-	<div>
-		<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-		</asp:ContentPlaceHolder>
-	</div>
+		<div>
+			<a href="CalendarAdmin.aspx">CalendarAdmin</a> | <a href="CalendarAdminAddEdit.aspx">CalendarAdminAddEdit</a> | <a href="CalendarDisplay.aspx">CalendarDisplay</a>
+		</div>
+		<div>
+			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+			</asp:ContentPlaceHolder>
+		</div>
 	</form>
 </body>
 </html>
