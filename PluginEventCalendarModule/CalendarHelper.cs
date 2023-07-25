@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -43,7 +44,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		public static string HEX_White = "#FFFFFF";
 		public static string HEX_Black = "#000000";
 
-		public static List<carrot_CalendarEventCategory> GetCalendarCategories(Guid siteID) {
+		public static void SeedCalendarCategories(Guid siteID) {
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				if (!db.carrot_CalendarEventCategories.Where(x => x.SiteID == siteID).Any()) {
 					carrot_CalendarEventCategory itm = new carrot_CalendarEventCategory();
@@ -60,7 +61,42 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 					db.SubmitChanges();
 				}
+			}
+		}
 
+		public static List<vw_carrot_CalendarEvent> GetDisplayEvents(Guid siteid, DateTime dtStart, DateTime dtEnd, int takeTop, bool activeOnly) {
+			IQueryable<vw_carrot_CalendarEvent> events = null;
+
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
+				if (activeOnly) {
+					events = (from c in db.vw_carrot_CalendarEvents
+							  where c.EventDate >= dtStart
+								   && c.EventDate < dtEnd
+								   && c.SiteID == siteid
+								   && c.IsPublic == true
+								   && (!c.IsCancelledEvent || c.IsCancelledPublic)
+								   && (!c.IsCancelledSeries || c.IsCancelledPublic)
+							  orderby c.EventDate, c.EventStartTime
+							  select c);
+				} else {
+					events = (from c in db.vw_carrot_CalendarEvents
+							  where c.EventDate >= dtStart
+								   && c.EventDate < dtEnd
+								   && c.SiteID == siteid
+							  orderby c.EventDate, c.EventStartTime
+							  select c);
+				}
+
+				if (takeTop >= 1) {
+					return events.Take(takeTop).ToList();
+				} else {
+					return events.ToList();
+				}
+			}
+		}
+
+		public static List<carrot_CalendarEventCategory> GetCalendarCategories(Guid siteID) {
+			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				return (from c in db.carrot_CalendarEventCategories
 						orderby c.CategoryName
 						where c.SiteID == siteID
@@ -95,28 +131,30 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		public static List<vw_carrot_CalendarEventProfile> GetProfileView(Guid siteID, int eventYear) {
+			SiteData site = SiteData.CurrentSite;
+
 			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
 				DateTime dateStart = DateTime.MinValue;
 				DateTime dateEnd = DateTime.MaxValue;
 
 				if (eventYear > 1000) {
 					// looking for everything in a particular year
-					dateStart = Convert.ToDateTime(String.Format("{0}-01-01", eventYear));
-					dateEnd = Convert.ToDateTime(String.Format("{0}-01-01", eventYear + 1)).AddMilliseconds(-5);
+					dateStart = Convert.ToDateTime(string.Format("{0}-01-01", eventYear));
+					dateEnd = Convert.ToDateTime(string.Format("{0}-01-01", eventYear + 1)).AddMilliseconds(-5);
 				} else {
 					if (eventYear == (int)EventLookupType.All) {
-						dateStart = DateTime.Now.Date.AddYears(-250);
-						dateEnd = DateTime.Now.Date.AddYears(250);
+						dateStart = site.Now.Date.AddYears(-250);
+						dateEnd = site.Now.Date.AddYears(250);
 					}
 
 					if (eventYear == (int)EventLookupType.Future) {
-						dateStart = DateTime.UtcNow.Date.AddDays(-1);
-						dateEnd = DateTime.Now.Date.AddYears(250);
+						dateStart = site.Now.Date.AddDays(-1);
+						dateEnd = site.Now.Date.AddYears(250);
 					}
 
 					if (eventYear == (int)EventLookupType.Current) {
-						dateStart = DateTime.Now.Date.AddDays(-90);
-						dateEnd = DateTime.Now.Date.AddDays(180);
+						dateStart = site.Now.Date.AddDays(-90);
+						dateEnd = site.Now.Date.AddDays(180);
 					}
 				}
 
@@ -501,7 +539,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		private static DateTime fakeDate {
 			get {
-				return Convert.ToDateTime("1899-12-31").Date;
+				return Convert.ToDateTime("1980-12-31").Date;
 			}
 		}
 

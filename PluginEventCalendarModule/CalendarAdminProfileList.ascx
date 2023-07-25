@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdminProfileList.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.EventCalendarModule.CalendarAdminProfileList" %>
 <%@ Import Namespace="Carrotware.CMS.UI.Plugins.EventCalendarModule" %>
-<h2>
-	Event Profiles
-</h2>
+<h2>Event Profiles </h2>
 <p>
 	<a href="<%= CreateLink(CalendarHelper.PluginKeys.EventAdminDetail.ToString())  %>">
 		<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />

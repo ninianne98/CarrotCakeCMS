@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Carrotware.CMS.Core;
+﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using System;
+using System.Linq;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -24,6 +23,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			}
 
 			if (!IsPostBack) {
+				CalendarHelper.SeedCalendarCategories(this.SiteID);
+
 				txtDate.Text = SiteData.CurrentSite.Now.Date.ToShortDateString();
 
 				Calendar1.CalendarDate = SiteData.CurrentSite.Now.Date;
@@ -60,22 +61,13 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			dtStart = site.ConvertSiteTimeToUTC(dtStart);
 			dtEnd = site.ConvertSiteTimeToUTC(dtEnd);
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-				List<vw_carrot_CalendarEvent> lst = (from c in db.vw_carrot_CalendarEvents
-													 where c.EventDate >= dtStart
-													  && c.EventDate < dtEnd
-													  && c.SiteID == SiteID
-													 orderby c.EventDate, c.EventStartTime
-													 select c).ToList();
+			var events = CalendarHelper.GetDisplayEvents(this.SiteID, dtStart, dtEnd, -1, false).ToList();
 
-				lst.ForEach(x => x.EventDate = site.ConvertUTCToSiteTime(x.EventDate));
+			events.ForEach(x => x.EventDate = site.ConvertUTCToSiteTime(x.EventDate));
 
-				List<DateTime> dates = (from dd in lst select dd.EventDate.Date).Distinct().ToList();
+			Calendar1.HilightDateList = (from dd in events select dd.EventDate.Date).Distinct().ToList();
 
-				Calendar1.HilightDateList = dates;
-
-				CalendarHelper.BindDataBoundControl(dgEvents, lst);
-			}
+			CalendarHelper.BindDataBoundControl(dgEvents, events);
 		}
 	}
 }

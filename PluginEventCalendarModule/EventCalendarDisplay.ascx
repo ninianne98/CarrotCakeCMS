@@ -27,6 +27,12 @@
 						</p>
 					</EmptyDataTemplate>
 					<Columns>
+						<asp:TemplateField HeaderText="EventDate">
+							<ItemStyle HorizontalAlign="Left" VerticalAlign="Top" />
+							<ItemTemplate>
+								<asp:Literal ID="litDate" runat="server" Text='<%# string.Format(" {0:d} ", Eval("EventDate") ) %>' />
+							</ItemTemplate>
+						</asp:TemplateField>
 						<asp:TemplateField HeaderText="EventDate" ItemStyle-Wrap="false">
 							<ItemStyle HorizontalAlign="Left" VerticalAlign="Top" />
 							<ItemTemplate>

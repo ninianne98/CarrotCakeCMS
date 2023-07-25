@@ -36,6 +36,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 			btnDelete.Visible = !(ItemGuid == Guid.Empty);
 
 			if (!IsPostBack) {
+				CalendarHelper.SeedCalendarCategories(this.SiteID);
+
 				CalendarHelper.BindRepeater(rpDays, CalendarHelper.DaysOfTheWeek);
 
 				Dictionary<Guid, string> colors = (from c in CalendarHelper.GetCalendarCategories(SiteID)

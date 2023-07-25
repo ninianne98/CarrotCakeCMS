@@ -22,17 +22,16 @@
 	</div>
 </div>
 <script type="text/javascript">
-
 	function EditEventEntry(proID, evtID, freq) {
 
 		if (freq != 'Once') {
 			var opts = {
-				"Cancel": function () { cmsAlertModalClose(); },
+				"Cancel": function () { __carrotAlertModalClose(); },
 				"Event": function () { clickEventLink(evtID); },
 				"Series": function () { clickProfileLink(proID); }
 			};
 
-			cmsAlertModalSmallBtns('Edit individual event or entire series/profile?', opts);
+			__carrotAlertModalSmallBtns('Edit individual event or entire series/profile?', 'Event Calendar', opts);
 		} else {
 			clickProfileLink(proID);
 		}
@@ -107,8 +106,7 @@
 				<ItemStyle HorizontalAlign="Left" VerticalAlign="Top" />
 				<ItemTemplate>
 					<div style="border: solid 1px <%# Eval("CategoryBGColor") %>; background-color: <%# Eval("CategoryFGColor") %>; padding: 1px;">
-						<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>;
-							padding: 5px; margin: 1px;">
+						<div style="border: solid 2px <%# Eval("CategoryFGColor") %>; color: <%# Eval("CategoryFGColor") %>; background-color: <%# Eval("CategoryBGColor") %>; padding: 5px; margin: 1px;">
 							<b>
 								<asp:Literal ID="litEvent" runat="server" Text='<%# String.Format( "{0}", Eval("EventTitle") ) %>' />
 								<asp:Literal ID="litStatus1" runat="server" Text=" (SINGLE EVENT CANCELLED) " Visible='<%#  (bool)Eval("IsCancelledEvent") %>' />

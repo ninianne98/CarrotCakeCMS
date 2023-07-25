@@ -1,7 +1,6 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
 using System;
-using System.Linq;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -105,27 +104,17 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		protected void SetCalendar() {
 			SiteData site = SiteData.CurrentSite;
 
-			DateTime dtStart = DateTime.Now.AddDays(DaysInPast).Date;
-			DateTime dtEnd = DateTime.Now.AddDays(DaysInFuture).Date;
+			DateTime dtStart = site.Now.AddDays(this.DaysInPast).Date;
+			DateTime dtEnd = site.Now.AddDays(this.DaysInFuture).Date;
 
 			dtStart = site.ConvertSiteTimeToUTC(dtStart);
 			dtEnd = site.ConvertSiteTimeToUTC(dtEnd);
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-				var lst = (from c in db.vw_carrot_CalendarEvents
-						   where c.EventDate >= dtStart
-							&& c.EventDate <= dtEnd
-							&& c.SiteID == SiteID
-							&& c.IsPublic == true
-							&& (!c.IsCancelledEvent || c.IsCancelledPublic)
-							&& (!c.IsCancelledSeries || c.IsCancelledPublic)
-						   orderby c.EventDate, c.EventStartTime
-						   select c).Take(TakeTop).ToList();
+			var events = CalendarHelper.GetDisplayEvents(this.SiteID, dtStart, dtEnd, this.TakeTop, true);
 
-				lst.ForEach(x => x.EventDate = site.ConvertUTCToSiteTime(x.EventDate));
+			events.ForEach(x => x.EventDate = site.ConvertUTCToSiteTime(x.EventDate));
 
-				CalendarHelper.BindRepeater(rpDates, lst);
-			}
+			CalendarHelper.BindRepeater(rpDates, events);
 
 			if (!string.IsNullOrEmpty(this.CalendarURL)) {
 				lnkHyper.NavigateUrl = this.CalendarURL;

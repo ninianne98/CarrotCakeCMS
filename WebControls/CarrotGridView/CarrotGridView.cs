@@ -55,6 +55,21 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		[Bindable(true)]
+		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool PrettifyHeadings {
+			get {
+				String s = (String)ViewState["PrettifyHeadings"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["PrettifyHeadings"] = value.ToString();
+			}
+		}
+
 		public string LinkButtonCommands {
 			get {
 				String s = ViewState["LinkButtonCommands"] as String;
@@ -184,6 +199,10 @@ namespace Carrotware.Web.UI.Controls {
 			foreach (DataControlField col in this.Columns) {
 				if (col is CarrotHeaderSortTemplateField) {
 					var ctf = (CarrotHeaderSortTemplateField)col;
+
+					if (this.PrettifyHeadings || ctf.PrettifyHeading) {
+						ctf.HeaderText = ctf.HeaderText.ToSpacedPascal();
+					}
 
 					ctf.HeaderTemplate = new CarrotSortButtonHeaderTemplate(ctf.HeaderText, ctf.SortExpression);
 

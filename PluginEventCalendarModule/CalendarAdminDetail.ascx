@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdminDetail.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.EventCalendarModule.CalendarAdminDetail" %>
 <h2>Add/Edit Event</h2>
-<fieldset style="width: 700px;">
+<fieldset style="width: 750px;">
 	<legend>
 		<label>
 			Event
@@ -61,7 +61,7 @@
 			</td>
 		</tr>
 	</table>
-	<table style="width: 675px">
+	<table style="width: 750px">
 		<tr>
 			<td class="tablecaption" style="text-align: right;">start date:
 			</td>
@@ -129,7 +129,6 @@
 		</label>
 	</legend>
 	<div>
-		<%--<a href="javascript:cmsToggleTinyMCE('<%= reContent.ClientID %>');">Add/Remove editor</a><br />--%>
 		<asp:TextBox CssClass="mceEditor" ID="reContent" runat="server" TextMode="MultiLine" Rows="10" Columns="80" />
 	</div>
 </fieldset>
@@ -176,11 +175,11 @@
 
 	function DeleteItem() {
 		var opts = {
-			"No": function () { cmsAlertModalClose(); },
+			"No": function () { __carrotAlertModalClose(); },
 			"Yes": function () { ClickDeleteItem(); }
 		};
 
-		cmsAlertModalSmallBtns('Are you sure you want to delete this item? This will remove all events for this series.', opts);
+		__carrotAlertModalSmallBtns('Are you sure you want to delete this item? This will remove all events for this series.', 'Event Calendar', opts);
 
 		return false;
 	}

@@ -53,6 +53,21 @@ namespace Carrotware.Web.UI.Controls {
 
 		[Bindable(true)]
 		[Category("Appearance")]
+		[DefaultValue(false)]
+		[Localizable(true)]
+		public bool PrettifyHeading {
+			get {
+				String s = (String)ViewState["PrettifyHeading"];
+				return ((s == null) ? false : Convert.ToBoolean(s));
+			}
+
+			set {
+				ViewState["PrettifyHeading"] = value.ToString();
+			}
+		}
+
+		[Bindable(true)]
+		[Category("Appearance")]
 		[DefaultValue("")]
 		[Localizable(true)]
 		public string ImagePathTrue {

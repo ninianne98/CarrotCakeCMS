@@ -49,6 +49,15 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
+		public static string CleanDuplicateSlashes(this string path) {
+			if (path != null) {
+				path = path.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+				path = path.Replace(@"//", @"/").Replace(@"//", @"/").Replace(@"//", @"/");
+				return path;
+			}
+			return string.Empty;
+		}
+
 		public static string NormalizeFilename(this string path) {
 			if (path != null) {
 				var p = path.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
@@ -153,6 +162,36 @@ namespace Carrotware.Web.UI.Controls {
 				val = Convert.ToBase64String(toEncodeAsBytes);
 			}
 			return val;
+		}
+
+		public static string ToKebabCase(this string input) {
+			return string.Concat(input.Select((c, i) => (char.IsUpper(c) && i > 0 ? "-" : string.Empty) + char.ToLower(c)));
+		}
+
+		public static string ToSpacedPascal(this string input) {
+			if (string.IsNullOrEmpty(input)) {
+				return input;
+			}
+
+			//var words = Regex.Split(input, @"(?<!^)(?=[A-Z])");
+			//return string.Join(" ", words);
+
+			var chars = input.ToCharArray();
+			string output = string.Empty;
+
+			for (int c = 0; c < input.Length; c++) {
+				var isUpper = char.IsUpper(input[c]);
+				var isPriorUpper = ((c - 1) > 0) ? char.IsUpper(input[c - 1]) : false;
+
+				// because we don't want "ParentID" / "ID" to become "I D" / "Parent I D"
+				if (isUpper && !isPriorUpper) {
+					output = output + " " + input[c];
+				} else {
+					output = output + input[c];
+				}
+			}
+
+			return output;
 		}
 	}
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Carrotware.CMS.Interface;
+﻿using Carrotware.CMS.Interface;
+using System;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -23,6 +21,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 
 		protected void LoadData() {
 			if (!IsPostBack) {
+				CalendarHelper.SeedCalendarCategories(this.SiteID);
+
 				var lst2 = CalendarHelper.GetYears(SiteID);
 				CalendarHelper.BindDataBoundControl(ddlFilter, lst2);
 				ddlFilter.SelectedValue = "-2";

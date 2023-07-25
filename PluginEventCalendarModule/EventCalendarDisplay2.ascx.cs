@@ -122,41 +122,25 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		protected void SetCalendar() {
 			SiteData site = SiteData.CurrentSite;
 
-			DateTime dtStart = Calendar1.CalendarDate.AddDays(1 - Calendar1.CalendarDate.Day).Date;
+			DateTime dtStart = new DateTime(this.Calendar1.CalendarDate.Year, this.Calendar1.CalendarDate.Month, 1).Date;
 			DateTime dtEnd = dtStart.AddMonths(1).Date;
 
 			dtStart = site.ConvertSiteTimeToUTC(dtStart);
 			dtEnd = site.ConvertSiteTimeToUTC(dtEnd);
 
-			List<vw_carrot_CalendarEvent> lst = null;
+			var events = CalendarHelper.GetDisplayEvents(this.SiteID, dtStart, dtEnd, -1, true).ToList();
 
-			using (CalendarDataContext db = CalendarDataContext.GetDataContext()) {
-				lst = (from c in db.vw_carrot_CalendarEvents
-					   where c.EventDate >= dtStart
-						&& c.EventDate < dtEnd
-						&& c.SiteID == SiteID
-						&& c.IsPublic == true
-						&& (!c.IsCancelledEvent || c.IsCancelledPublic)
-						&& (!c.IsCancelledSeries || c.IsCancelledPublic)
-					   orderby c.EventDate ascending, c.EventStartTime ascending, c.IsCancelledEvent ascending
-					   select c).ToList();
-			}
+			events.ForEach(x => x.EventDate = site.ConvertUTCToSiteTime(x.EventDate));
 
-			lst.ForEach(x => x.EventDate = site.ConvertUTCToSiteTime(x.EventDate));
+			List<DateTime> dates = (from dd in events select dd.EventDate.Date).Distinct().ToList();
 
-			List<DateTime> dates = (from dd in lst select dd.EventDate.Date).Distinct().ToList();
-
-			List<Guid> cats = (from dd in lst select dd.CalendarEventCategoryID).Distinct().ToList();
+			List<Guid> cats = (from dd in events select dd.CalendarEventCategoryID).Distinct().ToList();
 
 			Calendar1.HilightDateList = dates;
 
-			CalendarHelper.BindRepeater(rpEvent, lst);
+			CalendarHelper.BindRepeater(rpEvent, events);
 
-			if (lst.Count > 0) {
-				phNone.Visible = false;
-			} else {
-				phNone.Visible = true;
-			}
+			phNone.Visible = !events.Any();
 
 			SetDDLSelections();
 

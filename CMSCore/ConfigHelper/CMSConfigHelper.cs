@@ -29,7 +29,9 @@ namespace Carrotware.CMS.Core {
 		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
-		public CMSConfigHelper() { }
+		public CMSConfigHelper() {
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls;
+		}
 
 		private enum CMSConfigFileType {
 			AdminMod,
@@ -508,16 +510,17 @@ namespace Carrotware.CMS.Core {
 			return cc;
 		}
 
-		public void GetFile(string sRemoteFile, string sLocalFile) {
-			Uri remoteFile = new Uri(sRemoteFile);
-			string sServerPath = HttpContext.Current.Server.MapPath(sLocalFile);
-			bool bExists = File.Exists(sServerPath);
+		public void GetFile(string remoteFile, string localFile) {
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls;
+
+			Uri remoteUri = new Uri(remoteFile);
+			string serverPath = HttpContext.Current.Server.MapPath(localFile);
+			bool bExists = File.Exists(serverPath);
 
 			if (!bExists) {
-				using (WebClient webClient = new WebClient()) {
+				using (var webClient = new WebClient()) {
 					try {
-						webClient.DownloadFile(remoteFile, sServerPath);
-						//webClient.DownloadFileAsync(remoteFile, sServerPath);
+						webClient.DownloadFile(remoteUri, serverPath);
 					} catch (Exception ex) {
 						if (ex is WebException) {
 							WebException webException = (WebException)ex;

@@ -1,7 +1,5 @@
 ﻿using Carrotware.CMS.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 /*
 * CarrotCake CMS - Event Calendar
@@ -18,6 +16,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 	public partial class CalendarAdminCategoryList : AdminModule {
 
 		protected void Page_Load(object sender, EventArgs e) {
+			CalendarHelper.SeedCalendarCategories(this.SiteID);
+
 			LoadData();
 		}
 

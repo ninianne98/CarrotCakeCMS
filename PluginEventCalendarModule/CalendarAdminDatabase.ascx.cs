@@ -3,11 +3,6 @@ using Carrotware.CMS.Interface;
 using System;
 using System.IO;
 using System.Linq;
-
-using System.Linq;
-using System.Collections.Generic;
-using System;
-
 using System.Reflection;
 
 /*
@@ -58,6 +53,8 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 					db.SubmitChanges();
 				}
 			}
+
+			CalendarHelper.SeedCalendarCategories(this.SiteID);
 		}
 
 		private string ReadEmbededScript(string filePath) {

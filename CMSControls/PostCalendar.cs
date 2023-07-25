@@ -211,31 +211,33 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSSClassTableFoot = " class=\"" + CSSClassTableFoot + "\" ";
 			}
 
-			ContentDateTally lastMonth = new ContentDateTally { GoLiveDate = ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
-			ContentDateTally nextMonth = new ContentDateTally { GoLiveDate = ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
+			ContentDateTally thisMonth = new ContentDateTally { GoLiveDate = this.ThisMonth, TheSite = SiteData.CurrentSite };
+			ContentDateTally lastMonth = new ContentDateTally { GoLiveDate = this.ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
+			ContentDateTally nextMonth = new ContentDateTally { GoLiveDate = this.ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
 
 			output.WriteLine("<div" + sCSS + " id=\"" + this.HtmlClientID + "\"> ");
 			output.Indent++;
 
-			if (!string.IsNullOrEmpty(CalendarHead)) {
-				output.WriteLine("<h2 class=\"calendar-caption\">" + CalendarHead + "  </h2> ");
+			if (!string.IsNullOrEmpty(this.CalendarHead)) {
+				output.WriteLine("<h2 class=\"calendar-caption\">" + this.CalendarHead + "  </h2> ");
 			}
 
-			DateTime FirstOfMonth = ThisMonth.AddDays(1 - ThisMonth.Day);
-			int iFirstDay = (int)FirstOfMonth.DayOfWeek;
-			TimeSpan ts = FirstOfMonth.AddMonths(1) - FirstOfMonth;
-			int iDaysInMonth = ts.Days;
+			DateTime firstOfMonth = new DateTime(this.ThisMonth.Year, this.ThisMonth.Month, 1);
+			int firstDay = (int)firstOfMonth.DayOfWeek;
+			TimeSpan ts = firstOfMonth.AddMonths(1) - firstOfMonth;
+			int daysInMonth = ts.Days;
 
-			int YearNumber = FirstOfMonth.Date.Year;
-			int MonthNumber = FirstOfMonth.Date.Month;
+			int yearNumber = firstOfMonth.Date.Year;
+			int monthNumber = firstOfMonth.Date.Month;
 
-			int iDayOfWeek = 6;
-			int DayOfMonth = 1;
-			DayOfMonth -= iFirstDay;
-			int WeekNumber = 1;
+			int weekNumber = 1;
+			int dayOfWeek = 6;
+			int dayOfMonth = 1;
+			dayOfMonth -= firstDay;
 
 			output.WriteLine("	<table " + sCSSClassTable + "> ");
-			output.WriteLine("		<caption id=\"" + this.HtmlClientID + "-caption\"  " + sCSSClassCaption + "> " + ThisMonth.Date.ToString("MMMM yyyy") + " </caption>");
+			output.WriteLine("		<caption id=\"" + this.HtmlClientID + "-caption\"  " + sCSSClassCaption + "> "
+							+ "<a href=\"" + thisMonth.MetaInfoURL + "\">" + this.ThisMonth.Date.ToString("MMMM yyyy") + "</a> </caption>");
 
 			output.WriteLine("	<thead id=\"" + this.HtmlClientID + "-head\" " + sCSSClassDayHead + ">");
 			output.WriteLine("		<tr>");
@@ -250,17 +252,17 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine("	</thead>");
 
 			output.WriteLine("		<tbody id=\"" + this.HtmlClientID + "-body\"  " + sCSSClassTableBody + ">");
-			while ((DayOfMonth <= iDaysInMonth) && (DayOfMonth <= 31) && (DayOfMonth >= -7)) {
-				for (int DayIndex = 0; DayIndex <= iDayOfWeek; DayIndex++) {
+			while ((dayOfMonth <= daysInMonth) && (dayOfMonth <= 31) && (dayOfMonth >= -7)) {
+				for (int DayIndex = 0; DayIndex <= dayOfWeek; DayIndex++) {
 					if (DayIndex == 0) {
-						output.WriteLine("			<tr id=\"" + this.HtmlClientID + "-week" + WeekNumber.ToString() + "\"> ");
-						WeekNumber++;
+						output.WriteLine("			<tr id=\"" + this.HtmlClientID + "-week" + weekNumber.ToString() + "\"> ");
+						weekNumber++;
 					}
 
 					DateTime cellDate = DateTime.MinValue;
 
-					if ((DayOfMonth >= 1) && (DayOfMonth <= iDaysInMonth)) {
-						cellDate = new DateTime(YearNumber, MonthNumber, DayOfMonth);
+					if ((dayOfMonth >= 1) && (dayOfMonth <= daysInMonth)) {
+						cellDate = new DateTime(yearNumber, monthNumber, dayOfMonth);
 
 						string sTD = "<td";
 						if (cellDate.Date == SiteData.CurrentSite.Now.Date) {
@@ -282,9 +284,9 @@ namespace Carrotware.CMS.UI.Controls {
 						output.WriteLine("			<td class=\"pad\"> </td>");
 					}
 
-					DayOfMonth++;
+					dayOfMonth++;
 
-					if (DayIndex == iDayOfWeek) {
+					if (DayIndex == dayOfWeek) {
 						output.WriteLine("		</tr>");
 					}
 				}
@@ -318,10 +320,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void OnPreRender(EventArgs e) {
 			try {
-				if (PublicParmValues.Any()) {
-					CssClass = GetParmValue("CssClass", "");
+				if (this.PublicParmValues.Any()) {
+					this.CssClass = GetParmValue("CssClass", "");
 
-					CalendarHead = GetParmValue("CalendarHead", "");
+					this.CalendarHead = GetParmValue("CalendarHead", "");
 				}
 			} catch (Exception ex) {
 			}

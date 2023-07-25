@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CalendarAdminDetailSingle.ascx.cs" Inherits="Carrotware.CMS.UI.Plugins.EventCalendarModule.CalendarAdminDetailSingle" %>
-<h2>
-	Edit Event
-</h2>
-<fieldset style="width: 650px;">
+<h2>Edit Event </h2>
+<fieldset style="width: 750px;">
 	<legend>
 		<label>
 			Individual Event
@@ -14,18 +12,13 @@
 	</div>
 	<table style="width: 98%">
 		<tr>
-			<td style="width: 20%">
-			</td>
-			<td style="width: 30%">
-			</td>
-			<td style="width: 20%">
-			</td>
-			<td style="width: 30%">
-			</td>
+			<td style="width: 20%"></td>
+			<td style="width: 30%"></td>
+			<td style="width: 20%"></td>
+			<td style="width: 30%"></td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				date:
+			<td class="tablecaption">date:
 			</td>
 			<td>
 				<asp:Literal ID="litDate" runat="server" />
@@ -36,15 +29,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="tablecaption">
-				time from (override):
+			<td class="tablecaption">time from (override):
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventStartTime" runat="server" CssClass="timeRegion"
 					Columns="16" MaxLength="12" />
 			</td>
-			<td class="tablecaption">
-				time to (override):
+			<td class="tablecaption">time to (override):
 			</td>
 			<td>
 				<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtEventEndTime" runat="server" CssClass="timeRegion"
@@ -53,14 +44,13 @@
 		</tr>
 	</table>
 </fieldset>
-<fieldset style="width: 650px;">
+<fieldset style="width: 750px;">
 	<legend>
 		<label>
 			Details
 		</label>
 	</legend>
 	<div>
-		<%--<a href="javascript:cmsToggleTinyMCE('<%= reContent.ClientID %>');">Add/Remove editor</a><br />--%>
 		<asp:TextBox CssClass="mceEditor" ID="reContent" runat="server" TextMode="MultiLine" Rows="10" Columns="80" />
 	</div>
 </fieldset>
