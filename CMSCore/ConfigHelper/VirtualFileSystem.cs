@@ -20,8 +20,8 @@ using System.Web.UI;
 namespace Carrotware.CMS.Core {
 
 	public class VirtualFileSystem : IHttpHandler, IRequiresSessionState {
-		private const string REQ_PATH = "RewriteOrigPath";
-		private const string REQ_QUERY = "RewriteOrigQuery";
+		private const string REQ_PATH = "REWRITE_ORIGPATH";
+		private const string REQ_QUERY = "REWRITE_ORIGQUERY";
 
 		public bool IsReusable {
 			get {
@@ -33,11 +33,29 @@ namespace Carrotware.CMS.Core {
 		private string _requestedURL = string.Empty;
 		private bool _alreadyDone = false;
 		private bool _urlOverride = false;
+		private bool _realFile = false;
 
 		public void ProcessRequest(HttpContext context) {
+			_realFile = SiteData.IsPageReal;
+			string fileRequested = context.Request.Path;
+
+			// make sure if the file being accessed exists, serve that content
+			if (_realFile) {
+				var queryString = context.Request.QueryString.ToString();
+
+				_virtualReqFile = fileRequested;
+				_requestedURL = fileRequested;
+				context.Items[REQ_PATH] = string.Empty;
+				context.Items[REQ_QUERY] = queryString;
+
+				RewriteCMSPath(context, fileRequested, queryString);
+				context.ApplicationInstance.CompleteRequest();
+				return;
+			}
+
 			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				SiteNav navData = null;
-				string fileRequested = context.Request.Path;
+
 				_requestedURL = fileRequested;
 				string scrubbedURL = fileRequested;
 
@@ -70,9 +88,9 @@ namespace Carrotware.CMS.Core {
 					try {
 						if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
 							if (context.Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains(FormsAuthentication.LoginUrl.ToLowerInvariant())
-								|| FormsAuthentication.LoginUrl.ToLowerInvariant() == fileRequested.ToLowerInvariant()) {
+										|| FormsAuthentication.LoginUrl.ToLowerInvariant() == fileRequested.ToLowerInvariant()) {
 								if (SiteFilename.DashboardURL.ToLowerInvariant() != fileRequested.ToLowerInvariant()
-								&& SiteFilename.SiteInfoURL.ToLowerInvariant() != fileRequested.ToLowerInvariant()) {
+										&& SiteFilename.SiteInfoURL.ToLowerInvariant() != fileRequested.ToLowerInvariant()) {
 									fileRequested = SiteData.AdminDefaultFile;
 								}
 							}
@@ -83,15 +101,14 @@ namespace Carrotware.CMS.Core {
 				if (fileRequested.ToLowerInvariant().EndsWith(".aspx") || SiteData.IsLikelyHomePage(fileRequested)) {
 					bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
-					string queryString = string.Empty;
-					queryString = context.Request.QueryString.ToString();
+					string queryString = context.Request.QueryString.ToString();
 					if (string.IsNullOrEmpty(queryString)) {
 						queryString = string.Empty;
 					}
 
 					if (!CMSConfigHelper.CheckRequestedFileExistence(fileRequested, SiteData.CurrentSiteID) || SiteData.IsLikelyHomePage(fileRequested)) {
 						context.Items[REQ_PATH] = context.Request.PathInfo;
-						context.Items[REQ_QUERY] = context.Request.QueryString.ToString();
+						context.Items[REQ_QUERY] = queryString;
 
 						// handle a case where this site was migrated from a format where all pages varied on a consistent querystring
 						// allow this QS parm to be set in a config file.
@@ -190,14 +207,16 @@ namespace Carrotware.CMS.Core {
 
 		private void RewriteCMSPath(HttpContext context, string templateFile, string query) {
 			try {
-				if (string.IsNullOrEmpty(_virtualReqFile)) {
-					_virtualReqFile = SiteData.DefaultDirectoryFilename;
-				}
-				if (string.IsNullOrEmpty(templateFile)) {
-					templateFile = SiteData.DefaultTemplateFilename;
-				}
+				if (_realFile == false) {
+					if (string.IsNullOrEmpty(_virtualReqFile)) {
+						_virtualReqFile = SiteData.DefaultDirectoryFilename;
+					}
+					if (string.IsNullOrEmpty(templateFile)) {
+						templateFile = SiteData.DefaultTemplateFilename;
+					}
 
-				context.RewritePath(_virtualReqFile, string.Empty, query);
+					context.RewritePath(_virtualReqFile, string.Empty, query);
+				}
 
 				//cannot work in med trust
 				//Page hand = (Page)PageParser.GetCompiledPageInstance(sFileRequested, context.Server.MapPath(sRealFile), context);

@@ -1,4 +1,5 @@
 <%@ Page Language="C#" AutoEventWireup="true" %>
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,7 @@
 			<h2>&nbsp;</h2>
 			<h2 class="banner">UNDER CONSTRUCTION</h2>
 			<h2>&nbsp;</h2>
-			<h2>To manage your site, visit the <a href="/c3-admin/">site administration</a>.</h2>
+			<h2>To manage your site, visit the <a href="<%= SiteData.AdminFolderPath %>">site administration</a>.</h2>
 		</div>
 	</form>
 </body>
