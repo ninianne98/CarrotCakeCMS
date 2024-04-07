@@ -45,7 +45,7 @@ Released   : 20120902
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="Purple" />
 	<title>WaterDrops by FCT</title>
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css" />
 	<asp:PlaceHolder ID="myPageHead" runat="server">
 		<link href="<%=ThePage.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
 
