@@ -20,7 +20,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string DefaultJQVersion {
 			get {
-				return "1.11";
+				return "3";
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace Carrotware.Web.UI.Controls {
 		public bool UseJqueryMigrate {
 			get {
 				String s = (String)ViewState["UseJqueryMigrate"];
-				return ((s == null) ? false : Convert.ToBoolean(s));
+				return ((s == null) ? (this.JQVersion.StartsWith("3") ? true : false) : Convert.ToBoolean(s));
 			}
 			set {
 				ViewState["UseJqueryMigrate"] = value.ToString();
@@ -79,6 +79,14 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			switch (jqVer) {
+				case "3":
+				case "3.0":
+				case "3.6":
+				case "3.7":
+					jqVer = "3.7.1";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-3-7-1.js");
+					break;
+
 				case "2":
 				case "2.0":
 				case "2.2":
@@ -89,13 +97,12 @@ namespace Carrotware.Web.UI.Controls {
 				case "1":
 				case "1.0":
 				case "1.11":
-				default:
 					jqVer = "1.11.3";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-11-3.js");
 					break;
 
 				case "1.12":
-					jqVer = "1.12.0";
+					jqVer = "1.12.4";
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-12-4.js");
 					break;
 
@@ -104,44 +111,46 @@ namespace Carrotware.Web.UI.Controls {
 					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-10-2.js");
 					break;
 
-				case "1.9":
-					jqVer = "1.9.1";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-9-1.js");
-					break;
-
-				case "1.8":
-					jqVer = "1.8.3";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-8-3.js");
-					break;
-
-				case "1.7":
-					jqVer = "1.7.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-7-2.js");
-					break;
-
+				// older versions get dumped to 1.9
+				case "1.1":
 				case "1.2":
 				case "1.3":
 				case "1.4":
 				case "1.5":
 				case "1.6":
-					jqVer = "1.6.4";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-6-4.js");
+				case "1.7":
+				case "1.8":
+				case "1.9":
+					jqVer = "1.9.1";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-1-9-1.js");
+					break;
+
+				// if you didn't provide a version or a meaningful version, this is what you get
+				default:
+					jqVer = "3.7.1";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-3-7-1.js");
 					break;
 			}
 
 			output.WriteLine("<!-- JQuery v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 
 			if (this.UseJqueryMigrate) {
-				if (jqVer.StartsWith("1.9") || jqVer.StartsWith("1.10") || jqVer.StartsWith("1.11")) {
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-mig-1-2-1.js");
+				string sJQFileMig = string.Empty;
 
-					output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
+				if (jqVer.StartsWith("1.9") || jqVer.StartsWith("1.10") || jqVer.StartsWith("1.11")) {
+					sJQFileMig = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-mig-1-2-1.js");
 				}
 
 				if (jqVer.StartsWith("1.12") || jqVer.StartsWith("1.13")) {
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-mig-1-3-0.js");
+					sJQFileMig = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-mig-1-3-0.js");
+				}
 
-					output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
+				if (jqVer.StartsWith("3")) {
+					sJQFileMig = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jquery-mig-3-4-0.js");
+				}
+
+				if (!string.IsNullOrEmpty(sJQFileMig)) {
+					output.WriteLine("<!-- jQuery Migrate Plugin --> <script src=\"" + sJQFileMig + "\" type=\"text/javascript\"></script> ");
 				}
 			}
 

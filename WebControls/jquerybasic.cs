@@ -97,7 +97,7 @@ namespace Carrotware.Web.UI.Controls {
 		public bool UseJqueryMigrate {
 			get {
 				String s = (String)ViewState["UseJqueryMigrate"];
-				return ((s == null) ? false : Convert.ToBoolean(s));
+				return ((s == null) ? (this.JQVersion.StartsWith("3") ? true : false) : Convert.ToBoolean(s));
 			}
 			set {
 				ViewState["UseJqueryMigrate"] = value.ToString();

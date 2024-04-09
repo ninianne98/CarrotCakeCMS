@@ -34,7 +34,7 @@
 <head id="Head1" runat="server">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" JQVersion="1.11" />
+	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="GlossyBlack" JQVersion="3" />
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("input:button, input:submit, input:reset").button();

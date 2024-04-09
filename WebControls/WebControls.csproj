@@ -1,266 +1,257 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Carrotware.Web.UI.Controls</RootNamespace>
-    <AssemblyName>Carrotware.Web.UI.Controls</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BaseWebControl.cs" />
-    <Compile Include="Calendar.cs" />
-    <Compile Include="Captcha.cs" />
-    <Compile Include="captcha\CAPTCHA.aspx.cs">
-      <DependentUpon>CAPTCHA.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="captcha\CAPTCHA.aspx.designer.cs">
-      <DependentUpon>CAPTCHA.aspx.cs</DependentUpon>
-    </Compile>
-    <Compile Include="captcha\CaptchaImage.cs" />
-    <Compile Include="CarrotGridPaged.cs" />
-    <Compile Include="Email\EmailHelper.cs" />
-    <Compile Include="Email\EMailSettings.cs" />
-    <Compile Include="EnumHelper.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="FileData.cs" />
-    <Compile Include="HtmlTag.cs" />
-    <Compile Include="ReflectionUtilities.cs" />
-    <Compile Include="SimpleStyle.cs" />
-    <Compile Include="CarrotGridView\CarrotGridView.cs" />
-    <Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
-    <Compile Include="CarrotGridView\CarrotImageColumnData.cs" />
-    <Compile Include="CarrotGridView\CarrotImageColumnDataCollectionEditor.cs" />
-    <Compile Include="CarrotGridView\CarrotLinkButtonCmdTemplate.cs" />
-    <Compile Include="CarrotHttpHandler.cs" />
-    <Compile Include="CollectionHelpers\GuidItem.cs" />
-    <Compile Include="CollectionHelpers\GuidItemCollectionEditor.cs" />
-    <Compile Include="BasicControlUtils.cs" />
-    <Compile Include="CollectionHelpers\StringItem.cs" />
-    <Compile Include="CollectionHelpers\StringItemCollectionEditor.cs" />
-    <Compile Include="ImageSizer.cs" />
-    <Compile Include="jsHelperLib.cs" />
-    <Compile Include="jquery.cs" />
-    <Compile Include="jquerybasic.cs" />
-    <Compile Include="jqueryui.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateControls.cs" />
-    <Compile Include="UrlPaths.cs" />
-    <Compile Include="WebControlHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="calendar.txt" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_aaaaaa_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_efefef_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_80_111111_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_hexagon_90_eeeeee_12x10.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_111111_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_eeeeee_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_glass_100_e4f1fb_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_glass_50_3baae3_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_glass_80_d7ebf9_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-hard_70_000000_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-soft_100_deedf7_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-icons_2694e8_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-icons_3d80b3_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-icons_72a7cf_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\blue\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_glass_55_fcf0ba_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_gloss-wave_100_ece8da_500x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_100_f5f3e5_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_100_fafaf4_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_15_459e00_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_95_cccccc_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-soft_25_67b021_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-soft_95_ffedad_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-bg_inset-soft_15_2b2922_1x100.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-icons_808080_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-icons_847e71_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-icons_8dc262_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-icons_eeeeee_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\green\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\jquery-ui-black.css" />
-    <EmbeddedResource Include="jquerybasic\jquery-ui-blue.css" />
-    <EmbeddedResource Include="jquerybasic\jquery-ui-green.css" />
-    <EmbeddedResource Include="jquerybasic\jquery-ui-lightgreen.css" />
-    <EmbeddedResource Include="jquerybasic\jquery-ui-purple.css" />
-    <EmbeddedResource Include="jquerybasic\jquery-ui-silver.css" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_b7d7c4_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_dff6e8_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_f2f5f7_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_50_468b5e_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_80_b7d7c4_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_hexagon_90_eeeeee_12x10.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-bg_hexagon_90_eeeeee_12x10.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_686868_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d0d0d0_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d6d6d6_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d9d9d9_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_hexagon_80_dddddd_12x10.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-icons_111111_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-icons_2e83ff_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-icons_cd0a0a_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-icons_ffffff_256x240.png" />
-    <EmbeddedResource Include="jsHelperLibrary.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="captcha\CAPTCHA.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="CarrotGridView\accept.png" />
-    <EmbeddedResource Include="CarrotGridView\cancel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="CarrotGridView\attach.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ucFancyPager.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ucSimplePager1.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ucSimplePager2.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="carrotHelp.js" />
-    <EmbeddedResource Include="jquery\jquery-1-10-2.js" />
-    <EmbeddedResource Include="jquery\jquery-1-11-3.js" />
-    <EmbeddedResource Include="jquery\jquery-1-12-4.js" />
-    <EmbeddedResource Include="jquery\jquery-1-6-4.js" />
-    <EmbeddedResource Include="jquery\jquery-1-7-2.js" />
-    <EmbeddedResource Include="jquery\jquery-1-8-3.js" />
-    <EmbeddedResource Include="jquery\jquery-1-9-1.js" />
-    <EmbeddedResource Include="jquery\jquery-2-2-4.js" />
-    <EmbeddedResource Include="jquery\jquery-3-6-4.js" />
-    <EmbeddedResource Include="jquery\jquery-mig-1-2-1.js" />
-    <EmbeddedResource Include="jquery\jquery-mig-1-3-0.js" />
-    <EmbeddedResource Include="jquery\jquery-mig-1-4-1.js" />
-    <EmbeddedResource Include="jquery\jquery-unobtrusive-ajax.min.js" />
-    <EmbeddedResource Include="jquery\jquery-validate.unobtrusive.min.js" />
-    <EmbeddedResource Include="jquery\jqueryui-1-10-2.js" />
-    <EmbeddedResource Include="jquery\jqueryui-1-11-4.js" />
-    <EmbeddedResource Include="jquery\jqueryui-1-12-1.js" />
-    <EmbeddedResource Include="jquery\jqueryui-1-13-2.js" />
-    <EmbeddedResource Include="jquery\jqueryui-1-7-3.js" />
-    <EmbeddedResource Include="jquery\jqueryui-1-8-24.js" />
-    <EmbeddedResource Include="jquery\jqueryui-1-9-2.js" />
-    <EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_676767_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_222222_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\black\ui-bg_glass_50_555555_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_fefefe_1x400.png" />
-    <EmbeddedResource Include="ucSimplePager3.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_100_B296CC_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_100_CAB3E0_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_50_50425E_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_80_BC9ED8_1x400.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_222222_256x240.png" />
-    <EmbeddedResource Include="jquerybasic\purple\ui-icons_4F415D_256x240.png" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProductVersion>9.0.30729</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+		<ProjectGuid>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>Carrotware.Web.UI.Controls</RootNamespace>
+		<AssemblyName>Carrotware.Web.UI.Controls</AssemblyName>
+		<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+		<FileAlignment>512</FileAlignment>
+		<FileUpgradeFlags>
+		</FileUpgradeFlags>
+		<OldToolsVersion>3.5</OldToolsVersion>
+		<UpgradeBackupLocation />
+		<PublishUrl>publish\</PublishUrl>
+		<Install>true</Install>
+		<InstallFrom>Disk</InstallFrom>
+		<UpdateEnabled>false</UpdateEnabled>
+		<UpdateMode>Foreground</UpdateMode>
+		<UpdateInterval>7</UpdateInterval>
+		<UpdateIntervalUnits>Days</UpdateIntervalUnits>
+		<UpdatePeriodically>false</UpdatePeriodically>
+		<UpdateRequired>false</UpdateRequired>
+		<MapFileExtensions>true</MapFileExtensions>
+		<ApplicationRevision>0</ApplicationRevision>
+		<ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+		<IsWebBootstrapper>false</IsWebBootstrapper>
+		<UseApplicationTrust>false</UseApplicationTrust>
+		<BootstrapperEnabled>true</BootstrapperEnabled>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\</OutputPath>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.Core">
+			<RequiredTargetFramework>3.5</RequiredTargetFramework>
+		</Reference>
+		<Reference Include="System.Design" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Web" />
+		<Reference Include="System.Xml.Linq">
+			<RequiredTargetFramework>3.5</RequiredTargetFramework>
+		</Reference>
+		<Reference Include="System.Data.DataSetExtensions">
+			<RequiredTargetFramework>3.5</RequiredTargetFramework>
+		</Reference>
+		<Reference Include="System.Data" />
+		<Reference Include="System.Xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="BaseWebControl.cs" />
+		<Compile Include="Calendar.cs" />
+		<Compile Include="Captcha.cs" />
+		<Compile Include="captcha\CAPTCHA.aspx.cs">
+			<DependentUpon>CAPTCHA.aspx</DependentUpon>
+			<SubType>ASPXCodeBehind</SubType>
+		</Compile>
+		<Compile Include="captcha\CAPTCHA.aspx.designer.cs">
+			<DependentUpon>CAPTCHA.aspx.cs</DependentUpon>
+		</Compile>
+		<EmbeddedResource Include="captcha\CAPTCHA.aspx">
+			<SubType>ASPXCodeBehind</SubType>
+		</EmbeddedResource>
+		<Compile Include="captcha\CaptchaImage.cs" />
+		<Compile Include="BasicControlUtils.cs" />
+		<Compile Include="CarrotGridPaged.cs" />
+		<Compile Include="CarrotGridView\CarrotGridView.cs" />
+		<Compile Include="CarrotGridView\CarrotHeaderSortTemplateField.cs" />
+		<Compile Include="CarrotGridView\CarrotImageColumnData.cs" />
+		<Compile Include="CarrotGridView\CarrotImageColumnDataCollectionEditor.cs" />
+		<Compile Include="CarrotGridView\CarrotLinkButtonCmdTemplate.cs" />
+		<Compile Include="CarrotHttpHandler.cs" />
+		<Compile Include="CollectionHelpers\GuidItem.cs" />
+		<Compile Include="CollectionHelpers\GuidItemCollectionEditor.cs" />
+		<Compile Include="CollectionHelpers\StringItem.cs" />
+		<Compile Include="CollectionHelpers\StringItemCollectionEditor.cs" />
+		<Compile Include="Email\EmailHelper.cs" />
+		<Compile Include="Email\EMailSettings.cs" />
+		<Compile Include="EnumHelper.cs" />
+		<Compile Include="FileData.cs" />
+		<Compile Include="HtmlTag.cs" />
+		<Compile Include="ImageSizer.cs" />
+		<Compile Include="jquery.cs" />
+		<Compile Include="jquerybasic.cs" />
+		<Compile Include="jqueryui.cs" />
+		<Compile Include="jsHelperLib.cs" />
+		<Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="ReflectionUtilities.cs" />
+		<Compile Include="SimpleStyle.cs" />
+		<Compile Include="TemplateControls.cs" />
+		<Compile Include="UrlPaths.cs" />
+		<Compile Include="Utils.cs" />
+		<Compile Include="WebControlHelper.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="calendar.txt" />
+		<EmbeddedResource Include="carrotHelp.js" />
+		<EmbeddedResource Include="jquery\jquery-1-10-2.js" />
+		<EmbeddedResource Include="jquery\jquery-1-11-3.js" />
+		<EmbeddedResource Include="jquery\jquery-1-12-4.js" />
+		<EmbeddedResource Include="jquery\jquery-1-9-1.js" />
+		<EmbeddedResource Include="jquery\jquery-2-2-4.js" />
+		<EmbeddedResource Include="jquery\jquery-3-7-1.js" />
+		<EmbeddedResource Include="jquery\jquery-mig-1-2-1.js" />
+		<EmbeddedResource Include="jquery\jquery-mig-1-3-0.js" />
+		<EmbeddedResource Include="jquery\jquery-mig-1-4-1.js" />
+		<EmbeddedResource Include="jquery\jquery-mig-3-4-0.js" />
+		<EmbeddedResource Include="jquery\jqueryui-1-10-2.js" />
+		<EmbeddedResource Include="jquery\jqueryui-1-11-4.js" />
+		<EmbeddedResource Include="jquery\jqueryui-1-12-1.js" />
+		<EmbeddedResource Include="jquery\jqueryui-1-13-2.js" />
+		<EmbeddedResource Include="jquery\jquery-unobtrusive-ajax.min.js" />
+		<EmbeddedResource Include="jquery\jquery-validate.unobtrusive.min.js" />
+		<EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_222222_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_aaaaaa_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-bg_glass_100_efefef_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-bg_glass_50_555555_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-bg_glass_80_111111_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-bg_hexagon_90_eeeeee_12x10.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-icons_111111_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-icons_2e83ff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-icons_cd0a0a_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-icons_eeeeee_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\black\ui-icons_ffffff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_glass_100_e4f1fb_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_glass_50_3baae3_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_glass_80_d7ebf9_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-hard_70_000000_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-icons_2694e8_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-icons_2e83ff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-icons_3d80b3_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-icons_72a7cf_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\blue\ui-icons_ffffff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_glass_55_fcf0ba_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_gloss-wave_100_ece8da_500x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_100_f5f3e5_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_100_fafaf4_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_15_459e00_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-hard_95_cccccc_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-soft_25_67b021_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_highlight-soft_95_ffedad_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-bg_inset-soft_15_2b2922_1x100.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-icons_808080_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-icons_847e71_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-icons_8dc262_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-icons_cd0a0a_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-icons_eeeeee_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\green\ui-icons_ffffff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\jquery-ui-black.css" />
+		<EmbeddedResource Include="jquerybasic\jquery-ui-blue.css" />
+		<EmbeddedResource Include="jquerybasic\jquery-ui-green.css" />
+		<EmbeddedResource Include="jquerybasic\jquery-ui-lightgreen.css" />
+		<EmbeddedResource Include="jquerybasic\jquery-ui-purple.css" />
+		<EmbeddedResource Include="jquerybasic\jquery-ui-silver.css" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_b7d7c4_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_dff6e8_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_100_f2f5f7_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_50_468b5e_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_glass_80_b7d7c4_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-bg_hexagon_90_eeeeee_12x10.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_2e83ff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_676767_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_cd0a0a_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\lightgreen\ui-icons_ffffff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_100_B296CC_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_100_CAB3E0_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_50_50425E_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-bg_glass_80_BC9ED8_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-bg_hexagon_90_eeeeee_12x10.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-icons_222222_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-icons_2e83ff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-icons_4F415D_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-icons_cd0a0a_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\purple\ui-icons_ffffff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_686868_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d0d0d0_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d6d6d6_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_d9d9d9_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-bg_glass_100_fefefe_1x400.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-bg_hexagon_80_dddddd_12x10.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-icons_111111_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-icons_222222_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-icons_2e83ff_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-icons_cd0a0a_256x240.png" />
+		<EmbeddedResource Include="jquerybasic\silver\ui-icons_ffffff_256x240.png" />
+		<EmbeddedResource Include="jsHelperLibrary.js" />
+	</ItemGroup>
+	<ItemGroup>
+		<BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+			<Visible>False</Visible>
+			<ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+			<Install>false</Install>
+		</BootstrapperPackage>
+		<BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+			<Visible>False</Visible>
+			<ProductName>.NET Framework 3.5 SP1</ProductName>
+			<Install>true</Install>
+		</BootstrapperPackage>
+		<BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+			<Visible>False</Visible>
+			<ProductName>Windows Installer 3.1</ProductName>
+			<Install>true</Install>
+		</BootstrapperPackage>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="CarrotGridView\accept.png" />
+		<EmbeddedResource Include="CarrotGridView\attach.png" />
+		<EmbeddedResource Include="CarrotGridView\cancel.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="ucFancyPager.ascx">
+			<SubType>ASPXCodeBehind</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="ucSimplePager1.ascx">
+			<SubType>ASPXCodeBehind</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="ucSimplePager2.ascx">
+			<SubType>ASPXCodeBehind</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="ucSimplePager3.ascx">
+			<SubType>ASPXCodeBehind</SubType>
+		</EmbeddedResource>
+		<Content Include="Web.config">
+			<SubType>Designer</SubType>
+		</Content>
+	</ItemGroup>
+	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
