@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
@@ -110,6 +110,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			if (imgData == null) {
 				return "";
 			} else {
+				imgData.ValidateGalleryImage();
 				return imgData.ImageMetaData;
 			}
 		}
@@ -122,6 +123,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			if (imgData == null) {
 				return sImg;
 			} else {
+				imgData.ValidateGalleryImage();
 				return imgData.ImageTitle;
 			}
 		}
@@ -133,7 +135,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				try {
 					string sFoundVal = GetParmValue("GalleryID", Guid.Empty.ToString());
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.GalleryID = new Guid(sFoundVal);
 					}
 				} catch (Exception ex) { }
@@ -141,7 +143,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				try {
 					string sFoundVal = GetParmValueDefaultEmpty("WindowWidth", "500");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.WindowWidth = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
@@ -149,7 +151,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				try {
 					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize1", "150");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.ThumbSize1 = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
@@ -157,7 +159,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				try {
 					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize2", "200");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.ThumbSize2 = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
@@ -165,13 +167,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				try {
 					string sFoundVal = GetParmValue("PrettyPhotoSkin", "light_rounded");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.PrettyPhotoSkin = sFoundVal;
 					}
 				} catch (Exception ex) { }
 			}
 
-			if (String.IsNullOrEmpty(PrettyPhotoSkin)) {
+			if (string.IsNullOrEmpty(PrettyPhotoSkin)) {
 				this.PrettyPhotoSkin = "light_rounded";
 			}
 

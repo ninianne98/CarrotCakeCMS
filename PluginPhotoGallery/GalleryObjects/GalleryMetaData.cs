@@ -1,6 +1,16 @@
 ﻿using System;
 using System.Linq;
 
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 3 licenses.
+*
+* Date: October 2011
+*/
+
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 	public class GalleryMetaData : GalleryBase {
@@ -25,8 +35,25 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		public string ImageTitle { get; set; }
 		public string ImageMetaData { get; set; }
 
+		public void ValidateGalleryImage() {
+			if (this.GalleryImage.Contains("../") || this.GalleryImage.Contains(@"..\")) {
+				throw new Exception("Cannot use relative paths.");
+			}
+			if (this.GalleryImage.Contains(":")) {
+				throw new Exception("Cannot specify drive letters.");
+			}
+			if (this.GalleryImage.Contains("//") || this.GalleryImage.Contains(@"\\")) {
+				throw new Exception("Cannot use UNC paths.");
+			}
+			if (this.GalleryImage.Contains("<") || this.GalleryImage.Contains(">")) {
+				throw new Exception("Cannot include html tags.");
+			}
+		}
+
 		public void Save() {
 			if (!string.IsNullOrEmpty(this.GalleryImage)) {
+				this.ValidateGalleryImage();
+
 				using (var db = PhotoGalleryDataContext.GetDataContext()) {
 					tblGalleryImageMeta gal = (from c in db.tblGalleryImageMetas
 											   where c.GalleryImage.ToLower() == this.GalleryImage.ToLower()
