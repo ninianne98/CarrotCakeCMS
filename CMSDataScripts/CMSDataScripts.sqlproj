@@ -7,27 +7,22 @@
     <Name>CMSDataScripts</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{8aaef11c-6696-4ceb-8ede-f3652330d5c6}</ProjectGuid>
+    <ProjectGuid>{8AAEF11C-6696-4CEB-8EDE-F3652330D5C6}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
     <RootNamespace>CMSDataScripts</RootNamespace>
     <AssemblyName>CMSDataScripts</AssemblyName>
-    <ModelCollation>1033,CI</ModelCollation>
+    <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
-    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
-    <TargetFrameworkProfile />
-    <GenerateCreateScript>True</GenerateCreateScript>
-    <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -62,29 +57,21 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Scripts" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
-    <Folder Include="dbo\Views\" />
     <Folder Include="dbo\Stored Procedures\" />
-    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\__README.txt" />
+    <None Include="CarrotSqlSchemaCompare.scmp" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\tblRegistrations.sql" />
-    <Build Include="dbo\Tables\tblGalleryImageMeta.sql" />
-    <Build Include="dbo\Tables\tblGalleryImage.sql" />
-    <Build Include="dbo\Tables\tblGallery.sql" />
-    <Build Include="dbo\Tables\tblFAQ.sql" />
-    <Build Include="dbo\Tables\tblCalendar.sql" />
     <Build Include="dbo\Tables\carrot_WidgetData.sql" />
     <Build Include="dbo\Tables\carrot_Widget.sql" />
     <Build Include="dbo\Tables\carrot_UserSiteMapping.sql" />
     <Build Include="dbo\Tables\carrot_UserData.sql" />
     <Build Include="dbo\Tables\carrot_TrackbackQueue.sql" />
-    <Build Include="dbo\Tables\carrot_ThemeTemplate.sql" />
     <Build Include="dbo\Tables\carrot_TextWidget.sql" />
     <Build Include="dbo\Tables\carrot_TagContentMapping.sql" />
     <Build Include="dbo\Tables\carrot_Sites.sql" />
@@ -99,10 +86,6 @@
     <Build Include="dbo\Tables\carrot_ContentCategory.sql" />
     <Build Include="dbo\Tables\carrot_Content.sql" />
     <Build Include="dbo\Tables\carrot_CategoryContentMapping.sql" />
-    <Build Include="dbo\Tables\carrot_CalendarFrequency.sql" />
-    <Build Include="dbo\Tables\carrot_CalendarEventProfile.sql" />
-    <Build Include="dbo\Tables\carrot_CalendarEventCategory.sql" />
-    <Build Include="dbo\Tables\carrot_CalendarEvent.sql" />
     <Build Include="dbo\Tables\aspnet_UsersInRoles.sql" />
     <Build Include="dbo\Tables\aspnet_Users.sql" />
     <Build Include="dbo\Tables\aspnet_SchemaVersions.sql" />
@@ -122,8 +105,6 @@
     <Build Include="dbo\Views\vw_carrot_Comment.sql" />
     <Build Include="dbo\Views\vw_carrot_CategoryURL.sql" />
     <Build Include="dbo\Views\vw_carrot_CategoryCounted.sql" />
-    <Build Include="dbo\Views\vw_carrot_CalendarEventProfile.sql" />
-    <Build Include="dbo\Views\vw_carrot_CalendarEvent.sql" />
     <Build Include="dbo\Views\vw_aspnet_UsersInRoles.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
     </Build>
@@ -139,6 +120,12 @@
     <Build Include="dbo\Views\vw_aspnet_Applications.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
     </Build>
+    <Build Include="Security\aspnet_Roles_ReportingAccess.sql" />
+    <Build Include="Security\aspnet_Roles_FullAccess.sql" />
+    <Build Include="Security\aspnet_Roles_BasicAccess.sql" />
+    <Build Include="Security\aspnet_Membership_ReportingAccess.sql" />
+    <Build Include="Security\aspnet_Membership_FullAccess.sql" />
+    <Build Include="Security\aspnet_Membership_BasicAccess.sql" />
     <Build Include="dbo\Stored Procedures\carrot_UpdateGoLiveLocal.sql" />
     <Build Include="dbo\Stored Procedures\carrot_BlogMonthlyTallies.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
@@ -251,12 +238,6 @@
     <Build Include="dbo\Stored Procedures\aspnet_AnyDataInTables.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
     </Build>
-    <Build Include="Security\aspnet_Roles_ReportingAccess.sql" />
-    <Build Include="Security\aspnet_Roles_FullAccess.sql" />
-    <Build Include="Security\aspnet_Roles_BasicAccess.sql" />
-    <Build Include="Security\aspnet_Membership_ReportingAccess.sql" />
-    <Build Include="Security\aspnet_Membership_FullAccess.sql" />
-    <Build Include="Security\aspnet_Membership_BasicAccess.sql" />
     <Build Include="Security\aspnet_Roles_ReportingAccess_1.sql" />
     <Build Include="Security\aspnet_Roles_FullAccess_1.sql" />
     <Build Include="Security\aspnet_Roles_BasicAccess_1.sql" />

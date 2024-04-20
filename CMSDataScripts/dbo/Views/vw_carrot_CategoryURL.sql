@@ -1,6 +1,4 @@
-﻿
-
-CREATE VIEW [dbo].[vw_carrot_CategoryURL]
+﻿CREATE VIEW [dbo].[vw_carrot_CategoryURL]
 AS 
 
 select  s.SiteID, cc.ContentCategoryID, cc.CategoryText, cc.IsPublic, cc2.EditDate, 

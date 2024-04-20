@@ -1,6 +1,4 @@
-﻿
-
-CREATE VIEW [dbo].[vw_carrot_ContentChild]
+﻿CREATE VIEW [dbo].[vw_carrot_ContentChild]
 AS 
 
 SELECT DISTINCT cc.SiteID, cc.Root_ContentID, cc.[FileName], 

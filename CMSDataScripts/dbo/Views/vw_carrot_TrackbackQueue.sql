@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[vw_carrot_TrackbackQueue]
+﻿CREATE VIEW [dbo].[vw_carrot_TrackbackQueue]
 AS 
 
 SELECT tb.TrackbackQueueID, tb.TrackBackURL, tb.TrackBackResponse, tb.CreateDate, tb.ModifiedDate, tb.TrackedBack, c.Root_ContentID, c.PageActive, c.SiteID

@@ -1,6 +1,4 @@
-﻿
-
-CREATE VIEW [dbo].[vw_carrot_TagURL]
+﻿CREATE VIEW [dbo].[vw_carrot_TagURL]
 AS 
 
 select  s.SiteID, cc.ContentTagID, cc.TagText, cc.IsPublic, cc2.EditDate, 

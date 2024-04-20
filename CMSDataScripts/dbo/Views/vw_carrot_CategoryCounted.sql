@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[vw_carrot_CategoryCounted]
+﻿CREATE VIEW [dbo].[vw_carrot_CategoryCounted]
 AS 
 
 SELECT cc.ContentCategoryID, cc.SiteID, cc.CategoryText, cc.CategorySlug, cc.IsPublic, ISNULL(cc2.TheCount, 0) AS UseCount

@@ -1,6 +1,4 @@
-﻿
-
-CREATE VIEW [dbo].[vw_carrot_EditorURL]
+﻿CREATE VIEW [dbo].[vw_carrot_EditorURL]
 AS 
 
 select  d.SiteID, d.UserId, d.UserName, d.LoweredEmail, cc2.EditDate, 

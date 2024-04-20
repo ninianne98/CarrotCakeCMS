@@ -1,6 +1,4 @@
-﻿
-
-CREATE VIEW [dbo].[vw_carrot_EditHistory]
+﻿CREATE VIEW [dbo].[vw_carrot_EditHistory]
 AS 
 
 SELECT  rc.SiteID, c.ContentID, c.Root_ContentID, c.IsLatestVersion, c.TitleBar, c.NavMenuText, c.PageHead, c.EditUserId, c.CreditUserId, c.EditDate, rc.CreateDate,
