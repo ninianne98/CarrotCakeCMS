@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 
 /*
 * CarrotCake CMS
@@ -15,7 +16,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class about : AdminBasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
-			litVersion.Text = CurrentDLLVersion;
+			litVersion.Text = SiteData.CarrotCakeCMSVersionShort;
 		}
 	}
 }

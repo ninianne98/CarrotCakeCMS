@@ -849,7 +849,7 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		static private List<string> _specialFiles = null;
+		private static List<string> _specialFiles = null;
 
 		public static List<string> SpecialFiles {
 			get {
@@ -904,12 +904,23 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static string CarrotCakeCMSVersionShort {
+			get {
+#if DEBUG
+				return string.Format("Web Forms {0} (debug)", CurrentDLLVersion);
+#else
+				return string.Format("Web Forms {0}", CurrentDLLVersion);
+#endif
+			}
+		}
+
 		public static string CarrotCakeCMSVersion {
 			get {
 #if DEBUG
 				return string.Format("CarrotCake CMS {0} DEBUG MODE", CurrentDLLVersion);
-#endif
+#else
 				return string.Format("CarrotCake CMS {0}", CurrentDLLVersion);
+#endif
 			}
 		}
 
@@ -917,8 +928,9 @@ namespace Carrotware.CMS.Core {
 			get {
 #if DEBUG
 				return string.Format("CarrotCake CMS {0} (debug)", CurrentDLLMajorMinorVersion);
-#endif
+#else
 				return string.Format("CarrotCake CMS {0}", CurrentDLLMajorMinorVersion);
+#endif
 			}
 		}
 
