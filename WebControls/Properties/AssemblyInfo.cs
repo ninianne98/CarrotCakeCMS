@@ -83,7 +83,7 @@ using System.Web.UI;
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery.jqueryui-1-10-2.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery.jqueryui-1-11-4.js", "text/javascript")]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquery.jqueryui-1-12-1.js", "text/javascript")]
-[assembly: WebResource("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-2.js", "text/javascript")]
+[assembly: WebResource("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-3.js", "text/javascript")]
 
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css", "text/css", PerformSubstitution = true)]
 [assembly: WebResource("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-blue.css", "text/css", PerformSubstitution = true)]

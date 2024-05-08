@@ -47,7 +47,7 @@ namespace Carrotware.Web.UI.Controls {
 		public static string GeneralUri {
 			get {
 				if (string.IsNullOrEmpty(_generalUri)) {
-					_generalUri = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-2.js");
+					_generalUri = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-3.js");
 				}
 
 				return _generalUri;
@@ -82,8 +82,8 @@ namespace Carrotware.Web.UI.Controls {
 
 				case "1.13":
 				default:
-					jqVer = "1.13.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-2.js");
+					jqVer = "1.13.3";
+					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-3.js");
 					break;
 			}
 
