@@ -8,15 +8,21 @@ function cmsSetPageStatus(stat) {
 	cmsIsPageLocked = stat;
 }
 
-var webSvc = cmsWebServiceApi;
+var cmsWebSvc = cmsWebServiceApi;
+var cmsAdminUri = cmsAdminBasePath;
 var thisPage = ""; // used in escaped fashion
 var thisPageNav = "";  // used non-escaped (redirects)
 var thisPageNavSaved = "";  // used non-escaped (redirects)
 var thisPageID = "";
 var cmsTimeTick = 9999;
 
+function cmsGetAdminPath() {
+	cmsWebSvc = cmsWebServiceApi;
+	cmsAdminUri = cmsAdminBasePath;
+}
+
 function cmsSetServiceParms(serviceURL, pagePath, pageID) {
-	webSvc = serviceURL;
+	cmsWebSvc = serviceURL;
 	thisPageNav = pagePath;
 	thisPage = cmsMakeStringSafe(pagePath);
 	thisPageID = pageID;
@@ -158,7 +164,7 @@ function cmsFixGeneralImage(elm, img) {
 	var title = $(elm).attr('title');
 	var alt = $(elm).attr('alt');
 
-	$(elm).html(" <img class='cmsWidgetBarImgReset' border='0' src='/c3-admin/images/" + img + "' alt='" + alt + "' title='" + alt + "' />" + title);
+	$(elm).html(" <img class='cmsWidgetBarImgReset' border='0' src='" + cmsAdminUri + "/images/" + img + "' alt='" + alt + "' title='" + alt + "' />" + title);
 }
 
 function cmsPageLockCheck() {
@@ -233,17 +239,16 @@ function cmsEditHB() {
 	if (!cmsIsPageLocked) {
 		setTimeout("cmsEditHB();", 25 * 1000);
 
-		var webMthd = webSvc + "/RecordHeartbeat";
+		var webMthd = cmsWebSvc + "/RecordHeartbeat";
 
 		$.ajax({
 			type: "POST",
 			url: webMthd,
 			data: JSON.stringify({ PageID: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsUpdateHeartbeat,
-			error: cmsAjaxFailed
-		});
+			dataType: "json"
+		}).done(cmsUpdateHeartbeat)
+			.fail(cmsAjaxFailed);
 	}
 }
 
@@ -252,23 +257,22 @@ function cmsSaveToolbarPosition() {
 	var scrollWTopPos = $('#cmsToolBox').scrollTop();
 	var tabID = $('#cmsTabbedToolbox').tabs("option", "active");
 
-	var webMthd = webSvc + "/RecordEditorPosition";
+	var webMthd = cmsWebSvc + "/RecordEditorPosition";
 
 	$.ajax({
 		type: "POST",
 		url: webMthd,
 		data: JSON.stringify({ ToolbarState: cmsMnuVis, ToolbarMargin: cmsToolbarMargin, ToolbarScroll: scrollTopPos, WidgetScroll: scrollWTopPos, SelTabID: tabID }),
 		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsAjaxGeneralCallback,
-		error: cmsAjaxFailed
-	});
+		dataType: "json"
+	}).done(cmsAjaxGeneralCallback)
+		.fail(cmsAjaxFailed);
 }
 
 function cmsSaveContent(val, zone) {
 	cmsSaveToolbarPosition();
 
-	var webMthd = webSvc + "/CacheContentZoneText";
+	var webMthd = cmsWebSvc + "/CacheContentZoneText";
 
 	val = cmsMakeStringSafe(val);
 	zone = cmsMakeStringSafe(zone);
@@ -278,16 +282,15 @@ function cmsSaveContent(val, zone) {
 		url: webMthd,
 		data: JSON.stringify({ ZoneText: val, Zone: zone, ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSaveContentCallback,
-		error: cmsAjaxFailed
-	});
+		dataType: "json"
+	}).done(cmsSaveContentCallback)
+		.fail(cmsAjaxFailed);
 }
 
 function cmsSaveGenericContent(val, key) {
 	cmsSaveToolbarPosition();
 
-	var webMthd = webSvc + "/CacheGenericContent";
+	var webMthd = cmsWebSvc + "/CacheGenericContent";
 
 	val = cmsMakeStringSafe(val);
 
@@ -296,10 +299,9 @@ function cmsSaveGenericContent(val, key) {
 		url: webMthd,
 		data: JSON.stringify({ ZoneText: val, DBKey: key, ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSaveContentCallback,
-		error: cmsAjaxFailed
-	});
+		dataType: "json"
+	}).done(cmsSaveContentCallback)
+		.fail(cmsAjaxFailed);
 }
 
 function cmsPreviewTemplate2() {
@@ -360,10 +362,10 @@ function cmsPreviewTemplate() {
 	var btnApply = ' <input type="button" id="btnApplyTemplateCMS" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
 
 	$(editFrame).append('<div id="cms-seagreen-id"><div id="cmsPreviewControls" class="cms-seagreen cmsPreviewButtons"> '
-					+ '<div id="cmsPreviewTab" class="cmsTabs cmsPreview-Left"><ul> <li>' + btnWide1 + '</li> <li>' + btnWide2 + '</li> <li>' + btnWide3 + '</li>  </ul> '
-					+ ' \r\n <div id="cmsPreviewTabPanel" style="display: none;" >    </div>\r\n   </div> '
-					+ ' <div class="cmsPreview-Right">' + ddlPreview + btnClose + btnApply + '</div> </div>'
-					+ ' </div>');
+		+ '<div id="cmsPreviewTab" class="cmsTabs cmsPreview-Left"><ul> <li>' + btnWide1 + '</li> <li>' + btnWide2 + '</li> <li>' + btnWide3 + '</li>  </ul> '
+		+ ' \r\n <div id="cmsPreviewTabPanel" style="display: none;" >    </div>\r\n   </div> '
+		+ ' <div class="cmsPreview-Right">' + ddlPreview + btnClose + btnApply + '</div> </div>'
+		+ ' </div>');
 
 	window.setTimeout("cmsPreviewStyling();", 250);
 
@@ -457,17 +459,16 @@ function cmsUpdateTemplate() {
 
 	tmpl = cmsMakeStringSafe(tmpl);
 
-	var webMthd = webSvc + "/UpdatePageTemplate";
+	var webMthd = cmsWebSvc + "/UpdatePageTemplate";
 
 	$.ajax({
 		type: "POST",
 		url: webMthd,
 		data: JSON.stringify({ TheTemplate: tmpl, ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsSaveContentCallback,
-		error: cmsAjaxFailed
-	});
+		dataType: "json"
+	}).done(cmsSaveContentCallback)
+		.fail(cmsAjaxFailed);
 }
 
 var cmsWidgetUpdateInProgress = false;
@@ -476,7 +477,7 @@ function cmsUpdateWidgets() {
 	cmsSaveToolbarPosition();
 	cmsSpinnerLong();
 
-	var webMthd = webSvc + "/CacheWidgetUpdate";
+	var webMthd = cmsWebSvc + "/CacheWidgetUpdate";
 
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
@@ -490,10 +491,9 @@ function cmsUpdateWidgets() {
 			url: webMthd,
 			data: JSON.stringify({ WidgetAddition: val, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsSaveWidgetsCallback,
-			error: cmsAjaxFailed
-		});
+			dataType: "json"
+		}).done(cmsSaveWidgetsCallback)
+			.fail(cmsAjaxFailed);
 	}
 }
 
@@ -501,7 +501,7 @@ function cmsRemoveWidget(key) {
 	cmsSaveToolbarPosition();
 	cmsSpinnerLong();
 
-	var webMthd = webSvc + "/RemoveWidget";
+	var webMthd = cmsWebSvc + "/RemoveWidget";
 
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
@@ -511,10 +511,9 @@ function cmsRemoveWidget(key) {
 			url: webMthd,
 			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsSaveWidgetsCallback,
-			error: cmsAjaxFailed
-		});
+			dataType: "json"
+		}).done(cmsSaveWidgetsCallback)
+			.fail(cmsAjaxFailed);
 	}
 }
 
@@ -522,7 +521,7 @@ function cmsMoveWidgetZone(zone, val) {
 	cmsSaveToolbarPosition();
 	cmsSpinnerLong();
 
-	var webMthd = webSvc + "/MoveWidgetToNewZone";
+	var webMthd = cmsWebSvc + "/MoveWidgetToNewZone";
 
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
@@ -532,17 +531,16 @@ function cmsMoveWidgetZone(zone, val) {
 			url: webMthd,
 			data: JSON.stringify({ WidgetTarget: zone, WidgetDropped: val, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsSaveWidgetsCallback,
-			error: cmsAjaxFailed
-		});
+			dataType: "json"
+		}).done(cmsSaveWidgetsCallback)
+			.fail(cmsAjaxFailed);
 	}
 }
 
 var IsPublishing = false;
 
 function cmsApplyChanges() {
-	var webMthd = webSvc + "/PublishChanges";
+	var webMthd = cmsWebSvc + "/PublishChanges";
 
 	// prevent multiple submissions
 	if (!IsPublishing) {
@@ -551,10 +549,9 @@ function cmsApplyChanges() {
 			url: webMthd,
 			data: JSON.stringify({ ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsSavePageCallback,
-			error: cmsAjaxFailed
-		});
+			dataType: "json"
+		}).done(cmsSavePageCallback)
+			.fail(cmsAjaxFailed);
 	}
 
 	IsPublishing = true;
@@ -648,17 +645,16 @@ function cmsNotifySaved() {
 }
 
 function cmsRecordCancellation() {
-	var webMthd = webSvc + "/CancelEditing";
+	var webMthd = cmsWebSvc + "/CancelEditing";
 
 	$.ajax({
 		type: "POST",
 		url: webMthd,
 		data: JSON.stringify({ ThisPage: thisPageID }),
 		contentType: "application/json; charset=utf-8",
-		dataType: "json",
-		success: cmsAjaxGeneralCallback,
-		error: cmsAjaxFailed
-	});
+		dataType: "json"
+	}).done(cmsAjaxGeneralCallback)
+		.fail(cmsAjaxFailed);
 }
 
 function cmsCancelEdit() {
@@ -689,17 +685,16 @@ function cmsCancelEdit() {
 }
 
 function cmsSendTrackbackBatch() {
-	var webMthd = webSvc + "/SendTrackbackBatch";
+	var webMthd = cmsWebSvc + "/SendTrackbackBatch";
 
 	if (!cmsGetOKToLeaveStatus()) {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsAjaxGeneralCallback,
-			error: cmsAjaxFailedSwallow
-		});
+			dataType: "json"
+		}).done(cmsAjaxGeneralCallback)
+			.fail(cmsAjaxFailedSwallow);
 	}
 
 	setTimeout("cmsSendTrackbackBatch();", 15000);
@@ -708,7 +703,7 @@ function cmsSendTrackbackBatch() {
 setTimeout("cmsSendTrackbackBatch();", 5000);
 
 function cmsSendTrackbackPageBatch() {
-	var webMthd = webSvc + "/SendTrackbackPageBatch";
+	var webMthd = cmsWebSvc + "/SendTrackbackPageBatch";
 
 	if (!cmsGetOKToLeaveStatus()) {
 		$.ajax({
@@ -716,10 +711,9 @@ function cmsSendTrackbackPageBatch() {
 			url: webMthd,
 			data: JSON.stringify({ ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsAjaxGeneralCallback,
-			error: cmsAjaxFailedSwallow
-		});
+			dataType: "json"
+		}).done(cmsAjaxGeneralCallback)
+			.fail(cmsAjaxFailedSwallow);
 	}
 
 	setTimeout("cmsSendTrackbackPageBatch();", 3000);
@@ -783,54 +777,54 @@ function cmsAlertModalLarge(request) {
 // do a lot of iFrame magic
 
 function cmsShowWidgetList() {
-	cmsLaunchWindow('/c3-admin/WidgetList.aspx?pageid=' + thisPageID + "&zone=cms-all-placeholder-zones");
+	cmsLaunchWindow(cmsAdminUri + '/WidgetList.aspx?pageid=' + thisPageID + "&zone=cms-all-placeholder-zones");
 }
 function cmsManageWidgetList(zoneName) {
 	//alert(zoneName);
-	cmsLaunchWindow('/c3-admin/WidgetList.aspx?pageid=' + thisPageID + "&zone=" + zoneName);
+	cmsLaunchWindow(cmsAdminUri + '/WidgetList.aspx?pageid=' + thisPageID + "&zone=" + zoneName);
 }
 function cmsManageWidgetHistory(widgetID) {
 	//alert(widgetID);
-	cmsLaunchWindow('/c3-admin/WidgetHistory.aspx?pageid=' + thisPageID + "&widgetid=" + widgetID);
+	cmsLaunchWindow(cmsAdminUri + '/WidgetHistory.aspx?pageid=' + thisPageID + "&widgetid=" + widgetID);
 }
 function cmsManageWidgetTime(widgetID) {
 	//alert(widgetID);
-	cmsLaunchWindow('/c3-admin/WidgetTime.aspx?pageid=' + thisPageID + "&widgetid=" + widgetID);
+	cmsLaunchWindow(cmsAdminUri + '/WidgetTime.aspx?pageid=' + thisPageID + "&widgetid=" + widgetID);
 }
 
 function cmsShowEditPageInfo() {
-	cmsLaunchWindow('/c3-admin/PageEdit.aspx?pageid=' + thisPageID);
+	cmsLaunchWindow(cmsAdminUri + '/PageEdit.aspx?pageid=' + thisPageID);
 }
 
 function cmsShowEditPostInfo() {
-	cmsLaunchWindow('/c3-admin/BlogPostEdit.aspx?pageid=' + thisPageID);
+	cmsLaunchWindow(cmsAdminUri + '/BlogPostEdit.aspx?pageid=' + thisPageID);
 }
 function cmsShowAddPage() {
-	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?pageid=' + thisPageID);
+	cmsLaunchWindow(cmsAdminUri + '/PageAddChild.aspx?pageid=' + thisPageID);
 }
 function cmsShowAddChildPage() {
-	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?pageid=' + thisPageID);
+	cmsLaunchWindow(cmsAdminUri + '/PageAddChild.aspx?pageid=' + thisPageID);
 }
 function cmsShowAddTopPage() {
-	cmsLaunchWindow('/c3-admin/PageAddChild.aspx?addtoplevel=true&pageid=' + thisPageID);
+	cmsLaunchWindow(cmsAdminUri + '/PageAddChild.aspx?addtoplevel=true&pageid=' + thisPageID);
 }
 function cmsEditSiteMap() {
-	cmsLaunchWindow('/c3-admin/SiteMapPop.aspx');
+	cmsLaunchWindow(cmsAdminUri + '/SiteMapPop.aspx');
 }
 
 function cmsSortChildren() {
 	//cmsAlertModal("cmsSortChildren");
-	cmsLaunchWindowOnly('/c3-admin/PageChildSort.aspx?pageid=' + thisPageID);
+	cmsLaunchWindowOnly(cmsAdminUri + '/PageChildSort.aspx?pageid=' + thisPageID);
 }
 
 function cmsShowEditWidgetForm(w, m) {
 	//cmsAlertModal("cmsShowEditWidgetForm");
-	cmsLaunchWindow('/c3-admin/ContentEdit.aspx?pageid=' + thisPageID + "&widgetid=" + w + "&mode=" + m);
+	cmsLaunchWindow(cmsAdminUri + '/ContentEdit.aspx?pageid=' + thisPageID + "&widgetid=" + w + "&mode=" + m);
 }
 
 function cmsShowEditContentForm(f, m) {
 	//cmsAlertModal("cmsShowEditContentForm");
-	cmsLaunchWindow('/c3-admin/ContentEdit.aspx?pageid=' + thisPageID + "&field=" + f + "&mode=" + m);
+	cmsLaunchWindow(cmsAdminUri + '/ContentEdit.aspx?pageid=' + thisPageID + "&field=" + f + "&mode=" + m);
 }
 
 function cmsFixSpinner() {
@@ -838,7 +832,7 @@ function cmsFixSpinner() {
 	$(".blockMsg table").addClass('cmsImageSpinnerTbl');
 }
 
-var cmsHtmlSpinner = '<table width="100%" class="cmsImageSpinnerTbl" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="/c3-admin/images/ani-smallbar.gif"/></td></tr></table>';
+var cmsHtmlSpinner = '<table width="100%" class="cmsImageSpinnerTbl" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="' + cmsAdminUri + '/images/ani-smallbar.gif"/></td></tr></table>';
 
 function cmsSpinnerShort() {
 	$("#cmsDivActive").block({
@@ -894,14 +888,14 @@ function cmsBuildOrder() {
 }
 
 function cmsCopyWidgetFrom(zoneName) {
-	cmsLaunchWindow('/c3-admin/DuplicateWidgetFrom.aspx?pageid=' + thisPageID + "&zone=" + zoneName);
+	cmsLaunchWindow(cmsAdminUri + '/DuplicateWidgetFrom.aspx?pageid=' + thisPageID + "&zone=" + zoneName);
 }
 
 function cmsCopyWidget(key) {
 	cmsSaveToolbarPosition();
 	cmsSpinnerLong();
 
-	var webMthd = webSvc + "/CopyWidget";
+	var webMthd = cmsWebSvc + "/CopyWidget";
 
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
@@ -911,10 +905,9 @@ function cmsCopyWidget(key) {
 			url: webMthd,
 			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsSaveWidgetsCallback,
-			error: cmsAjaxFailed
-		});
+			dataType: "json"
+		}).done(cmsSaveWidgetsCallback)
+			.fail(cmsAjaxFailed);
 	}
 }
 
@@ -947,7 +940,7 @@ function cmsActivateWidgetLink(key) {
 	cmsSaveToolbarPosition();
 	cmsSpinnerLong();
 
-	var webMthd = webSvc + "/ActivateWidget";
+	var webMthd = cmsWebSvc + "/ActivateWidget";
 
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
@@ -957,10 +950,9 @@ function cmsActivateWidgetLink(key) {
 			url: webMthd,
 			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsSaveWidgetsCallback,
-			error: cmsAjaxFailed
-		});
+			dataType: "json"
+		}).done(cmsSaveWidgetsCallback)
+			.fail(cmsAjaxFailed);
 	}
 }
 
@@ -1103,12 +1095,12 @@ function cmsDblClickWidgetTarget(item) {
 
 function cmsCreateNewWidget() {
 	var widget = '<div id="cmsToolItemDiv" class="cmsToolItem cmsToolItemWrapper cms-seagreen"> \r\n ' +
-					'<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath cms-seagreen" id="cmsControl"> \r\n ' +
-					'<p class="cmsToolItem cms-seagreen"> ' + cmsLastWidgetName + ' </p> \r\n ' +
-					'<input type="hidden" id="cmsCtrlID" value="' + cmsLastWidget + '" /> \r\n ' +
-					'<input type="hidden" id="cmsCtrlOrder" value="-1" /> \r\n ' +
-					'</div> \r\n ' +
-				 '</div>';
+		'<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath cms-seagreen" id="cmsControl"> \r\n ' +
+		'<p class="cmsToolItem cms-seagreen"> ' + cmsLastWidgetName + ' </p> \r\n ' +
+		'<input type="hidden" id="cmsCtrlID" value="' + cmsLastWidget + '" /> \r\n ' +
+		'<input type="hidden" id="cmsCtrlOrder" value="-1" /> \r\n ' +
+		'</div> \r\n ' +
+		'</div>';
 
 	var zone = $('#cms_' + cmsLastWidgetTarget);
 
@@ -1123,7 +1115,7 @@ function cmsCreateNewWidget() {
 
 function cmsClickAddWidget() {
 	if (cmsLastWidget.length > 1
-			&& cmsLastWidgetTarget.length > 1) {
+		&& cmsLastWidgetTarget.length > 1) {
 		$("#CMSaddconfirm").dialog({
 			open: function () {
 				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
@@ -1219,18 +1211,15 @@ function cmsOverrideCSSScope(elm, xtra) {
 }
 
 function cmsGenericEdit(PageId, WidgetId) {
-	cmsLaunchWindow('/c3-admin/ControlPropertiesEdit.aspx?pageid=' + PageId + '&id=' + WidgetId);
+	cmsLaunchWindow(cmsAdminUri + '/ControlPropertiesEdit.aspx?pageid=' + PageId + '&id=' + WidgetId);
 }
 
 function cmsLaunchWindow(theURL) {
-	var TheURL = theURL;
-
 	cmsSetiFrameSource(theURL);
 
 	cmsSaveToolbarPosition();
 	setTimeout("cmsLoadWindow();", 800);
 }
-
 
 var cmsWindoWidth = 640;
 var cmsWindowHeight = 480;
@@ -1267,14 +1256,14 @@ function cmsSetIframeRealSrc(theFrameID) {
 }
 
 function cmsSetiFrameSource(theURL) {
-	var TheURL = theURL;
+	var realURL = theURL;
 
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + TheURL + '" src="/c3-admin/includes/Blank.htm" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + realURL + '" src="' + cmsAdminUri + '/includes/Blank.htm" /> </div>');
 
 	setTimeout("cmsSetIframeRealSrc('cmsFrameEditor');", 500);
 
 	$("#cmsAjaxMainDiv2").block({
-		message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="' + cmsAdminUri + '/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
@@ -1284,8 +1273,6 @@ function cmsSetiFrameSource(theURL) {
 }
 
 function cmsLaunchWindowOnly(theURL) {
-	var TheURL = theURL;
-
 	cmsSetiFrameSource(theURL);
 
 	cmsSaveToolbarPosition();
@@ -1409,8 +1396,8 @@ var cmsExtraAttached = false;
 
 function cmsAttachExtraScripts() {
 	if (typeof jQuery != 'undefined' && !cmsExtraAttached) {
-		cmsAddScript("/c3-admin/includes/jquery.simplemodal.js");
-		cmsAddScript("/c3-admin/includes/jquery.blockUI.js");
+		cmsAddScript(cmsAdminUri + "/includes/jquery.simplemodal.js");
+		cmsAddScript(cmsAdminUri + "/includes/jquery.blockUI.js");
 
 		cmsExtraAttached = true;
 		setTimeout('cmsAttemptExtra()', 5000);

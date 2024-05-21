@@ -23,6 +23,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -806,7 +807,6 @@
     <Content Include="c3-admin\Includes\chosen.min.css" />
     <Content Include="c3-admin\Includes\FindUsers.js" />
     <Content Include="c3-admin\Includes\icheck.init.js" />
-    <Content Include="c3-admin\Includes\jquery.form.min.js" />
     <Content Include="c3-admin\Includes\jquery.tooltipster.min.js" />
     <Content Include="c3-admin\Includes\jquery.uploadfile.min.js" />
     <Content Include="c3-admin\Includes\page-drill-down.js" />

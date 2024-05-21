@@ -7,7 +7,6 @@
 	<link href="iCheck/iCheck.css" rel="stylesheet" type="text/css" />
 	<script src="iCheck/icheck.min.js" type="text/javascript"></script>
 	<script src="Includes/icheck.init.js" type="text/javascript"></script>
-	<script src="Includes/jquery.form.min.js" type="text/javascript"></script>
 	<link href="Includes/uploadfile.css" rel="stylesheet" type="text/css" />
 	<script src="Includes/jquery.uploadfile.min.js" type="text/javascript"></script>
 	<link href="Includes/filebrowser.css" rel="stylesheet" type="text/css" />

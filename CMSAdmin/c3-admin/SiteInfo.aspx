@@ -40,10 +40,9 @@
 				}),
 
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: editFilenameCallback,
-				error: cmsAjaxFailed
-			});
+				dataType: "json"
+			}).done(editFilenameCallback)
+				.fail(cmsAjaxFailed);
 		}
 
 		function editFilenameCallback(data, status) {

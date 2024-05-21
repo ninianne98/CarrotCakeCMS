@@ -29,10 +29,9 @@
 				url: webMthd,
 				data: JSON.stringify({ TheSlug: myPage, ItemID: thePageID }),
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: editSlugCallback,
-				error: cmsAjaxFailed
-			});
+				dataType: "json"
+			}).done(editSlugCallback)
+				.fail(cmsAjaxFailed);
 		}
 
 		function GenerateSlug() {
@@ -49,10 +48,9 @@
 					url: webMthd,
 					data: JSON.stringify({ TheSlug: mySlug }),
 					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: editSlug,
-					error: cmsAjaxFailed
-				});
+					dataType: "json"
+				}).done(editSlug)
+					.fail(cmsAjaxFailed);
 
 			} else {
 				CheckSlug();
@@ -149,10 +147,9 @@
 				url: webMthd,
 				data: JSON.stringify({ ItemID: thePageID }),
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: updateHeartbeat,
-				error: cmsAjaxFailed
-			});
+				dataType: "json"
+			}).done(updateHeartbeat)
+				.fail(cmsAjaxFailed);
 		}
 
 		function updateHeartbeat(data, status) {
@@ -176,10 +173,9 @@
 					url: webMthd,
 					data: JSON.stringify({ ItemID: thePageID }),
 					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: cmsAjaxGeneralCallback,
-					error: cmsAjaxFailed
-				});
+					dataType: "json"
+				}).done(cmsAjaxGeneralCallback)
+					.fail(cmsAjaxFailed);
 			}
 		}
 

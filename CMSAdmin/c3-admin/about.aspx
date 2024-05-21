@@ -1,19 +1,20 @@
 ﻿<%@ Page Title="About" Language="C#" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="about.aspx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.about" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
-	<style>
-		body {
-			font-size: 1.08em;
-		}
+<style>
+	body {
+		font-size: 12pt;
+		line-height: 1.3em;
+	}
 
-		b {
-			color: #6a7960;
-		}
+	b {
+		color: #6a7960;
+	}
 
-		a {
-			color: #c76813;
-		}
-	</style>
+	a {
+		color: #c76813;
+	}
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
 	About
@@ -217,14 +218,6 @@
 		http://opensource.org/licenses/MIT
 		<br />
 		http://www.gnu.org/licenses/gpl.html
-		<br />
-	</p>
-	<p>
-		<b>jQuery Form Plugin</b>
-		<br />
-		Copyright (c) 2014 M. Alsup, <a target="_blank" href="http://malsup.com/jquery/form/">http://malsup.com/jquery/form/</a>
-		<br />
-		Dual licensed under the MIT and GPL licenses. https://github.com/malsup/form#copyright-and-license
 		<br />
 	</p>
 	<p>

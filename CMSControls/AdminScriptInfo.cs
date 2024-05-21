@@ -21,9 +21,11 @@ namespace Carrotware.CMS.UI.Controls {
 	public class AdminScriptInfo : BaseWebControl {
 
 		protected override void RenderContents(HtmlTextWriter output) {
+			var versionKey = string.Format("cms={0}", SiteData.CurrentDLLVersion);
 			var tag = new HtmlTag(HtmlTag.EasyTag.JavaScript);
 			var key = SecurityData.IsAuthenticated ? DateTime.UtcNow.Ticks.ToString().Substring(0, 8) : WebControlHelper.DateKey();
-			tag.Uri = SiteFilename.AdminScriptValues + "?ts=" + key;
+
+			tag.Uri = SiteFilename.AdminScriptValues + "?ts=" + key + (SecurityData.IsAuthenticated ? ("&a=true&" + versionKey) : string.Empty);
 
 			output.WriteLine(tag.RenderTag());
 		}

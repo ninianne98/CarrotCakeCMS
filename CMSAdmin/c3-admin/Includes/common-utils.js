@@ -39,7 +39,8 @@ function AjaxBtnLoad() {
 	}
 }
 
-var webSvc = cmsWebServiceApi;
+var cmsWebSvc = cmsWebServiceApi;
+var cmsAdminUri = cmsAdminBasePath;
 
 function cmsScrubDate(val) {
 	val = val.replace(/m/gi, 'mm');
@@ -76,7 +77,7 @@ function cmsSetDateRegion() {
 			changeMonth: true,
 			changeYear: true,
 			showOn: "both",
-			buttonImage: '/c3-admin/images/calendar.png',
+			buttonImage: cmsAdminUri + '/images/calendar.png',
 			buttonImageOnly: true,
 			constrainInput: true,
 			beforeShow: function () {
@@ -107,7 +108,7 @@ function cmsSetTimeRegion() {
 			$(this).parent().css('position', 'relative');
 
 			var id = $(this).attr('id');
-			$('<img class="ui-timepicker-trigger" src="/c3-admin/images/clock.png" for="' + id + '" id="' + id + '_triggerbtn" alt="' + cmsTimePattern + '" title="' + cmsTimePattern + '">').insertAfter(this);
+			$('<img class="ui-timepicker-trigger" src="' + cmsAdminUri + '/images/clock.png" for="' + id + '" id="' + id + '_triggerbtn" alt="' + cmsTimePattern + '" title="' + cmsTimePattern + '">').insertAfter(this);
 
 			$(this).timepicker({
 				showOn: "both",
@@ -125,7 +126,7 @@ $(document).ready(function () {
 	AjaxBtnLoad();
 });
 
-var htmlAjaxSpinnerTable = '<table class="cmsTableSpinner"><tr><td><img class="cmsRingSpinner" src="/c3-admin/images/Ring-64px-A7B2A0.gif"/></td></tr></table>';
+var htmlAjaxSpinnerTable = '<table class="cmsTableSpinner"><tr><td><img class="cmsRingSpinner" src="' + cmsAdminUri + '/images/Ring-64px-A7B2A0.gif"/></td></tr></table>';
 
 function BlockUI(elementID) {
 	if (typeof (Sys) != 'undefined') {
@@ -181,10 +182,8 @@ function uncheckGridBoxes(gridID) {
 
 //===================
 
-var webSvc = cmsWebServiceApi;
-
 function cmsGetServiceAddress() {
-	return webSvc;
+	return cmsWebServiceApi;
 }
 
 function MakeStringSafe(val) {
@@ -450,17 +449,16 @@ function checkFloatNumber(obj) {
 }
 
 function cmsSendTrackbackBatch() {
-	var webMthd = webSvc + "/SendTrackbackBatch";
+	var webMthd = cmsWebSvc + "/SendTrackbackBatch";
 
 	if (!cmsGetOKToLeaveStatus()) {
 		$.ajax({
 			type: "POST",
 			url: webMthd,
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsAjaxGeneralCallback,
-			error: cmsAjaxFailedSwallow
-		});
+			dataType: "json"
+		}).done(cmsAjaxGeneralCallback)
+			.fail(cmsAjaxFailedSwallow);
 	}
 
 	setTimeout("cmsSendTrackbackBatch();", 10000);
@@ -469,7 +467,7 @@ function cmsSendTrackbackBatch() {
 //setTimeout("cmsSendTrackbackBatch();", 5000);
 
 function cmsSendTrackbackPageBatch(thePageID) {
-	var webMthd = webSvc + "/SendTrackbackPageBatch";
+	var webMthd = cmsWebSvc + "/SendTrackbackPageBatch";
 
 	if (!cmsGetOKToLeaveStatus()) {
 		$.ajax({
@@ -477,10 +475,9 @@ function cmsSendTrackbackPageBatch(thePageID) {
 			url: webMthd,
 			data: JSON.stringify({ ThisPage: thePageID }),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: cmsAjaxGeneralCallback,
-			error: cmsAjaxFailedSwallow
-		});
+			dataType: "json"
+		}).done(cmsAjaxGeneralCallback)
+			.fail(cmsAjaxFailedSwallow);
 	}
 
 	setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 12000);
@@ -523,7 +520,7 @@ function cmsForceInputValidation(inputId) {
 
 //====================================
 
-var TheURL = '';
+var realFrameUri = '';
 var RefreshPage = 0;
 
 //============ full page
@@ -543,9 +540,9 @@ function SetIframeRealSrc(theFrameID) {
 }
 
 function LaunchWindow(theURL) {
-	TheURL = theURL;
+	realFrameUri = theURL;
 
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + TheURL + '" src="/c3-admin/includes/Blank.htm" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + realFrameUri + '" src="' + cmsAdminUri + '/includes/Blank.htm" /> </div>');
 
 	setTimeout("SetIframeRealSrc('cmsFrameEditor');", 1500);
 
@@ -572,9 +569,9 @@ function ShowWindowPop(theURL) {
 }
 
 function LaunchWindowPop(theURL) {
-	TheURL = theURL;
+	realFrameUri = theURL;
 
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="640" height="390" realsrc="' + TheURL + '" src="/c3-admin/includes/Blank.htm" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="640" height="390" realsrc="' + realFrameUri + '" src="' + cmsAdminUri + '/includes/Blank.htm" /> </div>');
 
 	setTimeout("SetIframeRealSrc('cmsFrameEditor');", 1500);
 
@@ -676,7 +673,7 @@ function cmsFileBrowserOpenReturn(fldN) {
 	var fld = $(fldN);
 	fldNameRet = fld.attr('id');
 
-	ShowWindowNoRefresh('/c3-admin/FileBrowser.aspx?returnvalue=1&viewmode=file&fldrpath=/');
+	ShowWindowNoRefresh(cmsAdminUri + '/FileBrowser.aspx?returnvalue=1&viewmode=file&fldrpath=/');
 
 	return false;
 }
@@ -686,7 +683,7 @@ function cmsFileBrowserOpenReturnPop(fldN) {
 	var fld = $(fldN);
 	fldNameRet = fld.attr('id');
 
-	ShowWindowNoRefreshPop('/c3-admin/FileBrowser.aspx?returnvalue=1&viewmode=file&fldrpath=/');
+	ShowWindowNoRefreshPop(cmsAdminUri + '/FileBrowser.aspx?returnvalue=1&viewmode=file&fldrpath=/');
 
 	return false;
 }

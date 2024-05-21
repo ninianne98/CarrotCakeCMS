@@ -50,7 +50,6 @@ function loadResults(data, response) {
 }
 
 function bindBehavior() {
-
 	$(fldSearch).on('change keyup paste textchange', function () {
 		if ($(fldSearch).val().length < 1) {
 			resetSearchFields();
@@ -81,16 +80,12 @@ function bindBehavior() {
 				dataType: 'json',
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify({ searchTerm: search }),
-				dataFilter: function (data) { return data; },
-
-				success: function (data) {
-					loadResults(data, response);
-				},
-
-				error: function (xmlRequest, textStatus, errorThrown) {
-					resetSearchFields();
-					cmsAjaxFailed(xmlRequest);
-				}
+				dataFilter: function (data) { return data; }
+			}).done(function (data, status, xhr) {
+				loadResults(data, response);
+			}).fail(function (xhr, status, error) {
+				resetSearchFields();
+				cmsAjaxFailed(xhr);
 			});
 		},
 
@@ -104,5 +99,4 @@ function bindBehavior() {
 		minLength: 1,
 		delay: 1000
 	});
-
 }

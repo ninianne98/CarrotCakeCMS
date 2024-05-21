@@ -32,10 +32,9 @@
 				url: webMthd,
 				data: JSON.stringify({ ThePageSlug: myPage, GoLiveDate: sGoLiveDate }),
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: editPrefixCallback,
-				error: cmsAjaxFailed
-			});
+				dataType: "json"
+			}).done(editPrefixCallback)
+				.fail(cmsAjaxFailed);
 
 		}
 
@@ -69,10 +68,9 @@
 				url: webMthd,
 				data: JSON.stringify({ ThePageSlug: myPage, GoLiveDate: sGoLiveDate, PageID: thePageID }),
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: editFilenameCallback,
-				error: cmsAjaxFailed
-			});
+				dataType: "json"
+			}).done(editFilenameCallback)
+				.fail(cmsAjaxFailed);
 		}
 
 		$(document).ready(function () {
@@ -151,10 +149,9 @@
 					url: webMthd,
 					data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'blog' }),
 					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: ajaxGeneratePageFilename,
-					error: cmsAjaxFailed
-				});
+					dataType: "json"
+				}).done(ajaxGeneratePageFilename)
+					.fail(cmsAjaxFailed);
 			} else {
 				cmsAlertModalSmall("Cannot create a filename with there is no title value assigned.");
 			}
@@ -221,10 +218,9 @@
 				url: webMthd,
 				data: JSON.stringify({ PageID: thePageID }),
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: updateHeartbeat,
-				error: cmsAjaxFailed
-			});
+				dataType: "json"
+			}).done(updateHeartbeat)
+				.fail(cmsAjaxFailed);
 		}
 
 		function updateHeartbeat(data, status) {
@@ -278,10 +274,9 @@
 					url: webMthd,
 					data: JSON.stringify({ ThisPage: thePageID }),
 					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: cmsAjaxGeneralCallback,
-					error: cmsAjaxFailed
-				});
+					dataType: "json"
+				}).done(cmsAjaxGeneralCallback)
+					.fail(cmsAjaxFailed);
 			}
 		}
 
@@ -342,10 +337,9 @@
 				url: webMthd,
 				data: JSON.stringify({ DBKey: val, ThisPage: thisPageID }),
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: cmsReqContentCallback,
-				error: cmsAjaxFailed
-			});
+				dataType: "json"
+			}).done(cmsReqContentCallback)
+				.fail(cmsAjaxFailed);
 		}
 
 		function cmsDoToolTipDataRequest(val) {
@@ -802,6 +796,12 @@
 			$('#<%=btnSaveVisit.ClientID %>').click();
 		}
 	}
+
+	function cmsTinyMceSave() {
+		SubmitPage();
+	}
+
+	cmsTinyMceSaveShow();
 
 	function SaveCommon() {
 		cmsSaveMakeOKAndCancelLeave();

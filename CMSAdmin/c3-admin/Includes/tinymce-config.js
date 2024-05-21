@@ -1,15 +1,19 @@
-﻿var tinyBrowseHeight = 300;
-var tinyBrowseWidth = 500;
+﻿if (typeof jQuery === 'undefined') {
+	throw new Error('Tiny config JavaScript requires jQuery')
+}
+
+var tinyBrowseHeight = 400;
+var tinyBrowseWidth = 600;
 var tinyBrowseResize = false;
 
 function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 	tinyBrowseHeight = parseInt(winHeight);
 	tinyBrowseWidth = parseInt(winWidth);
-	if (tinyBrowseWidth < 700) {
-		tinyBrowseWidth = 700;
+	if (tinyBrowseWidth < 500) {
+		tinyBrowseWidth = 500;
 	}
-	if (tinyBrowseHeight < 150) {
-		tinyBrowseHeight = 150;
+	if (tinyBrowseHeight < 100) {
+		tinyBrowseHeight = 100;
 	}
 
 	tinyBrowseResize = allowResize;
@@ -30,22 +34,32 @@ function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 		promotion: false,
 		convert_unsafe_embeds: true,
 		plugins: 'image link lists media charmap searchreplace visualblocks table preview code codesample help',
-		toolbar1: 'bold italic underline strikethrough sub sup | blocks forecolor backcolor | blockquote alignleft aligncenter alignright alignjustify outdent indent | help | ',
+		toolbar1: 'savebutton | bold italic underline strikethrough sub sup | blocks forecolor backcolor | blockquote alignleft aligncenter alignright alignjustify outdent indent | help | ',
 		toolbar2: 'undo redo searchreplace | bullist numlist | removeformat pastetext | link unlink anchor image media customfilebrowser | charmap codesample code preview visualblocks',
 		removed_menuitems: 'newdocument help',
 		codesample_languages: [
 			{ text: 'HTML', value: 'markup' },
+			{ text: 'Markdown', value: 'markdown' },
+			{ text: 'Plain Text', value: 'plaintext' },
 			{ text: 'XML', value: 'xml' },
+			{ text: 'JSON', value: 'json' },
 			{ text: 'Bash', value: 'bash' },
+			{ text: 'Shell', value: 'shell' },
+			{ text: 'Access log', value: 'accesslog' },
 			{ text: 'JavaScript', value: 'javascript' },
+			{ text: 'TypeScript', value: 'typescript' },
 			{ text: 'CSS', value: 'css' },
 			{ text: 'SQL', value: 'sql' },
 			{ text: 'PHP', value: 'php' },
 			{ text: 'Ruby', value: 'ruby' },
 			{ text: 'Python', value: 'python' },
+			{ text: 'PowerShell', value: 'powershell' },
 			{ text: 'Java', value: 'java' },
 			{ text: 'C', value: 'c' },
 			{ text: 'C#', value: 'csharp' },
+			{ text: 'VB', value: 'vbnet' },
+			{ text: 'ASP', value: 'vbscript-html' },
+			{ text: 'VBS', value: 'vbscript' },
 			{ text: 'C++', value: 'cpp' }
 		],
 		resize: tinyBrowseResize,
@@ -63,8 +77,60 @@ function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 					cmsTinyFileBrowser('0');
 				}
 			});
+
+			editor.ui.registry.addButton('savebutton', {
+				icon: 'save',
+				tooltip: "Save Document",
+				onAction: function (_) {
+					cmsTinyMceSave();
+				}
+			});
 		},
 		content_css: contentCss
+	});
+
+	setTimeout(function () {
+		cmsTinyMceSaveHide();
+	}, 200);
+
+	setTimeout(function () {
+		cmsTinyMceSaveHide();
+	}, 800);
+}
+
+function cmsTinyMceSave() {
+	alert("not implemented");
+}
+
+var cmsTinySpecialCss = 'tiny-save-ok';
+
+function cmsTinyMceSaveHide() {
+	var tinySave = $('.tox-toolbar-overlord').find('button[aria-label="Save Document"]');
+
+	$(tinySave).each(function () {
+		if (!$(this).parent().hasClass(cmsTinySpecialCss)) {
+			$(this).parent().hide();
+		}
+	});
+}
+
+function cmsTinyMceSaveShow() {
+	setTimeout(function () {
+		__cmsTinyMceSaveShow();
+	}, 600);
+	setTimeout(function () {
+		__cmsTinyMceSaveShow();
+	}, 1200);
+}
+
+function __cmsTinyMceSaveShow() {
+	var tinySave = $('.tox-toolbar-overlord').find('button[aria-label="Save Document"]');
+
+	$(tinySave).each(function () {
+		if (!$(this).parent().hasClass(cmsTinySpecialCss)) {
+			$(this).parent().show();
+			$(this).parent().addClass(cmsTinySpecialCss);
+		}
 	});
 }
 
@@ -79,7 +145,7 @@ function cmsTinyFileBrowserCallback(callback, value, meta) {
 }
 
 function cmsTinyFileBrowser(fld) {
-	var sURL = "/c3-admin/FileBrowser.aspx?useTiny=1&returnvalue=" + fld + "&viewmode=file&fldrpath=/";
+	var sURL = cmsAdminUri + "/FileBrowser.aspx?useTiny=1&returnvalue=" + fld + "&viewmode=file&fldrpath=/";
 
 	tinymce.activeEditor.windowManager.openUrl({
 		url: sURL,
@@ -110,17 +176,26 @@ function cmsFileBrowseSetUri(uri, h, w) {
 }
 
 function cmsPreSaveTrigger() {
-	var tgr = tinymce.triggerSave();
-
+	if (tinymce) {
+		var tgr = tinymce.triggerSave();
+	}
 	return true;
 }
 
 function cmsToggleTinyMCE(id) {
-	if (!tinymce.get(id))
+	if (!tinymce.get(id)) {
+		$('#' + id).addClass("mceEditor");
+		$('#' + id).removeClass("rawEditor");
 		tinymce.execCommand('mceAddControl', false, id);
-	else
+	} else {
+		$('#' + id).addClass("rawEditor");
+		$('#' + id).removeClass("mceEditor");
+		tinymce.execCommand('mceFocus', false, id);
 		tinymce.execCommand('mceRemoveControl', false, id);
+	}
 }
+
+//==================================
 
 var fldName = '';
 var winBrowse = null;
@@ -133,7 +208,7 @@ function cmsFileBrowserOpen(fldN) {
 		winBrowse.close();
 	}
 
-	ShowWindowNoRefresh('/c3-admin/FileBrowser.aspx?useTiny=0&viewmode=file&fldrpath=/');
+	ShowWindowNoRefresh(cmsAdminUri + '/FileBrowser.aspx?useTiny=0&viewmode=file&fldrpath=/');
 
 	return false;
 }
@@ -146,3 +221,8 @@ function cmsSetFileName(v) {
 	winBrowse.close();
 	winBrowse = null;
 }
+
+//===================
+
+var cmsAdminUri = cmsAdminBasePath;  //  "/c3-admin/";
+var cmsWebSvc = cmsWebServiceApi;

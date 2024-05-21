@@ -84,10 +84,9 @@
 						url: webMthd,
 						data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'page' }),
 						contentType: "application/json; charset=utf-8",
-						dataType: "json",
-						success: ajaxGeneratePageFilename,
-						error: cmsAjaxFailed
-					});
+						dataType: "json"
+					}).done(ajaxGeneratePageFilename)
+						.fail(cmsAjaxFailed);
 				}
 			} else {
 				cmsAlertModalSmall("Cannot create a filename with there is no title value assigned.");
@@ -132,10 +131,9 @@
 					url: webMthd,
 					data: JSON.stringify({ TheFileName: myPage, PageID: thePageID }),
 					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: editFilenameCallback,
-					error: cmsAjaxFailed
-				});
+					dataType: "json"
+				}).done(editFilenameCallback)
+					.fail(cmsAjaxFailed);
 			}
 		}
 

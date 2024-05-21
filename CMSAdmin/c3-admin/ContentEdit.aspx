@@ -33,6 +33,12 @@
 			function ClickBtn() {
 				$('#<%=btnSave.ClientID %>').click();
 			}
+
+			function cmsTinyMceSave() {
+				SubmitPage();
+			}
+
+			cmsTinyMceSaveShow();
 		</script>
 	</asp:Panel>
 	<asp:Panel ID="pnlPlain" runat="server" Visible="false">

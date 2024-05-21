@@ -43,11 +43,11 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public void GetAdminScript(HttpContext context) {
-			context.VaryCacheByQuery(new string[] { "ts" });
+			context.VaryCacheByQuery(new string[] { "ts", "cms", "a" });
 
 			var expireIn = 1;
 			if (SecurityData.IsAuthenticated) {
-				expireIn = 5;
+				expireIn = 3;
 			}
 			SetExpires(context, expireIn);
 
