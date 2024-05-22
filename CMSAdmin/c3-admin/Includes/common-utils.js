@@ -701,8 +701,68 @@ function cmsSetFileNameReturn(v) {
 //===========================
 
 var cmsConfirmLeavingPage = true;
+var cmsContentFormSerial = '';
+
+function cmsSerializeForm(frmName) {
+	if (tinymce) {
+		var ret = tinymce.triggerSave();
+	}
+	return '' + $(frmName + ' input:not(.non-serial-data)').serialize() + '&'
+		+ $(frmName + ' textarea:not(.non-serial-data)').serialize() + '';
+}
+
+$(document).ready(function () {
+	setTimeout(function () {
+		cmsDirtyPageInit();
+	}, 2500);
+});
+
+function cmsDirtyPageForceInit() {
+	var serial = $("[id$=SerialCache]").attr("id") || '';
+	//console.log('cmsDirtyPageForceInit:  ' + serial);
+
+	if (serial.length > 0) {
+		var serialId = '#' + serial;
+		if ($(serialId).val().length < 10) {
+			$(serialId).val('');
+			cmsContentFormSerial = '';
+		}
+
+		setTimeout(function () {
+			cmsDirtyPageInit();
+		}, 1250);
+	}
+}
+
+function cmsDirtyPageInit() {
+	var serial = $("[id$=SerialCache]").attr("id") || '';
+	//console.log('cmsDirtyPageInit:  ' + serial);
+
+	if (serial.length > 0 && $('#contentForm').length > 0) {
+		var serialId = '#' + serial;
+		if ($(serialId).val().length < 10) {
+			cmsContentFormSerial = cmsSerializeForm('#contentForm');
+			$(serialId).val(cmsContentFormSerial);
+		} else {
+			cmsContentFormSerial = $(serialId).val();
+		}
+	}
+}
 
 function cmsGetPageStatus() {
+	if (cmsConfirmLeavingPage == true) {
+		var currentSerial = '';
+		if (cmsContentFormSerial.length > 0) {
+			currentSerial = cmsSerializeForm('#contentForm');
+
+			//console.log('currentSerial  ' + currentSerial);
+			//console.log('cmsContentFormSerial  ' + cmsContentFormSerial);
+			//console.log((currentSerial == cmsContentFormSerial));
+
+			return !(currentSerial == cmsContentFormSerial);
+		}
+	}
+
 	return cmsConfirmLeavingPage;
 }
 

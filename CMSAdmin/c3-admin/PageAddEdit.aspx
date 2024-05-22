@@ -41,9 +41,9 @@
 				"Yes": function () { OverwriteFileData(); }
 			};
 
-			if (theTitle.length > 0 ) {
+			if (theTitle.length > 0) {
 				if (theFile.length > 0 || theNav.length > 0) {
-					cmsAlertModalSmallBtns('There is already content title and/or filename, overwrite?', opts );
+					cmsAlertModalSmallBtns('There is already content title and/or filename, overwrite?', opts);
 				} else {
 					GeneratePageFilename2();
 				}
@@ -350,351 +350,354 @@
 		</div>
 	</div>
 	<div id="PageContents">
-		<table class="table-lg">
-			<tr>
-				<td style="width: 125px;" class="tablecaption">last updated:
-				</td>
-				<td style="width: 575px;">
-					<asp:Label ID="lblUpdated" runat="server" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">create date:
-				</td>
-				<td>
-					<asp:Label ID="lblCreateDate" runat="server" /><br />
-					<br />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">release date:
-				</td>
-				<td>
-					<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">retire date:
-				</td>
-				<td>
-					<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">titlebar:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server"
-						Columns="60" MaxLength="200" />
-					<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
-						<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
-						runat="server" ErrorMessage="Titlebar is required" ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">filename:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
-						Columns="60" MaxLength="200" />
-					<a href="javascript:void(0)" onclick="openPage();">
-						<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileName" ID="RequiredFieldValidator2"
-						runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic" Text="**" />
-					<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1"
-						runat="server" ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID"
-						Operator="Equal" />
-					<div style="display: none;">
-						<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
-						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator3"
-							runat="server" ErrorMessage="Filename validation is required" ToolTip="Filename validation is required" Display="Dynamic" Text="**" />
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">navigation:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60" MaxLength="200" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav" ID="RequiredFieldValidator4"
-						runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">page head:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60" MaxLength="200" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">thumbnail:
-					<br />
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
-					<input type="button" id="btnThumb" value="Browse" onclick="<%=ClickFileBrowser(txtThumb) %>" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">&nbsp;
-				</td>
-				<td>
-					<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
-					&nbsp;&nbsp;&nbsp;
-					<asp:CheckBox ID="chkNavigation" runat="server" Text="Include in site navigation" Checked="true" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">&nbsp;
-				</td>
-				<td>
-					<asp:CheckBox ID="chkSiteMap" runat="server" Text="Include In Sitemap" Checked="true" />
-					&nbsp;&nbsp;&nbsp;
-					<asp:CheckBox ID="chkHide" runat="server" Text="Hide from Search Engines" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">credit author:
-				</td>
-				<td>
-					<b>find:</b> <span id="spanResults"></span>
-					<br />
-					<asp:TextBox ValidationGroup="inputForm" ID="txtSearchUser" onkeypress="return ProcessKeyPress(event)" Columns="60" MaxLength="100" runat="server" />
-					<asp:HiddenField ID="hdnCreditUserID" runat="server" />
-				</td>
-			</tr>
-			<tr>
-				<td style="width: 125px;" class="tablecaption">meta keywords:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine" runat="server" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">meta description:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine"
-						runat="server" />
-				</td>
-			</tr>
-			<tr style="display: none">
-				<td class="tablecaption">sort:
-				</td>
-				<td>
-					<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="1" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
-					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSort" ID="RequiredFieldValidator5"
-						runat="server" ErrorMessage="Sort Required" Display="Dynamic" Text="**" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">parent page:
-					<br />
-				</td>
-				<td>
-					<!-- parent page plugin-->
-					<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
-					<div style="clear: both; height: 2px;">
-					</div>
-					<%--<asp:DropDownList DataTextField="NavMenuText" DataValueField="Root_ContentID" ID="ddlParent" runat="server">
-				</asp:DropDownList>--%>
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption">template:
-				</td>
-				<td>
-					<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server" />
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" onclick="cmsPreviewTemplate()" value="Preview" />
-				</td>
-			</tr>
-			<tr>
-				<td class="tablecaption"></td>
-				<td align="right">
-					<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
-				</td>
-			</tr>
-		</table>
-		<br />
-		<div id="jqtabs" style="height: 600px; width: 1024px; margin-bottom: 10px;">
-			<ul>
-				<li><a href="#pagecontent-tabs-0">Left</a></li>
-				<li><a href="#pagecontent-tabs-1">Center</a></li>
-				<li><a href="#pagecontent-tabs-3">Right</a></li>
-				<li><a href="#pagecontent-tabs-5">Text Controls</a></li>
-				<asp:PlaceHolder runat="server" ID="phTrackback1">
-					<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
-				</asp:PlaceHolder>
-			</ul>
-			<div style="margin-bottom: 25px; height: 580px; width: 990px;">
-				<div id="pagecontent-tabs-0">
-					<div style="margin-bottom: 25px;">
-						<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-						<br />
-					</div>
-				</div>
-				<div id="pagecontent-tabs-1">
-					<div style="margin-bottom: 25px;">
-						<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-						<br />
-					</div>
-				</div>
-				<div id="pagecontent-tabs-3">
-					<div style="margin-bottom: 25px;">
-						<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
-						<br />
-					</div>
-				</div>
-				<div id="pagecontent-tabs-5">
-					<div class="scroll-container" style="height: 325px; width: 780px;">
-						<div class="scroll-area" style="height: 310px; width: 775px;">
-							<div class="SortableGrid">
-								<div>
-									<h3>HTML Rich Text Widgets</h3>
-									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvHtmControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
-										<EmptyDataTemplate>
-											<p>
-												<b>No html text widgets found.</b>
-											</p>
-										</EmptyDataTemplate>
-										<Columns>
-											<asp:TemplateField>
-												<ItemTemplate>
-													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.HtmlMode, guidContentID, Eval("Root_WidgetID")) %>');">
-														<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></a>
-												</ItemTemplate>
-											</asp:TemplateField>
-											<asp:TemplateField>
-												<ItemTemplate>
-													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.RawMode, guidContentID, Eval("Root_WidgetID")) %>');">
-														<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
-												</ItemTemplate>
-											</asp:TemplateField>
-											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
-											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
-											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
-												AlternateTextTrue="Active" ShowBooleanImage="true" />
-											<asp:TemplateField>
-												<HeaderTemplate>
-												</HeaderTemplate>
-												<ItemTemplate>
-													<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
-														<img src="/c3-admin/images/doc.png" alt="text" /></a>
-												</ItemTemplate>
-											</asp:TemplateField>
-										</Columns>
-									</carrot:CarrotGridView>
-								</div>
-								<br />
-								<div>
-									<h3>Plain Text Widgets</h3>
-									<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvTxtControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
-										<EmptyDataTemplate>
-											<p>
-												<b>No plain text widgets found.</b>
-											</p>
-										</EmptyDataTemplate>
-										<Columns>
-											<asp:TemplateField>
-												<ItemTemplate>
-													<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.RawMode, guidContentID, Eval("Root_WidgetID")) %>');">
-														<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
-												</ItemTemplate>
-											</asp:TemplateField>
-											<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
-											<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
-											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
-												AlternateTextTrue="Active" ShowBooleanImage="true" />
-											<asp:TemplateField>
-												<HeaderTemplate>
-												</HeaderTemplate>
-												<ItemTemplate>
-													<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
-														<img src="/c3-admin/images/doc.png" alt="text" /></a>
-												</ItemTemplate>
-											</asp:TemplateField>
-										</Columns>
-									</carrot:CarrotGridView>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<asp:PlaceHolder runat="server" ID="phTrackback2">
-					<div id="pagecontent-tabs-4">
-						<div style="margin-bottom: 25px;">
-							<div runat="server" id="divTrackback">
-								new trackbacks, one per line<br />
-							</div>
-							<asp:TextBox Style="height: 255px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
-							<div class="scroll-container" style="height: 175px; width: 780px;">
-								<div class="scroll-area" style="height: 170px; width: 775px;">
-									<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
-										AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
-										<Columns>
-											<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
-											<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:d} {0:t}" />
-											<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d} {0:t}" />
-											<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked"
-												AlternateTextTrue="Tracked" ShowBooleanImage="true" />
-										</Columns>
-									</carrot:CarrotGridView>
-								</div>
-							</div>
-						</div>
-					</div>
-				</asp:PlaceHolder>
-			</div>
-		</div>
-		<table style="width: 800px;">
-			<tr>
-				<td align="left">
-					<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; min-height: 22px;">
-						&nbsp;
-					</div>
-				</td>
-				<td>&nbsp;&nbsp;
-				</td>
-			</tr>
-		</table>
-		<div style="display: none;">
-			<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
-		</div>
-		<asp:PlaceHolder ID="pnlButtons" runat="server">
-			<table style="width: 1100px;">
+		<div id="contentForm">
+			<table class="table-lg">
 				<tr>
-					<td>
-						<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Save" />
-						&nbsp;&nbsp;
-						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="return SubmitPageVisit()" Text="Save and Visit" />
-						&nbsp;&nbsp;
-						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
-						&nbsp;&nbsp;
-						<input type="button" runat="server" id="btnDeleteButton" value="Delete" onclick="deleteContent()" />
+					<td style="width: 125px;" class="tablecaption">last updated:
+					</td>
+					<td style="width: 575px;">
+						<asp:Label ID="lblUpdated" runat="server" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">create date:
 					</td>
 					<td>
-						<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
+						<asp:Label ID="lblCreateDate" runat="server" /><br />
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">release date:
+					</td>
+					<td>
+						<uc1:datetime runat="server" ID="ucReleaseDate" ValidationGroup="inputForm" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">retire date:
+					</td>
+					<td>
+						<uc1:datetime runat="server" ID="ucRetireDate" ValidationGroup="inputForm" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">titlebar:
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="AutoGeneratePageFilename()" ID="txtTitle" runat="server"
+							Columns="60" MaxLength="200" />
+						<a href="javascript:void(0)" onclick="GeneratePageFilename()" class="lnkPopup">
+							<img class="imgNoBorder" src="images/page_white_wrench.png" title="Generate Filename and other Title fields" alt="Generate Filename and other Title fields" /></a>&nbsp;
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtTitle" ID="RequiredFieldValidator1"
+						runat="server" ErrorMessage="Titlebar is required" ToolTip="Titlebar is required" Display="Dynamic" Text="**" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">filename:
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
+							Columns="60" MaxLength="200" />
+						<a href="javascript:void(0)" onclick="openPage();">
+							<img class="imgNoBorder" src="images/html2.png" title="Visit page" alt="Visit page" /></a>&nbsp;
+					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileName" ID="RequiredFieldValidator2"
+						runat="server" ErrorMessage="Filename is required" ToolTip="Filename is required" Display="Dynamic" Text="**" />
+						<asp:CompareValidator ValidationGroup="inputForm" CssClass="validationExclaim" ForeColor="" ControlToValidate="txtFileValid" ID="CompareValidator1"
+							runat="server" ErrorMessage="Filename is not valid/not unique" ToolTip="Filename is not valid/not unique" Text="##" Display="Dynamic" ValueToCompare="VALID"
+							Operator="Equal" />
+						<div style="display: none;">
+							<asp:TextBox runat="server" ValidationGroup="inputForm" ID="txtFileValid" MaxLength="25" Columns="25" />
+							<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileValid" ID="RequiredFieldValidator3"
+								runat="server" ErrorMessage="Filename validation is required" ToolTip="Filename validation is required" Display="Dynamic" Text="**" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">navigation:
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtNav" runat="server" Columns="60" MaxLength="200" />
+						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtNav" ID="RequiredFieldValidator4"
+							runat="server" ErrorMessage="Navigation text is required" ToolTip="Navigation text is required" Display="Dynamic" Text="**" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">page head:
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtHead" runat="server" Columns="60" MaxLength="200" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">thumbnail:
+					<br />
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtThumb" runat="server" Columns="60" MaxLength="200" />
+						<input type="button" id="btnThumb" value="Browse" onclick="<%=ClickFileBrowser(txtThumb) %>" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">&nbsp;
+					</td>
+					<td>
+						<asp:CheckBox ID="chkActive" runat="server" Text="Show publicly" />
+						&nbsp;&nbsp;&nbsp;
+					<asp:CheckBox ID="chkNavigation" runat="server" Text="Include in site navigation" Checked="true" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">&nbsp;
+					</td>
+					<td>
+						<asp:CheckBox ID="chkSiteMap" runat="server" Text="Include In Sitemap" Checked="true" />
+						&nbsp;&nbsp;&nbsp;
+					<asp:CheckBox ID="chkHide" runat="server" Text="Hide from Search Engines" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">credit author:
+					</td>
+					<td>
+						<b>find:</b> <span id="spanResults"></span>
+						<br />
+						<asp:TextBox ValidationGroup="inputForm" ID="txtSearchUser" onkeypress="return ProcessKeyPress(event)" Columns="60" MaxLength="100" runat="server" />
+						<asp:HiddenField ID="hdnCreditUserID" runat="server" />
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 125px;" class="tablecaption">meta keywords:
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" ID="txtKey" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine" runat="server" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">meta description:
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" ID="txtDescription" MaxLength="1000" Columns="60" Style="width: 475px;" Rows="4" TextMode="MultiLine"
+							runat="server" />
+					</td>
+				</tr>
+				<tr style="display: none">
+					<td class="tablecaption">sort:
+					</td>
+					<td>
+						<asp:TextBox ValidationGroup="inputForm" onblur="checkIntNumber(this);" Text="1" ID="txtSort" runat="server" Columns="15" MaxLength="5" onkeypress="return ProcessKeyPress(event)" />
+						<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtSort" ID="RequiredFieldValidator5"
+							runat="server" ErrorMessage="Sort Required" Display="Dynamic" Text="**" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">parent page:
+					<br />
+					</td>
+					<td>
+						<!-- parent page plugin-->
+						<uc1:ucSitePageDrillDown ID="ParentPagePicker" runat="server" />
+						<div style="clear: both; height: 2px;">
+						</div>
+						<%--<asp:DropDownList DataTextField="NavMenuText" DataValueField="Root_ContentID" ID="ddlParent" runat="server">
+				</asp:DropDownList>--%>
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption">template:
+					</td>
+					<td>
+						<asp:DropDownList DataTextField="Caption" DataValueField="TemplatePath" ID="ddlTemplate" runat="server" />
+						&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" onclick="cmsPreviewTemplate()" value="Preview" />
+					</td>
+				</tr>
+				<tr>
+					<td class="tablecaption"></td>
+					<td align="right">
+						<input type="button" id="btnBrowseSvr" value="Browse Server Files" onclick="cmsFileBrowserOpen('not-a-real-file');" />
+					</td>
+				</tr>
+			</table>
+			<br />
+			<div id="jqtabs" style="height: 600px; width: 1024px; margin-bottom: 10px;">
+				<ul>
+					<li><a href="#pagecontent-tabs-0">Left</a></li>
+					<li><a href="#pagecontent-tabs-1">Center</a></li>
+					<li><a href="#pagecontent-tabs-3">Right</a></li>
+					<li><a href="#pagecontent-tabs-5">Text Controls</a></li>
+					<asp:PlaceHolder runat="server" ID="phTrackback1">
+						<li><a href="#pagecontent-tabs-4">Trackback URLs</a></li>
+					</asp:PlaceHolder>
+				</ul>
+				<div style="margin-bottom: 25px; height: 580px; width: 990px;">
+					<div id="pagecontent-tabs-0">
+						<div style="margin-bottom: 25px;">
+							<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reLeftBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+							<br />
+						</div>
+					</div>
+					<div id="pagecontent-tabs-1">
+						<div style="margin-bottom: 25px;">
+							<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+							<br />
+						</div>
+					</div>
+					<div id="pagecontent-tabs-3">
+						<div style="margin-bottom: 25px;">
+							<asp:TextBox Style="height: 475px; width: 950px;" CssClass="mceEditor" ID="reRightBody" runat="server" TextMode="MultiLine" Rows="15" Columns="80" />
+							<br />
+						</div>
+					</div>
+					<div id="pagecontent-tabs-5">
+						<div class="scroll-container" style="height: 325px; width: 780px;">
+							<div class="scroll-area" style="height: 310px; width: 775px;">
+								<div class="SortableGrid">
+									<div>
+										<h3>HTML Rich Text Widgets</h3>
+										<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvHtmControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+											AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+											<EmptyDataTemplate>
+												<p>
+													<b>No html text widgets found.</b>
+												</p>
+											</EmptyDataTemplate>
+											<Columns>
+												<asp:TemplateField>
+													<ItemTemplate>
+														<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.HtmlMode, guidContentID, Eval("Root_WidgetID")) %>');">
+															<img class="imgNoBorder" src="/c3-admin/images/pencil.png" alt="Edit with WYSIWYG" title="Edit with WYSIWYG" /></a>
+													</ItemTemplate>
+												</asp:TemplateField>
+												<asp:TemplateField>
+													<ItemTemplate>
+														<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.RawMode, guidContentID, Eval("Root_WidgetID")) %>');">
+															<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
+													</ItemTemplate>
+												</asp:TemplateField>
+												<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
+												<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
+												<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+													AlternateTextTrue="Active" ShowBooleanImage="true" />
+												<asp:TemplateField>
+													<HeaderTemplate>
+													</HeaderTemplate>
+													<ItemTemplate>
+														<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
+															<img src="/c3-admin/images/doc.png" alt="text" /></a>
+													</ItemTemplate>
+												</asp:TemplateField>
+											</Columns>
+										</carrot:CarrotGridView>
+									</div>
+									<br />
+									<div>
+										<h3>Plain Text Widgets</h3>
+										<carrot:CarrotGridView CssClass="datatable" DefaultSort="WidgetOrder ASC" ID="gvTxtControls" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+											AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+											<EmptyDataTemplate>
+												<p>
+													<b>No plain text widgets found.</b>
+												</p>
+											</EmptyDataTemplate>
+											<Columns>
+												<asp:TemplateField>
+													<ItemTemplate>
+														<a href="javascript:void(0)" onclick="ShowWindowNoRefresh('<%# String.Format("{0}?mode={1}&pageid={2}&widgetid={3}", "ContentEdit.aspx", SiteData.RawMode, guidContentID, Eval("Root_WidgetID")) %>');">
+															<img class="imgNoBorder" src="/c3-admin/images/script.png" alt="Edit with Plain Text" title="Edit with Plain Text" /></a>
+													</ItemTemplate>
+												</asp:TemplateField>
+												<asp:BoundField HeaderText="Last Edited" DataField="EditDate" DataFormatString="{0}" />
+												<asp:BoundField HeaderText="Placeholder Name" DataField="PlaceholderName" DataFormatString="{0}" />
+												<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsWidgetActive" HeaderText="Active" AlternateTextFalse="Inactive"
+													AlternateTextTrue="Active" ShowBooleanImage="true" />
+												<asp:TemplateField>
+													<HeaderTemplate>
+													</HeaderTemplate>
+													<ItemTemplate>
+														<a class="dataPopupTrigger" rel="<%# Eval("Root_WidgetID") %>" href="javascript:void(0)">
+															<img src="/c3-admin/images/doc.png" alt="text" /></a>
+													</ItemTemplate>
+												</asp:TemplateField>
+											</Columns>
+										</carrot:CarrotGridView>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<asp:PlaceHolder runat="server" ID="phTrackback2">
+						<div id="pagecontent-tabs-4">
+							<div style="margin-bottom: 25px;">
+								<div runat="server" id="divTrackback">
+									new trackbacks, one per line<br />
+								</div>
+								<asp:TextBox Style="height: 255px; width: 780px;" CssClass="mceEditorNone" ID="txtTrackback" runat="server" TextMode="MultiLine" Rows="8" Columns="80" />
+								<div class="scroll-container" style="height: 175px; width: 780px;">
+									<div class="scroll-area" style="height: 170px; width: 775px;">
+										<carrot:CarrotGridView CssClass="datatable" DefaultSort="ModifiedDate desc" ID="gvTracks" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"
+											AlternatingRowStyle-CssClass="rowalt" RowStyle-CssClass="rowregular">
+											<Columns>
+												<asp:BoundField HeaderText="Trackback URL" DataField="TrackBackURL" />
+												<carrot:CarrotHeaderSortTemplateField HeaderText="Last Modified" DataField="ModifiedDate" DataFieldFormat="{0:d} {0:t}" />
+												<carrot:CarrotHeaderSortTemplateField HeaderText="Created On" DataField="CreateDate" DataFieldFormat="{0:d} {0:t}" />
+												<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="TrackedBack" HeaderText="Status" AlternateTextFalse="Not Tracked"
+													AlternateTextTrue="Tracked" ShowBooleanImage="true" />
+											</Columns>
+										</carrot:CarrotGridView>
+									</div>
+								</div>
+							</div>
+						</div>
+					</asp:PlaceHolder>
+				</div>
+			</div>
+			<table style="width: 800px;">
+				<tr>
+					<td align="left">
+						<div id="cmsHeartBeat" style="clear: both; padding: 2px; margin: 2px; min-height: 22px;">
+							&nbsp;
+						</div>
 					</td>
 					<td>&nbsp;&nbsp;
 					</td>
-					<asp:PlaceHolder runat="server" ID="pnlReview">
-						<td align="right">
-							<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="Key" DataTextField="Value" />
+				</tr>
+			</table>
+			<div style="display: none;">
+				<asp:TextBox runat="server" ID="SerialCache" CssClass="non-serial-data" />
+				<asp:ValidationSummary ID="formValidationSummary" runat="server" ShowSummary="true" ValidationGroup="inputForm" />
+			</div>
+			<asp:PlaceHolder ID="pnlButtons" runat="server">
+				<table style="width: 1100px;">
+					<tr>
+						<td>
+							<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="return SubmitPage()" Text="Save" />
+							&nbsp;&nbsp;
+						<asp:Button ValidationGroup="inputForm" ID="btnSaveButtonVisit" runat="server" OnClientClick="return SubmitPageVisit()" Text="Save and Visit" />
+							&nbsp;&nbsp;
+						<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />
+							&nbsp;&nbsp;
+						<input type="button" runat="server" id="btnDeleteButton" value="Delete" onclick="deleteContent()" />
+						</td>
+						<td>
+							<asp:CheckBox ID="chkDraft" runat="server" Text="  Save this as draft" />
 						</td>
 						<td>&nbsp;&nbsp;
 						</td>
-						<td align="left">
-							<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
-						</td>
-					</asp:PlaceHolder>
-				</tr>
-			</table>
-		</asp:PlaceHolder>
+						<asp:PlaceHolder runat="server" ID="pnlReview">
+							<td align="right">
+								<asp:DropDownList ID="ddlVersions" runat="server" DataValueField="Key" DataTextField="Value" />
+							</td>
+							<td>&nbsp;&nbsp;
+							</td>
+							<td align="left">
+								<input type="button" onclick="javascript:cmsPageVersionNav();" name="btnReview" value="Review / Revert" />
+							</td>
+						</asp:PlaceHolder>
+					</tr>
+				</table>
+			</asp:PlaceHolder>
+		</div>
 	</div>
 	<script type="text/javascript">
 
@@ -743,33 +746,35 @@
 
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
-			$('#<%=btnSave.ClientID %>').click();
+				$('#<%=btnSave.ClientID %>').click();
+			}
 		}
-	}
 
-	function ClickSaveVisitBtn() {
-		if (cmsIsPageValid()) {
-			$('#<%=btnSaveVisit.ClientID %>').click();
+		function ClickSaveVisitBtn() {
+			if (cmsIsPageValid()) {
+				$('#<%=btnSaveVisit.ClientID %>').click();
+			}
 		}
-	}
 
-	function cmsTinyMceSave() {
-		SubmitPage();
-	}
+		function cmsTinyMceSave() {
+			SubmitPage();
+		}
 
-	cmsTinyMceSaveShow();
+		cmsTinyMceSaveShow();
 
-	function SaveCommon() {
-		cmsSaveMakeOKAndCancelLeave();
-		var ret = cmsPreSaveTrigger();
-		cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
-		return true;
-	}
+		function SaveCommon() {
+			cmsSaveMakeOKAndCancelLeave();
+			var ret = cmsPreSaveTrigger();
+			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+			return true;
+		}
 	</script>
 	<script type="text/javascript">
 
 		$(document).ready(function () {
 			setTimeout("$('#jqtabs').tabs('option', 'active', 1);", 500);
 		});
+
+		cmsDirtyPageForceInit();
 	</script>
 </asp:Content>
