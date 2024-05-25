@@ -65,6 +65,7 @@
 		function modulePageLoad() {
 			$("#module-accordion").accordion({
 				heightStyle: "content",
+				collapsible: true,
 				active: parseInt('<%=SelMenu %>')
 			});
 		}
