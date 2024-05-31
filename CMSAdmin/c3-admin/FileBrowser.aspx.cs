@@ -29,6 +29,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected FileDataHelper helpFile = CMSConfigHelper.GetFileDataHelper();
 
 		protected void Page_Load(object sender, EventArgs e) {
+			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
+
 			try { sQueryPath = this.Context.SafeQueryString("fldrpath", @"/"); } catch { sQueryPath = @"/"; }
 
 			sViewMode = defaultBrowseMode;

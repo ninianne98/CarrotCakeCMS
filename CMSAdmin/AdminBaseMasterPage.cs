@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using static Carrotware.CMS.UI.Controls.CmsSkin;
 
 /*
 * CarrotCake CMS
@@ -58,15 +57,15 @@ namespace Carrotware.CMS.UI.Admin {
 			MainFooter,
 		}
 
-		public static SkinOption _theme = SkinOption.None;
+		public static CmsSkin.SkinOption _theme = CmsSkin.SkinOption.None;
 
-		public static SkinOption SiteSkin {
+		public static CmsSkin.SkinOption SiteSkin {
 			get {
-				if (_theme == SkinOption.None) {
-					CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+				if (_theme == CmsSkin.SkinOption.None) {
+					var config = CarrotCakeConfig.GetConfig();
 					string skin = config.MainConfig.SiteSkin;
-					var actualSkin = SkinOption.Classic;
-					try { actualSkin = (SkinOption)Enum.Parse(typeof(SkinOption), skin, true); } catch { }
+					var actualSkin = CmsSkin.SkinOption.Classic;
+					try { actualSkin = (CmsSkin.SkinOption)Enum.Parse(typeof(CmsSkin.SkinOption), skin, true); } catch { }
 
 					_theme = actualSkin;
 				}
@@ -82,27 +81,27 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void LoadFooterCtrl(PlaceHolder plcHolder, ControlLocation CtrlKey) {
-			string sControlPath = String.Empty;
-			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
+			string controlPath = string.Empty;
+			var config = CarrotCakeConfig.GetConfig();
 
 			switch (CtrlKey) {
 				case ControlLocation.PublicFooter:
-					sControlPath = config.AdminFooterControls.ControlPathPublic;
+					controlPath = config.AdminFooterControls.ControlPathPublic;
 					break;
 
 				case ControlLocation.PopupFooter:
-					sControlPath = config.AdminFooterControls.ControlPathPopup;
+					controlPath = config.AdminFooterControls.ControlPathPopup;
 					break;
 
 				case ControlLocation.MainFooter:
-					sControlPath = config.AdminFooterControls.ControlPathMain;
+					controlPath = config.AdminFooterControls.ControlPathMain;
 					break;
 			}
 
-			if (!String.IsNullOrEmpty(sControlPath)) {
-				if (File.Exists(Server.MapPath(sControlPath))) {
+			if (!string.IsNullOrEmpty(controlPath)) {
+				if (File.Exists(Server.MapPath(controlPath))) {
 					Control ctrl = new Control();
-					ctrl = Page.LoadControl(sControlPath);
+					ctrl = Page.LoadControl(controlPath);
 					plcHolder.Controls.Add(ctrl);
 				}
 			}

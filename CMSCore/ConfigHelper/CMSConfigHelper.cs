@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
@@ -334,6 +333,18 @@ namespace Carrotware.CMS.Core {
 			return FileDataHelper.MakeWebFolderPath(sDirPath);
 		}
 
+		public static object GetCacheItem(string key) {
+			if (HttpContext.Current.Cache[key] != null) {
+				return HttpContext.Current.Cache[key];
+			}
+			return null;
+		}
+
+		public static string GetCacheItemString(string key) {
+			var item = GetCacheItem(key);
+			return item != null ? item.ToString() : null;
+		}
+
 		public List<CMSAdminModule> AdminModules {
 			get {
 				var _modules = new List<CMSAdminModule>();
@@ -341,7 +352,7 @@ namespace Carrotware.CMS.Core {
 				bool bCached = false;
 
 				try {
-					_modules = (List<CMSAdminModule>)HttpContext.Current.Cache[keyAdminMenuModules];
+					_modules = (List<CMSAdminModule>)GetCacheItem(keyAdminMenuModules);
 					if (_modules != null) {
 						bCached = true;
 					}
@@ -653,7 +664,7 @@ namespace Carrotware.CMS.Core {
 				bool bCached = false;
 
 				try {
-					_plugins = (List<CMSPlugin>)HttpContext.Current.Cache[keyAdminToolboxModules];
+					_plugins = (List<CMSPlugin>)GetCacheItem(keyAdminToolboxModules);
 					if (_plugins != null) {
 						bCached = true;
 					}
@@ -753,7 +764,7 @@ namespace Carrotware.CMS.Core {
 				bool bCached = false;
 
 				try {
-					_plugins = (List<CMSTemplate>)HttpContext.Current.Cache[keyTemplates];
+					_plugins = (List<CMSTemplate>)GetCacheItem(keyTemplates);
 					if (_plugins != null) {
 						bCached = true;
 					}
@@ -806,7 +817,7 @@ namespace Carrotware.CMS.Core {
 				bool bCached = false;
 
 				try {
-					_plugins = (List<CMSTextWidget>)HttpContext.Current.Cache[keyTxtWidgets];
+					_plugins = (List<CMSTextWidget>)GetCacheItem(keyTxtWidgets);
 					if (_plugins != null) {
 						bCached = true;
 					}
@@ -841,7 +852,7 @@ namespace Carrotware.CMS.Core {
 				bool bCached = false;
 
 				try {
-					_sites = (List<DynamicSite>)HttpContext.Current.Cache[keyDynamicSite];
+					_sites = (List<DynamicSite>)GetCacheItem(keyDynamicSite);
 					if (_sites != null) {
 						bCached = true;
 					}
@@ -872,7 +883,7 @@ namespace Carrotware.CMS.Core {
 				bool bCached = false;
 
 				try {
-					_site = (DynamicSite)HttpContext.Current.Cache[ModuleKey];
+					_site = (DynamicSite)GetCacheItem(ModuleKey);
 					if (_site != null) {
 						bCached = true;
 					}
@@ -890,44 +901,6 @@ namespace Carrotware.CMS.Core {
 				return _site;
 			}
 		}
-
-		//public static List<CMSTemplateFile> TemplateFileList {
-		//    get {
-		//        var _sites = new List<CMSTemplateFile>();
-
-		//        bool bCached = false;
-
-		//        try {
-		//            _sites = (List<CMSTemplateFile>)HttpContext.Current.Cache[keyTemplateFiles];
-		//            if (_sites != null) {
-		//                bCached = true;
-		//            }
-		//        } catch {
-		//            bCached = false;
-		//        }
-
-		//        if (!bCached) {
-		//            var _sites1 = new List<CMSTemplateFile>();
-		//            var _sites2 = new List<CMSTemplateFile>();
-
-		//            using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-		//                _sites1 = (from d in _db.vw_carrot_Contents
-		//                           where d.IsLatestVersion == true
-		//                           select new CMSTemplateFile(d.TemplateFile)).Distinct().ToList();
-		//            }
-
-		//            using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
-		//                _sites2 = (from d in cmsHelper.Templates
-		//                           select new CMSTemplateFile(d.TemplatePath)).Distinct().ToList();
-		//            }
-
-		//            _sites = _sites1.Union(_sites2).Distinct().ToList();
-
-		//            HttpContext.Current.Cache.Insert(keyTemplateFiles, _sites, null, DateTime.Now.AddMinutes(1), Cache.NoSlidingExpiration);
-		//        }
-		//        return _sites;
-		//    }
-		//}
 
 		public static bool CheckRequestedFileExistence(string templateFileName, Guid siteID) {
 			var _tmplts = GetTmplateStatus();
@@ -974,7 +947,7 @@ namespace Carrotware.CMS.Core {
 		private static List<CMSFilePath> GetTmplateStatus() {
 			var _tmplts = new List<CMSFilePath>();
 
-			try { _tmplts = (List<CMSFilePath>)HttpContext.Current.Cache[keyTemplateFiles]; } catch { }
+			try { _tmplts = (List<CMSFilePath>)GetCacheItem(keyTemplateFiles); } catch { }
 
 			if (_tmplts == null) {
 				_tmplts = new List<CMSFilePath>();

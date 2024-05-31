@@ -113,6 +113,7 @@ namespace Carrotware.CMS.UI.Controls {
 			sb.Replace("{HTML_FLAG}", SiteData.HtmlMode);
 			sb.Replace("{PLAIN_FLAG}", SiteData.RawMode);
 			sb.Replace("{ZONE_ID}", this.ClientID);
+			sb.Replace("{SHORT_ZONE_ID}", this.ID);
 			sb.Replace("{ZONE_CHAR}", this.ZoneChar);
 			sb.Replace("{ZONE_TYPE}", this.TextZone.ToString());
 

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using static Carrotware.CMS.UI.Controls.CmsSkin;
 
 /*
 * CarrotCake CMS
@@ -22,7 +21,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 	public class AdminBasePage : BasePage {
 
-		public SkinOption SiteSkin {
+		public CmsSkin.SkinOption SiteSkin {
 			get {
 				return AdminBaseMasterPage.SiteSkin;
 			}
@@ -74,17 +73,17 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		public void SetBlankText(ITextControl textControl) {
-			if (String.IsNullOrEmpty(textControl.Text)) {
+			if (string.IsNullOrEmpty(textControl.Text)) {
 				textControl.Text = ContentPage.PageContentEmpty;
 			}
 		}
 
 		public string ClickFileBrowser(Control ctrl) {
-			return String.Format("cmsFileBrowserOpenReturn('{0}'); return false;", ctrl.ClientID);
+			return string.Format("cmsFileBrowserOpenReturn('{0}'); return false;", ctrl.ClientID);
 		}
 
 		public string ClickFileBrowserPop(Control ctrl) {
-			return String.Format("cmsFileBrowserOpenReturnPop('{0}'); return false;", ctrl.ClientID);
+			return string.Format("cmsFileBrowserOpenReturnPop('{0}'); return false;", ctrl.ClientID);
 		}
 
 		public void PreselectCheckboxRepeater(Repeater repeater, List<IContentMetaInfo> lst) {

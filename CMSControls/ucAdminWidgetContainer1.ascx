@@ -2,7 +2,7 @@
 <div id="cms-outer_{WIDGETCONTAINER_ID}" class="cmsWidgetTargetOuterControl">
 	<div class="cmsWidgetControlTitle">
 		<div class="cmsWidgetControlIDZone">
-			<div id="cmsWidgetContainerName">
+			<div id="cmsWidgetContainerName" title="{WIDGETCONTAINER_ID}" tooltip="{WIDGETCONTAINER_ID}">
 				{WIDGETCONTAINER_ID}</div>
 			<div id="cmsEditMenuList" class="cmsWidgetContainerMenu">
 				<ul class="cmsWidgetContainerMenu cmsMnuParent">

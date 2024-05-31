@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSAdmin", "CMSAdmin\CMSAdmin.csproj", "{3137431F-6BE3-4996-9CF8-4D50414B403A}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "database scripts", "{835815E6-C641-402B-A6C5-E6E8A4B2C754}"
 	ProjectSection(SolutionItems) = preProject
 		CMSDataScripts\Scripts\__README.txt = CMSDataScripts\Scripts\__README.txt
@@ -26,8 +28,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "widgets", "widgets", "{53B5D160-56A0-42F9-8189-E0E87726B5CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server controls", "server controls", "{8A505549-83D1-4BBF-87DE-0276139946D2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSAdmin", "CMSAdmin\CMSAdmin.csproj", "{3137431F-6BE3-4996-9CF8-4D50414B403A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSBaseClasses", "CMSBaseClasses\CMSBaseClasses.csproj", "{B2F5F85A-ECF8-4E1D-B2B4-15EB7F6A0ED5}"
 EndProject

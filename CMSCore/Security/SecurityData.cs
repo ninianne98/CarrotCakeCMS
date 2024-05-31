@@ -181,8 +181,10 @@ namespace Carrotware.CMS.Core {
 
 			if (SiteData.IsWebView && IsAuthenticated) {
 				string key = string.Format("{0}_{1}", keyIsAdmin, SecurityData.CurrentUserIdentityName);
-				if (HttpContext.Current.Cache[key] != null) {
-					keyVal = Convert.ToBoolean(HttpContext.Current.Cache[key]);
+				var ret = GetCacheItem(key);
+
+				if (ret != null) {
+					keyVal = Convert.ToBoolean(ret);
 				} else {
 					keyVal = IsUserInRole(SecurityData.CMSGroup_Admins);
 					HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
@@ -197,8 +199,9 @@ namespace Carrotware.CMS.Core {
 
 			if (SiteData.IsWebView && IsAuthenticated) {
 				string key = string.Format("{0}_{1}_{2}", keyIsSiteEditor, SecurityData.CurrentUserIdentityName, SiteData.CurrentSiteID);
-				if (HttpContext.Current.Cache[key] != null) {
-					keyVal = Convert.ToBoolean(HttpContext.Current.Cache[key]);
+				var ret = GetCacheItem(key);
+				if (ret != null) {
+					keyVal = Convert.ToBoolean(ret);
 				} else {
 					ExtendedUserData usrEx = SecurityData.CurrentExtendedUser;
 
@@ -209,6 +212,18 @@ namespace Carrotware.CMS.Core {
 			}
 
 			return keyVal;
+		}
+
+		public static object GetCacheItem(string key) {
+			if (HttpContext.Current.Cache[key] != null) {
+				return HttpContext.Current.Cache[key];
+			}
+			return null;
+		}
+
+		public static string GetCacheItemString(string key) {
+			var item = GetCacheItem(key);
+			return item != null ? item.ToString() : null;
 		}
 
 		public static bool IsAdmin {
@@ -267,8 +282,9 @@ namespace Carrotware.CMS.Core {
 		public static void AuthCookieTime() {
 			if (SecurityData.IsAuthenticated && FormsAuthentication.SlidingExpiration) {
 				string key = SecurityData.AuthKey;
+				var keyEntry = GetCacheItemString(key);
 
-				string lastSet = HttpContext.Current.Cache[key] != null ? HttpContext.Current.Cache[key].ToString() : string.Empty;
+				string lastSet = !string.IsNullOrEmpty(keyEntry) ? keyEntry : string.Empty;
 
 				if (string.IsNullOrEmpty(lastSet)) {
 					string tOut = SiteData.GetAuthFormProp("timeout");
@@ -342,9 +358,10 @@ namespace Carrotware.CMS.Core {
 
 			if (SiteData.IsWebView && IsAuthenticated) {
 				string key = string.Format("{0}_{1}_{2}", keyIsUserInRole, userName, groupName);
+				var ret = GetCacheItem(key);
 
-				if (HttpContext.Current.Cache[key] != null) {
-					keyVal = Convert.ToBoolean(HttpContext.Current.Cache[key]);
+				if (ret != null) {
+					keyVal = Convert.ToBoolean(ret);
 				} else {
 					keyVal = Roles.IsUserInRole(userName, groupName);
 
@@ -388,9 +405,10 @@ namespace Carrotware.CMS.Core {
 				if (SiteData.IsWebView && IsAuthenticated) {
 					Guid userID = SecurityData.CurrentUserGuid;
 					string key = string.Format("cms_CurrentExtendedUser_{0}", userID);
+					var ret = GetCacheItem(key);
 
-					if (HttpContext.Current.Cache[key] != null) {
-						currentUser = (ExtendedUserData)HttpContext.Current.Cache[key];
+					if (ret != null) {
+						currentUser = (ExtendedUserData)ret;
 					} else {
 						currentUser = new ExtendedUserData(userID);
 						if (currentUser != null) {

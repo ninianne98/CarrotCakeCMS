@@ -116,6 +116,18 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
+		[Category("Appearance")]
+		[DefaultValue("")]
+		public string LinkTarget {
+			get {
+				string s = (string)ViewState["LinkTarget"];
+				return ((s == null) ? "" : s);
+			}
+			set {
+				ViewState["LinkTarget"] = value;
+			}
+		}
+
 		protected override void RenderContents(HtmlTextWriter output) {
 
 			switch (RenderRSSMode) {
@@ -155,6 +167,9 @@ namespace Carrotware.CMS.UI.Controls {
 							link.MergeAttribute("class", this.CssClass);
 							link.MergeAttribute("rel", "alternate");
 							link.MergeAttribute("type", "application/rss+xml");
+							if (!string.IsNullOrEmpty(this.LinkTarget)) {
+								link.MergeAttribute("target", this.LinkTarget);
+							}
 							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
 							link.InnerHtml = img.RenderSelfClosingTag();
 
@@ -178,6 +193,9 @@ namespace Carrotware.CMS.UI.Controls {
 							link.MergeAttribute("class", this.CssClass);
 							link.MergeAttribute("rel", "alternate");
 							link.MergeAttribute("type", "application/rss+xml");
+							if (!string.IsNullOrEmpty(this.LinkTarget)) {
+								link.MergeAttribute("target", this.LinkTarget);
+							}
 							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
 							link.InnerHtml = this.LinkText;
 

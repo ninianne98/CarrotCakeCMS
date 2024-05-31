@@ -2,7 +2,6 @@
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 using System;
-using static Carrotware.CMS.UI.Controls.CmsSkin;
 
 /*
 * CarrotCake CMS
@@ -18,7 +17,7 @@ namespace Carrotware.CMS.UI.Admin {
 
 	public class AdminBaseUserControl : BaseUserControl {
 
-		public SkinOption SiteSkin {
+		public CmsSkin.SkinOption SiteSkin {
 			get {
 				return AdminBaseMasterPage.SiteSkin;
 			}

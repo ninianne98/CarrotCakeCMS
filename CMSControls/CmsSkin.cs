@@ -46,6 +46,7 @@ namespace Carrotware.CMS.UI.Controls {
 			Popup,
 			Logon,
 			Notify,
+			Filebrowse,
 		}
 
 		[Bindable(true)]

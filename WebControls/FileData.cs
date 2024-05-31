@@ -349,6 +349,7 @@ namespace Carrotware.Web.UI.Controls {
 				if (_dict == null) {
 					lock (_lockMime) {
 						_dict = new Dictionary<string, string>();
+						_dict.Add(".7z", "application/octet-stream");
 						_dict.Add(".ai", "application/postscript");
 						_dict.Add(".aif", "audio/aiff");
 						_dict.Add(".aifc", "audio/aiff");
@@ -396,6 +397,7 @@ namespace Carrotware.Web.UI.Controls {
 						_dict.Add(".dwg", "application/acad");
 						_dict.Add(".dxf", "application/dxf");
 						_dict.Add(".el", "text/x-script.elisp");
+						_dict.Add(".eot", "font/eot");
 						_dict.Add(".eps", "application/postscript");
 						_dict.Add(".es", "application/x-esrehber");
 						_dict.Add(".etx", "text/x-setext");
@@ -405,6 +407,7 @@ namespace Carrotware.Web.UI.Controls {
 						_dict.Add(".fif", "image/fif");
 						_dict.Add(".fli", "video/x-fli");
 						_dict.Add(".flo", "image/florian");
+						_dict.Add(".flv", "video/x-flv");
 						_dict.Add(".flx", "text/vnd.fmi.flexstor");
 						_dict.Add(".fmf", "video/x-atomic3d-feature");
 						_dict.Add(".for", "text/plain");
@@ -435,6 +438,7 @@ namespace Carrotware.Web.UI.Controls {
 						_dict.Add(".ico", "image/x-icon");
 						_dict.Add(".imap", "application/x-httpd-imap");
 						_dict.Add(".inf", "application/inf");
+						_dict.Add(".ini", "text/plain");
 						_dict.Add(".it", "audio/it");
 						_dict.Add(".java", "text/plain");
 						_dict.Add(".jpe", "image/jpeg");
@@ -450,11 +454,13 @@ namespace Carrotware.Web.UI.Controls {
 						_dict.Add(".man", "application/x-troff-man");
 						_dict.Add(".map", "application/x-navimap");
 						_dict.Add(".mcd", "application/mcad");
+						_dict.Add(".md", "text/plain");
 						_dict.Add(".mht", "message/rfc822");
 						_dict.Add(".mhtml", "message/rfc822");
 						_dict.Add(".mid", "audio/midi");
 						_dict.Add(".midi", "audio/midi");
 						_dict.Add(".mime", "message/rfc822");
+						_dict.Add(".mkv", "video/webm");
 						_dict.Add(".mm", "application/base64");
 						_dict.Add(".mod", "audio/mod");
 						_dict.Add(".moov", "video/quicktime");
@@ -479,6 +485,7 @@ namespace Carrotware.Web.UI.Controls {
 						_dict.Add(".oga", "audio/ogg");
 						_dict.Add(".ogg", "video/ogg");
 						_dict.Add(".ogv", "video/ogg");
+						_dict.Add(".otf", "font/otf");
 						_dict.Add(".p", "text/x-pascal");
 						_dict.Add(".pas", "text/pascal");
 						_dict.Add(".pbm", "image/x-portable-bitmap");
@@ -527,6 +534,8 @@ namespace Carrotware.Web.UI.Controls {
 						_dict.Add(".tgz", "application/x-compressed");
 						_dict.Add(".tif", "image/tiff");
 						_dict.Add(".tiff", "image/tiff");
+						_dict.Add(".ttf", "font/ttf");
+						_dict.Add(".txt", "text/plain");
 						_dict.Add(".uu", "application/octet-stream");
 						_dict.Add(".uue", "text/x-uuencode");
 						_dict.Add(".vbhtml", "text/aspx");
@@ -538,6 +547,8 @@ namespace Carrotware.Web.UI.Controls {
 						_dict.Add(".vsw", "application/x-visio");
 						_dict.Add(".wav", "audio/wav");
 						_dict.Add(".wmf", "windows/metafile");
+						_dict.Add(".woff", "font/woff");
+						_dict.Add(".woff2", "font/woff2");
 						_dict.Add(".word", "application/msword");
 						_dict.Add(".wp", "application/wordperfect");
 						_dict.Add(".wri", "application/mswrite");

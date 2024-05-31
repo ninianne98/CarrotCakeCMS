@@ -3,13 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head id="Head1" runat="server">
-	<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="LightGreen" />
 	<link href="iCheck/iCheck.css" rel="stylesheet" type="text/css" />
+	<link href="Includes/uploadfile.css" rel="stylesheet" type="text/css" />
+
+	<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Filebrowse" SelectedColor="Classic" />
+	<carrot:AdminScriptInfo runat="server" ID="scriptInfo" />
+
 	<script src="iCheck/icheck.min.js" type="text/javascript"></script>
 	<script src="Includes/icheck.init.js" type="text/javascript"></script>
-	<link href="Includes/uploadfile.css" rel="stylesheet" type="text/css" />
 	<script src="Includes/jquery.uploadfile.min.js" type="text/javascript"></script>
-	<link href="Includes/filebrowser.css" rel="stylesheet" type="text/css" />
+
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("input:button, input:submit, input:reset").button();
@@ -154,7 +157,7 @@
 			}
 		</script>
 	</asp:PlaceHolder>
-	<title>Browser</title>
+	<title>File Browser</title>
 </head>
 <body>
 	<form id="form1" runat="server">
@@ -165,7 +168,7 @@
 						<h2 class="head2">Files On Server</h2>
 						Contents of:
 						<asp:Literal ID="litPath" runat="server" /><br />
-						<asp:HyperLink runat="server" ID="lnkUp"><img src="/c3-admin/images/back.png" border="0" alt="back" /><img src="/c3-admin/images/folder.png" border="0" alt="folder" /> </asp:HyperLink>
+						<asp:HyperLink runat="server" ID="lnkUp"><img src="/c3-admin/images/back.png" border="0" alt="back" /><img src="/c3-admin/images/folder2.png" border="0" alt="folder" /> </asp:HyperLink>
 						<br />
 					</td>
 				</tr>
@@ -178,7 +181,7 @@
 					<ItemTemplate>
 						<tr>
 							<td style="width: 32px">
-								<img src="/c3-admin/images/folder.png" alt="folder" />
+								<img src="/c3-admin/images/folder2.png" alt="folder" />
 							</td>
 							<td>
 								<a runat="server" id="lnkContent" href='<%# String.Format( "./FileBrowser.aspx?fldrpath={0}&useTiny={1}&returnvalue={2}&viewmode={3}", Eval("FolderPath"),  useTinyMode, sReturnMode, sViewMode ) %>'>
@@ -245,20 +248,23 @@
 						</div>
 					</ItemTemplate>
 				</asp:Repeater>
+
 				<asp:Repeater ID="rpFiles" runat="server">
 					<HeaderTemplate>
-						<table style="width: 98%;">
-							<tr class="headerRow">
-								<th style="width: 20px;"></th>
-								<th style="width: 20px;"></th>
-								<th class="headerRowText">Filename
-								</th>
-								<th style="width: 150px;" class="headerRowText">Date
-								</th>
-								<th></th>
-								<th style="width: 80px;" class="headerRowText">Size
-								</th>
-							</tr>
+						<div id="file-list">
+							<table style="width: 98%;">
+								<thead class="filelisthead">
+									<tr class="headerRow">
+										<th style="width: 20px;"></th>
+										<th style="width: 20px;"></th>
+										<th style="width: 20px;"></th>
+										<th class="headerRowText">Filename</th>
+										<th style="width: 150px;" class="headerRowText">Date</th>
+										<th></th>
+										<th style="width: 80px;" class="headerRowText">Size</th>
+									</tr>
+								</thead>
+								<tbody class="filelistrows">
 					</HeaderTemplate>
 					<ItemTemplate>
 						<tr>
@@ -267,6 +273,11 @@
 							</td>
 							<td>
 								<img src="/c3-admin/images/<%# FileImageLink(String.Format("{0}", Eval("MimeType")))  %>.png" alt="filetype" />
+							</td>
+							<td>
+								<a target="_blank" href="<%# String.Format( "{0}", Eval("FullFileName") ) %>">
+									<img src="/c3-admin/images/link.png" alt="filetype" />
+								</a>
 							</td>
 							<td>
 								<div class="ImgGroup" runat="server" id="imgContainerGroup">
@@ -290,11 +301,13 @@
 						</tr>
 					</ItemTemplate>
 					<FooterTemplate>
+						</tbody>
 						</table>
+						</div>
 					</FooterTemplate>
 				</asp:Repeater>
 			</div>
-			<div>
+			<div id="viewmodelink">
 				<asp:HyperLink runat="server" ID="lnkThumbView" Text="View Image Thumbnails" />
 				<asp:HyperLink runat="server" ID="lnkFileView" Text="View All Files" />
 			</div>

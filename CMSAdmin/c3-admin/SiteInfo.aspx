@@ -77,6 +77,41 @@
 		<asp:Button ValidationGroup="inputForm2" ID="btnResetVars" runat="server" Text="Refresh Configs" OnClick="btnResetVars_Click" />
 		<br />
 	</p>
+	<asp:PlaceHolder ID="phFeeds" runat="server">
+		<fieldset class="fieldset-med">
+			<legend>
+				<label>
+					Feeds
+				</label>
+			</legend>
+			<div>
+				<table style="width: 80%;">
+					<tr>
+						<td class="tablecaption" style="text-align: right; margin-right: 1em;">Rss Blog
+						</td>
+						<td style="width: 40px; text-align: left;">
+							<carrot:RSSFeed runat="server" ID="RSSFeedBlog" RSSFeedType="BlogOnly" LinkTarget="_blank" CssClass="rssimage" RenderRSSMode="ImageLink" />
+						</td>
+						<td class="tablecaption" style="text-align: right; margin-right: 1em;">Rss Content
+						</td>
+						<td style="width: 40px; text-align: left;">
+							<carrot:RSSFeed runat="server" ID="RSSFeedPage" RSSFeedType="PageOnly" LinkTarget="_blank" CssClass="rssimage" RenderRSSMode="ImageLink" />
+						</td>
+						<td class="tablecaption" style="text-align: right; margin-right: 1em;">Sitemap
+						</td>
+						<td style="width: 40px; text-align: left;">
+							<a href="<%= SiteFilename.SiteMapUri %>" target="_blank">
+								<img src="/c3-admin/images/chart_organisation.png" alt="Sitemap" title="Sitemap" />
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<br />
+		</fieldset>
+		<br />
+	</asp:PlaceHolder>
+
 	<fieldset class="fieldset-med">
 		<legend>
 			<label>

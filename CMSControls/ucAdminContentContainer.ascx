@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" %>
 <div id="cms_{ZONE_ID}" class="cmsContentContainer">
 	<div class="cmsContentContainerTitle" id="cmsContentContainerHead">
-		<div id="cmsContentEditTitle" class="cmsContentContainerTitleText">
-			{ZONE_TYPE} ({ZONE_ID})
+		<div id="cmsContentEditTitle" class="cmsContentContainerTitleText" title="{ZONE_ID}" tooltip="{ZONE_ID}">
+			{ZONE_TYPE} ({SHORT_ZONE_ID})
 		</div>
 		<div id="cmsEditMenuList" class="cmsContentContainerMenu">
 			<ul class="cmsContentContainerMenu cmsMnuParent">

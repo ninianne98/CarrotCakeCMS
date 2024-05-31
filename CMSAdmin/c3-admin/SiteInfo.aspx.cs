@@ -25,6 +25,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			litID.Text = SiteData.CurrentSiteID.ToString();
 
+			phFeeds.Visible = SiteData.CurretSiteExists;
+
 			if (!IsPostBack) {
 				CheckDatabase();
 
