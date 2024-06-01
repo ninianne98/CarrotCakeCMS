@@ -199,7 +199,7 @@
 			<tr>
 				<td class="tablecaption">filename:
 				</td>
-				<td>
+				<td style="white-space: nowrap;">
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" onblur="CheckFileName()" ID="txtFileName" runat="server"
 						Columns="45" MaxLength="200" />
 					<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtFileName" ID="RequiredFieldValidator2"

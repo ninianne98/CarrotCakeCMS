@@ -2,15 +2,15 @@
 <h2>Add/Edit Category</h2>
 <table style="width: 700px;">
 	<tr>
-		<td class="tablecaption">name:<br />
+		<td class="tablecaption" style="min-width: 150px;">name:<br />
 			<div style="border: 2px dotted #aaaaaa; background-color: #ffffff; margin: 2px; padding: 2px; min-width: 64px;">
-				<div id="ColorTextSample" style="margin: 2px; padding: 4px; font-size: 14px;">
+				<div id="ColorTextSample" style="margin: 2px; padding: 4px; font-size: 14px; font-weight: bolder;">
 					Sample Text
 				</div>
 			</div>
 		</td>
 		<td>
-			<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryName" runat="server" Columns="60" MaxLength="100" />
+			<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtCategoryName" runat="server" Columns="45" MaxLength="100" />
 			<asp:RequiredFieldValidator ValidationGroup="inputForm" CssClass="validationError" ForeColor="" ControlToValidate="txtCategoryName" ID="RequiredFieldValidator1"
 				runat="server" Text="**" ToolTip="Required" ErrorMessage="Required" Display="Dynamic" />
 		</td>

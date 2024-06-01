@@ -71,21 +71,30 @@ function cmsGetShortDatePattern() {
 
 function cmsSetDateRegion() {
 	$(".dateRegion").each(function () {
-		$(this).datepicker({
-			dateFormat: cmsDatePattern,
-			buttonText: cmsDatePattern,
-			changeMonth: true,
-			changeYear: true,
-			showOn: "both",
-			buttonImage: cmsAdminUri + '/images/calendar.png',
-			buttonImageOnly: true,
-			constrainInput: true,
-			beforeShow: function () {
-				setTimeout(function () {
-					$('.ui-datepicker').css('z-index', 15);
-				}, 0);
-			}
-		});
+		if (!$(this).hasClass("has-date-pick")) {
+			$(this).addClass("has-date-pick");
+
+			$(this).wrap('<span style="white-space: nowrap;" />')
+			var dt = $(this);
+
+			setTimeout(function () {
+				$(dt).datepicker({
+					dateFormat: cmsDatePattern,
+					buttonText: cmsDatePattern,
+					changeMonth: true,
+					changeYear: true,
+					showOn: "both",
+					buttonImage: cmsAdminUri + '/images/calendar.png',
+					buttonImageOnly: true,
+					constrainInput: true,
+					beforeShow: function () {
+						setTimeout(function () {
+							$('.ui-datepicker').css('z-index', 15);
+						}, 0);
+					}
+				});
+			}, 50);
+		}
 	});
 }
 
@@ -106,8 +115,10 @@ function cmsSetTimeRegion() {
 			$(this).addClass("hasTimePicker");
 			$(this).parent().css('z-index', 15);
 			$(this).parent().css('position', 'relative');
+			$(this).wrap('<span style="white-space: nowrap;" />')
 
 			var id = $(this).attr('id');
+
 			$('<img class="ui-timepicker-trigger" src="' + cmsAdminUri + '/images/clock.png" for="' + id + '" id="' + id + '_triggerbtn" alt="' + cmsTimePattern + '" title="' + cmsTimePattern + '">').insertAfter(this);
 
 			$(this).timepicker({
