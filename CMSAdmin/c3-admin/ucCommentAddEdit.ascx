@@ -96,9 +96,11 @@
 		</tr>
 	</table>
 </fieldset>
-<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<asp:Button ValidationGroup="deleteForm" ID="btnDeleteButton" runat="server" OnClientClick="return DeleteItem()" Text="Delete" />
+<div style="width: 600px; margin-left: 375px;">
+	<asp:Button ValidationGroup="inputForm" ID="btnSaveButton" runat="server" OnClientClick="SubmitPage()" Text="Save" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="button" id="btnCancel" value="Cancel" onclick="cancelEditing()" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<asp:Button ValidationGroup="deleteForm" ID="btnDeleteButton" runat="server" OnClientClick="return DeleteItem()" Text="Delete" />
+</div>
 <br />
 <div style="display: none;">
 	<asp:Button ValidationGroup="inputForm" ID="btnSave" runat="server" OnClick="btnSave_Click" Text="Save" />
