@@ -16,7 +16,7 @@
 		<link href="/c3-admin/MiniColors/jquery.minicolors.css" rel="stylesheet" />
 
 		<carrot:CmsSkin runat="server" ID="siteSkin" WindowMode="Main" SelectedColor="Classic" />
-		<carrot:AdminScriptInfo runat="server" id="scriptInfo" />
+		<carrot:AdminScriptInfo runat="server" ID="scriptInfo" />
 
 		<script src="/c3-admin/includes/jquery.ui.timepicker.js<%=AntiCache%>" type="text/javascript"></script>
 		<script src="/c3-admin/includes/chosen.jquery.min.js<%=AntiCache%>" type="text/javascript"></script>
@@ -67,6 +67,38 @@
 		</script>
 		<link href="/c3-admin/includes/tinymceoverride.css<%=AntiCache%>" rel="stylesheet" />
 		<!-- /TinyMCE -->
+		<script>
+			$(document).ready(function () {
+				$(window).on("scroll", onScroll);
+				onScroll(null);
+			});
+
+			function onScroll(event) {
+				var scrollPos = $(window).scrollTop();
+
+				if ($("#headercontainer").length > 0) {
+					var refElement = $("#headercontainer");
+					var mnuElement = $("#nav-menu-container");
+					//console.log(scrollPos + ' | ' + refElement.height());
+
+					if (scrollPos > (refElement.height() - mnuElement.height())) {
+						$("#nav-break").css('height', '5.5em');
+						$("#headercontainer").css('height', '2.25em');
+						$("#headercontainer").css('min-height', '75px');
+						$("#nav-menu-container").css('top', '3.25em');
+						$("#header").css('display', 'none');
+						$("#header-sm").css('display', '');
+					} else {
+						$("#nav-break").css('height', '');
+						$("#headercontainer").css('height', '');
+						$("#headercontainer").css('min-height', '');
+						$("#nav-menu-container").css('top', '');
+						$("#header").css('display', '');
+						$("#header-sm").css('display', 'none');
+					}
+				}
+			}
+		</script>
 	</asp:PlaceHolder>
 	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
 	</asp:ContentPlaceHolder>
@@ -87,6 +119,11 @@
 					</h3>
 					<div class="widthshim">
 					</div>
+				</div>
+				<div id="header-sm" style="display: none">
+					<h3>
+						<asp:Literal ID="litSmallHead" runat="server" />
+					</h3>
 				</div>
 				<div style="display: none">
 					<asp:Button ID="cmdDummy" runat="server"></asp:Button>
@@ -155,7 +192,7 @@
 					<li>&nbsp;</li>
 				</ul>
 			</div>
-			<div class="widthshim">
+			<div id="nav-break">
 			</div>
 			<div id="content">
 				<div class="pad-content">

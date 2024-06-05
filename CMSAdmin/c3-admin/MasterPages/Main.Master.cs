@@ -43,6 +43,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 			tabGroupAdmin.Visible = tabUserSecurity.Visible;
 			tabSites.Visible = tabUserSecurity.Visible;
 
+			litSmallHead.Text = SiteData.CarrotCakeCMSVersionMM;
+
 			if (!this.Page.Title.StartsWith(SiteData.CarrotCakeCMSVersionMM)) {
 				this.Page.Title = string.Format("{0} - {1}", SiteData.CarrotCakeCMSVersionMM, this.Page.Title);
 			}
@@ -52,8 +54,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				litSiteIdent.Text = SiteData.CurrentSite.SiteName;
 				litTag.Text = SiteData.CurrentSite.SiteTagline;
 
+				litSmallHead.Text = string.Format("{0} | {1}", SiteData.CarrotCakeCMSVersionMM, SiteData.CurrentSite.SiteName);
+
 				if (!string.IsNullOrEmpty(SiteData.CurrentSite.SiteName) && !string.IsNullOrEmpty(SiteData.CurrentSite.SiteTagline)) {
 					litSiteIdent.Text = string.Format("{0}: ", SiteData.CurrentSite.SiteName.Trim());
+					litSmallHead.Text = string.Format("{0} | {1}: {2}", SiteData.CarrotCakeCMSVersionMM, SiteData.CurrentSite.SiteName, SiteData.CurrentSite.SiteTagline);
 				}
 			} else {
 				litServerTime.Text = string.Format("{0} UTC", DateTime.UtcNow);
