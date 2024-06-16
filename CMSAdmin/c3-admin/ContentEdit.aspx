@@ -39,6 +39,7 @@
 			}
 
 			cmsTinyMceSaveShow();
+			cmsSynchTinyWidthInit();
 		</script>
 	</asp:Panel>
 	<asp:Panel ID="pnlPlain" runat="server" Visible="false">

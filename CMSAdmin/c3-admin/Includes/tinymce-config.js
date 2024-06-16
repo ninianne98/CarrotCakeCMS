@@ -12,6 +12,9 @@ function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 	if (tinyBrowseWidth < 500) {
 		tinyBrowseWidth = 500;
 	}
+	if (tinyBrowseWidth > 850) {
+		tinyBrowseWidth = 850;
+	}
 	if (tinyBrowseHeight < 100) {
 		tinyBrowseHeight = 100;
 	}
@@ -46,20 +49,28 @@ function cmsTinyMceInit(winWidth, winHeight, allowResize) {
 			{ text: 'Bash', value: 'bash' },
 			{ text: 'Shell', value: 'shell' },
 			{ text: 'Access log', value: 'accesslog' },
+			{ text: 'Log', value: 'log' },
 			{ text: 'JavaScript', value: 'javascript' },
 			{ text: 'TypeScript', value: 'typescript' },
 			{ text: 'CSS', value: 'css' },
+			{ text: 'LESS (css)', value: 'less' },
+			{ text: 'SASS (css)', value: 'scss' },
 			{ text: 'SQL', value: 'sql' },
 			{ text: 'PHP', value: 'php' },
 			{ text: 'Ruby', value: 'ruby' },
 			{ text: 'Python', value: 'python' },
 			{ text: 'PowerShell', value: 'powershell' },
+			{ text: 'Batch File', value: 'batch' },
 			{ text: 'Java', value: 'java' },
 			{ text: 'C', value: 'c' },
-			{ text: 'C#', value: 'csharp' },
-			{ text: 'VB', value: 'vbnet' },
-			{ text: 'ASP', value: 'vbscript-html' },
+			{ text: 'VB', value: 'visual-basic' },
 			{ text: 'VBS', value: 'vbscript' },
+			{ text: 'ASP', value: 'vbscript-html' },
+			{ text: 'VB.Net', value: 'vbnet' },
+			{ text: 'C#', value: 'csharp' },
+			{ text: 'C# ASP.Net', value: 'aspnet' },
+			{ text: 'C# Razor', value: 'cshtml' },
+			{ text: 'C-Like', value: 'clike' },
 			{ text: 'C++', value: 'cpp' }
 		],
 		resize: tinyBrowseResize,
@@ -220,6 +231,60 @@ function cmsSetFileName(v) {
 
 	winBrowse.close();
 	winBrowse = null;
+}
+
+function __cmsSynchTinyWidth() {
+	$('textarea.mceEditor').each(function () {
+		var id = $(this).attr('id');
+		var wTxt = $(this).css("width");
+		var w = parseInt(wTxt || '0');
+		//console.log("tiny-text-id:  " + id);
+
+		if ($(this).hasClass('tiny-resized') == false) {
+			//console.log("tiny-text-wt:  " + wTxt);
+			//console.log("tiny-text-w:  " + w);
+
+			if (tinymce && w > 0) {
+				var tinyInst = tinymce.get(id);
+				if (tinyInst) {
+					var tinyFrame = $('#' + id + '_ifr');
+					if (tinyFrame) {
+						$(this).addClass('tiny-resized');
+						var tc = $(tinyFrame).closest('.tox-tinymce');
+						//var tw = parseInt($(tc).css("width") || '0');
+						//console.log("tiny-ed-w:  " + tw);
+
+						$(tc).css("width", wTxt);
+					}
+				}
+			}
+		}
+	});
+}
+
+function cmsSynchTinyWidthInit() {
+	setTimeout(function () {
+		__cmsSynchTinyWidth();
+	}, 500);
+	setTimeout(function () {
+		__cmsSynchTinyWidth();
+	}, 1500);
+}
+
+function __cmsStripTinyWidths() {
+	$('.tox-tinymce').css("width", '');
+}
+
+function cmsStripTinyWidthsInit() {
+	setTimeout(function () {
+		__cmsStripTinyWidths();
+	}, 500);
+	setTimeout(function () {
+		__cmsStripTinyWidths();
+	}, 800);
+	setTimeout(function () {
+		__cmsStripTinyWidths();
+	}, 1200);
 }
 
 //===================

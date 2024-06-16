@@ -805,6 +805,7 @@
 		}
 
 		cmsTinyMceSaveShow();
+		cmsSynchTinyWidthInit();
 
 		function SaveCommon() {
 			cmsSaveMakeOKAndCancelLeave();
