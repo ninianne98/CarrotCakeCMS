@@ -19,19 +19,19 @@ using System.Xml.Serialization;
 namespace Carrotware.CMS.Core {
 
 	public class Widget : IDisposable {
-		private CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext();
+		private CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext();
 		//private CarrotCMSDataContext db = CompiledQueries.dbConn;
 
 		public Widget() { }
 
 		public Widget(Guid rootWidgetID) {
-			vw_carrot_Widget item = CompiledQueries.cqGetLatestWidget(db, rootWidgetID);
+			vw_carrot_Widget item = CompiledQueries.cqGetLatestWidget(_db, rootWidgetID);
 
 			SetVals(item);
 		}
 
 		public void LoadPageWidgetVersion(Guid widgetDataID) {
-			vw_carrot_Widget item = CompiledQueries.cqGetWidgetDataByID_VW(db, widgetDataID);
+			vw_carrot_Widget item = CompiledQueries.cqGetWidgetDataByID_VW(_db, widgetDataID);
 
 			SetVals(item);
 		}
@@ -101,9 +101,9 @@ namespace Carrotware.CMS.Core {
 
 		public void Save() {
 			if (!this.IsWidgetPendingDelete) {
-				SiteData site = new SiteData(CompiledQueries.cqGetSiteFromRootContentID(db, this.Root_ContentID));
+				SiteData site = new SiteData(CompiledQueries.cqGetSiteFromRootContentID(_db, this.Root_ContentID));
 
-				carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
+				carrot_Widget w = CompiledQueries.cqGetRootWidget(_db, this.Root_WidgetID);
 
 				bool bAdd = false;
 				if (w == null) {
@@ -139,56 +139,69 @@ namespace Carrotware.CMS.Core {
 				wd.ControlProperties = this.ControlProperties;
 				wd.EditDate = DateTime.UtcNow;
 
-				carrot_WidgetData oldWD = CompiledQueries.cqGetWidgetDataByRootID(db, this.Root_WidgetID);
+				carrot_WidgetData oldWD = CompiledQueries.cqGetWidgetDataByRootID(_db, this.Root_WidgetID);
 
 				//only add a new entry if the widget has some sort of change in the data stored.
 				if (oldWD != null) {
 					if (oldWD.ControlProperties != wd.ControlProperties) {
 						oldWD.IsLatestVersion = false;
-						db.carrot_WidgetDatas.InsertOnSubmit(wd);
+						_db.carrot_WidgetDatas.InsertOnSubmit(wd);
 					}
 				} else {
-					db.carrot_WidgetDatas.InsertOnSubmit(wd);
+					_db.carrot_WidgetDatas.InsertOnSubmit(wd);
 				}
 
 				if (bAdd) {
-					db.carrot_Widgets.InsertOnSubmit(w);
+					_db.carrot_Widgets.InsertOnSubmit(w);
 				}
 
-				db.SubmitChanges();
+				_db.SubmitChanges();
+
+				Guid oldId = oldWD != null ? oldWD.WidgetDataID : Guid.Empty;
+
+				var priorVersions = _db.carrot_WidgetDatas.Where(x => x.IsLatestVersion == true
+											&& x.WidgetDataID != oldId
+											&& x.WidgetDataID != wd.WidgetDataID
+											&& x.Root_WidgetID == wd.Root_WidgetID);
+
+				// make sure if there are any stray active rows besides the new one, mark them inactive
+				if (priorVersions != null && priorVersions.Any()) {
+					_db.carrot_WidgetDatas.BatchUpdate(priorVersions, p => new carrot_WidgetData { IsLatestVersion = false });
+					_db.SubmitChanges();
+				}
 			} else {
 				DeleteAll();
 			}
 		}
 
 		public void DeleteAll() {
-			IQueryable<carrot_WidgetData> w1 = CannedQueries.GetWidgetDataByRootAll(db, this.Root_WidgetID);
+			IQueryable<carrot_WidgetData> w1 = CannedQueries.GetWidgetDataByRootAll(_db, this.Root_WidgetID);
 
-			carrot_Widget w2 = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
+			carrot_Widget w2 = CompiledQueries.cqGetRootWidget(_db, this.Root_WidgetID);
 
 			bool bPendingDel = false;
 
 			if (w1 != null) {
-				db.carrot_WidgetDatas.BatchDelete(w1);
+				_db.carrot_WidgetDatas.BatchDelete(w1);
 				bPendingDel = true;
 			}
 
 			if (w2 != null) {
-				db.carrot_Widgets.DeleteOnSubmit(w2);
+				_db.carrot_Widgets.DeleteOnSubmit(w2);
 				bPendingDel = true;
 			}
 
 			if (bPendingDel) {
-				db.SubmitChanges();
+				_db.SubmitChanges();
 			}
 		}
 
 		public void Disable() {
-			carrot_Widget w = CompiledQueries.cqGetRootWidget(db, this.Root_WidgetID);
+			carrot_Widget w = CompiledQueries.cqGetRootWidget(_db, this.Root_WidgetID);
 
 			if (w != null) {
 				w.WidgetActive = false;
-				db.SubmitChanges();
+				_db.SubmitChanges();
 			}
 		}
 
@@ -268,8 +281,8 @@ namespace Carrotware.CMS.Core {
 		#region IDisposable Members
 
 		public void Dispose() {
-			if (db != null) {
-				db.Dispose();
+			if (_db != null) {
+				_db.Dispose();
 			}
 		}
 

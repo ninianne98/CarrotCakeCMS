@@ -97,23 +97,23 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void ResetHeartbeatLock() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
 				rc.EditHeartbeat = DateTime.UtcNow.AddHours(-2);
 				rc.Heartbeat_UserId = null;
-				_db.SubmitChanges();
+				db.SubmitChanges();
 			}
 		}
 
 		public void RecordHeartbeatLock(Guid currentUserID) {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
 				rc.Heartbeat_UserId = currentUserID;
 				rc.EditHeartbeat = DateTime.UtcNow;
 
-				_db.SubmitChanges();
+				db.SubmitChanges();
 			}
 		}
 
@@ -165,8 +165,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public Guid GetCurrentEditUser() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
 				if (rc != null) {
 					return (Guid)rc.Heartbeat_UserId;
@@ -177,8 +177,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public ExtendedUserData GetCurrentEditUserData() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
 				if (rc != null) {
 					return new ExtendedUserData((Guid)rc.Heartbeat_UserId);
@@ -189,8 +189,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ContentSnippet> GetHistory() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				List<ContentSnippet> _types = (from d in CompiledQueries.cqGetSnippetVersionHistory(_db, this.Root_ContentSnippetID)
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				List<ContentSnippet> _types = (from d in CompiledQueries.cqGetSnippetVersionHistory(db, this.Root_ContentSnippetID)
 											   select new ContentSnippet(d)).ToList();
 
 				return _types;
@@ -198,45 +198,45 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void Delete() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_RootContentSnippet s = CompiledQueries.cqGetSnippetDataTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContentSnippet s = CompiledQueries.cqGetSnippetDataTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
 				if (s != null) {
-					IQueryable<carrot_ContentSnippet> lst = (from m in _db.carrot_ContentSnippets
+					IQueryable<carrot_ContentSnippet> lst = (from m in db.carrot_ContentSnippets
 															 where m.Root_ContentSnippetID == s.Root_ContentSnippetID
 															 select m);
 
-					_db.carrot_ContentSnippets.BatchDelete(lst);
-					_db.carrot_RootContentSnippets.DeleteOnSubmit(s);
-					_db.SubmitChanges();
+					db.carrot_ContentSnippets.BatchDelete(lst);
+					db.carrot_RootContentSnippets.DeleteOnSubmit(s);
+					db.SubmitChanges();
 				}
 			}
 		}
 
 		public void DeleteThisVersion() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_RootContentSnippet s = CompiledQueries.cqGetSnippetDataTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_RootContentSnippet s = CompiledQueries.cqGetSnippetDataTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
 				if (s != null) {
-					IQueryable<carrot_ContentSnippet> lst = (from m in _db.carrot_ContentSnippets
+					IQueryable<carrot_ContentSnippet> lst = (from m in db.carrot_ContentSnippets
 															 where m.ContentSnippetID == this.ContentSnippetID
 																&& m.Root_ContentSnippetID == s.Root_ContentSnippetID
 																&& m.IsLatestVersion != true
 															 select m);
 
-					_db.carrot_ContentSnippets.BatchDelete(lst);
-					_db.SubmitChanges();
+					db.carrot_ContentSnippets.BatchDelete(lst);
+					db.SubmitChanges();
 				}
 			}
 		}
 
 		public void Save() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
 				SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
-				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+				carrot_RootContentSnippet rc = CompiledQueries.cqGetSnippetDataTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
-				carrot_ContentSnippet oldC = CompiledQueries.cqGetLatestSnippetContentTbl(_db, this.SiteID, this.Root_ContentSnippetID);
+				carrot_ContentSnippet oldC = CompiledQueries.cqGetLatestSnippetContentTbl(db, this.SiteID, this.Root_ContentSnippetID);
 
 				bool bNew = false;
 
@@ -252,7 +252,7 @@ namespace Carrotware.CMS.Core {
 						rc.CreateUserId = SecurityData.CurrentUserGuid;
 					}
 
-					_db.carrot_RootContentSnippets.InsertOnSubmit(rc);
+					db.carrot_RootContentSnippets.InsertOnSubmit(rc);
 					bNew = true;
 				}
 
@@ -286,9 +286,19 @@ namespace Carrotware.CMS.Core {
 				rc.Heartbeat_UserId = c.EditUserId;
 				rc.EditHeartbeat = DateTime.UtcNow;
 
-				_db.carrot_ContentSnippets.InsertOnSubmit(c);
+				db.carrot_ContentSnippets.InsertOnSubmit(c);
 
-				_db.SubmitChanges();
+				db.SubmitChanges();
+
+				var priorVersions = db.carrot_ContentSnippets.Where(x => x.IsLatestVersion == true
+										&& x.ContentSnippetID != c.ContentSnippetID
+										&& x.Root_ContentSnippetID == c.Root_ContentSnippetID);
+
+				// make sure if there are any stray active rows besides the new one, mark them inactive
+				if (priorVersions != null && priorVersions.Any()) {
+					db.carrot_ContentSnippets.BatchUpdate(priorVersions, p => new carrot_ContentSnippet { IsLatestVersion = false });
+					db.SubmitChanges();
+				}
 
 				this.ContentSnippetID = c.ContentSnippetID;
 				this.Root_ContentSnippetID = rc.Root_ContentSnippetID;
@@ -296,8 +306,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static int GetSimilar(Guid siteID, Guid rootSnippetID, string categorySlug) {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				IQueryable<vw_carrot_ContentSnippet> query = CompiledQueries.cqGetContentSnippetNoMatch(_db, siteID, rootSnippetID, categorySlug);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				IQueryable<vw_carrot_ContentSnippet> query = CompiledQueries.cqGetContentSnippetNoMatch(db, siteID, rootSnippetID, categorySlug);
 
 				return query.Count();
 			}
@@ -305,8 +315,8 @@ namespace Carrotware.CMS.Core {
 
 		public static ContentSnippet Get(Guid rootSnippetID) {
 			ContentSnippet _item = null;
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				vw_carrot_ContentSnippet query = CompiledQueries.cqGetLatestSnippetVersion(_db, rootSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				vw_carrot_ContentSnippet query = CompiledQueries.cqGetLatestSnippetVersion(db, rootSnippetID);
 				if (query != null) {
 					_item = new ContentSnippet(query);
 				}
@@ -317,8 +327,8 @@ namespace Carrotware.CMS.Core {
 
 		public static ContentSnippet GetSnippetByID(Guid siteID, Guid rootSnippetID, bool bActiveOnly) {
 			ContentSnippet _item = null;
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				vw_carrot_ContentSnippet query = CompiledQueries.GetLatestContentSnippetByID(_db, siteID, bActiveOnly, rootSnippetID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				vw_carrot_ContentSnippet query = CompiledQueries.GetLatestContentSnippetByID(db, siteID, bActiveOnly, rootSnippetID);
 				if (query != null) {
 					_item = new ContentSnippet(query);
 				}
@@ -329,8 +339,8 @@ namespace Carrotware.CMS.Core {
 
 		public static ContentSnippet GetSnippetBySlug(Guid siteID, string categorySlug, bool bActiveOnly) {
 			ContentSnippet _item = null;
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				vw_carrot_ContentSnippet query = CompiledQueries.GetLatestContentSnippetBySlug(_db, siteID, bActiveOnly, categorySlug);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				vw_carrot_ContentSnippet query = CompiledQueries.GetLatestContentSnippetBySlug(db, siteID, bActiveOnly, categorySlug);
 				if (query != null) {
 					_item = new ContentSnippet(query);
 				}
@@ -341,8 +351,8 @@ namespace Carrotware.CMS.Core {
 
 		public static ContentSnippet GetVersion(Guid snippetDataID) {
 			ContentSnippet _item = null;
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				vw_carrot_ContentSnippet query = CompiledQueries.cqGetSnippetVersionByID(_db, snippetDataID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				vw_carrot_ContentSnippet query = CompiledQueries.cqGetSnippetVersionByID(db, snippetDataID);
 				if (query != null) {
 					_item = new ContentSnippet(query);
 				}
@@ -352,8 +362,8 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public static List<ContentSnippet> GetHistory(Guid rootSnippetID) {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				List<ContentSnippet> _types = (from d in CompiledQueries.cqGetSnippetVersionHistory(_db, rootSnippetID)
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				List<ContentSnippet> _types = (from d in CompiledQueries.cqGetSnippetVersionHistory(db, rootSnippetID)
 											   select new ContentSnippet(d)).ToList();
 
 				return _types;

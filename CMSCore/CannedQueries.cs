@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Carrotware.CMS.Core {
 
-	static internal class CannedQueries {
+	internal static class CannedQueries {
 
 		internal static IQueryable<vw_carrot_Content> GetAllByTypeList(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, ContentPageType.PageType entryType) {
 			return (from ct in ctx.vw_carrot_Contents
@@ -460,9 +460,9 @@ namespace Carrotware.CMS.Core {
 			return (from r in ctx.vw_carrot_Comments
 					orderby r.CreateDate descending
 					where r.SiteID == siteID
-						   && (spam == null || r.IsSpam == spam)
-						   && (approved == null || r.IsApproved == approved)
-						&& r.ContentTypeID == ContentPageType.GetIDByType(contentEntry)
+							&& (spam == null || r.IsSpam == spam)
+							&& (approved == null || r.IsApproved == approved)
+							&& r.ContentTypeID == ContentPageType.GetIDByType(contentEntry)
 					select r);
 		}
 	}

@@ -125,7 +125,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void ResetHeartbeatLock() {
-			using (CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext()) {
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 				if (rc != null) {
@@ -137,7 +137,7 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void RecordHeartbeatLock(Guid currentUserID) {
-			using (CarrotCMSDataContext db = CarrotCMSDataContext.GetDataContext()) {
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
 				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 				if (rc != null) {
@@ -199,9 +199,9 @@ namespace Carrotware.CMS.Core {
 			this.MetaDescription = string.IsNullOrEmpty(this.MetaDescription) ? string.Empty : this.MetaDescription;
 		}
 
-		private void SaveKeywordsAndTags(CarrotCMSDataContext _db) {
-			IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(_db, this.Root_ContentID);
-			IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(_db, this.Root_ContentID);
+		private void SaveKeywordsAndTags(CarrotCMSDataContext db) {
+			IQueryable<carrot_TagContentMapping> oldContentTags = CannedQueries.GetContentTagMapByContentID(db, this.Root_ContentID);
+			IQueryable<carrot_CategoryContentMapping> oldContentCategories = CannedQueries.GetContentCategoryMapByContentID(db, this.Root_ContentID);
 
 			if (this.ContentType == ContentPageType.PageType.BlogEntry) {
 				List<carrot_TagContentMapping> newContentTags = (from x in this.ContentTags
@@ -219,15 +219,15 @@ namespace Carrotware.CMS.Core {
 																			}).ToList();
 
 				foreach (carrot_TagContentMapping s in newContentTags) {
-					_db.carrot_TagContentMappings.InsertOnSubmit(s);
+					db.carrot_TagContentMappings.InsertOnSubmit(s);
 				}
 				foreach (carrot_CategoryContentMapping s in newContentCategories) {
-					_db.carrot_CategoryContentMappings.InsertOnSubmit(s);
+					db.carrot_CategoryContentMappings.InsertOnSubmit(s);
 				}
 			}
 
-			_db.carrot_TagContentMappings.BatchDelete(oldContentTags);
-			_db.carrot_CategoryContentMappings.BatchDelete(oldContentCategories);
+			db.carrot_TagContentMappings.BatchDelete(oldContentTags);
+			db.carrot_CategoryContentMappings.BatchDelete(oldContentCategories);
 		}
 
 		private void PerformCommonSaveRoot(SiteData pageSite, carrot_RootContent rc) {
@@ -363,19 +363,19 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public void ApplyTemplate() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_Content c = CompiledQueries.cqGetLatestContentTbl(_db, this.SiteID, this.Root_ContentID);
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
+				carrot_Content c = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
 
 				if (c != null) {
 					c.TemplateFile = this.TemplateFile;
 
-					_db.SubmitChanges();
+					db.SubmitChanges();
 				}
 			}
 		}
 
 		public void SavePageEdit() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
 				SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
 				if (this.Root_ContentID == Guid.Empty) {
@@ -388,9 +388,9 @@ namespace Carrotware.CMS.Core {
 					this.Parent_ContentID = null;
 				}
 
-				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
+				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
-				carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(_db, this.SiteID, this.Root_ContentID);
+				carrot_Content oldC = CompiledQueries.cqGetLatestContentTbl(db, this.SiteID, this.Root_ContentID);
 
 				bool bNew = false;
 
@@ -399,7 +399,7 @@ namespace Carrotware.CMS.Core {
 
 					PerformCommonSaveRoot(site, rc);
 
-					_db.carrot_RootContents.InsertOnSubmit(rc);
+					db.carrot_RootContents.InsertOnSubmit(rc);
 					bNew = true;
 				}
 
@@ -411,18 +411,28 @@ namespace Carrotware.CMS.Core {
 
 				PerformCommonSave(site, rc, c);
 
-				_db.carrot_Contents.InsertOnSubmit(c);
+				db.carrot_Contents.InsertOnSubmit(c);
 
-				SaveKeywordsAndTags(_db);
+				SaveKeywordsAndTags(db);
 
-				_db.SubmitChanges();
+				db.SubmitChanges();
+
+				var priorVersions = db.carrot_Contents.Where(x => x.IsLatestVersion == true
+										&& x.ContentID != c.ContentID
+										&& x.Root_ContentID == c.Root_ContentID);
+
+				// make sure if there are any stray active rows besides the new one, mark them inactive
+				if (priorVersions != null && priorVersions.Any()) {
+					db.carrot_Contents.BatchUpdate(priorVersions, p => new carrot_Content { IsLatestVersion = false });
+					db.SubmitChanges();
+				}
 
 				SaveTrackbacks();
 			}
 		}
 
 		public void SavePageAsDraft() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+			using (var db = CarrotCMSDataContext.GetDataContext()) {
 				SiteData site = SiteData.GetSiteFromCache(this.SiteID);
 
 				if (this.Root_ContentID == Guid.Empty) {
@@ -432,14 +442,14 @@ namespace Carrotware.CMS.Core {
 					this.ContentID = Guid.NewGuid();
 				}
 
-				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(_db, this.SiteID, this.Root_ContentID);
+				carrot_RootContent rc = CompiledQueries.cqGetRootContentTbl(db, this.SiteID, this.Root_ContentID);
 
 				if (rc == null) {
 					rc = new carrot_RootContent();
 
 					PerformCommonSaveRoot(site, rc);
 
-					_db.carrot_RootContents.InsertOnSubmit(rc);
+					db.carrot_RootContents.InsertOnSubmit(rc);
 				}
 
 				carrot_Content c = new carrot_Content();
@@ -449,11 +459,11 @@ namespace Carrotware.CMS.Core {
 
 				c.IsLatestVersion = false; // draft, leave existing version latest
 
-				_db.carrot_Contents.InsertOnSubmit(c);
+				db.carrot_Contents.InsertOnSubmit(c);
 
-				SaveKeywordsAndTags(_db);
+				SaveKeywordsAndTags(db);
 
-				_db.SubmitChanges();
+				db.SubmitChanges();
 
 				this.IsLatestVersion = c.IsLatestVersion;
 				SaveTrackbacks();
