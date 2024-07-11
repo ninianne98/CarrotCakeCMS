@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
 
 namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		[Description("Gallery appearance (pretty photo skin)")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstPrettySkins")]
-		public string PrettyPhotoSkin { get; set; }
+		public string PrettyPhotoSkin { get; set; } = "light_rounded";
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstPrettySkins {
@@ -55,13 +55,13 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				try {
 					string sFoundVal = GetParmValue("PrettyPhotoSkin", "light_rounded");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.PrettyPhotoSkin = sFoundVal;
 					}
 				} catch (Exception ex) { }
 			}
 
-			if (String.IsNullOrEmpty(PrettyPhotoSkin)) {
+			if (string.IsNullOrEmpty(PrettyPhotoSkin)) {
 				PrettyPhotoSkin = "light_rounded";
 			}
 

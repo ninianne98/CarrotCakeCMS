@@ -30,6 +30,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		protected void BuildFolderList() {
 			List<FileData> lstFolders = new List<FileData>();
+			var now = DateTime.Now.Date;
 
 			string sRoot = HttpContext.Current.Server.MapPath("~/");
 
@@ -40,12 +41,12 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				subdirs = null;
 			}
 
-			lstFolders.Add(new FileData { FileName = "  -- whole site --  ", FolderPath = "/", FileDate = DateTime.Now });
+			lstFolders.Add(new FileData { FileName = "  -- whole site --  ", FolderPath = "/", FileDate = now });
 
 			if (subdirs != null) {
 				foreach (string theDir in subdirs) {
 					string w = FileDataHelper.MakeWebFolderPath(theDir);
-					lstFolders.Add(new FileData { FileName = w, FolderPath = w, FileDate = DateTime.Now });
+					lstFolders.Add(new FileData { FileName = w, FolderPath = w, FileDate = now });
 
 					string[] subdirs2;
 					try {
@@ -57,7 +58,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 					if (subdirs2 != null) {
 						foreach (string theDir2 in subdirs2) {
 							string w2 = FileDataHelper.MakeWebFolderPath(theDir2);
-							lstFolders.Add(new FileData { FileName = w2, FolderPath = w2, FileDate = DateTime.Now });
+							lstFolders.Add(new FileData { FileName = w2, FolderPath = w2, FileDate = now });
 						}
 					}
 				}
@@ -66,9 +67,12 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith(SiteData.AdminFolderPath));
 			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/bin/"));
 			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/obj/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/."));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/app_code/"));
 			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/app_data/"));
+			lstFolders.RemoveAll(f => f.FileName.ToLower().StartsWith("/app_start/"));
 
-			ddlFolders.DataSource = lstFolders.OrderBy(f => f.FileName);
+			ddlFolders.DataSource = lstFolders.Distinct().OrderBy(f => f.FileName);
 			ddlFolders.DataBind();
 		}
 

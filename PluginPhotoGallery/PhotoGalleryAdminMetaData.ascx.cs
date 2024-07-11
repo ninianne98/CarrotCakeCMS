@@ -63,11 +63,14 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 		}
 
 		protected void ValidateGalleryImage(string imageFile) {
+			if (string.IsNullOrEmpty(imageFile)) {
+				throw new Exception("Image path must be provided.");
+			}
 			if (imageFile.Contains("../") || imageFile.Contains(@"..\")) {
 				throw new Exception("Cannot use relative paths.");
 			}
 			if (imageFile.Contains(":")) {
-				throw new Exception("Cannot specify drive letters.");
+				throw new Exception("Cannot specify drive letters or other protocols.");
 			}
 			if (imageFile.Contains("//") || imageFile.Contains(@"\\")) {
 				throw new Exception("Cannot use UNC paths.");

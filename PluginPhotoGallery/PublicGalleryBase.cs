@@ -21,11 +21,11 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		[Description("Display gallery heading")]
 		[Widget(WidgetAttribute.FieldMode.CheckBox)]
-		public bool ShowHeading { get; set; }
+		public bool ShowHeading { get; set; } = false;
 
 		[Description("Scale gallery images")]
 		[Widget(WidgetAttribute.FieldMode.CheckBox)]
-		public bool ScaleImage { get; set; }
+		public bool ScaleImage { get; set; } = true;
 
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstGalleryID {
@@ -72,23 +72,17 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		public virtual void GetPublicParmValues() {
 			if (this.PublicParmValues.Any()) {
-				this.ScaleImage = false;
+				this.ScaleImage = true;
 				this.ShowHeading = false;
 
 				try {
-					string sFoundVal = GetParmValue("ShowHeading", "false");
-
-					if (!String.IsNullOrEmpty(sFoundVal)) {
-						this.ShowHeading = Convert.ToBoolean(sFoundVal);
-					}
+					var foundVal = this.GetValue(x => x.ShowHeading, this.ShowHeading);
+					this.SetBoolValue(x => x.ShowHeading, foundVal);
 				} catch (Exception ex) { }
 
 				try {
-					string sFoundVal = GetParmValue("ScaleImage", "false");
-
-					if (!String.IsNullOrEmpty(sFoundVal)) {
-						this.ScaleImage = Convert.ToBoolean(sFoundVal);
-					}
+					var foundVal = this.GetValue(x => x.ScaleImage, this.ScaleImage);
+					this.SetBoolValue(x => x.ScaleImage, foundVal);
 				} catch (Exception ex) { }
 			}
 		}

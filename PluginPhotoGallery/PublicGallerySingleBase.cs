@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 		[Description("Gallery image pixel height/width")]
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSizes")]
-		public int ThumbSize { get; set; }
+		public int ThumbSize { get; set; } = 100;
 
 		public override void GetPublicParmValues() {
 			base.GetPublicParmValues();
@@ -33,19 +33,16 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				this.ThumbSize = 100;
 
 				try {
-					string sFoundVal = GetParmValue("GalleryID", Guid.Empty.ToString());
+					var foundVal = this.GetValue(x => x.GalleryID, Guid.Empty);
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
-						this.GalleryID = new Guid(sFoundVal);
+					if (foundVal != Guid.Empty && this.GalleryID == Guid.Empty) {
+						this.SetGuidValue(x => x.GalleryID, foundVal);
 					}
 				} catch (Exception ex) { }
 
 				try {
-					string sFoundVal = GetParmValueDefaultEmpty("ThumbSize", "150");
-
-					if (!String.IsNullOrEmpty(sFoundVal)) {
-						this.ThumbSize = Convert.ToInt32(sFoundVal);
-					}
+					var foundVal = this.GetValue(x => x.ThumbSize, this.ThumbSize);
+					this.SetIntValue(x => x.ThumbSize, foundVal);
 				} catch (Exception ex) { }
 			}
 		}

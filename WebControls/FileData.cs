@@ -213,6 +213,11 @@ namespace Carrotware.Web.UI.Controls {
 				} catch (Exception ex) { }
 			}
 
+			if (File.Exists(testFile) == false) {
+				f.FileName = Path.GetFileName(myFileName);
+				f.FolderPath = MakeWebFolderPath(sQuery);
+			}
+
 			return f;
 		}
 
