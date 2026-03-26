@@ -27,8 +27,7 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
 				SiteData site = SiteData.CurrentSite;
-
-				Calendar1.CalendarDate = site.Now.Date;
+				Calendar1.CalendarDate = CalendarHelper.GetFirstOfMonthByDate(site.Now).Date;
 
 				SetCalendar();
 
@@ -110,12 +109,14 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		protected void btnLast_Click(object sender, EventArgs e) {
-			Calendar1.CalendarDate = Calendar1.CalendarDate.AddMonths(-1);
+			var first = CalendarHelper.GetFirstOfMonthByDate(Calendar1.CalendarDate);
+			Calendar1.CalendarDate = first.AddDays(-1).Date;
 			SetCalendar();
 		}
 
 		protected void btnNext_Click(object sender, EventArgs e) {
-			Calendar1.CalendarDate = Calendar1.CalendarDate.AddMonths(1);
+			var last = CalendarHelper.GetEndOfMonthByDate(Calendar1.CalendarDate);
+			Calendar1.CalendarDate = last.AddDays(1).Date;
 			SetCalendar();
 		}
 

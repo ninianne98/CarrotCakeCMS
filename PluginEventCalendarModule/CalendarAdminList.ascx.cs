@@ -38,25 +38,32 @@ namespace Carrotware.CMS.UI.Plugins.EventCalendarModule {
 		}
 
 		protected void txtDate_TextChanged(object sender, EventArgs e) {
-			Calendar1.CalendarDate = Convert.ToDateTime(txtDate.Text).Date;
+			var theDate = Convert.ToDateTime(txtDate.Text).Date;
+			var first = CalendarHelper.GetFirstOfMonthByDate(theDate);
+			Calendar1.CalendarDate = first.Date;
+			txtDate.Text = first.Date.ToShortDateString();
 			SetCalendar();
 		}
 
 		protected void btnLast_Click(object sender, EventArgs e) {
-			Calendar1.CalendarDate = Calendar1.CalendarDate.AddMonths(-1);
+			var first = CalendarHelper.GetFirstOfMonthByDate(Calendar1.CalendarDate);
+			Calendar1.CalendarDate = first.AddDays(-1).Date;
+			txtDate.Text = CalendarHelper.GetFirstOfMonthByDate(Calendar1.CalendarDate).ToShortDateString();
 			SetCalendar();
 		}
 
 		protected void btnNext_Click(object sender, EventArgs e) {
-			Calendar1.CalendarDate = Calendar1.CalendarDate.AddMonths(1);
+			var last = CalendarHelper.GetEndOfMonthByDate(Calendar1.CalendarDate);
+			Calendar1.CalendarDate = last.AddDays(1).Date;
+			txtDate.Text = CalendarHelper.GetFirstOfMonthByDate(Calendar1.CalendarDate).ToShortDateString();
 			SetCalendar();
 		}
 
 		protected void SetCalendar() {
 			SiteData site = SiteData.CurrentSite;
-
-			DateTime dtStart = Calendar1.CalendarDate.AddDays(1 - Calendar1.CalendarDate.Day).Date;
-			DateTime dtEnd = dtStart.AddMonths(1).Date;
+			var first = CalendarHelper.GetFirstOfMonthByDate(Calendar1.CalendarDate).Date;
+			DateTime dtStart = CalendarHelper.GetFirstOfMonthByDate(first).AddMinutes(-15);
+			DateTime dtEnd = CalendarHelper.GetEndOfMonthByDate(first).AddMinutes(15);
 
 			dtStart = site.ConvertSiteTimeToUTC(dtStart);
 			dtEnd = site.ConvertSiteTimeToUTC(dtEnd);
