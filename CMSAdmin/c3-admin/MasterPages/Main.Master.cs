@@ -49,7 +49,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 				this.Page.Title = string.Format("{0} - {1}", SiteData.CarrotCakeCMSVersionMM, this.Page.Title);
 			}
 
-			if (SiteData.CurretSiteExists) {
+			if (SiteData.CurrentSiteExists) {
 				litServerTime.Text = string.Format("{0} {1}", SiteData.CurrentSite.Now, SiteData.CurrentSite.TimeZoneIdentifier);
 				litSiteIdent.Text = SiteData.CurrentSite.SiteName;
 				litTag.Text = SiteData.CurrentSite.SiteTagline;
@@ -73,7 +73,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		}
 
 		public void HideWhenNoSiteProfileExists() {
-			bool bShowTop = SiteData.CurretSiteExists;
+			bool bShowTop = SiteData.CurrentSiteExists;
 
 			tabContentTop.Visible = bShowTop;
 			tabExportSite.Visible = bShowTop;

@@ -35,7 +35,7 @@ namespace Carrotware.CMS.Core {
 
 			if (sFileRequested.ToLowerInvariant().EndsWith(SiteFilename.TrackbackUri)) {
 				TrackbackHelper tbh = new TrackbackHelper();
-				if (SiteData.CurretSiteExists) {
+				if (SiteData.CurrentSiteExists) {
 					if (SiteData.CurrentSite.AcceptTrackbacks) {
 						tbh.ProcessTrackback(context, true);
 					} else {

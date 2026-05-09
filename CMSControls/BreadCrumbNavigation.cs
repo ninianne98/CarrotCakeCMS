@@ -94,7 +94,7 @@ namespace Carrotware.CMS.UI.Controls {
 			var pageNav = GetCurrentPage();
 			string currentPageFile = pageNav.FileName.ToLowerInvariant();
 
-			if (SiteData.CurretSiteExists && SiteData.CurrentSite.Blog_Root_ContentID.HasValue &&
+			if (SiteData.CurrentSiteExists && SiteData.CurrentSite.Blog_Root_ContentID.HasValue &&
 				pageNav.ContentType == ContentPageType.PageType.BlogEntry) {
 				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentSite.Blog_Root_ContentID.Value, !SecurityData.IsAuthEditor);
 

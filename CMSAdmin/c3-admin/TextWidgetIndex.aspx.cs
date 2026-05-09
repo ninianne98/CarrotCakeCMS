@@ -72,7 +72,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-			if (SiteData.CurretSiteExists) {
+			if (SiteData.CurrentSiteExists) {
 				SiteData.CurrentSite.LoadTextWidgets();
 			}
 

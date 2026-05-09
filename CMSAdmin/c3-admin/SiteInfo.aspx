@@ -148,6 +148,9 @@
 			</tr>
 			<tr>
 				<td class="tablecaption">Site Titlebar Pattern
+					<a href="javascript:cmsOpenPatternInfo()">
+						<img src="/c3-admin/images/information.png"
+							class="imgNoBorder" alt="Site titlebar pattern examples" title="Site titlebar pattern examples" /></a>
 				</td>
 				<td>
 					<asp:TextBox ValidationGroup="inputForm" onkeypress="return ProcessKeyPress(event)" ID="txtTitleBar" MaxLength="512" Columns="80" CssClass="form-control-xlg"

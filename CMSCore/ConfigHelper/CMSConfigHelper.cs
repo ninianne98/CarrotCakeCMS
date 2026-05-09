@@ -16,10 +16,10 @@ using System.Xml.Serialization;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -57,6 +57,8 @@ namespace Carrotware.CMS.Core {
 
 		private static string keyAdminToolboxModules = "cms_AdminToolboxModules";
 
+		private static string keyPrimarySite = "cms_PrimarySite";
+
 		private static string keyDynamicSite = "cms_DynamicSite";
 
 		private static string keyTemplateFiles = "cms_TemplateFiles";
@@ -90,7 +92,7 @@ namespace Carrotware.CMS.Core {
 			try {
 				VirtualDirectory.RegisterRoutes(true);
 
-				if (SiteData.CurretSiteExists) {
+				if (SiteData.CurrentSiteExists) {
 					SiteData.CurrentSite.LoadTextWidgets();
 				}
 			} catch (Exception ex) { }
@@ -369,22 +371,22 @@ namespace Carrotware.CMS.Core {
 					if (ds.Tables.Count == 2) {
 						_modules = (from d in ds.Tables[0].AsEnumerable()
 									select new CMSAdminModule {
-										PluginName = d.Field<string>("caption"),
-										PluginID = new Guid(d.Field<string>("pluginid"))
+										PluginName = d.GetStringValue("caption"),
+										PluginID = new Guid(d.GetStringValue("pluginid"))
 									}).OrderBy(x => x.PluginName).ToList();
 
 						foreach (DataTable t in ds.Tables) {
 							if (t.TableName.StartsWith("ID_") || t.TableName.StartsWith("plugincontrols")) {
 								var _ctrl2 = (from d in t.AsEnumerable()
 											  select new CMSAdminModuleMenu {
-												  Caption = d.Field<string>("pluginlabel"),
-												  SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
-												  PluginParm = d.Field<string>("parm"),
-												  ControlFile = d.Field<string>("plugincontrol"),
-												  UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
-												  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
-												  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
-												  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
+												  Caption = d.GetStringValue("pluginlabel"),
+												  SortOrder = d.GetIntValue("menuorder", -1),
+												  PluginParm = d.GetStringValue("parm"),
+												  ControlFile = d.GetStringValue("plugincontrol"),
+												  UsePopup = d.GetBoolValue("usepopup"),
+												  UseAjax = d.GetBoolValue("useajax"),
+												  IsVisible = d.GetBoolValue("visible"),
+												  PluginID = d.GetGuidValue("pluginid")
 											  }).OrderBy(x => x.Caption).OrderBy(x => x.SortOrder).ToList();
 
 								_ctrls = _ctrls.Union(_ctrl2).ToList();
@@ -392,16 +394,19 @@ namespace Carrotware.CMS.Core {
 						}
 					}
 
+					var ctx = HttpContext.Current;
+
 					foreach (var p in _modules) {
 						p.PluginMenus = (from c in _ctrls
 										 where c.PluginID == p.PluginID
+											&& File.Exists(ctx.Server.MapPath(c.ControlFile)) == true
 										 orderby c.Caption, c.SortOrder
 										 select c).ToList();
 					}
 
 					_modules = _modules.Union(GetModulesByDirectory()).ToList();
 
-					HttpContext.Current.Cache.Insert(keyAdminMenuModules, _modules, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+					ctx.Cache.Insert(keyAdminMenuModules, _modules, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 
 				return _modules.OrderBy(m => m.PluginName).ToList();
@@ -434,8 +439,8 @@ namespace Carrotware.CMS.Core {
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
 									   select new CMSPlugin {
 										   SortOrder = 100,
-										   FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
-										   Caption = d.Field<string>("crtldesc")
+										   FilePath = "~" + sPathPrefix + d.GetStringValue("filepath"),
+										   Caption = d.GetStringValue("crtldesc")
 									   }).ToList();
 
 							_plugins = _plugins.Union(_p2).ToList();
@@ -462,8 +467,8 @@ namespace Carrotware.CMS.Core {
 				_plugins = (from d in ds.Tables[0].AsEnumerable()
 							select new CMSPlugin {
 								SortOrder = 100,
-								FilePath = "~" + sPathPrefix + d.Field<string>("filepath"),
-								Caption = d.Field<string>("crtldesc")
+								FilePath = "~" + sPathPrefix + d.GetStringValue("filepath"),
+								Caption = d.GetStringValue("crtldesc")
 							}).ToList();
 			}
 
@@ -562,6 +567,8 @@ namespace Carrotware.CMS.Core {
 					subdirs = null;
 				}
 
+				var ctx = HttpContext.Current;
+
 				if (subdirs != null) {
 					foreach (string theDir in subdirs) {
 						string sTplDef = theDir + @"\Admin.config";
@@ -572,25 +579,26 @@ namespace Carrotware.CMS.Core {
 
 							var _modules = (from d in ds.Tables[0].AsEnumerable()
 											select new CMSAdminModule {
-												PluginName = d.Field<string>("caption"),
-												PluginID = new Guid(d.Field<string>("pluginid"))
+												PluginName = d.GetStringValue("caption"),
+												PluginID = new Guid(d.GetStringValue("pluginid"))
 											}).OrderBy(x => x.PluginName).ToList();
 
 							var _ctrls = (from d in ds.Tables[1].AsEnumerable()
 										  select new CMSAdminModuleMenu {
-											  Caption = d.Field<string>("pluginlabel"),
-											  SortOrder = string.IsNullOrEmpty(d.Field<string>("menuorder")) ? -1 : int.Parse(d.Field<string>("menuorder")),
-											  PluginParm = d.Field<string>("parm"),
-											  ControlFile = "~" + sPathPrefix + d.Field<string>("plugincontrol"),
-											  UsePopup = string.IsNullOrEmpty(d.Field<string>("usepopup")) ? false : Convert.ToBoolean(d.Field<string>("usepopup")),
-											  UseAjax = string.IsNullOrEmpty(d.Field<string>("useajax")) ? false : Convert.ToBoolean(d.Field<string>("useajax")),
-											  IsVisible = string.IsNullOrEmpty(d.Field<string>("visible")) ? false : Convert.ToBoolean(d.Field<string>("visible")),
-											  PluginID = string.IsNullOrEmpty(d.Field<string>("pluginid")) ? Guid.Empty : new Guid(d.Field<string>("pluginid"))
+											  Caption = d.GetStringValue("pluginlabel"),
+											  SortOrder = d.GetIntValue("menuorder", -1),
+											  PluginParm = d.GetStringValue("parm"),
+											  ControlFile = "~" + sPathPrefix + d.GetStringValue("plugincontrol"),
+											  UsePopup = d.GetBoolValue("usepopup"),
+											  UseAjax = d.GetBoolValue("useajax"),
+											  IsVisible = d.GetBoolValue("visible"),
+											  PluginID = d.GetGuidValue("pluginid")
 										  }).OrderBy(x => x.Caption).OrderBy(x => x.SortOrder).ToList();
 
 							foreach (var p in _modules) {
 								p.PluginMenus = (from c in _ctrls
 												 where c.PluginID == p.PluginID
+														&& File.Exists(ctx.Server.MapPath(c.ControlFile)) == true
 												 orderby c.Caption, c.SortOrder
 												 select c).ToList();
 							}
@@ -703,8 +711,8 @@ namespace Carrotware.CMS.Core {
 					List<CMSPlugin> _p2 = (from d in ds.Tables[0].AsEnumerable()
 										   select new CMSPlugin {
 											   SortOrder = 100,
-											   FilePath = d.Field<string>("filepath"),
-											   Caption = d.Field<string>("crtldesc")
+											   FilePath = d.GetStringValue("filepath"),
+											   Caption = d.GetStringValue("crtldesc")
 										   }).ToList();
 
 					_plugins = _p1.Union(_p2).Union(GetPluginsByDirectory()).ToList();
@@ -743,9 +751,9 @@ namespace Carrotware.CMS.Core {
 
 							var _p2 = (from d in ds.Tables[0].AsEnumerable()
 									   select new CMSTemplate {
-										   TemplatePath = (sPathPrefix + d.Field<string>("templatefile").ToLowerInvariant()).ToLowerInvariant(),
-										   EncodedPath = EncodeBase64((sPathPrefix + d.Field<string>("templatefile").ToLowerInvariant()).ToLowerInvariant()),
-										   Caption = d.Field<string>("filedesc")
+										   TemplatePath = (sPathPrefix + d.GetStringValue("templatefile").ToLowerInvariant()).ToLowerInvariant(),
+										   EncodedPath = EncodeBase64((sPathPrefix + d.GetStringValue("templatefile").ToLowerInvariant()).ToLowerInvariant()),
+										   Caption = d.GetStringValue("filedesc")
 									   }).ToList();
 
 							_plugins = _plugins.Union(_p2).ToList();
@@ -794,9 +802,9 @@ namespace Carrotware.CMS.Core {
 
 					var _p1 = (from d in ds.Tables[0].AsEnumerable()
 							   select new CMSTemplate {
-								   TemplatePath = d.Field<string>("templatefile").ToLowerInvariant(),
-								   EncodedPath = EncodeBase64(d.Field<string>("templatefile").ToLowerInvariant()),
-								   Caption = d.Field<string>("filedesc").Trim()
+								   TemplatePath = d.GetStringValue("templatefile").ToLowerInvariant(),
+								   EncodedPath = EncodeBase64(d.GetStringValue("templatefile").ToLowerInvariant()),
+								   Caption = d.GetStringValue("filedesc").Trim()
 							   }).ToList();
 
 					var _p2 = GetTemplatesByDirectory();
@@ -834,8 +842,8 @@ namespace Carrotware.CMS.Core {
 
 					_plugins = (from d in ds.Tables[0].AsEnumerable()
 								select new CMSTextWidget {
-									AssemblyString = d.Field<string>("pluginassembly"),
-									DisplayName = d.Field<string>("pluginname")
+									AssemblyString = d.GetStringValue("pluginassembly"),
+									DisplayName = d.GetStringValue("pluginname")
 								}).ToList();
 
 					HttpContext.Current.Cache.Insert(keyTxtWidgets, _plugins, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
@@ -865,13 +873,40 @@ namespace Carrotware.CMS.Core {
 
 					_sites = (from d in ds.Tables[0].AsEnumerable()
 							  select new DynamicSite {
-								  DomainName = string.IsNullOrEmpty(d.Field<string>("domname")) ? string.Empty : d.Field<string>("domname").ToLowerInvariant(),
-								  SiteID = new Guid(d.Field<string>("siteid"))
+								  DomainName = d.GetStringValue("domname").ToLowerInvariant(),
+								  SiteID = d.GetGuidValue("siteid")
 							  }).ToList();
 
 					HttpContext.Current.Cache.Insert(keyDynamicSite, _sites, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
 				}
 				return _sites;
+			}
+		}
+
+		public static Guid PrimarySiteID {
+			get {
+				Guid site = Guid.Empty;
+				bool bCached = false;
+
+				try {
+					var val = GetCacheItemString(keyPrimarySite);
+					if (val != null) {
+						site = new Guid(val);
+						bCached = val.Length > 10;
+					} else {
+						bCached = false;
+					}
+				} catch {
+					bCached = false;
+				}
+
+				if (!bCached) {
+					site = CarrotCakeConfig.GetConfig().MainConfig.SiteID.Value;
+
+					HttpContext.Current.Cache.Insert(keyPrimarySite, site, null, DateTime.Now.AddMinutes(3), Cache.NoSlidingExpiration);
+				}
+
+				return site;
 			}
 		}
 

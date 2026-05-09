@@ -42,7 +42,7 @@ namespace Carrotware.CMS.UI.Admin {
 		}
 
 		protected void RedirectIfNoSite() {
-			if (!SiteData.CurretSiteExists) {
+			if (!SiteData.CurrentSiteExists) {
 				Response.Redirect(SiteFilename.SiteInfoURL);
 			}
 		}

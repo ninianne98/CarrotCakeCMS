@@ -21,11 +21,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.SiteInfo);
 
-			_isNewSite = !SiteData.CurretSiteExists;
+			_isNewSite = !SiteData.CurrentSiteExists;
 
 			litID.Text = SiteData.CurrentSiteID.ToString();
 
-			phFeeds.Visible = SiteData.CurretSiteExists;
+			phFeeds.Visible = SiteData.CurrentSiteExists;
 
 			if (!IsPostBack) {
 				CheckDatabase();
@@ -75,7 +75,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				phCreatePage.Visible = false;
 
-				if (!SiteData.CurretSiteExists) {
+				if (!SiteData.CurrentSiteExists) {
 					btnSave.Text = "Click to Create Site";
 					phCreatePage.Visible = true;
 				}

@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Diagnostics;
-using System.Linq;
 
 /*
 * CarrotCake CMS
@@ -22,46 +18,41 @@ namespace Carrotware.CMS.Data {
 
 		private static string connString = ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"].ConnectionString;
 
+		public static CarrotCMSDataContext Create() {
+			return GetDataContext();
+		}
+
+		public static CarrotCMSDataContext Create(string connection) {
+			return GetDataContext(connection);
+		}
+
 		public static CarrotCMSDataContext GetDataContext() {
 			return GetDataContext(connString);
 		}
 
 		public static CarrotCMSDataContext GetDataContext(string connection) {
+			var db = new CarrotCMSDataContext(connection);
+
+			return DataContextCounter(db);
+		}
+
+		public static CarrotCMSDataContext Create(IDbConnection connection) {
+			var db = new CarrotCMSDataContext(connection);
+
+			return DataContextCounter(db);
+		}
+
+		protected static CarrotCMSDataContext DataContextCounter(CarrotCMSDataContext db) {
 #if DEBUG
-			CarrotCMSDataContext _db = new CarrotCMSDataContext(connection);
-			DataDiagnostic dd = new DataDiagnostic(_db, iDBConnCounter);
+			DataDiagnostic dd = new DataDiagnostic(db, iDBConnCounter);
 			iDBConnCounter++;
 			if (iDBConnCounter > 4096) {
 				iDBConnCounter = 0;
 			}
-			return _db;
+			return db;
 #else
-			return new CarrotCMSDataContext(connection);
+			return db;
 #endif
 		}
-
-		public static CarrotCMSDataContext GetDataContext(IDbConnection connection) {
-#if DEBUG
-			CarrotCMSDataContext _db = new CarrotCMSDataContext(connection);
-			DataDiagnostic dd = new DataDiagnostic(_db, iDBConnCounter);
-			iDBConnCounter++;
-			if (iDBConnCounter > 4096) {
-				iDBConnCounter = 0;
-			}
-			return _db;
-#else
-			return new CarrotCMSDataContext(connection);
-#endif
-		}
-
-		//public CarrotCMSDataContext() :
-		//    base(global::Carrotware.CMS.Data.Properties.Settings.Default.CarrotwareCMSConnectionString, mappingSource) {
-		//    OnCreated();
-		//}
-
-		//public CarrotCMSDataContext() :
-		//    base(global::System.Configuration.ConfigurationManager.ConnectionStrings["CarrotwareCMSConnectionString"].ConnectionString, mappingSource) {
-		//    OnCreated();
-		//}
 	}
 }
