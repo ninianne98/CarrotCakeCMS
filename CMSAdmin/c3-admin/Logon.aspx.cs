@@ -1,38 +1,26 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Base;
+using Microsoft.AspNet.Identity;
 using System;
-using System.Web.Security;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using System.Threading.Tasks;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class Logon : BasePage {
 
-		protected HtmlGenericControl divMsg {
-			get {
-				return ((HtmlGenericControl)loginTemplate.FindControl("divMsg"));
-			}
-		}
-
-		protected HtmlAnchor lnkForgot {
-			get {
-				return ((HtmlAnchor)loginTemplate.FindControl("lnkForgot"));
-			}
-		}
-
 		protected void Page_Load(object sender, EventArgs e) {
 			divMsg.Visible = false;
+			FailureText.Text = string.Empty;
 
 			lnkForgot.HRef = SiteFilename.ForgotPasswordURL;
 
@@ -43,33 +31,38 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		protected void cmdLogon_Click(object sender, EventArgs e) {
-		}
+		protected async void cmdLogon_Click(object sender, EventArgs e) {
+			var authState = await DoAuthAsync();
 
-		protected void loginTemplate_LoggedIn(object sender, EventArgs e) {
-			if (SecurityData.IsAuthenticated) {
+			if (authState) {
 				Response.Redirect(SiteFilename.DashboardURL);
-			}
-
-			DoAuth();
-		}
-
-		protected void loginTemplate_LoggingIn(object sender, LoginCancelEventArgs e) {
-			if (DoAuth()) {
-				FormsAuthentication.RedirectFromLoginPage(loginTemplate.UserName, true, "/");
 			} else {
 				divMsg.Visible = true;
+				FailureText.Text = "Invalid login attempt.";
 			}
 		}
 
-		protected bool DoAuth() {
-			if (!String.IsNullOrEmpty(loginTemplate.UserName) && !String.IsNullOrEmpty(loginTemplate.Password)) {
-				if (FormsAuthentication.Authenticate(loginTemplate.UserName, loginTemplate.Password)) {
-					FormsAuthentication.SetAuthCookie(loginTemplate.UserName, true, "/");
+		protected async Task<bool> DoAuthAsync() {
+			var userName = txtUserName.Text;
+			var pass = txtPassword.Text;
 
-					SecurityData.AuthCookieTime();
+			if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(pass)) {
+				var user = securityHelper.UserManager.FindByName(userName);
+				var result = (user == null) ? false : await securityHelper.SimpleLogInAsync(userName, pass, false);
+
+				if (result && user != null & user.IsLocked == false) {
+					await securityHelper.UserManager.ResetAccessFailedCountAsync(user.Id);
+
+					Response.Redirect(SiteFilename.DashboardURL);
 
 					return true;
+				} else {
+					if (user != null) {
+						if (user.IsLocked == false) {
+							user.AccessFailedCount++;
+							securityHelper.UserManager.Update(user);
+						}
+					}
 				}
 			}
 

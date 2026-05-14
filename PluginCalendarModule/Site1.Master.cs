@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 			string pf = AdminModuleQueryStringRoutines.GetPluginFile();
 			Guid id = ParmParser.GetGuidIDFromQuery();
 
-			if (!String.IsNullOrEmpty(pf)) {
+			if (!string.IsNullOrEmpty(pf)) {
 				Response.Redirect(String.Format("/{0}.aspx?id={1}", pf, id));
 			}
 		}

@@ -9,7 +9,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 		public DateTime theEventDate = DateTime.Now.Date;
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!String.IsNullOrEmpty(Request.QueryString["calendardate"])) {
+			if (!string.IsNullOrEmpty(Request.QueryString["calendardate"])) {
 				theEventDate = Convert.ToDateTime(ParmParser.GetStringParameterFromQuery("calendardate"));
 			}
 

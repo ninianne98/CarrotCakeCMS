@@ -1,8 +1,8 @@
 ﻿Dear {%%UserName%%},
 
-Your password has been reset to: {%%Password%%}
+A request to reset your password has been submitted.  Please click the link below to reset your password.
 
-		{%%AdminFolderPath%%}
+		{%%ResetURL%%}
 
 -- CMS Site {%%SiteURL%%}
 

@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Edit Profile" Language="C#" ValidateRequest="false" MasterPageFile="MasterPages/MainPopup.Master" AutoEventWireup="true" CodeBehind="UserProfile.aspx.cs"
-	Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserProfile" %>
+	Inherits="Carrotware.CMS.UI.Admin.c3_admin.UserProfile1" %>
 
 <%@ MasterType VirtualPath="MasterPages/MainPopup.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

@@ -1,18 +1,18 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					bLocked = item.IsSnippetLocked();
 
 					if (bLocked && item.Heartbeat_UserId != null) {
-						MembershipUser usr = SecurityData.GetUserByGuid(item.Heartbeat_UserId.Value);
+						ApplicationUser usr = SecurityData.GetUserByID(item.Heartbeat_UserId.Value);
 						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the snippet.";
 					}
 
@@ -86,7 +86,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			sPageMode = GetStringParameterFromQuery("mode");
 			if (SiteData.IsRawMode(sPageMode)) {
 				reBody.CssClass = "rawEditor";
-				//divCenter.Visible = false;
 			}
 
 			pnlHB.Visible = !bLocked;

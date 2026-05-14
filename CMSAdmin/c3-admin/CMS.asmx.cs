@@ -1,10 +1,10 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Script.Services;
-using System.Web.Security;
 using System.Web.Services;
 using System.Xml.Serialization;
 
@@ -12,10 +12,10 @@ using System.Xml.Serialization;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -467,20 +467,20 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public List<MembershipUser> FindUsers(string searchTerm) {
+		public List<UserProfile> FindUsers(string searchTerm) {
 			string search = CMSConfigHelper.DecodeBase64(searchTerm);
 
-			List<MembershipUser> lstUsers = SecurityData.GetUserSearch(search);
+			List<UserProfile> lstUsers = SecurityData.GetUserProfileSearch(search);
 
 			return lstUsers.OrderBy(x => x.UserName).ToList();
 		}
 
 		[WebMethod]
 		[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-		public List<MembershipUser> FindCreditUsers(string searchTerm) {
+		public List<ApplicationUser> FindCreditUsers(string searchTerm) {
 			string search = CMSConfigHelper.DecodeBase64(searchTerm);
 
-			List<MembershipUser> lstUsers = SecurityData.GetCreditUserSearch(search);
+			List<ApplicationUser> lstUsers = SecurityData.GetCreditUserSearch(search);
 
 			return lstUsers.OrderBy(x => x.UserName).ToList();
 		}

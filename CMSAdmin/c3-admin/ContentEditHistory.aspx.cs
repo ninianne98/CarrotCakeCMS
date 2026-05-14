@@ -7,10 +7,10 @@ using System.Collections.Generic;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -48,7 +48,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			List<EditHistory> lstHistory = null;
 
 			DateTime? dtFilter = null;
-			if (!String.IsNullOrEmpty(txtDate.Text)) {
+			if (!string.IsNullOrEmpty(txtDate.Text)) {
 				dtFilter = Convert.ToDateTime(txtDate.Text);
 			}
 
@@ -61,7 +61,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			pagedDataGrid.PageSize = int.Parse(ddlSize.SelectedValue);
 
-			lblPages.Text = String.Format(" {0} ", iRecCount);
+			lblPages.Text = string.Format(" {0} ", iRecCount);
 
 			pagedDataGrid.BuildSorting();
 

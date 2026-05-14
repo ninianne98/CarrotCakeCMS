@@ -787,13 +787,13 @@ namespace Carrotware.CMS.Core {
 					var t1 = new CMSTemplate();
 					t1.TemplatePath = site.TemplateFilename;
 					t1.EncodedPath = EncodeBase64(site.TemplateFilename);
-					t1.Caption = string.Format("    {0} [*]  ", ReflectionUtilities.DescriptionFor<SiteData>(x => x.TemplateFilename));
+					t1.Caption = string.Format("    {0} [*]  ", ReflectionUtilities.DisplayNameFor<SiteData>(x => x.TemplateFilename));
 					_plugins.Add(t1);
 
 					var t2 = new CMSTemplate();
 					t2.TemplatePath = site.TemplateBWFilename;
 					t2.EncodedPath = EncodeBase64(site.TemplateBWFilename);
-					t2.Caption = string.Format("   {0} [*]  ", ReflectionUtilities.DescriptionFor<SiteData>(x => x.TemplateBWFilename));
+					t2.Caption = string.Format("   {0} [*]  ", ReflectionUtilities.DisplayNameFor<SiteData>(x => x.TemplateBWFilename));
 					_plugins.Add(t2);
 				}
 

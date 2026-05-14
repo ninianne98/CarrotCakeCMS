@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					IsPageTemplate = true;
 				}
 
-				if ((SiteData.IsPageSampler || IsPageTemplate) && currentPage == null) {
+				if ((SiteData.IsPageSampler || this.IsPageTemplate) && currentPage == null) {
 					currentPage = ContentPageHelper.GetSamplerView();
 				}
 

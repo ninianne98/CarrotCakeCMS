@@ -14,10 +14,10 @@ using System.Web.UI.WebControls;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -234,31 +234,31 @@ namespace Carrotware.CMS.UI.Controls {
 					if ((this.AutoApproveAdmin)) {
 						pc.IsApproved = SecurityData.IsAdmin;
 					}
-					if (!String.IsNullOrEmpty(this.AutoApproveGroupName)) {
+					if (!string.IsNullOrEmpty(this.AutoApproveGroupName)) {
 						pc.IsApproved = SecurityData.IsUserInRole(this.AutoApproveGroupName);
 					}
 				}
 
 				pc.Save();
 
-				if (!String.IsNullOrEmpty(this.DirectEmail) || this.NotifyEditors || !String.IsNullOrEmpty(this.DirectEmailKeyName)) {
+				if (!string.IsNullOrEmpty(this.DirectEmail) || this.NotifyEditors || !string.IsNullOrEmpty(this.DirectEmailKeyName)) {
 					List<string> emails = new List<string>();
 
-					if (!String.IsNullOrEmpty(this.DirectEmail)) {
+					if (!string.IsNullOrEmpty(this.DirectEmail)) {
 						emails.Add(this.DirectEmail);
 					}
-					if (!String.IsNullOrEmpty(this.DirectEmailKeyName)) {
+					if (!string.IsNullOrEmpty(this.DirectEmailKeyName)) {
 						emails.Add(ConfigurationManager.AppSettings[this.DirectEmailKeyName].ToString());
 					}
 					if (this.NotifyEditors) {
 						ContentPage page = navData.GetContentPage();
-						emails.Add(page.CreateUser.EmailAddress);
+						emails.Add(page.CreateUser.Email);
 
 						if (page.EditUser.UserId != page.CreateUser.UserId) {
-							emails.Add(page.EditUser.EmailAddress);
+							emails.Add(page.EditUser.Email);
 						}
 						if (page.CreditUserId.HasValue) {
-							emails.Add(page.CreditUser.EmailAddress);
+							emails.Add(page.CreditUser.Email);
 						}
 					}
 

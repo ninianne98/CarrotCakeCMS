@@ -6,10 +6,10 @@ using System.Web.UI;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 // General Information about an assembly is controlled through the following
@@ -41,21 +41,5 @@ using System.Web.UI;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("4.4.*")]
+[assembly: AssemblyVersion("4.8.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
-
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER01.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER01a.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER02.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER03.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER04.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER05.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER06.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER07.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER08.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER09.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER10.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER11.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.ALTER12.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", "text/plain")]
-[assembly: WebResource("Carrotware.CMS.DBUpdater.DatabaseChecks.xml", "text/plain")]

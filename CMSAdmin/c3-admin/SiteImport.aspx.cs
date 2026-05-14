@@ -1,18 +1,18 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -116,7 +116,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private Guid FindUser(Guid userId) {
-			MembershipUser usr = SecurityData.GetUserByGuid(userId);
+			ApplicationUser usr = SecurityData.GetUserByID(userId);
 
 			if (usr == null) {
 				return SecurityData.CurrentUserGuid;
@@ -126,7 +126,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void SetMsg(string sMessage) {
-			if (!String.IsNullOrEmpty(sMessage)) {
+			if (!string.IsNullOrEmpty(sMessage)) {
 				litMessage.Text = sMessage;
 			}
 		}
@@ -221,35 +221,46 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			foreach (SiteExportUser seu in exSite.TheUsers) {
 				seu.ImportUserID = Guid.Empty;
 
-				MembershipUser usr = null;
+				ApplicationUser usr = null;
 				//attempt to find the user in the userbase
 				usr = SecurityData.GetUserListByEmail(seu.Email).FirstOrDefault();
 				if (usr != null) {
-					seu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+					seu.ImportUserID = new Guid(usr.Id);
 				} else {
 					usr = SecurityData.GetUserListByName(seu.Login).FirstOrDefault();
 					if (usr != null) {
-						seu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+						seu.ImportUserID = new Guid(usr.Id);
 					}
 				}
 
 				if (chkAuthors.Checked) {
+					var sd = new SecurityData();
+
 					if (seu.ImportUserID == Guid.Empty) {
-						usr = Membership.CreateUser(seu.Login, ProfileManager.GenerateSimplePassword(), seu.Email);
-						Roles.AddUserToRole(seu.Login, SecurityData.CMSGroup_Users);
-						seu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+						var user = new ApplicationUser { UserName = seu.Login, Email = seu.Email };
+						var nu = sd.CreateApplicationUser(user);
+						var result = nu.IdentityResult;
+
+						if (result.Succeeded) {
+							user = nu.User;
+							var exUser = nu.ExtendedUserData;
+							exUser.AddToRole(SecurityData.CMSGroup_Users);
+							seu.ImportUserID = new Guid(user.Id);
+						} else {
+							throw new Exception(string.Format("Could not create user: {0} ({1}) \r\n{2}", seu.Login, seu.Email, string.Join("\r\n", result.Errors)));
+						}
 					}
 
 					if (seu.ImportUserID != Guid.Empty) {
-						ExtendedUserData ud = new ExtendedUserData(seu.ImportUserID);
+						var ud = new ExtendedUserData(seu.ImportUserID);
 						if (ud != null) {
-							if (!String.IsNullOrEmpty(seu.FirstName) || !String.IsNullOrEmpty(seu.LastName)) {
+							if (!string.IsNullOrEmpty(seu.FirstName) || !string.IsNullOrEmpty(seu.LastName)) {
 								ud.FirstName = seu.FirstName;
 								ud.LastName = seu.LastName;
 								ud.Save();
 							}
 						} else {
-							throw new Exception(String.Format("Could not find new user: {0} ({1})", seu.Login, seu.Email));
+							throw new Exception(string.Format("Could not find new user: {0} ({1})", seu.Login, seu.Email));
 						}
 					}
 				}

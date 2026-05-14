@@ -1,19 +1,19 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.UI.Controls;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 using System.Web.UI.WebControls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -62,14 +62,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						}
 					}
 
-					MembershipUser usr = Membership.GetUser(userID);
-					Email.Text = usr.Email;
-					lblUserName.Text = usr.UserName;
-					UserName.Text = usr.UserName;
+					var user = securityHelper.UserManager.FindById(exUsr.UserKey);
+					txtEmail.Text = user.Email;
+					lblUserName.Text = user.UserName;
+					txtUserName.Text = user.UserName;
 					lblUserName.Visible = true;
-					UserName.Visible = false;
+					txtUserName.Visible = false;
 
-					chkLocked.Checked = usr.IsLockedOut;
+					chkLocked.Checked = (user.LockoutEndDateUtc.HasValue && user.LockoutEndDateUtc.Value > DateTime.UtcNow);
 
 					txtNickName.Text = exUsr.UserNickName;
 					txtFirstName.Text = exUsr.FirstName;
@@ -80,14 +80,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 					chkSelected = null;
 
+					var roles = exUsr.GetRoles();
+
 					HiddenField hdnRoleId = null;
 					foreach (GridViewRow dgItem in gvRoles.Rows) {
 						hdnRoleId = (HiddenField)dgItem.FindControl("hdnRoleId");
 						if (hdnRoleId != null) {
 							chkSelected = (CheckBox)dgItem.FindControl("chkSelected");
-							if (Roles.IsUserInRole(usr.UserName, hdnRoleId.Value)) {
-								chkSelected.Checked = true;
-							}
+							chkSelected.Checked = roles.Where(x => x.RoleName.ToLowerInvariant() == hdnRoleId.Value.ToLowerInvariant()).Any();
 						}
 					}
 				}
@@ -96,33 +96,34 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		protected void btnApply_Click(object sender, EventArgs e) {
 			if (userID != Guid.Empty) {
-				MembershipUser usr = Membership.GetUser(userID);
-				usr.Email = Email.Text;
-				Membership.UpdateUser(usr);
+				ExtendedUserData exUser = new ExtendedUserData(userID);
 
-				ExtendedUserData exUsr = new ExtendedUserData(userID);
-				exUsr.UserNickName = txtNickName.Text;
-				exUsr.FirstName = txtFirstName.Text;
-				exUsr.LastName = txtLastName.Text;
-				exUsr.UserBio = reBody.Text;
+				var user = securityHelper.UserManager.FindById(exUser.UserKey);
+				user.Email = txtEmail.Text;
+				exUser.Email = user.Email;
 
-				exUsr.Save();
+				exUser.UserNickName = txtNickName.Text;
+				exUser.FirstName = txtFirstName.Text;
+				exUser.LastName = txtLastName.Text;
+				exUser.UserBio = reBody.Text;
 
-				if (!chkLocked.Checked) {
-					usr.UnlockUser();
-					Membership.UpdateUser(usr);
+				IdentityResult result = securityHelper.UserManager.SetEmail(exUser.UserKey, exUser.Email);
+
+				exUser.Save();
+
+				if (chkLocked.Checked == false) {
+					user.LockoutEndDateUtc = null;
+					user.AccessFailedCount = 0;
+					securityHelper.UserManager.Update(user);
 				} else {
-					if (!usr.IsLockedOut) {
-						int iCount = 0;
-						while (iCount < 10) {
-							Membership.ValidateUser(usr.UserName, "zzBadPassWord123a" + iCount.ToString());
-							Membership.ValidateUser(usr.UserName, "zzBadPassWord123b" + iCount.ToString());
-							iCount++;
-						}
+					if (user.LockoutEndDateUtc.HasValue == false || user.LockoutEndDateUtc.Value < DateTime.UtcNow) {
+						user.LockoutEndDateUtc = DateTime.UtcNow.Date.AddYears(2);
+						user.AccessFailedCount = 25;
+						securityHelper.UserManager.Update(user);
 					}
 				}
 
-				exUsr.AddToRole(SecurityData.CMSGroup_Users);
+				exUser.AddToRole(SecurityData.CMSGroup_Users);
 
 				CheckBox chkSelected = null;
 				HiddenField hdnSiteID = null;
@@ -135,9 +136,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						chkSelected = (CheckBox)dgItem.FindControl("chkSelected");
 
 						if (chkSelected.Checked) {
-							exUsr.AddToSite(guidSiteID);
+							exUser.AddToSite(guidSiteID);
 						} else {
-							exUsr.RemoveFromSite(guidSiteID);
+							exUser.RemoveFromSite(guidSiteID);
 						}
 					}
 				}
@@ -150,9 +151,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						chkSelected = (CheckBox)dgItem.FindControl("chkSelected");
 
 						if (chkSelected.Checked) {
-							exUsr.AddToRole(hdnRoleId.Value);
+							exUser.AddToRole(hdnRoleId.Value);
 						} else {
-							exUsr.RemoveFromRole(hdnRoleId.Value);
+							exUser.RemoveFromRole(hdnRoleId.Value);
 						}
 					}
 				}

@@ -1,8 +1,7 @@
 ﻿using Carrotware.CMS.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text;
@@ -13,15 +12,15 @@ using System.Xml;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
 
-	public partial class SiteData {
+	public partial class SiteData : IValidatableObject {
 
 		public SiteData() { }
 
@@ -112,29 +111,29 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ContentCategory> GetCategoryList() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				List<ContentCategory> _types = (from d in CompiledQueries.cqGetContentCategoryBySiteID(_db, this.SiteID)
-												select new ContentCategory(d)).ToList();
+			using (var db = CarrotCMSDataContext.Create()) {
+				List<ContentCategory> types = (from d in CompiledQueries.cqGetContentCategoryBySiteID(db, this.SiteID)
+											   select new ContentCategory(d)).ToList();
 
-				return _types;
+				return types;
 			}
 		}
 
 		public List<ContentTag> GetTagList() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				List<ContentTag> _types = (from d in CompiledQueries.cqGetContentTagBySiteID(_db, this.SiteID)
-										   select new ContentTag(d)).ToList();
+			using (var db = CarrotCMSDataContext.Create()) {
+				List<ContentTag> types = (from d in CompiledQueries.cqGetContentTagBySiteID(db, this.SiteID)
+										  select new ContentTag(d)).ToList();
 
-				return _types;
+				return types;
 			}
 		}
 
 		public List<ContentSnippet> GetContentSnippetList() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				List<ContentSnippet> _types = (from d in CompiledQueries.cqGetSnippetsBySiteID(_db, this.SiteID)
-											   select new ContentSnippet(d)).ToList();
+			using (var db = CarrotCMSDataContext.Create()) {
+				List<ContentSnippet> types = (from d in CompiledQueries.cqGetSnippetsBySiteID(db, this.SiteID)
+											  select new ContentSnippet(d)).ToList();
 
-				return _types;
+				return types;
 			}
 		}
 
@@ -155,9 +154,14 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public SiteData GetCurrentSite() {
+			//return Get(CurrentSiteID);
+			return CurrentSite;
+		}
+
 		public void Save() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_Site s = CompiledQueries.cqGetSiteByID(_db, this.SiteID);
+			using (var db = CarrotCMSDataContext.Create()) {
+				carrot_Site s = CompiledQueries.cqGetSiteByID(db, this.SiteID);
 
 				bool bNew = false;
 				if (s == null) {
@@ -199,9 +203,9 @@ namespace Carrotware.CMS.Core {
 				s.Blog_DatePattern = string.IsNullOrEmpty(this.Blog_DatePattern) ? "yyyy/MM/dd" : this.Blog_DatePattern;
 
 				if (bNew) {
-					_db.carrot_Sites.InsertOnSubmit(s);
+					db.carrot_Sites.InsertOnSubmit(s);
 				}
-				_db.SubmitChanges();
+				db.SubmitChanges();
 			}
 		}
 
@@ -211,9 +215,9 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public List<ExtendedUserData> GetMappedUsers() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				return (from l in _db.carrot_UserSiteMappings
-						join u in _db.vw_carrot_UserDatas on l.UserId equals u.UserId
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from l in db.carrot_UserSiteMappings
+						join u in db.vw_carrot_UserDatas on l.UserId equals u.UserId
 						where l.SiteID == this.SiteID
 						select new ExtendedUserData(u)).ToList();
 			}
@@ -229,57 +233,56 @@ namespace Carrotware.CMS.Core {
 			if (!(SecurityData.IsSiteEditor || SecurityData.IsAdmin)) {
 				return false;
 			}
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+
+			using (var db = CarrotCMSDataContext.Create()) {
 				// by this point, the user is probably an editor, make sure they have rights to this site
-				IQueryable<Guid> lstSiteIDs = (from l in _db.carrot_UserSiteMappings
+				IQueryable<Guid> lstSiteIDs = (from l in db.carrot_UserSiteMappings
 											   where l.UserId == userID
 													&& l.SiteID == siteID
 											   select l.SiteID);
 
-				if (lstSiteIDs.Count() > 0) {
-					return true;
-				}
+				return lstSiteIDs.Any();
 			}
 
 			return false;
 		}
 
 		public void CleanUpSerialData() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				IQueryable<carrot_SerialCache> lst = (from c in _db.carrot_SerialCaches
+			using (var db = CarrotCMSDataContext.Create()) {
+				IQueryable<carrot_SerialCache> lst = (from c in db.carrot_SerialCaches
 													  where c.EditDate < DateTime.UtcNow.AddHours(-6)
 													  && c.SiteID == CurrentSiteID
 													  select c);
 
-				_db.carrot_SerialCaches.BatchDelete(lst);
-				_db.SubmitChanges();
+				db.carrot_SerialCaches.BatchDelete(lst);
+				db.SubmitChanges();
 			}
 		}
 
 		public int GetSitePageCount(ContentPageType.PageType entryType) {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				int iCount = CannedQueries.GetAllByTypeList(_db, this.SiteID, false, entryType).Count();
+			using (var db = CarrotCMSDataContext.Create()) {
+				int iCount = CannedQueries.GetAllByTypeList(db, this.SiteID, false, entryType).Count();
 				return iCount;
 			}
 		}
 
 		public void MapUserToSite(Guid siteID, Guid userID) {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+			using (var db = CarrotCMSDataContext.Create()) {
 				carrot_UserSiteMapping map = new carrot_UserSiteMapping();
 				map.UserSiteMappingID = Guid.NewGuid();
 				map.SiteID = siteID;
 				map.UserId = userID;
 
-				_db.carrot_UserSiteMappings.InsertOnSubmit(map);
-				_db.SubmitChanges();
+				db.carrot_UserSiteMappings.InsertOnSubmit(map);
+				db.SubmitChanges();
 			}
 		}
 
 		public List<BasicContentData> GetFullSiteFileList() {
 			List<BasicContentData> map = new List<BasicContentData>();
 
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				IQueryable<vw_carrot_Content> queryAllFiles = CompiledQueries.cqGetAllContent(_db, this.SiteID);
+			using (var db = CarrotCMSDataContext.Create()) {
+				IQueryable<vw_carrot_Content> queryAllFiles = CompiledQueries.cqGetAllContent(db, this.SiteID);
 				map = queryAllFiles.Select(x => new BasicContentData(x)).ToList();
 			}
 
@@ -288,7 +291,7 @@ namespace Carrotware.CMS.Core {
 
 		public DateTime Now {
 			get {
-				if (IsWebView) {
+				if (SiteData.CurrentSite != null) {
 					return SiteData.CurrentSite.ConvertUTCToSiteTime(DateTime.UtcNow);
 				} else {
 					return DateTime.Now;
@@ -299,10 +302,8 @@ namespace Carrotware.CMS.Core {
 		public TimeZoneInfo SiteTimeZoneInfo {
 			get {
 				TimeZoneInfo oTZ = TimeZoneInfo.Local;
-				if (IsWebView) {
-					if (!string.IsNullOrEmpty(this.TimeZoneIdentifier)) {
-						try { oTZ = TimeZoneInfo.FindSystemTimeZoneById(this.TimeZoneIdentifier); } catch { }
-					}
+				if (!string.IsNullOrEmpty(this.TimeZoneIdentifier)) {
+					try { oTZ = TimeZoneInfo.FindSystemTimeZoneById(this.TimeZoneIdentifier); } catch { }
 				}
 				return oTZ;
 			}
@@ -374,14 +375,38 @@ namespace Carrotware.CMS.Core {
 
 		public bool SendTrackbacks { get; set; }
 		public bool AcceptTrackbacks { get; set; }
+
+		[Display(Name = "Block Index")]
 		public bool BlockIndex { get; set; }
+
+		[StringLength(128)]
+		[Display(Name = "Site URL")]
+		[Required]
 		public string MainURL { get; set; }
+
+		[StringLength(1024)]
 		public string MetaDescription { get; set; }
+
+		[StringLength(1024)]
 		public string MetaKeyword { get; set; }
+
+		[Display(Name = "Site ID")]
+		[Required]
 		public Guid SiteID { get; set; }
+
+		[StringLength(256)]
+		[Display(Name = "Site Name")]
+		[Required]
 		public string SiteName { get; set; }
+
+		[StringLength(1024)]
 		public string SiteTagline { get; set; }
+
+		[StringLength(1024)]
 		public string SiteTitlebarPattern { get; set; }
+
+		[StringLength(128)]
+		[Required]
 		public string TimeZoneIdentifier { get; set; }
 
 		private List<TextWidget> _lstTextWidgets = null;
@@ -401,11 +426,35 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public Guid? Blog_Root_ContentID { get; set; }
+
+		[StringLength(64)]
+		[Display(Name = "Folder Path")]
+		[Required]
 		public string Blog_FolderPath { get; set; }
+
+		[StringLength(64)]
+		[Display(Name = "Category Path")]
+		[Required]
 		public string Blog_CategoryPath { get; set; }
+
+		[StringLength(64)]
+		[Display(Name = "Tag Path")]
+		[Required]
 		public string Blog_TagPath { get; set; }
+
+		[StringLength(32)]
+		[Display(Name = "Date Pattern")]
+		[Required]
 		public string Blog_DatePattern { get; set; }
+
+		[StringLength(64)]
+		[Display(Name = "Editor Path")]
+		[Required]
 		public string Blog_EditorPath { get; set; }
+
+		[StringLength(64)]
+		[Display(Name = "Date Path")]
+		[Required]
 		public string Blog_DatePath { get; set; }
 
 		public string BlogFolderPath {
@@ -452,6 +501,16 @@ namespace Carrotware.CMS.Core {
 			get { return SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(this.SiteSearchPath); }
 		}
 
+		[Display(Name = "Default - Plain L-R-C Content")]
+		public string TemplateFilename {
+			get { return SiteData.DefaultTemplateFilename.ToLowerInvariant(); }
+		}
+
+		[Display(Name = "Black 'n White - Plain L-R-C Content")]
+		public string TemplateBWFilename {
+			get { return SiteData.DefaultTemplateBWFilename.ToLowerInvariant(); }
+		}
+
 		public bool CheckIsBlogCategoryPath(string sFilterPath) {
 			return sFilterPath.ToLowerInvariant().StartsWith(this.BlogCategoryPath);
 		}
@@ -470,16 +529,6 @@ namespace Carrotware.CMS.Core {
 
 		public bool CheckIsSiteSearchPath(string sFilterPath) {
 			return sFilterPath.ToLowerInvariant().StartsWith(this.SiteSearchPath);
-		}
-
-		[Description("Default - Plain L-R-C Content")]
-		public string TemplateFilename {
-			get { return SiteData.DefaultTemplateFilename.ToLowerInvariant(); }
-		}
-
-		[Description("Black 'n White - Plain L-R-C Content")]
-		public string TemplateBWFilename {
-			get { return SiteData.DefaultTemplateBWFilename.ToLowerInvariant(); }
 		}
 
 		public List<string> GetSpecialFilePathPrefixes() {
@@ -545,14 +594,8 @@ namespace Carrotware.CMS.Core {
 
 		public enum RSSFeedInclude {
 			Unknown,
-
-			[Description("Blogs and Pages")]
 			BlogAndPages,
-
-			[Description("Blog Only")]
 			BlogOnly,
-
-			[Description("Page Only")]
 			PageOnly
 		}
 
@@ -573,6 +616,18 @@ namespace Carrotware.CMS.Core {
 
 			context.Response.StatusCode = 200;
 			context.Response.StatusDescription = "OK";
+		}
+
+		public HtmlString GetRSSFeed(string feedType) {
+			SiteData.RSSFeedInclude FeedType = SiteData.RSSFeedInclude.BlogAndPages;
+
+			if (!string.IsNullOrEmpty(feedType)) {
+				FeedType = (SiteData.RSSFeedInclude)Enum.Parse(typeof(SiteData.RSSFeedInclude), feedType, true);
+			}
+
+			string sRSSXML = SiteData.CurrentSite.GetRSSFeed(FeedType);
+
+			return new HtmlString(sRSSXML);
 		}
 
 		public string GetRSSFeed(RSSFeedInclude feedData) {
@@ -635,7 +690,7 @@ namespace Carrotware.CMS.Core {
 
 				Uri PageURI = new Uri(sPageURI);
 
-				si.Content = new TextSyndicationContent(sn.PageTextPlainSummaryMedium);
+				si.Content = new TextSyndicationContent(sn.PageTextPlainSummaryMedium.ToString());
 				si.Title = new TextSyndicationContent(sn.NavMenuText);
 				si.Links.Add(SyndicationLink.CreateSelfLink(PageURI));
 				si.AddPermalink(PageURI);
@@ -650,103 +705,56 @@ namespace Carrotware.CMS.Core {
 		}
 
 		//==========END RSS=================
-	}
 
-	//============================================
+		private List<ValidationResult> _errors = null;
 
-	public class BlogDatePathParser {
-		private string _filename = string.Empty;
-		private SiteData _site = new SiteData();
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext) {
+			if (_errors == null) {
+				_errors = new List<ValidationResult>();
+				List<string> lst = new List<string>();
 
-		private DateTime _dateBegin = DateTime.MinValue;
-		private DateTime _dateEnd = DateTime.MaxValue;
+				if (!string.IsNullOrEmpty(this.Blog_CategoryPath)) {
+					lst.Add(this.Blog_CategoryPath.ToLowerInvariant().Trim());
+				}
+				if (!string.IsNullOrEmpty(this.Blog_TagPath)) {
+					lst.Add(this.Blog_TagPath.ToLowerInvariant().Trim());
+				}
+				if (!string.IsNullOrEmpty(this.Blog_DatePath)) {
+					lst.Add(this.Blog_DatePath.ToLowerInvariant().Trim());
+				}
+				if (!string.IsNullOrEmpty(this.Blog_EditorPath)) {
+					lst.Add(this.Blog_EditorPath.ToLowerInvariant().Trim());
+				}
 
-		public int? Month { get; set; }
-		public int? Day { get; set; }
-		public int? Year { get; set; }
+				List<string> duplicates = lst.GroupBy(s => s).SelectMany(grp => grp.Skip(1)).ToList();
+				if (duplicates.Any()) {
+					ValidationResult err = new ValidationResult("One or more paths are not unique.", new string[] { "Blog_CategoryPath", "Blog_TagPath", "Blog_DatePath", "Blog_EditorPath" });
+					_errors.Add(err);
+				}
 
-		public DateTime DateBegin { get { return _dateBegin; } }
-		public DateTime DateEnd { get { return _dateEnd; } }
-
-		public DateTime DateBeginUTC {
-			get {
-				if (_site != null) {
-					return _site.ConvertSiteTimeToUTC(_dateBegin);
-				} else {
-					return _dateBegin;
+				if (!FoldersAreValid()) {
+					ValidationResult err = new ValidationResult("One or more paths are in conflict with existing site content.", new string[] { "Blog_FolderPath" });
+					_errors.Add(err);
 				}
 			}
+
+			return _errors;
 		}
 
-		public DateTime DateEndUTC {
-			get {
-				if (_site != null) {
-					return _site.ConvertSiteTimeToUTC(_dateEnd);
-				} else {
-					return _dateEnd;
+		protected bool FoldersAreValid() {
+			string sFolderPath = this.Blog_FolderPath ?? string.Empty;
+
+			if (SiteData.CurrentSiteExists) {
+				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+					var exists = pageHelper.ExistingPagesBeginWith(this);
+
+					return !exists;
 				}
-			}
-		}
-
-		public BlogDatePathParser() {
-			_filename = SiteData.CurrentScriptName;
-			_site = SiteData.CurrentSite;
-
-			ParseString();
-		}
-
-		public BlogDatePathParser(SiteData site) {
-			_filename = SiteData.CurrentScriptName;
-			_site = site;
-
-			ParseString();
-		}
-
-		public BlogDatePathParser(string folderPath) {
-			_filename = folderPath;
-			_site = SiteData.CurrentSite;
-
-			ParseString();
-		}
-
-		public BlogDatePathParser(SiteData site, string folderPath) {
-			_filename = folderPath;
-			_site = site;
-
-			ParseString();
-		}
-
-		private void ParseString() {
-			_filename = _filename.Replace(@"\", "/").Replace("//", "/").Replace("//", "/");
-			string sFile = _filename.ToLowerInvariant().Replace(_site.BlogDateFolderPath, string.Empty);
-
-			if (sFile.EndsWith(".aspx")) {
-				sFile = sFile.Substring(0, sFile.ToLowerInvariant().LastIndexOf("/"));
+			} else {
+				return true;
 			}
 
-			string[] parms = sFile.Split('/');
-			if (parms.Length > 2) {
-				this.Day = int.Parse(parms[2]);
-			}
-			if (parms.Length > 1) {
-				this.Month = int.Parse(parms[1]);
-			}
-			if (parms.Length > 0) {
-				this.Year = int.Parse(parms[0]);
-			}
-
-			if (this.Month == null && this.Day == null) {
-				_dateBegin = new DateTime(Convert.ToInt32(this.Year), 1, 1);
-				_dateEnd = _dateBegin.AddYears(1).AddMilliseconds(-1);
-			}
-			if (this.Month != null && this.Day == null) {
-				_dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), 1);
-				_dateEnd = _dateBegin.AddMonths(1).AddMilliseconds(-1);
-			}
-			if (this.Month != null && this.Day != null) {
-				_dateBegin = new DateTime(Convert.ToInt32(this.Year), Convert.ToInt32(this.Month), Convert.ToInt32(this.Day));
-				_dateEnd = _dateBegin.AddDays(1).AddMilliseconds(-1);
-			}
+			return false;
 		}
 	}
 }

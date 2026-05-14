@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Carrotware.CMS.Data;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -35,7 +35,7 @@ namespace Carrotware.CMS.Core {
 
 		public ITextBodyUpdate TextProcessor {
 			get {
-				if (_txt == null && !String.IsNullOrEmpty(this.TextWidgetAssembly)) {
+				if (_txt == null && !string.IsNullOrEmpty(this.TextWidgetAssembly)) {
 					Type t = Type.GetType(this.TextWidgetAssembly);
 					Object o = null;
 

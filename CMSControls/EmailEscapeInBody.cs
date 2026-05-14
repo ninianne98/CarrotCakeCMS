@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Carrotware.CMS.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Carrotware.CMS.Interface;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -22,7 +22,7 @@ namespace Carrotware.CMS.UI.Controls {
 		#region ITextBodyUpdate Members
 
 		public string UpdateContent(string TextContent) {
-			if (!String.IsNullOrEmpty(TextContent)) {
+			if (!string.IsNullOrEmpty(TextContent)) {
 				List<EmailReplace> _mail = FindEmails(TextContent);
 
 				if (_mail.Any()) {
@@ -56,7 +56,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected string MungeEmail(string s) {
 			string retVal = "";
 
-			if (!String.IsNullOrEmpty(s)) {
+			if (!string.IsNullOrEmpty(s)) {
 				StringBuilder sb = new StringBuilder();
 				for (int i = 0; i < s.Length; i++) {
 					sb.Append("&#" + Convert.ToByte(s[i]).ToString() + ";");

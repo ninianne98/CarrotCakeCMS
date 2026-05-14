@@ -1,0 +1,90 @@
+﻿using Carrotware.CMS.Data;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, 2026, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 3 licenses.
+*
+* Date: October 2011, May 2026
+*/
+
+namespace Carrotware.CMS.Core {
+
+	public class UserRole {
+
+		public UserRole() {
+			this.RoleId = Guid.Empty.ToString();
+		}
+
+		public UserRole(string roleName) {
+			this.RoleName = roleName;
+			this.RoleId = Guid.Empty.ToString();
+		}
+
+		public UserRole(string roleName, string roleID) {
+			this.RoleName = roleName;
+			this.RoleId = roleID;
+		}
+
+		public UserRole(string roleName, Guid roleID) {
+			this.RoleName = roleName;
+			this.RoleId = roleID.ToString();
+		}
+
+		internal UserRole(membership_Role role) {
+			if (role != null) {
+				this.RoleId = role.Id;
+				this.RoleName = role.Name;
+			}
+		}
+
+		[Display(Name = "ID")]
+		[Required]
+		public string RoleId { get; set; }
+
+		[Display(Name = "Name")]
+		[Required]
+		public string RoleName { get; set; }
+
+		[Display(Name = "Lowercase Name")]
+		public string LoweredRoleName { get { return (this.RoleName ?? string.Empty).ToLowerInvariant(); } }
+
+		public void Save() {
+			using (var db = CarrotCMSDataContext.Create()) {
+				membership_Role role = (from r in db.membership_Roles
+										where r.Name == this.RoleName || r.Id == this.RoleId
+										select r).FirstOrDefault();
+
+				if (role == null) {
+					role = new membership_Role();
+					role.Id = Guid.NewGuid().ToString().ToLowerInvariant();
+					db.membership_Roles.InsertOnSubmit(role);
+				}
+
+				role.Name = this.RoleName.Trim();
+
+				db.SubmitChanges();
+
+				this.RoleName = role.Name;
+				this.RoleId = role.Id;
+			}
+		}
+
+		public List<ExtendedUserData> GetMembers() {
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from ur in db.membership_UserRoles
+						join r in db.membership_Roles on ur.RoleId equals r.Id
+						join ud in db.vw_carrot_UserDatas on ur.UserId equals ud.UserKey
+						where r.Id == this.RoleId
+						orderby ud.UserName
+						select new ExtendedUserData(ud)).ToList();
+			}
+		}
+	}
+}

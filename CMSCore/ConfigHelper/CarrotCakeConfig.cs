@@ -9,10 +9,10 @@ using System.Web.Configuration;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -121,15 +121,15 @@ namespace Carrotware.CMS.Core {
 
 		[Description("Override parameter for admin folder")]
 		[ConfigurationProperty("AdminFolderPath", DefaultValue = "/c3-admin/", IsRequired = false)]
-		public String AdminFolderPath {
-			get { return (String)this["AdminFolderPath"]; }
+		public string AdminFolderPath {
+			get { return (string)this["AdminFolderPath"]; }
 			set { this["AdminFolderPath"] = value; }
 		}
 
 		[Description("Override parameter for site skin")]
 		[ConfigurationProperty("SiteSkin", DefaultValue = "Classic", IsRequired = false)]
-		public String SiteSkin {
-			get { return (String)this["SiteSkin"]; }
+		public string SiteSkin {
+			get { return (string)this["SiteSkin"]; }
 			set { this["SiteSkin"] = value; }
 		}
 	}
@@ -139,8 +139,8 @@ namespace Carrotware.CMS.Core {
 
 		[Description("File extensions to block from the CMS file browser")]
 		[ConfigurationProperty("BlockedExtensions", DefaultValue = null, IsRequired = false)]
-		public String BlockedExtensions {
-			get { return (String)this["BlockedExtensions"]; }
+		public string BlockedExtensions {
+			get { return (string)this["BlockedExtensions"]; }
 			set { this["BlockedExtensions"] = value; }
 		}
 	}
@@ -157,8 +157,8 @@ namespace Carrotware.CMS.Core {
 
 		[Description("Parameter to aid/assist migration from older CMSs that used querystring parameters")]
 		[ConfigurationProperty("OldSiteQuerystring", DefaultValue = null, IsRequired = false)]
-		public String OldSiteQuerystring {
-			get { return (String)this["OldSiteQuerystring"]; }
+		public string OldSiteQuerystring {
+			get { return (string)this["OldSiteQuerystring"]; }
 			set { this["OldSiteQuerystring"] = value; }
 		}
 	}
@@ -167,44 +167,44 @@ namespace Carrotware.CMS.Core {
 	public class ConfigFileElement : ConfigurationElement {
 
 		[ConfigurationProperty("SiteSkins", DefaultValue = "SiteSkins.config", IsRequired = false)]
-		public String SiteSkins {
-			get { return (String)this["SiteSkins"]; }
+		public string SiteSkins {
+			get { return (string)this["SiteSkins"]; }
 			set { this["SiteSkins"] = value; }
 		}
 
 		[ConfigurationProperty("SiteMapping", DefaultValue = "SiteMapping.config", IsRequired = false)]
-		public String SiteMapping {
-			get { return (String)this["SiteMapping"]; }
+		public string SiteMapping {
+			get { return (string)this["SiteMapping"]; }
 			set { this["SiteMapping"] = value; }
 		}
 
 		[ConfigurationProperty("PublicControls", DefaultValue = "PublicControls.config", IsRequired = false)]
-		public String PublicControls {
-			get { return (String)this["PublicControls"]; }
+		public string PublicControls {
+			get { return (string)this["PublicControls"]; }
 			set { this["PublicControls"] = value; }
 		}
 
 		[ConfigurationProperty("AdminModules", DefaultValue = "AdminModules.config", IsRequired = false)]
-		public String AdminModules {
-			get { return (String)this["AdminModules"]; }
+		public string AdminModules {
+			get { return (string)this["AdminModules"]; }
 			set { this["AdminModules"] = value; }
 		}
 
 		[ConfigurationProperty("TextContentProcessors", DefaultValue = "TextContentProcessors.config", IsRequired = false)]
-		public String TextContentProcessors {
-			get { return (String)this["TextContentProcessors"]; }
+		public string TextContentProcessors {
+			get { return (string)this["TextContentProcessors"]; }
 			set { this["TextContentProcessors"] = value; }
 		}
 
 		[ConfigurationProperty("TemplatePath", DefaultValue = "~/cmsTemplates/", IsRequired = false)]
-		public String TemplatePath {
-			get { return (String)this["TemplatePath"]; }
+		public string TemplatePath {
+			get { return (string)this["TemplatePath"]; }
 			set { this["TemplatePath"] = value; }
 		}
 
 		[ConfigurationProperty("PluginPath", DefaultValue = "~/cmsPlugins/", IsRequired = false)]
-		public String PluginPath {
-			get { return (String)this["PluginPath"]; }
+		public string PluginPath {
+			get { return (string)this["PluginPath"]; }
 			set { this["PluginPath"] = value; }
 		}
 	}
@@ -213,20 +213,20 @@ namespace Carrotware.CMS.Core {
 	public class AdminFooterElement : ConfigurationElement {
 
 		[ConfigurationProperty("ControlPathMain", DefaultValue = null, IsRequired = false)]
-		public String ControlPathMain {
-			get { return (String)this["ControlPathMain"]; }
+		public string ControlPathMain {
+			get { return (string)this["ControlPathMain"]; }
 			set { this["ControlPathMain"] = value; }
 		}
 
 		[ConfigurationProperty("ControlPathPopup", DefaultValue = null, IsRequired = false)]
-		public String ControlPathPopup {
-			get { return (String)this["ControlPathPopup"]; }
+		public string ControlPathPopup {
+			get { return (string)this["ControlPathPopup"]; }
 			set { this["ControlPathPopup"] = value; }
 		}
 
 		[ConfigurationProperty("ControlPathPublic", DefaultValue = null, IsRequired = false)]
-		public String ControlPathPublic {
-			get { return (String)this["ControlPathPublic"]; }
+		public string ControlPathPublic {
+			get { return (string)this["ControlPathPublic"]; }
 			set { this["ControlPathPublic"] = value; }
 		}
 	}
@@ -235,14 +235,14 @@ namespace Carrotware.CMS.Core {
 	public class PublicSiteElement : ConfigurationElement {
 
 		[ConfigurationProperty("ControlPathHeader", DefaultValue = null, IsRequired = false)]
-		public String ControlPathHeader {
-			get { return (String)this["ControlPathHeader"]; }
+		public string ControlPathHeader {
+			get { return (string)this["ControlPathHeader"]; }
 			set { this["ControlPathHeader"] = value; }
 		}
 
 		[ConfigurationProperty("ControlPathFooter", DefaultValue = null, IsRequired = false)]
-		public String ControlPathFooter {
-			get { return (String)this["ControlPathFooter"]; }
+		public string ControlPathFooter {
+			get { return (string)this["ControlPathFooter"]; }
 			set { this["ControlPathFooter"] = value; }
 		}
 	}

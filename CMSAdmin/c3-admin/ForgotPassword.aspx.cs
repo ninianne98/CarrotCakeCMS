@@ -1,6 +1,8 @@
-﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Core;
+using Carrotware.CMS.Security;
 using Carrotware.CMS.UI.Base;
 using System;
+using System.Web.Profile;
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
@@ -16,28 +18,34 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void cmdReset_Click(object sender, EventArgs e) {
-			ProfileManager p = new ProfileManager();
 			bool bReset = false;
-			lblErr.Text = "";
-			FailureText.Text = "";
+			var email = txtEmail.Text ?? string.Empty;
+			var usr = SecurityData.GetUserByEmail(email);
+
+			InfoMessage.Text = string.Empty;
+			lblErr.Text = string.Empty;
+			FailureText.Text = string.Empty;
 			divErrMsg.Visible = false;
 
-			try { bReset = p.ResetPassword(txtEmail.Text, this); } catch (Exception ex) { lblErr.Text = ex.ToString(); }
-			//bReset = p.ResetPassword(txtEmail.Text, this);
+			try {
+				if (usr != null) {
+					var sd = new SecurityData();
+					sd.ResetPassword(usr.Email);
+				}
+			} catch (Exception ex) { lblErr.Text = ex.ToString(); }
 
-			if (bReset) {
-				InfoMessage.Text = "Email sent with new password.";
-			} else {
+			InfoMessage.Text = "Please check your email to reset your password.";
+
+			if (!bReset) {
 				if (lblErr.Text.ToLowerInvariant().Contains("system.net.mail.smtpclient")
 						|| lblErr.Text.ToLowerInvariant().Contains("system.net.mime.mailbnfhelper.readmailaddress")
 						|| lblErr.Text.ToLowerInvariant().Contains("system.net.mail.mailaddresscollection")
 						|| lblErr.Text.ToLowerInvariant().Contains("system.security.securityexception")) {
 					FailureText.Text = "Error sending reset message.";
-				} else {
-					FailureText.Text = "Invalid username/email.";
 				}
 			}
-			divLogonLink.Visible = bReset;
+
+			divLogonLink.Visible = InfoMessage.Text.Length > 0;
 
 			SetMsgVisible();
 
@@ -45,12 +53,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void SetMsgVisible() {
-			divErrMsg.Visible = !String.IsNullOrEmpty(FailureText.Text);
-			divInfoMsg.Visible = !String.IsNullOrEmpty(InfoMessage.Text);
+			divErrMsg.Visible = !string.IsNullOrEmpty(FailureText.Text);
+			divInfoMsg.Visible = !string.IsNullOrEmpty(InfoMessage.Text);
 		}
 
 		protected void cmdCancel_Click(object sender, EventArgs e) {
-			Response.Redirect(SiteFilename.DashboardURL);
+			Response.Redirect(SiteFilename.LogonURL);
 		}
 	}
 }

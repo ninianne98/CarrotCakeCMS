@@ -12,7 +12,7 @@ using System.Web.UI;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
 [assembly: AssemblyProduct("CMSCore")]
-[assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
+[assembly: AssemblyCopyright("Copyright © Carrotware 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,7 +33,7 @@ using System.Web.UI;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("4.4.*")]
+[assembly: AssemblyVersion("4.8.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]
 
 [assembly: WebResource("Carrotware.CMS.Core.SiteContent.Default.htm", "text/plain")]

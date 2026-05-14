@@ -7,10 +7,10 @@ using System.Xml;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.Web.UI.Controls {
@@ -58,11 +58,11 @@ namespace Carrotware.Web.UI.Controls {
 				}
 			}
 
-			if (String.IsNullOrEmpty(mailSettings.MailDomainName)) {
+			if (string.IsNullOrEmpty(mailSettings.MailDomainName)) {
 				mailSettings.MailDomainName = context.Request.ServerVariables["SERVER_NAME"];
 			}
 
-			if (String.IsNullOrEmpty(mailSettings.ReturnAddress)) {
+			if (string.IsNullOrEmpty(mailSettings.ReturnAddress)) {
 				mailSettings.ReturnAddress = "no-reply@" + mailSettings.MailDomainName;
 			}
 

@@ -48,12 +48,13 @@
 	</p>
 	<h2>Components Utilized</h2>
 	<p>
-		<b>Microsoft .NET framework version 3.5 </b>
-		<br />
-		Download: https://dotnet.microsoft.com/en-us/download/dotnet-framework/net35-sp1
-		<br />
-		About: https://learn.microsoft.com/en-us/dotnet/framework/install/dotnet-35-windows
-		<br />
+	<b>
+		Microsoft .NET Framework version 4.5, Web Pages 3, Microsoft jQuery Unobtrusive Ajax,
+		Microsoft Owin, AspNet Identity, AspNet Web Optimization, Web Infrastructure, and Entity Framework 6
+	</b> <br />
+		<a target="_blank" href="https://dotnet.microsoft.com/en-us/download/dotnet-framework/net45">https://dotnet.microsoft.com/en-us/download/dotnet-framework/net45</a> <br />
+		<a target="_blank" href="https://github.com/aspnet/AspNetWebStack">https://github.com/aspnet/AspNetWebStack</a> <br />
+		<a target="_blank" href="https://github.com/dotnet/ef6">https://github.com/dotnet/ef6</a> <br />
 	</p>
 	<p>
 		<b>jQuery JavaScript Library</b>
@@ -259,7 +260,7 @@
 	<h2>The MIT License (MIT)
 	</h2>
 	<p>
-		Copyright (c) 2011, 2015 Samantha Copeland, http://www.carrotware.com/ 
+		Copyright (c) 2011, 2015, 2026 Samantha Copeland, http://www.carrotware.com/ 
 		&lt;<a target="_blank" href="https://opensource.org/license/MIT">https://opensource.org/license/MIT</a>&gt;
 	</p>
 	<p>

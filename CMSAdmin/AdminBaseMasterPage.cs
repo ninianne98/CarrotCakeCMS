@@ -1,4 +1,5 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
 using System;
@@ -10,16 +11,17 @@ using System.Web.UI.WebControls;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin {
 
 	public class AdminBaseMasterPage : BaseMasterPage {
 		protected SiteData siteHelper = new SiteData();
+		protected SecurityHelper securityHelper = new SecurityHelper();
 
 		public enum SectionID {
 			SiteDashboard,
@@ -104,6 +106,14 @@ namespace Carrotware.CMS.UI.Admin {
 					ctrl = Page.LoadControl(controlPath);
 					plcHolder.Controls.Add(ctrl);
 				}
+			}
+		}
+
+		public override void Dispose() {
+			base.Dispose();
+
+			if (securityHelper != null) {
+				securityHelper.Dispose();
 			}
 		}
 	}

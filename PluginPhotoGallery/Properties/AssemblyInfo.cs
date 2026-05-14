@@ -12,7 +12,7 @@ using System.Web.UI;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
 [assembly: AssemblyProduct("PluginPhotoGallery")]
-[assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
+[assembly: AssemblyCopyright("Copyright © Carrotware 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

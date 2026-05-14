@@ -7,10 +7,10 @@ using System.Web.UI.Design;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -26,7 +26,7 @@ namespace Carrotware.CMS.UI.Controls {
 			string sTextOut = "[" + sType + " - " + sID + "]";
 
 			if (myctrl is ITextControl) {
-				if (!String.IsNullOrEmpty(((ITextControl)myctrl).Text)) {
+				if (!string.IsNullOrEmpty(((ITextControl)myctrl).Text)) {
 					sTextOut = "[" + sType + " - " + sID + " : " + ((ITextControl)myctrl).Text + "]";
 				}
 			}

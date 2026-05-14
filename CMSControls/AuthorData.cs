@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -121,7 +121,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["DataField"];
 				AuthorTextFieldName c = AuthorTextFieldName.FullName_FirstLast;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (AuthorTextFieldName)Enum.Parse(typeof(AuthorTextFieldName), s, true);
 					} catch (Exception ex) { }
@@ -139,7 +139,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["SourceField"];
 				AuthorSource c = AuthorSource.Editor;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (AuthorSource)Enum.Parse(typeof(AuthorSource), s, true);
 					} catch (Exception ex) { }

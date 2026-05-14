@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
 [assembly: AssemblyProduct("CMSFAQModule")]
-[assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
+[assembly: AssemblyCopyright("Copyright © Carrotware 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

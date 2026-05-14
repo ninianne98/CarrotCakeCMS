@@ -11,10 +11,10 @@ using System.Web;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.Web.UI.Controls {
@@ -27,7 +27,7 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static bool SendMail(string fromEmail, string emailTo, string subjectLine, string bodyText, bool isHTML) {
 			List<string> lst = new List<string>();
-			if (String.IsNullOrEmpty(emailTo)) {
+			if (string.IsNullOrEmpty(emailTo)) {
 				emailTo = String.Empty;
 			}
 			//emailTo = emailTo.Replace(",", ";");
@@ -46,7 +46,7 @@ namespace Carrotware.Web.UI.Controls {
 			HttpContext context = HttpContext.Current;
 			EMailSettings mailSettings = EMailSettings.GetEMailSettings();
 
-			if (String.IsNullOrEmpty(fromEmail)) {
+			if (string.IsNullOrEmpty(fromEmail)) {
 				fromEmail = mailSettings.ReturnAddress;
 			}
 
@@ -87,8 +87,8 @@ namespace Carrotware.Web.UI.Controls {
 
 				SmtpClient client = new SmtpClient();
 				if (mailSettings.DeliveryMethod == SmtpDeliveryMethod.Network
-						&& !String.IsNullOrEmpty(mailSettings.MailUserName)
-						&& !String.IsNullOrEmpty(mailSettings.MailPassword)) {
+						&& !string.IsNullOrEmpty(mailSettings.MailUserName)
+						&& !string.IsNullOrEmpty(mailSettings.MailPassword)) {
 					client.Host = mailSettings.MailDomainName;
 					client.Credentials = new NetworkCredential(mailSettings.MailUserName, mailSettings.MailPassword);
 				} else {

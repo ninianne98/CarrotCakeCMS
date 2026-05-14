@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -147,7 +147,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["NavDirection"];
 				PagedDataNextPrevLinkWrapper.PagedDataDirection c = PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (PagedDataNextPrevLinkWrapper.PagedDataDirection)Enum.Parse(typeof(PagedDataNextPrevLinkWrapper.PagedDataDirection), s, true);
 					} catch (Exception ex) { }
@@ -194,7 +194,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["NavDirection"];
 				PagedDataNextPrevLinkWrapper.PagedDataDirection c = PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (PagedDataNextPrevLinkWrapper.PagedDataDirection)Enum.Parse(typeof(PagedDataNextPrevLinkWrapper.PagedDataDirection), s, true);
 					} catch (Exception ex) { }
@@ -207,7 +207,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public void SetText() {
-			if (String.IsNullOrEmpty(this.Text)) {
+			if (string.IsNullOrEmpty(this.Text)) {
 				this.Text = this.NavDirection.ToString();
 			}
 		}
@@ -217,7 +217,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void OnPreRender(EventArgs e) {
-			if (String.IsNullOrEmpty(this.Text) && this.NavDirection != PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown) {
+			if (string.IsNullOrEmpty(this.Text) && this.NavDirection != PagedDataNextPrevLinkWrapper.PagedDataDirection.Unknown) {
 				this.SetText();
 			}
 

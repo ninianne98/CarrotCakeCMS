@@ -14,10 +14,10 @@ using System.Text;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 // portions derived from https://terryaney.wordpress.com/2008/04/14/batch-updates-and-deletes-with-linq-to-sql/
@@ -32,7 +32,7 @@ namespace Carrotware.CMS.Data {
 		public static int BatchDelete<T>(this Table<T> table, IQueryable<T> entities) where T : class {
 			DbCommand cmd = table.GetBatchDeleteDbCommand<T>(entities);
 
-			IEnumerable<Object> parameters = (from p in cmd.Parameters.Cast<DbParameter>()
+			IEnumerable<object> parameters = (from p in cmd.Parameters.Cast<DbParameter>()
 											  select p.Value);
 
 			return table.Context.ExecuteCommand(cmd.CommandText, parameters.ToArray());
@@ -41,7 +41,7 @@ namespace Carrotware.CMS.Data {
 		public static int BatchUpdate<T>(this Table<T> table, IQueryable<T> entities, Expression<Func<T, T>> evaluator) where T : class {
 			DbCommand cmd = table.GetBatchUpdateDbCommand<T>(entities, evaluator);
 
-			IEnumerable<Object> parameters = (from p in cmd.Parameters.Cast<DbParameter>()
+			IEnumerable<object> parameters = (from p in cmd.Parameters.Cast<DbParameter>()
 											  select p.Value);
 
 			return table.Context.ExecuteCommand(cmd.CommandText, parameters.ToArray());
@@ -50,7 +50,7 @@ namespace Carrotware.CMS.Data {
 		internal static DbCommand GetBatchDeleteDbCommand<T>(this Table<T> table, IQueryable<T> entities) where T : class {
 			DbCommand deleteCommand = table.Context.GetCommand(entities);
 
-			deleteCommand.CommandText = String.Format("DELETE {0}\r\n{1}", TableAlias, table.GetJoinQuery<T>(entities));
+			deleteCommand.CommandText = string.Format("DELETE {0}\r\n{1}", TableAlias, table.GetJoinQuery<T>(entities));
 
 			return deleteCommand;
 		}
@@ -60,10 +60,10 @@ namespace Carrotware.CMS.Data {
 
 			string setParmVals = table.GetMemberInitExpression(entities, evaluator, updateCommand).ToString();
 
-			updateCommand.CommandText = String.Format("UPDATE {0}\r\n{1}\r\n{2}", TableAlias, setParmVals, table.GetJoinQuery<T>(entities));
+			updateCommand.CommandText = string.Format("UPDATE {0}\r\n{1}\r\n{2}", TableAlias, setParmVals, table.GetJoinQuery<T>(entities));
 
 			if (updateCommand.CommandText.IndexOf("[arg0]") >= 0 || updateCommand.CommandText.IndexOf("NULL AS [EMPTY]") >= 0) {
-				throw new NotSupportedException(String.Format("The evaluator Expression<Func<{0},{0}>> has processing that cannot be used during batch updating.", table.GetType()));
+				throw new NotSupportedException(string.Format("The evaluator Expression<Func<{0},{0}>> has processing that cannot be used during batch updating.", table.GetType()));
 			}
 
 			return updateCommand;
@@ -93,7 +93,7 @@ namespace Carrotware.CMS.Data {
 				sbJoinOn.Append(" ");
 				sbSubQrySel.Append(" ");
 			} else {
-				throw new MissingPrimaryKeyException(String.Format("{0} does not have a PK.", metaTable.TableName));
+				throw new MissingPrimaryKeyException(string.Format("{0} does not have a PK.", metaTable.TableName));
 			}
 
 			DbCommand selectCommand = table.Context.GetCommand(entities);
@@ -103,7 +103,7 @@ namespace Carrotware.CMS.Data {
 			string selectStmt = selectText.Substring(0, endSelect);
 			endSelect++;
 			string tableAlias = selectText.Substring(endSelect, selectText.IndexOf("]", endSelect) - endSelect);
-			string newTblAlias = String.Format("[{0}]", tableAlias);
+			string newTblAlias = string.Format("[{0}]", tableAlias);
 
 			string joinOn = sbJoinOn.ToString().Replace("[[tbl2]]", TableAlias).Replace("[[tbl3]]", TableJoinAlias).Replace("[[tbl1]]", newTblAlias);
 			string subQrySel = sbSubQrySel.ToString().Replace("[[tbl2]]", TableAlias).Replace("[[tbl3]]", TableJoinAlias).Replace("[[tbl1]]", newTblAlias);
@@ -116,14 +116,14 @@ namespace Carrotware.CMS.Data {
 
 			subSelect += selectText.Substring(selectText.IndexOf("\r\nFROM "));
 
-			var batchJoin = String.Format("FROM {0} AS {1} \r\nINNER JOIN ( {2} ) AS {3} ON ({4})\r\n", table.GetTableName(), TableAlias, subSelect, TableJoinAlias, joinOn);
+			var batchJoin = string.Format("FROM {0} AS {1} \r\nINNER JOIN ( {2} ) AS {3} ON ({4})\r\n", table.GetTableName(), TableAlias, subSelect, TableJoinAlias, joinOn);
 
 			return batchJoin;
 		}
 
 		private static void TestExpression(ITable table, Expression expression) {
 			PropertyInfo propertyInfo = table.Context.GetType().GetProperty("Provider", BindingFlags.Instance | BindingFlags.NonPublic);
-			Object val = propertyInfo.GetValue(table.Context, null);
+			object val = propertyInfo.GetValue(table.Context, null);
 			MethodInfo methodInfo = val.GetType().GetMethod("System.Data.Linq.Provider.IProvider.Compile", BindingFlags.Instance | BindingFlags.NonPublic);
 
 			methodInfo.Invoke(val, new object[] { expression });
@@ -134,7 +134,7 @@ namespace Carrotware.CMS.Data {
 
 			IQueryable selectQuery = (table as IQueryable).Provider.CreateQuery(selectExpression);
 
-			string newBindName = String.Format("@p{0}", bindingName);
+			string newBindName = string.Format("@p{0}", bindingName);
 
 			DbCommand selectCmd = table.Context.GetCommand(selectQuery);
 			string selectText = selectCmd.CommandText;
@@ -144,7 +144,7 @@ namespace Carrotware.CMS.Data {
 
 			string tableAlias = selectText.Substring(firstBracket, selectText.IndexOf("]", firstBracket) - firstBracket);
 
-			string newTblPrefix = String.Format("[{0}].", tableAlias);
+			string newTblPrefix = string.Format("[{0}].", tableAlias);
 			selectText = selectText.Substring(firstBracket - 1, fromIdx - firstBracket + 1);
 
 			selectText = selectText.Replace(newTblPrefix, String.Empty)
@@ -152,16 +152,16 @@ namespace Carrotware.CMS.Data {
 									.Replace("@p", newBindName);
 
 			foreach (DbParameter selectParam in selectCmd.Parameters.Cast<DbParameter>()) {
-				string paramName = String.Format("@p{0}", updateCommand.Parameters.Count);
+				string paramName = string.Format("@p{0}", updateCommand.Parameters.Count);
 
 				selectText = selectText.Replace(selectParam.ParameterName.Replace("@p", newBindName), paramName);
 
 				updateCommand.Parameters.Add(new SqlParameter(paramName, selectParam.Value));
 			}
 
-			if (!String.IsNullOrEmpty(selectText)) {
+			if (!string.IsNullOrEmpty(selectText)) {
 				if (!selectText.StartsWith("@") || selectText.StartsWith("[")) {
-					selectText = String.Format("[{0}].{1}", TableAlias, selectText);
+					selectText = string.Format("[{0}].{1}", TableAlias, selectText);
 				}
 			} else {
 				selectText = String.Empty;
@@ -176,7 +176,7 @@ namespace Carrotware.CMS.Data {
 
 			if (!tableName.Contains("[")) {
 				string[] frags = tableName.Split('.');
-				tableName = String.Format("[{0}]", String.Join("].[", frags));
+				tableName = string.Format("[{0}]", String.Join("].[", frags));
 			}
 
 			return tableName;
@@ -186,7 +186,7 @@ namespace Carrotware.CMS.Data {
 			Type entityType = typeof(T);
 
 			if (memberInitExpression.Type != entityType) {
-				throw new NotImplementedException(String.Format("The MemberInitExpression is initializing a class of the incorrect type '{0}' and it should be '{1}'.", memberInitExpression.Type, entityType));
+				throw new NotImplementedException(string.Format("The MemberInitExpression is initializing a class of the incorrect type '{0}' and it should be '{1}'.", memberInitExpression.Type, entityType));
 			}
 
 			string tableName = table.GetTableName();
@@ -215,17 +215,17 @@ namespace Carrotware.CMS.Data {
 										   select c).FirstOrDefault();
 
 				if (mdMember == null) {
-					throw new ArgumentOutOfRangeException(name, String.Format("The field '{0}' on table '{1}' could not be found.", name, tableName));
+					throw new ArgumentOutOfRangeException(name, string.Format("The field '{0}' on table '{1}' could not be found.", name, tableName));
 				}
 
 				if (entityParam == null) {
-					Object constant = Expression.Lambda(assignment.Expression, null).Compile().DynamicInvoke();
+					object constant = Expression.Lambda(assignment.Expression, null).Compile().DynamicInvoke();
 
 					if (constant == null) {
 						sbSetParmValues.AppendFormat("[{0}] = null", mdMember.MappedName);
 					} else {
 						sbSetParmValues.AppendFormat("[{0}] = @p{1}", mdMember.MappedName, updateCommand.Parameters.Count);
-						updateCommand.Parameters.Add(new SqlParameter(String.Format("@p{0}", updateCommand.Parameters.Count), constant));
+						updateCommand.Parameters.Add(new SqlParameter(string.Format("@p{0}", updateCommand.Parameters.Count), constant));
 					}
 				} else {
 					MethodCallExpression selectExpression = Expression.Call(typeof(Queryable), "Select", new Type[] { entityType, assignment.Expression.Type },
@@ -241,7 +241,7 @@ namespace Carrotware.CMS.Data {
 		public static StringBuilder GetMemberInitExpression<T>(this Table<T> table, IQueryable<T> entities, Expression<Func<T, T>> evaluator, DbCommand updateCommand) where T : class {
 			var sb = new StringBuilder();
 
-			evaluator.Visit<MemberInitExpression>(delegate(MemberInitExpression expression) {
+			evaluator.Visit<MemberInitExpression>(delegate (MemberInitExpression expression) {
 				if (sb.Length > 1) {
 					throw new NotImplementedException("Only one MemberInitExpression is allowed for the evaluator parameter.");
 				}
@@ -261,7 +261,7 @@ namespace Carrotware.CMS.Data {
 
 			ParameterExpression entityParam = null;
 
-			assignment.Expression.Visit<ParameterExpression>(delegate(ParameterExpression p) { if (p.Type == entityType) entityParam = p; return p; });
+			assignment.Expression.Visit<ParameterExpression>(delegate (ParameterExpression p) { if (p.Type == entityType) entityParam = p; return p; });
 
 			return entityParam;
 		}

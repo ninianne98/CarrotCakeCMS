@@ -9,10 +9,10 @@ using System.Web.UI;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -33,7 +33,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["RenderRSSMode"];
 				RSSRenderAs c = RSSRenderAs.HeaderLink;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (RSSRenderAs)Enum.Parse(typeof(RSSRenderAs), s, true);
 				}
 				return c;
@@ -64,7 +64,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["RSSFeedType"];
 				SiteData.RSSFeedInclude c = SiteData.RSSFeedInclude.BlogAndPages;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (SiteData.RSSFeedInclude)Enum.Parse(typeof(SiteData.RSSFeedInclude), s, true);
 				}
 				return c;
@@ -91,7 +91,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public string ImageURI {
 			get {
 				string s = (string)ViewState["ImageURI"];
-				if (String.IsNullOrEmpty(s)) {
+				if (string.IsNullOrEmpty(s)) {
 					s = this.Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Controls.feed.png");
 				}
 				try {
@@ -129,7 +129,6 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void RenderContents(HtmlTextWriter output) {
-
 			switch (RenderRSSMode) {
 				case RSSRenderAs.HeaderLink:
 

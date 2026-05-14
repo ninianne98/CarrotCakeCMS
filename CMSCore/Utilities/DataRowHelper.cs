@@ -5,10 +5,10 @@ using System.Data;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -46,7 +46,7 @@ namespace Carrotware.CMS.Core {
 			if (row.Table.Columns.Contains(columnName) && row[columnName] != DBNull.Value) {
 				string val = row[columnName].ToString();
 				Guid result;
-				if (TryParseGuid(val, out result)) {
+				if (Guid.TryParse(val, out result)) {
 					return result;
 				}
 			}
@@ -62,16 +62,6 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 			return defaultValue;
-		}
-
-		public static bool TryParseGuid(string s, out Guid result) {
-			try {
-				result = new Guid(s);
-				return true;
-			} catch {
-				result = Guid.Empty;
-				return false;
-			}
 		}
 	}
 }

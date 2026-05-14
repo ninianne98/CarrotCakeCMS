@@ -10,7 +10,7 @@
 namespace Carrotware.CMS.UI.Admin.c3_admin {
     
     
-    public partial class UserProfile {
+    public partial class UserProfile1 {
         
         /// <summary>
         /// divInfoMsg control.

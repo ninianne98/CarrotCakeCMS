@@ -1,20 +1,28 @@
 ﻿using Carrotware.CMS.Data;
+using Carrotware.CMS.Security;
+using Carrotware.CMS.Security.Models;
+using Carrotware.Web.UI.Controls;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
-using System.Web.Security;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -23,134 +31,188 @@ namespace Carrotware.CMS.Core {
 
 		public SecurityData() { }
 
-		public static MembershipRole FindMembershipRole(string roleName) {
-			MembershipRole role = null;
-
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				role = (from r in _db.aspnet_Roles
-						where r.LoweredRoleName == roleName
-						select new MembershipRole(r)).FirstOrDefault();
+		public static UserRole FindRole(string roleName) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from r in db.membership_Roles
+						where r.Name == roleName
+						select new UserRole(r)).FirstOrDefault();
 			}
-
-			return role;
 		}
 
-		public static MembershipRole FindMembershipRole(Guid roleID) {
-			MembershipRole role = null;
-
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				role = (from r in _db.aspnet_Roles
-						where r.RoleId == roleID
-						select new MembershipRole(r)).FirstOrDefault();
-			}
-
-			return role;
+		public static UserRole FindRoleByID(Guid roleID) {
+			return FindRoleByID(roleID.ToString());
 		}
 
-		public static List<MembershipRole> GetRoleList() {
-			List<MembershipRole> roles = new List<MembershipRole>();
-
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				roles = (from r in _db.aspnet_Roles
-						 orderby r.RoleName
-						 select new MembershipRole(r)).ToList();
+		public static UserRole FindRoleByID(string roleID) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from r in db.membership_Roles
+						where r.Id == roleID
+						select new UserRole(r)).FirstOrDefault();
 			}
-
-			return roles;
 		}
 
-		public static List<MembershipRole> GetRoleListRestricted() {
-			List<MembershipRole> roles = new List<MembershipRole>();
+		public static List<UserRole> GetRoleList() {
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from r in db.membership_Roles
+						orderby r.Name
+						select new UserRole(r)).ToList();
+			}
+		}
 
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
+		public static List<UserRole> GetRoleListRestricted() {
+			using (var db = CarrotCMSDataContext.Create()) {
 				if (!SecurityData.IsAdmin) {
-					roles = (from r in _db.aspnet_Roles
-							 where r.RoleName != SecurityData.CMSGroup_Users && r.RoleName != SecurityData.CMSGroup_Admins
-							 orderby r.RoleName
-							 select new MembershipRole(r)).ToList();
+					return (from r in db.membership_Roles
+							where r.Name != SecurityData.CMSGroup_Users && r.Name != SecurityData.CMSGroup_Admins
+							orderby r.Name
+							select new UserRole(r)).ToList();
 				} else {
-					roles = (from r in _db.aspnet_Roles
-							 where r.RoleName != SecurityData.CMSGroup_Users
-							 orderby r.RoleName
-							 select new MembershipRole(r)).ToList();
+					return (from r in db.membership_Roles
+							where r.Name != SecurityData.CMSGroup_Users
+							orderby r.Name
+							select new UserRole(r)).ToList();
 				}
 			}
-
-			return roles;
 		}
 
-		public static List<MembershipUser> GetUserSearch(string searchTerm) {
-			List<MembershipUser> usrs = null;
-
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				usrs = (from u in _db.aspnet_Users
-						join m in _db.aspnet_Memberships on u.UserId equals m.UserId
+		public static List<ApplicationUser> GetUserSearch(string searchTerm) {
+			using (var securityHelper = new SecurityHelper()) {
+				return (from u in securityHelper.DataContext.Users
 						where u.UserName.Contains(searchTerm)
-							|| m.Email.Contains(searchTerm)
-						select Membership.GetUser(u.UserName)).Take(50).ToList();
+								|| u.Email.Contains(searchTerm)
+						select securityHelper.UserManager.FindByName(u.UserName)).Take(100).ToList();
 			}
-
-			return usrs;
 		}
 
-		public static List<MembershipUser> GetCreditUserSearch(string searchTerm) {
-			List<MembershipUser> usrs = null;
+		public static UserProfile GetProfileByUserID(Guid userId) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from u in db.membership_Users
+						join ud1 in db.carrot_UserDatas on u.Id equals ud1.UserKey into ud2
+						from ud in ud2.DefaultIfEmpty()
+						where ud.UserId == userId
+						select new UserProfile(u, ud)).FirstOrDefault();
+			}
+		}
 
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				List<Guid> admins = (from ur in _db.aspnet_UsersInRoles
-									 join r in _db.aspnet_Roles on ur.RoleId equals r.RoleId
-									 where r.RoleName == CMSGroup_Admins
-									 select ur.UserId).ToList();
+		public static UserProfile GetProfileByUserName(string userName) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from u in db.membership_Users
+						join ud1 in db.carrot_UserDatas on u.Id equals ud1.UserKey into ud2
+						from ud in ud2.DefaultIfEmpty()
+						where u.UserName == userName
+						select new UserProfile(u, ud)).FirstOrDefault();
+			}
+		}
 
-				List<Guid> editors = (from sm in _db.carrot_UserSiteMappings
-									  where sm.SiteID == SiteData.CurrentSiteID
-									  select sm.UserId).ToList();
+		public static List<UserProfile> GetUserProfileSearch(string searchTerm) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				return (from u in db.membership_Users
+						join ud1 in db.carrot_UserDatas on u.Id equals ud1.UserKey into ud2
+						from ud in ud2.DefaultIfEmpty()
+						where u.UserName.Contains(searchTerm)
+								   || u.Email.Contains(searchTerm)
+						select new UserProfile(u, ud)).Take(100).ToList();
+			}
+		}
 
-				usrs = (from u in _db.aspnet_Users
-						join m in _db.aspnet_Memberships on u.UserId equals m.UserId
+		public static List<ApplicationUser> GetCreditUserSearch(string searchTerm) {
+			List<ApplicationUser> usrs = null;
+			List<string> admins = null;
+			List<string> editors = null;
+
+			using (var db = CarrotCMSDataContext.Create()) {
+				admins = (from ur in db.membership_UserRoles
+						  join u in db.membership_Users on ur.UserId equals u.Id
+						  join r in db.membership_Roles on ur.RoleId equals r.Id
+						  join ud in db.carrot_UserDatas on u.Id equals ud.UserKey
+						  where r.Name == CMSGroup_Admins
+						  select ud.UserKey).ToList();
+
+				editors = (from sm in db.carrot_UserSiteMappings
+						   join ud in db.carrot_UserDatas on sm.UserId equals ud.UserId
+						   where sm.SiteID == SiteData.CurrentSiteID
+						   select ud.UserKey).ToList();
+			}
+
+			using (var securityHelper = new SecurityHelper()) {
+				usrs = (from u in securityHelper.DataContext.Users
 						where (u.UserName.Contains(searchTerm)
-									|| m.Email.Contains(searchTerm))
-							&& admins.Union(editors).Contains(u.UserId)
-						select Membership.GetUser(u.UserName)).Take(50).ToList();
+									|| u.Email.Contains(searchTerm))
+								&& admins.Union(editors).Contains(u.Id)
+						select securityHelper.UserManager.FindByName(u.UserName)).Take(50).ToList();
 			}
 
 			return usrs;
 		}
 
-		public static List<MembershipUser> GetUserListByEmail(string email) {
-			List<MembershipUser> usrs = new List<MembershipUser>();
-			int iCt = 0;
-			foreach (MembershipUser usr in Membership.FindUsersByEmail(email, 0, 25, out iCt)) {
-				usrs.Add(usr);
+		public static List<UserProfile> GetCreditUserProfileSearch(string searchTerm) {
+			List<UserProfile> usrs = null;
+			List<string> admins = null;
+			List<string> editors = null;
+
+			using (var db = CarrotCMSDataContext.Create()) {
+				admins = (from ur in db.membership_UserRoles
+						  join u in db.membership_Users on ur.UserId equals u.Id
+						  join r in db.membership_Roles on ur.RoleId equals r.Id
+						  join ud in db.carrot_UserDatas on u.Id equals ud.UserKey
+						  where r.Name == CMSGroup_Admins
+						  select ud.UserKey).ToList();
+
+				editors = (from sm in db.carrot_UserSiteMappings
+						   join ud in db.carrot_UserDatas on sm.UserId equals ud.UserId
+						   where sm.SiteID == SiteData.CurrentSiteID
+						   select ud.UserKey).ToList();
+
+				usrs = (from u in db.membership_Users
+						join ud1 in db.carrot_UserDatas on u.Id equals ud1.UserKey into ud2
+						from ud in ud2.DefaultIfEmpty()
+						where (u.UserName.Contains(searchTerm)
+									|| u.Email.Contains(searchTerm))
+								&& admins.Union(editors).Contains(u.Id)
+						select new UserProfile(u, ud)).Take(50).ToList();
 			}
+
 			return usrs;
 		}
 
-		public static List<MembershipUser> GetUserListByName(string usrName) {
-			List<MembershipUser> usrs = new List<MembershipUser>();
-			int iCt = 0;
-			foreach (MembershipUser usr in Membership.FindUsersByName(usrName, 0, 25, out iCt)) {
-				usrs.Add(usr);
+		public static List<ApplicationUser> GetUserListByEmail(string email) {
+			using (var securityHelper = new SecurityHelper()) {
+				return (from u in securityHelper.DataContext.Users
+						where u.Email.Contains(email)
+						select securityHelper.UserManager.FindByName(u.UserName)).Take(50).ToList();
 			}
-			return usrs;
 		}
 
-		public static List<MembershipUser> GetUserList() {
-			List<MembershipUser> usrs = new List<MembershipUser>();
-			foreach (MembershipUser usr in Membership.GetAllUsers()) {
-				usrs.Add(usr);
+		public static List<ApplicationUser> GetUserListByName(string userName) {
+			using (var securityHelper = new SecurityHelper()) {
+				return (from u in securityHelper.DataContext.Users
+						where (u.UserName.Contains(userName))
+						select securityHelper.UserManager.FindByName(u.UserName)).Take(50).ToList();
 			}
-			return usrs;
 		}
 
-		public static List<MembershipUser> GetUsersInRole(string roleName) {
-			string[] usersInRole = Roles.GetUsersInRole(roleName);
-			List<MembershipUser> usrs = new List<MembershipUser>();
-			foreach (string u in usersInRole) {
-				foreach (MembershipUser usr in Membership.FindUsersByName(u)) {
-					usrs.Add(usr);
+		public static List<ApplicationUser> GetUserList() {
+			using (var securityHelper = new SecurityHelper()) {
+				return (from u in securityHelper.DataContext.Users
+						select securityHelper.UserManager.FindByName(u.UserName)).Take(1000).ToList();
+			}
+		}
+
+		public static List<ApplicationUser> GetUsersInRole(string groupName) {
+			List<ApplicationUser> usrs = new List<ApplicationUser>();
+
+			using (var securityHelper = new SecurityHelper()) {
+				var role = (from r in securityHelper.DataContext.Roles
+							where r.Name == groupName
+							select r).FirstOrDefault();
+
+				if (role != null) {
+					usrs = (from ur in role.Users
+							join u in securityHelper.DataContext.Users on ur.UserId equals u.Id
+							select securityHelper.UserManager.FindByName(u.UserName)).Take(2500).ToList();
 				}
 			}
+
 			return usrs;
 		}
 
@@ -178,39 +240,42 @@ namespace Carrotware.CMS.Core {
 
 		public static bool GetIsAdminFromCache() {
 			bool keyVal = false;
-
-			if (SiteData.IsWebView && IsAuthenticated) {
-				string key = string.Format("{0}_{1}", keyIsAdmin, SecurityData.CurrentUserIdentityName);
-				var ret = GetCacheItem(key);
-
-				if (ret != null) {
-					keyVal = Convert.ToBoolean(ret);
-				} else {
-					keyVal = IsUserInRole(SecurityData.CMSGroup_Admins);
-					HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+			try {
+				if (IsAuthenticated) {
+					string key = string.Format("{0}_{1}", keyIsAdmin, SecurityData.CurrentUserIdentityName);
+					var ret = GetCacheItem(key);
+					if (ret != null) {
+						keyVal = Convert.ToBoolean(ret);
+					} else {
+						keyVal = IsUserInRole(SecurityData.CMSGroup_Admins);
+						HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+					}
 				}
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("getisadminfromcache", ex);
 			}
-
 			return keyVal;
 		}
 
 		public static bool GetIsSiteEditorFromCache() {
 			bool keyVal = false;
+			try {
+				if (IsAuthenticated) {
+					string key = string.Format("{0}_{1}_{2}", keyIsSiteEditor, SecurityData.CurrentUserIdentityName, SiteData.CurrentSiteID);
+					var ret = GetCacheItem(key);
+					if (ret != null) {
+						keyVal = Convert.ToBoolean(ret);
+					} else {
+						ExtendedUserData usrEx = SecurityData.CurrentExUser;
 
-			if (SiteData.IsWebView && IsAuthenticated) {
-				string key = string.Format("{0}_{1}_{2}", keyIsSiteEditor, SecurityData.CurrentUserIdentityName, SiteData.CurrentSiteID);
-				var ret = GetCacheItem(key);
-				if (ret != null) {
-					keyVal = Convert.ToBoolean(ret);
-				} else {
-					ExtendedUserData usrEx = SecurityData.CurrentExtendedUser;
+						keyVal = (IsEditor || usrEx.IsEditor) && usrEx.MemberSiteIDs.Contains(SiteData.CurrentSiteID);
 
-					keyVal = (IsEditor || usrEx.IsEditor) && usrEx.MemberSiteIDs.Contains(SiteData.CurrentSiteID);
-
-					HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+						HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+					}
 				}
+			} catch (Exception ex) {
+				SiteData.WriteDebugException("getissiteeditorfromcache", ex);
 			}
-
 			return keyVal;
 		}
 
@@ -235,20 +300,26 @@ namespace Carrotware.CMS.Core {
 		public static bool IsEditor {
 			get {
 				try {
-					return IsUserInRole(SecurityData.CMSGroup_Editors);
-				} catch {
-					return false;
+					if (IsAuthenticated) {
+						return IsUserInRole(SecurityData.CMSGroup_Editors);
+					}
+				} catch (Exception ex) {
+					SiteData.WriteDebugException("iseditor", ex);
 				}
+				return false;
 			}
 		}
 
 		public static bool IsUsers {
 			get {
 				try {
-					return IsUserInRole(SecurityData.CMSGroup_Users);
-				} catch {
-					return false;
+					if (IsAuthenticated) {
+						return IsUserInRole(SecurityData.CMSGroup_Users);
+					}
+				} catch (Exception ex) {
+					SiteData.WriteDebugException("isusers", ex);
 				}
+				return false;
 			}
 		}
 
@@ -263,51 +334,10 @@ namespace Carrotware.CMS.Core {
 
 		public static void ResetAuth() {
 			if (SecurityData.IsAuthenticated) {
-				HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName);
-
-				authCookie = HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName];
-				authCookie.Value = string.Empty;
-				authCookie.Expires = DateTime.Now.AddDays(-10);
-				authCookie.Path = "/";
-
-				HttpContext.Current.Cache.Remove(SecurityData.AuthKey);
-
 				HttpContext.Current.Session.Clear();
-				Roles.DeleteCookie();
-			}
 
-			FormsAuthentication.SignOut();
-		}
-
-		public static void AuthCookieTime() {
-			if (SecurityData.IsAuthenticated && FormsAuthentication.SlidingExpiration) {
-				string key = SecurityData.AuthKey;
-				var keyEntry = GetCacheItemString(key);
-
-				string lastSet = !string.IsNullOrEmpty(keyEntry) ? keyEntry : string.Empty;
-
-				if (string.IsNullOrEmpty(lastSet)) {
-					string tOut = SiteData.GetAuthFormProp("timeout");
-					int timeout = Convert.ToInt32((tOut == null ? "30" : tOut));
-
-					if (timeout < 5) {
-						timeout = 5;
-					}
-
-					int expCache = timeout <= 60 ? 5 : 30;
-
-					HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName);
-
-					FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(SecurityData.CurrentUserIdentityName, true, timeout);
-
-					string theTicket = FormsAuthentication.Encrypt(ticket);
-
-					authCookie = HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName];
-					authCookie.Value = theTicket;
-					authCookie.Expires = DateTime.Now.AddMinutes((timeout + 2));
-					authCookie.Path = "/";
-
-					HttpContext.Current.Cache.Insert(key, SecurityData.CurrentUserIdentityName, null, DateTime.Now.AddMinutes(expCache), Cache.NoSlidingExpiration);
+				using (var securityHelper = new SecurityHelper()) {
+					securityHelper.LogoutSession();
 				}
 			}
 		}
@@ -320,35 +350,20 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsAuthenticated {
 			get {
-				if (SiteData.IsWebView && UserPrincipal.Identity.IsAuthenticated) {
-					return true;
-				}
-
-				return false;
+				return UserPrincipal.Identity.IsAuthenticated;
 			}
 		}
 
 		public static string GetUserName() {
-			if (SiteData.IsWebView && IsAuthenticated) {
-				return UserPrincipal.Identity.Name;
+			if (IsAuthenticated) {
+				return UserPrincipal.Identity.GetUserName();
 			}
 
 			return string.Empty;
 		}
 
-		public static string CurrentUserIdentityName {
-			get {
-				return GetUserName();
-			}
-		}
-
 		public static bool IsUserInRole(string groupName) {
-			try {
-				return Roles.IsUserInRole(groupName);
-			} catch (Exception ex) {
-				SiteData.WriteDebugException("isuserinrole", ex);
-				return false;
-			}
+			return IsUserInRole(SecurityData.CurrentUserIdentityName, groupName);
 		}
 
 		private static string keyIsUserInRole = "cms_IsUserInRole";
@@ -356,16 +371,23 @@ namespace Carrotware.CMS.Core {
 		public static bool IsUserInRole(string userName, string groupName) {
 			bool keyVal = false;
 
-			if (SiteData.IsWebView && IsAuthenticated) {
+			if (IsAuthenticated) {
 				string key = string.Format("{0}_{1}_{2}", keyIsUserInRole, userName, groupName);
 				var ret = GetCacheItem(key);
 
 				if (ret != null) {
 					keyVal = Convert.ToBoolean(ret);
 				} else {
-					keyVal = Roles.IsUserInRole(userName, groupName);
+					try {
+						using (var securityHelper = new SecurityHelper()) {
+							var _user = securityHelper.UserManager.FindByName(userName);
 
-					HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(15), Cache.NoSlidingExpiration);
+							keyVal = securityHelper.UserManager.IsInRole(_user.Id, groupName);
+						}
+						HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
+					} catch (Exception ex) {
+						SiteData.WriteDebugException("isuserinrole", ex);
+					}
 				}
 			}
 
@@ -380,7 +402,7 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsAuthEditor {
 			get {
-				if (SiteData.IsWebView && IsAuthenticated) {
+				if (IsAuthenticated) {
 					return AdvancedEditMode || IsAdmin || IsSiteEditor;
 				} else {
 					return false;
@@ -390,7 +412,7 @@ namespace Carrotware.CMS.Core {
 
 		public static bool IsAuthUser {
 			get {
-				if (SiteData.IsWebView && IsAuthenticated) {
+				if (IsAuthenticated) {
 					return IsAdmin || IsSiteEditor || IsUsers;
 				} else {
 					return false;
@@ -398,133 +420,579 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public static ExtendedUserData CurrentExtendedUser {
-			get {
-				ExtendedUserData currentUser = null;
-
-				if (SiteData.IsWebView && IsAuthenticated) {
-					Guid userID = SecurityData.CurrentUserGuid;
-					string key = string.Format("cms_CurrentExtendedUser_{0}", userID);
-					var ret = GetCacheItem(key);
-
-					if (ret != null) {
-						currentUser = (ExtendedUserData)ret;
-					} else {
-						currentUser = new ExtendedUserData(userID);
-						if (currentUser != null) {
-							HttpContext.Current.Cache.Insert(key, currentUser, null, DateTime.Now.AddSeconds(90), Cache.NoSlidingExpiration);
-						}
-					}
-				} else {
-					currentUser = new ExtendedUserData();
-					currentUser.UserId = Guid.Empty;
-					currentUser.UserName = "anonymous-user-" + Guid.Empty.ToString();
-				}
-				return currentUser;
-			}
-		}
-
 		public static Guid CurrentUserGuid {
 			get {
 				Guid _currentUserGuid = Guid.Empty;
-				if (SiteData.IsWebView && CurrentUser != null && IsAuthenticated) {
-					_currentUserGuid = new Guid(CurrentUser.ProviderUserKey.ToString());
+				if (CurrentUser != null) {
+					_currentUserGuid = SecurityData.CurrentExUser.UserId;
 				}
 				return _currentUserGuid;
 			}
 		}
 
-		public static MembershipUser CurrentUser {
+		public static UserProfile CurrentUser {
 			get {
-				MembershipUser _currentUser = null;
-				try {
-					if (SiteData.IsWebView && IsAuthenticated) {
-						_currentUser = GetUserByName(CurrentUserIdentityName);
+				UserProfile currentUser = null;
+				if (IsAuthenticated) {
+					string userName = SecurityData.CurrentUserIdentityName;
+					string key = string.Format("cms_CurrentUserProfile_{0}", userName);
+					var ret = GetCacheItem(key);
+
+					if (ret != null) {
+						currentUser = (UserProfile)ret;
+					} else {
+						try {
+							using (var db = CarrotCMSDataContext.Create()) {
+								currentUser = (from u in db.membership_Users
+											   join ud1 in db.carrot_UserDatas on u.Id equals ud1.UserKey into ud2
+											   from ud in ud2.DefaultIfEmpty()
+											   where u.UserName == userName
+											   select new UserProfile(u, ud)).FirstOrDefault();
+							}
+
+							if (currentUser != null) {
+								HttpContext.Current.Cache.Insert(key, currentUser, null, DateTime.Now.AddSeconds(90), Cache.NoSlidingExpiration);
+							}
+						} catch (Exception ex) {
+							SiteData.WriteDebugException("cms_currentuserprofile", ex);
+						}
 					}
-				} catch (Exception ex) {
-					SiteData.WriteDebugException("currentuser", ex);
+				} else {
+					currentUser = new UserProfile();
+					currentUser.UserId = Guid.Empty;
+					currentUser.UserKey = Guid.Empty.ToString();
+					currentUser.UserName = "anonymous-user-" + Guid.Empty.ToString();
+				}
+
+				return currentUser;
+			}
+		}
+
+		public static ExtendedUserData CurrentExUser {
+			get {
+				ExtendedUserData currentUser = null;
+
+				if (IsAuthenticated) {
+					string userName = SecurityData.CurrentUserIdentityName;
+					string key = string.Format("cms_CurrentExUser_{0}", userName);
+					var ret = GetCacheItem(key);
+
+					if (ret != null) {
+						currentUser = (ExtendedUserData)ret;
+					} else {
+						try {
+							using (var db = CarrotCMSDataContext.Create()) {
+								currentUser = (from u in db.vw_carrot_UserDatas
+											   where u.UserName == userName
+											   select new ExtendedUserData(u)).FirstOrDefault();
+							}
+
+							if (currentUser != null) {
+								HttpContext.Current.Cache.Insert(key, currentUser, null, DateTime.Now.AddSeconds(90), Cache.NoSlidingExpiration);
+							}
+						} catch (Exception ex) {
+							SiteData.WriteDebugException("cms_currentexuser", ex);
+						}
+					}
+				} else {
+					currentUser = new ExtendedUserData();
+					currentUser.UserId = Guid.Empty;
+					currentUser.UserKey = Guid.Empty.ToString();
+					currentUser.UserName = "anonymous-user-" + Guid.Empty.ToString();
+				}
+
+				return currentUser;
+			}
+		}
+
+		public static ApplicationUser CurrentApplicationUser {
+			get {
+				ApplicationUser _currentUser = null;
+				if (IsAuthenticated) {
+					using (var securityHelper = new SecurityHelper()) {
+						_currentUser = securityHelper.UserManager.FindByName(SecurityData.CurrentUserIdentityName);
+					}
 				}
 				return _currentUser;
 			}
 		}
 
-		public static MembershipUser GetUserByGuid(Guid providerUserKey) {
-			return Membership.GetUser(providerUserKey);
+		public static ApplicationUser GetUserByID(Guid key) {
+			return GetUserByID(key.ToString());
 		}
 
-		public static MembershipUser GetUserByName(string username) {
-			return Membership.GetUser(username);
+		public static ApplicationUser GetUserByID(string key) {
+			using (var securityHelper = new SecurityHelper()) {
+				return securityHelper.UserManager.FindById(key);
+			}
+		}
+
+		public static ApplicationUser GetUserByName(string username) {
+			using (var securityHelper = new SecurityHelper()) {
+				return securityHelper.UserManager.FindByName(username);
+			}
+		}
+
+		public static ApplicationUser GetUserByEmail(string email) {
+			using (var securityHelper = new SecurityHelper()) {
+				return securityHelper.UserManager.FindByEmail(email);
+			}
 		}
 
 		public static bool AdvancedEditMode {
 			get {
 				bool _Advanced = false;
-				if (SiteData.IsWebView && IsAuthenticated) {
-					if (HttpContext.Current.Request.QueryString[SiteData.AdvancedEditParameter] != null
-								&& (SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
+				if (IsAuthenticated) {
+					if (HttpContext.Current.Request.QueryString[SiteData.AdvancedEditParameter] != null && (SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
 						_Advanced = true;
 					} else {
 						_Advanced = false;
 					}
 				}
+
 				return _Advanced;
 			}
 		}
-	}
 
-	//================================================
-	public class MembershipRole {
-
-		public MembershipRole() {
-			this.RoleId = Guid.Empty;
+		private static string CurrentDLLVersion {
+			get { return SiteData.CurrentDLLVersion; }
 		}
 
-		public MembershipRole(string roleName) {
-			this.RoleName = roleName;
-			this.RoleId = Guid.Empty;
-		}
-
-		public MembershipRole(string roleName, Guid roleID) {
-			this.RoleName = roleName;
-			this.RoleId = roleID;
-		}
-
-		internal MembershipRole(aspnet_Role role) {
-			if (role != null) {
-				this.ApplicationId = role.ApplicationId;
-				this.RoleId = role.RoleId;
-				this.RoleName = role.RoleName;
-				this.Description = role.Description;
+		public static string CurrentUserIdentityName {
+			get {
+				if (IsAuthenticated) {
+					return UserPrincipal.Identity.Name.ToLowerInvariant();
+				}
+				return string.Empty;
 			}
 		}
 
-		public Guid ApplicationId { get; set; }
+		private static object newUsrLock = new object();
 
-		public Guid RoleId { get; set; }
+		public NewUser CreateApplicationUser(ApplicationUser user) {
+			return AttemptCreateApplicationUser(user, SecurityData.GenerateSimplePassword());
+		}
 
-		public string RoleName { get; set; }
+		public NewUser CreateApplicationUser(ApplicationUser user, string password) {
+			return AttemptCreateApplicationUser(user, password);
+		}
 
-		public string LoweredRoleName { get { return this.RoleName.ToLowerInvariant(); } }
+		private NewUser AttemptCreateApplicationUser(ApplicationUser user, string password) {
+			var data = new NewUser();
+			var result = new IdentityResult();
 
-		public string Description { get; set; }
+			lock (newUsrLock) {
+				if (user != null && !string.IsNullOrEmpty(user.Id)) {
+					using (var securityHelper = new SecurityHelper()) {
+						result = securityHelper.UserManager.Create(user, password);
+						data.IdentityResult = result;
+						data.User = user;
 
-		public void Save() {
-			using (CarrotCMSDataContext _db = CarrotCMSDataContext.GetDataContext()) {
-				aspnet_Role role = (from l in _db.aspnet_Roles
-									where l.LoweredRoleName == this.RoleName
-										|| l.RoleId == this.RoleId
-									select l).FirstOrDefault();
+						if (result.Succeeded) {
+							var newusr = new ExtendedUserData();
+							user = securityHelper.UserManager.FindByName(user.UserName);
 
-				if (role == null) {
-					if (!Roles.RoleExists(this.RoleName) && this.RoleId == Guid.Empty) {
-						Roles.CreateRole(this.RoleName);
+							newusr.UserKey = user.Id;
+							newusr.Id = user.Id;
+							newusr.UserName = user.UserName;
+							newusr.Email = user.Email;
+							newusr.Save();
+
+							newusr = ExtendedUserData.FindByUserID(newusr.UserId);
+
+							data = new NewUser(newusr, user, result);
+						}
 					}
-				} else {
-					role.RoleName = this.RoleName;
-					role.LoweredRoleName = role.RoleName.ToLowerInvariant();
-					_db.SubmitChanges();
 				}
 			}
+
+			return data;
+		}
+
+		public IdentityResult ResetPassword(ApplicationUser user, string token, string password) {
+			IdentityResult result = new IdentityResult();
+
+			if (user != null && !string.IsNullOrEmpty(user.Id)) {
+				using (var securityHelper = new SecurityHelper()) {
+					result = securityHelper.UserManager.ResetPassword(user.Id, token, password);
+
+					return result;
+				}
+			}
+
+			return result;
+		}
+
+		public bool ValidatePasswordToken(ApplicationUser user, string token) {
+			if (user == null) { return false; }
+
+			return ValidatePasswordToken(user.Id, token);
+		}
+
+		public bool ValidatePasswordToken(string userId, string token) {
+			if (userId == null || token == null) { return false; }
+
+			var result = false;
+			if (userId != null && !string.IsNullOrEmpty(userId)) {
+				try {
+					using (var securityHelper = new SecurityHelper()) {
+						var task = Task.Run(async () => await securityHelper.UserManager.VerifyUserTokenAsync(userId, "ResetPassword", token));
+						result = task.Result;
+					}
+				} catch {
+					result = false;
+				}
+			}
+
+			return result;
+		}
+
+		public bool ResetPassword(string email) {
+			string adminFolder = SiteData.AdminFolderPath.TrimPathSlashes();
+
+			string adminEmailPath = SiteFilename.ResetPasswordURL;
+
+			return ResetPassword(adminEmailPath, email);
+		}
+
+		public bool ResetPassword(string resetUri, string email) {
+			HttpRequest request = HttpContext.Current.Request;
+			ApplicationUser user = null;
+			string token = string.Empty;
+
+			resetUri = resetUri.TrimPathSlashes();
+
+			if (!string.IsNullOrEmpty(email)) {
+				using (var securityHelper = new SecurityHelper()) {
+					user = securityHelper.UserManager.FindByEmail(email);
+
+					if (user != null) {
+						token = securityHelper.UserManager.GeneratePasswordResetToken(user.Id);
+					}
+				}
+			}
+
+			if (user != null) {
+				var sbBody = new StringBuilder();
+				sbBody.Append(CoreHelper.ReadEmbededScript("Carrotware.CMS.Core.Security.EmailForgotPassMsg.txt"));
+
+				string httpHost = string.Empty;
+				try { httpHost = request.ServerVariables["HTTP_HOST"].ToString().Trim(); } catch { httpHost = string.Empty; }
+				string hostName = httpHost.ToLowerInvariant();
+
+				string hostPrefix = "http://";
+				try {
+					hostPrefix = request.ServerVariables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://";
+				} catch { hostPrefix = "http://"; }
+
+				httpHost = string.Format("{0}{1}", hostPrefix, hostName).ToLowerInvariant();
+
+				var resetTokenUrl = string.Empty;
+				var authKey = EncodeAuthKey(user, token);
+
+				if (string.IsNullOrEmpty(authKey)) {
+					resetTokenUrl = string.Format("{0}/{1}?userId={2}&token={3}", httpHost, resetUri, HttpUtility.UrlEncode(user.Id), HttpUtility.UrlEncode(token));
+				} else {
+					resetTokenUrl = string.Format("{0}/{1}?key={2}", httpHost, resetUri, HttpUtility.UrlEncode(authKey));
+				}
+
+				sbBody.Replace("{%%UserName%%}", user.UserName);
+				sbBody.Replace("{%%SiteURL%%}", httpHost);
+				sbBody.Replace("{%%Version%%}", CurrentDLLVersion);
+				sbBody.Replace("{%%AdminFolderPath%%}", string.Format("{0}{1}", httpHost, SiteData.AdminFolderPath));
+
+				sbBody.Replace("{%%ResetURL%%}", resetTokenUrl);
+
+				if (SiteData.CurrentSiteExists) {
+					sbBody.Replace("{%%Time%%}", SiteData.CurrentSite.Now.ToString());
+				} else {
+					sbBody.Replace("{%%Time%%}", DateTime.Now.ToString());
+				}
+
+				var sBody = sbBody.ToString();
+
+				EmailHelper.SendMail(null, user.Email, string.Format("Reset Password {0}", hostName), sBody, false);
+
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		private string GetAesKey() {
+			var key1 = SiteData.CurrentSiteExists ? SiteData.CurrentSiteID.ToString().Replace("-", "").ToLowerInvariant().Substring(0, 18) : "Key1_PlaceholderValue";
+			var key2 = SiteData.CurrentSiteExists ? CMSConfigHelper.DomainName : "Key2_PlaceholderValue";
+
+			return (key1 + key2).PadRight(12, '0').ToLowerInvariant().Substring(0, 24);
+		}
+
+		private byte[] Compress(string text) {
+			byte[] buffer = Encoding.UTF8.GetBytes(text);
+
+			using (var ms = new MemoryStream()) {
+				using (var zip = new GZipStream(ms, CompressionMode.Compress)) {
+					zip.Write(buffer, 0, buffer.Length);
+				}
+				return ms.ToArray();
+			}
+		}
+
+		private string Decompress(byte[] data) {
+			using (var ms = new MemoryStream(data)) {
+				using (var zip = new GZipStream(ms, CompressionMode.Decompress)) {
+					using (var sr = new StreamReader(zip, Encoding.UTF8)) {
+						return sr.ReadToEnd();
+					}
+				}
+			}
+		}
+
+		public string EncryptString(string aesKey, string rawValue) {
+			byte[] key = Encoding.UTF8.GetBytes(aesKey.PadRight(32, 'Z').Substring(0, 24));
+			byte[] compressedValue = Compress(rawValue);
+
+			using (var aes = Aes.Create()) {
+				aes.Key = key;
+				aes.GenerateIV();
+				byte[] iv = aes.IV;
+
+				using (var ms = new MemoryStream()) {
+					ms.Write(iv, 0, iv.Length);
+
+					using (var encryptor = aes.CreateEncryptor())
+					using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write)) {
+						cs.Write(compressedValue, 0, compressedValue.Length);
+						cs.FlushFinalBlock();
+					}
+
+					return Convert.ToBase64String(ms.ToArray());
+				}
+			}
+		}
+
+		public string DecryptString(string aesKey, string encodedValue) {
+			byte[] key = Encoding.UTF8.GetBytes(aesKey.PadRight(32, 'Z').Substring(0, 24));
+			var model = new ResetPasswordViewModel();
+			byte[] decodedB64 = Convert.FromBase64String(encodedValue);
+			byte[] decryptedData = new byte[0];
+
+			using (var aes = Aes.Create()) {
+				aes.Key = key;
+				int ivLength = aes.BlockSize / 8;
+
+				byte[] iv = new byte[ivLength];
+				byte[] cipherData = new byte[decodedB64.Length - ivLength];
+
+				Array.Copy(decodedB64, 0, iv, 0, ivLength);
+				Array.Copy(decodedB64, ivLength, cipherData, 0, cipherData.Length);
+
+				using (var decryptor = aes.CreateDecryptor(aes.Key, iv))
+				using (var msIn = new MemoryStream(cipherData))
+				using (var cs = new CryptoStream(msIn, decryptor, CryptoStreamMode.Read))
+				using (var msOut = new MemoryStream()) {
+					cs.CopyTo(msOut);
+					decryptedData = msOut.ToArray();
+				}
+			}
+
+			var decodedValue = Decompress(decryptedData);
+
+			return decodedValue;
+		}
+
+		public string EncodeAuthKey(ApplicationUser user, string token) {
+			string key = GetAesKey();
+			string utcTimestamp = DateTime.UtcNow.ToString("s");
+
+			if (user != null) {
+				var stamp = user.SecurityStamp;
+				utcTimestamp = EncryptString(stamp, utcTimestamp);
+			}
+
+			string authString = string.Format("{0}|{1}|{2}|{3}", user.Id, user.Email, utcTimestamp, token);
+
+			return EncryptString(key, authString);
+		}
+
+		public ResetPasswordViewModel DecodeAuthKey(string encodedValue) {
+			var model = new ResetPasswordViewModel();
+			string key = GetAesKey();
+			var decodedValue = DecryptString(key, encodedValue);
+
+			model.ValidToken = false;
+
+			// string authString = string.Format("{0}|{1}|{2}|{3}", user.Id, user.Email, utcTimestamp, token);
+			if (decodedValue.Contains('|')) {
+				var parms = decodedValue.Split('|');
+				if (parms.Length == 4) {
+					var userId = parms[0];
+					var email = parms[1];
+					var utcTimestamp = parms[2];
+					model.Token = parms[3];
+
+					double hrDelta = 24;
+					DateTime utcDate = DateTime.MinValue;
+					var user = GetUserByID(userId);
+
+					try {
+						if (user != null) {
+							var stamp = user.SecurityStamp;
+							utcTimestamp = DecryptString(stamp, utcTimestamp);
+							utcDate = DateTime.Parse(utcTimestamp, null, System.Globalization.DateTimeStyles.RoundtripKind);
+							hrDelta = Math.Abs((DateTime.UtcNow - utcDate).TotalHours);
+						}
+					} catch (Exception ex) {
+						hrDelta = 48;
+					}
+
+					model.ValidToken = hrDelta <= 12 && user != null && !string.IsNullOrEmpty(user.Email) && email.Contains("@")
+								&& user.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase)
+								&& ValidatePasswordToken(user, model.Token);
+
+					if (user != null && model.ValidToken) {
+						model.Email = user.Email ?? string.Empty;
+					}
+				}
+			}
+
+			return model;
+		}
+
+		public static bool RemoveUserFromRole(string userName, string roleName) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				membership_UserRole usrRole = (from r in db.membership_Roles
+											   join ur in db.membership_UserRoles on r.Id equals ur.RoleId
+											   join u in db.membership_Users on ur.UserId equals u.Id
+											   where r.Name == roleName
+													   && u.UserName == userName
+											   select ur).FirstOrDefault();
+
+				if (usrRole != null) {
+					db.membership_UserRoles.DeleteOnSubmit(usrRole);
+					db.SubmitChanges();
+
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public static bool AddUserToRole(string userName, string roleName) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				membership_Role role = (from r in db.membership_Roles
+										where r.Name == roleName
+										select r).FirstOrDefault();
+
+				membership_User user = (from u in db.membership_Users
+										where u.UserName == userName
+										select u).FirstOrDefault();
+
+				membership_UserRole usrRole = (from r in db.membership_Roles
+											   join ur in db.membership_UserRoles on r.Id equals ur.RoleId
+											   join u in db.membership_Users on ur.UserId equals u.Id
+											   where r.Name == roleName
+													   && u.UserName == userName
+											   select ur).FirstOrDefault();
+
+				if (usrRole == null && role != null && user != null) {
+					usrRole = new membership_UserRole();
+					usrRole.UserId = user.Id;
+					usrRole.RoleId = role.Id;
+					db.membership_UserRoles.InsertOnSubmit(usrRole);
+					db.SubmitChanges();
+
+					return true;
+				}
+				return false;
+			}
+		}
+
+		public static bool AddUserToRole(Guid UserId, string roleName) {
+			using (var db = CarrotCMSDataContext.Create()) {
+				membership_Role role = (from r in db.membership_Roles
+										where r.Name == roleName
+										select r).FirstOrDefault();
+
+				membership_User user = (from u in db.membership_Users
+										join ud in db.carrot_UserDatas on u.Id equals ud.UserKey
+										where ud.UserId == UserId
+										select u).FirstOrDefault();
+
+				membership_UserRole usrRole = (from r in db.membership_Roles
+											   join ur in db.membership_UserRoles on r.Id equals ur.RoleId
+											   join u in db.membership_Users on ur.UserId equals u.Id
+											   join ud in db.carrot_UserDatas on u.Id equals ud.UserKey
+											   where r.Name == roleName
+													   && ud.UserId == UserId
+											   select ur).FirstOrDefault();
+
+				if (usrRole == null && role != null && user != null) {
+					usrRole = new membership_UserRole();
+					usrRole.UserId = user.Id;
+					usrRole.RoleId = role.Id;
+					db.membership_UserRoles.InsertOnSubmit(usrRole);
+					db.SubmitChanges();
+
+					return true;
+				}
+				return false;
+			}
+		}
+
+		private static string alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		private static string alphaLower = "abcdefghijklmnopqrstuvwxyz";
+		private static string numericChars = "1234567890";
+		private static string specialChars = "@!$}{";
+
+		private static string allChars = alphaUpper + alphaLower + numericChars + specialChars;
+
+		private static int _length = -1;
+
+		private static int GeneratedPasswordLength {
+			get {
+				if (_length <= 3) {
+					CarrotSecurityConfig config = CarrotSecurityConfig.GetConfig();
+					_length = config.PasswordValidator.RequiredLength;
+					if (_length <= 8) {
+						_length = 12;
+					}
+				}
+
+				return _length;
+			}
+		}
+
+		public static string GenerateSimplePassword() {
+			int length = GeneratedPasswordLength;
+
+			string generatedPassword = SelectRandomString(allChars, 4);
+
+			for (int i = 0; i < length; i++) {
+				if (i == 0 || i == 7) {
+					generatedPassword += SelectRandomChar(alphaUpper);
+				} else if (i == 2 || i == 5) {
+					generatedPassword += SelectRandomChar(alphaLower);
+				} else if (i == 4 || i == 3) {
+					generatedPassword += SelectRandomChar(numericChars);
+				} else if (i == 6 || i == 1) {
+					generatedPassword += SelectRandomChar(specialChars);
+				} else {
+					generatedPassword += SelectRandomString(allChars, 3);
+				}
+			}
+
+			return generatedPassword;
+		}
+
+		private static string SelectRandomString(string sourceString, int take) {
+			return new string(sourceString.OrderBy(x => Guid.NewGuid()).Take(take).ToArray());
+		}
+
+		private static char SelectRandomChar(string sourceString) {
+			return SelectRandomString(sourceString, 1).FirstOrDefault();
+			//var rand = new Random();
+			//int index = rand.Next(sourceString.Length - 1);
+			//return sourceString.ToCharArray()[index];
 		}
 	}
 }

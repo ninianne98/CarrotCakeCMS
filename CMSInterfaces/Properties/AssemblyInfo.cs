@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 // General Information about an assembly is controlled through the following
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
 [assembly: AssemblyProduct("CMSInterfaces")]
-[assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
+[assembly: AssemblyCopyright("Copyright © Carrotware 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -40,5 +40,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("4.4.*")]
+[assembly: AssemblyVersion("4.8.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]

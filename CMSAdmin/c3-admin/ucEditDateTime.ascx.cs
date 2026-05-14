@@ -8,10 +8,10 @@ using System.Web.UI.WebControls;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -19,9 +19,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class ucEditDateTime : System.Web.UI.UserControl {
 
 		public ucEditDateTime() {
-			this.ValidationGroup = String.Empty;
-			this.OnBlur = String.Empty;
-			this.OnChange = String.Empty;
+			this.ValidationGroup = string.Empty;
+			this.OnBlur = string.Empty;
+			this.OnChange = string.Empty;
 		}
 
 		public DateTime TheDate { get; set; }
@@ -58,17 +58,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!String.IsNullOrEmpty(this.ValidationGroup)) {
+			if (!string.IsNullOrEmpty(this.ValidationGroup)) {
 				txtDate.ValidationGroup = this.ValidationGroup;
 				txtTime.ValidationGroup = this.ValidationGroup;
 			}
 
-			if (!String.IsNullOrEmpty(this.OnChange)) {
+			if (!string.IsNullOrEmpty(this.OnChange)) {
 				txtDate.Attributes["onchange"] = this.OnChange;
 				txtTime.Attributes["onchange"] = this.OnChange;
 			}
 
-			if (!String.IsNullOrEmpty(this.OnBlur)) {
+			if (!string.IsNullOrEmpty(this.OnBlur)) {
 				txtDate.Attributes["onblur"] = this.OnBlur;
 				txtTime.Attributes["onblur"] = this.OnBlur;
 			}

@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Carrotware")]
 [assembly: AssemblyProduct("CMSBaseClasses")]
-[assembly: AssemblyCopyright("Copyright © Carrotware 2011")]
+[assembly: AssemblyCopyright("Copyright © Carrotware 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -30,5 +30,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("4.4.*")]
+[assembly: AssemblyVersion("4.8.*")]
 //  [assembly: AssemblyFileVersion("4.3.0.0")]

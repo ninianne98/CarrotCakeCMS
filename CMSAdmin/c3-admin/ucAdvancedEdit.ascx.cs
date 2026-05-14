@@ -1,19 +1,19 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using Carrotware.Web.UI.Controls;
 using System;
 using System.Linq;
-using System.Web.Security;
 using System.Web.UI;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -125,7 +125,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				cmsDivEditing.Visible = true;
 
 				if (bLocked && pageContents.Heartbeat_UserId != null) {
-					MembershipUser usr = SecurityData.GetUserByGuid(pageContents.Heartbeat_UserId.Value);
+					ApplicationUser usr = SecurityData.GetUserByID(pageContents.Heartbeat_UserId.Value);
 					EditUserName = usr.UserName;
 					litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
 						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";

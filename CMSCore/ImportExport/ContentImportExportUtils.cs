@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Carrotware.CMS.Security.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Security;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -10,10 +10,10 @@ using System.Xml.Serialization;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -119,7 +119,7 @@ namespace Carrotware.CMS.Core {
 					WordPressUser wpu = wps.Authors.Where(x => x.Login.ToLowerInvariant() == c.PostAuthor.ToLowerInvariant()).FirstOrDefault();
 
 					if (wpu != null && wpu.ImportUserID != Guid.Empty) {
-						MembershipUser usr = SecurityData.GetUserByGuid(wpu.ImportUserID);
+						ApplicationUser usr = SecurityData.GetUserByID(wpu.ImportUserID.ToString());
 						if (usr != null) {
 							cont.CreateUserId = wpu.ImportUserID;
 							cont.EditUserId = wpu.ImportUserID;

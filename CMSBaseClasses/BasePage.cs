@@ -1,5 +1,6 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
+using Carrotware.CMS.Security;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Web.UI;
@@ -8,28 +9,31 @@ using System.Web.UI;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Base {
 
-	public abstract class BasePage : System.Web.UI.Page {
+	public abstract class BasePage : Page {
 		protected ContentPageHelper pageHelper = new ContentPageHelper();
 		protected SiteData siteHelper = new SiteData();
+		protected SecurityHelper securityHelper = new SecurityHelper();
 		protected WidgetHelper widgetHelper = new WidgetHelper();
 		protected CMSConfigHelper cmsHelper = new CMSConfigHelper();
 
 		protected override void OnLoad(EventArgs e) {
 			base.OnLoad(e);
-
-			SecurityData.AuthCookieTime();
 		}
 
 		public override void Dispose() {
 			base.Dispose();
+
+			if (securityHelper != null) {
+				securityHelper.Dispose();
+			}
 
 			if (pageHelper != null) {
 				pageHelper.Dispose();
@@ -55,9 +59,9 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		protected void CheckDatabase() {
-			if (DatabaseUpdate.AreCMSTablesIncomplete() || !DatabaseUpdate.UsersExist) {
-				DatabaseUpdate.ResetFailedSQL();
-				DatabaseUpdate.ResetSQLState();
+			if (DatabaseSchemaState.AreCMSTablesIncomplete() || !DatabaseSchemaState.UsersExist) {
+				DatabaseSchemaState.ResetFailedSQL();
+				DatabaseSchemaState.ResetSQLState();
 
 				Response.Redirect(SiteFilename.DatabaseSetupURL);
 			}

@@ -7,10 +7,10 @@ using System.Linq;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -134,6 +134,21 @@ namespace Carrotware.CMS.Core {
 					select ct);
 		}
 
+		internal static IQueryable<vw_carrot_Content> GetContentByStatusAndType(CarrotCMSDataContext ctx, Guid siteID,
+				ContentPageType.PageType pageType, bool bActiveOnly) {
+			Guid contentTypeID = ContentPageType.GetIDByType(pageType);
+
+			return (from ct in ctx.vw_carrot_Contents
+					orderby ct.ContentTypeValue, ct.NavMenuText
+					where ct.SiteID == siteID
+						&& ct.IsLatestVersion == true
+						&& (ct.ContentTypeID == contentTypeID || pageType == ContentPageType.PageType.Unknown)
+						&& (ct.PageActive == true || bActiveOnly == false)
+						&& (ct.GoLiveDate < DateTime.UtcNow || bActiveOnly == false)
+						&& (ct.RetireDate > DateTime.UtcNow || bActiveOnly == false)
+					select ct);
+		}
+
 		internal static IQueryable<vw_carrot_Content> GetLatestBlogList(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly) {
 			return (from ct in ctx.vw_carrot_Contents
 					orderby ct.NavOrder, ct.NavMenuText
@@ -207,6 +222,13 @@ namespace Carrotware.CMS.Core {
 		}
 
 		internal static IQueryable<vw_carrot_Content> GetContentByCategoryIDs(CarrotCMSDataContext ctx, Guid siteID, bool bActiveOnly, List<Guid> lstCategoryGUIDs, List<string> lstCategorySlugs) {
+			if (lstCategoryGUIDs == null) {
+				lstCategoryGUIDs = new List<Guid>();
+			}
+			if (lstCategorySlugs == null) {
+				lstCategorySlugs = new List<string>();
+			}
+
 			return (from ct in ctx.vw_carrot_Contents
 					where ct.SiteID == siteID
 						&& ((from m in ctx.carrot_CategoryContentMappings
@@ -324,6 +346,20 @@ namespace Carrotware.CMS.Core {
 			return (from ct in ctx.carrot_RootContents
 					where ct.SiteID == siteID
 					select ct);
+		}
+
+		internal static IQueryable<DateTime> GetAllDates(CarrotCMSDataContext ctx, Guid siteID) {
+			return (from ct in ctx.carrot_RootContents
+					where ct.SiteID == siteID
+					select ct.GoLiveDate).Distinct();
+		}
+
+		internal static IQueryable<DateTime> GetAllDatesByType(CarrotCMSDataContext ctx, Guid siteID, ContentPageType.PageType pageType) {
+			var pageTypeId = ContentPageType.GetIDByType(pageType);
+
+			return (from ct in ctx.carrot_RootContents
+					where ct.SiteID == siteID && ct.ContentTypeID == pageTypeId
+					select ct.GoLiveDate).Distinct();
 		}
 
 		internal static IQueryable<carrot_Content> GetContentAllContentTbl(CarrotCMSDataContext ctx, Guid siteID) {
@@ -460,9 +496,9 @@ namespace Carrotware.CMS.Core {
 			return (from r in ctx.vw_carrot_Comments
 					orderby r.CreateDate descending
 					where r.SiteID == siteID
-							&& (spam == null || r.IsSpam == spam)
-							&& (approved == null || r.IsApproved == approved)
-							&& r.ContentTypeID == ContentPageType.GetIDByType(contentEntry)
+						&& (spam == null || r.IsSpam == spam)
+						&& (approved == null || r.IsApproved == approved)
+						&& r.ContentTypeID == ContentPageType.GetIDByType(contentEntry)
 					select r);
 		}
 	}

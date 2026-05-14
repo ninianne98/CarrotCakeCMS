@@ -1,9 +1,9 @@
 using Carrotware.CMS.DBUpdater;
+using Carrotware.CMS.Security;
 using Carrotware.Web.UI.Controls;
 using System;
 using System.Web;
 using System.Web.Compilation;
-using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 
@@ -11,10 +11,10 @@ using System.Web.UI;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -72,7 +72,7 @@ namespace Carrotware.CMS.Core {
 					VirtualDirectory.RegisterRoutes();
 				} catch (Exception ex) {
 					//assumption is database is probably empty / needs updating, so trigger the under construction view
-					if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+					if (DatabaseSchemaState.SystemNeedsChecking(ex) || DatabaseSchemaState.AreCMSTablesIncomplete()) {
 						if (navData == null) {
 							navData = SiteNavHelper.GetEmptyHome();
 						}
@@ -84,11 +84,14 @@ namespace Carrotware.CMS.Core {
 
 				fileRequested = SiteData.AppendDefaultPath(fileRequested);
 
+				CarrotSecurityConfig config = CarrotSecurityConfig.GetConfig();
+				string loginPath = config.AdditionalSettings.LoginPath;
+
 				if (SecurityData.IsAuthenticated) {
 					try {
 						if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
-							if (context.Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains(FormsAuthentication.LoginUrl.ToLowerInvariant())
-										|| FormsAuthentication.LoginUrl.ToLowerInvariant() == fileRequested.ToLowerInvariant()) {
+							if (context.Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains(loginPath)
+										|| loginPath == fileRequested.ToLowerInvariant()) {
 								if (SiteFilename.DashboardURL.ToLowerInvariant() != fileRequested.ToLowerInvariant()
 										&& SiteFilename.SiteInfoURL.ToLowerInvariant() != fileRequested.ToLowerInvariant()) {
 									fileRequested = SiteData.AdminDefaultFile;
@@ -130,7 +133,7 @@ namespace Carrotware.CMS.Core {
 
 						try {
 							//periodic test of database up-to-dated-ness
-							if (DatabaseUpdate.TablesIncomplete) {
+							if (DatabaseSchemaState.TablesIncomplete) {
 								navData = SiteNavHelper.GetEmptyHome();
 							} else {
 								bool isHomePage = false;
@@ -155,7 +158,7 @@ namespace Carrotware.CMS.Core {
 							}
 						} catch (Exception ex) {
 							//assumption is database is probably empty / needs updating, so trigger the under construction view
-							if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+							if (DatabaseSchemaState.SystemNeedsChecking(ex) || DatabaseSchemaState.AreCMSTablesIncomplete()) {
 								if (navData == null) {
 									navData = SiteNavHelper.GetEmptyHome();
 								}
@@ -226,7 +229,7 @@ namespace Carrotware.CMS.Core {
 				hand.ProcessRequest(context);
 			} catch (Exception ex) {
 				//assumption is database is probably empty / needs updating, so trigger the under construction view
-				if (DatabaseUpdate.SystemNeedsChecking(ex) || DatabaseUpdate.AreCMSTablesIncomplete()) {
+				if (DatabaseSchemaState.SystemNeedsChecking(ex) || DatabaseSchemaState.AreCMSTablesIncomplete()) {
 					SiteData.ManuallyWriteDefaultFile(context, ex);
 				} else {
 					//something bad has gone down, toss back the error

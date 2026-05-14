@@ -8,10 +8,10 @@ using System.Web.UI;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -78,15 +78,15 @@ namespace Carrotware.CMS.UI.Controls {
 			output.WriteLine();
 
 			string sCSS = "";
-			if (!String.IsNullOrEmpty(CssClass)) {
+			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 			string sStyle = "";
-			if (!String.IsNullOrEmpty(CSSStyle)) {
+			if (!string.IsNullOrEmpty(CSSStyle)) {
 				sStyle = " style=\"" + CSSStyle + "\" ";
 			}
 			string sHREF = "";
-			if (!String.IsNullOrEmpty(Hyperlink)) {
+			if (!string.IsNullOrEmpty(Hyperlink)) {
 				sHREF = " src=\"" + Hyperlink + "\" ";
 			}
 			string sScroll = "";

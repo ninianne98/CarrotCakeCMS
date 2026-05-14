@@ -1,18 +1,18 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
-using System.Web.Security;
 using System.Web.UI.WebControls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class PageHistory : AdminBasePage {
 		public Guid guidRootID = Guid.Empty;
 		public Guid guidContentID = Guid.Empty;
-		private string sPageMode = String.Empty;
+		private string sPageMode = string.Empty;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.UsesSaved = true;
@@ -69,7 +69,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected string GetUserName(Guid userId) {
-			MembershipUser usr = SecurityData.GetUserByGuid(userId);
+			ApplicationUser usr = SecurityData.GetUserByID(userId);
 			if (usr != null) {
 				return usr.UserName;
 			} else {

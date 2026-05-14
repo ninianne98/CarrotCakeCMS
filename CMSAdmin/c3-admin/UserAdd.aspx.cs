@@ -1,75 +1,70 @@
 ﻿using Carrotware.CMS.Core;
-using Carrotware.Web.UI.Controls;
+using Carrotware.CMS.Security.Models;
 using System;
-using System.Web.Profile;
-using System.Web.Security;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class UserAdd : AdminBasePage {
 
-		protected HtmlGenericControl divMsg {
-			get {
-				return ((HtmlGenericControl)CreateUserWizardStep1.ContentTemplateContainer.FindControl("divMsg"));
-			}
-		}
-
-		protected Literal FailureText {
-			get {
-				return ((Literal)CreateUserWizardStep1.ContentTemplateContainer.FindControl("FailureText"));
-			}
-		}
-
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.UserAdmin);
-			createWizard.Visible = SecurityData.IsAdmin;
+			phStep1.Visible = SecurityData.IsAdmin;
+			phStep2.Visible = false;
 
 			divMsg.Visible = false;
+			FailureText.Text = string.Empty;
 		}
 
-		protected void createWizard_CreatedUser(object sender, EventArgs e) {
-			var pb = ProfileBase.Create(createWizard.UserName, false);
-			Roles.AddUserToRole(createWizard.UserName, SecurityData.CMSGroup_Users);
+		protected void btnStepNextButton_Click(object sender, EventArgs e) {
+			var userName = UserName.Text;
+			var email = Email.Text;
+			var password = Password.Text;
 
-			try {
-				MembershipUser usr = Membership.GetUser(createWizard.UserName);
-				Guid userID = new Guid(usr.ProviderUserKey.ToString());
+			var sd = new SecurityData();
+			var user = new ApplicationUser { UserName = userName, Email = email };
 
-				siteHelper.MapUserToSite(SiteID, userID);
 
-				Response.Redirect(string.Format("{0}?id={1}", SiteFilename.UserURL, userID));
-			} catch (Exception ex) {
-			}
-		}
+			var nu = sd.CreateApplicationUser(user, password);
+			var result = nu.IdentityResult;
+			ExtendedUserData exUser = nu.ExtendedUserData;
 
-		protected void createWizard_CreatingUser(object sender, LoginCancelEventArgs e) {
-		}
+			if (result != null && result.Succeeded) {
 
-		protected void createWizard_CreateUserError(object sender, CreateUserErrorEventArgs e) {
-			divMsg.Visible = true;
-			string sFieldValue = e.CreateUserError.ToString();
+				exUser.AddToRole(SecurityData.CMSGroup_Users);
 
-			CreateUserWizard cw = (CreateUserWizard)sender;
-			if (cw != null) {
-				object objData = ReflectionUtilities.GetPropertyValue(cw, e.CreateUserError.ToString() + "ErrorMessage");
-				if (objData != null) {
-					sFieldValue = string.Format("{0}", objData);
+				try {
+					siteHelper.MapUserToSite(SiteID, exUser.UserId);
+
+					phStep1.Visible = false;
+					phStep2.Visible = true;
+
+					Response.Redirect(string.Format("{0}?id={1}", SiteFilename.UserURL, exUser.UserId));
+				} catch (Exception ex) {
+					divMsg.Visible = true;
+					FailureText.Text = ex.Message;
+				}
+			} else {
+				FailureText.Text = string.Empty;
+
+				if (result != null) {
+					divMsg.Visible = true;
+					foreach (var err in result.Errors) {
+						FailureText.Text += err + "<br>";
+					}
 				}
 			}
 
-			FailureText.Text = sFieldValue;
 		}
+
 	}
 }

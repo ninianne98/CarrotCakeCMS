@@ -10,10 +10,10 @@ using System.Linq;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -34,9 +34,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			btnLogin.Visible = false;
 			btnCreate.Visible = false;
 
-			if (DatabaseUpdate.LastSQLError != null) {
-				du.HandleResponse(lst, DatabaseUpdate.LastSQLError);
-				DatabaseUpdate.LastSQLError = null;
+			if (DatabaseSchemaState.LastSQLError != null) {
+				du.HandleResponse(lst, DatabaseSchemaState.LastSQLError);
+				DatabaseSchemaState.LastSQLError = null;
 			} else {
 				bool bUpdate = true;
 
@@ -50,14 +50,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					DatabaseUpdateStatus status = du.PerformUpdates();
 					lst = du.MergeMessages(lst, status.Messages);
 				} else {
-					DataInfo ver = DatabaseUpdate.GetDbSchemaVersion();
+					DataInfo ver = DatabaseSchemaState.GetDbSchemaVersion();
 					du.HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 				}
 
 				bUpdate = du.DatabaseNeedsUpdate();
 
-				if (!bUpdate && DatabaseUpdate.LastSQLError == null) {
-					if (DatabaseUpdate.UsersExist) {
+				if (!bUpdate && DatabaseSchemaState.LastSQLError == null) {
+					if (DatabaseSchemaState.UsersExist) {
 						btnLogin.Visible = true;
 					} else {
 						btnCreate.Visible = true;
@@ -65,8 +65,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 			}
 
-			if (DatabaseUpdate.LastSQLError != null) {
-				du.HandleResponse(lst, DatabaseUpdate.LastSQLError);
+			if (DatabaseSchemaState.LastSQLError != null) {
+				du.HandleResponse(lst, DatabaseSchemaState.LastSQLError);
 			}
 
 			if (lst.Where(x => !string.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {

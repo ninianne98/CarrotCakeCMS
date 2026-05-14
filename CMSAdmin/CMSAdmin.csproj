@@ -12,18 +12,19 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Carrotware.CMS.UI.Admin</RootNamespace>
     <AssemblyName>Carrotware.CMS.UI.Admin</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,26 +45,43 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.4\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.Owin, Version=4.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.3\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.3\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web.Extensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -70,6 +89,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminBaseMasterPage.cs">
@@ -214,7 +234,21 @@
     <Compile Include="c3-admin\FileUp.ashx.cs">
       <DependentUpon>FileUp.ashx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\ForgotPassword.aspx.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ForgotPassword.aspx.designer.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\Helper.cs" />
+    <Compile Include="c3-admin\ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\SiteDetail.aspx.cs">
       <DependentUpon>SiteDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -453,13 +487,6 @@
     <Compile Include="c3-admin\FileBrowser.aspx.designer.cs">
       <DependentUpon>FileBrowser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="c3-admin\ForgotPassword.aspx.cs">
-      <DependentUpon>ForgotPassword.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="c3-admin\ForgotPassword.aspx.designer.cs">
-      <DependentUpon>ForgotPassword.aspx</DependentUpon>
-    </Compile>
     <Compile Include="c3-admin\Logon.aspx.cs">
       <DependentUpon>Logon.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -630,6 +657,10 @@
       <Project>{33D1EA6C-65EA-4234-9861-C1C88317B78A}</Project>
       <Name>CMSInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CMSSecurity\CMSSecurity.csproj">
+      <Project>{92B1049E-7381-4805-8B60-30DC61EFC014}</Project>
+      <Name>CMSSecurity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebControls\WebControls.csproj">
       <Project>{5AD0FFF2-6700-41AC-85BD-4F7452FDB7B7}</Project>
       <Name>WebControls</Name>
@@ -670,6 +701,7 @@
     <Content Include="c3-admin\editor\notify.rust.min.css" />
     <Content Include="c3-admin\editor\notify.sandstone.min.css" />
     <Content Include="c3-admin\editor\notify.sugaralmond.min.css" />
+    <Content Include="c3-admin\ForgotPassword.aspx" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1%402x.png" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1.css" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1.png" />
@@ -835,6 +867,7 @@
     <Content Include="c3-admin\MiniColors\jquery.minicolors.min.js" />
     <Content Include="c3-admin\MiniColors\jquery.minicolors.png" />
     <Content Include="c3-admin\PlainTemplateBW.aspx" />
+    <Content Include="c3-admin\ResetPassword.aspx" />
     <Content Include="c3-admin\SiteDetail.aspx" />
     <Content Include="c3-admin\SiteIndex.aspx" />
     <Content Include="c3-admin\skins\filebrowse.amethystorchid.min.css" />
@@ -1305,7 +1338,6 @@
     <Content Include="c3-admin\CMS.asmx" />
     <Content Include="c3-admin\SiteInfo.aspx" />
     <Content Include="c3-admin\FileBrowser.aspx" />
-    <Content Include="c3-admin\ForgotPassword.aspx" />
     <Content Include="c3-admin\Includes\jquery.blockUI.js" />
     <Content Include="c3-admin\Includes\jquery.simplemodal.js" />
     <Content Include="c3-admin\Includes\modal.css" />
@@ -1405,6 +1437,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="TextContentProcessors.config" />
+    <None Include="c3-admin\Includes\C3WebSecurityConfigSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="c3-admin\Includes\C3WidgetAdminSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1424,6 +1459,7 @@
     <Content Include="cmsTemplates\Imagination\css\font\FontAwesome.otf" />
     <Content Include="cmsTemplates\Imagination\imagination.master" />
     <Content Include="cmsTemplates\Imagination\Skin.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1443,12 +1479,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>60836</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:62636/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

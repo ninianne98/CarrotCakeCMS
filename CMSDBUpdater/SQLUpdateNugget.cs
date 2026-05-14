@@ -9,10 +9,10 @@ using System.Reflection;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.DBUpdater {
@@ -43,32 +43,37 @@ namespace Carrotware.CMS.DBUpdater {
 			return c;
 		}
 
+		private static object nuggetLocker = new object();
+
 		private static List<SQLUpdateNugget> _nuggets = null;
 
 		public static List<SQLUpdateNugget> SQLNuggets {
 			get {
-				if (_nuggets == null) {
-					_nuggets = new List<SQLUpdateNugget>();
+				if (_nuggets == null || _nuggets.Any() == false) {
+					lock (nuggetLocker) {
+						_nuggets = new List<SQLUpdateNugget>();
 
-					Assembly _assembly = Assembly.GetExecutingAssembly();
+						var assembly = Assembly.GetExecutingAssembly();
+						var ds = new DataSet();
 
-					DataSet ds = new DataSet();
-					string resourceName = "Carrotware.CMS.DBUpdater.DatabaseChecks.xml";
-					using (var stream = new StreamReader(_assembly.GetManifestResourceStream(resourceName))) {
-						ds.ReadXml(stream);
+						string resourceName = "Carrotware.CMS.DBUpdater.DatabaseChecks.xml";
+						using (var stream = new StreamReader(assembly.GetManifestResourceStream(resourceName))) {
+							ds.ReadXml(stream);
+						}
+
+						_nuggets = (from d in ds.Tables[0].AsEnumerable()
+									select new SQLUpdateNugget {
+										AssociatedWith = d.Field<string>("testcontext"),
+										SQLQuery = d.Field<string>("sql").Trim(),
+										AlwaysCheck = Convert.ToBoolean(d.Field<string>("alwayscheck")),
+										Mode = GetModeType(d.Field<string>("mode")),
+										Priority = int.Parse(d.Field<string>("priority")),
+										RowCount = int.Parse(d.Field<string>("rowcount"))
+									}).Where(x => x.SQLQuery != null && x.SQLQuery.Trim().StartsWith("XXXXXXXX") == false)
+									.OrderBy(x => x.Priority).ToList();
+
+						_nuggets.RemoveAll(x => !x.SQLQuery.ToLowerInvariant().Contains("select"));
 					}
-
-					_nuggets = (from d in ds.Tables[0].AsEnumerable()
-								select new SQLUpdateNugget {
-									AssociatedWith = d.Field<string>("testcontext"),
-									SQLQuery = d.Field<string>("sql").Trim(),
-									AlwaysCheck = Convert.ToBoolean(d.Field<string>("alwayscheck")),
-									Mode = GetModeType(d.Field<string>("mode")),
-									Priority = int.Parse(d.Field<string>("priority")),
-									RowCount = int.Parse(d.Field<string>("rowcount"))
-								}).OrderBy(x => x.Priority).ToList();
-
-					_nuggets.RemoveAll(x => !x.SQLQuery.ToLowerInvariant().Contains("select"));
 				}
 
 				return _nuggets;
@@ -101,7 +106,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 		private static bool RunEval(List<SQLUpdateNugget> nugs) {
 			foreach (var n in nugs) {
-				DataTable table1 = DatabaseUpdate.GetTestData(n.SQLQuery);
+				DataTable table1 = DatabaseSchemaState.GetTestData(n.SQLQuery);
 				int iMatchCount = table1.Rows.Count;
 
 				switch (n.Mode) {

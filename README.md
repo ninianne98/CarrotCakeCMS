@@ -1,5 +1,5 @@
 # CarrotCakeCMS (WebForms)
-Source code for CarrotCakeCMS (WebForms), ASP.Net 3.5 SP1
+Source code for CarrotCakeCMS (WebForms), ASP.Net 4.5
 
 [SITE_CT]: http://www.carrotware.com/contact?from=github
 [REPO_SF]: http://sourceforge.net/projects/carrotcakecms/
@@ -15,7 +15,7 @@ Source code for CarrotCakeCMS (WebForms), ASP.Net 3.5 SP1
 [SQL]: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 [SSMS]: https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
 
-Welcome to the GitHub project for CarrotCake CMS, an open source c# project. CarrotCake is a [template-based][TMPLT] ASP.Net CMS (content management system) built with C#, SQL server, jQueryUI, and TinyMCE. This content management system supports multi-tenant webroots with shared databases and works well in medium trust. 
+Welcome to the GitHub project for CarrotCake CMS, an open source c# project. CarrotCake is a [template-based][TMPLT] WebForms ASP.Net CMS (content management system) built with C#, SQL server, jQueryUI, and TinyMCE. This content management system supports multi-tenant webroots with shared databases. 
 
 ## If you have found this tool useful please [contact us][SITE_CT].
 
@@ -29,14 +29,14 @@ Other features also include date based release and retirement of content - allow
 
 ## CarrotCakeCMS Developer Quick Start Guide
 
-Copyright (c) 2011, 2023 Samantha Copeland
+Copyright (c) 2011, 2026 Samantha Copeland
 Licensed under the MIT or GPL v3 License
 
 CarrotCakeCMS is maintained by Samantha Copeland
 
 ### Install Development Tools
 
-1. **[Visual Studio Community/Express/Pro/Enterprise][IDE]** ([ISO VWD 2013][VWDISO2013], [ISO CE 2013][CEISO2013], or [ISO CE 2015][CEISO2015]) Professional (or higher) editions OK (make sure to target the 3.5 framework).  Typically being developed on VS 2015 Enterprise or VS 2019 Express.  Even VS 2012 is OK, the database project won't load, but that's OK because it's just there to maintain a schema history, it is not a required of part of the build
+1. **[Visual Studio Community/Express/Pro/Enterprise][IDE]** ([ISO VWD 2013][VWDISO2013], [ISO CE 2013][CEISO2013], or [ISO CE 2015][CEISO2015]) Professional (or higher) editions OK.  Typically being developed on VS 2015 Enterprise or VS 2019 Express.  Even VS 2012 is OK, the database project won't load, but that's OK because it's just there to maintain a schema history, it is not a required of part of the build
 1. **[SQL Server Express 2008 (or higher/later)][SQL]** - currently vetted on 2008, 2012R2, and 2016 Express.
 1. **[SQL Server Management Studio (SSMS)][SSMS]** - required for managing the database
 

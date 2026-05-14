@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				try {
 					string sFoundVal = GetParmValue("DaysInPast", "-3");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.DaysInPast = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }
@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Plugins.CalendarModule {
 				try {
 					string sFoundVal = GetParmValue("DaysInFuture", "30");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.DaysInFuture = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }

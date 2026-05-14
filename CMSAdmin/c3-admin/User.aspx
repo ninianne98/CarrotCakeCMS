@@ -19,14 +19,14 @@
 			<tr>
 				<td style="width: 180px;">
 					<b class="caption">
-						<asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name</asp:Label>
+						<asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="txtUserName">User Name</asp:Label>
 					</b>
 				</td>
 				<td style="width: 300px;">
 					<div style="height: 30px;">
 						<asp:Label ID="lblUserName" runat="server" Columns="60" MaxLength="100" />
-						<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="140px" ID="UserName" runat="server" MaxLength="50" ValidationGroup="createWizard" />
-						<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="UserName" ErrorMessage="Username is required."
+						<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="140px" ID="txtUserName" runat="server" MaxLength="50" ValidationGroup="createWizard" />
+						<asp:RequiredFieldValidator ID="UserNameRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtUserName" ErrorMessage="Username is required."
 							ToolTip="Username is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 					</div>
 				</td>
@@ -34,12 +34,12 @@
 			<tr>
 				<td>
 					<b class="caption">
-						<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />
+						<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="txtEmail" Text="E-mail " />
 					</b>
 				</td>
 				<td>
-					<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="200px" ID="Email" runat="server" MaxLength="100" ValidationGroup="createWizard" />
-					<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="E-mail is required."
+					<asp:TextBox onkeypress="return ProcessKeyPress(event)" Width="200px" ID="txtEmail" runat="server" MaxLength="100" ValidationGroup="createWizard" />
+					<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail" ErrorMessage="E-mail is required."
 						ToolTip="E-mail is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 				</td>
 			</tr>

@@ -1,4 +1,5 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using Carrotware.Web.UI.Controls;
 using System;
@@ -6,16 +7,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -136,7 +136,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		private void SetMsg(string sMessage) {
-			if (!String.IsNullOrEmpty(sMessage)) {
+			if (!string.IsNullOrEmpty(sMessage)) {
 				litMessage.Text = sMessage;
 			}
 		}
@@ -201,35 +201,46 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			foreach (WordPressUser wpu in wpSite.Authors) {
 				wpu.ImportUserID = Guid.Empty;
 
-				MembershipUser usr = null;
+				ApplicationUser usr = null;
 				//attempt to find the user in the userbase
 				usr = SecurityData.GetUserListByEmail(wpu.Email).FirstOrDefault();
 				if (usr != null) {
-					wpu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+					wpu.ImportUserID = new Guid(usr.Id);
 				} else {
 					usr = SecurityData.GetUserListByName(wpu.Login).FirstOrDefault();
 					if (usr != null) {
-						wpu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+						wpu.ImportUserID = new Guid(usr.Id);
 					}
 				}
 
 				if (chkAuthors.Checked) {
+					var sd = new SecurityData();
+
 					if (wpu.ImportUserID == Guid.Empty) {
-						usr = Membership.CreateUser(wpu.Login, ProfileManager.GenerateSimplePassword(), wpu.Email);
-						Roles.AddUserToRole(wpu.Login, SecurityData.CMSGroup_Users);
-						wpu.ImportUserID = new Guid(usr.ProviderUserKey.ToString());
+						var user = new ApplicationUser { UserName = wpu.Login, Email = wpu.Email };
+						var nu = sd.CreateApplicationUser(user);
+						var result = nu.IdentityResult;
+
+						if (result.Succeeded) {
+							user = nu.User;
+							var exUser = nu.ExtendedUserData;
+							exUser.AddToRole(SecurityData.CMSGroup_Users);
+							wpu.ImportUserID = new Guid(user.Id);
+						} else {
+							throw new Exception(string.Format("Could not create user: {0} ({1}) \r\n{2}", wpu.Login, wpu.Email, string.Join("\r\n", result.Errors)));
+						}
 					}
 
 					if (wpu.ImportUserID != Guid.Empty) {
-						ExtendedUserData ud = new ExtendedUserData(wpu.ImportUserID);
+						var ud = new ExtendedUserData(wpu.ImportUserID);
 						if (ud != null) {
-							if (!String.IsNullOrEmpty(wpu.FirstName) || !String.IsNullOrEmpty(wpu.LastName)) {
+							if (!string.IsNullOrEmpty(wpu.FirstName) || !string.IsNullOrEmpty(wpu.LastName)) {
 								ud.FirstName = wpu.FirstName;
 								ud.LastName = wpu.LastName;
 								ud.Save();
 							}
 						} else {
-							throw new Exception(String.Format("Could not find new user: {0} ({1})", wpu.Login, wpu.Email));
+							throw new Exception(string.Format("Could not find new user: {0} ({1})", wpu.Login, wpu.Email));
 						}
 					}
 				}

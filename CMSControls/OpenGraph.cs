@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using System;
 using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using Carrotware.CMS.Core;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -66,7 +66,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["OpenGraphType"];
 				OpenGraphTypeDef c = OpenGraphTypeDef.Default;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (OpenGraphTypeDef)Enum.Parse(typeof(OpenGraphTypeDef), s, true);
 				}
 				return c;
@@ -95,7 +95,7 @@ namespace Carrotware.CMS.UI.Controls {
 				if (cp != null) {
 					HtmlMeta metaSub = new HtmlMeta();
 					metaSub.Attributes["property"] = "og:description";
-					metaSub.Content = String.IsNullOrEmpty(cp.MetaDescription) ? theSite.MetaDescription : cp.MetaDescription;
+					metaSub.Content = string.IsNullOrEmpty(cp.MetaDescription) ? theSite.MetaDescription : cp.MetaDescription;
 					this.Controls.Add(metaSub);
 
 					HtmlMeta metaURL = new HtmlMeta();
@@ -120,21 +120,21 @@ namespace Carrotware.CMS.UI.Controls {
 
 					this.Controls.Add(metaType);
 
-					if (!String.IsNullOrEmpty(this.Page.Title)) {
+					if (!string.IsNullOrEmpty(this.Page.Title)) {
 						HtmlMeta metaTitle = new HtmlMeta();
 						metaTitle.Attributes["property"] = "og:title";
 						metaTitle.Content = cp.TitleBar;
 						this.Controls.Add(metaTitle);
 					}
 
-					if (!String.IsNullOrEmpty(cp.Thumbnail)) {
+					if (!string.IsNullOrEmpty(cp.Thumbnail)) {
 						HtmlMeta metaTitle = new HtmlMeta();
 						metaTitle.Attributes["property"] = "og:image";
 						metaTitle.Content = String.Format("{0}/{1}", theSite.MainCanonicalURL, cp.Thumbnail).Replace(@"//", @"/").Replace(@"//", @"/").Replace(@":/", @"://");
 						this.Controls.Add(metaTitle);
 					}
 
-					if (!String.IsNullOrEmpty(theSite.SiteName)) {
+					if (!string.IsNullOrEmpty(theSite.SiteName)) {
 						HtmlMeta metaSite = new HtmlMeta();
 						metaSite.Attributes["property"] = "og:site_name";
 						metaSite.Content = theSite.SiteName;

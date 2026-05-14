@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -62,7 +62,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				String s = (String)ViewState["ContentType"];
 				ListContentType c = ListContentType.Blog;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					c = (ListContentType)Enum.Parse(typeof(ListContentType), s, true);
 				}
 				return c;
@@ -234,11 +234,11 @@ namespace Carrotware.CMS.UI.Controls {
 					break;
 			}
 
-			if (this.ShowUpdateDate && String.IsNullOrEmpty(this.DateFormat)) {
+			if (this.ShowUpdateDate && string.IsNullOrEmpty(this.DateFormat)) {
 				this.DateFormat = "({0:d})";
 			}
 
-			if (this.ShowUpdateDate && !String.IsNullOrEmpty(this.DateFormat)) {
+			if (this.ShowUpdateDate && !string.IsNullOrEmpty(this.DateFormat)) {
 				lst.ForEach(x => x.NavMenuText = String.Format("{0}  {1}", x.NavMenuText, String.Format(this.DateFormat, x.GoLiveDate)));
 			}
 
@@ -277,7 +277,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 					List<string> lstCategories = GetParmValueList("SelectedCategories");
 					foreach (string sCat in lstCategories) {
-						if (!String.IsNullOrEmpty(sCat)) {
+						if (!string.IsNullOrEmpty(sCat)) {
 							this.SelectedCategories.Add(new Guid(sCat));
 						}
 					}

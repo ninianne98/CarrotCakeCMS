@@ -1,18 +1,18 @@
 ﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
-using System.Web.Security;
 using System.Web.UI.WebControls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (!IsPostBack) {
 				if (groupID != Guid.Empty) {
-					MembershipRole role = getCurrentGroup();
+					UserRole role = getCurrentGroup();
 
 					txtRoleName.Text = role.RoleName;
 					txtRoleName.Enabled = CheckValidEditing(role.RoleName);
@@ -50,7 +50,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void GetUserList(string roleName) {
-			List<MembershipUser> usrs = SecurityData.GetUsersInRole(roleName);
+			List<ApplicationUser> usrs = SecurityData.GetUsersInRole(roleName);
 			GeneralUtilities.BindDataBoundControl(gvUsers, usrs);
 
 			if (usrs.Count < 1) {
@@ -58,17 +58,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		protected MembershipRole getCurrentGroup() {
-			MembershipRole role = SecurityData.FindMembershipRole(groupID);
+		protected UserRole getCurrentGroup() {
+			var role = SecurityData.FindRoleByID(groupID);
 
 			return role;
 		}
 
 		protected void btnAddUsers_Click(object sender, EventArgs e) {
-			if (!String.IsNullOrEmpty(hdnUserID.Value)) {
-				MembershipRole role = getCurrentGroup();
+			if (!string.IsNullOrEmpty(hdnUserID.Value)) {
+				UserRole role = getCurrentGroup();
 
-				ExtendedUserData exUsr = new ExtendedUserData(hdnUserID.Value);
+				var exUsr = new ExtendedUserData(hdnUserID.Value);
 				exUsr.AddToRole(role.RoleName);
 			}
 
@@ -79,17 +79,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			HiddenField hdnUserName = null;
 			CheckBox chkSelected = null;
 
-			MembershipRole role = getCurrentGroup();
+			UserRole role = getCurrentGroup();
 
 			string currentRoleName = role.RoleName;
 
 			foreach (GridViewRow dgItem in gvUsers.Rows) {
 				hdnUserName = (HiddenField)dgItem.FindControl("hdnUserName");
 
-				if (!String.IsNullOrEmpty(hdnUserName.Value)) {
+				if (!string.IsNullOrEmpty(hdnUserName.Value)) {
 					chkSelected = (CheckBox)dgItem.FindControl("chkSelected");
 					if (chkSelected.Checked) {
-						Roles.RemoveUserFromRole(hdnUserName.Value, currentRoleName);
+						SecurityData.RemoveUserFromRole(hdnUserName.Value, currentRoleName);
 					}
 				}
 			}
@@ -98,35 +98,29 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnApply_Click(object sender, EventArgs e) {
-			MembershipRole role = new MembershipRole(txtRoleName.Text, groupID);
-
-			if (!Roles.RoleExists(txtRoleName.Text) && groupID == Guid.Empty) {
-				Roles.CreateRole(txtRoleName.Text);
+			bool bAdd = false;
+			if (groupID == Guid.Empty) {
+				groupID = Guid.NewGuid();
+				bAdd = true;
 			}
 
-			if (Roles.RoleExists(txtRoleName.Text) || groupID != Guid.Empty) {
-				if (groupID == Guid.Empty) {
-					role = SecurityData.FindMembershipRole(txtRoleName.Text);
+			UserRole role = new UserRole(txtRoleName.Text, groupID);
+			UserRole item = SecurityData.FindRole(role.RoleName);
 
-					groupID = role.RoleId;
-				} else {
-					role = SecurityData.FindMembershipRole(groupID);
-				}
+			if (item == null && bAdd == false) {
+				item = SecurityData.FindRoleByID(role.RoleId);
+			}
 
-				if (role != null && groupID != Guid.Empty) {
-					if (CheckValidEditing(role.LoweredRoleName)
-							&& CheckValidEditing(txtRoleName.Text)) {
-						role.RoleName = txtRoleName.Text;
-						role.Save();
-					}
+			if (item == null || bAdd) {
+				item = new UserRole();
+				item.RoleId = role.RoleId;
+			}
 
-					if (CheckValidEditing(role.LoweredRoleName)
-							&& !CheckValidEditing(txtRoleName.Text)) {
-						txtRoleName.Text = role.RoleName;
-					}
-				}
+			item.RoleName = role.RoleName.Trim();
+			item.Save();
 
-				Response.Redirect(SiteData.CurrentScriptName + "?id=" + groupID.ToString());
+			if (item.RoleId.Length > 10) {
+				Response.Redirect(SiteData.CurrentScriptName + "?id=" + item.RoleId);
 			}
 		}
 

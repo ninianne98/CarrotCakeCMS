@@ -11,10 +11,10 @@ using System.Web.UI.WebControls;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -327,7 +327,7 @@ namespace Carrotware.CMS.UI.Controls {
 			string sSortFld = string.Empty;
 			string sSortDir = string.Empty;
 
-			if (!String.IsNullOrEmpty(this.OrderBy)) {
+			if (!string.IsNullOrEmpty(this.OrderBy)) {
 				int pos = this.OrderBy.LastIndexOf(" ");
 				sSortFld = this.OrderBy.Substring(0, pos).Trim();
 				sSortDir = this.OrderBy.Substring(pos).Trim();
@@ -349,7 +349,7 @@ namespace Carrotware.CMS.UI.Controls {
 						string tgt = context.Request.Form["__EVENTTARGET"].ToString();
 
 						string sParm = this.ClientID.Replace(this.ID, "").Replace("_", "$");
-						if (String.IsNullOrEmpty(sParm)) {
+						if (string.IsNullOrEmpty(sParm)) {
 							sParm = this.ID + "$";
 						}
 
@@ -375,7 +375,7 @@ namespace Carrotware.CMS.UI.Controls {
 					if (context.Request[sPageParm] != null) {
 						sPageNbr = context.Request[sPageParm].ToString();
 					}
-					if (!String.IsNullOrEmpty(sPageNbr)) {
+					if (!string.IsNullOrEmpty(sPageNbr)) {
 						int pg = int.Parse(sPageNbr);
 						this.PageNumber = pg;
 						hdnPageNbr.Value = this.PageNumber.ToString();
@@ -383,7 +383,7 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			if (this.PageNumber <= 1 && !String.IsNullOrEmpty(hdnPageNbr.Value)) {
+			if (this.PageNumber <= 1 && !string.IsNullOrEmpty(hdnPageNbr.Value)) {
 				this.PageNumber = int.Parse(hdnPageNbr.Value);
 			}
 		}
@@ -467,11 +467,11 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected void RenderWrappedControl(HtmlTextWriter writer, Control ctrl, string sCSSValue) {
 			writer.WriteLine();
-			if (!String.IsNullOrEmpty(sCSSValue)) {
+			if (!string.IsNullOrEmpty(sCSSValue)) {
 				writer.WriteLine("<span class=\"" + sCSSValue + "\">");
 			}
 			ctrl.RenderControl(writer);
-			if (!String.IsNullOrEmpty(sCSSValue)) {
+			if (!string.IsNullOrEmpty(sCSSValue)) {
 				writer.WriteLine("</span>");
 			}
 			writer.WriteLine();

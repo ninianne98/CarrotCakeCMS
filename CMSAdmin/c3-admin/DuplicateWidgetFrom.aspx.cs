@@ -8,10 +8,10 @@ using System.Linq;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -45,7 +45,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			GeneralUtilities.BindDataBoundControl(gvWidgets, null);
 
-			if (!String.IsNullOrEmpty(gvPages.DefaultSort)) {
+			if (!string.IsNullOrEmpty(gvPages.DefaultSort)) {
 				int pos = gvPages.DefaultSort.LastIndexOf(" ");
 				sSortFld = gvPages.DefaultSort.Substring(0, pos).Trim();
 				sSortDir = gvPages.DefaultSort.Substring(pos).Trim();
@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			bool bLimit = chkActive.Checked;
 
 			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
-				if (!String.IsNullOrEmpty(sSearchTerm)) {
+				if (!string.IsNullOrEmpty(sSearchTerm)) {
 					iTotal = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, bLimit);
 					lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, bLimit, iTake, 0, sSortFld, sSortDir);
 				}
@@ -62,9 +62,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (iTotal > 0) {
 				if (iTotal > lstContents.Count) {
-					litResults.Text = String.Format("Showing {0} of {1} total results", lstContents.Count, iTotal);
+					litResults.Text = string.Format("Showing {0} of {1} total results", lstContents.Count, iTotal);
 				} else {
-					litResults.Text = String.Format("Showing {0} results", lstContents.Count);
+					litResults.Text = string.Format("Showing {0} results", lstContents.Count);
 				}
 			}
 

@@ -81,7 +81,7 @@
 									</ItemTemplate>
 								</asp:TemplateField>
 								<asp:BoundField DataField="UserName" HeaderText="User Name" />
-								<asp:BoundField DataField="EmailAddress" HeaderText="Email" />
+								<asp:BoundField DataField="Email" HeaderText="Email" />
 								<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsAdmin" HeaderText="Is Admin" ShowBooleanImage="true" AlternateTextTrue="Yes"
 									AlternateTextFalse="No" ImagePathTrue="/c3-admin/images/lightbulb.png" ImagePathFalse="/c3-admin/images/lightbulb_off.png" />
 								<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" DataField="IsEditor" HeaderText="Is Editor" ShowBooleanImage="true"

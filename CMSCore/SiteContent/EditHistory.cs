@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Carrotware.CMS.Data;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Carrotware.CMS.Data;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.Core {
@@ -39,14 +39,9 @@ namespace Carrotware.CMS.Core {
 				this.PageActive = p.PageActive;
 				this.GoLiveDate = site.ConvertUTCToSiteTime(p.GoLiveDate);
 				this.RetireDate = site.ConvertUTCToSiteTime(p.RetireDate);
+				this.CreateDate = site.ConvertUTCToSiteTime(p.CreateDate);
 				this.EditUserName = p.EditUserName;
 				this.EditEmail = p.EditEmail;
-				this.IsLockedOut = p.IsLockedOut;
-				this.CreateDate = site.ConvertUTCToSiteTime(p.CreateDate);
-				this.UserCreateDate = p.UserCreateDate;
-				this.LastLoginDate = p.LastLoginDate;
-				this.LastPasswordChangedDate = p.LastPasswordChangedDate;
-				this.LastLockoutDate = p.LastLockoutDate;
 				this.CreateUserName = p.CreateUserName;
 				this.CreateEmail = p.CreateEmail;
 			}
@@ -108,18 +103,18 @@ namespace Carrotware.CMS.Core {
 			string sortField = string.Empty;
 			string sortDir = string.Empty;
 
-			if (!String.IsNullOrEmpty(orderBy)) {
+			if (!string.IsNullOrEmpty(orderBy)) {
 				int pos = orderBy.LastIndexOf(" ");
 
 				sortField = orderBy.Substring(0, pos).Trim();
 				sortDir = orderBy.Substring(pos).Trim();
 			}
 
-			if (String.IsNullOrEmpty(sortField)) {
+			if (string.IsNullOrEmpty(sortField)) {
 				sortField = "EditDate";
 			}
 
-			if (String.IsNullOrEmpty(sortDir)) {
+			if (string.IsNullOrEmpty(sortDir)) {
 				sortDir = "DESC";
 			}
 
@@ -154,7 +149,7 @@ namespace Carrotware.CMS.Core {
 						 where p.ToLowerInvariant().Trim() == sortField.ToLowerInvariant().Trim()
 						 select p).FirstOrDefault();
 
-			if (!String.IsNullOrEmpty(sortField)) {
+			if (!string.IsNullOrEmpty(sortField)) {
 				IsContentProp = ReflectionUtilities.DoesPropertyExist(typeof(vw_carrot_EditHistory), sortField);
 			}
 

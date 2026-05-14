@@ -11,10 +11,10 @@ using System.Web.SessionState;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.Web.UI.Controls {
@@ -264,7 +264,7 @@ namespace Carrotware.Web.UI.Controls {
 			DateTime? dtModSince = null;
 			string modSince = context.Request.Headers.Get("If-Modified-Since");
 
-			if (!String.IsNullOrEmpty(modSince)) {
+			if (!string.IsNullOrEmpty(modSince)) {
 				dtModSince = DateTime.Parse(modSince);
 				dtModSince = dtModSince.Value.ToUniversalTime();
 			}

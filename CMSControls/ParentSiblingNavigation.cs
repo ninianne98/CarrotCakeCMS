@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Carrotware.CMS.Core;
+using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.UI;
-using Carrotware.CMS.Core;
-using Carrotware.CMS.Interface;
-using Carrotware.Web.UI.Controls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Controls {
@@ -66,7 +66,7 @@ namespace Carrotware.CMS.UI.Controls {
 			get {
 				string s = (string)ViewState["SortNavBy"];
 				SortOrder c = SortOrder.SortAsc;
-				if (!String.IsNullOrEmpty(s)) {
+				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (SortOrder)Enum.Parse(typeof(SortOrder), s, true);
 					} catch (Exception ex) { }
@@ -92,7 +92,7 @@ namespace Carrotware.CMS.UI.Controls {
 				string sTmp = "";
 				try {
 					sTmp = GetParmValue("SortNavBy", "");
-					if (!String.IsNullOrEmpty(sTmp)) {
+					if (!string.IsNullOrEmpty(sTmp)) {
 						this.SortNavBy = (SortOrder)Enum.Parse(typeof(SortOrder), sTmp, true);
 					}
 				} catch (Exception ex) {

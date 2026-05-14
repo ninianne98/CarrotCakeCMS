@@ -35,7 +35,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 					List<string> lstGallery = GetParmValueList("GalleryIDs");
 
 					foreach (string sGallery in lstGallery) {
-						if (!String.IsNullOrEmpty(sGallery)) {
+						if (!string.IsNullOrEmpty(sGallery)) {
 							this.GalleryIDs.Add(new Guid(sGallery));
 						}
 					}
@@ -44,7 +44,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				try {
 					string sFoundVal = GetParmValue("ThumbSize", "150");
 
-					if (!String.IsNullOrEmpty(sFoundVal)) {
+					if (!string.IsNullOrEmpty(sFoundVal)) {
 						this.ThumbSize = Convert.ToInt32(sFoundVal);
 					}
 				} catch (Exception ex) { }

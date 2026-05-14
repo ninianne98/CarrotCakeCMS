@@ -1,19 +1,17 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.DBUpdater;
+using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Base;
 using System;
-using System.Web.Profile;
-using System.Web.Security;
-using System.Web.UI.WebControls;
 
 /*
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -21,34 +19,43 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class CreateFirstAdmin : BasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (DatabaseUpdate.UsersExist) {
-				createWizard.Visible = false;
-				lblLogon.Visible = true;
+			if (DatabaseSchemaState.UsersExist) {
+				phStep1.Visible = false;
+				phStep2.Visible = true;
 			} else {
-				createWizard.Visible = true;
-				lblLogon.Visible = false;
+				SecurityData.ResetAuth();
+				phStep1.Visible = true;
+				phStep2.Visible = false;
 			}
+
+			divMsg.Visible = false;
+			FailureText.Text = string.Empty;
 		}
 
-		protected void createWizard_CreatedUser(object sender, EventArgs e) {
-			var pb = ProfileBase.Create(createWizard.UserName, false);
-			Roles.AddUserToRole(createWizard.UserName, SecurityData.CMSGroup_Users);
+		protected void btnStepNextButton_Click(object sender, EventArgs e) {
+			var userName = UserName.Text;
+			var email = Email.Text;
+			var password = Password.Text;
+
+			var sd = new SecurityData();
+			var user = new ApplicationUser { UserName = userName, Email = email };
+
+			var nu = sd.CreateApplicationUser(user, password);
+			var result = nu.IdentityResult;
+			ExtendedUserData exUser = nu.ExtendedUserData;
 
 			try {
-				MembershipUser usr = Membership.GetUser(createWizard.UserName);
-				Guid userID = new Guid(usr.ProviderUserKey.ToString());
+				exUser.AddToRole(SecurityData.CMSGroup_Users);
+				exUser.AddToRole(SecurityData.CMSGroup_Admins);
 
-				if (!Roles.IsUserInRole(usr.UserName, SecurityData.CMSGroup_Users)) {
-					Roles.AddUserToRole(usr.UserName, SecurityData.CMSGroup_Users);
-				}
-				if (!Roles.IsUserInRole(usr.UserName, SecurityData.CMSGroup_Admins)) {
-					Roles.AddUserToRole(usr.UserName, SecurityData.CMSGroup_Admins);
-				}
+				phStep1.Visible = true;
+				phStep2.Visible = false;
+
+				Response.Redirect(SiteFilename.DashboardURL);
 			} catch (Exception ex) {
+				divMsg.Visible = true;
+				FailureText.Text = ex.Message;
 			}
-		}
-
-		protected void createWizard_CreatingUser(object sender, LoginCancelEventArgs e) {
 		}
 	}
 }

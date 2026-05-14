@@ -7,10 +7,10 @@ using System.Linq;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
@@ -67,7 +67,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				sName = plug.Caption;
 			}
 
-			lnkIndex.NavigateUrl = String.Format("{0}?id={1}", SiteFilename.PageWidgetsURL, ww.Root_ContentID);
+			lnkIndex.NavigateUrl = string.Format("{0}?id={1}", SiteFilename.PageWidgetsURL, ww.Root_ContentID);
 
 			litControlPathName.Text = sName;
 		}

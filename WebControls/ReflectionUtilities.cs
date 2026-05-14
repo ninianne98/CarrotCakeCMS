@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -9,10 +10,10 @@ using System.Reflection;
 * CarrotCake CMS
 * http://www.carrotware.com/
 *
-* Copyright 2011, Samantha Copeland
+* Copyright 2011, 2026, Samantha Copeland
 * Dual licensed under the MIT or GPL Version 3 licenses.
 *
-* Date: October 2011
+* Date: October 2011, May 2026
 */
 
 namespace Carrotware.Web.UI.Controls {
@@ -146,6 +147,50 @@ namespace Carrotware.Web.UI.Controls {
 			return string.Empty;
 		}
 
+		public static string DisplayNameFor<T>(Expression<Func<T, object>> expression) {
+			string propertyName = string.Empty;
+			PropertyInfo propInfo = null;
+			Type type = null;
+
+			MemberExpression memberExpression = expression.Body as MemberExpression ??
+												((UnaryExpression)expression.Body).Operand as MemberExpression;
+			if (memberExpression != null) {
+				propertyName = memberExpression.Member.Name;
+				type = memberExpression.Member.DeclaringType;
+				propInfo = type.GetProperty(propertyName);
+			}
+
+			if (!string.IsNullOrEmpty(propertyName) && type != null) {
+				DisplayAttribute attribute1 = propInfo.GetCustomAttributes(typeof(DisplayAttribute), true).FirstOrDefault() as DisplayAttribute;
+				if (attribute1 != null) {
+					return attribute1.Name;
+				}
+
+				DisplayNameAttribute attribute2 = propInfo.GetCustomAttributes(typeof(DisplayNameAttribute), true).FirstOrDefault() as DisplayNameAttribute;
+				if (attribute2 != null) {
+					return attribute2.DisplayName;
+				}
+
+				MetadataTypeAttribute metadataType = (MetadataTypeAttribute)type.GetCustomAttributes(typeof(MetadataTypeAttribute), true).FirstOrDefault();
+				if (metadataType != null) {
+					PropertyInfo metaProp = metadataType.MetadataClassType.GetProperty(propInfo.Name);
+					if (metaProp != null) {
+						DisplayAttribute attribute3 = (DisplayAttribute)metaProp.GetCustomAttributes(typeof(DisplayAttribute), true).SingleOrDefault();
+						if (attribute3 != null) {
+							return attribute3.Name;
+						}
+
+						DisplayNameAttribute attribute4 = (DisplayNameAttribute)metaProp.GetCustomAttributes(typeof(DisplayNameAttribute), true).SingleOrDefault();
+						if (attribute4 != null) {
+							return attribute4.DisplayName;
+						}
+					}
+				}
+			}
+
+			return string.Empty;
+		}
+
 		public static IEnumerable<T> PaginateList<T>(this IQueryable<T> list, int page, int pageSize) {
 			page = page < 1 ? 1 : page;
 			pageSize = pageSize < 1 ? 10 : pageSize;
@@ -161,7 +206,7 @@ namespace Carrotware.Web.UI.Controls {
 
 			return list.Skip(skip).Take(pageSize).ToList();
 		}
-		
+
 		public static IQueryable<T> SortByParm<T>(IList<T> source, string sortByFieldName, string sortDirection) {
 			return SortByParm<T>(source.AsQueryable(), sortByFieldName, sortDirection);
 		}

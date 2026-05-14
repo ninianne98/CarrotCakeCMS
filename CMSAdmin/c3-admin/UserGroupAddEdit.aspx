@@ -57,7 +57,7 @@
 										<ItemTemplate>
 											<asp:CheckBox ValidationGroup="removeUsers" ID="chkSelected" runat="server" />
 											<asp:HiddenField Value='<%#Eval("UserName") %>' ID="hdnUserName" runat="server" Visible="false" />
-											<asp:HiddenField Value='<%#Eval("ProviderUserKey") %>' ID="hdnUserId" runat="server" Visible="false" />
+											<asp:HiddenField Value='<%#Eval("Id") %>' ID="hdnUserId" runat="server" Visible="false" />
 										</ItemTemplate>
 									</asp:TemplateField>
 									<asp:BoundField DataField="UserName" HeaderText="User Name" />

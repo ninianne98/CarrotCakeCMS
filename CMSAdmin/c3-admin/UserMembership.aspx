@@ -29,8 +29,7 @@
 				</asp:TemplateField>
 				<carrot:CarrotHeaderSortTemplateField SortExpression="Username" HeaderText="Username" />
 				<carrot:CarrotHeaderSortTemplateField SortExpression="FullName_LastFirst" HeaderText="Name" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="EmailAddress" HeaderText="Email" />
-				<carrot:CarrotHeaderSortTemplateField SortExpression="CreateDate" HeaderText="Created On" DataFieldFormat="{0:d}" />
+				<carrot:CarrotHeaderSortTemplateField SortExpression="Email" HeaderText="Email" />
 				<carrot:CarrotHeaderSortTemplateField ItemStyle-HorizontalAlign="Center" SortExpression="IsLockedOut" HeaderText="Status" ShowBooleanImage="true"
 					AlternateTextTrue="Locked Out" AlternateTextFalse="Unlocked" ImagePathTrue="/c3-admin/images/lock.png" ImagePathFalse="/c3-admin/images/user.png" />
 			</Columns>
