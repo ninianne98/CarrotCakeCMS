@@ -1,12 +1,14 @@
-﻿CREATE VIEW [dbo].[vw_carrot_EditorURL]
+﻿
+CREATE VIEW [dbo].[vw_carrot_EditorURL]
 AS 
+-- select top 10 * from [vw_carrot_EditorURL]
 
 select  d.SiteID, d.UserId, d.UserName, d.LoweredEmail, cc2.EditDate, 
 		ISNULL(cc2.TheCount, 0) as UseCount, ISNULL(cc3.TheCount, 0) as PublicUseCount,
 		'/'+d.Blog_FolderPath +'/'+ d.Blog_EditorPath +'/'+ d.UserName + '.aspx' as UserUrl
 from (
-		select s.SiteID, s.Blog_FolderPath, s.Blog_EditorPath, m.UserId, m.UserName, m.LoweredEmail
-			from [dbo].vw_aspnet_MembershipUsers m, [dbo].carrot_Sites s
+		select s.SiteID, s.Blog_FolderPath, s.Blog_EditorPath, m.UserId, m.UserName, lower(m.Email) as LoweredEmail
+			from [dbo].vw_carrot_UserData m, [dbo].carrot_Sites s
 		) as d
 	left join (
 			select v_cc.EditUserId, v_cc.SiteID, MAX(v_cc.EditDate) as EditDate, COUNT(ContentID) as TheCount

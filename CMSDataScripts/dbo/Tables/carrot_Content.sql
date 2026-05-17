@@ -17,10 +17,12 @@
     [MetaDescription]  NVARCHAR (1024)  NULL,
     [CreditUserId]     UNIQUEIDENTIFIER NULL,
     CONSTRAINT [PK_carrot_Content] PRIMARY KEY CLUSTERED ([ContentID] ASC),
-    CONSTRAINT [carrot_Content_CreditUserId_FK] FOREIGN KEY ([CreditUserId]) REFERENCES [dbo].[aspnet_Users] ([UserId]),
-    CONSTRAINT [carrot_Content_EditUserId_FK] FOREIGN KEY ([EditUserId]) REFERENCES [dbo].[aspnet_Users] ([UserId]),
+    CONSTRAINT [carrot_Content_CreditUserId_FK] FOREIGN KEY ([CreditUserId]) REFERENCES [dbo].[carrot_UserData] ([UserId]),
+    CONSTRAINT [carrot_Content_EditUserId_FK] FOREIGN KEY ([EditUserId]) REFERENCES [dbo].[carrot_UserData] ([UserId]),
     CONSTRAINT [carrot_RootContent_carrot_Content_FK] FOREIGN KEY ([Root_ContentID]) REFERENCES [dbo].[carrot_RootContent] ([Root_ContentID])
 );
+
+
 
 
 GO

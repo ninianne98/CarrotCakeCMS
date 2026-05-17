@@ -225,7 +225,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							user = nu.User;
 							var exUser = nu.ExtendedUserData;
 							exUser.AddToRole(SecurityData.CMSGroup_Users);
-							wpu.ImportUserID = new Guid(user.Id);
+							wpu.ImportUserID = exUser.UserId;
 						} else {
 							throw new Exception(string.Format("Could not create user: {0} ({1}) \r\n{2}", wpu.Login, wpu.Email, string.Join("\r\n", result.Errors)));
 						}

@@ -48,12 +48,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			phTrackback2.Visible = phTrackback1.Visible;
 
 			if (!IsPostBack) {
-				if (iPageCount < 1) {
-					txtSort.Text = "0";
-				} else {
-					int iOrder = pageHelper.GetMaxNavOrder(SiteID) + 1;
-					txtSort.Text = iOrder.ToString();
-				}
+				var iOrder = pageHelper.GetSitePageCount(this.SiteID, ContentPageType.PageType.ContentEntry) * 2;
+				txtSort.Text = iOrder.ToString();
 			}
 
 			sPageMode = GetStringParameterFromQuery("mode");

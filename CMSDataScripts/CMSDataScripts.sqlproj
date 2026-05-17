@@ -86,12 +86,6 @@
     <Build Include="dbo\Tables\carrot_ContentCategory.sql" />
     <Build Include="dbo\Tables\carrot_Content.sql" />
     <Build Include="dbo\Tables\carrot_CategoryContentMapping.sql" />
-    <Build Include="dbo\Tables\aspnet_UsersInRoles.sql" />
-    <Build Include="dbo\Tables\aspnet_Users.sql" />
-    <Build Include="dbo\Tables\aspnet_SchemaVersions.sql" />
-    <Build Include="dbo\Tables\aspnet_Roles.sql" />
-    <Build Include="dbo\Tables\aspnet_Membership.sql" />
-    <Build Include="dbo\Tables\aspnet_Applications.sql" />
     <Build Include="dbo\Views\vw_carrot_Widget.sql" />
     <Build Include="dbo\Views\vw_carrot_UserData.sql" />
     <Build Include="dbo\Views\vw_carrot_TrackbackQueue.sql" />
@@ -105,27 +99,6 @@
     <Build Include="dbo\Views\vw_carrot_Comment.sql" />
     <Build Include="dbo\Views\vw_carrot_CategoryURL.sql" />
     <Build Include="dbo\Views\vw_carrot_CategoryCounted.sql" />
-    <Build Include="dbo\Views\vw_aspnet_UsersInRoles.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Views\vw_aspnet_Users.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Views\vw_aspnet_Roles.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Views\vw_aspnet_MembershipUsers.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Views\vw_aspnet_Applications.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="Security\aspnet_Roles_ReportingAccess.sql" />
-    <Build Include="Security\aspnet_Roles_FullAccess.sql" />
-    <Build Include="Security\aspnet_Roles_BasicAccess.sql" />
-    <Build Include="Security\aspnet_Membership_ReportingAccess.sql" />
-    <Build Include="Security\aspnet_Membership_FullAccess.sql" />
-    <Build Include="Security\aspnet_Membership_BasicAccess.sql" />
     <Build Include="dbo\Stored Procedures\carrot_UpdateGoLiveLocal.sql" />
     <Build Include="dbo\Stored Procedures\carrot_BlogMonthlyTallies.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
@@ -133,116 +106,11 @@
     <Build Include="dbo\Stored Procedures\carrot_BlogDateFilenameUpdate.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
     </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_UsersInRoles_RemoveUsersFromRoles.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_UsersInRoles_IsUserInRole.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_UsersInRoles_GetUsersInRoles.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_UsersInRoles_GetRolesForUser.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_UsersInRoles_FindUsersInRole.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_UsersInRoles_AddUsersToRoles.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Users_DeleteUser.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Users_CreateUser.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_UnRegisterSchemaVersion.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Setup_RestorePermissions.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Setup_RemoveAllRoleMembers.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Roles_RoleExists.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Roles_GetAllRoles.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Roles_DeleteRole.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Roles_CreateRole.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_RegisterSchemaVersion.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_UpdateUserInfo.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_UpdateUser.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_UnlockUser.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_SetPassword.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_ResetPassword.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_GetUserByUserId.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_GetUserByName.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_GetUserByEmail.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_GetPasswordWithFormat.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_GetPassword.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_GetNumberOfUsersOnline.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_GetAllUsers.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_FindUsersByName.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_FindUsersByEmail.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_CreateUser.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Membership_ChangePasswordQuestionAndAnswer.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_CheckSchemaVersion.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_Applications_CreateApplication.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\aspnet_AnyDataInTables.sql">
-      <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="Security\aspnet_Roles_ReportingAccess_1.sql" />
-    <Build Include="Security\aspnet_Roles_FullAccess_1.sql" />
-    <Build Include="Security\aspnet_Roles_BasicAccess_1.sql" />
-    <Build Include="Security\aspnet_Membership_ReportingAccess_1.sql" />
-    <Build Include="Security\aspnet_Membership_FullAccess_1.sql" />
-    <Build Include="Security\aspnet_Membership_BasicAccess_1.sql" />
+    <Build Include="dbo\Tables\membership_UserRole.sql" />
+    <Build Include="dbo\Tables\membership_UserLogin.sql" />
+    <Build Include="dbo\Tables\membership_UserClaim.sql" />
+    <Build Include="dbo\Tables\membership_User.sql" />
+    <Build Include="dbo\Tables\membership_Role.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
   </ItemGroup>
 </Project>

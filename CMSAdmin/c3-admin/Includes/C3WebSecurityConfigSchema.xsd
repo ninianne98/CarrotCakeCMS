@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="CarrotCakeMVCSecuritySchema"
+<xs:schema id="CarrotCakeSecuritySchema"
 					elementFormDefault="qualified"
 					targetNamespace="urn:schema-carrotcakecms-com:securityconfig"
 					xmlns="urn:schema-carrotcakecms-com:securityconfig"

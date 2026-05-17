@@ -3,7 +3,7 @@
   <Version>10</Version>
   <SourceModelProvider>
     <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=.\SQL2016EXPRESS;Initial Catalog=CarrotwareCMS;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</ConnectionString>
+      <ConnectionString>Data Source=.\SQL2008EXPRESS;Initial Catalog=CarrotwareCMS;Integrated Security=True;Persist Security Info=False;Pooling=False;Multiple Active Result Sets=False;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False;Command Timeout=0</ConnectionString>
     </ConnectionBasedModelProvider>
   </SourceModelProvider>
   <TargetModelProvider>
@@ -33,7 +33,15 @@
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>AllowTableRecreation</Name>
+        <Value>True</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>BackupDatabaseBeforeChanges</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>IgnoreIndexesStatisticsOnEnclaveEnabledColumns</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
@@ -63,6 +71,14 @@
       <PropertyElementName>
         <Name>DisableAndReenableDdlTriggers</Name>
         <Value>True</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DisableIndexesForDataPhase</Name>
+        <Value>True</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DisableParallelismForEnablingIndexes</Name>
+        <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>DoNotAlterChangeDataCaptureObjects</Name>
@@ -106,6 +122,10 @@
       </PropertyElementName>
       <PropertyElementName>
         <Name>GenerateSmartDefaults</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>HashObjectNamesInLogs</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
@@ -157,6 +177,10 @@
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>IgnoreTablePartitionOptions</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>IgnoreWithNocheckOnCheckConstraints</Name>
         <Value>False</Value>
       </PropertyElementName>
@@ -182,6 +206,10 @@
       </PropertyElementName>
       <PropertyElementName>
         <Name>IgnoreColumnCollation</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>IgnoreColumnOrder</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
@@ -241,11 +269,23 @@
         <Value>True</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>IgnoreSensitivityClassifications</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>AllowUnsafeRowLevelSecurityDataMovement</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>IncludeCompositeObjects</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>IncludeTransactionalScripts</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>IsAlwaysEncryptedParameterizationEnabled</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
@@ -257,8 +297,24 @@
         <Value>True</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>PreserveIdentityLastValues</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>RegisterDataTierApplication</Name>
         <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>PerformIndexOperationsOnline</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>RebuildIndexesOfflineForDataPhase</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>RestoreSequenceCurrentValue</Name>
+        <Value>True</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>ScriptDatabaseCollation</Name>
@@ -319,6 +375,10 @@
       <PropertyElementName>
         <Name>AllowDropBlockingAssemblies</Name>
         <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DoNotEvaluateSqlCmdVariables</Name>
+        <Value>True</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>DoNotDropAggregates</Name>
@@ -389,6 +449,22 @@
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>IgnoreDatabaseWorkloadGroups</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DoNotDropDatabaseWorkloadGroups</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>IgnoreWorkloadClassifiers</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DoNotDropWorkloadClassifiers</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>DoNotDropDefaults</Name>
         <Value>False</Value>
       </PropertyElementName>
@@ -421,11 +497,31 @@
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>DoNotDropExternalLanguages</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DoNotDropExternalLibraries</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DoNotDropExternalStreamingJobs</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>DoNotDropExternalTables</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>DoNotDropExternalStreams</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>DoNotDropFilegroups</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>DoNotDropFiles</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
@@ -661,7 +757,23 @@
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>ExcludeExternalLanguages</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>ExcludeExternalLibraries</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>ExcludeExternalStreamingJobs</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>ExcludeExternalTables</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>ExcludeExternalStreams</Name>
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
@@ -671,6 +783,10 @@
       <PropertyElementName>
         <Name>ExcludeFilegroups</Name>
         <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>ExcludeFiles</Name>
+        <Value>True</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>ExcludeFileTables</Name>
@@ -805,6 +921,14 @@
         <Value>False</Value>
       </PropertyElementName>
       <PropertyElementName>
+        <Name>AllowExternalLibraryPaths</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
+        <Name>AllowExternalLanguagePaths</Name>
+        <Value>False</Value>
+      </PropertyElementName>
+      <PropertyElementName>
         <Name>Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlRoute</Name>
         <Value>ExcludedType</Value>
       </PropertyElementName>
@@ -899,4 +1023,61 @@
     <ZoomLevel>100</ZoomLevel>
     <Filter>Equals_Objects,Not_Supported_Deploy</Filter>
   </SchemaCompareViewSettings>
+  <ExcludedSourceElements>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>carrot_CalendarEvent</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>carrot_CalendarEventCategory</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>carrot_CalendarEventProfile</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>carrot_CalendarFrequency</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>carrot_ThemeTemplate</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>tblCalendar</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>tblFAQ</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>tblGallery</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>tblGalleryImage</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>tblGalleryImageMeta</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlTable, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>tblRegistrations</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlView, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>vw_carrot_CalendarEvent</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlView, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>dbo</Name>
+      <Name>vw_carrot_CalendarEventProfile</Name>
+    </SelectedItem>
+    <SelectedItem Type="Microsoft.Data.Tools.Schema.Sql.SchemaModel.SqlUser, Microsoft.Data.Tools.Schema.Sql, Version=162.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Name>CarrotUser</Name>
+    </SelectedItem>
+  </ExcludedSourceElements>
 </SchemaComparison>

@@ -50,7 +50,7 @@
 	</div>
 	<p>
 		<asp:Button ID="btnLogin" runat="server" Text="Continue" OnClick="btnLogin_Click" />
-		<asp:Button ID="btnCreate" runat="server" Text="Create User" OnClick="btnCreate_Click" />
+		<asp:Button ID="btnCreate" runat="server" Text="Create First User" OnClick="btnCreate_Click" />
 	</p>
 	<p>
 		<a href="<%=SiteData.CurrentScriptName %>?">Re-run</a> &nbsp;|&nbsp; <a href="<%=SiteData.CurrentScriptName %>?signout=true">Re-run with signout</a>

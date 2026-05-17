@@ -1,5 +1,7 @@
-﻿CREATE VIEW [dbo].[vw_carrot_TagURL]
+﻿
+CREATE VIEW [dbo].[vw_carrot_TagURL]
 AS 
+-- select top 10 * from [vw_carrot_TagURL]
 
 select  s.SiteID, cc.ContentTagID, cc.TagText, cc.IsPublic, cc2.EditDate, 
 		ISNULL(cc2.TheCount, 0) as UseCount, ISNULL(cc3.TheCount, 0) as PublicUseCount,

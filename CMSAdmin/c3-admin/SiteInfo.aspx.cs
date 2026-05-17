@@ -76,7 +76,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				phCreatePage.Visible = false;
 
 				if (!SiteData.CurrentSiteExists) {
-					btnSave.Text = "Click to Create Site";
+					btnSave.Text = "Create";
 					phCreatePage.Visible = true;
 				}
 			}

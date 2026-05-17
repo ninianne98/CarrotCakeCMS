@@ -41,11 +41,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e) {
-			pageContents = new ContentPage(SiteID, ContentPageType.PageType.ContentEntry);
+			pageContents = new ContentPage(this.SiteID, ContentPageType.PageType.ContentEntry);
 
 			DateTime dtSite = CMSConfigHelper.CalcNearestFiveMinTime(SiteData.CurrentSite.Now);
 
-			int iOrder = pageHelper.GetMaxNavOrder(SiteID) + 1;
+			var iOrder = pageHelper.GetMaxNavOrder(this.SiteID) + 1;
 			Guid? parentContentID = ParentPagePicker.SelectedPage;
 
 			pageContents.Parent_ContentID = parentContentID;

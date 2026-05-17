@@ -3,7 +3,7 @@
     [UserId]            UNIQUEIDENTIFIER NOT NULL,
     [SiteID]            UNIQUEIDENTIFIER NOT NULL,
     CONSTRAINT [carrot_UserSiteMapping_PK] PRIMARY KEY CLUSTERED ([UserSiteMappingID] ASC),
-    CONSTRAINT [aspnet_Users_carrot_UserSiteMapping_FK] FOREIGN KEY ([UserId]) REFERENCES [dbo].[aspnet_Users] ([UserId]),
+    CONSTRAINT [aspnet_Users_carrot_UserSiteMapping_FK] FOREIGN KEY ([UserId]) REFERENCES [dbo].[carrot_UserData] ([UserId]),
     CONSTRAINT [carrot_Sites_carrot_UserSiteMapping_FK] FOREIGN KEY ([SiteID]) REFERENCES [dbo].[carrot_Sites] ([SiteID])
 );
 

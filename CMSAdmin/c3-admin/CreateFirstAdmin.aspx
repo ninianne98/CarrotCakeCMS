@@ -40,6 +40,18 @@
 				<tr>
 					<td>
 						<b class="caption">
+							<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />
+						</b>
+					</td>
+					<td>
+						<asp:TextBox Style="width: 175px;" ValidationGroup="createWizard" ID="Email" runat="server" TabIndex="4" />
+						<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="!"
+							ToolTip="E-mail is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<b class="caption">
 							<asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password" Text="Password " />
 						</b>
 					</td>
@@ -61,18 +73,6 @@
 							ErrorMessage="!" ToolTip="Confirm Password is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 						<asp:CompareValidator ID="PasswordCompare" runat="server" ControlToCompare="Password" CssClass="validationError" ForeColor="" ControlToValidate="ConfirmPassword"
 							Display="Dynamic" ErrorMessage="!!" ToolTip="Confirm Password does not match Password." ValidationGroup="createWizard" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<b class="caption">
-							<asp:Label ID="EmailLabel" runat="server" AssociatedControlID="Email" Text="E-mail " />
-						</b>
-					</td>
-					<td>
-						<asp:TextBox Style="width: 175px;" ValidationGroup="createWizard" ID="Email" runat="server" TabIndex="4" />
-						<asp:RequiredFieldValidator ID="EmailRequired" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="Email" ErrorMessage="!"
-							ToolTip="E-mail is required." ValidationGroup="createWizard" Display="Dynamic" Text="**" />
 					</td>
 				</tr>
 			</table>

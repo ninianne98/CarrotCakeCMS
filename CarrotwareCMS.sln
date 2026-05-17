@@ -24,7 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "databas
 		CMSDBUpdater\DataScripts\CREATE01.sql = CMSDBUpdater\DataScripts\CREATE01.sql
 		CMSDBUpdater\DataScripts\MEMBER01.sql = CMSDBUpdater\DataScripts\MEMBER01.sql
 		CMSDBUpdater\DataScripts\MIGRATE01.sql = CMSDBUpdater\DataScripts\MIGRATE01.sql
-		CMSDataScripts\Scripts\__README.txt = CMSDataScripts\Scripts\__README.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "widgets", "widgets", "{53B5D160-56A0-42F9-8189-E0E87726B5CA}"

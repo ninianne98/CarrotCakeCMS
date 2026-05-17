@@ -18,9 +18,11 @@
     [BlockIndex]       BIT              NOT NULL,
     CONSTRAINT [carrot_RootContent_PK] PRIMARY KEY CLUSTERED ([Root_ContentID] ASC),
     CONSTRAINT [carrot_ContentType_carrot_RootContent_FK] FOREIGN KEY ([ContentTypeID]) REFERENCES [dbo].[carrot_ContentType] ([ContentTypeID]),
-    CONSTRAINT [carrot_RootContent_CreateUserId_FK] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[aspnet_Users] ([UserId]),
+    CONSTRAINT [carrot_RootContent_CreateUserId_FK] FOREIGN KEY ([CreateUserId]) REFERENCES [dbo].[carrot_UserData] ([UserId]),
     CONSTRAINT [carrot_Sites_carrot_RootContent_FK] FOREIGN KEY ([SiteID]) REFERENCES [dbo].[carrot_Sites] ([SiteID])
 );
+
+
 
 
 GO
