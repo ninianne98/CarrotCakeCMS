@@ -23,15 +23,15 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public SiteExport() {
-			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.UtcNow;
+			this.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
+			this.ExportDate = DateTime.UtcNow;
 
-			TheSite = new SiteData();
-			ThePages = new List<ContentPageExport>();
+			this.TheSite = new SiteData();
+			this.ThePages = new List<ContentPageExport>();
 
-			TheCategories = new List<ContentCategory>();
-			TheTags = new List<ContentTag>();
-			TheSnippets = new List<ContentSnippet>();
+			this.TheCategories = new List<ContentCategory>();
+			this.TheTags = new List<ContentTag>();
+			this.TheSnippets = new List<ContentSnippet>();
 		}
 
 		public SiteExport(Guid siteID) {
@@ -81,53 +81,53 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private void SetVals(SiteData s, List<ContentPageExport> pages) {
-			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.UtcNow;
+			this.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
+			this.ExportDate = DateTime.UtcNow;
 
-			NewSiteID = Guid.NewGuid();
+			this.NewSiteID = Guid.NewGuid();
 
-			TheSite = s;
-			ThePages = pages;
+			this.TheSite = s;
+			this.ThePages = pages;
 
-			if (TheSite == null) {
-				TheSite = new SiteData();
-				TheSite.SiteID = Guid.NewGuid();
+			if (this.TheSite == null) {
+				this.TheSite = new SiteData();
+				this.TheSite.SiteID = Guid.NewGuid();
 			}
-			if (ThePages == null) {
-				ThePages = new List<ContentPageExport>();
+			if (this.ThePages == null) {
+				this.ThePages = new List<ContentPageExport>();
 			}
 
-			OriginalSiteID = TheSite.SiteID;
+			this.OriginalSiteID = this.TheSite.SiteID;
 
 			foreach (var w in ThePages) {
 				w.OriginalSiteID = NewSiteID;
 			}
 
-			TheCategories = s.GetCategoryList();
-			TheTags = s.GetTagList();
-			TheSnippets = s.GetContentSnippetList();
+			this.TheCategories = s.GetCategoryList();
+			this.TheTags = s.GetTagList();
+			this.TheSnippets = s.GetContentSnippetList();
 		}
 
 		public void LoadComments() {
-			if (ThePages != null) {
-				TheComments = new List<CommentExport>();
+			if (this.ThePages != null) {
+				this.TheComments = new List<CommentExport>();
 				foreach (ContentPageExport cpe in ThePages) {
-					TheComments = TheComments.Union(CommentExport.GetPageCommentExport(cpe.OriginalRootContentID)).ToList();
+					this.TheComments = TheComments.Union(CommentExport.GetPageCommentExport(cpe.OriginalRootContentID)).ToList();
 				}
 			}
 		}
 
-		public string CarrotCakeVersion { get; set; }
+		public string CarrotCakeVersion { get; set; } = SiteData.CarrotCakeCMSVersion;
 
-		public DateTime ExportDate { get; set; }
+		public DateTime ExportDate { get; set; } = DateTime.UtcNow;
 
 		public Guid NewSiteID { get; set; }
 
 		public Guid OriginalSiteID { get; set; }
 
-		public SiteData TheSite { get; set; }
+		public SiteData TheSite { get; set; } = new SiteData();
 
-		public List<ContentPageExport> ThePages { get; set; }
+		public List<ContentPageExport> ThePages { get; set; } = new List<ContentPageExport>();
 
 		public List<ContentPageExport> TheContentPages {
 			get {
@@ -149,25 +149,24 @@ namespace Carrotware.CMS.Core {
 
 		public Guid FindImportUser(SiteExportUser u) {
 			SiteExportUser usr = (from t in this.TheUsers
-								  where t.Login.ToString() == u.Login.ToString()
-										  || t.Email.ToString() == u.Email.ToString()
+								  where (u.Login != null && t.Login.ToLowerInvariant() == u.Login.ToLowerInvariant())
+										  || (u.Email != null && t.Email.ToLowerInvariant() == u.Email.ToLowerInvariant())
 								  select t).FirstOrDefault();
 
-			if (usr == null || (usr != null && usr.ImportUserID != Guid.Empty)) {
-				return SecurityData.CurrentUserGuid;
-			} else {
+			if (usr != null && usr.ImportUserID != Guid.Empty) {
 				return usr.ImportUserID;
 			}
+			return SecurityData.CurrentUserGuid;
 		}
 
-		public List<CommentExport> TheComments { get; set; }
+		public List<CommentExport> TheComments { get; set; } = new List<CommentExport>();
 
-		public List<ContentCategory> TheCategories { get; set; }
+		public List<ContentCategory> TheCategories { get; set; } = new List<ContentCategory>();
 
-		public List<ContentTag> TheTags { get; set; }
+		public List<ContentTag> TheTags { get; set; } = new List<ContentTag>();
 
-		public List<ContentSnippet> TheSnippets { get; set; }
+		public List<ContentSnippet> TheSnippets { get; set; } = new List<ContentSnippet>();
 
-		public List<SiteExportUser> TheUsers { get; set; }
+		public List<SiteExportUser> TheUsers { get; set; } = new List<SiteExportUser>();
 	}
 }

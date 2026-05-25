@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public class GeneralUtilities {
 
-		#region binding utilitites
+		#region binding utilities
 
 		public static string GetSelectedValue(ListControl ddl) {
 			string sVal = null;
@@ -73,42 +73,42 @@ namespace Carrotware.CMS.UI.Controls {
 			ctrl.DataBind();
 		}
 
-		public static void BindList(ListControl ctrl, object dataSource, string SelectedValue) {
+		public static void BindList(ListControl ctrl, object dataSource, string selectedValue) {
 			BindList(ctrl, dataSource);
-			SelectListValue(ctrl, SelectedValue);
+			SelectListValue(ctrl, selectedValue);
 		}
 
 		public static void BindListChooseOne(ListControl ctrl, object dataSource) {
 			BindListChooseOne(ctrl, dataSource, null);
 		}
 
-		public static void BindListChooseOne(ListControl ctrl, object dataSource, string SelectedValue) {
-			BindListDefaultText(ctrl, dataSource, SelectedValue, "Choose One", "");
+		public static void BindListChooseOne(ListControl ctrl, object dataSource, string selectedValue) {
+			BindListDefaultText(ctrl, dataSource, selectedValue, "Choose One", "");
 		}
 
-		public static void BindListDefaultText(ListControl ctrl, object dataSource, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue) {
+		public static void BindListDefaultText(ListControl ctrl, object dataSource, string selectedValue, string emptyChoiceText, string emptyChoiceValue) {
 			BindList(ctrl, dataSource);
 
-			EmptyChoiceValue = string.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
-			ctrl.Items.Insert(0, new ListItem(string.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
+			emptyChoiceValue = string.IsNullOrEmpty(emptyChoiceValue) ? "" : emptyChoiceValue;
+			ctrl.Items.Insert(0, new ListItem(string.Format("-{0}-", emptyChoiceText), emptyChoiceValue));
 
-			SelectListValue(ctrl, SelectedValue);
+			SelectListValue(ctrl, selectedValue);
 		}
 
-		public static void SelectListValue(ListControl ctrl, string SelectedValue) {
+		public static void SelectListValue(ListControl ctrl, string selectedValue) {
 			if (ctrl.Items.Count > 0) {
-				if (SelectedValue != null) {
-					try { ctrl.SelectedValue = SelectedValue; } catch { }
+				if (selectedValue != null) {
+					try { ctrl.SelectedValue = selectedValue; } catch { }
 				}
 			}
 		}
 
-		public static void SelectListValues(ListControl list, List<string> SelectedValues) {
-			if (list != null && list.Items.Count > 0 && SelectedValues != null) {
-				if (SelectedValues.Any()) {
+		public static void SelectListValues(ListControl list, List<string> selectedValues) {
+			if (list != null && list.Items.Count > 0 && selectedValues != null) {
+				if (selectedValues.Any()) {
 					try {
 						foreach (ListItem itm in list.Items) {
-							if (SelectedValues.Where(x => x.ToLowerInvariant() == itm.Value.ToLowerInvariant()).Any()) {
+							if (selectedValues.Where(x => x.ToLowerInvariant() == itm.Value.ToLowerInvariant()).Any()) {
 								itm.Selected = true;
 							}
 						}
@@ -117,16 +117,16 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		#endregion binding utilitites
+		#endregion binding utilities
 
 		#region table checkbox parsers
 
-		public static List<Guid> GetCheckedItemGuidsByValue(GridView grid, bool CollectState, string CheckBoxName) {
+		public static List<Guid> GetCheckedItemGuidsByValue(GridView grid, bool collectState, string checkBoxName) {
 			List<Guid> lstUpd = new List<Guid>();
 
 			foreach (GridViewRow row in grid.Rows) {
-				CheckBox chk = (CheckBox)row.FindControl(CheckBoxName);
-				if (chk != null && chk.Checked == CollectState) {
+				CheckBox chk = (CheckBox)row.FindControl(checkBoxName);
+				if (chk != null && chk.Checked == collectState) {
 					Guid gRoot = new Guid(chk.Attributes["value"].ToString());
 					lstUpd.Add(gRoot);
 				}
@@ -134,13 +134,13 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstUpd;
 		}
 
-		public static List<Guid> GetCheckedItemGuids(GridView grid, bool CollectState, string CheckBoxName, string HiddenName) {
+		public static List<Guid> GetCheckedItemGuids(GridView grid, bool collectState, string checkBoxName, string hiddenName) {
 			List<Guid> lstUpd = new List<Guid>();
 
 			foreach (GridViewRow row in grid.Rows) {
-				CheckBox chk = (CheckBox)row.FindControl(CheckBoxName);
-				if (chk != null && chk.Checked == CollectState) {
-					HiddenField hdn = (HiddenField)row.FindControl(HiddenName);
+				CheckBox chk = (CheckBox)row.FindControl(checkBoxName);
+				if (chk != null && chk.Checked == collectState) {
+					HiddenField hdn = (HiddenField)row.FindControl(hiddenName);
 					Guid gRoot = new Guid(hdn.Value);
 					lstUpd.Add(gRoot);
 				}
@@ -148,13 +148,13 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstUpd;
 		}
 
-		public static List<string> GetCheckedItemString(GridView grid, bool CollectState, string CheckBoxName, string HiddenName) {
+		public static List<string> GetCheckedItemString(GridView grid, bool collectState, string checkBoxName, string hiddenName) {
 			List<string> lstUpd = new List<string>();
 
 			foreach (GridViewRow row in grid.Rows) {
-				CheckBox chk = (CheckBox)row.FindControl(CheckBoxName);
-				if (chk != null && chk.Checked == CollectState) {
-					HiddenField hdn = (HiddenField)row.FindControl(HiddenName);
+				CheckBox chk = (CheckBox)row.FindControl(checkBoxName);
+				if (chk != null && chk.Checked == collectState) {
+					HiddenField hdn = (HiddenField)row.FindControl(hiddenName);
 					lstUpd.Add(hdn.Value);
 				}
 			}
@@ -178,20 +178,20 @@ namespace Carrotware.CMS.UI.Controls {
 			return bVal;
 		}
 
-		public static void BindOptionalBooleanList(ListControl ctrl, string SelectedValue, string EmptyChoiceText, string EmptyChoiceValue, string TrueChoiceText, string FalseChoiceText) {
-			EmptyChoiceValue = string.IsNullOrEmpty(EmptyChoiceValue) ? "" : EmptyChoiceValue;
+		public static void BindOptionalBooleanList(ListControl ctrl, string selectedValue, string emptyChoiceText, string emptyChoiceValue, string trueChoiceText, string falseChoiceText) {
+			emptyChoiceValue = string.IsNullOrEmpty(emptyChoiceValue) ? "" : emptyChoiceValue;
 
 			List<ListItem> lst = new List<ListItem>();
-			lst.Add(new ListItem(string.Format("-{0}-", EmptyChoiceText), EmptyChoiceValue));
-			lst.Add(new ListItem(string.Format("{0}", TrueChoiceText), "1"));
-			lst.Add(new ListItem(string.Format("{0}", FalseChoiceText), "0"));
+			lst.Add(new ListItem(string.Format("-{0}-", emptyChoiceText), emptyChoiceValue));
+			lst.Add(new ListItem(string.Format("{0}", trueChoiceText), "1"));
+			lst.Add(new ListItem(string.Format("{0}", falseChoiceText), "0"));
 
 			ctrl.DataTextField = "Text";
 			ctrl.DataValueField = "Value";
 
 			BindList(ctrl, lst);
 
-			SelectListValue(ctrl, SelectedValue);
+			SelectListValue(ctrl, selectedValue);
 		}
 
 		public static void BindOptionalYesNoList(ListControl ctrl) {
@@ -206,8 +206,8 @@ namespace Carrotware.CMS.UI.Controls {
 			BindOptionalTrueFalseList(ctrl, null);
 		}
 
-		public static void BindOptionalTrueFalseList(ListControl ctrl, string SelectedValue) {
-			BindOptionalBooleanList(ctrl, SelectedValue, "Choose One", "-1", "True", "False");
+		public static void BindOptionalTrueFalseList(ListControl ctrl, string selectedValue) {
+			BindOptionalBooleanList(ctrl, selectedValue, "Choose One", "-1", "True", "False");
 		}
 
 		#endregion boolean list stuff
@@ -222,23 +222,31 @@ namespace Carrotware.CMS.UI.Controls {
 			return GetGuidParameterFromQuery("id");
 		}
 
-		public static Guid GetGuidParameterFromQuery(string ParmName) {
+		public static Guid GetGuidVersionFromQuery() {
+			return GetGuidParameterFromQuery("versionid");
+		}
+
+		public static Guid GetGuidImportFromQuery() {
+			return GetGuidParameterFromQuery(ContentImportExportUtils.ImportQueryKey);
+		}
+
+		public static Guid GetGuidParameterFromQuery(string parmName) {
 			Guid id = Guid.Empty;
 			if (SiteData.IsWebView) {
-				if (HttpContext.Current.Request.QueryString[ParmName] != null
-					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
-					id = new Guid(HttpContext.Current.Request.QueryString[ParmName].ToString());
+				if (HttpContext.Current.Request.QueryString[parmName] != null
+					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[parmName].ToString())) {
+					id = new Guid(HttpContext.Current.Request.QueryString[parmName].ToString());
 				}
 			}
 			return id;
 		}
 
-		public static string GetStringParameterFromQuery(string ParmName) {
+		public static string GetStringParameterFromQuery(string parmName) {
 			string id = string.Empty;
 			if (SiteData.IsWebView) {
-				if (HttpContext.Current.Request.QueryString[ParmName] != null
-					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[ParmName].ToString())) {
-					id = HttpContext.Current.Request.QueryString[ParmName].ToString();
+				if (HttpContext.Current.Request.QueryString[parmName] != null
+					&& !string.IsNullOrEmpty(HttpContext.Current.Request.QueryString[parmName].ToString())) {
+					id = HttpContext.Current.Request.QueryString[parmName].ToString();
 				}
 			}
 			return id;

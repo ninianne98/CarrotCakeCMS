@@ -5,13 +5,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="H1ContentPlaceHolder" runat="server">
-	Manage User Groups
+	Role Index
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
 	<p>
 		<a href="./UserGroupAddEdit.aspx">
 			<img class="imgNoBorder" src="/c3-admin/images/add.png" alt="Add" title="Add" />
-			Add Group</a>
+			Add Role</a>
 	</p>
 	<div class="SortableGrid">
 		<carrot:CarrotGridView CssClass="datatable" DefaultSort="RoleName ASC" ID="gvRoles" runat="server" AutoGenerateColumns="false" HeaderStyle-CssClass="tablehead"

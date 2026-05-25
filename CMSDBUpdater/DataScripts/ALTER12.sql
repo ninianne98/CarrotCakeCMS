@@ -268,3 +268,10 @@ from [dbo].carrot_Sites as s
 GO
 
 
+UPDATE [dbo].[carrot_DataInfo]
+set [DataValue] = '20141020' -- match date in the create script
+WHERE [DataKey] = 'DBSchema'
+
+GO
+
+

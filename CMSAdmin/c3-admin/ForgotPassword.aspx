@@ -1,10 +1,11 @@
 <%@ Page Title="Forgot Password?" Language="C#" MasterPageFile="MasterPages/Public.Master" AutoEventWireup="true" CodeBehind="ForgotPassword.aspx.cs"
 	Inherits="Carrotware.CMS.UI.Admin.c3_admin.ForgotPassword" %>
 
+<%@ Import Namespace="Carrotware.CMS.Core" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-	<table style="width: 380px;">
+	<table style="width: 400px;">
 		<tr>
 			<td class="tableback">
 				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">
@@ -16,7 +17,7 @@
 				<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="validationError" ForeColor="" ControlToValidate="txtEmail"
 					ErrorMessage="!" ToolTip="email is required." ValidationGroup="loginTemplate" Display="Dynamic" Text="**" />
 				<br />
-				<asp:TextBox ID="txtEmail" runat="server" Width="310px" MaxLength="90" ValidationGroup="loginTemplate" TabIndex="1" />
+				<asp:TextBox ID="txtEmail" runat="server" Style="width: 200px;" MaxLength="90" ValidationGroup="loginTemplate" TabIndex="1" />
 			</td>
 			<td class="tableback">
 				<div style="height: 10px; width: 20px; border: 1px solid #ffffff;">
@@ -64,7 +65,7 @@
 	<div style="width: 300px; text-align: left;">
 		<div runat="server" id="divLogonLink">
 			<p>
-				Click <a href="./logon.aspx">here </a>to logon.
+				Click <a href="<%=SiteFilename.LogonURL %>">here</a> to logon.
 			</p>
 		</div>
 	</div>

@@ -133,9 +133,7 @@
       <Name>WebControls</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="GenericMasterPage.Master" />
   </ItemGroup>

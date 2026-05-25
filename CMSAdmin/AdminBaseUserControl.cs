@@ -37,8 +37,8 @@ namespace Carrotware.CMS.UI.Admin {
 			return GeneralUtilities.GetGuidIDFromQuery();
 		}
 
-		protected Guid GetGuidParameterFromQuery(string ParmName) {
-			return GeneralUtilities.GetGuidParameterFromQuery(ParmName);
+		protected Guid GetGuidParameterFromQuery(string parmName) {
+			return GeneralUtilities.GetGuidParameterFromQuery(parmName);
 		}
 
 		protected void RedirectIfNoSite() {

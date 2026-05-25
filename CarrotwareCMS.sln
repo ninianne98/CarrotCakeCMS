@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSAdmin", "CMSAdmin\CMSAdmin.csproj", "{3137431F-6BE3-4996-9CF8-4D50414B403A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "database scripts", "{835815E6-C641-402B-A6C5-E6E8A4B2C754}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{835815E6-C641-402B-A6C5-E6E8A4B2C754}"
 	ProjectSection(SolutionItems) = preProject
 		CMSDBUpdater\DataScripts\ALTER01.sql = CMSDBUpdater\DataScripts\ALTER01.sql
 		CMSDBUpdater\DataScripts\ALTER01a.sql = CMSDBUpdater\DataScripts\ALTER01a.sql
@@ -22,8 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database scripts", "databas
 		CMSDBUpdater\DataScripts\ALTER12.sql = CMSDBUpdater\DataScripts\ALTER12.sql
 		CMSDBUpdater\DataScripts\ALTER13.sql = CMSDBUpdater\DataScripts\ALTER13.sql
 		CMSDBUpdater\DataScripts\CREATE01.sql = CMSDBUpdater\DataScripts\CREATE01.sql
+		LICENSE = LICENSE
 		CMSDBUpdater\DataScripts\MEMBER01.sql = CMSDBUpdater\DataScripts\MEMBER01.sql
 		CMSDBUpdater\DataScripts\MIGRATE01.sql = CMSDBUpdater\DataScripts\MIGRATE01.sql
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "widgets", "widgets", "{53B5D160-56A0-42F9-8189-E0E87726B5CA}"

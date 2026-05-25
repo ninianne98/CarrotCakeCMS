@@ -38,7 +38,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				lstGE.TheGalleries.Add(ge);
 			}
 
-			return ContentImportExportUtils.GetExportXML<GalleryExportList>(lstGE);
+			return ContentImportExportUtils.GetExportXML(lstGE);
 		}
 
 		public static GalleryExportList GetGalleryExport(Guid galleryID) {
@@ -65,7 +65,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 				g.TheGallery.GalleryImages.ForEach(q => q.GalleryImageID = Guid.NewGuid());
 			}
 
-			ContentImportExportUtils.SaveSerializedDataExport<GalleryExportList>(gKey, lstGalleries);
+			ContentImportExportUtils.SaveSerializedDataExport(gKey, lstGalleries);
 			return gKey;
 		}
 	}

@@ -538,5 +538,10 @@ FROM [dbo].carrot_RootContent AS rc
 GO
 
 
+UPDATE [dbo].[carrot_DataInfo]
+set [DataValue] = '20130610' -- match date in the create script
+WHERE [DataKey] = 'DBSchema'
+
+GO
 
 

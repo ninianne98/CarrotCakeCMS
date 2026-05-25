@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (guidContentID != Guid.Empty) {
 				ContentPageExport content = ContentImportExportUtils.GetExportPage(SiteData.CurrentSiteID, guidContentID);
-				theXML = ContentImportExportUtils.GetExportXML<ContentPageExport>(content);
+				theXML = ContentImportExportUtils.GetExportXML(content);
 
 				fileName = "page_" + content.ThePage.NavMenuText + "_" + guidContentID.ToString();
 			} else {
@@ -62,7 +62,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					site.LoadComments();
 				}
 
-				theXML = ContentImportExportUtils.GetExportXML<SiteExport>(site);
+				theXML = ContentImportExportUtils.GetExportXML(site);
 
 				fileName = "site_" + site.TheSite.SiteName + "_" + site.TheSite.SiteID.ToString();
 			}

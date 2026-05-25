@@ -37,6 +37,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			phLogonLink.Visible = false;
 			phExpired.Visible = false;
 
+			FailureText.Text = string.Empty;
+
 			if (!IsPostBack) {
 				if (string.IsNullOrEmpty(code)
 						&& string.IsNullOrEmpty(key)
@@ -86,7 +88,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						if (user != null) {
 							password.ValidToken = sd.ValidatePasswordToken(user, password.Token);
 							if (password.ValidToken == false) {
-								litMessage.Text = "Reset link is no longer valid.  Please make a new password reset request.";
+								FailureText.Text = "Reset link is no longer valid.  Please make a new password reset request.";
 								password = null;
 							} else {
 								password.Email = user.Email ?? string.Empty;
@@ -99,16 +101,20 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						hdnToken.Value = password.Token;
 					}
 
-					pnlReset.Visible = password != null && password.ValidToken;
-					phExpired.Visible = pnlReset.Visible == false;
+					phReset.Visible = password != null && password.ValidToken;
+					phExpired.Visible = phReset.Visible == false;
 				}
 			}
+
+			divMsg.Visible = (FailureText.Text.Length > 0);
 		}
 
 		protected void btnReset_Click(object sender, EventArgs e) {
 			var user = new ApplicationUser();
 			var sd = new SecurityData();
 			bool validToken = false;
+
+			FailureText.Text = string.Empty;
 
 			if (Page.IsValid) {
 				string token = hdnToken.Value;
@@ -129,26 +135,28 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 								var result = sd.ResetPassword(user, token, newPassword);
 								if (result.Succeeded) {
 									phLogonLink.Visible = true;
-									pnlReset.Visible = false;
+									phReset.Visible = false;
 								}
 							}
 						} else {
 							validToken = false;
-							litMessage.Text = "Passwords did not match.";
+							FailureText.Text = "Passwords did not match.";
 						}
 					} else {
 						phLogonLink.Visible = true;
-						pnlReset.Visible = false;
+						phReset.Visible = false;
 					}
 				} else {
 					validToken = false;
-					litMessage.Text = "Token was not provided.";
+					FailureText.Text = "Token was not provided.";
 				}
 			}
 
+			divMsg.Visible = (FailureText.Text.Length > 0);
+
 			if (validToken == false) {
 				phLogonLink.Visible = false;
-				pnlReset.Visible = true;
+				phReset.Visible = true;
 			}
 		}
 

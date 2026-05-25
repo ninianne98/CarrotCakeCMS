@@ -18,7 +18,7 @@
 		<a href="/">
 			<img class="imgNoBorder" src="/c3-admin/images/house_go.png" alt="Homepage" title="Homepage" /></a>
 	</div>
-	<div style="border: solid 0px #000000; width: 375px; height: 140px; overflow: auto;" class="<%=CSSMsg() %>">
+	<div id="updateList" class="status-scroll  <%= this.CSSMsg %>">
 		<asp:Repeater ID="rpMessages" runat="server">
 			<HeaderTemplate>
 				<div>
@@ -38,8 +38,7 @@
 					<%#Eval("ExceptionText")%>
 				</div>
 				<div>
-					<i>
-						<%#Eval("InnerExceptionText")%></i>
+					<i><%#Eval("InnerExceptionText")%></i>
 				</div>
 				<hr />
 			</ItemTemplate>

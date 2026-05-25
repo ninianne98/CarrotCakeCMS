@@ -1,5 +1,4 @@
 ﻿using Carrotware.CMS.Core;
-using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using Carrotware.Web.UI.Controls;
 using System;
@@ -20,12 +19,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class ucAdvancedEdit : AdminBaseUserControl {
 		public Guid guidContentID = Guid.Empty;
-		public bool bLocked = false;
 		public ContentPageType.PageType PageType = ContentPageType.PageType.Unknown;
 		public UserEditState EditorPrefs = null;
 
-		public string EditedPageFileName = string.Empty;
-		public string EditUserName = string.Empty;
+		public string EditedPageFileName { get; set; } = string.Empty;
+		public string EditUserName { get; set; } = string.Empty;
+		public bool IsLocked { get; set; }
 
 		public string AntiCache {
 			get {
@@ -63,7 +62,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			PageType = pageContents.ContentType;
-			EditedPageFileName = pageContents.FileName;
+			this.EditedPageFileName = pageContents.FileName;
 
 			btnEditCoreInfo.Attributes["onclick"] = "cmsShowEditPageInfo();";
 
@@ -73,7 +72,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			if (cmsHelper.cmsAdminContent != null) {
-				EditedPageFileName = cmsHelper.cmsAdminContent.FileName;
+				this.EditedPageFileName = cmsHelper.cmsAdminContent.FileName;
 			}
 
 			if (cmsHelper.ToolboxPlugins.Any()) {
@@ -82,23 +81,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				rpTools.Visible = false;
 			}
 
-			bLocked = pageHelper.IsPageLocked(pageContents.Root_ContentID, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
+			this.IsLocked = pageHelper.IsPageLocked(pageContents.Root_ContentID, SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
 			GeneralUtilities.BindList(ddlTemplate, cmsHelper.Templates);
 			try { GeneralUtilities.SelectListValue(ddlTemplate, cmsHelper.cmsAdminContent.TemplateFile.ToLowerInvariant()); } catch { }
 
-			if (!bLocked) {
-				this.Page.Header.Controls.Add(new AdminScriptInfo());
+			this.Page.Header.Controls.Add(new AdminScriptInfo());
 
+			if (!this.IsLocked) {
 				foreach (Control c in plcIncludes.Controls) {
 					this.Page.Header.Controls.Add(c);
 				}
 
-				var siteSkin = new CmsSkin() { WindowMode = CmsSkin.SkinMode.AdvEdit, SelectedColor = AdminBaseMasterPage.SiteSkin };
-				this.Page.Header.Controls.Add(siteSkin);
-
-				BasicControlUtils.InsertjQueryMain(this.Page);
-				BasicControlUtils.InsertjQueryUI(this.Page);
+				LoadJQ();
 
 				guidContentID = pageContents.Root_ContentID;
 
@@ -115,6 +110,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				//BasicControlUtils.MakeXUACompatibleFirst(this.Page);
 			} else {
+				LoadJQ();
+
 				pnlCMSEditZone.Visible = false;
 				rpTools.Visible = false;
 				btnToolboxSave1.Visible = false;
@@ -124,13 +121,22 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				btnEditCoreInfo.Visible = false;
 				cmsDivEditing.Visible = true;
 
-				if (bLocked && pageContents.Heartbeat_UserId != null) {
-					ApplicationUser usr = SecurityData.GetUserByID(pageContents.Heartbeat_UserId.Value);
-					EditUserName = usr.UserName;
+				if (this.IsLocked && pageContents.Heartbeat_UserId != null) {
+					var usr = SecurityData.GetProfileByUserID(pageContents.Heartbeat_UserId.Value);
+					this.EditUserName = usr.UserName;
 					litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.<br />" +
 						" Click <b><a href=\"" + pageContents.FileName + "\">here</a></b> to return to the browse view.<br />";
 				}
 			}
+		}
+
+		protected void LoadJQ() {
+			//this.Page.Header.Controls.Add(new AdminScriptInfo());
+			var siteSkin = new CmsSkin() { WindowMode = CmsSkin.SkinMode.AdvEdit, SelectedColor = AdminBaseMasterPage.SiteSkin };
+			this.Page.Header.Controls.Add(siteSkin);
+
+			BasicControlUtils.InsertjQueryMain(this.Page);
+			BasicControlUtils.InsertjQueryUI(this.Page);
 		}
 	}
 }

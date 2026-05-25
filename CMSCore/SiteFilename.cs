@@ -96,6 +96,10 @@ namespace Carrotware.CMS.Core {
 			get { return SiteData.AdminFolderPath + "default.aspx"; }
 		}
 
+		public static string NotAuthorizedURL {
+			get { return SiteData.AdminFolderPath + "NotAuthorized.aspx"; }
+		}
+
 		public static string SiteInfoURL {
 			get { return SiteData.AdminFolderPath + "SiteInfo.aspx"; }
 		}

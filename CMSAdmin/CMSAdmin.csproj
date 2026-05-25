@@ -237,6 +237,13 @@
     <Compile Include="c3-admin\FileUp.ashx.cs">
       <DependentUpon>FileUp.ashx</DependentUpon>
     </Compile>
+    <Compile Include="c3-admin\NotAuthorized.aspx.cs">
+      <DependentUpon>NotAuthorized.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c3-admin\NotAuthorized.aspx.designer.cs">
+      <DependentUpon>NotAuthorized.aspx</DependentUpon>
+    </Compile>
     <Compile Include="c3-admin\ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -704,6 +711,7 @@
     <Content Include="c3-admin\editor\notify.rust.min.css" />
     <Content Include="c3-admin\editor\notify.sandstone.min.css" />
     <Content Include="c3-admin\editor\notify.sugaralmond.min.css" />
+    <Content Include="c3-admin\NotAuthorized.aspx" />
     <Content Include="c3-admin\ForgotPassword.aspx" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1%402x.png" />
     <Content Include="c3-admin\iCheck\customized\grey-alt1.css" />

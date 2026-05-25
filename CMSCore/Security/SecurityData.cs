@@ -5,6 +5,7 @@ using Carrotware.Web.UI.Controls;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -380,9 +381,8 @@ namespace Carrotware.CMS.Core {
 				} else {
 					try {
 						using (var securityHelper = new SecurityHelper()) {
-							var _user = securityHelper.UserManager.FindByName(userName);
-
-							keyVal = securityHelper.UserManager.IsInRole(_user.Id, groupName);
+							var user = securityHelper.UserManager.FindByName(userName);
+							keyVal = securityHelper.UserManager.IsInRole(user.Id, groupName);
 						}
 						HttpContext.Current.Cache.Insert(key, keyVal.ToString(), null, DateTime.Now.AddSeconds(30), Cache.NoSlidingExpiration);
 					} catch (Exception ex) {

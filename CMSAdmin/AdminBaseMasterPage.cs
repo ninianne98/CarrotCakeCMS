@@ -82,11 +82,11 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 		}
 
-		protected void LoadFooterCtrl(PlaceHolder plcHolder, ControlLocation CtrlKey) {
+		protected void LoadFooterCtrl(PlaceHolder plcHolder, ControlLocation ctrlKey) {
 			string controlPath = string.Empty;
 			var config = CarrotCakeConfig.GetConfig();
 
-			switch (CtrlKey) {
+			switch (ctrlKey) {
 				case ControlLocation.PublicFooter:
 					controlPath = config.AdminFooterControls.ControlPathPublic;
 					break;

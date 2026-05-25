@@ -1,5 +1,4 @@
 ﻿using Carrotware.CMS.Core;
-using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -36,8 +35,8 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			lblCreateDate.Text = SiteData.CurrentSite.Now.ToString();
 
 			guidContentID = GetGuidIDFromQuery();
-			guidVersionContentID = GetGuidParameterFromQuery("versionid");
-			guidImportContentID = GetGuidParameterFromQuery("importid");
+			guidVersionContentID = GetGuidVersionFromQuery();
+			guidImportContentID = GetGuidImportFromQuery();
 
 			var site = SiteData.CurrentSite;
 			phTrackback1.Visible = (site.AcceptTrackbacks || site.SendTrackbacks);
@@ -73,12 +72,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					ContentPageExport cpe = ContentImportExportUtils.GetSerializedContentPageExport(guidImportContentID);
 
 					if (cpe != null) {
+						cpe = ContentImportExportUtils.MapTemplate(cpe);
 						pageContents = cpe.ThePage;
 						pageContents.EditDate = SiteData.CurrentSite.Now;
 						pageContents.Parent_ContentID = null;
 					}
 
-					var rp = pageHelper.GetLatestContentByURL(SiteID, false, pageContents.FileName);
+					var rp = pageHelper.GetLatestContentByURL(this.SiteID, false, pageContents.FileName);
 					if (rp != null) {
 						pageContents.Root_ContentID = rp.Root_ContentID;
 						pageContents.ContentID = rp.ContentID;
@@ -89,10 +89,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pageContents.Parent_ContentID = null;
 					pageContents.NavOrder = SiteData.BlogSortOrderNumber;
 				}
-
-				//if (pageContents == null) {
-				//    pageContents = new ContentPage(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
-				//}
 
 				List<ContentPage> lstContent = pageHelper.GetAllLatestContentList(SiteID);
 
@@ -151,7 +147,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pnlHBEmpty.Visible = bLocked;
 
 					if (bLocked && pageContents.Heartbeat_UserId != null) {
-						ApplicationUser usr = SecurityData.GetUserByID(pageContents.Heartbeat_UserId.Value);
+						var usr = SecurityData.GetProfileByUserID(pageContents.Heartbeat_UserId.Value);
 						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the page.";
 					}
 

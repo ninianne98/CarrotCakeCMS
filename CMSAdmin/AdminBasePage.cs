@@ -44,7 +44,7 @@ namespace Carrotware.CMS.UI.Admin {
 			}
 
 			Response.Cache.SetCacheability(System.Web.HttpCacheability.Private);
-			DateTime dtExpire = System.DateTime.Now.AddMinutes(-5);
+			DateTime dtExpire = DateTime.Now.AddMinutes(-5);
 			Response.Cache.SetExpires(dtExpire);
 
 			base.OnInit(e);
@@ -58,12 +58,20 @@ namespace Carrotware.CMS.UI.Admin {
 			return GeneralUtilities.GetGuidIDFromQuery();
 		}
 
-		protected Guid GetGuidParameterFromQuery(string ParmName) {
-			return GeneralUtilities.GetGuidParameterFromQuery(ParmName);
+		protected Guid GetGuidVersionFromQuery() {
+			return GeneralUtilities.GetGuidVersionFromQuery();
 		}
 
-		protected string GetStringParameterFromQuery(string ParmName) {
-			return GeneralUtilities.GetStringParameterFromQuery(ParmName);
+		protected Guid GetGuidImportFromQuery() {
+			return GeneralUtilities.GetGuidImportFromQuery();
+		}
+
+		protected Guid GetGuidParameterFromQuery(string parmName) {
+			return GeneralUtilities.GetGuidParameterFromQuery(parmName);
+		}
+
+		protected string GetStringParameterFromQuery(string parmName) {
+			return GeneralUtilities.GetStringParameterFromQuery(parmName);
 		}
 
 		protected void RedirectIfNoSite() {

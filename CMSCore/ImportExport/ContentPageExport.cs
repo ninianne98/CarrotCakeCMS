@@ -16,11 +16,11 @@ namespace Carrotware.CMS.Core {
 	public class ContentPageExport {
 
 		public ContentPageExport() {
-			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.UtcNow;
+			this.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
+			this.ExportDate = DateTime.UtcNow;
 
-			ThePage = new ContentPage();
-			ThePageWidgets = new List<Widget>();
+			this.ThePage = new ContentPage();
+			this.ThePageWidgets = new List<Widget>();
 		}
 
 		public ContentPageExport(Guid siteID, Guid rootContentID) {
@@ -40,45 +40,45 @@ namespace Carrotware.CMS.Core {
 		}
 
 		private void SetVals(ContentPage cp, List<Widget> widgets) {
-			CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
-			ExportDate = DateTime.UtcNow;
+			this.CarrotCakeVersion = SiteData.CarrotCakeCMSVersion;
+			this.ExportDate = DateTime.UtcNow;
 			Guid siteID = cp.SiteID;
 
-			NewRootContentID = Guid.NewGuid();
+			this.NewRootContentID = Guid.NewGuid();
 
 			cp.LoadAttributes();
 
-			ThePage = cp;
-			ThePageWidgets = widgets;
+			this.ThePage = cp;
+			this.ThePageWidgets = widgets;
 
-			if (ThePage == null) {
-				ThePage = new ContentPage();
-				ThePage.Root_ContentID = Guid.NewGuid();
-				ThePage.ContentID = ThePage.Root_ContentID;
+			if (this.ThePage == null) {
+				this.ThePage = new ContentPage();
+				this.ThePage.Root_ContentID = Guid.NewGuid();
+				this.ThePage.ContentID = this.ThePage.Root_ContentID;
 			}
-			if (ThePageWidgets == null) {
-				ThePageWidgets = new List<Widget>();
+			if (this.ThePageWidgets == null) {
+				this.ThePageWidgets = new List<Widget>();
 			}
 
-			OriginalRootContentID = ThePage.Root_ContentID;
-			OriginalSiteID = ThePage.SiteID;
-			OriginalParentContentID = Guid.Empty;
-			ParentFileName = "";
+			this.OriginalRootContentID = this.ThePage.Root_ContentID;
+			this.OriginalSiteID = this.ThePage.SiteID;
+			this.OriginalParentContentID = Guid.Empty;
+			this.ParentFileName = "";
 
-			if (ThePage.Parent_ContentID != null) {
-				ContentPage parent = new ContentPage();
+			if (this.ThePage.Parent_ContentID != null) {
+				var parent = new ContentPage();
 				using (ContentPageHelper cph = new ContentPageHelper()) {
-					parent = cph.FindContentByID(siteID, ThePage.Parent_ContentID.Value);
+					parent = cph.FindContentByID(siteID, this.ThePage.Parent_ContentID.Value);
 				}
-				ParentFileName = parent.FileName;
-				OriginalParentContentID = parent.Root_ContentID;
+				this.ParentFileName = parent.FileName;
+				this.OriginalParentContentID = parent.Root_ContentID;
 			}
 
-			ThePage.Root_ContentID = NewRootContentID;
-			ThePage.ContentID = NewRootContentID;
+			this.ThePage.Root_ContentID = this.NewRootContentID;
+			this.ThePage.ContentID = this.NewRootContentID;
 
-			foreach (var w in ThePageWidgets) {
-				w.Root_ContentID = NewRootContentID;
+			foreach (var w in this.ThePageWidgets) {
+				w.Root_ContentID = this.NewRootContentID;
 				w.Root_WidgetID = Guid.NewGuid();
 				w.WidgetDataID = Guid.NewGuid();
 			}
@@ -91,7 +91,7 @@ namespace Carrotware.CMS.Core {
 				userID1 = cp.EditUserId.Value;
 			}
 
-			ExtendedUserData u1 = new ExtendedUserData(userID1);
+			var u1 = new ExtendedUserData(userID1);
 			this.TheUser = new SiteExportUser(u1);
 
 			Guid userID2 = Guid.Empty;
@@ -100,7 +100,7 @@ namespace Carrotware.CMS.Core {
 				userID2 = cp.CreditUserId.Value;
 			}
 
-			ExtendedUserData u2 = new ExtendedUserData(userID2);
+			var u2 = new ExtendedUserData(userID2);
 			if (u2 != null) {
 				this.CreditUser = new SiteExportUser(u2);
 			} else {
@@ -108,11 +108,11 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public string CarrotCakeVersion { get; set; }
+		public string CarrotCakeVersion { get; set; } = SiteData.CarrotCakeCMSVersion;
 
-		public DateTime ExportDate { get; set; }
+		public DateTime ExportDate { get; set; } = DateTime.UtcNow;
 
-		public Guid NewRootContentID { get; set; }
+		public Guid NewRootContentID { get; set; } = Guid.NewGuid();
 
 		public Guid OriginalRootContentID { get; set; }
 
@@ -122,12 +122,21 @@ namespace Carrotware.CMS.Core {
 
 		public string ParentFileName { get; set; }
 
-		public ContentPage ThePage { get; set; }
+		public ContentPage ThePage { get; set; } = new ContentPage();
 
-		public List<Widget> ThePageWidgets { get; set; }
+		public List<Widget> ThePageWidgets { get; set; } = new List<Widget>();
 
-		public SiteExportUser TheUser { get; set; }
+		public SiteExportUser TheUser { get; set; } = new SiteExportUser();
 
-		public SiteExportUser CreditUser { get; set; }
+		public SiteExportUser CreditUser { get; set; } = new SiteExportUser();
+
+		public void SavePageEdit(ContentPage cp) {
+			//cp.SavePageEdit();
+			//this.ThePage.Root_ContentID = cp.Root_ContentID;
+			//this.ThePage.ContentID = cp.ContentID;
+
+			this.ThePage = cp;
+			this.ThePage.SavePageEdit();
+		}
 	}
 }

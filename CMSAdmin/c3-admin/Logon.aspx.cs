@@ -27,6 +27,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			CheckDatabase();
 
 			if (SecurityData.IsAuthenticated) {
+				if (!SecurityData.IsAuthEditor) {
+					Response.Redirect(SiteFilename.NotAuthorizedURL);
+				}
 				Response.Redirect(SiteFilename.DashboardURL);
 			}
 		}
@@ -35,7 +38,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			var authState = await DoAuthAsync();
 
 			if (authState) {
-				Response.Redirect(SiteFilename.DashboardURL);
+				Response.Redirect(SiteFilename.LogonURL + "?carrot_cache=" + DateTime.UtcNow.Ticks.ToString());
 			} else {
 				divMsg.Visible = true;
 				FailureText.Text = "Invalid login attempt.";
@@ -52,9 +55,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				if (result && user != null & user.IsLocked == false) {
 					await securityHelper.UserManager.ResetAccessFailedCountAsync(user.Id);
-
-					Response.Redirect(SiteFilename.DashboardURL);
-
 					return true;
 				} else {
 					if (user != null) {

@@ -26,9 +26,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		private int iPageCount = 0;
 
 		protected void Page_Load(object sender, EventArgs e) {
-			guidImportID = GetGuidParameterFromQuery("importid");
+			guidImportID = GetGuidImportFromQuery();
 
-			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
+			iPageCount = pageHelper.GetSitePageCount(this.SiteID, ContentPageType.PageType.ContentEntry);
 
 			litTrust.Visible = false;
 			if (SiteData.CurrentTrustLevel != AspNetHostingPermissionLevel.Unrestricted) {
@@ -37,7 +37,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				litTrust.Visible = true;
 			}
 
-			litMessage.Text = "";
+			litMessage.Text = string.Empty;
 
 			if (guidImportID != Guid.Empty) {
 				wpSite = ContentImportExportUtils.GetSerializedWPExport(guidImportID);
@@ -73,12 +73,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			float iThird = (float)(iPageCount - 1) / (float)3;
 			Dictionary<string, float> dictTemplates = null;
 
-			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.ContentEntry);
+			dictTemplates = pageHelper.GetPopularTemplateList(this.SiteID, ContentPageType.PageType.ContentEntry);
 			if (dictTemplates.Any() && dictTemplates.First().Value >= iThird) {
 				try { ddlTemplatePage.SelectedValue = dictTemplates.First().Key; } catch { }
 			}
 
-			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
+			dictTemplates = pageHelper.GetPopularTemplateList(this.SiteID, ContentPageType.PageType.BlogEntry);
 			if (dictTemplates.Any()) {
 				try { ddlTemplatePost.SelectedValue = dictTemplates.First().Key; } catch { }
 			}
@@ -135,19 +135,30 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		private void SetMsg(string sMessage) {
-			if (!string.IsNullOrEmpty(sMessage)) {
-				litMessage.Text = sMessage;
+		private void SetMsg(string message) {
+			if (!string.IsNullOrEmpty(message)) {
+				litMessage.Text = string.Format("<p>{0}</p>", message);
+			} else {
+				litMessage.Text = string.Empty;
+			}
+		}
+
+		private void SetMsg(List<string> messages) {
+			if (messages != null && messages.Any()) {
+				var htmlString = string.Join(Environment.NewLine, messages.Select(x => string.Format("<li>{0}</li>", x)));
+				litMessage.Text = "<ul>" + Environment.NewLine + htmlString + Environment.NewLine + "<ul>";
+			} else {
+				litMessage.Text = string.Empty;
 			}
 		}
 
 		private void ImportStuff() {
 			SiteData.CurrentSite = null;
 
-			SiteData site = SiteData.CurrentSite;
+			var site = SiteData.CurrentSite;
 
-			litMessage.Text = "<p>No Items Selected For Import</p>";
-			string sMsg = "";
+			var lstMsg = new List<string>();
+			SetMsg("No Items Selected For Import");
 
 			if (chkSite.Checked || chkPages.Checked || chkPosts.Checked) {
 				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLowerInvariant()).ToList();
@@ -156,7 +167,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				wpSite.Tags.RemoveAll(x => tags.Contains(x.InfoKey.ToLowerInvariant()));
 				wpSite.Categories.RemoveAll(x => cats.Contains(x.InfoKey.ToLowerInvariant()));
 
-				sMsg += "<p>Imported Tags and Categories</p>";
+				lstMsg.Add("Imported Tags and Categories");
 
 				List<ContentTag> lstTag = (from l in wpSite.Tags.Distinct()
 										   select new ContentTag {
@@ -183,39 +194,40 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					v.Save();
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			if (chkSite.Checked) {
-				sMsg += "<p>Updated Site Name</p>";
+				lstMsg.Add("Updated Site Name");
+
 				site.SiteName = wpSite.SiteTitle;
 				site.SiteTagline = wpSite.SiteDescription;
 				site.Save();
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			if (!chkMapAuthor.Checked) {
 				wpSite.Authors = new List<WordPressUser>();
 			}
 
+			var sd = new SecurityData();
+
 			//itterate author collection and find if in the system
 			foreach (WordPressUser wpu in wpSite.Authors) {
+				ExtendedUserData usr = null;
 				wpu.ImportUserID = Guid.Empty;
 
-				ApplicationUser usr = null;
 				//attempt to find the user in the userbase
-				usr = SecurityData.GetUserListByEmail(wpu.Email).FirstOrDefault();
-				if (usr != null) {
-					wpu.ImportUserID = new Guid(usr.Id);
+				usr = ExtendedUserData.FindByEmail(wpu.Email);
+				if (usr != null && usr.UserId != Guid.Empty) {
+					wpu.ImportUserID = usr.UserId;
 				} else {
-					usr = SecurityData.GetUserListByName(wpu.Login).FirstOrDefault();
-					if (usr != null) {
-						wpu.ImportUserID = new Guid(usr.Id);
+					usr = ExtendedUserData.FindByUsername(wpu.Login);
+					if (usr != null && usr.UserId != Guid.Empty) {
+						wpu.ImportUserID = usr.UserId;
 					}
 				}
 
 				if (chkAuthors.Checked) {
-					var sd = new SecurityData();
-
 					if (wpu.ImportUserID == Guid.Empty) {
 						var user = new ApplicationUser { UserName = wpu.Login, Email = wpu.Email };
 						var nu = sd.CreateApplicationUser(user);
@@ -232,15 +244,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 
 					if (wpu.ImportUserID != Guid.Empty) {
-						var ud = new ExtendedUserData(wpu.ImportUserID);
-						if (ud != null) {
-							if (!string.IsNullOrEmpty(wpu.FirstName) || !string.IsNullOrEmpty(wpu.LastName)) {
-								ud.FirstName = wpu.FirstName;
-								ud.LastName = wpu.LastName;
-								ud.Save();
-							}
-						} else {
-							throw new Exception(string.Format("Could not find new user: {0} ({1})", wpu.Login, wpu.Email));
+						if (!string.IsNullOrEmpty(wpu.FirstName) || !string.IsNullOrEmpty(wpu.LastName)) {
+							var ud = new ExtendedUserData(wpu.ImportUserID);
+							ud.FirstName = wpu.FirstName;
+							ud.LastName = wpu.LastName;
+							ud.Save();
 						}
 					}
 				}
@@ -250,7 +258,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 				if (chkPages.Checked) {
-					sMsg += "<p>Imported Pages</p>";
+					lstMsg.Add("Imported Pages");
 
 					int iOrder = 0;
 					SiteNav navHome = navHelper.FindHome(site.SiteID, false);
@@ -314,16 +322,18 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							cp.GoLiveDate = navData.GoLiveDate;
 						}
 
-						cp.SavePageEdit();
-
-						wpSite.Comments.Where(x => x.PostID == wpp.PostID).ToList().ForEach(r => r.ImportRootID = cp.Root_ContentID);
+						//cp.SavePageEdit();
+						//wpp.ImportRootID = cp.Root_ContentID;
+						//wpSite.Comments.Where(x => x.PostID == wpp.PostID).ToList().ForEach(r => r.ImportRootID = cp.Root_ContentID);
+						//wpp.SavePageEdit(wpSite, cp);
+						wpSite.SavePageEdit(wpp, cp);
 
 						iOrder++;
 					}
 				}
 
 				if (chkPosts.Checked) {
-					sMsg += "<p>Imported Posts</p>";
+					lstMsg.Add("Imported Posts");
 
 					foreach (var wpp in (from c in wpSite.Content
 										 where c.PostType == WordPressPost.WPPostType.BlogPost
@@ -352,24 +362,25 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							cp.GoLiveDate = navData.GoLiveDate;
 						}
 
-						cp.SavePageEdit();
-
-						wpSite.Comments.Where(x => x.PostID == wpp.PostID).ToList().ForEach(r => r.ImportRootID = cp.Root_ContentID);
+						//cp.SavePageEdit();
+						//wpp.ImportRootID = cp.Root_ContentID;
+						//wpSite.Comments.Where(x => x.PostID == wpp.PostID).ToList().ForEach(r => r.ImportRootID = cp.Root_ContentID);
+						//wpp.SavePageEdit(wpSite, cp);
+						wpSite.SavePageEdit(wpp, cp);
 					}
 
-					using (ContentPageHelper cph = new ContentPageHelper()) {
-						//cph.BulkBlogFileNameUpdateFromDate(site.SiteID);
+					using (var cph = new ContentPageHelper()) {
 						cph.ResolveDuplicateBlogURLs(site.SiteID);
 						cph.FixBlogNavOrder(site.SiteID);
 					}
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			wpSite.Comments.RemoveAll(r => r.ImportRootID == Guid.Empty);
 
 			if (wpSite.Comments.Any()) {
-				sMsg += "<p>Imported Comments</p>";
+				lstMsg.Add("Imported Comments");
 			}
 
 			foreach (WordPressComment wpc in wpSite.Comments) {
@@ -407,7 +418,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pc.Save();
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			BindData();
 		}

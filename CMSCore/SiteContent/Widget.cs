@@ -213,8 +213,8 @@ namespace Carrotware.CMS.Core {
 					&& sProps.Contains("<KeyName") && sProps.Contains("<KeyValue")) {
 				if (sProps.Contains("<ArrayOfWidgetProps")) {
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WidgetProps>));
-					Object genpref = null;
-					using (StringReader stringReader = new StringReader(sProps)) {
+					object genpref = null;
+					using (var stringReader = new StringReader(sProps)) {
 						genpref = xmlSerializer.Deserialize(stringReader);
 					}
 					props = genpref as List<WidgetProps>;
@@ -230,7 +230,7 @@ namespace Carrotware.CMS.Core {
 		public void SaveDefaultControlProperties(List<WidgetProps> props) {
 			XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WidgetProps>));
 			string sXML = string.Empty;
-			using (StringWriter stringWriter = new StringWriter()) {
+			using (var stringWriter = new StringWriter()) {
 				xmlSerializer.Serialize(stringWriter, props);
 				sXML = stringWriter.ToString();
 			}
@@ -243,14 +243,14 @@ namespace Carrotware.CMS.Core {
 
 			if (!string.IsNullOrEmpty(sProps) && sProps.StartsWith("<?xml")) {
 				DataSet ds = new DataSet();
-				using (StringReader stream = new StringReader(sProps)) {
+				using (var stream = new StringReader(sProps)) {
 					ds.ReadXml(stream);
 				}
 
 				props = (from d in ds.Tables[0].AsEnumerable()
 						 select new WidgetProps {
-							 KeyName = d.Field<string>("KeyName"),
-							 KeyValue = d.Field<string>("KeyValue")
+							 KeyName = d.GetStringValue("KeyName"),
+							 KeyValue = d.GetStringValue("KeyValue")
 						 }).ToList();
 			}
 

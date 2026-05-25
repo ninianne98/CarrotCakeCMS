@@ -11,14 +11,6 @@
 	<script src="/c3-admin/includes/advanced-editor.js<%=AntiCache%>" type="text/javascript"></script>
 </asp:PlaceHolder>
 
-<%--
-<!-- jQuery CDN -->
-<script>		setTimeout(function () { window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"><\/script>'); }, 100);  </script>
-<script>		setTimeout(function () { window.jQuery.ui || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"><\/script>'); }, 200);  </script>
-<script>	(!window.jQuery || (typeof jQuery == 'undefined')) || document.write('<script src="<% = Carrotware.Web.UI.Controls.jquery.GeneralUri %>" type="text/javascript"><\/script>'); </script>
-<script>	window.jQuery.ui || document.write('<script src="<% = Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>" type="text/javascript"><\/script>'); </script>
---%>
-
 <script type="text/javascript">
 	var cmsJQLoadCtr = 1;
 	function cmsLoadJQDyn() {
@@ -39,7 +31,7 @@
 </script>
 <script type="text/javascript">
 	var cmsPageInit2 = false;
-	var cmsPageLocked = <%=bLocked.ToString().ToLowerInvariant() %>;
+	var cmsPageLocked = '<%=this.IsLocked.ToString().ToLowerInvariant() %>' == 'true';
 
 	if (!window.jQuery || (typeof jQuery == 'undefined')) {
 		setTimeout("cmsToolbarPageInit2();", 1000);
@@ -58,7 +50,7 @@
 			if(!cmsPageLocked){
 				setTimeout('cmsEditHB();', 1000);
 			} else{
-				setTimeout(function () { cmsAlertModal("The content is already being edited by '<%= EditUserName %>' "); }, 250);
+				setTimeout(function () { cmsAlertModal("The content is already being edited by '<%= this.EditUserName %>' "); }, 250);
 			}
 
 			cmsPageInit2 = true;
@@ -105,7 +97,7 @@
 
 		cmsSetTemplateDDL('#<%=ddlTemplate.ClientID%>');
 
-		cmsOverridePageName('<%=EditedPageFileName %>');
+		cmsOverridePageName('<%=this.EditedPageFileName %>');
 
 		if (!cmsPageInit1) {
 
@@ -183,7 +175,7 @@
 										<li><a href="#cmsTabIdx-tabs-3">Page Info</a></li>
 									</ul>
 									<div id="cmsTabIdx-tabs-1" class="cmsToolboxTab">
-										<% if (!bLocked) { %>
+										<% if (!this.IsLocked) { %>
 										<div style="display: none;">
 											cmsFullOrder<br />
 											<textarea rows="5" cols="30" id="cmsFullOrder" style="width: 310px; height: 50px;"></textarea><br />
@@ -226,7 +218,7 @@
 										</div>
 									</div>
 									<div id="cmsTabIdx-tabs-2" class="cmsToolboxTab">
-										<% if (!bLocked) { %>
+										<% if (!this.IsLocked) { %>
 										<div class="cmsLeft5px">
 											<p>
 												Templates / Skins<br />
@@ -254,7 +246,7 @@
 										</div>
 									</div>
 									<div id="cmsTabIdx-tabs-3" class="cmsToolboxTab">
-										<% if (!bLocked) { %>
+										<% if (!this.IsLocked) { %>
 										<div class="cmsLeft5px">
 											<p>
 												<input runat="server" id="btnEditCoreInfo" type="button" value="Edit Core Page Info" />

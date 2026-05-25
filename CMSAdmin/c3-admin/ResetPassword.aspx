@@ -6,9 +6,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
-
-	<asp:Panel ID="pnlReset" runat="server">
-		<table style="width: 350px;">
+	<div class="ui-widget" id="divMsg" runat="server">
+		<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+			<p>
+				<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+				<asp:Literal ID="FailureText" runat="server" EnableViewState="False" />
+			</p>
+		</div>
+	</div>
+	<asp:PlaceHolder ID="phReset" runat="server">
+		<table style="width: 400px;">
 			<tr>
 				<td>
 					<div style="height: 35px; width: 50px; border: 1px solid #ffffff;">
@@ -21,7 +28,7 @@
 						ControlToValidate="txtEmail" ErrorMessage="!" ToolTip="email is required" ValidationGroup="inputForm"
 						Display="Dynamic" Text="**" />
 					<br />
-					<asp:TextBox ID="txtEmail" ValidationGroup="inputForm" runat="server" CssClass="form-control" TabIndex="0" />
+					<asp:TextBox ID="txtEmail" Style="width: 200px;" ValidationGroup="inputForm" runat="server" CssClass="form-control" TabIndex="0" />
 				</td>
 				<td rowspan="3">
 					<div style="height: 50px; width: 75px; text-align: right; border: 1px solid #ffffff;">
@@ -42,7 +49,7 @@
 						ControlToValidate="txtNewPassword" ErrorMessage="!" ToolTip="password is required" ValidationGroup="inputForm"
 						Display="Dynamic" Text="**" />
 					<br />
-					<asp:TextBox ID="txtNewPassword" ValidationGroup="inputForm" runat="server" CssClass="form-control" TextMode="Password" TabIndex="1" />
+					<asp:TextBox ID="txtNewPassword" Style="width: 200px;" ValidationGroup="inputForm" runat="server" CssClass="form-control" TextMode="Password" TabIndex="1" />
 				</td>
 			</tr>
 			<tr>
@@ -62,7 +69,7 @@
 						ControlToCompare="txtNewPassword" ControlToValidate="txtConfirmPassword" Display="Dynamic" ErrorMessage="!!"
 						ToolTip="Confirm Password does not match Password." ValidationGroup="inputForm" />
 					<br />
-					<asp:TextBox ID="txtConfirmPassword" ValidationGroup="inputForm" runat="server" CssClass="form-control" TextMode="Password" TabIndex="2" />
+					<asp:TextBox ID="txtConfirmPassword" Style="width: 200px;" ValidationGroup="inputForm" runat="server" CssClass="form-control" TextMode="Password" TabIndex="2" />
 				</td>
 			</tr>
 			<tr>
@@ -82,14 +89,11 @@
 				</td>
 			</tr>
 		</table>
-	</asp:Panel>
-
-	<asp:Literal ID="litMessage" runat="server" />
-
+	</asp:PlaceHolder>
 	<div style="width: 350px; text-align: left;">
 		<asp:PlaceHolder runat="server" ID="phLogonLink">
 			<p>
-				Click <a href="./logon.aspx">here </a>to logon.
+				Click <a href="<%=SiteFilename.LogonURL %>">here</a> to logon.
 			</p>
 		</asp:PlaceHolder>
 		<asp:PlaceHolder runat="server" ID="phExpired">

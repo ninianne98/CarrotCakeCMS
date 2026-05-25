@@ -110,7 +110,7 @@
 							user
 						</HeaderTemplate>
 						<ItemTemplate>
-							<asp:Literal ID="litUser" runat="server" Text='<%# GetUserName( new Guid( Eval("EditUserId").ToString()) ) %>' />
+							<asp:Literal ID="litUser" runat="server" Text='<%# Eval("EditUser.UserName") %>' />
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:BoundField HeaderText="TitleBar" DataField="TitleBar" />

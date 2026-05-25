@@ -62,3 +62,11 @@ END
 
 GO
 
+
+UPDATE [dbo].[carrot_DataInfo]
+set [DataValue] = '20130920' -- match date in the create script
+WHERE [DataKey] = 'DBSchema'
+
+GO
+
+

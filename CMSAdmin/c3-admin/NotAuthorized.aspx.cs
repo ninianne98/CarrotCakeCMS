@@ -1,0 +1,29 @@
+using Carrotware.CMS.Core;
+using Carrotware.CMS.UI.Base;
+using System;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, 2026, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 3 licenses.
+*
+* Date: October 2011, May 2026
+*/
+
+namespace Carrotware.CMS.UI.Admin.c3_admin {
+
+	public partial class NotAuthorized : BasePage {
+
+		protected void Page_Load(object sender, EventArgs e) {
+			phNotAuth.Visible = SecurityData.IsAuthEditor == false;
+			phIsSiteEditor.Visible = SecurityData.IsAuthEditor;
+
+			if (!string.IsNullOrEmpty(Request.QueryString["signout"])) {
+				SecurityData.ResetAuth();
+				Response.Redirect(SiteFilename.NotAuthorizedURL);
+			}
+		}
+	}
+}

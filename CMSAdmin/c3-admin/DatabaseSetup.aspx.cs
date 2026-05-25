@@ -19,7 +19,8 @@ using System.Linq;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class DatabaseSetup : BasePage {
-		private bool bOK = false;
+		private bool _ok = false;
+		private bool _update = true;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(Request.QueryString["signout"])) {
@@ -27,7 +28,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				Response.Redirect(SiteFilename.DatabaseSetupURL);
 			}
 
-			DatabaseUpdate du = new DatabaseUpdate(true);
+			var du = new DatabaseUpdate(true);
 
 			var lst = new List<DatabaseUpdateMessage>();
 
@@ -38,15 +39,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				du.HandleResponse(lst, DatabaseSchemaState.LastSQLError);
 				DatabaseSchemaState.LastSQLError = null;
 			} else {
-				bool bUpdate = true;
-
 				if (!du.DoCMSTablesExist()) {
-					bUpdate = false;
+					_update = false;
 				}
 
-				bUpdate = du.DatabaseNeedsUpdate();
+				_update = du.DatabaseNeedsUpdate();
 
-				if (bUpdate) {
+				if (_update) {
 					DatabaseUpdateStatus status = du.PerformUpdates();
 					lst = du.MergeMessages(lst, status.Messages);
 				} else {
@@ -54,9 +53,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					du.HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 				}
 
-				bUpdate = du.DatabaseNeedsUpdate();
+				_update = du.DatabaseNeedsUpdate();
 
-				if (!bUpdate && DatabaseSchemaState.LastSQLError == null) {
+				if (!_update && DatabaseSchemaState.LastSQLError == null) {
 					if (DatabaseSchemaState.UsersExist) {
 						btnLogin.Visible = true;
 					} else {
@@ -69,26 +68,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				du.HandleResponse(lst, DatabaseSchemaState.LastSQLError);
 			}
 
-			if (lst.Where(x => !string.IsNullOrEmpty(x.ExceptionText)).Count() > 0) {
-				bOK = false;
-			} else {
-				bOK = true;
-			}
+			_ok = lst.Any() && (lst.Where(x => !string.IsNullOrWhiteSpace(x.ExceptionText)).Count() > 0) == false;
 
 			GeneralUtilities.BindRepeater(rpMessages, lst.OrderBy(x => x.Order));
 
-			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+			using (var cmsHelper = new CMSConfigHelper()) {
 				cmsHelper.ResetConfigs();
 			}
 		}
 
-		protected string CSSMsg() {
-			string sCSS = "okMsg";
-			if (!bOK) {
-				sCSS = "errMsg";
+		protected string CSSMsg {
+			get {
+				return _ok ? " okMsg " : " errMsg ";
 			}
-
-			return sCSS;
 		}
 
 		protected void btnLogin_Click(object sender, EventArgs e) {

@@ -76,7 +76,7 @@ namespace Carrotware.CMS.DBUpdater {
 				var res1 = new DatabaseUpdateResponse();
 
 				if (!bAuthResult) {
-					res1.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.MEMBER01.sql", false);
+					res1.LastException = ExecFileContents("MEMBER01.sql", false);
 					res1.Response = "Created Membership";
 					res1.RanUpdate = true;
 				} else {
@@ -87,7 +87,7 @@ namespace Carrotware.CMS.DBUpdater {
 				var res2 = new DatabaseUpdateResponse();
 
 				if (!bDbResult) {
-					res2.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.CREATE01.sql", false);
+					res2.LastException = ExecFileContents("CREATE01.sql", false);
 					res2.Response = "Created Database";
 					res2.RanUpdate = true;
 					// change version key when the DB creation is re-scripted
@@ -266,16 +266,19 @@ namespace Carrotware.CMS.DBUpdater {
 								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep11());
 							}
 							ver = DatabaseSchemaState.GetDbSchemaVersion();
-							if (ver.DataValue == DatabaseSchemaState.DbVersion11 || ver.IsYearOf("2013") || ver.IsMinorOf("201409") || ver.IsMinorOf("201410")) {
+							if (ver.DataValue == DatabaseSchemaState.DbVersion11 || ver.IsYearOf("2013") || ver.IsYearOf("2014")) {
 								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep12());
 							}
-							if (ver.DataValue == DatabaseSchemaState.DbVersion12 || ver.IsYearOf("2013") || ver.IsYearOf("2014") || ver.IsYearOf("2015")) {
+							ver = DatabaseSchemaState.GetDbSchemaVersion();
+							if (ver.DataValue == DatabaseSchemaState.DbVersion12 || ver.IsYearOf("2014") || ver.IsYearOf("2015")) {
 								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep13());
 							}
+							ver = DatabaseSchemaState.GetDbSchemaVersion();
 							if (ver.DataValue == DatabaseSchemaState.DbVersion13 || ver.IsYearOf("2020")
 										|| ver.IsYearOf("2025") || ver.IsYearOf("2026")) {
 								HandleResponse(lst, BuildUpdateString(iUpdate++), Migrate45());
 							}
+							ver = DatabaseSchemaState.GetDbSchemaVersion();
 						}
 					} else {
 						HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
@@ -412,7 +415,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep01");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01.sql", false);
+				res.LastException = ExecFileContents("ALTER01.sql", false);
 				res.Response = "Created Content MetaKeyword and MetaDescription";
 				res.RanUpdate = true;
 				return res;
@@ -428,7 +431,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep00");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER01a.sql", false);
+				res.LastException = ExecFileContents("ALTER01a.sql", false);
 				res.Response = "Created Table SerialCache";
 				res.RanUpdate = true;
 				return res;
@@ -444,7 +447,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep02");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER02.sql", false);
+				res.LastException = ExecFileContents("ALTER02.sql", false);
 				res.Response = "Widget Schema Updated";
 				res.RanUpdate = true;
 				return res;
@@ -460,7 +463,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep03");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER03.sql", false);
+				res.LastException = ExecFileContents("ALTER03.sql", false);
 				res.Response = "RootContent CreateDate Created";
 				res.RanUpdate = true;
 				return res;
@@ -476,7 +479,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep04");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER04.sql", false);
+				res.LastException = ExecFileContents("ALTER04.sql", false);
 				res.Response = "CMS Table Names Changed";
 				res.RanUpdate = true;
 				return res;
@@ -492,7 +495,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep05");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER05.sql", false);
+				res.LastException = ExecFileContents("ALTER05.sql", false);
 				res.Response = "CMS DB created vw_carrot_Content and vw_carrot_Widget";
 				res.RanUpdate = true;
 				return res;
@@ -512,7 +515,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep06");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER06.sql", false);
+				res.LastException = ExecFileContents("ALTER06.sql", false);
 				res.Response = "CMS DB created carrot_ContentType, carrot_ContentTag, carrot_ContentCategory";
 				res.RanUpdate = true;
 				return res;
@@ -528,7 +531,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep07");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER07.sql", false);
+				res.LastException = ExecFileContents("ALTER07.sql", false);
 				res.Response = "CMS DB created cols RetireDate, GoLiveDate, and GoLiveDateLocal in carrot_RootContent";
 				res.RanUpdate = true;
 				return res;
@@ -544,7 +547,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep08");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER08.sql", false);
+				res.LastException = ExecFileContents("ALTER08.sql", false);
 				res.Response = "CMS DB created vw_carrot_Comment";
 				res.RanUpdate = true;
 				return res;
@@ -560,7 +563,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep09");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER09.sql", false);
+				res.LastException = ExecFileContents("ALTER09.sql", false);
 				res.Response = "CMS DB created vw_carrot_ContentChild and ShowInSiteNav";
 				res.RanUpdate = true;
 				return res;
@@ -578,7 +581,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep10");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER10.sql", false);
+				res.LastException = ExecFileContents("ALTER10.sql", false);
 				res.Response = "CMS DB created TextWidget and Content Snippet, updated edit history";
 				res.RanUpdate = true;
 				DatabaseSchemaState.SetDbSchemaVersion(DatabaseSchemaState.DbVersion10);
@@ -595,7 +598,7 @@ namespace Carrotware.CMS.DBUpdater {
 			bool bTestResult = SQLUpdateNugget.EvalNuggetKey("AlterStep11");
 
 			if (bTestResult) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER11.sql", false);
+				res.LastException = ExecFileContents("ALTER11.sql", false);
 				res.Response = "CMS DB Updated archive tally";
 				res.RanUpdate = true;
 				DatabaseSchemaState.SetDbSchemaVersion(DatabaseSchemaState.DbVersion11);
@@ -614,7 +617,7 @@ namespace Carrotware.CMS.DBUpdater {
 			var minorUpdate = ver.IsMinorOf(DatabaseSchemaState.DbVersion12);
 
 			if (bTestResult || minorUpdate) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER12.sql", false);
+				res.LastException = ExecFileContents("ALTER12.sql", false);
 				res.Response = minorUpdate ? "Reapply time zone sproc and tally updates"
 											: "CMS DB Updated time zone sproc and tallies";
 				res.RanUpdate = true;
@@ -634,7 +637,7 @@ namespace Carrotware.CMS.DBUpdater {
 			var minorUpdate = ver.IsMinorOf(DatabaseSchemaState.DbVersion13);
 
 			if (bTestResult || minorUpdate) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.ALTER13.sql", false);
+				res.LastException = ExecFileContents("ALTER13.sql", false);
 				res.Response = minorUpdate ? "Reapply update timezone sproc"
 											: "Update timezone sproc";
 				res.RanUpdate = true;
@@ -654,7 +657,7 @@ namespace Carrotware.CMS.DBUpdater {
 			var minorUpdate = ver.IsMinorOf(DatabaseSchemaState.DbVersion20);
 
 			if (bTestResult || minorUpdate) {
-				res.LastException = ExecFileContents("Carrotware.CMS.DBUpdater.DataScripts.MIGRATE01.sql", false);
+				res.LastException = ExecFileContents("MIGRATE01.sql", false);
 				res.Response = minorUpdate ? "Reapply Schema update for Framework 4.5 / Owin"
 										: "Migrated Schema to Framework 4.5 / Owin";
 				res.RanUpdate = true;

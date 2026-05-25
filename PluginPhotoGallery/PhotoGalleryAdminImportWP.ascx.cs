@@ -270,7 +270,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 						&& sTest.Contains("http://wordpress.org/export")) {
 						WordPressSite wps = ContentImportExportUtils.DeserializeWPExportAll(sXML);
 						ContentImportExportUtils.AssignWPExportNewIDs(SiteData.CurrentSite, wps);
-						ContentImportExportUtils.SaveSerializedDataExport<WordPressSite>(wps.NewSiteID, wps);
+						ContentImportExportUtils.SaveSerializedDataExport(wps.NewSiteID, wps);
 
 						Response.Redirect(CreateLink("WPGalleryImport", string.Format("id={0}", wps.NewSiteID)));
 					}

@@ -4,6 +4,7 @@ using Carrotware.CMS.Security;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 /*
 * CarrotCake CMS
@@ -112,6 +113,16 @@ namespace Carrotware.CMS.UI.Base {
 					TheGrid.DataBind();
 				}
 		*/
+
+		protected void WarningSet(Label lblWarning, string warningText) {
+			lblWarning.Text = warningText;
+			lblWarning.Attributes["style"] = "color: #990000;";
+		}
+
+		protected void WarningReset(Label lblWarning) {
+			lblWarning.Text = string.Empty;
+			lblWarning.Attributes["style"] = string.Empty;
+		}
 
 		private bool bFound = false;
 		private WidgetContainer x = new WidgetContainer();

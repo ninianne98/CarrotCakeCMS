@@ -19,8 +19,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.DataImport);
 
-			lblWarning.Text = "";
-			lblWarning.Attributes["style"] = "color: #000000;";
+			WarningReset(lblWarning);
 
 			CMSConfigHelper.CleanUpSerialData();
 		}
@@ -28,7 +27,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 		protected void btnUpload_Click(object sender, EventArgs e) {
 			string sXML = "";
 			if (upFile.HasFile) {
-				using (StreamReader sr = new StreamReader(upFile.FileContent)) {
+				using (var sr = new StreamReader(upFile.FileContent)) {
 					sXML = sr.ReadToEnd();
 				}
 			}
@@ -49,12 +48,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						ContentPageExport cph = ContentImportExportUtils.DeserializeContentPageExport(sXML);
 						ContentImportExportUtils.AssignContentPageExportNewIDs(cph);
 						ContentImportExportUtils.MapSiteCategoryTags(cph);
-						ContentImportExportUtils.SaveSerializedDataExport<ContentPageExport>(cph.NewRootContentID, cph);
+						ContentImportExportUtils.SaveSerializedDataExport(cph.NewRootContentID, cph);
 
 						if (cph.ThePage.ContentType == ContentPageType.PageType.ContentEntry) {
-							Response.Redirect(SiteFilename.PageAddEditURL + "?importid=" + cph.NewRootContentID.ToString());
+							Response.Redirect(ContentImportExportUtils.ImportQuery(SiteFilename.PageAddEditURL, cph.NewRootContentID));
 						} else {
-							Response.Redirect(SiteFilename.BlogPostAddEditURL + "?importid=" + cph.NewRootContentID.ToString());
+							Response.Redirect(ContentImportExportUtils.ImportQuery(SiteFilename.BlogPostAddEditURL, cph.NewRootContentID));
 						}
 					}
 
@@ -62,9 +61,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						|| sTest.Contains("<siteexport xmlns:xsd=\"http://www.w3.org/2001/xmlschema\" xmlns:xsi=\"http://www.w3.org/2001/xmlschema-instance\">")) {
 						SiteExport site = ContentImportExportUtils.DeserializeSiteExport(sXML);
 						ContentImportExportUtils.AssignSiteExportNewIDs(site);
-						ContentImportExportUtils.SaveSerializedDataExport<SiteExport>(site.NewSiteID, site);
+						ContentImportExportUtils.SaveSerializedDataExport(site.NewSiteID, site);
 
-						Response.Redirect(SiteFilename.SiteImportURL + "?importid=" + site.NewSiteID.ToString());
+						Response.Redirect(ContentImportExportUtils.ImportQuery(SiteFilename.SiteImportURL, site.NewSiteID));
 					}
 
 					if (sXML.Contains("<channel>") && sXML.Contains("<rss")) {
@@ -77,20 +76,17 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 						&& sTest.Contains("://wordpress.org/export")) {
 						WordPressSite wps = ContentImportExportUtils.DeserializeWPExport(sXML);
 						ContentImportExportUtils.AssignWPExportNewIDs(SiteData.CurrentSite, wps);
-						ContentImportExportUtils.SaveSerializedDataExport<WordPressSite>(wps.NewSiteID, wps);
+						ContentImportExportUtils.SaveSerializedDataExport(wps.NewSiteID, wps);
 
-						Response.Redirect(SiteFilename.WPSiteImportURL + "?importid=" + wps.NewSiteID.ToString());
+						Response.Redirect(ContentImportExportUtils.ImportQuery(SiteFilename.WPSiteImportURL, wps.NewSiteID));
 					}
 
-					lblWarning.Text = "File did not appear to match an expected format.";
-					lblWarning.Attributes["style"] = "color: #990000;";
+					WarningSet(lblWarning, "File did not appear to match an expected format.");
 				} catch (Exception ex) {
-					lblWarning.Text = ex.ToString();
-					lblWarning.Attributes["style"] = "color: #990000;";
+					WarningSet(lblWarning, ex.ToString());
 				}
 			} else {
-				lblWarning.Text = "No file appeared in the upload queue.";
-				lblWarning.Attributes["style"] = "color: #990000;";
+				WarningSet(lblWarning, "No file appeared in the upload queue.");
 			}
 		}
 	}

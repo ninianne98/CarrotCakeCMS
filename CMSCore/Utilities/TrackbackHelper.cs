@@ -44,7 +44,7 @@ namespace Carrotware.CMS.Core {
 			request.ContentType = "application/x-www-form-urlencoded; charset=utf-8";
 			request.KeepAlive = true;
 
-			using (StreamWriter myWriter = new StreamWriter(request.GetRequestStream())) {
+			using (var myWriter = new StreamWriter(request.GetRequestStream())) {
 				myWriter.Write(postData);
 			}
 

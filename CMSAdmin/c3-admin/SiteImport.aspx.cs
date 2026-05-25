@@ -20,15 +20,15 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class SiteImport : AdminBasePage {
 		public Guid guidImportID = Guid.Empty;
 		private SiteExport exSite = null;
-		private List<BasicContentData> sitePageList = new List<BasicContentData>();
 		private int iPageCount = 0;
+		private List<BasicContentData> sitePageList = new List<BasicContentData>();
 
 		protected void Page_Load(object sender, EventArgs e) {
-			guidImportID = GetGuidParameterFromQuery("importid");
+			guidImportID = GetGuidImportFromQuery();
 
-			litMessage.Text = "";
+			litMessage.Text = string.Empty;
 
-			iPageCount = pageHelper.GetSitePageCount(SiteID, ContentPageType.PageType.ContentEntry);
+			iPageCount = pageHelper.GetSitePageCount(this.SiteID, ContentPageType.PageType.ContentEntry);
 
 			if (guidImportID != Guid.Empty) {
 				exSite = ContentImportExportUtils.GetSerializedSiteExport(guidImportID);
@@ -63,14 +63,40 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			float iThird = (float)(iPageCount - 1) / (float)3;
 			Dictionary<string, float> dictTemplates = null;
 
-			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.ContentEntry);
+			dictTemplates = pageHelper.GetPopularTemplateList(this.SiteID, ContentPageType.PageType.ContentEntry);
 			if (dictTemplates.Any() && dictTemplates.First().Value >= iThird) {
 				try { ddlTemplatePage.SelectedValue = dictTemplates.First().Key; } catch { }
 			}
 
-			dictTemplates = pageHelper.GetPopularTemplateList(SiteID, ContentPageType.PageType.BlogEntry);
+			dictTemplates = pageHelper.GetPopularTemplateList(this.SiteID, ContentPageType.PageType.BlogEntry);
 			if (dictTemplates.Any()) {
 				try { ddlTemplatePost.SelectedValue = dictTemplates.First().Key; } catch { }
+			}
+
+			if (exSite != null) {
+				if (string.IsNullOrEmpty(ddlTemplatePage.SelectedValue)
+						|| ddlTemplatePage.SelectedValue == SiteData.DefaultTemplateFilename) {
+					iThird = (float)(exSite.TheContentPages.Count() / (float)3);
+
+					var pageTemplate = exSite.TheContentPages.Select(x => x.ThePage.TemplateFile)
+									.GroupBy(x => x).Select(g => new { Item = g.Key, Count = g.Count() })
+									.Where(x => x.Count >= iThird)
+									.Select(x => x.Item).FirstOrDefault();
+
+					ddlTemplatePage.SelectedValue = ContentImportExportUtils.MapTemplate(pageTemplate);
+				}
+
+				if (string.IsNullOrEmpty(ddlTemplatePost.SelectedValue)
+						|| ddlTemplatePost.SelectedValue == SiteData.DefaultTemplateFilename) {
+					iThird = (float)(exSite.TheBlogPages.Count() / (float)3);
+
+					var blogTemplate = exSite.TheBlogPages.Select(x => x.ThePage.TemplateFile)
+									.GroupBy(x => x).Select(g => new { Item = g.Key, Count = g.Count() })
+									.Where(x => x.Count >= iThird)
+									.Select(x => x.Item).FirstOrDefault();
+
+					ddlTemplatePost.SelectedValue = ContentImportExportUtils.MapTemplate(blogTemplate);
+				}
 			}
 		}
 
@@ -115,29 +141,30 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 		}
 
-		private Guid FindUser(Guid userId) {
-			ApplicationUser usr = SecurityData.GetUserByID(userId);
-
-			if (usr == null) {
-				return SecurityData.CurrentUserGuid;
+		private void SetMsg(string message) {
+			if (!string.IsNullOrEmpty(message)) {
+				litMessage.Text = string.Format("<p>{0}</p>", message);
 			} else {
-				return userId;
+				litMessage.Text = string.Empty;
 			}
 		}
 
-		private void SetMsg(string sMessage) {
-			if (!string.IsNullOrEmpty(sMessage)) {
-				litMessage.Text = sMessage;
+		private void SetMsg(List<string> messages) {
+			if (messages != null && messages.Any()) {
+				var htmlString = string.Join(Environment.NewLine, messages.Select(x => string.Format("<li>{0}</li>", x)));
+				litMessage.Text = "<ul>" + Environment.NewLine + htmlString + Environment.NewLine + "<ul>";
+			} else {
+				litMessage.Text = string.Empty;
 			}
 		}
 
 		private void ImportStuff() {
 			SiteData.CurrentSite = null;
 
-			SiteData site = SiteData.CurrentSite;
+			var site = SiteData.CurrentSite;
 
-			litMessage.Text = "<p>No Items Selected For Import</p>";
-			string sMsg = "";
+			var lstMsg = new List<string>();
+			SetMsg("No Items Selected For Import");
 
 			if (chkSite.Checked || chkPages.Checked || chkPosts.Checked) {
 				List<string> tags = site.GetTagList().Select(x => x.TagSlug.ToLowerInvariant()).ToList();
@@ -146,7 +173,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				exSite.TheTags.RemoveAll(x => tags.Contains(x.TagSlug.ToLowerInvariant()));
 				exSite.TheCategories.RemoveAll(x => cats.Contains(x.CategorySlug.ToLowerInvariant()));
 
-				sMsg += "<p>Imported Tags and Categories</p>";
+				lstMsg.Add("Imported Tags and Categories");
 
 				List<ContentTag> lstTag = (from l in exSite.TheTags.Distinct()
 										   select new ContentTag {
@@ -173,14 +200,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					v.Save();
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			if (chkSnippet.Checked) {
 				List<string> snippets = site.GetContentSnippetList().Select(x => x.ContentSnippetSlug.ToLowerInvariant()).ToList();
 
 				exSite.TheSnippets.RemoveAll(x => snippets.Contains(x.ContentSnippetSlug.ToLowerInvariant()));
 
-				sMsg += "<p>Imported Content Snippets</p>";
+				lstMsg.Add("Imported Content Snippets");
 
 				List<ContentSnippet> lstSnip = (from l in exSite.TheSnippets.Distinct()
 												select new ContentSnippet {
@@ -203,39 +230,40 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					v.Save();
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			if (chkSite.Checked) {
-				sMsg += "<p>Updated Site Name</p>";
+				lstMsg.Add("Updated Site Name");
+
 				site.SiteName = exSite.TheSite.SiteName;
 				site.SiteTagline = exSite.TheSite.SiteTagline;
 				site.Save();
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			if (!chkMapAuthor.Checked) {
 				exSite.TheUsers = new List<SiteExportUser>();
 			}
 
+			var sd = new SecurityData();
+
 			//itterate author collection and find if in the system
 			foreach (SiteExportUser seu in exSite.TheUsers) {
+				ExtendedUserData usr = null;
 				seu.ImportUserID = Guid.Empty;
 
-				ApplicationUser usr = null;
 				//attempt to find the user in the userbase
-				usr = SecurityData.GetUserListByEmail(seu.Email).FirstOrDefault();
-				if (usr != null) {
-					seu.ImportUserID = new Guid(usr.Id);
+				usr = ExtendedUserData.FindByEmail(seu.Email);
+				if (usr != null && usr.UserId != Guid.Empty) {
+					seu.ImportUserID = usr.UserId;
 				} else {
-					usr = SecurityData.GetUserListByName(seu.Login).FirstOrDefault();
-					if (usr != null) {
-						seu.ImportUserID = new Guid(usr.Id);
+					usr = ExtendedUserData.FindByUsername(seu.Login);
+					if (usr != null && usr.UserId != Guid.Empty) {
+						seu.ImportUserID = usr.UserId;
 					}
 				}
 
 				if (chkAuthors.Checked) {
-					var sd = new SecurityData();
-
 					if (seu.ImportUserID == Guid.Empty) {
 						var user = new ApplicationUser { UserName = seu.Login, Email = seu.Email };
 						var nu = sd.CreateApplicationUser(user);
@@ -252,22 +280,19 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 
 					if (seu.ImportUserID != Guid.Empty) {
-						var ud = new ExtendedUserData(seu.ImportUserID);
-						if (ud != null) {
-							if (!string.IsNullOrEmpty(seu.FirstName) || !string.IsNullOrEmpty(seu.LastName)) {
-								ud.FirstName = seu.FirstName;
-								ud.LastName = seu.LastName;
-								ud.Save();
-							}
-						} else {
-							throw new Exception(string.Format("Could not find new user: {0} ({1})", seu.Login, seu.Email));
+						if (!string.IsNullOrEmpty(seu.FirstName) || !string.IsNullOrEmpty(seu.LastName)) {
+							var ud = new ExtendedUserData(seu.ImportUserID);
+							ud.FirstName = seu.FirstName;
+							ud.LastName = seu.LastName;
+							ud.Save();
 						}
 					}
 				}
 			}
 
 			if (chkPages.Checked) {
-				sMsg += "<p>Imported Pages</p>";
+				lstMsg.Add("Imported Pages");
+
 				sitePageList = site.GetFullSiteFileList();
 
 				int iOrder = 0;
@@ -320,6 +345,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 							cp.NavOrder = 0;
 						}
 					}
+
 					//preserve homepage
 					if (navHome != null && navHome.FileName.ToLowerInvariant() == cp.FileName.ToLowerInvariant()) {
 						cp.NavOrder = 0;
@@ -332,15 +358,20 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.RetireDate = impCP.ThePage.RetireDate;
 					cp.GoLiveDate = impCP.ThePage.GoLiveDate;
 
-					cp.SavePageEdit();
+					//cp.SavePageEdit();
+					//impCP.ThePage.Root_ContentID = cp.Root_ContentID;
+					//impCP.ThePage.ContentID = cp.ContentID;
+
+					impCP.SavePageEdit(cp);
 
 					iOrder++;
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			if (chkPosts.Checked) {
-				sMsg += "<p>Imported Posts</p>";
+				lstMsg.Add("Imported Posts");
+
 				sitePageList = site.GetFullSiteFileList();
 
 				List<ContentTag> lstTags = site.GetTagList();
@@ -386,19 +417,24 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					cp.RetireDate = impCP.ThePage.RetireDate;
 					cp.GoLiveDate = impCP.ThePage.GoLiveDate;
 
-					cp.SavePageEdit();
+					//cp.SavePageEdit();
+					//impCP.ThePage.Root_ContentID = cp.Root_ContentID;
+					//impCP.ThePage.ContentID = cp.ContentID;
+
+					impCP.SavePageEdit(cp);
 				}
 
-				using (ContentPageHelper cph = new ContentPageHelper()) {
+				using (var cph = new ContentPageHelper()) {
 					//cph.BulkBlogFileNameUpdateFromDate(site.SiteID);
 					cph.ResolveDuplicateBlogURLs(site.SiteID);
 					cph.FixBlogNavOrder(site.SiteID);
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
 
 			if (chkComments.Checked) {
-				sMsg += "<p>Imported Comments</p>";
+				lstMsg.Add("Imported Comments");
+
 				sitePageList = site.GetFullSiteFileList();
 
 				foreach (var impCP in (from c in exSite.TheComments
@@ -407,6 +443,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					int iCommentCount = -1;
 					PostComment pc = impCP.TheComment;
 					BasicContentData navData = GetFileInfoFromList(site, pc.FileName);
+
 					if (navData != null) {
 						pc.Root_ContentID = navData.Root_ContentID;
 						pc.ContentCommentID = Guid.NewGuid();
@@ -422,7 +459,25 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					}
 				}
 			}
-			SetMsg(sMsg);
+			SetMsg(lstMsg);
+
+			if (chkSite.Checked && chkPages.Checked) {
+				lstMsg.Add("Updated Site Index");
+
+				var blogIndex = (from c in exSite.ThePages
+								 where c.ThePage.ContentType == ContentPageType.PageType.ContentEntry
+									 && c.OriginalRootContentID == exSite.TheSite.Blog_Root_ContentID
+								 select c).FirstOrDefault();
+
+				if (blogIndex != null) {
+					site.Blog_Root_ContentID = blogIndex.ThePage.Root_ContentID;
+				} else {
+					site.Blog_Root_ContentID = null;
+				}
+
+				site.Save();
+			}
+			SetMsg(lstMsg);
 
 			BindData();
 		}

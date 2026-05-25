@@ -1,5 +1,4 @@
 ﻿using Carrotware.CMS.Core;
-using Carrotware.CMS.Security.Models;
 using Carrotware.CMS.UI.Controls;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			Master.ActivateTab(AdminBaseMasterPage.SectionID.ContentSnippet);
 
 			guidRootItemID = GetGuidIDFromQuery();
-			guidVersionItemID = GetGuidParameterFromQuery("versionid");
+			guidVersionItemID = GetGuidVersionFromQuery();
 
 			guidItemID = guidRootItemID;
 
@@ -54,7 +53,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					bLocked = item.IsSnippetLocked();
 
 					if (bLocked && item.Heartbeat_UserId != null) {
-						ApplicationUser usr = SecurityData.GetUserByID(item.Heartbeat_UserId.Value);
+						var usr = SecurityData.GetProfileByUserID(item.Heartbeat_UserId.Value);
 						litUser.Text = "Read only mode. User '" + usr.UserName + "' is currently editing the snippet.";
 					}
 

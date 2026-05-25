@@ -70,6 +70,15 @@ namespace Carrotware.CMS.Core {
 			return this.PostID.GetHashCode() ^ this.ImportFileName.GetHashCode() ^ this.PostDateUTC.GetHashCode();
 		}
 
+		public void SavePageEdit(WordPressSite wpSite, ContentPage cp) {
+			cp.SavePageEdit();
+
+			this.ImportRootID = cp.Root_ContentID;
+
+			wpSite.Comments.Where(c => c.PostID == this.PostID).ToList()
+					.ForEach(r => r.ImportRootID = this.ImportRootID);
+		}
+
 		public void CleanBody() {
 			if (string.IsNullOrEmpty(this.PostContent)) {
 				this.PostContent = "";
@@ -98,7 +107,7 @@ namespace Carrotware.CMS.Core {
 
 			lstA.ToList().ForEach(q => q.ImportFileSlug = q.ImportFileSlug.NormalizeFilename());
 
-			using (CMSConfigHelper cmsHelper = new CMSConfigHelper()) {
+			using (var cmsHelper = new CMSConfigHelper()) {
 				foreach (var img in lstA) {
 					img.ImportFileSlug = ("~" + folderName + "/" + img.ImportFileSlug).CleanDuplicateSlashes();
 

@@ -50,7 +50,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			if (File.Exists(sEditFile)) {
 				if (!IsPostBack) {
-					using (StreamReader sr = new StreamReader(sEditFile)) {
+					using (var sr = new StreamReader(sEditFile)) {
 						txtPageContents.Text = sr.ReadToEnd();
 					}
 				}

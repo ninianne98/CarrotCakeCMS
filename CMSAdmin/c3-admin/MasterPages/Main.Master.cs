@@ -94,137 +94,137 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		protected void btnLogout_Click(object sender, EventArgs e) {
 			SecurityData.ResetAuth();
 
-			Response.Redirect(SiteFilename.LogonURL);
+			Response.Redirect(SiteFilename.LogonURL + "?carrot_cache=" + DateTime.UtcNow.Ticks.ToString());
 		}
 
 		public void ActivateTab(SectionID sectionID) {
-			string sCSSTop = "current sub";
-			string sCSSSecondary = "current";
+			string cssTop = "current sub";
+			string cssSecondary = "current";
 
 			switch (sectionID) {
 				case SectionID.SiteDashboard:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					//tabDashboard.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					//tabDashboard.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.SiteInfo:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					tabMain.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					tabMain.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.ContentHistory:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					tabHistory.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					tabHistory.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.SiteTemplate:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					tabMainTemplate.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					tabMainTemplate.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.ContentSkinEdit:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					tabContentSkin.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					tabContentSkin.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.DataImport:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					tabImportContent.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					tabImportContent.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.SiteExport:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					tabExportSite.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					tabExportSite.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.StatusChange:
-					tabMainTop.Attributes["class"] = sCSSTop;
-					tabStatusChange.Attributes["class"] = sCSSSecondary;
+					tabMainTop.Attributes["class"] = cssTop;
+					tabStatusChange.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.ContentIndex:
-					tabContentTop.Attributes["class"] = sCSSTop;
-					tabContent.Attributes["class"] = sCSSSecondary;
+					tabContentTop.Attributes["class"] = cssTop;
+					tabContent.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.ContentAdd:
-					tabContentTop.Attributes["class"] = sCSSTop;
-					tabAddContent.Attributes["class"] = sCSSSecondary;
+					tabContentTop.Attributes["class"] = cssTop;
+					tabAddContent.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.ContentTemplate:
-					tabContentTop.Attributes["class"] = sCSSTop;
-					tabContentTemplate.Attributes["class"] = sCSSSecondary;
+					tabContentTop.Attributes["class"] = cssTop;
+					tabContentTemplate.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.PageComment:
-					tabContentTop.Attributes["class"] = sCSSTop;
-					tabContentCommentIndex.Attributes["class"] = sCSSSecondary;
+					tabContentTop.Attributes["class"] = cssTop;
+					tabContentCommentIndex.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.ContentSiteMap:
-					tabContentTop.Attributes["class"] = sCSSTop;
-					tabContentSiteMap.Attributes["class"] = sCSSSecondary;
+					tabContentTop.Attributes["class"] = cssTop;
+					tabContentSiteMap.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.Modules:
-					tabExtensions.Attributes["class"] = sCSSTop;
-					tabModules.Attributes["class"] = sCSSSecondary;
+					tabExtensions.Attributes["class"] = cssTop;
+					tabModules.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.TextWidget:
-					tabExtensions.Attributes["class"] = sCSSTop;
-					tabTxtWidgets.Attributes["class"] = sCSSSecondary;
+					tabExtensions.Attributes["class"] = cssTop;
+					tabTxtWidgets.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.ContentSnippet:
-					tabExtensions.Attributes["class"] = sCSSTop;
-					tabSnippets.Attributes["class"] = sCSSSecondary;
+					tabExtensions.Attributes["class"] = cssTop;
+					tabSnippets.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.UserAdmin:
-					tabUserSecurity.Attributes["class"] = sCSSTop;
-					tabUserAdmin.Attributes["class"] = sCSSSecondary;
+					tabUserSecurity.Attributes["class"] = cssTop;
+					tabUserAdmin.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.GroupAdmin:
-					tabUserSecurity.Attributes["class"] = sCSSTop;
-					tabGroupAdmin.Attributes["class"] = sCSSSecondary;
+					tabUserSecurity.Attributes["class"] = cssTop;
+					tabGroupAdmin.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.SiteIndex:
-					tabUserSecurity.Attributes["class"] = sCSSTop;
-					tabSites.Attributes["class"] = sCSSSecondary;
+					tabUserSecurity.Attributes["class"] = cssTop;
+					tabSites.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.BlogContentAdd:
-					tabBlogTop.Attributes["class"] = sCSSTop;
-					tabAddBlogContent.Attributes["class"] = sCSSSecondary;
+					tabBlogTop.Attributes["class"] = cssTop;
+					tabAddBlogContent.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.BlogIndex:
-					tabBlogTop.Attributes["class"] = sCSSTop;
-					tabBlogContent.Attributes["class"] = sCSSSecondary;
+					tabBlogTop.Attributes["class"] = cssTop;
+					tabBlogContent.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.BlogCategory:
-					tabBlogTop.Attributes["class"] = sCSSTop;
-					tabBlogCategoryIndex.Attributes["class"] = sCSSSecondary;
+					tabBlogTop.Attributes["class"] = cssTop;
+					tabBlogCategoryIndex.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.BlogTag:
-					tabBlogTop.Attributes["class"] = sCSSTop;
-					tabBlogTagIndex.Attributes["class"] = sCSSSecondary;
+					tabBlogTop.Attributes["class"] = cssTop;
+					tabBlogTagIndex.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.BlogTemplate:
-					tabBlogTop.Attributes["class"] = sCSSTop;
-					tabBlogTemplate.Attributes["class"] = sCSSSecondary;
+					tabBlogTop.Attributes["class"] = cssTop;
+					tabBlogTemplate.Attributes["class"] = cssSecondary;
 					break;
 
 				case SectionID.BlogComment:
-					tabBlogTop.Attributes["class"] = sCSSTop;
-					tabBlogCommentIndex.Attributes["class"] = sCSSSecondary;
+					tabBlogTop.Attributes["class"] = cssTop;
+					tabBlogCommentIndex.Attributes["class"] = cssSecondary;
 					break;
 			}
 		}
