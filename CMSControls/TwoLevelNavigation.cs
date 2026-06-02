@@ -314,7 +314,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void LoadData() {
 			base.LoadData();
 
-			this.NavigationData = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			this.NavigationData = _navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 		}
 
 		private Literal _cssText = new Literal();
@@ -335,10 +335,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void WriteListPrefix(HtmlTextWriter output) {
+		protected override void WriteListPrefix(HtmlTextWriter writer) {
 			if (!SiteData.IsWebView) {
-				_cssText.RenderControl(output);
-				output.Write(GetCtrlText(_cssText));
+				_cssText.RenderControl(writer);
+				writer.Write(GetCtrlText(_cssText));
 			}
 
 			string sCSSWrap = "";
@@ -347,10 +347,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (this.WrapList) {
-				output.WriteLine("<div" + sCSSWrap + " id=\"" + this.HtmlClientID + "\">");
-				output.Indent++;
-				output.WriteLine("<div id=\"" + this.HtmlClientID + "-inner\">");
-				output.Indent++;
+				writer.WriteLine("<div" + sCSSWrap + " id=\"" + this.HtmlClientID + "\">");
+				writer.Indent++;
+				writer.WriteLine("<div id=\"" + this.HtmlClientID + "-inner\">");
+				writer.Indent++;
 			}
 
 			string sCSSList = this.CSSULClassTop.Trim();
@@ -362,20 +362,20 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (!string.IsNullOrEmpty(sCSSList)) {
-				output.WriteLine("<ul id=\"" + sLstID + "\" class=\"" + sCSSList + "\">");
+				writer.WriteLine("<ul id=\"" + sLstID + "\" class=\"" + sCSSList + "\">");
 			} else {
-				output.WriteLine("<ul id=\"" + sLstID + "\" >");
+				writer.WriteLine("<ul id=\"" + sLstID + "\" >");
 			}
 		}
 
-		protected override void WriteListSuffix(HtmlTextWriter output) {
-			output.WriteLine("</ul>");
+		protected override void WriteListSuffix(HtmlTextWriter writer) {
+			writer.WriteLine("</ul>");
 
 			if (this.WrapList) {
-				output.Indent--;
-				output.WriteLine("</div>");
-				output.Indent--;
-				output.WriteLine("</div>");
+				writer.Indent--;
+				writer.WriteLine("</div>");
+				writer.Indent--;
+				writer.WriteLine("</div>");
 			}
 		}
 
@@ -654,11 +654,11 @@ namespace Carrotware.CMS.UI.Controls {
 			if (string.IsNullOrEmpty(this.OverrideCSS) && !this.AutoStylingDisabled) {
 				FlipColor();
 
-				sb.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenu.txt"));
+				sb.Append(ControlUtilities.GetManifestResourceStream("TopMenu.txt"));
 
 				if (this.AttemptResponsiveCSS && sb.Length > 1) {
 					var sbCSS1 = new StringBuilder();
-					sbCSS1.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.TopMenuRes.txt"));
+					sbCSS1.Append(ControlUtilities.GetManifestResourceStream("TopMenuRes.txt"));
 					sbCSS1.Replace("{DESKTOP_CSS}", sb.ToString());
 
 					sb = sbCSS1;

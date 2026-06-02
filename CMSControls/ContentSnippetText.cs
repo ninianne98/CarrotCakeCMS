@@ -109,7 +109,7 @@ namespace Carrotware.CMS.UI.Controls {
 			RenderContents(writer);
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			string sBody = string.Empty;
 
 			ContentSnippet cs = null;
@@ -164,16 +164,16 @@ namespace Carrotware.CMS.UI.Controls {
 
 			this.Text = SiteData.CurrentSite.UpdateContentSnippet(sBody);
 
-			int indent = output.Indent;
+			int indent = writer.Indent;
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
-			output.WriteLine();
-			output.Write(this.Text);
-			output.WriteLine();
+			writer.WriteLine();
+			writer.Write(this.Text);
+			writer.WriteLine();
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 
 		protected override void OnPreRender(EventArgs e) {

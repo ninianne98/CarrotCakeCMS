@@ -41,15 +41,15 @@ namespace Carrotware.Web.UI.Controls {
 			RenderContents(writer);
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 		}
 
 		protected void BaseRender(HtmlTextWriter writer) {
 			base.Render(writer);
 		}
 
-		protected void BaseRenderContents(HtmlTextWriter output) {
-			base.RenderContents(output);
+		protected void BaseRenderContents(HtmlTextWriter writer) {
+			base.RenderContents(writer);
 		}
 	}
 }

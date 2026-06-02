@@ -18,22 +18,22 @@ using System.Web.UI.WebControls;
 
 namespace Carrotware.CMS.UI.Controls {
 
-	public class GeneralUtilities {
+	public static class GeneralUtilities {
 
 		#region binding utilities
 
-		public static string GetSelectedValue(ListControl ddl) {
+		public static string GetSelectedValue(ListControl ctrl) {
 			string sVal = null;
-			if (ddl.SelectedItem != null) {
-				sVal = ddl.SelectedValue;
+			if (ctrl.SelectedItem != null) {
+				sVal = ctrl.SelectedValue;
 			}
 			return sVal;
 		}
 
-		public static List<string> GetSelectedValues(ListControl list) {
+		public static List<string> GetSelectedValues(ListControl ctrl) {
 			List<string> sVal = new List<string>();
-			if (list.Items != null) {
-				foreach (ListItem itm in list.Items) {
+			if (ctrl.Items != null) {
+				foreach (ListItem itm in ctrl.Items) {
 					if (itm.Selected) {
 						sVal.Add(itm.Value);
 					}
@@ -42,18 +42,18 @@ namespace Carrotware.CMS.UI.Controls {
 			return sVal;
 		}
 
-		public static int? GetSelectedInt(ListControl ddl) {
+		public static int? GetSelectedInt(ListControl ctrl) {
 			int? iVal = null;
-			if (ddl.SelectedItem != null) {
-				iVal = int.Parse(ddl.SelectedValue);
+			if (ctrl.SelectedItem != null) {
+				iVal = int.Parse(ctrl.SelectedValue);
 			}
 			return iVal;
 		}
 
-		public static Guid? GetSelectedGuid(ListControl ddl) {
+		public static Guid? GetSelectedGuid(ListControl ctrl) {
 			Guid? gVal = null;
-			if (ddl.SelectedItem != null) {
-				gVal = new Guid(ddl.SelectedValue);
+			if (ctrl.SelectedItem != null) {
+				gVal = new Guid(ctrl.SelectedValue);
 			}
 			return gVal;
 		}
@@ -103,11 +103,11 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public static void SelectListValues(ListControl list, List<string> selectedValues) {
-			if (list != null && list.Items.Count > 0 && selectedValues != null) {
+		public static void SelectListValues(ListControl ctrl, List<string> selectedValues) {
+			if (ctrl != null && ctrl.Items.Count > 0 && selectedValues != null) {
 				if (selectedValues.Any()) {
 					try {
-						foreach (ListItem itm in list.Items) {
+						foreach (ListItem itm in ctrl.Items) {
 							if (selectedValues.Where(x => x.ToLowerInvariant() == itm.Value.ToLowerInvariant()).Any()) {
 								itm.Selected = true;
 							}
@@ -165,13 +165,13 @@ namespace Carrotware.CMS.UI.Controls {
 
 		#region boolean list stuff
 
-		public static bool? GetNullableBoolValue(ListControl ddl) {
+		public static bool? GetNullableBoolValue(ListControl ctrl) {
 			bool? bVal = null;
 
-			if (ddl.SelectedValue == "0") {
+			if (ctrl.SelectedValue == "0") {
 				bVal = false;
 			}
-			if (ddl.SelectedValue == "1") {
+			if (ctrl.SelectedValue == "1") {
 				bVal = true;
 			}
 
@@ -198,8 +198,8 @@ namespace Carrotware.CMS.UI.Controls {
 			BindOptionalYesNoList(ctrl, null);
 		}
 
-		public static void BindOptionalYesNoList(ListControl ctrl, string SelectedValue) {
-			BindOptionalBooleanList(ctrl, SelectedValue, "Choose One", "-1", "Yes", "No");
+		public static void BindOptionalYesNoList(ListControl ctrl, string selectedValue) {
+			BindOptionalBooleanList(ctrl, selectedValue, "Choose One", "-1", "Yes", "No");
 		}
 
 		public static void BindOptionalTrueFalseList(ListControl ctrl) {
@@ -254,17 +254,17 @@ namespace Carrotware.CMS.UI.Controls {
 
 		#endregion QueryString Parsers
 
-		public static string ResolvePath(Control srcControl, string sPath) {
+		public static string ResolvePath(Control ctrl, string path) {
 			string sPathOut = null;
-			if (!string.IsNullOrEmpty(sPath)) {
-				sPathOut = sPath.Replace(@"\", "/");
+			if (!string.IsNullOrEmpty(path)) {
+				sPathOut = path.Replace(@"\", "/");
 			} else {
 				sPathOut = "";
 			}
 
 			if (!sPathOut.Contains("//")) {
 				if ((!sPathOut.StartsWith("~") && !sPathOut.StartsWith("/"))) {
-					sPathOut = srcControl.AppRelativeTemplateSourceDirectory + sPathOut;
+					sPathOut = ctrl.AppRelativeTemplateSourceDirectory + sPathOut;
 				}
 				if (sPathOut.StartsWith("~")) {
 					sPathOut = VirtualPathUtility.ToAbsolute(sPathOut);

@@ -219,10 +219,10 @@ namespace Carrotware.CMS.UI.Controls {
 			_useEditor = editModes.Contains(this.WindowMode);
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			GetEditState();
 
-			output.WriteLine();
+			writer.WriteLine();
 			_jqb.SelectedSkin = jquerybasic.jQueryTheme.Silver;
 
 			switch (this.SelectedColor) {
@@ -267,15 +267,15 @@ namespace Carrotware.CMS.UI.Controls {
 						this.WindowMode.ToString().ToLowerInvariant(),
 						this.SelectedColor.ToString().ToLowerInvariant(), versionKey);
 
-			output.WriteLine(string.Format("<!-- BEGIN {0} Theme   -->", this.SelectedColor));
+			writer.WriteLine(string.Format("<!-- BEGIN {0} Theme   -->", this.SelectedColor));
 
 			if (!_useEditor) {
-				_jqb.RenderControl(output);
+				_jqb.RenderControl(writer);
 			}
 
-			output.WriteLine(string.Format("<!-- CMS {0} Theme   -->", this.SelectedColor) + csstag.RenderSelfClosingTag());
+			writer.WriteLine(string.Format("<!-- CMS {0} Theme   -->", this.SelectedColor) + csstag.RenderSelfClosingTag());
 
-			output.WriteLine(string.Format("<!-- END {0} Theme   -->", this.SelectedColor));
+			writer.WriteLine(string.Format("<!-- END {0} Theme   -->", this.SelectedColor));
 		}
 
 		protected override void OnPreRender(EventArgs e) {

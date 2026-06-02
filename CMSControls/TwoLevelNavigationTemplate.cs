@@ -250,9 +250,9 @@ namespace Carrotware.CMS.UI.Controls {
 			ParentPageNav = GetParentPage();
 
 			if (ShowSecondLevel) {
-				lstTwoLevelNav = navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+				lstTwoLevelNav = _navHelper.GetTwoLevelNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			} else {
-				lstTwoLevelNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+				lstTwoLevelNav = _navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			}
 
 			lstTwoLevelNav = CMSConfigHelper.TweakData(lstTwoLevelNav, false, true);

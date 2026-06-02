@@ -295,37 +295,37 @@ namespace Carrotware.CMS.UI.Controls {
 				switch (this.ContentType) {
 					case SummaryContentType.Blog:
 						viewContentType = ContentPageType.PageType.BlogEntry;
-						TotalRecords = navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = _navHelper.GetFilteredContentPagedCount(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor);
+						lstContents = _navHelper.GetFilteredContentPagedList(SiteData.CurrentSite, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 
 					case SummaryContentType.ChildContentPage:
 						viewContentType = ContentPageType.PageType.ContentEntry;
-						TotalRecords = navHelper.GetChildNavigationCount(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetLatestChildContentPagedList(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = _navHelper.GetChildNavigationCount(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor);
+						lstContents = _navHelper.GetLatestChildContentPagedList(SiteData.CurrentSiteID, sPagePath, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 
 					case SummaryContentType.ContentPage:
 						viewContentType = ContentPageType.PageType.ContentEntry;
-						TotalRecords = navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetLatestContentPagedList(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = _navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor);
+						lstContents = _navHelper.GetLatestContentPagedList(SiteData.CurrentSiteID, viewContentType, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 
 					case SummaryContentType.SpecifiedCategories:
 						viewContentType = ContentPageType.PageType.BlogEntry;
-						TotalRecords = navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = _navHelper.GetFilteredContentByIDPagedCount(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor);
+						lstContents = _navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 
 					case SummaryContentType.SiteSearch:
-						TotalRecords = navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor);
-						lstContents = navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
+						TotalRecords = _navHelper.GetSiteSearchCount(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor);
+						lstContents = _navHelper.GetLatestContentSearchList(SiteData.CurrentSiteID, sSearchTerm, !SecurityData.IsAuthEditor, this.PageSize, iPageNbr, sSortFld, sSortDir);
 						break;
 				}
 			} else {
 				viewContentType = ContentPageType.PageType.ContentEntry;
-				TotalRecords = navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, false);
-				lstContents = navHelper.GetLatestContentPagedList(Guid.NewGuid(), viewContentType, false, this.PageSize, iPageNbr, sSortFld, sSortDir);
+				TotalRecords = _navHelper.GetSitePageCount(SiteData.CurrentSiteID, viewContentType, false);
+				lstContents = _navHelper.GetLatestContentPagedList(Guid.NewGuid(), viewContentType, false, this.PageSize, iPageNbr, sSortFld, sSortDir);
 			}
 
 			lstContents = CMSConfigHelper.TweakData(lstContents);

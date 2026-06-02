@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(false)]
 		public override bool EnableViewState {
 			get {
-				String s = (String)ViewState["EnableViewState"];
+				string s = (string)ViewState["EnableViewState"];
 				bool b = ((s == null) ? false : Convert.ToBoolean(s));
 				base.EnableViewState = b;
 				return b;
@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("")]
 		public string ZoneChar {
 			get {
-				String s = (String)ViewState["ZoneChar"];
+				string s = (string)ViewState["ZoneChar"];
 				return ((s == null) ? string.Empty : s);
 			}
 
@@ -103,13 +103,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
-
-		private Control GetCtrl(Control X) {
-			cu = new ControlUtilities(this);
-			var sb = new StringBuilder();
-			sb.Append(cu.GetResourceText("Carrotware.CMS.UI.Controls.ucAdminContentContainer.ascx"));
-
+		private StringBuilder ScrubCtrl(StringBuilder sb) {
 			sb.Replace("{HTML_FLAG}", SiteData.HtmlMode);
 			sb.Replace("{PLAIN_FLAG}", SiteData.RawMode);
 			sb.Replace("{ZONE_ID}", this.ClientID);
@@ -117,7 +111,23 @@ namespace Carrotware.CMS.UI.Controls {
 			sb.Replace("{ZONE_CHAR}", this.ZoneChar);
 			sb.Replace("{ZONE_TYPE}", this.TextZone.ToString());
 
-			Control userControl = cu.CreateControlFromString(sb.ToString());
+			return sb;
+		}
+
+		private Control _ctrl = new Control();
+
+		private ControlUtilities _cu = new ControlUtilities();
+
+		private Control GetCtrl(Control ctrl) {
+			_cu = new ControlUtilities(this);
+			var sb = new StringBuilder();
+
+			sb.Append(_cu.GetResourceText("ucAdminContentContainer.ascx"));
+
+			sb = ScrubCtrl(sb);
+
+			Control userControl = _cu.CreateControlFromString(sb.ToString());
+			userControl.Page = ctrl.Page;
 
 			return userControl;
 		}
@@ -126,7 +136,7 @@ namespace Carrotware.CMS.UI.Controls {
 			this.EnsureChildControls();
 
 			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
-				ContentPage pageContents = cu.GetContainerContentPage(this);
+				ContentPage pageContents = _cu.GetContainerContentPage(this);
 
 				if (pageContents != null) {
 					this.DatabaseKey = pageContents.Root_ContentID;
@@ -154,25 +164,33 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			Control ctrl = new Control();
-
 			string outputText = SiteData.CurrentSite.UpdateContent(this.Text);
 
-			if (IsAdminMode) {
-				ctrl = GetCtrl(this);
-				Literal lit = (Literal)cu.FindControl("litContent", ctrl);
+			var lit1 = new Literal { Text = string.Empty };
+			var lit2 = new Literal { Text = string.Empty };
+#if DEBUG
+			lit1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
+			lit2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
+#endif
+			var lit = new Literal();
+
+			if (this.IsAdminMode) {
+				_ctrl = GetCtrl(this);
+				lit = (Literal)_cu.FindControl("litContent", _ctrl);
 				lit.Text = outputText;
 			} else {
-#if DEBUG
-				ctrl.Controls.Add(new Literal { Text = "\r\n<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>" });
-#endif
-				ctrl.Controls.Add(new Literal { Text = string.Format("\r\n {0} \r\n", outputText) });
-#if DEBUG
-				ctrl.Controls.Add(new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" });
-#endif
+				lit = new Literal { Text = string.Format(Environment.NewLine + " {0} " + Environment.NewLine, outputText) };
+				_ctrl.Controls.Add(lit);
 			}
 
-			ctrl.RenderControl(writer);
+			lit.ID = "litContent";
+
+			var idx = _ctrl.Controls.IndexOf(lit);
+
+			_ctrl.Controls.AddAt(idx, lit1);
+			_ctrl.Controls.AddAt(idx + 2, lit2);
+
+			_ctrl.RenderControl(writer);
 		}
 	}
 

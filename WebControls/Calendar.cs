@@ -281,13 +281,13 @@ namespace Carrotware.Web.UI.Controls {
 
 		public List<DateTime> HilightDateList { get; set; }
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int indent = output.Indent;
+		protected override void RenderContents(HtmlTextWriter writer) {
+			int indent = writer.Indent;
 
 			string CtrlID = this.ClientID;
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
 			DateTime Today = DateTime.Today.Date;
 			DateTime ThisMonth = DateTime.Today.Date;
@@ -377,42 +377,42 @@ namespace Carrotware.Web.UI.Controls {
 				}
 			}
 
-			output.WriteLine("<table  id=\"" + CtrlID + "-CalTable\" class=\"calendarGrid\" cellspacing=\"0\" cellpadding=\"3\" align=\"center\" border=\"1\">");
-			output.WriteLine("	<tr class=\"calendarheadrow\">");
-			output.WriteLine("		<td class=\"head\" colspan=\"7\">");
-			output.WriteLine("			<table class=\"innerhead\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
-			output.WriteLine("				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
-			output.WriteLine("				<tr> <td class=\"head headtext\"> " + MonthName + " </td> </tr>");
-			output.WriteLine("				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
-			output.WriteLine("			</table>");
-			output.WriteLine("		</td>");
-			output.WriteLine("	</tr>");
-			output.WriteLine();
-			output.WriteLine("	<tr class=\"weekday\">");
-			output.WriteLine("		<td class=\"weekday\" width=\"38\"> SU </td>");
-			output.WriteLine("		<td class=\"weekday\" width=\"38\"> M </td>");
-			output.WriteLine("		<td class=\"weekday\" width=\"38\"> TU </td>");
-			output.WriteLine("		<td class=\"weekday\" width=\"38\"> W </td>");
-			output.WriteLine("		<td class=\"weekday\" width=\"38\"> TR </td>");
-			output.WriteLine("		<td class=\"weekday\" width=\"38\"> F </td>");
-			output.WriteLine("		<td class=\"weekday\" width=\"38\"> SA </td>");
-			output.WriteLine("	</tr>");
-			output.WriteLine();
+			writer.WriteLine("<table  id=\"" + CtrlID + "-CalTable\" class=\"calendarGrid\" cellspacing=\"0\" cellpadding=\"3\" align=\"center\" border=\"1\">");
+			writer.WriteLine("	<tr class=\"calendarheadrow\">");
+			writer.WriteLine("		<td class=\"head\" colspan=\"7\">");
+			writer.WriteLine("			<table class=\"innerhead\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
+			writer.WriteLine("				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
+			writer.WriteLine("				<tr> <td class=\"head headtext\"> " + MonthName + " </td> </tr>");
+			writer.WriteLine("				<tr> <td class=\"head normaltext\"> &nbsp; </td> </tr>");
+			writer.WriteLine("			</table>");
+			writer.WriteLine("		</td>");
+			writer.WriteLine("	</tr>");
+			writer.WriteLine();
+			writer.WriteLine("	<tr class=\"weekday\">");
+			writer.WriteLine("		<td class=\"weekday\" width=\"38\"> SU </td>");
+			writer.WriteLine("		<td class=\"weekday\" width=\"38\"> M </td>");
+			writer.WriteLine("		<td class=\"weekday\" width=\"38\"> TU </td>");
+			writer.WriteLine("		<td class=\"weekday\" width=\"38\"> W </td>");
+			writer.WriteLine("		<td class=\"weekday\" width=\"38\"> TR </td>");
+			writer.WriteLine("		<td class=\"weekday\" width=\"38\"> F </td>");
+			writer.WriteLine("		<td class=\"weekday\" width=\"38\"> SA </td>");
+			writer.WriteLine("	</tr>");
+			writer.WriteLine();
 
-			output.Indent = indent + 4;
+			writer.Indent = indent + 4;
 
 			string[] rows = sb.ToString().Split('\n');
 			int iRows = rows.Count();
 
 			for (int i = 0; i < iRows; i++) {
-				output.WriteLine(rows[i]);
+				writer.WriteLine(rows[i]);
 			}
 
-			output.Indent = indent + 3;
+			writer.Indent = indent + 3;
 
-			output.WriteLine("</table>");
+			writer.WriteLine("</table>");
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 
 		protected override void OnPreRender(EventArgs e) {

@@ -3,7 +3,8 @@
 	<div id="cms_{WIDGET_ID}" class="cms-seagreen">
 		<div id="cmsWidgetHead" class="cmsWidgetTitleBar">
 			<div id="cmsControlPath" title="{WIDGET_PATH}" tooltip="{WIDGET_PATH}">
-				{WIDGET_TITLE}</div>
+				{WIDGET_TITLE}
+			</div>
 			<div id="cmsEditMenuList" class="cmsWidgetMenu">
 				<ul class="cmsWidgetMenu cmsMnuParent">
 					<li class="cmsWidgetCogIcon"><a title="" alt="Modify" class="cmsWidgetBarLink cmsWidgetBarIconCog" id="cmsWidgetBarIcon" href="javascript:void(0);">
@@ -31,7 +32,7 @@
 	<div class="cmsWidgetControl cmsWidgetControlItem" id="cmsControl">
 		<input type="hidden" id="cmsCtrlID" value="{WIDGET_KEY}" />
 		<input type="hidden" id="cmsCtrlOrder" value="{WIDGET_ORDER}" />
-		<asp:PlaceHolder ID="phWidgetZone" runat="server" />
+		<asp:PlaceHolder runat="server" ID="phWidgetZone" />
 		<div style="clear: both;">
 		</div>
 	</div>

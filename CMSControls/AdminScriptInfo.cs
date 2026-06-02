@@ -20,14 +20,14 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:AdminScriptInfo runat=server></{0}:AdminScriptInfo>")]
 	public class AdminScriptInfo : BaseWebControl {
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			var versionKey = string.Format("cms={0}", SiteData.CurrentDLLVersion);
 			var tag = new HtmlTag(HtmlTag.EasyTag.JavaScript);
 			var key = SecurityData.IsAuthenticated ? DateTime.UtcNow.Ticks.ToString().Substring(0, 8) : WebControlHelper.DateKey();
 
 			tag.Uri = SiteFilename.AdminScriptValues + "?ts=" + key + (SecurityData.IsAuthenticated ? ("&a=true&" + versionKey) : string.Empty);
 
-			output.WriteLine(tag.RenderTag());
+			writer.WriteLine(tag.RenderTag());
 		}
 
 		protected override void OnPreRender(EventArgs e) { }

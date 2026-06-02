@@ -36,16 +36,16 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
-		private ExtendedUserData usr = null;
+		private ControlUtilities _cu = new ControlUtilities();
+		private ExtendedUserData _usr = null;
 
 		protected override void OnPreRender(EventArgs e) {
-			if (usr == null) {
-				usr = ExtendedUserData.GetEditorFromURL();
+			if (_usr == null) {
+				_usr = ExtendedUserData.GetEditorFromURL();
 			}
-			if (usr == null) {
-				ContentPage cp = cu.GetContainerContentPage(this);
-				usr = cp.BylineUser;
+			if (_usr == null) {
+				ContentPage cp = _cu.GetContainerContentPage(this);
+				_usr = cp.BylineUser;
 			}
 
 			AssignUser();
@@ -54,12 +54,12 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void AssignUser() {
-			if (usr != null) {
+			if (_usr != null) {
 				if (this.UseDefaultText) {
 					this.Controls.Clear();
-					this.Text = usr.ToString();
+					this.Text = _usr.ToString();
 				}
-				this.NavigateUrl = usr.EditorURL;
+				this.NavigateUrl = _usr.EditorURL;
 			}
 		}
 
@@ -71,7 +71,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (contentData is ISiteContent) {
 				ISiteContent content = (ISiteContent)(contentData);
 
-				usr = content.BylineUser;
+				_usr = content.BylineUser;
 
 				AssignUser();
 			}
@@ -107,7 +107,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("{0}")]
 		public string FieldFormat {
 			get {
-				String s = ViewState["FieldFormat"] as String;
+				string s = ViewState["FieldFormat"] as string;
 				return ((s == null) ? "{0}" : s);
 			}
 			set {
@@ -151,7 +151,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities _cu = new ControlUtilities();
 		private ExtendedUserData _usr = null;
 
 		protected override void OnPreRender(EventArgs e) {
@@ -159,7 +159,7 @@ namespace Carrotware.CMS.UI.Controls {
 				_usr = ExtendedUserData.GetEditorFromURL();
 			}
 			if (_usr == null) {
-				ContentPage cp = cu.GetContainerContentPage(this);
+				ContentPage cp = _cu.GetContainerContentPage(this);
 
 				switch (this.SourceField) {
 					case AuthorSource.Editor:
@@ -186,12 +186,12 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private void AssignUser() {
-			string sFieldValue = String.Empty;
+			string sFieldValue = string.Empty;
 
 			if (_usr != null) {
 				object objData = ReflectionUtilities.GetPropertyValue(_usr, DataField.ToString());
 				if (objData != null) {
-					sFieldValue = String.Format(FieldFormat, objData);
+					sFieldValue = string.Format(FieldFormat, objData);
 				}
 
 				this.Text = sFieldValue;

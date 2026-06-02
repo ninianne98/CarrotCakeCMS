@@ -42,29 +42,29 @@ namespace Carrotware.CMS.UI.Base {
 		public SiteData TheSite { get { return _theSite; } }
 		public List<Widget> ThePageWidgets { get { return _pageWidgets; } }
 
-		protected ControlUtilities cu = new ControlUtilities();
+		protected ControlUtilities _cu = new ControlUtilities();
 
 		protected ContentPage _pageContents = null;
 		protected SiteData _theSite = null;
 		protected List<Widget> _pageWidgets = null;
 
-		public Guid guidContentID = Guid.Empty;
+		public Guid Root_ContentID { get; set; } = Guid.Empty;
 
-		public bool IsPageTemplate = false;
+		public bool IsPageTemplate { get; set; } = false;
 
-		private int iCtrl = 0;
+		private int _ctrlCounter = 0;
 
 		public string CtrlId {
 			get {
-				return "WidgetCtrlId" + (iCtrl++);
+				return "WidgetCtrlId" + (_ctrlCounter++);
 			}
 		}
 
-		private int iCtrlW = 0;
+		private int _ctrlWrapCounter = 0;
 
 		public string WrapCtrlId {
 			get {
-				return "WidgetWrapCtrlId" + (iCtrlW++);
+				return "WidgetWrapCtrlId" + (_ctrlWrapCounter++);
 			}
 		}
 
@@ -73,25 +73,25 @@ namespace Carrotware.CMS.UI.Base {
 			Header,
 		}
 
-		protected void InsertSpecialCtrl(Control control, ControlLocation CtrlKey) {
-			string sControlPath = string.Empty;
+		protected void InsertSpecialCtrl(Control ctrl, ControlLocation ctrlKey) {
+			string controlPath = string.Empty;
 			CarrotCakeConfig config = CarrotCakeConfig.GetConfig();
 
-			switch (CtrlKey) {
+			switch (ctrlKey) {
 				case ControlLocation.Header:
-					sControlPath = config.PublicSiteControls.ControlPathHeader;
+					controlPath = config.PublicSiteControls.ControlPathHeader;
 					break;
 
 				case ControlLocation.Footer:
-					sControlPath = config.PublicSiteControls.ControlPathFooter;
+					controlPath = config.PublicSiteControls.ControlPathFooter;
 					break;
 			}
 
-			if (!string.IsNullOrEmpty(sControlPath)) {
-				if (File.Exists(HttpContext.Current.Server.MapPath(sControlPath))) {
-					Control ctrl = new Control();
-					ctrl = CurrentWebPage.LoadControl(sControlPath);
-					control.Controls.Add(ctrl);
+			if (!string.IsNullOrEmpty(controlPath)) {
+				if (File.Exists(HttpContext.Current.Server.MapPath(controlPath))) {
+					var c = new Control();
+					c = CurrentWebPage.LoadControl(controlPath);
+					ctrl.Controls.Add(c);
 				}
 			}
 		}
@@ -116,8 +116,8 @@ namespace Carrotware.CMS.UI.Base {
 			_pageContents = SiteData.GetCurrentPage();
 
 			if (_pageContents != null) {
-				guidContentID = _pageContents.Root_ContentID;
-				_pageWidgets = SiteData.GetCurrentPageWidgets(guidContentID);
+				this.Root_ContentID = _pageContents.Root_ContentID;
+				_pageWidgets = SiteData.GetCurrentPageWidgets(this.Root_ContentID);
 			}
 		}
 
@@ -132,8 +132,8 @@ namespace Carrotware.CMS.UI.Base {
 			this.CurrentWebPage.Header.Controls.Add(metaGenerator);
 			this.CurrentWebPage.Header.Controls.Add(new Literal { Text = "\r\n" });
 
-			if (guidContentID == SiteData.CurrentSiteID && SiteData.IsPageReal) {
-				IsPageTemplate = true;
+			if (this.Root_ContentID == SiteData.CurrentSiteID && SiteData.IsPageReal) {
+				this.IsPageTemplate = true;
 			}
 
 			if (_theSite != null && _pageContents != null) {
@@ -221,7 +221,7 @@ namespace Carrotware.CMS.UI.Base {
 						_pageContents.TitleBar = _pageContents.TitleBar.Trim() + ": " + sTitleAddendum;
 					}
 
-					PagedDataSummary pd = (PagedDataSummary)cu.FindControl(typeof(PagedDataSummary), this.CurrentWebPage);
+					PagedDataSummary pd = (PagedDataSummary)_cu.FindControl(typeof(PagedDataSummary), this.CurrentWebPage);
 
 					if (pd != null) {
 						PagedDataSummaryTitleOption titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == pvt.CurrentViewType).FirstOrDefault();
@@ -273,7 +273,7 @@ namespace Carrotware.CMS.UI.Base {
 
 					if (!SecurityData.AdvancedEditMode) {
 						if (SecurityData.IsAdmin || SecurityData.IsSiteEditor) {
-							if (!SiteData.IsPageSampler && !IsPageTemplate) {
+							if (!SiteData.IsPageSampler && !this.IsPageTemplate) {
 								Control editor = this.CurrentWebPage.LoadControl(SiteFilename.EditNotifierControlPath);
 								this.CurrentWebPage.Form.Controls.Add(editor);
 							}
@@ -489,26 +489,26 @@ namespace Carrotware.CMS.UI.Base {
 
 		public void AssignControls() {
 			if (_pageContents != null) {
-				cu.ResetFind();
-				Control ctrlHead = cu.FindControl("litPageHeading", this.CurrentWebPage);
+				_cu.ResetFind();
+				Control ctrlHead = _cu.FindControl("litPageHeading", this.CurrentWebPage);
 				if (ctrlHead != null && ctrlHead is ITextControl) {
 					((ITextControl)ctrlHead).Text = _pageContents.PageHead;
 				}
 
-				cu.ResetFind();
-				Control ctrlCenter = cu.FindControl("BodyCenter", this.CurrentWebPage);
+				_cu.ResetFind();
+				Control ctrlCenter = _cu.FindControl("BodyCenter", this.CurrentWebPage);
 				if (ctrlCenter != null && ctrlCenter is ContentContainer) {
 					AssignContentZones((ContentContainer)ctrlCenter, contCenter);
 				}
 
-				cu.ResetFind();
-				Control ctrlLeft = cu.FindControl("BodyLeft", this.CurrentWebPage);
+				_cu.ResetFind();
+				Control ctrlLeft = _cu.FindControl("BodyLeft", this.CurrentWebPage);
 				if (ctrlLeft != null && ctrlLeft is ContentContainer) {
 					AssignContentZones((ContentContainer)ctrlLeft, contLeft);
 				}
 
-				cu.ResetFind();
-				Control ctrlRight = cu.FindControl("BodyRight", this.CurrentWebPage);
+				_cu.ResetFind();
+				Control ctrlRight = _cu.FindControl("BodyRight", this.CurrentWebPage);
 				if (ctrlRight != null && ctrlRight is ContentContainer) {
 					AssignContentZones((ContentContainer)ctrlRight, contRight);
 				}

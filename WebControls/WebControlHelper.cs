@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Xml.Linq;
 
 /*
@@ -133,17 +134,24 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static string GetWebResourceUrl(Page page, Type type, string resource) {
-			string sPath = string.Empty;
+			string uri = string.Empty;
+
+			var assembly = Assembly.GetExecutingAssembly();
+			var a_name = assembly.GetName().Name;
+
+			if (resource.ToLowerInvariant().StartsWith(a_name.ToLowerInvariant()) == false) {
+				resource = string.Format("{0}.{1}", a_name, resource);
+			}
 
 			if (page != null) {
 				try {
-					sPath = page.ClientScript.GetWebResourceUrl(type, resource);
+					uri = page.ClientScript.GetWebResourceUrl(type, resource);
 				} catch (Exception ex) { }
 			} else {
-				sPath = GetWebResourceUrl(type, resource);
+				uri = GetWebResourceUrl(type, resource);
 			}
 
-			return sPath;
+			return uri;
 		}
 
 		internal static string GetManifestResourceStream(string resource) {
@@ -183,14 +191,6 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			return returnBytes;
-		}
-
-		internal static string RenderCtrl(Control ctrl) {
-			var sw = new StringWriter();
-			using (var tw = new HtmlTextWriter(sw)) {
-				ctrl.RenderControl(tw);
-				return sw.ToString();
-			}
 		}
 
 		public static string ShortDateFormatPattern {
@@ -237,6 +237,42 @@ namespace Carrotware.Web.UI.Controls {
 
 				return _shortTimePattern;
 			}
+		}
+
+		public static string RenderControl(this Control ctrl) {
+			var sb = new StringBuilder();
+
+			using (var tw = new StringWriter(sb)) {
+				using (var hw = new HtmlTextWriter(tw)) {
+
+					ctrl.RenderControl(hw);
+
+					return sb.ToString();
+				}
+			}
+		}
+
+		public static HtmlMeta CreateHtmlMeta(string attrib, string attribValue, string content) {
+			var meta = new HtmlMeta();
+
+			meta.Attributes[attrib] = attribValue;
+			meta.Content = content;
+
+			return meta;
+		}
+
+		public static HtmlMeta CreateHtmlMetaProp(string property, string content) {
+			return CreateHtmlMeta("property", property, content);
+		}
+
+		public static ControlCollection AddLiteral(this ControlCollection collection, string content) {
+			collection.Add(new LiteralControl() { Text = content });
+			return collection;
+		}
+
+		public static ControlCollection AddHtmlMetaProp(this ControlCollection collection, string property, string content) {
+			collection.Add(CreateHtmlMetaProp(property, content));
+			return collection;
 		}
 	}
 }

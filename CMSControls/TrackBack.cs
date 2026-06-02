@@ -52,7 +52,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(false)]
 		public override bool EnableViewState {
 			get {
-				String s = (String)ViewState["EnableViewState"];
+				string s = (string)ViewState["EnableViewState"];
 				bool b = ((s == null) ? false : Convert.ToBoolean(s));
 				base.EnableViewState = b;
 				return b;
@@ -64,19 +64,19 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities _cu = new ControlUtilities();
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			var sbTrackback = new StringBuilder();
-			sbTrackback.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.Trackback.txt"));
+			sbTrackback.Append(ControlUtilities.GetManifestResourceStream("Trackback.txt"));
 
-			ContentPage cp = cu.GetContainerContentPage(this);
+			ContentPage cp = _cu.GetContainerContentPage(this);
 
 			if (cp != null && sbTrackback.Length > 1) {
 				sbTrackback.Replace("{URL}", SiteData.CurrentSite.ConstructedCanonicalURL(cp));
 				sbTrackback.Replace("{TB_TITLE}", cp.NavMenuText);
 				sbTrackback.Replace("{TB_URL_ID}", SiteData.CurrentSite.ConstructedCanonicalURL(TrackBackURI) + "?id=" + HttpUtility.UrlEncode(cp.FileName));
-				output.Write(sbTrackback.ToString());
+				writer.Write(sbTrackback.ToString());
 			}
 
 			if (IsPostBack && EnableDirectTrackback) {

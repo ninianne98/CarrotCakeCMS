@@ -1176,6 +1176,18 @@
     <Content Include="cmsTemplates\Imagination\no-sidebar.aspx" />
     <Content Include="cmsTemplates\Imagination\post.aspx" />
     <Content Include="cmsTemplates\Imagination\right-sidebar.aspx" />
+    <Content Include="cmsTemplates\oilpainting\images\img01.jpg" />
+    <Content Include="cmsTemplates\oilpainting\images\pics01.jpg" />
+    <Content Include="cmsTemplates\oilpainting\menu.css" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-blog-m.aspx" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-blog.aspx" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-home-m.aspx" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-home.aspx" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-index-m.aspx" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-index.aspx" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-page-m.aspx" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting-page.aspx" />
+    <Content Include="cmsTemplates\oilpainting\style.css" />
     <Content Include="cmsTemplates\waterdrops\images\img01.jpg" />
     <Content Include="cmsTemplates\waterdrops\images\img02.jpg" />
     <Content Include="cmsTemplates\waterdrops\images\img02b.jpg" />
@@ -1470,6 +1482,8 @@
     <Content Include="cmsTemplates\Imagination\css\font\FontAwesome.otf" />
     <Content Include="cmsTemplates\Imagination\imagination.master" />
     <Content Include="cmsTemplates\Imagination\Skin.config" />
+    <Content Include="cmsTemplates\oilpainting\Skin.config" />
+    <Content Include="cmsTemplates\oilpainting\oilpainting.master" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

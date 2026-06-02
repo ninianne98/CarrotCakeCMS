@@ -101,7 +101,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 		}
 
-		protected override void WriteListPrefix(HtmlTextWriter output) {
+		protected override void WriteListPrefix(HtmlTextWriter writer) {
 			if (this.NavigationData != null) {
 				this.ItemCount = this.NavigationData.Count;
 			}
@@ -110,10 +110,10 @@ namespace Carrotware.CMS.UI.Controls {
 				var head = new HtmlTag(this.HeadWrapTag.ToString());
 				head.MergeAttribute("class", "meta-caption");
 				head.InnerHtml = this.MetaDataTitle;
-				output.WriteLine(head.RenderTag());
+				writer.WriteLine(head.RenderTag());
 			}
 
-			base.WriteListPrefix(output);
+			base.WriteListPrefix(writer);
 		}
 	}
 }

@@ -37,17 +37,17 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public static string DbVersion20 { get { return "20260510"; } }
 
-		internal static string ReadEmbededScript(string resouceName) {
+		internal static string ReadEmbededScript(string resourceName) {
 			var sb = new StringBuilder();
 
 			var assembly = Assembly.GetExecutingAssembly();
 			var a_name = assembly.GetName().Name;
 
-			if (resouceName.ToLowerInvariant().StartsWith(a_name.ToLowerInvariant()) == false) {
-				resouceName = string.Format("{0}.DataScripts.{1}", a_name, resouceName);
+			if (resourceName.ToLowerInvariant().StartsWith(a_name.ToLowerInvariant()) == false) {
+				resourceName = string.Format("{0}.DataScripts.{1}", a_name, resourceName);
 			}
 
-			using (var stream = new StreamReader(assembly.GetManifestResourceStream(resouceName))) {
+			using (var stream = new StreamReader(assembly.GetManifestResourceStream(resourceName))) {
 				sb.Append(stream.ReadToEnd());
 			}
 

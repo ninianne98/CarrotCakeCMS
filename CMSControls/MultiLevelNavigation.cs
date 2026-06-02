@@ -39,7 +39,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void LoadData() {
 			base.LoadData();
 
-			this.NavigationData = navHelper.GetLevelDepthNavigation(SiteData.CurrentSiteID, LevelDepth, !SecurityData.IsAuthEditor);
+			this.NavigationData = _navHelper.GetLevelDepthNavigation(SiteData.CurrentSiteID, LevelDepth, !SecurityData.IsAuthEditor);
 		}
 
 		public override List<string> LimitedPropertyList {

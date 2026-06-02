@@ -119,27 +119,27 @@ namespace Carrotware.CMS.UI.Controls {
 			return navCrumbs.Where(ct => ct.Root_ContentID == rootContentID && ct.NavOrder > 0).FirstOrDefault();
 		}
 
-		protected override void WriteListPrefix(HtmlTextWriter output) {
+		protected override void WriteListPrefix(HtmlTextWriter writer) {
 			_topTag = new HtmlTag("ul");
 
 			_topTag.SetAttribute("id", this.HtmlClientID);
 			_topTag.MergeAttribute("class", this.CSSULClassTop);
 			_topTag.MergeAttribute("class", this.CssClass);
 
-			output.WriteLine(_topTag.OpenTag());
+			writer.WriteLine(_topTag.OpenTag());
 		}
 
-		protected override void WriteListSuffix(HtmlTextWriter output) {
-			output.WriteLine(_topTag.CloseTag());
+		protected override void WriteListSuffix(HtmlTextWriter writer) {
+			writer.WriteLine(_topTag.CloseTag());
 		}
 
 		protected string ParentFileName { get; set; }
 
 		private int _itemNumber = 0;
 
-		protected virtual void WriteTopLevel(HtmlTextWriter output) {
-			int indent = output.Indent;
-			output.Indent = indent + 2;
+		protected virtual void WriteTopLevel(HtmlTextWriter writer) {
+			int indent = writer.Indent;
+			writer.Indent = indent + 2;
 
 			List<SiteNav> lstNav = GetTopNav();
 			SiteNav parentPageNav = GetParentPage();
@@ -150,10 +150,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 
 			if (lstNav != null && lstNav.Any()) {
-				output.WriteLine();
-				WriteListPrefix(output);
+				writer.WriteLine();
+				WriteListPrefix(writer);
 
-				int indent2 = output.Indent + 1;
+				int indent2 = writer.Indent + 1;
 
 				foreach (SiteNav c1 in lstNav) {
 					var item = new HtmlTag("li");
@@ -164,7 +164,7 @@ namespace Carrotware.CMS.UI.Controls {
 					link.Uri = c1.FileName;
 					link.InnerHtml = c1.NavMenuText;
 
-					output.Indent = indent2;
+					writer.Indent = indent2;
 					List<SiteNav> cc = GetChildren(c1.Root_ContentID);
 
 					if (this.MultiLevel) {
@@ -183,36 +183,36 @@ namespace Carrotware.CMS.UI.Controls {
 					_itemNumber++;
 					item.SetAttribute("id", string.Format("listitem{0}", _itemNumber));
 
-					output.Write(item.OpenTag());
+					writer.Write(item.OpenTag());
 
 					link.Uri = c1.FileName;
 					link.InnerHtml = c1.NavMenuText;
 
-					output.WriteLine(link.RenderTag());
+					writer.WriteLine(link.RenderTag());
 
-					int indent3 = output.Indent;
+					int indent3 = writer.Indent;
 					if (this.MultiLevel && cc != null && cc.Any()) {
-						LoadChildren(output, c1.Root_ContentID, _itemNumber, 2);
+						LoadChildren(writer, c1.Root_ContentID, _itemNumber, 2);
 					}
-					output.Indent = indent3;
+					writer.Indent = indent3;
 
-					output.Write(item.CloseTag());
-					output.WriteLine();
+					writer.Write(item.CloseTag());
+					writer.WriteLine();
 				}
-				WriteListSuffix(output);
+				WriteListSuffix(writer);
 			} else {
 #if DEBUG
-				output.WriteLine("<span style=\"display: none;\" id=\"" + this.HtmlClientID + "\"></span>");
+				writer.WriteLine("<span style=\"display: none;\" id=\"" + this.HtmlClientID + "\"></span>");
 #endif
 			}
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 
-		protected virtual void LoadChildren(HtmlTextWriter output, Guid rootContentID, int iParent, int iLevel) {
+		protected virtual void LoadChildren(HtmlTextWriter writer, Guid rootContentID, int iParent, int iLevel) {
 			List<SiteNav> lstNav = GetChildren(rootContentID);
-			int indent = output.Indent;
-			output.Indent = indent + 1;
+			int indent = writer.Indent;
+			writer.Indent = indent + 1;
 
 			if (lstNav != null && lstNav.Any()) {
 				var childList = new HtmlTag("ul");
@@ -221,12 +221,12 @@ namespace Carrotware.CMS.UI.Controls {
 				childList.MergeAttribute("class", string.Format("childlist childlevel{0}", iLevel));
 				childList.MergeAttribute("class", this.CSSULClassLower);
 
-				output.Write(childList.OpenTag());
-				output.WriteLine();
+				writer.Write(childList.OpenTag());
+				writer.WriteLine();
 
-				int indent2 = output.Indent + 1;
+				int indent2 = writer.Indent + 1;
 				foreach (SiteNav c2 in lstNav) {
-					output.Indent = indent2;
+					writer.Indent = indent2;
 					List<SiteNav> cc = GetChildren(c2.Root_ContentID);
 					var childItem = new HtmlTag("li");
 					var childLink = new HtmlTag("a");
@@ -246,32 +246,32 @@ namespace Carrotware.CMS.UI.Controls {
 					_itemNumber++;
 					childItem.SetAttribute("id", string.Format("listitem{0}", _itemNumber));
 					childItem.MergeAttribute("class", "child-nav");
-					output.Write(childItem.OpenTag());
+					writer.Write(childItem.OpenTag());
 
 					childLink.Uri = c2.FileName;
 					childLink.InnerHtml = c2.NavMenuText;
-					output.WriteLine(childLink.RenderTag());
+					writer.WriteLine(childLink.RenderTag());
 
-					int indent3 = output.Indent;
+					int indent3 = writer.Indent;
 					if (cc != null && cc.Any()) {
-						LoadChildren(output, c2.Root_ContentID, _itemNumber, iLevel + 1);
+						LoadChildren(writer, c2.Root_ContentID, _itemNumber, iLevel + 1);
 					}
-					output.Indent = indent3;
+					writer.Indent = indent3;
 
-					output.Write(childItem.CloseTag());
-					output.WriteLine();
+					writer.Write(childItem.CloseTag());
+					writer.WriteLine();
 				}
-				output.Indent--;
-				output.WriteLine(childList.CloseTag());
+				writer.Indent--;
+				writer.WriteLine(childList.CloseTag());
 			}
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			LoadAndTweakData();
 
-			WriteTopLevel(output);
+			WriteTopLevel(writer);
 		}
 
 		protected override void OnPreRender(EventArgs e) {

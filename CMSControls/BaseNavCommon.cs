@@ -100,20 +100,20 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected HtmlTag _topTag = new HtmlTag("ul");
 
-		protected virtual void WriteListPrefix(HtmlTextWriter output) {
+		protected virtual void WriteListPrefix(HtmlTextWriter writer) {
 			_topTag = new HtmlTag("ul");
 
 			if (this.NavigationData != null && this.NavigationData.Any()) {
 				_topTag.SetAttribute("id", this.HtmlClientID);
 				_topTag.MergeAttribute("class", this.CssClass);
 
-				output.WriteLine(_topTag.OpenTag());
+				writer.WriteLine(_topTag.OpenTag());
 			}
 		}
 
-		protected virtual void WriteListSuffix(HtmlTextWriter output) {
+		protected virtual void WriteListSuffix(HtmlTextWriter writer) {
 			if (this.NavigationData != null && this.NavigationData.Any()) {
-				output.WriteLine(_topTag.CloseTag());
+				writer.WriteLine(_topTag.CloseTag());
 			}
 		}
 

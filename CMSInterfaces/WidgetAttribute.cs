@@ -27,19 +27,19 @@ namespace Carrotware.CMS.Interface {
 		}
 
 		public WidgetAttribute(FieldMode mode) {
-			this._mode = mode;
+			_mode = mode;
 		}
 
 		public WidgetAttribute(FieldMode mode, string field) {
-			this._mode = mode;
-			this._field = field;
+			_mode = mode;
+			_field = field;
 		}
 
 		private FieldMode _mode;
 
 		public FieldMode Mode {
 			get {
-				return this._mode;
+				return _mode;
 			}
 		}
 
@@ -47,7 +47,7 @@ namespace Carrotware.CMS.Interface {
 
 		public string SelectFieldSource {
 			get {
-				return this._field;
+				return _field;
 			}
 		}
 	}

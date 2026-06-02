@@ -1,21 +1,27 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace Carrotware.CMS.UI.Plugins.LoremIpsum.Code {
 
 	public class WebHelper {
 
-		public static string ReadEmbededScript(string sResouceName) {
-			string sReturn = null;
+		public static string ReadEmbededScript(string resourceName) {
+			var sb = new StringBuilder();
 
-			Assembly _assembly = Assembly.GetExecutingAssembly();
-			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(sResouceName))) {
-				sReturn = stream.ReadToEnd();
+			var assembly = Assembly.GetExecutingAssembly();
+			var a_name = assembly.GetName().Name;
+
+			if (resourceName.ToLowerInvariant().StartsWith(a_name.ToLowerInvariant()) == false) {
+				resourceName = string.Format("{0}.{1}", a_name, resourceName);
 			}
 
-			return sReturn;
+			using (var stream = new StreamReader(assembly.GetManifestResourceStream(resourceName))) {
+				sb.Append(stream.ReadToEnd());
+			}
+
+			return sb.ToString();
 		}
 
 		private static string _shortDatePattern = null;

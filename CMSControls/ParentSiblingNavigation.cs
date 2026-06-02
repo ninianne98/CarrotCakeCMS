@@ -108,9 +108,9 @@ namespace Carrotware.CMS.UI.Controls {
 			SiteNav parentNav = GetParentPage();
 
 			if (parentNav.Root_ContentID != Guid.Empty && parentNav.Parent_ContentID != null) {
-				lstNav = navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, parentNav.FileName, !SecurityData.IsAuthEditor);
+				lstNav = _navHelper.GetSiblingNavigation(SiteData.CurrentSiteID, parentNav.FileName, !SecurityData.IsAuthEditor);
 			} else {
-				lstNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+				lstNav = _navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 			}
 
 			switch (this.SortNavBy) {

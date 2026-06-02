@@ -128,7 +128,7 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			switch (RenderRSSMode) {
 				case RSSRenderAs.HeaderLink:
 
@@ -142,7 +142,7 @@ namespace Carrotware.CMS.UI.Controls {
 							link.MergeAttribute("type", "application/rss+xml");
 							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
 
-							output.Write("<!-- RSS Header Feed --> " + link.RenderSelfClosingTag() + " \r\n");
+							writer.Write("<!-- RSS Header Feed --> " + link.RenderSelfClosingTag() + " \r\n");
 							break;
 
 						default:
@@ -172,7 +172,7 @@ namespace Carrotware.CMS.UI.Controls {
 							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
 							link.InnerHtml = img.RenderSelfClosingTag();
 
-							output.Write("<!-- RSS Feed Image Link--> " + link.RenderTag() + "\r\n");
+							writer.Write("<!-- RSS Feed Image Link--> " + link.RenderTag() + "\r\n");
 							break;
 
 						default:
@@ -198,7 +198,7 @@ namespace Carrotware.CMS.UI.Controls {
 							link.MergeAttribute("title", EnumHelper.GetDescription<SiteData.RSSFeedInclude>(this.RSSFeedType.ToString()) + " RSS Feed");
 							link.InnerHtml = this.LinkText;
 
-							output.Write("<!-- RSS Feed Text Link--> " + link.RenderTag() + "\r\n");
+							writer.Write("<!-- RSS Feed Text Link--> " + link.RenderTag() + "\r\n");
 							break;
 
 						default:

@@ -116,7 +116,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void LoadData() {
 			base.LoadData();
 
-			List<SiteNav> lstNav = navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
+			List<SiteNav> lstNav = _navHelper.GetChildNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 
 			if (this.IncludeParent && lstNav != null && lstNav.Where(x => x.ShowInSiteNav == true).Count() > 0) {
 				SiteNav p = GetParent(lstNav.OrderByDescending(x => x.Parent_ContentID).FirstOrDefault().Parent_ContentID);
@@ -157,7 +157,7 @@ namespace Carrotware.CMS.UI.Controls {
 		protected SiteNav GetParent(Guid? rootContentID) {
 			SiteNav pageNav = null;
 			if (rootContentID.HasValue) {
-				pageNav = navHelper.GetPageNavigation(SiteData.CurrentSiteID, rootContentID.Value);
+				pageNav = _navHelper.GetPageNavigation(SiteData.CurrentSiteID, rootContentID.Value);
 			}
 			return pageNav;
 		}

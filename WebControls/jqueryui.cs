@@ -30,7 +30,7 @@ namespace Carrotware.Web.UI.Controls {
 		[Localizable(true)]
 		public string JQUIVersion {
 			get {
-				String s = (String)ViewState["JQUIVersion"];
+				string s = (string)ViewState["JQUIVersion"];
 				return ((s == null) ? DefaultJQUIVersion : s);
 			}
 			set {
@@ -47,16 +47,16 @@ namespace Carrotware.Web.UI.Controls {
 		public static string GeneralUri {
 			get {
 				if (string.IsNullOrEmpty(_generalUri)) {
-					_generalUri = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-3.js");
+					_generalUri = GetWebResourceUrl("jquery.jqueryui-1-13-3.js");
 				}
 
 				return _generalUri;
 			}
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			string sJQFile = "";
-			string jqVer = JQUIVersion;
+			string jqVer = this.JQUIVersion;
 
 			if (!string.IsNullOrEmpty(jqVer) && jqVer.Length > 2) {
 				if (jqVer.LastIndexOf(".") != jqVer.IndexOf(".")) {
@@ -67,27 +67,27 @@ namespace Carrotware.Web.UI.Controls {
 			switch (jqVer) {
 				case "1.10":
 					jqVer = "1.10.2";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-10-2.js");
+					sJQFile = GetWebResourceUrl("jquery.jqueryui-1-10-2.js");
 					break;
 
 				case "1.11":
 					jqVer = "1.11.4";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-11-4.js");
+					sJQFile = GetWebResourceUrl("jquery.jqueryui-1-11-4.js");
 					break;
 
 				case "1.12":
 					jqVer = "1.12.1";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-12-1.js");
+					sJQFile = GetWebResourceUrl("jquery.jqueryui-1-12-1.js");
 					break;
 
 				case "1.13":
 				default:
 					jqVer = "1.13.3";
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-3.js");
+					sJQFile = GetWebResourceUrl("jquery.jqueryui-1-13-3.js");
 					break;
 			}
 
-			output.WriteLine("<!-- JQuery UI v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
+			writer.WriteLine("<!-- JQuery UI v. " + jqVer + " --> <script src=\"" + sJQFile + "\" type=\"text/javascript\"></script> ");
 		}
 	}
 }

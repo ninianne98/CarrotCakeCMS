@@ -35,7 +35,7 @@ namespace Carrotware.Web.UI.Controls {
 		public jQueryTheme SelectedSkin {
 			get {
 				string s = (string)ViewState["SelectedSkin"];
-				jQueryTheme c = (jQueryTheme)Enum.Parse(typeof(jQueryTheme), "GlossyBlack", true);
+				jQueryTheme c = (jQueryTheme)Enum.Parse(typeof(jQueryTheme), jQueryTheme.GlossyBlack.ToString(), true);
 				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (jQueryTheme)Enum.Parse(typeof(jQueryTheme), s, true);
@@ -54,7 +54,7 @@ namespace Carrotware.Web.UI.Controls {
 		[Localizable(true)]
 		public bool StylesheetOnly {
 			get {
-				String s = (String)ViewState["StylesheetOnly"];
+				string s = (string)ViewState["StylesheetOnly"];
 				return ((s == null) ? false : Convert.ToBoolean(s));
 			}
 			set {
@@ -68,7 +68,7 @@ namespace Carrotware.Web.UI.Controls {
 		[Localizable(true)]
 		public string JQVersion {
 			get {
-				String s = (String)ViewState["JQVersion"];
+				string s = (string)ViewState["JQVersion"];
 				return ((s == null) ? jquery.DefaultJQVersion : s);
 			}
 			set {
@@ -76,27 +76,13 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		//[Bindable(true)]
-		//[Category("Appearance")]
-		//[DefaultValue("")]
-		//[Localizable(true)]
-		//public string JQUIVersion {
-		//    get {
-		//        String s = (String)ViewState["JQUIVersion"];
-		//        return ((s == null) ? "1.10" : s);
-		//    }
-		//    set {
-		//        ViewState["JQUIVersion"] = value;
-		//    }
-		//}
-
 		[Bindable(true)]
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		[Localizable(true)]
 		public bool UseJqueryMigrate {
 			get {
-				String s = (String)ViewState["UseJqueryMigrate"];
+				string s = (string)ViewState["UseJqueryMigrate"];
 				return ((s == null) ? (this.JQVersion.StartsWith("3") ? true : false) : Convert.ToBoolean(s));
 			}
 			set {
@@ -118,10 +104,10 @@ namespace Carrotware.Web.UI.Controls {
 			this.Controls.Add(_jqui);
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			string sJQFile = "";
 
-			output.WriteLine();
+			writer.WriteLine();
 
 			if (!this.StylesheetOnly) {
 				_jq.JQVersion = this.JQVersion;
@@ -129,41 +115,41 @@ namespace Carrotware.Web.UI.Controls {
 
 				//j2.JQUIVersion = this.JQUIVersion;
 
-				_jq.RenderControl(output);
-				_jqui.RenderControl(output);
+				_jq.RenderControl(writer);
+				_jqui.RenderControl(writer);
 			}
 
 			sJQFile = "";
 
 			switch (this.SelectedSkin) {
 				case jQueryTheme.GlossyBlack:
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-black.css");
+					sJQFile = GetWebResourceUrl("jquerybasic.jquery-ui-black.css");
 					break;
 
 				case jQueryTheme.Purple:
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-purple.css");
+					sJQFile = GetWebResourceUrl("jquerybasic.jquery-ui-purple.css");
 					break;
 
 				case jQueryTheme.Green:
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-green.css");
+					sJQFile = GetWebResourceUrl("jquerybasic.jquery-ui-green.css");
 					break;
 
 				case jQueryTheme.Blue:
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-blue.css");
+					sJQFile = GetWebResourceUrl("jquerybasic.jquery-ui-blue.css");
 					break;
 
 				case jQueryTheme.LightGreen:
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-lightgreen.css");
+					sJQFile = GetWebResourceUrl("jquerybasic.jquery-ui-lightgreen.css");
 					break;
 
 				case jQueryTheme.Silver:
 				default:
-					sJQFile = GetWebResourceUrl("Carrotware.Web.UI.Controls.jquerybasic.jquery-ui-silver.css");
+					sJQFile = GetWebResourceUrl("jquerybasic.jquery-ui-silver.css");
 					break;
 			}
 
 			if (this.SelectedSkin != jQueryTheme.NotUsed) {
-				output.Write("<!-- JQuery UI CSS " + SelectedSkin.ToString() + " --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
+				writer.Write("<!-- JQuery UI CSS " + this.SelectedSkin.ToString() + " --> <link href=\"" + sJQFile + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 			}
 		}
 

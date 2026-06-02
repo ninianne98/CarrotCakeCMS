@@ -53,7 +53,7 @@ namespace Carrotware.CMS.UI.Controls {
 			int iPageNbr = this.PageNumberZeroIndex;
 
 			if (context != null) {
-				SiteNav sn = navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+				SiteNav sn = _navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
 
 				if (sn != null) {
 					TotalRecords = PostComment.GetCommentCountByContent(sn.Root_ContentID, !SecurityData.IsAuthEditor);

@@ -71,11 +71,11 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int indent = output.Indent;
+		protected override void RenderContents(HtmlTextWriter writer) {
+			int indent = writer.Indent;
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
@@ -94,15 +94,15 @@ namespace Carrotware.CMS.UI.Controls {
 				sScroll = " scrolling=\"auto\" ";
 			}
 
-			output.Indent++;
+			writer.Indent++;
 
-			output.WriteLine("<div id=\"" + this.ClientID + "\">");
-			output.WriteLine("\t<iframe id=\"" + this.ClientID + "_frame\" " + sScroll + sStyle + sCSS + sHREF + " > </iframe>");
-			output.WriteLine("</div>");
+			writer.WriteLine("<div id=\"" + this.ClientID + "\">");
+			writer.WriteLine("\t<iframe id=\"" + this.ClientID + "_frame\" " + sScroll + sStyle + sCSS + sHREF + " > </iframe>");
+			writer.WriteLine("</div>");
 
-			output.Indent--;
+			writer.Indent--;
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 
 		protected override void OnPreRender(EventArgs e) {

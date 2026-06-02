@@ -218,18 +218,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 			switch (ContentType) {
 				case ListContentType.Blog:
-					lst = navHelper.GetLatestPosts(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+					lst = _navHelper.GetLatestPosts(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
 					break;
 
 				case ListContentType.ContentPage:
-					lst = navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
+					lst = _navHelper.GetLatest(SiteData.CurrentSiteID, TakeTop, !SecurityData.IsAuthEditor);
 					break;
 
 				case ListContentType.SpecifiedCategories:
 					if (TakeTop > 0) {
-						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, TakeTop, 0, "GoLiveDate", "DESC");
+						lst = _navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, TakeTop, 0, "GoLiveDate", "DESC");
 					} else {
-						lst = navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, 100000, 0, "NavMenuText", "ASC");
+						lst = _navHelper.GetFilteredContentByIDPagedList(SiteData.CurrentSite, SelectedCategories, SelectedCategorySlugs, !SecurityData.IsAuthEditor, 100000, 0, "NavMenuText", "ASC");
 					}
 					break;
 			}

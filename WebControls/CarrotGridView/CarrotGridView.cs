@@ -576,7 +576,7 @@ namespace Carrotware.Web.UI.Controls {
 				}
 			}
 
-			return WebControlHelper.RenderCtrl(table);
+			return BasicControlUtils.GetCtrlText(table);
 		}
 	}
 }

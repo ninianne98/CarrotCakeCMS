@@ -356,7 +356,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private ControlUtilities _cu = new ControlUtilities();
 
 		private Control GetCtrl() {
-			Control userControl = _cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucContactForm.ascx");
+			Control userControl = _cu.CreateControlFromResource("ucContactForm.ascx");
 			return userControl;
 		}
 
@@ -377,93 +377,6 @@ namespace Carrotware.CMS.UI.Controls {
 	}
 
 	//========================================
-	/*
-	public class DefaultContentCommentEntryFormB : ITemplate {
-		public DefaultContentCommentEntryFormB() { }
-
-		public void InstantiateIn(Control container) {
-			PlaceHolder ph = new PlaceHolder();
-			ph.ID = "DefaultContentCommentForm";
-
-			string sValidationMethodName = "__carrotware_ValidateLongText";
-
-			string sVG = "ContentCommentForm";
-
-			ph.Controls.Add(new Literal { Text = "<div>\r\n " });
-			ph.Controls.Add(new Label { ID = "ContentCommentFormMsg", Text = " " });
-			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
-
-			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form-outer\">\r\n" });
-
-			// CommenterName
-			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\"> Name: " });
-			ph.Controls.Add(new RequiredFieldValidator {
-				ID = "CommenterNameValid",
-				ControlToValidate = "CommenterName",
-				ErrorMessage = "*",
-				ValidationGroup = sVG
-			});
-			ph.Controls.Add(new Literal { Text = " </label> " });
-			ph.Controls.Add(new TextBox { ID = "CommenterName", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
-			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
-
-			// CommenterEmail
-			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\">  E-mail: " });
-			ph.Controls.Add(new RequiredFieldValidator {
-				ID = "CommenterEmailValid",
-				ControlToValidate = "CommenterEmail",
-				ErrorMessage = "*",
-				ValidationGroup = sVG
-			});
-			ph.Controls.Add(new Literal { Text = " </label> " });
-			ph.Controls.Add(new TextBox { ID = "CommenterEmail", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
-			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
-
-			// CommenterURL
-			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\">  Website: " });
-			ph.Controls.Add(new Literal { Text = " </label> " });
-			ph.Controls.Add(new TextBox { ID = "CommenterURL", Columns = 40, MaxLength = 100, ValidationGroup = sVG });
-			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
-
-			// VisitorComments
-			ph.Controls.Add(new Literal { Text = "<div class=\"comment-form\"> <label class=\"comment-form-caption\"> Comment:  " });
-			ph.Controls.Add(new CustomValidator {
-				ID = "VisitorCommentsValid",
-				ControlToValidate = "VisitorComments",
-				ErrorMessage = "**",
-				ClientValidationFunction = sValidationMethodName,
-				ValidationGroup = sVG
-			});
-			ph.Controls.Add(new Literal { Text = " </label> " });
-			ph.Controls.Add(new TextBox { ID = "VisitorComments", Columns = 40, MaxLength = 1024, Rows = 8, TextMode = TextBoxMode.MultiLine });
-			ph.Controls.Add(new Literal { Text = "<br />\r\n</div>\r\n" });
-
-			// ContentCommentCaptcha
-			ph.Controls.Add(new Literal { Text = "<div style=\"clear: both;\"></div>\r\n<div class=\"comment-form-captcha\"> " });
-			ph.Controls.Add(new RequiredFieldValidator {
-				ID = "ContentCommentCaptchaValid",
-				ControlToValidate = "ContentCommentCaptcha",
-				ErrorMessage = "**",
-				ValidationGroup = sVG
-			});
-			ph.Controls.Add(new Captcha { ID = "ContentCommentCaptcha", ValidationGroup = sVG });
-			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
-
-			// SubmitCommentButton
-			ph.Controls.Add(new Literal { Text = "<div style=\"clear: both;\"></div><br />\r\n<div class=\"comment-form-button\">" });
-			ph.Controls.Add(new Button { ID = "SubmitCommentButton", Text = "Submit Comment", ValidationGroup = sVG });
-			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
-
-			ph.Controls.Add(new Literal { Text = "</div>\r\n" });
-
-			jsHelperLib js = new jsHelperLib();
-			container.Controls.Add(js);
-			container.Controls.Add(ph);
-		}
-	}
-	*/
-
-	//========================================
 	public class DefaultSearchBoxForm : ITemplate {
 
 		public DefaultSearchBoxForm() { }
@@ -471,7 +384,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private Control GetCtrl(Control control) {
 			var cu = new ControlUtilities(control);
 
-			Control userControl = cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSearchForm.ascx");
+			Control userControl = cu.CreateControlFromResource("ucSearchForm.ascx");
 
 			return userControl;
 		}
@@ -511,7 +424,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private Control GetCtrl() {
-			Control userControl = _cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucSummaryDisplay.ascx");
+			Control userControl = _cu.CreateControlFromResource("ucSummaryDisplay.ascx");
 			return userControl;
 		}
 
@@ -548,7 +461,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private Control GetCtrl() {
-			Control userControl = _cu.CreateControlFromResource("Carrotware.CMS.UI.Controls.ucCommentDisplay.ascx");
+			Control userControl = _cu.CreateControlFromResource("ucCommentDisplay.ascx");
 			return userControl;
 		}
 

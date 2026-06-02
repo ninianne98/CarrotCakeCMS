@@ -18,20 +18,20 @@ namespace Carrotware.CMS.UI.Controls {
 
 	public abstract class BaseNav : BaseNavCommon {
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			LoadAndTweakData();
 
-			int indent = output.Indent;
+			int indent = writer.Indent;
 
 			List<SiteNav> lstNav = this.NavigationData;
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
-			WriteListPrefix(output);
+			WriteListPrefix(writer);
 
 			if (lstNav != null && lstNav.Any()) {
-				output.Indent++;
+				writer.Indent++;
 
 				foreach (SiteNav c in lstNav) {
 					var childItem = new HtmlTag("li");
@@ -48,18 +48,18 @@ namespace Carrotware.CMS.UI.Controls {
 						childItem.MergeAttribute("class", "parent-nav");
 					}
 
-					output.WriteLine(childItem.RenderTag());
+					writer.WriteLine(childItem.RenderTag());
 				}
-				output.Indent--;
+				writer.Indent--;
 			} else {
 #if DEBUG
-				output.WriteLine("<span style=\"display: none;\" id=\"" + this.HtmlClientID + "\"></span>");
+				writer.WriteLine("<span style=\"display: none;\" id=\"" + this.HtmlClientID + "\"></span>");
 #endif
 			}
 
-			WriteListSuffix(output);
+			WriteListSuffix(writer);
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 	}
 }

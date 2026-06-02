@@ -465,13 +465,13 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.Indent--;
 		}
 
-		protected void RenderWrappedControl(HtmlTextWriter writer, Control ctrl, string sCSSValue) {
+		protected void RenderWrappedControl(HtmlTextWriter writer, Control ctrl, string cssValue) {
 			writer.WriteLine();
-			if (!string.IsNullOrEmpty(sCSSValue)) {
-				writer.WriteLine("<span class=\"" + sCSSValue + "\">");
+			if (!string.IsNullOrEmpty(cssValue)) {
+				writer.WriteLine("<span class=\"" + cssValue + "\">");
 			}
 			ctrl.RenderControl(writer);
-			if (!string.IsNullOrEmpty(sCSSValue)) {
+			if (!string.IsNullOrEmpty(cssValue)) {
 				writer.WriteLine("</span>");
 			}
 			writer.WriteLine();

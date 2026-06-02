@@ -210,15 +210,15 @@ namespace Carrotware.CMS.UI.Controls {
 
 			switch (ContentType) {
 				case MetaDataType.Tag:
-					lstNav = navHelper.GetTagList(SiteData.CurrentSiteID, takeTop);
+					lstNav = _navHelper.GetTagList(SiteData.CurrentSiteID, takeTop);
 					break;
 
 				case MetaDataType.Category:
-					lstNav = navHelper.GetCategoryList(SiteData.CurrentSiteID, takeTop);
+					lstNav = _navHelper.GetCategoryList(SiteData.CurrentSiteID, takeTop);
 					break;
 
 				case MetaDataType.DateMonth:
-					lstNav = navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, takeTop, !SecurityData.IsAuthEditor);
+					lstNav = _navHelper.GetMonthBlogUpdateList(SiteData.CurrentSiteID, takeTop, !SecurityData.IsAuthEditor);
 					break;
 
 				default:
@@ -244,13 +244,13 @@ namespace Carrotware.CMS.UI.Controls {
 			return lstNav;
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int indent = output.Indent;
+		protected override void RenderContents(HtmlTextWriter writer) {
+			int indent = writer.Indent;
 
 			List<IContentMetaInfo> lstNav = GetMetaInfo();
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
 			var outerItem = new HtmlTag("ul");
 			outerItem.SetAttribute("id", this.ClientID);
@@ -260,19 +260,19 @@ namespace Carrotware.CMS.UI.Controls {
 				var head = new HtmlTag(this.HeadWrapTag.ToString());
 				head.MergeAttribute("class", "meta-caption");
 				head.InnerHtml = HttpUtility.HtmlEncode(this.MetaDataTitle);
-				output.WriteLine(head.RenderTag());
+				writer.WriteLine(head.RenderTag());
 			}
 
-			output.WriteLine(outerItem.OpenTag());
-			output.Indent++;
+			writer.WriteLine(outerItem.OpenTag());
+			writer.Indent++;
 
 			int contentCount = 0;
 
 			if (this.ContentType == MetaDataType.DateMonth) {
-				contentCount = navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry)
-								+ navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
+				contentCount = _navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.ContentEntry)
+								+ _navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
 			} else {
-				contentCount = navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
+				contentCount = _navHelper.GetSitePageCount(SiteData.CurrentSiteID, ContentPageType.PageType.BlogEntry);
 			}
 
 			foreach (IContentMetaInfo c in lstNav) {
@@ -309,13 +309,13 @@ namespace Carrotware.CMS.UI.Controls {
 					childItem.MergeAttribute("class", "selected");
 				}
 
-				output.WriteLine(childItem.RenderTag());
+				writer.WriteLine(childItem.RenderTag());
 			}
 
-			output.Indent--;
-			output.WriteLine(outerItem.CloseTag());
+			writer.Indent--;
+			writer.WriteLine(outerItem.CloseTag());
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 
 		protected override void OnPreRender(EventArgs e) {

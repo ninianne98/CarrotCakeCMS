@@ -167,19 +167,19 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected List<ContentDateLinks> GetMetaInfo() {
 			if (SiteData.IsWebView) {
-				return navHelper.GetSingleMonthBlogUpdateList(SiteData.CurrentSite, ThisMonth, !SecurityData.IsAuthEditor);
+				return _navHelper.GetSingleMonthBlogUpdateList(SiteData.CurrentSite, ThisMonth, !SecurityData.IsAuthEditor);
 			} else {
 				return new List<ContentDateLinks>();
 			}
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int indent = output.Indent;
+		protected override void RenderContents(HtmlTextWriter writer) {
+			int indent = writer.Indent;
 
 			List<ContentDateLinks> lstCalendar = GetMetaInfo();
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
@@ -215,11 +215,11 @@ namespace Carrotware.CMS.UI.Controls {
 			ContentDateTally lastMonth = new ContentDateTally { GoLiveDate = this.ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
 			ContentDateTally nextMonth = new ContentDateTally { GoLiveDate = this.ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
 
-			output.WriteLine("<div" + sCSS + " id=\"" + this.HtmlClientID + "\"> ");
-			output.Indent++;
+			writer.WriteLine("<div" + sCSS + " id=\"" + this.HtmlClientID + "\"> ");
+			writer.Indent++;
 
 			if (!string.IsNullOrEmpty(this.CalendarHead)) {
-				output.WriteLine("<h2 class=\"calendar-caption\">" + this.CalendarHead + "  </h2> ");
+				writer.WriteLine("<h2 class=\"calendar-caption\">" + this.CalendarHead + "  </h2> ");
 			}
 
 			DateTime firstOfMonth = new DateTime(this.ThisMonth.Year, this.ThisMonth.Month, 1);
@@ -235,27 +235,27 @@ namespace Carrotware.CMS.UI.Controls {
 			int dayOfMonth = 1;
 			dayOfMonth -= firstDay;
 
-			output.WriteLine("	<table " + sCSSClassTable + "> ");
-			output.WriteLine("		<caption id=\"" + this.HtmlClientID + "-caption\"  " + sCSSClassCaption + "> "
+			writer.WriteLine("	<table " + sCSSClassTable + "> ");
+			writer.WriteLine("		<caption id=\"" + this.HtmlClientID + "-caption\"  " + sCSSClassCaption + "> "
 							+ "<a href=\"" + thisMonth.MetaInfoURL + "\">" + this.ThisMonth.Date.ToString("MMMM yyyy") + "</a> </caption>");
 
-			output.WriteLine("	<thead id=\"" + this.HtmlClientID + "-head\" " + sCSSClassDayHead + ">");
-			output.WriteLine("		<tr>");
-			output.WriteLine("			<th scope=\"col\">SU</th>");
-			output.WriteLine("			<th scope=\"col\">M</th>");
-			output.WriteLine("			<th scope=\"col\">TU</th>");
-			output.WriteLine("			<th scope=\"col\">W</th>");
-			output.WriteLine("			<th scope=\"col\">TR</th>");
-			output.WriteLine("			<th scope=\"col\">F</th>");
-			output.WriteLine("			<th scope=\"col\">SA</th>");
-			output.WriteLine("		</tr>");
-			output.WriteLine("	</thead>");
+			writer.WriteLine("	<thead id=\"" + this.HtmlClientID + "-head\" " + sCSSClassDayHead + ">");
+			writer.WriteLine("		<tr>");
+			writer.WriteLine("			<th scope=\"col\">SU</th>");
+			writer.WriteLine("			<th scope=\"col\">M</th>");
+			writer.WriteLine("			<th scope=\"col\">TU</th>");
+			writer.WriteLine("			<th scope=\"col\">W</th>");
+			writer.WriteLine("			<th scope=\"col\">TR</th>");
+			writer.WriteLine("			<th scope=\"col\">F</th>");
+			writer.WriteLine("			<th scope=\"col\">SA</th>");
+			writer.WriteLine("		</tr>");
+			writer.WriteLine("	</thead>");
 
-			output.WriteLine("		<tbody id=\"" + this.HtmlClientID + "-body\"  " + sCSSClassTableBody + ">");
+			writer.WriteLine("		<tbody id=\"" + this.HtmlClientID + "-body\"  " + sCSSClassTableBody + ">");
 			while ((dayOfMonth <= daysInMonth) && (dayOfMonth <= 31) && (dayOfMonth >= -7)) {
 				for (int DayIndex = 0; DayIndex <= dayOfWeek; DayIndex++) {
 					if (DayIndex == 0) {
-						output.WriteLine("			<tr id=\"" + this.HtmlClientID + "-week" + weekNumber.ToString() + "\"> ");
+						writer.WriteLine("			<tr id=\"" + this.HtmlClientID + "-week" + weekNumber.ToString() + "\"> ");
 						weekNumber++;
 					}
 
@@ -273,49 +273,49 @@ namespace Carrotware.CMS.UI.Controls {
 												where n.PostDate.Date == cellDate.Date
 												select n).FirstOrDefault();
 						if (cal != null) {
-							output.WriteLine("			" + sTD + " " + sCSSClassDateLink + ">");
-							output.WriteLine("				<a href=\"" + cal.MetaInfoURL + "\"> " + cellDate.Day.ToString() + " </a>");
+							writer.WriteLine("			" + sTD + " " + sCSSClassDateLink + ">");
+							writer.WriteLine("				<a href=\"" + cal.MetaInfoURL + "\"> " + cellDate.Day.ToString() + " </a>");
 						} else {
-							output.WriteLine("			" + sTD + ">");
-							output.WriteLine("				" + cellDate.Day.ToString() + " ");
+							writer.WriteLine("			" + sTD + ">");
+							writer.WriteLine("				" + cellDate.Day.ToString() + " ");
 						}
-						output.WriteLine("			</td>");
+						writer.WriteLine("			</td>");
 					} else {
-						output.WriteLine("			<td class=\"pad\"> </td>");
+						writer.WriteLine("			<td class=\"pad\"> </td>");
 					}
 
 					dayOfMonth++;
 
 					if (DayIndex == dayOfWeek) {
-						output.WriteLine("		</tr>");
+						writer.WriteLine("		</tr>");
 					}
 				}
 			}
-			output.WriteLine("		</tbody>");
+			writer.WriteLine("		</tbody>");
 
 			// as a bot crawler abuse stopper
 
-			output.WriteLine("		<tfoot id=\"" + this.HtmlClientID + "-foot\" " + sCSSClassTableFoot + ">");
-			output.WriteLine("		<tr>");
-			output.WriteLine("			<td colspan=\"3\" id=\"prev\" class=\"cal-prev\">");
+			writer.WriteLine("		<tfoot id=\"" + this.HtmlClientID + "-foot\" " + sCSSClassTableFoot + ">");
+			writer.WriteLine("		<tr>");
+			writer.WriteLine("			<td colspan=\"3\" id=\"prev\" class=\"cal-prev\">");
 			if (lastMonth.GoLiveDate >= SiteData.CurrentSite.Now.AddYears(-5)) {
-				output.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.GoLiveDate.ToString("MMM") + "</a>");
+				writer.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.GoLiveDate.ToString("MMM") + "</a>");
 			}
-			output.WriteLine("			</td>");
-			output.WriteLine("			<td class=\"pad\"> &nbsp; </td>");
-			output.WriteLine("			<td colspan=\"3\" id=\"next\" class=\"cal-prev\">");
+			writer.WriteLine("			</td>");
+			writer.WriteLine("			<td class=\"pad\"> &nbsp; </td>");
+			writer.WriteLine("			<td colspan=\"3\" id=\"next\" class=\"cal-prev\">");
 			if (nextMonth.GoLiveDate <= SiteData.CurrentSite.Now.AddYears(5)) {
-				output.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.GoLiveDate.ToString("MMM") + " &raquo;</a>");
+				writer.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.GoLiveDate.ToString("MMM") + " &raquo;</a>");
 			}
-			output.WriteLine("			</td>");
-			output.WriteLine("		</tr>");
-			output.WriteLine("		</tfoot>");
+			writer.WriteLine("			</td>");
+			writer.WriteLine("		</tr>");
+			writer.WriteLine("		</tfoot>");
 
-			output.WriteLine("	</table>");
+			writer.WriteLine("	</table>");
 
-			output.Indent--;
-			output.WriteLine("</div> ");
-			output.Indent = indent;
+			writer.Indent--;
+			writer.WriteLine("</div> ");
+			writer.Indent = indent;
 		}
 
 		protected override void OnPreRender(EventArgs e) {

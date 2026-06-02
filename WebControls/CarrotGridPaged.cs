@@ -296,7 +296,7 @@ namespace Carrotware.Web.UI.Controls {
 			thePager.DataBind();
 
 			//since the pretty pager won't show up, append some placeholder text to simulate a pager
-			return WebControlHelper.RenderCtrl(thePager)
+			return BasicControlUtils.GetCtrlText(thePager)
 				+ " <br />\r\n <span>[" + string.Join("],  [", pagelist.Select(x => x.ToString()).ToArray()) + "]</span> <br />"; ;
 		}
 

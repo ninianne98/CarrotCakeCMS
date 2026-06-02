@@ -199,7 +199,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 				bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
-				SiteNav navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, SiteData.CurrentScriptName);
+				SiteNav navData = _navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, SiteData.CurrentScriptName);
 
 				Label lblContentCommentFormMsg = (Label)GetEntryFormControl("ContentCommentFormMsg");
 				TextBox txtCommenterName = (TextBox)GetEntryFormControl("CommenterName");

@@ -63,7 +63,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("{0}")]
 		public string FieldFormat {
 			get {
-				String s = ViewState["FieldFormat"] as String;
+				string s = ViewState["FieldFormat"] as string;
 				return ((s == null) ? "{0}" : s);
 			}
 			set {
@@ -95,14 +95,14 @@ namespace Carrotware.CMS.UI.Controls {
 			base.Render(writer);
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities _cu = new ControlUtilities();
 
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
 			string sField = DataField.ToString();
 
 			try {
-				ContentPage cp = cu.GetContainerContentPage(this);
+				ContentPage cp = _cu.GetContainerContentPage(this);
 
 				if (cp != null) {
 					if (sField.StartsWith("Author_") || sField.StartsWith("Credit_")) {
@@ -213,18 +213,18 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void Render(HtmlTextWriter output) {
+		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 
-			base.Render(output);
+			base.Render(writer);
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities _cu = new ControlUtilities();
 
 		protected override void OnPreRender(EventArgs e) {
 			string sFieldValue = string.Empty;
 
-			ContentPage cp = cu.GetContainerContentPage(this);
+			ContentPage cp = _cu.GetContainerContentPage(this);
 			SiteNav navNext = new SiteNav();
 			if (NavigationDirection != NavDirection.Unknown) {
 				using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
@@ -321,12 +321,12 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		private ControlUtilities cu = new ControlUtilities();
+		private ControlUtilities _cu = new ControlUtilities();
 
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 
-			ContentPage cp = cu.GetContainerContentPage(this);
+			ContentPage cp = _cu.GetContainerContentPage(this);
 
 			if (cp != null) {
 				SetFileInfo(cp);
@@ -363,7 +363,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(false)]
 		public bool Enable301Redirect {
 			get {
-				String s = (String)ViewState["Enable301Redirect"];
+				string s = (string)ViewState["Enable301Redirect"];
 				bool b = ((s == null) ? false : Convert.ToBoolean(s));
 				return b;
 			}
@@ -436,7 +436,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("{0}")]
 		public string FieldFormat {
 			get {
-				String s = ViewState["FieldFormat"] as String;
+				string s = ViewState["FieldFormat"] as string;
 				return ((s == null) ? "{0}" : s);
 			}
 			set {

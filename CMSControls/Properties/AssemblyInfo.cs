@@ -78,6 +78,7 @@ using System.Web.UI;
 [assembly: TagPrefix("SiteCanonicalURL", "carrot")]
 [assembly: TagPrefix("SiteDataProperty", "carrot")]
 [assembly: TagPrefix("SiteMetaWordList", "carrot")]
+[assembly: TagPrefix("SocialMetaTag", "carrot")]
 [assembly: TagPrefix("TopLevelNavigation", "carrot")]
 [assembly: TagPrefix("TrackBack", "carrot")]
 [assembly: TagPrefix("TwoLevelNavigation", "carrot")]

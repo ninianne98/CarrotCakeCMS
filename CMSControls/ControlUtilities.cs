@@ -3,6 +3,7 @@ using Carrotware.Web.UI.Controls;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -27,35 +28,35 @@ namespace Carrotware.CMS.UI.Controls {
 			_page = null;
 		}
 
-		public void AssignPage(Control X) {
+		public void AssignPage(Control ctrl) {
 			ResetFind();
 
-			if (X != null && X is Control && X.Page != null) {
-				_page = X.Page;
+			if (ctrl != null && ctrl is Control && ctrl.Page != null) {
+				_page = ctrl.Page;
 			} else {
-				_page = GetContainerPage(X);
+				_page = GetContainerPage(ctrl);
 			}
 		}
 
-		public ControlUtilities(Control X) {
+		public ControlUtilities(Control ctrl) {
 			ResetFind();
 
-			if (X != null && X is Control && X.Page != null) {
-				_page = X.Page;
+			if (ctrl != null && ctrl is Control && ctrl.Page != null) {
+				_page = ctrl.Page;
 			} else {
-				_page = GetContainerPage(X);
+				_page = GetContainerPage(ctrl);
 			}
 		}
 
-		public ControlUtilities(Page X) {
+		public ControlUtilities(Page p) {
 			ResetFind();
-			_page = X;
+			_page = p;
 		}
 
-		public Page GetContainerPage(object X) {
+		public Page GetContainerPage(object o) {
 			ResetFind();
 
-			Page foundPage = FindPage(X);
+			Page foundPage = FindPage(o);
 
 			if (foundPage == null) {
 				foundPage = CachedPage;
@@ -65,19 +66,19 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public string GetResourceUrl(Type type, string resource) {
-			string sPath = "";
+			string path = "";
 
 			if (_page != null) {
-				try { sPath = _page.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+				try { path = _page.ClientScript.GetWebResourceUrl(type, resource); } catch { }
 			} else {
-				try { sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+				try { path = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
 			}
 
 			try {
-				sPath = HttpUtility.HtmlEncode(sPath);
+				path = HttpUtility.HtmlEncode(path);
 			} catch { }
 
-			return sPath;
+			return path;
 		}
 
 		public Control CreateControlFromResource(string resourceName) {
@@ -92,31 +93,35 @@ namespace Carrotware.CMS.UI.Controls {
 			return s;
 		}
 
-		public Control CreateControlFromString(string sControlText) {
-			return _page.ParseControl(sControlText);
+		public Control CreateControlFromString(string controlText) {
+			return _page.ParseControl(controlText);
 		}
+
+		public Control CreateControlFromString(StringBuilder sb) {
+			return _page.ParseControl(sb.ToString());
+		}
+
+		private static Page _cachedPage;
 
 		private static Page CachedPage {
 			get {
-				if (_CachedPage == null) {
-					_CachedPage = new Page();
-					_CachedPage.AppRelativeVirtualPath = "~/";
+				if (_cachedPage == null) {
+					_cachedPage = new Page();
+					_cachedPage.AppRelativeVirtualPath = "~/";
 				}
-				return _CachedPage;
+				return _cachedPage;
 			}
 		}
 
-		private static Page _CachedPage;
-
 		public static string GetWebResourceUrl(Type type, string resource) {
-			string sPath = "";
+			string path = "";
 
 			try {
-				sPath = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
-				sPath = HttpUtility.HtmlEncode(sPath);
+				path = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+				path = HttpUtility.HtmlEncode(path);
 			} catch { }
 
-			return sPath;
+			return path;
 		}
 
 		public static Control ParseControlByName(string resourceName) {
@@ -129,35 +134,51 @@ namespace Carrotware.CMS.UI.Controls {
 			return CachedPage.ParseControl(resource);
 		}
 
-		public static string GetManifestResourceStream(string resourceName) {
-			string sReturn = null;
+		internal static string GetManifestResourceStream(string resourceName) {
+			var sb = new StringBuilder();
+			var assembly = Assembly.GetExecutingAssembly();
+			var a_name = assembly.GetName().Name;
 
-			Assembly _assembly = Assembly.GetExecutingAssembly();
-			using (var stream = new StreamReader(_assembly.GetManifestResourceStream(resourceName))) {
-				sReturn = stream.ReadToEnd();
+			if (resourceName.ToLowerInvariant().StartsWith(a_name.ToLowerInvariant()) == false) {
+				resourceName = string.Format("{0}.{1}", a_name, resourceName);
 			}
 
-			return sReturn;
+			using (var sr = new StreamReader(assembly.GetManifestResourceStream(resourceName))) {
+				sb.Append(sr.ReadToEnd());
+			}
+
+			return sb.ToString();
+		}
+
+		internal static string ReadEmbededResource(string resourceName) {
+			var assembly = Assembly.GetExecutingAssembly();
+			var a_name = assembly.GetName().Name;
+
+			if (resourceName.ToLowerInvariant().StartsWith(a_name.ToLowerInvariant()) == false) {
+				resourceName = string.Format("{0}.{1}", a_name, resourceName);
+			}
+
+			return GetManifestResourceStream(resourceName);
 		}
 
 		public void ResetFind() {
-			bFoundPage = false;
-			page = null;
+			_isPageFound = false;
+			_pageFound = null;
 
-			bFoundPlaceHolder = false;
-			plcholder = null;
+			_isFoundPlaceHolder = false;
+			_plcholder = null;
 
-			bFoundControl = false;
-			ctrl = null;
+			_isFoundControl = false;
+			_ctrl = null;
 		}
 
-		public ContentPage GetContainerContentPage(object X) {
+		public ContentPage GetContainerContentPage(object o) {
 			ResetFind();
 
 			ContentPage cp = null;
 			Page foundPage = null;
 
-			foundPage = FindPage(X);
+			foundPage = FindPage(o);
 
 			try {
 				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "ThePage");
@@ -170,11 +191,11 @@ namespace Carrotware.CMS.UI.Controls {
 			return cp;
 		}
 
-		public SiteData GetContainerSiteData(object X) {
+		public SiteData GetContainerSiteData(object o) {
 			ResetFind();
 
 			SiteData sd = null;
-			Page foundPage = FindPage(X);
+			Page foundPage = FindPage(o);
 
 			try {
 				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "TheSite");
@@ -187,26 +208,26 @@ namespace Carrotware.CMS.UI.Controls {
 			return sd;
 		}
 
-		private bool bFoundPage = false;
-		private Page page = null;
+		private bool _isPageFound = false;
+		private Page _pageFound = null;
 
-		public Page FindPage(object X) {
-			if (!bFoundPage) {
-				if (X is Page) {
-					bFoundPage = true;
-					page = (Page)X;
+		public Page FindPage(object o) {
+			if (!_isPageFound) {
+				if (o is Page) {
+					_isPageFound = true;
+					_pageFound = (Page)o;
 				} else {
-					if (!bFoundPage) {
-						if (X is Control && X != null) {
-							Control c = (Control)X;
+					if (!_isPageFound) {
+						if (o is Control && o != null) {
+							Control c = (Control)o;
 							if (c.Page != null) {
-								bFoundPage = true;
-								page = c.Page;
+								_isPageFound = true;
+								_pageFound = c.Page;
 							}
 						}
-						if (!bFoundPage) {
-							if (X is Control) {
-								Control c = (Control)X;
+						if (!_isPageFound) {
+							if (o is Control) {
+								Control c = (Control)o;
 								FindPage(c.Parent);
 							}
 						}
@@ -214,71 +235,71 @@ namespace Carrotware.CMS.UI.Controls {
 				}
 			}
 
-			return page;
+			return _pageFound;
 		}
 
-		private bool bFoundPlaceHolder = false;
-		private PlaceHolder plcholder = null;
+		private bool _isFoundPlaceHolder = false;
+		private PlaceHolder _plcholder = null;
 
-		public PlaceHolder FindPlaceHolder(string ControlName, Control X) {
-			if (X is Page) {
-				bFoundPlaceHolder = false;
-				plcholder = new PlaceHolder();
+		public PlaceHolder FindPlaceHolder(string controlName, Control ctrl) {
+			if (ctrl is Page) {
+				_isFoundPlaceHolder = false;
+				_plcholder = new PlaceHolder();
 			}
 
-			foreach (Control c in X.Controls) {
-				if (c.ID == ControlName && c is PlaceHolder) {
-					bFoundPlaceHolder = true;
-					plcholder = (PlaceHolder)c;
-					return plcholder;
+			foreach (Control c in ctrl.Controls) {
+				if (c.ID == controlName && c is PlaceHolder) {
+					_isFoundPlaceHolder = true;
+					_plcholder = (PlaceHolder)c;
+					return _plcholder;
 				} else {
-					if (!bFoundPlaceHolder) {
-						FindPlaceHolder(ControlName, c);
+					if (!_isFoundPlaceHolder) {
+						FindPlaceHolder(controlName, c);
 					}
 				}
 			}
 
-			return plcholder;
+			return _plcholder;
 		}
 
-		private bool bFoundControl = false;
-		private Control ctrl = null;
+		private bool _isFoundControl = false;
+		private Control _ctrl = null;
 
-		public Control FindControl(string ControlName, Control X) {
-			if (X is Page) {
-				bFoundControl = false;
-				ctrl = new Control();
+		public Control FindControl(string controlName, Control ctrl) {
+			if (ctrl is Page) {
+				_isFoundControl = false;
+				_ctrl = new Control();
 			}
 
-			foreach (Control c in X.Controls) {
-				if (c.ID == ControlName && c is Control) {
-					bFoundControl = true;
-					ctrl = (Control)c;
-					return ctrl;
+			foreach (Control c in ctrl.Controls) {
+				if (c.ID == controlName && c is Control) {
+					_isFoundControl = true;
+					_ctrl = (Control)c;
+					return _ctrl;
 				} else {
-					if (!bFoundControl) {
-						FindControl(ControlName, c);
+					if (!_isFoundControl) {
+						FindControl(controlName, c);
 					}
 				}
 			}
 
-			return ctrl;
+			return _ctrl;
 		}
 
-		public Control FindControl(Type type, Control X) {
-			foreach (Control c in X.Controls) {
+		public Control FindControl(Type type, Control ctrl) {
+			foreach (Control c in ctrl.Controls) {
 				if (c.GetType() == type) {
-					bFoundControl = true;
-					ctrl = (Control)c;
-					return ctrl;
+					_isFoundControl = true;
+					_ctrl = (Control)c;
+					return _ctrl;
 				} else {
-					if (!bFoundControl) {
+					if (!_isFoundControl) {
 						FindControl(type, c);
 					}
 				}
 			}
 
-			return ctrl;
+			return _ctrl;
 		}
 	}
 }

@@ -20,9 +20,10 @@ namespace Carrotware.Web.UI.Controls {
 
 	public static class Utils {
 
-		public static string GetAssemblyName(this Assembly assembly) {
-			var assemblyName = assembly.ManifestModule.Name;
-			return Path.GetFileNameWithoutExtension(assemblyName);
+		internal static string GetAssemblyName(this Assembly assembly) {
+			//var assemblyName = assembly.ManifestModule.Name;
+			//return Path.GetFileNameWithoutExtension(assemblyName);
+			return assembly.GetName().Name;
 		}
 
 		public static string ScrubQueryElement(this string text) {

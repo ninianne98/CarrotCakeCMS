@@ -18,7 +18,7 @@ namespace Carrotware.Web.UI.Controls {
 
 	[DefaultProperty("CaptchaText")]
 	[ToolboxData("<{0}:Captcha runat=server></{0}:Captcha>")]
-	[ValidationPropertyAttribute("CaptchaText")]
+	[ValidationProperty("CaptchaText")]
 	public class Captcha : BaseWebControl, ITextControl {
 
 		public Captcha() {
@@ -37,8 +37,8 @@ namespace Carrotware.Web.UI.Controls {
 		[Localizable(true)]
 		public string Text {
 			get {
-				String s = (String)ViewState["Text"];
-				return ((s == null) ? String.Empty : s);
+				string s = (string)ViewState["Text"];
+				return ((s == null) ? string.Empty : s);
 			}
 			set {
 				ViewState["Text"] = value;
@@ -199,46 +199,53 @@ namespace Carrotware.Web.UI.Controls {
 			return this.IsValid;
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			var key = CaptchaImage.GetKey();
 
-			output.Write("<div style=\"clear: both;\" id=\"" + this.ClientID + "_wrapper\">\r\n");
+			writer.Write("<div style=\"clear: both;\" id=\"" + this.ClientID + "_wrapper\">\r\n");
 
 			if (!string.IsNullOrEmpty(this.ValidationMessage)) {
-				output.Write("<div");
+				writer.Write("<div");
 
 				if (this.IsValid) {
-					output.Write(this.CaptchaIsValidStyle.ToString());
+					writer.Write(this.CaptchaIsValidStyle.ToString());
 				} else {
-					output.Write(this.CaptchaIsNotValidStyle.ToString());
+					writer.Write(this.CaptchaIsNotValidStyle.ToString());
 				}
 
-				output.Write(" id=\"" + this.ClientID + "_msg\">\r\n");
-				output.Write(this.ValidationMessage);
-				output.Write("\r\n</div>\r\n");
+				writer.Write(" id=\"" + this.ClientID + "_msg\">\r\n");
+				writer.Write(this.ValidationMessage);
+				writer.Write("\r\n</div>\r\n");
 			}
 
 			string sJSFuncName = "Show_" + this.ClientID;
 
-			output.Write("<div" + this.CaptchaImageBoxStyle.ToString() + "> ");
-			output.Write("<a href=\"javascript:" + sJSFuncName + "();\"> <img" + this.CaptchaImageStyle.ToString() + " title=\"" + key + "\" alt=\"" + key + "\" border=\"0\" id=\""
-				+ this.ClientID + "_img\" src=\"" + GetCaptchaImageURI() + "\" /> </a> \r\n");
+			if (this.CssClass != null) {
+				var txtCss = string.Format("{0} {1}", this.CssClass, this.CaptchaTextStyle.CssClass).Trim();
 
-			output.Write("</div>\r\n");
-			output.Write("<div" + this.CaptchaInstructionStyle.ToString() + ">" + this.Instructions + " </div>\r\n");
-			output.Write("<div" + this.CaptchaTextStyle.ToString() + "><input type=\"text\" id=\"" + this.ClientID + "\" name=\"" + this.UniqueID + "\" value=\"" + HttpUtility.HtmlEncode(this.CaptchaText) + "\" /> </div>\r\n");
-
-			output.Write("\r\n<script  type=\"text/javascript\">\r\n");
-			output.Write("\r\nfunction " + sJSFuncName + "(){\r\n");
-			if (!string.IsNullOrEmpty(key)) {
-				output.Write("alert('" + key.Substring(0, 3) + "' + '" + key.Substring(3) + "');\r\n");
-			} else {
-				output.Write("alert('no code');\r\n");
+				this.CaptchaTextStyle.CssClass = txtCss;
 			}
-			output.Write("}\r\n");
-			output.Write("</script>\r\n");
 
-			output.Write("\r\n</div>\r\n");
+			writer.Write("<div" + this.CaptchaImageBoxStyle.ToString() + "> ");
+			writer.Write("<a href=\"javascript:" + sJSFuncName + "();\"> <img" + this.CaptchaImageStyle.ToString() + " title=\"" + key + "\" alt=\"" + key + "\" border=\"0\" id=\""
+							+ this.ClientID + "_img\" src=\"" + GetCaptchaImageURI() + "\" /> </a> \r\n");
+
+			writer.Write("</div>\r\n");
+			writer.Write("<div" + this.CaptchaInstructionStyle.ToString() + ">" + this.Instructions + " </div>\r\n");
+			writer.Write("<div" + this.CaptchaTextStyle.ToString() + ">");
+			writer.Write("<input type=\"text\" " + this.CaptchaTextStyle.ToString() + "id=\"" + this.ClientID + "\" autocomplete=\"off\" name=\"" + this.UniqueID + "\" value=\"" + HttpUtility.HtmlEncode(this.CaptchaText) + "\" /> </div>\r\n");
+
+			writer.Write("\r\n<script  type=\"text/javascript\">\r\n");
+			writer.Write("\r\nfunction " + sJSFuncName + "(){\r\n");
+			if (!string.IsNullOrEmpty(key)) {
+				writer.Write("alert('" + key.Substring(0, 3) + "' + '" + key.Substring(3) + "');\r\n");
+			} else {
+				writer.Write("alert('no code');\r\n");
+			}
+			writer.Write("}\r\n");
+			writer.Write("</script>\r\n");
+
+			writer.Write("\r\n</div>\r\n");
 		}
 
 		private string GetCaptchaImageURI() {
@@ -259,8 +266,7 @@ namespace Carrotware.Web.UI.Controls {
 		// call directly in user control when in dynamically inserted controls like cms widgets
 		public void RefreshField() {
 			if (this.IsWebView) {
-				//ViewState["Text"] = null;
-				this.CaptchaText = String.Empty;
+				this.CaptchaText = string.Empty;
 
 				if (HttpContext.Current.Request.Form[this.UniqueID] != null) {
 					var val = HttpContext.Current.Request.Form[this.UniqueID];

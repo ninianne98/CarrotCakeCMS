@@ -51,19 +51,19 @@ namespace Carrotware.CMS.UI.Controls {
 			RenderContents(writer);
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int indent = output.Indent;
+		protected override void RenderContents(HtmlTextWriter writer) {
+			int indent = writer.Indent;
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
 			this.Text = SiteData.CurrentSite.UpdateContentPlainText(this.RawWidgetData);
 
-			output.WriteLine();
-			output.Write(this.Text);
-			output.WriteLine();
+			writer.WriteLine();
+			writer.Write(this.Text);
+			writer.WriteLine();
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 	}
 }

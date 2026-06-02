@@ -109,39 +109,39 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int indent = output.Indent;
+		protected override void RenderContents(HtmlTextWriter writer) {
+			int indent = writer.Indent;
 
 			SiteNav pageNav = GetParentPage();
 			string sParent = pageNav.FileName.ToLowerInvariant();
 
-			List<SiteNav> lstNav = navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
+			List<SiteNav> lstNav = _navHelper.GetTopNavigation(SiteData.CurrentSiteID, !SecurityData.IsAuthEditor);
 
 			lstNav = CMSConfigHelper.TweakData(lstNav, false, true);
 
-			output.Indent = indent + 3;
-			output.WriteLine();
+			writer.Indent = indent + 3;
+			writer.WriteLine();
 
 			string sCSS = "";
 			if (!string.IsNullOrEmpty(CssClass)) {
 				sCSS = " class=\"" + CssClass + "\" ";
 			}
 
-			output.WriteLine("<ul" + sCSS + " id=\"" + this.HtmlClientID + "\">");
-			output.Indent++;
+			writer.WriteLine("<ul" + sCSS + " id=\"" + this.HtmlClientID + "\">");
+			writer.Indent++;
 
 			foreach (SiteNav c in lstNav) {
 				if (SiteData.IsFilenameCurrentPage(c.FileName) || AreFilenamesSame(c.FileName, sParent)) {
-					output.WriteLine("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
+					writer.WriteLine("<li class=\"" + CSSSelected + "\"><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				} else {
-					output.WriteLine("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
+					writer.WriteLine("<li><a href=\"" + c.FileName + "\">" + c.NavMenuText + "</a></li> ");
 				}
 			}
 
-			output.Indent--;
-			output.WriteLine("</ul>");
+			writer.Indent--;
+			writer.WriteLine("</ul>");
 
-			output.Indent = indent;
+			writer.Indent = indent;
 		}
 	}
 }

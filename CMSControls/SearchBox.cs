@@ -105,7 +105,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void CreateChildControls() {
 			var sbScript = new StringBuilder();
-			sbScript.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.SearchBoxJS.txt"));
+			sbScript.Append(ControlUtilities.GetManifestResourceStream("SearchBoxJS.txt"));
 
 			if (SearchTemplate != null) {
 				this.Controls.Clear();

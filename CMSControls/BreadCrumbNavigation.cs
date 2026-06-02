@@ -89,21 +89,21 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			var lstNav = new List<SiteNav>();
 			var pageNav = GetCurrentPage();
 			string currentPageFile = pageNav.FileName.ToLowerInvariant();
 
 			if (SiteData.CurrentSiteExists && SiteData.CurrentSite.Blog_Root_ContentID.HasValue &&
 				pageNav.ContentType == ContentPageType.PageType.BlogEntry) {
-				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentSite.Blog_Root_ContentID.Value, !SecurityData.IsAuthEditor);
+				lstNav = _navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.CurrentSite.Blog_Root_ContentID.Value, !SecurityData.IsAuthEditor);
 
 				if (lstNav != null && lstNav.Any()) {
 					pageNav.NavOrder = lstNav.Max(x => x.NavOrder) + 100;
 					lstNav.Add(pageNav);
 				}
 			} else {
-				lstNav = navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
+				lstNav = _navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, pageNav.Root_ContentID, !SecurityData.IsAuthEditor);
 			}
 
 			lstNav = CMSConfigHelper.TweakData(lstNav, false, true);
@@ -115,7 +115,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (this.DisplayAsList) {
 				outerTag = new HtmlTag("ul");
 
-				output.WriteLine(outerTag.OpenTag());
+				writer.WriteLine(outerTag.OpenTag());
 
 				foreach (SiteNav c in lstNav) {
 					var item = new HtmlTag("li");
@@ -132,14 +132,14 @@ namespace Carrotware.CMS.UI.Controls {
 						item.InnerHtml = link.RenderTag();
 					}
 
-					output.WriteLine(item.RenderTag());
+					writer.WriteLine(item.RenderTag());
 				}
 
-				output.WriteLine(outerTag.CloseTag());
+				writer.WriteLine(outerTag.CloseTag());
 			} else {
 				outerTag = new HtmlTag("div");
 
-				output.WriteLine(outerTag.OpenTag());
+				writer.WriteLine(outerTag.OpenTag());
 
 				foreach (SiteNav c in lstNav) {
 					var item = new HtmlTag("span");
@@ -156,10 +156,10 @@ namespace Carrotware.CMS.UI.Controls {
 						item.InnerHtml = link.RenderTag() + string.Format(" {0} ", this.TextDivider);
 					}
 
-					output.WriteLine(item.RenderTag());
+					writer.WriteLine(item.RenderTag());
 				}
 
-				output.WriteLine(outerTag.CloseTag());
+				writer.WriteLine(outerTag.CloseTag());
 			}
 		}
 	}

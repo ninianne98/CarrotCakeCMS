@@ -10,15 +10,15 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 	[ToolboxData("<{0}:PrettyPhoto runat=server></{0}:PrettyPhoto>")]
 	public class PrettyPhoto : BaseWebControl {
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 			if (HttpContext.Current != null) {
-				string sJQFile = String.Empty;
+				string sJQFile = string.Empty;
 
 				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.prettyphoto.prettyPhoto.css");
-				output.Write("<link href=\"" + HttpUtility.HtmlEncode(sJQFile) + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
+				writer.Write("<link href=\"" + HttpUtility.HtmlEncode(sJQFile) + "\" type=\"text/css\" rel=\"stylesheet\" /> \r\n");
 
 				sJQFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "Carrotware.CMS.UI.Plugins.PhotoGallery.prettyphoto.prettyPhoto.js");
-				output.Write("<script src=\"" + HttpUtility.HtmlEncode(sJQFile) + "\" type=\"text/javascript\"></script> \r\n");
+				writer.Write("<script src=\"" + HttpUtility.HtmlEncode(sJQFile) + "\" type=\"text/javascript\"></script> \r\n");
 			}
 		}
 	}

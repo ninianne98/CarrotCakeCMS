@@ -14,7 +14,7 @@ namespace Carrotware.Web.UI.Controls {
 		[Localizable(true)]
 		public bool LoadJQueryAsServerControl {
 			get {
-				String s = (String)ViewState["LoadJQueryAsServerControl"];
+				string s = (string)ViewState["LoadJQueryAsServerControl"];
 				return ((s == null) ? false : Convert.ToBoolean(s));
 			}
 			set {
@@ -22,27 +22,27 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
-			int ident = output.Indent;
+		protected override void RenderContents(HtmlTextWriter writer) {
+			int ident = writer.Indent;
 
-			string sJSFile = WebControlHelper.GetWebResourceUrl("Carrotware.Web.UI.Controls.jsHelperLibrary.js");
+			string sJSFile = WebControlHelper.GetWebResourceUrl("jsHelperLibrary.js");
 			string sJQFile = jquery.GeneralUri;
 
-			output.Indent = ident + 3;
-			output.WriteLine();
-			output.WriteLine("<!-- Javascript Helper Functions BEGIN -->");
-			output.WriteLine("<script src=\"" + sJSFile + "\" type=\"text/javascript\"></script> ");
+			writer.Indent = ident + 3;
+			writer.WriteLine();
+			writer.WriteLine("<!-- Javascript Helper Functions BEGIN -->");
+			writer.WriteLine("<script src=\"" + sJSFile + "\" type=\"text/javascript\"></script> ");
 
-			if (LoadJQueryAsServerControl) {
+			if (this.LoadJQueryAsServerControl) {
 				this.Page.Header.Controls.AddAt(0, new jquery());
 			} else {
-				output.WriteLine("<script type=\"text/javascript\">__carrotware_SetJQueryURL('" + sJQFile + "');</script> ");
+				writer.WriteLine("<script type=\"text/javascript\">__carrotware_SetJQueryURL('" + sJQFile + "');</script> ");
 			}
 
-			output.WriteLine("<!-- Javascript Helper Functions END -->");
-			output.WriteLine();
+			writer.WriteLine("<!-- Javascript Helper Functions END -->");
+			writer.WriteLine();
 
-			output.Indent = ident;
+			writer.Indent = ident;
 		}
 	}
 }

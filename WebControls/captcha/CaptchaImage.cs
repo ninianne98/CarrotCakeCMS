@@ -63,11 +63,11 @@ namespace Carrotware.Web.UI.Controls {
 			}
 		}
 
-		public static bool Validate(string TestValue) {
+		public static bool Validate(string testValue) {
 			bool bValid = false;
 			string guid = GetKey();
 
-			if (TestValue.ToLowerInvariant() == guid.ToLowerInvariant()) {
+			if (testValue.ToLowerInvariant() == guid.ToLowerInvariant()) {
 				bValid = true;
 			}
 
@@ -85,21 +85,29 @@ namespace Carrotware.Web.UI.Controls {
 		}
 
 		public static string GetKey() {
-			string guid = "ABCXYZ";
+			string guid = "ABCDWXYZ";
 			if (HttpContext.Current != null) {
 				try {
 					if (HttpContext.Current.Session["captcha_key"] != null) {
 						guid = HttpContext.Current.Session["captcha_key"].ToString();
 					} else {
-						guid = Guid.NewGuid().ToString().Substring(0, 6);
+						guid = GetNewKey(6);
 						HttpContext.Current.Session["captcha_key"] = guid;
 					}
 				} catch {
-					guid = Guid.NewGuid().ToString().Substring(0, 6);
+					guid = GetNewKey(6);
 					HttpContext.Current.Session["captcha_key"] = guid;
 				}
 			}
 			return guid.ToUpperInvariant();
+		}
+
+		private static string GetNewKey(int len) {
+			if (len <= 4 || len >= 12) {
+				len = 8;
+			}
+
+			return Guid.NewGuid().ToString("N").Substring(0, len);
 		}
 
 		public static Bitmap GetCaptchaImage(Color fg, Color bg, Color n) {

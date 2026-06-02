@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div class="cmsTargetArea cmsTargetMove cmsWidgetControl" id="cms_{WIDGETCONTAINER_ID}">
-		<asp:PlaceHolder ID="phWidgetZone" runat="server" />
+		<asp:PlaceHolder runat="server" ID="phWidgetZone" />
 		<div style="clear: both;">
 			&nbsp;
 		</div>

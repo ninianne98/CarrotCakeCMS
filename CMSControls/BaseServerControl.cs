@@ -1,11 +1,10 @@
 ﻿using Carrotware.CMS.Core;
 using Carrotware.CMS.Interface;
+using Carrotware.Web.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
 
@@ -22,11 +21,11 @@ using System.Web.UI;
 namespace Carrotware.CMS.UI.Controls {
 
 	public abstract class BaseServerControl : WidgetParmDataWebControl {
-		protected ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper();
+		protected ISiteNavHelper _navHelper = SiteNavFactory.GetSiteNavHelper();
 
 		protected void SetSiteID() {
 			try {
-				SiteID = SiteData.CurrentSiteID;
+				this.SiteID = SiteData.CurrentSiteID;
 			} catch { }
 		}
 
@@ -65,8 +64,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public override void Dispose() {
 			base.Dispose();
 
-			if (navHelper != null) {
-				navHelper.Dispose();
+			if (_navHelper != null) {
+				_navHelper.Dispose();
 			}
 		}
 
@@ -76,15 +75,15 @@ namespace Carrotware.CMS.UI.Controls {
 			RenderContents(writer);
 		}
 
-		protected override void RenderContents(HtmlTextWriter output) {
+		protected override void RenderContents(HtmlTextWriter writer) {
 		}
 
 		protected void BaseRender(HtmlTextWriter writer) {
 			base.Render(writer);
 		}
 
-		protected void BaseRenderContents(HtmlTextWriter output) {
-			base.RenderContents(output);
+		protected void BaseRenderContents(HtmlTextWriter writer) {
+			base.RenderContents(writer);
 		}
 
 		protected string GetParentPageName() {
@@ -93,20 +92,20 @@ namespace Carrotware.CMS.UI.Controls {
 			return nav.FileName.ToLowerInvariant();
 		}
 
-		protected bool AreFilenamesSame(string sParm1, string sParm2) {
-			if (sParm1 == null || sParm2 == null) {
+		protected bool AreFilenamesSame(string parm1, string parm2) {
+			if (parm1 == null || parm2 == null) {
 				return false;
 			}
 
-			return (sParm1.ToLowerInvariant() == sParm2.ToLowerInvariant()) ? true : false;
+			return (parm1.ToLowerInvariant() == parm2.ToLowerInvariant()) ? true : false;
 		}
 
 		protected List<SiteNav> GetPageNavTree() {
-			return navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
+			return _navHelper.GetPageCrumbNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName, !SecurityData.IsAuthEditor);
 		}
 
 		protected SiteNav GetParentPage() {
-			SiteNav pageNav = navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
+			SiteNav pageNav = _navHelper.GetParentPageNavigation(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
 
 			//assign bogus page name for comp purposes
 			if (pageNav == null) {
@@ -127,7 +126,7 @@ namespace Carrotware.CMS.UI.Controls {
 			if (cp != null) {
 				pageNav = cp.GetSiteNav();
 			} else {
-				pageNav = navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
+				pageNav = _navHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.AlternateCurrentScriptName);
 				//assign bogus page name for comp purposes
 				if (pageNav == null) {
 					pageNav = new SiteNav();
@@ -142,13 +141,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public static string GetCtrlText(Control ctrl) {
-			StringBuilder sb = new StringBuilder();
-			StringWriter tw = new StringWriter(sb);
-			HtmlTextWriter hw = new HtmlTextWriter(tw);
-
-			ctrl.RenderControl(hw);
-
-			return sb.ToString();
+			return ctrl.RenderControl();
 		}
 
 		public static SiteNav FixNavLinkText(SiteNav nav) {

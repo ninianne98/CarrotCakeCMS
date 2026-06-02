@@ -54,7 +54,7 @@ namespace Carrotware.CMS.UI.Controls {
 			var adminFolder = SiteData.AdminFolderPath;
 
 			var sb = new StringBuilder();
-			sb.Append(ControlUtilities.GetManifestResourceStream("Carrotware.CMS.UI.Controls.adminHelp.js").ToString());
+			sb.Append(ControlUtilities.GetManifestResourceStream("adminHelp.js").ToString());
 
 			sb.Replace("[[TIMESTAMP]]", DateTime.UtcNow.ToString("u"));
 
