@@ -26,6 +26,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
 
+			lnkDB.HRef = SiteFilename.DatabaseSetupURL;
+			lnkLog.HRef = SiteFilename.LogonURL;
+
 			if (!this.Page.Title.StartsWith(SiteData.CarrotCakeCMSVersionMM)) {
 				this.Page.Title = string.Format("{0} - {1}", SiteData.CarrotCakeCMSVersionMM, this.Page.Title);
 			}

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
@@ -683,38 +684,38 @@ namespace Carrotware.CMS.Core {
 					DataSet ds = ReadDataSetConfig(CMSConfigFileType.PublicControls, "~/");
 					int iSortOrder = 0;
 
-					List<CMSPlugin> _p1 = new List<CMSPlugin>();
+					List<CMSPlugin> p1 = new List<CMSPlugin>();
 
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Content Snippet &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentSnippetText, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Content Snippet &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentSnippetText, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Most Recent Updated &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MostRecentUpdated, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Most Recent Updated &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MostRecentUpdated, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Multi Level Nav List &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MultiLevelNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Multi Level Nav List &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MultiLevelNavigation, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Comments &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Comments &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Site &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Post &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Site &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Post &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
 
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Comment Form &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });
-					_p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "IFRAME content wrapper &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.IFrameWidgetWrapper, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Comment Form &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "IFRAME content wrapper &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.IFrameWidgetWrapper, Carrotware.CMS.UI.Controls" });
 
-					List<CMSPlugin> _p2 = (from d in ds.Tables[0].AsEnumerable()
-										   select new CMSPlugin {
-											   SortOrder = 100,
-											   FilePath = d.GetStringValue("filepath"),
-											   Caption = d.GetStringValue("crtldesc")
-										   }).ToList();
+					List<CMSPlugin> p2 = (from d in ds.Tables[0].AsEnumerable()
+										  select new CMSPlugin {
+											  SortOrder = 100,
+											  FilePath = d.GetStringValue("filepath"),
+											  Caption = d.GetStringValue("crtldesc")
+										  }).ToList();
 
-					plugins = _p1.Union(_p2).Union(GetPluginsByDirectory()).ToList();
+					plugins = p1.Union(p2).Union(GetPluginsByDirectory()).ToList();
 
 					plugins.Where(x => x.FilePath.StartsWith("~~/")).ToList().ForEach(r => r.FilePath = r.FilePath.Replace("~~/", "~/"));
 
@@ -1141,33 +1142,41 @@ namespace Carrotware.CMS.Core {
 			return text.EncodeBase64();
 		}
 
-		public void OverrideKey(Guid guidContentID) {
-			filePage = null;
-			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidContentID);
+		public void OverridePage(ContentPage page) {
+			_filePage = page;
+		}
+
+		public void OverrideKey(Guid rootId) {
+			_filePage = null;
+			using (var pageHelper = new ContentPageHelper()) {
+				_filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, rootId);
 			}
 		}
 
-		public void OverrideKey(string sPageName) {
-			filePage = null;
-			using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-				filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, sPageName);
+		public void OverrideKey(string pageName) {
+			_filePage = null;
+			using (var pageHelper = new ContentPageHelper()) {
+				_filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, pageName);
 			}
 		}
 
-		protected ContentPage filePage = null;
+		protected ContentPage _filePage = null;
 
 		protected void LoadGuids() {
-			if (filePage == null) {
-				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
-					if (SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(SiteData.AdminFolderPath)) {
-						var pageId = HttpContext.Current.GetGuidParmFromQuery("pageid");
-						filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, pageId);
+			if (_filePage == null) {
+				using (var pageHelper = new ContentPageHelper()) {
+					if (SiteData.IsPageSampler && _filePage == null) {
+						_filePage = ContentPageHelper.GetSamplerView();
 					} else {
-						filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
-					}
-					if (SiteData.IsPageSampler && filePage == null) {
-						filePage = ContentPageHelper.GetSamplerView();
+						if (SiteData.CurrentScriptName.ToLowerInvariant().StartsWith(SiteData.AdminFolderPath)) {
+							Guid pageId = Guid.Empty;
+							if (!string.IsNullOrEmpty(HttpContext.Current.Request.QueryString["pageid"])) {
+								pageId = new Guid(HttpContext.Current.Request.QueryString["pageid"].ToString());
+							}
+							_filePage = pageHelper.FindContentByID(SiteData.CurrentSiteID, pageId);
+						} else {
+							_filePage = pageHelper.FindByFilename(SiteData.CurrentSiteID, SiteData.CurrentScriptName);
+						}
 					}
 				}
 			}
@@ -1177,67 +1186,64 @@ namespace Carrotware.CMS.Core {
 			get {
 				ContentPage c = null;
 				try {
-					string sXML = GetSerialized(keyAdminContent);
-					if (!string.IsNullOrEmpty(sXML)) {
-						XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-						Object genpref = null;
-						using (StringReader stringReader = new StringReader(sXML)) {
-							genpref = xmlSerializer.Deserialize(stringReader);
-						}
-						c = genpref as ContentPage;
+					string xml = GetSerialized(keyAdminContent);
+					var xmlSerializer = new XmlSerializer(typeof(ContentPage));
+					object adminContent = null;
+					using (var sr = new StringReader(xml)) {
+						adminContent = xmlSerializer.Deserialize(sr);
 					}
-				} catch (Exception ex) { }
+					c = adminContent as ContentPage;
+				} catch { }
 				return c;
 			}
 			set {
 				if (value == null) {
 					ClearSerialized(keyAdminContent);
 				} else {
-					XmlSerializer xmlSerializer = new XmlSerializer(typeof(ContentPage));
-					string sXML = string.Empty;
-					using (StringWriter stringWriter = new StringWriter()) {
-						xmlSerializer.Serialize(stringWriter, value);
-						sXML = stringWriter.ToString();
+					var sb = new StringBuilder();
+					var xmlSerializer = new XmlSerializer(typeof(ContentPage));
+					using (var sw = new StringWriter(sb)) {
+						xmlSerializer.Serialize(sw, value);
 					}
-					SaveSerialized(keyAdminContent, sXML);
+					SaveSerialized(keyAdminContent, sb.ToString());
 				}
 			}
 		}
 
 		public List<Widget> cmsAdminWidget {
 			get {
-				List<Widget> c = null;
-				string sXML = GetSerialized(keyAdminWidget);
-				if (!string.IsNullOrEmpty(sXML)) {
-					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
-					Object genpref = null;
-					using (StringReader stringReader = new StringReader(sXML)) {
-						genpref = xmlSerializer.Deserialize(stringReader);
+				List<Widget> w = null;
+				string xml = GetSerialized(keyAdminWidget);
+				//since a page may not have any widgets, initialize it and skip deserializing
+				if (!string.IsNullOrEmpty(xml)) {
+					var xmlSerializer = new XmlSerializer(typeof(List<Widget>));
+					object adminContent = null;
+					using (var sr = new StringReader(xml)) {
+						adminContent = xmlSerializer.Deserialize(sr);
 					}
-					c = genpref as List<Widget>;
+					w = adminContent as List<Widget>;
 				}
-				return c;
+				return w;
 			}
 			set {
 				if (value == null) {
 					ClearSerialized(keyAdminWidget);
 				} else {
-					XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Widget>));
-					string sXML = string.Empty;
-					using (StringWriter stringWriter = new StringWriter()) {
-						xmlSerializer.Serialize(stringWriter, value);
-						sXML = stringWriter.ToString();
+					var sb = new StringBuilder();
+					var xmlSerializer = new XmlSerializer(typeof(List<Widget>));
+					using (var sw = new StringWriter(sb)) {
+						xmlSerializer.Serialize(sw, value);
 					}
-					SaveSerialized(keyAdminWidget, sXML);
+					SaveSerialized(keyAdminWidget, sb.ToString());
 				}
 			}
 		}
 
-		public static void SaveSerialized(Guid itemID, string sKey, string sData) {
-			using (var db = CarrotCMSDataContext.GetDataContext()) {
+		public static void SaveSerialized(Guid itemID, string key, string data) {
+			using (var db = CarrotCMSDataContext.Create()) {
 				bool bAdd = false;
 
-				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(db, itemID, sKey);
+				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(db, itemID, key);
 
 				if (itm == null) {
 					bAdd = true;
@@ -1246,10 +1252,10 @@ namespace Carrotware.CMS.Core {
 					itm.SiteID = SiteData.CurrentSiteID;
 					itm.ItemID = itemID;
 					itm.EditUserId = SecurityData.CurrentUserGuid;
-					itm.KeyType = sKey;
+					itm.KeyType = key;
 				}
 
-				itm.SerializedData = sData;
+				itm.SerializedData = data;
 				itm.EditDate = DateTime.UtcNow;
 
 				if (bAdd) {
@@ -1259,23 +1265,23 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
-		public static string GetSerialized(Guid itemID, string sKey) {
-			string sData = string.Empty;
-			using (var db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(db, itemID, sKey);
+		public static string GetSerialized(Guid itemID, string key) {
+			string data = string.Empty;
+			using (var db = CarrotCMSDataContext.Create()) {
+				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(db, itemID, key);
 
 				if (itm != null) {
-					sData = itm.SerializedData;
+					data = itm.SerializedData;
 				}
 			}
 
-			return sData;
+			return data;
 		}
 
-		public static bool ClearSerialized(Guid itemID, string sKey) {
+		public static bool ClearSerialized(Guid itemID, string key) {
 			bool bRet = false;
-			using (var db = CarrotCMSDataContext.GetDataContext()) {
-				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(db, itemID, sKey);
+			using (var db = CarrotCMSDataContext.Create()) {
+				carrot_SerialCache itm = CompiledQueries.SearchSeriaCache(db, itemID, key);
 
 				if (itm != null) {
 					db.carrot_SerialCaches.DeleteOnSubmit(itm);
@@ -1286,27 +1292,27 @@ namespace Carrotware.CMS.Core {
 			return bRet;
 		}
 
-		private void SaveSerialized(string sKey, string sData) {
+		private void SaveSerialized(string key, string data) {
 			LoadGuids();
-			if (filePage != null) {
-				CMSConfigHelper.SaveSerialized(filePage.Root_ContentID, sKey, sData);
+			if (_filePage != null) {
+				CMSConfigHelper.SaveSerialized(_filePage.Root_ContentID, key, data);
 			}
 		}
 
-		private string GetSerialized(string sKey) {
-			string sData = string.Empty;
+		private string GetSerialized(string key) {
+			string data = string.Empty;
 			LoadGuids();
 
-			if (filePage != null) {
-				sData = CMSConfigHelper.GetSerialized(filePage.Root_ContentID, sKey);
+			if (_filePage != null) {
+				data = CMSConfigHelper.GetSerialized(_filePage.Root_ContentID, key);
 			}
-			return sData;
+			return data;
 		}
 
-		private bool ClearSerialized(string sKey) {
+		private bool ClearSerialized(string key) {
 			LoadGuids();
-			if (filePage != null) {
-				return CMSConfigHelper.ClearSerialized(filePage.Root_ContentID, sKey);
+			if (_filePage != null) {
+				return CMSConfigHelper.ClearSerialized(_filePage.Root_ContentID, key);
 			} else {
 				return false;
 			}

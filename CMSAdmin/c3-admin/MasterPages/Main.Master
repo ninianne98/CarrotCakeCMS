@@ -100,8 +100,7 @@
 			}
 		</script>
 	</asp:PlaceHolder>
-	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
-	</asp:ContentPlaceHolder>
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server" />
 </head>
 <body>
 	<form id="aspnetForm" runat="server">
@@ -126,7 +125,7 @@
 					</h3>
 				</div>
 				<div style="display: none">
-					<asp:Button ID="cmdDummy" runat="server"></asp:Button>
+					<asp:Button ID="cmdDummy" runat="server" />
 				</div>
 			</div>
 			<div id="nav-menu-container">
@@ -182,7 +181,7 @@
 					<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/About.aspx?');">About</a></li>
 					<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
 					<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
-						<%=String.Format("My Profile [{0}]", this.UserName) %></a>
+							<asp:Literal runat="server" ID="litUsername" /></a>
 						<ul class="children">
 							<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
 							<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>
@@ -197,17 +196,14 @@
 			<div id="content">
 				<div class="pad-content">
 					<h1 class="headingColor">
-						<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
-						</asp:ContentPlaceHolder>
+						<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server" />
 					</h1>
 					<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
 						<ContentTemplate>
-							<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
-							</asp:ContentPlaceHolder>
+							<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server" />
 						</ContentTemplate>
 					</asp:UpdatePanel>
-					<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
-					</asp:ContentPlaceHolder>
+					<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server" />
 				</div>
 			</div>
 			<div style="display: none">

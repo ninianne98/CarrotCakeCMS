@@ -4,9 +4,17 @@ namespace Carrotware.CMS.Core {
 	//======================================
 
 	public class ContentDateTally : IContentMetaInfo {
+
+		public ContentDateTally() { }
+
+		public ContentDateTally(SiteData site, DateTime tallyDate) {
+			this.TheSite = site;
+			this.TallyDate = tallyDate;
+		}
+
 		public Guid TallyID { get; set; }
 		public SiteData TheSite { get; set; }
-		public DateTime GoLiveDate { get; set; }
+		public DateTime TallyDate { get; set; }
 		public string DateCaption { get; set; }
 		public string DateSlug { get; set; }
 		public string DateURL { get; set; }
@@ -28,17 +36,17 @@ namespace Carrotware.CMS.Core {
 
 		public string MetaInfoText {
 			get {
-				return this.GoLiveDate.ToString("MMMM yyyy");
+				return this.TallyDate.ToString("MMMM yyyy");
 			}
 		}
 
 		public DateTime? MetaDataDate {
-			get { return this.GoLiveDate; }
+			get { return this.TallyDate; }
 		}
 
 		public string MetaInfoURL {
 			get {
-				this.DateURL = (this.TheSite.BuildMonthSearchLink(this.GoLiveDate));
+				this.DateURL = (this.TheSite.BuildMonthSearchLink(this.TallyDate));
 				return this.DateURL;
 			}
 		}

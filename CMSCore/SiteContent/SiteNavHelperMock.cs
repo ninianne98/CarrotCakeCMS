@@ -92,7 +92,7 @@ namespace Carrotware.CMS.Core {
 
 				ContentDateTally cc = new ContentDateTally {
 					DateCaption = dateNow.ToString("MMMM yyyy"),
-					GoLiveDate = Convert.ToDateTime(dateNow),
+					TallyDate = Convert.ToDateTime(dateNow),
 					UseCount = Convert.ToInt32(n * 2),
 					TheSite = SiteData.CurrentSite
 				};

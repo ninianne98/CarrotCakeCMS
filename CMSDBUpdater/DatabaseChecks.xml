@@ -157,7 +157,7 @@
 		<mode>EQ</mode>
 		<rowcount>3</rowcount>
 		<alwayscheck>False</alwayscheck>
-		<testcontext>|IsPostStep10|</testcontext>
+		<testcontext>|AreCMSTablesIncomplete|IsPostStep10|</testcontext>
 		<sql>
 			select [table_schema], [table_name], [column_name], [ordinal_position]
 			from [INFORMATION_SCHEMA].[COLUMNS]
@@ -434,7 +434,7 @@
 	</querynugget>
 
 	<querynugget>
-		<priority>26</priority>
+		<priority>20</priority>
 		<mode>GT</mode>
 		<rowcount>3</rowcount>
 		<alwayscheck>False</alwayscheck>
@@ -446,7 +446,7 @@
 	</querynugget>
 
 	<querynugget>
-		<priority>26</priority>
+		<priority>30</priority>
 		<mode>LT</mode>
 		<rowcount>3</rowcount>
 		<alwayscheck>False</alwayscheck>

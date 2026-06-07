@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Web;
+using System.Xml;
 
 /*
 * CarrotCake CMS
@@ -45,6 +46,23 @@ namespace Carrotware.CMS.Core {
 				}
 			}
 			return id;
+		}
+
+		public static XmlReaderSettings GetXmlReaderSettings() {
+			var settings = new XmlReaderSettings {
+				ConformanceLevel = ConformanceLevel.Fragment
+			};
+
+			return settings;
+		}
+
+		public static XmlWriterSettings GetXmlWriterSettings() {
+			var settings = new XmlWriterSettings {
+				OmitXmlDeclaration = true,
+				Indent = true
+			};
+
+			return settings;
 		}
 
 		public static T Clone<T>(this T source) {

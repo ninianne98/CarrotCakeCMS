@@ -15,7 +15,12 @@ using System.Web.UI;
 namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 
 	public partial class Main : AdminBaseMasterPage {
-		public string UserName { get; set; }
+
+		public string UserName {
+			get {
+				return SecurityData.CurrentUserIdentityName ?? string.Empty;
+			}
+		}
 
 		public string AntiCache {
 			get {
@@ -24,16 +29,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin.MasterPages {
 		}
 
 		protected void Page_Load(object sender, EventArgs e) {
-			this.UserName = string.Empty;
-
 			siteSkin.SelectedColor = AdminBaseMasterPage.SiteSkin;
+
+			litUsername.Text = string.Format("My Profile [{0}]", this.UserName);
 
 			if (!SecurityData.IsAuthenticated) {
 				SecurityData.ResetAuth();
 				Response.Redirect(SiteFilename.LogonURL);
 			}
-
-			this.UserName = SecurityData.CurrentUserIdentityName;
 
 			if (!SecurityData.IsAdmin) {
 				tabUserSecurity.Visible = false;

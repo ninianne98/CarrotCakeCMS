@@ -19,7 +19,9 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 	public partial class CreateFirstAdmin : BasePage {
 
 		protected void Page_Load(object sender, EventArgs e) {
-			if (DatabaseSchemaState.UsersExist) {
+			var du = new DatabaseUpdate();
+
+			if (du.DoUsersExist()) {
 				phStep1.Visible = false;
 				phStep2.Visible = true;
 			} else {

@@ -341,7 +341,7 @@ namespace Carrotware.CMS.Core {
 												 select (IContentMetaInfo)(
 												 new ContentDateTally {
 													 DateCaption = ct.DateSlug,
-													 GoLiveDate = Convert.ToDateTime(ct.DateMonth),
+													 TallyDate = Convert.ToDateTime(ct.DateMonth),
 													 UseCount = Convert.ToInt32(ct.ContentCount),
 													 TheSite = site,
 													 TallyID = Guid.NewGuid()

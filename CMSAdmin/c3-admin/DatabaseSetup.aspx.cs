@@ -20,7 +20,6 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class DatabaseSetup : BasePage {
 		private bool _ok = false;
-		private bool _update = true;
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!string.IsNullOrEmpty(Request.QueryString["signout"])) {
@@ -28,41 +27,28 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				Response.Redirect(SiteFilename.DatabaseSetupURL);
 			}
 
-			var du = new DatabaseUpdate(true);
-
+			var du = new DatabaseUpdate();
 			var lst = new List<DatabaseUpdateMessage>();
 
 			btnLogin.Visible = false;
 			btnCreate.Visible = false;
 
+			btnCreate.Visible = du.DoUsersExist() == false;
+
 			if (DatabaseSchemaState.LastSQLError != null) {
 				du.HandleResponse(lst, DatabaseSchemaState.LastSQLError);
-				DatabaseSchemaState.LastSQLError = null;
+				du.ClearTest();
 			} else {
-				if (!du.DoCMSTablesExist()) {
-					_update = false;
-				}
+				du.ClearTest();
+				var update = du.DatabaseNeedsUpdate();
 
-				_update = du.DatabaseNeedsUpdate();
+				DatabaseUpdateStatus status = du.PerformUpdates();
+				lst = du.MergeMessages(lst, status.Messages);
 
-				if (_update) {
-					DatabaseUpdateStatus status = du.PerformUpdates();
-					lst = du.MergeMessages(lst, status.Messages);
-				} else {
-					DataInfo ver = DatabaseSchemaState.GetDbSchemaVersion();
-					du.HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
-				}
-
-				_update = du.DatabaseNeedsUpdate();
-
-				if (!_update && DatabaseSchemaState.LastSQLError == null) {
-					if (DatabaseSchemaState.UsersExist) {
-						btnLogin.Visible = true;
-					} else {
-						btnCreate.Visible = true;
-					}
-				}
+				update = du.DatabaseNeedsUpdate();
 			}
+
+			btnLogin.Visible = btnCreate.Visible == false;
 
 			if (DatabaseSchemaState.LastSQLError != null) {
 				du.HandleResponse(lst, DatabaseSchemaState.LastSQLError);
@@ -75,11 +61,14 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			using (var cmsHelper = new CMSConfigHelper()) {
 				cmsHelper.ResetConfigs();
 			}
+
+			lnkRun1.HRef = SiteData.CurrentScriptName;
+			lnkRun2.HRef = SiteData.CurrentScriptName + "?signout=true&carrot_tick=" + DateTime.UtcNow.Ticks.ToString();
 		}
 
 		protected string CSSMsg {
 			get {
-				return _ok ? " okMsg " : " errMsg ";
+				return _ok ? " msg-ok " : " msg-err ";
 			}
 		}
 

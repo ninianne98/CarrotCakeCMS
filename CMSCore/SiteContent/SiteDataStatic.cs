@@ -387,7 +387,8 @@ namespace Carrotware.CMS.Core {
 						}
 					} else {
 						pageContents = GetCurrentLivePage();
-						if (pageContents == null && (!SiteData.CurrentSiteExists || DatabaseSchemaState.AreCMSTablesIncomplete())) {
+						var du = new DatabaseUpdate();
+						if (pageContents == null && (!SiteData.CurrentSiteExists || du.DatabaseNeedsUpdate())) {
 							pageContents = ContentPageHelper.GetEmptyHome();
 						}
 						if (SecurityData.CurrentUserGuid != Guid.Empty) {

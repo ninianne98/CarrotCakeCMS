@@ -23,36 +23,51 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public DatabaseUpdate(bool clearTest) {
 			if (clearTest) {
-				DatabaseSchemaState.LastSQLError = null;
-				DatabaseSchemaState.ResetSQLState();
-				TestDatabaseWithQuery();
+				ClearTest();
 			}
 		}
+
+		public void ClearTest() {
+			_usersexist = false;
+			_step04 = false;
+			_step09 = false;
+			_step10 = false;
+
+			DatabaseSchemaState.LastSQLError = null;
+			DatabaseSchemaState.ResetSQLState();
+			TestDatabaseWithQuery();
+		}
+
+		private bool _step04 = false;
 
 		public bool IsPostStep04 {
 			get {
-				if (!DatabaseSchemaState.FailedSQL) {
-					return SQLUpdateNugget.EvalNuggetKey("IsPostStep04");
+				if (!DatabaseSchemaState.FailedSQL && !_step04) {
+					_step04 = SQLUpdateNugget.EvalNuggetKey("IsPostStep04");
 				}
-				return false;
+				return _step04;
 			}
 		}
+
+		private bool _step09 = false;
 
 		public bool IsPostStep09 {
 			get {
-				if (!DatabaseSchemaState.FailedSQL) {
-					return SQLUpdateNugget.EvalNuggetKey("IsPostStep09");
+				if (!DatabaseSchemaState.FailedSQL && !_step09) {
+					_step09 = SQLUpdateNugget.EvalNuggetKey("IsPostStep09");
 				}
-				return false;
+				return _step09;
 			}
 		}
 
+		private bool _step10 = false;
+
 		public bool IsPostStep10 {
 			get {
-				if (!DatabaseSchemaState.FailedSQL) {
-					return SQLUpdateNugget.EvalNuggetKey("IsPostStep10");
+				if (!DatabaseSchemaState.FailedSQL && !_step10) {
+					_step10 = SQLUpdateNugget.EvalNuggetKey("IsPostStep10");
 				}
-				return false;
+				return _step10;
 			}
 		}
 
@@ -214,86 +229,113 @@ namespace Carrotware.CMS.DBUpdater {
 			return lstMsgs;
 		}
 
+		public List<DatabaseUpdateMessage> ResponseVersion(List<DatabaseUpdateMessage> lstMsgs) {
+			var ver = DatabaseSchemaState.GetDbSchemaVersion();
+
+			string sMsg = "Database version [" + ver.DataValue + "] ";
+
+			if (ver.IsLatest()) {
+				sMsg = "Database up-to-date [" + ver.DataValue + "] ";
+			}
+
+			if (lstMsgs == null) {
+				lstMsgs = new List<DatabaseUpdateMessage>();
+			}
+
+			var execMessage = new DatabaseUpdateResponse();
+
+			HandleResponse(lstMsgs, sMsg, execMessage);
+
+			return lstMsgs;
+		}
+
 		public string BuildUpdateString(int iCount) {
 			return "Update " + (iCount).ToString() + " ";
 		}
 
+		private static object _updateLocker = new object();
+
 		public DatabaseUpdateStatus PerformUpdates() {
 			DatabaseUpdateStatus status = new DatabaseUpdateStatus();
-			bool bUpdate = true;
+			bool update = true;
 			var lst = new List<DatabaseUpdateMessage>();
 
-			lock (DatabaseSchemaState.UpdateLocker) {
-				if (!DoCMSTablesExist()) {
-					HandleResponse(lst, "Create Database", CreateCMSDatabase());
-				} else {
-					HandleResponse(lst, "Database already exists");
+			lock (_updateLocker) {
+				var doTablesExist = DoCMSTablesExist();
+				var ver = DatabaseSchemaState.GetDbSchemaVersion();
+
+				if (ver.IsLatest() == false || ver.IsBlank()) {
+					if (!doTablesExist) {
+						HandleResponse(lst, "Create Database", CreateCMSDatabase());
+					} else {
+						HandleResponse(lst, "Database already exists");
+					}
 				}
 
-				DataInfo ver = DatabaseSchemaState.GetDbSchemaVersion();
+				var needsUpdate = DatabaseNeedsUpdate();
+				ver.GetDbSchema();
+				update = needsUpdate && ver.IsLatest() == false;
 
-				bUpdate = DatabaseNeedsUpdate()
-						&& ver.DataValue != DatabaseSchemaState.CurrentDbVersion;
+				int updateCount = 1;
 
-				int iUpdate = 1;
-
-				if (bUpdate) {
-					if (ver.DataValue != DatabaseSchemaState.CurrentDbVersion) {
+				if (update) {
+					if (doTablesExist && !this.IsPostStep10) {
 						if (!this.IsPostStep04) {
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep00());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep01());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep02());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep03());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep04());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep00());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep01());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep02());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep03());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep04());
 						}
 
 						if (!this.IsPostStep09) {
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep05());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep06());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep07());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep08());
-							HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep09());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep05());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep06());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep07());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep08());
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep09());
 						}
-
-						ver = DatabaseSchemaState.GetDbSchemaVersion();
-
-						if (ver.DataValue != DatabaseSchemaState.CurrentDbVersion) {
-							if (ver.DataValue.Length < 2 || ver.IsMinorOf("201305") || ver.IsMinorOf("201306")) {
-								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep10());
-							}
-							ver = DatabaseSchemaState.GetDbSchemaVersion();
-							if (ver.DataValue == DatabaseSchemaState.DbVersion10 || ver.IsMinorOf("201306") || ver.IsMinorOf("201309")) {
-								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep11());
-							}
-							ver = DatabaseSchemaState.GetDbSchemaVersion();
-							if (ver.DataValue == DatabaseSchemaState.DbVersion11 || ver.IsYearOf("2013") || ver.IsYearOf("2014")) {
-								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep12());
-							}
-							ver = DatabaseSchemaState.GetDbSchemaVersion();
-							if (ver.DataValue == DatabaseSchemaState.DbVersion12 || ver.IsYearOf("2014") || ver.IsYearOf("2015")) {
-								HandleResponse(lst, BuildUpdateString(iUpdate++), AlterStep13());
-							}
-							ver = DatabaseSchemaState.GetDbSchemaVersion();
-							if (ver.DataValue == DatabaseSchemaState.DbVersion13 || ver.IsYearOf("2020")
-										|| ver.IsYearOf("2025") || ver.IsYearOf("2026")) {
-								HandleResponse(lst, BuildUpdateString(iUpdate++), Migrate45());
-							}
-							ver = DatabaseSchemaState.GetDbSchemaVersion();
-						}
-					} else {
-						HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
 					}
-				} else {
-					HandleResponse(lst, "Database up-to-date [" + ver.DataValue + "] ");
+
+					ver.GetDbSchema();
+
+					if (ver.IsLatest() == false || ver.IsBlank()) {
+						if (ver.IsBlank() || ver.IsYearOf("2013")) {
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep10());
+							ver.GetDbSchema();
+						}
+						if (ver.Matches(DatabaseSchemaState.DbVersion10) || ver.IsYearOf("2013")) {
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep11());
+							ver.GetDbSchema();
+						}
+						if (ver.Matches(DatabaseSchemaState.DbVersion11) || ver.IsYearOf("2013") || ver.IsYearOf("2014")) {
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep12());
+							ver.GetDbSchema();
+						}
+						if (ver.Matches(DatabaseSchemaState.DbVersion12) || ver.IsYearOf("2014") || ver.IsYearOf("2015")) {
+							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep13());
+							ver.GetDbSchema();
+						}
+
+						if (ver.Matches(DatabaseSchemaState.DbVersion13) || ver.IsYearOf("2020")
+									|| ver.IsYearOf("2025") || ver.IsYearOf("2026")) {
+							HandleResponse(lst, BuildUpdateString(updateCount++), Migrate45());
+							ver.GetDbSchema();
+						}
+					}
 				}
+
+				ResponseVersion(lst);
 
 				DatabaseSchemaState.ResetFailedSQL();
 
 				DatabaseSchemaState.ResetSQLState();
 
-				bUpdate = DatabaseNeedsUpdate();
+				needsUpdate = DatabaseNeedsUpdate();
+				ver.GetDbSchema();
+				update = needsUpdate && ver.IsLatest() == false;
 
-				status.NeedsUpdate = bUpdate;
+				status.NeedsUpdate = update;
 				status.Messages = lst;
 			}
 
@@ -380,31 +422,37 @@ namespace Carrotware.CMS.DBUpdater {
 
 		public bool DatabaseNeedsUpdate() {
 			if (!DatabaseSchemaState.FailedSQL) {
-				bool bTestResult = false;
-
-				DataInfo ver = DatabaseSchemaState.GetDbSchemaVersion();
-				bTestResult = ver.DataValue != DatabaseSchemaState.CurrentDbVersion;
-				if (bTestResult) {
+				var ver = DatabaseSchemaState.GetDbSchemaVersion();
+				if (ver.IsBlank() || ver.IsLatest() == false) {
 					return true;
 				}
-
-				bTestResult = SQLUpdateNugget.EvalNuggetKey("DatabaseNeedsUpdate");
-				if (bTestResult) {
+				if (ver.IsLatest()) {
+					return false;
+				}
+				if (SQLUpdateNugget.EvalNuggetKey("AreCMSTablesIncomplete")) {
 					return true;
 				}
-
-				bTestResult = SQLUpdateNugget.EvalNuggetKey("PreCarrotPrefix");
-				if (bTestResult) {
+				if (SQLUpdateNugget.EvalNuggetKey("PreCarrotPrefix")) {
 					return true;
 				}
-
-				bTestResult = SQLUpdateNugget.EvalManditoryChecks();
-				if (bTestResult) {
+				if (SQLUpdateNugget.EvalManditoryChecks()) {
 					return true;
 				}
 			}
-
 			return false;
+		}
+
+		private bool _usersexist = false;
+
+		public bool DoUsersExist() {
+			if (!DatabaseSchemaState.FailedSQL && !_usersexist) {
+				try {
+					_usersexist = SQLUpdateNugget.EvalNuggetKey("DoUsersExist");
+				} catch (Exception ex) {
+					DatabaseSchemaState.WriteDebugException("usersexist", ex);
+				}
+			}
+			return _usersexist;
 		}
 
 		#region Pre Blog alters
@@ -709,62 +757,50 @@ namespace Carrotware.CMS.DBUpdater {
 		#region General database routines
 
 		private Exception ExecNonQuery(string connectionString, string sqlQuery, bool bIgnoreErr) {
-			Exception exc = new Exception("");
+			var exc = new Exception("");
+			var sb = new StringBuilder();
 
 			using (SqlConnection cn = new SqlConnection(connectionString)) {
-				cn.Open();
-
 				List<string> cmdLst = SplitScriptAtGo(sqlQuery);
 
-				if (!bIgnoreErr) {
+				foreach (string cmdStr in cmdLst) {
+					cn.Open();
+
 					try {
-						foreach (string cmdStr in cmdLst) {
-							using (SqlCommand cmd = cn.CreateCommand()) {
-								cmd.CommandText = cmdStr;
-								cmd.Connection = cn;
-								cmd.CommandTimeout = 360;
-								int ret = cmd.ExecuteNonQuery();
-							}
+						using (SqlCommand cmd = cn.CreateCommand()) {
+							cmd.CommandText = cmdStr;
+							cmd.Connection = cn;
+							cmd.CommandTimeout = 360;
+							int ret = cmd.ExecuteNonQuery();
 						}
 					} catch (Exception ex) {
 						exc = ex;
-						DatabaseSchemaState.WriteDebugException("execnonquery-ignore", ex);
-					} finally {
-						cn.Close();
-					}
-				} else {
-					var sb = new StringBuilder();
-					foreach (string cmdStr in cmdLst) {
-						try {
-							using (SqlCommand cmd = cn.CreateCommand()) {
-								cmd.CommandText = cmdStr;
-								cmd.Connection = cn;
-								cmd.CommandTimeout = 360;
-								int ret = cmd.ExecuteNonQuery();
-							}
-						} catch (Exception ex) {
-							sb.Append(ex.Message + "\n" + ex.StackTrace + "\n~~~~~~~~~~~~~~~~~~~~~~~~\n");
-							if (ex.InnerException != null) {
-								sb.Append(ex.InnerException.Message + "\n" + ex.InnerException.StackTrace + "\n~~~~~~~~~~~~~~~~~~~~~~~~\n");
-							}
-							DatabaseSchemaState.WriteDebugException("execnonquery", ex);
+						if (!bIgnoreErr) {
+							var extxt = ex.CombineMessage();
+							sb.AppendLine("~~~~~~~~~~~~~~~~~~~~~~~~");
+							sb.AppendLine(extxt);
 						}
+						DatabaseSchemaState.WriteDebugException("execnonquery", ex);
 					}
-					exc = new Exception(sb.ToString());
 					cn.Close();
 				}
-			}
-			return exc;
 
-			#endregion General database routines
+				if (!bIgnoreErr) {
+					exc = new Exception(sb.ToString());
+				}
+			}
+
+			return exc;
 		}
+
+		#endregion General database routines
 	}
 
 	//======================
 	public class DatabaseUpdateStatus {
-		public bool NeedsUpdate { get; set; }
+		public bool NeedsUpdate { get; set; } = true;
 
-		public List<DatabaseUpdateMessage> Messages { get; set; }
+		public List<DatabaseUpdateMessage> Messages { get; set; } = new List<DatabaseUpdateMessage>();
 
 		public DatabaseUpdateStatus() {
 			this.Messages = new List<DatabaseUpdateMessage>();
@@ -794,6 +830,28 @@ namespace Carrotware.CMS.DBUpdater {
 			}
 
 			return this.DataValue.Substring(0, len) == testVersion.Substring(0, len);
+		}
+
+		public bool Matches(string testVersion) {
+			if (string.IsNullOrWhiteSpace(this.DataValue) || string.IsNullOrWhiteSpace(testVersion)) {
+				return false;
+			}
+
+			return this.DataValue.ToUpperInvariant() == testVersion.ToUpperInvariant();
+		}
+
+		public bool IsLatest() {
+			return this.DataValue == DatabaseSchemaState.CurrentDbVersion;
+		}
+
+		public bool IsBlank() {
+			return string.IsNullOrWhiteSpace(this.DataValue) || this.DataValue.Length < 4 || this.DataValue.StartsWith("0000");
+		}
+
+		public void GetDbSchema() {
+			var ver = DatabaseSchemaState.GetDbSchemaVersion();
+			this.DataKey = ver.DataKey;
+			this.DataValue = ver.DataValue;
 		}
 
 		public static string DBSchema {

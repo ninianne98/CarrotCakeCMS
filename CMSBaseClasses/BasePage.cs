@@ -60,7 +60,8 @@ namespace Carrotware.CMS.UI.Base {
 		}
 
 		protected void CheckDatabase() {
-			if (DatabaseSchemaState.AreCMSTablesIncomplete() || !DatabaseSchemaState.UsersExist) {
+			var du = new DatabaseUpdate();
+			if (du.DatabaseNeedsUpdate() || !du.DoUsersExist()) {
 				DatabaseSchemaState.ResetFailedSQL();
 				DatabaseSchemaState.ResetSQLState();
 

@@ -89,8 +89,9 @@ namespace Carrotware.CMS.Core {
 					HasRegisteredRoutes = true;
 				}
 			} catch (Exception ex) {
+				var du = new DatabaseUpdate();
 				//assumption is database is probably empty / needs updating, so trigger the under construction view
-				if (DatabaseSchemaState.SystemNeedsChecking(ex) || DatabaseSchemaState.AreCMSTablesIncomplete()) {
+				if (ex.SystemNeedsChecking() || du.DatabaseNeedsUpdate()) {
 					routes.Clear();
 					HasRegisteredRoutes = false;
 				} else {

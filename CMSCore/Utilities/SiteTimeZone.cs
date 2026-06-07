@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -35,9 +37,9 @@ namespace Carrotware.CMS.Core {
 
 	//===============================
 	public class TimeZoneContent {
-		public List<ContentLocalTime> ContentLocalDates { get; set; }
+		public List<ContentLocalTime> ContentLocalDates { get; set; } = new List<ContentLocalTime>();
 
-		public List<BlogPostPageUrl> BlogPostUrls { get; set; }
+		public List<BlogPostPageUrl> BlogPostUrls { get; set; } = new List<BlogPostPageUrl>();
 
 		public Guid SiteID { get; set; }
 
@@ -107,13 +109,14 @@ namespace Carrotware.CMS.Core {
 		}
 
 		public string GetXml() {
-			XmlSerializer xmlSerializer = new XmlSerializer(typeof(TimeZoneContent));
-			string sXML = string.Empty;
-			using (StringWriter stringWriter = new StringWriter()) {
-				xmlSerializer.Serialize(stringWriter, this);
-				sXML = stringWriter.ToString();
+			var sb = new StringBuilder();
+			var xmlSerializer = new XmlSerializer(typeof(TimeZoneContent));
+			using (var sw = new StringWriter(sb)) {
+				using (var xw = XmlWriter.Create(sw, CoreHelper.GetXmlWriterSettings())) {
+					xmlSerializer.Serialize(xw, this);
+				}
 			}
-			return sXML;
+			return sb.ToString();
 		}
 	}
 }

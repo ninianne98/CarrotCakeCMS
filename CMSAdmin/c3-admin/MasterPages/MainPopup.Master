@@ -117,8 +117,7 @@
 		<!-- /TinyMCE -->
 		<% } %>
 	</asp:PlaceHolder>
-	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
-	</asp:ContentPlaceHolder>
+	<asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server" />
 </head>
 <body>
 	<form id="aspnetForm" runat="server">
@@ -136,18 +135,14 @@
 			<asp:UpdatePanel ID="ajaxUpdatePanel" runat="server">
 				<ContentTemplate>
 					<h1 class="headingColor">
-						<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server">
-						</asp:ContentPlaceHolder>
+						<asp:ContentPlaceHolder ID="H1ContentPlaceHolder" runat="server" />
 					</h1>
-					<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
-					</asp:ContentPlaceHolder>
-					<asp:Panel ID="pnlDirty" runat="server">
-					</asp:Panel>
+					<asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server" />
+					<asp:Panel ID="pnlDirty" runat="server" />
 					<asp:HiddenField ID="hdnShow" runat="server" />
 				</ContentTemplate>
 			</asp:UpdatePanel>
-			<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server">
-			</asp:ContentPlaceHolder>
+			<asp:ContentPlaceHolder ID="NoAjaxContentPlaceHolder" runat="server" />
 		</div>
 		<asp:PlaceHolder ID="plcFooter" runat="server" />
 		<div style="display: none">

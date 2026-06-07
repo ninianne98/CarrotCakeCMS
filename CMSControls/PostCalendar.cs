@@ -211,9 +211,10 @@ namespace Carrotware.CMS.UI.Controls {
 				sCSSClassTableFoot = " class=\"" + CSSClassTableFoot + "\" ";
 			}
 
-			ContentDateTally thisMonth = new ContentDateTally { GoLiveDate = this.ThisMonth, TheSite = SiteData.CurrentSite };
-			ContentDateTally lastMonth = new ContentDateTally { GoLiveDate = this.ThisMonth.AddMonths(-1), TheSite = SiteData.CurrentSite };
-			ContentDateTally nextMonth = new ContentDateTally { GoLiveDate = this.ThisMonth.AddMonths(1), TheSite = SiteData.CurrentSite };
+			var site = SiteData.CurrentSite;
+			ContentDateTally thisMonth = new ContentDateTally(site, this.ThisMonth);
+			ContentDateTally lastMonth = new ContentDateTally(site, this.ThisMonth.AddMonths(-1));
+			ContentDateTally nextMonth = new ContentDateTally(site, this.ThisMonth.AddMonths(1));
 
 			writer.WriteLine("<div" + sCSS + " id=\"" + this.HtmlClientID + "\"> ");
 			writer.Indent++;
@@ -298,14 +299,14 @@ namespace Carrotware.CMS.UI.Controls {
 			writer.WriteLine("		<tfoot id=\"" + this.HtmlClientID + "-foot\" " + sCSSClassTableFoot + ">");
 			writer.WriteLine("		<tr>");
 			writer.WriteLine("			<td colspan=\"3\" id=\"prev\" class=\"cal-prev\">");
-			if (lastMonth.GoLiveDate >= SiteData.CurrentSite.Now.AddYears(-5)) {
-				writer.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.GoLiveDate.ToString("MMM") + "</a>");
+			if (lastMonth.TallyDate >= SiteData.CurrentSite.Now.AddYears(-5)) {
+				writer.WriteLine("				<a href=\"" + lastMonth.MetaInfoURL + "\">&laquo; " + lastMonth.TallyDate.ToString("MMM") + "</a>");
 			}
 			writer.WriteLine("			</td>");
 			writer.WriteLine("			<td class=\"pad\"> &nbsp; </td>");
 			writer.WriteLine("			<td colspan=\"3\" id=\"next\" class=\"cal-prev\">");
-			if (nextMonth.GoLiveDate <= SiteData.CurrentSite.Now.AddYears(5)) {
-				writer.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.GoLiveDate.ToString("MMM") + " &raquo;</a>");
+			if (nextMonth.TallyDate <= SiteData.CurrentSite.Now.AddYears(5)) {
+				writer.WriteLine("				<a href=\"" + nextMonth.MetaInfoURL + "\">" + nextMonth.TallyDate.ToString("MMM") + " &raquo;</a>");
 			}
 			writer.WriteLine("			</td>");
 			writer.WriteLine("		</tr>");

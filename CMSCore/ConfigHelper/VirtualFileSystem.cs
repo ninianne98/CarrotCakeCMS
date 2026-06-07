@@ -20,8 +20,8 @@ using System.Web.UI;
 namespace Carrotware.CMS.Core {
 
 	public class VirtualFileSystem : IHttpHandler, IRequiresSessionState {
-		private const string REQ_PATH = "REWRITE_ORIGPATH";
-		private const string REQ_QUERY = "REWRITE_ORIGQUERY";
+		private const string REQ_PATH = "CARROT_RW_ORIGPATH";
+		private const string REQ_QUERY = "CARROT_RW_ORIGQUERY";
 
 		public bool IsReusable {
 			get {
@@ -71,8 +71,9 @@ namespace Carrotware.CMS.Core {
 
 					VirtualDirectory.RegisterRoutes();
 				} catch (Exception ex) {
+					var du = new DatabaseUpdate();
 					//assumption is database is probably empty / needs updating, so trigger the under construction view
-					if (DatabaseSchemaState.SystemNeedsChecking(ex) || DatabaseSchemaState.AreCMSTablesIncomplete()) {
+					if (ex.SystemNeedsChecking() || du.DatabaseNeedsUpdate()) {
 						if (navData == null) {
 							navData = SiteNavHelper.GetEmptyHome();
 						}
@@ -85,9 +86,10 @@ namespace Carrotware.CMS.Core {
 				fileRequested = SiteData.AppendDefaultPath(fileRequested);
 
 				CarrotSecurityConfig config = CarrotSecurityConfig.GetConfig();
-				string loginPath = config.AdditionalSettings.LoginPath;
 
 				if (SecurityData.IsAuthenticated) {
+					string loginPath = config.AdditionalSettings.LoginPath;
+
 					try {
 						if (context.Request.UrlReferrer != null && !string.IsNullOrEmpty(context.Request.UrlReferrer.AbsolutePath)) {
 							if (context.Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains(loginPath)
@@ -157,8 +159,9 @@ namespace Carrotware.CMS.Core {
 								}
 							}
 						} catch (Exception ex) {
+							var du = new DatabaseUpdate();
 							//assumption is database is probably empty / needs updating, so trigger the under construction view
-							if (DatabaseSchemaState.SystemNeedsChecking(ex) || DatabaseSchemaState.AreCMSTablesIncomplete()) {
+							if (ex.SystemNeedsChecking() || du.DatabaseNeedsUpdate()) {
 								if (navData == null) {
 									navData = SiteNavHelper.GetEmptyHome();
 								}
@@ -228,8 +231,9 @@ namespace Carrotware.CMS.Core {
 				hand.PreRenderComplete += new EventHandler(hand_PreRenderComplete);
 				hand.ProcessRequest(context);
 			} catch (Exception ex) {
+				var du = new DatabaseUpdate();
 				//assumption is database is probably empty / needs updating, so trigger the under construction view
-				if (DatabaseSchemaState.SystemNeedsChecking(ex) || DatabaseSchemaState.AreCMSTablesIncomplete()) {
+				if (ex.SystemNeedsChecking() || du.DatabaseNeedsUpdate()) {
 					SiteData.ManuallyWriteDefaultFile(context, ex);
 				} else {
 					//something bad has gone down, toss back the error

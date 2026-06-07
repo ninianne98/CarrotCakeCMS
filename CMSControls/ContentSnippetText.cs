@@ -27,7 +27,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("")]
 		public string Text {
 			get {
-				String s = (String)ViewState["Text"];
+				string s = (string)ViewState["Text"];
 				return ((s == null) ? string.Empty : s);
 			}
 
@@ -40,7 +40,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(false)]
 		public override bool EnableViewState {
 			get {
-				String s = (String)ViewState["EnableViewState"];
+				string s = (string)ViewState["EnableViewState"];
 				bool b = ((s == null) ? false : Convert.ToBoolean(s));
 				base.EnableViewState = b;
 				return b;
@@ -56,7 +56,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("")]
 		public string SnippetSlug {
 			get {
-				String s = ViewState["SnippetSlug"] as String;
+				string s = ViewState["SnippetSlug"] as string;
 				return ((s == null) ? "" : s);
 			}
 			set {
@@ -70,7 +70,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstSnippetID")]
 		public Guid SnippetID {
 			get {
-				String s = ViewState["SnippetID"] as String;
+				string s = ViewState["SnippetID"] as string;
 				return ((s == null) ? Guid.Empty : new Guid(s));
 			}
 			set {
@@ -81,12 +81,12 @@ namespace Carrotware.CMS.UI.Controls {
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstSnippetID {
 			get {
-				if (SiteID == Guid.Empty) {
-					SiteID = SiteData.CurrentSiteID;
+				if (this.SiteID == Guid.Empty) {
+					this.SiteID = SiteData.CurrentSiteID;
 				}
 				Dictionary<string, string> _dict = (from c in SiteData.CurrentSite.GetContentSnippetList()
-													orderby c.ContentSnippetName
-													where c.SiteID == SiteID
+													orderby c.ContentSnippetName, c.CreateDate
+													where c.SiteID == this.SiteID
 													select c).ToList().ToDictionary(k => k.Root_ContentSnippetID.ToString(),
 													v => string.Format("{0} - {1} ({2})", v.ContentSnippetSlug, v.ContentSnippetName, (v.ContentSnippetActive ? "active" : "inactive")));
 				return _dict;
@@ -180,7 +180,7 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Any()) {
+				if (this.PublicParmValues.Any()) {
 					//this.SnippetSlug = GetParmValue("SnippetSlug", "");
 					this.SnippetID = new Guid(GetParmValue("SnippetID", Guid.Empty.ToString()));
 					this.EnableViewState = Convert.ToBoolean(GetParmValue("EnableViewState", "false"));

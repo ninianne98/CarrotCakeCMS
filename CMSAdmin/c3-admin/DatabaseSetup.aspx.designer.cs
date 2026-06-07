@@ -8,10 +8,10 @@
 //------------------------------------------------------------------------------
 
 namespace Carrotware.CMS.UI.Admin.c3_admin {
-    
-    
+
+
     public partial class DatabaseSetup {
-        
+
         /// <summary>
         /// rpMessages control.
         /// </summary>
@@ -20,7 +20,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rpMessages;
-        
+
         /// <summary>
         /// btnLogin control.
         /// </summary>
@@ -29,7 +29,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLogin;
-        
+
         /// <summary>
         /// btnCreate control.
         /// </summary>
@@ -38,5 +38,23 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCreate;
+
+        /// <summary>
+        /// lnkRun1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkRun1;
+
+        /// <summary>
+        /// lnkRun2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkRun2;
     }
 }

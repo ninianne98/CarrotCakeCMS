@@ -56,7 +56,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public SkinOption SelectedColor {
 			get {
 				string s = (string)ViewState["SelectedColor"];
-				SkinOption c = (SkinOption)Enum.Parse(typeof(SkinOption), "Classic", true);
+				SkinOption c = (SkinOption)Enum.Parse(typeof(SkinOption), SkinOption.Classic.ToString(), true);
 				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (SkinOption)Enum.Parse(typeof(SkinOption), s, true);
@@ -76,7 +76,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public SkinMode WindowMode {
 			get {
 				string s = (string)ViewState["WindowMode"];
-				SkinMode c = (SkinMode)Enum.Parse(typeof(SkinMode), "Main", true);
+				SkinMode c = (SkinMode)Enum.Parse(typeof(SkinMode), SkinMode.Main.ToString(), true);
 				if (!string.IsNullOrEmpty(s)) {
 					try {
 						c = (SkinMode)Enum.Parse(typeof(SkinMode), s, true);
