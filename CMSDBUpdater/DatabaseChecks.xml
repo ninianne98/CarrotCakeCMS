@@ -188,6 +188,19 @@
 			where table_name in ('carrot_Sites', 'carrot_RootContent', 'carrot_Content', 'carrot_Widget')
 		</sql>
 	</querynugget>
+
+	<querynugget>
+		<priority>1</priority>
+		<mode>EQ</mode>
+		<rowcount>0</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|IsBlankDb|</testcontext>
+		<sql>
+			select distinct table_name
+			from [INFORMATION_SCHEMA].[COLUMNS]
+		</sql>
+	</querynugget>
+	
 	<querynugget>
 		<priority>1</priority>
 		<mode>GTE</mode>
@@ -442,6 +455,18 @@
 		<sql>
 			select * from [INFORMATION_SCHEMA].[COLUMNS]
 			where table_name = 'aspnet_Users'
+		</sql>
+	</querynugget>
+
+	<querynugget>
+		<priority>20</priority>
+		<mode>EQ</mode>
+		<rowcount>5</rowcount>
+		<alwayscheck>False</alwayscheck>
+		<testcontext>|HasMembership|</testcontext>
+		<sql>
+			select distinct table_name from [INFORMATION_SCHEMA].[COLUMNS]
+			where table_name in('membership_Role', 'membership_User', 'membership_UserClaim', 'membership_UserLogin', 'membership_UserRole')
 		</sql>
 	</querynugget>
 

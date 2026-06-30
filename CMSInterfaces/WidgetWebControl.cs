@@ -17,11 +17,11 @@ namespace Carrotware.CMS.Interface {
 
 		#region IWidget Members
 
-		public virtual Guid PageWidgetID { get; set; }
+		public virtual Guid PageWidgetID { get; set; } = Guid.Empty;
 
-		public virtual Guid RootContentID { get; set; }
+		public virtual Guid RootContentID { get; set; } = Guid.Empty;
 
-		public virtual Guid SiteID { get; set; }
+		public virtual Guid SiteID { get; set; } = Guid.Empty;
 
 		public virtual string JSEditFunction {
 			get { return ""; }

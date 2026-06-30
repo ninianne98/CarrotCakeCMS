@@ -35,9 +35,9 @@ namespace Carrotware.CMS.UI.Admin {
 
 		protected override void OnInit(EventArgs e) {
 			if (SecurityData.IsAuthenticated) {
-				bool bHasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
+				bool hasAccess = siteHelper.VerifyUserHasSiteAccess(SiteData.CurrentSiteID, SecurityData.CurrentUserGuid);
 
-				if (!bHasAccess) {
+				if (!hasAccess) {
 					SecurityData.ResetAuth();
 					Response.Redirect(SiteFilename.LogonURL);
 				}

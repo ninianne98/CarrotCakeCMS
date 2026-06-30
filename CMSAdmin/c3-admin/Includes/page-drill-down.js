@@ -69,9 +69,8 @@ function getCrumbs() {
 		var myVal = getSelectedNodeValue();
 
 		$.ajax({
-			type: "POST",
-			url: webMthd,
-			data: JSON.stringify({ PageID: myVal, CurrPageID: thisPage }),
+			type: "GET",
+			url: webMthd + "?PageID=" + encodeURIComponent(myVal) + "&CurrPageID=" + encodeURIComponent(thisPage),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
 		}).done(ajaxReturnCrumb)
@@ -80,7 +79,7 @@ function getCrumbs() {
 }
 
 function ajaxReturnCrumb(data, status) {
-	var lstData = data.d;
+	var lstData = data;
 	var val = '';
 	var mnuName = '#' + menuPath;
 
@@ -157,9 +156,8 @@ function mouseNode() {
 			$('#' + menuInner).html("<div style='width: 32px; height: 32px; margin: 0 auto;'><img src='/c3-admin/images/mini-spinner3-6F997D.gif' alt='spinner' /></div>");
 
 			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ PageID: myVal, CurrPageID: thisPage }),
+				type: "GET",
+				url: webMthd + "?PageID=" + encodeURIComponent(myVal) + "&CurrPageID=" + encodeURIComponent(thisPage),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(ajaxReturnNode)
@@ -171,7 +169,7 @@ function mouseNode() {
 }
 
 function ajaxReturnNode(data, status) {
-	var lstData = data.d;
+	var lstData = data;
 	var mnuName = '#' + menuInner;
 
 	hideMnu();

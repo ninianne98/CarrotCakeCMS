@@ -27,6 +27,18 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:ContentCommentForm runat=server></{0}:ContentCommentForm>")]
 	public class ContentCommentForm : BaseServerControl, INamingContainer {
 
+		public class Fields {
+			public const string ContentCommentFormMsg = "ContentCommentFormMsg";
+			public const string ContentCommentCaptcha = "ContentCommentCaptcha";
+			public const string CommenterName = "CommenterName";
+			public const string CommenterEmail = "CommenterEmail";
+			public const string VisitorComments = "VisitorComments";
+			public const string CommenterURL = "CommenterURL";
+			public const string SubmitCommentButton = "SubmitCommentButton";
+		}
+
+		//=================
+
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateInstance(TemplateInstance.Single)]
 		[DefaultValue(null)]
@@ -67,20 +79,24 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(false)]
 		public bool NotifyEditors { get; set; }
 
-		protected PlaceHolder phEntry = new PlaceHolder();
-		protected List<Control> EntryFormControls = new List<Control>();
+		[Browsable(true)]
+		[DefaultValue("ContentCommentForm")]
+		public string ValidationGroup { get; set; }
 
-		protected PlaceHolder phThanks = new PlaceHolder();
-		protected List<Control> ThanksControls = new List<Control>();
+		protected PlaceHolder _phEntry = new PlaceHolder();
+		protected List<Control> _entryFormControls = new List<Control>();
+
+		protected PlaceHolder _phThanks = new PlaceHolder();
+		protected List<Control> _thanksControls = new List<Control>();
 
 		protected override void OnInit(EventArgs e) {
 			base.OnInit(e);
 
-			if (CommentEntryTemplate == null) {
-				CommentEntryTemplate = new DefaultContentCommentEntryForm(this);
+			if (this.CommentEntryTemplate == null) {
+				this.CommentEntryTemplate = new DefaultContentCommentEntryForm(this);
 			}
-			if (CommentThanksTemplate == null) {
-				CommentThanksTemplate = new DefaultContentCommentFormThanks(this);
+			if (this.CommentThanksTemplate == null) {
+				this.CommentThanksTemplate = new DefaultContentCommentFormThanks(this);
 			}
 		}
 
@@ -95,127 +111,172 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void CreateChildControls() {
-			if (CommentEntryTemplate != null || CommentThanksTemplate != null) {
+			if (this.CommentEntryTemplate != null || this.CommentThanksTemplate != null) {
 				this.Controls.Clear();
 			}
 
-			phEntry.Visible = true;
-			phEntry.Controls.Clear();
-			this.Controls.Add(phEntry);
-
-			if (CommentEntryTemplate != null) {
-				CommentEntryTemplate.InstantiateIn(phEntry);
+			if (string.IsNullOrWhiteSpace(this.ID) == false && this.ID.ToLowerInvariant().Contains("widget")
+				&& this.PageWidgetID != Guid.Empty) {
+				this.ValidationGroup = string.Format("{0}_ValidGroupW", this.ID);
 			}
 
-			phThanks.Visible = false;
-			phThanks.Controls.Clear();
-			this.Controls.Add(phThanks);
-
-			if (CommentThanksTemplate != null) {
-				CommentThanksTemplate.InstantiateIn(phThanks);
+			if (string.IsNullOrWhiteSpace(this.ValidationGroup)) {
+				this.ValidationGroup = string.Format("{0}_ValidGroup", this.ClientID);
 			}
 
-			Literal lit1 = new Literal();
-			lit1.Text = "<div style=\"display: none\">";
-			Literal lit2 = new Literal();
-			lit2.Text = "</div>";
+			_phEntry.Visible = true;
+			_phEntry.Controls.Clear();
+			this.Controls.Add(_phEntry);
 
-			Button btnNone = new Button();
-			btnNone.ID = "btn_" + DateTime.UtcNow.Ticks.ToString();
+			if (this.CommentEntryTemplate != null) {
+				this.CommentEntryTemplate.InstantiateIn(_phEntry);
+			}
 
-			phEntry.Controls.AddAt(0, lit2);
-			phEntry.Controls.AddAt(0, btnNone);
-			phEntry.Controls.AddAt(0, lit1);
+			_phThanks.Visible = false;
+			_phThanks.Controls.Clear();
+			this.Controls.Add(_phThanks);
 
-			FindEntryFormCtrls(phEntry);
-			FindThanksFormCtrls(phThanks);
+			if (this.CommentThanksTemplate != null) {
+				this.CommentThanksTemplate.InstantiateIn(_phThanks);
+			}
 
-			Label lbl = (Label)GetEntryFormControl("ContentCommentFormMsg");
+			var pnl = new Panel();
+			pnl.Style.Add("display", "none");
+
+			var btn = new Button();
+			//btn.ID = "btn_" + Guid.NewGuid().ToString("N").Substring(0, 12);
+			btn.ID = "btn_" + this.ValidationGroup;
+			btn.ValidationGroup = this.ValidationGroup;
+
+			pnl.Controls.Add(btn);
+
+			_phEntry.Controls.AddAt(0, pnl);
+
+			FindEntryFormCtrls(_phEntry);
+			FindThanksFormCtrls(_phThanks);
+
+			var lbl = (Label)GetEntryFormControl(Fields.ContentCommentFormMsg);
 
 			if (lbl != null) {
 				lbl.Text = "&nbsp;";
 			}
 
+			if (_entryFormControls.Select(x => x.GetType()).Contains(typeof(jsHelperLib)) == false) {
+				var jsh = new jsHelperLib();
+
+				_phEntry.Controls.AddAt(0, jsh);
+				_entryFormControls.Insert(0, jsh);
+			}
+
+			if (_entryFormControls.Select(x => x.GetType()).Contains(typeof(jsHelperLib))) {
+				var litj = new Literal();
+				litj.Text = Environment.NewLine +
+							Environment.NewLine + "		<script type=\"text/javascript\"> " +
+							Environment.NewLine + "			__carrotware_PageValidate('" + this.ValidationGroup + "'); " +
+							Environment.NewLine + "		</script>" + Environment.NewLine + Environment.NewLine;
+
+				_phEntry.Controls.Add(litj);
+				_entryFormControls.Add(litj);
+			}
+
 			if (this.RequireAuthentication) {
-				phEntry.Visible = false;
+				_phEntry.Visible = false;
 			}
 
 			base.CreateChildControls();
 		}
 
-		private void FindEntryFormCtrls(Control X) {
-			foreach (Control c in X.Controls) {
-				EntryFormControls.Add(c);
+		private void FindEntryFormCtrls(Control ctrls) {
+			foreach (Control c in ctrls.Controls) {
+				_entryFormControls.Add(c);
 
-				if (c is TextBox && c.ID != null) {
-					TextBox z = (TextBox)c;
+				if (c is BaseValidator) {
+					var ctrl = (BaseValidator)c;
 
-					z.ValidationGroup = "ContentCommentForm";
+					ctrl.ValidationGroup = this.ValidationGroup;
 				}
 
-				if (c is Button && c.ID != null) {
-					Button z = (Button)c;
-					switch (c.ID) {
-						case "SubmitCommentButton":
-							z.Click += new EventHandler(this.Submit_ContentCommentForm);
-							break;
+				if (string.IsNullOrWhiteSpace(c.ID) == false) {
+					if (c is TextBox) {
+						var ctrl = (TextBox)c;
 
-						default:
-							break;
+						ctrl.ValidationGroup = this.ValidationGroup;
 					}
-					z.ValidationGroup = "ContentCommentForm";
+
+					if (c is Captcha) {
+						var ctrl = (Captcha)c;
+
+						ctrl.ValidationGroup = this.ValidationGroup;
+					}
+
+					if (c is Button) {
+						var ctrl = (Button)c;
+						switch (c.ID) {
+							case Fields.SubmitCommentButton:
+								ctrl.Click += new EventHandler(this.Submit_ContentCommentForm);
+								break;
+
+							default:
+								break;
+						}
+
+						ctrl.ViewStateMode = ViewStateMode.Disabled;
+						ctrl.ValidationGroup = this.ValidationGroup;
+						ctrl.CausesValidation = true;
+						ctrl.OnClientClick = "return __carrotware_IsPageValid('" + this.ValidationGroup + "')";
+					}
 				}
 
 				FindEntryFormCtrls(c);
 			}
 		}
 
-		private void FindThanksFormCtrls(Control X) {
-			foreach (Control c in X.Controls) {
-				ThanksControls.Add(c);
+		private void FindThanksFormCtrls(Control ctrl) {
+			foreach (Control c in ctrl.Controls) {
+				_thanksControls.Add(c);
 				FindThanksFormCtrls(c);
 			}
 		}
 
-		protected Control GetEntryFormControl(string ControlName) {
-			return (from x in EntryFormControls
-					where x.ID != null
-					&& x.ID.ToLowerInvariant() == ControlName.ToLowerInvariant()
-					select x).FirstOrDefault();
+		protected Control GetEntryFormControl(string controlName) {
+			return (from c in _entryFormControls
+					where c.ID != null
+							&& c.ID.ToLowerInvariant() == controlName.ToLowerInvariant()
+					select c).FirstOrDefault();
 		}
 
 		protected void Submit_ContentCommentForm(object sender, EventArgs e) {
-			bool bCaptcha = false;
+			bool isValidCaptcha = false;
 
-			Captcha captcha = (Captcha)GetEntryFormControl("ContentCommentCaptcha");
+			var captcha = (Captcha)GetEntryFormControl(Fields.ContentCommentCaptcha);
 			if (captcha != null) {
-				bCaptcha = captcha.Validate();
+				isValidCaptcha = captcha.Validate();
 			} else {
-				bCaptcha = true;
+				isValidCaptcha = true;
 			}
 
-			if (bCaptcha) {
+			if (isValidCaptcha) {
 				HttpRequest request = HttpContext.Current.Request;
 
 				bool bIgnorePublishState = SecurityData.AdvancedEditMode || SecurityData.IsAdmin || SecurityData.IsSiteEditor;
 
 				SiteNav navData = _navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, SiteData.CurrentScriptName);
 
-				Label lblContentCommentFormMsg = (Label)GetEntryFormControl("ContentCommentFormMsg");
-				TextBox txtCommenterName = (TextBox)GetEntryFormControl("CommenterName");
-				TextBox txtCommenterEmail = (TextBox)GetEntryFormControl("CommenterEmail");
-				TextBox txtVisitorComments = (TextBox)GetEntryFormControl("VisitorComments");
-				TextBox txtCommenterURL = (TextBox)GetEntryFormControl("CommenterURL");
+				var lblContentCommentFormMsg = (Label)GetEntryFormControl(Fields.ContentCommentFormMsg);
+				var txtCommenterName = (TextBox)GetEntryFormControl(Fields.CommenterName);
+				var txtCommenterEmail = (TextBox)GetEntryFormControl(Fields.CommenterEmail);
+				var txtVisitorComments = (TextBox)GetEntryFormControl(Fields.VisitorComments);
+				var txtCommenterURL = (TextBox)GetEntryFormControl(Fields.CommenterURL);
 
-				string sIP = request.ServerVariables["REMOTE_ADDR"].ToString();
+				string addr = request.ServerVariables["REMOTE_ADDR"].ToString();
 
-				PostComment pc = new PostComment();
+				var pc = new PostComment();
 				pc.ContentCommentID = Guid.NewGuid();
 				pc.Root_ContentID = navData.Root_ContentID;
 				pc.CreateDate = SiteData.CurrentSite.Now;
 				pc.IsApproved = false;
 				pc.IsSpam = false;
-				pc.CommenterIP = sIP;
+				pc.CommenterIP = addr;
 
 				if (txtCommenterName != null) {
 					pc.CommenterName = txtCommenterName.Text;
@@ -262,36 +323,32 @@ namespace Carrotware.CMS.UI.Controls {
 						}
 					}
 
-					string sEmail = String.Join(";", emails.ToArray());
+					string sEmail = string.Join(";", emails.ToArray());
 
-					string strHTTPHost = String.Empty;
-					try { strHTTPHost = request.ServerVariables["HTTP_HOST"] + String.Empty; } catch { strHTTPHost = String.Empty; }
+					string host = string.Empty;
+					try { host = request.ServerVariables["HTTP_HOST"].ToString().Trim(); } catch { host = string.Empty; }
 
-					string hostName = strHTTPHost.ToLowerInvariant();
+					string hostName = host.ToLowerInvariant();
 
-					string strHTTPProto = "http://";
+					string hostPrefix = "http://";
 					try {
-						strHTTPProto = request.ServerVariables["SERVER_PORT_SECURE"] + String.Empty;
-						if (strHTTPProto == "1") {
-							strHTTPProto = "https://";
-						} else {
-							strHTTPProto = "http://";
-						}
-					} catch { }
+						hostPrefix = request.ServerVariables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://";
+					} catch { hostPrefix = "http://"; }
 
-					string mailSubject = String.Format("Comment Form From {0}", hostName);
+					host = string.Format("{0}{1}", hostPrefix, hostName).ToLowerInvariant();
 
-					strHTTPHost = String.Format("{0}{1}", strHTTPProto, strHTTPHost).ToLowerInvariant();
+					string mailSubject = string.Format("Comment Form From {0}", hostName);
 
 					string sBody = "Name:   " + pc.CommenterName
-						+ "\r\nEmail:   " + pc.CommenterEmail
-						+ "\r\nURL:   " + pc.CommenterURL
-						+ "\r\n-----------------\r\nComment:\r\n" + HttpUtility.HtmlEncode(pc.PostCommentText)
-						+ "\r\n=================\r\n\r\nIP:   " + pc.CommenterIP
-						//+ "\r\nSite Page:   " + request.ServerVariables["script_name"].ToString()
-						+ "\r\nSite URL:   " + String.Format("{0}{1}", strHTTPHost, request.ServerVariables["script_name"])
-						+ "\r\nSite Time:   " + SiteData.CurrentSite.Now.ToString()
-						+ "\r\nUTC Time:   " + DateTime.UtcNow.ToString();
+						+ Environment.NewLine + "Email:   " + pc.CommenterEmail
+						+ Environment.NewLine + "URL:   " + pc.CommenterURL
+						+ Environment.NewLine + " -----------------"
+						+ Environment.NewLine + "Comment:" + Environment.NewLine + HttpUtility.HtmlEncode(pc.PostCommentText)
+						+ Environment.NewLine + " ================= "
+						+ Environment.NewLine + Environment.NewLine + "IP:   " + pc.CommenterIP
+						+ Environment.NewLine + "Site URL:   " + string.Format("{0}{1}", host, request.ServerVariables["script_name"])
+						+ Environment.NewLine + "Site Time:   " + SiteData.CurrentSite.Now.ToString()
+						+ Environment.NewLine + "UTC Time:   " + DateTime.UtcNow.ToString();
 
 					EmailHelper.SendMail(null, sEmail, mailSubject, sBody, false);
 				}
@@ -300,8 +357,8 @@ namespace Carrotware.CMS.UI.Controls {
 				//    lbl.Text = "Clicked the button: " + txt1.Text + " - " + txt2.Text;
 				//}
 
-				phEntry.Visible = false;
-				phThanks.Visible = true;
+				_phEntry.Visible = false;
+				_phThanks.Visible = true;
 			}
 		}
 	}
@@ -334,8 +391,8 @@ namespace Carrotware.CMS.UI.Controls {
 				control = (ContentCommentForm)Component;
 				group = new TemplateGroup("Item");
 
-				group.AddTemplateDefinition(new TemplateDefinition(this, "CommentEntryTemplate", control, "CommentEntryTemplate", true));
-				group.AddTemplateDefinition(new TemplateDefinition(this, "CommentThanksTemplate", control, "CommentThanksTemplate", true));
+				group.AddTemplateDefinition(new TemplateDefinition(this, nameof(ContentCommentForm.CommentEntryTemplate), control, nameof(ContentCommentForm.CommentEntryTemplate), true));
+				group.AddTemplateDefinition(new TemplateDefinition(this, nameof(ContentCommentForm.CommentThanksTemplate), control, nameof(ContentCommentForm.CommentThanksTemplate), true));
 
 				collection.Add(group);
 

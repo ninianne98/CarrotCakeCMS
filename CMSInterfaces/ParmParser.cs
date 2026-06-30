@@ -71,6 +71,18 @@ namespace Carrotware.CMS.Interface {
 			SetValue(widgetObject, widgetProperty, val);
 		}
 
+		public static void SetEnumValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty, TValue value)
+			where TValue : struct, Enum {
+			SetEnumValue(widgetObject, widgetProperty, value, default);
+		}
+
+		public static void SetEnumValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty, TValue value, TValue defaultValue)
+			where TValue : struct, Enum {
+			TValue val = Enum.IsDefined(typeof(TValue), value) ? value : defaultValue;
+
+			SetValue(widgetObject, widgetProperty, val);
+		}
+
 		public static void SetValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty, TValue value) {
 			var selector = widgetProperty.Body as MemberExpression;
 			if (selector != null) {
@@ -93,9 +105,29 @@ namespace Carrotware.CMS.Interface {
 			string foundVal = defaultVal;
 			var selector = widgetProperty.Body as MemberExpression;
 
-			if (selector != null && widgetObject is IWidgetParmData) {
+			if (selector != null && widgetObject is IWidget) {
 				var property = selector.Member as PropertyInfo;
 				foundVal = ((IWidgetParmData)widgetObject).PublicParmValues.GetParmValue(property.Name, defaultVal);
+			}
+
+			return foundVal;
+		}
+
+		public static TValue GetEnumValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty)
+				where TValue : struct, Enum {
+			return GetValue(widgetObject, widgetProperty, (TValue)default);
+		}
+
+		public static TValue GetValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty, TValue defaultVal)
+				where TValue : struct, Enum {
+			TValue foundVal = defaultVal;
+
+			var foundString = GetValue(widgetObject, widgetProperty, defaultVal.ToString());
+
+			if (!string.IsNullOrEmpty(foundString)) {
+				if (Enum.TryParse(foundString, out TValue enumType)) {
+					foundVal = enumType;
+				}
 			}
 
 			return foundVal;
@@ -107,14 +139,11 @@ namespace Carrotware.CMS.Interface {
 
 		public static int GetValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty, int defaultVal) {
 			int foundVal = defaultVal;
-			var selector = widgetProperty.Body as MemberExpression;
 
-			if (selector != null && widgetObject is IWidgetParmData) {
-				var property = selector.Member as PropertyInfo;
-				var foundString = ((IWidgetParmData)widgetObject).PublicParmValues.GetParmValue(property.Name, defaultVal);
-				if (!string.IsNullOrEmpty(foundString)) {
-					foundVal = Convert.ToInt32(foundString);
-				}
+			var foundString = GetValue(widgetObject, widgetProperty, defaultVal.ToString());
+
+			if (!string.IsNullOrEmpty(foundString)) {
+				foundVal = Convert.ToInt32(foundString);
 			}
 
 			return foundVal;
@@ -126,14 +155,11 @@ namespace Carrotware.CMS.Interface {
 
 		public static bool GetValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty, bool defaultVal) {
 			bool foundVal = defaultVal;
-			var selector = widgetProperty.Body as MemberExpression;
 
-			if (selector != null && widgetObject is IWidgetParmData) {
-				var property = selector.Member as PropertyInfo;
-				var foundString = ((IWidgetParmData)widgetObject).PublicParmValues.GetParmValue(property.Name, defaultVal);
-				if (!string.IsNullOrEmpty(foundString)) {
-					foundVal = Convert.ToBoolean(foundString);
-				}
+			var foundString = GetValue(widgetObject, widgetProperty, defaultVal.ToString());
+
+			if (!string.IsNullOrEmpty(foundString)) {
+				foundVal = Convert.ToBoolean(foundString);
 			}
 
 			return foundVal;
@@ -145,14 +171,11 @@ namespace Carrotware.CMS.Interface {
 
 		public static Guid GetValue<T, TValue>(this T widgetObject, Expression<Func<T, TValue>> widgetProperty, Guid defaultVal) {
 			Guid foundVal = defaultVal;
-			var selector = widgetProperty.Body as MemberExpression;
 
-			if (selector != null && widgetObject is IWidgetParmData) {
-				var property = selector.Member as PropertyInfo;
-				var foundString = ((IWidgetParmData)widgetObject).PublicParmValues.GetParmValue(property.Name, defaultVal.ToString());
-				if (!string.IsNullOrEmpty(foundString)) {
-					foundVal = new Guid(foundString);
-				}
+			var foundString = GetValue(widgetObject, widgetProperty, defaultVal.ToString());
+
+			if (!string.IsNullOrEmpty(foundString)) {
+				foundVal = new Guid(foundString);
 			}
 
 			return foundVal;

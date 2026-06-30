@@ -1,6 +1,7 @@
 ﻿if (typeof jQuery === 'undefined') {
 	throw new Error('Advanced Editor JavaScript requires jQuery')
 }
+//var $j = jQuery.noConflict();
 
 var cmsIsPageLocked = true;
 
@@ -8,8 +9,9 @@ function cmsSetPageStatus(stat) {
 	cmsIsPageLocked = stat;
 }
 
-var cmsWebSvc = cmsWebServiceApi;
-var cmsAdminUri = cmsAdminBasePath;
+var cmsAdminUri = cmsAdminBasePath;  //  "/c3-admin/";
+var cmsWebSvc = cmsWebServiceApi;  // "**api**";
+var cmsResourceBase = cmsGetResourceBase();
 var thisPage = ""; // used in escaped fashion
 var thisPageNav = "";  // used non-escaped (redirects)
 var thisPageNavSaved = "";  // used non-escaped (redirects)
@@ -17,8 +19,16 @@ var thisPageID = "";
 var cmsTimeTick = 9999;
 
 function cmsGetAdminPath() {
-	cmsWebSvc = cmsWebServiceApi;
 	cmsAdminUri = cmsAdminBasePath;
+	cmsWebSvc = cmsWebServiceApi;
+	cmsResourceBase = cmsGetResourceBase();
+}
+
+function cmsGetResourceBase() {
+	if (cmsPlatform == "webform") {
+		return cmsAdminUri;
+	}
+	return '/Assets/Admin';
 }
 
 function cmsSetServiceParms(serviceURL, pagePath, pageID) {
@@ -27,6 +37,10 @@ function cmsSetServiceParms(serviceURL, pagePath, pageID) {
 	thisPage = cmsMakeStringSafe(pagePath);
 	thisPageID = pageID;
 
+	cmsSetTick();
+}
+
+function cmsSetTick() {
 	var d = new Date();
 	cmsTimeTick = d.getTime();
 }
@@ -164,7 +178,7 @@ function cmsFixGeneralImage(elm, img) {
 	var title = $(elm).attr('title');
 	var alt = $(elm).attr('alt');
 
-	$(elm).html(" <img class='cmsWidgetBarImgReset' border='0' src='" + cmsAdminUri + "/images/" + img + "' alt='" + alt + "' title='" + alt + "' />" + title);
+	$(elm).html(" <img class='cmsWidgetBarImgReset' border='0' src='" + cmsResourceBase + "/images/" + img + "' alt='" + alt + "' title='" + alt + "' />" + title);
 }
 
 function cmsPageLockCheck() {
@@ -241,10 +255,13 @@ function cmsEditHB() {
 
 		var webMthd = cmsWebSvc + "/RecordHeartbeat";
 
+		var dataObj = {};
+		dataObj["PageID"] = thisPageID;
+
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: JSON.stringify({ PageID: thisPageID }),
+			data: JSON.stringify(dataObj),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
 		}).done(cmsUpdateHeartbeat)
@@ -259,10 +276,17 @@ function cmsSaveToolbarPosition() {
 
 	var webMthd = cmsWebSvc + "/RecordEditorPosition";
 
+	var dataObj = {};
+	dataObj["ToolbarState"] = cmsMnuVis.toString();
+	dataObj["ToolbarMargin"] = cmsToolbarMargin.toString();
+	dataObj["ToolbarScroll"] = scrollTopPos.toString();
+	dataObj["WidgetScroll"] = scrollWTopPos.toString();
+	dataObj["SelTabID"] = tabID.toString();
+
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: JSON.stringify({ ToolbarState: cmsMnuVis, ToolbarMargin: cmsToolbarMargin, ToolbarScroll: scrollTopPos, WidgetScroll: scrollWTopPos, SelTabID: tabID }),
+		data: JSON.stringify(dataObj),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json"
 	}).done(cmsAjaxGeneralCallback)
@@ -277,10 +301,15 @@ function cmsSaveContent(val, zone) {
 	val = cmsMakeStringSafe(val);
 	zone = cmsMakeStringSafe(zone);
 
+	var dataObj = {};
+	dataObj["ZoneText"] = val;
+	dataObj["Zone"] = zone;
+	dataObj["ThisPage"] = thisPageID;
+
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: JSON.stringify({ ZoneText: val, Zone: zone, ThisPage: thisPageID }),
+		data: JSON.stringify(dataObj),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json"
 	}).done(cmsSaveContentCallback)
@@ -294,10 +323,15 @@ function cmsSaveGenericContent(val, key) {
 
 	val = cmsMakeStringSafe(val);
 
+	var dataObj = {};
+	dataObj["ZoneText"] = val;
+	dataObj["DBKey"] = key;
+	dataObj["ThisPage"] = thisPageID;
+
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: JSON.stringify({ ZoneText: val, DBKey: key, ThisPage: thisPageID }),
+		data: JSON.stringify(dataObj),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json"
 	}).done(cmsSaveContentCallback)
@@ -307,8 +341,9 @@ function cmsSaveGenericContent(val, key) {
 function cmsPreviewTemplate2() {
 	var tmpl = $(cmsTemplateListPreviewer).val();
 	tmpl = cmsMakeStringSafe(tmpl);
+	cmsSetTick();
 
-	var srcURL = cmsTemplatePreview + "?" + cmsTemplatePreviewQS + "=" + tmpl;
+	var srcURL = cmsTemplatePreview + "?" + cmsTemplatePreviewQS + "=" + tmpl + "&ts=" + cmsTimeTick;
 
 	var editIFrame = $('#cmsFrameEditorPreview');
 	$(editIFrame).attr('src', srcURL);
@@ -326,7 +361,7 @@ function cmsWideMobile() {
 }
 
 function cmWideTablet() {
-	cmsWidePreview('760px');
+	cmsWidePreview('750px');
 }
 
 function cmsWideDesk() {
@@ -341,8 +376,9 @@ function cmsWidePreview(width) {
 function cmsPreviewTemplate() {
 	var tmplReal = $(cmsTemplateDDL).val();
 	tmpl = cmsMakeStringSafe(tmplReal);
+	cmsSetTick();
 
-	cmsLaunchWindowOnly(cmsTemplatePreview + "?" + cmsTemplatePreviewQS + "=" + tmpl);
+	cmsLaunchWindowOnly(cmsTemplatePreview + "?" + cmsTemplatePreviewQS + "=" + tmpl + "&ts=" + cmsTimeTick);
 
 	var editFrame = $('#cmsModalFrame');
 
@@ -352,19 +388,19 @@ function cmsPreviewTemplate() {
 		templateList += "<option value='" + this.value + "'>" + this.text + "</option>";
 	});
 
-	var btnWide1 = '<a id="btnDeskTemplateCMS" name="btnWidthTemplateCMS" onclick="cmsWideDesk();"> Desktop Size </a>';
-	var btnWide2 = '<a id="btnTabletTemplateCMS" name="btnWidthTemplateCMS" onclick="cmWideTablet();"> Tablet Size </a>';
-	var btnWide3 = '<a id="btnMobileTemplateCMS" name="btnWidthTemplateCMS" onclick="cmsWideMobile();"> Mobile Size </a>';
+	var btnWide1 = '<a id="btnDeskTemplateCMS" class="cms-seagreen" name="btnWidthTemplateCMS" onclick="cmsWideDesk();"> Desktop Size </a>';
+	var btnWide2 = '<a id="btnTabletTemplateCMS" class="cms-seagreen" name="btnWidthTemplateCMS" onclick="cmWideTablet();"> Tablet Size </a>';
+	var btnWide3 = '<a id="btnMobileTemplateCMS" class="cms-seagreen" name="btnWidthTemplateCMS" onclick="cmsWideMobile();"> Mobile Size </a>';
 
-	var ddlPreview = '<span> <select id="cmsTemplateList">' + templateList + '</select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>';
+	var ddlPreview = '<span> <select class="cms-seagreen" id="cmsTemplateList">' + templateList + '</select>  <input type="button" value="Preview" id="btnPreviewCMS" onclick="cmsPreviewTemplate2();" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>';
 
-	var btnClose = ' <input type="button" id="btnCloseTemplateCMS" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
-	var btnApply = ' <input type="button" id="btnApplyTemplateCMS" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
+	var btnClose = ' <input type="button" class="cms-seagreen" id="btnCloseTemplateCMS" value="Close" onclick="cmsCloseModalWin();" /> &nbsp;&nbsp;&nbsp; ';
+	var btnApply = ' <input type="button" class="cms-seagreen" id="btnApplyTemplateCMS" value="Apply Template" onclick="cmsUpdateTemplate();" /> &nbsp;&nbsp;&nbsp; ';
 
-	$(editFrame).append('<div id="cms-seagreen-id"><div id="cmsPreviewControls" class="cms-seagreen cmsPreviewButtons"> '
-		+ '<div id="cmsPreviewTab" class="cmsTabs cmsPreview-Left"><ul> <li>' + btnWide1 + '</li> <li>' + btnWide2 + '</li> <li>' + btnWide3 + '</li>  </ul> '
+	$(editFrame).append('<div id="cms-seagreen-id" class="cms-seagreen"><div id="cmsPreviewControls" class="cms-seagreen cmsPreviewButtons"> '
+		+ '<div id="cmsPreviewTab" class="cmsTabs cmsPreview-Left cms-seagreen"><ul class="cms-seagreen"> <li>' + btnWide1 + '</li> <li>' + btnWide2 + '</li> <li>' + btnWide3 + '</li>  </ul> '
 		+ ' \r\n <div id="cmsPreviewTabPanel" style="display: none;" >    </div>\r\n   </div> '
-		+ ' <div class="cmsPreview-Right">' + ddlPreview + btnClose + btnApply + '</div> </div>'
+		+ ' <div class="cmsPreview-Right cms-seagreen">' + ddlPreview + btnClose + btnApply + '</div> </div>'
 		+ ' </div>');
 
 	window.setTimeout("cmsPreviewStyling();", 250);
@@ -461,10 +497,14 @@ function cmsUpdateTemplate() {
 
 	var webMthd = cmsWebSvc + "/UpdatePageTemplate";
 
+	var dataObj = {};
+	dataObj["TheTemplate"] = tmpl;
+	dataObj["ThisPage"] = thisPageID;
+
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: JSON.stringify({ TheTemplate: tmpl, ThisPage: thisPageID }),
+		data: JSON.stringify(dataObj),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json"
 	}).done(cmsSaveContentCallback)
@@ -486,10 +526,14 @@ function cmsUpdateWidgets() {
 
 		val = cmsMakeStringSafe(val);
 
+		var dataObj = {};
+		dataObj["WidgetAddition"] = val;
+		dataObj["ThisPage"] = thisPageID;
+
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: JSON.stringify({ WidgetAddition: val, ThisPage: thisPageID }),
+			data: JSON.stringify(dataObj),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
 		}).done(cmsSaveWidgetsCallback)
@@ -506,10 +550,38 @@ function cmsRemoveWidget(key) {
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
 
+		var dataObj = {};
+		dataObj["DBKey"] = key;
+		dataObj["ThisPage"] = thisPageID;
+
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
+			data: JSON.stringify(dataObj),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
+		}).done(cmsSaveWidgetsCallback)
+			.fail(cmsAjaxFailed);
+	}
+}
+
+function cmsActivateWidgetLink(key) {
+	cmsSaveToolbarPosition();
+	cmsSpinnerLong();
+
+	var webMthd = cmsWebSvc + "/ActivateWidget";
+
+	if (!cmsWidgetUpdateInProgress) {
+		cmsWidgetUpdateInProgress = true;
+
+		var dataObj = {};
+		dataObj["DBKey"] = key;
+		dataObj["ThisPage"] = thisPageID;
+
+		$.ajax({
+			type: "POST",
+			url: webMthd,
+			data: JSON.stringify(dataObj),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
 		}).done(cmsSaveWidgetsCallback)
@@ -526,10 +598,15 @@ function cmsMoveWidgetZone(zone, val) {
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
 
+		var dataObj = {};
+		dataObj["WidgetTarget"] = zone;
+		dataObj["WidgetDropped"] = val;
+		dataObj["ThisPage"] = thisPageID;
+
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: JSON.stringify({ WidgetTarget: zone, WidgetDropped: val, ThisPage: thisPageID }),
+			data: JSON.stringify(dataObj),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
 		}).done(cmsSaveWidgetsCallback)
@@ -544,10 +621,13 @@ function cmsApplyChanges() {
 
 	// prevent multiple submissions
 	if (!IsPublishing) {
+		var dataObj = {};
+		dataObj["ThisPage"] = thisPageID;
+
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: JSON.stringify({ ThisPage: thisPageID }),
+			data: JSON.stringify(dataObj),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
 		}).done(cmsSavePageCallback)
@@ -560,52 +640,46 @@ function cmsApplyChanges() {
 function cmsUpdateHeartbeat(data, status) {
 	var hb = $('#cmsHeartBeat');
 	hb.empty().append('HB:  ');
-	hb.append(data.d);
+	hb.append(data);
 	//cmsSpinnerShort();
 }
 
 function cmsSaveContentCallback(data, status) {
-	if (data.d == "OK") {
+	if (data == "OK") {
 		cmsSpinnerShort();
 		cmsDirtyPageRefresh();
 	} else {
-		cmsAlertModal(data.d);
+		cmsAlertModal(data);
 	}
 }
 
 function cmsAjaxGeneralCallback(data, status) {
-	//if (data.d == "OK") {
-	//	cmsSpinnerShort();
-	//} else {
-	//	cmsAlertModal(data.d);
-	//}
-
-	if (data.d != "OK") {
-		cmsAlertModal(data.d);
+	if (data != "OK") {
+		cmsAlertModal(data);
 	}
 }
 
 function cmsSaveWidgetsCallback(data, status) {
-	if (data.d == "OK") {
+	if (data == "OK") {
 		cmsSpinnerShort();
 		cmsDirtyPageRefresh();
 	} else {
-		cmsAlertModal(data.d);
+		cmsAlertModal(data);
 	}
 
 	cmsWidgetUpdateInProgress = false;
 }
 
 function cmsSavePageCallback(data, status) {
-	if (data.d == "OK") {
+	if (data == "OK") {
 		cmsSpinnerShort();
 		cmsMakeOKToLeave();
 		cmsNotifySaved();
-		//window.setTimeout("location.href = \'" + thisPageNav + "\'", 10000);
+
 		iCount = 10;
 		cmsCountdownWindow();
 	} else {
-		cmsAlertModal(data.d);
+		cmsAlertModal(data);
 	}
 }
 
@@ -642,15 +716,19 @@ function cmsNotifySaved() {
 	});
 
 	cmsFixDialog('CMSsavedconfirmmsg');
+	return false;
 }
 
 function cmsRecordCancellation() {
 	var webMthd = cmsWebSvc + "/CancelEditing";
 
+	var dataObj = {};
+	dataObj["ThisPage"] = thisPageID;
+
 	$.ajax({
 		type: "POST",
 		url: webMthd,
-		data: JSON.stringify({ ThisPage: thisPageID }),
+		data: JSON.stringify(dataObj),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json"
 	}).done(cmsAjaxGeneralCallback)
@@ -659,15 +737,14 @@ function cmsRecordCancellation() {
 
 function cmsCancelEdit() {
 	$("#CMScancelconfirm").dialog({
-		open: function () {
-			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
-		},
-
 		closeOnEscape: true,
 		resizable: false,
 		height: 250,
 		width: 400,
 		modal: true,
+		open: function () {
+			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
+		},
 		buttons: {
 			"No": function () {
 				$(this).dialog("close");
@@ -682,44 +759,8 @@ function cmsCancelEdit() {
 	});
 
 	cmsFixDialog('CMScancelconfirmmsg');
+	return false;
 }
-
-function cmsSendTrackbackBatch() {
-	var webMthd = cmsWebSvc + "/SendTrackbackBatch";
-
-	if (!cmsGetOKToLeaveStatus()) {
-		$.ajax({
-			type: "POST",
-			url: webMthd,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json"
-		}).done(cmsAjaxGeneralCallback)
-			.fail(cmsAjaxFailedSwallow);
-	}
-
-	setTimeout("cmsSendTrackbackBatch();", 15000);
-}
-
-setTimeout("cmsSendTrackbackBatch();", 5000);
-
-function cmsSendTrackbackPageBatch() {
-	var webMthd = cmsWebSvc + "/SendTrackbackPageBatch";
-
-	if (!cmsGetOKToLeaveStatus()) {
-		$.ajax({
-			type: "POST",
-			url: webMthd,
-			data: JSON.stringify({ ThisPage: thisPageID }),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json"
-		}).done(cmsAjaxGeneralCallback)
-			.fail(cmsAjaxFailedSwallow);
-	}
-
-	setTimeout("cmsSendTrackbackPageBatch();", 3000);
-}
-
-setTimeout("cmsSendTrackbackPageBatch();", 1500);
 
 function cmsAjaxFailedSwallow(request) {
 	var s = "";
@@ -764,13 +805,16 @@ function cmsAlertModalHeightWidth(request, h, w) {
 }
 
 function cmsAlertModal(request) {
-	cmsAlertModalHeightWidth(request, 400, 550);
+	cmsAlertModalHeightWidth(request, 425, 550);
 }
 function cmsAlertModalSmall(request) {
 	cmsAlertModalHeightWidth(request, 250, 400);
 }
 function cmsAlertModalLarge(request) {
 	cmsAlertModalHeightWidth(request, 550, 700);
+}
+function cmsAlertModalXLarge(request) {
+	cmsAlertModalHeightWidth(request, 600, 800);
 }
 
 //===========================
@@ -832,7 +876,7 @@ function cmsFixSpinner() {
 	$(".blockMsg table").addClass('cmsImageSpinnerTbl');
 }
 
-var cmsHtmlSpinner = '<table width="100%" class="cmsImageSpinnerTbl" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="' + cmsAdminUri + '/images/ani-smallbar.gif"/></td></tr></table>';
+var cmsHtmlSpinner = '<table width="100%" class="cmsImageSpinnerTbl" border="0"><tr><td align="center" id="cmsSpinnerZone"><img id="cmsImageSpinnerImage" class="cmsImageSpinner" border="0" src="' + cmsResourceBase + '/images/ani-smallbar.gif"/></td></tr></table>';
 
 function cmsSpinnerShort() {
 	$("#cmsDivActive").block({
@@ -842,7 +886,6 @@ function cmsSpinnerShort() {
 		timeout: 750,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
-
 	cmsFixSpinner();
 }
 
@@ -900,10 +943,14 @@ function cmsCopyWidget(key) {
 	if (!cmsWidgetUpdateInProgress) {
 		cmsWidgetUpdateInProgress = true;
 
+		var dataObj = {};
+		dataObj["DBKey"] = key;
+		dataObj["ThisPage"] = thisPageID;
+
 		$.ajax({
 			type: "POST",
 			url: webMthd,
-			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
+			data: JSON.stringify(dataObj),
 			contentType: "application/json; charset=utf-8",
 			dataType: "json"
 		}).done(cmsSaveWidgetsCallback)
@@ -916,7 +963,6 @@ function cmsRemoveWidgetLink(v) {
 		open: function () {
 			$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 		},
-
 		closeOnEscape: true,
 		resizable: false,
 		height: 250,
@@ -934,26 +980,6 @@ function cmsRemoveWidgetLink(v) {
 	});
 
 	cmsFixDialog('CMSremoveconfirmmsg');
-}
-
-function cmsActivateWidgetLink(key) {
-	cmsSaveToolbarPosition();
-	cmsSpinnerLong();
-
-	var webMthd = cmsWebSvc + "/ActivateWidget";
-
-	if (!cmsWidgetUpdateInProgress) {
-		cmsWidgetUpdateInProgress = true;
-
-		$.ajax({
-			type: "POST",
-			url: webMthd,
-			data: JSON.stringify({ DBKey: key, ThisPage: thisPageID }),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json"
-		}).done(cmsSaveWidgetsCallback)
-			.fail(cmsAjaxFailed);
-	}
 }
 
 function cmsSetOrder(fld) {
@@ -1120,7 +1146,6 @@ function cmsClickAddWidget() {
 			open: function () {
 				$(this).parents('.ui-dialog-buttonpane button:eq(0)').focus();
 			},
-
 			closeOnEscape: true,
 			resizable: false,
 			height: 250,
@@ -1258,17 +1283,18 @@ function cmsSetIframeRealSrc(theFrameID) {
 function cmsSetiFrameSource(theURL) {
 	var realURL = theURL;
 
-	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="90%" height="500" realsrc="' + realURL + '" src="' + cmsAdminUri + '/includes/Blank.htm" /> </div>');
+	$('#cmsModalFrame').html('<div id="cmsAjaxMainDiv2"> <iframe scrolling="auto" id="cmsFrameEditor" frameborder="0" name="cmsFrameEditor" width="96%" height="500" realsrc="' + realURL + '" src="' + cmsResourceBase + '/includes/Blank.htm" /> </div>');
 
-	setTimeout("cmsSetIframeRealSrc('cmsFrameEditor');", 500);
+	setTimeout("cmsSetIframeRealSrc('cmsFrameEditor');", 750);
 
 	$("#cmsAjaxMainDiv2").block({
-		message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="' + cmsAdminUri + '/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
+		message: '<table><tr><td><img class="cmsAjaxModalSpinner" src="' + cmsResourceBase + '/images/Ring-64px-A7B2A0.gif"/></td></tr></table>',
 		css: { width: '98%', height: '98%' },
 		fadeOut: 1000,
 		timeout: 1200,
 		overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.6, border: '0px solid #000000' }
 	});
+
 	cmsStyleButtons();
 }
 
@@ -1298,117 +1324,27 @@ function cmsLoadWindowOnly() {
 	return false;
 }
 
-function cmsCloseModalWin() {
-	cmsSaveToolbarPosition();
-	setTimeout("$.simplemodal.close();", 250);
-	cmsResetIframe();
-}
-
 function cmsResetIframe() {
 	var frameSel = '#cmsModalFrame';
 
 	$(frameSel).css('width', '98%');
 	$(frameSel).attr('width', '98%');
-	$(frameSel).css('height', '99%');
-	$(frameSel).attr('height', '99%');
+	$(frameSel).css('height', '98%');
+	$(frameSel).attr('height', '98%');
 	$(frameSel).html('<div id="cmsAjaxMainDiv"></div>');
+}
+
+function cmsCloseModalWin() {
+	cmsSaveToolbarPosition();
+	cmsResetIframe();
+	setTimeout("$.simplemodal.close();", 250);
 }
 
 function cmsDirtyPageRefresh() {
 	cmsSaveToolbarPosition();
 	cmsMakeOKToLeave();
+	cmsSetTick();
 	window.setTimeout('cmsMakeOKToLeave();', 500);
 	window.setTimeout('cmsMakeOKToLeave();', 700);
 	window.setTimeout("location.href = \'" + thisPageNav + "?carrotedit=true&carrottick=" + cmsTimeTick + "\'", 800);
-}
-
-//===================
-
-var jqAttemptCount1 = 0;
-var jqAttemptCount2 = 0;
-var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
-var jqui_URL = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js';
-
-function cmsSetJQueryURL(jqPath, jqUIPath) {
-	jqURL = jqPath;
-	jqui_URL = jqUIPath;
-
-	jqAttemptCount1 = 0;
-	jqAttemptCount2 = 0;
-
-	cmsLoadJQuery();
-}
-
-function cmsLoadJQuery() {
-	setTimeout('cmsAttemptAttachJQ1()', 250);
-	setTimeout('cmsAttemptAttachJQ2()', 500);
-}
-
-function cmsAddScript(scriptURL) {
-	var newScript = document.createElement('script');
-	newScript.type = 'text/javascript';
-	newScript.src = scriptURL;
-
-	var pageHead = document.getElementsByTagName("head")[0];
-	pageHead.appendChild(newScript);
-}
-
-function cmsAttemptAttachJQ1() {
-	if (jqAttemptCount1 < 50) {
-		jqAttemptCount1++;
-
-		if (!window.jQuery || (typeof jQuery == 'undefined')) {
-			cmsAttachJQScript1();
-		} else {
-			cmsAttemptExtra();
-			setTimeout('cmsAttemptAttachJQ2()', 500);
-		}
-	}
-}
-
-function cmsAttachJQScript1() {
-	if (!window.jQuery || (typeof jQuery == 'undefined')) {
-		cmsAddScript(jqURL);
-
-		setTimeout('cmsAttemptAttachJQ1()', 500);
-	}
-}
-
-function cmsAttemptAttachJQ2() {
-	if (jqAttemptCount2 < 200) {
-		jqAttemptCount2++;
-
-		if ((window.jQuery || (typeof jQuery != 'undefined')) && typeof jQuery.ui == 'undefined') {
-			cmsAttachJQScript2();
-		}
-	}
-}
-
-function cmsAttachJQScript2() {
-	if (typeof jQuery.ui == 'undefined') {
-		cmsAddScript(jqui_URL);
-
-		setTimeout('cmsAttemptAttachJQ2()', 500);
-	}
-}
-
-var cmsExtraAttached = false;
-
-function cmsAttachExtraScripts() {
-	if (typeof jQuery != 'undefined' && !cmsExtraAttached) {
-		cmsAddScript(cmsAdminUri + "/includes/jquery.simplemodal.js");
-		cmsAddScript(cmsAdminUri + "/includes/jquery.blockUI.js");
-
-		cmsExtraAttached = true;
-		setTimeout('cmsAttemptExtra()', 5000);
-	}
-}
-
-function cmsAttemptExtra() {
-	if (jqAttemptCount1 < 50) {
-		jqAttemptCount1++;
-		if (typeof jQuery != 'undefined') {
-			cmsAttachExtraScripts();
-		}
-	}
 }

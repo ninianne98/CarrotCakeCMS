@@ -13,7 +13,6 @@
 			obj.returnValue = false;
 			obj.cancelBubble = true;
 			return {SEARCH_FUNC}();
-			return false;
 		}
 
 		return true;

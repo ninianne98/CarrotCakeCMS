@@ -70,20 +70,48 @@
     <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.3\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.3\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.6.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.3.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.3.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -95,13 +123,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminBaseMasterPage.cs">
+    <Compile Include="Code\AdminBaseMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AdminBasePage.cs">
+    <Compile Include="Code\AdminBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AdminBaseUserControl.cs">
+    <Compile Include="Code\AdminBaseUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="c3-admin\about.aspx.cs">
@@ -145,10 +173,6 @@
     </Compile>
     <Compile Include="c3-admin\CategoryIndex.aspx.designer.cs">
       <DependentUpon>CategoryIndex.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="c3-admin\CMS.asmx.cs">
-      <DependentUpon>CMS.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="c3-admin\ContentEditHistory.aspx.cs">
       <DependentUpon>ContentEditHistory.aspx</DependentUpon>
@@ -251,7 +275,7 @@
     <Compile Include="c3-admin\ForgotPassword.aspx.designer.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
     </Compile>
-    <Compile Include="c3-admin\Helper.cs" />
+    <Compile Include="Code\Helper.cs" />
     <Compile Include="c3-admin\ResetPassword.aspx.cs">
       <DependentUpon>ResetPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -644,6 +668,8 @@
     <Compile Include="c3-admin\wp-SiteImport.aspx.designer.cs">
       <DependentUpon>wp-SiteImport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Code\ApiModel.cs" />
+    <Compile Include="Code\CmsAdminApiController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -877,6 +903,7 @@
     <Content Include="c3-admin\MiniColors\jquery.minicolors.css" />
     <Content Include="c3-admin\MiniColors\jquery.minicolors.min.js" />
     <Content Include="c3-admin\MiniColors\jquery.minicolors.png" />
+    <None Include="c3-admin\PlainTemplate.master" />
     <Content Include="c3-admin\PlainTemplateBW.aspx" />
     <Content Include="c3-admin\ResetPassword.aspx" />
     <Content Include="c3-admin\SiteDetail.aspx" />
@@ -1188,6 +1215,7 @@
     <Content Include="cmsTemplates\oilpainting\oilpainting-page-m.aspx" />
     <Content Include="cmsTemplates\oilpainting\oilpainting-page.aspx" />
     <Content Include="cmsTemplates\oilpainting\style.css" />
+    <Content Include="cmsTemplates\waterdrops\buttons.js" />
     <Content Include="cmsTemplates\waterdrops\images\img01.jpg" />
     <Content Include="cmsTemplates\waterdrops\images\img02.jpg" />
     <Content Include="cmsTemplates\waterdrops\images\img02b.jpg" />
@@ -1358,7 +1386,6 @@
     <Content Include="SiteSkins.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="c3-admin\CMS.asmx" />
     <Content Include="c3-admin\SiteInfo.aspx" />
     <Content Include="c3-admin\FileBrowser.aspx" />
     <Content Include="c3-admin\Includes\jquery.blockUI.js" />
@@ -1426,7 +1453,6 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="c3-admin\tinymce\plugins\bbcode\" />
     <Folder Include="c3-admin\tinymce\plugins\colorpicker\" />
     <Folder Include="c3-admin\tinymce\plugins\contextmenu\" />

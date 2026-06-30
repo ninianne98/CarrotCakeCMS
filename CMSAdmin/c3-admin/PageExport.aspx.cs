@@ -77,7 +77,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			Response.Write(theXML);
 
-			Response.StatusCode = 200;
+			Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 			Response.StatusDescription = "OK";
 			Response.End();
 		}

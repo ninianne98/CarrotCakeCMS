@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="imagination.master" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPageFromMaster" %>
 
+<%@ MasterType VirtualPath="imagination.master" %>
+
+<script runat="server">
+	protected override void OnInit(EventArgs e) {
+		base.OnInit(e);
+
+		Master.IsHome = true;
+	}
+</script>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		$(document).ready(function () {

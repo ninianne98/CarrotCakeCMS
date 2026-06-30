@@ -14,7 +14,7 @@ using System.Web.UI;
 
 namespace Carrotware.CMS.UI.Base {
 
-	public class BaseContentPage : Page {
+	public class BaseContentPage : Page, IContentPage {
 		protected PageProcessingHelper pph = new PageProcessingHelper();
 
 		public ContentPage ThePage { get { return _pageContents; } }
@@ -23,9 +23,13 @@ namespace Carrotware.CMS.UI.Base {
 
 		public bool IsSiteIndex {
 			get {
-				return this.TheSite != null && this.ThePage != null
+				var realSearch = this.TheSite != null && this.ThePage != null
 						&& this.TheSite.Blog_Root_ContentID.HasValue
 						&& this.ThePage.Root_ContentID == this.TheSite.Blog_Root_ContentID.Value;
+
+				var fakeSearch = SiteData.IsLikelyFakeSearch();
+
+				return fakeSearch || realSearch;
 			}
 		}
 

@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="imagination.master" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPageFromMaster" %>
 
+<%@ MasterType VirtualPath="imagination.master" %>
+
+<script runat="server">
+	protected override void OnInit(EventArgs e) {
+		base.OnInit(e);
+
+		Master.IsHome = false;
+	}
+</script>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -34,47 +43,44 @@
 				</article>
 			</section>
 			<div>
-				<carrot:ContentCommentForm runat="server" ID="commentFrm">
+				<carrot:ContentCommentForm runat="server" ID="commentFrm" ValidationGroup="CommentFrmValidGrp">
 					<CommentEntryTemplate>
 						<carrot:jsHelperLib runat="server" ID="jsHelperLib1" />
 						<div>
 							<asp:Label ID="ContentCommentFormMsg" runat="server" Text="" />
 						</div>
 						<div class="input-form">
-							<p class="padding10">
+							<div class="padding10">
 								<label class="comment-label">
 									name:
-									<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterName" ErrorMessage="*" />
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="CommenterName" ErrorMessage="*" />
 								</label>
-								<asp:TextBox runat="server" ID="CommenterName" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
+								<asp:TextBox runat="server" ID="CommenterName" Columns="30" MaxLength="100" />
 								<label class="comment-label">
 									email:
-									<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="CommenterEmail" ErrorMessage="*" />
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="CommenterEmail" ErrorMessage="*" />
 								</label>
-								<asp:TextBox runat="server" ID="CommenterEmail" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
+								<asp:TextBox runat="server" ID="CommenterEmail" Columns="30" MaxLength="100" />
 								<label class="comment-label">
 									website:
 								</label>
-								<asp:TextBox runat="server" ID="CommenterURL" Columns="30" MaxLength="100" ValidationGroup="ContentCommentForm" />
+								<asp:TextBox runat="server" ID="CommenterURL" Columns="30" MaxLength="100" />
 								<label class="comment-label">
 									comment:
-									<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="VisitorComments" ClientValidationFunction="__carrotware_ValidateLongText"
+									<asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="VisitorComments" ClientValidationFunction="__carrotware_ValidateLongText"
 										EnableClientScript="true" ErrorMessage="**" />
 								</label>
 								<asp:TextBox runat="server" ID="VisitorComments" TextMode="MultiLine" Rows="8" Columns="40" MaxLength="1024" />
 								<div class="padding10">
-									<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="ContentCommentForm" ControlToValidate="ContentCommentCaptcha"
+									<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ContentCommentCaptcha"
 										ErrorMessage="**" />
-									<carrot:Captcha runat="server" ID="ContentCommentCaptcha" ValidationGroup="ContentCommentForm" CaptchaIsValidStyle-Style="clear: both; color: green;" CaptchaIsNotValidStyle-Style="clear: both; color: red;"
+									<carrot:Captcha runat="server" ID="ContentCommentCaptcha" CaptchaIsValidStyle-Style="clear: both; color: green;" CaptchaIsNotValidStyle-Style="clear: both; color: red;"
 										CaptchaImageBoxStyle-Style="clear: both;" CaptchaInstructionStyle-Style="clear: both;" CaptchaTextStyle-Style="clear: both;" IsNotValidMessage="Code is not correct!" />
 								</div>
 								<div class="padding10">
-									<asp:Button ID="SubmitCommentButton" CssClass="button padding10" runat="server" Text="Submit Comment" ValidationGroup="ContentCommentForm" />
+									<asp:Button ID="SubmitCommentButton" CssClass="button padding10" runat="server" Text="Submit Comment" />
 								</div>
-								<script type="text/javascript">
-									__carrotware_PageValidate();
-								</script>
-							</p>
+							</div>
 						</div>
 					</CommentEntryTemplate>
 				</carrot:ContentCommentForm>

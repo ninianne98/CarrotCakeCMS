@@ -219,43 +219,50 @@ namespace Carrotware.CMS.UI.Controls {
 			_useEditor = editModes.Contains(this.WindowMode);
 		}
 
-		protected override void RenderContents(HtmlTextWriter writer) {
-			GetEditState();
+		public static jquerybasic.jQueryTheme GetJQ_Skin(CmsSkin.SkinOption skin) {
+			var selectedSkin = jquerybasic.jQueryTheme.Silver;
 
-			writer.WriteLine();
-			_jqb.SelectedSkin = jquerybasic.jQueryTheme.Silver;
-
-			switch (this.SelectedColor) {
+			switch (skin) {
 				case SkinOption.Classic:
-					_jqb.SelectedSkin = jquerybasic.jQueryTheme.LightGreen;
+					selectedSkin = jquerybasic.jQueryTheme.LightGreen;
 					break;
 
 				case SkinOption.Mauve:
 				case SkinOption.AmethystOrchid:
-					_jqb.SelectedSkin = jquerybasic.jQueryTheme.Purple;
+					selectedSkin = jquerybasic.jQueryTheme.Purple;
 					break;
 
 				case SkinOption.Rust:
 				case SkinOption.Sandstone:
 				case SkinOption.SugarAlmond:
 				case SkinOption.MosaicBlue:
-					_jqb.SelectedSkin = jquerybasic.jQueryTheme.GlossyBlack;
+					selectedSkin = jquerybasic.jQueryTheme.GlossyBlack;
 					break;
 
 				case SkinOption.FrenchBlue:
-					_jqb.SelectedSkin = jquerybasic.jQueryTheme.Blue;
+					selectedSkin = jquerybasic.jQueryTheme.Blue;
 					break;
 
 				case SkinOption.QuetzalGreen:
 				case SkinOption.BlueIzis:
 				case SkinOption.Plum:
-					_jqb.SelectedSkin = jquerybasic.jQueryTheme.Silver;
+					selectedSkin = jquerybasic.jQueryTheme.Silver;
 					break;
 
 				default:
-					_jqb.SelectedSkin = jquerybasic.jQueryTheme.Silver;
+					selectedSkin = jquerybasic.jQueryTheme.Silver;
 					break;
 			}
+
+			return selectedSkin;
+		}
+
+		protected override void RenderContents(HtmlTextWriter writer) {
+			GetEditState();
+
+			writer.WriteLine();
+
+			_jqb.SelectedSkin = GetJQ_Skin(this.SelectedColor);
 
 			var rootPath = _useEditor ? _rootThemePathEdit : _rootThemePathSkin;
 

@@ -22,15 +22,14 @@
 
 		function GenerateBlogFilePrefix() {
 			var sGoLiveDate = $('#<%= ucReleaseDate.DateField.ClientID %>').val();
-			var pageTitle = $(tValidSlug).val();
-			var myPage = MakeStringSafe(pageTitle);
+			var pageSlug = $(tValidSlug).val();
+			var mySlug = MakeStringSafe(pageSlug);
 
 			var webMthd = webSvc + "/GenerateBlogFilePrefix";
 
 			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ ThePageSlug: myPage, GoLiveDate: sGoLiveDate }),
+				type: "GET",
+				url: webMthd + "?ThePageSlug=" + encodeURIComponent(mySlug) + "&GoLiveDate=" + encodeURIComponent(sGoLiveDate),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(editPrefixCallback)
@@ -41,8 +40,8 @@
 		setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 1500);
 
 		function editPrefixCallback(data, status) {
-			if (data.d != "FAIL") {
-				$('#<%= lblPrefix.ClientID %>').html(data.d);
+			if (data != "FAIL") {
+				$('#<%= lblPrefix.ClientID %>').html(data);
 			} else {
 				$('#<%= lblPrefix.ClientID %>').html('/0000/00/00/file.aspx');
 			}
@@ -64,9 +63,8 @@
 			var myPage = MakeStringSafe(thePage);
 
 			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ ThePageSlug: myPage, GoLiveDate: sGoLiveDate, PageID: thePageID }),
+				type: "GET",
+				url: webMthd + "?ThePageSlug=" + encodeURIComponent(myPage) + "&GoLiveDate=" + encodeURIComponent(sGoLiveDate) + "&PageID=" + encodeURIComponent(thePageID),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(editFilenameCallback)
@@ -79,11 +77,11 @@
 		});
 
 		function editFilenameCallback(data, status) {
-			if (data.d != "FAIL" && data.d != "OK") {
-				cmsAlertModal(data.d);
+			if (data != "FAIL" && data != "OK") {
+				cmsAlertModal(data);
 			}
 
-			if (data.d == "OK") {
+			if (data == "OK") {
 				$(tValid).val('VALID');
 				$(tValidSlug).removeClass('validationExclaimBox');
 			} else {
@@ -145,9 +143,8 @@
 				var myPageTitle = MakeStringSafe(theTitle);
 
 				$.ajax({
-					type: "POST",
-					url: webMthd,
-					data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'blog' }),
+					type: "GET",
+					url: webMthd + "?ThePageTitle=" + encodeURIComponent(myPageTitle) + "&GoLiveDate=" + encodeURIComponent(sGoLiveDate) + "&PageID=" + encodeURIComponent(thePageID) + "&Mode=blog",
 					contentType: "application/json; charset=utf-8",
 					dataType: "json"
 				}).done(ajaxGeneratePageFilename)
@@ -158,8 +155,8 @@
 		}
 
 		function ajaxGeneratePageFilename(data, status) {
-			if (data.d == "FAIL") {
-				cmsAlertModal(data.d);
+			if (data == "FAIL") {
+				cmsAlertModal(data);
 			} else {
 				var theTitle = $(tTitle).val();
 				var theFile = $(tValidSlug).val();
@@ -167,7 +164,7 @@
 				var theHead = $(tHead).val();
 
 				if (theFile.length < 3) {
-					$(tValidSlug).val(data.d);
+					$(tValidSlug).val(data);
 				}
 				if (theNav.length < 1) {
 					$(tNav).val(theTitle);
@@ -209,6 +206,9 @@
 		}
 
 		function EditHB() {
+			var dataObj = {};
+			dataObj["PageID"] = thisPageID;
+
 			setTimeout("EditHB();", 25 * 1000);
 
 			var webMthd = webSvc + "/RecordHeartbeat";
@@ -216,7 +216,7 @@
 			$.ajax({
 				type: "POST",
 				url: webMthd,
-				data: JSON.stringify({ PageID: thePageID }),
+				data: JSON.stringify(dataObj),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(updateHeartbeat)
@@ -226,7 +226,7 @@
 		function updateHeartbeat(data, status) {
 			var hb = $('#cmsHeartBeat');
 			hb.empty().append('HB:  ');
-			hb.append(data.d);
+			hb.append(data);
 		}
 
 		$(document).ready(function () {
@@ -266,13 +266,15 @@
 		function cmsRecordCancellation() {
 
 			if (thePageID != '<%=Guid.Empty %>') {
+				var dataObj = {};
+				dataObj["ThisPage"] = thePageID;
 
 				var webMthd = webSvc + "/CancelEditing";
 
 				$.ajax({
 					type: "POST",
 					url: webMthd,
-					data: JSON.stringify({ ThisPage: thePageID }),
+					data: JSON.stringify(dataObj),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json"
 				}).done(cmsAjaxGeneralCallback)
@@ -333,9 +335,8 @@
 			var webMthd = webSvc + "/GetWidgetLatestText";
 
 			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ DBKey: val, ThisPage: thisPageID }),
+				type: "GET",
+				url: webMthd + "?DBKey=" + encodeURIComponent(val) + "&ThisPage=" + encodeURIComponent(thisPageID),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(cmsReqContentCallback)
@@ -347,10 +348,10 @@
 		}
 
 		function cmsReqContentCallback(data, status) {
-			if (data.d == "FAIL") {
+			if (data == "FAIL") {
 				cmsSetHTMLMessage('<i>An error occurred. Please try again.</i>');
 			} else {
-				cmsSetTextMessage(data.d);
+				cmsSetTextMessage(data);
 			}
 		}
 	</script>

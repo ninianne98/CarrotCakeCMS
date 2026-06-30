@@ -2,7 +2,6 @@
 using Carrotware.CMS.Security;
 using Carrotware.CMS.UI.Base;
 using Carrotware.CMS.UI.Controls;
-using System;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -59,26 +58,15 @@ namespace Carrotware.CMS.UI.Admin {
 			MainFooter,
 		}
 
-		public static CmsSkin.SkinOption _theme = CmsSkin.SkinOption.None;
-
 		public static CmsSkin.SkinOption SiteSkin {
 			get {
-				if (_theme == CmsSkin.SkinOption.None) {
-					var config = CarrotCakeConfig.GetConfig();
-					string skin = config.MainConfig.SiteSkin;
-					var actualSkin = CmsSkin.SkinOption.Classic;
-					try { actualSkin = (CmsSkin.SkinOption)Enum.Parse(typeof(CmsSkin.SkinOption), skin, true); } catch { }
-
-					_theme = actualSkin;
-				}
-
-				return _theme;
+				return Helper.SiteSkin;
 			}
 		}
 
 		public static string MainColorCode {
 			get {
-				return CmsSkin.GetPrimaryColorCode(SiteSkin);
+				return Helper.MainColorCode;
 			}
 		}
 

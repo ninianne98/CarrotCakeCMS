@@ -2,16 +2,20 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <script runat="server">
+	public bool IsHome { get; set; }
+
 	protected string headId = "header-wrapper-sub";
 	protected string headImg = "images/img03b.jpg";
+
 	protected int headH = 200;
 
 	protected string bannerId = "banner-sub";
 
-	protected override void OnInit(EventArgs e) {
-		base.OnInit(e);
+	protected override void OnLoad(EventArgs e) {
+		base.OnLoad(e);
+		//this.IsHome = ThePage.TemplateFile.ToLowerInvariant().Contains("home");
 
-		if (ThePage.TemplateFile.ToLowerInvariant().Contains("home")) {
+		if (this.IsHome) {
 			headId = "header-wrapper";
 			headImg = "images/img03.jpg";
 			headH = 320;
@@ -25,7 +29,6 @@
 		if (IsSiteIndex || IsBlogPost) {
 			calendarWrap.Visible = true;
 		}
-
 	}
 </script>
 <!--
@@ -48,22 +51,7 @@ Released   : 20120902
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css" />
 	<asp:PlaceHolder ID="myPageHead" runat="server">
 		<link href="<%=ThePage.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
-
-		<script type="text/javascript">
-			$(document).ready(function () {
-				buttonStyleWater()
-			});
-
-			$(document).ajaxComplete(function (event, xhr, settings) {
-				buttonStyleWater()
-			});
-
-			function buttonStyleWater() {
-				$("input:button, input:submit, input:reset, button").button();
-
-				$("#search input").removeClass("ui-button ui-widget ui-state-default ui-state-hover");
-			}
-		</script>
+		<script src="<%=ThePage.TemplateFolderPath %>buttons.js" type="text/javascript"></script>
 	</asp:PlaceHolder>
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
@@ -159,7 +147,7 @@ Released   : 20120902
 		<asp:PlaceHolder ID="myFooter" runat="server">
 			<div id="footer">
 				<p>
-					<%=String.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
+					<%=string.Format("&copy;  {0}, {1}. ", DateTime.Now.Year, TheSite.SiteName.Trim()) %>
 					| Design by <a href="https://templated.live">FCT</a>
 					| Photos by <a href="http://fotogrph.com/">Fotogrph</a>
 					| Site built with <a target="_blank" href="http://www.carrotware.com/">carrotcake cms</a>

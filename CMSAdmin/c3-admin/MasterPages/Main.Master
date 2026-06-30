@@ -181,7 +181,7 @@
 					<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/About.aspx?');">About</a></li>
 					<li><a class="lnkPopup" target="_blank" href="/">View Site</a> </li>
 					<li runat="server" id="tabProfileTop" class="sub"><a href="javascript:void(0)" class="lnkPopup">
-							<asp:Literal runat="server" ID="litUsername" /></a>
+						<asp:Literal runat="server" ID="litUsername" /></a>
 						<ul class="children">
 							<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserProfile.aspx?');">Edit Profile</a> </li>
 							<li><a href="javascript:void(0)" class="lnkPopup" onclick="ShowWindowNoRefresh('/c3-admin/UserPassword.aspx?');">Change Password</a> </li>

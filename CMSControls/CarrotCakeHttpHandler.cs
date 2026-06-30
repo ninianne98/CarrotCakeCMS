@@ -52,24 +52,26 @@ namespace Carrotware.CMS.UI.Controls {
 			SetExpires(context, expireIn);
 
 			var adminFolder = SiteData.AdminFolderPath;
+			var apiPath = SiteData.ApiBasePath;
 
 			var sb = new StringBuilder();
-			sb.Append(ControlUtilities.GetManifestResourceStream("adminHelp.js").ToString());
+			sb.Append(ControlUtilities.GetManifestResourceStream("adminHelp.js"));
 
 			sb.Replace("[[TIMESTAMP]]", DateTime.UtcNow.ToString("u"));
 
 			if (SecurityData.UserPrincipal.Identity.IsAuthenticated) {
 				if (SecurityData.IsAdmin || SecurityData.IsEditor) {
 					sb.Replace("[[ADMIN_PATH]]", adminFolder.FixPathSlashes());
-					sb.Replace("[[API_PATH]]", (adminFolder + "/CMS.asmx").FixPathSlashes());
+					sb.Replace("[[API_PATH]]", apiPath.FixPathSlashes());
 					sb.Replace("[[TEMPLATE_PATH]]", SiteData.PreviewTemplateFilePage);
 					sb.Replace("[[TEMPLATE_QS]]", SiteData.TemplatePreviewParameter);
+					sb.Replace("[[CMS_PLATFORM]]", "webform");
 				}
 			}
 
 			context.Response.ContentType = "text/javascript";
 			context.Response.Write(sb.ToString());
-			context.Response.StatusCode = 200;
+			context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 			context.Response.StatusDescription = "OK";
 		}
 
@@ -108,7 +110,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 			context.Response.ContentType = "text/css";
 			context.Response.Write(txt);
-			context.Response.StatusCode = 200;
+			context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 			context.Response.StatusDescription = "OK";
 		}
 	}

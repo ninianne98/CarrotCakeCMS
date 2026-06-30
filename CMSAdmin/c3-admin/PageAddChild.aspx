@@ -80,9 +80,8 @@
 					var myPageTitle = MakeStringSafe(theTitle);
 
 					$.ajax({
-						type: "POST",
-						url: webMthd,
-						data: JSON.stringify({ ThePageTitle: myPageTitle, GoLiveDate: sGoLiveDate, PageID: thePageID, Mode: 'page' }),
+						type: "GET",
+						url: webMthd + "?ThePageTitle=" + encodeURIComponent(myPageTitle) + "&GoLiveDate=" + encodeURIComponent(sGoLiveDate) + "&PageID=" + encodeURIComponent(thePageID) + "&Mode=page",
 						contentType: "application/json; charset=utf-8",
 						dataType: "json"
 					}).done(ajaxGeneratePageFilename)
@@ -95,8 +94,8 @@
 
 		function ajaxGeneratePageFilename(data, status) {
 			//debugger;
-			if (data.d == "FAIL") {
-				cmsAlertModal(data.d);
+			if (data == "FAIL") {
+				cmsAlertModal(data);
 			} else {
 				var theTitle = $(tTitle).val();
 				var theFile = $(tValidFile).val();
@@ -104,7 +103,7 @@
 				var theHead = $(tHead).val();
 
 				if (theFile.length < 3) {
-					$(tValidFile).val(data.d);
+					$(tValidFile).val(data);
 				}
 				if (theNav.length < 1) {
 					$(tNav).val(theTitle);
@@ -127,9 +126,8 @@
 				var myPage = MakeStringSafe(thePage);
 
 				$.ajax({
-					type: "POST",
-					url: webMthd,
-					data: JSON.stringify({ TheFileName: myPage, PageID: thePageID }),
+					type: "GET",
+					url: webMthd + "?TheFileName=" + encodeURIComponent(myPage) + "&PageID=" + encodeURIComponent(thePageID),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json"
 				}).done(editFilenameCallback)
@@ -143,11 +141,11 @@
 		});
 
 		function editFilenameCallback(data, status) {
-			if (data.d != "FAIL" && data.d != "OK") {
-				cmsAlertModal(data.d);
+			if (data != "FAIL" && data != "OK") {
+				cmsAlertModal(data);
 			}
 
-			if (data.d == "OK") {
+			if (data == "OK") {
 				$(tValid).val('VALID');
 				$(tValidFile).removeClass('validationExclaimBox');
 			} else {

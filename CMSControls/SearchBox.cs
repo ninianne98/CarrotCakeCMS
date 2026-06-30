@@ -26,6 +26,12 @@ namespace Carrotware.CMS.UI.Controls {
 	[ToolboxData("<{0}:SearchBox runat=server></{0}:SearchBox>")]
 	public class SearchBox : BaseServerControl, INamingContainer {
 
+		public class Fields {
+			public const string SearchText = "SearchText";
+		}
+
+		//=================
+
 		[PersistenceMode(PersistenceMode.InnerProperty)]
 		[TemplateInstance(TemplateInstance.Single)]
 		[DefaultValue(null)]
@@ -38,7 +44,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue("")]
 		public string OverrideTextboxName {
 			get {
-				String s = (String)ViewState["OverrideTextboxName"];
+				string s = (string)ViewState["OverrideTextboxName"];
 				return ((s == null) ? string.Empty : s);
 			}
 			set {
@@ -50,7 +56,7 @@ namespace Carrotware.CMS.UI.Controls {
 		[DefaultValue(false)]
 		public override bool EnableViewState {
 			get {
-				String s = (String)ViewState["EnableViewState"];
+				string s = (string)ViewState["EnableViewState"];
 				bool b = ((s == null) ? false : Convert.ToBoolean(s));
 				base.EnableViewState = b;
 				return b;
@@ -62,10 +68,10 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		protected PlaceHolder phEntry = new PlaceHolder();
-		protected Literal litScript = new Literal();
+		protected PlaceHolder _phEntry = new PlaceHolder();
+		protected Literal _litScript = new Literal();
 
-		protected List<Control> EntryFormControls = new List<Control>();
+		protected List<Control> _entryFormControls = new List<Control>();
 
 		protected string JS_SearchName {
 			get {
@@ -88,8 +94,8 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void OnInit(EventArgs e) {
 			base.OnInit(e);
 
-			if (SearchTemplate == null) {
-				SearchTemplate = new DefaultSearchBoxForm();
+			if (this.SearchTemplate == null) {
+				this.SearchTemplate = new DefaultSearchBoxForm();
 			}
 		}
 
@@ -104,92 +110,90 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		protected override void CreateChildControls() {
-			var sbScript = new StringBuilder();
-			sbScript.Append(ControlUtilities.GetManifestResourceStream("SearchBoxJS.txt"));
-
-			if (SearchTemplate != null) {
+			if (this.SearchTemplate != null) {
 				this.Controls.Clear();
 			}
-			phEntry.Controls.Clear();
+			_phEntry.Controls.Clear();
 
-			phEntry.Controls.Add(new jsHelperLib());
-			phEntry.Controls.Add(litScript);
-			this.Controls.Add(phEntry);
+			_phEntry.Controls.Add(new jsHelperLib());
+			_phEntry.Controls.Add(_litScript);
+			this.Controls.Add(_phEntry);
 
-			phEntry.Visible = true;
+			_phEntry.Visible = true;
 			if (this.SearchTemplate != null) {
-				this.SearchTemplate.InstantiateIn(phEntry);
+				this.SearchTemplate.InstantiateIn(_phEntry);
 			}
 
-			FindEntryFormCtrls(phEntry);
+			FindEntryFormCtrls(_phEntry);
 
-			TextBox txtSearchText = null;
-			if (string.IsNullOrEmpty(OverrideTextboxName)) {
-				txtSearchText = (TextBox)GetEntryFormControl("SearchText");
+			TextBox searchText = null;
+			if (string.IsNullOrWhiteSpace(this.OverrideTextboxName)) {
+				searchText = (TextBox)GetEntryFormControl(Fields.SearchText);
 
-				if (txtSearchText == null) {
-					txtSearchText = (TextBox)GetEntryFormControl(typeof(TextBox));
+				if (searchText == null) {
+					searchText = (TextBox)GetEntryFormControl(typeof(TextBox));
 				}
 			} else {
-				txtSearchText = new TextBox();
-				txtSearchText.ID = "over_" + OverrideTextboxName;
+				searchText = new TextBox();
+				searchText.ID = "over_" + this.OverrideTextboxName;
 			}
 
-			if (txtSearchText != null && sbScript.Length > 1) {
-				sbScript.Replace("{SEARCH_PARAM}", SiteData.SearchQueryParameter);
-				sbScript.Replace("{SEARCH_FUNC}", JS_SearchName);
-				sbScript.Replace("{SEARCH_ENTERFUNC}", JS_EnterSearch);
-				sbScript.Replace("{SEARCH_ENTERFUNC2}", JS_EnterSearch2);
+			var sb = new StringBuilder();
+			sb.Append(ControlUtilities.GetManifestResourceStream("SearchBoxJS.txt"));
 
-				if (string.IsNullOrEmpty(OverrideTextboxName)) {
-					sbScript.Replace("{SEARCH_TEXT}", this.ClientID + "_" + txtSearchText.ID);
-				} else {
-					sbScript.Replace("{SEARCH_TEXT}", OverrideTextboxName);
+			if (sb.Length > 1) {
+				sb.Replace("{SEARCH_PARAM}", SiteData.SearchQueryParameter);
+				sb.Replace("{SEARCH_FUNC}", this.JS_SearchName);
+				sb.Replace("{SEARCH_ENTERFUNC}", this.JS_EnterSearch);
+				sb.Replace("{SEARCH_ENTERFUNC2}", this.JS_EnterSearch2);
+
+				if (searchText != null) {
+					if (string.IsNullOrEmpty(this.OverrideTextboxName)) {
+						sb.Replace("{SEARCH_TEXT}", this.ClientID + "_" + searchText.ID);
+					} else {
+						sb.Replace("{SEARCH_TEXT}", this.OverrideTextboxName);
+					}
 				}
 
-				sbScript.Replace("{SEARCH_URL}", SiteData.CurrentSite.SiteSearchPath);
+				sb.Replace("{SEARCH_URL}", SiteData.CurrentSite.SiteSearchPath);
 
-				litScript.Text = sbScript.ToString();
+				sb.Replace("{EXEC_SEARCH_FUNCTION}", "return " + this.JS_SearchName + "()");
+				sb.Replace("{EXEC_SEARCH_FUNCTION_ENTER}", "return " + this.JS_EnterSearch + "(event)");
+
+				_litScript.Text = sb.ToString();
 			}
 
 			base.CreateChildControls();
 		}
 
-		protected Control GetEntryFormControl(string ControlName) {
-			return (from x in EntryFormControls
-					where x.ID != null
-					&& x.ID.ToLowerInvariant() == ControlName.ToLowerInvariant()
-					select x).FirstOrDefault();
+		protected Control GetEntryFormControl(string controlName) {
+			return (from c in _entryFormControls
+					where c.ID != null
+							&& c.ID.ToLowerInvariant() == controlName.ToLowerInvariant()
+					select c).FirstOrDefault();
 		}
 
 		protected Control GetEntryFormControl(Type type) {
-			return (from x in EntryFormControls
-					where x.ID != null
-					&& x.GetType() == type
-					select x).FirstOrDefault();
+			return (from c in _entryFormControls
+					where c.ID != null
+							&& c.GetType() == type
+					select c).FirstOrDefault();
 		}
 
-		private void FindEntryFormCtrls(Control X) {
-			foreach (Control c in X.Controls) {
-				EntryFormControls.Add(c);
+		private void FindEntryFormCtrls(Control ctrls) {
+			foreach (Control c in ctrls.Controls) {
+				_entryFormControls.Add(c);
 
-				if (c is LiteralControl) {
-					LiteralControl z = (LiteralControl)c;
-					z.Text = z.Text.Replace("{EXEC_SEARCH_FUNCTION}", "return " + JS_SearchName + "()");
-					z.Text = z.Text.Replace("{EXEC_SEARCH_FUNCTION_ENTER}", "return " + JS_EnterSearch + "(event)");
-				}
-
-				if (c is TextBox && c.ID != null) {
-					TextBox z = (TextBox)c;
-					if (z.ID.ToLowerInvariant().Contains("search")) {
-						z.Attributes["onkeypress"] = "return " + JS_EnterSearch + "()";
+				if (string.IsNullOrWhiteSpace(c.ID) == false
+							&& c.ID.ToLowerInvariant().Contains("search")) {
+					if (c is TextBox) {
+						var ctrl = (TextBox)c;
+						ctrl.Attributes["onkeypress"] = "return " + this.JS_EnterSearch + "()";
 					}
-				}
 
-				if (c is Button && c.ID != null) {
-					Button z = (Button)c;
-					if (z.ID.ToLowerInvariant().Contains("search")) {
-						z.OnClientClick = "return " + JS_SearchName + "()";
+					if (c is Button) {
+						var ctrl = (Button)c;
+						ctrl.OnClientClick = "return " + this.JS_SearchName + "()";
 					}
 				}
 
@@ -226,7 +230,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 				control = (SearchBox)Component;
 				group = new TemplateGroup("Item");
-				template = new TemplateDefinition(this, "SearchTemplate", control, "SearchTemplate", true);
+				template = new TemplateDefinition(this, nameof(SearchBox.SearchTemplate), control, nameof(SearchBox.SearchTemplate), true);
 				group.AddTemplateDefinition(template);
 				collection.Add(group);
 

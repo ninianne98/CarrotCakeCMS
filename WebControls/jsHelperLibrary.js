@@ -34,47 +34,52 @@ function __carrotware_RedirectWithQuerystringParm(url, parm, query) {
 
 //====================================================
 
-var jqAttemptCount = 0;
-//var jqURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js';
-//var jqURL = '<%= Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>';
-var jqURL = '/<%=WebResource("Carrotware.Web.UI.Controls.jquery-1-8-3.js")%>';
+var carrotAttemptCount = 0;
+var carrot_JQ_URL = '/<%=WebResource("Carrotware.Web.UI.Controls.jquery.jqueryui-1-13-3.js")%>';
 
 function __carrotware_SetJQueryURL(jqPath) {
-	jqURL = jqPath;
+	carrot_JQ_URL = jqPath;
 
 	__carrotware_LoadJQuery();
 }
 
 function __carrotware_LoadJQuery() {
-	setTimeout('__carrotware_LoadJS()', 150);
+	setTimeout('__carrotware_LoadJS()', 1500);
 }
 
 function __carrotware_LoadJQScript() {
 	if (typeof jQuery == 'undefined') {
 		//alert('adding');
 		var script = document.createElement('script');
-		script.src = jqURL;
+		script.src = carrot_JQ_URL;
 		document.getElementsByTagName('head')[0].appendChild(script);
-		setTimeout('__carrotware_LoadJS()', 150);
+		setTimeout('__carrotware_LoadJS()', 200);
 	}
 }
 
 function __carrotware_LoadJS() {
-	jqAttemptCount++;
-	if (jqAttemptCount < 50) {
+	carrotAttemptCount++;
+	if (carrotAttemptCount < 50) {
 		if (typeof jQuery == 'undefined') {
 			__carrotware_LoadJQScript();
 		}
 	}
 }
 
-function __carrotware_PageValidate() {
-	setTimeout("__carrotware_IsPageValid();", 250);
+function __carrotware_ResetValidation() {
+	if (typeof (Page_ClientValidate) == 'function') {
+		Page_BlockSubmit = false;
+		Page_IsValid = true;
+	}
 }
 
-function __carrotware_IsPageValid() {
+function __carrotware_PageValidate(validGrp) {
+	setTimeout("__carrotware_IsPageValid('" + validGrp + "');", 250);
+}
+
+function __carrotware_IsPageValid(validGrp) {
 	if (typeof (Page_ClientValidate) == 'function') {
-		Page_ClientValidate();
+		Page_ClientValidate(validGrp);
 	} else {
 		return true;
 	}
@@ -82,24 +87,8 @@ function __carrotware_IsPageValid() {
 	if (Page_IsValid) {
 		return true;
 	} else {
+		// because the sub form has validated, reset so other forms are not impacted
+		setTimeout("__carrotware_ResetValidation()", 500);
 		return false;
 	}
 }
-
-//setTimeout('__carrotware_LoadJS()', 150);
-
-//====================================================
-
-/*
-<script>
-//alert("alert 1");
-setTimeout('delayed()', 1500);
-function delayed() {
-//alert("alert 3.a");
-$(document).ready(function () {
-alert("alert 2");
-});
-//alert("alert 3.b");
-}
-</script>
-*/

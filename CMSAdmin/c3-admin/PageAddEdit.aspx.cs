@@ -118,11 +118,11 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				}
 
 				if (pageContents != null) {
-					bool bRet = pageHelper.RecordPageLock(pageContents.Root_ContentID, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
-
 					if (pageContents.ContentType != ContentPageType.PageType.ContentEntry) {
 						Response.Redirect(SiteFilename.BlogPostAddEditURL + "?id=" + Request.QueryString.ToString());
 					}
+
+					bool ret = pageHelper.RecordPageLock(pageContents.Root_ContentID, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
 
 					cmsHelper.OverrideKey(pageContents.Root_ContentID);
 					cmsHelper.cmsAdminContent = pageContents;

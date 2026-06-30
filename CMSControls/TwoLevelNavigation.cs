@@ -569,6 +569,11 @@ namespace Carrotware.CMS.UI.Controls {
 			return hcolor;
 		}
 
+		public void SetThemeColor(CmsSkin.SkinOption main) {
+			var mainColor = CmsSkin.GetPrimaryColorCode(main);
+			SetThemeColor(mainColor);
+		}
+
 		public void SetThemeColor(string main) {
 			var mainColor = main.DecodeColor();
 			SetThemeColor(mainColor);

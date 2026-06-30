@@ -25,9 +25,8 @@
 			var myPage = MakeStringSafe(thePage);
 
 			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ TheSlug: myPage, ItemID: thePageID }),
+				type: "GET",
+				url: webMthd + "?TheSlug=" + encodeURIComponent(myPage) + "&ItemID=" + encodeURIComponent(thePageID),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(editSlugCallback)
@@ -44,9 +43,8 @@
 				var mySlug = MakeStringSafe(theText);
 
 				$.ajax({
-					type: "POST",
-					url: webMthd,
-					data: JSON.stringify({ TheSlug: mySlug }),
+					type: "GET",
+					url: webMthd + "?TheSlug=" + encodeURIComponent(mySlug),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json"
 				}).done(editSlug)
@@ -63,11 +61,11 @@
 		});
 
 		function editSlugCallback(data, status) {
-			if (data.d != "FAIL" && data.d != "OK") {
-				cmsAlertModal(data.d);
+			if (data != "FAIL" && data != "OK") {
+				cmsAlertModal(data);
 			}
 
-			if (data.d == "OK") {
+			if (data == "OK") {
 				$(tValid).val('VALID');
 				$(tValidSlug).removeClass('validationExclaimBox');
 			} else {
@@ -80,10 +78,10 @@
 		}
 
 		function editSlug(data, status) {
-			if (data.d == "FAIL") {
-				cmsAlertModal(data.d);
+			if (data == "FAIL") {
+				cmsAlertModal(data);
 			} else {
-				$(tValidSlug).val(data.d);
+				$(tValidSlug).val(data);
 			}
 
 			CheckSlug();
@@ -155,7 +153,7 @@
 		function updateHeartbeat(data, status) {
 			var hb = $('#cmsHeartBeat');
 			hb.empty().append('HB:  ');
-			hb.append(data.d);
+			hb.append(data);
 		}
 
 		$(document).ready(function () {
@@ -391,15 +389,15 @@
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
 				$('#<%=btnSave.ClientID %>').click();
+			}
 		}
-	}
 
-	function SaveCommon() {
-		cmsSaveMakeOKAndCancelLeave();
-		var ret = cmsPreSaveTrigger();
-		cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
-		return true;
-	}
+		function SaveCommon() {
+			cmsSaveMakeOKAndCancelLeave();
+			var ret = cmsPreSaveTrigger();
+			cmsLoadPrettyValidationPopup('<%= formValidationSummary.ClientID %>');
+			return true;
+		}
 	</script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">

@@ -115,18 +115,26 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private Control _ctrl = new Control();
-
 		private ControlUtilities _cu = new ControlUtilities();
 
+		private string _controlText = string.Empty;
+
+		private string GetControlText() {
+			if (string.IsNullOrEmpty(_controlText)) {
+				_controlText = _cu.GetUserControlText("ucAdminContentContainer");
+			}
+			return _controlText;
+		}
+
 		private Control GetCtrl(Control ctrl) {
-			_cu = new ControlUtilities(this);
 			var sb = new StringBuilder();
 
-			sb.Append(_cu.GetResourceText("ucAdminContentContainer.ascx"));
+			var txt = GetControlText();
+			sb.Append(txt);
 
 			sb = ScrubCtrl(sb);
 
-			Control userControl = _cu.CreateControlFromString(sb.ToString());
+			Control userControl = _cu.PageParseControlFromString(sb);
 			userControl.Page = ctrl.Page;
 
 			return userControl;
@@ -134,6 +142,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
+
+			if (SiteData.IsWebView) {
+				_cu = new ControlUtilities(this);
+			}
 
 			if (this.TextZone != TextFieldZone.Unknown && (string.IsNullOrEmpty(this.Text) || this.DatabaseKey == Guid.Empty)) {
 				ContentPage pageContents = _cu.GetContainerContentPage(this);
@@ -173,17 +185,18 @@ namespace Carrotware.CMS.UI.Controls {
 			lit2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
 #endif
 			var lit = new Literal();
+			var litId = "litContent";
 
 			if (this.IsAdminMode) {
 				_ctrl = GetCtrl(this);
-				lit = (Literal)_cu.FindControl("litContent", _ctrl);
+				lit = (Literal)_cu.FindControl(litId, _ctrl);
 				lit.Text = outputText;
 			} else {
 				lit = new Literal { Text = string.Format(Environment.NewLine + " {0} " + Environment.NewLine, outputText) };
 				_ctrl.Controls.Add(lit);
 			}
 
-			lit.ID = "litContent";
+			lit.ID = litId;
 
 			var idx = _ctrl.Controls.IndexOf(lit);
 

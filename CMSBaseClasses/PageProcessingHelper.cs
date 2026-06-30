@@ -136,6 +136,11 @@ namespace Carrotware.CMS.UI.Base {
 				this.IsPageTemplate = true;
 			}
 
+			if (SiteData.IsLikelyFakeSearch() && SiteData.IsPageReal == false) {
+				// if using a placeholder search, mark as a template to prevent editing
+				this.IsPageTemplate = true;
+			}
+
 			if (_theSite != null && _pageContents != null) {
 				if (_theSite.BlockIndex || _pageContents.BlockIndex) {
 					bool bCrawlExist = false;
@@ -228,8 +233,8 @@ namespace Carrotware.CMS.UI.Base {
 
 						if (titleOpts == null
 							&& (pvt.CurrentViewType == PageViewType.ViewType.DateDayIndex
-							|| pvt.CurrentViewType == PageViewType.ViewType.DateMonthIndex
-							|| pvt.CurrentViewType == PageViewType.ViewType.DateYearIndex)) {
+								|| pvt.CurrentViewType == PageViewType.ViewType.DateMonthIndex
+								|| pvt.CurrentViewType == PageViewType.ViewType.DateYearIndex)) {
 							titleOpts = pd.TypeLabelPrefixes.Where(x => x.KeyValue == PageViewType.ViewType.DateIndex).FirstOrDefault();
 						}
 

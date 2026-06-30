@@ -21,12 +21,8 @@ Released   : 20120902
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css" />
 	<asp:PlaceHolder ID="myPageHead" runat="server">
 		<link href="<%=ThePage.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+		<script src="<%=ThePage.TemplateFolderPath %>buttons.js" type="text/javascript"></script>
 	</asp:PlaceHolder>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$("input:button, input:submit").button();
-		});
-	</script>
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
 </head>
@@ -76,6 +72,23 @@ Released   : 20120902
 				<!-- end #content -->
 				<div id="sidebar">
 					<div id="box1">
+						<h2>Search Here:</h2>
+						<div id="search">
+							<carrot:SearchBox ID="SearchBox1" runat="server">
+								<SearchTemplate>
+									<div class="searchzone">
+										<div id="searchinner">
+											<asp:TextBox ID="SearchText" runat="server" CssClass="search-text" MaxLength="40" />
+											<asp:Button ID="btnSiteSearch" runat="server" CssClass="search-submit" Text="Search" />
+										</div>
+									</div>
+								</SearchTemplate>
+							</carrot:SearchBox>
+						</div>
+						<div style="clear: both;">
+						</div>
+					</div>
+					<div>
 						<carrot:WidgetContainer ID="phRightTop" runat="server">
 						</carrot:WidgetContainer>
 						<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server">

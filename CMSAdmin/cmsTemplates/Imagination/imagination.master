@@ -2,19 +2,20 @@
 
 <!DOCTYPE HTML>
 <script runat="server">
+	public bool IsHome { get; set; }
 	protected string bodyCss = "not-homepage";
 
-	protected override void OnInit(EventArgs e) {
-		base.OnInit(e);
+	protected override void OnLoad(EventArgs e) {
+		base.OnLoad(e);
+		//this.IsHome = ThePage.TemplateFile.ToLowerInvariant().Contains("home");
 
-		if (ThePage.TemplateFile.ToLowerInvariant().Contains("home")) {
+		if (this.IsHome) {
 			bodyCss = "homepage";
 		}
 
 		body1.Attributes["class"] = bodyCss;
 	}
 </script>
-
 <!--
 	Imagination by TEMPLATED
     templated.co @templatedco

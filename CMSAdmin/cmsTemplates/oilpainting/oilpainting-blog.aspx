@@ -95,6 +95,44 @@ Conversion to CarrotCake CMS Template: Carrotware
 									<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server" />
 									<carrot:WidgetContainer ID="phRightBottom" runat="server">
 									</carrot:WidgetContainer>
+
+									<div id="contactForm">
+										<carrot:ContentCommentForm runat="server" ID="commentFrm" ValidationGroup="CommentFrmValidGrp">
+											<CommentEntryTemplate>
+												<asp:Label ID="ContentCommentFormMsg" runat="server" Text="" />
+												<div>
+													<asp:TextBox runat="server" ID="CommenterName" Columns="30" MaxLength="100" placeholder="Name" />
+													<asp:RequiredFieldValidator CssClass="text-danger" ID="RequiredFieldValidator1" runat="server" ControlToValidate="CommenterName"
+														ErrorMessage="Required" />
+												</div>
+												<div>
+													<asp:TextBox runat="server" ID="CommenterEmail" Columns="30" MaxLength="100" placeholder="Email" />
+													<asp:RequiredFieldValidator CssClass="text-danger" ID="RequiredFieldValidator2" runat="server" ControlToValidate="CommenterEmail"
+														ErrorMessage="Required" />
+												</div>
+												<div>
+													<asp:TextBox runat="server" ID="CommenterURL" Columns="30" MaxLength="100" placeholder="Website" />
+												</div>
+												<div>
+													<br />
+													<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ContentCommentCaptcha"
+														ErrorMessage="**" />
+													<carrot:Captcha runat="server" ID="ContentCommentCaptcha" CaptchaIsValidStyle-Style="clear: both; color: green;"
+														CaptchaIsNotValidStyle-Style="clear: both; color: red;" CaptchaImageBoxStyle-Style="clear: both;" CaptchaInstructionStyle-Style="clear: both;"
+														CaptchaTextStyle-Style="clear: both;" IsNotValidMessage="Code is not correct!" />
+												</div>
+												<div>
+													<br />
+													<asp:TextBox runat="server" ID="VisitorComments" TextMode="MultiLine" Rows="8" Columns="40" MaxLength="1024" placeholder="Message" />
+												</div>
+												<div>
+													<br />
+													<asp:Button ID="SubmitCommentButton" runat="server" Text="Send Message" />
+												</div>
+												<br />
+											</CommentEntryTemplate>
+										</carrot:ContentCommentForm>
+									</div>
 								</div>
 							</div>
 							<div style="clear: both;">

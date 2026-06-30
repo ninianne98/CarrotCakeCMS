@@ -1,7 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ucAdvancedEdit.ascx.cs" Inherits="Carrotware.CMS.UI.Admin.c3_admin.ucAdvancedEdit" %>
 <%@ Import Namespace="Carrotware.CMS.Core" %>
 <!-- CarrotCake CMS Editor Control BEGIN -->
-<%--<carrot:jquerybasic runat="server" ID="jquerybasic1" SelectedSkin="NotUsed"   />--%>
 <asp:PlaceHolder ID="plcIncludes" runat="server">
 	<link href="/c3-admin/includes/advanced-editor-reset.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
 	<link href="/c3-admin/includes/modal.css<%=AntiCache%>" rel="stylesheet" type="text/css" />
@@ -11,24 +10,6 @@
 	<script src="/c3-admin/includes/advanced-editor.js<%=AntiCache%>" type="text/javascript"></script>
 </asp:PlaceHolder>
 
-<script type="text/javascript">
-	var cmsJQLoadCtr = 1;
-	function cmsLoadJQDyn() {
-		var jq2URL = '<%= Carrotware.Web.UI.Controls.jquery.GeneralUri %>';
-		var jq1URL = '<%= Carrotware.Web.UI.Controls.jqueryui.GeneralUri %>';
-
-		if (cmsJQLoadCtr <= 30) {
-			cmsJQLoadCtr++;
-			cmsSetJQueryURL(jq2URL, jq1URL);
-
-			if ((typeof jQuery.ui == 'undefined') || (typeof jQuery == 'undefined')) {
-				setTimeout("cmsLoadJQDyn();", 500);
-			}
-		}
-	}
-
-	cmsLoadJQDyn();
-</script>
 <script type="text/javascript">
 	var cmsPageInit2 = false;
 	var cmsPageLocked = '<%=this.IsLocked.ToString().ToLowerInvariant() %>' == 'true';
@@ -76,7 +57,7 @@
 
 		var cmsWebSvc = cmsWebServiceApi;
 		var cmsThisPage = "<%=SiteData.AlternateCurrentScriptName %>";
-		var cmsThisPageID = "<%=guidContentID.ToString() %>";
+		var cmsThisPageID = "<%=GuidContentID.ToString() %>";
 
 		var cmsTabIdx = parseInt('<%=EditorPrefs.EditorSelectedTabIdx %>');
 		var cmsMargin = '<%=EditorPrefs.EditorMargin %>';
@@ -196,6 +177,7 @@
 													<div class="cmsWidgetControlItem cmsWidgetToolboxItem cmsWidgetCtrlPath cms-seagreen" id="cmsControl">
 														<p class="cmsToolItem cms-seagreen">
 															<%# Eval("Caption")%>
+															<span style="float:right;" class="<%# FlagSystemPlugin(Eval("SystemPlugin")) %>"></span>
 														</p>
 														<p class="cmsWidgetToolboxPath cms-seagreen">
 															<%# string.Format("{0}", Eval("FilePath")).Replace(".", ". ").Replace("/", "/ ")%><br />

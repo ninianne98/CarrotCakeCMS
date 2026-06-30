@@ -6,26 +6,25 @@
 	<script type="text/javascript">
 		var webSvc = cmsGetServiceAddress();
 
-		var thePageID = '<%= guidItemID %>';
+		var theItemID = '<%= guidItemID %>';
 
 		var tValid = '#<%= txtFileValid.ClientID %>';
 		var tValidSlug = '#<%= txtSlug.ClientID %>';
 		var tCaption = '#<%= txtLabel.ClientID %>';
 
-		var thePage = '';
+		var theSlug = '';
 
 		function CheckSlug() {
-			thePage = $(tValidSlug).val();
+			theSlug = $(tValidSlug).val();
 
 			$(tValid).val('');
 
 			var webMthd = webSvc + "/ValidateUniqueCategory";
-			var myPage = MakeStringSafe(thePage);
+			var mySlug = MakeStringSafe(theSlug);
 
 			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ TheSlug: myPage, ItemID: thePageID }),
+				type: "GET",
+				url: webMthd + "?TheSlug=" + encodeURIComponent(mySlug) + "&ItemID=" + encodeURIComponent(theItemID),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(editSlugCallback)
@@ -42,9 +41,8 @@
 				var mySlug = MakeStringSafe(theText);
 
 				$.ajax({
-					type: "POST",
-					url: webMthd,
-					data: JSON.stringify({ TheSlug: mySlug, Mode: 'Category' }),
+					type: "GET",
+					url: webMthd + "?TheSlug=" + encodeURIComponent(mySlug) + "&ItemID=" + encodeURIComponent(theItemID) + "&Mode=Category",
 					contentType: "application/json; charset=utf-8",
 					dataType: "json"
 				}).done(editSlug)
@@ -61,11 +59,11 @@
 		});
 
 		function editSlugCallback(data, status) {
-			if (data.d != "FAIL" && data.d != "OK") {
-				cmsAlertModal(data.d);
+			if (data != "FAIL" && data != "OK") {
+				cmsAlertModal(data);
 			}
 
-			if (data.d == "OK") {
+			if (data == "OK") {
 				$(tValid).val('VALID');
 				$(tValidSlug).removeClass('validationExclaimBox');
 			} else {
@@ -78,10 +76,10 @@
 		}
 
 		function editSlug(data, status) {
-			if (data.d == "FAIL") {
-				cmsAlertModal(data.d);
+			if (data == "FAIL") {
+				cmsAlertModal(data);
 			} else {
-				$(tValidSlug).val(data.d);
+				$(tValidSlug).val(data);
 			}
 
 			CheckSlug();
@@ -163,12 +161,12 @@
 		function ClickSaveBtn() {
 			if (cmsIsPageValid()) {
 				$('#<%=btnSave.ClientID %>').click();
+			}
 		}
-	}
 
-	function cancelEditing() {
-		window.setTimeout("location.href = './CategoryIndex.aspx';", 250);
-	}
+		function cancelEditing() {
+			window.setTimeout("location.href = './CategoryIndex.aspx';", 250);
+		}
 	</script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="NoAjaxContentPlaceHolder" runat="server">

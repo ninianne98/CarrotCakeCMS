@@ -271,14 +271,15 @@ namespace Carrotware.CMS.UI.Controls {
 
 					this.ShowUpdateDate = Convert.ToBoolean(GetParmValue("ShowUpdateDate", "false"));
 
-					this.ContentType = (ListContentType)Enum.Parse(typeof(ListContentType), GetParmValue("ContentType", ListContentType.Blog.ToString()), true);
+					var foundVal = this.GetValue(x => x.ContentType, this.ContentType);
+					this.ContentType = foundVal;
 
 					this.SelectedCategories = new List<Guid>();
 
-					List<string> lstCategories = GetParmValueList("SelectedCategories");
-					foreach (string sCat in lstCategories) {
-						if (!string.IsNullOrEmpty(sCat)) {
-							this.SelectedCategories.Add(new Guid(sCat));
+					List<string> lstCategories = this.GetParmValueList(nameof(this.SelectedCategories));
+					foreach (string cat in lstCategories) {
+						if (!string.IsNullOrEmpty(cat)) {
+							this.SelectedCategories.Add(new Guid(cat));
 						}
 					}
 				}

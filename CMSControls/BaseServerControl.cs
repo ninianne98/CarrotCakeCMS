@@ -33,9 +33,9 @@ namespace Carrotware.CMS.UI.Controls {
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool IsPostBack {
 			get {
-				string sReq = "GET";
-				try { sReq = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpperInvariant(); } catch { }
-				return sReq != "GET" ? true : false;
+				string method = "GET";
+				try { method = HttpContext.Current.Request.ServerVariables["REQUEST_METHOD"].ToString().ToUpperInvariant(); } catch { }
+				return method != "GET" ? true : false;
 			}
 		}
 
@@ -135,6 +135,10 @@ namespace Carrotware.CMS.UI.Controls {
 					pageNav.TemplateFile = "/##/##/";
 				}
 			}
+			if (pageNav == null && SiteData.IsLikelyFakeSearch()) {
+				pageNav = SiteNavHelper.GetEmptySearch();
+			}
+
 			pageNav.SiteID = SiteData.CurrentSiteID;
 
 			return pageNav;

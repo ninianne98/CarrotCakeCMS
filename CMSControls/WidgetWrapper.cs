@@ -123,85 +123,124 @@ namespace Carrotware.CMS.UI.Controls {
 			return sb;
 		}
 
-		private Control GetCtrl(string ctrlFile, Control ctrl) {
-			_cu = new ControlUtilities(this);
+		private ControlUtilities _cu = new ControlUtilities();
+
+		protected Control _ctrl = new Control();
+
+		private string _controlText = string.Empty;
+
+		private string GetControlText() {
+			if (string.IsNullOrEmpty(_controlText)) {
+				_controlText = _cu.GetUserControlText("ucAdminWidget");
+			}
+			return _controlText;
+		}
+
+		private Control GetCtrl(Control ctrl) {
 			var sb = new StringBuilder();
 
-			var txt = ControlUtilities.GetManifestResourceStream(ctrlFile + ".ascx");
+			var txt = GetControlText();
 			sb.Append(txt);
 
 			sb = ScrubCtrl(sb);
 
-			Control userControl = _cu.CreateControlFromString(sb);
+			Control userControl = _cu.PageParseControlFromString(sb);
 			userControl.Page = ctrl.Page;
 
 			return userControl;
 		}
 
-		private ControlUtilities _cu = new ControlUtilities();
+		private string _menuControlText = string.Empty;
 
-		private Control GetCtrl(Control ctrl, string menuText, string menuFunc) {
-			_cu = new ControlUtilities(this);
+		private string GetMenuControlText() {
+			if (string.IsNullOrEmpty(_menuControlText)) {
+				_menuControlText = _cu.GetUserControlText("ucAdminWidgetMenuItem");
+			}
+			return _menuControlText;
+		}
+
+		private Control GetMenuCtrl(Control ctrl, string menuText, string menuFunc) {
 			var sb = new StringBuilder();
 
-			sb.Append(_cu.GetResourceText("ucAdminWidgetMenuItem.ascx"));
+			var txt = GetMenuControlText();
+			sb.Append(txt);
 
 			sb = ScrubCtrl(sb);
+
 			sb.Replace("{WIDGET_MENU_TEXT}", menuText);
 			sb.Replace("{WIDGET_MENU_JS}", menuFunc);
 
-			Control userControl = _cu.CreateControlFromString(sb.ToString());
+			Control userControl = _cu.PageParseControlFromString(sb);
+			userControl.Page = ctrl.Page;
 
 			return userControl;
 		}
 
-		protected Control _ctrl = new Control();
+		private HtmlGenericControl GetSubItem(string itemName) {
+			return (HtmlGenericControl)_cu.FindControl(itemName, _ctrl);
+		}
 
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender(e);
 
-			//this.ControlPath = this.WidgetSettings.ControlPath;
-			//this.ControlTitle = this.WidgetSettings.ControlPath;
-			//this.Order = this.WidgetSettings.WidgetOrder;
+			if (SiteData.IsWebView) {
+				_cu = new ControlUtilities(this);
+			}
+
+			_ctrl = new PlaceHolder();
+
 			this.DatabaseKey = this.WidgetData.Root_WidgetID;
 
-			if (!this.WidgetData.IsWidgetActive) {
-				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, this.ControlTitle);
-			}
-			if (this.WidgetData.IsRetired) {
-				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.RetiredPagePrefix, this.ControlTitle);
-			}
-			if (this.WidgetData.IsUnReleased) {
-				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.UnreleasedPagePrefix, this.ControlTitle);
-			}
-			if (this.WidgetData.IsWidgetPendingDelete) {
-				this.ControlTitle = string.Format("{0} {1}", CMSConfigHelper.PendingDeletePrefix, this.ControlTitle);
+			using (var cmsHelper = new CMSConfigHelper()) {
+				CMSPlugin plug = (from p in cmsHelper.ToolboxPlugins
+								  where p.FilePath.ToLowerInvariant() == this.WidgetData.ControlPath.ToLowerInvariant()
+								  select p).FirstOrDefault();
+
+				string captionPrefix = string.Empty;
+
+				if (!this.WidgetData.IsWidgetActive) {
+					captionPrefix = string.Format("{0} {1}", CMSConfigHelper.InactivePagePrefix, captionPrefix);
+				}
+				if (this.WidgetData.IsRetired) {
+					captionPrefix = string.Format("{0} {1}", CMSConfigHelper.RetiredPagePrefix, captionPrefix);
+				}
+				if (this.WidgetData.IsUnReleased) {
+					captionPrefix = string.Format("{0} {1}", CMSConfigHelper.UnreleasedPagePrefix, captionPrefix);
+				}
+				if (this.WidgetData.IsWidgetPendingDelete) {
+					captionPrefix = string.Format("{0} {1}", CMSConfigHelper.PendingDeletePrefix, captionPrefix);
+				}
+
+				if (plug != null) {
+					string sysControl = (plug.SystemPlugin ? "[CMS]" : string.Empty);
+					this.ControlTitle = string.Format("{0}  {1}  {2}", captionPrefix, plug.Caption, sysControl).Trim();
+				} else {
+					this.ControlTitle = string.Format("{0}  UNTITLED", captionPrefix).Trim();
+				}
 			}
 
 			if (SiteData.IsWebView) {
-				_cu = new ControlUtilities();
-
 				if (this.IsAdminMode) {
-					_ctrl = GetCtrl("ucAdminWidget", this);
+					_ctrl = GetCtrl(this);
 
 					if (this.JSEditFunctions != null && this.JSEditFunctions.Any()) {
 						var phMenuItems = (PlaceHolder)_cu.FindControl("phMenuItems", _ctrl);
 						foreach (KeyValuePair<string, string> f in this.JSEditFunctions) {
-							Control itm = GetCtrl(this, f.Key, f.Value);
+							Control itm = GetMenuCtrl(this, f.Key, f.Value);
 							phMenuItems.Controls.Add(itm);
 						}
 						this.JSEditFunction = null;
 					}
 
-					var remove = (HtmlGenericControl)_cu.FindControl("liRemove", _ctrl);
-					var act = (HtmlGenericControl)_cu.FindControl("liActivate", _ctrl);
+					var remove = GetSubItem("liRemove");
+					var act = GetSubItem("liActivate");
 
 					act.Visible = !this.WidgetData.IsWidgetActive;
 					remove.Visible = this.WidgetData.IsWidgetActive;
 
 					if (string.IsNullOrEmpty(this.JSEditFunction)) {
-						var edit = (HtmlGenericControl)_cu.FindControl("liEdit", _ctrl);
-						var hist = (HtmlGenericControl)_cu.FindControl("liHistory", _ctrl);
+						var edit = GetSubItem("liEdit");
+						var hist = GetSubItem("liHistory");
 
 						edit.Visible = false;
 						hist.Visible = false;
@@ -215,7 +254,9 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 
-			_cu = new ControlUtilities(this);
+			if (SiteData.IsWebView) {
+				_cu = new ControlUtilities(this);
+			}
 
 			var lit1 = new Literal { Text = string.Empty };
 			var lit2 = new Literal { Text = string.Empty };
@@ -223,8 +264,9 @@ namespace Carrotware.CMS.UI.Controls {
 			lit1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
 			lit2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
 #endif
-			var widgetBody = (PlaceHolder)_cu.FindControl("phWidgetZone", _ctrl);
-			widgetBody.ID = "phWidgetZone";
+			var widgetId = "phWidgetZone";
+			var widgetBody = (PlaceHolder)_cu.FindControl(widgetId, _ctrl);
+			widgetBody.ID = widgetId;
 
 			_ctrl.Controls.Add(lit1);
 

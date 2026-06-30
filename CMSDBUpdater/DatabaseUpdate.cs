@@ -85,12 +85,14 @@ namespace Carrotware.CMS.DBUpdater {
 			var res = new List<DatabaseUpdateResponse>();
 
 			if (!DatabaseSchemaState.FailedSQL) {
-				bool bDbResult = SQLUpdateNugget.EvalNuggetKey("DoCMSTablesExist");
-				bool bAuthResult = SQLUpdateNugget.EvalNuggetKey("DoAuthTablesExist");
+				bool isBlankDB = IsBlankDB();
+				bool membershipOnly = isBlankDB ? false : MembershipOnly();
+				bool authResult = isBlankDB ? false : SQLUpdateNugget.EvalNuggetKey("DoAuthTablesExist");
+				bool dbResult = isBlankDB ? false : SQLUpdateNugget.EvalNuggetKey("DoCMSTablesExist");
 
 				var res1 = new DatabaseUpdateResponse();
 
-				if (!bAuthResult) {
+				if (authResult == false) {
 					res1.LastException = ExecFileContents("MEMBER01.sql", false);
 					res1.Response = "Created Membership";
 					res1.RanUpdate = true;
@@ -101,7 +103,7 @@ namespace Carrotware.CMS.DBUpdater {
 
 				var res2 = new DatabaseUpdateResponse();
 
-				if (!bDbResult) {
+				if (dbResult == false || membershipOnly) {
 					res2.LastException = ExecFileContents("CREATE01.sql", false);
 					res2.Response = "Created Database";
 					res2.RanUpdate = true;
@@ -130,6 +132,27 @@ namespace Carrotware.CMS.DBUpdater {
 				if (bTestResult) {
 					return bTestResult;
 				}
+			}
+
+			return false;
+		}
+
+		public bool IsBlankDB() {
+			if (!DatabaseSchemaState.FailedSQL) {
+				bool bTestResult = SQLUpdateNugget.EvalNuggetKey("IsBlankDb");
+
+				return bTestResult;
+			}
+
+			return false;
+		}
+
+		public bool MembershipOnly() {
+			if (!DatabaseSchemaState.FailedSQL) {
+				bool hasCarrotPrefix = SQLUpdateNugget.EvalNuggetKey("HasCarrotPrefix");
+				bool hasMembership = SQLUpdateNugget.EvalNuggetKey("HasMembership");
+
+				return hasMembership && hasCarrotPrefix == false;
 			}
 
 			return false;
@@ -261,11 +284,14 @@ namespace Carrotware.CMS.DBUpdater {
 			var lst = new List<DatabaseUpdateMessage>();
 
 			lock (_updateLocker) {
-				var doTablesExist = DoCMSTablesExist();
+				var isBlankDB = IsBlankDB();
+				var membershipOnly = isBlankDB ? false : MembershipOnly();
+				var doCmsTablesExist = isBlankDB ? false : DoCMSTablesExist();
+
 				var ver = DatabaseSchemaState.GetDbSchemaVersion();
 
-				if (ver.IsLatest() == false || ver.IsBlank()) {
-					if (!doTablesExist) {
+				if (ver.IsLatest() == false || ver.IsBlank() || isBlankDB) {
+					if (isBlankDB || doCmsTablesExist == false || membershipOnly) {
 						HandleResponse(lst, "Create Database", CreateCMSDatabase());
 					} else {
 						HandleResponse(lst, "Database already exists");
@@ -279,7 +305,7 @@ namespace Carrotware.CMS.DBUpdater {
 				int updateCount = 1;
 
 				if (update) {
-					if (doTablesExist && !this.IsPostStep10) {
+					if (doCmsTablesExist && !this.IsPostStep10) {
 						if (!this.IsPostStep04) {
 							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep00());
 							HandleResponse(lst, BuildUpdateString(updateCount++), AlterStep01());

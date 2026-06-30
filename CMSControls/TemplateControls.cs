@@ -356,7 +356,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private ControlUtilities _cu = new ControlUtilities();
 
 		private Control GetCtrl() {
-			Control userControl = _cu.CreateControlFromResource("ucContactForm.ascx");
+			Control userControl = _cu.CreateControlFromResource("ucContactForm");
 			return userControl;
 		}
 
@@ -368,6 +368,7 @@ namespace Carrotware.CMS.UI.Controls {
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultContentCommentForm";
+
 			container.Controls.Add(ph);
 
 			Control control = GetCtrl();
@@ -384,7 +385,7 @@ namespace Carrotware.CMS.UI.Controls {
 		private Control GetCtrl(Control control) {
 			var cu = new ControlUtilities(control);
 
-			Control userControl = cu.CreateControlFromResource("ucSearchForm.ascx");
+			Control userControl = cu.CreateControlFromResource("ucSearchForm");
 
 			return userControl;
 		}
@@ -392,24 +393,12 @@ namespace Carrotware.CMS.UI.Controls {
 		public void InstantiateIn(Control container) {
 			PlaceHolder ph = new PlaceHolder();
 			ph.ID = "DefaultSearchBoxForm";
+
 			container.Controls.Add(ph);
 
 			Control c = GetCtrl(ph);
+
 			ph.Controls.Add(c);
-
-			//ph.Controls.Add(new Literal { Text = "<div class=\"search-form-outer\">\r\n" });
-
-			//// SearchText
-			//ph.Controls.Add(new Literal { Text = "<div class=\"search-form-text\"> " });
-			//ph.Controls.Add(new TextBox { ID = "SearchText", Columns = 16, MaxLength = 40 });
-			//ph.Controls.Add(new Literal { Text = " </div>\r\n" });
-
-			//// btnSiteSearch
-			//ph.Controls.Add(new Literal { Text = "<div class=\"search-form-button\"> " });
-			//ph.Controls.Add(new Button { ID = "btnSiteSearch", Text = "Search" });
-			//ph.Controls.Add(new Literal { Text = "</div>\r\n" });
-
-			//ph.Controls.Add(new Literal { Text = " </div>\r\n" });
 		}
 	}
 
@@ -424,7 +413,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private Control GetCtrl() {
-			Control userControl = _cu.CreateControlFromResource("ucSummaryDisplay.ascx");
+			Control userControl = _cu.CreateControlFromResource("ucSummaryDisplay");
 			return userControl;
 		}
 
@@ -461,7 +450,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		private Control GetCtrl() {
-			Control userControl = _cu.CreateControlFromResource("ucCommentDisplay.ascx");
+			Control userControl = _cu.CreateControlFromResource("ucCommentDisplay");
 			return userControl;
 		}
 

@@ -154,8 +154,12 @@ namespace Carrotware.CMS.Core {
 									navData = navHelper.GetLatestVersion(SiteData.CurrentSiteID, !bIgnorePublishState, pageName);
 								}
 
-								if (SiteData.IsLikelyHomePage(fileRequested) && navData == null) {
+								if (navData == null && SiteData.IsLikelyHomePage(fileRequested)) {
 									navData = SiteNavHelper.GetEmptyHome();
+								}
+
+								if (navData == null && SiteData.IsLikelyFakeSearch()) {
+									navData = SiteNavHelper.GetEmptySearch();
 								}
 							}
 						} catch (Exception ex) {

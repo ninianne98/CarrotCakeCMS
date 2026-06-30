@@ -146,17 +146,17 @@ namespace Carrotware.Web.UI.Controls {
 
 		public static string CurrentScriptName {
 			get {
-				string sPath = "/";
-				try { sPath = HttpContext.Current.Request.ServerVariables["script_name"].ToString(); } catch { }
-				return sPath;
+				string path = "/";
+				try { path = HttpContext.Current.Request.ServerVariables["script_name"].ToString(); } catch { }
+				return path;
 			}
 		}
 
 		public static string RefererScriptName {
 			get {
-				string sPath = string.Empty;
-				try { sPath = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
-				return sPath;
+				string referer = string.Empty;
+				try { referer = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
+				return referer;
 			}
 		}
 

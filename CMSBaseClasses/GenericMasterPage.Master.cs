@@ -1,6 +1,7 @@
 ﻿using Carrotware.CMS.Core;
 using System;
 using System.Collections.Generic;
+using System.Web.UI;
 
 /*
 * CarrotCake CMS
@@ -14,7 +15,7 @@ using System.Collections.Generic;
 
 namespace Carrotware.CMS.UI.Base {
 
-	public partial class GenericMasterPage : System.Web.UI.MasterPage {
+	public partial class GenericMasterPage : MasterPage, IContentPage {
 		protected PageProcessingHelper pph = new PageProcessingHelper();
 
 		public ContentPage ThePage { get { return pageContents; } }
@@ -50,9 +51,13 @@ namespace Carrotware.CMS.UI.Base {
 
 		public bool IsSiteIndex {
 			get {
-				return this.TheSite != null && this.ThePage != null
+				var realSearch = this.TheSite != null && this.ThePage != null
 						&& this.TheSite.Blog_Root_ContentID.HasValue
 						&& this.ThePage.Root_ContentID == this.TheSite.Blog_Root_ContentID.Value;
+
+				var fakeSearch = SiteData.IsLikelyFakeSearch();
+
+				return fakeSearch || realSearch;
 			}
 		}
 

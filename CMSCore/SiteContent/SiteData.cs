@@ -614,7 +614,7 @@ namespace Carrotware.CMS.Core {
 
 			context.Response.Write(sRSSXML);
 
-			context.Response.StatusCode = 200;
+			context.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 			context.Response.StatusDescription = "OK";
 		}
 
@@ -742,16 +742,12 @@ namespace Carrotware.CMS.Core {
 		}
 
 		protected bool FoldersAreValid() {
-			string sFolderPath = this.Blog_FolderPath ?? string.Empty;
-
 			if (SiteData.CurrentSiteExists) {
-				using (ContentPageHelper pageHelper = new ContentPageHelper()) {
+				using (var pageHelper = new ContentPageHelper()) {
 					var exists = pageHelper.ExistingPagesBeginWith(this);
 
 					return !exists;
 				}
-			} else {
-				return true;
 			}
 
 			return false;

@@ -49,6 +49,7 @@ namespace Carrotware.CMS.Core {
 			this.SortOrder = 1000;
 		}
 
+		public bool SystemPlugin { get; set; }
 		public int SortOrder { get; set; }
 		public string FilePath { get; set; }
 		public string Caption { get; set; }

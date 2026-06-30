@@ -35,11 +35,16 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 				ContentPage currentPage = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
 
 				if (currentPage == null && SiteData.IsPageReal) {
-					IsPageTemplate = true;
+					this.IsPageTemplate = true;
 				}
 
-				if ((SiteData.IsPageSampler || this.IsPageTemplate) && currentPage == null) {
+				if (currentPage == null && (SiteData.IsPageSampler || this.IsPageTemplate)) {
 					currentPage = ContentPageHelper.GetSamplerView();
+				}
+
+				if (currentPage == null && SiteData.IsLikelyFakeSearch()) {
+					currentPage = ContentPageHelper.GetEmptySearch();
+					this.IsPageTemplate = true;
 				}
 
 				litVersion.Text = SiteData.CarrotCakeCMSVersion;

@@ -1,8 +1,10 @@
 ﻿using Carrotware.CMS.DBUpdater;
+using Carrotware.Web.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Caching;
+using System.Web.Http;
 using System.Web.Routing;
 
 /*
@@ -25,23 +27,44 @@ namespace Carrotware.CMS.Core {
 
 		public string VirtualPath { get; private set; }
 
-		private static string ContentKey = "cms_RegisterRoutes";
+		private static string _keyRegister = "cmsRegisterRoutes";
+
+		private static string _dataTokenId = "cmsCarrotCakeRoute";
 
 		public static bool HasRegisteredRoutes {
 			get {
-				bool c = false;
-				if (HttpContext.Current.Cache[ContentKey] != null) {
-					try { c = (bool)HttpContext.Current.Cache[ContentKey]; } catch { }
+				bool reg = false;
+				if (HttpContext.Current.Cache[_keyRegister] != null) {
+					try { reg = (bool)HttpContext.Current.Cache[_keyRegister]; } catch { }
 				}
-				return c;
+				return reg;
 			}
 			set {
-				HttpContext.Current.Cache.Insert(ContentKey, value, null, DateTime.Now.AddMinutes(15), Cache.NoSlidingExpiration);
+				HttpContext.Current.Cache.Insert(_keyRegister, value, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration);
+			}
+		}
+
+		public static void RegisterWebApi(HttpConfiguration config) {
+			if (config.Routes.ContainsKey("MS_attributerouteWebApi")) {
+				SiteData.WriteDebugException("webapiconfig", new Exception("Routing already registered. Skipping."));
+			} else {
+				config.MapHttpAttributeRoutes();
+
+				var apiPath = SiteData.ApiBasePath.TrimPathSlashes();
+
+				config.Routes.MapHttpRoute(
+					name: "C3_AdminApi_Default",
+					routeTemplate: apiPath + "/{action}/{id}",
+					defaults: new { controller = "CmsAdminApi", action = "Index", id = RouteParameter.Optional }
+				);
+
+				config.Formatters.Remove(config.Formatters.XmlFormatter);
 			}
 		}
 
 		public static void RegisterRoutes(bool OverrideRefresh) {
 			RegisterRoutes(RouteTable.Routes, OverrideRefresh);
+			GlobalConfiguration.Configure(RegisterWebApi);
 		}
 
 		public static void RegisterRoutes() {
@@ -54,36 +77,40 @@ namespace Carrotware.CMS.Core {
 
 		public static void RegisterRoutes(RouteCollection routes, bool overrideRefresh) {
 			try {
-				string sKeyPrefix = "CarrotCakeCMS_";
+				string key = "RouteName";
 
 				if (!HasRegisteredRoutes || overrideRefresh) {
-					List<string> listFiles = SiteNavHelper.GetSiteDirectoryPaths();
-					int iRoute = 0;
-					List<Route> lstRoute = new List<Route>();
+					var lstRoute = new List<Route>();
+					List<string> lstFiles = SiteNavHelper.GetSiteDirectoryPaths();
 
 					//routes.Clear();
 					//only remove routes that are tagged as coming from the CMS
 					foreach (Route rr in routes) {
-						if (rr.DataTokens != null && rr.DataTokens["RouteName"] != null && rr.DataTokens["RouteName"].ToString().StartsWith(sKeyPrefix)) {
+						if (rr.DataTokens != null && rr.DataTokens.ContainsKey(key)
+									&& rr.DataTokens[key].ToString().StartsWith(_dataTokenId)) {
 							lstRoute.Add(rr);
 						}
 					}
+
 					foreach (Route rr in lstRoute) {
 						RouteTable.Routes.Remove(rr);
 					}
 
-					foreach (string fileName in listFiles) {
-						string sKeyName = sKeyPrefix + iRoute.ToString();
+					int routeId = 0;
 
-						VirtualDirectory vd = new VirtualDirectory(fileName);
-						Route r = new Route(fileName.Substring(1, fileName.LastIndexOf("/")), vd);
-						if (r.DataTokens == null) {
-							r.DataTokens = new RouteValueDictionary();
+					foreach (string fileName in lstFiles) {
+						string routeKey = string.Format("{0}_{1}", _dataTokenId, routeId);
+
+						var vd = new VirtualDirectory(fileName);
+						var rr = new Route(fileName.Substring(1, fileName.LastIndexOf("/")), vd);
+
+						if (rr.DataTokens == null) {
+							rr.DataTokens = new RouteValueDictionary();
 						}
-						r.DataTokens["RouteName"] = sKeyName;
-						routes.Add(sKeyName, r);
+						rr.DataTokens[key] = routeKey;
+						routes.Add(routeKey, rr);
 
-						iRoute++;
+						routeId++;
 					}
 
 					HasRegisteredRoutes = true;

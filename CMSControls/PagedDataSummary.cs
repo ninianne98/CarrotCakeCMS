@@ -24,7 +24,7 @@ namespace Carrotware.CMS.UI.Controls {
 
 	[ToolboxData("<{0}:PagedDataSummary runat=server></{0}:PagedDataSummary>")]
 	public class PagedDataSummary : BasePagedDataTemplate, IWidgetLimitedProperties {
-		private List<GuidItem> guidList = null;
+		private List<GuidItem> _guidList = null;
 
 		[
 		Category("Behavior"),
@@ -39,14 +39,14 @@ namespace Carrotware.CMS.UI.Controls {
 		]
 		public List<GuidItem> CategoryGuidList {
 			get {
-				if (guidList == null) {
-					guidList = new List<GuidItem>();
+				if (_guidList == null) {
+					_guidList = new List<GuidItem>();
 				}
-				return guidList;
+				return _guidList;
 			}
 		}
 
-		private List<StringItem> stringList = null;
+		private List<StringItem> _stringList = null;
 
 		[
 		Category("Behavior"),
@@ -61,14 +61,14 @@ namespace Carrotware.CMS.UI.Controls {
 		]
 		public List<StringItem> CategorySlugList {
 			get {
-				if (stringList == null) {
-					stringList = new List<StringItem>();
+				if (_stringList == null) {
+					_stringList = new List<StringItem>();
 				}
-				return stringList;
+				return _stringList;
 			}
 		}
 
-		private List<PagedDataSummaryTitleOption> typeLabels = null;
+		private List<PagedDataSummaryTitleOption> _typeLabels = null;
 
 		[
 		Category("Behavior"),
@@ -82,15 +82,15 @@ namespace Carrotware.CMS.UI.Controls {
 		]
 		public List<PagedDataSummaryTitleOption> TypeLabelPrefixes {
 			get {
-				if (typeLabels == null) {
-					typeLabels = new List<PagedDataSummaryTitleOption>();
+				if (_typeLabels == null) {
+					_typeLabels = new List<PagedDataSummaryTitleOption>();
 					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.SinglePage, LabelText = "" });
 					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.DateIndex, LabelText = "Date" });
 					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.CategoryIndex, LabelText = "Category" });
 					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.TagIndex, LabelText = "Tag" });
 					//typeLabels.Add(new PagedDataSummaryTitleOption { KeyValue = PageViewType.ViewType.SearchResults, LabelText = "Search results for" });
 				}
-				return typeLabels;
+				return _typeLabels;
 			}
 		}
 
@@ -155,10 +155,10 @@ namespace Carrotware.CMS.UI.Controls {
 
 		[Category("Appearance")]
 		[DefaultValue("Blog")]
-		[Widget(WidgetAttribute.FieldMode.DropDownList, "lstContentType")]
+		[Widget(WidgetAttribute.FieldMode.DropDownList, nameof(lstContentType))]
 		public SummaryContentType ContentType {
 			get {
-				String s = (String)ViewState["ContentType"];
+				string s = (string)ViewState["ContentType"];
 				SummaryContentType c = SummaryContentType.Blog;
 				if (!string.IsNullOrEmpty(s)) {
 					c = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), s, true);
@@ -175,21 +175,31 @@ namespace Carrotware.CMS.UI.Controls {
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstContentType {
 			get {
-				Dictionary<string, string> _dict = new Dictionary<string, string>();
-				_dict.Add("Blog", "Blog");
-				_dict.Add("ContentPage", "Content Page");
-				_dict.Add("ChildContentPage", "Child Content Page");
-				_dict.Add("SpecifiedCategories", "Specified Categories");
+				var _dict = typeof(SummaryContentType).ToDescriptionDictionary()
+						.Where(x => x.Key != SummaryContentType.Unknown.ToString()
+										&& x.Key != SummaryContentType.SiteSearch.ToString())
+						.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
 				return _dict;
 			}
 		}
 
 		public enum SummaryContentType {
 			Unknown,
+
+			[Description("Blog")]
 			Blog,
+
+			[Description("Content Page")]
 			ContentPage,
+
+			[Description("Child Content Page")]
 			ChildContentPage,
+
+			[Description("Specified Categories")]
 			SpecifiedCategories,
+
+			[Description("Site Search")]
 			SiteSearch
 		}
 
@@ -200,8 +210,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public List<Guid> SelectedCategories {
 			get {
 				if (_guids == null) {
-					if (CategoryGuidList.Any()) {
-						_guids = (from n in CategoryGuidList select n.GuidValue).ToList();
+					if (this.CategoryGuidList.Any()) {
+						_guids = (from n in this.CategoryGuidList select n.GuidValue).ToList();
 					} else {
 						_guids = new List<Guid>();
 					}
@@ -218,8 +228,8 @@ namespace Carrotware.CMS.UI.Controls {
 		public List<string> SelectedCategorySlugs {
 			get {
 				if (_slugs == null) {
-					if (CategorySlugList.Any()) {
-						_slugs = (from n in CategorySlugList select n.StringValue).ToList();
+					if (this.CategorySlugList.Any()) {
+						_slugs = (from n in this.CategorySlugList select n.StringValue).ToList();
 					} else {
 						_slugs = new List<string>();
 					}
@@ -235,25 +245,26 @@ namespace Carrotware.CMS.UI.Controls {
 		[Widget(WidgetAttribute.FieldMode.DictionaryList)]
 		public Dictionary<string, string> lstCategories {
 			get {
-				Dictionary<string, string> _dict = (from c in SiteData.CurrentSite.GetCategoryList()
-													orderby c.CategoryText
-													where c.SiteID == SiteData.CurrentSiteID
-													select c).ToList().ToDictionary(k => k.ContentCategoryID.ToString(), v => v.CategoryText + " (" + v.CategorySlug + ")");
+				var _dict = (from c in SiteData.CurrentSite.GetCategoryList()
+							 orderby c.CategoryText
+							 where c.SiteID == SiteData.CurrentSiteID
+							 select c).ToList()
+							.ToDictionary(k => k.ContentCategoryID.ToString(), v => v.CategoryText + " (" + v.CategorySlug + ")");
 
 				return _dict;
 			}
 		}
 
 		public string GetSearchTerm() {
-			string sSearchTerm = string.Empty;
-
-			sSearchTerm = HttpContext.Current.SafeQueryString(SiteData.SearchQueryParameter);
+			string sSearchTerm = HttpContext.Current.SafeQueryString(SiteData.SearchQueryParameter);
 
 			return sSearchTerm;
 		}
 
 		public override void FetchData() {
+			this.EnableViewState = false;
 			HttpContext context = HttpContext.Current;
+
 			string sPagePath = SiteData.CurrentScriptName;
 
 			if (string.IsNullOrEmpty(this.OrderBy)) {
@@ -350,7 +361,6 @@ namespace Carrotware.CMS.UI.Controls {
 				lst.Add("PageSize");
 				lst.Add("PagerBelowContent");
 				lst.Add("ShowPager");
-				lst.Add("EnableViewState");
 				lst.Add("CSSSelectedPage");
 				lst.Add("CSSPageListing");
 				lst.Add("CSSPageFooter");
@@ -467,19 +477,20 @@ namespace Carrotware.CMS.UI.Controls {
 			base.OnPreRender(e);
 
 			try {
-				if (PublicParmValues.Any()) {
-					this.ContentType = (SummaryContentType)Enum.Parse(typeof(SummaryContentType), GetParmValue("ContentType", "Blog"), true);
+				if (this.PublicParmValues.Any()) {
+					var foundVal = this.GetValue(x => x.ContentType, this.ContentType);
+					this.ContentType = foundVal;
 
-					SelectedCategories = new List<Guid>();
+					this.SelectedCategories = new List<Guid>();
 
-					List<string> lstCategories = GetParmValueList("SelectedCategories");
-					foreach (string sCat in lstCategories) {
-						if (!string.IsNullOrEmpty(sCat)) {
-							SelectedCategories.Add(new Guid(sCat));
+					List<string> lstCategories = this.GetParmValueList(nameof(this.SelectedCategories));
+					foreach (string cat in lstCategories) {
+						if (!string.IsNullOrEmpty(cat)) {
+							this.SelectedCategories.Add(new Guid(cat));
 						}
 					}
 				}
-				if (SelectedCategories.Any()) {
+				if (this.SelectedCategories.Any()) {
 					this.ContentType = SummaryContentType.SpecifiedCategories;
 				}
 			} catch (Exception ex) {

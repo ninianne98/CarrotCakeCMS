@@ -25,18 +25,18 @@ namespace Carrotware.Web.UI.Controls {
 		protected override void RenderContents(HtmlTextWriter writer) {
 			int ident = writer.Indent;
 
-			string sJSFile = WebControlHelper.GetWebResourceUrl("jsHelperLibrary.js");
-			string sJQFile = jquery.GeneralUri;
+			string helperUri = WebControlHelper.GetWebResourceUrl("jsHelperLibrary.js");
 
 			writer.Indent = ident + 3;
 			writer.WriteLine();
 			writer.WriteLine("<!-- Javascript Helper Functions BEGIN -->");
-			writer.WriteLine("<script src=\"" + sJSFile + "\" type=\"text/javascript\"></script> ");
+			writer.WriteLine("<script src=\"" + helperUri + "\" type=\"text/javascript\"></script> ");
 
 			if (this.LoadJQueryAsServerControl) {
 				this.Page.Header.Controls.AddAt(0, new jquery());
 			} else {
-				writer.WriteLine("<script type=\"text/javascript\">__carrotware_SetJQueryURL('" + sJQFile + "');</script> ");
+				string jqueryUri = jquery.GeneralUri;
+				writer.WriteLine("<script type=\"text/javascript\">__carrotware_SetJQueryURL('" + jqueryUri + "');</script> ");
 			}
 
 			writer.WriteLine("<!-- Javascript Helper Functions END -->");

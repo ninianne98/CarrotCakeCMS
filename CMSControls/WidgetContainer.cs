@@ -46,8 +46,9 @@ namespace Carrotware.CMS.UI.Controls {
 
 		private ControlUtilities _cu = new ControlUtilities();
 
+		protected Control _ctrl = new Control();
+
 		private Control GetCtrl(string ctrlFile, Control ctrl) {
-			_cu = new ControlUtilities(this);
 			var sb = new StringBuilder();
 
 			var txt = ControlUtilities.GetManifestResourceStream(ctrlFile + ".ascx");
@@ -55,18 +56,18 @@ namespace Carrotware.CMS.UI.Controls {
 
 			sb = ScrubCtrl(sb);
 
-			Control userControl = _cu.CreateControlFromString(sb);
+			Control userControl = _cu.PageParseControlFromString(sb);
 			userControl.Page = ctrl.Page;
 
 			return userControl;
 		}
 
-		protected Control _ctrl = new Control();
-
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender(e);
 
 			if (SiteData.IsWebView) {
+				_cu = new ControlUtilities(this);
+
 				if (this.IsAdminMode) {
 					_ctrl = GetCtrl("ucAdminWidgetContainer", this);
 				} else {
@@ -104,7 +105,9 @@ namespace Carrotware.CMS.UI.Controls {
 		protected override void Render(HtmlTextWriter writer) {
 			this.EnsureChildControls();
 
-			_cu = new ControlUtilities(this);
+			if (SiteData.IsWebView) {
+				_cu = new ControlUtilities(this);
+			}
 
 			var lit1 = new Literal { Text = string.Empty };
 			var lit2 = new Literal { Text = string.Empty };
@@ -112,11 +115,12 @@ namespace Carrotware.CMS.UI.Controls {
 			lit1 = new Literal { Text = "<span style=\"display: none;\" id=\"BEGIN-" + this.ClientID + "\"></span>\r\n" };
 			lit2 = new Literal { Text = "<span style=\"display: none;\" id=\"END-" + this.ClientID + "\"></span>\r\n" };
 #endif
-			var widgetBody = (PlaceHolder)_cu.FindControl("phWidgetZone", _ctrl);
+			var widgetId = "phWidgetZone";
+			var widgetBody = (PlaceHolder)_cu.FindControl(widgetId, _ctrl);
 			if (widgetBody == null && _ctrl is PlaceHolder) {
 				widgetBody = (PlaceHolder)_ctrl;
 			}
-			widgetBody.ID = "phWidgetZone";
+			widgetBody.ID = widgetId;
 
 			_ctrl.Controls.Add(lit1);
 

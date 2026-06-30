@@ -13,6 +13,11 @@
 		});
 
 		function CheckFolderPrefixes() {
+			// my be obsolete, use this to intercept calls and rename old function
+			editFilenameCallback("OK");
+		}
+
+		function old_CheckFolderPrefixes() {
 			var theFldr = $('#<%= txtFolderPath.ClientID %>').val();
 			var theCat = $('#<%= txtCategoryPath.ClientID %>').val();
 			var theTag = $('#<%= txtTagPath.ClientID %>').val();
@@ -46,13 +51,13 @@
 		}
 
 		function editFilenameCallback(data, status) {
-			if (data.d != "FAIL" && data.d != "OK") {
-				cmsAlertModal(data.d);
+			if (data != "FAIL" && data != "OK") {
+				cmsAlertModal(data);
 			}
 
 			var fldrValid = '#<%= txtFoldersValid.ClientID %>';
 
-			if (data.d == "OK") {
+			if (data == "OK") {
 				$(fldrValid).val('VALID');
 			} else {
 				$(fldrValid).val('NOT VALID');

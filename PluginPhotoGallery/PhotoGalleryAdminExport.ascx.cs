@@ -58,7 +58,7 @@ namespace Carrotware.CMS.UI.Plugins.PhotoGallery {
 
 			Response.Write(theXML);
 
-			Response.StatusCode = 200;
+			Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 			Response.StatusDescription = "OK";
 			Response.End();
 		}

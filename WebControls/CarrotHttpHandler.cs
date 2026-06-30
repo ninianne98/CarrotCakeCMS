@@ -66,7 +66,7 @@ namespace Carrotware.Web.UI.Controls {
 			Bitmap captchaImg = CaptchaImage.GetCaptchaImage(f, b, n);
 
 			if (captchaImg == null) {
-				context.Response.StatusCode = 404;
+				context.Response.StatusCode = (int)System.Net.HttpStatusCode.NotFound;
 				context.Response.StatusDescription = "Not Found";
 				context.ApplicationInstance.CompleteRequest();
 				return;
@@ -173,7 +173,7 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			if (bmpThumb == null) {
-				context.Response.StatusCode = 404;
+				context.Response.StatusCode = (int)System.Net.HttpStatusCode.NotFound;
 				context.Response.StatusDescription = "Not Found";
 				context.ApplicationInstance.CompleteRequest();
 				return;

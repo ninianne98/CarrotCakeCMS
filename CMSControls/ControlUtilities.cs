@@ -65,13 +65,13 @@ namespace Carrotware.CMS.UI.Controls {
 			return foundPage;
 		}
 
-		public string GetResourceUrl(Type type, string resource) {
+		public string GetResourceUrl(Type type, string resourceName) {
 			string path = "";
 
 			if (_page != null) {
-				try { path = _page.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+				try { path = _page.ClientScript.GetWebResourceUrl(type, resourceName); } catch { }
 			} else {
-				try { path = CachedPage.ClientScript.GetWebResourceUrl(type, resource); } catch { }
+				try { path = CachedPage.ClientScript.GetWebResourceUrl(type, resourceName); } catch { }
 			}
 
 			try {
@@ -81,24 +81,39 @@ namespace Carrotware.CMS.UI.Controls {
 			return path;
 		}
 
-		public Control CreateControlFromResource(string resourceName) {
-			string s = GetResourceText(resourceName);
-
-			return CreateControlFromString(s);
-		}
-
 		public string GetResourceText(string resourceName) {
 			string s = GetManifestResourceStream(resourceName);
 
 			return s;
 		}
 
-		public Control CreateControlFromString(string controlText) {
+		public Control CreateControlFromResource(string resourceName) {
+			string txt = GetUserControlText(resourceName);
+
+			return PageParseControlFromString(txt);
+		}
+
+		public string GetUserControlText(string resourceName) {
+			string txt = GetUserControlString(resourceName);
+
+			return txt;
+		}
+
+		public static string GetUserControlString(string resourceName) {
+			resourceName = resourceName.ToLowerInvariant().EndsWith(".ascx")
+						? resourceName : resourceName + ".ascx";
+
+			var txt = GetManifestResourceStream(resourceName);
+
+			return txt;
+		}
+
+		public Control PageParseControlFromString(string controlText) {
 			return _page.ParseControl(controlText);
 		}
 
-		public Control CreateControlFromString(StringBuilder sb) {
-			return _page.ParseControl(sb.ToString());
+		public Control PageParseControlFromString(StringBuilder sb) {
+			return PageParseControlFromString(sb.ToString());
 		}
 
 		private static Page _cachedPage;
@@ -113,11 +128,11 @@ namespace Carrotware.CMS.UI.Controls {
 			}
 		}
 
-		public static string GetWebResourceUrl(Type type, string resource) {
+		public static string GetWebResourceUrl(Type type, string resourceName) {
 			string path = "";
 
 			try {
-				path = CachedPage.ClientScript.GetWebResourceUrl(type, resource);
+				path = CachedPage.ClientScript.GetWebResourceUrl(type, resourceName);
 				path = HttpUtility.HtmlEncode(path);
 			} catch { }
 
@@ -130,8 +145,8 @@ namespace Carrotware.CMS.UI.Controls {
 			return CachedPage.ParseControl(s);
 		}
 
-		public static Control ParseControl(string resource) {
-			return CachedPage.ParseControl(resource);
+		public static Control ParseControl(string resourceName) {
+			return CachedPage.ParseControl(resourceName);
 		}
 
 		internal static string GetManifestResourceStream(string resourceName) {
@@ -172,40 +187,60 @@ namespace Carrotware.CMS.UI.Controls {
 			_ctrl = null;
 		}
 
+		private Page _foundPage = null;
+		private ContentPage _cp = null;
+		private SiteData _sd = null;
+
 		public ContentPage GetContainerContentPage(object o) {
 			ResetFind();
 
-			ContentPage cp = null;
-			Page foundPage = null;
+			if (_foundPage == null) {
+				_foundPage = FindPage(o);
+			}
 
-			foundPage = FindPage(o);
+			if (_foundPage != null && _cp == null) {
+				try {
+					if (_foundPage is IContentPage) {
+						var icp = (_foundPage as IContentPage);
+						_cp = icp.ThePage;
+						_sd = icp.TheSite;
+					} else {
+						var obj = ReflectionUtilities.GetPropertyValue(_foundPage, nameof(IContentPage.ThePage));
 
-			try {
-				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "ThePage");
+						if (obj is ContentPage) {
+							_cp = obj as ContentPage;
+						}
+					}
+				} catch (Exception ex) { }
+			}
 
-				if (foundPage != null && obj is ContentPage) {
-					cp = obj as ContentPage;
-				}
-			} catch (Exception ex) { }
-
-			return cp;
+			return _cp;
 		}
 
 		public SiteData GetContainerSiteData(object o) {
 			ResetFind();
 
-			SiteData sd = null;
-			Page foundPage = FindPage(o);
+			if (_foundPage == null) {
+				_foundPage = FindPage(o);
+			}
 
-			try {
-				object obj = ReflectionUtilities.GetPropertyValue(foundPage, "TheSite");
+			if (_foundPage != null && _sd == null) {
+				try {
+					if (_foundPage is IContentPage) {
+						var icp = (_foundPage as IContentPage);
+						_cp = icp.ThePage;
+						_sd = icp.TheSite;
+					} else {
+						object obj = ReflectionUtilities.GetPropertyValue(_foundPage, nameof(IContentPage.TheSite));
 
-				if (foundPage != null && obj is SiteData) {
-					sd = obj as SiteData;
-				}
-			} catch (Exception ex) { }
+						if (obj is SiteData) {
+							_sd = obj as SiteData;
+						}
+					}
+				} catch (Exception ex) { }
+			}
 
-			return sd;
+			return _sd;
 		}
 
 		private bool _isPageFound = false;

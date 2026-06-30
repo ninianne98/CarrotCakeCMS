@@ -18,9 +18,9 @@ using System.Web.UI;
 namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 	public partial class ucAdvancedEdit : AdminBaseUserControl {
-		public Guid guidContentID = Guid.Empty;
-		public ContentPageType.PageType PageType = ContentPageType.PageType.Unknown;
-		public UserEditState EditorPrefs = null;
+		public Guid GuidContentID { get; set; } = Guid.Empty;
+		public UserEditState EditorPrefs { get; set; }
+		public ContentPageType.PageType PageType { get; set; } = ContentPageType.PageType.Unknown;
 
 		public string EditedPageFileName { get; set; } = string.Empty;
 		public string EditUserName { get; set; } = string.Empty;
@@ -37,12 +37,12 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 		//protected void Page_Load(object sender, EventArgs e) {
 		protected void Page_Init(object sender, EventArgs e) {
-			guidContentID = GetGuidIDFromQuery();
+			this.GuidContentID = GetGuidIDFromQuery();
 
-			EditorPrefs = UserEditState.cmsUserEditState;
-			if (EditorPrefs == null) {
-				EditorPrefs = new UserEditState();
-				EditorPrefs.Init();
+			this.EditorPrefs = UserEditState.cmsUserEditState;
+			if (this.EditorPrefs == null) {
+				this.EditorPrefs = new UserEditState();
+				this.EditorPrefs.Init();
 			}
 
 			litCmsToolbarTitle.Text = string.Format("CarrotCake CMS {0}", SiteData.CurrentDLLMajorMinorVersion);
@@ -55,13 +55,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 			}
 
 			ContentPage pageContents = new ContentPage();
-			if (guidContentID == Guid.Empty) {
+			if (this.GuidContentID == Guid.Empty) {
 				pageContents = pageHelper.FindByFilename(SiteData.CurrentSiteID, sCurrentPage);
 			} else {
-				pageContents = pageHelper.FindContentByID(SiteData.CurrentSiteID, guidContentID);
+				pageContents = pageHelper.FindContentByID(SiteData.CurrentSiteID, GuidContentID);
 			}
 
-			PageType = pageContents.ContentType;
+			this.PageType = pageContents.ContentType;
 			this.EditedPageFileName = pageContents.FileName;
 
 			btnEditCoreInfo.Attributes["onclick"] = "cmsShowEditPageInfo();";
@@ -95,7 +95,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 				LoadJQ();
 
-				guidContentID = pageContents.Root_ContentID;
+				this.GuidContentID = pageContents.Root_ContentID;
 
 				if (cmsHelper.cmsAdminContent == null) {
 					pageContents.LoadAttributes();
@@ -104,7 +104,7 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 					pageContents = cmsHelper.cmsAdminContent;
 				}
 
-				bool bRet = pageHelper.RecordPageLock(pageContents.Root_ContentID, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
+				bool ret = pageHelper.RecordPageLock(pageContents.Root_ContentID, SiteData.CurrentSite.SiteID, SecurityData.CurrentUserGuid);
 
 				cmsDivEditing.Visible = false;
 
@@ -137,6 +137,13 @@ namespace Carrotware.CMS.UI.Admin.c3_admin {
 
 			BasicControlUtils.InsertjQueryMain(this.Page);
 			BasicControlUtils.InsertjQueryUI(this.Page);
+		}
+
+		protected string FlagSystemPlugin(object sysPlug) {
+			if (sysPlug == null) return string.Empty;
+			var isSystem = Convert.ToBoolean(sysPlug);
+
+			return isSystem ? "ui-icon ui-icon-star" : "ui-icon ui-icon-tag";
 		}
 	}
 }

@@ -1,0 +1,24 @@
+﻿using System.Collections.Generic;
+
+/*
+* CarrotCake CMS
+* http://www.carrotware.com/
+*
+* Copyright 2011, 2026, Samantha Copeland
+* Dual licensed under the MIT or GPL Version 3 licenses.
+*
+* Date: October 2011, May 2026
+*/
+
+namespace Carrotware.CMS.Core {
+
+	public interface IContentPage {
+		ContentPage ThePage { get; }
+		SiteData TheSite { get; }
+		List<Widget> ThePageWidgets { get; }
+
+		bool IsBlogPost { get; }
+		bool IsPageContent { get; }
+		bool IsSiteIndex { get; }
+	}
+}

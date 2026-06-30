@@ -141,7 +141,7 @@ namespace Carrotware.CMS.Core {
 			}
 
 			return string.Format("{0}", filePath).Length <= 1
-				|| filePath.ToLowerInvariant() == SiteData.DefaultDirectoryFilename;
+							|| filePath.ToLowerInvariant() == SiteData.DefaultDirectoryFilename;
 		}
 
 		public static bool IsLikelyFakeSearch() {
@@ -151,13 +151,16 @@ namespace Carrotware.CMS.Core {
 			if (CurrentSite == null) {
 				return false;
 			}
+
+			var site = CurrentSite;
+
 			// no blog index is set, but the URL looks like a search is happening
-			return !CurrentSite.Blog_Root_ContentID.HasValue
-						&& (CurrentSite.IsBlogDateFolderPath
-								|| CurrentSite.IsBlogCategoryPath
-								|| CurrentSite.IsBlogTagPath
-								|| CurrentSite.IsBlogEditorFolderPath
-								|| CurrentSite.IsSiteSearchPath);
+			return !site.Blog_Root_ContentID.HasValue
+						&& (site.IsBlogDateFolderPath
+								|| site.IsBlogCategoryPath
+								|| site.IsBlogTagPath
+								|| site.IsBlogEditorFolderPath
+								|| site.IsSiteSearchPath);
 		}
 
 		public static bool IsLikelySearch() {
@@ -168,12 +171,14 @@ namespace Carrotware.CMS.Core {
 				return false;
 			}
 
-			return CurrentSite.Blog_Root_ContentID.HasValue
-						&& (CurrentSite.IsBlogDateFolderPath
-								|| CurrentSite.IsBlogCategoryPath
-								|| CurrentSite.IsBlogTagPath
-								|| CurrentSite.IsBlogEditorFolderPath
-								|| CurrentSite.IsSiteSearchPath);
+			var site = CurrentSite;
+
+			return site.Blog_Root_ContentID.HasValue
+						&& (site.IsBlogDateFolderPath
+								|| site.IsBlogCategoryPath
+								|| site.IsBlogTagPath
+								|| site.IsBlogEditorFolderPath
+								|| site.IsSiteSearchPath);
 		}
 
 		private static string SiteKeyPrefix = "cms_SiteData_";
@@ -460,26 +465,26 @@ namespace Carrotware.CMS.Core {
 
 			using (var pageHelper = new ContentPageHelper()) {
 				bool isPageTemplate = false;
-				string sCurrentPage = SiteData.CurrentScriptName;
-				string sScrubbedURL = SiteData.AlternateCurrentScriptName;
+				string currentPage = SiteData.CurrentScriptName;
+				string scrubbedURL = SiteData.AlternateCurrentScriptName;
 
-				if (sScrubbedURL.ToLowerInvariant() != sCurrentPage.ToLowerInvariant()) {
-					sCurrentPage = sScrubbedURL;
+				if (scrubbedURL.ToLowerInvariant() != currentPage.ToLowerInvariant()) {
+					currentPage = scrubbedURL;
 				}
 
 				var requireActivePage = !(SecurityData.IsAdmin || SecurityData.IsSiteEditor);
 
-				if (SiteData.IsLikelyHomePage(sCurrentPage)) {
+				if (SiteData.IsLikelyHomePage(currentPage)) {
 					pageContents = pageHelper.FindHome(SiteData.CurrentSiteID, requireActivePage);
 				} else {
-					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, requireActivePage, sCurrentPage);
+					pageContents = pageHelper.GetLatestContentByURL(SiteData.CurrentSiteID, requireActivePage, currentPage);
 				}
 
 				if (pageContents == null && SiteData.IsPageReal) {
 					isPageTemplate = true;
 				}
 
-				if ((SiteData.IsPageSampler || isPageTemplate || !SiteData.IsWebView) && pageContents == null) {
+				if (pageContents == null && (SiteData.IsPageSampler || isPageTemplate || !SiteData.IsWebView)) {
 					pageContents = ContentPageHelper.GetSamplerView();
 				}
 
@@ -488,7 +493,7 @@ namespace Carrotware.CMS.Core {
 				}
 
 				if (isPageTemplate) {
-					pageContents.TemplateFile = sCurrentPage;
+					pageContents.TemplateFile = currentPage;
 				}
 			}
 
@@ -673,9 +678,9 @@ namespace Carrotware.CMS.Core {
 			return sbBody.ToString();
 		}
 
-		public static void Show404MessageFull(bool bResponseEnd) {
+		public static void Show404MessageFull(bool responseEnd) {
 			HttpContext context = HttpContext.Current;
-			context.Response.StatusCode = 404;
+			context.Response.StatusCode = (int)System.Net.HttpStatusCode.NotFound;
 			context.Response.AppendHeader("Status", "HTTP/1.1 404 Object Not Found");
 			context.Response.Cache.SetLastModified(DateTime.Today.Date);
 			//context.Response.Write("<h2>404 Not Found</h2><p>HTTP 404. The resource you are looking for (or one of its dependencies) could have been removed, had its name changed, or is temporarily unavailable.  Please review the following URL and make sure that it is spelled correctly. </p>");
@@ -685,22 +690,22 @@ namespace Carrotware.CMS.Core {
 
 			context.Response.Write(FormatErrorOutput(err));
 
-			if (bResponseEnd) {
+			if (responseEnd) {
 				context.Response.End();
 			}
 		}
 
 		public static void Show404MessageShort() {
 			HttpContext context = HttpContext.Current;
-			context.Response.StatusCode = 404;
+			context.Response.StatusCode = (int)System.Net.HttpStatusCode.NotFound;
 			context.Response.StatusDescription = "Not Found";
 		}
 
-		public static void Show301Message(string sFileRequested) {
+		public static void Show301Message(string fileRequested) {
 			HttpContext context = HttpContext.Current;
 			context.Response.StatusCode = 301;
 			context.Response.AppendHeader("Status", "301 Moved Permanently");
-			context.Response.AppendHeader("Location", sFileRequested);
+			context.Response.AppendHeader("Location", fileRequested);
 			context.Response.Cache.SetLastModified(DateTime.Today.Date);
 			//context.Response.Write("<h2>301 Moved Permanently</h2>");
 
@@ -814,11 +819,9 @@ namespace Carrotware.CMS.Core {
 					using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
 						return navHelper.GetLatestVersion(CurrentSite.SiteID, CurrentSite.Blog_Root_ContentID.Value);
 					}
-				} else {
-					// fake / mockup of a search page
-					return SiteNavHelper.GetEmptySearch();
 				}
-				return null;
+				// fake / mockup of a search page
+				return SiteNavHelper.GetEmptySearch();
 			}
 		}
 
@@ -972,17 +975,17 @@ namespace Carrotware.CMS.Core {
 
 		public static string CurrentScriptName {
 			get {
-				string sPath = "/";
-				try { sPath = HttpContext.Current.Request.ServerVariables["script_name"].ToString(); } catch { }
-				return sPath;
+				string script = "/";
+				try { script = HttpContext.Current.Request.ServerVariables["script_name"].ToString(); } catch { }
+				return script;
 			}
 		}
 
 		public static string RefererScriptName {
 			get {
-				string sPath = string.Empty;
-				try { sPath = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
-				return sPath;
+				string referer = string.Empty;
+				try { referer = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
+				return referer;
 			}
 		}
 
@@ -1029,71 +1032,81 @@ namespace Carrotware.CMS.Core {
 			}
 		}
 
+		public static string ApiBasePath {
+			get {
+				return string.Format("/api/{0}/", AdminFolderPath).Replace(@"\", "/").Replace("///", "/").Replace("//", "/").Replace("//", "/").Trim();
+			}
+		}
+
 		public static string AlternateCurrentScriptName {
 			get {
-				string sCurrentPage = CurrentScriptName;
+				string currentPage = CurrentScriptName;
 
 				if (IsWebView) {
 					if (!CurrentScriptName.ToLowerInvariant().StartsWith(AdminFolderPath)) {
-						string sScrubbedURL = CheckForSpecialURL(CurrentSite);
+						string scrubbedURL = CheckForSpecialURL(CurrentSite);
 
-						//if (sScrubbedURL.ToLowerInvariant() == sCurrentPage.ToLowerInvariant()) {
-						//	sCurrentPage = AppendDefaultPath(sCurrentPage);
-						//}
-
-						if (sCurrentPage.EndsWith("/")) {
-							sCurrentPage = sCurrentPage.Substring(0, sCurrentPage.Length - 1);
+						if (currentPage.EndsWith("/")) {
+							currentPage = currentPage.Substring(0, currentPage.Length - 1);
 						}
 
-						if (!sScrubbedURL.ToLowerInvariant().StartsWith(sCurrentPage.ToLowerInvariant())
-							&& !sCurrentPage.ToLowerInvariant().EndsWith(DefaultDirectoryFilename)) {
-							if (sScrubbedURL.ToLowerInvariant() != sCurrentPage.ToLowerInvariant()) {
-								sCurrentPage = sScrubbedURL;
+						if (!scrubbedURL.ToLowerInvariant().StartsWith(currentPage.ToLowerInvariant())
+									&& !currentPage.ToLowerInvariant().EndsWith(DefaultDirectoryFilename)) {
+							if (scrubbedURL.ToLowerInvariant() != currentPage.ToLowerInvariant()) {
+								currentPage = scrubbedURL;
 							}
 						}
 					}
 				}
 
-				return sCurrentPage;
+				return currentPage;
 			}
 		}
 
 		public static string CheckForSpecialURL(SiteData site) {
-			string sRequestedURL = "/";
+			string requestedURL = "/";
 
 			if (IsWebView) {
-				sRequestedURL = CurrentScriptName;
-				string sFileRequested = sRequestedURL;
+				string key = "CARROT_RW_REQUESTEDURL";
 
-				if (!sRequestedURL.ToLowerInvariant().StartsWith(AdminFolderPath) && site != null) {
-					if (sFileRequested.ToLowerInvariant().StartsWith(site.BlogFolderPath.ToLowerInvariant())) {
-						if (site.GetSpecialFilePathPrefixes().Where(x => sFileRequested.ToLowerInvariant().StartsWith(x)).Count() > 0) {
-							if (site.Blog_Root_ContentID.HasValue) {
-								using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
-									SiteNav blogNavPage = navHelper.GetLatestVersion(site.SiteID, site.Blog_Root_ContentID.Value);
-									if (blogNavPage == null) {
-										blogNavPage = SiteNavHelper.GetEmptySearch();
-									}
-									if (blogNavPage != null) {
-										sRequestedURL = blogNavPage.FileName;
-									}
+				requestedURL = CurrentScriptName;
+
+				string fileRequested = (requestedURL ?? string.Empty).ToLowerInvariant();
+				string adminPath = (AdminFolderPath ?? string.Empty).ToLowerInvariant();
+
+				if (site != null && fileRequested.StartsWith(adminPath) == false
+									&& fileRequested.StartsWith(site.BlogFolderPath.ToLowerInvariant())) {
+					if (HttpContext.Current.Items[key] == null) {
+						if (site.GetSpecialFilePathPrefixes().Where(x => fileRequested.StartsWith(x.ToLowerInvariant())).Any()
+										&& site.Blog_Root_ContentID.HasValue) {
+							using (ISiteNavHelper navHelper = SiteNavFactory.GetSiteNavHelper()) {
+								SiteNav blogNavPage = navHelper.GetLatestVersion(site.SiteID, site.Blog_Root_ContentID.Value);
+								if (blogNavPage == null) {
+									blogNavPage = SiteNavHelper.GetEmptySearch();
+								}
+								if (blogNavPage != null) {
+									requestedURL = blogNavPage.FileName;
 								}
 							}
 						}
+
+						HttpContext.Current.Items[key] = requestedURL;
+					} else {
+						requestedURL = HttpContext.Current.Items[key].ToString();
 					}
 				}
 			}
 
-			return sRequestedURL;
+			return requestedURL;
 		}
 
 		public static string ReferringPage {
 			get {
-				string r = SiteData.CurrentScriptName;
-				try { r = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
-				if (string.IsNullOrEmpty(r))
-					r = DefaultDirectoryFilename;
-				return r;
+				string referer = CurrentScriptName;
+				try { referer = HttpContext.Current.Request.ServerVariables["http_referer"].ToString(); } catch { }
+				if (string.IsNullOrEmpty(referer))
+					referer = DefaultDirectoryFilename;
+				return referer;
 			}
 		}
 

@@ -12,9 +12,8 @@
 			var webMthd = webSvc + "/GetWidgetText";
 
 			$.ajax({
-				type: "POST",
-				url: webMthd,
-				data: JSON.stringify({ DBKey: val, ThisPage: thisPageID }),
+				type: "GET",
+				url: webMthd + "?DBKey=" + encodeURIComponent(val) + "&ThisPage=" + encodeURIComponent(thisPageID),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
 			}).done(cmsReqContentCallback)
@@ -26,10 +25,10 @@
 		}
 
 		function cmsReqContentCallback(data, status) {
-			if (data.d == "FAIL") {
+			if (data == "FAIL") {
 				cmsSetHTMLMessage('<i>An error occurred. Please try again.</i>');
 			} else {
-				cmsSetTextMessage(data.d);
+				cmsSetTextMessage(data);
 			}
 		}
 	</script>

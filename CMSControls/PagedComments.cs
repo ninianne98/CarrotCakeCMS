@@ -42,6 +42,7 @@ namespace Carrotware.CMS.UI.Controls {
 		}
 
 		public override void FetchData() {
+			this.EnableViewState = false;
 			HttpContext context = HttpContext.Current;
 
 			if (string.IsNullOrEmpty(OrderBy)) {
@@ -73,7 +74,6 @@ namespace Carrotware.CMS.UI.Controls {
 				lst.Add("PageSize");
 				lst.Add("PagerBelowContent");
 				lst.Add("ShowPager");
-				lst.Add("EnableViewState");
 				lst.Add("OrderBy");
 				lst.Add("CSSSelectedPage");
 				lst.Add("CSSPageListing");

@@ -143,12 +143,12 @@ namespace Carrotware.CMS.Core {
 
 		public static string DomainName {
 			get {
-				var domName = HttpContext.Current.Request.ServerVariables["HTTP_HOST"];
-				if (domName.IndexOf(":") > 0) {
-					domName = domName.Substring(0, domName.IndexOf(":"));
+				var host = HttpContext.Current.Request.ServerVariables["HTTP_HOST"];
+				if (host.IndexOf(":") > 0) {
+					host = host.Substring(0, host.IndexOf(":"));
 				}
 
-				return domName.ToLowerInvariant();
+				return host.ToLowerInvariant();
 			}
 		}
 
@@ -686,27 +686,27 @@ namespace Carrotware.CMS.Core {
 
 					List<CMSPlugin> p1 = new List<CMSPlugin>();
 
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Generic HTML &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Plain Text &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Content Snippet &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentSnippetText, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Generic HTML", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentRichText, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Plain Text", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentPlainText, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Content Snippet", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentSnippetText, Carrotware.CMS.UI.Controls" });
 
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Top Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Two Level Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Top Level Navigation", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TopLevelNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Two Level Navigation", FilePath = "CLASS:Carrotware.CMS.UI.Controls.TwoLevelNavigation, Carrotware.CMS.UI.Controls" });
 
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Child Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Sibling Navigation &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Most Recent Updated &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MostRecentUpdated, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Child Navigation", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ChildNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Sibling Navigation", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiblingNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Most Recent Updated", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MostRecentUpdated, Carrotware.CMS.UI.Controls" });
 
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Multi Level Nav List &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MultiLevelNavigation, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Multi Level Nav List", FilePath = "CLASS:Carrotware.CMS.UI.Controls.MultiLevelNavigation, Carrotware.CMS.UI.Controls" });
 
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Data &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Paged Comments &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Paged Data", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedDataSummary, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Paged Comments", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PagedComments, Carrotware.CMS.UI.Controls" });
 
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Site &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Meta List - Post &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Meta List - Site", FilePath = "CLASS:Carrotware.CMS.UI.Controls.SiteMetaWordList, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Meta List - Post", FilePath = "CLASS:Carrotware.CMS.UI.Controls.PostMetaWordList, Carrotware.CMS.UI.Controls" });
 
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "Comment Form &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });
-					p1.Add(new CMSPlugin { SortOrder = iSortOrder++, Caption = "IFRAME content wrapper &#0134;", FilePath = "CLASS:Carrotware.CMS.UI.Controls.IFrameWidgetWrapper, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "Comment Form", FilePath = "CLASS:Carrotware.CMS.UI.Controls.ContentCommentForm, Carrotware.CMS.UI.Controls" });
+					p1.Add(new CMSPlugin { SystemPlugin = true, SortOrder = iSortOrder++, Caption = "IFRAME content wrapper", FilePath = "CLASS:Carrotware.CMS.UI.Controls.IFrameWidgetWrapper, Carrotware.CMS.UI.Controls" });
 
 					List<CMSPlugin> p2 = (from d in ds.Tables[0].AsEnumerable()
 										  select new CMSPlugin {

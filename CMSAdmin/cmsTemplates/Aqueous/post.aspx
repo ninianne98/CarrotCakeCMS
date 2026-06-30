@@ -70,9 +70,6 @@
 							<input type="reset" value="Clear form" />
 						</div>
 					</div>
-					<script type="text/javascript">
-						__carrotware_PageValidate();
-					</script>
 				</CommentEntryTemplate>
 			</carrot:ContentCommentForm>
 			<%--<carrot:ContentCommentForm runat="server" ID="commentFrm">
@@ -116,9 +113,6 @@
 							<div>
 								<asp:Button ID="SubmitCommentButton" CssClass="button" runat="server" Text="Submit Comment" ValidationGroup="ContentCommentForm" />
 							</div>
-							<script type="text/javascript">
-								__carrotware_PageValidate();
-							</script>
 						</p>
 					</div>
 				</CommentEntryTemplate>

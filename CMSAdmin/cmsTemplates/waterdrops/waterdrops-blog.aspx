@@ -21,12 +21,8 @@ Released   : 20120902
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css" />
 	<asp:PlaceHolder ID="myPageHead" runat="server">
 		<link href="<%=ThePage.TemplateFolderPath %>style.css" rel="stylesheet" type="text/css" media="screen" />
+		<script src="<%=ThePage.TemplateFolderPath %>buttons.js" type="text/javascript"></script>
 	</asp:PlaceHolder>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$("input:button, input:submit").button();
-		});
-	</script>
 	<carrot:RSSFeed runat="server" ID="RSSFeed1" />
 	<carrot:SiteCanonicalURL runat="server" ID="SiteCanonicalURL1" />
 </head>
@@ -78,6 +74,45 @@ Released   : 20120902
 							</p>
 							<carrot:WidgetContainer ID="phCenterBottom" runat="server">
 							</carrot:WidgetContainer>
+
+							<div id="contactForm">
+								<carrot:ContentCommentForm runat="server" ID="commentFrm" ValidationGroup="CommentFrmValidGrp">
+									<CommentEntryTemplate>
+										<carrot:jsHelperLib runat="server" ID="jsHelperLib1" />
+										<asp:Label ID="ContentCommentFormMsg" runat="server" Text="" />
+										<div>
+											<asp:TextBox runat="server" ID="CommenterName" Columns="30" MaxLength="100" placeholder="Name" />
+											<asp:RequiredFieldValidator CssClass="text-danger" ID="RequiredFieldValidator1" runat="server" ControlToValidate="CommenterName"
+												ErrorMessage="Required" />
+										</div>
+										<div>
+											<asp:TextBox runat="server" ID="CommenterEmail" Columns="30" MaxLength="100" placeholder="Email" />
+											<asp:RequiredFieldValidator CssClass="text-danger" ID="RequiredFieldValidator2" runat="server" ControlToValidate="CommenterEmail"
+												ErrorMessage="Required" />
+										</div>
+										<div>
+											<asp:TextBox runat="server" ID="CommenterURL" Columns="30" MaxLength="100" placeholder="Website" />
+										</div>
+										<div>
+											<br />
+											<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ContentCommentCaptcha"
+												ErrorMessage="**" />
+											<carrot:Captcha runat="server" ID="ContentCommentCaptcha" CaptchaIsValidStyle-Style="clear: both; color: green;"
+												CaptchaIsNotValidStyle-Style="clear: both; color: red;" CaptchaImageBoxStyle-Style="clear: both;" CaptchaInstructionStyle-Style="clear: both;"
+												CaptchaTextStyle-Style="clear: both;" IsNotValidMessage="Code is not correct!" />
+										</div>
+										<div>
+											<br />
+											<asp:TextBox runat="server" ID="VisitorComments" TextMode="MultiLine" Rows="8" Columns="40" MaxLength="1024" placeholder="Message" />
+										</div>
+										<div>
+											<br />
+											<asp:Button ID="SubmitCommentButton" runat="server" Text="Send Message" />
+										</div>
+										<br />
+									</CommentEntryTemplate>
+								</carrot:ContentCommentForm>
+							</div>
 						</div>
 					</div>
 					<div style="clear: both;">
@@ -87,15 +122,32 @@ Released   : 20120902
 				<!-- end #content -->
 				<div id="sidebar">
 					<div id="box1">
+						<h2>Search Here:</h2>
+						<div id="search">
+							<carrot:SearchBox ID="SearchBox1" runat="server">
+								<SearchTemplate>
+									<div class="searchzone">
+										<div id="searchinner">
+											<asp:TextBox ID="SearchText" runat="server" CssClass="search-text" MaxLength="40" />
+											<asp:Button ID="btnSiteSearch" runat="server" CssClass="search-submit" Text="Search" />
+										</div>
+									</div>
+								</SearchTemplate>
+							</carrot:SearchBox>
+						</div>
+						<div style="clear: both;">
+						</div>
+					</div>
+					<div id="calendar_wrap">
+						<carrot:PostCalendar runat="server" ID="calendar" CssClass="calendar" RenderHTMLWithID="true" />
+					</div>
+					<div>
 						<carrot:WidgetContainer ID="phRightTop" runat="server">
 						</carrot:WidgetContainer>
 						<carrot:ContentContainer EnableViewState="false" ID="BodyRight" runat="server">
 						</carrot:ContentContainer>
 						<carrot:WidgetContainer ID="phRightBottom" runat="server">
 						</carrot:WidgetContainer>
-					</div>
-					<div id="calendar_wrap">
-						<carrot:PostCalendar runat="server" ID="calendar" CssClass="calendar" RenderHTMLWithID="true" />
 					</div>
 					<div>
 						<carrot:SiteMetaWordList ID="SiteMetaWordList1" runat="server" CssClass="list-style1" ContentType="DateMonth" MetaDataTitle="Archive" TakeTop="6" />

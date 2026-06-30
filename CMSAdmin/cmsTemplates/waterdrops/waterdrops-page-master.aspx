@@ -1,5 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="waterdrops.master" AutoEventWireup="true" Inherits="Carrotware.CMS.UI.Base.GenericPageFromMaster" %>
 
+<%@ MasterType VirtualPath="waterdrops.master" %>
+
+<script runat="server">
+	protected override void OnInit(EventArgs e) {
+		base.OnInit(e);
+
+		Master.IsHome = false;
+	}
+</script>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="PageMainContentPlaceHolder" runat="server">
 	<h2 class="title">
 		<carrot:ContentPageProperty runat="server" ID="ContentPageProperty10" DataField="PageHead" />

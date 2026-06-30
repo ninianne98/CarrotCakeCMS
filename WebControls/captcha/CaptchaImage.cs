@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 /*
@@ -72,7 +74,7 @@ namespace Carrotware.Web.UI.Controls {
 			}
 
 			if (HttpContext.Current != null) {
-				guid = Guid.NewGuid().ToString().Substring(0, 6);
+				guid = GetNewChallengeText();
 				HttpContext.Current.Session["captcha_key"] = guid;
 			}
 			return bValid;
@@ -91,23 +93,35 @@ namespace Carrotware.Web.UI.Controls {
 					if (HttpContext.Current.Session["captcha_key"] != null) {
 						guid = HttpContext.Current.Session["captcha_key"].ToString();
 					} else {
-						guid = GetNewKey(6);
+						guid = GetNewChallengeText();
 						HttpContext.Current.Session["captcha_key"] = guid;
 					}
 				} catch {
-					guid = GetNewKey(6);
+					guid = GetNewChallengeText();
 					HttpContext.Current.Session["captcha_key"] = guid;
 				}
 			}
 			return guid.ToUpperInvariant();
 		}
 
-		private static string GetNewKey(int len) {
-			if (len <= 4 || len >= 12) {
-				len = 8;
+		internal static string GetNewChallengeText() {
+			int length = 6;
+			var tmp = Guid.NewGuid().ToString("N")
+					+ Guid.NewGuid().ToString("N")
+					+ Guid.NewGuid().ToString("N");
+			byte[] inputBytes = Encoding.UTF8.GetBytes(tmp);
+			byte[] hashBytes;
+
+			using (var sha256 = SHA256.Create()) {
+				hashBytes = sha256.ComputeHash(inputBytes);
 			}
 
-			return Guid.NewGuid().ToString("N").Substring(0, len);
+			int number = BitConverter.ToInt32(hashBytes, 0) & 0x7FFFFFFF;
+
+			int modulus = (int)Math.Pow(10, length);
+			int pinValue = number % modulus;
+
+			return pinValue.ToString(new string('0', length));
 		}
 
 		public static Bitmap GetCaptchaImage(Color fg, Color bg, Color n) {

@@ -481,38 +481,9 @@ function checkFloatNumber(obj) {
 }
 
 function cmsSendTrackbackBatch() {
-	var webMthd = cmsWebSvc + "/SendTrackbackBatch";
-
-	if (!cmsGetOKToLeaveStatus()) {
-		$.ajax({
-			type: "POST",
-			url: webMthd,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json"
-		}).done(cmsAjaxGeneralCallback)
-			.fail(cmsAjaxFailedSwallow);
-	}
-
-	setTimeout("cmsSendTrackbackBatch();", 10000);
 }
 
-//setTimeout("cmsSendTrackbackBatch();", 5000);
-
 function cmsSendTrackbackPageBatch(thePageID) {
-	var webMthd = cmsWebSvc + "/SendTrackbackPageBatch";
-
-	if (!cmsGetOKToLeaveStatus()) {
-		$.ajax({
-			type: "POST",
-			url: webMthd,
-			data: JSON.stringify({ ThisPage: thePageID }),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json"
-		}).done(cmsAjaxGeneralCallback)
-			.fail(cmsAjaxFailedSwallow);
-	}
-
-	setTimeout("cmsSendTrackbackPageBatch('" + thePageID + "');", 12000);
 }
 
 function cmsSaveMakeOKAndCancelLeave() {
