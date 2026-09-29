@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Script.Serialization;
@@ -26,12 +27,35 @@ namespace Carrotware.CMS.UI.Admin {
 		protected override void Initialize(HttpControllerContext controllerContext) {
 			base.Initialize(controllerContext);
 
-			if (!SecurityData.UserPrincipal.Identity.IsAuthenticated) {
-				throw new Exception("Not Authenticated!");
+			var routeInfo = controllerContext.RouteData.Values;
+			string action = routeInfo["action"].ToString();
+
+			HttpContext context = HttpContext.Current;
+
+			var forbiddenRoute = "apiforbidden";
+			bool forbidden = false;
+
+			if (action.ToLowerInvariant() != forbiddenRoute) {
+				if (!SecurityData.UserPrincipal.Identity.IsAuthenticated) {
+					forbidden = true;
+				}
+
+				if (!(SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
+					forbidden = true;
+				}
 			}
 
-			if (!(SecurityData.IsAdmin || SecurityData.IsSiteEditor)) {
-				throw new Exception("Not Authorized!");
+			if (forbidden) {
+				var response = context.Response;
+				controllerContext.RouteData.Values["action"] = forbiddenRoute;
+
+				if (response != null) {
+					response.Clear();
+					response.StatusCode = (int)HttpStatusCode.PreconditionFailed;
+					response.StatusDescription = HttpStatusCode.PreconditionFailed.ToString();
+					response.SuppressFormsAuthenticationRedirect = true;
+					response.TrySkipIisCustomErrors = true;
+				}
 			}
 		}
 
@@ -109,6 +133,10 @@ namespace Carrotware.CMS.UI.Admin {
 					}
 				}
 			}
+		}
+
+		public IHttpActionResult ApiForbidden() {
+			return Content(HttpStatusCode.Forbidden, HttpStatusCode.Forbidden.ToString());
 		}
 
 		[HttpGet]
